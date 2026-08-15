@@ -7,12 +7,13 @@ import { createMtgServer } from './server.js';
 const mcpHandler = createMcpHandler(() => createMtgServer());
 const handleMcp = toNodeHandler(mcpHandler);
 
-type McpIncomingMessage = IncomingMessage & { method: string };
+type McpIncomingMessage = IncomingMessage & { method: string; url: string };
 
 const httpServer = createServer((request, response) => {
   void (async () => {
     try {
-      const url = new URL(request.url ?? '/', `http://${request.headers.host ?? 'localhost'}`);
+      const requestUrl = request.url ?? '/';
+      const url = new URL(requestUrl, `http://${request.headers.host ?? 'localhost'}`);
 
       if (url.pathname === '/health') {
         response.statusCode = 200;
@@ -29,10 +30,10 @@ const httpServer = createServer((request, response) => {
       }
 
       if (url.pathname === '/mcp' || url.pathname === '/mcp/') {
-        if (!request.method) {
+        if (!request.method || !request.url) {
           response.statusCode = 400;
           response.setHeader('Content-Type', 'application/json; charset=utf-8');
-          response.end(JSON.stringify({ error: 'HTTP method is required' }));
+          response.end(JSON.stringify({ error: 'HTTP method and URL are required' }));
           return;
         }
         await handleMcp(request as McpIncomingMessage, response);
