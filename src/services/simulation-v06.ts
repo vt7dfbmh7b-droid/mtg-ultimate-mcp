@@ -3,20 +3,9 @@ import { analyzeCastingProfileV05 } from './casting-v05.js';
 import { analyzeCommanderDependencyV05 } from './combat-v05.js';
 import type { ParsedDeck } from './deck.js';
 import { resolveEntryCard } from './deck.js';
-import {
-  evaluateCastabilityV05,
-  type ManaPoolV05,
-  type PaymentLineV05,
-} from './payment-v05.js';
-import {
-  getCardOracleText,
-  inferCardRoles,
-} from './scryfall.js';
-import {
-  parseDrawProfile,
-  simulateDeckConsistencyV04,
-  type DeckSimulationV04Options,
-} from './simulation-v04.js';
+import { evaluateCastabilityV05, type ManaPoolV05, type PaymentLineV05 } from './payment-v05.js';
+import { getCardOracleText, inferCardRoles } from './scryfall.js';
+import { parseDrawProfile, simulateDeckConsistencyV04, type DeckSimulationV04Options } from './simulation-v04.js';
 
 export type PodPressureV06 = 'goldfish' | 'casual' | 'upgraded' | 'optimized' | 'cedh';
 
@@ -69,9 +58,6 @@ interface CommanderStateV06 {
   card: SimCardV06;
   online: boolean;
   timesCast: number;
-  firstResolvedTurn: number | null;
-  removalCount: number;
-  stoppedOnStackCount: number;
 }
 
 interface IterationResultV06 {
@@ -102,7 +88,7 @@ interface IterationResultV06 {
 }
 
 const COLORS = ['W', 'U', 'B', 'R', 'G'] as const;
-const BASIC_COLOR: Array<[RegExp, string]> = [
+const BASIC_COLORS: Array<[RegExp, string]> = [
   [/\bPlains\b/i, 'W'],
   [/\bIsland\b/i, 'U'],
   [/\bSwamp\b/i, 'B'],
@@ -110,18 +96,14 @@ const BASIC_COLOR: Array<[RegExp, string]> = [
   [/\bForest\b/i, 'G'],
 ];
 
-function clampInt(value: number | undefined, fallback: number, min: number, max: number): number {
-  if (!Number.isFinite(value)) return fallback;
-  return Math.max(min, Math.min(max, Math.trunc(value ?? fallback)));
-}
+const clampInt = (value: number | undefined, fallback: number, min: number, max: number): number =>
+  !Number.isFinite(value) ? fallback : Math.max(min, Math.min(max, Math.trunc(value ?? fallback)));
 
 class SeededRandomV06 {
   private state: number;
-
   constructor(seed: number) {
     this.state = (seed >>> 0) || 0x9e3779b9;
   }
-
   next(): number {
     let x = this.state;
     x ^= x << 13;
@@ -136,16 +118,13 @@ function shuffle<T>(items: T[], random: SeededRandomV06): T[] {
   const result = [...items];
   for (let index = result.length - 1; index > 0; index -= 1) {
     const swapIndex = Math.floor(random.next() * (index + 1));
-    const current = result[index] as T;
-    result[index] = result[swapIndex] as T;
-    result[swapIndex] = current;
+    [result[index], result[swapIndex]] = [result[swapIndex] as T, result[index] as T];
   }
   return result;
 }
 
 function hasLandFace(card: ScryfallCard): boolean {
-  if (/\bland\b/i.test(card.type_line)) return true;
-  return (card.card_faces ?? []).some((face) => /\bland\b/i.test(face.type_line ?? ''));
+  return /\bland\b/i.test(card.type_line) || (card.card_faces ?? []).some((face) => /\bland\b/i.test(face.type_line ?? ''));
 }
 
 function isPermanent(card: ScryfallCard): boolean {
@@ -157,7 +136,7 @@ function cardColors(card: ScryfallCard, commanderIdentity: string[]): string[] {
   if (/any color in your commander['’]s color identity/i.test(text)) return [...commanderIdentity];
   const explicit = (card.produced_mana ?? []).map((color) => color.toUpperCase()).filter(Boolean);
   if (explicit.length > 0) return [...new Set(explicit)];
-  const inferred = BASIC_COLOR.filter(([pattern]) => pattern.test(card.type_line)).map(([, color]) => color);
+  const inferred = BASIC_COLORS.filter(([pattern]) => pattern.test(card.type_line)).map(([, color]) => color);
   return inferred.length > 0 ? inferred : ['C'];
 }
 
@@ -165,32 +144,27 @@ function manaOutput(card: ScryfallCard): number {
   const text = getCardOracleText(card);
   const symbols = text.match(/add\s+((?:\{[WUBRGC]\}){2,6})/i)?.[1]?.match(/\{[WUBRGC]\}/gi) ?? [];
   if (symbols.length > 1) return symbols.length;
+  const words: Record<string, number> = { two: 2, three: 3, four: 4, five: 5 };
   const word = text.match(/add (two|three|four|five) mana/i)?.[1]?.toLowerCase();
-  if (word === 'two') return 2;
-  if (word === 'three') return 3;
-  if (word === 'four') return 4;
-  if (word === 'five') return 5;
-  return 1;
+  return word ? words[word] ?? 1 : 1;
 }
 
 function commanderIdentity(parsed: ParsedDeck, cards: ScryfallCard[]): string[] {
-  return [...new Set(
-    parsed.commanders
-      .map((entry) => resolveEntryCard(entry, cards))
-      .filter((card): card is ScryfallCard => Boolean(card))
-      .flatMap((card) => card.color_identity),
-  )].sort();
+  return [...new Set(parsed.commanders
+    .map((entry) => resolveEntryCard(entry, cards))
+    .filter((card): card is ScryfallCard => Boolean(card))
+    .flatMap((card) => card.color_identity))].sort();
 }
 
 function toSimCard(card: ScryfallCard, uid: number, identity: string[]): SimCardV06 {
   const type = card.type_line.toLowerCase();
   const text = getCardOracleText(card);
   const roles = new Set(inferCardRoles(card));
-  const sourceText = /\badd\b.*(?:mana|\{[WUBRGC]\})|\{T\}:\s*Add/i.test(text);
   const permanent = isPermanent(card);
   const creature = type.includes('creature');
   const artifact = type.includes('artifact');
-  const manaPermanent = permanent && sourceText && (creature || artifact);
+  const manaText = /\badd\b.*(?:mana|\{[WUBRGC]\})|\{T\}:\s*Add/i.test(text);
+  const manaPermanent = permanent && manaText && (creature || artifact);
   return {
     uid,
     card,
@@ -204,7 +178,7 @@ function toSimCard(card: ScryfallCard, uid: number, identity: string[]): SimCard
     isArtifact: artifact,
     isManaPermanent: manaPermanent,
     isManaCreature: manaPermanent && creature,
-    isOneShotMana: !permanent && sourceText,
+    isOneShotMana: !permanent && manaText,
     isProtection: roles.has('protection') || roles.has('board protection') || roles.has('countermagic') || roles.has('free interaction'),
     isInteraction: roles.has('spot interaction') || roles.has('countermagic') || roles.has('board wipe') || roles.has('free interaction'),
     commanderDependent: analyzeCommanderDependencyV05(card).dependsOnCommander,
@@ -214,14 +188,14 @@ function toSimCard(card: ScryfallCard, uid: number, identity: string[]): SimCard
 }
 
 function expandMainDeck(parsed: ParsedDeck, cards: ScryfallCard[], identity: string[]): SimCardV06[] {
-  const output: SimCardV06[] = [];
+  const result: SimCardV06[] = [];
   let uid = 1;
   for (const entry of parsed.main) {
     const card = resolveEntryCard(entry, cards);
     if (!card) continue;
-    for (let copy = 0; copy < entry.quantity; copy += 1) output.push(toSimCard(card, uid++, identity));
+    for (let copy = 0; copy < entry.quantity; copy += 1) result.push(toSimCard(card, uid++, identity));
   }
-  return output;
+  return result;
 }
 
 function commanderStates(parsed: ParsedDeck, cards: ScryfallCard[], identity: string[]): CommanderStateV06[] {
@@ -229,242 +203,170 @@ function commanderStates(parsed: ParsedDeck, cards: ScryfallCard[], identity: st
   return parsed.commanders
     .map((entry) => resolveEntryCard(entry, cards))
     .filter((card): card is ScryfallCard => Boolean(card))
-    .map((card) => ({
-      card: toSimCard(card, uid--, identity),
-      online: false,
-      timesCast: 0,
-      firstResolvedTurn: null,
-      removalCount: 0,
-      stoppedOnStackCount: 0,
-    }));
+    .map((card) => ({ card: toSimCard(card, uid--, identity), online: false, timesCast: 0 }));
 }
 
 function drawCards(library: SimCardV06[], hand: SimCardV06[], count: number): number {
   let drawn = 0;
   while (drawn < count && library.length > 0) {
-    const next = library.shift();
-    if (!next) break;
-    hand.push(next);
+    const card = library.shift();
+    if (!card) break;
+    hand.push(card);
     drawn += 1;
   }
   return drawn;
 }
 
-function sourceToPool(pool: ManaPoolV05, source: ManaSourceV06): void {
-  for (let index = 0; index < Math.max(1, source.output); index += 1) {
+function addSourceToPool(pool: ManaPoolV05, source: ManaSourceV06): void {
+  for (let unit = 0; unit < Math.max(1, source.output); unit += 1) {
     const colors = source.colors.filter((color) => COLORS.includes(color as (typeof COLORS)[number]) || color === 'C');
-    if (colors.length > 1) {
-      pool.any = (pool.any ?? 0) + 1;
-      continue;
-    }
-    const color = colors[0] ?? 'C';
-    if (color === 'W') pool.W = (pool.W ?? 0) + 1;
-    else if (color === 'U') pool.U = (pool.U ?? 0) + 1;
-    else if (color === 'B') pool.B = (pool.B ?? 0) + 1;
-    else if (color === 'R') pool.R = (pool.R ?? 0) + 1;
-    else if (color === 'G') pool.G = (pool.G ?? 0) + 1;
+    if (colors.length > 1) pool.any = (pool.any ?? 0) + 1;
+    else if (colors[0] === 'W') pool.W = (pool.W ?? 0) + 1;
+    else if (colors[0] === 'U') pool.U = (pool.U ?? 0) + 1;
+    else if (colors[0] === 'B') pool.B = (pool.B ?? 0) + 1;
+    else if (colors[0] === 'R') pool.R = (pool.R ?? 0) + 1;
+    else if (colors[0] === 'G') pool.G = (pool.G ?? 0) + 1;
     else pool.C = (pool.C ?? 0) + 1;
   }
 }
 
-function buildManaPool(sources: ManaSourceV06[]): ManaPoolV05 {
+function manaPool(sources: ManaSourceV06[]): ManaPoolV05 {
   const pool: ManaPoolV05 = {};
-  for (const source of sources) sourceToPool(pool, source);
+  for (const source of sources) addSourceToPool(pool, source);
   return pool;
 }
 
 function subtractMana(pool: ManaPoolV05, used: Record<string, number>): void {
   const keys: Array<keyof ManaPoolV05> = ['W', 'U', 'B', 'R', 'G', 'C', 'any'];
-  for (const key of keys) {
-    const amount = used[key] ?? 0;
-    if (amount <= 0) continue;
-    pool[key] = Math.max(0, (pool[key] ?? 0) - amount);
-  }
-}
-
-function permanentArtifactCount(battlefield: SimCardV06[]): number {
-  return battlefield.filter((card) => card.isArtifact).length;
-}
-
-function convokeCreatures(battlefield: SimCardV06[], tappedCreatures: number): Array<{ colors: string[] }> {
-  return battlefield
-    .filter((card) => card.isCreature)
-    .slice(Math.max(0, tappedCreatures))
-    .map((card) => ({ colors: card.card.colors ?? card.card.color_identity }));
+  for (const key of keys) pool[key] = Math.max(0, (pool[key] ?? 0) - (used[key] ?? 0));
 }
 
 function escapeExileCost(card: ScryfallCard): number | null {
-  const text = getCardOracleText(card);
-  const raw = text.match(/Escape[—–-][^\n]*?Exile\s+(\d+|one|two|three|four|five|six|seven|eight|nine|ten)\s+other cards?/i)?.[1];
+  const raw = getCardOracleText(card).match(/Escape[—–-][^\n]*?Exile\s+(\d+|one|two|three|four|five|six|seven|eight|nine|ten)\s+other cards?/i)?.[1];
   if (!raw) return null;
-  const numeric = Number.parseInt(raw, 10);
-  if (Number.isFinite(numeric)) return numeric;
+  const direct = Number.parseInt(raw, 10);
+  if (Number.isFinite(direct)) return direct;
   const words: Record<string, number> = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
   return words[raw.toLowerCase()] ?? null;
 }
 
 function affinityCountFor(card: SimCardV06, battlefield: SimCardV06[], treasures: number): number {
   if (!card.casting.paymentMechanics.includes('affinity')) return 0;
-  if (card.casting.affinityFor.some((subject) => /artifact/i.test(subject))) {
-    return permanentArtifactCount(battlefield) + treasures;
-  }
-  return 0;
+  return card.casting.affinityFor.some((subject) => /artifact/i.test(subject))
+    ? battlefield.filter((permanent) => permanent.isArtifact).length + treasures
+    : 0;
+}
+
+function convokeCreatures(battlefield: SimCardV06[], alreadyTapped: number): Array<{ colors: string[] }> {
+  return battlefield
+    .filter((card) => card.isCreature && !card.isManaCreature)
+    .slice(alreadyTapped)
+    .map((card) => ({ colors: card.card.colors ?? card.card.color_identity }));
+}
+
+function availableImproviseArtifacts(battlefield: SimCardV06[], alreadyTapped: number): number {
+  const count = battlefield.filter((card) => card.isArtifact && !card.isManaPermanent).length;
+  return Math.max(0, count - alreadyTapped);
 }
 
 function lineAllowed(card: SimCardV06, line: PaymentLineV05, graveyardCards: number): boolean {
   if (line.mode === 'normal') return true;
   if (['evoke', 'blitz', 'overload', 'prototype', 'sneak'].includes(line.mode)) return true;
   if (line.mode === 'escape') {
-    const exile = escapeExileCost(card.card);
-    return exile !== null && graveyardCards >= exile;
+    const required = escapeExileCost(card.card);
+    return required !== null && graveyardCards >= required;
   }
   return false;
 }
 
-interface PaymentContextV06 {
+interface ResourceState {
   mana: ManaPoolV05;
   treasures: number;
-  battlefield: SimCardV06[];
-  tappedCreatures: number;
-  tappedArtifacts: number;
   graveyardCards: number;
   life: number;
-  commanderTax: number;
-  isCommander: boolean;
+  tappedCreatures: number;
+  tappedArtifacts: number;
 }
 
-function choosePaymentLine(card: SimCardV06, context: PaymentContextV06): PaymentLineV05 | null {
-  const availableArtifacts = Math.max(0, permanentArtifactCount(context.battlefield) - context.tappedArtifacts);
-  const result = evaluateCastabilityV05(card.card, {
-    mana: context.mana,
-    treasures: context.treasures,
-    untappedCreatures: convokeCreatures(context.battlefield, context.tappedCreatures),
-    untappedArtifacts: availableArtifacts,
-    graveyardCards: context.graveyardCards,
-    affinityCount: affinityCountFor(card, context.battlefield, context.treasures),
-    life: context.life,
-    isCommander: context.isCommander,
-    commanderTax: context.commanderTax,
+function choosePaymentLine(card: SimCardV06, resources: ResourceState, battlefield: SimCardV06[], commanderTax = 0, isCommander = false): PaymentLineV05 | null {
+  const report = evaluateCastabilityV05(card.card, {
+    mana: resources.mana,
+    treasures: resources.treasures,
+    untappedCreatures: convokeCreatures(battlefield, resources.tappedCreatures),
+    untappedArtifacts: availableImproviseArtifacts(battlefield, resources.tappedArtifacts),
+    graveyardCards: resources.graveyardCards,
+    affinityCount: affinityCountFor(card, battlefield, resources.treasures),
+    life: resources.life,
+    commanderTax,
+    isCommander,
     alternativeResourceReady: true,
   });
-  const allowed = result.lines.filter((line) => line.castable && lineAllowed(card, line, context.graveyardCards));
-  return allowed.find((line) => line.mode === 'normal') ?? allowed[0] ?? null;
+  const lines = report.lines.filter((line) => line.castable && lineAllowed(card, line, resources.graveyardCards));
+  return lines.find((line) => line.mode === 'normal') ?? lines[0] ?? null;
 }
 
-function paymentMechanicsUsed(line: PaymentLineV05): string[] {
-  const output: string[] = [];
-  if (line.used.convokeCreatures > 0) output.push('convoke');
-  if (line.used.improviseArtifacts > 0) output.push('improvise');
-  if (line.used.delvedCards > 0) output.push('delve');
-  if (line.used.phyrexianLife > 0) output.push('phyrexian-mana');
-  if (line.reasons.some((reason) => /Affinity reduced/i.test(reason))) output.push('affinity');
-  if (line.mode !== 'normal') output.push(`alternative:${line.mode}`);
-  return output;
+function mechanicsUsed(line: PaymentLineV05): string[] {
+  const result: string[] = [];
+  if (line.used.convokeCreatures > 0) result.push('convoke');
+  if (line.used.improviseArtifacts > 0) result.push('improvise');
+  if (line.used.delvedCards > 0) result.push('delve');
+  if (line.used.phyrexianLife > 0) result.push('phyrexian-mana');
+  if (line.reasons.some((reason) => /Affinity reduced/i.test(reason))) result.push('affinity');
+  if (line.mode !== 'normal') result.push(`alternative:${line.mode}`);
+  return result;
 }
 
-function applyPayment(
-  card: SimCardV06,
-  line: PaymentLineV05,
-  state: {
-    mana: ManaPoolV05;
-    treasures: number;
-    graveyardCards: number;
-    life: number;
-    tappedCreatures: number;
-    tappedArtifacts: number;
-  },
-): { treasuresSpent: number; delvedCards: number; lifePaid: number; mechanics: string[] } {
-  subtractMana(state.mana, line.used.mana);
-  state.treasures = Math.max(0, state.treasures - line.used.treasures);
-  state.graveyardCards = Math.max(0, state.graveyardCards - line.used.delvedCards);
-  state.life = Math.max(0, state.life - line.used.phyrexianLife);
-  state.tappedCreatures += line.used.convokeCreatures;
-  state.tappedArtifacts += line.used.improviseArtifacts;
-  if (line.mode === 'escape') {
-    const exile = escapeExileCost(card.card) ?? 0;
-    state.graveyardCards = Math.max(0, state.graveyardCards - exile);
-  }
-  return {
-    treasuresSpent: line.used.treasures,
-    delvedCards: line.used.delvedCards,
-    lifePaid: line.used.phyrexianLife,
-    mechanics: paymentMechanicsUsed(line),
-  };
+function pay(card: SimCardV06, line: PaymentLineV05, resources: ResourceState): { treasure: number; life: number; delve: number; mechanics: string[] } {
+  subtractMana(resources.mana, line.used.mana);
+  resources.treasures = Math.max(0, resources.treasures - line.used.treasures);
+  resources.graveyardCards = Math.max(0, resources.graveyardCards - line.used.delvedCards);
+  resources.life = Math.max(0, resources.life - line.used.phyrexianLife);
+  resources.tappedCreatures += line.used.convokeCreatures;
+  resources.tappedArtifacts += line.used.improviseArtifacts;
+  if (line.mode === 'escape') resources.graveyardCards = Math.max(0, resources.graveyardCards - (escapeExileCost(card.card) ?? 0));
+  return { treasure: line.used.treasures, life: line.used.phyrexianLife, delve: line.used.delvedCards, mechanics: mechanicsUsed(line) };
 }
 
-function simpleLandDelayed(card: SimCardV06): boolean {
-  const text = getCardOracleText(card.card);
-  return /enters (?:the battlefield )?tapped/i.test(text);
-}
-
-function recurringTreasurePerTurn(card: SimCardV06): number {
-  const profile = card.casting.treasure;
-  if (!profile.recurring || !profile.trigger) return 0;
-  if (/enters(?: the battlefield)?/i.test(profile.trigger)) return 0;
-  if (/upkeep|end step|whenever you attack|combat damage|whenever .*cast/i.test(profile.trigger)) {
-    return Math.max(1, profile.recurringTreasurePerTrigger);
-  }
-  return 0;
+function delayedMana(card: SimCardV06): boolean {
+  return /enters (?:the battlefield )?tapped/i.test(getCardOracleText(card.card));
 }
 
 function treasureOnResolve(card: SimCardV06): number {
-  let amount = card.casting.treasure.immediateTreasure;
-  const trigger = card.casting.treasure.trigger ?? '';
-  if (card.casting.treasure.recurring && /enters(?: the battlefield)?/i.test(trigger)) {
-    amount += Math.max(1, card.casting.treasure.recurringTreasurePerTrigger);
-  }
+  const profile = card.casting.treasure;
+  let amount = profile.immediateTreasure;
+  if (profile.recurring && /enters(?: the battlefield)?/i.test(profile.trigger ?? '')) amount += Math.max(1, profile.recurringTreasurePerTrigger);
   return amount;
 }
 
-function recurringDrawPerTurn(battlefield: SimCardV06[]): number {
-  return battlefield.reduce((sum, card) => sum + card.draw.recurringPerTurn, 0);
+function recurringTreasure(card: SimCardV06): number {
+  const profile = card.casting.treasure;
+  if (!profile.recurring || !profile.trigger || /enters(?: the battlefield)?/i.test(profile.trigger)) return 0;
+  return /upkeep|end step|whenever you attack|combat damage|whenever .*cast/i.test(profile.trigger)
+    ? Math.max(1, profile.recurringTreasurePerTrigger)
+    : 0;
 }
 
-function isComboPiece(card: SimCardV06, comboPieces: string[][]): boolean {
+function isComboPiece(card: SimCardV06, combos: string[][]): boolean {
   const name = card.name.toLocaleLowerCase();
-  return comboPieces.some((combo) => combo.some((piece) => piece.toLocaleLowerCase() === name));
+  return combos.some((combo) => combo.some((piece) => piece.toLocaleLowerCase() === name));
 }
 
-function candidateScore(card: SimCardV06, comboPieces: string[][]): number {
-  let score = 0;
-  if (card.roles.has('mana acceleration') || card.roles.has('land ramp') || card.isManaPermanent || card.isOneShotMana) score += 90;
-  if (card.casting.treasure.createsTreasure) score += 78;
-  if (card.roles.has('card draw') || card.roles.has('repeatable draw') || card.draw.immediate > 0 || card.draw.recurringPerTurn > 0) score += 65;
-  if (isComboPiece(card, comboPieces)) score += 55;
-  if (card.commanderDependent) score += 35;
-  if (card.isPermanent) score += 20;
-  if (card.isInteraction || card.isProtection) score -= 30;
-  score -= card.card.cmc * 2;
-  return score;
+function score(card: SimCardV06, combos: string[][]): number {
+  let value = 0;
+  if (card.roles.has('mana acceleration') || card.roles.has('land ramp') || card.isManaPermanent || card.isOneShotMana) value += 90;
+  if (card.casting.treasure.createsTreasure) value += 78;
+  if (card.roles.has('card draw') || card.roles.has('repeatable draw') || card.draw.immediate > 0 || card.draw.recurringPerTurn > 0) value += 65;
+  if (isComboPiece(card, combos)) value += 55;
+  if (card.commanderDependent) value += 35;
+  if (card.isPermanent) value += 20;
+  if (card.isInteraction || card.isProtection) value -= 30;
+  return value - card.card.cmc * 2;
 }
 
-function namesInZones(hand: SimCardV06[], battlefield: SimCardV06[], graveyardNames: Set<string>): Set<string> {
-  return new Set([
-    ...hand.map((card) => card.name.toLocaleLowerCase()),
-    ...battlefield.map((card) => card.name.toLocaleLowerCase()),
-    ...graveyardNames,
-  ]);
-}
+const percentage = (count: number, total: number): number => total > 0 ? Number(((count / total) * 100).toFixed(1)) : 0;
+const average = (values: number[]): number => values.length > 0 ? Number((values.reduce((sum, value) => sum + value, 0) / values.length).toFixed(2)) : 0;
 
-function comboCurrentReady(combo: string[], hand: SimCardV06[], battlefield: SimCardV06[]): boolean {
-  const accessible = new Set([...hand, ...battlefield].map((card) => card.name.toLocaleLowerCase()));
-  return combo.every((piece) => accessible.has(piece.toLocaleLowerCase()));
-}
-
-function comboSeen(combo: string[], seen: Set<string>): boolean {
-  return combo.every((piece) => seen.has(piece.toLocaleLowerCase()));
-}
-
-function percentage(count: number, total: number): number {
-  return total > 0 ? Number(((count / total) * 100).toFixed(1)) : 0;
-}
-
-function average(values: number[]): number {
-  if (values.length === 0) return 0;
-  return Number((values.reduce((sum, value) => sum + value, 0) / values.length).toFixed(2));
-}
-
-function cumulativeTurnPercent(results: IterationResultV06[], getter: (result: IterationResultV06) => number | null, turns: number): Record<string, number> {
+function cumulative(results: IterationResultV06[], getter: (result: IterationResultV06) => number | null, turns: number): Record<string, number> {
   return Object.fromEntries(Array.from({ length: turns }, (_, index) => {
     const turn = index + 1;
     return [`turn${turn}`, percentage(results.filter((result) => {
@@ -481,14 +383,16 @@ function averageByTurn(results: IterationResultV06[], getter: (result: Iteration
   ]));
 }
 
-function addMechanic(target: Record<string, number>, mechanic: string): void {
-  target[mechanic] = (target[mechanic] ?? 0) + 1;
+function increment(record: Record<string, number>, key: string): void {
+  record[key] = (record[key] ?? 0) + 1;
 }
 
-function runAdvancedIteration(
+function runIteration(
   baseLibrary: SimCardV06[],
-  commanderBase: CommanderStateV06[],
-  options: { turns: number; comboPieces: string[][]; pressure: PressureProfile },
+  commanderTemplate: CommanderStateV06[],
+  turns: number,
+  combos: string[][],
+  pressure: PressureProfile,
   random: SeededRandomV06,
 ): IterationResultV06 {
   const library = shuffle(baseLibrary, random);
@@ -496,17 +400,15 @@ function runAdvancedIteration(
   drawCards(library, hand, 7);
   const battlefield: SimCardV06[] = [];
   const graveyardNames = new Set<string>();
-  let graveyardCards = 0;
-  let treasures = 0;
-  let life = 40;
+  const commanders = commanderTemplate.map((commander) => ({ ...commander }));
   const activeSources: ManaSourceV06[] = [];
   let delayedSources: ManaSourceV06[] = [];
-  const commanders = commanderBase.map((state) => ({ ...state }));
-  const comboReadyTurns = options.comboPieces.map(() => null as number | null);
-  const comboSeenTurns = options.comboPieces.map(() => null as number | null);
+  const comboReadyTurns = combos.map(() => null as number | null);
+  const comboSeenTurns = combos.map(() => null as number | null);
   const treasuresByTurn: number[] = [];
   const lifeByTurn: number[] = [];
-  const mechanicUses: Record<string, number> = {};
+  const mechanics: Record<string, number> = {};
+  let resources: ResourceState = { mana: {}, treasures: 0, graveyardCards: 0, life: 40, tappedCreatures: 0, tappedArtifacts: 0 };
   let treasuresCreated = 0;
   let treasuresSpent = 0;
   let firstTreasureSpendTurn: number | null = null;
@@ -527,36 +429,26 @@ function runAdvancedIteration(
   let spellsCast = 0;
   let commanderDependentPermanentsCast = 0;
 
-  const tryProtection = (mana: ManaPoolV05, tapped: { creatures: number; artifacts: number }): boolean => {
+  const recordPayment = (paid: ReturnType<typeof pay>, turn: number): void => {
+    treasuresSpent += paid.treasure;
+    phyrexianLifePaid += paid.life;
+    delvedCards += paid.delve;
+    if (paid.treasure > 0 && firstTreasureSpendTurn === null) firstTreasureSpendTurn = turn;
+    for (const mechanic of paid.mechanics) increment(mechanics, mechanic);
+    if (paid.mechanics.length > 0) advancedCasts += 1;
+  };
+
+  const castProtection = (turn: number): boolean => {
     const candidates = hand.filter((card) => card.isProtection && !card.isLand).sort((a, b) => a.card.cmc - b.card.cmc);
-    for (const protector of candidates) {
-      const line = choosePaymentLine(protector, {
-        mana,
-        treasures,
-        battlefield,
-        tappedCreatures: tapped.creatures,
-        tappedArtifacts: tapped.artifacts,
-        graveyardCards,
-        life,
-        commanderTax: 0,
-        isCommander: false,
-      });
+    for (const card of candidates) {
+      const line = choosePaymentLine(card, resources, battlefield);
       if (!line) continue;
       protectionAttempts += 1;
-      const mutable = { mana, treasures, graveyardCards, life, tappedCreatures: tapped.creatures, tappedArtifacts: tapped.artifacts };
-      const paid = applyPayment(protector, line, mutable);
-      treasures = mutable.treasures;
-      graveyardCards = mutable.graveyardCards + 1;
-      life = mutable.life;
-      tapped.creatures = mutable.tappedCreatures;
-      tapped.artifacts = mutable.tappedArtifacts;
-      treasuresSpent += paid.treasuresSpent;
-      phyrexianLifePaid += paid.lifePaid;
-      delvedCards += paid.delvedCards;
-      if (paid.treasuresSpent > 0 && firstTreasureSpendTurn === null) firstTreasureSpendTurn = 1;
-      for (const mechanic of paid.mechanics) addMechanic(mechanicUses, mechanic);
-      hand.splice(hand.indexOf(protector), 1);
-      graveyardNames.add(protector.name.toLocaleLowerCase());
+      const paid = pay(card, line, resources);
+      recordPayment(paid, turn);
+      hand.splice(hand.indexOf(card), 1);
+      resources.graveyardCards += 1;
+      graveyardNames.add(card.name.toLocaleLowerCase());
       spellsCast += 1;
       protectionWins += 1;
       return true;
@@ -564,19 +456,70 @@ function runAdvancedIteration(
     return false;
   };
 
-  for (let turn = 1; turn <= options.turns; turn += 1) {
+  const resolveCard = (card: SimCardV06, line: PaymentLineV05): void => {
+    const treasure = treasureOnResolve(card);
+    resources.treasures += treasure;
+    treasuresCreated += treasure;
+    if (card.draw.immediate > 0 && !/at the beginning/i.test(getCardOracleText(card.card))) {
+      cardsDrawnByEffects += drawCards(library, hand, card.draw.immediate);
+    }
+    if (card.roles.has('land ramp')) {
+      const landIndex = library.findIndex((candidate) => candidate.isLand);
+      if (landIndex >= 0) {
+        const land = library.splice(landIndex, 1)[0];
+        if (land) delayedSources.push({ colors: land.colors, output: Math.max(1, land.manaOutput) });
+      }
+    }
+    if (card.isOneShotMana) addSourceToPool(resources.mana, { colors: card.colors, output: Math.max(1, card.manaOutput) });
+    if (card.isPermanent && line.mode !== 'evoke') {
+      battlefield.push(card);
+      if (card.commanderDependent) commanderDependentPermanentsCast += 1;
+      if (card.isManaPermanent) {
+        const source = { colors: card.colors, output: Math.max(1, card.manaOutput) };
+        if (card.isManaCreature || delayedMana(card)) delayedSources.push(source);
+        else {
+          activeSources.push(source);
+          addSourceToPool(resources.mana, source);
+        }
+      }
+    } else {
+      resources.graveyardCards += 1;
+      graveyardNames.add(card.name.toLocaleLowerCase());
+    }
+  };
+
+  const castCard = (card: SimCardV06, turn: number, keySpell: boolean): boolean => {
+    const line = choosePaymentLine(card, resources, battlefield);
+    if (!line) return false;
+    hand.splice(hand.indexOf(card), 1);
+    const paid = pay(card, line, resources);
+    recordPayment(paid, turn);
+    if (line.mode !== 'normal') alternativeCostCasts += 1;
+    spellsCast += 1;
+    if (keySpell && random.next() < pressure.keySpellChallenge) {
+      keySpellChallenges += 1;
+      if (!castProtection(turn)) {
+        keySpellStops += 1;
+        resources.graveyardCards += 1;
+        graveyardNames.add(card.name.toLocaleLowerCase());
+        return true;
+      }
+    }
+    resolveCard(card, line);
+    return true;
+  };
+
+  for (let turn = 1; turn <= turns; turn += 1) {
     activeSources.push(...delayedSources);
     delayedSources = [];
-    let tappedCreatures = 0;
-    let tappedArtifacts = 0;
+    resources.mana = manaPool(activeSources);
+    resources.tappedCreatures = 0;
+    resources.tappedArtifacts = 0;
 
-    const recurringTreasure = battlefield.reduce((sum, card) => sum + recurringTreasurePerTurn(card), 0);
-    if (recurringTreasure > 0) {
-      treasures += recurringTreasure;
-      treasuresCreated += recurringTreasure;
-    }
-
-    const recurringDraw = recurringDrawPerTurn(battlefield);
+    const recurringTreasure = battlefield.reduce((sum, card) => sum + recurringTreasure(card), 0);
+    resources.treasures += recurringTreasure;
+    treasuresCreated += recurringTreasure;
+    const recurringDraw = battlefield.reduce((sum, card) => sum + card.draw.recurringPerTurn, 0);
     if (recurringDraw > 0) cardsDrawnByEffects += drawCards(library, hand, recurringDraw);
     drawCards(library, hand, 1);
 
@@ -584,144 +527,41 @@ function runAdvancedIteration(
     if (landIndex >= 0) {
       const land = hand.splice(landIndex, 1)[0];
       if (land) {
-        const source: ManaSourceV06 = { colors: land.colors, output: Math.max(1, land.manaOutput) };
-        if (simpleLandDelayed(land)) delayedSources.push(source);
-        else activeSources.push(source);
+        const source = { colors: land.colors, output: Math.max(1, land.manaOutput) };
+        if (delayedMana(land)) delayedSources.push(source);
+        else {
+          activeSources.push(source);
+          addSourceToPool(resources.mana, source);
+        }
       }
     }
 
-    const mana = buildManaPool(activeSources);
-    const tapped = { creatures: tappedCreatures, artifacts: tappedArtifacts };
-
-    const castNonCommander = (card: SimCardV06, isKeySpell: boolean): boolean => {
-      const line = choosePaymentLine(card, {
-        mana,
-        treasures,
-        battlefield,
-        tappedCreatures: tapped.creatures,
-        tappedArtifacts: tapped.artifacts,
-        graveyardCards,
-        life,
-        commanderTax: 0,
-        isCommander: false,
-      });
-      if (!line) return false;
-
-      if (isKeySpell && random.next() < options.pressure.keySpellChallenge) {
-        keySpellChallenges += 1;
-        if (!tryProtection(mana, tapped)) {
-          keySpellStops += 1;
-          hand.splice(hand.indexOf(card), 1);
-          graveyardCards += 1;
-          graveyardNames.add(card.name.toLocaleLowerCase());
-          spellsCast += 1;
-          return true;
-        }
-      }
-
-      const mutable = { mana, treasures, graveyardCards, life, tappedCreatures: tapped.creatures, tappedArtifacts: tapped.artifacts };
-      const paid = applyPayment(card, line, mutable);
-      treasures = mutable.treasures;
-      graveyardCards = mutable.graveyardCards;
-      life = mutable.life;
-      tapped.creatures = mutable.tappedCreatures;
-      tapped.artifacts = mutable.tappedArtifacts;
-      treasuresSpent += paid.treasuresSpent;
-      phyrexianLifePaid += paid.lifePaid;
-      delvedCards += paid.delvedCards;
-      if (paid.treasuresSpent > 0 && firstTreasureSpendTurn === null) firstTreasureSpendTurn = turn;
-      for (const mechanic of paid.mechanics) addMechanic(mechanicUses, mechanic);
-      if (paid.mechanics.length > 0) advancedCasts += 1;
-      if (line.mode !== 'normal') alternativeCostCasts += 1;
-      hand.splice(hand.indexOf(card), 1);
-      spellsCast += 1;
-
-      const treasureGain = treasureOnResolve(card);
-      if (treasureGain > 0) {
-        treasures += treasureGain;
-        treasuresCreated += treasureGain;
-      }
-
-      if (card.draw.immediate > 0) cardsDrawnByEffects += drawCards(library, hand, card.draw.immediate);
-
-      if (card.roles.has('land ramp')) {
-        const targetIndex = library.findIndex((candidate) => candidate.isLand);
-        if (targetIndex >= 0) {
-          const land = library.splice(targetIndex, 1)[0];
-          if (land) delayedSources.push({ colors: land.colors, output: Math.max(1, land.manaOutput) });
-        }
-      }
-
-      if (card.isOneShotMana) sourceToPool(mana, { colors: card.colors, output: Math.max(1, card.manaOutput) });
-
-      if (card.isPermanent && line.mode !== 'evoke') {
-        battlefield.push(card);
-        if (card.commanderDependent) commanderDependentPermanentsCast += 1;
-        if (card.isManaPermanent) {
-          const source = { colors: card.colors, output: Math.max(1, card.manaOutput) };
-          if (card.isManaCreature || simpleLandDelayed(card)) delayedSources.push(source);
-          else {
-            activeSources.push(source);
-            sourceToPool(mana, source);
-          }
-        }
-      } else {
-        graveyardCards += 1;
-        graveyardNames.add(card.name.toLocaleLowerCase());
-      }
-      return true;
-    };
-
     const setup = hand
       .filter((card) => !card.isLand && !card.isInteraction && !card.isProtection)
-      .sort((a, b) => candidateScore(b, options.comboPieces) - candidateScore(a, options.comboPieces));
-    const earlySetup = setup.find((card) => candidateScore(card, options.comboPieces) >= 65);
-    if (earlySetup) castNonCommander(earlySetup, isComboPiece(earlySetup, options.comboPieces));
+      .sort((a, b) => score(b, combos) - score(a, combos));
+    const firstSetup = setup.find((card) => score(card, combos) >= 65);
+    if (firstSetup) castCard(firstSetup, turn, isComboPiece(firstSetup, combos));
 
     for (const commander of commanders) {
       if (commander.online) continue;
-      const tax = commander.timesCast * 2;
-      const line = choosePaymentLine(commander.card, {
-        mana,
-        treasures,
-        battlefield,
-        tappedCreatures: tapped.creatures,
-        tappedArtifacts: tapped.artifacts,
-        graveyardCards,
-        life,
-        commanderTax: tax,
-        isCommander: true,
-      });
+      const line = choosePaymentLine(commander.card, resources, battlefield, commander.timesCast * 2, true);
       if (!line) continue;
       commander.timesCast += 1;
       commanderCasts += 1;
-      if (random.next() < options.pressure.keySpellChallenge) {
+      const paid = pay(commander.card, line, resources);
+      recordPayment(paid, turn);
+      if (line.mode !== 'normal') alternativeCostCasts += 1;
+      spellsCast += 1;
+      if (random.next() < pressure.keySpellChallenge) {
         keySpellChallenges += 1;
-        if (!tryProtection(mana, tapped)) {
-          commander.stoppedOnStackCount += 1;
+        if (!castProtection(turn)) {
           commanderStoppedOnStack += 1;
           keySpellStops += 1;
           continue;
         }
       }
-      const mutable = { mana, treasures, graveyardCards, life, tappedCreatures: tapped.creatures, tappedArtifacts: tapped.artifacts };
-      const paid = applyPayment(commander.card, line, mutable);
-      treasures = mutable.treasures;
-      graveyardCards = mutable.graveyardCards;
-      life = mutable.life;
-      tapped.creatures = mutable.tappedCreatures;
-      tapped.artifacts = mutable.tappedArtifacts;
-      treasuresSpent += paid.treasuresSpent;
-      phyrexianLifePaid += paid.lifePaid;
-      delvedCards += paid.delvedCards;
-      if (paid.treasuresSpent > 0 && firstTreasureSpendTurn === null) firstTreasureSpendTurn = turn;
-      for (const mechanic of paid.mechanics) addMechanic(mechanicUses, mechanic);
-      if (paid.mechanics.length > 0) advancedCasts += 1;
-      if (line.mode !== 'normal') alternativeCostCasts += 1;
       commander.online = true;
-      commander.firstResolvedTurn ??= turn;
       battlefield.push(commander.card);
-      spellsCast += 1;
     }
 
     let actions = 0;
@@ -729,10 +569,10 @@ function runAdvancedIteration(
       actions += 1;
       const candidates = hand
         .filter((card) => !card.isLand && !card.isInteraction && !card.isProtection)
-        .sort((a, b) => candidateScore(b, options.comboPieces) - candidateScore(a, options.comboPieces));
+        .sort((a, b) => score(b, combos) - score(a, combos));
       let acted = false;
       for (const card of candidates) {
-        if (castNonCommander(card, isComboPiece(card, options.comboPieces))) {
+        if (castCard(card, turn, isComboPiece(card, combos))) {
           acted = true;
           break;
         }
@@ -743,27 +583,24 @@ function runAdvancedIteration(
     for (const commander of commanders) {
       if (!commander.online) continue;
       commanderOnlineTurns += 1;
-      if (random.next() < options.pressure.commanderRemoval) {
-        if (!tryProtection(mana, tapped)) {
-          commander.online = false;
-          commander.removalCount += 1;
-          commanderRemovals += 1;
-          const index = battlefield.findIndex((card) => card.uid === commander.card.uid);
-          if (index >= 0) battlefield.splice(index, 1);
-        }
+      if (random.next() < pressure.commanderRemoval && !castProtection(turn)) {
+        commander.online = false;
+        commanderRemovals += 1;
+        const battlefieldIndex = battlefield.findIndex((card) => card.uid === commander.card.uid);
+        if (battlefieldIndex >= 0) battlefield.splice(battlefieldIndex, 1);
       }
     }
 
-    if (battlefield.filter((card) => card.isCreature).length >= 2 && random.next() < options.pressure.boardWipe) {
+    if (battlefield.filter((card) => card.isCreature).length >= 2 && random.next() < pressure.boardWipe) {
       boardWipes += 1;
-      if (!tryProtection(mana, tapped)) {
+      if (!castProtection(turn)) {
         for (let index = battlefield.length - 1; index >= 0; index -= 1) {
           const card = battlefield[index];
           if (!card?.isCreature) continue;
           const commander = commanders.find((state) => state.card.uid === card.uid);
           if (commander) commander.online = false;
           else {
-            graveyardCards += 1;
+            resources.graveyardCards += 1;
             graveyardNames.add(card.name.toLocaleLowerCase());
           }
           battlefield.splice(index, 1);
@@ -771,14 +608,19 @@ function runAdvancedIteration(
       }
     }
 
-    const seen = namesInZones(hand, battlefield, graveyardNames);
-    options.comboPieces.forEach((combo, index) => {
-      if (comboReadyTurns[index] === null && comboCurrentReady(combo, hand, battlefield)) comboReadyTurns[index] = turn;
-      if (comboSeenTurns[index] === null && comboSeen(combo, seen)) comboSeenTurns[index] = turn;
+    const seen = new Set([
+      ...hand.map((card) => card.name.toLocaleLowerCase()),
+      ...battlefield.map((card) => card.name.toLocaleLowerCase()),
+      ...graveyardNames,
+    ]);
+    const accessible = new Set([...hand, ...battlefield].map((card) => card.name.toLocaleLowerCase()));
+    combos.forEach((combo, index) => {
+      if (comboSeenTurns[index] === null && combo.every((piece) => seen.has(piece.toLocaleLowerCase()))) comboSeenTurns[index] = turn;
+      if (comboReadyTurns[index] === null && combo.every((piece) => accessible.has(piece.toLocaleLowerCase()))) comboReadyTurns[index] = turn;
     });
 
-    treasuresByTurn.push(treasures);
-    lifeByTurn.push(life);
+    treasuresByTurn.push(resources.treasures);
+    lifeByTurn.push(resources.life);
   }
 
   return {
@@ -787,7 +629,7 @@ function runAdvancedIteration(
     firstTreasureSpendTurn,
     advancedCasts,
     alternativeCostCasts,
-    mechanicUses,
+    mechanicUses: mechanics,
     phyrexianLifePaid,
     delvedCards,
     cardsDrawnByEffects,
@@ -810,34 +652,29 @@ function runAdvancedIteration(
 }
 
 function aggregateMechanics(results: IterationResultV06[]): Record<string, number> {
-  const counts: Record<string, number> = {};
+  const totals: Record<string, number> = {};
   for (const result of results) {
-    for (const [mechanic, count] of Object.entries(result.mechanicUses)) counts[mechanic] = (counts[mechanic] ?? 0) + count;
+    for (const [mechanic, count] of Object.entries(result.mechanicUses)) totals[mechanic] = (totals[mechanic] ?? 0) + count;
   }
-  return Object.fromEntries(Object.entries(counts).sort(([a], [b]) => a.localeCompare(b)).map(([key, value]) => [key, Number((value / results.length).toFixed(2))]));
+  return Object.fromEntries(Object.entries(totals).sort(([a], [b]) => a.localeCompare(b)).map(([key, value]) => [key, Number((value / results.length).toFixed(2))]));
 }
 
-function buildSimpleSummary(
-  results: IterationResultV06[],
-  turns: number,
-  pressure: PodPressureV06,
-  comboPieces: string[][],
-): string[] {
-  const summary: string[] = [];
+function simpleSummary(results: IterationResultV06[], turns: number, pressure: PodPressureV06, combos: string[][]): string[] {
+  const output: string[] = [];
   const treasureGames = results.filter((result) => result.treasuresSpent > 0).length;
-  if (treasureGames > 0) summary.push(`Treasures were actually spent in ${percentage(treasureGames, results.length)}% of simulated games.`);
+  if (treasureGames > 0) output.push(`Treasures were actually spent in ${percentage(treasureGames, results.length)}% of simulated games.`);
   const advancedGames = results.filter((result) => result.advancedCasts > 0).length;
-  if (advancedGames > 0) summary.push(`Convoke, delve, improvise, affinity, Phyrexian mana, or an alternative cost mattered in ${percentage(advancedGames, results.length)}% of games.`);
+  if (advancedGames > 0) output.push(`A special payment mechanic or alternative cost mattered in ${percentage(advancedGames, results.length)}% of games.`);
   const uptime = percentage(results.reduce((sum, result) => sum + result.commanderOnlineTurns, 0), results.length * turns);
-  summary.push(`Under the ${pressure} pressure assumptions, the commander was on the battlefield for about ${uptime}% of simulated turns.`);
+  output.push(`Under the ${pressure} pressure assumptions, the commander was on the battlefield for about ${uptime}% of simulated turns.`);
   const challenges = results.reduce((sum, result) => sum + result.keySpellChallenges, 0);
-  const protectionWins = results.reduce((sum, result) => sum + result.protectionWins, 0);
-  if (challenges > 0) summary.push(`Protection successfully answered ${percentage(protectionWins, challenges)}% of modeled challenges to key plays.`);
-  if (comboPieces.length > 0) {
+  const wins = results.reduce((sum, result) => sum + result.protectionWins, 0);
+  if (challenges > 0) output.push(`Protection answered ${percentage(wins, challenges)}% of modeled challenges to key plays.`);
+  if (combos.length > 0) {
     const ready = results.filter((result) => result.comboReadyTurns.some((turn) => turn !== null)).length;
-    summary.push(`At least one requested combo had all named pieces in hand/battlefield by turn ${turns} in ${percentage(ready, results.length)}% of games.`);
+    output.push(`At least one requested combo had all named pieces in hand/battlefield by turn ${turns} in ${percentage(ready, results.length)}% of games.`);
   }
-  return summary.slice(0, 5);
+  return output.slice(0, 5);
 }
 
 export function simulateAdvancedGameplayV06(
@@ -849,26 +686,16 @@ export function simulateAdvancedGameplayV06(
   const iterations = clampInt(rawOptions.advancedIterations ?? rawOptions.iterations, 2_500, 100, 10_000);
   const seed = clampInt(rawOptions.seed, 20_260_816, 1, 2_147_483_647);
   const pressure = rawOptions.pressure ?? 'upgraded';
-  const comboPieces = (rawOptions.comboPieces ?? []).slice(0, 8).map((combo) => combo.slice(0, 6));
+  const combos = (rawOptions.comboPieces ?? []).slice(0, 8).map((combo) => combo.slice(0, 6));
   const identity = commanderIdentity(parsed, cards);
   const library = expandMainDeck(parsed, cards, identity);
   const commanders = commanderStates(parsed, cards, identity);
   if (library.length < 40) throw new Error(`V0.6 advanced simulation needs a mostly resolved library; only ${library.length} cards were available.`);
 
   const random = new SeededRandomV06(seed ^ 0x6a09e667);
-  const results: IterationResultV06[] = [];
-  for (let iteration = 0; iteration < iterations; iteration += 1) {
-    results.push(runAdvancedIteration(library, commanders, { turns, comboPieces, pressure: PRESSURE[pressure] }, random));
-  }
-
-  const totalChallenges = results.reduce((sum, result) => sum + result.keySpellChallenges, 0);
-  const totalProtectionWins = results.reduce((sum, result) => sum + result.protectionWins, 0);
-  const comboOutput = comboPieces.map((pieces, index) => ({
-    pieces,
-    allNamedPiecesSeenByTurn: cumulativeTurnPercent(results, (result) => result.comboSeenTurns[index] ?? null, turns),
-    allNamedPiecesInHandOrBattlefieldByTurn: cumulativeTurnPercent(results, (result) => result.comboReadyTurns[index] ?? null, turns),
-    note: 'This is zone-readiness for the named pieces, not proof that every Commander Spellbook requirement, target, timing condition, or mana requirement is satisfied.',
-  }));
+  const results = Array.from({ length: iterations }, () => runIteration(library, commanders, turns, combos, PRESSURE[pressure], random));
+  const challenges = results.reduce((sum, result) => sum + result.keySpellChallenges, 0);
+  const protectionWins = results.reduce((sum, result) => sum + result.protectionWins, 0);
 
   return {
     model: 'MTG Ultimate advanced turn simulation V0.6',
@@ -876,11 +703,11 @@ export function simulateAdvancedGameplayV06(
     turns,
     seed,
     pressure,
-    summary: buildSimpleSummary(results, turns, pressure, comboPieces),
+    summary: simpleSummary(results, turns, pressure, combos),
     resources: {
       averageTreasuresCreated: average(results.map((result) => result.treasuresCreated)),
       averageTreasuresSpent: average(results.map((result) => result.treasuresSpent)),
-      firstTreasureSpendByTurn: cumulativeTurnPercent(results, (result) => result.firstTreasureSpendTurn, turns),
+      firstTreasureSpendByTurn: cumulative(results, (result) => result.firstTreasureSpendTurn, turns),
       averageTreasuresRemainingByTurn: averageByTurn(results, (result) => result.treasuresByTurn, turns),
       averagePhyrexianLifePaid: average(results.map((result) => result.phyrexianLifePaid)),
       averageCardsDelved: average(results.map((result) => result.delvedCards)),
@@ -903,20 +730,26 @@ export function simulateAdvancedGameplayV06(
       averageKeySpellStops: average(results.map((result) => result.keySpellStops)),
       averageProtectionAttempts: average(results.map((result) => result.protectionAttempts)),
       averageProtectionWins: average(results.map((result) => result.protectionWins)),
-      protectionWinRateWhenChallenged: percentage(totalProtectionWins, totalChallenges),
+      protectionWinRateWhenChallenged: percentage(protectionWins, challenges),
       averageBoardWipes: average(results.map((result) => result.boardWipes)),
     },
     cardFlow: {
       averageCardsDrawnByEffects: average(results.map((result) => result.cardsDrawnByEffects)),
       averageSpellsCast: average(results.map((result) => result.spellsCast)),
     },
-    combos: comboOutput,
+    combos: combos.map((pieces, index) => ({
+      pieces,
+      allNamedPiecesSeenByTurn: cumulative(results, (result) => result.comboSeenTurns[index] ?? null, turns),
+      allNamedPiecesInHandOrBattlefieldByTurn: cumulative(results, (result) => result.comboReadyTurns[index] ?? null, turns),
+      note: 'This is named-piece zone readiness, not proof that every target, timing, Spellbook prerequisite, or mana condition is satisfied.',
+    })),
     assumptions: [
       `The ${pressure} profile is a transparent simulation assumption, not a measured win-rate claim.`,
-      'V0.6 uses the V0.5 payment solver inside each simulated turn for Treasures, convoke, improvise, delve, artifact-affinity, Phyrexian mana, commander tax, and supported named alternative costs.',
-      'Pitch-style alternate costs and “cast without paying” effects stay disabled unless their separate permission/resource can be proven; this avoids treating every free-cast sentence as always active.',
-      'The advanced lane uses conservative land timing and simplified opponent choices. V0.4 remains the stronger source for detailed land/fetch/tutor sequencing.',
-      'Protection and removal pressure are modeled as explicit probabilities; politics and full multiplayer priority trees are not yet claimed.',
+      'Spell costs are paid before the model lets opponents challenge the spell; protection must then be affordable from the remaining resources.',
+      'V0.6 uses the V0.5 payment solver for Treasures, convoke, improvise, delve, artifact-affinity, Phyrexian mana, commander tax, and supported named alternative costs.',
+      'Mana creatures are not simultaneously counted for their mana and convoke, and mana rocks are not simultaneously counted for mana and improvise.',
+      'Pitch-style alternate costs and “cast without paying” effects stay disabled unless their separate permission/resource can be proven.',
+      'The advanced lane uses conservative land timing and simplified opponent choices; V0.4 remains the stronger source for detailed land/fetch/tutor sequencing.',
     ],
   };
 }
@@ -926,22 +759,21 @@ export function simulateDeckGameplayV06(
   cards: ScryfallCard[],
   options: DeckSimulationV06Options = {},
 ): Record<string, unknown> {
-  const baseline = simulateDeckConsistencyV04(parsed, cards, options);
-  const advanced = simulateAdvancedGameplayV06(parsed, cards, options);
-  const baselineRecord = baseline as Record<string, unknown>;
+  const baseline = simulateDeckConsistencyV04(parsed, cards, options) as Record<string, unknown>;
+  const advanced = simulateAdvancedGameplayV06(parsed, cards, options) as Record<string, unknown>;
   return {
     model: 'MTG Ultimate hybrid Commander simulation V0.6',
-    summary: (advanced as Record<string, unknown>).summary,
+    summary: advanced.summary,
     baseline: {
-      openingHands: baselineRecord.openingHands,
-      development: baselineRecord.development,
-      commanders: baselineRecord.commanders,
-      tutors: baselineRecord.tutors,
-      cardAdvantage: baselineRecord.cardAdvantage,
-      interaction: baselineRecord.interaction,
-      combos: baselineRecord.combos,
+      openingHands: baseline.openingHands,
+      development: baseline.development,
+      commanders: baseline.commanders,
+      tutors: baseline.tutors,
+      cardAdvantage: baseline.cardAdvantage,
+      interaction: baseline.interaction,
+      combos: baseline.combos,
     },
     advanced,
-    explanation: 'Use the baseline for land/fetch/tutor consistency and the advanced lane for special payment, Treasure, commander-pressure, and protection behavior. The two views are intentionally kept separate where one model is stronger than the other.',
+    explanation: 'Use the baseline for land/fetch/tutor consistency and the advanced lane for special payment, Treasure, commander-pressure, and protection behavior.',
   };
 }
