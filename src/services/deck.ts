@@ -1,5 +1,5 @@
 import type { ScryfallCard } from '../types/scryfall.js';
-import { inferCardRoles, summarizeCard } from './scryfall.js';
+import { getCardManaCost, inferCardRoles, summarizeCard } from './scryfall.js';
 
 export interface DeckEntry {
   name: string;
@@ -12,6 +12,27 @@ export interface ParsedDeck {
   totalMain: number;
   totalCommanders: number;
   totalCards: number;
+}
+
+export interface DeckMetrics {
+  landCount: number;
+  nonlandCount: number;
+  landRatio: number;
+  averageNonlandManaValue: number;
+  manaCurve: Record<string, number>;
+  coloredPips: Record<string, number>;
+  roleCounts: Record<string, number>;
+  earlyPlayCount: number;
+  fastManaCount: number;
+  rampCount: number;
+  drawCount: number;
+  tutorCount: number;
+  interactionCount: number;
+  cheapInteractionCount: number;
+  protectionCount: number;
+  recursionCount: number;
+  boardWipeCount: number;
+  structuralSignals: string[];
 }
 
 const COMMANDER_HEADERS = new Set(['commander', 'commanders', 'command', 'command zone']);
@@ -111,6 +132,106 @@ function resolvedCardMap(cards: ScryfallCard[]): Map<string, ScryfallCard> {
   return map;
 }
 
+function curveBucket(cmc: number): string {
+  if (cmc <= 0) return '0';
+  if (cmc >= 7) return '7+';
+  return String(Math.floor(cmc));
+}
+
+function addColoredPips(target: Record<string, number>, manaCost: string, quantity: number): void {
+  const symbols = manaCost.match(/\{[^}]+\}/g) ?? [];
+  for (const symbol of symbols) {
+    const upper = symbol.toUpperCase();
+    for (const color of ['W', 'U', 'B', 'R', 'G']) {
+      if (upper.includes(color)) target[color] = (target[color] ?? 0) + quantity;
+    }
+  }
+}
+
+export function buildDeckMetrics(parsed: ParsedDeck, cards: ScryfallCard[]): DeckMetrics {
+  const map = resolvedCardMap(cards);
+  const allEntries = [...parsed.commanders, ...parsed.main];
+  const roleCounts: Record<string, number> = {};
+  const manaCurve: Record<string, number> = { '0': 0, '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7+': 0 };
+  const coloredPips: Record<string, number> = { W: 0, U: 0, B: 0, R: 0, G: 0 };
+  let landCount = 0;
+  let nonlandCount = 0;
+  let nonlandManaValue = 0;
+  let earlyPlayCount = 0;
+  let fastManaCount = 0;
+  let rampCount = 0;
+  let drawCount = 0;
+  let tutorCount = 0;
+  let interactionCount = 0;
+  let cheapInteractionCount = 0;
+  let protectionCount = 0;
+  let recursionCount = 0;
+  let boardWipeCount = 0;
+
+  for (const entry of allEntries) {
+    const card = map.get(entry.name.toLocaleLowerCase());
+    if (!card) continue;
+    const type = card.type_line.toLowerCase();
+    const roles = new Set(inferCardRoles(card));
+    const isLand = type.includes('land');
+
+    if (isLand) {
+      landCount += entry.quantity;
+    } else {
+      nonlandCount += entry.quantity;
+      nonlandManaValue += card.cmc * entry.quantity;
+      manaCurve[curveBucket(card.cmc)] = (manaCurve[curveBucket(card.cmc)] ?? 0) + entry.quantity;
+      addColoredPips(coloredPips, getCardManaCost(card), entry.quantity);
+      if (card.cmc <= 2) earlyPlayCount += entry.quantity;
+    }
+
+    for (const role of roles) roleCounts[role] = (roleCounts[role] ?? 0) + entry.quantity;
+
+    if (roles.has('fast mana')) fastManaCount += entry.quantity;
+    if (roles.has('mana acceleration') || roles.has('land ramp') || roles.has('cost reduction')) rampCount += entry.quantity;
+    if (roles.has('card draw') || roles.has('repeatable draw') || roles.has('card selection')) drawCount += entry.quantity;
+    if (roles.has('tutor')) tutorCount += entry.quantity;
+    if (roles.has('spot interaction') || roles.has('countermagic') || roles.has('board wipe') || roles.has('free interaction')) {
+      interactionCount += entry.quantity;
+      if (card.cmc <= 2 || roles.has('free interaction')) cheapInteractionCount += entry.quantity;
+    }
+    if (roles.has('protection') || roles.has('board protection')) protectionCount += entry.quantity;
+    if (roles.has('graveyard recursion')) recursionCount += entry.quantity;
+    if (roles.has('board wipe')) boardWipeCount += entry.quantity;
+  }
+
+  const averageNonlandManaValue = nonlandCount > 0 ? nonlandManaValue / nonlandCount : 0;
+  const structuralSignals: string[] = [];
+  if (landCount < 30) structuralSignals.push('Very low land count; verify fast mana, MDFCs, and the intended competitive speed before assuming this is stable.');
+  if (landCount > 42) structuralSignals.push('High land count; check whether the commander/theme truly converts excess lands into value.');
+  if (rampCount < 8) structuralSignals.push('Low detected ramp/mana acceleration density.');
+  if (drawCount < 8) structuralSignals.push('Low detected card-advantage/selection density.');
+  if (interactionCount < 8) structuralSignals.push('Low detected interaction density for a multiplayer Commander table.');
+  if (averageNonlandManaValue > 4) structuralSignals.push('High nonland mana curve; early turns may be clunky without substantial acceleration.');
+  if (earlyPlayCount < 12) structuralSignals.push('Low density of nonland plays at mana value 0–2; opening hands may have few proactive early actions.');
+
+  return {
+    landCount,
+    nonlandCount,
+    landRatio: parsed.totalCards > 0 ? Number((landCount / parsed.totalCards).toFixed(3)) : 0,
+    averageNonlandManaValue: Number(averageNonlandManaValue.toFixed(2)),
+    manaCurve,
+    coloredPips,
+    roleCounts,
+    earlyPlayCount,
+    fastManaCount,
+    rampCount,
+    drawCount,
+    tutorCount,
+    interactionCount,
+    cheapInteractionCount,
+    protectionCount,
+    recursionCount,
+    boardWipeCount,
+    structuralSignals,
+  };
+}
+
 export function analyzeResolvedDeck(
   parsed: ParsedDeck,
   cards: ScryfallCard[],
@@ -136,9 +257,6 @@ export function analyzeResolvedDeck(
     battle: 0,
     other: 0,
   };
-  const roleCounts: Record<string, number> = {};
-  let nonlandManaValue = 0;
-  let nonlandCount = 0;
 
   const illegalCards: Array<{ name: string; legality: string }> = [];
   const colorIdentityViolations: Array<{ name: string; colorIdentity: string[] }> = [];
@@ -160,29 +278,18 @@ export function analyzeResolvedDeck(
     else if (type.includes('battle')) bucket = 'battle';
     typeCounts[bucket] = (typeCounts[bucket] ?? 0) + entry.quantity;
 
-    if (!type.includes('land')) {
-      nonlandManaValue += card.cmc * entry.quantity;
-      nonlandCount += entry.quantity;
-    }
-
-    for (const role of inferCardRoles(card)) {
-      roleCounts[role] = (roleCounts[role] ?? 0) + entry.quantity;
-    }
-
     const commanderLegality = card.legalities.commander ?? 'unknown';
-    if (commanderLegality !== 'legal') {
-      illegalCards.push({ name: card.name, legality: commanderLegality });
-    }
+    if (commanderLegality !== 'legal') illegalCards.push({ name: card.name, legality: commanderLegality });
 
     if (allowedIdentity.length > 0 && !isColorIdentitySubset(card.color_identity, allowedIdentity)) {
       colorIdentityViolations.push({ name: card.name, colorIdentity: card.color_identity });
     }
 
     const isBasicLand = /\bbasic\b/i.test(card.type_line) && /\bland\b/i.test(card.type_line);
-    if (!isBasicLand && entry.quantity > 1) {
-      singletonViolations.push({ name: card.name, quantity: entry.quantity });
-    }
+    if (!isBasicLand && entry.quantity > 1) singletonViolations.push({ name: card.name, quantity: entry.quantity });
   }
+
+  const metrics = buildDeckMetrics(parsed, cards);
 
   return {
     parsed,
@@ -194,14 +301,14 @@ export function analyzeResolvedDeck(
     deckSize: parsed.totalCards,
     commanderDeckSizeValid: parsed.totalCards === 100,
     typeCounts,
-    averageNonlandManaValue: nonlandCount > 0 ? Number((nonlandManaValue / nonlandCount).toFixed(2)) : 0,
-    roleCounts,
+    ...metrics,
     illegalCards,
     colorIdentityViolations,
     singletonViolations,
     caveats: [
-      'Commander partner/background/Doctor-companion pairing rules are not yet validated in V1.',
-      'Role detection is heuristic; use Oracle text and known combo data for final strategic interpretation.',
+      'Commander partner/background/Doctor-companion pairing rules still need dedicated validation.',
+      'Strategic role classification is heuristic; Oracle text and known combo data remain the source of truth for exact interactions.',
+      'Structural signals are deck-building heuristics, not official Commander bracket rules.',
     ],
   };
 }
