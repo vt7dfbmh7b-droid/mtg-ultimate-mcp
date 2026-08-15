@@ -6,6 +6,7 @@ import { simulatePodPressureV04 } from './pressure-v04.js';
 
 let collector = 1;
 function card(name: string, cmc: number, typeLine: string, oracleText = '', manaCost = '', colorIdentity: string[] = []): ScryfallCard {
+  const producedMana = /Plains/.test(typeLine) ? ['W'] : /Island/.test(typeLine) ? ['U'] : null;
   return {
     id: `${name}-${collector}`,
     name,
@@ -17,7 +18,7 @@ function card(name: string, cmc: number, typeLine: string, oracleText = '', mana
     color_identity: colorIdentity,
     keywords: [],
     legalities: { commander: 'legal' },
-    produced_mana: /Plains/.test(typeLine) ? ['W'] : /Island/.test(typeLine) ? ['U'] : undefined,
+    ...(producedMana ? { produced_mana: producedMana } : {}),
     set: 'tst',
     set_name: 'Test',
     collector_number: String(collector++),
