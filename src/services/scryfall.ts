@@ -209,7 +209,7 @@ export async function getCardPrintings(name: string, limit = 100): Promise<Scryf
   let nextUrl: string | undefined = `${config.scryfallApiBase}/cards/search?q=${encodeURIComponent(`!\"${name.trim()}\"`)}&unique=prints&order=released&dir=desc`;
 
   while (nextUrl && cards.length < safeLimit) {
-    const page = await scryfallRequest<ScryfallList<ScryfallCard>>(nextUrl);
+    const page: ScryfallList<ScryfallCard> = await scryfallRequest<ScryfallList<ScryfallCard>>(nextUrl);
     cards.push(...page.data.slice(0, safeLimit - cards.length));
     nextUrl = page.has_more ? page.next_page : undefined;
   }
