@@ -1,162 +1,174 @@
 # MTG Ultimate MCP
 
-An MCP-powered Magic: The Gathering knowledge, Commander deck-building, pricing, simulation, and evidence-analysis service.
+An MCP-powered Magic: The Gathering knowledge, Commander rules, deck-building, printing-aware pricing, simulation, combo, and evidence-analysis service.
 
-The goal is an **MTG brain for AI clients**: live Oracle/card data, exact printing identity, edition-aware prices, rules-aware deck analysis, combo discovery, Commander bracket signals, Monte Carlo consistency testing, upgrade research, community references, observed tournament outcomes, and eventually collection-aware complete deck building.
+The goal is an **MTG brain for AI clients**: live Oracle/card data, exact printing identity, edition-aware prices, hard Commander legality, rules-aware deck analysis, combo discovery, bracket signals, Monte Carlo testing, upgrade research, public deck references, observed tournament outcomes, and eventually collection-aware complete deck building.
 
-## Current stage — V0.3 printing-aware analysis and simulation
+## Current stage — V0.4
 
-The server currently exposes fifteen read-only MCP tools:
+V0.4 has four major layers:
+
+1. **Rules facts** — card text, color identity, Commander legality, commander pairing, deck size, singleton rules.
+2. **Physical printing identity** — set code, collector number, finish, release metadata, and printing-specific prices.
+3. **Deck/simulation intelligence** — mana sequencing, legal fetch targets, restricted mana, tutors, draw engines, commander taxes, combo assembly, and pod-pressure scenarios.
+4. **Real-world evidence** — Scryfall, Commander Spellbook, attributed public Archidekt decks, and TopDeck.gg EDH tournament results when configured.
+
+## MCP tools
+
+Current tools include:
 
 | Tool | Purpose |
 | --- | --- |
-| `card_lookup` | Resolve a card by name, optionally constrained to a set code, and return Oracle knowledge plus the resolved printing. |
-| `printing_lookup` | Resolve one exact physical printing from set/expansion code + collector number. |
-| `card_printings` | List distinct printings of the same card with set codes, collector numbers, dates, finishes, and printing-specific price fields. |
-| `compare_printing_prices` | Sort printings by current Scryfall USD reference price for nonfoil, foil, etched, or cheapest available finish. |
-| `card_search` | Search Scryfall with full Scryfall query syntax. |
-| `compare_cards` | Compare two cards for strategy, legality, mana, community adoption, and resolved-printing prices. |
-| `analyze_deck` | Parse and analyze a Commander deck, including exact printing identity and printing-aware deck value. |
-| `price_deck_printings` | Price the exact physical editions in a pasted decklist and flag name-only lines that are not price-exact. |
-| `simulate_deck_consistency` | Run deterministic V0.3 Monte Carlo simulations with colored mana, tapped-land tempo, MDFCs, ramp sequencing, commander taxes, mulligans, and combo proxies. |
-| `compare_deck_performance_profiles` | Run the same structural and same-seed simulation model on two lists to identify measurable candidate explanations for performance differences. |
-| `find_deck_combos` | Use Commander Spellbook to find known combos already present and near-combos. |
-| `estimate_commander_bracket` | Use current Commander Spellbook bracket evidence for classification, Game Changers, bans, extra turns, MLD, and combos. |
-| `analyze_archidekt_references` | Load public Archidekt decks with creator/source attribution and compare structure/common choices. |
-| `analyze_tournament_results` | Use TopDeck.gg EDH results and submitted decklists to compare observed higher- and lower-performing structures. Requires `TOPDECK_API_KEY`. |
-| `suggest_upgrades` | Detect structural deficits and search current Scryfall data for legal candidate adds/cuts under optional budget, set, theme, and exclusion constraints. |
+| `card_lookup` | Resolve a card by name, optionally constrained to a set code. |
+| `printing_lookup` | Resolve one exact physical printing from set code + collector number. |
+| `card_printings` | List releases/printings with set, collector number, finish, date, and price fields. |
+| `compare_printing_prices` | Compare prices across physical releases of the same card. |
+| `card_search` | Advanced live card search. |
+| `compare_cards` | Compare two cards for rules, role, mana, legality, and printing prices. |
+| `check_commander_rules` | Hard Commander deck-construction validation. |
+| `check_card_for_commander` | Check whether one card is legal with the designated commander(s). |
+| `analyze_deck` | Structure + printing value + hard Commander legality. |
+| `price_deck_printings` | Price exact `(SET) collector` deck entries and requested finishes. |
+| `analyze_mana_base_v04` | Land/source analysis, exact fetch targets, common land conditions, restricted mana, reducers. |
+| `simulate_deck_consistency` | Default V0.4 rules-aware Monte Carlo sequencer. |
+| `simulate_pod_pressure_v04` | Explicit opponent-pressure scenarios over the V0.4 base model. |
+| `compare_deck_performance_profiles` | Same-seed comparison of two deck structures/simulations. |
+| `find_deck_combos` | Commander Spellbook combos and near-combos. |
+| `estimate_commander_bracket` | Current bracket evidence and relevant cards/combos. |
+| `analyze_archidekt_references` | Attributed public community deck comparisons. |
+| `analyze_tournament_results` | Attributed TopDeck.gg EDH outcome/decklist comparisons. |
+| `suggest_upgrades` | Legal, printing-aware candidate upgrades under budget/set/theme constraints. |
 
-## Oracle card vs physical printing
+## Commander rules
 
-MTG Ultimate deliberately treats these as two linked but different identities:
+V0.4 validates resolved decks before advanced simulation/optimization.
 
-- **Oracle identity** answers rules, legality, synergy, combo, and deck-function questions.
-- **Physical printing identity** answers set, collector number, release, finish, artwork/printing metadata, and price questions.
+It checks:
 
-For example, two different Sol Ring releases share the same rules identity but can have very different market reference prices. A deck line such as:
+- exactly 100 cards including commander(s)
+- commander eligibility
+- one commander normally, or two only through a supported pairing rule
+- live Commander-format legality/banned status
+- combined commander color identity
+- every deck card's color identity is a subset of that combined identity
+- basic-land-type color restrictions
+- singleton by English card name
+- unlimited basic lands and parsed Oracle copy-count exceptions
+- unresolved cards return `incomplete` rather than a false legal result
+
+### Example — Rakdos
+
+A commander with black-red (`BR`) color identity may use:
+
+- black cards
+- red cards
+- black-red cards
+- colorless cards
+
+It may not use cards with white, blue, or green in their color identity.
+
+Hybrid remains an **AND** for current Commander color identity: a black/red hybrid-identity card requires both black and red in the commander identity.
+
+Current paired-commander handling includes:
+
+- Partner
+- Friends forever
+- Partner—Character select, only with the same variant
+- Choose a Background + legendary Background
+- Doctor's companion + an eligible Time Lord Doctor
+- matching Partner with pairs
+
+See [`docs/V0.4_RULES_AND_SIMULATION.md`](docs/V0.4_RULES_AND_SIMULATION.md) for details.
+
+## Oracle identity vs physical printing
+
+MTG Ultimate deliberately keeps two linked identities:
+
+- **Oracle identity** — rules, legality, synergy, combos, strategic analysis.
+- **Physical printing identity** — set, collector number, release, finish, artwork/printing metadata, price.
+
+For example:
 
 ```text
 1 Sol Ring (CMM) 396
+1 Sol Ring (LTC) 284 *F*
 ```
 
-is resolved as that exact printing. A line such as:
+are the same rules card but different physical products with different pricing.
+
+Supported finish annotations:
 
 ```text
-1 Sol Ring
+*F*  foil
+*E*  etched
+*N*  nonfoil
 ```
 
-still resolves correctly for rules/deck analysis, but its physical price is labelled non-exact because no edition was supplied.
+A name-only line still works for rules analysis but is marked non-exact for physical valuation.
 
-Supported finish annotations currently include:
+## V0.4 simulation
 
-```text
-1 Card Name (SET) 123 *F*   # foil
-1 Card Name (SET) 123 *E*   # etched
-1 Card Name (SET) 123 *N*   # nonfoil
-```
+The default `simulate_deck_consistency` engine performs repeated, deterministic turn-sequence simulations rather than simply counting cards.
 
-Different physical printings of the same card are kept as distinct parsed entries instead of being collapsed together.
+It now models/approximates:
 
-## Printing-aware pricing
+- London mulligans
+- colored mana requirements
+- commander-color mana sources
+- common restricted-mana payments
+- common generic cost reducers
+- MDFC land options
+- shock/check/fast/slow/reveal/multiplayer/tapped land decisions
+- fetch lands searching the actual remaining library for legal targets
+- mana rocks, mana creatures, one-shot mana, and land ramp
+- commander first-cast, +2 tax, and +4 tax affordability
+- common tutor restrictions and actual target selection
+- tutor movement of cards out of the simulated library
+- one-shot card draw creating actual extra card flow
+- simple recurring upkeep/end-step/attack/combat-damage draw proxies
+- affordable interaction windows
+- requested combo assembly with legal tutor target checks
 
-Scryfall price fields are attached to individual card-printing objects, so V0.3 keeps set code + collector number attached to every returned price.
+The simulator is deliberately **not** presented as a full Magic rules engine or a multiplayer win-rate oracle.
 
-`price_deck_printings` and the `pricing` section of `analyze_deck` report:
+## Pod-pressure scenarios
 
-- requested set code and collector number
-- resolved set code and full set name
-- release date
-- rarity
-- available finishes
-- printing-specific Scryfall price fields
-- selected unit price based on requested finish
-- quantity-adjusted line value
-- estimated deck total in USD reference pricing
-- how many deck entries had exact physical printing information
+`simulate_pod_pressure_v04` adds visible/configurable opponent assumptions for:
 
-This is deliberately separate from future **New Zealand store pricing**, because local stock and NZD retail prices may differ materially from international reference data.
+- commander removal
+- board resets
+- key-spell interaction
+- commander recasts using +2/+4 tax affordability
+- protection-density proxies around challenged combo attempts
 
-## What V0.3 simulation models
+Built-in profiles:
 
-`simulate_deck_consistency` is still a **Monte Carlo consistency/goldfish model**, not a claim to reproduce every Commander game.
+- `goldfish`
+- `casual`
+- `core`
+- `upgraded`
+- `optimized`
+- `cedh`
 
-V0.3 now models or approximates:
+The numerical pressure values are returned in the output. They are scenario assumptions, not claimed universal real-world frequencies.
 
-- London-style mulligan pressure
-- real lands plus MDFC land options
-- colored mana requirements rather than mana value alone
-- mana-source color coverage by turn
-- always-tapped land tempo loss
-- conditional tapped lands through an explicit probabilistic approximation
-- fetch-style lands as commander-color access proxies
-- mana rocks versus summoning-sick mana creatures
-- land-ramp spells
-- rituals and one-shot mana separately from persistent sources
-- opening and early mana development
-- commander first-cast affordability
-- commander affordability after +2 and +4 commander tax
-- early interaction affordability using colored costs
-- early draw/selection affordability using colored costs
-- mana-screw and flood proxies
-- natural combo-piece assembly
-- clearly labelled tutor-assisted combo proxies
-
-Every simulation result includes its assumptions and caveats. It does **not** convert goldfish percentages into invented multiplayer win rates.
-
-`compare_deck_performance_profiles` uses the same seed/settings on both decks, which is useful for an old list versus an upgrade, two builds of the same commander, or a tournament/reference list versus a weaker version.
-
-## Real-world evidence layer
-
-### TopDeck.gg — observed tournament outcomes
-
-With a configured TopDeck API key, `analyze_tournament_results` queries completed Magic: The Gathering EDH tournaments and uses available submitted decklists plus wins/draws/losses.
-
-It compares higher- and lower-performing sampled structures including land count, curve, early-play density, fast mana, ramp, draw, tutors, interaction, protection, and recursion.
-
-The output describes these as **observed associations**, not causal proof. Pilot skill, pod composition, seat order, matchup mix, event size, and variance still matter.
-
-### Archidekt — public community references
-
-`analyze_archidekt_references` accepts up to ten public Archidekt deck IDs or URLs. It preserves creator/source links, compares deck structure, and calculates common cards across the sample.
-
-Reference frequency is community evidence, not tournament proof: popularity, budget, theme, and creator preference can all affect inclusion rates.
-
-## Data sources
+## Real-world evidence
 
 ### Scryfall
 
-Scryfall is the primary live source for Oracle text, legality, color identity, exact set/collector printing resolution, printing metadata, search, EDHREC rank fields when present, and price fields.
-
-The service uses explicit request identification, appropriate Accept headers, and request pacing.
+Primary live source for Oracle text, color identity, Commander legality, exact set/collector printing resolution, printing metadata, search, community-rank fields when available, and price fields.
 
 ### Commander Spellbook
 
-Commander Spellbook powers known-combo discovery, near-combo discovery, and current Commander bracket evidence.
+Known combos, near-combos, and current Commander bracket evidence.
 
-## Architecture
+### Archidekt
 
-```text
-AI / MCP client
-      |
-      v
-  /mcp endpoint
-      |
-      +-- card / exact printing / prices ---------> Scryfall
-      |
-      +-- analyze + price deck -------------------> local parser + Scryfall exact identifiers
-      |
-      +-- simulate / compare deck profiles -------> local V0.3 Monte Carlo engine + Scryfall
-      |
-      +-- find_deck_combos / bracket -------------> Commander Spellbook
-      |
-      +-- analyze_archidekt_references -----------> Archidekt public deck API
-      |
-      +-- analyze_tournament_results -------------> TopDeck.gg API + Scryfall
-      |
-      +-- suggest_upgrades -----------------------> local structure engine + Scryfall
-```
+Public reference decks with creator/source attribution. Inclusion frequency is treated as community evidence, not proof that a card caused wins.
 
-The HTTP server uses the MCP TypeScript SDK Streamable HTTP handler at `/mcp`.
+### TopDeck.gg
+
+Observed EDH tournament results/decklists when `TOPDECK_API_KEY` is configured. Higher/lower-performing structural differences are reported as associations rather than causal proof.
 
 ## Run locally
 
@@ -171,12 +183,12 @@ cp .env.example .env
 npm run dev
 ```
 
-Then:
+Endpoints:
 
 - MCP: `http://localhost:3000/mcp`
 - Health: `http://localhost:3000/health`
 
-Build and test:
+Validate:
 
 ```bash
 npm run check
@@ -198,12 +210,10 @@ docker run --rm -p 3000:3000 mtg-ultimate-mcp
 | `SCRYFALL_API_BASE` | `https://api.scryfall.com` | Scryfall API origin. |
 | `COMMANDER_SPELLBOOK_API_BASE` | `https://backend.commanderspellbook.com` | Commander Spellbook API origin. |
 | `TOPDECK_API_BASE` | `https://topdeck.gg/api` | TopDeck.gg API origin. |
-| `TOPDECK_API_KEY` | empty | Optional TopDeck API key required by tournament analysis. |
-| `MTG_USER_AGENT` | project identifier | User-Agent sent to upstream services. |
+| `TOPDECK_API_KEY` | empty | Optional TopDeck API key for tournament analysis. |
+| `MTG_USER_AGENT` | project identifier | User-Agent sent upstream. |
 
 ## Decklist format
-
-The parser understands common copy/paste formats and preserves printing annotations:
 
 ```text
 // COMMANDER
@@ -215,76 +225,28 @@ The parser understands common copy/paste formats and preserves printing annotati
 3 Swamp (NEO) 297 *F*
 ```
 
-It also recognizes `# Commander`, `^Commander^`, and `[Commander]` tags. Relevant tools accept explicit `commanderNames` when a list has no Commander section.
+The parser also understands common commander tags and preserves set/collector/finish data.
 
-## Upgrade-engine constraints
+## Current limitations
 
-`suggest_upgrades` currently supports:
+V0.4 is more rules-aware, but difficult mechanics still need deeper card-specific simulation, including alternate/free costs, Phyrexian mana, delve/convoke/improvise/affinity, conditionally generated Treasures, full zone-aware combo requirements, exact opponent target selection, complete priority/stack trees, and table politics.
 
-- target structural bracket profile 1–5
-- maximum Scryfall USD reference price per candidate
-- allowed set codes, useful for universes/set-restricted builds
-- additional Scryfall theme-query fragments
-- excluded card names
-- controlled candidate count per structural deficit
+Scryfall prices are reference data, not NZ-local retail checkout prices.
 
-These structural profiles are heuristics, not official bracket definitions. Official/current bracket evidence remains separate.
+## Next stages
 
-## Important caveats
-
-- Partner, Background, Doctor's companion, and similar commander-pairing rules still need a dedicated local validation pass.
-- Strategic role tags are heuristics; Oracle text and known combo data remain the source material for exact interactions.
-- Conditional land untapping, unusual mana restrictions, alternate costs, combat, priority, opponent interaction, and politics are still simplified or absent from V0.3 simulation.
-- Same-seed deck comparisons improve consistency of comparison but do not reproduce real multiplayer games.
-- Tournament cohort analysis is observational and can be biased by event/decklist availability.
-- Scryfall price fields are reference data and are not a complete NZ-specific shopping engine.
-- Name-only deck lines cannot identify a unique physical printing and are explicitly marked as non-exact for valuation.
-
-## Roadmap
-
-### V0.4 — simulation and evidence calibration
-
-- exact land-type/fetch-target modeling
-- shock/check/fast/battle land conditional logic instead of a general approximation
-- commander-only/restricted mana such as Jeweled Lotus-style constraints
-- alternate costs, delve/convoke/improvise, and cost reducers
-- draw-engine activation and card-flow simulation
-- tutor timing and tutor-class restrictions
-- interaction windows and opponent-pressure profiles with user-controlled assumptions
-- commander removal/recast state rather than affordability-only tax scenarios
-- calibrate heuristic weights against observed tournament samples without inventing causal win rates
-
-### Deck intelligence V0.5
-
+- deeper stack and interaction simulation
 - commander-specific synergy scoring
-- exact colored-source requirements and land-base recommendations
-- more detailed removal/threat coverage
-- identify dead, redundant, and competing packages
-- compare multiple versions of the same deck statistically
-- explain why an exact IN/OUT package changes simulated consistency
-
-### Full upgrade/builder stage
-
-- whole-upgrade budget limits
-- NZ pricing/provider adapters
-- exact-printing and cheapest-printing purchase modes
-- exact IN/OUT swap optimizer
-- no-infinite / combo-light / combo-heavy preferences
-- build complete 100-card Commander lists from constraints
-- multiple win-condition routes
-- mulligan guidance
-- primer generation
-
-### Collection and rules stage
-
-- user collection import/storage including set + collector number + finish
-- build with owned cards first
-- missing-card shopping list
-- Comprehensive Rules retrieval and citations
-- interaction/priority/stack explainer
-- combo interruption points
+- exact colored-source recommendations
+- statistical IN/OUT swap comparison
+- whole-upgrade budgets
+- NZ pricing/store adapters
+- full 100-card constrained deck builder
+- collection import with exact printings/finishes
+- owned-cards-first optimization
+- rules/interaction explanations with source citations
 - deck version history
 
 ## Development
 
-The project is private and under active development. Changes are developed on feature branches and merged through pull requests after CI passes.
+The repository is private and changes stay on feature branches / pull requests until explicitly merged.
