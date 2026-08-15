@@ -22,7 +22,7 @@ const httpServer = createServer((request, response) => {
           JSON.stringify({
             ok: true,
             service: 'mtg-ultimate-mcp',
-            version: '0.1.0',
+            version: config.version,
             mcpEndpoint: '/mcp',
           }),
         );
@@ -46,7 +46,7 @@ const httpServer = createServer((request, response) => {
         response.end(
           JSON.stringify({
             name: 'MTG Ultimate MCP',
-            version: '0.1.0',
+            version: config.version,
             endpoints: { health: '/health', mcp: '/mcp' },
           }),
         );
@@ -71,7 +71,7 @@ const httpServer = createServer((request, response) => {
 });
 
 httpServer.listen(config.port, '0.0.0.0', () => {
-  console.error(`MTG Ultimate MCP listening on port ${config.port}`);
+  console.error(`MTG Ultimate MCP ${config.version} listening on port ${config.port}`);
   console.error(`MCP endpoint: http://0.0.0.0:${config.port}/mcp`);
 });
 
