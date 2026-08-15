@@ -1,6 +1,7 @@
 import * as z from 'zod/v4';
 import { createMtgServerV04 } from './server-v04.js';
 import { analyzeCastingProfileV05 } from './services/casting-v05.js';
+import { buildCardIntelligenceV05 } from './services/card-intelligence-v05.js';
 import { analyzeCommanderDependencyV05, simulateCombatSnapshotV05 } from './services/combat-v05.js';
 import { parseDecklist, resolveEntryCard } from './services/deck.js';
 import { evaluateInteractionExchangeV05 } from './services/interaction-v05.js';
@@ -44,6 +45,31 @@ function expandNamedCards(cardsByName: Map<string, ScryfallCard>, entries: Array
 
 export function createMtgServerV05() {
   const server = createMtgServerV04();
+
+  server.registerTool(
+    'card_intelligence_v05',
+    {
+      title: 'Explain a card, its best uses, rules hooks, and Commander fit',
+      description:
+        'Build a single V0.5 card-intelligence report from live Oracle data: strategic roles, practical best-use guidance, synergy hooks, advanced casting/payment mechanics, interaction/protection profile, combat characteristics, commander-dependency signals, rules attention points, and optional Commander color-identity/legality fit.',
+      inputSchema: z.object({
+        cardName: z.string().min(1).max(256),
+        commanderNames: z.array(z.string().min(1).max(256)).max(2).optional().default([]),
+      }),
+      annotations: { readOnlyHint: true, openWorldHint: true },
+    },
+    async ({ cardName, commanderNames }) => {
+      try {
+        const [card, ...commanders] = await Promise.all([
+          lookupCard(cardName, true),
+          ...commanderNames.map((name) => lookupCard(name, true)),
+        ]);
+        return jsonResult(buildCardIntelligenceV05(card, commanders));
+      } catch (error) {
+        return errorResult(error);
+      }
+    },
+  );
 
   server.registerTool(
     'analyze_card_casting_v05',
