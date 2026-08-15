@@ -19,6 +19,8 @@ export interface CardSummary {
   roles: string[];
   commanderLegality: string;
   legalities: ScryfallCard['legalities'];
+  edhrecRank?: number;
+  producedMana?: string[];
   set: string;
   setName: string;
   collectorNumber: string;
@@ -52,7 +54,7 @@ async function scryfallRequest<T>(url: string, init: RequestInit = {}): Promise<
   }
 }
 
-function combinedOracleText(card: ScryfallCard): string {
+export function getCardOracleText(card: ScryfallCard): string {
   if (card.oracle_text) return card.oracle_text;
   return (card.card_faces ?? [])
     .map((face) => [face.name, face.oracle_text].filter(Boolean).join(' — '))
@@ -60,7 +62,7 @@ function combinedOracleText(card: ScryfallCard): string {
     .join('\n');
 }
 
-function combinedManaCost(card: ScryfallCard): string {
+export function getCardManaCost(card: ScryfallCard): string {
   if (card.mana_cost) return card.mana_cost;
   return (card.card_faces ?? [])
     .map((face) => face.mana_cost)
@@ -69,31 +71,67 @@ function combinedManaCost(card: ScryfallCard): string {
 }
 
 export function inferCardRoles(card: ScryfallCard): string[] {
-  const text = combinedOracleText(card).toLowerCase();
+  const text = getCardOracleText(card).toLowerCase();
   const type = card.type_line.toLowerCase();
+  const manaCost = getCardManaCost(card);
   const roles = new Set<string>();
 
-  if (/\badd (?:\{|one mana|two mana|three mana|mana)/.test(text)) roles.add('mana acceleration');
+  const addsMana = /\badd (?:\{|one mana|two mana|three mana|four mana|five mana|mana)/.test(text);
+  if (addsMana) roles.add('mana acceleration');
+  if (type.includes('artifact') && addsMana && !type.includes('creature')) roles.add('mana rock');
+  if (type.includes('creature') && /\{t\}:\s*add|whenever .* add .* mana/.test(text)) roles.add('mana dork');
+  if (card.cmc <= 1 && addsMana && !type.includes('land')) roles.add('fast mana');
   if (/search your library for .*land/.test(text) && /battlefield/.test(text)) roles.add('land ramp');
+  if (/costs? .* less to cast/.test(text)) roles.add('cost reduction');
+  if (/create .* treasure token/.test(text)) roles.add('treasure');
+
   if (/draw (?:a|one|two|three|four|five|\d+) cards?/.test(text)) roles.add('card draw');
+  if (/whenever .* draw a card|at the beginning of .* draw|whenever .* deals? combat damage .* draw/.test(text)) {
+    roles.add('repeatable draw');
+  }
+  if (/scry|surveil|look at the top .* cards|exile the top .* you may play/.test(text)) roles.add('card selection');
+  if (/discard your hand.*draw|each player discards .* hand.*draw/.test(text)) roles.add('wheel');
+
   if (/search your library for/.test(text)) roles.add('tutor');
+  if (/search your library for .*creature/.test(text)) roles.add('creature tutor');
+  if (/search your library for .*land/.test(text)) roles.add('land tutor');
+
   if (/counter target spell/.test(text)) roles.add('countermagic');
+  if ((manaCost === '' || /\{0\}/.test(manaCost) || /rather than pay .* mana cost/.test(text)) && /counter target|destroy target|exile target/.test(text)) {
+    roles.add('free interaction');
+  }
   if (/(destroy|exile) target/.test(text) || /return target .* to (?:its|their) owner's hand/.test(text)) {
     roles.add('spot interaction');
+  }
+  if (/destroy target artifact|destroy target enchantment|exile target artifact|exile target enchantment/.test(text)) {
+    roles.add('artifact/enchantment interaction');
+  }
+  if (/exile .* graveyard|cards? in graveyards? can't|players? can't cast .* graveyards?/.test(text)) {
+    roles.add('graveyard hate');
   }
   if (/(destroy|exile) (?:all|each) (?:creatures|artifacts|enchantments|nonland permanents|permanents)/.test(text)) {
     roles.add('board wipe');
   }
+
   if (/create .* token/.test(text)) roles.add('token production');
   if (/sacrifice (?:a|another|target|this)/.test(text)) roles.add('sacrifice synergy');
+  if (/sacrifice (?:a|another) creature\s*:|sacrifice (?:a|another) permanent\s*:/.test(text)) roles.add('sacrifice outlet');
   if (/from your graveyard/.test(text) || /return .* from .* graveyard/.test(text)) roles.add('graveyard recursion');
-  if (/hexproof|indestructible|protection from/.test(text)) roles.add('protection');
+  if (/hexproof|indestructible|protection from|phase out/.test(text)) roles.add('protection');
+  if (/other .* you control (?:have|gain) hexproof|permanents? you control .* indestructible/.test(text)) {
+    roles.add('board protection');
+  }
+  if (/haste/.test(text)) roles.add('haste');
+  if (/can't cast|can't activate|players can't|opponents can't|doesn't untap|enter the battlefield tapped/.test(text)) roles.add('stax/control');
   if (/extra turn/.test(text)) roles.add('extra turn');
   if (/extra combat/.test(text) || /additional combat/.test(text)) roles.add('extra combat');
   if (/you win the game|loses the game/.test(text)) roles.add('alternate win condition');
   if (/whenever .* loses? life|deals? damage to each opponent|each opponent loses/.test(text)) roles.add('life drain');
   if (/\+1\/\+1 counter/.test(text)) roles.add('+1/+1 counters');
   if (/equipment|equip /.test(text) || type.includes('equipment')) roles.add('equipment');
+  if (/copy target .* spell|copy .* triggered ability|copy .* activated ability/.test(text)) roles.add('copy effect');
+  if (/untap target|untap all|untap another/.test(text)) roles.add('untap engine');
+  if (/whenever .* enters|enters the battlefield/.test(text)) roles.add('etb synergy');
   if (type.includes('land')) roles.add('land');
   if (type.includes('creature')) roles.add('creature');
 
@@ -106,15 +144,17 @@ export function summarizeCard(card: ScryfallCard): CardSummary {
     id: card.id,
     ...(card.oracle_id ? { oracleId: card.oracle_id } : {}),
     name: card.name,
-    manaCost: combinedManaCost(card),
+    manaCost: getCardManaCost(card),
     manaValue: card.cmc,
     typeLine: card.type_line,
-    oracleText: combinedOracleText(card),
+    oracleText: getCardOracleText(card),
     colorIdentity: card.color_identity,
     keywords: card.keywords,
     roles: inferCardRoles(card),
     commanderLegality: card.legalities.commander ?? 'unknown',
     legalities: card.legalities,
+    ...(card.edhrec_rank !== undefined ? { edhrecRank: card.edhrec_rank } : {}),
+    ...(card.produced_mana ? { producedMana: card.produced_mana } : {}),
     set: card.set,
     setName: card.set_name,
     collectorNumber: card.collector_number,
