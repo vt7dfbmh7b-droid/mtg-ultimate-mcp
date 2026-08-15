@@ -1,7 +1,7 @@
 import * as z from 'zod/v4';
 import { createMtgServerV04 } from './server-v04.js';
 import { analyzeCastingProfileV05 } from './services/casting-v05.js';
-import { buildCardIntelligenceV05 } from './services/card-intelligence-v05.js';
+import { buildCardIntelligenceV05, formatCardIntelligenceV05 } from './services/card-intelligence-v05.js';
 import { analyzeCommanderDependencyV05, simulateCombatSnapshotV05 } from './services/combat-v05.js';
 import { parseDecklist, resolveEntryCard } from './services/deck.js';
 import { evaluateInteractionExchangeV05 } from './services/interaction-v05.js';
@@ -52,20 +52,21 @@ export function createMtgServerV05() {
     {
       title: 'Explain a card, its best uses, rules hooks, and Commander fit',
       description:
-        'Build a single V0.5 card-intelligence report from live Oracle data: strategic roles, practical best-use guidance, synergy hooks, advanced casting/payment mechanics, interaction/protection profile, combat characteristics, commander-dependency signals, rules attention points, and optional Commander color-identity/legality fit.',
+        'Explain a Magic card from live Oracle data. Defaults to a short plain-language response with what the card does, why it is useful, and only the most important rule or interaction. Standard and detailed modes are available when deeper mechanics are actually needed.',
       inputSchema: z.object({
         cardName: z.string().min(1).max(256),
         commanderNames: z.array(z.string().min(1).max(256)).max(2).optional().default([]),
+        detail: z.enum(['simple', 'standard', 'detailed']).optional().default('simple'),
       }),
       annotations: { readOnlyHint: true, openWorldHint: true },
     },
-    async ({ cardName, commanderNames }) => {
+    async ({ cardName, commanderNames, detail }) => {
       try {
         const [card, ...commanders] = await Promise.all([
           lookupCard(cardName, true),
           ...commanderNames.map((name) => lookupCard(name, true)),
         ]);
-        return jsonResult(buildCardIntelligenceV05(card, commanders));
+        return jsonResult(formatCardIntelligenceV05(buildCardIntelligenceV05(card, commanders), detail));
       } catch (error) {
         return errorResult(error);
       }
