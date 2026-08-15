@@ -6,6 +6,9 @@ export interface ScryfallCardFace {
   type_line?: string;
   oracle_text?: string;
   colors?: string[];
+  power?: string;
+  toughness?: string;
+  loyalty?: string;
   image_uris?: Record<string, string>;
 }
 
@@ -36,6 +39,10 @@ export interface ScryfallCard {
   frame?: string;
   frame_effects?: string[];
   produced_mana?: string[];
+  power?: string;
+  toughness?: string;
+  loyalty?: string;
+  defense?: string;
   edhrec_rank?: number;
   penny_rank?: number;
   set: string;
