@@ -2,7 +2,9 @@ import type { ScryfallCard } from '../types/scryfall.js';
 import { analyzeCastingProfileV05 } from './casting-v05.js';
 import { analyzeCommanderDependencyV05, toCombatCreatureV05 } from './combat-v05.js';
 import { analyzeInteractionProfileV05 } from './interaction-v05.js';
-import { getCardManaCost, getCardOracleText, inferCardRoles, summarizeCard } from './scryfall.js';
+import { getCardOracleText, inferCardRoles, summarizeCard } from './scryfall.js';
+
+export type CardIntelligenceDetailV05 = 'simple' | 'standard' | 'detailed';
 
 export interface CardIntelligenceV05 {
   card: ReturnType<typeof summarizeCard>;
@@ -36,44 +38,44 @@ function strategicNotes(card: ScryfallCard, roles: string[]): { bestUseCases: st
   const synergyHooks: string[] = [];
   const rulesAttention: string[] = [];
 
-  addIf(bestUseCases, roles.includes('mana acceleration'), 'Use early when accelerating into the commander or a high-impact turn is more valuable than holding the card for later.');
-  addIf(bestUseCases, roles.includes('card draw') || roles.includes('repeatable draw'), 'Best in turns where converting spare mana/board presence into additional cards improves long-game consistency.');
-  addIf(bestUseCases, roles.includes('countermagic'), 'Hold for the opposing spell that most threatens your win condition or protects an opponent’s winning line.');
-  addIf(bestUseCases, roles.includes('spot interaction'), 'Prioritize targets that stop a win, disable your engine, or generate substantially more value than this card costs.');
-  addIf(bestUseCases, roles.includes('board wipe'), 'Best when opponents are materially ahead on board or when your deck rebuilds more efficiently after the reset.');
-  addIf(bestUseCases, roles.includes('protection'), 'Keep available when committing a commander, combo piece, or high-value engine into likely interaction.');
-  addIf(bestUseCases, roles.includes('tutor'), 'Use when you know the role or exact piece the current game state requires rather than tutoring automatically for the same card every game.');
-  addIf(bestUseCases, roles.includes('extra combat'), 'Maximize after establishing attack triggers, commander-damage pressure, or creatures that benefit from repeated combat steps.');
-  addIf(bestUseCases, roles.includes('graveyard recursion'), 'Delay until the graveyard contains a target whose recovered value exceeds the opportunity cost of casting this card now.');
-  addIf(bestUseCases, roles.includes('equipment'), 'Most effective when attached to a creature that already has evasion, double strike, attack triggers, or commander-damage relevance.');
-  addIf(bestUseCases, roles.includes('life drain'), 'Scales best with repeatable sacrifice, token, spell-cast, or life-loss loops that trigger the drain effect multiple times.');
+  addIf(bestUseCases, roles.includes('mana acceleration'), 'Use it early when getting ahead on mana matters more than saving it for later.');
+  addIf(bestUseCases, roles.includes('card draw') || roles.includes('repeatable draw'), 'Use it to keep cards flowing so the deck does not run out of gas.');
+  addIf(bestUseCases, roles.includes('countermagic'), 'Usually save it for a spell that can stop your plan or win the game for an opponent.');
+  addIf(bestUseCases, roles.includes('spot interaction'), 'Use it on the threat that matters most, rather than the first legal target.');
+  addIf(bestUseCases, roles.includes('board wipe'), 'Best when opponents are further ahead on board than you are.');
+  addIf(bestUseCases, roles.includes('protection'), 'Keep it available when you are committing an important commander, engine, or combo piece.');
+  addIf(bestUseCases, roles.includes('tutor'), 'Use it to find the card or role the current game actually needs.');
+  addIf(bestUseCases, roles.includes('extra combat'), 'Best when you already have useful attackers, attack triggers, or commander-damage pressure.');
+  addIf(bestUseCases, roles.includes('graveyard recursion'), 'Use it when your graveyard contains something worth getting back.');
+  addIf(bestUseCases, roles.includes('equipment'), 'Put it on a creature that already attacks well, has evasion, or matters for commander damage.');
+  addIf(bestUseCases, roles.includes('life drain'), 'Gets stronger when your deck can trigger the life-loss effect repeatedly.');
 
-  addIf(synergyHooks, /whenever .*cast|whenever you cast/i.test(text), 'Spell-cast trigger');
-  addIf(synergyHooks, /whenever .*enters|enters the battlefield/i.test(text), 'ETB/enter trigger');
-  addIf(synergyHooks, /whenever .*attacks?|whenever you attack/i.test(text), 'Attack trigger');
-  addIf(synergyHooks, /combat damage/i.test(text), 'Combat-damage trigger');
-  addIf(synergyHooks, /sacrifice/i.test(text), 'Sacrifice interaction');
-  addIf(synergyHooks, /graveyard/i.test(text), 'Graveyard interaction');
-  addIf(synergyHooks, /\+1\/\+1 counter/i.test(text), '+1/+1 counter synergy');
-  addIf(synergyHooks, /artifact/i.test(text), 'Artifact synergy');
-  addIf(synergyHooks, /enchantment/i.test(text), 'Enchantment synergy');
-  addIf(synergyHooks, /equipment|equip /i.test(text), 'Equipment synergy');
-  addIf(synergyHooks, /token/i.test(text), 'Token synergy');
-  addIf(synergyHooks, /Treasure/i.test(text), 'Treasure synergy');
-  addIf(synergyHooks, /commander/i.test(text), 'Commander-dependent synergy');
+  addIf(synergyHooks, /whenever .*cast|whenever you cast/i.test(text), 'spell-cast effects');
+  addIf(synergyHooks, /whenever .*enters|enters the battlefield/i.test(text), 'ETB/enter effects');
+  addIf(synergyHooks, /whenever .*attacks?|whenever you attack/i.test(text), 'attack triggers');
+  addIf(synergyHooks, /combat damage/i.test(text), 'combat-damage triggers');
+  addIf(synergyHooks, /sacrifice/i.test(text), 'sacrifice effects');
+  addIf(synergyHooks, /graveyard/i.test(text), 'graveyard cards');
+  addIf(synergyHooks, /\+1\/\+1 counter/i.test(text), '+1/+1 counters');
+  addIf(synergyHooks, /artifact/i.test(text), 'artifacts');
+  addIf(synergyHooks, /enchantment/i.test(text), 'enchantments');
+  addIf(synergyHooks, /equipment|equip /i.test(text), 'Equipment');
+  addIf(synergyHooks, /token/i.test(text), 'tokens');
+  addIf(synergyHooks, /Treasure/i.test(text), 'Treasures');
+  addIf(synergyHooks, /commander/i.test(text), 'commander-focused effects');
 
-  addIf(rulesAttention, card.name.includes('//'), 'Multi-face/split card: casting face, characteristics, and zone rules can matter.');
-  addIf(rulesAttention, /without paying .* mana cost|rather than pay .* mana cost/i.test(text), 'Alternative/free casting does not automatically erase additional costs such as commander tax.');
-  addIf(rulesAttention, /ward/i.test(text), 'Ward is a triggered ability; target legality and whether the ward cost is paid are separate from choosing the target.');
-  addIf(rulesAttention, /protection from/i.test(text), 'Protection has multiple consequences (damage, enchanting/equipping, blocking, targeting) and is not the same as indestructible or hexproof.');
-  addIf(rulesAttention, /indestructible/i.test(text), 'Indestructible prevents destruction but not exile, sacrifice, bounce, toughness reduction, or many other removal methods.');
-  addIf(rulesAttention, /hexproof/i.test(text), 'Hexproof restricts opposing targeting; it does not stop untargeted effects such as many board wipes.');
-  addIf(rulesAttention, /copy/i.test(text), 'Copy effects can differ depending on whether a spell or permanent was cast and which choices/values are copied.');
-  addIf(rulesAttention, /you may cast/i.test(text) && /exile/i.test(text), 'Permission to cast from exile can have a duration/timing window; the exact Oracle sentence controls it.');
-  addIf(rulesAttention, type.includes('creature') && (card.power === '*' || card.toughness === '*'), 'Power/toughness is characteristic- or state-dependent and requires the relevant game state for exact combat math.');
+  addIf(rulesAttention, card.name.includes('//'), 'This is a multi-face/split card, so which face or zone it is in can matter.');
+  addIf(rulesAttention, /without paying .* mana cost|rather than pay .* mana cost/i.test(text), 'Free or alternative casting can still leave extra costs such as commander tax to pay.');
+  addIf(rulesAttention, /ward/i.test(text), 'Ward does not stop targeting; it makes the opponent pay after targeting or lose the spell/ability.');
+  addIf(rulesAttention, /protection from/i.test(text), 'Protection affects damage, enchanting/equipping, blocking, and targeting; it is not the same as hexproof or indestructible.');
+  addIf(rulesAttention, /indestructible/i.test(text), 'Indestructible stops destroy effects, but not exile, sacrifice, bounce, or toughness reduction.');
+  addIf(rulesAttention, /hexproof/i.test(text), 'Hexproof stops opponents from targeting it, but many board wipes do not target.');
+  addIf(rulesAttention, /copy/i.test(text), 'Copy effects can depend on exactly what is being copied and which choices were made.');
+  addIf(rulesAttention, /you may cast/i.test(text) && /exile/i.test(text), 'If it lets you cast from exile, check how long that permission lasts.');
+  addIf(rulesAttention, type.includes('creature') && (card.power === '*' || card.toughness === '*'), 'Its exact power/toughness depends on the game state.');
 
   if (bestUseCases.length === 0) {
-    bestUseCases.push('Use according to its primary Oracle-text role; this card does not match one of the current high-confidence strategic role templates.');
+    bestUseCases.push('Use it for the main job described by its Oracle text; this card does not match one of the current simple role templates.');
   }
 
   return {
@@ -112,10 +114,55 @@ export function buildCardIntelligenceV05(card: ScryfallCard, commanders: Scryfal
       explanation: !formatLegal
         ? `${card.name} is not currently legal in Commander.`
         : !colorIdentityLegal
-          ? `${card.name} contains color identity outside the supplied commanders’ combined identity: ${outside.join(', ')}.`
-          : `${card.name} is Commander-legal and its color identity fits the supplied commanders.`,
+          ? `${card.name} has color identity outside the supplied commanders: ${outside.join(', ')}.`
+          : `${card.name} is Commander-legal with the supplied commander(s).`,
     };
   }
 
   return result;
+}
+
+export function formatCardIntelligenceV05(report: CardIntelligenceV05, detail: CardIntelligenceDetailV05 = 'simple'): unknown {
+  if (detail === 'detailed') return { detail, ...report };
+
+  const base = {
+    detail,
+    card: {
+      name: report.card.name,
+      manaCost: report.card.manaCost,
+      typeLine: report.card.typeLine,
+      oracleText: report.card.oracleText,
+      colorIdentity: report.card.colorIdentity,
+      set: report.card.set,
+      collectorNumber: report.card.collectorNumber,
+    },
+    mainJobs: report.strategicRoles.slice(0, detail === 'simple' ? 3 : 6),
+    bestUse: report.bestUseCases.slice(0, detail === 'simple' ? 2 : 4),
+    worksWellWith: report.synergyHooks.slice(0, detail === 'simple' ? 3 : 6),
+    importantRules: report.rulesAttention.slice(0, detail === 'simple' ? 1 : 3),
+    ...(report.commanderFit
+      ? {
+          commanderFit: {
+            legal: report.commanderFit.legalForCommanders,
+            explanation: report.commanderFit.explanation,
+          },
+        }
+      : {}),
+  };
+
+  if (detail === 'simple') {
+    return {
+      ...base,
+      responseGuidance: 'Explain this card in plain language. Keep the normal answer short: what it does, why it is useful, and at most one important rule or interaction. Only go deeper if the user asks or the card is genuinely tricky.',
+    };
+  }
+
+  return {
+    ...base,
+    casting: report.casting,
+    interaction: report.interaction,
+    combat: report.combat,
+    commanderDependency: report.commanderDependency,
+    responseGuidance: 'Give a clear practical explanation first. Put deeper rules/mechanics after the simple explanation rather than leading with them.',
+  };
 }
