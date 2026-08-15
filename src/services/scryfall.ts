@@ -206,7 +206,8 @@ export async function searchCards(query: string, limit = 10): Promise<ScryfallCa
 export async function getCardPrintings(name: string, limit = 100): Promise<ScryfallCard[]> {
   const safeLimit = Math.max(1, Math.min(limit, 250));
   const cards: ScryfallCard[] = [];
-  let nextUrl: string | undefined = `${config.scryfallApiBase}/cards/search?q=${encodeURIComponent(`!\"${name.trim()}\"`)}&unique=prints&order=released&dir=desc`;
+  const escapedName = name.trim().replace(/"/g, '\\"');
+  let nextUrl: string | undefined = `${config.scryfallApiBase}/cards/search?q=${encodeURIComponent(`!"${escapedName}"`)}&unique=prints&order=released&dir=desc`;
 
   while (nextUrl && cards.length < safeLimit) {
     const page: ScryfallList<ScryfallCard> = await scryfallRequest<ScryfallList<ScryfallCard>>(nextUrl);
