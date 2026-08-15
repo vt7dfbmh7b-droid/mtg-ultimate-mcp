@@ -5,6 +5,7 @@ import { buildCardIntelligenceV05 } from './services/card-intelligence-v05.js';
 import { analyzeCommanderDependencyV05, simulateCombatSnapshotV05 } from './services/combat-v05.js';
 import { parseDecklist, resolveEntryCard } from './services/deck.js';
 import { evaluateInteractionExchangeV05 } from './services/interaction-v05.js';
+import { evaluateCastabilityV05 } from './services/payment-v05.js';
 import { getCardsByIdentifiers, lookupCard } from './services/scryfall.js';
 import type { ScryfallCard } from './types/scryfall.js';
 
@@ -65,6 +66,56 @@ export function createMtgServerV05() {
           ...commanderNames.map((name) => lookupCard(name, true)),
         ]);
         return jsonResult(buildCardIntelligenceV05(card, commanders));
+      } catch (error) {
+        return errorResult(error);
+      }
+    },
+  );
+
+  server.registerTool(
+    'evaluate_castability_v05',
+    {
+      title: 'Check whether a card can be cast from a supplied resource state',
+      description:
+        'State-aware V0.5 payment solver for normal, detected alternative, and detected free-cast lines. Supports colored/colorless/generic mana, Treasures, commander tax, Phyrexian life payments, convoke creatures, improvise artifacts, delve graveyard cards, and affinity counts. It preserves applicable commander tax on alternative/free casting.',
+      inputSchema: z.object({
+        cardName: z.string().min(1).max(256),
+        mana: z.object({
+          W: z.number().int().min(0).max(100).optional(),
+          U: z.number().int().min(0).max(100).optional(),
+          B: z.number().int().min(0).max(100).optional(),
+          R: z.number().int().min(0).max(100).optional(),
+          G: z.number().int().min(0).max(100).optional(),
+          C: z.number().int().min(0).max(100).optional(),
+          any: z.number().int().min(0).max(100).optional(),
+        }).optional(),
+        treasures: z.number().int().min(0).max(100).optional().default(0),
+        untappedCreatures: z.array(z.object({ colors: z.array(z.enum(['W', 'U', 'B', 'R', 'G'])).max(5) })).max(100).optional().default([]),
+        untappedArtifacts: z.number().int().min(0).max(100).optional().default(0),
+        graveyardCards: z.number().int().min(0).max(500).optional().default(0),
+        affinityCount: z.number().int().min(0).max(500).optional().default(0),
+        life: z.number().min(0).max(10_000).optional().default(40),
+        isCommander: z.boolean().optional().default(false),
+        commanderTax: z.number().int().min(0).max(100).optional().default(0),
+        alternativeResourceReady: z.boolean().optional(),
+      }),
+      annotations: { readOnlyHint: true, openWorldHint: true },
+    },
+    async ({ cardName, mana, treasures, untappedCreatures, untappedArtifacts, graveyardCards, affinityCount, life, isCommander, commanderTax, alternativeResourceReady }) => {
+      try {
+        const card = await lookupCard(cardName, true);
+        return jsonResult(evaluateCastabilityV05(card, {
+          ...(mana ? { mana } : {}),
+          treasures,
+          untappedCreatures,
+          untappedArtifacts,
+          graveyardCards,
+          affinityCount,
+          life,
+          isCommander,
+          commanderTax,
+          ...(alternativeResourceReady !== undefined ? { alternativeResourceReady } : {}),
+        }));
       } catch (error) {
         return errorResult(error);
       }
