@@ -18,7 +18,11 @@ export interface PodSimulationOptions {
   maxMulligans?: number;
   comboPieces?: string[][];
   podProfile?: PodPressureProfile;
-  customPressure?: Partial<PressureParameters>;
+  customPressure?: {
+    commanderRemovalPerTurn?: number | undefined;
+    keySpellInteractionChance?: number | undefined;
+    boardResetPerTurn?: number | undefined;
+  };
 }
 
 const PROFILES: Record<PodPressureProfile, PressureParameters> = {
@@ -84,7 +88,7 @@ function average(value: number, total: number): number {
   return total > 0 ? Number((value / total).toFixed(2)) : 0;
 }
 
-function resolvePressure(profile: PodPressureProfile, custom?: Partial<PressureParameters>): PressureParameters {
+function resolvePressure(profile: PodPressureProfile, custom?: PodSimulationOptions['customPressure']): PressureParameters {
   const defaults = PROFILES[profile];
   return {
     commanderRemovalPerTurn: clampProbability(custom?.commanderRemovalPerTurn, defaults.commanderRemovalPerTurn),
@@ -136,7 +140,6 @@ export function simulatePodPressureV04(
       firstCastCount += 1;
       let currentCastTurn = firstCast;
       let taxStage = 0;
-      let removed = false;
 
       for (let turn = firstCast; turn <= turns; turn += 1) {
         if (turn < currentCastTurn) continue;
@@ -148,7 +151,6 @@ export function simulatePodPressureV04(
         totalRemovalEvents += 1;
         if (taxStage === 0) firstRemovalCount += 1;
         if (taxStage === 1) secondRemovalCount += 1;
-        removed = true;
         taxStage += 1;
         if (taxStage > 2) break;
 
@@ -159,10 +161,7 @@ export function simulatePodPressureV04(
         if (taxStage === 2) secondRecastCount += 1;
         currentCastTurn = recast;
         turn = recast - 1;
-        removed = false;
       }
-
-      void removed;
     }
 
     return {
