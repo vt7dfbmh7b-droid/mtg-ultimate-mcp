@@ -1,9 +1,14 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import { getCardManaCost, inferCardRoles, summarizeCard } from './scryfall.js';
 
+export type DeckFinish = 'foil' | 'etched' | 'nonfoil';
+
 export interface DeckEntry {
   name: string;
   quantity: number;
+  set?: string;
+  collectorNumber?: string;
+  finish?: DeckFinish;
 }
 
 export interface ParsedDeck {
@@ -39,22 +44,54 @@ const COMMANDER_HEADERS = new Set(['commander', 'commanders', 'command', 'comman
 const MAIN_HEADERS = new Set(['main', 'mainboard', 'deck']);
 const IGNORE_HEADERS = new Set(['sideboard', 'maybeboard', 'about']);
 
-function cleanCardName(raw: string): string {
-  return raw
-    .replace(/\s+\*F\*\s*$/i, '')
-    .replace(/\s+\([A-Z0-9]{2,8}\)\s+\S+\s*$/i, '')
-    .replace(/\s+\[[A-Z0-9]{2,8}\]\s+\S+\s*$/i, '')
-    .trim();
+function parseDeckEntry(raw: string, quantity: number): DeckEntry | null {
+  let body = raw.trim();
+  let finish: DeckFinish | undefined;
+
+  if (/\*F\*\s*$/i.test(body)) {
+    finish = 'foil';
+    body = body.replace(/\s*\*F\*\s*$/i, '').trim();
+  } else if (/\*E\*\s*$/i.test(body)) {
+    finish = 'etched';
+    body = body.replace(/\s*\*E\*\s*$/i, '').trim();
+  } else if (/\*N\*\s*$/i.test(body)) {
+    finish = 'nonfoil';
+    body = body.replace(/\s*\*N\*\s*$/i, '').trim();
+  }
+
+  const printing = body.match(/^(.*?)\s+(?:\(([A-Z0-9]{2,8})\)|\[([A-Z0-9]{2,8})\])\s+(\S+)\s*$/i);
+  if (printing) {
+    const name = (printing[1] ?? '').trim();
+    const set = (printing[2] ?? printing[3] ?? '').trim().toUpperCase();
+    const collectorNumber = (printing[4] ?? '').trim();
+    if (!name || !set || !collectorNumber) return null;
+    return {
+      name,
+      quantity,
+      set,
+      collectorNumber,
+      ...(finish ? { finish } : {}),
+    };
+  }
+
+  if (!body) return null;
+  return { name: body, quantity, ...(finish ? { finish } : {}) };
 }
 
-function addEntry(map: Map<string, DeckEntry>, name: string, quantity: number): void {
-  const key = name.toLocaleLowerCase();
+function entryKey(entry: DeckEntry): string {
+  return [
+    entry.name.toLocaleLowerCase(),
+    entry.set?.toLocaleLowerCase() ?? '',
+    entry.collectorNumber?.toLocaleLowerCase() ?? '',
+    entry.finish ?? '',
+  ].join('|');
+}
+
+function addEntry(map: Map<string, DeckEntry>, entry: DeckEntry): void {
+  const key = entryKey(entry);
   const existing = map.get(key);
-  if (existing) {
-    existing.quantity += quantity;
-  } else {
-    map.set(key, { name, quantity });
-  }
+  if (existing) existing.quantity += entry.quantity;
+  else map.set(key, { ...entry });
 }
 
 export function parseDecklist(decklist: string, commanderNames: string[] = []): ParsedDeck {
@@ -79,8 +116,7 @@ export function parseDecklist(decklist: string, commanderNames: string[] = []): 
       section = 'ignore';
       continue;
     }
-    if (line.startsWith('//')) continue;
-    if (section === 'ignore') continue;
+    if (line.startsWith('//') || section === 'ignore') continue;
 
     const commanderTagged = /(?:#\s*!?\s*commander|\^commander\^|\[commander\])\s*$/i.test(line);
     const withoutTag = line.replace(/\s*(?:#\s*!?\s*commander|\^commander\^|\[commander\])\s*$/i, '').trim();
@@ -88,20 +124,21 @@ export function parseDecklist(decklist: string, commanderNames: string[] = []): 
     if (!match) continue;
 
     const quantity = Number.parseInt(match[1] ?? '1', 10);
-    const name = cleanCardName(match[2] ?? '');
-    if (!name || !Number.isFinite(quantity) || quantity < 1) continue;
+    if (!Number.isFinite(quantity) || quantity < 1) continue;
+    const entry = parseDeckEntry(match[2] ?? '', quantity);
+    if (!entry) continue;
 
-    addEntry(section === 'commander' || commanderTagged ? commanders : main, name, quantity);
+    addEntry(section === 'commander' || commanderTagged ? commanders : main, entry);
   }
 
   for (const commanderName of commanderNames.map((name) => name.trim()).filter(Boolean)) {
-    const key = commanderName.toLocaleLowerCase();
-    const mainEntry = main.get(key);
-    if (mainEntry) {
-      main.delete(key);
-      addEntry(commanders, mainEntry.name, mainEntry.quantity);
-    } else if (!commanders.has(key)) {
-      addEntry(commanders, commanderName, 1);
+    const normalized = commanderName.toLocaleLowerCase();
+    const matched = [...main.entries()].find(([, entry]) => entry.name.toLocaleLowerCase() === normalized);
+    if (matched) {
+      main.delete(matched[0]);
+      addEntry(commanders, matched[1]);
+    } else if (![...commanders.values()].some((entry) => entry.name.toLocaleLowerCase() === normalized)) {
+      addEntry(commanders, { name: commanderName, quantity: 1 });
     }
   }
 
@@ -124,10 +161,30 @@ export function isColorIdentitySubset(cardIdentity: string[], allowedIdentity: s
   return cardIdentity.every((color) => allowed.has(color));
 }
 
+export function resolveEntryCard(entry: DeckEntry, cards: ScryfallCard[]): ScryfallCard | undefined {
+  if (entry.set && entry.collectorNumber) {
+    const exact = cards.find(
+      (card) =>
+        card.set.toLocaleLowerCase() === entry.set?.toLocaleLowerCase() &&
+        card.collector_number.toLocaleLowerCase() === entry.collectorNumber?.toLocaleLowerCase(),
+    );
+    if (exact) return exact;
+  }
+  if (entry.set) {
+    const inSet = cards.find(
+      (card) =>
+        card.name.toLocaleLowerCase() === entry.name.toLocaleLowerCase() &&
+        card.set.toLocaleLowerCase() === entry.set?.toLocaleLowerCase(),
+    );
+    if (inSet) return inSet;
+  }
+  return cards.find((card) => card.name.toLocaleLowerCase() === entry.name.toLocaleLowerCase());
+}
+
 function resolvedCardMap(cards: ScryfallCard[]): Map<string, ScryfallCard> {
   const map = new Map<string, ScryfallCard>();
   for (const card of cards) {
-    map.set(card.name.toLocaleLowerCase(), card);
+    if (!map.has(card.name.toLocaleLowerCase())) map.set(card.name.toLocaleLowerCase(), card);
   }
   return map;
 }
@@ -149,7 +206,6 @@ function addColoredPips(target: Record<string, number>, manaCost: string, quanti
 }
 
 export function buildDeckMetrics(parsed: ParsedDeck, cards: ScryfallCard[]): DeckMetrics {
-  const map = resolvedCardMap(cards);
   const allEntries = [...parsed.commanders, ...parsed.main];
   const roleCounts: Record<string, number> = {};
   const manaCurve: Record<string, number> = { '0': 0, '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7+': 0 };
@@ -169,7 +225,7 @@ export function buildDeckMetrics(parsed: ParsedDeck, cards: ScryfallCard[]): Dec
   let boardWipeCount = 0;
 
   for (const entry of allEntries) {
-    const card = map.get(entry.name.toLocaleLowerCase());
+    const card = resolveEntryCard(entry, cards);
     if (!card) continue;
     const type = card.type_line.toLowerCase();
     const roles = new Set(inferCardRoles(card));
@@ -186,7 +242,6 @@ export function buildDeckMetrics(parsed: ParsedDeck, cards: ScryfallCard[]): Dec
     }
 
     for (const role of roles) roleCounts[role] = (roleCounts[role] ?? 0) + entry.quantity;
-
     if (roles.has('fast mana')) fastManaCount += entry.quantity;
     if (roles.has('mana acceleration') || roles.has('land ramp') || roles.has('cost reduction')) rampCount += entry.quantity;
     if (roles.has('card draw') || roles.has('repeatable draw') || roles.has('card selection')) drawCount += entry.quantity;
@@ -232,15 +287,81 @@ export function buildDeckMetrics(parsed: ParsedDeck, cards: ScryfallCard[]): Dec
   };
 }
 
+function numericPrice(value: string | null | undefined): number | null {
+  if (!value) return null;
+  const parsed = Number.parseFloat(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function selectedUsdPrice(entry: DeckEntry, card: ScryfallCard): { field: string; unit: number | null } {
+  const prices = card.prices ?? {};
+  if (entry.finish === 'etched') return { field: 'usd_etched', unit: numericPrice(prices.usd_etched) };
+  if (entry.finish === 'foil') return { field: 'usd_foil', unit: numericPrice(prices.usd_foil) };
+  if (entry.finish === 'nonfoil') return { field: 'usd', unit: numericPrice(prices.usd) };
+  const nonfoil = numericPrice(prices.usd);
+  if (nonfoil !== null) return { field: 'usd', unit: nonfoil };
+  const foil = numericPrice(prices.usd_foil);
+  if (foil !== null) return { field: 'usd_foil', unit: foil };
+  return { field: 'usd_etched', unit: numericPrice(prices.usd_etched) };
+}
+
+export function buildDeckPricing(parsed: ParsedDeck, cards: ScryfallCard[]): Record<string, unknown> {
+  const entries = [...parsed.commanders, ...parsed.main].map((entry) => {
+    const card = resolveEntryCard(entry, cards);
+    if (!card) return { ...entry, resolved: false };
+    const selected = selectedUsdPrice(entry, card);
+    return {
+      ...entry,
+      resolved: true,
+      exactPrintingRequested: Boolean(entry.set && entry.collectorNumber),
+      resolvedPrinting: {
+        set: card.set.toUpperCase(),
+        setName: card.set_name,
+        collectorNumber: card.collector_number,
+        releaseDate: card.released_at ?? null,
+        rarity: card.rarity,
+        finishes: card.finishes ?? [],
+        scryfallId: card.id,
+      },
+      prices: card.prices ?? {},
+      selectedUsdPriceField: selected.field,
+      selectedUnitUsd: selected.unit,
+      selectedLineUsd: selected.unit === null ? null : Number((selected.unit * entry.quantity).toFixed(2)),
+      scryfallUrl: card.scryfall_uri,
+    };
+  });
+
+  const priced = entries.filter(
+    (entry): entry is typeof entry & { selectedLineUsd: number } =>
+      'selectedLineUsd' in entry && typeof entry.selectedLineUsd === 'number',
+  );
+  const totalUsd = priced.reduce((sum, entry) => sum + entry.selectedLineUsd, 0);
+  const exactRequested = [...parsed.commanders, ...parsed.main].filter((entry) => entry.set && entry.collectorNumber).length;
+
+  return {
+    currency: 'USD',
+    pricingModel: 'Exact Scryfall printing when set code + collector number is supplied; otherwise the resolved/default printing is used.',
+    exactPrintingEntriesRequested: exactRequested,
+    pricedEntries: priced.length,
+    totalEntries: entries.length,
+    estimatedDeckValueUsd: Number(totalUsd.toFixed(2)),
+    entries,
+    caveats: [
+      'Scryfall price fields are printing-specific snapshots and may be unavailable for some products/finishes.',
+      'A deck line without set code + collector number does not uniquely identify a physical printing, so its price should not be treated as exact.',
+      'Local New Zealand retail prices can differ from USD reference prices and remain a separate provider-integration stage.',
+    ],
+  };
+}
+
 export function analyzeResolvedDeck(
   parsed: ParsedDeck,
   cards: ScryfallCard[],
   notFound: string[] = [],
 ): Record<string, unknown> {
-  const cardMap = resolvedCardMap(cards);
   const allEntries = [...parsed.commanders, ...parsed.main];
   const commanderCards = parsed.commanders
-    .map((entry) => cardMap.get(entry.name.toLocaleLowerCase()))
+    .map((entry) => resolveEntryCard(entry, cards))
     .filter((card): card is ScryfallCard => Boolean(card));
 
   const allowedIdentity = [...new Set(commanderCards.flatMap((card) => card.color_identity))].sort();
@@ -257,13 +378,12 @@ export function analyzeResolvedDeck(
     battle: 0,
     other: 0,
   };
-
   const illegalCards: Array<{ name: string; legality: string }> = [];
   const colorIdentityViolations: Array<{ name: string; colorIdentity: string[] }> = [];
-  const singletonViolations: Array<{ name: string; quantity: number }> = [];
+  const singletonNameCounts = new Map<string, number>();
 
   for (const entry of allEntries) {
-    const card = cardMap.get(entry.name.toLocaleLowerCase());
+    const card = resolveEntryCard(entry, cards);
     if (!card) continue;
     const type = card.type_line.toLowerCase();
 
@@ -280,16 +400,26 @@ export function analyzeResolvedDeck(
 
     const commanderLegality = card.legalities.commander ?? 'unknown';
     if (commanderLegality !== 'legal') illegalCards.push({ name: card.name, legality: commanderLegality });
-
     if (allowedIdentity.length > 0 && !isColorIdentitySubset(card.color_identity, allowedIdentity)) {
       colorIdentityViolations.push({ name: card.name, colorIdentity: card.color_identity });
     }
 
     const isBasicLand = /\bbasic\b/i.test(card.type_line) && /\bland\b/i.test(card.type_line);
-    if (!isBasicLand && entry.quantity > 1) singletonViolations.push({ name: card.name, quantity: entry.quantity });
+    if (!isBasicLand) {
+      const key = card.name.toLocaleLowerCase();
+      singletonNameCounts.set(key, (singletonNameCounts.get(key) ?? 0) + entry.quantity);
+    }
   }
 
+  const singletonViolations = [...singletonNameCounts.entries()]
+    .filter(([, quantity]) => quantity > 1)
+    .map(([key, quantity]) => ({
+      name: cards.find((card) => card.name.toLocaleLowerCase() === key)?.name ?? key,
+      quantity,
+    }));
+
   const metrics = buildDeckMetrics(parsed, cards);
+  const printingSpecifiedCount = allEntries.filter((entry) => entry.set && entry.collectorNumber).length;
 
   return {
     parsed,
@@ -302,6 +432,11 @@ export function analyzeResolvedDeck(
     commanderDeckSizeValid: parsed.totalCards === 100,
     typeCounts,
     ...metrics,
+    printingIdentity: {
+      entriesWithExactSetAndCollectorNumber: printingSpecifiedCount,
+      entriesWithoutExactPrinting: allEntries.length - printingSpecifiedCount,
+    },
+    pricing: buildDeckPricing(parsed, cards),
     illegalCards,
     colorIdentityViolations,
     singletonViolations,
@@ -309,6 +444,7 @@ export function analyzeResolvedDeck(
       'Commander partner/background/Doctor-companion pairing rules still need dedicated validation.',
       'Strategic role classification is heuristic; Oracle text and known combo data remain the source of truth for exact interactions.',
       'Structural signals are deck-building heuristics, not official Commander bracket rules.',
+      'Rules identity uses the Oracle card, while valuation uses the resolved physical printing when a set code and collector number are supplied.',
     ],
   };
 }
