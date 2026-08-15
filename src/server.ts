@@ -1,6 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/server';
 import * as z from 'zod/v4';
 import { compareDeckPerformanceProfiles } from './services/comparison.js';
+import { validateCommanderDeck } from './services/commander-rules.js';
 import { analyzeResolvedDeck, buildDeckPricing, parseDecklist, resolveEntryCard } from './services/deck.js';
 import { analyzeArchidektReferences, analyzeTopDeckTournamentReferences } from './services/references.js';
 import {
@@ -48,8 +49,7 @@ function commanderIdentity(parsed: ReturnType<typeof parseDecklist>, cards: Scry
   const commanders = parsed.commanders
     .map((entry) => resolveEntryCard(entry, cards))
     .filter((card): card is ScryfallCard => Boolean(card));
-  const source = commanders.length > 0 ? commanders : cards;
-  return [...new Set(source.flatMap((card) => card.color_identity))].sort();
+  return [...new Set(commanders.flatMap((card) => card.color_identity))].sort();
 }
 
 function numericPrice(value: string | null | undefined): number | null {
@@ -73,9 +73,9 @@ export function createMtgServer(): McpServer {
   const server = new McpServer({
     name: 'mtg-ultimate-mcp',
     title: 'MTG Ultimate',
-    version: '0.3.0',
+    version: '0.4.0',
     description:
-      'Magic: The Gathering card and printing knowledge, Commander deck analysis, pricing, combo discovery, colored-mana simulations, deck comparisons, community/tournament references, upgrade recommendations, and bracket estimation backed by live MTG data sources.',
+      'Magic: The Gathering card and printing knowledge, hard Commander deck-construction rules, pricing, combo discovery, colored-mana simulations, deck comparisons, community/tournament references, upgrade recommendations, and bracket estimation backed by live MTG data sources.',
   });
 
   server.registerTool(
@@ -236,12 +236,12 @@ export function createMtgServer(): McpServer {
   server.registerTool(
     'analyze_deck',
     {
-      title: 'Analyze and value a Commander deck',
+      title: 'Analyze, validate, and value a Commander deck',
       description:
-        'Parse a Commander decklist and analyze structure, legality, curve, colored pips, roles, exact physical printing identity, and printing-specific Scryfall value. Lines such as `1 Sol Ring (CMM) 396` resolve that exact edition.',
+        'Parse a Commander decklist and analyze structure, hard Commander construction rules, curve, colored pips, roles, exact physical printing identity, and printing-specific Scryfall value. Color identity is enforced from the designated commander(s).',
       inputSchema: z.object({
         decklist: z.string().min(1).max(100_000),
-        commanderNames: z.array(z.string().min(1).max(256)).max(12).optional().default([]),
+        commanderNames: z.array(z.string().min(1).max(256)).max(2).optional().default([]),
         resolveCards: z.boolean().optional().default(true),
       }),
       annotations: { readOnlyHint: true, openWorldHint: true },
@@ -251,7 +251,11 @@ export function createMtgServer(): McpServer {
         const parsed = parseDecklist(decklist, commanderNames);
         if (!resolveCards) return jsonResult({ parsed });
         const { cards, notFound } = await resolveDeck(decklist, commanderNames);
-        return jsonResult(analyzeResolvedDeck(parsed, cards, notFound));
+        const commanderRules = validateCommanderDeck(parsed, cards);
+        return jsonResult({
+          ...analyzeResolvedDeck(parsed, cards, notFound),
+          commanderRules,
+        });
       } catch (error) {
         return errorResult(error);
       }
@@ -266,7 +270,7 @@ export function createMtgServer(): McpServer {
         'Resolve set codes and collector numbers from a pasted decklist and calculate a printing-aware USD reference value. Flags cards where the physical printing was not specified.',
       inputSchema: z.object({
         decklist: z.string().min(1).max(100_000),
-        commanderNames: z.array(z.string().min(1).max(256)).max(12).optional().default([]),
+        commanderNames: z.array(z.string().min(1).max(256)).max(2).optional().default([]),
       }),
       annotations: { readOnlyHint: true, openWorldHint: true },
     },
@@ -283,12 +287,12 @@ export function createMtgServer(): McpServer {
   server.registerTool(
     'simulate_deck_consistency',
     {
-      title: 'Monte Carlo simulate a Commander deck',
+      title: 'Monte Carlo simulate a legal Commander deck',
       description:
-        'Run deterministic V0.3 Commander consistency simulations with colored mana requirements, tapped-land tempo, MDFC land choices, differentiated ramp sequencing, commander tax scenarios, mulligans, early interaction/draw, and combo assembly proxies.',
+        'Run deterministic V0.3 consistency simulations with colored mana requirements, tapped-land tempo, MDFC land choices, differentiated ramp sequencing, commander tax scenarios, mulligans, early interaction/draw, and combo assembly proxies. The tool refuses fully resolved decks that fail Commander construction rules.',
       inputSchema: z.object({
         decklist: z.string().min(1).max(100_000),
-        commanderNames: z.array(z.string().min(1).max(256)).max(12).optional().default([]),
+        commanderNames: z.array(z.string().min(1).max(256)).max(2).optional().default([]),
         iterations: z.number().int().min(100).max(50_000).optional().default(5_000),
         turns: z.number().int().min(1).max(15).optional().default(7),
         seed: z.number().int().min(1).max(2_147_483_647).optional().default(1_337),
@@ -300,10 +304,24 @@ export function createMtgServer(): McpServer {
     async ({ decklist, commanderNames, iterations, turns, seed, maxMulligans, comboPieces }) => {
       try {
         const { parsed, cards, notFound } = await resolveDeck(decklist, commanderNames);
-        if (notFound.length > 0) {
-          return jsonResult({ error: 'Resolve all or nearly all cards before simulation.', unresolvedCards: notFound, resolvedCards: cards.length });
+        const commanderRules = validateCommanderDeck(parsed, cards);
+        if (notFound.length > 0 || commanderRules.status === 'incomplete') {
+          return jsonResult({
+            error: 'Resolve the entire deck before simulation.',
+            unresolvedCards: notFound,
+            commanderRules,
+          });
         }
-        return jsonResult(simulateDeckConsistency(parsed, cards, { iterations, turns, seed, maxMulligans, comboPieces }));
+        if (!commanderRules.isLegal) {
+          return jsonResult({
+            error: 'This deck fails Commander construction rules. Fix legality before interpreting simulation results.',
+            commanderRules,
+          });
+        }
+        return jsonResult({
+          commanderRules,
+          simulation: simulateDeckConsistency(parsed, cards, { iterations, turns, seed, maxMulligans, comboPieces }),
+        });
       } catch (error) {
         return errorResult(error);
       }
@@ -319,10 +337,10 @@ export function createMtgServer(): McpServer {
       inputSchema: z.object({
         firstDecklist: z.string().min(1).max(100_000),
         firstLabel: z.string().min(1).max(100).optional().default('First deck'),
-        firstCommanderNames: z.array(z.string().min(1).max(256)).max(12).optional().default([]),
+        firstCommanderNames: z.array(z.string().min(1).max(256)).max(2).optional().default([]),
         secondDecklist: z.string().min(1).max(100_000),
         secondLabel: z.string().min(1).max(100).optional().default('Second deck'),
-        secondCommanderNames: z.array(z.string().min(1).max(256)).max(12).optional().default([]),
+        secondCommanderNames: z.array(z.string().min(1).max(256)).max(2).optional().default([]),
         iterations: z.number().int().min(250).max(50_000).optional().default(5_000),
         turns: z.number().int().min(3).max(12).optional().default(7),
         seed: z.number().int().min(1).max(2_147_483_647).optional().default(2_026),
@@ -453,12 +471,12 @@ export function createMtgServer(): McpServer {
   server.registerTool(
     'suggest_upgrades',
     {
-      title: 'Suggest Commander upgrades and cuts',
+      title: 'Suggest legal Commander upgrades and cuts',
       description:
-        'Detect structural deficits and search current Scryfall data for legal candidate upgrades under optional price, set, theme, and exclusion constraints.',
+        'Validate the submitted Commander deck, then detect structural deficits and search current Scryfall data for candidate upgrades restricted to the commanders’ combined color identity and optional price, set, theme, and exclusion constraints.',
       inputSchema: z.object({
         decklist: z.string().min(1).max(100_000),
-        commanderNames: z.array(z.string().min(1).max(256)).max(12).optional().default([]),
+        commanderNames: z.array(z.string().min(1).max(256)).max(2).optional().default([]),
         targetBracket: z.number().int().min(1).max(5).optional().default(4),
         maxUsdPerCard: z.number().positive().max(10_000).optional(),
         allowedSets: z.array(z.string().min(2).max(12)).max(20).optional().default([]),
@@ -470,10 +488,25 @@ export function createMtgServer(): McpServer {
     },
     async ({ decklist, commanderNames, targetBracket, maxUsdPerCard, allowedSets, themeQuery, excludedCards, maxCandidatesPerRole }) => {
       try {
-        const { parsed, cards } = await resolveDeck(decklist, commanderNames);
+        const { parsed, cards, notFound } = await resolveDeck(decklist, commanderNames);
+        const commanderRules = validateCommanderDeck(parsed, cards);
+        if (notFound.length > 0 || commanderRules.status === 'incomplete') {
+          return jsonResult({
+            error: 'Resolve the full deck before generating upgrades.',
+            unresolvedCards: notFound,
+            commanderRules,
+          });
+        }
+        if (!commanderRules.isLegal) {
+          return jsonResult({
+            error: 'The submitted list is not Commander-legal. Fix rule violations before optimization.',
+            commanderRules,
+          });
+        }
         const identity = commanderIdentity(parsed, cards);
-        return jsonResult(
-          await suggestDeckUpgrades(parsed, cards, identity, {
+        return jsonResult({
+          commanderRules,
+          upgrades: await suggestDeckUpgrades(parsed, cards, identity, {
             targetBracket,
             ...(maxUsdPerCard !== undefined ? { maxUsdPerCard } : {}),
             allowedSets,
@@ -481,7 +514,7 @@ export function createMtgServer(): McpServer {
             excludedCards,
             maxCandidatesPerRole,
           }),
-        );
+        });
       } catch (error) {
         return errorResult(error);
       }
