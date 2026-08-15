@@ -13,6 +13,7 @@ export interface ScryfallCard {
   id: string;
   oracle_id?: string;
   name: string;
+  printed_name?: string;
   lang: string;
   released_at?: string;
   mana_cost?: string;
@@ -27,6 +28,13 @@ export interface ScryfallCard {
   reserved?: boolean;
   foil?: boolean;
   nonfoil?: boolean;
+  finishes?: string[];
+  promo?: boolean;
+  digital?: boolean;
+  full_art?: boolean;
+  border_color?: string;
+  frame?: string;
+  frame_effects?: string[];
   produced_mana?: string[];
   edhrec_rank?: number;
   penny_rank?: number;
@@ -34,9 +42,12 @@ export interface ScryfallCard {
   set_name: string;
   collector_number: string;
   rarity: string;
+  tcgplayer_id?: number;
+  cardmarket_id?: number;
   flavor_text?: string;
   artist?: string;
   prices?: Record<string, string | null>;
+  purchase_uris?: Record<string, string>;
   related_uris?: Record<string, string>;
   scryfall_uri: string;
   image_uris?: Record<string, string>;
