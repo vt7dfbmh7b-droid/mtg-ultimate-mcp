@@ -5,6 +5,7 @@ const parsePositiveInt = (value: string | undefined, fallback: number): number =
 };
 
 export const config = {
+  version: '0.2.0',
   port: parsePositiveInt(process.env.PORT, 3000),
   httpTimeoutMs: parsePositiveInt(process.env.HTTP_TIMEOUT_MS, 15_000),
   scryfallApiBase: (process.env.SCRYFALL_API_BASE ?? 'https://api.scryfall.com').replace(/\/$/, ''),
