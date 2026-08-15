@@ -27,6 +27,9 @@ export interface ScryfallCard {
   reserved?: boolean;
   foil?: boolean;
   nonfoil?: boolean;
+  produced_mana?: string[];
+  edhrec_rank?: number;
+  penny_rank?: number;
   set: string;
   set_name: string;
   collector_number: string;
