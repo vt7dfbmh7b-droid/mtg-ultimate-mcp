@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { isColorIdentitySubset, parseDecklist } from './deck.js';
 
-test('parseDecklist understands Commander sections and printing annotations', () => {
+test('parseDecklist preserves Commander and physical printing annotations', () => {
   const deck = parseDecklist(`
 // COMMANDER
 1 Edgar Markov (INR) 234
@@ -13,15 +13,28 @@ test('parseDecklist understands Commander sections and printing annotations', ()
 1 Blood Artist
 `);
 
-  assert.deepEqual(deck.commanders, [{ name: 'Edgar Markov', quantity: 1 }]);
+  assert.deepEqual(deck.commanders, [
+    { name: 'Edgar Markov', quantity: 1, set: 'INR', collectorNumber: '234' },
+  ]);
   assert.deepEqual(deck.main, [
-    { name: 'Sol Ring', quantity: 1 },
-    { name: 'Swamp', quantity: 3 },
+    { name: 'Sol Ring', quantity: 1, set: 'CMM', collectorNumber: '396' },
+    { name: 'Swamp', quantity: 3, set: 'NEO', collectorNumber: '297', finish: 'foil' },
     { name: 'Blood Artist', quantity: 1 },
   ]);
   assert.equal(deck.totalCommanders, 1);
   assert.equal(deck.totalMain, 5);
   assert.equal(deck.totalCards, 6);
+});
+
+test('different physical printings of the same card remain distinct entries', () => {
+  const deck = parseDecklist(`
+1 Sol Ring (CMM) 396
+1 Sol Ring (LTC) 284 *F*
+`);
+  assert.equal(deck.main.length, 2);
+  assert.equal(deck.main[0]?.set, 'CMM');
+  assert.equal(deck.main[1]?.set, 'LTC');
+  assert.equal(deck.main[1]?.finish, 'foil');
 });
 
 test('parseDecklist can promote supplied commander names', () => {
