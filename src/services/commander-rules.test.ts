@@ -30,10 +30,6 @@ function card(
   };
 }
 
-function repeated(name: string, count: number): string {
-  return Array.from({ length: count }, () => `1 ${name}`).join('\n');
-}
-
 test('Rakdos commander rejects blue, white, and green identities but allows colorless', () => {
   const cards = [
     card('Rakdos Boss', 'Legendary Creature — Vampire', ['B', 'R']),
@@ -58,6 +54,39 @@ test('Rakdos commander rejects blue, white, and green identities but allows colo
   assert.equal(result.colorIdentityViolations.length, 1);
   assert.equal(result.colorIdentityViolations[0]?.name, 'Blue Spell');
   assert.equal(result.isLegal, false);
+});
+
+test('hybrid identity counts as both colors for Commander construction', () => {
+  const hybrid = card('Black Red Hybrid', 'Creature — Rogue', ['B', 'R']);
+  const monoBlackCards = [
+    card('Mono Black Boss', 'Legendary Creature — Wizard', ['B']),
+    hybrid,
+    card('Swamp', 'Basic Land — Swamp', ['B']),
+  ];
+  const monoBlackDeck = parseDecklist(`
+// COMMANDER
+1 Mono Black Boss
+// MAIN
+1 Black Red Hybrid
+98 Swamp
+`);
+  const monoResult = validateCommanderDeck(monoBlackDeck, monoBlackCards);
+  assert.equal(monoResult.colorIdentityViolations.some((item) => item.name === 'Black Red Hybrid'), true);
+
+  const rakdosCards = [
+    card('Rakdos Boss', 'Legendary Creature — Wizard', ['B', 'R']),
+    hybrid,
+    card('Swamp', 'Basic Land — Swamp', ['B']),
+  ];
+  const rakdosDeck = parseDecklist(`
+// COMMANDER
+1 Rakdos Boss
+// MAIN
+1 Black Red Hybrid
+98 Swamp
+`);
+  const rakdosResult = validateCommanderDeck(rakdosDeck, rakdosCards);
+  assert.equal(rakdosResult.colorIdentityViolations.length, 0);
 });
 
 test('combined Partner identities permit cards inside the combined identity', () => {
