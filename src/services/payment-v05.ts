@@ -6,13 +6,13 @@ const COLORS = ['W', 'U', 'B', 'R', 'G'] as const;
 type Color = (typeof COLORS)[number];
 
 export interface ManaPoolV05 {
-  W?: number;
-  U?: number;
-  B?: number;
-  R?: number;
-  G?: number;
-  C?: number;
-  any?: number;
+  W?: number | undefined;
+  U?: number | undefined;
+  B?: number | undefined;
+  R?: number | undefined;
+  G?: number | undefined;
+  C?: number | undefined;
+  any?: number | undefined;
 }
 
 export interface ConvokeCreatureV05 {
