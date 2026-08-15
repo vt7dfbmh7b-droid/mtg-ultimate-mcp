@@ -1,4 +1,4 @@
-import { createServer } from 'node:http';
+import { createServer, type IncomingMessage } from 'node:http';
 import { toNodeHandler } from '@modelcontextprotocol/node';
 import { createMcpHandler } from '@modelcontextprotocol/server';
 import { config } from './config.js';
@@ -6,6 +6,8 @@ import { createMtgServer } from './server.js';
 
 const mcpHandler = createMcpHandler(() => createMtgServer());
 const handleMcp = toNodeHandler(mcpHandler);
+
+type McpIncomingMessage = IncomingMessage & { method: string };
 
 const httpServer = createServer((request, response) => {
   void (async () => {
@@ -27,7 +29,13 @@ const httpServer = createServer((request, response) => {
       }
 
       if (url.pathname === '/mcp' || url.pathname === '/mcp/') {
-        await handleMcp(request, response);
+        if (!request.method) {
+          response.statusCode = 400;
+          response.setHeader('Content-Type', 'application/json; charset=utf-8');
+          response.end(JSON.stringify({ error: 'HTTP method is required' }));
+          return;
+        }
+        await handleMcp(request as McpIncomingMessage, response);
         return;
       }
 
