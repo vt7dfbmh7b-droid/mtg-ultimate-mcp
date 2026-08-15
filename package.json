@@ -1,9 +1,9 @@
 {
   "name": "mtg-ultimate-mcp",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
-  "description": "MCP-powered Magic: The Gathering card and printing knowledge, Commander rules validation, mana-base analysis, pod-pressure simulation, pricing, combo discovery, evidence analysis, and upgrade tooling.",
+  "description": "MCP-powered Magic: The Gathering card and printing knowledge, Commander rules validation, rules-aware casting/resource analysis, interaction exchange analysis, combat snapshots, simulation, pricing, combo discovery, evidence analysis, and upgrade tooling.",
   "engines": {
     "node": ">=20"
   },
