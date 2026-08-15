@@ -1,6 +1,6 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import type { DeckEntry, ParsedDeck } from './deck.js';
-import { getCardOracleText, summarizeCard } from './scryfall.js';
+import { getCardOracleText } from './scryfall.js';
 
 const COLORS = ['W', 'U', 'B', 'R', 'G'] as const;
 type Color = (typeof COLORS)[number];
@@ -25,10 +25,6 @@ export interface CommanderRulesResult {
 
 function normalize(value: string): string {
   return value.trim().toLocaleLowerCase();
-}
-
-function entryKey(entry: DeckEntry): string {
-  return [normalize(entry.name), normalize(entry.set ?? ''), normalize(entry.collectorNumber ?? '')].join('|');
 }
 
 function resolveEntry(entry: DeckEntry, cards: ScryfallCard[]): ScryfallCard | undefined {
@@ -72,17 +68,26 @@ function hasDoctorsCompanion(card: ScryfallCard): boolean {
   return /doctor['’]s companion/i.test(getCardOracleText(card));
 }
 
-function isDoctor(card: ScryfallCard): boolean {
-  return /(?:^|—)\s*[^\n]*\bDoctor\b/i.test(card.type_line);
+function isDoctorForCompanion(card: ScryfallCard): boolean {
+  if (!isLegendaryCreature(card)) return false;
+  const subtypePart = card.type_line.split(/\s+[—–]\s+/)[1]?.trim().toLowerCase() ?? '';
+  return subtypePart === 'time lord doctor';
 }
 
 function hasFriendsForever(card: ScryfallCard): boolean {
   return /friends forever/i.test(getCardOracleText(card));
 }
 
+function hasCharacterSelectPartner(card: ScryfallCard): boolean {
+  const source = `${getCardOracleText(card)}\n${(card.keywords ?? []).join('\n')}`;
+  return /partner\s*[—–-]\s*character select/i.test(source);
+}
+
 function hasPlainPartner(card: ScryfallCard): boolean {
   const text = getCardOracleText(card);
-  return /(?:^|\n)Partner(?:\s*\(|\s*$)/im.test(text) && !/(?:^|\n)Partner with\b/im.test(text);
+  return /(?:^|\n)Partner(?:\s*\(|\s*$)/im.test(text)
+    && !/(?:^|\n)Partner with\b/im.test(text)
+    && !/Partner\s*[—–-]/i.test(text);
 }
 
 function partnerWithTarget(card: ScryfallCard): string | null {
@@ -95,8 +100,15 @@ function ordinaryCommanderEligible(card: ScryfallCard): boolean {
 }
 
 function twoCommanderPairing(first: ScryfallCard, second: ScryfallCard): { legal: boolean; method: string; reason: string } {
+  if (hasCharacterSelectPartner(first) && hasCharacterSelectPartner(second)) {
+    return {
+      legal: true,
+      method: 'Partner—Character select',
+      reason: 'Both commanders have Partner—Character select; this variant pairs only with the same variant.',
+    };
+  }
   if (hasPlainPartner(first) && hasPlainPartner(second)) {
-    return { legal: true, method: 'Partner', reason: 'Both commanders have Partner.' };
+    return { legal: true, method: 'Partner', reason: 'Both commanders have the original Partner ability.' };
   }
   if (hasFriendsForever(first) && hasFriendsForever(second)) {
     return { legal: true, method: 'Friends forever', reason: 'Both commanders have Friends forever.' };
@@ -104,8 +116,12 @@ function twoCommanderPairing(first: ScryfallCard, second: ScryfallCard): { legal
   if ((hasChooseBackground(first) && isBackground(second)) || (hasChooseBackground(second) && isBackground(first))) {
     return { legal: true, method: 'Choose a Background', reason: 'A commander with Choose a Background is paired with a legendary Background.' };
   }
-  if ((isDoctor(first) && hasDoctorsCompanion(second)) || (isDoctor(second) && hasDoctorsCompanion(first))) {
-    return { legal: true, method: "Doctor's companion", reason: "A Doctor commander is paired with a card that has Doctor's companion." };
+  if ((isDoctorForCompanion(first) && hasDoctorsCompanion(second)) || (isDoctorForCompanion(second) && hasDoctorsCompanion(first))) {
+    return {
+      legal: true,
+      method: "Doctor's companion",
+      reason: "A Doctor's companion is paired with a legendary creature whose creature subtypes are exactly Time Lord Doctor.",
+    };
   }
 
   const firstTarget = partnerWithTarget(first);
@@ -122,7 +138,7 @@ function twoCommanderPairing(first: ScryfallCard, second: ScryfallCard): { legal
   return {
     legal: false,
     method: 'none',
-    reason: 'Two commanders require a valid pairing rule such as Partner, Friends forever, Choose a Background, Doctor’s companion, or matching Partner with abilities.',
+    reason: 'The designated cards do not form a valid current two-commander pairing. Partner variants must follow their own pairing rule and cannot be mixed just because both are partner-like mechanics.',
   };
 }
 
@@ -276,6 +292,7 @@ export function validateCommanderDeck(parsed: ParsedDeck, cards: ScryfallCard[])
     rulesApplied: [
       'Exactly 100 cards including commander(s).',
       'Normally one commander; two only when an applicable pairing mechanic permits them.',
+      'Partner variants are distinct: original Partner, Friends forever, Partner—Character select, Doctor’s companion, Choose a Background, and Partner with follow their own pairing conditions.',
       'Each commander must be eligible to be designated as a commander.',
       'Every card must be legal in the Commander format.',
       'Every card’s color identity must be a subset of the combined commander color identity; colorless cards are allowed.',
