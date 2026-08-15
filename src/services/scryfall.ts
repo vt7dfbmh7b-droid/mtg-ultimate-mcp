@@ -6,10 +6,17 @@ import type {
   ScryfallList,
 } from '../types/scryfall.js';
 
+export interface CardIdentifierInput {
+  name: string;
+  set?: string;
+  collectorNumber?: string;
+}
+
 export interface CardSummary {
   id: string;
   oracleId?: string;
   name: string;
+  printedName?: string;
   manaCost: string;
   manaValue: number;
   typeLine: string;
@@ -24,8 +31,21 @@ export interface CardSummary {
   set: string;
   setName: string;
   collectorNumber: string;
+  releaseDate?: string;
   rarity: string;
+  finishes: string[];
+  foil: boolean;
+  nonfoil: boolean;
+  promo: boolean;
+  digital: boolean;
+  fullArt: boolean;
+  frame?: string;
+  frameEffects: string[];
+  borderColor?: string;
+  tcgplayerId?: number;
+  cardmarketId?: number;
   prices: Record<string, string | null>;
+  purchaseUris: Record<string, string>;
   scryfallUrl: string;
   imageUrl?: string;
 }
@@ -44,9 +64,7 @@ async function scryfallRequest<T>(url: string, init: RequestInit = {}): Promise<
   await previous;
   try {
     const waitMs = Math.max(0, MIN_REQUEST_GAP_MS - (Date.now() - lastRequestAt));
-    if (waitMs > 0) {
-      await new Promise((resolve) => setTimeout(resolve, waitMs));
-    }
+    if (waitMs > 0) await new Promise((resolve) => setTimeout(resolve, waitMs));
     lastRequestAt = Date.now();
     return await fetchJson<T>(url, init);
   } finally {
@@ -86,9 +104,7 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (/create .* treasure token/.test(text)) roles.add('treasure');
 
   if (/draw (?:a|one|two|three|four|five|\d+) cards?/.test(text)) roles.add('card draw');
-  if (/whenever .* draw a card|at the beginning of .* draw|whenever .* deals? combat damage .* draw/.test(text)) {
-    roles.add('repeatable draw');
-  }
+  if (/whenever .* draw a card|at the beginning of .* draw|whenever .* deals? combat damage .* draw/.test(text)) roles.add('repeatable draw');
   if (/scry|surveil|look at the top .* cards|exile the top .* you may play/.test(text)) roles.add('card selection');
   if (/discard your hand.*draw|each player discards .* hand.*draw/.test(text)) roles.add('wheel');
 
@@ -97,30 +113,18 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (/search your library for .*land/.test(text)) roles.add('land tutor');
 
   if (/counter target spell/.test(text)) roles.add('countermagic');
-  if ((manaCost === '' || /\{0\}/.test(manaCost) || /rather than pay .* mana cost/.test(text)) && /counter target|destroy target|exile target/.test(text)) {
-    roles.add('free interaction');
-  }
-  if (/(destroy|exile) target/.test(text) || /return target .* to (?:its|their) owner's hand/.test(text)) {
-    roles.add('spot interaction');
-  }
-  if (/destroy target artifact|destroy target enchantment|exile target artifact|exile target enchantment/.test(text)) {
-    roles.add('artifact/enchantment interaction');
-  }
-  if (/exile .* graveyard|cards? in graveyards? can't|players? can't cast .* graveyards?/.test(text)) {
-    roles.add('graveyard hate');
-  }
-  if (/(destroy|exile) (?:all|each) (?:creatures|artifacts|enchantments|nonland permanents|permanents)/.test(text)) {
-    roles.add('board wipe');
-  }
+  if ((manaCost === '' || /\{0\}/.test(manaCost) || /rather than pay .* mana cost/.test(text)) && /counter target|destroy target|exile target/.test(text)) roles.add('free interaction');
+  if (/(destroy|exile) target/.test(text) || /return target .* to (?:its|their) owner's hand/.test(text)) roles.add('spot interaction');
+  if (/destroy target artifact|destroy target enchantment|exile target artifact|exile target enchantment/.test(text)) roles.add('artifact/enchantment interaction');
+  if (/exile .* graveyard|cards? in graveyards? can't|players? can't cast .* graveyards?/.test(text)) roles.add('graveyard hate');
+  if (/(destroy|exile) (?:all|each) (?:creatures|artifacts|enchantments|nonland permanents|permanents)/.test(text)) roles.add('board wipe');
 
   if (/create .* token/.test(text)) roles.add('token production');
   if (/sacrifice (?:a|another|target|this)/.test(text)) roles.add('sacrifice synergy');
   if (/sacrifice (?:a|another) creature\s*:|sacrifice (?:a|another) permanent\s*:/.test(text)) roles.add('sacrifice outlet');
   if (/from your graveyard/.test(text) || /return .* from .* graveyard/.test(text)) roles.add('graveyard recursion');
   if (/hexproof|indestructible|protection from|phase out/.test(text)) roles.add('protection');
-  if (/other .* you control (?:have|gain) hexproof|permanents? you control .* indestructible/.test(text)) {
-    roles.add('board protection');
-  }
+  if (/other .* you control (?:have|gain) hexproof|permanents? you control .* indestructible/.test(text)) roles.add('board protection');
   if (/haste/.test(text)) roles.add('haste');
   if (/can't cast|can't activate|players can't|opponents can't|doesn't untap|enter the battlefield tapped/.test(text)) roles.add('stax/control');
   if (/extra turn/.test(text)) roles.add('extra turn');
@@ -144,6 +148,7 @@ export function summarizeCard(card: ScryfallCard): CardSummary {
     id: card.id,
     ...(card.oracle_id ? { oracleId: card.oracle_id } : {}),
     name: card.name,
+    ...(card.printed_name ? { printedName: card.printed_name } : {}),
     manaCost: getCardManaCost(card),
     manaValue: card.cmc,
     typeLine: card.type_line,
@@ -155,19 +160,39 @@ export function summarizeCard(card: ScryfallCard): CardSummary {
     legalities: card.legalities,
     ...(card.edhrec_rank !== undefined ? { edhrecRank: card.edhrec_rank } : {}),
     ...(card.produced_mana ? { producedMana: card.produced_mana } : {}),
-    set: card.set,
+    set: card.set.toUpperCase(),
     setName: card.set_name,
     collectorNumber: card.collector_number,
+    ...(card.released_at ? { releaseDate: card.released_at } : {}),
     rarity: card.rarity,
+    finishes: card.finishes ?? [card.foil ? 'foil' : '', card.nonfoil ? 'nonfoil' : ''].filter(Boolean),
+    foil: Boolean(card.foil),
+    nonfoil: Boolean(card.nonfoil),
+    promo: Boolean(card.promo),
+    digital: Boolean(card.digital),
+    fullArt: Boolean(card.full_art),
+    ...(card.frame ? { frame: card.frame } : {}),
+    frameEffects: card.frame_effects ?? [],
+    ...(card.border_color ? { borderColor: card.border_color } : {}),
+    ...(card.tcgplayer_id !== undefined ? { tcgplayerId: card.tcgplayer_id } : {}),
+    ...(card.cardmarket_id !== undefined ? { cardmarketId: card.cardmarket_id } : {}),
     prices: card.prices ?? {},
+    purchaseUris: card.purchase_uris ?? {},
     scryfallUrl: card.scryfall_uri,
     ...(imageUrl ? { imageUrl } : {}),
   };
 }
 
-export async function lookupCard(name: string, exact = false): Promise<ScryfallCard> {
+export async function lookupCard(name: string, exact = false, set?: string): Promise<ScryfallCard> {
   const parameter = exact ? 'exact' : 'fuzzy';
-  const url = `${config.scryfallApiBase}/cards/named?${parameter}=${encodeURIComponent(name.trim())}`;
+  const setPart = set?.trim() ? `&set=${encodeURIComponent(set.trim().toLowerCase())}` : '';
+  const url = `${config.scryfallApiBase}/cards/named?${parameter}=${encodeURIComponent(name.trim())}${setPart}`;
+  return scryfallRequest<ScryfallCard>(url);
+}
+
+export async function lookupPrinting(set: string, collectorNumber: string, lang?: string): Promise<ScryfallCard> {
+  const language = lang?.trim() ? `/${encodeURIComponent(lang.trim().toLowerCase())}` : '';
+  const url = `${config.scryfallApiBase}/cards/${encodeURIComponent(set.trim().toLowerCase())}/${encodeURIComponent(collectorNumber.trim())}${language}`;
   return scryfallRequest<ScryfallCard>(url);
 }
 
@@ -178,27 +203,71 @@ export async function searchCards(query: string, limit = 10): Promise<ScryfallCa
   return result.data.slice(0, safeLimit);
 }
 
-export async function getCardsByNames(names: string[]): Promise<{
+export async function getCardPrintings(name: string, limit = 100): Promise<ScryfallCard[]> {
+  const safeLimit = Math.max(1, Math.min(limit, 250));
+  const cards: ScryfallCard[] = [];
+  let nextUrl: string | undefined = `${config.scryfallApiBase}/cards/search?q=${encodeURIComponent(`!\"${name.trim()}\"`)}&unique=prints&order=released&dir=desc`;
+
+  while (nextUrl && cards.length < safeLimit) {
+    const page = await scryfallRequest<ScryfallList<ScryfallCard>>(nextUrl);
+    cards.push(...page.data.slice(0, safeLimit - cards.length));
+    nextUrl = page.has_more ? page.next_page : undefined;
+  }
+
+  return cards;
+}
+
+function identifierKey(identifier: CardIdentifierInput): string {
+  return [identifier.name.toLocaleLowerCase(), identifier.set?.toLocaleLowerCase() ?? '', identifier.collectorNumber ?? ''].join('|');
+}
+
+export async function getCardsByIdentifiers(identifiers: CardIdentifierInput[]): Promise<{
   cards: ScryfallCard[];
   notFound: string[];
 }> {
-  const uniqueNames = [...new Set(names.map((name) => name.trim()).filter(Boolean))];
+  const unique = [...new Map(
+    identifiers
+      .filter((identifier) => identifier.name.trim())
+      .map((identifier) => [identifierKey(identifier), identifier]),
+  ).values()];
   const cards: ScryfallCard[] = [];
   const notFound: string[] = [];
 
-  for (let index = 0; index < uniqueNames.length; index += 75) {
-    const batch = uniqueNames.slice(index, index + 75);
+  for (let index = 0; index < unique.length; index += 75) {
+    const batch = unique.slice(index, index + 75);
+    const apiIdentifiers = batch.map((identifier) => {
+      if (identifier.set && identifier.collectorNumber) {
+        return {
+          set: identifier.set.toLowerCase(),
+          collector_number: identifier.collectorNumber,
+        };
+      }
+      if (identifier.set) return { name: identifier.name, set: identifier.set.toLowerCase() };
+      return { name: identifier.name };
+    });
+
     const result = await scryfallRequest<ScryfallCollectionResult>(
       `${config.scryfallApiBase}/cards/collection`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ identifiers: batch.map((name) => ({ name })) }),
+        body: JSON.stringify({ identifiers: apiIdentifiers }),
       },
     );
     cards.push(...result.data);
-    notFound.push(...result.not_found.map((entry) => entry.name ?? JSON.stringify(entry)));
+    notFound.push(
+      ...result.not_found.map((entry) =>
+        [entry.name, entry.set, entry.collector_number].filter(Boolean).join(' ') || JSON.stringify(entry),
+      ),
+    );
   }
 
   return { cards, notFound };
+}
+
+export async function getCardsByNames(names: string[]): Promise<{
+  cards: ScryfallCard[];
+  notFound: string[];
+}> {
+  return getCardsByIdentifiers(names.map((name) => ({ name })));
 }
