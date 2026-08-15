@@ -60,7 +60,7 @@ test('buildDeckMetrics exposes curve, colored pips, and strategic density', () =
   assert.equal(metrics.drawCount >= 8, true);
   assert.equal(metrics.interactionCount >= 8, true);
   assert.equal(metrics.manaCurve['1'], 16);
-  assert.equal(metrics.coloredPips.U > 0, true);
+  assert.equal((metrics.coloredPips.U ?? 0) > 0, true);
 });
 
 test('simulateDeckConsistency is deterministic for a fixed seed', () => {
@@ -80,5 +80,5 @@ test('simulateDeckConsistency is deterministic for a fixed seed', () => {
   });
   assert.deepEqual(first, second);
   const openingHands = first.openingHands as Record<string, number>;
-  assert.equal(openingHands.functionalKeepRate > 0, true);
+  assert.equal((openingHands.functionalKeepRate ?? 0) > 0, true);
 });
