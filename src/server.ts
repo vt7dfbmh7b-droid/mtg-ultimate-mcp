@@ -1,5 +1,6 @@
 import { McpServer } from '@modelcontextprotocol/server';
 import * as z from 'zod/v4';
+import { compareDeckPerformanceProfiles } from './services/comparison.js';
 import { analyzeResolvedDeck, parseDecklist } from './services/deck.js';
 import { analyzeArchidektReferences, analyzeTopDeckTournamentReferences } from './services/references.js';
 import {
@@ -55,7 +56,7 @@ export function createMtgServer(): McpServer {
     title: 'MTG Ultimate',
     version: '0.2.0',
     description:
-      'Magic: The Gathering card knowledge, Commander deck analysis, combo discovery, simulations, community/tournament references, upgrade recommendations, and bracket estimation backed by live MTG data sources.',
+      'Magic: The Gathering card knowledge, Commander deck analysis, combo discovery, simulations, deck comparisons, community/tournament references, upgrade recommendations, and bracket estimation backed by live MTG data sources.',
   });
 
   server.registerTool(
@@ -154,7 +155,7 @@ export function createMtgServer(): McpServer {
     {
       title: 'Monte Carlo simulate a Commander deck',
       description:
-        'Run thousands of deterministic Monte Carlo goldfish simulations to estimate opening-hand quality, mulligans, land development, mana by turn, commander castability, early interaction/draw availability, mana-screw/flood proxies, and natural/tutor-proxy combo assembly. This is a consistency model, not a full MTG rules engine.',
+        'Run thousands of deterministic Monte Carlo goldfish simulations to estimate opening-hand quality, mulligans, land development, spendable mana by turn, commander castability, early interaction/draw availability, mana-screw/flood proxies, and natural/tutor-proxy combo assembly. This is a consistency model, not a full MTG rules engine.',
       inputSchema: z.object({
         decklist: z.string().min(1).max(100_000),
         commanderNames: z.array(z.string().min(1).max(256)).max(12).optional().default([]),
@@ -184,6 +185,51 @@ export function createMtgServer(): McpServer {
             maxMulligans,
             comboPieces,
           }),
+        );
+      } catch (error) {
+        return errorResult(error);
+      }
+    },
+  );
+
+  server.registerTool(
+    'compare_deck_performance_profiles',
+    {
+      title: 'Compare why two Commander decks perform differently',
+      description:
+        'Resolve two decklists, calculate the same structural metrics, and run the same-seed Monte Carlo model on both. Returns measurable differences in curve, early plays, fast mana, ramp, draw, tutors, interaction, protection, mulligan pressure, mana development, commander timing, and early interaction/draw availability. Treats these as candidate explanations rather than proof of why a real player won or lost.',
+      inputSchema: z.object({
+        firstDecklist: z.string().min(1).max(100_000),
+        firstLabel: z.string().min(1).max(100).optional().default('First deck'),
+        firstCommanderNames: z.array(z.string().min(1).max(256)).max(12).optional().default([]),
+        secondDecklist: z.string().min(1).max(100_000),
+        secondLabel: z.string().min(1).max(100).optional().default('Second deck'),
+        secondCommanderNames: z.array(z.string().min(1).max(256)).max(12).optional().default([]),
+        iterations: z.number().int().min(250).max(50_000).optional().default(5_000),
+        turns: z.number().int().min(3).max(12).optional().default(7),
+        seed: z.number().int().min(1).max(2_147_483_647).optional().default(2_026),
+      }),
+      annotations: { readOnlyHint: true, openWorldHint: true },
+    },
+    async ({ firstDecklist, firstLabel, firstCommanderNames, secondDecklist, secondLabel, secondCommanderNames, iterations, turns, seed }) => {
+      try {
+        const [first, second] = await Promise.all([
+          resolveDeck(firstDecklist, firstCommanderNames),
+          resolveDeck(secondDecklist, secondCommanderNames),
+        ]);
+        if (first.notFound.length > 0 || second.notFound.length > 0) {
+          return jsonResult({
+            error: 'Both decks should resolve fully before performance-profile comparison.',
+            firstUnresolvedCards: first.notFound,
+            secondUnresolvedCards: second.notFound,
+          });
+        }
+        return jsonResult(
+          compareDeckPerformanceProfiles(
+            { label: firstLabel, parsed: first.parsed, cards: first.cards },
+            { label: secondLabel, parsed: second.parsed, cards: second.cards },
+            { iterations, turns, seed },
+          ),
         );
       } catch (error) {
         return errorResult(error);
