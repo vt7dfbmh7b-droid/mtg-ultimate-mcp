@@ -1,20 +1,20 @@
 import { McpServer } from '@modelcontextprotocol/server';
 import * as z from 'zod/v4';
 import { compareDeckPerformanceProfiles } from './services/comparison.js';
-import { analyzeResolvedDeck, parseDecklist } from './services/deck.js';
+import { analyzeResolvedDeck, buildDeckPricing, parseDecklist, resolveEntryCard } from './services/deck.js';
 import { analyzeArchidektReferences, analyzeTopDeckTournamentReferences } from './services/references.js';
 import {
-  getCardsByNames,
+  getCardPrintings,
+  getCardsByIdentifiers,
   lookupCard,
+  lookupPrinting,
   searchCards,
   summarizeCard,
 } from './services/scryfall.js';
 import { simulateDeckConsistency } from './services/simulation.js';
-import {
-  estimateCommanderBracket,
-  findDeckCombos,
-} from './services/spellbook.js';
+import { estimateCommanderBracket, findDeckCombos } from './services/spellbook.js';
 import { suggestDeckUpgrades } from './services/upgrade.js';
+import type { ScryfallCard } from './types/scryfall.js';
 
 const jsonResult = (value: unknown) => ({
   content: [{ type: 'text' as const, text: JSON.stringify(value, null, 2) }],
@@ -35,28 +35,47 @@ const errorResult = (error: unknown) => ({
 
 async function resolveDeck(decklist: string, commanderNames: string[]) {
   const parsed = parseDecklist(decklist, commanderNames);
-  const names = [...parsed.commanders, ...parsed.main].map((entry) => entry.name);
-  const resolved = await getCardsByNames(names);
+  const identifiers = [...parsed.commanders, ...parsed.main].map((entry) => ({
+    name: entry.name,
+    ...(entry.set ? { set: entry.set } : {}),
+    ...(entry.collectorNumber ? { collectorNumber: entry.collectorNumber } : {}),
+  }));
+  const resolved = await getCardsByIdentifiers(identifiers);
   return { parsed, ...resolved };
 }
 
-function commanderIdentity(
-  parsed: ReturnType<typeof parseDecklist>,
-  cards: Awaited<ReturnType<typeof getCardsByNames>>['cards'],
-): string[] {
-  const commanderNames = new Set(parsed.commanders.map((entry) => entry.name.toLocaleLowerCase()));
-  const commanders = cards.filter((card) => commanderNames.has(card.name.toLocaleLowerCase()));
+function commanderIdentity(parsed: ReturnType<typeof parseDecklist>, cards: ScryfallCard[]): string[] {
+  const commanders = parsed.commanders
+    .map((entry) => resolveEntryCard(entry, cards))
+    .filter((card): card is ScryfallCard => Boolean(card));
   const source = commanders.length > 0 ? commanders : cards;
   return [...new Set(source.flatMap((card) => card.color_identity))].sort();
+}
+
+function numericPrice(value: string | null | undefined): number | null {
+  if (!value) return null;
+  const parsed = Number.parseFloat(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function priceForFinish(card: ScryfallCard, finish: 'nonfoil' | 'foil' | 'etched' | 'any'): number | null {
+  const prices = card.prices ?? {};
+  if (finish === 'nonfoil') return numericPrice(prices.usd);
+  if (finish === 'foil') return numericPrice(prices.usd_foil);
+  if (finish === 'etched') return numericPrice(prices.usd_etched);
+  const values = [prices.usd, prices.usd_foil, prices.usd_etched]
+    .map(numericPrice)
+    .filter((value): value is number => value !== null);
+  return values.length > 0 ? Math.min(...values) : null;
 }
 
 export function createMtgServer(): McpServer {
   const server = new McpServer({
     name: 'mtg-ultimate-mcp',
     title: 'MTG Ultimate',
-    version: '0.2.0',
+    version: '0.3.0',
     description:
-      'Magic: The Gathering card knowledge, Commander deck analysis, combo discovery, simulations, deck comparisons, community/tournament references, upgrade recommendations, and bracket estimation backed by live MTG data sources.',
+      'Magic: The Gathering card and printing knowledge, Commander deck analysis, pricing, combo discovery, colored-mana simulations, deck comparisons, community/tournament references, upgrade recommendations, and bracket estimation backed by live MTG data sources.',
   });
 
   server.registerTool(
@@ -64,16 +83,106 @@ export function createMtgServer(): McpServer {
     {
       title: 'Look up an MTG card',
       description:
-        'Look up a Magic card by name using Scryfall. Returns Oracle text, color identity, Commander legality, prices, printing data, keywords, EDHREC rank when available, and heuristic strategic roles. Prefer this over recalling card text from memory.',
+        'Look up a Magic card by name using Scryfall. Optionally constrain to a set code. Returns Oracle identity plus the resolved physical printing, price fields, legality, and strategic roles.',
       inputSchema: z.object({
-        name: z.string().min(1).max(256).describe('Card name. Fuzzy matching is used by default.'),
+        name: z.string().min(1).max(256),
         exact: z.boolean().optional().default(false),
+        set: z.string().min(2).max(12).optional(),
       }),
       annotations: { readOnlyHint: true, openWorldHint: true },
     },
-    async ({ name, exact }) => {
+    async ({ name, exact, set }) => {
       try {
-        return jsonResult(summarizeCard(await lookupCard(name, exact)));
+        return jsonResult(summarizeCard(await lookupCard(name, exact, set)));
+      } catch (error) {
+        return errorResult(error);
+      }
+    },
+  );
+
+  server.registerTool(
+    'printing_lookup',
+    {
+      title: 'Look up an exact MTG printing',
+      description:
+        'Resolve a physical Magic printing by expansion/set code and collector number. Use this when edition-specific pricing matters.',
+      inputSchema: z.object({
+        set: z.string().min(2).max(12).describe('Set/expansion code, such as CMM, LTC, FIN, or SLD.'),
+        collectorNumber: z.string().min(1).max(32),
+        language: z.string().min(2).max(8).optional(),
+      }),
+      annotations: { readOnlyHint: true, openWorldHint: true },
+    },
+    async ({ set, collectorNumber, language }) => {
+      try {
+        return jsonResult(summarizeCard(await lookupPrinting(set, collectorNumber, language)));
+      } catch (error) {
+        return errorResult(error);
+      }
+    },
+  );
+
+  server.registerTool(
+    'card_printings',
+    {
+      title: 'List all printings and prices for an MTG card',
+      description:
+        'List physical/digital printings of the same Oracle card with set code, set name, collector number, release date, finish availability, and printing-specific price fields. Useful when releases have different prices.',
+      inputSchema: z.object({
+        name: z.string().min(1).max(256),
+        limit: z.number().int().min(1).max(250).optional().default(100),
+        includeDigital: z.boolean().optional().default(false),
+      }),
+      annotations: { readOnlyHint: true, openWorldHint: true },
+    },
+    async ({ name, limit, includeDigital }) => {
+      try {
+        const printings = (await getCardPrintings(name, limit)).filter((card) => includeDigital || !card.digital);
+        return jsonResult({
+          name,
+          count: printings.length,
+          printings: printings.map(summarizeCard),
+          note: 'Each row is a distinct Scryfall printing; price fields belong to that printing, not to the Oracle card globally.',
+        });
+      } catch (error) {
+        return errorResult(error);
+      }
+    },
+  );
+
+  server.registerTool(
+    'compare_printing_prices',
+    {
+      title: 'Compare prices across MTG printings',
+      description:
+        'Find and sort printings of one card by current Scryfall USD reference price for nonfoil, foil, etched, or the cheapest available finish. Keeps set codes and collector numbers attached to every price.',
+      inputSchema: z.object({
+        name: z.string().min(1).max(256),
+        finish: z.enum(['nonfoil', 'foil', 'etched', 'any']).optional().default('nonfoil'),
+        includeDigital: z.boolean().optional().default(false),
+        limit: z.number().int().min(1).max(250).optional().default(100),
+      }),
+      annotations: { readOnlyHint: true, openWorldHint: true },
+    },
+    async ({ name, finish, includeDigital, limit }) => {
+      try {
+        const printings = (await getCardPrintings(name, 250))
+          .filter((card) => includeDigital || !card.digital)
+          .map((card) => ({ card, price: priceForFinish(card, finish) }))
+          .filter((row): row is { card: ScryfallCard; price: number } => row.price !== null)
+          .sort((a, b) => a.price - b.price)
+          .slice(0, limit);
+        return jsonResult({
+          name,
+          finish,
+          count: printings.length,
+          currency: 'USD',
+          printings: printings.map(({ card, price }) => ({
+            price,
+            ...summarizeCard(card),
+          })),
+          caveat: 'These are live reference fields from Scryfall and are not NZ-local retail quotes.',
+        });
       } catch (error) {
         return errorResult(error);
       }
@@ -85,9 +194,9 @@ export function createMtgServer(): McpServer {
     {
       title: 'Search MTG cards',
       description:
-        'Search Scryfall using Scryfall search syntax. Use for finding legal cards by color identity, text, type, mana value, set, theme, or other constraints. Results include Oracle text and strategic role tags.',
+        'Search Scryfall using Scryfall search syntax. Use for legal cards by color identity, Oracle text, type, mana value, set, theme, or other constraints.',
       inputSchema: z.object({
-        query: z.string().min(1).max(1_000).describe('A Scryfall search query.'),
+        query: z.string().min(1).max(1_000),
         limit: z.number().int().min(1).max(50).optional().default(10),
       }),
       annotations: { readOnlyHint: true, openWorldHint: true },
@@ -107,7 +216,7 @@ export function createMtgServer(): McpServer {
     {
       title: 'Compare MTG cards',
       description:
-        'Resolve two Magic cards from live card data and return them side by side. Use the returned Oracle text, mana value, roles, legality, community rank, and prices to explain which card better fits a deck or game plan.',
+        'Resolve two Magic cards side by side for Oracle text, mana, strategic roles, legality, community rank, and resolved-printing prices.',
       inputSchema: z.object({
         first: z.string().min(1).max(256),
         second: z.string().min(1).max(256),
@@ -127,9 +236,9 @@ export function createMtgServer(): McpServer {
   server.registerTool(
     'analyze_deck',
     {
-      title: 'Analyze a Commander deck',
+      title: 'Analyze and value a Commander deck',
       description:
-        'Parse a decklist and deeply analyze deck size, card types, curve, colored mana pips, early-play density, ramp, draw, tutors, interaction, protection, recursion, color identity, Commander legality, singleton violations, and structural warning signals.',
+        'Parse a Commander decklist and analyze structure, legality, curve, colored pips, roles, exact physical printing identity, and printing-specific Scryfall value. Lines such as `1 Sol Ring (CMM) 396` resolve that exact edition.',
       inputSchema: z.object({
         decklist: z.string().min(1).max(100_000),
         commanderNames: z.array(z.string().min(1).max(256)).max(12).optional().default([]),
@@ -141,9 +250,30 @@ export function createMtgServer(): McpServer {
       try {
         const parsed = parseDecklist(decklist, commanderNames);
         if (!resolveCards) return jsonResult({ parsed });
-        const names = [...parsed.commanders, ...parsed.main].map((entry) => entry.name);
-        const { cards, notFound } = await getCardsByNames(names);
+        const { cards, notFound } = await resolveDeck(decklist, commanderNames);
         return jsonResult(analyzeResolvedDeck(parsed, cards, notFound));
+      } catch (error) {
+        return errorResult(error);
+      }
+    },
+  );
+
+  server.registerTool(
+    'price_deck_printings',
+    {
+      title: 'Price exact MTG deck printings',
+      description:
+        'Resolve set codes and collector numbers from a pasted decklist and calculate a printing-aware USD reference value. Flags cards where the physical printing was not specified.',
+      inputSchema: z.object({
+        decklist: z.string().min(1).max(100_000),
+        commanderNames: z.array(z.string().min(1).max(256)).max(12).optional().default([]),
+      }),
+      annotations: { readOnlyHint: true, openWorldHint: true },
+    },
+    async ({ decklist, commanderNames }) => {
+      try {
+        const { parsed, cards, notFound } = await resolveDeck(decklist, commanderNames);
+        return jsonResult({ unresolvedCards: notFound, pricing: buildDeckPricing(parsed, cards) });
       } catch (error) {
         return errorResult(error);
       }
@@ -155,7 +285,7 @@ export function createMtgServer(): McpServer {
     {
       title: 'Monte Carlo simulate a Commander deck',
       description:
-        'Run thousands of deterministic Monte Carlo goldfish simulations to estimate opening-hand quality, mulligans, land development, spendable mana by turn, commander castability, early interaction/draw availability, mana-screw/flood proxies, and natural/tutor-proxy combo assembly. This is a consistency model, not a full MTG rules engine.',
+        'Run deterministic V0.3 Commander consistency simulations with colored mana requirements, tapped-land tempo, MDFC land choices, differentiated ramp sequencing, commander tax scenarios, mulligans, early interaction/draw, and combo assembly proxies.',
       inputSchema: z.object({
         decklist: z.string().min(1).max(100_000),
         commanderNames: z.array(z.string().min(1).max(256)).max(12).optional().default([]),
@@ -171,21 +301,9 @@ export function createMtgServer(): McpServer {
       try {
         const { parsed, cards, notFound } = await resolveDeck(decklist, commanderNames);
         if (notFound.length > 0) {
-          return jsonResult({
-            error: 'Resolve all or nearly all cards before simulation.',
-            unresolvedCards: notFound,
-            resolvedCards: cards.length,
-          });
+          return jsonResult({ error: 'Resolve all or nearly all cards before simulation.', unresolvedCards: notFound, resolvedCards: cards.length });
         }
-        return jsonResult(
-          simulateDeckConsistency(parsed, cards, {
-            iterations,
-            turns,
-            seed,
-            maxMulligans,
-            comboPieces,
-          }),
-        );
+        return jsonResult(simulateDeckConsistency(parsed, cards, { iterations, turns, seed, maxMulligans, comboPieces }));
       } catch (error) {
         return errorResult(error);
       }
@@ -197,7 +315,7 @@ export function createMtgServer(): McpServer {
     {
       title: 'Compare why two Commander decks perform differently',
       description:
-        'Resolve two decklists, calculate the same structural metrics, and run the same-seed Monte Carlo model on both. Returns measurable differences in curve, early plays, fast mana, ramp, draw, tutors, interaction, protection, mulligan pressure, mana development, commander timing, and early interaction/draw availability. Treats these as candidate explanations rather than proof of why a real player won or lost.',
+        'Run identical structural and same-seed simulation analysis on two lists and surface candidate explanations for consistency/performance differences without claiming causation.',
       inputSchema: z.object({
         firstDecklist: z.string().min(1).max(100_000),
         firstLabel: z.string().min(1).max(100).optional().default('First deck'),
@@ -242,7 +360,7 @@ export function createMtgServer(): McpServer {
     {
       title: 'Find combos in a Commander deck',
       description:
-        'Send a Commander decklist to Commander Spellbook and return known combos already in the deck plus combos the deck is close to completing. Include a Commander section or commander tags when possible.',
+        'Use Commander Spellbook to find combos already present plus near-combos the list is close to completing.',
       inputSchema: z.object({
         decklist: z.string().min(1).max(100_000),
         maxResultsPerCategory: z.number().int().min(1).max(100).optional().default(20),
@@ -263,7 +381,7 @@ export function createMtgServer(): McpServer {
     {
       title: 'Estimate Commander bracket',
       description:
-        'Use Commander Spellbook’s current bracket estimator to classify a deck and surface bracket-relevant cards and combos, including banned cards, Game Changers, mass land denial, extra turns, and strategically relevant combos.',
+        'Use Commander Spellbook current bracket evidence to surface classification, Game Changers, banned cards, MLD/extra-turn flags, and relevant combos.',
       inputSchema: z.object({
         decklist: z.string().min(1).max(100_000),
         unknownCommanders: z.boolean().optional().default(false),
@@ -284,7 +402,7 @@ export function createMtgServer(): McpServer {
     {
       title: 'Analyze public Archidekt reference decks',
       description:
-        'Load up to ten public Archidekt deck IDs/URLs, credit the original creators, compare their structural metrics and common card choices, and optionally show which common reference cards are missing from a target deck. Use as community evidence, not as proof of match performance.',
+        'Load public Archidekt references, preserve creator/source attribution, compare structural metrics and common cards, and optionally compare them with a target deck.',
       inputSchema: z.object({
         references: z.array(z.union([z.string().min(1).max(1_000), z.number().int().positive()])).min(1).max(10),
         targetDecklist: z.string().min(1).max(100_000).optional(),
@@ -305,7 +423,7 @@ export function createMtgServer(): McpServer {
     {
       title: 'Analyze real EDH tournament deck outcomes',
       description:
-        'Use TopDeck.gg EDH tournament results and submitted decklists to compare higher- and lower-performing sampled lists. Returns observed wins/draws/losses plus structural associations such as curve, fast mana, interaction, tutors, draw, protection, and early-action density. Requires TOPDECK_API_KEY and treats associations as correlation, not causation.',
+        'Use TopDeck.gg EDH results and submitted decklists to compare observed higher- and lower-performing structures. Requires TOPDECK_API_KEY and treats differences as associations rather than causal proof.',
       inputSchema: z.object({
         lastDays: z.number().int().min(1).max(365).optional().default(90),
         participantMin: z.number().int().min(4).max(500).optional().default(16),
@@ -337,7 +455,7 @@ export function createMtgServer(): McpServer {
     {
       title: 'Suggest Commander upgrades and cuts',
       description:
-        'Analyze structural deficits and search current Scryfall data for legal candidate upgrades under optional per-card USD, set, theme-query, and exclusion constraints. Returns candidate adds grouped by role deficit and cautious cut candidates. Role-count targets are heuristics, not official bracket rules.',
+        'Detect structural deficits and search current Scryfall data for legal candidate upgrades under optional price, set, theme, and exclusion constraints.',
       inputSchema: z.object({
         decklist: z.string().min(1).max(100_000),
         commanderNames: z.array(z.string().min(1).max(256)).max(12).optional().default([]),
