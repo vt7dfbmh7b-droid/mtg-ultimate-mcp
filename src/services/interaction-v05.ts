@@ -119,7 +119,7 @@ export function analyzeInteractionProfileV05(card: ScryfallCard): InteractionPro
   if (/this spell can['’]t be countered/i.test(text)) timingNotes.push('This spell itself cannot be countered by normal counter effects.');
   if (/cast this spell only/i.test(text)) timingNotes.push('Card-specific casting timing restriction detected.');
 
-  const normalizedKinds = unique(kinds.length > 0 ? kinds : ['other']);
+  const normalizedKinds: InteractionKind[] = unique<InteractionKind>(kinds.length > 0 ? kinds : ['other']);
   const confidence: InteractionProfileV05['confidence'] =
     normalizedKinds.some((kind) => ['hard-counter', 'destroy', 'exile', 'bounce', 'phase-out'].includes(kind))
       ? 'high'
