@@ -6,7 +6,7 @@ The goal is an **MTG brain for AI clients**: live card data, rules-aware deck an
 
 ## Current stage — V0.2 analysis, simulation, and references
 
-The server currently exposes ten read-only MCP tools:
+The server currently exposes eleven read-only MCP tools:
 
 | Tool | Purpose |
 | --- | --- |
@@ -15,6 +15,7 @@ The server currently exposes ten read-only MCP tools:
 | `compare_cards` | Resolve two cards side-by-side for strategy, legality, mana, community adoption, and price comparisons. |
 | `analyze_deck` | Parse a Commander decklist and calculate curve, colored pips, early plays, lands, ramp, draw, tutors, interaction, protection, recursion, legality, color identity, and structural signals. |
 | `simulate_deck_consistency` | Run deterministic Monte Carlo goldfish simulations for opening hands, mulligans, mana development, commander timing, interaction/draw availability, mana screw/flood proxies, and optional combo assembly. |
+| `compare_deck_performance_profiles` | Run the same structural and same-seed simulation model on two lists, then surface measurable differences that could explain consistency/performance differences without claiming causation. |
 | `find_deck_combos` | Use Commander Spellbook to find known combos already present and combos the deck is close to completing. |
 | `estimate_commander_bracket` | Use Commander Spellbook's bracket estimator to surface bracket classification, Game Changers, bans, extra turns, mass land denial, and strategically relevant combos. |
 | `analyze_archidekt_references` | Load public Archidekt decks, credit their creators, compare structures/common cards, and optionally compare them with a target deck. |
@@ -38,6 +39,8 @@ It can repeatedly sample realistic opening hands and early draws to measure thin
 - a clearly labelled tutor-assisted combo proxy
 
 The model exposes its simplifying assumptions in every result. It does **not** pretend that a goldfish percentage is a real match win rate.
+
+`compare_deck_performance_profiles` uses the **same seed and settings** on two resolved lists, which makes it useful for comparing an old list versus an upgraded list, a winning public list versus a lower-performing list, or two different builds of the same commander. Its explanations are candidate structural explanations, not claims that one variable caused a real-world win or loss.
 
 ## Real-world evidence layer
 
@@ -93,7 +96,7 @@ AI / MCP client
       |
       +-- analyze_deck ---------------------------> local parser + Scryfall
       |
-      +-- simulate_deck_consistency --------------> local Monte Carlo engine
+      +-- simulate / compare deck profiles -------> local Monte Carlo engine + Scryfall
       |
       +-- find_deck_combos / bracket -------------> Commander Spellbook
       |
@@ -183,6 +186,7 @@ The structural profiles help identify consistency gaps but are **not official br
 - Partner, Background, Doctor's companion, and similar commander-pairing rules are not yet fully validated locally.
 - Strategic role tags are heuristics; Oracle text and known combo data remain the source material for final analysis.
 - Monte Carlo simulation currently simplifies colored mana, tapped lands, complex sequencing, taxes, removal, combat, priority, and opponent decisions.
+- Same-seed deck comparisons improve consistency of the comparison but still do not reproduce real multiplayer games.
 - Tournament cohort analysis is observational and can be biased by which events/decklists are publicly available.
 - Scryfall price fields are useful reference data, not a complete NZ-specific shopping engine.
 - Upgrade cut suggestions are intentionally cautious and should be checked against simulations, reference lists, and actual play experience.
