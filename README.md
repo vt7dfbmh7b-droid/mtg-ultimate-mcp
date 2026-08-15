@@ -2,202 +2,182 @@
 
 An MCP-powered Magic: The Gathering knowledge, Commander rules, deck-building, printing-aware pricing, simulation, combo, interaction, combat, and evidence-analysis service.
 
-The goal is an **MTG brain for AI clients**: live Oracle/card data, exact printing identity, hard Commander legality, card explanations and best-use guidance, combo discovery, rules-aware simulations, supplied-state payment/combat/interaction reasoning, bracket evidence, upgrade research, public deck references, observed tournament outcomes, and eventually collection-aware complete deck building.
+The goal is an **MTG brain for AI clients**: accurate card knowledge, legal Commander deck construction, exact printing/set-aware prices, useful deck analysis, realistic-enough simulations, combo research, upgrades, and real-world reference evidence—without making normal answers harder to understand than they need to be.
 
-## Current stage — V0.5
+## Current stage — V0.6
 
-V0.5 has five linked layers:
+V0.6 combines six layers:
 
 1. **Rules facts** — Oracle text, color identity, Commander legality, commander pairing, deck size, singleton/copy-count rules.
 2. **Physical printing identity** — set code, collector number, finish, release metadata, and printing-specific prices.
-3. **Deck simulation** — V0.4 colored mana, land sequencing, legal fetch targets, tutors, draw engines, commander taxes, combo assembly, and pod-pressure scenarios.
-4. **Advanced gameplay intelligence** — V0.5 casting/payment mechanics, state-aware castability, card explanations, counter/removal/protection exchanges, combat snapshots, and commander-dependent cards.
-5. **Real-world evidence** — Scryfall, Commander Spellbook, attributed public Archidekt decks, and TopDeck.gg EDH tournament results when configured.
+3. **Baseline deck simulation** — strong land/fetch/tutor/draw/colored-mana sequencing from V0.4.
+4. **Advanced gameplay simulation** — turn-level Treasures, special payment mechanics, commander pressure, and protection exchanges from V0.6.
+5. **Card/game intelligence** — simple card explanations by default, with deeper casting, interaction, combat, and rules analysis available when needed.
+6. **Real-world evidence** — Scryfall, Commander Spellbook, attributed public Archidekt decks, and TopDeck.gg EDH tournament data when configured.
 
-The project deliberately separates **known rules** from **simulation assumptions/heuristics**. If a result cannot be solved confidently from the supplied state, the output should say so instead of inventing precision.
+The project deliberately separates **known rules** from **simulation assumptions**. If something cannot be solved confidently from the available game state, the tool should say so instead of inventing precision.
 
-## MCP tools
+## Simple explanations by default
 
-### Card / printing knowledge
+Normal card questions should be easy to read. `card_intelligence_v05` defaults to `detail: simple`, which focuses on:
+
+- what the card does
+- why it is useful
+- what it works well with
+- at most one important rule/interaction when needed
+
+`standard` and `detailed` modes remain available for complicated interactions or when deeper rules analysis is requested.
+
+## Main MCP tools
+
+### Cards, printings, and prices
 
 | Tool | Purpose |
 | --- | --- |
 | `card_lookup` | Resolve a card by name, optionally constrained to a set code. |
 | `printing_lookup` | Resolve one exact physical printing from set code + collector number. |
-| `card_printings` | List releases/printings with set, collector number, finish, date, and price fields. |
-| `compare_printing_prices` | Compare prices across physical releases of the same card. |
-| `card_search` | Advanced live card search. |
+| `card_printings` | List releases with set, collector number, finish, date, and price fields. |
+| `compare_printing_prices` | Compare prices across physical releases of the same Oracle card. |
+| `card_search` | Advanced live Scryfall search. |
 | `compare_cards` | Compare two cards for rules, role, mana, legality, and printing prices. |
-| `card_intelligence_v05` | One consolidated report: what a card does, best uses, synergies, casting mechanics, interaction profile, combat data, rules attention, and optional Commander fit. |
+| `card_intelligence_v05` | Plain-English card explanation plus optional deeper intelligence. |
+
+Rules identity and physical printing identity are intentionally separate. For example:
+
+```text
+1 Sol Ring (CMM) 396
+1 Sol Ring (LTC) 284 *F*
+```
+
+use the same Oracle card for rules, but retain different set codes, collector numbers, finishes, and prices.
+
+Supported finish annotations:
+
+```text
+*F* = foil
+*E* = etched
+*N* = nonfoil
+```
 
 ### Commander rules
 
 | Tool | Purpose |
 | --- | --- |
 | `check_commander_rules` | Hard Commander deck-construction validation. |
-| `check_card_for_commander` | Check whether one card is legal with the designated commander(s). |
-| `analyze_commander_dependencies_v05` | Find cards whose Oracle text depends on or references the commander. |
+| `check_card_for_commander` | Check one card against designated commander(s). |
+| `analyze_commander_dependencies_v05` | Find cards that depend on the commander being available/online. |
 
-The Commander rules layer enforces exact deck size, singleton/copy-count rules, current card legality, commander eligibility, supported two-commander pairing mechanics, combined color identity, and off-color/basic-land-type restrictions.
+The legality layer enforces:
 
-Example: a black-red commander permits black, red, black-red, and colorless identity cards. It does not permit a card with white, blue, or green in its color identity. Hybrid identity includes all colors shown in that identity.
+- exactly 100 cards including commander(s)
+- commander eligibility
+- supported legal two-commander pairings
+- current Commander legality/bans from live card data
+- combined commander color identity
+- off-color rejection
+- singleton/basic-land/card-specific copy-count exceptions
+- basic-land-type color restrictions
 
-### Deck / mana / pricing
+Example: a black-red commander permits black, red, black-red, and colorless identity cards, but not cards containing white, blue, or green identity.
+
+A fully resolved illegal Commander deck is blocked from advanced simulation and upgrade optimization.
+
+### Deck analysis, mana, and upgrades
 
 | Tool | Purpose |
 | --- | --- |
-| `analyze_deck` | Structure + printing value + hard Commander legality. |
-| `price_deck_printings` | Price exact `(SET) collector` entries and requested finishes. |
-| `analyze_mana_base_v04` | Land/source analysis, exact fetch targets, common land conditions, restricted mana, reducers. |
-| `suggest_upgrades` | Legal, printing-aware candidate upgrades under budget/set/theme constraints. |
+| `analyze_deck` | Structure, curve, roles, printing value, and hard Commander legality. |
+| `price_deck_printings` | Value exact `(SET) collector` entries and requested finishes. |
+| `analyze_mana_base_v04` | Mana sources, common land conditions, fetch targets, restricted mana, reducers. |
+| `suggest_upgrades` | Legal, printing-aware upgrades under budget/set/theme constraints. |
 
-### Simulation / comparison
+Upgrade pricing can select a cheaper valid printing instead of treating a card name as having one universal price.
+
+### V0.6 hybrid simulation
 
 | Tool | Purpose |
 | --- | --- |
-| `simulate_deck_consistency` | Default V0.4 rules-aware Monte Carlo sequencer. |
-| `simulate_pod_pressure_v04` | Explicit opponent-pressure scenarios over the V0.4 base model. |
+| `simulate_deck_consistency` | Existing detailed consistency model for opening hands, mana, lands, fetches, tutors, draw, and combos. |
+| `simulate_pod_pressure_v04` | Existing pressure scenarios over the baseline consistency model. |
+| `simulate_advanced_gameplay_v06` | New hybrid V0.6 simulation combining the baseline with advanced turn-level gameplay. |
 | `compare_deck_performance_profiles` | Same-seed comparison of two deck structures/simulations. |
 
-V0.4 remains the deck-level Monte Carlo foundation and models common land decisions, colored mana, commander tax affordability, legal fetch targets, actual tutor targets, extra-card draw flow, restricted mana, common reducers, and requested combo assembly.
+`simulate_advanced_gameplay_v06` keeps two views rather than forcing one model to pretend it is best at everything:
 
-### V0.5 casting / payment / resources
+**Baseline lane (V0.4)**
 
-| Tool | Purpose |
-| --- | --- |
-| `analyze_card_casting_v05` | Detect advanced casting/payment mechanics and Treasure generation on one card. |
-| `analyze_deck_casting_v05` | Inventory those mechanics across a resolved deck. |
-| `evaluate_castability_v05` | Test normal/alternative/free casting from a supplied resource state. |
+- London-style mulligans
+- colored mana requirements
+- common conditional/tapped land behavior
+- legal fetch targets still present in the library
+- mana rocks, dorks, land ramp, and rituals
+- restricted mana and common reducers
+- actual common tutor restrictions/destinations
+- one-shot and simple recurring draw
+- commander tax affordability
+- requested combo-piece assembly
 
-V0.5 recognizes common patterns including:
+**Advanced lane (V0.6)**
 
+- Treasure creation and later spending
 - convoke
 - improvise
 - delve
-- affinity
-- Phyrexian mana
-- named alternative costs such as evoke, escape, blitz, overload, prototype, and sneak when detectable from current Oracle text
-- pitch-style “rather than pay this spell’s mana cost” text
-- “without paying its mana cost” permissions
-- immediate and recurring Treasure creation
+- artifact affinity
+- Phyrexian mana/life payments
+- supported named alternative costs such as evoke, escape, blitz, overload, prototype, and sneak when enough information is available
+- commander casts, tax, removal, and battlefield uptime
+- modeled challenges to key spells
+- protection responses using resources still available after the original spell has been paid for
+- board-wipe pressure proxy
+- commander-dependent permanents
+- named combo-piece zone readiness
 
-`evaluate_castability_v05` can use colored/colorless/flexible mana, Treasures, convoke creatures, improvise artifacts, graveyard cards for delve, an affinity count, life for Phyrexian mana, and commander tax.
+The default `detail: simple` result is intentionally short and focuses on what helped, what slowed the deck down, and the most useful numbers. `standard` and `detailed` expose the deeper simulation data.
 
-Commander tax is retained as an applicable additional cost on supported alternative/free casting lines.
+Pressure profiles are:
 
-### V0.5 interaction / combat
+```text
+goldfish | casual | upgraded | optimized | cedh
+```
+
+Their interaction/removal probabilities are **transparent simulation assumptions**, not measured win rates.
+
+## V0.5 supplied-state gameplay tools retained
 
 | Tool | Purpose |
 | --- | --- |
-| `evaluate_interaction_exchange_v05` | Compare a named threat, answer, and optional protection response. |
-| `simulate_combat_snapshot_v05` | Estimate one combat snapshot from named attackers/blockers and track named commander damage. |
+| `analyze_card_casting_v05` | Detect advanced casting/payment mechanics and Treasure generation. |
+| `analyze_deck_casting_v05` | Inventory those mechanics across a deck. |
+| `evaluate_castability_v05` | Test whether a card can be cast from a supplied resource state. |
+| `evaluate_interaction_exchange_v05` | Evaluate a named threat, answer, and optional protection response. |
+| `simulate_combat_snapshot_v05` | Estimate one supplied combat snapshot. |
 
-The interaction analyzer recognizes common hard/soft counters, counter restrictions, destroy/exile/bounce/damage removal, board-wipe signals, hexproof, indestructible, phasing, uncounterable effects, and countering the interaction spell.
+These are useful when the question is about a particular game state rather than thousands of simulated deck runs.
 
-It reports **definite**, **conditional**, or **unlikely** instead of claiming every arbitrary stack is fully solved.
-
-The combat snapshot currently supports printed numeric power/toughness plus common flying, reach, menace, trample, double-strike awareness, first-strike awareness, deathtouch, lifelink/vigilance metadata, unblockable text, and named commander-damage tracking.
-
-Variable stats such as `*` are explicitly unresolved rather than treated as zero.
-
-### Combo / bracket / evidence
+## Combos, brackets, and real-world evidence
 
 | Tool | Purpose |
 | --- | --- |
 | `find_deck_combos` | Commander Spellbook combos and near-combos. |
 | `estimate_commander_bracket` | Current bracket evidence and relevant cards/combos. |
 | `analyze_archidekt_references` | Attributed public community deck comparisons. |
-| `analyze_tournament_results` | Attributed TopDeck.gg EDH outcome/decklist comparisons. |
+| `analyze_tournament_results` | Attributed TopDeck.gg EDH result/decklist comparisons. |
 
-## Oracle card vs physical printing
+Real-world deck evidence is used to ask questions such as:
 
-MTG Ultimate keeps rules identity and physical printing identity separate.
+- which cards/packages recur in successful lists?
+- what structural differences exist between stronger and weaker lists?
+- does one build produce more reliable mana, interaction, protection, or early action?
 
-For example:
+Observed deck results are treated as associations, not proof that a single card caused a win or loss.
 
-```text
-1 Sol Ring (CMM) 396
-```
+## Data sources
 
-resolves that exact printing for set/collector/finish/price data while still using Sol Ring’s Oracle identity for rules and deck analysis.
-
-Name-only entries still work for rules analysis but cannot identify a unique physical release for exact valuation.
-
-Supported finish annotations include:
-
-```text
-1 Card Name (SET) 123 *F*   # foil
-1 Card Name (SET) 123 *E*   # etched
-1 Card Name (SET) 123 *N*   # nonfoil
-```
-
-## Commander legality philosophy
-
-A fully resolved illegal Commander deck is blocked from advanced simulation and upgrade optimization.
-
-If one or more cards cannot be resolved, the rules engine returns an incomplete result instead of falsely declaring the list legal.
-
-Supported current two-commander patterns include the project’s tested handling for original Partner, Friends forever, Partner—Character select, Choose a Background, Doctor’s companion, and matching Partner with pairs.
-
-## V0.4 Monte Carlo model
-
-The default consistency simulator currently models or approximates:
-
-- London-style mulligans
-- real lands and MDFCs
-- colored casting requirements
-- common tapped/conditional land behavior
-- legal fetch targets still present in the simulated library
-- mana rocks/dorks/land ramp/ritual-style sources
-- common restricted mana
-- common generic reducers
-- commander first-cast and +2/+4 tax affordability
-- one-shot and simple recurring draw flow
-- actual common tutor target restrictions/destinations
-- requested combo assembly
-- early interaction availability
-
-It is a consistency/game-state model, not a claimed multiplayer win-rate oracle.
-
-## V0.5 payment rules
-
-The V0.5 payment solver follows the broad current casting-cost structure:
-
-1. choose the normal or applicable alternative cost
-2. add applicable additional costs such as commander tax
-3. apply supported reductions such as affinity
-4. pay the resulting cost using supported payment mechanics/resources
-
-Supported supplied-state resources include:
-
-- W/U/B/R/G/C mana
-- flexible any-color mana
-- Treasure tokens
-- convoke creatures and their colors
-- improvise artifacts
-- graveyard cards for delve
-- affinity count
-- life for Phyrexian symbols
-
-Card-specific permission, timing, sacrifice, discard, exile, X-value, and unusual additional-cost conditions may still require more state and are reported as conditional.
-
-## Evidence sources
-
-### Scryfall
-
-Primary live source for Oracle identity, color identity, legality, exact printings, set/collector resolution, search, release metadata, finishes, and price fields.
-
-### Commander Spellbook
-
-Known combos, near-combos, and current Commander bracket evidence.
-
-### Archidekt
-
-Public community reference decks with source/creator attribution.
-
-### TopDeck.gg
-
-Observed EDH tournament results and available submitted decklists when `TOPDECK_API_KEY` is configured. Tournament comparisons are observational associations, not causal proof.
+- **Scryfall** — Oracle identity, color identity, legality, exact printings, set/collector resolution, release metadata, finishes, and reference price fields.
+- **Commander Spellbook** — known combos, near-combos, and bracket evidence.
+- **Archidekt** — attributed public community deck references.
+- **TopDeck.gg** — observed EDH tournament results/decklists when `TOPDECK_API_KEY` is configured.
 
 ## Architecture
 
@@ -205,24 +185,20 @@ Observed EDH tournament results and available submitted decklists when `TOPDECK_
 AI / MCP client
       |
       v
-   /mcp
+    /mcp
       |
-      +-- card / printing / prices ----------------> Scryfall
+      +-- cards / printings / prices -------------> Scryfall
       +-- Commander legality ----------------------> local rules engine + Scryfall
-      +-- deck analysis / Monte Carlo -------------> local V0.4 engine + Scryfall
-      +-- card intelligence / casting / payment ---> local V0.5 engines + Scryfall
-      +-- interaction / combat snapshots ----------> local V0.5 state engines + Scryfall
-      +-- combos / bracket -------------------------> Commander Spellbook
-      +-- public deck references ------------------> Archidekt
-      +-- tournament evidence ---------------------> TopDeck.gg + Scryfall
+      +-- baseline consistency --------------------> V0.4 simulation engine
+      +-- advanced turn gameplay -----------------> V0.6 + V0.5 payment engine
+      +-- combos / bracket ------------------------> Commander Spellbook
+      +-- community references -------------------> Archidekt
+      +-- tournament evidence --------------------> TopDeck.gg
 ```
 
 ## Run locally
 
-Requirements:
-
-- Node.js 20+
-- npm
+Requirements: Node.js 20+ and npm.
 
 ```bash
 npm install
@@ -241,13 +217,6 @@ Build and test:
 npm run check
 ```
 
-## Docker
-
-```bash
-docker build -t mtg-ultimate-mcp .
-docker run --rm -p 3000:3000 mtg-ultimate-mcp
-```
-
 ## Environment variables
 
 | Variable | Default | Purpose |
@@ -257,7 +226,7 @@ docker run --rm -p 3000:3000 mtg-ultimate-mcp
 | `SCRYFALL_API_BASE` | `https://api.scryfall.com` | Scryfall API origin. |
 | `COMMANDER_SPELLBOOK_API_BASE` | `https://backend.commanderspellbook.com` | Commander Spellbook API origin. |
 | `TOPDECK_API_BASE` | `https://topdeck.gg/api` | TopDeck.gg API origin. |
-| `TOPDECK_API_KEY` | empty | Optional API key for tournament analysis. |
+| `TOPDECK_API_KEY` | empty | Optional tournament-data API key. |
 | `MTG_USER_AGENT` | project identifier | Upstream User-Agent. |
 
 ## Decklist format
@@ -272,30 +241,21 @@ docker run --rm -p 3000:3000 mtg-ultimate-mcp
 3 Swamp (NEO) 297 *F*
 ```
 
-The parser also recognizes common Commander tags and explicit `commanderNames` inputs when needed.
+## Current limits / next deep-state work
 
-## Current limits
+V0.6 is much more useful for real deck testing, but it is still not a complete digital implementation of every Magic rule. Future work includes:
 
-V0.5 is materially more rules-aware, but it is not a complete digital implementation of all Magic rules.
+- ward payment and controller-sensitive targeting inside simulations
+- replacement/prevention effects and layer interactions
+- arbitrary modes, X values, unusual additional costs, and copy effects
+- richer stack/priority trees and opponent target selection
+- counters, Equipment, Auras, lords, and continuous effects in combat
+- exact graveyard/exile/battlefield prerequisites for more combo lines
+- multiplayer defending-player choices, attack taxes, and politics
+- calibrating pressure assumptions against larger real-world tournament/reference datasets
 
-Deep-state work still includes:
-
-- Treasure generation/spending inside every Monte Carlo turn
-- alternative/free costs inside deck-level sequencing
-- convoke/improvise/delve/affinity inside the Monte Carlo engine itself
-- ward payment and controller-sensitive targeting
-- replacement/prevention/layer systems
-- arbitrary modes, X values, additional costs, and copy interactions
-- board-state-aware opponent target selection
-- full priority/stack trees
-- commander-dependent permanents responding dynamically to removal/recast state
-- counters/equipment/auras/lords/continuous effects in combat
-- multiplayer defending-player choice and attack taxes
-- richer graveyard/exile/battlefield requirements for combos
-- politics and opponent strategic choice
-
-See [`docs/V0.4_RULES_AND_SIMULATION.md`](docs/V0.4_RULES_AND_SIMULATION.md) and [`docs/V0.5_ADVANCED_GAMEPLAY.md`](docs/V0.5_ADVANCED_GAMEPLAY.md) for the model boundaries.
+See `docs/V0.4_RULES_AND_SIMULATION.md`, `docs/V0.5_ADVANCED_GAMEPLAY.md`, and `docs/V0.6_HYBRID_SIMULATION.md` for model boundaries.
 
 ## Development
 
-The project is private and under active development. Changes are developed on the feature branch and kept in a draft pull request while the foundation is still being expanded. CI uses strict TypeScript build checks plus the test suite before each stage is treated as green.
+The repository remains under active development on the feature branch and draft PR. Strict TypeScript compilation plus the full test suite must pass before a stage is treated as green.
