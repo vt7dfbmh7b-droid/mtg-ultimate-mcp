@@ -1,0 +1,33 @@
+name: FF cEDH Fast Regression
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["agent/**"]
+    paths:
+      - "scripts/e2e-ff-cedh-refine.ts"
+      - "testdata/ff-najeela-powerful-baseline.txt"
+      - ".github/workflows/ff-cedh-fast.yml"
+      - "src/services/cedh-refinement-v14.ts"
+      - "src/services/printing-policy-v08.ts"
+      - "src/services/scryfall.ts"
+      - "src/services/spellbook.ts"
+      - "src/services/commander-rules.ts"
+      - "src/services/deck.ts"
+
+permissions:
+  contents: read
+
+jobs:
+  ff-cedh-fast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run build
+      - name: Refine known FF Powerful baseline toward cEDH
+        run: npx tsx scripts/e2e-ff-cedh-refine.ts
