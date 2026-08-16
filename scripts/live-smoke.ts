@@ -7,36 +7,17 @@ function asRecord(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
 }
 
-async function probeUrl(url: string): Promise<{ url: string; status: number | null; ok: boolean; detail: string }> {
-  try {
-    const response = await fetch(url, { headers: { Accept: 'application/json' } });
-    return {
-      url,
-      status: response.status,
-      ok: response.ok,
-      detail: `${response.status} ${response.statusText}`,
-    };
-  } catch (error) {
-    return {
-      url,
-      status: null,
-      ok: false,
-      detail: error instanceof Error ? error.message : String(error),
-    };
-  }
-}
-
 async function main(): Promise<void> {
   const health = await sourceHealthDiagnosticsV12({ includeReferenceSources: false });
   console.log('SOURCE HEALTH');
   console.log(JSON.stringify(health, null, 2));
 
-  const edhTop16HostProbes = await Promise.all([
-    probeUrl('https://edhtop16.com/api/get_commanders'),
-    probeUrl('https://cedhtop16.com/api/get_commanders'),
-  ]);
-  console.log('\nEDHTOP16 API HOST DIAGNOSTIC');
-  console.log(JSON.stringify(edhTop16HostProbes, null, 2));
+  const sources = Array.isArray(health.sources) ? health.sources.map(asRecord) : [];
+  for (const id of ['scryfall', 'commander-spellbook', 'mtgjson', 'edhtop16']) {
+    const source = sources.find((entry) => entry.id === id);
+    assert.ok(source, `source health should include ${id}`);
+    assert.equal(source.state, 'healthy', `${id} live integration should be healthy`);
+  }
 
   const solRing = await lookupCard('Sol Ring', true);
   assert.equal(solRing.name, 'Sol Ring');
