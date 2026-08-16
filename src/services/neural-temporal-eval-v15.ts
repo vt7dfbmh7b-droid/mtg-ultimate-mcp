@@ -113,7 +113,8 @@ export function evaluateNeuralOnTemporalCorpusV15(
   options: NeuralRankerOptionsV15 & { holdoutFraction?: number } = {},
 ): NeuralTemporalEvaluationV15 {
   const corpusAudit = auditLearningCorpusV15(records);
-  const split = temporalSplitLearningCorpusV15(records, options.holdoutFraction ?? 0.2);
+  const holdoutFraction = Number.isFinite(options.holdoutFraction) ? options.holdoutFraction ?? 0.2 : 0.2;
+  const split = temporalSplitLearningCorpusV15(records, holdoutFraction);
   const trainingExamples = split.trainingExamples;
   const holdoutExamples = split.holdoutExamples;
 
@@ -124,8 +125,9 @@ export function evaluateNeuralOnTemporalCorpusV15(
 
   if (trainingExamples.length >= 10 && holdoutExamples.length > 0) {
     neuralModel = trainNeuralRankerV15(trainingExamples, options);
+    const neuralEpochs = Number.isFinite(options.epochs) ? options.epochs ?? 400 : 400;
     transparentModel = trainAdaptiveRankerV15(trainingExamples, {
-      epochs: Math.min(500, Math.max(120, Math.trunc((options.epochs ?? 400) / 2))),
+      epochs: Math.min(500, Math.max(120, Math.trunc(neuralEpochs / 2))),
       learningRate: 0.08,
       l2: 0.01,
       minimumExamples: Math.max(10, trainingExamples.length + 1),
@@ -146,6 +148,8 @@ export function evaluateNeuralOnTemporalCorpusV15(
     independentEvidenceGroups: corpusAudit.independentEvidenceGroups,
     evidenceClassCount: corpusAudit.evidenceClassCount,
     duplicateRate: corpusAudit.duplicateRate,
+    conflictRate: corpusAudit.conflictRate,
+    malformedRate: corpusAudit.malformedRate,
     leakageChecksPassed: split.leakageChecksPassed,
     transparentBaselineAccuracy: transparentTemporalMetrics.accuracy,
     candidateModelAccuracy: neuralTemporalMetrics.accuracy,
