@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import { validateCommanderDeck } from '../src/services/commander-rules.js';
-import { parseDecklist, type DeckEntry, type ParsedDeck } from '../src/services/deck.js';
+import { buildDeckMetrics, parseDecklist, type DeckEntry, type ParsedDeck } from '../src/services/deck.js';
 import { getPreconStockV10, searchCommanderPreconsV10 } from '../src/services/precons-v10.js';
 import { refinePreconIterativelyV12 } from '../src/services/refinement-workflows-v12.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from '../src/services/scryfall.js';
+import type { ScryfallCard } from '../src/types/scryfall.js';
 
 const MAX_TOTAL_USD = 100;
 const MAX_USD_PER_CARD = 20;
@@ -85,11 +86,12 @@ function numericPrice(value: unknown): number | null {
   return null;
 }
 
-async function assertResolvedLegalDeck(parsed: ParsedDeck, label: string): Promise<void> {
+async function assertResolvedLegalDeck(parsed: ParsedDeck, label: string): Promise<ScryfallCard[]> {
   const resolved = await getCardsByIdentifiers(identifiers(parsed));
   assert.deepEqual(resolved.notFound, [], `${label} must resolve every exact card/printing identifier`);
   const rules = validateCommanderDeck(parsed, resolved.cards);
   assert.equal(rules.isLegal, true, `${label} must pass hard Commander legality`);
+  return resolved.cards;
 }
 
 async function main(): Promise<void> {
@@ -115,7 +117,8 @@ async function main(): Promise<void> {
   const stockDecklist = String(stock.stockDecklist);
   const stockParsed = parseDecklist(stockDecklist);
   assert.equal(stockParsed.totalCards, 100, 'parsed stock deck must contain exactly 100 cards');
-  await assertResolvedLegalDeck(stockParsed, 'stock deck');
+  const stockCards = await assertResolvedLegalDeck(stockParsed, 'stock deck');
+  const stockMetrics = buildDeckMetrics(stockParsed, stockCards);
 
   console.log(`COMMANDER E2E: refining ${String(asRecord(stock.precon).name ?? reference)} with $${MAX_TOTAL_USD} total / $${MAX_USD_PER_CARD} per-card caps...`);
   const result = await refinePreconIterativelyV12({
@@ -141,7 +144,9 @@ async function main(): Promise<void> {
   const finalParsed = parseDecklist(finalDecklist);
 
   assert.equal(finalParsed.totalCards, 100, 'refined deck must still contain exactly 100 cards');
-  await assertResolvedLegalDeck(finalParsed, 'refined deck');
+  const finalCards = await assertResolvedLegalDeck(finalParsed, 'refined deck');
+  const finalMetrics = buildDeckMetrics(finalParsed, finalCards);
+  assert.equal(finalMetrics.landCount, stockMetrics.landCount, 'automatic nonland upgrade swaps must preserve the stock land count');
 
   const stockCommanders = stockParsed.commanders.map((entry) => entry.name.toLocaleLowerCase()).sort();
   const finalCommanders = finalParsed.commanders.map((entry) => entry.name.toLocaleLowerCase()).sort();
@@ -167,6 +172,10 @@ async function main(): Promise<void> {
     const incoming = String(swap.in).toLocaleLowerCase();
     touchedNames.add(outgoing);
     touchedNames.add(incoming);
+
+    const incomingCard = finalCards.find((card) => card.name.toLocaleLowerCase() === incoming);
+    assert.ok(incomingCard, `${String(swap.in)} must resolve in the final deck`);
+    assert.equal(incomingCard.type_line.toLocaleLowerCase().includes('land'), false, `${String(swap.in)} must not silently turn a nonland upgrade slot into a land`);
 
     const printing = asRecord(swap.recommendedPrinting);
     assert.equal(typeof printing.set, 'string', `${String(swap.in)} must include a recommended set code`);
@@ -204,7 +213,7 @@ async function main(): Promise<void> {
     const printing = asRecord(swap.recommendedPrinting);
     console.log(`- ${String(swap.out)} -> ${String(swap.in)} (${String(printing.set)} ${String(printing.collectorNumber)}) $${String(printing.priceUsd)}`);
   }
-  console.log(`\nFINAL: 100 cards, Commander legal, ${swaps.length} swap(s), estimated spend $${estimatedSpend?.toFixed(2)}.`);
+  console.log(`\nFINAL: 100 cards, Commander legal, land count ${finalMetrics.landCount}, ${swaps.length} swap(s), estimated spend $${estimatedSpend?.toFixed(2)}.`);
   console.log('COMMANDER E2E RESULT: PASS');
 }
 
