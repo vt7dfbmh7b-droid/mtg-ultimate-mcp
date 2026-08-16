@@ -69,3 +69,64 @@ test('neural score is blocked before inference when hard deck gates fail', () =>
   assert.equal(scored.probability, null);
   assert.deepEqual(scored.failedGuardrails.sort(), ['fullyResolved', 'printingPolicyCompliant']);
 });
+
+test('non-finite feature and importance values cannot poison neural weights or inference', () => {
+  const examples = xorExamples(20);
+  const contaminated = examples.map((example, index) => index === 7
+    ? {
+        ...example,
+        importance: Number.NaN,
+        features: {
+          ...example.features,
+          priceEfficiency: Number.NaN,
+          communitySupport: Number.POSITIVE_INFINITY,
+        },
+      }
+    : example);
+
+  const model = trainNeuralRankerV15(contaminated, { epochs: 250, seed: 71 });
+  const allParameters = [
+    ...model.weights1.flat(),
+    ...model.bias1,
+    ...model.weights2.flat(),
+    ...model.bias2,
+    ...model.weights3,
+    model.bias3,
+  ];
+  assert.equal(allParameters.every(Number.isFinite), true);
+  assert.equal(model.holdoutAccuracy === null || Number.isFinite(model.holdoutAccuracy), true);
+
+  const scored = scoreCandidateWithNeuralV15(
+    { tournamentSupport: Number.POSITIVE_INFINITY, comboVerification: Number.NaN },
+    model,
+    {
+      commanderLegal: true,
+      fullyResolved: true,
+      exactCardCount: true,
+      printingPolicyCompliant: true,
+    },
+  );
+  assert.equal(scored.eligible, true);
+  assert.notEqual(scored.probability, null);
+  assert.equal(Number.isFinite(scored.probability), true);
+});
+
+test('non-finite neural hyperparameters fall back to safe defaults', () => {
+  const model = trainNeuralRankerV15(xorExamples(10), {
+    hiddenLayerOne: Number.NaN,
+    hiddenLayerTwo: Number.POSITIVE_INFINITY,
+    epochs: Number.NaN,
+    learningRate: Number.NaN,
+    l2: Number.NaN,
+    seed: Number.NaN,
+  });
+
+  assert.equal(model.hiddenLayerOne, 8);
+  assert.equal(model.hiddenLayerTwo, 4);
+  assert.equal(model.seed, 20_260_816);
+  assert.equal(model.weights1.length, 8);
+  assert.equal(model.weights2.length, 4);
+  assert.equal(model.weights1.flat().every(Number.isFinite), true);
+  assert.equal(model.weights2.flat().every(Number.isFinite), true);
+  assert.equal(model.weights3.every(Number.isFinite), true);
+});
