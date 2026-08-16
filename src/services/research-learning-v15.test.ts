@@ -213,3 +213,41 @@ test('deep-learning candidate cannot promote if it does not beat transparent bas
   assert.notEqual(readiness.status, 'promotion-ready');
   assert.ok(readiness.blockers.some((blocker) => blocker.includes('does not materially beat')));
 });
+
+test('deep-learning candidate cannot promote without a transparent baseline comparison', () => {
+  const readiness = evaluateDeepLearningReadinessV15({
+    labelledExamples: 3000,
+    positiveExamples: 1600,
+    negativeExamples: 1400,
+    temporalCoverageDays: 365,
+    independentEvidenceGroups: 8,
+    evidenceClassCount: 5,
+    duplicateRate: 0.03,
+    leakageChecksPassed: true,
+    transparentBaselineAccuracy: null,
+    candidateModelAccuracy: 0.9,
+    temporalHoldoutExamples: 500,
+  });
+
+  assert.equal(readiness.status, 'experiment-ready');
+  assert.ok(readiness.blockers.some((blocker) => blocker.includes('Transparent baseline')));
+});
+
+test('deep-learning readiness rejects inconsistent label totals', () => {
+  const readiness = evaluateDeepLearningReadinessV15({
+    labelledExamples: 3000,
+    positiveExamples: 2500,
+    negativeExamples: 1500,
+    temporalCoverageDays: 365,
+    independentEvidenceGroups: 8,
+    evidenceClassCount: 5,
+    duplicateRate: 0.03,
+    leakageChecksPassed: true,
+    transparentBaselineAccuracy: 0.76,
+    candidateModelAccuracy: 0.82,
+    temporalHoldoutExamples: 500,
+  });
+
+  assert.equal(readiness.status, 'not-ready');
+  assert.ok(readiness.blockers.some((blocker) => blocker.includes('label counts')));
+});
