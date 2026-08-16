@@ -1,0 +1,41 @@
+name: Commander E2E
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["agent/**"]
+    paths:
+      - "scripts/e2e-commander-scenario.ts"
+      - ".github/workflows/commander-e2e.yml"
+      - "package.json"
+      - "src/services/commander-rules.ts"
+      - "src/services/deck.ts"
+      - "src/services/deck-builder-v07.ts"
+      - "src/services/optimizer-v11.ts"
+      - "src/services/optimizer-v12.ts"
+      - "src/services/precons-v10.ts"
+      - "src/services/refinement-workflows-v12.ts"
+      - "src/services/scryfall.ts"
+      - "src/services/upgrade.ts"
+
+permissions:
+  contents: read
+
+jobs:
+  commander-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run real precon upgrade scenario
+        run: npm run test:e2e
