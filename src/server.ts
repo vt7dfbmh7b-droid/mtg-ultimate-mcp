@@ -1,5 +1,6 @@
 import { McpServer } from '@modelcontextprotocol/server';
 import * as z from 'zod/v4';
+import { config } from './config.js';
 import { compareDeckPerformanceProfiles } from './services/comparison.js';
 import { validateCommanderDeck } from './services/commander-rules.js';
 import { analyzeResolvedDeck, buildDeckPricing, parseDecklist, resolveEntryCard } from './services/deck.js';
@@ -73,9 +74,9 @@ export function createMtgServer(): McpServer {
   const server = new McpServer({
     name: 'mtg-ultimate-mcp',
     title: 'MTG Ultimate',
-    version: '0.4.0',
+    version: config.version,
     description:
-      'Magic: The Gathering card and printing knowledge, hard Commander deck-construction rules, pricing, combo discovery, colored-mana simulations, deck comparisons, community/tournament references, upgrade recommendations, and bracket estimation backed by live MTG data sources.',
+      'Magic: The Gathering card and printing knowledge, hard Commander deck-construction rules, pricing, combo discovery, gameplay simulations, deck comparisons, community/tournament evidence, deck building, precon intelligence, and upgrade recommendations backed by live MTG data sources.',
   });
 
   server.registerTool(
