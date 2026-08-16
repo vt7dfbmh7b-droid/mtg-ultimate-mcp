@@ -97,6 +97,31 @@ test('contradictory labels for the same observed outcome are quarantined instead
   assert.equal([...split.training, ...split.holdout].some((entry) => entry.outcomeId === 'event-1-player-1'), false);
 });
 
+test('same outcome with conflicting exact deck identity is quarantined even when labels agree', () => {
+  const first = record();
+  const differentPhysicalDeck = record({
+    sourceId: 'mirror',
+    deckFingerprint: fingerprintExactDeckV15(deckDifferentPrinting),
+  });
+  const deduped = deduplicateLearningCorpusV15([first, differentPhysicalDeck]);
+
+  assert.equal(deduped.records.length, 0);
+  assert.equal(deduped.duplicateRecords.length, 0);
+  assert.equal(deduped.conflictingRecords.length, 2);
+});
+
+test('same outcome with conflicting commander identity is quarantined', () => {
+  const first = record();
+  const commanderConflict = record({
+    sourceId: 'mirror',
+    commanderNames: ['Thrasios, Triton Hero', 'Tymna the Weaver'],
+  });
+  const deduped = deduplicateLearningCorpusV15([first, commanderConflict]);
+
+  assert.equal(deduped.records.length, 0);
+  assert.equal(deduped.conflictingRecords.length, 2);
+});
+
 test('malformed provenance and non-finite learning features are quarantined before training', () => {
   const invalidFingerprint = record({
     outcomeId: 'bad-hash',
@@ -130,6 +155,7 @@ test('malformed provenance and non-finite learning features are quarantined befo
   const audit = auditLearningCorpusV15([invalidFingerprint, invalidFeature, invalidCommander, valid]);
   assert.equal(audit.uniqueRecords, 1);
   assert.equal(audit.malformedRecords, 3);
+  assert.equal(audit.malformedRate, 0.75);
 });
 
 test('temporal split keeps a leakage group entirely on one side of the holdout boundary', () => {
@@ -163,6 +189,8 @@ test('learning corpus audit reports duplicate, balance, diversity and temporal c
   assert.equal(audit.uniqueRecords, 3);
   assert.equal(audit.duplicateRecords, 1);
   assert.equal(audit.conflictingRecords, 0);
+  assert.equal(audit.malformedRecords, 0);
+  assert.equal(audit.malformedRate, 0);
   assert.equal(audit.positiveExamples, 2);
   assert.equal(audit.negativeExamples, 1);
   assert.equal(audit.independentEvidenceGroups, 3);
