@@ -18,7 +18,6 @@ function xorExamples(repetitions = 50): LearningExampleV15[] {
         features: {
           tournamentSupport: pattern.a,
           comboVerification: pattern.b,
-          crossClassResearch: pattern.a * pattern.b * 0.1,
         },
       });
     }
