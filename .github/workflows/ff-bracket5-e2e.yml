@@ -7,16 +7,16 @@ on:
     paths:
       - "scripts/e2e-ff-bracket5.ts"
       - ".github/workflows/ff-bracket5-e2e.yml"
+      - "src/services/cedh-combo-completion-v14.ts"
+      - "src/services/cedh-efficiency-v14.ts"
+      - "src/services/cedh-manabase-v14.ts"
+      - "src/services/cedh-workflow-v14.ts"
       - "src/services/commander-rules.ts"
       - "src/services/deck.ts"
       - "src/services/deck-builder-v07.ts"
-      - "src/services/optimizer-v11.ts"
-      - "src/services/optimizer-v12.ts"
       - "src/services/printing-policy-v08.ts"
-      - "src/services/refinement-workflows-v12.ts"
       - "src/services/scryfall.ts"
       - "src/services/spellbook.ts"
-      - "src/services/upgrade.ts"
 
 permissions:
   contents: read
