@@ -5,7 +5,7 @@ const parsePositiveInt = (value: string | undefined, fallback: number): number =
 };
 
 export const config = {
-  version: '0.8.0',
+  version: '0.9.0',
   port: parsePositiveInt(process.env.PORT, 3000),
   httpTimeoutMs: parsePositiveInt(process.env.HTTP_TIMEOUT_MS, 15_000),
   scryfallApiBase: (process.env.SCRYFALL_API_BASE ?? 'https://api.scryfall.com').replace(/\/$/, ''),
@@ -15,5 +15,5 @@ export const config = {
   edhTop16ApiBase: (process.env.EDHTOP16_API_BASE ?? 'https://edhtop16.com/api').replace(/\/$/, ''),
   userAgent:
     process.env.MTG_USER_AGENT ??
-    'mtg-ultimate-mcp/0.8 (+https://github.com/vt7dfbmh7b-droid/mtg-ultimate-mcp)',
+    'mtg-ultimate-mcp/0.9 (+https://github.com/vt7dfbmh7b-droid/mtg-ultimate-mcp)',
 } as const;
