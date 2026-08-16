@@ -1,13 +1,12 @@
 import assert from 'node:assert/strict';
-import { refineForCedhV14 } from '../src/services/cedh-refinement-v14.js';
+import { buildCommanderForCedhV14 } from '../src/services/cedh-workflow-v14.js';
 import { validateCommanderDeck } from '../src/services/commander-rules.js';
 import { parseDecklist, type DeckEntry, type ParsedDeck } from '../src/services/deck.js';
 import { printingMatchesPolicyV08, resolvePrintingPolicyV08 } from '../src/services/printing-policy-v08.js';
-import { buildAndRefineCommanderDeckV12 } from '../src/services/refinement-workflows-v12.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from '../src/services/scryfall.js';
 import { estimateCommanderBracket, findDeckCombos } from '../src/services/spellbook.js';
 
-function asRecord(value: unknown): Record<string, unknown> {
+function record(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
 }
 
@@ -21,14 +20,6 @@ function identifiers(parsed: ParsedDeck): CardIdentifierInput[] {
     ...(entry.set ? { set: entry.set } : {}),
     ...(entry.collectorNumber ? { collectorNumber: entry.collectorNumber } : {}),
   }));
-}
-
-function finalDecklistFrom(result: Record<string, unknown>): string {
-  const refinement = asRecord(result.refinement);
-  if (typeof refinement.finalDecklist === 'string' && refinement.finalDecklist.trim()) return refinement.finalDecklist;
-  const initialDraft = asRecord(result.initialDraft);
-  if (typeof initialDraft.decklist === 'string' && initialDraft.decklist.trim()) return initialDraft.decklist;
-  throw new Error('Builder did not return a complete final or initial decklist.');
 }
 
 async function verifyFinalDeck(decklist: string): Promise<{ parsed: ParsedDeck; rules: ReturnType<typeof validateCommanderDeck>; resolvedCount: number }> {
@@ -57,69 +48,69 @@ async function main(): Promise<void> {
   const commander = 'Najeela, the Blade-Blossom';
   console.log('FF BRACKET 5 E2E: building a FINAL FANTASY-printings-only Commander deck...');
   console.log(`Commander Oracle identity: ${commander}`);
-  console.log('Goal: Bracket 5 / cEDH-oriented construction under the FINAL FANTASY physical-printing restriction.');
+  console.log('Goal: strongest cEDH-oriented construction the current FF physical-printing pool can support.');
 
-  const initialBuild = await buildAndRefineCommanderDeckV12([commander], {
-    targetBracket: 5,
+  const built = await buildCommanderForCedhV14([commander], {
     printingFamily: 'Final Fantasy',
     includePromos: true,
     includeSpecialReleases: true,
-    maxRefinementRounds: 5,
-    maxRefinementSwaps: 30,
-    swapsPerRound: 6,
-    candidatePackagesPerRound: 6,
-    minimumImprovementScore: -10,
-    simulationIterations: 750,
-    simulationTurns: 7,
-    seed: 20_260_816,
-    detailLevel: 'detailed',
+    requireVerifiedCombo: true,
+    maxMissingCards: 2,
+    maxCandidatesToVerify: 8,
+    maxEfficiencySwaps: 3,
+    maxManaBaseSwaps: 5,
   });
-  assert.equal(initialBuild.status, 'built-and-refined', 'from-scratch FF build should complete before cEDH package refinement');
-  const baselineDecklist = finalDecklistFrom(initialBuild);
-  const baselineBracket = await estimateCommanderBracket(baselineDecklist);
-  const baselineCombos = await findDeckCombos(baselineDecklist, 60);
+  assert.notEqual(built.status, 'commander-resolution-failed');
+  assert.notEqual(built.status, 'incomplete-first-draft');
+  assert.notEqual(built.status, 'built-but-competitive-signals-incomplete', 'full V0.14 build must clear the competitive-construction gates');
+  assert.equal(built.status, 'built-with-strong-competitive-signals');
 
-  console.log(`BASELINE SPELLBOOK TAG: ${String(baselineBracket.bracketTag ?? 'unknown')}`);
-  console.log(`BASELINE COMPLETE COMBOS: ${String(asRecord(baselineCombos.counts).included ?? 0)}`);
-  console.log(`BASELINE NEAR COMBOS: ${String(asRecord(baselineCombos.counts).almostIncluded ?? 0)}`);
-
-  const cedh = await refineForCedhV14(baselineDecklist, {
-    printingFamily: 'Final Fantasy',
-    includePromos: true,
-    includeSpecialReleases: true,
-    maxRounds: 4,
-    maxSwaps: 18,
-    candidatePackagesPerRound: 10,
-  });
-  assert.notEqual(cedh.status, 'invalid-starting-deck', 'V0.14 cEDH refinement should accept the legal FF baseline');
-  const finalDecklist = typeof cedh.finalDecklist === 'string' ? cedh.finalDecklist : baselineDecklist;
+  const finalDecklist = typeof built.finalDecklist === 'string' ? built.finalDecklist : '';
+  assert.ok(finalDecklist.trim(), 'V0.14 build must return a complete final decklist');
   const verified = await verifyFinalDeck(finalDecklist);
-  const bracket = await estimateCommanderBracket(finalDecklist);
-  const combos = await findDeckCombos(finalDecklist, 80);
+  const [bracket, combos] = await Promise.all([
+    estimateCommanderBracket(finalDecklist),
+    findDeckCombos(finalDecklist, 100),
+  ]);
+  const comboCounts = record(combos.counts);
+  const completeCombos = Number(comboCounts.included ?? 0);
+  const ruthlessCombos = Array.isArray(combos.included)
+    ? combos.included.map(record).filter((combo) => String(combo.bracketTag ?? '') === 'R').length
+    : 0;
+  const strategicallyRelevant = Array.isArray(bracket.strategicallyRelevantCombos) ? bracket.strategicallyRelevantCombos.length : 0;
+  const refinement = record(built.refinement);
+  const stages = record(refinement.stages);
+  const comboStage = record(stages.comboCompletion);
+  const efficiencyStage = record(stages.strictEfficiency);
+  const manaStage = record(stages.manaBase);
+  const finalAssessment = record(refinement.finalAssessment);
+
+  assert.ok(completeCombos >= 1, 'full FF cEDH build must contain at least one independently verified complete combo');
+  assert.ok(
+    ruthlessCombos >= 1 || strategicallyRelevant >= 1 || String(bracket.bracketTag ?? '') === 'R',
+    'full FF cEDH build must have a Ruthless/strategically relevant competitive combo signal',
+  );
+  assert.equal(finalAssessment.status, 'strong-competitive-construction-signals');
+  assert.equal(refinement.comboWasPreserved, true, 'efficiency and mana-base tuning must preserve the verified win package');
 
   const commanderEntry = verified.parsed.commanders[0];
   console.log(`\nCOMMANDER PRINTING: ${commanderEntry?.name ?? commander} (${commanderEntry?.set ?? '?'}) ${commanderEntry?.collectorNumber ?? '?'}`);
   console.log(`FINAL CARD COUNT: ${verified.parsed.totalCards}`);
   console.log(`COMMANDER LEGAL: ${verified.rules.isLegal}`);
-  console.log(`FF PRINTING POLICY: PASS (${verified.resolvedCount}/${verified.resolvedCount} exact printings eligible)`);
-  console.log(`V0.14 STATUS: ${String(cedh.status)}`);
-  console.log(`V0.14 SWAPS: ${String(cedh.totalSwaps ?? 0)}`);
-  console.log(`V0.14 SWAP DETAIL: ${JSON.stringify(cedh.swaps ?? [], null, 2)}`);
+  console.log(`FF PRINTING POLICY: PASS (${verified.resolvedCount}/${verified.resolvedCount} exact printing entries eligible)`);
+  console.log(`BUILD STATUS: ${String(built.status)}`);
   console.log(`FINAL SPELLBOOK TAG: ${String(bracket.bracketTag ?? 'unknown')}`);
-  console.log(`FINAL COMBO SUMMARY: ${JSON.stringify(asRecord(combos).counts ?? {}, null, 2)}`);
-  console.log(`FINAL COMPETITIVE EVIDENCE: ${JSON.stringify(cedh.competitiveEvidence ?? {}, null, 2)}`);
-  console.log(`STRATEGICALLY RELEVANT COMBOS: ${JSON.stringify(bracket.strategicallyRelevantCombos ?? [], null, 2)}`);
-
-  const baselineIncluded = Number(asRecord(baselineCombos.counts).included ?? 0);
-  const finalIncluded = Number(asRecord(combos.counts).included ?? 0);
-  assert.ok(
-    finalIncluded > baselineIncluded || String(bracket.bracketTag ?? '') === 'R' || Number(cedh.totalSwaps ?? 0) > 0,
-    'V0.14 should produce at least one measurable competitive-construction improvement over the failed baseline',
-  );
+  console.log(`COMPLETE COMBOS: ${completeCombos}`);
+  console.log(`RUTHLESS COMBOS: ${ruthlessCombos}`);
+  console.log(`STRATEGICALLY RELEVANT COMBOS: ${strategicallyRelevant}`);
+  console.log(`COMBO STAGE: ${JSON.stringify(comboStage, null, 2)}`);
+  console.log(`EFFICIENCY STAGE: ${JSON.stringify(efficiencyStage, null, 2)}`);
+  console.log(`MANA STAGE: ${JSON.stringify(manaStage, null, 2)}`);
+  console.log(`FINAL READINESS: ${JSON.stringify(finalAssessment, null, 2)}`);
 
   console.log('\nFINAL DECKLIST');
   console.log(finalDecklist.trim());
-  console.log('\nBRACKET 5 / cEDH NOTE: card composition can show competitive readiness, but official Bracket 5 also depends on cEDH intent, metagame awareness, and tournament-minded construction.');
+  console.log('\nBRACKET 5 / cEDH NOTE: this test proves strong competitive construction signals under the FF-only printing restriction; official Bracket 5 still also depends on cEDH intent, metagame awareness, pilot choices, and tournament-minded play.');
   console.log('FF BRACKET 5 E2E RESULT: PASS');
 }
 
