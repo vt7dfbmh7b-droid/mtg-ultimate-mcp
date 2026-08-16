@@ -10,10 +10,20 @@ export interface TournamentMetricSnapshotV07 {
   averageNonlandManaValue?: number | undefined;
 }
 
+interface NormalizedTournamentMetricsV07 {
+  interactionCount: number;
+  cheapInteractionCount: number;
+  protectionCount: number;
+  tutorCount: number;
+  fastManaCount: number;
+  rampCount: number;
+  averageNonlandManaValue: number;
+}
+
 export interface PressureCalibrationV07 {
   selectedPressure: PodPressureV06;
   structuralPressureScore: number;
-  inputs: Required<TournamentMetricSnapshotV07>;
+  inputs: NormalizedTournamentMetricsV07;
   signals: Array<{ signal: string; contribution: number; explanation: string }>;
   confidence: 'low' | 'medium';
   explanation: string;
@@ -25,7 +35,7 @@ function number(value: number | undefined): number {
 }
 
 export function calibratePressureFromMetricsV07(metrics: TournamentMetricSnapshotV07): PressureCalibrationV07 {
-  const inputs: Required<TournamentMetricSnapshotV07> = {
+  const inputs: NormalizedTournamentMetricsV07 = {
     interactionCount: number(metrics.interactionCount),
     cheapInteractionCount: number(metrics.cheapInteractionCount),
     protectionCount: number(metrics.protectionCount),
