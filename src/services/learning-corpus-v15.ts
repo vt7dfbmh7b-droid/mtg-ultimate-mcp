@@ -22,6 +22,8 @@ export interface LearningCorpusAuditV15 {
   uniqueRecords: number;
   duplicateRecords: number;
   duplicateRate: number;
+  conflictingRecords: number;
+  conflictRate: number;
   positiveExamples: number;
   negativeExamples: number;
   minorityShare: number;
@@ -76,8 +78,8 @@ function timestampMs(value: string): number | null {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-function recordKey(record: LearningOutcomeRecordV15): string {
-  return `${normalize(record.independentGroup)}|${normalize(record.outcomeId)}|${record.label}`;
+function outcomeKey(record: LearningOutcomeRecordV15): string {
+  return `${normalize(record.independentGroup)}|${normalize(record.outcomeId)}`;
 }
 
 function validRecord(record: LearningOutcomeRecordV15): boolean {
@@ -96,10 +98,12 @@ function validRecord(record: LearningOutcomeRecordV15): boolean {
 export function deduplicateLearningCorpusV15(records: LearningOutcomeRecordV15[]): {
   records: LearningOutcomeRecordV15[];
   duplicateRecords: LearningOutcomeRecordV15[];
+  conflictingRecords: LearningOutcomeRecordV15[];
   malformedRecords: LearningOutcomeRecordV15[];
 } {
-  const strongest = new Map<string, LearningOutcomeRecordV15>();
+  const groups = new Map<string, LearningOutcomeRecordV15[]>();
   const duplicateRecords: LearningOutcomeRecordV15[] = [];
+  const conflictingRecords: LearningOutcomeRecordV15[] = [];
   const malformedRecords: LearningOutcomeRecordV15[] = [];
 
   for (const record of records) {
@@ -107,25 +111,41 @@ export function deduplicateLearningCorpusV15(records: LearningOutcomeRecordV15[]
       malformedRecords.push(record);
       continue;
     }
-    const key = recordKey(record);
-    const existing = strongest.get(key);
-    if (!existing) {
-      strongest.set(key, record);
+    const key = outcomeKey(record);
+    const group = groups.get(key) ?? [];
+    group.push(record);
+    groups.set(key, group);
+  }
+
+  const usable: LearningOutcomeRecordV15[] = [];
+  for (const group of groups.values()) {
+    const labels = new Set(group.map((record) => record.label));
+    if (labels.size > 1) {
+      conflictingRecords.push(...group);
       continue;
     }
-    const existingImportance = existing.importance ?? 1;
-    const candidateImportance = record.importance ?? 1;
-    if (candidateImportance > existingImportance) {
-      duplicateRecords.push(existing);
-      strongest.set(key, record);
-    } else {
-      duplicateRecords.push(record);
+
+    let strongest = group[0];
+    if (!strongest) continue;
+    for (let index = 1; index < group.length; index += 1) {
+      const candidate = group[index];
+      if (!candidate) continue;
+      const strongestImportance = strongest.importance ?? 1;
+      const candidateImportance = candidate.importance ?? 1;
+      if (candidateImportance > strongestImportance) {
+        duplicateRecords.push(strongest);
+        strongest = candidate;
+      } else {
+        duplicateRecords.push(candidate);
+      }
     }
+    usable.push(strongest);
   }
 
   return {
-    records: [...strongest.values()].sort((a, b) => (timestampMs(a.observedAt) ?? 0) - (timestampMs(b.observedAt) ?? 0)),
+    records: usable.sort((a, b) => (timestampMs(a.observedAt) ?? 0) - (timestampMs(b.observedAt) ?? 0)),
     duplicateRecords,
+    conflictingRecords,
     malformedRecords,
   };
 }
@@ -140,11 +160,14 @@ export function auditLearningCorpusV15(records: LearningOutcomeRecordV15[]): Lea
   const maxTime = times.length > 0 ? Math.max(...times) : null;
   const temporalCoverageDays = minTime === null || maxTime === null ? 0 : (maxTime - minTime) / 86_400_000;
   const duplicateRecords = deduped.duplicateRecords.length;
+  const conflictingRecords = deduped.conflictingRecords.length;
   return {
     inputRecords: records.length,
     uniqueRecords: usable.length,
     duplicateRecords,
     duplicateRate: records.length > 0 ? round(duplicateRecords / records.length) : 0,
+    conflictingRecords,
+    conflictRate: records.length > 0 ? round(conflictingRecords / records.length) : 0,
     positiveExamples,
     negativeExamples,
     minorityShare: usable.length > 0 ? round(Math.min(positiveExamples, negativeExamples) / usable.length) : 0,
