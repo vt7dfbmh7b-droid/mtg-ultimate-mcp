@@ -108,6 +108,29 @@ export interface AdaptiveRankerV15 {
   guardrails: string[];
 }
 
+export interface DeepLearningReadinessInputV15 {
+  labelledExamples: number;
+  positiveExamples: number;
+  negativeExamples: number;
+  temporalCoverageDays: number;
+  independentEvidenceGroups: number;
+  evidenceClassCount: number;
+  duplicateRate: number;
+  leakageChecksPassed: boolean;
+  transparentBaselineAccuracy: number | null;
+  candidateModelAccuracy: number | null;
+  temporalHoldoutExamples: number;
+}
+
+export interface DeepLearningReadinessV15 {
+  status: 'not-ready' | 'experiment-ready' | 'promotion-ready';
+  readinessScore: number;
+  blockers: string[];
+  warnings: string[];
+  requirements: Record<string, number | boolean>;
+  guidance: string;
+}
+
 function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
 }
@@ -234,7 +257,7 @@ export function synthesizeDeepResearchV15(observations: ResearchObservationV15[]
     let confidence = clamp((dominant / Math.max(1, total)) * 0.48 + directionalCertainty * 0.34 + corroboration - conflictPenalty, 0, 1);
     const focus = scored[0]?.focus ?? 'community';
     const gaps = synthesisGaps(scored, focus);
-    if (gaps.length > 0) confidence = Math.min(confidence, groups.size < 2 ? 0.55 : 0.78);
+    if (gaps.length > 0) confidence = Math.min(confidence, independentGroups.size < 2 ? 0.55 : 0.78);
     if (focus === 'rules' && !scored.some((entry) => entry.source.evidenceClass === 'official')) confidence = Math.min(confidence, 0.6);
 
     let verdict: ResearchVerdictV15 = 'insufficient';
@@ -383,5 +406,75 @@ export function scoreCandidateWithLearningV15(
     eligible: true,
     probability: round(sigmoid(rawModelScore(features, model.weights, model.bias))),
     failedGuardrails,
+  };
+}
+
+export function evaluateDeepLearningReadinessV15(input: DeepLearningReadinessInputV15): DeepLearningReadinessV15 {
+  const requirements = {
+    minimumLabelledExamplesForExperiment: 500,
+    minimumLabelledExamplesForPromotion: 2000,
+    minimumTemporalCoverageDays: 90,
+    minimumIndependentEvidenceGroups: 3,
+    minimumEvidenceClasses: 3,
+    maximumDuplicateRate: 0.1,
+    minimumTemporalHoldoutExamples: 200,
+    minimumCandidateAccuracy: 0.75,
+    minimumImprovementOverTransparentBaseline: 0.02,
+    leakageChecksRequired: true,
+  };
+  const blockers: string[] = [];
+  const warnings: string[] = [];
+  const total = Math.max(0, Math.trunc(input.labelledExamples));
+  const positives = Math.max(0, Math.trunc(input.positiveExamples));
+  const negatives = Math.max(0, Math.trunc(input.negativeExamples));
+  const minorityShare = total > 0 ? Math.min(positives, negatives) / total : 0;
+
+  if (total < requirements.minimumLabelledExamplesForExperiment) blockers.push('Not enough labelled examples for a meaningful neural-model experiment.');
+  if (input.temporalCoverageDays < requirements.minimumTemporalCoverageDays) blockers.push('Training data does not cover enough time to test metagame drift.');
+  if (input.independentEvidenceGroups < requirements.minimumIndependentEvidenceGroups) blockers.push('Training data lacks enough independent evidence groups.');
+  if (input.evidenceClassCount < requirements.minimumEvidenceClasses) blockers.push('Training data lacks enough evidence-class diversity.');
+  if (input.duplicateRate > requirements.maximumDuplicateRate) blockers.push('Duplicate/dependent data rate is too high and risks teaching the model the same evidence repeatedly.');
+  if (!input.leakageChecksPassed) blockers.push('Data-leakage checks have not passed.');
+  if (minorityShare < 0.2) blockers.push('Labels are too imbalanced; the minority outcome should be at least 20% of the dataset.');
+  if (input.temporalHoldoutExamples < requirements.minimumTemporalHoldoutExamples) blockers.push('Temporal holdout set is too small for promotion evidence.');
+
+  const baseline = input.transparentBaselineAccuracy;
+  const candidate = input.candidateModelAccuracy;
+  if (candidate === null) blockers.push('No neural candidate has been evaluated on the temporal holdout set.');
+  if (candidate !== null && candidate < requirements.minimumCandidateAccuracy) blockers.push('Neural candidate accuracy is below the minimum promotion threshold.');
+  if (candidate !== null && baseline !== null && candidate - baseline < requirements.minimumImprovementOverTransparentBaseline) {
+    blockers.push('Neural candidate does not materially beat the transparent baseline on unseen temporal data.');
+  }
+  if (baseline === null) warnings.push('Transparent baseline accuracy is missing, so a neural model cannot prove it adds value over the simpler model.');
+  if (total < requirements.minimumLabelledExamplesForPromotion) warnings.push('Dataset may support experiments but is still below the preferred promotion size.');
+
+  const checks = [
+    clamp(total / requirements.minimumLabelledExamplesForPromotion, 0, 1),
+    clamp(input.temporalCoverageDays / requirements.minimumTemporalCoverageDays, 0, 1),
+    clamp(input.independentEvidenceGroups / requirements.minimumIndependentEvidenceGroups, 0, 1),
+    clamp(input.evidenceClassCount / requirements.minimumEvidenceClasses, 0, 1),
+    clamp((requirements.maximumDuplicateRate - input.duplicateRate) / requirements.maximumDuplicateRate, 0, 1),
+    input.leakageChecksPassed ? 1 : 0,
+    clamp(minorityShare / 0.2, 0, 1),
+    clamp(input.temporalHoldoutExamples / requirements.minimumTemporalHoldoutExamples, 0, 1),
+    candidate === null ? 0 : clamp(candidate / requirements.minimumCandidateAccuracy, 0, 1),
+    candidate === null || baseline === null ? 0 : clamp((candidate - baseline) / requirements.minimumImprovementOverTransparentBaseline, 0, 1),
+  ];
+  const readinessScore = round(checks.reduce((sum, value) => sum + value, 0) / checks.length);
+
+  let status: DeepLearningReadinessV15['status'] = 'not-ready';
+  const experimentBlocking = blockers.some((blocker) => !blocker.includes('promotion') && !blocker.includes('Neural candidate'));
+  if (!experimentBlocking && total >= requirements.minimumLabelledExamplesForExperiment) status = 'experiment-ready';
+  if (blockers.length === 0 && total >= requirements.minimumLabelledExamplesForPromotion) status = 'promotion-ready';
+
+  return {
+    status,
+    readinessScore,
+    blockers,
+    warnings,
+    requirements,
+    guidance: status === 'promotion-ready'
+      ? 'A neural model may be considered for a shadow deployment, but it should still be compared continuously against the transparent ranker and never bypass hard deck-construction gates.'
+      : 'Keep the transparent adaptive ranker as the active learning baseline. Gather cleaner labelled outcomes, preserve source independence, and require temporal holdout gains before calling a neural system better.',
   };
 }
