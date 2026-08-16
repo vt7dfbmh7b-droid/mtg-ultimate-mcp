@@ -6,9 +6,12 @@ import {
   scoreCandidateWithLearningV15,
   synthesizeDeepResearchV15,
   trainAdaptiveRankerV15,
-  type EvidenceFocusV09,
 } from './services/research-learning-v15.js';
-import { buildResearchLinksV09, fetchEdhTop16CommanderEntriesV09 } from './services/evidence-sources-v09.js';
+import {
+  buildResearchLinksV09,
+  fetchEdhTop16CommanderEntriesV09,
+  type EvidenceFocusV09,
+} from './services/evidence-sources-v09.js';
 import { analyzeTopDeckTournamentReferences } from './services/references.js';
 import { sourceHealthDiagnosticsV12 } from './services/source-health-v12.js';
 import { getCardsByNames } from './services/scryfall.js';
