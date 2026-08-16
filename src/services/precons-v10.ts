@@ -478,11 +478,11 @@ export async function upgradePreconV10(options: PreconUpgradeOptionsV10): Promis
     stockDecklist: fetched.decklist,
     plan,
     evidence: {
-      edhrecPreconUpgradePage: edhrecPreconUrlV10(fetched.deck.name),
+      edhrecPreconUpgradeReference: edhrecPreconUrlV10(fetched.deck.name),
       widerCrossReferences: buildResearchLinksV09(
         (fetched.deck.commander ?? []).map((card) => card.name),
       ),
-      guidance: 'Use EDHREC precon add/cut data as community adoption evidence, then cross-check important swaps against current card rules, simulation, public/tournament references and exact printing price/availability.',
+      guidance: 'The EDHREC precon page is supplied as attributed community add/cut evidence for the AI client to consult when research access is available. The deterministic upgrade plan itself uses current rules/card data, role analysis, price/printing constraints and same-seed simulation; do not claim EDHREC percentages were ingested unless they were actually fetched in that request.',
     },
     responseGuidance: 'Lead with exact OUT -> IN swaps and a short reason. Keep the original precon plan recognizable unless the user explicitly asks for a rebuild. Always show the exact recommended printing when price or printing restrictions matter.',
     caveats: [
