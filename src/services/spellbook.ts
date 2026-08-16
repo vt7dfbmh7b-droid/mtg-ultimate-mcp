@@ -55,6 +55,7 @@ function summarizeVariant(value: unknown): Record<string, unknown> {
     id: variant.id,
     identity: variant.identity,
     status: variant.status,
+    bracketTag: variant.bracketTag ?? variant.bracket_tag ?? null,
     cards,
     results,
     requirements,
