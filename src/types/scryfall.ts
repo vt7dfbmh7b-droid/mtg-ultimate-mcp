@@ -17,6 +17,7 @@ export interface ScryfallCard {
   oracle_id?: string;
   name: string;
   printed_name?: string;
+  flavor_name?: string;
   lang: string;
   released_at?: string;
   mana_cost?: string;
@@ -33,6 +34,7 @@ export interface ScryfallCard {
   nonfoil?: boolean;
   finishes?: string[];
   promo?: boolean;
+  promo_types?: string[];
   digital?: boolean;
   full_art?: boolean;
   border_color?: string;
@@ -59,6 +61,23 @@ export interface ScryfallCard {
   scryfall_uri: string;
   image_uris?: Record<string, string>;
   card_faces?: ScryfallCardFace[];
+}
+
+export interface ScryfallSet {
+  id: string;
+  code: string;
+  name: string;
+  set_type: string;
+  released_at?: string;
+  block_code?: string;
+  block?: string;
+  parent_set_code?: string;
+  card_count?: number;
+  digital?: boolean;
+  foil_only?: boolean;
+  nonfoil_only?: boolean;
+  scryfall_uri?: string;
+  search_uri?: string;
 }
 
 export interface ScryfallList<T> {
