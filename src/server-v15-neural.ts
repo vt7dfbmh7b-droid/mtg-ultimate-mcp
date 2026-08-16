@@ -12,6 +12,7 @@ import {
   trainNeuralRankerV15,
   type NeuralRankerV15,
 } from './services/neural-ranker-v15.js';
+import { evaluateNeuralOnTemporalCorpusV15 } from './services/neural-temporal-eval-v15.js';
 import type { LearningExampleV15, LearningFeatureV15 } from './services/research-learning-v15.js';
 
 const jsonResult = (value: unknown) => ({ content: [{ type: 'text' as const, text: JSON.stringify(value, null, 2) }] });
@@ -142,8 +143,8 @@ export function registerMtgNeuralToolsV15(server: McpServer): McpServer {
   server.registerTool(
     'audit_learning_corpus_v15',
     {
-      title: 'Audit MTG learning data for duplicates, balance, diversity and leakage risk',
-      description: 'Audit labelled outcome data before training. Reports conservative duplicate rate, label balance, temporal coverage, independent evidence groups, evidence-class diversity, leakage groups and malformed records.',
+      title: 'Audit MTG learning data for duplicates, conflicts, balance, diversity and leakage risk',
+      description: 'Audit labelled outcome data before training. Quarantines malformed records, contradictory outcomes and exact-deck/commander identity conflicts, then reports duplicate/conflict/malformed rates, label balance, temporal coverage, independent evidence groups and evidence-class diversity.',
       inputSchema: z.object({ records: z.array(corpusRecordSchema).min(1).max(50_000) }),
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
@@ -153,8 +154,42 @@ export function registerMtgNeuralToolsV15(server: McpServer): McpServer {
         return jsonResult({
           audit: auditLearningCorpusV15(normalized),
           temporalSplit: temporalSplitLearningCorpusV15(normalized, 0.2),
-          guidance: 'Do not train a neural model on duplicated event/deck-history groups or evaluate it on closely related records seen during training. Temporal leakage-safe performance is the promotion signal that matters.',
+          guidance: 'Do not train a neural model on duplicated, contradictory, malformed or identity-conflicted outcome data. Related leakage groups stay entirely on one side of the temporal boundary.',
         });
+      } catch (error) {
+        return errorResult(error);
+      }
+    },
+  );
+
+  server.registerTool(
+    'evaluate_neural_temporal_corpus_v15',
+    {
+      title: 'Evaluate neural MTG learning on a leakage-safe future holdout',
+      description: 'Audit and quarantine the learning corpus, split it chronologically without allowing a leakage group onto both sides, train the neural and transparent rankers on the earlier data, score both on the same unseen future records, and apply promotion-readiness gates including duplicate, conflict and malformed-provenance rates.',
+      inputSchema: z.object({
+        records: z.array(corpusRecordSchema).min(1).max(50_000),
+        holdoutFraction: z.number().min(0.05).max(0.5).optional().default(0.2),
+        hiddenLayerOne: z.number().int().min(2).max(32).optional().default(8),
+        hiddenLayerTwo: z.number().int().min(2).max(16).optional().default(4),
+        epochs: z.number().int().min(1).max(2_000).optional().default(400),
+        learningRate: z.number().min(0.0001).max(0.3).optional().default(0.035),
+        l2: z.number().min(0).max(0.1).optional().default(0.001),
+        seed: z.number().int().min(1).max(2_147_483_647).optional().default(20_260_816),
+      }),
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async ({ records, holdoutFraction, hiddenLayerOne, hiddenLayerTwo, epochs, learningRate, l2, seed }) => {
+      try {
+        return jsonResult(evaluateNeuralOnTemporalCorpusV15(normalizeCorpus(records), {
+          holdoutFraction,
+          hiddenLayerOne,
+          hiddenLayerTwo,
+          epochs,
+          learningRate,
+          l2,
+          seed,
+        }));
       } catch (error) {
         return errorResult(error);
       }
