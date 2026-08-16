@@ -2,9 +2,9 @@ import { createServer, type IncomingMessage } from 'node:http';
 import { toNodeHandler } from '@modelcontextprotocol/node';
 import { createMcpHandler } from '@modelcontextprotocol/server';
 import { config } from './config.js';
-import { createMtgServerV11 } from './server-v11.js';
+import { createCurrentMtgServer } from './server-current.js';
 
-const mcpHandler = createMcpHandler(() => createMtgServerV11());
+const mcpHandler = createMcpHandler(() => createCurrentMtgServer());
 const handleMcp = toNodeHandler(mcpHandler);
 
 type McpIncomingMessage = IncomingMessage & { method: string; url: string };
