@@ -1,0 +1,35 @@
+name: Live MTG smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["agent/**"]
+    paths:
+      - "scripts/live-smoke.ts"
+      - ".github/workflows/live-smoke.yml"
+      - "src/services/source-health-v12.ts"
+      - "src/services/precons-v10.ts"
+      - "src/services/scryfall.ts"
+      - "src/server-current.ts"
+
+permissions:
+  contents: read
+
+jobs:
+  live-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run live Scryfall and precon smoke test
+        run: npm run test:live
