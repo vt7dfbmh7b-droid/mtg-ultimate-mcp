@@ -4,8 +4,14 @@ const parsePositiveInt = (value: string | undefined, fallback: number): number =
   return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
 };
 
+const parseOptionalPositiveFloat = (value: string | undefined): number | null => {
+  if (!value?.trim()) return null;
+  const parsed = Number.parseFloat(value);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+};
+
 export const config = {
-  version: '0.12.0',
+  version: '0.13.0',
   port: parsePositiveInt(process.env.PORT, 3000),
   httpTimeoutMs: parsePositiveInt(process.env.HTTP_TIMEOUT_MS, 15_000),
   httpRetryAttempts: Math.max(1, Math.min(5, parsePositiveInt(process.env.HTTP_RETRY_ATTEMPTS, 3))),
@@ -16,7 +22,10 @@ export const config = {
   topDeckApiKey: process.env.TOPDECK_API_KEY?.trim() || '',
   mtgJsonApiBase: (process.env.MTGJSON_API_BASE ?? 'https://mtgjson.com/api/v5').replace(/\/$/, ''),
   preconCatalogCacheMs: parsePositiveInt(process.env.PRECON_CATALOG_CACHE_MS, 21_600_000),
+  fxApiBase: (process.env.FX_API_BASE ?? 'https://api.frankfurter.dev').replace(/\/$/, ''),
+  fxCacheMs: parsePositiveInt(process.env.FX_CACHE_MS, 21_600_000),
+  usdToNzdFallback: parseOptionalPositiveFloat(process.env.USD_TO_NZD_FALLBACK),
   userAgent:
     process.env.MTG_USER_AGENT ??
-    'mtg-ultimate-mcp/0.12 (+https://github.com/vt7dfbmh7b-droid/mtg-ultimate-mcp)',
+    'mtg-ultimate-mcp/0.13 (+https://github.com/vt7dfbmh7b-droid/mtg-ultimate-mcp)',
 } as const;
