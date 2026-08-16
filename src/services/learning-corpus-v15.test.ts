@@ -63,16 +63,42 @@ test('learning corpus deduplicates the same observed outcome but not the same de
 
   assert.equal(deduped.records.length, 2);
   assert.equal(deduped.duplicateRecords.length, 1);
+  assert.equal(deduped.conflictingRecords.length, 0);
   assert.ok(deduped.records.some((entry) => entry.outcomeId === 'event-2-player-1'));
+});
+
+test('contradictory labels for the same observed outcome are quarantined instead of training both answers', () => {
+  const positive = record();
+  const contradictoryMirror = record({ sourceId: 'mirror', label: 0 });
+  const separateOutcome = record({
+    outcomeId: 'event-2-player-1',
+    observedAt: '2026-01-08T00:00:00.000Z',
+    independentGroup: 'topdeck-event-2',
+    leakageGroup: 'event-2',
+    label: 0,
+  });
+
+  const deduped = deduplicateLearningCorpusV15([positive, contradictoryMirror, separateOutcome]);
+  assert.equal(deduped.records.length, 1);
+  assert.equal(deduped.conflictingRecords.length, 2);
+  assert.equal(deduped.records[0]?.outcomeId, 'event-2-player-1');
+
+  const audit = auditLearningCorpusV15([positive, contradictoryMirror, separateOutcome]);
+  assert.equal(audit.uniqueRecords, 1);
+  assert.equal(audit.conflictingRecords, 2);
+  assert.equal(audit.conflictRate, 0.6667);
+
+  const split = temporalSplitLearningCorpusV15([positive, contradictoryMirror, separateOutcome]);
+  assert.equal([...split.training, ...split.holdout].some((entry) => entry.outcomeId === 'event-1-player-1'), false);
 });
 
 test('temporal split keeps a leakage group entirely on one side of the holdout boundary', () => {
   const records = [
     record({ outcomeId: 'a', observedAt: '2026-01-01T00:00:00Z', leakageGroup: 'series-a', independentGroup: 'group-a' }),
     record({ outcomeId: 'b', observedAt: '2026-01-10T00:00:00Z', leakageGroup: 'series-b', independentGroup: 'group-b', label: 0 }),
+    record({ outcomeId: 'c', observedAt: '2026-01-20T00:00:00Z', leakageGroup: 'series-a', independentGroup: 'group-a' }),
     record({ outcomeId: 'd', observedAt: '2026-01-30T00:00:00Z', leakageGroup: 'series-c', independentGroup: 'group-c', label: 0 }),
     record({ outcomeId: 'e', observedAt: '2026-02-10T00:00:00Z', leakageGroup: 'series-d', independentGroup: 'group-d' }),
-    record({ outcomeId: 'c', observedAt: '2026-02-15T00:00:00Z', leakageGroup: 'series-a', independentGroup: 'group-a' }),
   ];
   const split = temporalSplitLearningCorpusV15(records, 0.2);
   const trainingGroups = new Set(split.training.map((entry) => entry.leakageGroup));
@@ -96,6 +122,7 @@ test('learning corpus audit reports duplicate, balance, diversity and temporal c
   assert.equal(audit.inputRecords, 4);
   assert.equal(audit.uniqueRecords, 3);
   assert.equal(audit.duplicateRecords, 1);
+  assert.equal(audit.conflictingRecords, 0);
   assert.equal(audit.positiveExamples, 2);
   assert.equal(audit.negativeExamples, 1);
   assert.equal(audit.independentEvidenceGroups, 3);
