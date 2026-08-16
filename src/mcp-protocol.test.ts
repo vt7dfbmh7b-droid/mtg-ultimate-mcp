@@ -36,6 +36,7 @@ test('stable current server completes MCP handshake and advertises V0.13 tools',
   assert.ok(tools.includes('refine_precon_v13'));
   assert.ok(tools.includes('build_and_refine_commander_deck_v13'));
   assert.equal(tools.includes('train_neural_ranker_v15'), false, 'experimental neural tools must not leak into the stable runtime');
+  assert.equal(tools.includes('evaluate_neural_temporal_corpus_v15'), false, 'experimental temporal neural evaluation must not leak into the stable runtime');
 });
 
 test('experimental V0.15 neural server negotiates modern MCP and advertises research and learning tools', async () => {
@@ -44,6 +45,7 @@ test('experimental V0.15 neural server negotiates modern MCP and advertises rese
   assert.ok(tools.includes('deep_research_commander_v15'));
   assert.ok(tools.includes('synthesize_deep_research_v15'));
   assert.ok(tools.includes('audit_learning_corpus_v15'));
+  assert.ok(tools.includes('evaluate_neural_temporal_corpus_v15'));
   assert.ok(tools.includes('train_neural_ranker_v15'));
   assert.ok(tools.includes('score_candidate_with_neural_v15'));
   assert.ok(tools.includes('refine_precon_v13'), 'experimental server must retain stable V0.13 tools underneath');
