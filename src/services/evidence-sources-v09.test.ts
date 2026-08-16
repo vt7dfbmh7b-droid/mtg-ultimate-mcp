@@ -1,13 +1,21 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { buildResearchLinksV09, evidenceSourcesForV09, evidenceWeightingGuideV09 } from './evidence-sources-v09.js';
+import { buildResearchLinksV09, evidenceSourcesForV09, evidenceWeightingGuideV09, fetchEdhTop16CommanderEntriesV09 } from './evidence-sources-v09.js';
 
-test('competitive evidence includes observed-results and curated sources', () => {
+test('competitive evidence includes structured, public-reference and curated sources', () => {
   const sources = evidenceSourcesForV09(['competitive']);
   const ids = new Set(sources.map((source) => source.id));
   assert.equal(ids.has('topdeck'), true);
   assert.equal(ids.has('edhtop16'), true);
   assert.equal(ids.has('cedh-ddb'), true);
+  assert.equal(sources.find((source) => source.id === 'edhtop16')?.access, 'public-reference');
+});
+
+test('EDHTop16 compatibility helper returns an explicit reference packet instead of fabricated structured rows', async () => {
+  const result = await fetchEdhTop16CommanderEntriesV09({ commanders: ['Najeela, the Blade-Blossom'] });
+  assert.equal(result.sourceMode, 'public-reference');
+  assert.equal(result.structuredDataAvailable, false);
+  assert.deepEqual(result.entries, []);
 });
 
 test('NZ pricing evidence includes TCGfind and exact printing identity support', () => {
