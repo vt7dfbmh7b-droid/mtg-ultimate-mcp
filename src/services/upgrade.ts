@@ -1,11 +1,20 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import { buildDeckMetrics, type ParsedDeck } from './deck.js';
-import { getCardPrintings, inferCardRoles, searchCards, summarizeCard } from './scryfall.js';
+import {
+  describePrintingPolicyV08,
+  resolvePrintingPolicyV08,
+  selectEligiblePrintingV08,
+  type ResolvedPrintingPolicyV08,
+} from './printing-policy-v08.js';
+import { inferCardRoles, searchCards, summarizeCard } from './scryfall.js';
 
 export interface UpgradeOptions {
   targetBracket?: number;
   maxUsdPerCard?: number;
   allowedSets?: string[];
+  printingFamily?: string;
+  includePromos?: boolean;
+  includeSpecialReleases?: boolean;
   themeQuery?: string;
   excludedCards?: string[];
   maxCandidatesPerRole?: number;
@@ -18,12 +27,6 @@ interface StructuralTarget {
   protection: number;
   tutors: number;
   earlyPlays: number;
-}
-
-interface PrintingPriceChoice {
-  card: ScryfallCard;
-  finish: 'nonfoil' | 'foil' | 'etched';
-  priceUsd: number;
 }
 
 const TARGETS: Record<number, StructuralTarget> = {
@@ -43,22 +46,12 @@ function identityQuery(identity: string[]): string {
   return `id<=${identity.join('').toLowerCase()}`;
 }
 
-function normalizedAllowedSets(sets: string[] | undefined): string[] {
-  return [...new Set((sets ?? []).map((set) => set.trim().toLowerCase()).filter(Boolean))];
-}
-
-function setQuery(sets: string[] | undefined): string {
-  const normalized = normalizedAllowedSets(sets);
-  if (normalized.length === 0) return '';
-  return `(${normalized.map((set) => `set:${set}`).join(' OR ')})`;
-}
-
-function priceSearchQuery(maxUsdPerCard: number | undefined): string {
-  if (maxUsdPerCard === undefined) return '';
-  return `usd<=${Number(maxUsdPerCard.toFixed(2))}`;
-}
-
-function roleSearchQuery(role: string, identity: string[], options: UpgradeOptions): string {
+function roleSearchQuery(
+  role: string,
+  identity: string[],
+  options: UpgradeOptions,
+  printingPolicy: ResolvedPrintingPolicyV08,
+): string {
   const roleClause: Record<string, string> = {
     ramp: '(o:"add" OR o:"search your library for" OR o:"costs" )',
     draw: '(o:"draw" OR o:"scry" OR o:"surveil" OR o:"look at the top")',
@@ -71,52 +64,11 @@ function roleSearchQuery(role: string, identity: string[], options: UpgradeOptio
     'f:commander',
     identityQuery(identity),
     roleClause[role] ?? '',
-    setQuery(options.allowedSets),
-    priceSearchQuery(options.maxUsdPerCard),
+    printingPolicy.searchClause,
     options.themeQuery?.trim() ?? '',
   ]
     .filter(Boolean)
     .join(' ');
-}
-
-function numericPrice(value: string | null | undefined): number | null {
-  if (!value) return null;
-  const parsed = Number.parseFloat(value);
-  return Number.isFinite(parsed) ? parsed : null;
-}
-
-function printingPriceChoices(card: ScryfallCard): PrintingPriceChoice[] {
-  const prices = card.prices ?? {};
-  const choices: PrintingPriceChoice[] = [];
-  const nonfoil = numericPrice(prices.usd);
-  const foil = numericPrice(prices.usd_foil);
-  const etched = numericPrice(prices.usd_etched);
-  if (nonfoil !== null) choices.push({ card, finish: 'nonfoil', priceUsd: nonfoil });
-  if (foil !== null) choices.push({ card, finish: 'foil', priceUsd: foil });
-  if (etched !== null) choices.push({ card, finish: 'etched', priceUsd: etched });
-  return choices;
-}
-
-async function cheapestEligiblePrinting(
-  card: ScryfallCard,
-  options: UpgradeOptions,
-): Promise<PrintingPriceChoice | null> {
-  const allowedSets = new Set(normalizedAllowedSets(options.allowedSets));
-  let printings: ScryfallCard[];
-  try {
-    printings = await getCardPrintings(card.name, 250);
-  } catch {
-    printings = [card];
-  }
-
-  const choices = printings
-    .filter((printing) => !printing.digital)
-    .filter((printing) => allowedSets.size === 0 || allowedSets.has(printing.set.toLowerCase()))
-    .flatMap(printingPriceChoices)
-    .filter((choice) => options.maxUsdPerCard === undefined || choice.priceUsd <= options.maxUsdPerCard)
-    .sort((a, b) => a.priceUsd - b.priceUsd || b.card.released_at?.localeCompare(a.card.released_at ?? '') || 0);
-
-  return choices[0] ?? null;
 }
 
 function cardMatchesRole(card: ScryfallCard, role: string): boolean {
@@ -174,6 +126,12 @@ export async function suggestDeckUpgrades(
   const targetBracket = clampBracket(options.targetBracket);
   const targets = TARGETS[targetBracket] as StructuralTarget;
   const metrics = buildDeckMetrics(parsed, cards);
+  const printingPolicy = await resolvePrintingPolicyV08({
+    allowedSets: options.allowedSets,
+    printingFamily: options.printingFamily,
+    includePromos: options.includePromos,
+    includeSpecialReleases: options.includeSpecialReleases,
+  });
   const deficits = [
     { role: 'ramp', current: metrics.rampCount, target: targets.ramp },
     { role: 'draw', current: metrics.drawCount, target: targets.draw },
@@ -192,7 +150,7 @@ export async function suggestDeckUpgrades(
   const candidateGroups: Array<Record<string, unknown>> = [];
 
   for (const deficit of deficits.slice(0, 5)) {
-    const query = roleSearchQuery(deficit.role, allowedIdentity, options);
+    const query = roleSearchQuery(deficit.role, allowedIdentity, options, printingPolicy);
     let results: ScryfallCard[] = [];
     try {
       results = await searchCards(query, 40);
@@ -206,31 +164,31 @@ export async function suggestDeckUpgrades(
       .filter((card) => card.legalities.commander === 'legal')
       .filter((card) => cardMatchesRole(card, deficit.role))
       .sort((a, b) => candidateScore(b, deficit.role) - candidateScore(a, deficit.role))
-      .slice(0, Math.max(maxCandidates * 2, maxCandidates));
+      .slice(0, Math.max(maxCandidates * 3, maxCandidates));
 
     const candidates: Array<Record<string, unknown>> = [];
     for (const card of ranked) {
       if (candidates.length >= maxCandidates) break;
-      const printing = await cheapestEligiblePrinting(card, options);
-      if (options.maxUsdPerCard !== undefined && !printing) continue;
+      const printing = await selectEligiblePrintingV08(card, printingPolicy, options.maxUsdPerCard);
+      if (!printing) continue;
 
       candidates.push({
         card: summarizeCard(card),
         score: Number(candidateScore(card, deficit.role).toFixed(1)),
-        ...(printing
-          ? {
-              recommendedPrinting: {
-                set: printing.card.set.toUpperCase(),
-                setName: printing.card.set_name,
-                collectorNumber: printing.card.collector_number,
-                releaseDate: printing.card.released_at ?? null,
-                finish: printing.finish,
-                priceUsd: printing.priceUsd,
-                scryfallUrl: printing.card.scryfall_uri,
-              },
-            }
-          : {}),
-        whyItFits: `Addresses the detected ${deficit.role} deficit; final inclusion still depends on commander synergy, theme, combo plan, and cards being removed.`,
+        recommendedPrinting: {
+          set: printing.card.set.toUpperCase(),
+          setName: printing.card.set_name,
+          collectorNumber: printing.card.collector_number,
+          releaseDate: printing.card.released_at ?? null,
+          finish: printing.finish,
+          priceUsd: printing.priceUsd,
+          promo: Boolean(printing.card.promo),
+          promoTypes: printing.card.promo_types ?? [],
+          flavorName: printing.card.flavor_name ?? null,
+          familyMatch: printing.matchedBy,
+          scryfallUrl: printing.card.scryfall_uri,
+        },
+        whyItFits: `Addresses the detected ${deficit.role} deficit; the recommended physical printing also satisfies the active printing-family/set policy.`,
       });
     }
 
@@ -247,20 +205,24 @@ export async function suggestDeckUpgrades(
     constraints: {
       maxUsdPerCard: options.maxUsdPerCard ?? null,
       allowedSets: options.allowedSets ?? [],
+      printingFamily: options.printingFamily ?? null,
+      includePromos: options.includePromos ?? true,
+      includeSpecialReleases: options.includeSpecialReleases ?? true,
       themeQuery: options.themeQuery ?? null,
       excludedCards: options.excludedCards ?? [],
     },
+    printingPolicy: describePrintingPolicyV08(printingPolicy),
     pricingPolicy: {
       printingAware: true,
       explanation:
-        'When pricing information is relevant, candidates are tied to an eligible physical printing with set code, collector number, finish, and price instead of treating one card name as having one universal price.',
+        'Candidates are tied to a qualifying physical printing with set code, collector number, finish, promo metadata, and price. A cheaper or more common unrelated printing of the same Oracle card cannot bypass a themed printing-family restriction.',
     },
     caveats: [
       'These role-count targets are engineering heuristics for deck consistency and are not the official Commander bracket definitions.',
       'Candidate ordering combines role fit, mana efficiency, and EDHREC-rank/community-adoption signal; popularity is not proof of optimality.',
       'Cut suggestions deliberately avoid claiming thematic/high-mana cards are bad; validate them against simulations, actual games, and reference-deck evidence.',
       'Scryfall USD prices are printing-specific reference values rather than guaranteed store checkout prices, and this version does not yet convert them to NZD.',
-      'The initial Scryfall budget query uses nonfoil USD availability; the returned recommendedPrinting is then resolved across eligible physical printings/finishes for exact edition-level evidence.',
+      'Promo status by itself never grants membership in a printing family; the printing must match a family set or a curated exact special-printing selector.',
     ],
   };
 }
