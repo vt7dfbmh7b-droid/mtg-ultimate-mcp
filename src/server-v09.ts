@@ -58,7 +58,7 @@ export function createMtgServerV09() {
     'research_commander_across_sources_v09',
     {
       title: 'Cross-reference a Commander across MTG sources',
-      description: 'Build a multi-source research packet for one or two commanders using live EDHTop16 tournament evidence plus research links and source weighting for EDHREC, cEDH DDB, Moxfield, MTGGoldfish, AetherHub, Playgroup.gg, DeckCheck, TCGfind NZ and the existing MTG Ultimate sources.',
+      description: 'Build a multi-source research packet for one or two commanders using structured sources where currently supported plus attributed research references such as EDHTop16, EDHREC, cEDH DDB, Moxfield, MTGGoldfish, AetherHub, Playgroup.gg, DeckCheck and TCGfind NZ.',
       inputSchema: z.object({
         commanders: z.array(z.string().min(1).max(256)).min(1).max(2),
         cards: z.array(z.string().min(1).max(256)).max(20).optional().default([]),
@@ -73,30 +73,18 @@ export function createMtgServerV09() {
     },
     async ({ commanders, cards, focuses, includeEdhTop16, lastDays, minTournamentSize, maxStanding, resultLimit }) => {
       try {
-        let edhTop16: Record<string, unknown> | null = null;
-        let edhTop16Error: string | null = null;
-        if (includeEdhTop16) {
-          try {
-            edhTop16 = await fetchEdhTop16CommanderEntriesV09({
-              commanders,
-              lastDays,
-              minTournamentSize,
-              maxStanding,
-              limit: resultLimit,
-            });
-          } catch (error) {
-            edhTop16Error = error instanceof Error ? error.message : String(error);
-          }
-        }
+        const edhTop16 = includeEdhTop16
+          ? await fetchEdhTop16CommanderEntriesV09({ commanders, lastDays, minTournamentSize, maxStanding, limit: resultLimit })
+          : null;
 
         return jsonResult({
           commanders,
           cards,
           sourceCatalog: evidenceSourcesForV09(focuses as EvidenceFocusV09[]),
           researchLinks: buildResearchLinksV09(commanders, cards),
-          liveEvidence: { edhTop16, edhTop16Error },
+          evidence: { edhTop16 },
           weightingGuide: evidenceWeightingGuideV09(),
-          responseGuidance: 'Summarize agreement/disagreement across evidence classes in plain English. Competitive tournament evidence, recorded casual games, broad community adoption, deck primers, independent deck-analysis scores, and prices answer different questions and must not be collapsed into one fake certainty score.',
+          responseGuidance: 'Summarize agreement/disagreement across evidence classes in plain English. Structured tournament evidence, public competitive references, recorded casual games, broad community adoption, deck primers, independent deck-analysis scores, and prices answer different questions and must not be collapsed into one fake certainty score.',
         });
       } catch (error) {
         return errorResult(error);
@@ -108,7 +96,7 @@ export function createMtgServerV09() {
     'cross_reference_deck_evidence_v09',
     {
       title: 'Cross-reference a deck with community and tournament evidence',
-      description: 'Combine existing Archidekt and TopDeck integrations with EDHTop16 and the wider source registry. Use it when building or upgrading a deck to see whether proposed choices agree with tournament, community, primer, recorded-game, analysis-tool, and price evidence.',
+      description: 'Combine existing Archidekt and TopDeck integrations with EDHTop16 public-reference context and the wider source registry. Use it when building or upgrading a deck to see whether proposed choices agree with tournament, community, primer, recorded-game, analysis-tool, and price evidence.',
       inputSchema: z.object({
         decklist: z.string().min(1).max(100_000).optional(),
         commanders: z.array(z.string().min(1).max(256)).min(1).max(2),
@@ -126,7 +114,6 @@ export function createMtgServerV09() {
       try {
         let archidekt: Record<string, unknown> | null = null;
         let topDeck: Record<string, unknown> | null = null;
-        let edhTop16: Record<string, unknown> | null = null;
         const errors: Record<string, string> = {};
 
         if (archidektReferences.length > 0) {
@@ -151,19 +138,15 @@ export function createMtgServerV09() {
           }
         }
 
-        if (includeEdhTop16) {
-          try {
-            edhTop16 = await fetchEdhTop16CommanderEntriesV09({
+        const edhTop16 = includeEdhTop16
+          ? await fetchEdhTop16CommanderEntriesV09({
               commanders,
               lastDays,
               minTournamentSize: participantMin,
               maxStanding: 16,
               limit: Math.min(40, sampleLimit * 2),
-            });
-          } catch (error) {
-            errors.edhTop16 = error instanceof Error ? error.message : String(error);
-          }
-        }
+            })
+          : null;
 
         return jsonResult({
           commanders,
@@ -179,7 +162,7 @@ export function createMtgServerV09() {
           ]),
           weightingGuide: evidenceWeightingGuideV09(),
           sourceErrors: errors,
-          responseGuidance: 'For upgrades, lead with the practical card choices and why. Then give short evidence such as “seen across community lists”, “supported by tournament lists”, “recorded-game signal is weak/strong”, or “NZ price needs checking”. Do not dump raw source data unless asked.',
+          responseGuidance: 'For upgrades, lead with the practical card choices and why. Then give short evidence such as “seen across community lists”, “supported by structured tournament lists”, “appears in EDHTop16 public references”, or “NZ price needs checking”. Do not dump raw source data unless asked.',
         });
       } catch (error) {
         return errorResult(error);
