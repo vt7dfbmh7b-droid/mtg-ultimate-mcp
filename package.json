@@ -1,9 +1,9 @@
 {
   "name": "mtg-ultimate-mcp",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "private": true,
   "type": "module",
-  "description": "MCP-powered Magic: The Gathering card and printing knowledge, Commander rules validation, themed printing-family deck construction and upgrades, hybrid gameplay simulation, multi-source evidence cross-referencing, pricing, combo discovery, and real-world deck analysis.",
+  "description": "MCP-powered Magic: The Gathering knowledge, Commander rules, self-updating precon intelligence, themed printing-aware deck building/upgrades, simulation, multi-source evidence, pricing and combo analysis.",
   "engines": {
     "node": ">=20"
   },
