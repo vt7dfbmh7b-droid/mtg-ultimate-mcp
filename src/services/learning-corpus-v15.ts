@@ -32,6 +32,7 @@ export interface LearningCorpusAuditV15 {
   evidenceClassCount: number;
   leakageGroupCount: number;
   malformedRecords: number;
+  malformedRate: number;
 }
 
 export interface TemporalLearningSplitV15 {
@@ -84,6 +85,10 @@ function timestampMs(value: string): number | null {
 
 function outcomeKey(record: LearningOutcomeRecordV15): string {
   return `${normalize(record.independentGroup)}|${normalize(record.outcomeId)}`;
+}
+
+function commanderIdentityKey(record: LearningOutcomeRecordV15): string {
+  return record.commanderNames.map(normalize).sort().join('|');
 }
 
 function nonEmptyString(value: unknown): value is string {
@@ -150,7 +155,9 @@ export function deduplicateLearningCorpusV15(records: LearningOutcomeRecordV15[]
   const usable: LearningOutcomeRecordV15[] = [];
   for (const group of groups.values()) {
     const labels = new Set(group.map((record) => record.label));
-    if (labels.size > 1) {
+    const deckFingerprints = new Set(group.map((record) => record.deckFingerprint.toLocaleLowerCase()));
+    const commanderIdentities = new Set(group.map(commanderIdentityKey));
+    if (labels.size > 1 || deckFingerprints.size > 1 || commanderIdentities.size > 1) {
       conflictingRecords.push(...group);
       continue;
     }
@@ -191,6 +198,7 @@ export function auditLearningCorpusV15(records: LearningOutcomeRecordV15[]): Lea
   const temporalCoverageDays = minTime === null || maxTime === null ? 0 : (maxTime - minTime) / 86_400_000;
   const duplicateRecords = deduped.duplicateRecords.length;
   const conflictingRecords = deduped.conflictingRecords.length;
+  const malformedRecords = deduped.malformedRecords.length;
   return {
     inputRecords: records.length,
     uniqueRecords: usable.length,
@@ -205,7 +213,8 @@ export function auditLearningCorpusV15(records: LearningOutcomeRecordV15[]): Lea
     independentEvidenceGroups: new Set(usable.map((record) => normalize(record.independentGroup))).size,
     evidenceClassCount: new Set(usable.map((record) => normalize(record.evidenceClass))).size,
     leakageGroupCount: new Set(usable.map((record) => normalize(record.leakageGroup))).size,
-    malformedRecords: deduped.malformedRecords.length,
+    malformedRecords,
+    malformedRate: records.length > 0 ? round(malformedRecords / records.length) : 0,
   };
 }
 
