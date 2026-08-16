@@ -5,7 +5,7 @@ const parsePositiveInt = (value: string | undefined, fallback: number): number =
 };
 
 export const config = {
-  version: '0.11.0',
+  version: '0.12.0',
   port: parsePositiveInt(process.env.PORT, 3000),
   httpTimeoutMs: parsePositiveInt(process.env.HTTP_TIMEOUT_MS, 15_000),
   httpRetryAttempts: Math.max(1, Math.min(5, parsePositiveInt(process.env.HTTP_RETRY_ATTEMPTS, 3))),
@@ -19,5 +19,5 @@ export const config = {
   preconCatalogCacheMs: parsePositiveInt(process.env.PRECON_CATALOG_CACHE_MS, 21_600_000),
   userAgent:
     process.env.MTG_USER_AGENT ??
-    'mtg-ultimate-mcp/0.11 (+https://github.com/vt7dfbmh7b-droid/mtg-ultimate-mcp)',
+    'mtg-ultimate-mcp/0.12 (+https://github.com/vt7dfbmh7b-droid/mtg-ultimate-mcp)',
 } as const;
