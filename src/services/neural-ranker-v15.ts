@@ -51,6 +51,10 @@ function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
 }
 
+function finiteOr(value: number | undefined, fallback: number): number {
+  return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
+}
+
 function round(value: number, digits = 6): number {
   const scale = 10 ** digits;
   return Math.round(value * scale) / scale;
@@ -86,7 +90,7 @@ function randomVector(length: number, random: () => number, scale: number): numb
 }
 
 function featureVector(example: LearningExampleV15 | { features: Partial<Record<LearningFeatureV15, number>> }): number[] {
-  return LEARNING_FEATURES_V15.map((feature) => clamp(example.features[feature] ?? 0, -1, 1));
+  return LEARNING_FEATURES_V15.map((feature) => clamp(finiteOr(example.features[feature], 0), -1, 1));
 }
 
 function dot(weights: number[], values: number[]): number {
@@ -164,12 +168,12 @@ export function trainNeuralRankerV15(
   examples: LearningExampleV15[],
   options: NeuralRankerOptionsV15 = {},
 ): NeuralRankerV15 {
-  const hiddenLayerOne = Math.max(2, Math.min(32, Math.trunc(options.hiddenLayerOne ?? 8)));
-  const hiddenLayerTwo = Math.max(2, Math.min(16, Math.trunc(options.hiddenLayerTwo ?? 4)));
-  const epochs = Math.max(1, Math.min(2_000, Math.trunc(options.epochs ?? 400)));
-  const learningRate = clamp(options.learningRate ?? 0.035, 0.0001, 0.3);
-  const l2 = clamp(options.l2 ?? 0.001, 0, 0.1);
-  const seed = Math.max(1, Math.min(2_147_483_647, Math.trunc(options.seed ?? 20_260_816)));
+  const hiddenLayerOne = Math.max(2, Math.min(32, Math.trunc(finiteOr(options.hiddenLayerOne, 8))));
+  const hiddenLayerTwo = Math.max(2, Math.min(16, Math.trunc(finiteOr(options.hiddenLayerTwo, 4))));
+  const epochs = Math.max(1, Math.min(2_000, Math.trunc(finiteOr(options.epochs, 400))));
+  const learningRate = clamp(finiteOr(options.learningRate, 0.035), 0.0001, 0.3);
+  const l2 = clamp(finiteOr(options.l2, 0.001), 0, 0.1);
+  const seed = Math.max(1, Math.min(2_147_483_647, Math.trunc(finiteOr(options.seed, 20_260_816))));
   const random = mulberry32(seed);
   const model = emptyModel(hiddenLayerOne, hiddenLayerTwo, seed, random);
   const training = examples.filter((_, index) => index % 5 !== 0);
@@ -178,7 +182,7 @@ export function trainNeuralRankerV15(
   for (let epoch = 0; epoch < epochs; epoch += 1) {
     for (const example of training) {
       const pass = forward(model, featureVector(example));
-      const importance = clamp(example.importance ?? 1, 0.1, 5);
+      const importance = clamp(finiteOr(example.importance, 1), 0.1, 5);
       const deltaOutput = (pass.output - example.label) * importance;
 
       const deltaHidden2 = model.weights3.map((weight, index) =>
