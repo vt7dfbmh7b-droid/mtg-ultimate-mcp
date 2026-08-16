@@ -39,6 +39,8 @@ export interface ResearchSynthesisV15 {
   opposeWeight: number;
   sourceCount: number;
   independentGroupCount: number;
+  internallyConflictedGroupCount: number;
+  internallyConflictedGroups: string[];
   evidenceClassCount: number;
   evidenceClasses: string[];
   observations: ScoredResearchObservationV15[];
@@ -121,7 +123,11 @@ export interface DeepLearningReadinessInputV15 {
   leakageChecksPassed: boolean;
   transparentBaselineAccuracy: number | null;
   candidateModelAccuracy: number | null;
+  transparentBaselineLogLoss?: number | null;
+  candidateModelLogLoss?: number | null;
   temporalHoldoutExamples: number;
+  temporalHoldoutPositiveExamples?: number;
+  temporalHoldoutNegativeExamples?: number;
 }
 
 export interface DeepLearningReadinessV15 {
@@ -131,6 +137,11 @@ export interface DeepLearningReadinessV15 {
   warnings: string[];
   requirements: Record<string, number | boolean>;
   guidance: string;
+}
+
+interface CollapsedEvidenceV15 {
+  observations: ScoredResearchObservationV15[];
+  internallyConflictedGroups: string[];
 }
 
 function clamp(value: number, min: number, max: number): number {
@@ -152,7 +163,7 @@ function round(value: number, digits = 4): number {
 
 function sourceById(sourceId: string): EvidenceSourceV09 {
   const source = EVIDENCE_SOURCES_V09.find((entry) => entry.id === sourceId);
-  if (!source) throw new Error(`Unknown evidence source: ${sourceId}`);
+  if (!source) throw new Error(`Unknown evidence source: ${String(sourceId)}`);
   return source;
 }
 
@@ -179,7 +190,7 @@ function sampleFactor(sampleSize: number | undefined): number {
 export function scoreResearchObservationV15(observation: ResearchObservationV15): ScoredResearchObservationV15 {
   const source = sourceById(observation.sourceId);
   if (!source.focuses.includes(observation.focus)) {
-    throw new Error(`${source.name} is not registered for ${observation.focus} evidence.`);
+    throw new Error(`${source.name} is not registered for ${String(observation.focus)} evidence.`);
   }
   const ageDays = Math.max(0, Number.isFinite(observation.ageDays) ? observation.ageDays ?? 0 : 0);
   const freshness = clamp(2 ** (-ageDays / halfLifeDays(observation.focus)), 0.12, 1);
@@ -190,7 +201,7 @@ export function scoreResearchObservationV15(observation: ResearchObservationV15)
   const score = clamp(source.weight * freshness * sample * access * strength * structureBoost, 0, 1);
   return {
     ...observation,
-    polarity: observation.polarity ?? 'support',
+    polarity: observation.polarity === 'oppose' ? 'oppose' : 'support',
     source,
     score: round(score),
     freshness: round(freshness),
@@ -204,25 +215,68 @@ function researchKey(observation: ResearchObservationV15): string {
 }
 
 function independenceKey(observation: ScoredResearchObservationV15): string {
-  return normalize(observation.independentGroup ?? observation.sourceId);
+  const group = typeof observation.independentGroup === 'string' ? observation.independentGroup.trim() : '';
+  return normalize(group || observation.sourceId);
 }
 
-function collapseDependentEvidence(observations: ScoredResearchObservationV15[]): ScoredResearchObservationV15[] {
-  const strongest = new Map<string, ScoredResearchObservationV15>();
+function strongestForPolarity(
+  observations: ScoredResearchObservationV15[],
+  polarity: ResearchPolarityV15,
+): ScoredResearchObservationV15 | null {
+  let strongest: ScoredResearchObservationV15 | null = null;
   for (const observation of observations) {
-    const key = `${independenceKey(observation)}|${observation.polarity ?? 'support'}`;
-    const existing = strongest.get(key);
-    if (!existing || observation.score > existing.score) strongest.set(key, observation);
+    const normalizedPolarity: ResearchPolarityV15 = observation.polarity === 'oppose' ? 'oppose' : 'support';
+    if (normalizedPolarity !== polarity) continue;
+    if (!strongest || observation.score > strongest.score) strongest = observation;
   }
-  return [...strongest.values()];
+  return strongest;
 }
 
-function synthesisGaps(observations: ScoredResearchObservationV15[], focus: EvidenceFocusV09): string[] {
+function collapseDependentEvidence(observations: ScoredResearchObservationV15[]): CollapsedEvidenceV15 {
+  const grouped = new Map<string, ScoredResearchObservationV15[]>();
+  for (const observation of observations) {
+    const key = independenceKey(observation);
+    const group = grouped.get(key) ?? [];
+    group.push(observation);
+    grouped.set(key, group);
+  }
+
+  const collapsed: ScoredResearchObservationV15[] = [];
+  const internallyConflictedGroups: string[] = [];
+  for (const [groupKey, group] of grouped) {
+    const support = strongestForPolarity(group, 'support');
+    const oppose = strongestForPolarity(group, 'oppose');
+    if (support && oppose) {
+      internallyConflictedGroups.push(groupKey);
+      const groupBudget = Math.max(support.score, oppose.score);
+      const rawTotal = Math.max(1e-9, support.score + oppose.score);
+      collapsed.push({ ...support, score: round(groupBudget * (support.score / rawTotal)) });
+      collapsed.push({ ...oppose, score: round(groupBudget * (oppose.score / rawTotal)) });
+      continue;
+    }
+    if (support) collapsed.push(support);
+    else if (oppose) collapsed.push(oppose);
+  }
+
+  return {
+    observations: collapsed,
+    internallyConflictedGroups: internallyConflictedGroups.sort(),
+  };
+}
+
+function synthesisGaps(
+  observations: ScoredResearchObservationV15[],
+  focus: EvidenceFocusV09,
+  internallyConflictedGroups: string[],
+): string[] {
   const gaps: string[] = [];
   const classes = new Set(observations.map((entry) => entry.source.evidenceClass));
   const groups = new Set(observations.map(independenceKey));
   if (groups.size < 2) gaps.push('Only one independent evidence group supports this claim.');
   if (classes.size < 2) gaps.push('Evidence comes from only one evidence class; seek a different kind of source.');
+  if (internallyConflictedGroups.length > 0) {
+    gaps.push(`Conflicting reports exist inside ${internallyConflictedGroups.length} underlying evidence group(s); those reports share one capped evidence budget instead of being counted twice.`);
+  }
   if (focus === 'rules' && !observations.some((entry) => entry.source.evidenceClass === 'official')) {
     gaps.push('Rules claims need an official source before high confidence is allowed.');
   }
@@ -236,10 +290,15 @@ function synthesisGaps(observations: ScoredResearchObservationV15[], focus: Evid
   return gaps;
 }
 
+function validResearchText(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
 export function synthesizeDeepResearchV15(observations: ResearchObservationV15[]): ResearchSynthesisV15[] {
   const groups = new Map<string, ResearchObservationV15[]>();
   for (const observation of observations) {
-    if (!observation.subject.trim() || !observation.claim.trim()) continue;
+    if (!observation || typeof observation !== 'object') continue;
+    if (!validResearchText(observation.subject) || !validResearchText(observation.claim)) continue;
     const key = researchKey(observation);
     const current = groups.get(key) ?? [];
     current.push(observation);
@@ -248,7 +307,8 @@ export function synthesizeDeepResearchV15(observations: ResearchObservationV15[]
 
   const output: ResearchSynthesisV15[] = [];
   for (const rawGroup of groups.values()) {
-    const scored = collapseDependentEvidence(rawGroup.map(scoreResearchObservationV15));
+    const collapsed = collapseDependentEvidence(rawGroup.map(scoreResearchObservationV15));
+    const scored = collapsed.observations;
     if (scored.length === 0) continue;
     const supportWeight = scored.filter((entry) => entry.polarity !== 'oppose').reduce((sum, entry) => sum + entry.score, 0);
     const opposeWeight = scored.filter((entry) => entry.polarity === 'oppose').reduce((sum, entry) => sum + entry.score, 0);
@@ -260,15 +320,19 @@ export function synthesizeDeepResearchV15(observations: ResearchObservationV15[]
     const independentGroups = new Set(scored.map(independenceKey));
     const corroboration = Math.min(0.2, Math.max(0, classes.length - 1) * 0.06 + Math.max(0, independentGroups.size - 1) * 0.025);
     const conflictPenalty = total > 0 ? (minority / total) * 0.32 : 0;
-    let confidence = clamp((dominant / Math.max(1, total)) * 0.48 + directionalCertainty * 0.34 + corroboration - conflictPenalty, 0, 1);
+    const internalConflictPenalty = Math.min(0.2, collapsed.internallyConflictedGroups.length * 0.08);
+    let confidence = clamp((dominant / Math.max(1, total)) * 0.48 + directionalCertainty * 0.34 + corroboration - conflictPenalty - internalConflictPenalty, 0, 1);
     const focus = scored[0]?.focus ?? 'community';
-    const gaps = synthesisGaps(scored, focus);
+    const gaps = synthesisGaps(scored, focus, collapsed.internallyConflictedGroups);
     if (gaps.length > 0) confidence = Math.min(confidence, independentGroups.size < 2 ? 0.55 : 0.78);
+    if (collapsed.internallyConflictedGroups.length > 0) {
+      confidence = Math.min(confidence, independentGroups.size < 2 ? 0.45 : 0.68);
+    }
     if (focus === 'rules' && !scored.some((entry) => entry.source.evidenceClass === 'official')) confidence = Math.min(confidence, 0.6);
 
     let verdict: ResearchVerdictV15 = 'insufficient';
     if (total >= 0.55 && directionalCertainty >= 0.38) verdict = supportWeight >= opposeWeight ? 'supported' : 'rejected';
-    if (total >= 0.7 && minority / Math.max(0.0001, dominant) >= 0.55) verdict = 'disputed';
+    if (total >= 0.55 && minority / Math.max(0.0001, dominant) >= 0.55) verdict = 'disputed';
 
     output.push({
       subject: rawGroup[0]?.subject ?? '',
@@ -279,6 +343,8 @@ export function synthesizeDeepResearchV15(observations: ResearchObservationV15[]
       opposeWeight: round(opposeWeight),
       sourceCount: new Set(scored.map((entry) => entry.sourceId)).size,
       independentGroupCount: independentGroups.size,
+      internallyConflictedGroupCount: collapsed.internallyConflictedGroups.length,
+      internallyConflictedGroups: collapsed.internallyConflictedGroups,
       evidenceClassCount: classes.length,
       evidenceClasses: classes,
       observations: scored.sort((a, b) => b.score - a.score),
@@ -306,6 +372,7 @@ export function buildDeepResearchPlanV15(focuses: EvidenceFocusV09[]): DeepResea
     'Use official/structured sources for identity, legality, printings and rules before community interpretation.',
     'For performance claims, prefer observed results plus a different evidence class; popularity alone is not performance.',
     'Deduplicate sources that ultimately depend on the same underlying event, decklist or dataset.',
+    'If mirrors disagree inside one underlying evidence group, cap that group to one evidence budget and lower confidence instead of counting both sides independently.',
     'Apply stronger freshness decay to prices, availability and competitive metagame claims than to stable rules or Oracle identity.',
     'Keep contradictions visible instead of averaging them away; disputed claims should trigger more research or lower confidence.',
   ];
@@ -425,8 +492,10 @@ export function evaluateDeepLearningReadinessV15(input: DeepLearningReadinessInp
     maximumConflictRate: 0.02,
     maximumMalformedRate: 0.05,
     minimumTemporalHoldoutExamples: 200,
+    minimumTemporalHoldoutMinorityShare: 0.2,
     minimumCandidateAccuracy: 0.75,
     minimumImprovementOverTransparentBaseline: 0.02,
+    maximumCandidateLogLossRegressionVsBaseline: 0,
     leakageChecksRequired: true,
   };
   const blockers: string[] = [];
@@ -449,6 +518,16 @@ export function evaluateDeepLearningReadinessV15(input: DeepLearningReadinessInp
   const labelCountsConsistent = positives + negatives === total;
   const minorityShare = total > 0 ? Math.min(positives, negatives) / total : 0;
 
+  const holdoutPositiveProvided = typeof input.temporalHoldoutPositiveExamples === 'number' && Number.isFinite(input.temporalHoldoutPositiveExamples);
+  const holdoutNegativeProvided = typeof input.temporalHoldoutNegativeExamples === 'number' && Number.isFinite(input.temporalHoldoutNegativeExamples);
+  const holdoutPositives = holdoutPositiveProvided ? Math.max(0, Math.trunc(input.temporalHoldoutPositiveExamples ?? 0)) : null;
+  const holdoutNegatives = holdoutNegativeProvided ? Math.max(0, Math.trunc(input.temporalHoldoutNegativeExamples ?? 0)) : null;
+  const holdoutCountsKnown = holdoutPositives !== null && holdoutNegatives !== null;
+  const holdoutCountsConsistent = holdoutCountsKnown && holdoutPositives + holdoutNegatives === temporalHoldoutExamples;
+  const holdoutMinorityShare = holdoutCountsConsistent && temporalHoldoutExamples > 0
+    ? Math.min(holdoutPositives, holdoutNegatives) / temporalHoldoutExamples
+    : 0;
+
   if (!labelCountsConsistent) addBlocker('Positive and negative label counts must exactly match labelledExamples before model readiness can be evaluated.');
   if (total < requirements.minimumLabelledExamplesForExperiment) addBlocker('Not enough labelled examples for a meaningful neural-model experiment.');
   if (temporalCoverageDays < requirements.minimumTemporalCoverageDays) addBlocker('Training data does not cover enough time to test metagame drift.');
@@ -460,6 +539,13 @@ export function evaluateDeepLearningReadinessV15(input: DeepLearningReadinessInp
   if (!input.leakageChecksPassed) addBlocker('Data-leakage checks have not passed.');
   if (minorityShare < 0.2) addBlocker('Labels are too imbalanced; the minority outcome should be at least 20% of the dataset.');
   if (temporalHoldoutExamples < requirements.minimumTemporalHoldoutExamples) addBlocker('Temporal holdout set is too small for promotion evidence.', false);
+  if (!holdoutCountsKnown) {
+    addBlocker('Temporal holdout positive/negative label counts are required before neural-model promotion.', false);
+  } else if (!holdoutCountsConsistent) {
+    addBlocker('Temporal holdout positive and negative counts must exactly match temporalHoldoutExamples.', false);
+  } else if (holdoutMinorityShare < requirements.minimumTemporalHoldoutMinorityShare) {
+    addBlocker('Temporal holdout labels are too imbalanced for reliable promotion evidence.', false);
+  }
 
   const baseline = input.transparentBaselineAccuracy === null ? null : finiteOr(input.transparentBaselineAccuracy, Number.NaN);
   const candidate = input.candidateModelAccuracy === null ? null : finiteOr(input.candidateModelAccuracy, Number.NaN);
@@ -471,8 +557,27 @@ export function evaluateDeepLearningReadinessV15(input: DeepLearningReadinessInp
   if (validCandidate !== null && validBaseline !== null && validCandidate - validBaseline < requirements.minimumImprovementOverTransparentBaseline) {
     addBlocker('Neural candidate does not materially beat the transparent baseline on unseen temporal data.', false);
   }
+
+  const baselineLogLossRaw = input.transparentBaselineLogLoss === null ? null : input.transparentBaselineLogLoss;
+  const candidateLogLossRaw = input.candidateModelLogLoss === null ? null : input.candidateModelLogLoss;
+  const validBaselineLogLoss = typeof baselineLogLossRaw === 'number' && Number.isFinite(baselineLogLossRaw) && baselineLogLossRaw >= 0
+    ? baselineLogLossRaw
+    : null;
+  const validCandidateLogLoss = typeof candidateLogLossRaw === 'number' && Number.isFinite(candidateLogLossRaw) && candidateLogLossRaw >= 0
+    ? candidateLogLossRaw
+    : null;
+  if (validBaselineLogLoss === null) addBlocker('Transparent baseline log loss is required before neural-model promotion.', false);
+  if (validCandidateLogLoss === null) addBlocker('Neural candidate log loss is required before neural-model promotion.', false);
+  if (validBaselineLogLoss !== null && validCandidateLogLoss !== null
+    && validCandidateLogLoss - validBaselineLogLoss > requirements.maximumCandidateLogLossRegressionVsBaseline) {
+    addBlocker('Neural candidate has worse temporal log loss than the transparent baseline.', false);
+  }
+
   if (total < requirements.minimumLabelledExamplesForPromotion) warnings.push('Dataset may support experiments but is still below the preferred promotion size.');
 
+  const logLossCheck = validBaselineLogLoss === null || validCandidateLogLoss === null
+    ? 0
+    : validCandidateLogLoss <= validBaselineLogLoss ? 1 : 0;
   const checks = [
     clamp(total / requirements.minimumLabelledExamplesForPromotion, 0, 1),
     clamp(temporalCoverageDays / requirements.minimumTemporalCoverageDays, 0, 1),
@@ -484,8 +589,10 @@ export function evaluateDeepLearningReadinessV15(input: DeepLearningReadinessInp
     input.leakageChecksPassed ? 1 : 0,
     labelCountsConsistent ? clamp(minorityShare / 0.2, 0, 1) : 0,
     clamp(temporalHoldoutExamples / requirements.minimumTemporalHoldoutExamples, 0, 1),
+    holdoutCountsConsistent ? clamp(holdoutMinorityShare / requirements.minimumTemporalHoldoutMinorityShare, 0, 1) : 0,
     validCandidate === null ? 0 : clamp(validCandidate / requirements.minimumCandidateAccuracy, 0, 1),
     validCandidate === null || validBaseline === null ? 0 : clamp((validCandidate - validBaseline) / requirements.minimumImprovementOverTransparentBaseline, 0, 1),
+    logLossCheck,
   ];
   const readinessScore = round(checks.reduce((sum, value) => sum + value, 0) / checks.length);
 
@@ -501,6 +608,6 @@ export function evaluateDeepLearningReadinessV15(input: DeepLearningReadinessInp
     requirements,
     guidance: status === 'promotion-ready'
       ? 'A neural model may be considered for a shadow deployment, but it should still be compared continuously against the transparent ranker and never bypass hard deck-construction gates.'
-      : 'Keep the transparent adaptive ranker as the active learning baseline. Gather cleaner labelled outcomes, preserve source independence, and require temporal holdout gains before calling a neural system better.',
+      : 'Keep the transparent adaptive ranker as the active learning baseline. Gather cleaner labelled outcomes, preserve source independence, and require balanced temporal holdout gains in both accuracy and log loss before calling a neural system better.',
   };
 }
