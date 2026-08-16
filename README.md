@@ -208,4 +208,4 @@ Build and test:
 npm run check
 ```
 
-The feature branch remains under active development in a draft PR. A release stage is only considered complete after strict TypeScript compilation and the full test suite pass.
+The documented V0.12 release head has passed dependency installation, strict TypeScript compilation and the complete automated test suite. The feature branch remains under active development in a draft PR.
