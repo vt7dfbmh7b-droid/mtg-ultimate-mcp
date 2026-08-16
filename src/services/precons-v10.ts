@@ -7,7 +7,7 @@ import { buildDeckMetrics, parseDecklist, type ParsedDeck } from './deck.js';
 import { buildResearchLinksV09 } from './evidence-sources-v09.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from './scryfall.js';
 import { simulateDeckGameplayV06 } from './simulation-v06.js';
-import { estimateBracket, findDeckCombos } from './spellbook.js';
+import { estimateCommanderBracket, findDeckCombos } from './spellbook.js';
 
 interface MtgJsonEnvelope<T> {
   data: T;
@@ -360,7 +360,7 @@ export async function analyzePreconV10(options: {
   let combos: Record<string, unknown> | null = null;
   const externalErrors: Record<string, string> = {};
   try {
-    bracket = await estimateBracket(fetched.decklist, false, 20);
+    bracket = await estimateCommanderBracket(fetched.decklist, false);
   } catch (error) {
     externalErrors.bracket = error instanceof Error ? error.message : String(error);
   }
