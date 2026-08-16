@@ -114,6 +114,17 @@ function conditionallyTapped(card: ScryfallCard): boolean {
   return /enters (?:the battlefield )?tapped (?:unless|if)/.test(oracle(card));
 }
 
+function slowFetchTempo(card: ScryfallCard): boolean {
+  const value = oracle(card);
+  return /sacrifice [^:]+: search your library for .*basic land/.test(value)
+    && /put (?:it|that card) onto the battlefield tapped/.test(value);
+}
+
+function filterLandRequiresMana(card: ScryfallCard): boolean {
+  const value = oracle(card);
+  return /\{1\},\s*\{t\}:\s*add/.test(value) || /\{t\},\s*pay \{1\}:\s*add/.test(value);
+}
+
 function scoreLand(card: ScryfallCard, identity: string[]): { score: number; reasons: string[] } {
   const colors = colorCoverage(card, identity);
   const value = oracle(card);
@@ -146,7 +157,19 @@ function scoreLand(card: ScryfallCard, identity: string[]): { score: number; rea
     reasons.push('conditionally enters tapped');
   } else {
     score += 20;
-    reasons.push('normally untapped');
+    reasons.push('land itself normally enters untapped');
+  }
+  if (slowFetchTempo(card)) {
+    score -= 48;
+    reasons.push('fetch target enters tapped; costs a turn of mana tempo');
+  }
+  if (filterLandRequiresMana(card)) {
+    score -= 18;
+    reasons.push('filter activation requires another mana source first');
+  }
+  if ((card.produced_mana ?? []).length === 0 && !/add \{/.test(value)) {
+    score -= 10;
+    reasons.push('does not directly produce mana');
   }
   if (card.edhrec_rank !== undefined) score += Math.max(0, 14 - Math.log10(card.edhrec_rank + 1) * 3);
   return { score, reasons };
@@ -368,6 +391,6 @@ export async function optimizeCedhManaBaseV14(
     finalDecklist: afterDecklist,
     finalCommanderRules: nextRules,
     printingPolicy: describePrintingPolicyV08(policy),
-    guidance: 'This lane is strictly nonbasic-land-for-nonbasic-land. It rewards color coverage and normally untapped access, heavily penalizes unconditional tapped lands, preserves total land count, and cannot remove a previously verified combo.',
+    guidance: 'This lane is strictly nonbasic-land-for-nonbasic-land. It rewards color coverage and usable untapped access, penalizes filter lands that need an existing source, strongly penalizes fetches whose target enters tapped, preserves total land count, and cannot remove a previously verified combo.',
   };
 }
