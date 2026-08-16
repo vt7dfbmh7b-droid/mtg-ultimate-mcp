@@ -12,6 +12,7 @@ export const config = {
   commanderSpellbookApiBase: (process.env.COMMANDER_SPELLBOOK_API_BASE ?? 'https://backend.commanderspellbook.com').replace(/\/$/, ''),
   topDeckApiBase: (process.env.TOPDECK_API_BASE ?? 'https://topdeck.gg/api').replace(/\/$/, ''),
   topDeckApiKey: process.env.TOPDECK_API_KEY?.trim() || '',
+  edhTop16ApiBase: (process.env.EDHTOP16_API_BASE ?? 'https://edhtop16.com/api').replace(/\/$/, ''),
   userAgent:
     process.env.MTG_USER_AGENT ??
     'mtg-ultimate-mcp/0.8 (+https://github.com/vt7dfbmh7b-droid/mtg-ultimate-mcp)',
