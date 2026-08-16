@@ -3,13 +3,13 @@ import { fetchJson } from '../src/lib/http.js';
 
 async function main(): Promise<void> {
   const queries = [
-    'bracket:ruthless cards<=3 result:"infinite damage" legal:commander',
-    'bracket:ruthless cards<=3 result:"win the game" legal:commander',
-    'bracket:ruthless cards<=3 result:"infinite combat" legal:commander',
-    'bracket:ruthless cards<=3 result:"infinite mill" legal:commander',
+    'bracket:ruthless card<=2 is:winning legal:commander',
+    'bracket:ruthless card<=3 is:winning legal:commander',
+    'bracket:ruthless card<=3 result:"infinite damage" legal:commander',
+    'bracket:ruthless card<=3 result:"infinite combat" legal:commander',
   ];
   for (const q of queries) {
-    const url = `${config.commanderSpellbookApiBase}/variants/?q=${encodeURIComponent(q)}&limit=5&offset=0&ordering=-popularity`;
+    const url = `${config.commanderSpellbookApiBase}/variants/?q=${encodeURIComponent(q)}&limit=10&offset=0&ordering=-popularity`;
     const response = await fetchJson<unknown>(url);
     console.log(`\nQUERY ${q}`);
     console.log(JSON.stringify(response, null, 2));
