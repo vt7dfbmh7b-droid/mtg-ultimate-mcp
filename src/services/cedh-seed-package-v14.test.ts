@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { buildCedhSeedQueriesV14, rankCedhSeedCandidatesV14 } from './cedh-seed-package-v14.js';
+import {
+  buildCedhSeedQueriesV14,
+  rankCedhSeedCandidatesV14,
+  scoreCedhSeedPracticalityV14,
+} from './cedh-seed-package-v14.js';
 
 function variant(overrides: Record<string, unknown> = {}) {
   return {
@@ -103,4 +107,27 @@ test('packages requiring duplicate nonbasic combo pieces are rejected', () => {
   ], [], 3);
 
   assert.equal(ranked.length, 0);
+});
+
+test('practical seed scoring prefers cheap commander-centric utility over expensive dead-card spectacle', () => {
+  const efficient = scoreCedhSeedPracticalityV14([
+    { name: 'Commander X', cmc: 2, typeLine: 'Legendary Creature', roles: ['repeatable draw'] },
+    { name: 'Mana Engine', cmc: 3, typeLine: 'Artifact', roles: ['mana acceleration'] },
+    { name: 'Win Outlet', cmc: 0, typeLine: 'Artifact Creature', roles: [] },
+  ], ['Commander X']);
+  const clunky = scoreCedhSeedPracticalityV14([
+    {
+      name: 'All-In Exiler',
+      cmc: 5,
+      typeLine: 'Artifact Creature',
+      oracleText: 'When this enters, exile your library.',
+      roles: [],
+    },
+    { name: 'Expensive Win Walker', cmc: 4, typeLine: 'Legendary Planeswalker', roles: [] },
+  ], ['Commander X']);
+
+  assert.ok(efficient.scoreAdjustment > clunky.scoreAdjustment);
+  assert.ok(efficient.commanderOverlap > clunky.commanderOverlap);
+  assert.ok(clunky.deadPieceRisk > efficient.deadPieceRisk);
+  assert.ok(clunky.totalManaValue > efficient.totalManaValue);
 });
