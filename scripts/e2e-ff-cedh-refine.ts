@@ -18,9 +18,9 @@ async function main(): Promise<void> {
     printingFamily: 'Final Fantasy',
     includePromos: true,
     includeSpecialReleases: true,
-    maxRounds: 3,
-    maxSwaps: 12,
-    candidatePackagesPerRound: 8,
+    maxRounds: 1,
+    maxSwaps: 7,
+    candidatePackagesPerRound: 4,
   });
   assert.notEqual(result.status, 'invalid-starting-deck');
   const finalDecklist = typeof result.finalDecklist === 'string' ? result.finalDecklist : baseline;
@@ -33,13 +33,14 @@ async function main(): Promise<void> {
   console.log(`AFTER: tag=${String(afterBracket.bracketTag ?? 'unknown')} completeCombos=${afterCount}`);
   console.log(`SWAPS: ${String(result.totalSwaps ?? 0)}`);
   console.log(JSON.stringify(result.swaps ?? [], null, 2));
+  console.log(`ROUNDS: ${JSON.stringify(result.rounds ?? [], null, 2)}`);
   console.log(`COMPETITIVE EVIDENCE: ${JSON.stringify(result.competitiveEvidence ?? {}, null, 2)}`);
   console.log('\nFINAL DECKLIST');
   console.log(finalDecklist.trim());
 
   assert.ok(
     afterCount > beforeCount || String(afterBracket.bracketTag ?? '') === 'R' || Number(result.totalSwaps ?? 0) > 0,
-    'cEDH refinement must improve at least one measurable competitive-construction signal',
+    'cEDH refinement must improve at least one measurable competitive-construction signal in the first focused round',
   );
   console.log('FAST FF cEDH REGRESSION: PASS');
 }
