@@ -149,7 +149,7 @@ export function nzCurrencyPolicyV13(rate: UsdNzdRateV13): Record<string, unknown
 }
 
 export function withNzdPricingV13(value: unknown, rate: UsdNzdRateV13, requestedBudgets: Record<string, unknown> = {}): Record<string, unknown> {
-  const converted = annotatePricingNzdV13(value, rate);
+  const converted = annotatePricingNzdV13(value, rate.rate);
   return {
     currency: 'NZD',
     currencyPolicy: nzCurrencyPolicyV13(rate),
