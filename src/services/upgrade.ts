@@ -127,10 +127,10 @@ export async function suggestDeckUpgrades(
   const targets = TARGETS[targetBracket] as StructuralTarget;
   const metrics = buildDeckMetrics(parsed, cards);
   const printingPolicy = await resolvePrintingPolicyV08({
-    allowedSets: options.allowedSets,
-    printingFamily: options.printingFamily,
-    includePromos: options.includePromos,
-    includeSpecialReleases: options.includeSpecialReleases,
+    ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
+    ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
+    ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
+    ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
   });
   const deficits = [
     { role: 'ramp', current: metrics.rampCount, target: targets.ramp },
