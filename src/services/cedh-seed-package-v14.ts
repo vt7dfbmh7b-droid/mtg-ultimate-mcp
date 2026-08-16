@@ -4,7 +4,7 @@ import {
   resolvePrintingPolicyV08,
   selectEligiblePrintingV08,
 } from './printing-policy-v08.js';
-import { getCardsByNames } from './scryfall.js';
+import { getCardsByNames, inferCardRoles } from './scryfall.js';
 import { searchSpellbookVariants } from './spellbook.js';
 import { isWinResultV14 } from './cedh-win-package-v14.js';
 
@@ -32,6 +32,35 @@ interface SeedCandidateV14 {
   requirements: unknown[];
   popularity: number;
   score: number;
+}
+
+export interface CedhSeedCardProfileV14 {
+  name: string;
+  cmc: number;
+  typeLine: string;
+  oracleText?: string;
+  roles?: string[];
+}
+
+export interface CedhSeedPracticalityV14 {
+  scoreAdjustment: number;
+  totalManaValue: number;
+  maxManaValue: number;
+  lowCostCount: number;
+  highCostCount: number;
+  reusableRoleCount: number;
+  deadPieceRisk: number;
+  commanderOverlap: number;
+  reasons: string[];
+}
+
+interface VerifiedSeedCandidateV14 {
+  candidate: Record<string, unknown>;
+  comboCardNames: string[];
+  seedNames: string[];
+  exactPrintings: Array<Record<string, unknown>>;
+  practicality: CedhSeedPracticalityV14;
+  finalScore: number;
 }
 
 function record(value: unknown): Record<string, unknown> {
@@ -119,6 +148,78 @@ export function rankCedhSeedCandidatesV14(
     .map((candidate) => ({ ...candidate }));
 }
 
+export function scoreCedhSeedPracticalityV14(
+  cards: CedhSeedCardProfileV14[],
+  commanderNames: string[],
+): CedhSeedPracticalityV14 {
+  const commanders = new Set(commanderNames.map(normalize));
+  const reusableRoles = new Set([
+    'fast mana',
+    'mana acceleration',
+    'land ramp',
+    'tutor',
+    'free interaction',
+    'countermagic',
+    'spot interaction',
+    'protection',
+    'repeatable draw',
+    'card draw',
+  ]);
+  let totalManaValue = 0;
+  let maxManaValue = 0;
+  let lowCostCount = 0;
+  let highCostCount = 0;
+  let reusableRoleCount = 0;
+  let deadPieceRisk = 0;
+  let commanderOverlap = 0;
+  const reasons: string[] = [];
+
+  for (const card of cards) {
+    const mv = Math.max(0, Number.isFinite(card.cmc) ? card.cmc : 0);
+    totalManaValue += mv;
+    maxManaValue = Math.max(maxManaValue, mv);
+    if (mv <= 2) lowCostCount += 1;
+    if (mv >= 4) highCostCount += 1;
+    if (commanders.has(normalize(card.name))) commanderOverlap += 1;
+
+    const roles = new Set((card.roles ?? []).map(normalize));
+    if ([...roles].some((role) => reusableRoles.has(role))) reusableRoleCount += 1;
+
+    const oracle = (card.oracleText ?? '').toLocaleLowerCase();
+    const typeLine = card.typeLine.toLocaleLowerCase();
+    if (mv >= 5 && !typeLine.includes('land')) deadPieceRisk += 1;
+    if (mv >= 4 && roles.size === 0 && !typeLine.includes('land')) deadPieceRisk += 0.65;
+    if (/exile (?:all cards from|your) (?:your )?library|exile your library/.test(oracle)) deadPieceRisk += 2;
+    if (typeLine.includes('planeswalker') && mv >= 4) deadPieceRisk += 0.35;
+  }
+
+  let scoreAdjustment = 0;
+  scoreAdjustment -= totalManaValue * 35;
+  scoreAdjustment -= highCostCount * 70;
+  scoreAdjustment += lowCostCount * 45;
+  scoreAdjustment += reusableRoleCount * 35;
+  scoreAdjustment -= deadPieceRisk * 105;
+  scoreAdjustment += commanderOverlap * 180;
+
+  if (totalManaValue <= 5) reasons.push('Compact execution mana supports a faster competitive line.');
+  if (commanderOverlap > 0) reasons.push('The package uses a commander already available from the command zone.');
+  if (reusableRoleCount > 0) reasons.push('At least one combo card has utility outside the deterministic win line.');
+  if (highCostCount > 0) reasons.push('High-mana combo pieces increase setup and dead-draw risk.');
+  if (deadPieceRisk > 0) reasons.push('One or more pieces carry meaningful dead-card or all-in setup risk outside the combo.');
+
+  return {
+    scoreAdjustment: Math.round(scoreAdjustment * 100) / 100,
+    totalManaValue: Math.round(totalManaValue * 100) / 100,
+    maxManaValue: Math.round(maxManaValue * 100) / 100,
+    lowCostCount,
+    highCostCount,
+    reusableRoleCount,
+    deadPieceRisk: Math.round(deadPieceRisk * 100) / 100,
+    commanderOverlap,
+    reasons,
+  };
+}
+
 export async function discoverCedhSeedWinPackageV14(
   commanders: ScryfallCard[],
   options: CedhSeedPackageOptionsV14 = {},
@@ -155,12 +256,15 @@ export async function discoverCedhSeedWinPackageV14(
   ))];
   const oracleLookup = allNames.length > 0 ? await getCardsByNames(allNames) : { cards: [], notFound: [] };
   const oracleByName = new Map(oracleLookup.cards.map((card) => [normalize(card.name), card]));
+  const commanderByName = new Map(commanders.map((card) => [normalize(card.name), card]));
   const audit: Array<Record<string, unknown>> = [];
+  const verifiedCandidates: VerifiedSeedCandidateV14[] = [];
 
   for (const candidate of candidates) {
     const uses = Array.isArray(candidate.cards) ? candidate.cards.map(record) : [];
     const exactPrintings: Array<Record<string, unknown>> = [];
     const unavailable: string[] = [];
+    const practicalityCards: CedhSeedCardProfileV14[] = [];
     let legal = true;
 
     for (const use of uses) {
@@ -169,9 +273,22 @@ export async function discoverCedhSeedWinPackageV14(
         legal = false;
         continue;
       }
-      if (normalizedCommanders.has(normalize(name))) continue;
-      const oracle = oracleByName.get(normalize(name));
-      if (!oracle || oracle.legalities.commander !== 'legal' || oracle.color_identity.some((color) => !identity.includes(color))) {
+      const normalizedName = normalize(name);
+      const oracle = commanderByName.get(normalizedName) ?? oracleByName.get(normalizedName);
+      if (!oracle) {
+        legal = false;
+        unavailable.push(name);
+        continue;
+      }
+      practicalityCards.push({
+        name: oracle.name,
+        cmc: oracle.cmc,
+        typeLine: oracle.type_line,
+        ...(oracle.oracle_text ? { oracleText: oracle.oracle_text } : {}),
+        roles: inferCardRoles(oracle),
+      });
+      if (normalizedCommanders.has(normalizedName)) continue;
+      if (oracle.legalities.commander !== 'legal' || oracle.color_identity.some((color) => !identity.includes(color))) {
         legal = false;
         unavailable.push(name);
         continue;
@@ -203,23 +320,47 @@ export async function discoverCedhSeedWinPackageV14(
       continue;
     }
 
+    const practicality = scoreCedhSeedPracticalityV14(practicalityCards, commanderNames);
+    const structuralScore = typeof candidate.score === 'number' && Number.isFinite(candidate.score) ? candidate.score : 0;
+    const finalScore = structuralScore + practicality.scoreAdjustment;
+    verifiedCandidates.push({ candidate, comboCardNames, seedNames, exactPrintings, practicality, finalScore });
+    audit.push({
+      comboId: candidate.id,
+      status: 'eligible-package-scored',
+      structuralScore,
+      practicalAdjustment: practicality.scoreAdjustment,
+      finalScore: Math.round(finalScore * 100) / 100,
+      totalManaValue: practicality.totalManaValue,
+      deadPieceRisk: practicality.deadPieceRisk,
+    });
+  }
+
+  verifiedCandidates.sort((a, b) =>
+    b.finalScore - a.finalScore
+    || a.practicality.totalManaValue - b.practicality.totalManaValue
+    || Number(b.candidate.popularity ?? 0) - Number(a.candidate.popularity ?? 0));
+
+  const winning = verifiedCandidates[0];
+  if (winning) {
     return {
       status: 'eligible-winning-seed-package-found',
       commanderNames,
       commanderIdentity: identity,
       spellbookIdentityFilter: identityToken,
-      comboId: candidate.id,
-      bracketTag: candidate.bracketTag,
-      results: candidate.results,
-      popularity: candidate.popularity,
-      comboCardNames,
-      seedNames,
-      exactPrintings,
+      comboId: winning.candidate.id,
+      bracketTag: winning.candidate.bracketTag,
+      results: winning.candidate.results,
+      popularity: winning.candidate.popularity,
+      comboCardNames: winning.comboCardNames,
+      seedNames: winning.seedNames,
+      exactPrintings: winning.exactPrintings,
+      selectionScore: Math.round(winning.finalScore * 100) / 100,
+      practicality: winning.practicality,
       printingPolicy: describePrintingPolicyV08(policy),
       queryAudit,
       audit,
       source: 'Commander Spellbook + Scryfall exact-printing verification',
-      guidance: 'The package is only a construction seed. The finished 100-card deck must still independently resolve, pass Commander legality and printing policy, and reproduce the winning combo through find-my-combos before it can satisfy the cEDH win-package gate.',
+      guidance: 'The package is only a construction seed. Candidate selection now prefers compact, lower-mana, commander-centric lines with useful cards outside the combo instead of popularity alone. The finished 100-card deck must still independently resolve, pass Commander legality and printing policy, and reproduce the winning combo through find-my-combos before it can satisfy the cEDH win-package gate.',
     };
   }
 
