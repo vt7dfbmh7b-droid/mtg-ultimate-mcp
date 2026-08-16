@@ -1,7 +1,14 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { fingerprintExactDeckV15, type LearningOutcomeRecordV15 } from './learning-corpus-v15.js';
 import { evaluateNeuralOnTemporalCorpusV15 } from './neural-temporal-eval-v15.js';
-import type { LearningOutcomeRecordV15 } from './learning-corpus-v15.js';
+
+const exactDeckFingerprint = fingerprintExactDeckV15(`// COMMANDER
+1 Kinnan, Bonder Prodigy (IKO) 192
+
+// MAIN
+1 Sol Ring (CMM) 396
+98 Forest (M21) 272`);
 
 function temporalXorCorpus(size = 200): LearningOutcomeRecordV15[] {
   const patterns = [
@@ -21,7 +28,7 @@ function temporalXorCorpus(size = 200): LearningOutcomeRecordV15[] {
       evidenceClass: index % 2 === 0 ? 'observed-results' : 'recorded-games',
       independentGroup: `event-${index}`,
       leakageGroup: `event-${index}`,
-      deckFingerprint: `deck-${index % 12}`,
+      deckFingerprint: exactDeckFingerprint,
       commanderNames: ['Kinnan, Bonder Prodigy'],
       features: {
         tournamentSupport: pattern.a,
