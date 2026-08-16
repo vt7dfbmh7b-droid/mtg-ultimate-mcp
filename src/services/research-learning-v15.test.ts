@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   buildDeepResearchPlanV15,
+  evaluateDeepLearningReadinessV15,
   scoreCandidateWithLearningV15,
   scoreResearchObservationV15,
   synthesizeDeepResearchV15,
@@ -34,6 +35,7 @@ test('deep research collapses dependent copies instead of double counting one da
   assert.equal(synthesis.independentGroupCount, 1);
   assert.equal(synthesis.observations.length, 1);
   assert.ok(synthesis.researchGaps.some((gap) => gap.includes('one independent')));
+  assert.ok(synthesis.confidence <= 0.55, 'one independent evidence group must not receive high confidence');
 });
 
 test('deep research keeps strong contradictory evidence visible as disputed', () => {
@@ -150,4 +152,64 @@ test('learned score can never override Commander legality or printing policy', (
   assert.equal(blocked.eligible, false);
   assert.equal(blocked.probability, null);
   assert.deepEqual(blocked.failedGuardrails.sort(), ['commanderLegal', 'printingPolicyCompliant']);
+});
+
+test('deep-learning readiness blocks small duplicated or leaky datasets', () => {
+  const readiness = evaluateDeepLearningReadinessV15({
+    labelledExamples: 300,
+    positiveExamples: 270,
+    negativeExamples: 30,
+    temporalCoverageDays: 30,
+    independentEvidenceGroups: 1,
+    evidenceClassCount: 1,
+    duplicateRate: 0.3,
+    leakageChecksPassed: false,
+    transparentBaselineAccuracy: 0.74,
+    candidateModelAccuracy: 0.82,
+    temporalHoldoutExamples: 50,
+  });
+
+  assert.equal(readiness.status, 'not-ready');
+  assert.ok(readiness.blockers.some((blocker) => blocker.includes('labelled examples')));
+  assert.ok(readiness.blockers.some((blocker) => blocker.includes('Duplicate')));
+  assert.ok(readiness.blockers.some((blocker) => blocker.includes('leakage')));
+});
+
+test('deep-learning promotion requires a clean temporal win over transparent baseline', () => {
+  const readiness = evaluateDeepLearningReadinessV15({
+    labelledExamples: 3000,
+    positiveExamples: 1600,
+    negativeExamples: 1400,
+    temporalCoverageDays: 365,
+    independentEvidenceGroups: 8,
+    evidenceClassCount: 5,
+    duplicateRate: 0.03,
+    leakageChecksPassed: true,
+    transparentBaselineAccuracy: 0.76,
+    candidateModelAccuracy: 0.8,
+    temporalHoldoutExamples: 500,
+  });
+
+  assert.equal(readiness.status, 'promotion-ready');
+  assert.equal(readiness.blockers.length, 0);
+  assert.ok(readiness.readinessScore > 0.9);
+});
+
+test('deep-learning candidate cannot promote if it does not beat transparent baseline', () => {
+  const readiness = evaluateDeepLearningReadinessV15({
+    labelledExamples: 3000,
+    positiveExamples: 1600,
+    negativeExamples: 1400,
+    temporalCoverageDays: 365,
+    independentEvidenceGroups: 8,
+    evidenceClassCount: 5,
+    duplicateRate: 0.03,
+    leakageChecksPassed: true,
+    transparentBaselineAccuracy: 0.8,
+    candidateModelAccuracy: 0.805,
+    temporalHoldoutExamples: 500,
+  });
+
+  assert.notEqual(readiness.status, 'promotion-ready');
+  assert.ok(readiness.blockers.some((blocker) => blocker.includes('does not materially beat')));
 });
