@@ -13,6 +13,8 @@ export const config = {
   topDeckApiBase: (process.env.TOPDECK_API_BASE ?? 'https://topdeck.gg/api').replace(/\/$/, ''),
   topDeckApiKey: process.env.TOPDECK_API_KEY?.trim() || '',
   edhTop16ApiBase: (process.env.EDHTOP16_API_BASE ?? 'https://edhtop16.com/api').replace(/\/$/, ''),
+  mtgJsonApiBase: (process.env.MTGJSON_API_BASE ?? 'https://mtgjson.com/api/v5').replace(/\/$/, ''),
+  preconCatalogCacheMs: parsePositiveInt(process.env.PRECON_CATALOG_CACHE_MS, 21_600_000),
   userAgent:
     process.env.MTG_USER_AGENT ??
     'mtg-ultimate-mcp/0.9 (+https://github.com/vt7dfbmh7b-droid/mtg-ultimate-mcp)',
