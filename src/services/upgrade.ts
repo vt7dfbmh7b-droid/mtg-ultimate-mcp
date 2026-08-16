@@ -63,6 +63,7 @@ function roleSearchQuery(
   return [
     'f:commander',
     identityQuery(identity),
+    '-t:land',
     roleClause[role] ?? '',
     printingPolicy.searchClause,
     options.themeQuery?.trim() ?? '',
@@ -159,6 +160,7 @@ export async function suggestDeckUpgrades(
     }
 
     const ranked = results
+      .filter((card) => !card.type_line.toLowerCase().includes('land'))
       .filter((card) => !existing.has(card.name.toLocaleLowerCase()))
       .filter((card) => !excluded.has(card.name.toLocaleLowerCase()))
       .filter((card) => card.legalities.commander === 'legal')
@@ -220,6 +222,7 @@ export async function suggestDeckUpgrades(
     caveats: [
       'These role-count targets are engineering heuristics for deck consistency and are not the official Commander bracket definitions.',
       'Candidate ordering combines role fit, mana efficiency, and EDHREC-rank/community-adoption signal; popularity is not proof of optimality.',
+      'Automatic upgrade packages pair the nonland cut pool with nonland additions so a utility land cannot silently replace a spell; dedicated mana-base work should be handled explicitly.',
       'Cut suggestions deliberately avoid claiming thematic/high-mana cards are bad; validate them against simulations, actual games, and reference-deck evidence.',
       'Scryfall USD prices are printing-specific reference values rather than guaranteed store checkout prices, and this version does not yet convert them to NZD.',
       'Promo status by itself never grants membership in a printing family; the printing must match a family set or a curated exact special-printing selector.',
