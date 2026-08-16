@@ -1,53 +1,72 @@
 # MTG Ultimate MCP
 
-An MCP-powered Magic: The Gathering / Commander knowledge, deck-building, upgrade, precon, printing, pricing, combo, simulation and evidence service.
+An MCP-powered Magic: The Gathering / Commander knowledge, rules, deck-building, upgrade, precon, printing, pricing, combo, simulation and evidence service.
 
-The goal is an **MTG brain for AI clients**: accurate card/rules knowledge, legal Commander construction, exact physical printings, useful simulations, evidence-backed upgrades, complete deck drafts, and simple explanations on top of the deeper logic.
+The goal is an **MTG brain for AI clients**: accurate card/rules knowledge, legal Commander construction, exact physical printings, useful simulations, evidence-backed upgrades, complete deck drafts, and simple explanations on top of deeper logic.
 
-## Current stage — V0.10
+## Current stage — V0.11
 
-V0.10 makes **Commander preconstructed decks first-class objects**.
+V0.11 is a **refinement and optimization release**. Instead of only making one upgrade pass, MTG Ultimate can now iteratively improve a legal deck, rebuild it, re-check legality, compare the new version with the previous one, and stop when further changes no longer clear the requested improvement threshold.
 
-Instead of hard-coding hundreds of lists, MTG Ultimate reads the current MTGJSON deck catalog, filters Commander/EDH products, caches it, and fetches the exact stock deck when requested. This lets the catalog grow as the source adds future Commander products.
+The preferred workflow is now:
 
-The stock physical deck identity is retained: quantity, card name, set code, collector number, and foil/nonfoil status.
+`rules + exact printing policy -> analyse -> propose small package -> rebuild -> validate -> same-seed compare -> budget check -> accept/reject -> repeat`
 
-### New V0.10 tools
+The engine deliberately keeps the current legal list when another round would be weaker, illegal, over budget, unverifiable, or below the improvement threshold.
+
+### New V0.11 tools
 
 | Tool | Purpose |
 | --- | --- |
-| `list_commander_precons_v10` | Browse/search the self-updating Commander precon catalog by name, year or code. |
-| `get_precon_stock_deck_v10` | Fetch the untouched stock list with exact physical printing information. |
-| `analyze_precon_v10` | Analyse the stock list with Commander rules, metrics, combos/bracket evidence and simulation. |
-| `precon_upgrade_profiles_v10` | Show light, balanced, strong, optimized and custom upgrade paths. |
-| `upgrade_precon_v10` | Generate exact OUT -> IN upgrades, rebuild the full deck and simulate stock vs upgraded. |
+| `refine_commander_deck_v11` | Iteratively improve any supplied legal Commander deck. |
+| `refine_precon_v11` | Start from an exact stock precon and iteratively improve it. |
+| `build_and_refine_commander_deck_v11` | Build a legal 100-card draft from scratch, then refine it instead of treating the first draft as final. |
 
-Product variants such as regular and Collector/foil editions remain separate when MTGJSON lists them separately because the physical versions can have different printings and values.
+### Total-budget support
 
-### Upgrade profiles
+V0.11 separates two budget rules:
 
-- **Light:** up to 5 swaps, default $5/card cap.
-- **Balanced:** up to 10 swaps, default $10/card cap.
-- **Strong:** up to 15 swaps, default $20/card cap.
-- **Optimized:** up to 15 swaps with no default per-card price cap.
-- **Custom:** caller supplies bracket, swap count, price and other restrictions.
+- `maxUsdPerCard` — maximum price of each incoming physical printing.
+- `maxTotalUsd` — maximum combined reference price of all accepted upgrade swaps.
 
-These are starting profiles, not universal power labels. Every option can still respect the intended precon plan, protected cards, exclusions, target bracket, allowed sets, budget and themed physical-printing policy.
+If a strict total budget is active and a selected printing has no verifiable reference price, the package is rejected rather than pretending it fits.
 
-A typical upgrade workflow is:
+For from-scratch construction, `maxPostDraftUpgradeUsd` only applies to refinement swaps after the first draft; it is not described as a full-deck purchase budget.
 
-`exact stock deck -> Commander legality -> analyse -> candidate OUT/IN swaps -> printing/price restrictions -> rebuild -> validate -> same-seed simulation -> cross-reference evidence -> simple recommendation`
+### Conservative iterative optimization
 
-EDHREC precon pages and the V0.9 source network are supplied as evidence references. Community popularity is not automatically treated as proof that a card is optimal.
+Accepted changes become the input to the next round. New cards are protected by default so the optimizer does not immediately undo successful changes, while cards already cut are not re-added in the same run.
+
+The internal acceptance score uses same-deck before/after signals such as opening-hand quality, commander uptime, protection, spell throughput and smaller structural role changes. It is **not** presented as a universal power score or measured win rate.
 
 ## Simple explanations by default
 
-Normal answers lead with what matters rather than internal calculations. For example:
+Normal answers lead with what matters:
 
-> **Add:** Card X — fixes weak early ramp and works directly with the commander.  
-> **Cut:** Card Y — expensive and rarely advances the main plan.
+> **Add:** Card X — improves early interaction and works directly with the commander.  
+> **Cut:** Card Y — expensive and contributes less to the main plan.  
+> **Result:** the refined version tested better, stayed legal and fits the requested budget.
 
-Detailed simulation, source counts and rules reasoning stay available when useful.
+Detailed round scoring, simulation outputs and evidence dumps remain available through `standard` or `detailed` output when useful.
+
+## Commander precons
+
+V0.10+ treats Commander preconstructed decks as first-class objects.
+
+Instead of hard-coding a frozen list, MTG Ultimate reads the current MTGJSON deck catalog, filters Commander/EDH products, caches the catalog and fetches the exact stock deck when requested.
+
+Stock identity retains quantity, card name, set code, collector number and foil/nonfoil status. Regular vs Collector/foil product variants remain separate when the source lists them separately.
+
+Key precon tools retained:
+
+| Tool | Purpose |
+| --- | --- |
+| `list_commander_precons_v10` | Browse/search the self-updating precon catalog. |
+| `get_precon_stock_deck_v10` | Fetch the untouched exact stock deck. |
+| `analyze_precon_v10` | Analyse stock legality, structure, combos/bracket evidence and simulation. |
+| `precon_upgrade_profiles_v10` | Show light/balanced/strong/optimized/custom upgrade levels. |
+| `upgrade_precon_v10` | Generate a one-pass exact OUT -> IN upgrade plan. |
+| `refine_precon_v11` | Run the newer iterative upgrade process from the same exact stock baseline. |
 
 ## Printing-aware deck building
 
@@ -63,6 +82,8 @@ Foil/etched/nonfoil information is retained where available.
 
 A restriction such as **“Final Fantasy printings only”** means the selected physical printing must belong to the allowed FINAL FANTASY family. Qualifying promos and curated special/Secret Lair releases can be included; an unrelated printing of the same Oracle card cannot substitute.
 
+The same restriction remains active during iterative refinement.
+
 ## Commander legality
 
 The hard rules layer validates:
@@ -76,11 +97,11 @@ The hard rules layer validates:
 
 Example: a black-red commander may use black, red, black-red and colorless identity cards, but not white, blue or green identity cards.
 
-Fully resolved illegal decks are blocked from advanced upgrade/simulation workflows.
+Fully resolved illegal decks are blocked from advanced upgrade/refinement/simulation workflows.
 
 ## Deck building and upgrading
 
-The general builder/upgrader supports:
+The builder/upgrader supports:
 
 - decks from scratch
 - exact IN/OUT swaps
@@ -88,26 +109,27 @@ The general builder/upgrader supports:
 - target bracket
 - theme restrictions
 - protected/must-include/excluded cards
-- per-card price limits
+- per-card and iterative total-upgrade budgets
 - allowed-set and printing-family restrictions
 - exact set + collector output
 - role/mana analysis
 - combo discovery
 - before/after simulation
 - public/tournament/community evidence
+- iterative stop-on-plateau refinement
 
 A generated 100-card list is treated as an evidence-backed draft, not an automatic claim of global optimality.
 
 ## Multi-source evidence
 
-V0.9+ keeps different evidence classes separate:
+Different evidence classes stay separate:
 
 - Wizards — official rules/product facts
 - Scryfall — cards, legalities, printings, reference prices
 - Commander Spellbook — combos and bracket evidence
 - TopDeck.gg / EDHTop16 — competitive results/decklists
 - Playgroup.gg — recorded paper Commander context
-- EDHREC — broad Commander adoption/synergy/precon add-cut context
+- EDHREC — broad Commander adoption/synergy/precon context
 - Archidekt / Moxfield / MTGGoldfish / AetherHub — public deck references and primers
 - cEDH Decklist Database — curated competitive archetype context
 - DeckCheck — independent deck-analysis opinion
@@ -122,6 +144,19 @@ Earlier versions provide London-style mulligans, colored mana, common conditiona
 
 The simulator is deliberately **not** described as a complete digital implementation of every Magic rule.
 
+## Reliability refinements
+
+V0.11 adds bounded automatic retries for safe GET/HEAD data requests on temporary statuses such as `429`, `500`, `502`, `503` and `504`, with `Retry-After` support where provided. Permanent client errors are not hidden, and write-like requests are not automatically retried by the shared helper.
+
+Default settings:
+
+```text
+HTTP_TIMEOUT_MS=15000
+HTTP_RETRY_ATTEMPTS=3
+HTTP_RETRY_BASE_MS=250
+PRECON_CATALOG_CACHE_MS=21600000
+```
+
 ## Documentation
 
 - `docs/V0.4_RULES_AND_SIMULATION.md`
@@ -131,6 +166,7 @@ The simulator is deliberately **not** described as a complete digital implementa
 - `docs/V0.8_PRINTING_FAMILIES.md`
 - `docs/V0.9_MULTI_SOURCE_EVIDENCE.md`
 - `docs/V0.10_PRECON_INTELLIGENCE.md`
+- `docs/V0.11_REFINEMENT.md`
 
 ## Run locally
 
@@ -152,7 +188,5 @@ Build and test:
 ```bash
 npm run check
 ```
-
-Optional/configurable sources include TopDeck, EDHTop16 and MTGJSON. The precon catalog cache defaults to six hours and can be force-refreshed through the precon catalog tool.
 
 The feature branch remains under active development in a draft PR. A stage is only treated as complete after strict TypeScript compilation and the full test suite pass.
