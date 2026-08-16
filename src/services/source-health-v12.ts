@@ -72,7 +72,7 @@ function referenceOnly(id: string, name: string, detail: string): SourceHealthCh
 export async function sourceHealthDiagnosticsV12(options: {
   includeReferenceSources?: boolean;
 } = {}): Promise<Record<string, unknown>> {
-  const checks = await Promise.all([
+  const checks: SourceHealthCheckV12[] = await Promise.all([
     timedProbe(
       'scryfall',
       'Scryfall',
@@ -87,18 +87,6 @@ export async function sourceHealthDiagnosticsV12(options: {
       'mtgjson',
       'MTGJSON',
       () => fetchJson(`${config.mtgJsonApiBase}/Meta.json`),
-    ),
-    timedProbe(
-      'edhtop16',
-      'EDHTop16',
-      () => fetchJson(`${config.edhTop16ApiBase}/req`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          standing: { $lte: 1 },
-          tourney_filter: { size: { $gte: 10_000 } },
-        }),
-      }),
     ),
     timedProbe(
       'topdeck',
@@ -120,6 +108,15 @@ export async function sourceHealthDiagnosticsV12(options: {
       Boolean(config.topDeckApiKey),
     ),
   ]);
+
+  // EDHTop16 remains useful as an attributed competitive reference. August 2026
+  // live tests found its legacy filtered POST routes redirecting to website HTML,
+  // so it is intentionally not counted as a healthy/degraded structured dependency.
+  checks.push(referenceOnly(
+    'edhtop16',
+    'EDHTop16',
+    'Public competitive-reference source. The legacy filtered POST API is not treated as a current structured dependency because live tests returned website HTML instead of JSON.',
+  ));
 
   if (options.includeReferenceSources ?? true) {
     checks.push(
@@ -152,6 +149,6 @@ export async function sourceHealthDiagnosticsV12(options: {
       baseDelayMs: config.httpRetryBaseMs,
       note: 'Shared HTTP retries apply only to safe GET/HEAD requests. Read-oriented POST APIs are probed once so diagnostics do not hide repeated endpoint failures.',
     },
-    guidance: 'A degraded reference source should reduce confidence or trigger a fallback; it should not cause MTG Ultimate to fabricate data. Rules/legality and exact printing claims should remain grounded in the authoritative source class available for that claim.',
+    guidance: 'A degraded structured source should reduce confidence or trigger a fallback; a reference-only source should be used as attributed context rather than fabricated structured data. Rules/legality and exact printing claims should remain grounded in the authoritative source class available for that claim.',
   };
 }
