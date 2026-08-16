@@ -65,19 +65,17 @@ export async function buildAndRefineCommanderDeckV11(
     };
   }
 
-  const protectedCards = [...new Set([
-    ...(options.mustInclude ?? []),
-  ])];
+  const protectedCards = [...new Set(options.mustInclude ?? [])];
   const refinement = await refineCommanderDeckIterativelyV11(draft.decklist, {
-    targetBracket: options.targetBracket,
-    maxUsdPerCard: options.maxUsdPerCard,
-    maxTotalUsd: options.maxPostDraftUpgradeUsd,
-    allowedSets: options.allowedSets,
-    printingFamily: options.printingFamily,
-    includePromos: options.includePromos,
-    includeSpecialReleases: options.includeSpecialReleases,
-    themeQuery: options.themeQuery,
-    excludedCards: options.excludedCards,
+    ...(options.targetBracket !== undefined ? { targetBracket: options.targetBracket } : {}),
+    ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
+    ...(options.maxPostDraftUpgradeUsd !== undefined ? { maxTotalUsd: options.maxPostDraftUpgradeUsd } : {}),
+    ...(options.allowedSets !== undefined ? { allowedSets: options.allowedSets } : {}),
+    ...(options.printingFamily !== undefined ? { printingFamily: options.printingFamily } : {}),
+    ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
+    ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
+    ...(options.themeQuery !== undefined ? { themeQuery: options.themeQuery } : {}),
+    ...(options.excludedCards !== undefined ? { excludedCards: options.excludedCards } : {}),
     protectedCards,
     maxSwaps: options.maxRefinementSwaps ?? 12,
     maxRounds: options.maxRefinementRounds ?? 3,
