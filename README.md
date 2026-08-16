@@ -57,7 +57,7 @@ Printing-family inputs support:
 
 The built-in Final Fantasy family preset dynamically discovers physical Scryfall sets whose set names belong to the FINAL FANTASY family and also recognizes curated exact special-release printings that live in broader products such as Secret Lair.
 
-This is important because a broad set code such as `SLD` contains many unrelated products. MTG Ultimate therefore does **not** whitelist all Secret Lair cards. It whitelists the exact FINAL FANTASY special printings instead.
+This is important because a broad set code such as `SLD` contains many unrelated products. MTG Ultimate therefore does **not** whitelist all Secret Lair cards. It whitelists exact known FINAL FANTASY special printings instead.
 
 Examples of the intended distinction:
 
