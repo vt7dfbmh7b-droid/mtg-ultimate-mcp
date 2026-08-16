@@ -2,49 +2,90 @@
 
 An MCP-powered Magic: The Gathering / Commander knowledge, rules, deck-building, upgrade, precon, printing, pricing, combo, simulation and evidence service.
 
-The goal is an **MTG brain for AI clients**: accurate card/rules knowledge, legal Commander construction, exact physical printings, useful simulations, evidence-backed upgrades, complete deck drafts, and simple explanations on top of deeper logic.
+The goal is an **MTG brain for AI clients**: accurate card/rules knowledge, legal Commander construction, exact physical printings, useful simulations, evidence-backed upgrades, complete deck drafts, NZ-focused shopping decisions, and simple explanations on top of deeper logic.
 
-## Current stage — V0.12
+## Current stage — V0.13
 
-V0.12 refines three areas at once: **upgrade selection, evidence quality, and runtime reliability/architecture**.
+V0.13 makes **New Zealand dollars (NZD) the primary pricing and budget currency**.
 
-The preferred deck workflow is now:
+The default pricing rule is:
 
-`rules + exact printing policy -> analyse -> generate competing packages -> rebuild each -> validate -> same-seed compare -> budget check -> choose winner -> repeat until plateau`
+> **NZ$ first. Direct New Zealand prices when actually checked; otherwise convert the exact Scryfall USD printing reference to NZD and keep USD only as a labelled reference value.**
 
-Instead of testing only one upgrade package per round, the optimizer can compare several materially different legal packages and keep the strongest supported option.
+The older V0.12 USD-oriented tools remain registered for compatibility, but current clients should use the V0.13 pricing/refinement tools.
 
-### V0.12 tools
+### V0.13 tools
 
 | Tool | Purpose |
 | --- | --- |
-| `refine_commander_deck_v12` | Compare multiple candidate upgrade packages each round and iteratively refine any legal Commander deck. |
-| `refine_precon_v12` | Start from the exact stock precon and apply competing-package refinement. |
-| `build_and_refine_commander_deck_v12` | Build a legal 100-card draft, then compare competing refinement packages instead of treating the first draft as final. |
-| `source_health_v12` | Probe structured data sources and report healthy/degraded/not-configured/reference-only state. |
-| `cross_reference_tournament_evidence_v12` | Use structured TopDeck tournament evidence when configured, pair it with public competitive references, and deduplicate structured records that are actually available. |
+| `pricing_policy_v13` | Show the current USD→NZD rate and NZ-local pricing priority. |
+| `price_card_nzd_v13` | Price a named card or exact set/collector-number printing with NZ$ first. |
+| `refine_commander_deck_v13` | Iteratively refine any legal Commander deck using NZD budgets. |
+| `refine_precon_v13` | Refine a stock precon using NZD-first prices and budgets. |
+| `build_and_refine_commander_deck_v13` | Build from scratch and refine using NZD per-card/post-draft budgets. |
 
-### Competing-package optimization
+## NZD pricing policy
 
-The default is **3 candidate packages per round**; callers can request 1–6.
+V0.13 uses these priorities:
 
-Every package uses the same per-round simulation seed. Packages are rejected when they fail legality/resolution, physical-printing rules, per-card/total budgets, minimum improvement, or material regression checks.
+1. Prefer a directly checked New Zealand listing for the **exact physical printing**.
+2. TCGfind NZ / NZ retailers are the preferred local shopping lane.
+3. If no direct local listing is available through a supported research path, use the exact Scryfall printing's USD reference price and convert it to NZD.
+4. Keep the original USD number as `priceUsdReference` for auditability, not as the primary price.
+5. Never imply a converted international reference includes NZ shipping or is a guaranteed checkout/landed cost.
 
-Later candidates temporarily block part of earlier candidate additions so the engine explores different paths instead of repeatedly resimulating the same suggestion.
+A printing restriction always remains active. A cheaper unrelated printing cannot replace a required Final Fantasy, Marvel, Secret Lair, promo, foil or other requested edition.
 
-The winner becomes the next full deck and the process repeats. The engine stops instead of forcing a change when no candidate clears the checks.
+### NZD budget fields
 
-The comparison score is a within-deck engineering heuristic, **not** a universal Commander power score or measured win rate.
+Current refinement tools use:
+
+- `maxNzdPerCard`
+- `maxTotalNzd`
+- `maxPostDraftUpgradeNzd` for post-draft refinement of a from-scratch build
+
+The V0.13 precon profile defaults are expressed directly in NZD:
+
+- light — NZ$10/card
+- balanced — NZ$20/card
+- strong — NZ$35/card
+- optimized — no default per-card cap
+
+All can be overridden by the caller.
+
+## Exchange-rate handling
+
+The default FX source is Frankfurter's USD/NZD rate endpoint. The result is cached for six hours so repeated deck refinement does not repeatedly call the FX service.
+
+```text
+FX_API_BASE=https://api.frankfurter.dev
+FX_CACHE_MS=21600000
+USD_TO_NZD_FALLBACK=
+```
+
+The fallback is blank by default. If live FX is unavailable and there is no cached value, MTG Ultimate fails clearly instead of silently inventing an exchange rate. A manually configured fallback is labelled as such.
+
+## Deck refinement foundation
+
+The preferred deck workflow remains:
+
+`rules + exact printing policy -> analyse -> generate competing packages -> rebuild each -> validate -> same-seed compare -> NZD budget check -> choose winner -> repeat until plateau`
+
+The optimizer can compare several materially different legal packages per round and keep the strongest supported option. The default is **3 candidate packages per round**; callers can request 1–6.
+
+Every package uses the same per-round simulation seed. Packages are rejected when they fail legality/resolution, physical-printing rules, budget, minimum improvement, or material-regression checks.
+
+The comparison score is a within-deck engineering heuristic, **not** a universal Commander power score or measured multiplayer win rate.
 
 ## Simple explanations by default
 
-Normal answers should still be easy to read:
+Normal answers should stay easy to read:
 
-> **Add:** Card X — improves early interaction and fits the deck's plan.  
-> **Cut:** Card Y — costs more mana and contributes less to the main route.  
-> **Why this package won:** it tested better than the alternatives, stayed legal, and fit the requested budget/printing rules.
+> **Add:** Card X — improves early interaction and costs about NZ$8 for this printing.  
+> **Cut:** Card Y — contributes less to the main plan.  
+> **Why this package won:** it tested better than the alternatives, stayed legal, and fit the NZ$ budget.
 
-`standard` and `detailed` modes can expose candidate-package comparisons, simulation deltas, source health and evidence details when useful.
+Detailed simulation, FX, source and USD-reference data remain available when useful.
 
 ## Commander precons
 
@@ -59,8 +100,8 @@ Key tools include:
 | `list_commander_precons_v10` | Browse/search the self-updating Commander precon catalog. |
 | `get_precon_stock_deck_v10` | Fetch the untouched stock list with exact physical printings. |
 | `analyze_precon_v10` | Analyse stock rules, structure, combos/bracket evidence and simulation. |
-| `upgrade_precon_v10` | One-pass stock OUT -> IN upgrade plan. |
-| `refine_precon_v12` | Multi-package iterative refinement from the same untouched stock baseline. |
+| `upgrade_precon_v10` | Historical one-pass upgrade workflow. |
+| `refine_precon_v13` | Current multi-package iterative precon refinement with NZD-first pricing. |
 
 ## Printing-aware deck building
 
@@ -76,40 +117,20 @@ Foil/etched/nonfoil information is retained where available.
 
 A request such as **“Final Fantasy printings only”** means the selected physical printing must belong to the allowed FINAL FANTASY family. Qualifying promos and curated special/Secret Lair releases can be allowed; an unrelated printing of the same Oracle card cannot substitute.
 
-That printing policy remains active through every refinement round.
+That printing policy remains active through every refinement round and pricing check.
 
 ## Commander legality
 
-The hard rules layer validates:
-
-- commander eligibility
-- supported partner/two-commander configurations
-- exactly 100 cards
-- commander color identity
-- singleton/basic/card-specific copy exceptions
-- current Commander legality/banned state
-
-A black-red commander therefore permits black, red, black-red and colorless identity cards, but not white, blue or green identity cards.
+The hard rules layer validates commander eligibility, supported partner/two-commander configurations, exactly 100 cards, combined commander color identity, singleton/basic/card-specific copy exceptions and current Commander legality.
 
 Fully resolved illegal decks are blocked from advanced building/refinement/simulation workflows.
-
-## Budgets
-
-Refinement distinguishes:
-
-- `maxUsdPerCard` — maximum price of each incoming physical printing.
-- `maxTotalUsd` — maximum combined reference spend of accepted upgrade swaps.
-
-For from-scratch construction, `maxPostDraftUpgradeUsd` caps only the extra refinement swaps after the first draft; it is not presented as a full-deck purchase budget.
-
-If a strict total budget is active and a selected printing has no verifiable price, the package is rejected rather than treated as free.
 
 ## Multi-source evidence
 
 Different evidence classes stay separate:
 
 - Wizards — official rules/product facts
-- Scryfall — Oracle data, legality, exact printings and reference prices
+- Scryfall — Oracle data, legality, exact printings and USD market reference values
 - Commander Spellbook — curated combos and bracket evidence
 - TopDeck.gg — structured competitive tournament results/decklists when configured
 - EDHTop16 — attributed public competitive/meta reference
@@ -119,59 +140,17 @@ Different evidence classes stay separate:
 - cEDH Decklist Database — curated competitive archetype context
 - DeckCheck — independent deck-analysis opinion
 - TCGfind NZ — New Zealand availability/local-price checks
-- TCGplayer / Cardmarket — international price cross-checks
+- TCGplayer / Cardmarket — secondary international price cross-checks
 
 No single popularity score, analysis score or tournament finish is treated as proof that a card is universally best.
 
-### Tournament overlap protection
+## Source health and reliability
 
-V0.12 includes conservative deduplication for structured tournament records. Likely duplicates require event/player/deck/result context; a reused deck URL alone is never enough to merge records because a maintained deck link may be used at multiple events.
+`source_health_v12` continues to probe Scryfall, Commander Spellbook, MTGJSON and TopDeck.gg when configured. Reference-only sources are not fabricated as backend APIs.
 
-During live integration testing in August 2026, the legacy EDHTop16 filtered POST routes redirected to the public website and returned HTML rather than structured JSON. EDHTop16 therefore remains useful as a public competitive reference, but it is **not counted as extra structured tournament rows** unless a current stable structured endpoint is verified later.
+The shared HTTP/Scryfall layers use bounded retries where safe, request pacing and in-process caches to reduce redundant traffic during long refinement runs.
 
-## Source health
-
-`source_health_v12` actively probes the structured dependencies MTG Ultimate currently relies on:
-
-- Scryfall
-- Commander Spellbook
-- MTGJSON
-- TopDeck.gg when an API key is configured
-
-It reports healthy, degraded, not configured, reference-only, and live-probe latency where applicable.
-
-EDHTop16, EDHREC, Moxfield, DeckCheck and TCGfind NZ are explicitly labelled as reference sources where no current supported structured integration is relied on. A reference source being useful does not make it a backend dependency.
-
-A degraded structured source should lower confidence or trigger another evidence path. The system must not invent data to fill an outage.
-
-## Gameplay/simulation foundation
-
-Earlier versions provide London-style mulligans, colored mana, common conditional lands/fetches, ramp, tutors, draw, commander tax, Treasures, common special payment mechanics, supported alternative costs, commander removal/recasts, protection battles, Ward-aware targeting, multiplayer stack abstractions, combat modifiers and zone-aware combo readiness.
-
-The simulator is deliberately **not** described as a complete digital implementation of every Magic rule.
-
-## Reliability and runtime architecture
-
-The shared HTTP layer retries safe GET/HEAD requests on temporary failures such as `429`, `500`, `502`, `503` and `504`, with bounded attempts and `Retry-After` support. Read-oriented POST APIs are not automatically retried.
-
-V0.12 also removes the stale-version problem from the MCP identity:
-
-- the base MCP constructor uses `config.version`
-- package/config/health/User-Agent/MCP identity use the same release version
-- `src/server-current.ts` is the stable runtime entry point
-- `src/index.ts` no longer imports a numbered release module directly
-- V0.12 exposes `registerMtgToolsV12(server)` as the preferred future registration pattern
-
-Historical numbered server modules remain as compatibility/regression layers.
-
-Default operational settings:
-
-```text
-HTTP_TIMEOUT_MS=15000
-HTTP_RETRY_ATTEMPTS=3
-HTTP_RETRY_BASE_MS=250
-PRECON_CATALOG_CACHE_MS=21600000
-```
+The V0.13 currency layer separately exposes the current FX status through `pricing_policy_v13`.
 
 ## Testing
 
@@ -181,29 +160,44 @@ Normal regression checks:
 npm run check
 ```
 
-This runs strict TypeScript compilation plus the automated unit/regression suite, including the current MCP server-construction smoke test.
-
-A separate live integration smoke test is available:
+Live dependency checks:
 
 ```bash
 npm run test:live
 ```
 
-The live smoke test checks real current dependencies rather than mocks. It verifies:
+The live smoke suite now verifies:
 
-- Scryfall can resolve `Sol Ring` and reports it Commander-legal
-- Commander Spellbook responds
-- MTGJSON responds
-- the live Commander precon catalog contains `Limit Break`
-- the stock `Limit Break (FINAL FANTASY VII)` product resolves to exactly 100 cards
-- the stock list preserves exact set / collector-number / finish information
-- sources without a current supported structured API are labelled reference-only rather than fabricated as healthy APIs
+- Scryfall / Commander Spellbook / MTGJSON availability
+- a real USD→NZD FX rate
+- a real Scryfall printing converted to `priceNzd`
+- no bare USD price is presented as the primary current pricing field
+- `Limit Break (FINAL FANTASY VII)` resolves as a real exact 100-card stock precon
 
-`.github/workflows/live-smoke.yml` runs this as a dedicated integration workflow when relevant integration files change and can also be manually dispatched.
+Full real-precon end-to-end test:
 
-The corrected live smoke run passed with Scryfall, Commander Spellbook and MTGJSON healthy, TopDeck correctly reported as not configured without an API key, EDHTop16 correctly reported as reference-only, `Sol Ring` resolving live, and `Limit Break (FINAL FANTASY VII)` resolving as an exact 100-card stock deck.
+```bash
+npm run test:e2e
+```
 
-The current V0.12 head also passed dependency installation, strict TypeScript compilation and the complete automated regression suite after the live-test corrections.
+The E2E scenario uses a real `Limit Break` stock deck, submits NZD per-card and total budgets, runs competing refinement packages, then independently verifies:
+
+- exactly 100 cards
+- hard Commander legality
+- commander preservation
+- stable land count for the automatic nonland swap lane
+- exact OUT -> IN deck deltas
+- exact incoming set / collector number / finish
+- untouched stock printings stay unchanged
+- every accepted card stays within the NZD per-card cap
+- the package stays within the NZD total cap
+- USD values remain only as source/reference fields
+
+## Runtime architecture
+
+The base MCP constructor uses central `config.version`; package/config/health/User-Agent/MCP identity therefore share the release version. `src/server-current.ts` is the stable current runtime boundary.
+
+Historical numbered server modules remain as compatibility/regression layers rather than being deleted in a risky rewrite.
 
 ## Documentation
 
@@ -216,6 +210,7 @@ The current V0.12 head also passed dependency installation, strict TypeScript co
 - `docs/V0.10_PRECON_INTELLIGENCE.md`
 - `docs/V0.11_REFINEMENT.md`
 - `docs/V0.12_COMPETING_REFINEMENT_AND_SOURCE_HEALTH.md`
+- `docs/V0.13_NZD_FIRST_PRICING.md`
 
 ## Run locally
 
@@ -232,4 +227,4 @@ Endpoints:
 - MCP: `http://localhost:3000/mcp`
 - Health: `http://localhost:3000/health`
 
-The feature branch remains under active development in a draft PR. A release is only treated as green after the normal regression suite passes; live integrations are checked separately so a third-party outage can be distinguished from a code regression.
+The feature branch remains under active development in a draft PR. A release is treated as green only after the normal regression suite passes; live integrations and full Commander scenarios are tested separately so external-source outages can be distinguished from code regressions.
