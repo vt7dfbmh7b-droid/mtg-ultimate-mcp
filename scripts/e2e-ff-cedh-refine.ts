@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { completeBestCedhComboV14 } from '../src/services/cedh-combo-completion-v14.js';
-import { refineForCedhV14 } from '../src/services/cedh-refinement-v14.js';
+import { refineCedhEfficiencyV14 } from '../src/services/cedh-efficiency-v14.js';
 import { parseDecklist } from '../src/services/deck.js';
 import { estimateCommanderBracket, findDeckCombos } from '../src/services/spellbook.js';
 
@@ -31,18 +31,18 @@ async function main(): Promise<void> {
   const afterGateCount = Number(record(afterGateCombos.counts).included ?? 0);
   assert.ok(afterGateCount > beforeCount, 'combo gate must increase the number of complete Spellbook combos');
 
-  const result = await refineForCedhV14(comboDecklist, {
+  const protectedComboCards = Array.isArray(record(comboGate.completedPlan).comboCardNames)
+    ? (record(comboGate.completedPlan).comboCardNames as string[])
+    : [];
+  const result = await refineCedhEfficiencyV14(comboDecklist, {
     printingFamily: 'Final Fantasy',
     includePromos: true,
     includeSpecialReleases: true,
-    maxRounds: 1,
     maxSwaps: 3,
-    candidatePackagesPerRound: 3,
-    protectedCards: Array.isArray(record(comboGate.completedPlan).comboCardNames)
-      ? (record(comboGate.completedPlan).comboCardNames as string[])
-      : [],
+    protectedCards: protectedComboCards,
   });
   assert.notEqual(result.status, 'invalid-starting-deck');
+  assert.notEqual(result.status, 'starting-deck-violates-printing-policy');
   const finalDecklist = typeof result.finalDecklist === 'string' ? result.finalDecklist : comboDecklist;
   assert.equal(parseDecklist(finalDecklist).totalCards, 100);
   const afterBracket = await estimateCommanderBracket(finalDecklist);
@@ -51,15 +51,28 @@ async function main(): Promise<void> {
 
   console.log(`BEFORE: tag=${String(beforeBracket.bracketTag ?? 'unknown')} completeCombos=${beforeCount}`);
   console.log(`AFTER COMBO GATE: completeCombos=${afterGateCount}`);
+  console.log(`STRICT EFFICIENCY STATUS: ${String(result.status)}`);
   console.log(`FINAL: tag=${String(afterBracket.bracketTag ?? 'unknown')} completeCombos=${afterCount}`);
   console.log(`COMBO SWAPS: ${JSON.stringify(comboGate.swaps ?? [], null, 2)}`);
-  console.log(`EFFICIENCY SWAPS: ${JSON.stringify(result.swaps ?? [], null, 2)}`);
-  console.log(`COMPETITIVE EVIDENCE: ${JSON.stringify(result.competitiveEvidence ?? {}, null, 2)}`);
+  console.log(`STRICT EFFICIENCY SWAPS: ${JSON.stringify(result.swaps ?? [], null, 2)}`);
+  console.log(`BEFORE METRICS: ${JSON.stringify(result.beforeMetrics ?? {}, null, 2)}`);
+  console.log(`AFTER METRICS: ${JSON.stringify(result.afterMetrics ?? {}, null, 2)}`);
   console.log('\nFINAL DECKLIST');
   console.log(finalDecklist.trim());
 
   assert.ok(afterCount >= afterGateCount, 'later efficiency tuning must not remove the verified complete combo');
+  const weakNames = new Set(['world map', 'magitek infantry']);
+  const strictSwaps = Array.isArray(result.swaps) ? result.swaps.map(record) : [];
+  assert.equal(
+    strictSwaps.some((swap) => typeof swap.in === 'string' && weakNames.has(normalizeForTest(swap.in))),
+    false,
+    'strict cEDH efficiency tuning must not admit cards merely because they are cheap',
+  );
   console.log('FAST FF cEDH REGRESSION: PASS');
+}
+
+function normalizeForTest(value: string): string {
+  return value.trim().toLocaleLowerCase();
 }
 
 main().catch((error) => {
