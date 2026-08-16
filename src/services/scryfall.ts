@@ -1,5 +1,5 @@
 import { config } from '../config.js';
-import { fetchJson } from '../lib/http.js';
+import { fetchJson, HttpError } from '../lib/http.js';
 import type {
   ScryfallCard,
   ScryfallCollectionResult,
@@ -55,10 +55,22 @@ export interface CardSummary {
 
 let rateLimitQueue: Promise<void> = Promise.resolve();
 let lastRequestAt = 0;
-const MIN_REQUEST_GAP_MS = 120;
+const MIN_REQUEST_GAP_MS = 175;
 let setCache: ScryfallSet[] | null = null;
 let setCacheAt = 0;
 const SET_CACHE_TTL_MS = 6 * 60 * 60 * 1_000;
+
+function sleep(ms: number): Promise<void> {
+  return ms <= 0 ? Promise.resolve() : new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function isReadOnlyPost(init: RequestInit): boolean {
+  return (init.method ?? 'GET').toUpperCase() === 'POST';
+}
+
+function collectionRetryDelayMs(attempt: number): number {
+  return Math.min(8_000, Math.max(1_000, config.httpRetryBaseMs * (2 ** Math.max(0, attempt))));
+}
 
 async function scryfallRequest<T>(url: string, init: RequestInit = {}): Promise<T> {
   let releaseQueue: () => void = () => undefined;
@@ -69,10 +81,23 @@ async function scryfallRequest<T>(url: string, init: RequestInit = {}): Promise<
 
   await previous;
   try {
-    const waitMs = Math.max(0, MIN_REQUEST_GAP_MS - (Date.now() - lastRequestAt));
-    if (waitMs > 0) await new Promise((resolve) => setTimeout(resolve, waitMs));
-    lastRequestAt = Date.now();
-    return await fetchJson<T>(url, init);
+    const attempts = isReadOnlyPost(init) ? config.httpRetryAttempts : 1;
+    for (let attempt = 1; attempt <= attempts; attempt += 1) {
+      const waitMs = Math.max(0, MIN_REQUEST_GAP_MS - (Date.now() - lastRequestAt));
+      if (waitMs > 0) await sleep(waitMs);
+      lastRequestAt = Date.now();
+      try {
+        return await fetchJson<T>(url, init);
+      } catch (error) {
+        const retryableRateLimit = error instanceof HttpError && error.status === 429;
+        if (!retryableRateLimit || attempt >= attempts) throw error;
+        // /cards/collection is a read-only query even though Scryfall exposes it as POST.
+        // Retrying the identical JSON body is safe and prevents a transient shared-IP
+        // rate limit from aborting a long Commander refinement run.
+        await sleep(collectionRetryDelayMs(attempt));
+      }
+    }
+    throw new Error(`Scryfall request failed after ${attempts} attempts: ${url}`);
   } finally {
     releaseQueue();
   }
