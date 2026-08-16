@@ -1,13 +1,13 @@
 import type { PodPressureV06 } from './simulation-v06.js';
 
 export interface TournamentMetricSnapshotV07 {
-  interactionCount?: number;
-  cheapInteractionCount?: number;
-  protectionCount?: number;
-  tutorCount?: number;
-  fastManaCount?: number;
-  rampCount?: number;
-  averageNonlandManaValue?: number;
+  interactionCount?: number | undefined;
+  cheapInteractionCount?: number | undefined;
+  protectionCount?: number | undefined;
+  tutorCount?: number | undefined;
+  fastManaCount?: number | undefined;
+  rampCount?: number | undefined;
+  averageNonlandManaValue?: number | undefined;
 }
 
 export interface PressureCalibrationV07 {
