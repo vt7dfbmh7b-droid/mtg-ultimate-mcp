@@ -70,9 +70,9 @@ test('temporal split keeps a leakage group entirely on one side of the holdout b
   const records = [
     record({ outcomeId: 'a', observedAt: '2026-01-01T00:00:00Z', leakageGroup: 'series-a', independentGroup: 'group-a' }),
     record({ outcomeId: 'b', observedAt: '2026-01-10T00:00:00Z', leakageGroup: 'series-b', independentGroup: 'group-b', label: 0 }),
-    record({ outcomeId: 'c', observedAt: '2026-01-20T00:00:00Z', leakageGroup: 'series-a', independentGroup: 'group-a' }),
     record({ outcomeId: 'd', observedAt: '2026-01-30T00:00:00Z', leakageGroup: 'series-c', independentGroup: 'group-c', label: 0 }),
     record({ outcomeId: 'e', observedAt: '2026-02-10T00:00:00Z', leakageGroup: 'series-d', independentGroup: 'group-d' }),
+    record({ outcomeId: 'c', observedAt: '2026-02-15T00:00:00Z', leakageGroup: 'series-a', independentGroup: 'group-a' }),
   ];
   const split = temporalSplitLearningCorpusV15(records, 0.2);
   const trainingGroups = new Set(split.training.map((entry) => entry.leakageGroup));
