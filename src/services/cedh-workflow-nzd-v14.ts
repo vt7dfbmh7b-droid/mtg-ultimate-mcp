@@ -1,4 +1,7 @@
-import { completeBestCedhComboV14, type CedhComboCompletionOptionsV14 } from './cedh-combo-completion-v14.js';
+import {
+  completeBestCedhWinPackageV14,
+  type CedhWinPackageOptionsV14,
+} from './cedh-win-package-v14.js';
 import {
   getUsdNzdRateV13,
   nzdToUsdV13,
@@ -20,13 +23,13 @@ function usdCap(maxNzdPerCard: number | undefined, rate: number): number | undef
   return maxNzdPerCard === undefined ? undefined : nzdToUsdV13(maxNzdPerCard, rate);
 }
 
-export async function completeBestCedhComboNzdV14(
+export async function completeBestCedhWinPackageNzdV14(
   decklist: string,
-  options: CedhComboCompletionOptionsV14 & CedhNzdBudgetOptionsV14 = {},
+  options: CedhWinPackageOptionsV14 & CedhNzdBudgetOptionsV14 = {},
 ): Promise<Record<string, unknown>> {
   const rate = await getUsdNzdRateV13();
   const maxUsdPerCard = usdCap(options.maxNzdPerCard, rate.rate);
-  const result = await completeBestCedhComboV14(decklist, {
+  const result = await completeBestCedhWinPackageV14(decklist, {
     ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
     ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
     ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
@@ -39,6 +42,17 @@ export async function completeBestCedhComboNzdV14(
   return withNzdPricingV13(result, rate, {
     maxNzdPerCard: options.maxNzdPerCard ?? null,
   });
+}
+
+/**
+ * Backward-compatible V0.14 alias. The implementation is intentionally stricter now:
+ * only win-oriented Commander Spellbook packages satisfy the competitive combo gate.
+ */
+export async function completeBestCedhComboNzdV14(
+  decklist: string,
+  options: CedhWinPackageOptionsV14 & CedhNzdBudgetOptionsV14 = {},
+): Promise<Record<string, unknown>> {
+  return completeBestCedhWinPackageNzdV14(decklist, options);
 }
 
 export async function refineCommanderForCedhNzdV14(
