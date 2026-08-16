@@ -142,7 +142,7 @@ export function createMtgServerV09() {
             topDeck = await analyzeTopDeckTournamentReferences({
               lastDays,
               participantMin,
-              commanderName: commanders.length === 1 ? commanders[0] : undefined,
+              ...(commanders.length === 1 && commanders[0] ? { commanderName: commanders[0] } : {}),
               sampleLimit,
               minGames: 3,
             });
