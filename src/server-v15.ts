@@ -170,7 +170,7 @@ export function registerMtgToolsV15(server: McpServer): McpServer {
     'synthesize_deep_research_v15',
     {
       title: 'Synthesize MTG research without double counting evidence',
-      description: 'Score and synthesize normalized research observations with source quality, freshness, sample-size, independence and evidence-class diversity. Contradictions remain visible and can produce a disputed verdict instead of false certainty.',
+      description: 'Score and synthesize normalized research observations with source quality, freshness, sample-size, independence and evidence-class diversity. Contradictions remain visible and can produce a disputed verdict instead of false certainty; contradictory mirrors inside the same underlying evidence group share one capped evidence budget.',
       inputSchema: z.object({
         observations: z.array(z.object({
           sourceId: z.string().min(1).max(80),
@@ -254,7 +254,7 @@ export function registerMtgToolsV15(server: McpServer): McpServer {
     'evaluate_deep_learning_readiness_v15',
     {
       title: 'Evaluate whether MTG data is ready for neural deep learning',
-      description: 'Refuse premature deep-learning claims. Checks labelled sample size, class balance, temporal coverage, independent evidence groups, evidence-class diversity, duplicate/conflict/malformed rates, leakage checks, temporal holdout size, and whether a neural candidate materially beats the transparent baseline.',
+      description: 'Refuse premature deep-learning claims. Checks labelled sample size, class balance, temporal coverage, evidence independence/diversity, duplicate/conflict/malformed rates, leakage, temporal holdout class balance, accuracy improvement, and temporal log-loss calibration against the transparent baseline.',
       inputSchema: z.object({
         labelledExamples: z.number().int().min(0).max(100_000_000),
         positiveExamples: z.number().int().min(0).max(100_000_000),
@@ -268,7 +268,11 @@ export function registerMtgToolsV15(server: McpServer): McpServer {
         leakageChecksPassed: z.boolean(),
         transparentBaselineAccuracy: z.number().min(0).max(1).nullable(),
         candidateModelAccuracy: z.number().min(0).max(1).nullable(),
+        transparentBaselineLogLoss: z.number().min(0).nullable().optional(),
+        candidateModelLogLoss: z.number().min(0).nullable().optional(),
         temporalHoldoutExamples: z.number().int().min(0).max(100_000_000),
+        temporalHoldoutPositiveExamples: z.number().int().min(0).max(100_000_000).optional(),
+        temporalHoldoutNegativeExamples: z.number().int().min(0).max(100_000_000).optional(),
       }),
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
