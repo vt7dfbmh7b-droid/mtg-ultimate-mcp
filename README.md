@@ -201,6 +201,10 @@ The live smoke test checks real current dependencies rather than mocks. It verif
 
 `.github/workflows/live-smoke.yml` runs this as a dedicated integration workflow when relevant integration files change and can also be manually dispatched.
 
+The corrected live smoke run passed with Scryfall, Commander Spellbook and MTGJSON healthy, TopDeck correctly reported as not configured without an API key, EDHTop16 correctly reported as reference-only, `Sol Ring` resolving live, and `Limit Break (FINAL FANTASY VII)` resolving as an exact 100-card stock deck.
+
+The current V0.12 head also passed dependency installation, strict TypeScript compilation and the complete automated regression suite after the live-test corrections.
+
 ## Documentation
 
 - `docs/V0.4_RULES_AND_SIMULATION.md`
