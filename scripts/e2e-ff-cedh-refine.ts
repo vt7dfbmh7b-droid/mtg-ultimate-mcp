@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { completeBestCedhComboV14 } from '../src/services/cedh-combo-completion-v14.js';
 import { refineCedhEfficiencyV14 } from '../src/services/cedh-efficiency-v14.js';
 import { optimizeCedhManaBaseV14 } from '../src/services/cedh-manabase-v14.js';
+import { completeBestCedhWinPackageV14, countWinningCombosV14 } from '../src/services/cedh-win-package-v14.js';
 import { parseDecklist } from '../src/services/deck.js';
 import { estimateCommanderBracket, findDeckCombos } from '../src/services/spellbook.js';
 
@@ -18,28 +18,29 @@ async function main(): Promise<void> {
   const baseline = await readFile(new URL('../testdata/ff-najeela-powerful-baseline.txt', import.meta.url), 'utf8');
   const beforeBracket = await estimateCommanderBracket(baseline);
   const beforeCombos = await findDeckCombos(baseline, 100);
-  const beforeCount = Number(record(beforeCombos.counts).included ?? 0);
+  const beforeComplete = Number(record(beforeCombos.counts).included ?? 0);
+  const beforeWins = countWinningCombosV14(beforeCombos);
 
-  const comboGate = await completeBestCedhComboV14(baseline, {
+  const winGate = await completeBestCedhWinPackageV14(baseline, {
     printingFamily: 'Final Fantasy',
     includePromos: true,
     includeSpecialReleases: true,
     maxMissingCards: 2,
     maxCandidatesToVerify: 8,
   });
-  console.log(`COMBO GATE STATUS: ${String(comboGate.status)}`);
-  console.log(`COMBO GATE AUDIT: ${JSON.stringify(comboGate.audit ?? [], null, 2)}`);
-  assert.equal(comboGate.status, 'combo-completed', 'FF cEDH path must find and independently verify at least one eligible complete combo from the known Powerful baseline');
+  console.log(`WIN GATE STATUS: ${String(winGate.status)}`);
+  console.log(`WIN GATE AUDIT: ${JSON.stringify(winGate.audit ?? [], null, 2)}`);
+  assert.equal(winGate.status, 'winning-combo-completed', 'FF cEDH path must independently verify a policy-compliant win-oriented combo');
 
-  const comboDecklist = typeof comboGate.finalDecklist === 'string' ? comboGate.finalDecklist : baseline;
-  const afterGateCombos = await findDeckCombos(comboDecklist, 100);
-  const afterGateCount = Number(record(afterGateCombos.counts).included ?? 0);
-  assert.ok(afterGateCount > beforeCount, 'combo gate must increase the number of complete Spellbook combos');
+  const winDecklist = typeof winGate.finalDecklist === 'string' ? winGate.finalDecklist : baseline;
+  const afterWinCombos = await findDeckCombos(winDecklist, 100);
+  const afterWinCount = countWinningCombosV14(afterWinCombos);
+  assert.ok(afterWinCount > beforeWins, 'win-package gate must increase the number of verified winning Spellbook combos');
 
-  const protectedComboCards = Array.isArray(record(comboGate.completedPlan).comboCardNames)
-    ? (record(comboGate.completedPlan).comboCardNames as string[])
+  const protectedComboCards = Array.isArray(record(winGate.completedPlan).comboCardNames)
+    ? (record(winGate.completedPlan).comboCardNames as string[])
     : [];
-  const efficiency = await refineCedhEfficiencyV14(comboDecklist, {
+  const efficiency = await refineCedhEfficiencyV14(winDecklist, {
     printingFamily: 'Final Fantasy',
     includePromos: true,
     includeSpecialReleases: true,
@@ -48,11 +49,11 @@ async function main(): Promise<void> {
   });
   assert.notEqual(efficiency.status, 'invalid-starting-deck');
   assert.notEqual(efficiency.status, 'starting-deck-violates-printing-policy');
-  const efficiencyDecklist = typeof efficiency.finalDecklist === 'string' ? efficiency.finalDecklist : comboDecklist;
+  const efficiencyDecklist = typeof efficiency.finalDecklist === 'string' ? efficiency.finalDecklist : winDecklist;
   assert.equal(parseDecklist(efficiencyDecklist).totalCards, 100);
   const afterEfficiencyCombos = await findDeckCombos(efficiencyDecklist, 100);
-  const afterEfficiencyCount = Number(record(afterEfficiencyCombos.counts).included ?? 0);
-  assert.ok(afterEfficiencyCount >= afterGateCount, 'strict efficiency tuning must not remove the verified complete combo');
+  const afterEfficiencyWins = countWinningCombosV14(afterEfficiencyCombos);
+  assert.ok(afterEfficiencyWins >= afterWinCount, 'strict efficiency tuning must not remove the verified win package');
 
   const mana = await optimizeCedhManaBaseV14(efficiencyDecklist, {
     printingFamily: 'Final Fantasy',
@@ -67,14 +68,16 @@ async function main(): Promise<void> {
   assert.equal(parseDecklist(finalDecklist).totalCards, 100);
   const afterBracket = await estimateCommanderBracket(finalDecklist);
   const afterCombos = await findDeckCombos(finalDecklist, 100);
-  const afterCount = Number(record(afterCombos.counts).included ?? 0);
+  const afterComplete = Number(record(afterCombos.counts).included ?? 0);
+  const afterWins = countWinningCombosV14(afterCombos);
 
-  console.log(`BEFORE: tag=${String(beforeBracket.bracketTag ?? 'unknown')} completeCombos=${beforeCount}`);
-  console.log(`AFTER COMBO GATE: completeCombos=${afterGateCount}`);
+  console.log(`BEFORE: tag=${String(beforeBracket.bracketTag ?? 'unknown')} completeCombos=${beforeComplete} winningCombos=${beforeWins}`);
+  console.log(`AFTER WIN GATE: winningCombos=${afterWinCount}`);
   console.log(`STRICT EFFICIENCY STATUS: ${String(efficiency.status)}`);
   console.log(`MANA-BASE STATUS: ${String(mana.status)}`);
-  console.log(`FINAL: tag=${String(afterBracket.bracketTag ?? 'unknown')} completeCombos=${afterCount}`);
-  console.log(`COMBO SWAPS: ${JSON.stringify(comboGate.swaps ?? [], null, 2)}`);
+  console.log(`FINAL: tag=${String(afterBracket.bracketTag ?? 'unknown')} completeCombos=${afterComplete} winningCombos=${afterWins}`);
+  console.log(`WIN PACKAGE: ${JSON.stringify(winGate.completedPlan ?? {}, null, 2)}`);
+  console.log(`WIN SWAPS: ${JSON.stringify(winGate.swaps ?? [], null, 2)}`);
   console.log(`STRICT EFFICIENCY SWAPS: ${JSON.stringify(efficiency.swaps ?? [], null, 2)}`);
   console.log(`MANA-BASE SWAPS: ${JSON.stringify(mana.swaps ?? [], null, 2)}`);
   console.log(`BEFORE METRICS: ${JSON.stringify(efficiency.beforeMetrics ?? {}, null, 2)}`);
@@ -82,7 +85,7 @@ async function main(): Promise<void> {
   console.log('\nFINAL DECKLIST');
   console.log(finalDecklist.trim());
 
-  assert.ok(afterCount >= afterGateCount, 'later efficiency/mana tuning must not remove the verified complete combo');
+  assert.ok(afterWins >= afterWinCount, 'later efficiency/mana tuning must preserve the verified winning combo');
   const weakNames = new Set(['world map', 'magitek infantry']);
   const strictSwaps = Array.isArray(efficiency.swaps) ? efficiency.swaps.map(record) : [];
   assert.equal(
@@ -92,6 +95,12 @@ async function main(): Promise<void> {
   );
   if (mana.status === 'cedh-mana-base-refined') {
     assert.equal(mana.beforeLandCount, mana.afterLandCount, 'mana-base refinement must be land-for-land with no land-count change');
+    const manaSwaps = Array.isArray(mana.swaps) ? mana.swaps.map(record) : [];
+    assert.equal(
+      manaSwaps.some((swap) => normalizeForTest(String(swap.in ?? '')) === 'evolving wilds'),
+      false,
+      'cEDH mana-base tuning must not treat Evolving Wilds as a premium untapped upgrade',
+    );
   }
   console.log('FAST FF cEDH REGRESSION: PASS');
 }
