@@ -91,19 +91,54 @@ function deckCounts(parsed: ParsedDeck): Map<string, number> {
   return counts;
 }
 
+function normalizedResultText(results: string[]): string {
+  return results
+    .join(' ')
+    .toLocaleLowerCase()
+    .replace(/[’‘]/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function hasDirectGameWin(text: string): boolean {
+  return /\b(?:win|wins) the game\b/.test(text)
+    || /\b(?:each|all) opponents? (?:lose|loses) the game\b/.test(text)
+    || /\bopponents? (?:lose|loses) the game\b/.test(text);
+}
+
+function hasDeterministicDamageWin(text: string): boolean {
+  return /\b(?:infinite|unbounded|arbitrarily (?:large|high)) (?:amounts? of )?damage\b/.test(text)
+    || /\b(?:infinite|unbounded|arbitrarily (?:large|high)) (?:amounts? of )?(?:life ?loss|loss of life)\b/.test(text)
+    || /\b(?:each|all) opponents? (?:lose|loses) (?:an? )?(?:infinite|unbounded|arbitrarily large) (?:amount of )?life\b/.test(text);
+}
+
+function hasDeterministicCombatWin(text: string): boolean {
+  return /\b(?:infinite|unbounded|arbitrarily many) (?:combat(?: phases?| steps?)?|extra combats?)\b/.test(text);
+}
+
+function hasDeterministicMillWin(text: string): boolean {
+  if (/\b(?:infinite|unbounded) mill(?:ing)?\b/.test(text)) return true;
+  return /\bmill(?:s|ing)? (?:each|all) opponents?'?s? (?:entire )?(?:library|libraries)\b/.test(text)
+    || /\bmill(?:s|ing)? (?:each|all) opponents?' (?:entire )?(?:library|libraries)\b/.test(text)
+    || /\b(?:each|all) opponents? (?:mill|mills) (?:their|his or her) (?:entire )?(?:library|libraries)\b/.test(text);
+}
+
 export function isWinResultV14(results: string[]): boolean {
-  const text = results.join(' ').toLocaleLowerCase();
-  return /infinite combat|infinite damage|win the game|each opponent loses|each opponent mills|infinite mill|mill(?:s|ing)? (?:each opponent|target opponent|their|his or her) (?:library|deck)|draw your library/.test(text);
+  const text = normalizedResultText(results);
+  if (!text) return false;
+  return hasDirectGameWin(text)
+    || hasDeterministicDamageWin(text)
+    || hasDeterministicCombatWin(text)
+    || hasDeterministicMillWin(text);
 }
 
 function winResultScore(results: string[]): number {
-  const text = results.join(' ').toLocaleLowerCase();
+  const text = normalizedResultText(results);
   let score = 0;
-  if (/win the game/.test(text)) score += 180;
-  if (/infinite damage|each opponent loses/.test(text)) score += 160;
-  if (/infinite combat/.test(text)) score += 150;
-  if (/infinite mill|each opponent mills|mill(?:s|ing)? .*library/.test(text)) score += 130;
-  if (/draw your library/.test(text)) score += 90;
+  if (hasDirectGameWin(text)) score += 180;
+  if (hasDeterministicDamageWin(text)) score += 160;
+  if (hasDeterministicCombatWin(text)) score += 150;
+  if (hasDeterministicMillWin(text)) score += 130;
   return score;
 }
 
@@ -370,7 +405,7 @@ export async function completeBestCedhWinPackageV14(
       bracketEvidence: bracket,
       printingPolicy: describePrintingPolicyV08(policy),
       audit,
-      guidance: 'This cEDH gate only accepts a package when the rebuilt deck gains the exact planned Commander Spellbook combo and its reported result is win-oriented. Lifegain-only, value-only, and standalone infinite-mana engines do not satisfy this gate.',
+      guidance: 'This cEDH gate only accepts a package when the rebuilt deck gains the exact planned Commander Spellbook combo and its reported result is deterministically win-oriented. Lifegain-only, value-only, standalone infinite-mana, draw-your-library, and bounded life-loss or mill outputs do not satisfy this gate.',
     };
   }
 
@@ -381,6 +416,6 @@ export async function completeBestCedhWinPackageV14(
     printingPolicy: describePrintingPolicyV08(policy),
     audit,
     finalDecklist: renderDeck(resolved.parsed),
-    guidance: 'No checked winning near-combo could be completed with legal policy-compliant printings and independently verified after rebuilding the deck.',
+    guidance: 'No checked deterministic winning near-combo could be completed with legal policy-compliant printings and independently verified after rebuilding the deck.',
   };
 }
