@@ -427,8 +427,10 @@ export function evaluateDeepLearningReadinessV15(input: DeepLearningReadinessInp
   const total = Math.max(0, Math.trunc(input.labelledExamples));
   const positives = Math.max(0, Math.trunc(input.positiveExamples));
   const negatives = Math.max(0, Math.trunc(input.negativeExamples));
+  const labelCountsConsistent = positives + negatives === total;
   const minorityShare = total > 0 ? Math.min(positives, negatives) / total : 0;
 
+  if (!labelCountsConsistent) blockers.push('Positive and negative label counts must exactly match labelledExamples before model readiness can be evaluated.');
   if (total < requirements.minimumLabelledExamplesForExperiment) blockers.push('Not enough labelled examples for a meaningful neural-model experiment.');
   if (input.temporalCoverageDays < requirements.minimumTemporalCoverageDays) blockers.push('Training data does not cover enough time to test metagame drift.');
   if (input.independentEvidenceGroups < requirements.minimumIndependentEvidenceGroups) blockers.push('Training data lacks enough independent evidence groups.');
@@ -442,10 +444,10 @@ export function evaluateDeepLearningReadinessV15(input: DeepLearningReadinessInp
   const candidate = input.candidateModelAccuracy;
   if (candidate === null) blockers.push('No neural candidate has been evaluated on the temporal holdout set.');
   if (candidate !== null && candidate < requirements.minimumCandidateAccuracy) blockers.push('Neural candidate accuracy is below the minimum promotion threshold.');
+  if (baseline === null) blockers.push('Transparent baseline accuracy is required before neural-model promotion.');
   if (candidate !== null && baseline !== null && candidate - baseline < requirements.minimumImprovementOverTransparentBaseline) {
     blockers.push('Neural candidate does not materially beat the transparent baseline on unseen temporal data.');
   }
-  if (baseline === null) warnings.push('Transparent baseline accuracy is missing, so a neural model cannot prove it adds value over the simpler model.');
   if (total < requirements.minimumLabelledExamplesForPromotion) warnings.push('Dataset may support experiments but is still below the preferred promotion size.');
 
   const checks = [
@@ -455,7 +457,7 @@ export function evaluateDeepLearningReadinessV15(input: DeepLearningReadinessInp
     clamp(input.evidenceClassCount / requirements.minimumEvidenceClasses, 0, 1),
     clamp((requirements.maximumDuplicateRate - input.duplicateRate) / requirements.maximumDuplicateRate, 0, 1),
     input.leakageChecksPassed ? 1 : 0,
-    clamp(minorityShare / 0.2, 0, 1),
+    labelCountsConsistent ? clamp(minorityShare / 0.2, 0, 1) : 0,
     clamp(input.temporalHoldoutExamples / requirements.minimumTemporalHoldoutExamples, 0, 1),
     candidate === null ? 0 : clamp(candidate / requirements.minimumCandidateAccuracy, 0, 1),
     candidate === null || baseline === null ? 0 : clamp((candidate - baseline) / requirements.minimumImprovementOverTransparentBaseline, 0, 1),
