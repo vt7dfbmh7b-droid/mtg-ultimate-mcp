@@ -20,33 +20,38 @@ function arrayFrom(record: UnknownRecord, camel: string, snake: string): unknown
   return Array.isArray(value) ? value : [];
 }
 
-function summarizeVariant(value: unknown): Record<string, unknown> {
+export function summarizeSpellbookVariant(value: unknown): Record<string, unknown> {
   const variant = asRecord(value);
-  const uses = Array.isArray(variant.uses) ? variant.uses : [];
+  const uses = Array.isArray(variant.uses) ? variant.uses : Array.isArray(variant.cards) ? variant.cards : [];
   const produces = Array.isArray(variant.produces) ? variant.produces : [];
-  const requires = Array.isArray(variant.requires) ? variant.requires : [];
+  const requires = Array.isArray(variant.requires) ? variant.requires : Array.isArray(variant.requirements) ? variant.requirements : [];
 
   const cards = uses.map((use) => {
     const useRecord = asRecord(use);
     const card = asRecord(useRecord.card);
+    const fallbackName = typeof useRecord.name === 'string' ? useRecord.name : undefined;
     return {
-      name: card.name ?? card.oracleId ?? card.id ?? 'Unknown card',
+      name: card.name ?? fallbackName ?? card.oracleId ?? card.id ?? 'Unknown card',
       quantity: useRecord.quantity ?? 1,
       mustBeCommander: useRecord.mustBeCommander ?? useRecord.must_be_commander ?? false,
     };
   });
 
-  const results = produces.map((produce) => {
-    const produceRecord = asRecord(produce);
-    const feature = asRecord(produceRecord.feature);
-    return feature.name ?? feature.description ?? feature.id ?? produceRecord;
-  });
+  const results = produces.length > 0
+    ? produces.map((produce) => {
+        const produceRecord = asRecord(produce);
+        const feature = asRecord(produceRecord.feature);
+        return feature.name ?? feature.description ?? feature.id ?? produceRecord;
+      })
+    : Array.isArray(variant.results)
+      ? variant.results
+      : [];
 
   const requirements = requires.map((requirement) => {
     const requirementRecord = asRecord(requirement);
     const template = asRecord(requirementRecord.template);
     return {
-      name: template.name ?? template.scryfallQuery ?? template.id ?? 'Template requirement',
+      name: template.name ?? template.scryfallQuery ?? requirementRecord.name ?? template.id ?? 'Template requirement',
       quantity: requirementRecord.quantity ?? 1,
     };
   });
@@ -62,6 +67,7 @@ function summarizeVariant(value: unknown): Record<string, unknown> {
     description: variant.description,
     manaNeeded: variant.manaNeeded ?? variant.mana_needed,
     otherPrerequisites: variant.otherPrerequisites ?? variant.other_prerequisites,
+    popularity: variant.popularity ?? null,
   };
 }
 
@@ -76,28 +82,48 @@ async function postDecklist(path: string, decklist: string, query = ''): Promise
   });
 }
 
+export async function searchSpellbookVariants(
+  query: string,
+  options: { limit?: number; offset?: number; ordering?: string } = {},
+): Promise<Record<string, unknown>> {
+  const limit = Math.max(1, Math.min(100, Math.trunc(options.limit ?? 25)));
+  const offset = Math.max(0, Math.trunc(options.offset ?? 0));
+  const ordering = options.ordering?.trim() || '-popularity';
+  const url = `${config.commanderSpellbookApiBase}/variants/?q=${encodeURIComponent(query)}&limit=${limit}&offset=${offset}&ordering=${encodeURIComponent(ordering)}`;
+  const raw = await fetchJson<SpellbookPage>(url);
+  const results = Array.isArray(raw.results) ? raw.results.map(summarizeSpellbookVariant) : [];
+  return {
+    query,
+    count: typeof raw.count === 'number' ? raw.count : results.length,
+    next: raw.next ?? null,
+    previous: raw.previous ?? null,
+    results,
+    source: 'Commander Spellbook variants search',
+  };
+}
+
 export async function findDeckCombos(decklist: string, maxResults = 20): Promise<Record<string, unknown>> {
   const raw = await postDecklist('/find-my-combos', decklist);
   const payload = asRecord(raw.results ?? raw);
   const safeLimit = Math.max(1, Math.min(maxResults, 100));
 
-  const included = arrayFrom(payload, 'included', 'included').map(summarizeVariant);
-  const almostIncluded = arrayFrom(payload, 'almostIncluded', 'almost_included').map(summarizeVariant);
+  const included = arrayFrom(payload, 'included', 'included').map(summarizeSpellbookVariant);
+  const almostIncluded = arrayFrom(payload, 'almostIncluded', 'almost_included').map(summarizeSpellbookVariant);
   const includedByChangingCommanders = arrayFrom(
     payload,
     'includedByChangingCommanders',
     'included_by_changing_commanders',
-  ).map(summarizeVariant);
+  ).map(summarizeSpellbookVariant);
   const almostByAddingColors = arrayFrom(
     payload,
     'almostIncludedByAddingColors',
     'almost_included_by_adding_colors',
-  ).map(summarizeVariant);
+  ).map(summarizeSpellbookVariant);
   const almostByChangingCommanders = arrayFrom(
     payload,
     'almostIncludedByChangingCommanders',
     'almost_included_by_changing_commanders',
-  ).map(summarizeVariant);
+  ).map(summarizeSpellbookVariant);
 
   return {
     identity: payload.identity,
@@ -167,7 +193,7 @@ export async function estimateCommanderBracket(
       definitelyTwoCard: entry.definitelyTwoCard ?? entry.definitely_two_card ?? false,
       speed: entry.speed,
       lock: entry.lock ?? false,
-      combo: summarizeVariant(entry.combo),
+      combo: summarizeSpellbookVariant(entry.combo),
     }));
 
   return {
