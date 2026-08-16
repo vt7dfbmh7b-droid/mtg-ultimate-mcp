@@ -96,9 +96,9 @@ test('temporal split keeps a leakage group entirely on one side of the holdout b
   const records = [
     record({ outcomeId: 'a', observedAt: '2026-01-01T00:00:00Z', leakageGroup: 'series-a', independentGroup: 'group-a' }),
     record({ outcomeId: 'b', observedAt: '2026-01-10T00:00:00Z', leakageGroup: 'series-b', independentGroup: 'group-b', label: 0 }),
-    record({ outcomeId: 'c', observedAt: '2026-01-20T00:00:00Z', leakageGroup: 'series-a', independentGroup: 'group-a' }),
-    record({ outcomeId: 'd', observedAt: '2026-01-30T00:00:00Z', leakageGroup: 'series-c', independentGroup: 'group-c', label: 0 }),
-    record({ outcomeId: 'e', observedAt: '2026-02-10T00:00:00Z', leakageGroup: 'series-d', independentGroup: 'group-d' }),
+    record({ outcomeId: 'c', observedAt: '2026-01-20T00:00:00Z', leakageGroup: 'series-c', independentGroup: 'group-c' }),
+    record({ outcomeId: 'd', observedAt: '2026-01-30T00:00:00Z', leakageGroup: 'series-d', independentGroup: 'group-d', label: 0 }),
+    record({ outcomeId: 'e', observedAt: '2026-02-10T00:00:00Z', leakageGroup: 'series-a', independentGroup: 'group-a' }),
   ];
   const split = temporalSplitLearningCorpusV15(records, 0.2);
   const trainingGroups = new Set(split.training.map((entry) => entry.leakageGroup));
@@ -106,7 +106,7 @@ test('temporal split keeps a leakage group entirely on one side of the holdout b
 
   assert.equal(split.leakageChecksPassed, true);
   for (const group of trainingGroups) assert.equal(holdoutGroups.has(group), false);
-  assert.ok(split.holdout.some((entry) => entry.leakageGroup === 'series-a'), 'series-a must move wholly to holdout because it crosses the temporal boundary');
+  assert.equal(split.holdout.filter((entry) => entry.leakageGroup === 'series-a').length, 2, 'the entire leakage group must move to holdout when its latest record crosses the temporal boundary');
   assert.equal(split.training.some((entry) => entry.leakageGroup === 'series-a'), false);
 });
 
