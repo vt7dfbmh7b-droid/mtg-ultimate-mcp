@@ -1,19 +1,37 @@
-import { config } from '../src/config.js';
-import { fetchJson } from '../src/lib/http.js';
+import { buildCedhSeedQueriesV14 } from '../src/services/cedh-seed-package-v14.js';
+import { searchSpellbookVariants } from '../src/services/spellbook.js';
 
 async function main(): Promise<void> {
-  const queries = [
-    'bracket:ruthless card<=2 is:winning legal:commander',
-    'bracket:ruthless card<=3 is:winning legal:commander',
-    'bracket:ruthless card<=3 result:"infinite damage" legal:commander',
-    'bracket:ruthless card<=3 result:"infinite combat" legal:commander',
-  ];
-  for (const q of queries) {
-    const url = `${config.commanderSpellbookApiBase}/variants/?q=${encodeURIComponent(q)}&limit=10&offset=0&ordering=-popularity`;
-    const response = await fetchJson<unknown>(url);
-    console.log(`\nQUERY ${q}`);
-    console.log(JSON.stringify(response, null, 2));
+  const queries = buildCedhSeedQueriesV14(3, 'WUBRG');
+  let totalReturned = 0;
+
+  for (const query of queries) {
+    const response = await searchSpellbookVariants(query, {
+      limit: 8,
+      offset: 0,
+      ordering: '-popularity',
+    });
+    const results = Array.isArray(response.results) ? response.results : [];
+    totalReturned += results.length;
+
+    console.log(`\nQUERY ${query}`);
+    console.log(JSON.stringify({
+      totalMatching: response.count ?? null,
+      returned: results.length,
+      sample: results.slice(0, 3).map((entry) => {
+        const variant = entry && typeof entry === 'object' && !Array.isArray(entry) ? entry as Record<string, unknown> : {};
+        return {
+          id: variant.id ?? null,
+          bracketTag: variant.bracketTag ?? null,
+          cards: variant.cards ?? [],
+          results: variant.results ?? [],
+        };
+      }),
+    }, null, 2));
   }
+
+  if (queries.length < 2) throw new Error('Expected compact two-card and three-card cEDH seed queries.');
+  if (totalReturned < 1) throw new Error('Commander Spellbook returned no Ruthless winning seed variants through the production search helper.');
 }
 
 main().catch((error) => {
