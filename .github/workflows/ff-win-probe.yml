@@ -6,6 +6,7 @@ on:
     branches: ["agent/**"]
     paths:
       - "scripts/probe-ff-win-packages.ts"
+      - "scripts/probe-spellbook-ruthless.ts"
       - ".github/workflows/ff-win-probe.yml"
       - "src/services/printing-policy-v08.ts"
       - "src/services/scryfall.ts"
@@ -27,3 +28,5 @@ jobs:
       - run: npm run build
       - name: Probe known FINAL FANTASY win packages
         run: npx tsx scripts/probe-ff-win-packages.ts
+      - name: Probe compact Ruthless Spellbook win variants
+        run: npx tsx scripts/probe-spellbook-ruthless.ts
