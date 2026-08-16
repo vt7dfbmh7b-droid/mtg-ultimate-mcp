@@ -14,7 +14,6 @@ export const config = {
   commanderSpellbookApiBase: (process.env.COMMANDER_SPELLBOOK_API_BASE ?? 'https://backend.commanderspellbook.com').replace(/\/$/, ''),
   topDeckApiBase: (process.env.TOPDECK_API_BASE ?? 'https://topdeck.gg/api').replace(/\/$/, ''),
   topDeckApiKey: process.env.TOPDECK_API_KEY?.trim() || '',
-  edhTop16ApiBase: (process.env.EDHTOP16_API_BASE ?? 'https://cedhtop16.com/api').replace(/\/$/, ''),
   mtgJsonApiBase: (process.env.MTGJSON_API_BASE ?? 'https://mtgjson.com/api/v5').replace(/\/$/, ''),
   preconCatalogCacheMs: parsePositiveInt(process.env.PRECON_CATALOG_CACHE_MS, 21_600_000),
   userAgent:
