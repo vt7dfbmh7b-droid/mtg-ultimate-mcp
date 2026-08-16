@@ -38,7 +38,13 @@ const cardRefSchema = z.object({
   collectorNumber: z.string().min(1).max(32).optional(),
 });
 
-async function resolveCardRef(ref: { name: string; set?: string; collectorNumber?: string }): Promise<ScryfallCard> {
+type CardRefV07 = {
+  name: string;
+  set?: string | undefined;
+  collectorNumber?: string | undefined;
+};
+
+async function resolveCardRef(ref: CardRefV07): Promise<ScryfallCard> {
   if (ref.set && ref.collectorNumber) {
     const result = await getCardsByIdentifiers([{ name: ref.name, set: ref.set, collectorNumber: ref.collectorNumber }]);
     const exact = result.cards[0];
