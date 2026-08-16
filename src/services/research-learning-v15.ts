@@ -116,6 +116,8 @@ export interface DeepLearningReadinessInputV15 {
   independentEvidenceGroups: number;
   evidenceClassCount: number;
   duplicateRate: number;
+  conflictRate?: number;
+  malformedRate?: number;
   leakageChecksPassed: boolean;
   transparentBaselineAccuracy: number | null;
   candidateModelAccuracy: number | null;
@@ -420,6 +422,8 @@ export function evaluateDeepLearningReadinessV15(input: DeepLearningReadinessInp
     minimumIndependentEvidenceGroups: 3,
     minimumEvidenceClasses: 3,
     maximumDuplicateRate: 0.1,
+    maximumConflictRate: 0.02,
+    maximumMalformedRate: 0.05,
     minimumTemporalHoldoutExamples: 200,
     minimumCandidateAccuracy: 0.75,
     minimumImprovementOverTransparentBaseline: 0.02,
@@ -439,6 +443,8 @@ export function evaluateDeepLearningReadinessV15(input: DeepLearningReadinessInp
   const independentEvidenceGroups = Math.max(0, Math.trunc(finiteOr(input.independentEvidenceGroups, 0)));
   const evidenceClassCount = Math.max(0, Math.trunc(finiteOr(input.evidenceClassCount, 0)));
   const duplicateRate = clamp(finiteOr(input.duplicateRate, 1), 0, 1);
+  const conflictRate = clamp(finiteOr(input.conflictRate, 0), 0, 1);
+  const malformedRate = clamp(finiteOr(input.malformedRate, 0), 0, 1);
   const temporalHoldoutExamples = Math.max(0, Math.trunc(finiteOr(input.temporalHoldoutExamples, 0)));
   const labelCountsConsistent = positives + negatives === total;
   const minorityShare = total > 0 ? Math.min(positives, negatives) / total : 0;
@@ -449,6 +455,8 @@ export function evaluateDeepLearningReadinessV15(input: DeepLearningReadinessInp
   if (independentEvidenceGroups < requirements.minimumIndependentEvidenceGroups) addBlocker('Training data lacks enough independent evidence groups.');
   if (evidenceClassCount < requirements.minimumEvidenceClasses) addBlocker('Training data lacks enough evidence-class diversity.');
   if (duplicateRate > requirements.maximumDuplicateRate) addBlocker('Duplicate/dependent data rate is too high and risks teaching the model the same evidence repeatedly.');
+  if (conflictRate > requirements.maximumConflictRate) addBlocker('Conflicting outcome or exact-deck identity rate is too high for trustworthy learning.');
+  if (malformedRate > requirements.maximumMalformedRate) addBlocker('Malformed learning provenance rate is too high for trustworthy learning.');
   if (!input.leakageChecksPassed) addBlocker('Data-leakage checks have not passed.');
   if (minorityShare < 0.2) addBlocker('Labels are too imbalanced; the minority outcome should be at least 20% of the dataset.');
   if (temporalHoldoutExamples < requirements.minimumTemporalHoldoutExamples) addBlocker('Temporal holdout set is too small for promotion evidence.', false);
@@ -471,6 +479,8 @@ export function evaluateDeepLearningReadinessV15(input: DeepLearningReadinessInp
     clamp(independentEvidenceGroups / requirements.minimumIndependentEvidenceGroups, 0, 1),
     clamp(evidenceClassCount / requirements.minimumEvidenceClasses, 0, 1),
     clamp((requirements.maximumDuplicateRate - duplicateRate) / requirements.maximumDuplicateRate, 0, 1),
+    clamp((requirements.maximumConflictRate - conflictRate) / requirements.maximumConflictRate, 0, 1),
+    clamp((requirements.maximumMalformedRate - malformedRate) / requirements.maximumMalformedRate, 0, 1),
     input.leakageChecksPassed ? 1 : 0,
     labelCountsConsistent ? clamp(minorityShare / 0.2, 0, 1) : 0,
     clamp(temporalHoldoutExamples / requirements.minimumTemporalHoldoutExamples, 0, 1),
