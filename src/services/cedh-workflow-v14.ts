@@ -1,4 +1,5 @@
 import { buildCommanderDeckDraftV07, type DeckBuildOptionsV07 } from './deck-builder-v07.js';
+import { discoverCedhSeedWinPackageV14 } from './cedh-seed-package-v14.js';
 import {
   completeBestCedhWinPackageV14,
   countWinningCombosV14,
@@ -32,6 +33,10 @@ function record(value: unknown): Record<string, unknown> {
 
 function normalize(value: string): string {
   return value.trim().toLocaleLowerCase();
+}
+
+function strings(value: unknown): string[] {
+  return Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string' && item.trim().length > 0) : [];
 }
 
 function identifiers(parsed: ParsedDeck): CardIdentifierInput[] {
@@ -186,9 +191,7 @@ export async function refineCommanderForCedhV14(
 
   let currentDecklist = typeof winPackage.finalDecklist === 'string' ? winPackage.finalDecklist : decklist;
   const completedPlan = record(winPackage.completedPlan);
-  const protectedComboCards = Array.isArray(completedPlan.comboCardNames)
-    ? completedPlan.comboCardNames.filter((value): value is string => typeof value === 'string')
-    : [];
+  const protectedComboCards = strings(completedPlan.comboCardNames);
   const protectedCards = [...new Set([...(options.protectedCards ?? []), ...protectedComboCards])];
 
   const efficiency = await refineCedhEfficiencyV14(currentDecklist, {
@@ -251,6 +254,32 @@ export async function buildCommanderForCedhV14(
     };
   }
 
+  let seedDiscovery = await discoverCedhSeedWinPackageV14(resolved.cards, {
+    ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
+    ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
+    ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
+    ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
+    ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
+    maxPackageCards: Math.max(2, Math.min(4, options.maxMissingCards ?? 3)),
+    maxCandidatesToVerify: options.maxCandidatesToVerify ?? 10,
+  });
+
+  const excluded = new Set((options.excludedCards ?? []).map(normalize));
+  const discoveredSeedNames = strings(seedDiscovery.seedNames);
+  const blockedSeedNames = discoveredSeedNames.filter((name) => excluded.has(normalize(name)));
+  if (seedDiscovery.status === 'eligible-winning-seed-package-found' && blockedSeedNames.length > 0) {
+    seedDiscovery = {
+      ...seedDiscovery,
+      status: 'winning-seed-package-blocked-by-exclusions',
+      blockedCards: blockedSeedNames,
+      guidance: 'A legal winning seed package was found, but one or more required cards were explicitly excluded. The builder will not override the exclusion; it will fall back to ordinary drafting and require later independent win-package verification.',
+    };
+  }
+
+  const seedNames = seedDiscovery.status === 'eligible-winning-seed-package-found' ? discoveredSeedNames : [];
+  const seedComboCards = seedDiscovery.status === 'eligible-winning-seed-package-found' ? strings(seedDiscovery.comboCardNames) : [];
+  const mustInclude = [...new Set([...(options.mustInclude ?? []), ...seedNames])];
+
   const draft = await buildCommanderDeckDraftV07(resolved.cards, {
     targetBracket: 5,
     ...(options.themeQuery ? { themeQuery: options.themeQuery } : {}),
@@ -260,7 +289,7 @@ export async function buildCommanderForCedhV14(
     ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
     ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
     ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
-    ...(options.mustInclude ? { mustInclude: options.mustInclude } : {}),
+    ...(mustInclude.length > 0 ? { mustInclude } : {}),
     ...(options.landCount !== undefined ? { landCount: options.landCount } : {}),
     ...(options.maxNonbasicLands !== undefined ? { maxNonbasicLands: options.maxNonbasicLands } : {}),
   });
@@ -268,14 +297,20 @@ export async function buildCommanderForCedhV14(
     return {
       status: 'incomplete-first-draft',
       requestedCommanders: requested,
+      seedDiscovery,
       draft,
     };
   }
 
-  const refinement = await refineCommanderForCedhV14(draft.decklist, options);
+  const protectedCards = [...new Set([...(options.protectedCards ?? []), ...seedComboCards])];
+  const refinement = await refineCommanderForCedhV14(draft.decklist, {
+    ...options,
+    protectedCards,
+  });
   return {
     status: refinement.status === 'cedh-oriented-refinement-complete' ? 'built-with-strong-competitive-signals' : 'built-but-competitive-signals-incomplete',
     requestedCommanders: requested,
+    seedDiscovery,
     draft: {
       status: draft.status,
       cardCount: draft.cardCount,
@@ -283,9 +318,10 @@ export async function buildCommanderForCedhV14(
       roleCounts: draft.roleCounts,
       roleTargets: draft.roleTargets,
       printingPolicy: draft.printingPolicy,
+      seededMustInclude: seedNames,
     },
     refinement,
     finalDecklist: typeof refinement.finalDecklist === 'string' ? refinement.finalDecklist : draft.decklist,
-    caveat: 'A successful build means the deck passed the plugin’s competitive-construction gates under the requested restrictions, including a verified win-oriented Commander Spellbook package. Official Bracket 5 still describes cEDH intent/metagame/tournament-minded play, not a static card-list certification.',
+    caveat: 'A successful build means the deck passed the plugin’s competitive-construction gates under the requested restrictions, including a verified win-oriented Commander Spellbook package. Seed discovery can propose compact winning packages, but the finished 100-card deck must independently reproduce the win package before it counts. Official Bracket 5 still describes cEDH intent/metagame/tournament-minded play, not a static card-list certification.',
   };
 }
