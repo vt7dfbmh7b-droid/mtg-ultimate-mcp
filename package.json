@@ -1,9 +1,9 @@
 {
   "name": "mtg-ultimate-mcp",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "private": true,
   "type": "module",
-  "description": "MCP-powered Magic: The Gathering knowledge, Commander rules, self-updating precon intelligence, themed printing-aware deck building, competing-package refinement, source diagnostics, deduplicated tournament evidence, simulation, pricing and combo analysis.",
+  "description": "MCP-powered Magic: The Gathering knowledge, Commander rules, self-updating precon intelligence, NZD-first pricing, themed printing-aware deck building, competing-package refinement, source diagnostics, simulation and combo analysis.",
   "engines": {
     "node": ">=20"
   },
