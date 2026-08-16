@@ -135,6 +135,10 @@ function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
 }
 
+function finiteOr(value: number | undefined, fallback: number): number {
+  return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
+}
+
 function normalize(value: string): string {
   return value.trim().toLocaleLowerCase().replace(/\s+/g, ' ');
 }
@@ -179,7 +183,7 @@ export function scoreResearchObservationV15(observation: ResearchObservationV15)
   const freshness = clamp(2 ** (-ageDays / halfLifeDays(observation.focus)), 0.12, 1);
   const sample = sampleFactor(observation.sampleSize);
   const access = accessFactor(source);
-  const strength = clamp(observation.outcomeStrength ?? 1, 0.2, 1);
+  const strength = clamp(Number.isFinite(observation.outcomeStrength) ? observation.outcomeStrength ?? 1 : 1, 0.2, 1);
   const structureBoost = observation.structured === true ? 1.04 : 1;
   const score = clamp(source.weight * freshness * sample * access * strength * structureBoost, 0, 1);
   return {
@@ -307,8 +311,7 @@ export function buildDeepResearchPlanV15(focuses: EvidenceFocusV09[]): DeepResea
 }
 
 function featureValue(example: LearningExampleV15, feature: LearningFeatureV15): number {
-  const value = example.features[feature] ?? 0;
-  return clamp(Number.isFinite(value) ? value : 0, -1, 1);
+  return clamp(finiteOr(example.features[feature], 0), -1, 1);
 }
 
 function sigmoid(value: number): number {
@@ -325,18 +328,18 @@ function emptyWeights(): Record<LearningFeatureV15, number> {
 }
 
 function rawModelScore(features: Partial<Record<LearningFeatureV15, number>>, weights: Record<LearningFeatureV15, number>, bias: number): number {
-  return LEARNING_FEATURES_V15.reduce((sum, feature) => sum + clamp(features[feature] ?? 0, -1, 1) * weights[feature], bias);
+  return LEARNING_FEATURES_V15.reduce((sum, feature) => sum + clamp(finiteOr(features[feature], 0), -1, 1) * weights[feature], bias);
 }
 
 export function trainAdaptiveRankerV15(
   examples: LearningExampleV15[],
   options: { epochs?: number; learningRate?: number; l2?: number; minimumExamples?: number; minimumHoldoutAccuracy?: number } = {},
 ): AdaptiveRankerV15 {
-  const epochs = Math.max(1, Math.min(500, Math.trunc(options.epochs ?? 120)));
-  const learningRate = clamp(options.learningRate ?? 0.08, 0.001, 0.5);
-  const l2 = clamp(options.l2 ?? 0.01, 0, 0.2);
-  const minimumExamples = Math.max(10, Math.trunc(options.minimumExamples ?? 30));
-  const minimumHoldoutAccuracy = clamp(options.minimumHoldoutAccuracy ?? 0.72, 0.5, 1);
+  const epochs = Math.max(1, Math.min(500, Math.trunc(finiteOr(options.epochs, 120))));
+  const learningRate = clamp(finiteOr(options.learningRate, 0.08), 0.001, 0.5);
+  const l2 = clamp(finiteOr(options.l2, 0.01), 0, 0.2);
+  const minimumExamples = Math.max(10, Math.trunc(finiteOr(options.minimumExamples, 30)));
+  const minimumHoldoutAccuracy = clamp(finiteOr(options.minimumHoldoutAccuracy, 0.72), 0.5, 1);
   const holdout = examples.filter((_, index) => index % 5 === 0);
   const training = examples.filter((_, index) => index % 5 !== 0);
   const weights = emptyWeights();
@@ -346,7 +349,7 @@ export function trainAdaptiveRankerV15(
     for (const example of training) {
       const prediction = sigmoid(rawModelScore(example.features, weights, bias));
       const error = example.label - prediction;
-      const importance = clamp(example.importance ?? 1, 0.1, 5);
+      const importance = clamp(finiteOr(example.importance, 1), 0.1, 5);
       for (const feature of LEARNING_FEATURES_V15) {
         const x = featureValue(example, feature);
         weights[feature] += learningRate * importance * (error * x - l2 * weights[feature]);
@@ -423,50 +426,61 @@ export function evaluateDeepLearningReadinessV15(input: DeepLearningReadinessInp
     leakageChecksRequired: true,
   };
   const blockers: string[] = [];
+  const experimentBlockers: string[] = [];
   const warnings: string[] = [];
-  const total = Math.max(0, Math.trunc(input.labelledExamples));
-  const positives = Math.max(0, Math.trunc(input.positiveExamples));
-  const negatives = Math.max(0, Math.trunc(input.negativeExamples));
+  const addBlocker = (message: string, blocksExperiment = true) => {
+    blockers.push(message);
+    if (blocksExperiment) experimentBlockers.push(message);
+  };
+  const total = Math.max(0, Math.trunc(finiteOr(input.labelledExamples, 0)));
+  const positives = Math.max(0, Math.trunc(finiteOr(input.positiveExamples, 0)));
+  const negatives = Math.max(0, Math.trunc(finiteOr(input.negativeExamples, 0)));
+  const temporalCoverageDays = Math.max(0, finiteOr(input.temporalCoverageDays, 0));
+  const independentEvidenceGroups = Math.max(0, Math.trunc(finiteOr(input.independentEvidenceGroups, 0)));
+  const evidenceClassCount = Math.max(0, Math.trunc(finiteOr(input.evidenceClassCount, 0)));
+  const duplicateRate = clamp(finiteOr(input.duplicateRate, 1), 0, 1);
+  const temporalHoldoutExamples = Math.max(0, Math.trunc(finiteOr(input.temporalHoldoutExamples, 0)));
   const labelCountsConsistent = positives + negatives === total;
   const minorityShare = total > 0 ? Math.min(positives, negatives) / total : 0;
 
-  if (!labelCountsConsistent) blockers.push('Positive and negative label counts must exactly match labelledExamples before model readiness can be evaluated.');
-  if (total < requirements.minimumLabelledExamplesForExperiment) blockers.push('Not enough labelled examples for a meaningful neural-model experiment.');
-  if (input.temporalCoverageDays < requirements.minimumTemporalCoverageDays) blockers.push('Training data does not cover enough time to test metagame drift.');
-  if (input.independentEvidenceGroups < requirements.minimumIndependentEvidenceGroups) blockers.push('Training data lacks enough independent evidence groups.');
-  if (input.evidenceClassCount < requirements.minimumEvidenceClasses) blockers.push('Training data lacks enough evidence-class diversity.');
-  if (input.duplicateRate > requirements.maximumDuplicateRate) blockers.push('Duplicate/dependent data rate is too high and risks teaching the model the same evidence repeatedly.');
-  if (!input.leakageChecksPassed) blockers.push('Data-leakage checks have not passed.');
-  if (minorityShare < 0.2) blockers.push('Labels are too imbalanced; the minority outcome should be at least 20% of the dataset.');
-  if (input.temporalHoldoutExamples < requirements.minimumTemporalHoldoutExamples) blockers.push('Temporal holdout set is too small for promotion evidence.');
+  if (!labelCountsConsistent) addBlocker('Positive and negative label counts must exactly match labelledExamples before model readiness can be evaluated.');
+  if (total < requirements.minimumLabelledExamplesForExperiment) addBlocker('Not enough labelled examples for a meaningful neural-model experiment.');
+  if (temporalCoverageDays < requirements.minimumTemporalCoverageDays) addBlocker('Training data does not cover enough time to test metagame drift.');
+  if (independentEvidenceGroups < requirements.minimumIndependentEvidenceGroups) addBlocker('Training data lacks enough independent evidence groups.');
+  if (evidenceClassCount < requirements.minimumEvidenceClasses) addBlocker('Training data lacks enough evidence-class diversity.');
+  if (duplicateRate > requirements.maximumDuplicateRate) addBlocker('Duplicate/dependent data rate is too high and risks teaching the model the same evidence repeatedly.');
+  if (!input.leakageChecksPassed) addBlocker('Data-leakage checks have not passed.');
+  if (minorityShare < 0.2) addBlocker('Labels are too imbalanced; the minority outcome should be at least 20% of the dataset.');
+  if (temporalHoldoutExamples < requirements.minimumTemporalHoldoutExamples) addBlocker('Temporal holdout set is too small for promotion evidence.', false);
 
-  const baseline = input.transparentBaselineAccuracy;
-  const candidate = input.candidateModelAccuracy;
-  if (candidate === null) blockers.push('No neural candidate has been evaluated on the temporal holdout set.');
-  if (candidate !== null && candidate < requirements.minimumCandidateAccuracy) blockers.push('Neural candidate accuracy is below the minimum promotion threshold.');
-  if (baseline === null) blockers.push('Transparent baseline accuracy is required before neural-model promotion.');
-  if (candidate !== null && baseline !== null && candidate - baseline < requirements.minimumImprovementOverTransparentBaseline) {
-    blockers.push('Neural candidate does not materially beat the transparent baseline on unseen temporal data.');
+  const baseline = input.transparentBaselineAccuracy === null ? null : finiteOr(input.transparentBaselineAccuracy, Number.NaN);
+  const candidate = input.candidateModelAccuracy === null ? null : finiteOr(input.candidateModelAccuracy, Number.NaN);
+  const validBaseline = baseline !== null && Number.isFinite(baseline) && baseline >= 0 && baseline <= 1 ? baseline : null;
+  const validCandidate = candidate !== null && Number.isFinite(candidate) && candidate >= 0 && candidate <= 1 ? candidate : null;
+  if (validCandidate === null) addBlocker('No valid neural candidate has been evaluated on the temporal holdout set.', false);
+  if (validCandidate !== null && validCandidate < requirements.minimumCandidateAccuracy) addBlocker('Neural candidate accuracy is below the minimum promotion threshold.', false);
+  if (validBaseline === null) addBlocker('Transparent baseline accuracy is required before neural-model promotion.', false);
+  if (validCandidate !== null && validBaseline !== null && validCandidate - validBaseline < requirements.minimumImprovementOverTransparentBaseline) {
+    addBlocker('Neural candidate does not materially beat the transparent baseline on unseen temporal data.', false);
   }
   if (total < requirements.minimumLabelledExamplesForPromotion) warnings.push('Dataset may support experiments but is still below the preferred promotion size.');
 
   const checks = [
     clamp(total / requirements.minimumLabelledExamplesForPromotion, 0, 1),
-    clamp(input.temporalCoverageDays / requirements.minimumTemporalCoverageDays, 0, 1),
-    clamp(input.independentEvidenceGroups / requirements.minimumIndependentEvidenceGroups, 0, 1),
-    clamp(input.evidenceClassCount / requirements.minimumEvidenceClasses, 0, 1),
-    clamp((requirements.maximumDuplicateRate - input.duplicateRate) / requirements.maximumDuplicateRate, 0, 1),
+    clamp(temporalCoverageDays / requirements.minimumTemporalCoverageDays, 0, 1),
+    clamp(independentEvidenceGroups / requirements.minimumIndependentEvidenceGroups, 0, 1),
+    clamp(evidenceClassCount / requirements.minimumEvidenceClasses, 0, 1),
+    clamp((requirements.maximumDuplicateRate - duplicateRate) / requirements.maximumDuplicateRate, 0, 1),
     input.leakageChecksPassed ? 1 : 0,
     labelCountsConsistent ? clamp(minorityShare / 0.2, 0, 1) : 0,
-    clamp(input.temporalHoldoutExamples / requirements.minimumTemporalHoldoutExamples, 0, 1),
-    candidate === null ? 0 : clamp(candidate / requirements.minimumCandidateAccuracy, 0, 1),
-    candidate === null || baseline === null ? 0 : clamp((candidate - baseline) / requirements.minimumImprovementOverTransparentBaseline, 0, 1),
+    clamp(temporalHoldoutExamples / requirements.minimumTemporalHoldoutExamples, 0, 1),
+    validCandidate === null ? 0 : clamp(validCandidate / requirements.minimumCandidateAccuracy, 0, 1),
+    validCandidate === null || validBaseline === null ? 0 : clamp((validCandidate - validBaseline) / requirements.minimumImprovementOverTransparentBaseline, 0, 1),
   ];
   const readinessScore = round(checks.reduce((sum, value) => sum + value, 0) / checks.length);
 
   let status: DeepLearningReadinessV15['status'] = 'not-ready';
-  const experimentBlocking = blockers.some((blocker) => !blocker.includes('promotion') && !blocker.includes('Neural candidate'));
-  if (!experimentBlocking && total >= requirements.minimumLabelledExamplesForExperiment) status = 'experiment-ready';
+  if (experimentBlockers.length === 0 && total >= requirements.minimumLabelledExamplesForExperiment) status = 'experiment-ready';
   if (blockers.length === 0 && total >= requirements.minimumLabelledExamplesForPromotion) status = 'promotion-ready';
 
   return {
