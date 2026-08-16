@@ -2,12 +2,12 @@ import assert from 'node:assert/strict';
 import { validateCommanderDeck } from '../src/services/commander-rules.js';
 import { buildDeckMetrics, parseDecklist, type DeckEntry, type ParsedDeck } from '../src/services/deck.js';
 import { getPreconStockV10, searchCommanderPreconsV10 } from '../src/services/precons-v10.js';
-import { refinePreconIterativelyV12 } from '../src/services/refinement-workflows-v12.js';
+import { refinePreconNzdV13 } from '../src/services/refinement-workflows-v13.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from '../src/services/scryfall.js';
 import type { ScryfallCard } from '../src/types/scryfall.js';
 
-const MAX_TOTAL_USD = 100;
-const MAX_USD_PER_CARD = 20;
+const MAX_TOTAL_NZD = 100;
+const MAX_NZD_PER_CARD = 20;
 
 function asRecord(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
@@ -120,12 +120,12 @@ async function main(): Promise<void> {
   const stockCards = await assertResolvedLegalDeck(stockParsed, 'stock deck');
   const stockMetrics = buildDeckMetrics(stockParsed, stockCards);
 
-  console.log(`COMMANDER E2E: refining ${String(asRecord(stock.precon).name ?? reference)} with $${MAX_TOTAL_USD} total / $${MAX_USD_PER_CARD} per-card caps...`);
-  const result = await refinePreconIterativelyV12({
+  console.log(`COMMANDER E2E: refining ${String(asRecord(stock.precon).name ?? reference)} with NZ$${MAX_TOTAL_NZD} total / NZ$${MAX_NZD_PER_CARD} per-card caps...`);
+  const nzdResult = await refinePreconNzdV13({
     reference,
     targetBracket: 4,
-    maxUsdPerCard: MAX_USD_PER_CARD,
-    maxTotalUsd: MAX_TOTAL_USD,
+    maxNzdPerCard: MAX_NZD_PER_CARD,
+    maxTotalNzd: MAX_TOTAL_NZD,
     maxSwaps: 4,
     maxRounds: 2,
     swapsPerRound: 2,
@@ -137,7 +137,13 @@ async function main(): Promise<void> {
     detailLevel: 'detailed',
   });
 
-  const refinement = asRecord(result.refinement);
+  assert.equal(nzdResult.currency, 'NZD', 'V0.13 must make NZD the primary workflow currency');
+  const budgets = asRecord(nzdResult.requestedBudgets);
+  assert.equal(budgets.maxNzdPerCard, MAX_NZD_PER_CARD, 'NZD per-card budget must be preserved as the user-facing budget');
+  assert.equal(budgets.maxTotalNzd, MAX_TOTAL_NZD, 'NZD total budget must be preserved as the user-facing budget');
+  const wrappedResult = asRecord(nzdResult.result);
+  const refinement = asRecord(wrappedResult.refinement);
+
   assert.equal(refinement.status, 'refined', 'the live scenario should exercise at least one accepted optimizer package');
   assert.equal(typeof refinement.finalDecklist, 'string', 'optimizer must return the complete final decklist');
   const finalDecklist = String(refinement.finalDecklist);
@@ -161,10 +167,10 @@ async function main(): Promise<void> {
     'reported OUT -> IN swaps must exactly explain the stock-to-final card-count delta',
   );
 
-  const estimatedSpend = numericPrice(refinement.estimatedUpgradeSpendUsd);
-  assert.notEqual(estimatedSpend, null, 'optimizer must report a numeric total upgrade spend');
-  assert.ok((estimatedSpend ?? Infinity) <= MAX_TOTAL_USD + 0.0001, 'accepted upgrades must remain within the $100 total budget');
-  assert.equal(refinement.maxTotalUsd, MAX_TOTAL_USD, 'optimizer output must preserve the requested total budget');
+  const estimatedSpendNzd = numericPrice(refinement.estimatedUpgradeSpendNzd);
+  assert.notEqual(estimatedSpendNzd, null, 'optimizer must report a numeric NZD total upgrade spend');
+  assert.ok((estimatedSpendNzd ?? Infinity) <= MAX_TOTAL_NZD + 0.01, 'accepted upgrades must remain within the NZ$100 total budget');
+  assert.notEqual(numericPrice(refinement.estimatedUpgradeSpendUsdReference), null, 'USD source reference should remain available for traceability');
 
   const touchedNames = new Set<string>();
   for (const swap of swaps) {
@@ -180,9 +186,10 @@ async function main(): Promise<void> {
     const printing = asRecord(swap.recommendedPrinting);
     assert.equal(typeof printing.set, 'string', `${String(swap.in)} must include a recommended set code`);
     assert.equal(typeof printing.collectorNumber, 'string', `${String(swap.in)} must include a collector number`);
-    const price = numericPrice(printing.priceUsd);
-    assert.notEqual(price, null, `${String(swap.in)} must have a verifiable selected-printing price under a total budget`);
-    assert.ok((price ?? Infinity) <= MAX_USD_PER_CARD + 0.0001, `${String(swap.in)} must stay within the $20 per-card cap`);
+    const priceNzd = numericPrice(printing.priceNzd);
+    assert.notEqual(priceNzd, null, `${String(swap.in)} must expose an NZD selected-printing price`);
+    assert.ok((priceNzd ?? Infinity) <= MAX_NZD_PER_CARD + 0.01, `${String(swap.in)} must stay within the NZ$20 per-card cap`);
+    assert.notEqual(numericPrice(printing.priceUsdReference), null, `${String(swap.in)} must retain the original USD market reference`);
 
     const finalEntry = entries(finalParsed).find((entry) => entry.name.toLocaleLowerCase() === incoming);
     assert.ok(finalEntry, `${String(swap.in)} must exist in the final deck`);
@@ -211,9 +218,9 @@ async function main(): Promise<void> {
   console.log('\nACCEPTED SWAPS');
   for (const swap of swaps) {
     const printing = asRecord(swap.recommendedPrinting);
-    console.log(`- ${String(swap.out)} -> ${String(swap.in)} (${String(printing.set)} ${String(printing.collectorNumber)}) $${String(printing.priceUsd)}`);
+    console.log(`- ${String(swap.out)} -> ${String(swap.in)} (${String(printing.set)} ${String(printing.collectorNumber)}) NZ$${Number(printing.priceNzd).toFixed(2)}`);
   }
-  console.log(`\nFINAL: 100 cards, Commander legal, land count ${finalMetrics.landCount}, ${swaps.length} swap(s), estimated spend $${estimatedSpend?.toFixed(2)}.`);
+  console.log(`\nFINAL: 100 cards, Commander legal, land count ${finalMetrics.landCount}, ${swaps.length} swap(s), estimated spend NZ$${estimatedSpendNzd?.toFixed(2)}.`);
   console.log('COMMANDER E2E RESULT: PASS');
 }
 
