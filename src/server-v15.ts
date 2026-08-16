@@ -7,6 +7,9 @@ import {
   scoreCandidateWithLearningV15,
   synthesizeDeepResearchV15,
   trainAdaptiveRankerV15,
+  type LearningExampleV15,
+  type LearningFeatureV15,
+  type ResearchObservationV15,
 } from './services/research-learning-v15.js';
 import {
   buildResearchLinksV09,
@@ -47,6 +50,14 @@ const learningFeatureSchema = z.object({
   priceEfficiency: z.number().min(-1).max(1).optional(),
   communitySupport: z.number().min(-1).max(1).optional(),
 });
+
+function compactLearningFeatures(input: z.infer<typeof learningFeatureSchema>): Partial<Record<LearningFeatureV15, number>> {
+  const output: Partial<Record<LearningFeatureV15, number>> = {};
+  for (const [key, value] of Object.entries(input)) {
+    if (typeof value === 'number' && Number.isFinite(value)) output[key as LearningFeatureV15] = value;
+  }
+  return output;
+}
 
 export function registerMtgToolsV15(server: McpServer): McpServer {
   server.registerTool(
@@ -178,8 +189,20 @@ export function registerMtgToolsV15(server: McpServer): McpServer {
     },
     async ({ observations }) => {
       try {
+        const normalized: ResearchObservationV15[] = observations.map((observation) => ({
+          sourceId: observation.sourceId,
+          focus: observation.focus,
+          subject: observation.subject,
+          claim: observation.claim,
+          polarity: observation.polarity,
+          ageDays: observation.ageDays,
+          outcomeStrength: observation.outcomeStrength,
+          structured: observation.structured,
+          ...(observation.independentGroup !== undefined ? { independentGroup: observation.independentGroup } : {}),
+          ...(observation.sampleSize !== undefined ? { sampleSize: observation.sampleSize } : {}),
+        }));
         return jsonResult({
-          synthesis: synthesizeDeepResearchV15(observations),
+          synthesis: synthesizeDeepResearchV15(normalized),
           guidance: 'High confidence requires independent corroboration. A second website that republishes the same event or decklist is not a second independent result.',
         });
       } catch (error) {
@@ -209,7 +232,12 @@ export function registerMtgToolsV15(server: McpServer): McpServer {
     },
     async ({ examples, epochs, learningRate, l2, minimumExamples, minimumHoldoutAccuracy }) => {
       try {
-        return jsonResult(trainAdaptiveRankerV15(examples, {
+        const normalized: LearningExampleV15[] = examples.map((example) => ({
+          features: compactLearningFeatures(example.features),
+          label: example.label,
+          importance: example.importance,
+        }));
+        return jsonResult(trainAdaptiveRankerV15(normalized, {
           epochs,
           learningRate,
           l2,
@@ -290,7 +318,7 @@ export function registerMtgToolsV15(server: McpServer): McpServer {
     },
     async ({ features, model, hardChecks }) => {
       try {
-        return jsonResult(scoreCandidateWithLearningV15(features, model, hardChecks));
+        return jsonResult(scoreCandidateWithLearningV15(compactLearningFeatures(features), model, hardChecks));
       } catch (error) {
         return errorResult(error);
       }
