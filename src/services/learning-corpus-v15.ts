@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { parseDecklist, type DeckEntry } from './deck.js';
-import type { LearningExampleV15, LearningFeatureV15 } from './research-learning-v15.js';
+import { LEARNING_FEATURES_V15, type LearningExampleV15, type LearningFeatureV15 } from './research-learning-v15.js';
 
 export interface LearningOutcomeRecordV15 {
   outcomeId: string;
@@ -44,6 +44,9 @@ export interface TemporalLearningSplitV15 {
   holdoutExamples: LearningExampleV15[];
 }
 
+const LEARNING_FEATURE_SET_V15 = new Set<string>(LEARNING_FEATURES_V15);
+const SHA256_HEX = /^[a-f0-9]{64}$/i;
+
 function normalize(value: string): string {
   return value.trim().toLocaleLowerCase().replace(/\s+/g, ' ');
 }
@@ -66,6 +69,7 @@ function entrySignature(zone: 'commander' | 'main', entry: DeckEntry): string {
 
 export function fingerprintExactDeckV15(decklist: string): string {
   const parsed = parseDecklist(decklist);
+  if (parsed.totalCards <= 0) throw new Error('Cannot fingerprint an empty or unparseable decklist.');
   const signatures = [
     ...parsed.commanders.map((entry) => entrySignature('commander', entry)),
     ...parsed.main.map((entry) => entrySignature('main', entry)),
@@ -82,15 +86,41 @@ function outcomeKey(record: LearningOutcomeRecordV15): string {
   return `${normalize(record.independentGroup)}|${normalize(record.outcomeId)}`;
 }
 
+function nonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+function validFeatures(features: unknown): boolean {
+  if (!features || typeof features !== 'object' || Array.isArray(features)) return false;
+  const entries = Object.entries(features as Record<string, unknown>);
+  if (entries.length === 0) return false;
+  return entries.every(([key, value]) =>
+    LEARNING_FEATURE_SET_V15.has(key)
+    && typeof value === 'number'
+    && Number.isFinite(value)
+    && value >= -1
+    && value <= 1);
+}
+
 function validRecord(record: LearningOutcomeRecordV15): boolean {
+  const commanders = Array.isArray(record.commanderNames) ? record.commanderNames : [];
+  const importanceValid = record.importance === undefined
+    || (Number.isFinite(record.importance) && record.importance >= 0.1 && record.importance <= 5);
   return Boolean(
-    record.outcomeId.trim()
-    && record.sourceId.trim()
-    && record.evidenceClass.trim()
-    && record.independentGroup.trim()
-    && record.leakageGroup.trim()
-    && record.deckFingerprint.trim()
+    nonEmptyString(record.outcomeId)
+    && nonEmptyString(record.sourceId)
+    && nonEmptyString(record.evidenceClass)
+    && nonEmptyString(record.independentGroup)
+    && nonEmptyString(record.leakageGroup)
+    && nonEmptyString(record.deckFingerprint)
+    && SHA256_HEX.test(record.deckFingerprint.trim())
+    && nonEmptyString(record.observedAt)
     && timestampMs(record.observedAt) !== null
+    && commanders.length >= 1
+    && commanders.length <= 2
+    && commanders.every(nonEmptyString)
+    && validFeatures(record.features)
+    && importanceValid
     && (record.label === 0 || record.label === 1),
   );
 }
