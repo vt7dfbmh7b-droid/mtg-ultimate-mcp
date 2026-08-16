@@ -93,7 +93,11 @@ function compactFeatures(input: z.infer<typeof learningFeatureSchema>): Partial<
   return output;
 }
 
-function normalizeExamples(examples: Array<{ features: z.infer<typeof learningFeatureSchema>; label: 0 | 1; importance?: number }>): LearningExampleV15[] {
+function normalizeExamples(examples: Array<{
+  features: z.infer<typeof learningFeatureSchema>;
+  label: 0 | 1;
+  importance?: number | undefined;
+}>): LearningExampleV15[] {
   return examples.map((example) => ({
     features: compactFeatures(example.features),
     label: example.label,
