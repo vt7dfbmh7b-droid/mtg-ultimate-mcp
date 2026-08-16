@@ -10,9 +10,9 @@ function parsePrice(value: string | null | undefined): number | null {
 }
 
 export async function priceCardNzdV13(options: {
-  cardName?: string;
-  set?: string;
-  collectorNumber?: string;
+  cardName?: string | undefined;
+  set?: string | undefined;
+  collectorNumber?: string | undefined;
 }): Promise<Record<string, unknown>> {
   const card = options.set?.trim() && options.collectorNumber?.trim()
     ? await lookupPrinting(options.set, options.collectorNumber)
