@@ -12,9 +12,9 @@ The preferred deck workflow is now:
 
 `rules + exact printing policy -> analyse -> generate competing packages -> rebuild each -> validate -> same-seed compare -> budget check -> choose winner -> repeat until plateau`
 
-Instead of testing only one upgrade package per round, the new optimizer can compare several materially different legal packages and keep the strongest supported option.
+Instead of testing only one upgrade package per round, the optimizer can compare several materially different legal packages and keep the strongest supported option.
 
-### New V0.12 tools
+### V0.12 tools
 
 | Tool | Purpose |
 | --- | --- |
@@ -22,15 +22,15 @@ Instead of testing only one upgrade package per round, the new optimizer can com
 | `refine_precon_v12` | Start from the exact stock precon and apply competing-package refinement. |
 | `build_and_refine_commander_deck_v12` | Build a legal 100-card draft, then compare competing refinement packages instead of treating the first draft as final. |
 | `source_health_v12` | Probe structured data sources and report healthy/degraded/not-configured/reference-only state. |
-| `cross_reference_tournament_evidence_v12` | Combine TopDeck.gg + EDHTop16 tournament evidence and conservatively deduplicate likely cross-site copies of the same appearance. |
+| `cross_reference_tournament_evidence_v12` | Use structured TopDeck tournament evidence when configured, pair it with public competitive references, and deduplicate structured records that are actually available. |
 
 ### Competing-package optimization
 
 The default is **3 candidate packages per round**; callers can request 1–6.
 
-Every package uses the same per-round simulation seed, so the comparison is fairer. Packages are rejected when they fail legality/resolution, physical-printing rules, per-card/total budgets, minimum improvement, or material regression checks.
+Every package uses the same per-round simulation seed. Packages are rejected when they fail legality/resolution, physical-printing rules, per-card/total budgets, minimum improvement, or material regression checks.
 
-Later candidates temporarily block part of earlier candidate additions so the engine explores genuinely different paths instead of repeatedly resimulating the same suggestion.
+Later candidates temporarily block part of earlier candidate additions so the engine explores different paths instead of repeatedly resimulating the same suggestion.
 
 The winner becomes the next full deck and the process repeats. The engine stops instead of forcing a change when no candidate clears the checks.
 
@@ -111,7 +111,8 @@ Different evidence classes stay separate:
 - Wizards — official rules/product facts
 - Scryfall — Oracle data, legality, exact printings and reference prices
 - Commander Spellbook — curated combos and bracket evidence
-- TopDeck.gg / EDHTop16 — competitive tournament results/decklists
+- TopDeck.gg — structured competitive tournament results/decklists when configured
+- EDHTop16 — attributed public competitive/meta reference
 - Playgroup.gg — recorded paper Commander context
 - EDHREC — broad Commander adoption/synergy/precon context
 - Archidekt / Moxfield / MTGGoldfish / AetherHub — public decks and primers
@@ -124,27 +125,24 @@ No single popularity score, analysis score or tournament finish is treated as pr
 
 ### Tournament overlap protection
 
-TopDeck.gg and EDHTop16 can contain the same underlying tournament appearance. V0.12 reports both the raw record count and an **effective unique record count** after conservative cross-site deduplication.
+V0.12 includes conservative deduplication for structured tournament records. Likely duplicates require event/player/deck/result context; a reused deck URL alone is never enough to merge records because a maintained deck link may be used at multiple events.
 
-Likely duplicates require event/player/deck/result context. A reused deck URL alone is never enough to merge records, because a maintained deck link may be used at multiple events.
-
-When the same appearance is found on both sites, agreement is treated as corroboration rather than a second independent result.
+During live integration testing in August 2026, the legacy EDHTop16 filtered POST routes redirected to the public website and returned HTML rather than structured JSON. EDHTop16 therefore remains useful as a public competitive reference, but it is **not counted as extra structured tournament rows** unless a current stable structured endpoint is verified later.
 
 ## Source health
 
-`source_health_v12` probes structured sources such as Scryfall, Commander Spellbook, MTGJSON, EDHTop16 and TopDeck.gg when configured.
+`source_health_v12` actively probes the structured dependencies MTG Ultimate currently relies on:
 
-It reports:
+- Scryfall
+- Commander Spellbook
+- MTGJSON
+- TopDeck.gg when an API key is configured
 
-- healthy
-- degraded
-- not configured
-- reference-only
-- latency for live probes
+It reports healthy, degraded, not configured, reference-only, and live-probe latency where applicable.
 
-Reference destinations such as EDHREC, Moxfield, DeckCheck and TCGfind NZ are labelled separately instead of pretending they are mandatory backend APIs.
+EDHTop16, EDHREC, Moxfield, DeckCheck and TCGfind NZ are explicitly labelled as reference sources where no current supported structured integration is relied on. A reference source being useful does not make it a backend dependency.
 
-A degraded source should lower confidence or trigger another evidence path. The system must not invent data to fill an outage.
+A degraded structured source should lower confidence or trigger another evidence path. The system must not invent data to fill an outage.
 
 ## Gameplay/simulation foundation
 
@@ -158,13 +156,13 @@ The shared HTTP layer retries safe GET/HEAD requests on temporary failures such 
 
 V0.12 also removes the stale-version problem from the MCP identity:
 
-- the base MCP constructor now uses `config.version`
+- the base MCP constructor uses `config.version`
 - package/config/health/User-Agent/MCP identity use the same release version
 - `src/server-current.ts` is the stable runtime entry point
 - `src/index.ts` no longer imports a numbered release module directly
 - V0.12 exposes `registerMtgToolsV12(server)` as the preferred future registration pattern
 
-Historical numbered server modules remain as compatibility/regression layers. The active runtime boundary is stable, so future releases can continue consolidating registration code without another public-entry rewrite.
+Historical numbered server modules remain as compatibility/regression layers.
 
 Default operational settings:
 
@@ -174,6 +172,34 @@ HTTP_RETRY_ATTEMPTS=3
 HTTP_RETRY_BASE_MS=250
 PRECON_CATALOG_CACHE_MS=21600000
 ```
+
+## Testing
+
+Normal regression checks:
+
+```bash
+npm run check
+```
+
+This runs strict TypeScript compilation plus the automated unit/regression suite, including the current MCP server-construction smoke test.
+
+A separate live integration smoke test is available:
+
+```bash
+npm run test:live
+```
+
+The live smoke test checks real current dependencies rather than mocks. It verifies:
+
+- Scryfall can resolve `Sol Ring` and reports it Commander-legal
+- Commander Spellbook responds
+- MTGJSON responds
+- the live Commander precon catalog contains `Limit Break`
+- the stock `Limit Break (FINAL FANTASY VII)` product resolves to exactly 100 cards
+- the stock list preserves exact set / collector-number / finish information
+- sources without a current supported structured API are labelled reference-only rather than fabricated as healthy APIs
+
+`.github/workflows/live-smoke.yml` runs this as a dedicated integration workflow when relevant integration files change and can also be manually dispatched.
 
 ## Documentation
 
@@ -202,10 +228,4 @@ Endpoints:
 - MCP: `http://localhost:3000/mcp`
 - Health: `http://localhost:3000/health`
 
-Build and test:
-
-```bash
-npm run check
-```
-
-The documented V0.12 release head has passed dependency installation, strict TypeScript compilation and the complete automated test suite. The feature branch remains under active development in a draft PR.
+The feature branch remains under active development in a draft PR. A release is only treated as green after the normal regression suite passes; live integrations are checked separately so a third-party outage can be distinguished from a code regression.
