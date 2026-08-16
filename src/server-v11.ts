@@ -20,23 +20,31 @@ const refinementFields = {
   targetBracket: z.number().int().min(1).max(5).optional(),
   maxUsdPerCard: z.number().positive().max(100_000).optional(),
   maxTotalUsd: z.number().positive().max(1_000_000).optional(),
-  maxSwaps: z.number().int().min(1).max(30).optional().default(12),
-  maxRounds: z.number().int().min(1).max(5).optional().default(3),
-  swapsPerRound: z.number().int().min(1).max(8).optional().default(4),
-  minimumImprovementScore: z.number().min(-10).max(100).optional().default(0.1),
+  maxSwaps: z.number().int().min(1).max(30).optional(),
+  maxRounds: z.number().int().min(1).max(5).optional(),
+  swapsPerRound: z.number().int().min(1).max(8).optional(),
+  minimumImprovementScore: z.number().min(-10).max(100).optional(),
   themeQuery: z.string().min(1).max(500).optional(),
   excludedCards: z.array(z.string().min(1).max(256)).max(300).optional().default([]),
   protectedCards: z.array(z.string().min(1).max(256)).max(300).optional().default([]),
-  simulationIterations: z.number().int().min(100).max(5_000).optional().default(750),
-  simulationTurns: z.number().int().min(3).max(12).optional().default(7),
-  seed: z.number().int().min(1).max(2_147_483_647).optional().default(20_260_816),
+  simulationIterations: z.number().int().min(100).max(5_000).optional(),
+  simulationTurns: z.number().int().min(3).max(12).optional(),
+  seed: z.number().int().min(1).max(2_147_483_647).optional(),
   detailLevel,
   ...printingFields,
 };
 
 const preconProfile = z.enum(['light', 'balanced', 'strong', 'optimized', 'custom']).optional().default('balanced');
+type PreconProfile = 'light' | 'balanced' | 'strong' | 'optimized' | 'custom';
+interface ProfileDefaults {
+  targetBracket?: number;
+  maxUsdPerCard?: number;
+  maxSwaps?: number;
+  maxRounds?: number;
+  swapsPerRound?: number;
+}
 
-function profileDefaults(profile: 'light' | 'balanced' | 'strong' | 'optimized' | 'custom'): Record<string, number> {
+function profileDefaults(profile: PreconProfile): ProfileDefaults {
   if (profile === 'light') return { targetBracket: 2, maxUsdPerCard: 5, maxSwaps: 5, maxRounds: 2, swapsPerRound: 3 };
   if (profile === 'balanced') return { targetBracket: 3, maxUsdPerCard: 10, maxSwaps: 10, maxRounds: 3, swapsPerRound: 4 };
   if (profile === 'strong') return { targetBracket: 4, maxUsdPerCard: 20, maxSwaps: 15, maxRounds: 4, swapsPerRound: 4 };
@@ -58,48 +66,28 @@ export function createMtgServerV11() {
       }),
       annotations: { readOnlyHint: true, openWorldHint: true },
     },
-    async ({
-      decklist,
-      targetBracket,
-      maxUsdPerCard,
-      maxTotalUsd,
-      maxSwaps,
-      maxRounds,
-      swapsPerRound,
-      minimumImprovementScore,
-      themeQuery,
-      excludedCards,
-      protectedCards,
-      simulationIterations,
-      simulationTurns,
-      seed,
-      detailLevel: requestedDetail,
-      printingFamily,
-      allowedSets,
-      includePromos,
-      includeSpecialReleases,
-    }) => {
+    async (input) => {
       try {
-        return jsonResult(await refineCommanderDeckIterativelyV11(decklist, {
-          ...(targetBracket !== undefined ? { targetBracket } : {}),
-          ...(maxUsdPerCard !== undefined ? { maxUsdPerCard } : {}),
-          ...(maxTotalUsd !== undefined ? { maxTotalUsd } : {}),
-          maxSwaps,
-          maxRounds,
-          swapsPerRound,
-          minimumImprovementScore,
-          ...(themeQuery ? { themeQuery } : {}),
-          excludedCards,
-          protectedCards,
-          simulationIterations,
-          simulationTurns,
-          seed,
-          requestedDetail,
-          ...(printingFamily ? { printingFamily } : {}),
-          allowedSets,
-          includePromos,
-          includeSpecialReleases,
-        } as never));
+        return jsonResult(await refineCommanderDeckIterativelyV11(input.decklist, {
+          ...(input.targetBracket !== undefined ? { targetBracket: input.targetBracket } : {}),
+          ...(input.maxUsdPerCard !== undefined ? { maxUsdPerCard: input.maxUsdPerCard } : {}),
+          ...(input.maxTotalUsd !== undefined ? { maxTotalUsd: input.maxTotalUsd } : {}),
+          ...(input.maxSwaps !== undefined ? { maxSwaps: input.maxSwaps } : {}),
+          ...(input.maxRounds !== undefined ? { maxRounds: input.maxRounds } : {}),
+          ...(input.swapsPerRound !== undefined ? { swapsPerRound: input.swapsPerRound } : {}),
+          ...(input.minimumImprovementScore !== undefined ? { minimumImprovementScore: input.minimumImprovementScore } : {}),
+          ...(input.themeQuery ? { themeQuery: input.themeQuery } : {}),
+          excludedCards: input.excludedCards,
+          protectedCards: input.protectedCards,
+          ...(input.simulationIterations !== undefined ? { simulationIterations: input.simulationIterations } : {}),
+          ...(input.simulationTurns !== undefined ? { simulationTurns: input.simulationTurns } : {}),
+          ...(input.seed !== undefined ? { seed: input.seed } : {}),
+          detailLevel: input.detailLevel,
+          ...(input.printingFamily ? { printingFamily: input.printingFamily } : {}),
+          allowedSets: input.allowedSets,
+          includePromos: input.includePromos,
+          includeSpecialReleases: input.includeSpecialReleases,
+        }));
       } catch (error) {
         return errorResult(error);
       }
@@ -123,7 +111,11 @@ export function createMtgServerV11() {
         const defaults = profileDefaults(input.profile);
         return jsonResult(await refinePreconIterativelyV11({
           reference: input.reference,
-          targetBracket: input.targetBracket ?? defaults.targetBracket,
+          ...(input.targetBracket !== undefined
+            ? { targetBracket: input.targetBracket }
+            : defaults.targetBracket !== undefined
+              ? { targetBracket: defaults.targetBracket }
+              : {}),
           ...(input.maxUsdPerCard !== undefined
             ? { maxUsdPerCard: input.maxUsdPerCard }
             : defaults.maxUsdPerCard !== undefined
@@ -133,13 +125,13 @@ export function createMtgServerV11() {
           maxSwaps: input.maxSwaps ?? defaults.maxSwaps ?? 12,
           maxRounds: input.maxRounds ?? defaults.maxRounds ?? 3,
           swapsPerRound: input.swapsPerRound ?? defaults.swapsPerRound ?? 4,
-          minimumImprovementScore: input.minimumImprovementScore,
+          ...(input.minimumImprovementScore !== undefined ? { minimumImprovementScore: input.minimumImprovementScore } : {}),
           ...(input.themeQuery ? { themeQuery: input.themeQuery } : {}),
           excludedCards: input.excludedCards,
           protectedCards: input.protectedCards,
-          simulationIterations: input.simulationIterations,
-          simulationTurns: input.simulationTurns,
-          seed: input.seed,
+          ...(input.simulationIterations !== undefined ? { simulationIterations: input.simulationIterations } : {}),
+          ...(input.simulationTurns !== undefined ? { simulationTurns: input.simulationTurns } : {}),
+          ...(input.seed !== undefined ? { seed: input.seed } : {}),
           detailLevel: input.detailLevel,
           ...(input.printingFamily ? { printingFamily: input.printingFamily } : {}),
           allowedSets: input.allowedSets,
