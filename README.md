@@ -1,56 +1,88 @@
 # MTG Ultimate MCP
 
-An MCP-powered Magic: The Gathering knowledge, Commander rules, deck-building, printing-aware pricing, simulation, combo, interaction, combat, and evidence-analysis service.
+An MCP-powered Magic: The Gathering knowledge, Commander rules, deck-building, **printing-family aware** pricing/upgrades, simulation, combo, interaction, combat, and evidence-analysis service.
 
-The goal is an **MTG brain for AI clients**: accurate card knowledge, legal Commander deck construction, exact printing/set-aware prices, useful deck analysis, realistic-enough simulations, combo research, upgrades, complete deck drafts, and real-world reference evidence—without making normal answers harder to understand than they need to be.
+The goal is an **MTG brain for AI clients**: accurate card knowledge, legal Commander construction, exact edition-aware prices, realistic-enough simulations, useful upgrades, complete deck drafts, and real-world reference evidence—while keeping normal explanations simple.
 
-## Current stage — V0.7
+## Current stage — V0.8
 
-V0.7 combines seven linked layers:
+V0.8 adds **physical printing-family policies** on top of the V0.7 deck-building and gameplay foundation.
 
-1. **Rules facts** — Oracle text, color identity, Commander legality, commander pairing, deck size, singleton/copy-count rules.
-2. **Physical printing identity** — set code, collector number, finish, release metadata, and printing-specific prices.
-3. **Deck construction and upgrades** — full Commander drafts, exact IN/OUT upgrade plans, budget/set/theme constraints, and same-seed before/after simulation.
-4. **Baseline deck simulation** — strong land/fetch/tutor/draw/colored-mana sequencing from V0.4.
-5. **Advanced game-state intelligence** — V0.5/V0.6 payment/resource simulation plus V0.7 Ward-aware targeting, stack chains, combat modifiers, and zone-aware combo readiness.
-6. **Card/game intelligence** — simple card explanations by default, with deeper casting, interaction, combat, and rules analysis available when needed.
-7. **Real-world evidence** — Scryfall, Commander Spellbook, attributed public Archidekt decks, and TopDeck.gg EDH tournament data when configured.
+The central rule is:
 
-The project deliberately separates **known rules** from **simulation assumptions and evidence-derived heuristics**. If something cannot be solved confidently from the available game state, the tool should say so instead of inventing precision.
+> **Oracle identity answers “what card is this?” Physical printing identity answers “is this exact edition allowed, and what does this edition cost?”**
+
+That means a request such as **“Final Fantasy printings only”** does not mean “only cards originally designed in the FINAL FANTASY set.” It means every card used must have an eligible physical printing belonging to the FINAL FANTASY product/franchise family.
+
+By default, a themed family can include:
+
+- normal/main-set printings
+- Commander/supplemental printings in the same family
+- qualifying promo sets
+- qualifying bonus/special printings
+- curated franchise Secret Lair printings
+- bundle/product promos tied to that family
+
+Promo status by itself is **never enough**. An unrelated Secret Lair or promo printing does not become legal for a Final Fantasy-only deck merely because it is a promo.
 
 ## Simple explanations by default
 
-Normal card questions should be easy to read. `card_intelligence_v05` defaults to `detail: simple`, which focuses on:
+Normal card questions should stay easy to read. `card_intelligence_v05` defaults to `detail: simple`, focusing on:
 
 - what the card does
 - why it is useful
 - what it works well with
 - at most one important rule/interaction when needed
 
-`standard` and `detailed` modes remain available for complicated interactions or when deeper rules analysis is requested.
+The complicated rules, printing and simulation logic stays underneath unless deeper detail is requested.
 
-## Main MCP tools
-
-### Cards, printings, and prices
+## V0.8 printing-family tools
 
 | Tool | Purpose |
 | --- | --- |
-| `card_lookup` | Resolve a card by name, optionally constrained to a set code. |
-| `printing_lookup` | Resolve one exact physical printing from set code + collector number. |
-| `card_printings` | List releases with set, collector number, finish, date, and price fields. |
-| `compare_printing_prices` | Compare prices across physical releases of the same Oracle card. |
-| `card_search` | Advanced live Scryfall search. |
-| `compare_cards` | Compare two cards for rules, role, mana, legality, and printing prices. |
-| `card_intelligence_v05` | Plain-English card explanation plus optional deeper intelligence. |
+| `find_printings_in_family_v08` | Show every qualifying physical printing of a named Oracle card inside a requested family/set policy. |
+| `normalize_deck_printings_v08` | Convert an existing deck to qualifying exact printings and report cards that have no legal themed printing. |
+| `build_commander_deck_v08` | Build a complete Commander draft while enforcing Commander rules plus the physical printing-family policy. |
+| `plan_commander_upgrade_v08` | Generate exact IN/OUT upgrades where every new card has an eligible physical printing, with edition-specific pricing. |
 
-Rules identity and physical printing identity are intentionally separate. For example:
+Printing-family inputs support:
+
+- `printingFamily` — e.g. `Final Fantasy`
+- `allowedSets` — optional exact set-code restrictions/additions
+- `includePromos` — defaults to `true`
+- `includeSpecialReleases` — defaults to `true`
+- existing per-card price limits
+
+### FINAL FANTASY behavior
+
+The built-in Final Fantasy family preset dynamically discovers physical Scryfall sets whose set names belong to the FINAL FANTASY family and also recognizes curated exact special-release printings that live in broader products such as Secret Lair.
+
+This is important because a broad set code such as `SLD` contains many unrelated products. MTG Ultimate therefore does **not** whitelist all Secret Lair cards. It whitelists the exact FINAL FANTASY special printings instead.
+
+Examples of the intended distinction:
+
+```text
+Cyclonic Rift — FINAL FANTASY Secret Lair printing     -> eligible
+Cyclonic Rift — unrelated Secret Lair printing        -> not eligible
+Cyclonic Rift — ordinary non-FINAL-FANTASY printing   -> not eligible
+```
+
+The final deck line always identifies the actual physical edition:
+
+```text
+1 Cyclonic Rift (SLD) 1869
+```
+
+If no qualifying printing exists, the builder/upgrader must choose a **different card**, not quietly use an unrelated printing of the desired Oracle card.
+
+## Exact printing and pricing model
+
+Rules logic and combo logic use Oracle identity. Shopping/value logic uses the exact printing:
 
 ```text
 1 Sol Ring (CMM) 396
 1 Sol Ring (LTC) 284 *F*
 ```
-
-use the same Oracle card for rules, but retain different set codes, collector numbers, finishes, and prices.
 
 Supported finish annotations:
 
@@ -60,89 +92,72 @@ Supported finish annotations:
 *N* = nonfoil
 ```
 
-### Commander rules
+Price constraints are applied to qualifying physical editions. A cheap unrelated printing cannot bypass a themed-printing requirement, and an expensive premium printing should not make an Oracle card appear unaffordable when a cheaper **qualifying** printing exists.
 
-| Tool | Purpose |
-| --- | --- |
-| `check_commander_rules` | Hard Commander deck-construction validation. |
-| `check_card_for_commander` | Check one card against designated commander(s). |
-| `analyze_commander_dependencies_v05` | Find cards that depend on the commander being available/online. |
+## Commander rules
 
-The legality layer enforces exactly 100 cards including commander(s), commander eligibility, supported legal two-commander pairings, current Commander legality/bans from live card data, combined commander color identity, off-color rejection, singleton/basic-land/card-specific copy-count exceptions, and basic-land-type color restrictions.
+The hard legality layer validates:
 
-Example: a black-red commander permits black, red, black-red, and colorless identity cards, but not cards containing white, blue, or green identity.
+- exactly 100 cards including commander(s)
+- commander eligibility
+- supported two-commander pairings
+- current Commander legality/bans from live card data
+- combined commander color identity
+- off-color rejection
+- singleton/basic-land/card-specific copy-count exceptions
+- basic-land-type color restrictions
+
+Example: a black-red commander permits black, red, black-red, and colorless identity cards, but not cards whose color identity contains white, blue, or green.
 
 A fully resolved illegal Commander deck is blocked from advanced simulation and optimization.
 
-### Deck analysis, building, and upgrades
+## Deck analysis, building and upgrades
+
+Important tools retained from earlier stages include:
 
 | Tool | Purpose |
 | --- | --- |
 | `analyze_deck` | Structure, curve, roles, printing value, and hard Commander legality. |
 | `price_deck_printings` | Value exact `(SET) collector` entries and requested finishes. |
-| `analyze_mana_base_v04` | Mana sources, common land conditions, fetch targets, restricted mana, reducers. |
-| `suggest_upgrades` | Legal, printing-aware upgrade candidates under budget/set/theme constraints. |
-| `plan_commander_upgrade_v07` | Exact candidate IN/OUT swaps, protected-card constraints, whole rebuilt deck, and same-seed before/after simulation. |
-| `build_commander_deck_v07` | Build a complete Commander draft from one or two commanders with legality, role, set, price, theme, include/exclude, land, printing, bracket, simulation, and optional community-reference checks. |
+| `analyze_mana_base_v04` | Mana sources, conditional lands, fetch targets, restricted mana and reducers. |
+| `suggest_upgrades` | Printing-aware legal upgrade candidates. |
+| `plan_commander_upgrade_v07` | Whole-deck exact IN/OUT plan with same-seed before/after simulation. |
+| `build_commander_deck_v07` | First-pass full Commander draft. |
+| `plan_commander_upgrade_v08` | V0.7 upgrade workflow plus hard printing-family enforcement. |
+| `build_commander_deck_v08` | V0.7 builder plus hard printing-family enforcement. |
 
-`plan_commander_upgrade_v07` treats simulation as supporting evidence rather than automatically replacing cards solely because a number improved. It returns the whole candidate deck so an AI/player can reject a swap that damages the intended theme or preferred win route.
+Simulation is supporting evidence rather than an automatic instruction to remove a thematic or preferred card.
 
-`build_commander_deck_v07` emits exact selected set codes and collector numbers. Its first-pass role targets are consistency heuristics, not the official definition of Commander brackets; bracket evidence is checked separately when the external estimator is available.
+## Game-state intelligence
 
-Upgrade pricing can select a cheaper valid printing instead of treating a card name as having one universal price. The from-scratch builder always identifies the selected printing, but without an explicit price constraint it does not claim that printing is the globally cheapest release ever printed.
+V0.7/V0.6/V0.5 systems remain available:
 
-### V0.7 game-state intelligence
+- Ward-aware target ranking
+- common multiplayer counter/protection stack chains
+- supplied +1/+1/-1/-1 counters
+- common static Equipment/Aura/lord combat bonuses
+- zone-aware combo readiness
+- Treasures and special payment mechanics
+- commander tax/removal/recast pressure
+- supplied-state castability and interaction checks
 
-| Tool | Purpose |
-| --- | --- |
-| `rank_interaction_targets_v07` | Rank legal/important targets for a supplied answer and account for supported Ward costs/resources. |
-| `evaluate_multiplayer_stack_v07` | Evaluate a supplied common counter/protection chain in stack order. |
-| `analyze_combat_board_v07` | Apply common +1/+1/-1/-1 counters, static Equipment/Aura bonuses, and lord effects to combat stats. |
-| `evaluate_combo_zones_v07` | Check whether named combo pieces are actually usable from their current/required zones. |
+The service deliberately says when a state is unresolved rather than pretending to implement every possible Magic rule interaction.
 
-Ward is modeled as a triggered cost after an opponent legally targets the permanent, not as a hexproof-style targeting prohibition. Unsupported or state-dependent Ward costs remain conditional.
+## Simulation
 
-The stack model handles common hard/soft counter chains and uncounterable text. It does not claim to solve every possible priority branch, copied spell, retarget effect, mode, or split-second interaction.
-
-The combat model keeps variable printed stats such as `*` unresolved instead of inventing a number. V0.7 adds supplied counters plus common static Equipment, Aura, and lord bonuses while leaving full Magic layer interactions for later work.
-
-Zone-aware combo checks distinguish a piece being merely seen from being actually ready. A card stranded in the library, graveyard, or exile is not counted as live unless the supplied requirement or a supported permission says it can function there.
-
-### Simulation
+Available simulation tools include:
 
 | Tool | Purpose |
 | --- | --- |
-| `simulate_deck_consistency` | Detailed consistency model for opening hands, mana, lands, fetches, tutors, draw, and combos. |
-| `simulate_pod_pressure_v04` | Existing pressure scenarios over the baseline consistency model. |
+| `simulate_deck_consistency` | Opening hands, mana, lands, fetches, tutors, draw and combo consistency. |
+| `simulate_pod_pressure_v04` | Pressure scenarios over the baseline model. |
 | `simulate_advanced_gameplay_v06` | Hybrid baseline + advanced turn-level gameplay. |
-| `simulate_calibrated_gameplay_v07` | Optionally use recent tournament-deck structure to choose the closest transparent simulation-pressure preset, then run the hybrid model. |
+| `simulate_calibrated_gameplay_v07` | Optional tournament-structure-informed pressure calibration. |
 | `compare_deck_performance_profiles` | Same-seed comparison of two deck structures/simulations. |
 
-The baseline lane models London-style mulligans, colored mana, common conditional/tapped lands, legal fetch targets, rocks/dorks/land ramp/rituals, restricted mana, common reducers, common tutor restrictions, card draw, commander tax affordability, and requested combo-piece assembly.
+Pressure outputs are model assumptions/evidence proxies, not claimed real-world win percentages.
 
-The advanced lane models Treasures, convoke, improvise, delve, artifact affinity, Phyrexian mana/life, supported alternative costs, commander removal/recasts/uptime, challenges to key spells, protection using resources left after paying for the original spell, board-wipe pressure, and commander-dependent permanents.
-
-Pressure profiles are:
-
-```text
-goldfish | casual | upgraded | optimized | cedh
-```
-
-Their interaction/removal probabilities are **transparent simulation assumptions**, not measured win rates.
-
-`simulate_calibrated_gameplay_v07` can use the structure of the higher-performing TopDeck.gg sample as an evidence-informed proxy for choosing among those existing presets. This does **not** turn registered decklists into measured per-game interaction rates; the calibration output exposes the structural signals and confidence/caveats.
-
-### V0.5 supplied-state gameplay tools retained
-
-| Tool | Purpose |
-| --- | --- |
-| `analyze_card_casting_v05` | Detect advanced casting/payment mechanics and Treasure generation. |
-| `analyze_deck_casting_v05` | Inventory those mechanics across a deck. |
-| `evaluate_castability_v05` | Test whether a card can be cast from a supplied resource state. |
-| `evaluate_interaction_exchange_v05` | Evaluate a named threat, answer, and optional protection response. |
-| `simulate_combat_snapshot_v05` | Estimate one supplied combat snapshot. |
-
-### Combos, brackets, and real-world evidence
+## Combos and real-world evidence
 
 | Tool | Purpose |
 | --- | --- |
@@ -151,19 +166,12 @@ Their interaction/removal probabilities are **transparent simulation assumptions
 | `analyze_archidekt_references` | Attributed public community deck comparisons. |
 | `analyze_tournament_results` | Attributed TopDeck.gg EDH result/decklist comparisons. |
 
-Real-world deck evidence is used to ask questions such as:
-
-- which cards/packages recur in successful lists?
-- what structural differences exist between stronger and weaker lists?
-- does one build produce more reliable mana, interaction, protection, or early action?
-- does a proposed upgrade improve the same seeded consistency model without violating theme/legality/budget constraints?
-
-Observed deck results are treated as associations, not proof that a single card caused a win or loss.
+Reference decks help identify recurring cards/packages and structural differences, but observed association is not treated as proof that one card caused a win.
 
 ## Data sources
 
-- **Scryfall** — Oracle identity, color identity, legality, exact printings, set/collector resolution, release metadata, finishes, search, and reference price fields.
-- **Commander Spellbook** — known combos, near-combos, and bracket evidence.
+- **Scryfall** — Oracle identity, legality, exact printings, set metadata, set/collector resolution, promo metadata, finishes, release metadata and reference prices.
+- **Commander Spellbook** — known combos, near-combos and bracket evidence.
 - **Archidekt** — attributed public community deck references.
 - **TopDeck.gg** — observed EDH tournament results/decklists when `TOPDECK_API_KEY` is configured.
 
@@ -175,15 +183,27 @@ AI / MCP client
       v
     /mcp
       |
-      +-- cards / printings / prices -------------> Scryfall
-      +-- Commander legality ----------------------> local rules engine + Scryfall
-      +-- build / upgrade / role search -----------> local V0.7 engine + Scryfall
-      +-- baseline consistency --------------------> V0.4 simulation engine
-      +-- advanced turn gameplay -----------------> V0.6 + V0.5 payment engine
-      +-- Ward / stack / combat / combo zones ----> local V0.7 engines
-      +-- combos / bracket ------------------------> Commander Spellbook
-      +-- community references -------------------> Archidekt
-      +-- tournament evidence/calibration --------> TopDeck.gg
+      +-- cards / exact printings / prices --------> Scryfall
+      +-- printing-family policy -------------------> V0.8 local policy + Scryfall sets
+      +-- Commander legality -----------------------> local rules engine + Scryfall
+      +-- build / upgrade --------------------------> V0.8/V0.7 engines
+      +-- consistency / gameplay simulation --------> V0.4/V0.5/V0.6 engines
+      +-- Ward / stack / combat / combo zones ------> V0.7 engines
+      +-- combos / bracket -------------------------> Commander Spellbook
+      +-- community references --------------------> Archidekt
+      +-- tournament evidence ---------------------> TopDeck.gg
+```
+
+## Decklist format
+
+```text
+// COMMANDER
+1 Edgar Markov (INR) 234
+
+// MAIN
+1 Sol Ring (CMM) 396
+1 Blood Artist
+3 Swamp (NEO) 297 *F*
 ```
 
 ## Run locally
@@ -219,34 +239,14 @@ npm run check
 | `TOPDECK_API_KEY` | empty | Optional tournament-data API key. |
 | `MTG_USER_AGENT` | project identifier | Upstream User-Agent. |
 
-## Decklist format
+## Current limits / next work
 
-```text
-// COMMANDER
-1 Edgar Markov (INR) 234
+V0.8 is still not a full digital implementation of Magic. Important future work includes richer replacement/layer/priority modeling, more card-specific timing logic, stronger commander-specific synergy discovery, iterative build → simulate → replace optimization, improved shopping/region pricing, and larger real-game calibration datasets.
 
-// MAIN
-1 Sol Ring (CMM) 396
-1 Blood Artist
-3 Swamp (NEO) 297 *F*
-```
+Printing-family presets also need ongoing maintenance for special releases that live inside broad catch-all products. Normal family-named sets are discovered dynamically; exceptional releases such as franchise Secret Lairs are intentionally exact-listed so unrelated cards cannot leak into the family.
 
-## Current limits / next deep-state work
-
-V0.7 is much stronger at deck creation, upgrade testing, and supplied game states, but it is still not a complete digital implementation of every Magic rule. Important future work includes:
-
-- replacement/prevention effects and full layer interactions
-- arbitrary modes, X values, unusual additional costs, copies, and retargeting
-- richer priority/stack trees and multiple legal target choices inside the full turn simulator
-- attack taxes, defending-player selection, multiplayer politics, and richer combat decisions
-- exact card-specific timing/activation prerequisites for more combo lines
-- stronger automatic commander-specific theme/synergy discovery when building from scratch
-- multi-pass build → simulate → replace → re-simulate optimization rather than stopping after the first legal 100-card draft
-- shared cheapest-printing optimization across all from-scratch selections when that is the requested shopping goal
-- larger tournament datasets and true game-log/event-sequence data for better pressure calibration
-
-See `docs/V0.4_RULES_AND_SIMULATION.md`, `docs/V0.5_ADVANCED_GAMEPLAY.md`, `docs/V0.6_HYBRID_SIMULATION.md`, and `docs/V0.7_DECKBUILDING_AND_INTERACTION.md` for model boundaries.
+See `docs/V0.4_RULES_AND_SIMULATION.md`, `docs/V0.5_ADVANCED_GAMEPLAY.md`, `docs/V0.6_HYBRID_SIMULATION.md`, `docs/V0.7_DECKBUILDING_AND_INTERACTION.md`, and `docs/V0.8_PRINTING_FAMILIES.md`.
 
 ## Development
 
-The repository remains under active development on the feature branch and draft PR. Strict TypeScript compilation plus the full test suite must pass before a stage is treated as green. V0.7 passed the complete CI suite on its documented release head before this status-only README clarification.
+The repository remains under active development on the feature branch and draft PR. Strict TypeScript compilation plus the full test suite must pass before a stage is treated as green.
