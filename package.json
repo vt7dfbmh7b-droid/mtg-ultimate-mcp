@@ -11,7 +11,7 @@
     "dev": "tsx src/index.ts",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/index.js",
-    "test": "tsx --test src/**/*.test.ts",
+    "test": "tsx --test src/*.test.ts src/**/*.test.ts",
     "test:live": "tsx scripts/live-smoke.ts",
     "test:e2e": "tsx scripts/e2e-commander-scenario.ts",
     "check": "npm run build && npm test"
