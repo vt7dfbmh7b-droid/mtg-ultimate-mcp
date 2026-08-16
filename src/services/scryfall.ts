@@ -1,5 +1,5 @@
 import { config } from '../config.js';
-import { fetchJson, HttpError } from '../lib/http.js';
+import { fetchJson } from '../lib/http.js';
 import type {
   ScryfallCard,
   ScryfallCollectionResult,
@@ -53,23 +53,25 @@ export interface CardSummary {
   imageUrl?: string;
 }
 
+interface TimedCardCacheEntry {
+  loadedAt: number;
+  cards: ScryfallCard[];
+}
+
 let rateLimitQueue: Promise<void> = Promise.resolve();
 let lastRequestAt = 0;
-const MIN_REQUEST_GAP_MS = 175;
+const MIN_REQUEST_GAP_MS = 300;
 let setCache: ScryfallSet[] | null = null;
 let setCacheAt = 0;
 const SET_CACHE_TTL_MS = 6 * 60 * 60 * 1_000;
+const QUERY_CACHE_TTL_MS = 5 * 60 * 1_000;
+const IDENTIFIER_CACHE_MAX = 5_000;
+const searchCache = new Map<string, TimedCardCacheEntry>();
+const printingsCache = new Map<string, TimedCardCacheEntry>();
+const identifierCache = new Map<string, ScryfallCard>();
 
 function sleep(ms: number): Promise<void> {
   return ms <= 0 ? Promise.resolve() : new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-function isReadOnlyPost(init: RequestInit): boolean {
-  return (init.method ?? 'GET').toUpperCase() === 'POST';
-}
-
-function collectionRetryDelayMs(attempt: number): number {
-  return Math.min(8_000, Math.max(1_000, config.httpRetryBaseMs * (2 ** Math.max(0, attempt))));
 }
 
 async function scryfallRequest<T>(url: string, init: RequestInit = {}): Promise<T> {
@@ -81,26 +83,42 @@ async function scryfallRequest<T>(url: string, init: RequestInit = {}): Promise<
 
   await previous;
   try {
-    const attempts = isReadOnlyPost(init) ? config.httpRetryAttempts : 1;
-    for (let attempt = 1; attempt <= attempts; attempt += 1) {
-      const waitMs = Math.max(0, MIN_REQUEST_GAP_MS - (Date.now() - lastRequestAt));
-      if (waitMs > 0) await sleep(waitMs);
-      lastRequestAt = Date.now();
-      try {
-        return await fetchJson<T>(url, init);
-      } catch (error) {
-        const retryableRateLimit = error instanceof HttpError && error.status === 429;
-        if (!retryableRateLimit || attempt >= attempts) throw error;
-        // /cards/collection is a read-only query even though Scryfall exposes it as POST.
-        // Retrying the identical JSON body is safe and prevents a transient shared-IP
-        // rate limit from aborting a long Commander refinement run.
-        await sleep(collectionRetryDelayMs(attempt));
-      }
-    }
-    throw new Error(`Scryfall request failed after ${attempts} attempts: ${url}`);
+    const waitMs = Math.max(0, MIN_REQUEST_GAP_MS - (Date.now() - lastRequestAt));
+    if (waitMs > 0) await sleep(waitMs);
+    lastRequestAt = Date.now();
+    return await fetchJson<T>(url, init);
   } finally {
     releaseQueue();
   }
+}
+
+function freshTimedCards(entry: TimedCardCacheEntry | undefined): ScryfallCard[] | null {
+  if (!entry || Date.now() - entry.loadedAt >= QUERY_CACHE_TTL_MS) return null;
+  return entry.cards;
+}
+
+function rememberIdentifier(key: string, card: ScryfallCard): void {
+  if (!identifierCache.has(key) && identifierCache.size >= IDENTIFIER_CACHE_MAX) {
+    const oldest = identifierCache.keys().next().value as string | undefined;
+    if (oldest) identifierCache.delete(oldest);
+  }
+  identifierCache.set(key, card);
+}
+
+function identifierKey(identifier: CardIdentifierInput): string {
+  return [identifier.name.toLocaleLowerCase(), identifier.set?.toLocaleLowerCase() ?? '', identifier.collectorNumber ?? ''].join('|');
+}
+
+function cacheCardAliases(card: ScryfallCard): void {
+  rememberIdentifier(identifierKey({ name: card.name }), card);
+  rememberIdentifier(identifierKey({ name: card.name, set: card.set }), card);
+  rememberIdentifier(identifierKey({ name: card.name, set: card.set, collectorNumber: card.collector_number }), card);
+}
+
+function cardMatchesIdentifier(card: ScryfallCard, identifier: CardIdentifierInput): boolean {
+  if (identifier.set && card.set.toLocaleLowerCase() !== identifier.set.toLocaleLowerCase()) return false;
+  if (identifier.collectorNumber && card.collector_number.toLocaleLowerCase() !== identifier.collectorNumber.toLocaleLowerCase()) return false;
+  return card.name.toLocaleLowerCase() === identifier.name.toLocaleLowerCase();
 }
 
 export function getCardOracleText(card: ScryfallCard): string {
@@ -220,19 +238,29 @@ export async function lookupCard(name: string, exact = false, set?: string): Pro
   const parameter = exact ? 'exact' : 'fuzzy';
   const setPart = set?.trim() ? `&set=${encodeURIComponent(set.trim().toLowerCase())}` : '';
   const url = `${config.scryfallApiBase}/cards/named?${parameter}=${encodeURIComponent(name.trim())}${setPart}`;
-  return scryfallRequest<ScryfallCard>(url);
+  const card = await scryfallRequest<ScryfallCard>(url);
+  cacheCardAliases(card);
+  return card;
 }
 
 export async function lookupPrinting(set: string, collectorNumber: string, lang?: string): Promise<ScryfallCard> {
   const language = lang?.trim() ? `/${encodeURIComponent(lang.trim().toLowerCase())}` : '';
   const url = `${config.scryfallApiBase}/cards/${encodeURIComponent(set.trim().toLowerCase())}/${encodeURIComponent(collectorNumber.trim())}${language}`;
-  return scryfallRequest<ScryfallCard>(url);
+  const card = await scryfallRequest<ScryfallCard>(url);
+  cacheCardAliases(card);
+  return card;
 }
 
 export async function searchCards(query: string, limit = 10): Promise<ScryfallCard[]> {
   const safeLimit = Math.max(1, Math.min(limit, 50));
-  const url = `${config.scryfallApiBase}/cards/search?q=${encodeURIComponent(query.trim())}&unique=cards&order=edhrec`;
+  const normalizedQuery = query.trim();
+  const cached = freshTimedCards(searchCache.get(normalizedQuery));
+  if (cached) return cached.slice(0, safeLimit);
+
+  const url = `${config.scryfallApiBase}/cards/search?q=${encodeURIComponent(normalizedQuery)}&unique=cards&order=edhrec`;
   const result = await scryfallRequest<ScryfallList<ScryfallCard>>(url);
+  searchCache.set(normalizedQuery, { loadedAt: Date.now(), cards: result.data });
+  for (const card of result.data) cacheCardAliases(card);
   return result.data.slice(0, safeLimit);
 }
 
@@ -247,8 +275,13 @@ export async function getScryfallSets(forceRefresh = false): Promise<ScryfallSet
 
 export async function getCardPrintings(name: string, limit = 100): Promise<ScryfallCard[]> {
   const safeLimit = Math.max(1, Math.min(limit, 250));
+  const normalizedName = name.trim();
+  const cacheKey = `${normalizedName.toLocaleLowerCase()}|${safeLimit}`;
+  const cached = freshTimedCards(printingsCache.get(cacheKey));
+  if (cached) return cached.slice(0, safeLimit);
+
   const cards: ScryfallCard[] = [];
-  const escapedName = name.trim().replace(/"/g, '\\"');
+  const escapedName = normalizedName.replace(/"/g, '\\"');
   let nextUrl: string | undefined = `${config.scryfallApiBase}/cards/search?q=${encodeURIComponent(`!"${escapedName}"`)}&unique=prints&order=released&dir=desc`;
 
   while (nextUrl && cards.length < safeLimit) {
@@ -257,11 +290,9 @@ export async function getCardPrintings(name: string, limit = 100): Promise<Scryf
     nextUrl = page.has_more ? page.next_page : undefined;
   }
 
+  printingsCache.set(cacheKey, { loadedAt: Date.now(), cards });
+  for (const card of cards) cacheCardAliases(card);
   return cards;
-}
-
-function identifierKey(identifier: CardIdentifierInput): string {
-  return [identifier.name.toLocaleLowerCase(), identifier.set?.toLocaleLowerCase() ?? '', identifier.collectorNumber ?? ''].join('|');
 }
 
 export async function getCardsByIdentifiers(identifiers: CardIdentifierInput[]): Promise<{
@@ -274,10 +305,17 @@ export async function getCardsByIdentifiers(identifiers: CardIdentifierInput[]):
       .map((identifier) => [identifierKey(identifier), identifier]),
   ).values()];
   const cards: ScryfallCard[] = [];
+  const pending: CardIdentifierInput[] = [];
   const notFound: string[] = [];
 
-  for (let index = 0; index < unique.length; index += 75) {
-    const batch = unique.slice(index, index + 75);
+  for (const identifier of unique) {
+    const cached = identifierCache.get(identifierKey(identifier));
+    if (cached) cards.push(cached);
+    else pending.push(identifier);
+  }
+
+  for (let index = 0; index < pending.length; index += 75) {
+    const batch = pending.slice(index, index + 75);
     const apiIdentifiers = batch.map((identifier) => {
       if (identifier.set && identifier.collectorNumber) {
         return {
@@ -298,6 +336,11 @@ export async function getCardsByIdentifiers(identifiers: CardIdentifierInput[]):
       },
     );
     cards.push(...result.data);
+    for (const card of result.data) cacheCardAliases(card);
+    for (const identifier of batch) {
+      const match = result.data.find((card) => cardMatchesIdentifier(card, identifier));
+      if (match) rememberIdentifier(identifierKey(identifier), match);
+    }
     notFound.push(
       ...result.not_found.map((entry) =>
         [entry.name, entry.set, entry.collector_number].filter(Boolean).join(' ') || JSON.stringify(entry),
