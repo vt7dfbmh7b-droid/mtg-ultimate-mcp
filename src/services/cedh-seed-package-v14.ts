@@ -43,14 +43,26 @@ function normalize(value: string): string {
 }
 
 function commanderIdentity(commanders: ScryfallCard[]): string[] {
-  return [...new Set(commanders.flatMap((card) => card.color_identity))].sort();
+  const present = new Set(commanders.flatMap((card) => card.color_identity));
+  return ['W', 'U', 'B', 'R', 'G'].filter((color) => present.has(color));
 }
 
-export function buildCedhSeedQueriesV14(maxPackageCards = 3): string[] {
+function normalizeIdentityQuery(identity?: string): string | null {
+  if (!identity) return null;
+  const upper = identity.trim().toUpperCase();
+  if (upper === 'C') return 'C';
+  const present = new Set([...upper].filter((color) => 'WUBRG'.includes(color)));
+  const normalized = ['W', 'U', 'B', 'R', 'G'].filter((color) => present.has(color)).join('');
+  return normalized || null;
+}
+
+export function buildCedhSeedQueriesV14(maxPackageCards = 3, identity?: string): string[] {
   const maxCards = Math.max(2, Math.min(4, Math.trunc(maxPackageCards)));
-  const queries = [`bracket:ruthless card<=2 is:winning legal:commander`];
-  if (maxCards >= 3) queries.push(`bracket:ruthless card<=3 is:winning legal:commander`);
-  if (maxCards >= 4) queries.push(`bracket:ruthless card<=4 is:winning legal:commander`);
+  const identityToken = normalizeIdentityQuery(identity);
+  const identityClause = identityToken ? ` identity<=${identityToken}` : '';
+  const queries = [`bracket:ruthless card<=2 is:winning legal:commander${identityClause}`];
+  if (maxCards >= 3) queries.push(`bracket:ruthless card<=3 is:winning legal:commander${identityClause}`);
+  if (maxCards >= 4) queries.push(`bracket:ruthless card<=4 is:winning legal:commander${identityClause}`);
   return queries;
 }
 
@@ -90,19 +102,19 @@ export function rankCedhSeedCandidatesV14(
 ): Array<Record<string, unknown>> {
   const normalizedCommanders = new Set(commanderNames.map(normalize));
   const maxCards = Math.max(2, Math.min(4, Math.trunc(maxPackageCards)));
-  const seen = new Set<string>();
-  const candidates: SeedCandidateV14[] = [];
+  const bestByPackage = new Map<string, SeedCandidateV14>();
 
   for (const variant of variants) {
     const candidate = parseCandidate(variant, normalizedCommanders, maxCards);
     if (!candidate) continue;
     const key = candidate.cards.map((card) => normalize(card.name)).sort().join('|');
-    if (seen.has(key)) continue;
-    seen.add(key);
-    candidates.push(candidate);
+    const existing = bestByPackage.get(key);
+    if (!existing || candidate.score > existing.score || (candidate.score === existing.score && candidate.popularity > existing.popularity)) {
+      bestByPackage.set(key, candidate);
+    }
   }
 
-  return candidates
+  return [...bestByPackage.values()]
     .sort((a, b) => b.score - a.score || a.cards.length - b.cards.length || b.popularity - a.popularity)
     .map((candidate) => ({ ...candidate }));
 }
@@ -123,11 +135,12 @@ export async function discoverCedhSeedWinPackageV14(
   const commanderNames = commanders.map((card) => card.name);
   const normalizedCommanders = new Set(commanderNames.map(normalize));
   const identity = commanderIdentity(commanders);
+  const identityToken = identity.length > 0 ? identity.join('') : 'C';
 
   const rawVariants: unknown[] = [];
   const queryAudit: Array<Record<string, unknown>> = [];
-  for (const query of buildCedhSeedQueriesV14(maxPackageCards)) {
-    const search = await searchSpellbookVariants(query, { limit: 30, ordering: '-popularity' });
+  for (const query of buildCedhSeedQueriesV14(maxPackageCards, identityToken)) {
+    const search = await searchSpellbookVariants(query, { limit: 50, ordering: '-popularity' });
     const results = Array.isArray(search.results) ? search.results : [];
     rawVariants.push(...results);
     queryAudit.push({ query, returned: results.length, totalMatching: search.count ?? null });
@@ -194,6 +207,7 @@ export async function discoverCedhSeedWinPackageV14(
       status: 'eligible-winning-seed-package-found',
       commanderNames,
       commanderIdentity: identity,
+      spellbookIdentityFilter: identityToken,
       comboId: candidate.id,
       bracketTag: candidate.bracketTag,
       results: candidate.results,
@@ -213,6 +227,7 @@ export async function discoverCedhSeedWinPackageV14(
     status: 'no-eligible-winning-seed-package',
     commanderNames,
     commanderIdentity: identity,
+    spellbookIdentityFilter: identityToken,
     checkedCandidates: candidates.length,
     printingPolicy: describePrintingPolicyV08(policy),
     queryAudit,
