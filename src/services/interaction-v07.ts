@@ -1,6 +1,5 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import { analyzeInteractionProfileV05, type InteractionProfileV05 } from './interaction-v05.js';
-import { analyzeCommanderDependencyV05 } from './combat-v05.js';
 import { getCardOracleText, inferCardRoles } from './scryfall.js';
 
 export type ZoneV07 = 'stack' | 'battlefield';
@@ -124,7 +123,7 @@ function canPayOneWard(requirement: WardRequirementV07, state: WardPaymentStateV
   }
   const ordinaryMana = Math.max(0, Math.trunc(state.genericMana ?? 0))
     + flexible
-    + Object.values(colored).reduce((sum, value) => sum + Math.max(0, value ?? 0), 0);
+    + Object.values(colored).reduce<number>((sum, value) => sum + Math.max(0, value ?? 0), 0);
   if (ordinaryMana < requirement.genericMana) return false;
   if ((state.life ?? 40) <= requirement.life) return false;
   if ((state.cardsInHand ?? 0) < requirement.discardCards) return false;
