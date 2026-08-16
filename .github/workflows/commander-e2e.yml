@@ -8,13 +8,17 @@ on:
       - "scripts/e2e-commander-scenario.ts"
       - ".github/workflows/commander-e2e.yml"
       - "package.json"
+      - "src/config.ts"
       - "src/services/commander-rules.ts"
+      - "src/services/currency-v13.ts"
+      - "src/services/pricing-v13.ts"
       - "src/services/deck.ts"
       - "src/services/deck-builder-v07.ts"
       - "src/services/optimizer-v11.ts"
       - "src/services/optimizer-v12.ts"
       - "src/services/precons-v10.ts"
       - "src/services/refinement-workflows-v12.ts"
+      - "src/services/refinement-workflows-v13.ts"
       - "src/services/scryfall.ts"
       - "src/services/upgrade.ts"
 
@@ -37,5 +41,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run real precon upgrade scenario
+      - name: Run real precon upgrade scenario with NZD budgets
         run: npm run test:e2e
