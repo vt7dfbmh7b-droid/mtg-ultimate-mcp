@@ -228,8 +228,8 @@ export function registerMtgToolsV12(server: McpServer): McpServer {
   server.registerTool(
     'cross_reference_tournament_evidence_v12',
     {
-      title: 'Cross-reference and deduplicate Commander tournament evidence',
-      description: 'Query TopDeck.gg and EDHTop16 for Commander tournament evidence, then conservatively collapse likely cross-site duplicates so the same tournament appearance is not counted twice merely because two sites recorded it.',
+      title: 'Cross-reference Commander tournament evidence without double-counting',
+      description: 'Use TopDeck.gg as structured tournament evidence when configured, pair it with EDHTop16 as an attributed public competitive reference, and conservatively deduplicate any structured records that are actually available. Reference-only sources are not counted as extra tournament rows.',
       inputSchema: z.object({
         commanderNames: z.array(z.string().min(1).max(256)).min(1).max(2),
         lastDays: z.number().int().min(1).max(365).optional().default(90),
@@ -244,7 +244,6 @@ export function registerMtgToolsV12(server: McpServer): McpServer {
     async ({ commanderNames, lastDays, participantMin, sampleLimit, minGames, includeTopDeck, includeEdhTop16 }) => {
       try {
         let topDeck: Record<string, unknown> | null = null;
-        let edhTop16: Record<string, unknown> | null = null;
         const sourceErrors: Record<string, string> = {};
 
         if (includeTopDeck) {
@@ -260,19 +259,16 @@ export function registerMtgToolsV12(server: McpServer): McpServer {
             sourceErrors.topDeck = error instanceof Error ? error.message : String(error);
           }
         }
-        if (includeEdhTop16) {
-          try {
-            edhTop16 = await fetchEdhTop16CommanderEntriesV09({
+
+        const edhTop16 = includeEdhTop16
+          ? await fetchEdhTop16CommanderEntriesV09({
               commanders: commanderNames,
               lastDays,
               minTournamentSize: participantMin,
               maxStanding: 64,
               limit: Math.min(100, sampleLimit * 3),
-            });
-          } catch (error) {
-            sourceErrors.edhTop16 = error instanceof Error ? error.message : String(error);
-          }
-        }
+            })
+          : null;
 
         const deduplicated = deduplicateTournamentEvidenceV12(topDeck ?? {}, edhTop16 ?? {});
         return jsonResult({
@@ -281,7 +277,7 @@ export function registerMtgToolsV12(server: McpServer): McpServer {
           sourceErrors,
           deduplicated,
           sourceEvidence: { topDeck, edhTop16 },
-          guidance: 'Use the deduplicated effective sample for claims about sample size. If both sites contain the same event appearance, their agreement is corroboration rather than an extra independent result.',
+          guidance: 'Use the deduplicated effective sample only for structured tournament rows. EDHTop16 currently contributes attributed public-reference context and must not be counted as additional structured appearances unless a current stable structured endpoint is verified later.',
         });
       } catch (error) {
         return errorResult(error);
