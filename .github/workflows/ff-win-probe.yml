@@ -1,0 +1,29 @@
+name: FF Win Package Probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["agent/**"]
+    paths:
+      - "scripts/probe-ff-win-packages.ts"
+      - ".github/workflows/ff-win-probe.yml"
+      - "src/services/printing-policy-v08.ts"
+      - "src/services/scryfall.ts"
+      - "src/services/spellbook.ts"
+
+permissions:
+  contents: read
+
+jobs:
+  ff-win-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run build
+      - name: Probe known FINAL FANTASY win packages
+        run: npx tsx scripts/probe-ff-win-packages.ts
