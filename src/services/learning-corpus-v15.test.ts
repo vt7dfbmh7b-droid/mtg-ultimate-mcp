@@ -50,6 +50,11 @@ test('exact deck fingerprint is order-independent but printing-sensitive', () =>
   assert.notEqual(fingerprintExactDeckV15(deckA), fingerprintExactDeckV15(deckDifferentPrinting));
 });
 
+test('exact deck fingerprint refuses empty or unparseable input', () => {
+  assert.throws(() => fingerprintExactDeckV15(''), /empty or unparseable/i);
+  assert.throws(() => fingerprintExactDeckV15('// COMMANDER\n// MAIN'), /empty or unparseable/i);
+});
+
 test('learning corpus deduplicates the same observed outcome but not the same deck in a different event', () => {
   const original = record();
   const mirror = record({ sourceId: 'mirror', importance: 0.5 });
@@ -90,6 +95,41 @@ test('contradictory labels for the same observed outcome are quarantined instead
 
   const split = temporalSplitLearningCorpusV15([positive, contradictoryMirror, separateOutcome]);
   assert.equal([...split.training, ...split.holdout].some((entry) => entry.outcomeId === 'event-1-player-1'), false);
+});
+
+test('malformed provenance and non-finite learning features are quarantined before training', () => {
+  const invalidFingerprint = record({
+    outcomeId: 'bad-hash',
+    independentGroup: 'bad-hash-group',
+    leakageGroup: 'bad-hash-event',
+    deckFingerprint: 'not-a-sha256',
+  });
+  const invalidFeature = record({
+    outcomeId: 'bad-feature',
+    independentGroup: 'bad-feature-group',
+    leakageGroup: 'bad-feature-event',
+    features: { tournamentSupport: Number.NaN },
+  });
+  const invalidCommander = record({
+    outcomeId: 'bad-commander',
+    independentGroup: 'bad-commander-group',
+    leakageGroup: 'bad-commander-event',
+    commanderNames: [],
+  });
+  const valid = record({
+    outcomeId: 'good',
+    independentGroup: 'good-group',
+    leakageGroup: 'good-event',
+  });
+
+  const deduped = deduplicateLearningCorpusV15([invalidFingerprint, invalidFeature, invalidCommander, valid]);
+  assert.equal(deduped.records.length, 1);
+  assert.equal(deduped.records[0]?.outcomeId, 'good');
+  assert.equal(deduped.malformedRecords.length, 3);
+
+  const audit = auditLearningCorpusV15([invalidFingerprint, invalidFeature, invalidCommander, valid]);
+  assert.equal(audit.uniqueRecords, 1);
+  assert.equal(audit.malformedRecords, 3);
 });
 
 test('temporal split keeps a leakage group entirely on one side of the holdout boundary', () => {
