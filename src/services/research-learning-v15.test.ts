@@ -1,0 +1,153 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import {
+  buildDeepResearchPlanV15,
+  scoreCandidateWithLearningV15,
+  scoreResearchObservationV15,
+  synthesizeDeepResearchV15,
+  trainAdaptiveRankerV15,
+  type LearningExampleV15,
+} from './research-learning-v15.js';
+
+test('deep research collapses dependent copies instead of double counting one dataset', () => {
+  const synthesis = synthesizeDeepResearchV15([
+    {
+      sourceId: 'topdeck',
+      focus: 'competitive',
+      subject: 'Card A',
+      claim: 'improves tournament performance',
+      independentGroup: 'same-event-feed',
+      structured: true,
+      sampleSize: 80,
+    },
+    {
+      sourceId: 'edhtop16',
+      focus: 'competitive',
+      subject: 'Card A',
+      claim: 'improves tournament performance',
+      independentGroup: 'same-event-feed',
+      sampleSize: 80,
+    },
+  ])[0];
+
+  assert.ok(synthesis);
+  assert.equal(synthesis.independentGroupCount, 1);
+  assert.equal(synthesis.observations.length, 1);
+  assert.ok(synthesis.researchGaps.some((gap) => gap.includes('one independent')));
+});
+
+test('deep research keeps strong contradictory evidence visible as disputed', () => {
+  const synthesis = synthesizeDeepResearchV15([
+    {
+      sourceId: 'topdeck',
+      focus: 'competitive',
+      subject: 'Commander X',
+      claim: 'is strongly positioned',
+      polarity: 'support',
+      independentGroup: 'tournament-results',
+      structured: true,
+      sampleSize: 200,
+      ageDays: 3,
+    },
+    {
+      sourceId: 'playgroup',
+      focus: 'recorded-games',
+      subject: 'Commander X',
+      claim: 'is strongly positioned',
+      polarity: 'oppose',
+      independentGroup: 'paper-games',
+      sampleSize: 300,
+      ageDays: 3,
+    },
+  ])[0];
+
+  assert.ok(synthesis);
+  assert.equal(synthesis.verdict, 'disputed');
+  assert.ok(synthesis.supportWeight > 0);
+  assert.ok(synthesis.opposeWeight > 0);
+});
+
+test('fast-changing pricing evidence decays much faster than stable rules evidence', () => {
+  const stalePrice = scoreResearchObservationV15({
+    sourceId: 'scryfall',
+    focus: 'pricing',
+    subject: 'Sol Ring',
+    claim: 'reference price is current',
+    ageDays: 60,
+  });
+  const oldRules = scoreResearchObservationV15({
+    sourceId: 'wizards',
+    focus: 'rules',
+    subject: 'Commander',
+    claim: 'deck construction rule is current',
+    ageDays: 60,
+  });
+
+  assert.ok(stalePrice.freshness < 0.2);
+  assert.ok(oldRules.freshness > 0.98);
+  assert.ok(stalePrice.score < oldRules.score);
+});
+
+test('deep research plan deliberately spans different evidence classes', () => {
+  const plan = buildDeepResearchPlanV15(['competitive', 'decklists', 'combos']);
+  assert.ok(plan.sources.length >= 5);
+  assert.ok(plan.evidenceClasses.includes('observed-results'));
+  assert.ok(plan.evidenceClasses.includes('curated'));
+  assert.ok(plan.evidenceClasses.includes('community'));
+});
+
+function syntheticExamples(): LearningExampleV15[] {
+  const examples: LearningExampleV15[] = [];
+  for (let index = 0; index < 50; index += 1) {
+    const positive = index % 2 === 0;
+    examples.push({
+      label: positive ? 1 : 0,
+      features: {
+        tournamentSupport: positive ? 0.9 : -0.9,
+        comboVerification: positive ? 0.8 : -0.7,
+        simulationImprovement: positive ? 0.7 : -0.6,
+        communitySupport: positive ? 0.2 : 0.4,
+      },
+    });
+  }
+  return examples;
+}
+
+test('adaptive ranker learns from labelled outcomes but requires holdout evaluation', () => {
+  const model = trainAdaptiveRankerV15(syntheticExamples());
+  assert.equal(model.modelType, 'transparent-logistic-ranker');
+  assert.equal(model.holdoutExamples, 10);
+  assert.notEqual(model.holdoutAccuracy, null);
+  assert.ok((model.holdoutAccuracy ?? 0) >= 0.9);
+  assert.equal(model.promotable, true);
+  assert.ok(model.weights.tournamentSupport > 0);
+  assert.ok(model.weights.comboVerification > 0);
+});
+
+test('small datasets cannot silently promote learned weights', () => {
+  const model = trainAdaptiveRankerV15(syntheticExamples().slice(0, 10));
+  assert.equal(model.promotable, false);
+  assert.ok(model.promotionReasons.length > 0);
+});
+
+test('learned score can never override Commander legality or printing policy', () => {
+  const model = trainAdaptiveRankerV15(syntheticExamples());
+  const blocked = scoreCandidateWithLearningV15(
+    {
+      tournamentSupport: 1,
+      comboVerification: 1,
+      simulationImprovement: 1,
+    },
+    model,
+    {
+      commanderLegal: false,
+      fullyResolved: true,
+      exactCardCount: true,
+      printingPolicyCompliant: false,
+    },
+  );
+
+  assert.equal(blocked.eligible, false);
+  assert.equal(blocked.probability, null);
+  assert.deepEqual(blocked.failedGuardrails.sort(), ['commanderLegal', 'printingPolicyCompliant']);
+});
