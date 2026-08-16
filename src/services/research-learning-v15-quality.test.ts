@@ -13,7 +13,11 @@ const cleanPromotionCandidate = {
   leakageChecksPassed: true,
   transparentBaselineAccuracy: 0.76,
   candidateModelAccuracy: 0.82,
+  transparentBaselineLogLoss: 0.52,
+  candidateModelLogLoss: 0.44,
   temporalHoldoutExamples: 500,
+  temporalHoldoutPositiveExamples: 260,
+  temporalHoldoutNegativeExamples: 240,
 } as const;
 
 test('high conflicting-outcome rate blocks deep-learning experimentation and promotion', () => {
