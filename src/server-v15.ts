@@ -254,7 +254,7 @@ export function registerMtgToolsV15(server: McpServer): McpServer {
     'evaluate_deep_learning_readiness_v15',
     {
       title: 'Evaluate whether MTG data is ready for neural deep learning',
-      description: 'Refuse premature deep-learning claims. Checks labelled sample size, class balance, temporal coverage, independent evidence groups, evidence-class diversity, duplicate rate, leakage checks, temporal holdout size, and whether a neural candidate materially beats the transparent baseline.',
+      description: 'Refuse premature deep-learning claims. Checks labelled sample size, class balance, temporal coverage, independent evidence groups, evidence-class diversity, duplicate/conflict/malformed rates, leakage checks, temporal holdout size, and whether a neural candidate materially beats the transparent baseline.',
       inputSchema: z.object({
         labelledExamples: z.number().int().min(0).max(100_000_000),
         positiveExamples: z.number().int().min(0).max(100_000_000),
@@ -263,6 +263,8 @@ export function registerMtgToolsV15(server: McpServer): McpServer {
         independentEvidenceGroups: z.number().int().min(0).max(1_000_000),
         evidenceClassCount: z.number().int().min(0).max(20),
         duplicateRate: z.number().min(0).max(1),
+        conflictRate: z.number().min(0).max(1).optional().default(0),
+        malformedRate: z.number().min(0).max(1).optional().default(0),
         leakageChecksPassed: z.boolean(),
         transparentBaselineAccuracy: z.number().min(0).max(1).nullable(),
         candidateModelAccuracy: z.number().min(0).max(1).nullable(),
