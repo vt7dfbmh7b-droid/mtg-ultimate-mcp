@@ -77,7 +77,7 @@ async function main(): Promise<void> {
   );
 
   const bracket = await estimateCommanderBracket(finalDecklist);
-  const combos = await findDeckCombos(finalDecklist, 25);
+  const combos = await findDeckCombos(finalDecklist, 50);
   const refinement = asRecord(result.refinement);
   const initialDraft = asRecord(result.initialDraft);
 
@@ -93,6 +93,7 @@ async function main(): Promise<void> {
   console.log(`REFINEMENT STOP REASON: ${String(refinement.stopReason ?? 'not reported')}`);
   console.log(`FLAGGED CARDS: ${JSON.stringify(bracket.flaggedCards ?? [], null, 2)}`);
   console.log(`COMBO SUMMARY: ${JSON.stringify(asRecord(combos).counts ?? {}, null, 2)}`);
+  console.log(`NEAR COMBOS: ${JSON.stringify(asRecord(combos).almostIncluded ?? [], null, 2)}`);
   console.log(`STRATEGICALLY RELEVANT COMBOS: ${JSON.stringify(bracket.strategicallyRelevantCombos ?? [], null, 2)}`);
 
   console.log('\nFINAL DECKLIST');
