@@ -30,6 +30,13 @@ interface ExactLandCandidateV14 {
   reasons: string[];
 }
 
+interface ExistingLandV14 {
+  entry: DeckEntry;
+  card: ScryfallCard;
+  score: number;
+  reasons: string[];
+}
+
 function record(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
 }
@@ -83,7 +90,7 @@ function isBasic(card: ScryfallCard): boolean {
   return card.type_line.toLocaleLowerCase().includes('basic land');
 }
 
-function identityLegal(card: ScryfallCard, identity: string[]): boolean {
+function legalIdentity(card: ScryfallCard, identity: string[]): boolean {
   const allowed = new Set(identity);
   return card.legalities.commander === 'legal' && card.color_identity.every((color) => allowed.has(color));
 }
@@ -92,169 +99,165 @@ function oracle(card: ScryfallCard): string {
   return (card.oracle_text ?? '').toLocaleLowerCase();
 }
 
-function producedColors(card: ScryfallCard, identity: string[]): number {
+function colorCoverage(card: ScryfallCard, identity: string[]): number {
   const produced = new Set((card.produced_mana ?? []).map((value) => value.toUpperCase()));
   return identity.filter((color) => produced.has(color)).length;
 }
 
-function unconditionalTapped(card: ScryfallCard): boolean {
+function unconditionallyTapped(card: ScryfallCard): boolean {
   const value = oracle(card);
-  return /(?:this land|~|[a-z' -]+) enters (?:the battlefield )?tapped\./.test(value)
-    || /^.*enters tapped\./m.test(value);
+  if (!/enters (?:the battlefield )?tapped/.test(value)) return false;
+  return !/enters (?:the battlefield )?tapped (?:unless|if)/.test(value);
 }
 
-function conditionalTapped(card: ScryfallCard): boolean {
-  const value = oracle(card);
-  return /enters (?:the battlefield )?tapped unless|enters tapped unless|enters tapped if/.test(value);
+function conditionallyTapped(card: ScryfallCard): boolean {
+  return /enters (?:the battlefield )?tapped (?:unless|if)/.test(oracle(card));
 }
 
-function landQuality(card: ScryfallCard, identity: string[]): { score: number; reasons: string[] } {
-  const colors = producedColors(card, identity);
+function scoreLand(card: ScryfallCard, identity: string[]): { score: number; reasons: string[] } {
+  const colors = colorCoverage(card, identity);
   const value = oracle(card);
   const reasons: string[] = [];
   let score = colors * 20;
 
-  if (colors >= Math.min(5, identity.length) && identity.length >= 4) {
-    score += 45;
+  if (identity.length >= 4 && colors >= Math.min(5, identity.length)) {
+    score += 50;
     reasons.push('five-color coverage');
   } else if (colors >= 2) {
     reasons.push(`${colors}-color coverage`);
   }
-
   if (/add one mana of any color|add one mana of any type/.test(value)) {
-    score += 38;
-    reasons.push('any-color mana');
+    score += 35;
+    reasons.push('any-color fixing');
   }
   if (/pay 1 life/.test(value)) {
     score += 8;
-    reasons.push('untapped pain-land style fixing');
+    reasons.push('efficient pain-style fixing');
   }
   if (/search your library/.test(value)) {
     score += 18;
-    reasons.push('land-search/fetch utility');
+    reasons.push('fetch/search utility');
   }
-  if (/add \{c\}/.test(value) && colors === 0) score -= 8;
-  if (unconditionalTapped(card)) {
-    score -= 65;
+  if (unconditionallyTapped(card)) {
+    score -= 70;
     reasons.push('unconditionally enters tapped');
-  } else if (conditionalTapped(card)) {
-    score -= 16;
+  } else if (conditionallyTapped(card)) {
+    score -= 18;
     reasons.push('conditionally enters tapped');
   } else {
-    score += 18;
+    score += 20;
     reasons.push('normally untapped');
   }
-  if (isBasic(card)) score += 3;
   if (card.edhrec_rank !== undefined) score += Math.max(0, 14 - Math.log10(card.edhrec_rank + 1) * 3);
   return { score, reasons };
 }
 
-function currentLandRows(parsed: ParsedDeck, cards: ScryfallCard[], identity: string[], protectedNames: Set<string>) {
-  return parsed.main
-    .map((entry) => ({ entry, card: resolveEntryCard(entry, cards) }))
-    .filter((item): item is { entry: DeckEntry; card: ScryfallCard } => Boolean(item.card) && isLand(item.card))
-    .map(({ entry, card }) => ({
-      entry,
-      card,
-      quality: landQuality(card, identity),
-      protected: protectedNames.has(normalize(card.name)),
-    }));
+function existingNonbasicLands(
+  parsed: ParsedDeck,
+  cards: ScryfallCard[],
+  identity: string[],
+  protectedNames: Set<string>,
+): ExistingLandV14[] {
+  const rows: ExistingLandV14[] = [];
+  for (const entry of parsed.main) {
+    const card = resolveEntryCard(entry, cards);
+    if (!card || !isLand(card) || isBasic(card) || entry.quantity !== 1 || protectedNames.has(normalize(card.name))) continue;
+    const quality = scoreLand(card, identity);
+    rows.push({ entry, card, score: quality.score, reasons: quality.reasons });
+  }
+  return rows.sort((a, b) => a.score - b.score || a.card.name.localeCompare(b.card.name));
 }
 
-async function candidateLands(
+async function betterLandCandidates(
   parsed: ParsedDeck,
   identity: string[],
   policy: ResolvedPrintingPolicyV08,
   options: CedhManaBaseOptionsV14,
 ): Promise<ExactLandCandidateV14[]> {
   const existing = new Set([...parsed.commanders, ...parsed.main].map((entry) => normalize(entry.name)));
-  const query = ['f:commander', 't:land', '-t:basic', identity.length ? `id<=${identity.join('').toLocaleLowerCase()}` : 'id:c', policy.searchClause]
-    .filter(Boolean)
-    .join(' ');
+  const query = [
+    'f:commander',
+    't:land',
+    '-t:basic',
+    identity.length > 0 ? `id<=${identity.join('').toLocaleLowerCase()}` : 'id:c',
+    policy.searchClause,
+  ].filter(Boolean).join(' ');
+
   let results: ScryfallCard[] = [];
   try {
-    results = await searchCards(query, 80);
+    results = await searchCards(query, 100);
   } catch {
     return [];
   }
 
   const ranked = results
-    .filter((card) => isLand(card) && identityLegal(card, identity) && !existing.has(normalize(card.name)))
-    .map((card) => ({ card, quality: landQuality(card, identity) }))
-    .filter(({ quality }) => quality.score > 20)
+    .filter((card) => isLand(card) && !isBasic(card) && legalIdentity(card, identity) && !existing.has(normalize(card.name)))
+    .map((card) => ({ card, quality: scoreLand(card, identity) }))
     .sort((a, b) => b.quality.score - a.quality.score || a.card.name.localeCompare(b.card.name));
 
   const output: ExactLandCandidateV14[] = [];
   for (const item of ranked) {
-    if (output.length >= 16) break;
+    if (output.length >= 20) break;
     const printing = await selectEligiblePrintingV08(item.card, policy, options.maxUsdPerCard);
     if (!printing) continue;
-    const exactQuality = landQuality(printing.card, identity);
+    const exact = scoreLand(printing.card, identity);
     output.push({
       card: printing.card,
       finish: printing.finish,
       priceUsd: printing.priceUsd,
-      score: exactQuality.score,
-      reasons: exactQuality.reasons,
+      score: exact.score,
+      reasons: exact.reasons,
     });
   }
   return output;
 }
 
-function applyLandSwaps(
+function applySwaps(
   parsed: ParsedDeck,
-  swaps: Array<{ out: DeckEntry; in: ExactLandCandidateV14 }>,
-): ParsedDeck | null {
-  if (swaps.length === 0) return null;
+  cards: ScryfallCard[],
+  swaps: Array<{ out: ExistingLandV14; in: ExactLandCandidateV14 }>,
+): { parsed: ParsedDeck; cards: ScryfallCard[] } | null {
   const main = parsed.main.map((entry) => ({ ...entry }));
+  const nextCards = [...cards];
+
   for (const swap of swaps) {
-    const index = main.findIndex((entry) => normalize(entry.name) === normalize(swap.out.name) && entry.quantity === swap.out.quantity);
-    if (index < 0) return null;
-    if (swap.out.quantity > 1) {
-      main[index] = { ...swap.out, quantity: swap.out.quantity - 1 };
-      main.push({
-        name: swap.in.card.name,
-        quantity: 1,
-        set: swap.in.card.set.toUpperCase(),
-        collectorNumber: swap.in.card.collector_number,
-        ...(swap.in.finish ? { finish: swap.in.finish } : {}),
-      });
-    } else {
-      main[index] = {
-        name: swap.in.card.name,
-        quantity: 1,
-        set: swap.in.card.set.toUpperCase(),
-        collectorNumber: swap.in.card.collector_number,
-        ...(swap.in.finish ? { finish: swap.in.finish } : {}),
-      };
-    }
+    const entryIndex = main.findIndex((entry) => normalize(entry.name) === normalize(swap.out.entry.name) && entry.quantity === 1);
+    const cardIndex = nextCards.findIndex((card) => normalize(card.name) === normalize(swap.out.card.name));
+    if (entryIndex < 0 || cardIndex < 0) return null;
+    main[entryIndex] = {
+      name: swap.in.card.name,
+      quantity: 1,
+      set: swap.in.card.set.toUpperCase(),
+      collectorNumber: swap.in.card.collector_number,
+      ...(swap.in.finish ? { finish: swap.in.finish } : {}),
+    };
+    nextCards.splice(cardIndex, 1, swap.in.card);
   }
+
   const totalMain = main.reduce((sum, entry) => sum + entry.quantity, 0);
   return {
-    main,
-    commanders: parsed.commanders.map((entry) => ({ ...entry })),
-    totalMain,
-    totalCommanders: parsed.totalCommanders,
-    totalCards: totalMain + parsed.totalCommanders,
+    parsed: {
+      main,
+      commanders: parsed.commanders.map((entry) => ({ ...entry })),
+      totalMain,
+      totalCommanders: parsed.totalCommanders,
+      totalCards: totalMain + parsed.totalCommanders,
+    },
+    cards: nextCards,
   };
 }
 
-function applyResolvedLandSwaps(
-  cards: ScryfallCard[],
-  swaps: Array<{ out: DeckEntry; in: ExactLandCandidateV14 }>,
-): ScryfallCard[] | null {
-  const next = [...cards];
-  for (const swap of swaps) {
-    const index = next.findIndex((card) => normalize(card.name) === normalize(swap.out.name));
-    if (index < 0) return null;
-    next.splice(index, 1);
-    next.push(swap.in.card);
-  }
-  return next;
+function comboCount(value: Record<string, unknown>): number {
+  return Number(record(value.counts).included ?? 0);
 }
 
-function comboCount(combos: Record<string, unknown>): number {
-  return Number(record(combos.counts).included ?? 0);
+function landCount(parsed: ParsedDeck, cards: ScryfallCard[]): number {
+  let total = 0;
+  for (const entry of parsed.main) {
+    const card = resolveEntryCard(entry, cards);
+    if (card && isLand(card)) total += entry.quantity;
+  }
+  return total;
 }
 
 export async function optimizeCedhManaBaseV14(
@@ -280,42 +283,24 @@ export async function optimizeCedhManaBaseV14(
 
   const identity = commanderIdentity(resolved.parsed, resolved.cards);
   const protectedNames = new Set((options.protectedLands ?? []).map(normalize));
-  const current = currentLandRows(resolved.parsed, resolved.cards, identity, protectedNames);
-  const beforeLandCount = current.reduce((sum, row) => sum + row.entry.quantity, 0);
-  const candidates = await candidateLands(resolved.parsed, identity, policy, options);
-  const cutUnits: Array<{ entry: DeckEntry; score: number; reasons: string[] }> = [];
-  for (const row of current) {
-    if (row.protected) continue;
-    const copies = isBasic(row.card) ? Math.min(row.entry.quantity, 2) : row.entry.quantity;
-    for (let index = 0; index < copies; index += 1) {
-      cutUnits.push({ entry: { ...row.entry, quantity: 1 }, score: row.quality.score, reasons: row.quality.reasons });
-    }
-  }
-  cutUnits.sort((a, b) => a.score - b.score || a.entry.name.localeCompare(b.entry.name));
+  const cuts = existingNonbasicLands(resolved.parsed, resolved.cards, identity, protectedNames);
+  const candidates = await betterLandCandidates(resolved.parsed, identity, policy, options);
+  const beforeLandCount = landCount(resolved.parsed, resolved.cards);
+  const selected: Array<{ out: ExistingLandV14; in: ExactLandCandidateV14; improvement: number }> = [];
+  const usedCandidateNames = new Set<string>();
 
-  const swaps: Array<{ out: DeckEntry; in: ExactLandCandidateV14; improvement: number; outScore: number; outReasons: string[] }> = [];
-  const usedCandidates = new Set<string>();
-  const usedOutNames = new Map<string, number>();
-  for (const cut of cutUnits) {
-    if (swaps.length >= maxSwaps) break;
-    const candidate = candidates.find((item) => !usedCandidates.has(normalize(item.card.name)) && item.score - cut.score >= minImprovement);
-    if (!candidate) continue;
-    const original = resolved.parsed.main.find((entry) => normalize(entry.name) === normalize(cut.entry.name));
-    if (!original) continue;
-    const used = usedOutNames.get(normalize(original.name)) ?? 0;
-    if (used >= original.quantity) continue;
-    swaps.push({
-      out: { ...original },
-      in: candidate,
-      improvement: Number((candidate.score - cut.score).toFixed(2)),
-      outScore: cut.score,
-      outReasons: cut.reasons,
+  for (const cut of cuts) {
+    if (selected.length >= maxSwaps) break;
+    const candidate = candidates.find((item) => {
+      if (usedCandidateNames.has(normalize(item.card.name))) return false;
+      return item.score - cut.score >= minImprovement;
     });
-    usedCandidates.add(normalize(candidate.card.name));
-    usedOutNames.set(normalize(original.name), used + 1);
+    if (!candidate) continue;
+    selected.push({ out: cut, in: candidate, improvement: Number((candidate.score - cut.score).toFixed(2)) });
+    usedCandidateNames.add(normalize(candidate.card.name));
   }
 
-  if (swaps.length === 0) {
+  if (selected.length === 0) {
     return {
       status: 'no-supported-mana-base-improvement',
       finalDecklist: renderDeck(resolved.parsed),
@@ -325,28 +310,16 @@ export async function optimizeCedhManaBaseV14(
     };
   }
 
-  // Apply one copy at a time so basics with quantity >1 remain accurate.
-  let nextParsed = resolved.parsed;
-  let nextCards = resolved.cards;
-  const applied: typeof swaps = [];
-  for (const swap of swaps) {
-    const currentEntry = nextParsed.main.find((entry) => normalize(entry.name) === normalize(swap.out.name));
-    if (!currentEntry) continue;
-    const oneSwap = [{ out: { ...currentEntry }, in: swap.in }];
-    const parsedAfter = applyLandSwaps(nextParsed, oneSwap);
-    const cardsAfter = applyResolvedLandSwaps(nextCards, oneSwap);
-    if (!parsedAfter || !cardsAfter) continue;
-    nextParsed = parsedAfter;
-    nextCards = cardsAfter;
-    applied.push(swap);
-  }
-
-  const nextRules = validateCommanderDeck(nextParsed, nextCards);
-  const afterLandCount = nextParsed.main
-    .map((entry) => ({ entry, card: resolveEntryCard(entry, nextCards) }))
-    .filter((item) => item.card && isLand(item.card))
-    .reduce((sum, item) => sum + item.entry.quantity, 0);
-  if (!nextRules.isLegal || nextParsed.totalCards !== 100 || afterLandCount !== beforeLandCount || nextCards.some((card) => !printingMatchesPolicyV08(card, policy))) {
+  const applied = applySwaps(resolved.parsed, resolved.cards, selected);
+  if (!applied) return { status: 'package-application-failed', finalDecklist: renderDeck(resolved.parsed) };
+  const nextRules = validateCommanderDeck(applied.parsed, applied.cards);
+  const afterLandCount = landCount(applied.parsed, applied.cards);
+  if (
+    !nextRules.isLegal
+    || applied.parsed.totalCards !== 100
+    || afterLandCount !== beforeLandCount
+    || applied.cards.some((card) => !printingMatchesPolicyV08(card, policy))
+  ) {
     return {
       status: 'candidate-mana-base-failed-validation',
       finalDecklist: renderDeck(resolved.parsed),
@@ -356,14 +329,16 @@ export async function optimizeCedhManaBaseV14(
     };
   }
 
+  const beforeDecklist = renderDeck(resolved.parsed);
+  const afterDecklist = renderDeck(applied.parsed);
   const [beforeCombos, afterCombos] = await Promise.all([
-    findDeckCombos(renderDeck(resolved.parsed), 100),
-    findDeckCombos(renderDeck(nextParsed), 100),
+    findDeckCombos(beforeDecklist, 100),
+    findDeckCombos(afterDecklist, 100),
   ]);
   if (comboCount(afterCombos) < comboCount(beforeCombos)) {
     return {
       status: 'rejected-combo-regression',
-      finalDecklist: renderDeck(resolved.parsed),
+      finalDecklist: beforeDecklist,
       beforeComboCount: comboCount(beforeCombos),
       afterComboCount: comboCount(afterCombos),
     };
@@ -371,13 +346,13 @@ export async function optimizeCedhManaBaseV14(
 
   return {
     status: 'cedh-mana-base-refined',
-    swaps: applied.map((swap) => ({
-      out: swap.out.name,
+    swaps: selected.map((swap) => ({
+      out: swap.out.card.name,
       in: swap.in.card.name,
       improvementScore: swap.improvement,
-      outLandScore: Number(swap.outScore.toFixed(2)),
+      outLandScore: Number(swap.out.score.toFixed(2)),
       inLandScore: Number(swap.in.score.toFixed(2)),
-      outReasons: swap.outReasons,
+      outReasons: swap.out.reasons,
       inReasons: swap.in.reasons,
       printing: {
         set: swap.in.card.set.toUpperCase(),
@@ -390,9 +365,9 @@ export async function optimizeCedhManaBaseV14(
     afterLandCount,
     beforeComboCount: comboCount(beforeCombos),
     afterComboCount: comboCount(afterCombos),
-    finalDecklist: renderDeck(nextParsed),
+    finalDecklist: afterDecklist,
     finalCommanderRules: nextRules,
     printingPolicy: describePrintingPolicyV08(policy),
-    guidance: 'This lane is land-for-land only. It prioritizes color coverage and normally untapped access, penalizes unconditional tapped lands, preserves total land count, and may not destroy a previously verified combo.',
+    guidance: 'This lane is strictly nonbasic-land-for-nonbasic-land. It rewards color coverage and normally untapped access, heavily penalizes unconditional tapped lands, preserves total land count, and cannot remove a previously verified combo.',
   };
 }
