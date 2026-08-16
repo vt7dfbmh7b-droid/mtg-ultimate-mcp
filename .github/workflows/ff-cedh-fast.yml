@@ -8,7 +8,8 @@ on:
       - "scripts/e2e-ff-cedh-refine.ts"
       - "testdata/ff-najeela-powerful-baseline.txt"
       - ".github/workflows/ff-cedh-fast.yml"
-      - "src/services/cedh-combo-completion-v14.ts"
+      - "src/services/cedh-win-package-v14.ts"
+      - "src/services/cedh-seed-package-v14.ts"
       - "src/services/cedh-efficiency-v14.ts"
       - "src/services/cedh-manabase-v14.ts"
       - "src/services/cedh-workflow-v14.ts"
@@ -32,5 +33,5 @@ jobs:
           node-version: 22
       - run: npm install
       - run: npm run build
-      - name: Refine known FF Powerful baseline toward cEDH
+      - name: Verify FF cEDH path or truthful restricted ceiling
         run: npx tsx scripts/e2e-ff-cedh-refine.ts
