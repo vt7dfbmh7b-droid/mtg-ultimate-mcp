@@ -4,6 +4,7 @@ import type {
   ScryfallCard,
   ScryfallCollectionResult,
   ScryfallList,
+  ScryfallSet,
 } from '../types/scryfall.js';
 
 export interface CardIdentifierInput {
@@ -17,6 +18,7 @@ export interface CardSummary {
   oracleId?: string;
   name: string;
   printedName?: string;
+  flavorName?: string;
   manaCost: string;
   manaValue: number;
   typeLine: string;
@@ -37,6 +39,7 @@ export interface CardSummary {
   foil: boolean;
   nonfoil: boolean;
   promo: boolean;
+  promoTypes: string[];
   digital: boolean;
   fullArt: boolean;
   frame?: string;
@@ -53,6 +56,9 @@ export interface CardSummary {
 let rateLimitQueue: Promise<void> = Promise.resolve();
 let lastRequestAt = 0;
 const MIN_REQUEST_GAP_MS = 120;
+let setCache: ScryfallSet[] | null = null;
+let setCacheAt = 0;
+const SET_CACHE_TTL_MS = 6 * 60 * 60 * 1_000;
 
 async function scryfallRequest<T>(url: string, init: RequestInit = {}): Promise<T> {
   let releaseQueue: () => void = () => undefined;
@@ -149,6 +155,7 @@ export function summarizeCard(card: ScryfallCard): CardSummary {
     ...(card.oracle_id ? { oracleId: card.oracle_id } : {}),
     name: card.name,
     ...(card.printed_name ? { printedName: card.printed_name } : {}),
+    ...(card.flavor_name ? { flavorName: card.flavor_name } : {}),
     manaCost: getCardManaCost(card),
     manaValue: card.cmc,
     typeLine: card.type_line,
@@ -169,6 +176,7 @@ export function summarizeCard(card: ScryfallCard): CardSummary {
     foil: Boolean(card.foil),
     nonfoil: Boolean(card.nonfoil),
     promo: Boolean(card.promo),
+    promoTypes: card.promo_types ?? [],
     digital: Boolean(card.digital),
     fullArt: Boolean(card.full_art),
     ...(card.frame ? { frame: card.frame } : {}),
@@ -201,6 +209,15 @@ export async function searchCards(query: string, limit = 10): Promise<ScryfallCa
   const url = `${config.scryfallApiBase}/cards/search?q=${encodeURIComponent(query.trim())}&unique=cards&order=edhrec`;
   const result = await scryfallRequest<ScryfallList<ScryfallCard>>(url);
   return result.data.slice(0, safeLimit);
+}
+
+export async function getScryfallSets(forceRefresh = false): Promise<ScryfallSet[]> {
+  const now = Date.now();
+  if (!forceRefresh && setCache && now - setCacheAt < SET_CACHE_TTL_MS) return setCache;
+  const result = await scryfallRequest<ScryfallList<ScryfallSet>>(`${config.scryfallApiBase}/sets`);
+  setCache = result.data;
+  setCacheAt = now;
+  return setCache;
 }
 
 export async function getCardPrintings(name: string, limit = 100): Promise<ScryfallCard[]> {
