@@ -18,9 +18,17 @@ import {
 
 export interface TemporalModelMetricsV15 {
   examples: number;
+  positiveExamples: number;
+  negativeExamples: number;
   correct: number;
+  truePositive: number;
+  trueNegative: number;
+  falsePositive: number;
+  falseNegative: number;
   accuracy: number | null;
+  balancedAccuracy: number | null;
   logLoss: number | null;
+  brierScore: number | null;
 }
 
 export interface NeuralTemporalEvaluationV15 {
@@ -28,6 +36,10 @@ export interface NeuralTemporalEvaluationV15 {
   split: {
     trainingRecords: number;
     holdoutRecords: number;
+    trainingPositiveExamples: number;
+    trainingNegativeExamples: number;
+    holdoutPositiveExamples: number;
+    holdoutNegativeExamples: number;
     cutoff: string | null;
     leakageChecksPassed: boolean;
     overlappingLeakageGroups: string[];
@@ -37,6 +49,9 @@ export interface NeuralTemporalEvaluationV15 {
   neuralTemporalMetrics: TemporalModelMetricsV15;
   transparentTemporalMetrics: TemporalModelMetricsV15;
   temporalAccuracyImprovement: number | null;
+  temporalBalancedAccuracyImprovement: number | null;
+  temporalLogLossImprovement: number | null;
+  evaluationWarnings: string[];
   readiness: ReturnType<typeof evaluateDeepLearningReadinessV15>;
 }
 
@@ -64,26 +79,82 @@ function allHardChecksPass() {
 }
 
 function emptyMetrics(): TemporalModelMetricsV15 {
-  return { examples: 0, correct: 0, accuracy: null, logLoss: null };
+  return {
+    examples: 0,
+    positiveExamples: 0,
+    negativeExamples: 0,
+    correct: 0,
+    truePositive: 0,
+    trueNegative: 0,
+    falsePositive: 0,
+    falseNegative: 0,
+    accuracy: null,
+    balancedAccuracy: null,
+    logLoss: null,
+    brierScore: null,
+  };
+}
+
+function finalizeMetrics(
+  holdout: LearningExampleV15[],
+  probabilities: number[],
+): TemporalModelMetricsV15 {
+  if (holdout.length === 0) return emptyMetrics();
+  let truePositive = 0;
+  let trueNegative = 0;
+  let falsePositive = 0;
+  let falseNegative = 0;
+  let loss = 0;
+  let brier = 0;
+  let positiveExamples = 0;
+
+  for (let index = 0; index < holdout.length; index += 1) {
+    const example = holdout[index];
+    const probability = probabilities[index];
+    if (!example || probability === undefined) throw new Error('Temporal metrics received mismatched examples and probabilities.');
+    const prediction = probability >= 0.5 ? 1 : 0;
+    if (example.label === 1) positiveExamples += 1;
+    if (prediction === 1 && example.label === 1) truePositive += 1;
+    else if (prediction === 0 && example.label === 0) trueNegative += 1;
+    else if (prediction === 1 && example.label === 0) falsePositive += 1;
+    else falseNegative += 1;
+    loss += binaryLogLoss(example.label, probability);
+    brier += (probability - example.label) ** 2;
+  }
+
+  const negativeExamples = holdout.length - positiveExamples;
+  const correct = truePositive + trueNegative;
+  const positiveRecall = positiveExamples > 0 ? truePositive / positiveExamples : null;
+  const negativeRecall = negativeExamples > 0 ? trueNegative / negativeExamples : null;
+  const balancedAccuracy = positiveRecall === null || negativeRecall === null
+    ? null
+    : (positiveRecall + negativeRecall) / 2;
+
+  return {
+    examples: holdout.length,
+    positiveExamples,
+    negativeExamples,
+    correct,
+    truePositive,
+    trueNegative,
+    falsePositive,
+    falseNegative,
+    accuracy: round(correct / holdout.length),
+    balancedAccuracy: balancedAccuracy === null ? null : round(balancedAccuracy),
+    logLoss: round(loss / holdout.length),
+    brierScore: round(brier / holdout.length),
+  };
 }
 
 function evaluateTransparent(model: AdaptiveRankerV15, holdout: LearningExampleV15[]): TemporalModelMetricsV15 {
   if (holdout.length === 0) return emptyMetrics();
-  let correct = 0;
-  let loss = 0;
+  const probabilities: number[] = [];
   for (const example of holdout) {
     const scored = scoreCandidateWithLearningV15(example.features, model, allHardChecksPass());
     if (!scored.eligible || scored.probability === null) throw new Error('Transparent temporal evaluation unexpectedly failed hard gates.');
-    const prediction = scored.probability >= 0.5 ? 1 : 0;
-    if (prediction === example.label) correct += 1;
-    loss += binaryLogLoss(example.label, scored.probability);
+    probabilities.push(scored.probability);
   }
-  return {
-    examples: holdout.length,
-    correct,
-    accuracy: round(correct / holdout.length),
-    logLoss: round(loss / holdout.length),
-  };
+  return finalizeMetrics(holdout, probabilities);
 }
 
 function evaluateNeural(
@@ -91,21 +162,22 @@ function evaluateNeural(
   holdout: LearningExampleV15[],
 ): TemporalModelMetricsV15 {
   if (holdout.length === 0) return emptyMetrics();
-  let correct = 0;
-  let loss = 0;
+  const probabilities: number[] = [];
   for (const example of holdout) {
     const scored = scoreCandidateWithNeuralV15(example.features, model, allHardChecksPass());
     if (!scored.eligible || scored.probability === null) throw new Error('Neural temporal evaluation unexpectedly failed hard gates.');
-    const prediction = scored.probability >= 0.5 ? 1 : 0;
-    if (prediction === example.label) correct += 1;
-    loss += binaryLogLoss(example.label, scored.probability);
+    probabilities.push(scored.probability);
   }
-  return {
-    examples: holdout.length,
-    correct,
-    accuracy: round(correct / holdout.length),
-    logLoss: round(loss / holdout.length),
-  };
+  return finalizeMetrics(holdout, probabilities);
+}
+
+function countLabels(examples: LearningExampleV15[]): { positive: number; negative: number } {
+  const positive = examples.filter((example) => example.label === 1).length;
+  return { positive, negative: examples.length - positive };
+}
+
+function nullableDifference(left: number | null, right: number | null): number | null {
+  return left === null || right === null ? null : round(left - right);
 }
 
 export function evaluateNeuralOnTemporalCorpusV15(
@@ -117,6 +189,16 @@ export function evaluateNeuralOnTemporalCorpusV15(
   const split = temporalSplitLearningCorpusV15(records, holdoutFraction);
   const trainingExamples = split.trainingExamples;
   const holdoutExamples = split.holdoutExamples;
+  const trainingLabels = countLabels(trainingExamples);
+  const holdoutLabels = countLabels(holdoutExamples);
+  const evaluationWarnings: string[] = [];
+
+  if (trainingExamples.length < 10) evaluationWarnings.push('Too few leakage-safe training examples to evaluate either model.');
+  if (trainingLabels.positive === 0 || trainingLabels.negative === 0) evaluationWarnings.push('Leakage-safe training data contains only one outcome class.');
+  if (holdoutExamples.length === 0) evaluationWarnings.push('No leakage-safe future holdout examples are available.');
+  if (holdoutExamples.length > 0 && (holdoutLabels.positive === 0 || holdoutLabels.negative === 0)) {
+    evaluationWarnings.push('Future temporal holdout contains only one outcome class; ordinary accuracy is not sufficient promotion evidence.');
+  }
 
   let neuralModel: ReturnType<typeof trainNeuralRankerV15> | null = null;
   let transparentModel: AdaptiveRankerV15 | null = null;
@@ -137,9 +219,15 @@ export function evaluateNeuralOnTemporalCorpusV15(
     transparentTemporalMetrics = evaluateTransparent(transparentModel, holdoutExamples);
   }
 
-  const temporalAccuracyImprovement = neuralTemporalMetrics.accuracy === null || transparentTemporalMetrics.accuracy === null
+  const temporalAccuracyImprovement = nullableDifference(neuralTemporalMetrics.accuracy, transparentTemporalMetrics.accuracy);
+  const temporalBalancedAccuracyImprovement = nullableDifference(
+    neuralTemporalMetrics.balancedAccuracy,
+    transparentTemporalMetrics.balancedAccuracy,
+  );
+  const temporalLogLossImprovement = neuralTemporalMetrics.logLoss === null || transparentTemporalMetrics.logLoss === null
     ? null
-    : round(neuralTemporalMetrics.accuracy - transparentTemporalMetrics.accuracy);
+    : round(transparentTemporalMetrics.logLoss - neuralTemporalMetrics.logLoss);
+
   const readiness = evaluateDeepLearningReadinessV15({
     labelledExamples: corpusAudit.uniqueRecords,
     positiveExamples: corpusAudit.positiveExamples,
@@ -153,7 +241,11 @@ export function evaluateNeuralOnTemporalCorpusV15(
     leakageChecksPassed: split.leakageChecksPassed,
     transparentBaselineAccuracy: transparentTemporalMetrics.accuracy,
     candidateModelAccuracy: neuralTemporalMetrics.accuracy,
+    transparentBaselineLogLoss: transparentTemporalMetrics.logLoss,
+    candidateModelLogLoss: neuralTemporalMetrics.logLoss,
     temporalHoldoutExamples: holdoutExamples.length,
+    temporalHoldoutPositiveExamples: holdoutLabels.positive,
+    temporalHoldoutNegativeExamples: holdoutLabels.negative,
   });
 
   return {
@@ -161,6 +253,10 @@ export function evaluateNeuralOnTemporalCorpusV15(
     split: {
       trainingRecords: split.training.length,
       holdoutRecords: split.holdout.length,
+      trainingPositiveExamples: trainingLabels.positive,
+      trainingNegativeExamples: trainingLabels.negative,
+      holdoutPositiveExamples: holdoutLabels.positive,
+      holdoutNegativeExamples: holdoutLabels.negative,
       cutoff: split.cutoff,
       leakageChecksPassed: split.leakageChecksPassed,
       overlappingLeakageGroups: split.overlappingLeakageGroups,
@@ -170,6 +266,9 @@ export function evaluateNeuralOnTemporalCorpusV15(
     neuralTemporalMetrics,
     transparentTemporalMetrics,
     temporalAccuracyImprovement,
+    temporalBalancedAccuracyImprovement,
+    temporalLogLossImprovement,
+    evaluationWarnings,
     readiness,
   };
 }
