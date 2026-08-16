@@ -3,6 +3,7 @@ import * as z from 'zod/v4';
 import { createMtgServerV14 } from './server-v14.js';
 import {
   buildDeepResearchPlanV15,
+  evaluateDeepLearningReadinessV15,
   scoreCandidateWithLearningV15,
   synthesizeDeepResearchV15,
   trainAdaptiveRankerV15,
@@ -215,6 +216,35 @@ export function registerMtgToolsV15(server: McpServer): McpServer {
           minimumExamples,
           minimumHoldoutAccuracy,
         }));
+      } catch (error) {
+        return errorResult(error);
+      }
+    },
+  );
+
+  server.registerTool(
+    'evaluate_deep_learning_readiness_v15',
+    {
+      title: 'Evaluate whether MTG data is ready for neural deep learning',
+      description: 'Refuse premature deep-learning claims. Checks labelled sample size, class balance, temporal coverage, independent evidence groups, evidence-class diversity, duplicate rate, leakage checks, temporal holdout size, and whether a neural candidate materially beats the transparent baseline.',
+      inputSchema: z.object({
+        labelledExamples: z.number().int().min(0).max(100_000_000),
+        positiveExamples: z.number().int().min(0).max(100_000_000),
+        negativeExamples: z.number().int().min(0).max(100_000_000),
+        temporalCoverageDays: z.number().min(0).max(20_000),
+        independentEvidenceGroups: z.number().int().min(0).max(1_000_000),
+        evidenceClassCount: z.number().int().min(0).max(20),
+        duplicateRate: z.number().min(0).max(1),
+        leakageChecksPassed: z.boolean(),
+        transparentBaselineAccuracy: z.number().min(0).max(1).nullable(),
+        candidateModelAccuracy: z.number().min(0).max(1).nullable(),
+        temporalHoldoutExamples: z.number().int().min(0).max(100_000_000),
+      }),
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (input) => {
+      try {
+        return jsonResult(evaluateDeepLearningReadinessV15(input));
       } catch (error) {
         return errorResult(error);
       }
