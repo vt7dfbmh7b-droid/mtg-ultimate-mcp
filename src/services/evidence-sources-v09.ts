@@ -82,7 +82,6 @@ export function buildResearchLinksV09(commanders: string[], cards: string[] = []
   const combined = commanderKey(commanders);
   const first = commanders[0]?.trim() ?? '';
   const card = cards[0]?.trim() ?? '';
-  const q = encodeURIComponent(combined || card);
   return [
     { source: 'EDHREC', url: first ? `https://edhrec.com/commanders/${slug(first)}` : 'https://edhrec.com/', query: combined || card, useFor: 'community adoption, synergy and themes' },
     { source: 'EDHTop16', url: combined ? `https://edhtop16.com/commander/${encodeURIComponent(combined)}` : 'https://edhtop16.com/', query: combined, useFor: 'competitive entries, conversion and cEDH staples' },
@@ -90,9 +89,9 @@ export function buildResearchLinksV09(commanders: string[], cards: string[] = []
     { source: 'Moxfield', url: 'https://www.moxfield.com/decks/public/advanced', query: combined, useFor: 'maintained public lists and primers' },
     { source: 'MTGGoldfish', url: 'https://www.mtggoldfish.com/metagame/commander/full', query: combined || card, useFor: 'decklists and secondary price/meta cross-checks' },
     { source: 'AetherHub', url: 'https://aetherhub.com/Decks/', query: combined, useFor: 'additional public decklists and simulations' },
-    { source: 'Playgroup.gg', url: first ? `https://playgroup.gg/search?q=${encodeURIComponent(first)}` : 'https://playgroup.gg/', query: combined, useFor: 'recorded paper Commander outcomes' },
-    { source: 'DeckCheck', url: q ? `https://deckcheck.co/?q=${q}` : 'https://deckcheck.co/', query: combined || card, useFor: 'independent CRISPI/PowerTune-style analysis' },
-    { source: 'TCGfind NZ', url: card ? `https://tcgfind.co.nz/?q=${encodeURIComponent(card)}` : 'https://tcgfind.co.nz/', query: card || combined, useFor: 'NZ availability and local-price checking' },
+    { source: 'Playgroup.gg', url: 'https://playgroup.gg/', query: combined, useFor: 'recorded paper Commander outcomes; use the site search rather than assuming a private query route' },
+    { source: 'DeckCheck', url: 'https://deckcheck.co/', query: combined || card, useFor: 'independent CRISPI/PowerTune-style analysis; use the site UI for the supplied query/deck' },
+    { source: 'TCGfind NZ', url: 'https://tcgfind.co.nz/', query: card || combined, useFor: 'NZ availability and local-price checking; search the exact printing in the site UI' },
   ];
 }
 
