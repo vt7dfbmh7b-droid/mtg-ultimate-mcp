@@ -1,6 +1,6 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import { validateCommanderDeck } from './commander-rules.js';
-import { buildDeckMetrics, parseDecklist, resolveEntryCard, type DeckEntry, type ParsedDeck } from './deck.js';
+import { buildDeckMetrics, parseDecklist, type DeckEntry, type ParsedDeck } from './deck.js';
 import { getCardsByIdentifiers, getCardsByNames, inferCardRoles, searchCards, summarizeCard } from './scryfall.js';
 import { simulateDeckGameplayV06 } from './simulation-v06.js';
 import { suggestDeckUpgrades, type UpgradeOptions } from './upgrade.js';
@@ -279,7 +279,9 @@ export async function buildCommanderDeckDraftV07(
   }
 
   const basicsNeeded = Math.max(0, landsWanted - nonbasics.length);
-  const basicNames = colors.length > 0 ? colors.map((color) => BASIC_FOR_COLOR[color]).filter(Boolean) : ['Wastes'];
+  const basicNames: string[] = colors.length > 0
+    ? colors.map((color) => BASIC_FOR_COLOR[color]).filter((name): name is string => Boolean(name))
+    : ['Wastes'];
   const basicCards: ScryfallCard[] = [];
   for (const name of basicNames) {
     const printing = await basicPrinting(name, options);
@@ -383,8 +385,8 @@ function simulationSignals(result: Record<string, unknown>): Record<string, numb
 
 function signalDeltas(before: Record<string, number | null>, after: Record<string, number | null>): Record<string, number | null> {
   return Object.fromEntries(Object.keys(before).map((key) => {
-    const left = before[key];
-    const right = after[key];
+    const left = before[key] ?? null;
+    const right = after[key] ?? null;
     return [key, left === null || right === null ? null : Number((right - left).toFixed(2))];
   }));
 }
