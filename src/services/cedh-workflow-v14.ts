@@ -1,5 +1,9 @@
 import { buildCommanderDeckDraftV07, type DeckBuildOptionsV07 } from './deck-builder-v07.js';
-import { completeBestCedhComboV14, type CedhComboCompletionOptionsV14 } from './cedh-combo-completion-v14.js';
+import {
+  completeBestCedhWinPackageV14,
+  countWinningCombosV14,
+  type CedhWinPackageOptionsV14,
+} from './cedh-win-package-v14.js';
 import { refineCedhEfficiencyV14, type CedhEfficiencyOptionsV14 } from './cedh-efficiency-v14.js';
 import { optimizeCedhManaBaseV14, type CedhManaBaseOptionsV14 } from './cedh-manabase-v14.js';
 import { validateCommanderDeck } from './commander-rules.js';
@@ -12,7 +16,7 @@ import {
 import { getCardsByIdentifiers, getCardsByNames, type CardIdentifierInput } from './scryfall.js';
 import { estimateCommanderBracket, findDeckCombos } from './spellbook.js';
 
-export interface CedhWorkflowOptionsV14 extends CedhComboCompletionOptionsV14, CedhEfficiencyOptionsV14, CedhManaBaseOptionsV14 {
+export interface CedhWorkflowOptionsV14 extends CedhWinPackageOptionsV14, CedhEfficiencyOptionsV14, CedhManaBaseOptionsV14 {
   maxEfficiencySwaps?: number;
   maxManaBaseSwaps?: number;
   requireVerifiedCombo?: boolean;
@@ -101,12 +105,14 @@ export async function assessCedhReadinessV14(
   ]);
   const metrics = buildDeckMetrics(parsed, cards);
   const includedCombos = comboCount(combos);
+  const winningCombos = countWinningCombosV14(combos);
   const ruthlessCombos = ruthlessComboCount(combos);
   const strategicallyRelevantCombos = strategicComboCount(bracket);
   const bracketTag = typeof bracket.bracketTag === 'string' ? bracket.bracketTag : null;
 
   const constructionSignals = {
     verifiedCompleteCombo: includedCombos > 0,
+    verifiedWinningCombo: winningCombos > 0,
     ruthlessCombo: ruthlessCombos > 0,
     strategicallyRelevantCombo: strategicallyRelevantCombos > 0,
     spellbookRuthlessDeckTag: bracketTag === 'R',
@@ -116,7 +122,7 @@ export async function assessCedhReadinessV14(
     fastManaPresent: metrics.fastManaCount > 0,
   };
 
-  const strongCompetitiveConstructionSignals = constructionSignals.verifiedCompleteCombo
+  const strongCompetitiveConstructionSignals = constructionSignals.verifiedWinningCombo
     && (constructionSignals.ruthlessCombo || constructionSignals.strategicallyRelevantCombo || constructionSignals.spellbookRuthlessDeckTag)
     && constructionSignals.lowAverageNonlandManaValue
     && constructionSignals.freeInteractionPresent;
@@ -125,6 +131,7 @@ export async function assessCedhReadinessV14(
     status: strongCompetitiveConstructionSignals ? 'strong-competitive-construction-signals' : 'not-yet-strong-competitive-construction-signals',
     bracketTag,
     includedCombos,
+    winningCombos,
     ruthlessCombos,
     strategicallyRelevantCombos,
     metrics: {
@@ -142,7 +149,7 @@ export async function assessCedhReadinessV14(
       commanderRules: validation.commanderRules,
       printingPolicy: validation.printingPolicy,
     },
-    caveat: 'This is a construction-readiness assessment, not a declaration that the deck is officially Bracket 5. Bracket 5/cEDH also depends on competitive intent, metagame knowledge, pilot decisions, and tournament-minded play.',
+    caveat: 'This is a construction-readiness assessment, not a declaration that the deck is officially Bracket 5. A combo only satisfies the win-package gate when Commander Spellbook reports a win-oriented result; lifegain-only, value-only, and standalone infinite-mana engines do not qualify. Bracket 5/cEDH also depends on competitive intent, metagame knowledge, pilot decisions, and tournament-minded play.',
   };
 }
 
@@ -155,7 +162,7 @@ export async function refineCommanderForCedhV14(
     return { status: 'invalid-starting-deck', initialAssessment };
   }
 
-  const combo = await completeBestCedhComboV14(decklist, {
+  const winPackage = await completeBestCedhWinPackageV14(decklist, {
     ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
     ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
     ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
@@ -166,19 +173,19 @@ export async function refineCommanderForCedhV14(
     maxCandidatesToVerify: options.maxCandidatesToVerify ?? 8,
   });
 
-  const initialAlreadyHasCombo = Number(initialAssessment.includedCombos ?? 0) > 0;
-  if ((options.requireVerifiedCombo ?? true) && !initialAlreadyHasCombo && combo.status !== 'combo-completed') {
+  const initialAlreadyHasWinningCombo = Number(initialAssessment.winningCombos ?? 0) > 0;
+  if ((options.requireVerifiedCombo ?? true) && !initialAlreadyHasWinningCombo && winPackage.status !== 'winning-combo-completed') {
     return {
       status: 'stopped-no-verifiable-win-package',
       initialAssessment,
-      comboStage: combo,
+      winPackageStage: winPackage,
       finalDecklist: decklist,
-      guidance: 'Target Bracket 5 construction is not allowed to hide a missing win package behind generic role counts. No later efficiency tuning was applied because no complete policy-compliant combo could be verified.',
+      guidance: 'Target Bracket 5 construction is not allowed to hide a missing win condition behind generic role counts or non-winning infinite engines. No later efficiency tuning was applied because no complete policy-compliant win-oriented package could be verified.',
     };
   }
 
-  let currentDecklist = typeof combo.finalDecklist === 'string' ? combo.finalDecklist : decklist;
-  const completedPlan = record(combo.completedPlan);
+  let currentDecklist = typeof winPackage.finalDecklist === 'string' ? winPackage.finalDecklist : decklist;
+  const completedPlan = record(winPackage.completedPlan);
   const protectedComboCards = Array.isArray(completedPlan.comboCardNames)
     ? completedPlan.comboCardNames.filter((value): value is string => typeof value === 'string')
     : [];
@@ -207,7 +214,10 @@ export async function refineCommanderForCedhV14(
   if (typeof manaBase.finalDecklist === 'string') currentDecklist = manaBase.finalDecklist;
 
   const finalAssessment = await assessCedhReadinessV14(currentDecklist, options);
-  const comboWasPreserved = Number(finalAssessment.includedCombos ?? 0) >= Number(initialAlreadyHasCombo ? initialAssessment.includedCombos ?? 0 : combo.afterIncludedCombos ?? 1);
+  const baselineWinningCombos = initialAlreadyHasWinningCombo
+    ? Number(initialAssessment.winningCombos ?? 0)
+    : Number(winPackage.afterWinningCombos ?? 1);
+  const comboWasPreserved = Number(finalAssessment.winningCombos ?? 0) >= baselineWinningCombos;
 
   return {
     status: finalAssessment.status === 'strong-competitive-construction-signals' && comboWasPreserved
@@ -215,14 +225,14 @@ export async function refineCommanderForCedhV14(
       : 'cedh-oriented-refinement-incomplete',
     initialAssessment,
     stages: {
-      comboCompletion: combo,
+      winPackageCompletion: winPackage,
       strictEfficiency: efficiency,
       manaBase,
     },
     finalAssessment,
     comboWasPreserved,
     finalDecklist: currentDecklist,
-    guidance: 'The cEDH path is package-first: verify a real win package, protect it, improve only with strict high-value roles, optimize lands separately, then independently reassess. It does not translate targetBracket=5 into an automatic Bracket 5 claim.',
+    guidance: 'The cEDH path is win-package-first: verify a real winning package, protect it, improve only with strict high-value roles, optimize lands separately, then independently reassess. It does not translate targetBracket=5 into an automatic Bracket 5 claim.',
   };
 }
 
@@ -276,6 +286,6 @@ export async function buildCommanderForCedhV14(
     },
     refinement,
     finalDecklist: typeof refinement.finalDecklist === 'string' ? refinement.finalDecklist : draft.decklist,
-    caveat: 'A successful build means the deck passed the plugin’s competitive-construction gates under the requested restrictions. Official Bracket 5 still describes cEDH intent/metagame/tournament-minded play, not a static card-list certification.',
+    caveat: 'A successful build means the deck passed the plugin’s competitive-construction gates under the requested restrictions, including a verified win-oriented Commander Spellbook package. Official Bracket 5 still describes cEDH intent/metagame/tournament-minded play, not a static card-list certification.',
   };
 }
