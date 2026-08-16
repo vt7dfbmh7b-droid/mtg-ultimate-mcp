@@ -1,6 +1,13 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import { validateCommanderDeck } from './commander-rules.js';
 import { buildDeckMetrics, parseDecklist, type DeckEntry, type ParsedDeck } from './deck.js';
+import {
+  describePrintingPolicyV08,
+  printingMatchesPolicyV08,
+  resolvePrintingPolicyV08,
+  selectEligiblePrintingV08,
+  type ResolvedPrintingPolicyV08,
+} from './printing-policy-v08.js';
 import { getCardsByIdentifiers, getCardsByNames, inferCardRoles, searchCards, summarizeCard } from './scryfall.js';
 import { simulateDeckGameplayV06 } from './simulation-v06.js';
 import { suggestDeckUpgrades, type UpgradeOptions } from './upgrade.js';
@@ -10,6 +17,9 @@ export interface DeckBuildOptionsV07 {
   themeQuery?: string;
   maxUsdPerCard?: number;
   allowedSets?: string[];
+  printingFamily?: string;
+  includePromos?: boolean;
+  includeSpecialReleases?: boolean;
   excludedCards?: string[];
   mustInclude?: string[];
   landCount?: number;
@@ -62,15 +72,6 @@ function identity(commanders: ScryfallCard[]): string[] {
 
 function identityQuery(colors: string[]): string {
   return colors.length === 0 ? 'id:c' : `id<=${colors.join('').toLowerCase()}`;
-}
-
-function setClause(sets: string[] | undefined): string {
-  const clean = [...new Set((sets ?? []).map((set) => set.trim().toLowerCase()).filter(Boolean))];
-  return clean.length > 0 ? `(${clean.map((set) => `set:${set}`).join(' OR ')})` : '';
-}
-
-function priceClause(maxUsdPerCard: number | undefined): string {
-  return maxUsdPerCard === undefined ? '' : `usd<=${Number(maxUsdPerCard.toFixed(2))}`;
 }
 
 function legalIdentity(card: ScryfallCard, colors: string[]): boolean {
@@ -153,9 +154,38 @@ function printingLine(quantity: number, card: ScryfallCard): string {
   return `${quantity} ${card.name} (${card.set.toUpperCase()}) ${card.collector_number}`;
 }
 
+function hasPrintingRestriction(policy: ResolvedPrintingPolicyV08): boolean {
+  return Boolean(policy.family) || policy.allowedSetCodes.length > 0 || policy.exactSpecialPrintings.length > 0;
+}
+
+async function eligibleCardPrinting(
+  card: ScryfallCard,
+  policy: ResolvedPrintingPolicyV08,
+  maxUsdPerCard: number | undefined,
+  cache: Map<string, ScryfallCard | null>,
+): Promise<ScryfallCard | null> {
+  const cacheKey = `${card.name.toLocaleLowerCase()}|${maxUsdPerCard ?? 'any'}`;
+  if (cache.has(cacheKey)) return cache.get(cacheKey) ?? null;
+
+  if (printingMatchesPolicyV08(card, policy)) {
+    const price = selectedPrice(card);
+    if (maxUsdPerCard === undefined || (price !== null && price <= maxUsdPerCard)) {
+      cache.set(cacheKey, card);
+      return card;
+    }
+  }
+
+  const choice = await selectEligiblePrintingV08(card, policy, maxUsdPerCard);
+  const chosen = choice?.card ?? null;
+  cache.set(cacheKey, chosen);
+  return chosen;
+}
+
 async function searchPool(
   colors: string[],
   options: DeckBuildOptionsV07,
+  policy: ResolvedPrintingPolicyV08,
+  cache: Map<string, ScryfallCard | null>,
   role: keyof RoleTargetsV07 | 'theme' | 'general' | 'land',
   limit = 50,
 ): Promise<ScryfallCard[]> {
@@ -170,21 +200,38 @@ async function searchPool(
     'f:commander',
     identityQuery(colors),
     clause,
-    setClause(options.allowedSets),
-    priceClause(options.maxUsdPerCard),
+    policy.searchClause,
   ].filter(Boolean).join(' ');
   if (!query.trim()) return [];
+
   try {
-    return await searchCards(query, limit);
+    const results = await searchCards(query, limit);
+    const eligible: ScryfallCard[] = [];
+    for (const card of results) {
+      const printing = await eligibleCardPrinting(card, policy, options.maxUsdPerCard, cache);
+      if (printing) eligible.push(printing);
+    }
+    return eligible;
   } catch {
     return [];
   }
 }
 
-async function resolveMustIncludes(names: string[], colors: string[]): Promise<ScryfallCard[]> {
+async function resolveMustIncludes(
+  names: string[],
+  colors: string[],
+  policy: ResolvedPrintingPolicyV08,
+  maxUsdPerCard: number | undefined,
+  cache: Map<string, ScryfallCard | null>,
+): Promise<ScryfallCard[]> {
   if (names.length === 0) return [];
   const { cards } = await getCardsByNames(names.slice(0, 30));
-  return cards.filter((card) => legalIdentity(card, colors));
+  const eligible: ScryfallCard[] = [];
+  for (const card of cards.filter((candidate) => legalIdentity(candidate, colors))) {
+    const printing = await eligibleCardPrinting(card, policy, maxUsdPerCard, cache);
+    if (printing) eligible.push(printing);
+  }
+  return eligible;
 }
 
 function landScore(card: ScryfallCard, colors: string[]): number {
@@ -199,10 +246,20 @@ function landScore(card: ScryfallCard, colors: string[]): number {
   return score;
 }
 
-async function basicPrinting(name: string, options: DeckBuildOptionsV07): Promise<ScryfallCard | null> {
-  const query = [`!"${name}"`, 't:basic', setClause(options.allowedSets), priceClause(options.maxUsdPerCard)].filter(Boolean).join(' ');
+async function basicPrinting(
+  name: string,
+  options: DeckBuildOptionsV07,
+  policy: ResolvedPrintingPolicyV08,
+  cache: Map<string, ScryfallCard | null>,
+): Promise<ScryfallCard | null> {
+  const query = [`!"${name}"`, 't:basic', policy.searchClause].filter(Boolean).join(' ');
   try {
-    return (await searchCards(query, 10))[0] ?? null;
+    const results = await searchCards(query, 10);
+    for (const card of results) {
+      const printing = await eligibleCardPrinting(card, policy, options.maxUsdPerCard, cache);
+      if (printing) return printing;
+    }
+    return null;
   } catch {
     return null;
   }
@@ -213,20 +270,37 @@ export async function buildCommanderDeckDraftV07(
   options: DeckBuildOptionsV07 = {},
 ): Promise<Record<string, unknown>> {
   if (commanders.length < 1 || commanders.length > 2) throw new Error('V0.7 deck building requires one or two resolved commanders.');
-  const colors = identity(commanders);
+
+  const printingPolicy = await resolvePrintingPolicyV08({
+    ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
+    ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
+    ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
+    ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
+  });
+  const printingCache = new Map<string, ScryfallCard | null>();
+  const eligibleCommanders: ScryfallCard[] = [];
+  for (const commander of commanders) {
+    const printing = await eligibleCardPrinting(commander, printingPolicy, options.maxUsdPerCard, printingCache);
+    if (!printing) {
+      throw new Error(`No eligible physical printing of commander ${commander.name} satisfies the active printing-family/set/price policy.`);
+    }
+    eligibleCommanders.push(printing);
+  }
+
+  const colors = identity(eligibleCommanders);
   const bracket = clampBracket(options.targetBracket);
   const targets = ROLE_TARGETS[bracket] as RoleTargetsV07;
   const landsWanted = targetLands(bracket, options.landCount);
-  const nonlandSlots = Math.max(1, 100 - commanders.length - landsWanted);
+  const nonlandSlots = Math.max(1, 100 - eligibleCommanders.length - landsWanted);
   const excluded = new Set((options.excludedCards ?? []).map((name) => name.toLocaleLowerCase()));
-  const commanderNames = new Set(commanders.map((card) => card.name.toLocaleLowerCase()));
+  const commanderNames = new Set(eligibleCommanders.map((card) => card.name.toLocaleLowerCase()));
   const candidateMap = new Map<string, ScryfallCard>();
 
   const searchRoles: Array<keyof RoleTargetsV07 | 'theme' | 'general'> = [
     'ramp', 'draw', 'interaction', 'protection', 'tutors', 'recursion', 'boardWipes', 'early', 'theme', 'general',
   ];
   for (const role of searchRoles) {
-    const results = await searchPool(colors, options, role, role === 'general' ? 50 : 35);
+    const results = await searchPool(colors, options, printingPolicy, printingCache, role, role === 'general' ? 50 : 35);
     for (const card of results) {
       const key = card.name.toLocaleLowerCase();
       if (commanderNames.has(key) || excluded.has(key) || card.type_line.toLowerCase().includes('land')) continue;
@@ -235,7 +309,13 @@ export async function buildCommanderDeckDraftV07(
     }
   }
 
-  const mustInclude = await resolveMustIncludes(options.mustInclude ?? [], colors);
+  const mustInclude = await resolveMustIncludes(
+    options.mustInclude ?? [],
+    colors,
+    printingPolicy,
+    options.maxUsdPerCard,
+    printingCache,
+  );
   for (const card of mustInclude) {
     const key = card.name.toLocaleLowerCase();
     if (!commanderNames.has(key) && !excluded.has(key) && !card.type_line.toLowerCase().includes('land')) candidateMap.set(key, card);
@@ -264,7 +344,7 @@ export async function buildCommanderDeckDraftV07(
   }
 
   const nonbasicLimit = Math.max(0, Math.min(landsWanted, Math.trunc(options.maxNonbasicLands ?? Math.min(16, Math.max(8, colors.length * 4)))));
-  const landPool = (await searchPool(colors, options, 'land', 50))
+  const landPool = (await searchPool(colors, options, printingPolicy, printingCache, 'land', 50))
     .filter((card) => legalIdentity(card, colors))
     .filter((card) => !excluded.has(card.name.toLocaleLowerCase()))
     .sort((a, b) => landScore(b, colors) - landScore(a, colors));
@@ -284,7 +364,7 @@ export async function buildCommanderDeckDraftV07(
     : ['Wastes'];
   const basicCards: ScryfallCard[] = [];
   for (const name of basicNames) {
-    const printing = await basicPrinting(name, options);
+    const printing = await basicPrinting(name, options, printingPolicy, printingCache);
     if (printing) basicCards.push(printing);
   }
   const basicQuantities = new Map<string, number>();
@@ -293,7 +373,7 @@ export async function buildCommanderDeckDraftV07(
     basicQuantities.set(card.name, (basicQuantities.get(card.name) ?? 0) + 1);
   }
 
-  const commanderLines = commanders.map((card) => printingLine(1, card));
+  const commanderLines = eligibleCommanders.map((card) => printingLine(1, card));
   const mainLines = [
     ...selected.map((card) => printingLine(1, card)),
     ...nonbasics.map((card) => printingLine(1, card)),
@@ -301,24 +381,28 @@ export async function buildCommanderDeckDraftV07(
   ];
   const decklist = ['// COMMANDER', ...commanderLines, '', '// MAIN', ...mainLines].join('\n');
   const parsed = parseDecklist(decklist);
-  const allCards = [...commanders, ...selected, ...nonbasics, ...basicCards];
+  const allCards = [...eligibleCommanders, ...selected, ...nonbasics, ...basicCards];
   const commanderRules = validateCommanderDeck(parsed, allCards);
   const roleDeficits = Object.fromEntries(
     (Object.keys(targets) as Array<keyof RoleTargetsV07>).map((key) => [key, Math.max(0, targets[key] - counts[key])]),
   );
-  const selectedPricedCards = [...commanders, ...selected, ...nonbasics];
+  const selectedPricedCards = [...eligibleCommanders, ...selected, ...nonbasics];
   const estimatedUsd = selectedPricedCards.reduce((sum, card) => sum + (selectedPrice(card) ?? 0), 0)
     + basicCards.reduce((sum, card) => sum + (selectedPrice(card) ?? 0) * (basicQuantities.get(card.name) ?? 0), 0);
+  const printingPolicySatisfied = allCards.every((card) => printingMatchesPolicyV08(card, printingPolicy));
+  const hasEnoughCards = parsed.totalCards === 100;
 
   return {
-    status: commanderRules.isLegal && parsed.totalCards === 100 ? 'complete-draft' : 'incomplete-draft',
+    status: commanderRules.isLegal && hasEnoughCards && printingPolicySatisfied ? 'complete-draft' : 'incomplete-draft',
     targetBracket: bracket,
-    commanders: commanders.map(summarizeCard),
+    commanders: eligibleCommanders.map(summarizeCard),
     commanderColorIdentity: colors,
     themeQuery: options.themeQuery ?? null,
     decklist,
     cardCount: parsed.totalCards,
     commanderRules,
+    printingPolicySatisfied,
+    printingPolicy: describePrintingPolicyV08(printingPolicy),
     roleTargets: targets,
     detectedRoleCounts: counts,
     remainingRoleDeficits: roleDeficits,
@@ -327,19 +411,26 @@ export async function buildCommanderDeckDraftV07(
       selectedNonbasicLands: nonbasics.length,
       selectedBasics: [...basicQuantities.entries()].map(([name, quantity]) => ({ name, quantity })),
     },
-    exactPrintingPolicy: 'Every selected line carries the specific Scryfall set code and collector number returned for that selection. Exact printing affects price; Oracle identity remains the rules identity.',
+    exactPrintingPolicy:
+      'Every selected line carries an exact Scryfall set code and collector number. Oracle identity drives rules; the selected physical printing must independently satisfy the active family/set/promo policy and its own price constraint.',
     selectedPrintingEstimatedUsd: Number(estimatedUsd.toFixed(2)),
     constraints: {
       maxUsdPerCard: options.maxUsdPerCard ?? null,
       allowedSets: options.allowedSets ?? [],
+      printingFamily: options.printingFamily ?? null,
+      includePromos: options.includePromos ?? true,
+      includeSpecialReleases: options.includeSpecialReleases ?? true,
       excludedCards: options.excludedCards ?? [],
       mustInclude: options.mustInclude ?? [],
     },
     caveats: [
       'This is an evidence-oriented draft builder, not a claim that the first generated 100 cards are the globally optimal list.',
       'Role targets are consistency heuristics. Current official bracket classification should still be checked after construction because bracket rules are not just role counts.',
-      'The selected printing is explicit for pricing and shopping, but without an explicit price constraint it is not guaranteed to be the cheapest printing ever released.',
-      'Theme quality depends on the supplied Scryfall theme query and card text; unusual tribal, combo, or story restrictions may benefit from mustInclude/excludedCards and a second optimization pass.',
+      'The selected printing is explicit for pricing and shopping. When a printing-family restriction is active, an unrelated edition of the same Oracle card cannot substitute for a qualifying themed edition.',
+      hasPrintingRestriction(printingPolicy)
+        ? 'If the printing family does not contain enough suitable legal cards or basics under the requested price cap, the builder returns an incomplete draft instead of leaking cards from outside the family.'
+        : 'No themed printing-family restriction was requested.',
+      'Promo status alone never qualifies a printing for a themed family; the promo must belong to a matching family set or an exact curated special-release selector.',
     ],
   };
 }
