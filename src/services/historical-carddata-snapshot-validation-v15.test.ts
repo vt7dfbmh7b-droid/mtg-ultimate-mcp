@@ -180,7 +180,7 @@ test('runtime guard rejects a snapshot whose stored Commander validation summary
   const { historicalCommanderValidation: _removed, ...altered } = snapshot;
   assert.throws(
     () => assertProvenancedHistoricalFeatureSnapshotV15(altered),
-    /Commander validation.*required|required.*Commander validation/i,
+    /Commander validation.*required|required.*Commander validation|requires.*Commander validation/i,
   );
 });
 
