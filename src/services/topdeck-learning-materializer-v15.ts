@@ -35,20 +35,10 @@ function commanderKey(names: readonly string[]): string {
   return names.map(normalize).sort().join('|');
 }
 
-/**
- * Converts a strict TopDeck provider candidate plus a pre-outcome structural
- * feature snapshot into the generic observed-learning ingestion contract.
- *
- * This boundary deliberately accepts no caller-supplied model features. Features
- * are projected from the supplied, versioned deck snapshot with a normalizer
- * already fitted by the caller on training data only.
- */
-export function materializeTopDeckLearningCandidateV15(
+export function validateTopDeckFeatureSnapshotV15(
   candidate: TopDeckLearningCandidateV15,
   snapshot: DeckFeatureSnapshotV15,
-  normalizer: DeckFeatureNormalizerV15,
-  linkage: TopDeckLearningLinkageV15,
-): ObservedLearningSourceRecordV15 {
+): void {
   if (!candidate || typeof candidate !== 'object') throw new Error('candidate must be a TopDeck learning candidate.');
   if (!snapshot || typeof snapshot !== 'object') throw new Error('snapshot must be a deck feature snapshot.');
 
@@ -65,6 +55,23 @@ export function materializeTopDeckLearningCandidateV15(
   if (snapshotAt > outcomeAt) {
     throw new Error('Feature snapshot availableAt cannot occur after the TopDeck outcome being predicted.');
   }
+}
+
+/**
+ * Converts a strict TopDeck provider candidate plus a pre-outcome structural
+ * feature snapshot into the generic observed-learning ingestion contract.
+ *
+ * This boundary deliberately accepts no caller-supplied model features. Features
+ * are projected from the supplied, versioned deck snapshot with a normalizer
+ * already fitted by the caller on training data only.
+ */
+export function materializeTopDeckLearningCandidateV15(
+  candidate: TopDeckLearningCandidateV15,
+  snapshot: DeckFeatureSnapshotV15,
+  normalizer: DeckFeatureNormalizerV15,
+  linkage: TopDeckLearningLinkageV15,
+): ObservedLearningSourceRecordV15 {
+  validateTopDeckFeatureSnapshotV15(candidate, snapshot);
 
   const features = projectDeckFeatureSnapshotV15(snapshot, normalizer);
   const featureExtractorId = `${DECK_FEATURE_EXTRACTOR_ID_V15}+${DECK_FEATURE_NORMALIZER_ID_V15}`;
