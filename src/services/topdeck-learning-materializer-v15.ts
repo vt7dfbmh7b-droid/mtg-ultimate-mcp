@@ -91,6 +91,7 @@ export function materializeTopDeckLearningCandidateV15(
       ...(observed.metadata ?? {}),
       featureSnapshotAvailableAt: snapshot.availableAt,
       cardDataObservedAt: snapshot.cardDataObservedAt,
+      cardDataSnapshotFingerprint: snapshot.cardDataSnapshotFingerprint,
       featureNormalizerId: normalizer.normalizerId,
       featureNormalizerFitFingerprint: normalizer.fitFingerprint,
       featureNormalizerTrainingSnapshots: normalizer.fittedSnapshotCount,
