@@ -22,19 +22,23 @@ This file is the **persistent recovery point for future ChatGPT sessions**. Read
 
 Important current/recent commits:
 
+- `df318ce4e52ec858b39d3a87e80479194009ef2c` — bounded live TopDeck learning fetcher tests; CI succeeded.
+- `9c48616a4c76532649a2d3427546d91dfd34e52e` — bounded single-request TopDeck V2 learning fetcher with explicit 429 handling.
+- `4724a2b7f06968fc70c7d09bcfca2ce39661e370` — deterministic TopDeck V2 learning adapter tests.
+- `b4da0294d05e196b19fc8e067eaa7bad10b8f03b` — deterministic TopDeck tournament-to-learning-candidate adapter.
+- `0c0439e17b379dde5bff2c81bd2a10055b9842f0` — provenance-safe corpus ingestion + mixed-target safety final fix; CI succeeded.
+- `afedc656c7cd914fdf36bc51eb9a3d085af9dd99` — mixed-learning-target temporal-evaluation safety tests.
+- `02111539f93ac36b8b836643406e592a74e5719f` — temporal evaluator refuses to train one classifier across mixed outcome semantics.
+- `e4610593624076026fe955a9914fe4ba0953889a` — provenance-safe learning-ingestion tests.
+- `74fa7c43717878ef1b5a78f4685ba31203405355` — quarantine-first observed-outcome ingestion boundary.
+- `85ca53545720790422907e92890b57257bf421bb` — explicit learning-target identity in the corpus.
 - `87f74e6223a27b13bace8f201e1f396e11400ff1` — exact-oracle calibration tests against the existing V0.4 simulator; CI succeeded.
-- `3546cc66cb42139c224f5d0042cb3361caa3ee12` — finite-sample Bernoulli/Bernstein exact-oracle calibration layer.
-- `8285ca8bebdf3234be5fa8cc5754b6f0fddedab8` — handoff after exact access curves.
 - `85029cdfbe12bd8ecb0b81cbb11b197bfe35128a` — exact turn/access-curve tests; CI succeeded.
-- `29cb99290467c26795e23fbb1c093336322d0271` — exact turn/access-curve implementation.
 - `2f45b1381d525bd2a3bdfaf719894f2c8d5d5c2e` — commander-zone exact availability hardened; CI succeeded.
-- `d529e326181cf0453eeb68568d51796fd6472293` — commander-zone exact implementation.
 - `17bcfcc6819fcf9ef43ed5a8d14bcd9dc371ee6a` — overlap-aware package solver exhaustive/adversarial tests; CI succeeded.
-- `e126bf436ae0b1c2cae1b9f2e0ec74127b6311fd` — overlap-aware exact package solver.
-- `161d3d1acb1129381d9195d39360b7ce0812f610` — disjoint exact package probability + oracle normalization; CI succeeded.
 - `966bffac0a981f9aea5b828c94e6aa091de640ea` — V0.15 foundation baseline before the package branch.
 
-The exact-oracle implementation/test head `87f74e6223a27b13bace8f201e1f396e11400ff1` passed dependency install, strict TypeScript build, and the complete automated test suite.
+The current learning-source implementation/test head `df318ce4e52ec858b39d3a87e80479194009ef2c` passed dependency install, strict TypeScript build, and the complete automated test suite.
 
 Temporary branches `agent/package-probabilities-2` and `agent/package-probabilities-3` contain no unique work and are not active.
 
@@ -76,7 +80,7 @@ The branch already contains substantial infrastructure for:
 - Scryfall, Commander Spellbook, tournament/deck evidence and source diagnostics;
 - deterministic simulation and Commander E2E scenarios;
 - V0.14 cEDH readiness, combo completion, competitive refinement and from-scratch competitive building;
-- V0.15 bracket ceiling/evidence, research/learning, drift detection, neural shadow ranking and exact statistics.
+- V0.15 bracket ceiling/evidence, research/learning, drift detection, neural shadow ranking, exact statistics and real-corpus ingestion foundations.
 
 The neural model remains experimental/shadow-only. Real, independent, leakage-safe temporal outcome data is required before promotion beyond the transparent baseline.
 
@@ -155,7 +159,7 @@ Files:
 - `src/services/exact-access-curve-v15.ts`
 - `src/services/exact-access-curve-v15.test.ts`
 
-Current draw-step rules from the Wizards Comprehensive Rules effective **2026-08-07** are explicit:
+Explicit natural-draw contexts:
 
 - `two-player-starting` — skip first-turn natural draw;
 - `two-player-non-starting` — draw turn one;
@@ -185,39 +189,124 @@ Files:
 - `src/services/simulation-exact-calibration-v15.ts`
 - `src/services/simulation-exact-calibration-v15.test.ts`
 
-This milestone calibrates the **existing `simulateDeckConsistencyV04` path**, rather than adding a second competing Monte Carlo simulator.
+The milestone calibrates the **existing `simulateDeckConsistencyV04` path**, rather than adding a second competing Monte Carlo simulator.
 
-For exact-comparable fixtures the V0.4 simulation is constrained to:
+For exact-comparable fixtures V0.4 uses mulligans disabled, no relevant tutors/draw engines, multiplayer natural draws, fixed seeds and explicit sample counts.
 
-- mulligans disabled;
-- no tutors or draw engines affecting the requested package;
-- multiplayer natural-draw schedule, matching its current one-natural-draw-per-turn behavior;
-- fixed seed and explicit sample count.
+Acceptance is not a fixed arbitrary ±percentage. It uses a finite-sample two-sided Bernstein concentration bound for Bernoulli sample means with exact BigInt-oracle probability, default failure budget `1e-6`, explicit p=0/p=1 boundaries, and only the known reporting quantization allowance.
 
-The tests use a 100-card Commander deck with a 99-card library and compare V0.4 `naturalAssemblyByTurn` against `calculateExactAccessCurveV15` for both:
+The integration fixture compares singleton and two-piece natural assembly at several turns using 12,000 seeded full V0.4 simulation iterations. CI succeeded at `87f74e6223a27b13bace8f201e1f396e11400ff1`.
 
-- a singleton target;
-- a two-unique-piece package;
-- several cumulative turn checkpoints.
+---
 
-Acceptance is **not** a fixed arbitrary ±percentage. The calibration uses a finite-sample two-sided Bernstein concentration bound for a Bernoulli sample mean with exact probability `p` supplied by the BigInt oracle:
+## Real learning corpus foundation — milestone complete
 
-`P(|p_hat - p| > epsilon) <= 2 exp(-n epsilon^2 / (2 p(1-p) + 2 epsilon / 3))`
+### Core corpus target identity
 
-The implementation solves this bound for `epsilon` using a default failure budget of `1e-6`. The tolerance therefore shrinks with sample count and adapts to the exact Bernoulli variance. Exact `p=0` and `p=1` are deterministic zero-statistical-width boundaries.
+File: `src/services/learning-corpus-v15.ts`
 
-The existing V0.4 output rounds cumulative percentages to 0.1 percentage point, so calibration adds only the explicitly known half-resolution allowance (`0.0005` probability) on top of the statistical band. Raw/unrounded future simulation outputs can use reporting resolution zero.
+The corpus now records an explicit `LearningTargetV15` so different binary outcomes cannot silently become one semantic label. Current target identities include:
 
-Additional regression tests verify:
+- `match-win`;
+- `event-top-cut`;
+- `deck-change-improvement`;
+- `simulation-outcome`;
+- `verified-package-success`;
+- `recommendation-outcome`;
+- `legacy-unspecified` for backward compatibility.
 
-- recomputation from exact numerator/denominator instead of trusting a display decimal;
-- tolerance shrinkage with larger samples;
-- rare-event probability-aware behavior;
-- rejection of materially biased Monte Carlo output;
-- deterministic p=0/p=1 handling;
-- malformed calibration requests fail closed.
+Deduplication keys include learning target + independent outcome group + outcome ID. Corpus audits now report target count and target identities.
 
-Implementation/test head `87f74e6223a27b13bace8f201e1f396e11400ff1` passed install, strict build and the full test suite, including 12,000 seeded full V0.4 iterations for the exact-oracle integration fixture.
+### Quarantine-first observed-outcome ingestion
+
+Files:
+
+- `src/services/learning-corpus-ingestion-v15.ts`
+- `src/services/learning-corpus-ingestion-v15.test.ts`
+
+Properties:
+
+- only registered `observed-results` sources can enter this outcome ingestion path;
+- evidence class comes from the source registry, never caller claims;
+- source URL hostname must match the registered provider;
+- a training deck must parse as an exact 100-card Commander deck with one or two one-card commander entries;
+- exact deck fingerprint is derived from the supplied complete decklist;
+- `outcomeOccurredAt` is separate from `sourceObservedAt` and temporal splits use the actual outcome date;
+- caller provides an explicit versioned `featureExtractorId` and normalized features, but ingestion validates their names/ranges;
+- caller must provide cross-source `canonicalOutcomeId`, `independenceKey`, and `leakageKey` rather than treating one provider's local ID as independent truth;
+- event-top-cut labels are derived from standing/field/top-cut values;
+- match-win labels are derived from the observed win boolean;
+- malformed rows are quarantined individually;
+- repeated rows from one source are quarantined before corpus-level cross-source deduplication;
+- mirror results from TopDeck and EDH Top 16 can share one underlying evidence group and therefore do not multiply independent evidence;
+- event-related records remain together across temporal train/holdout boundaries.
+
+### Mixed learning-target model safety
+
+Files:
+
+- `src/services/neural-temporal-eval-v15.ts`
+- `src/services/neural-temporal-target-safety-v15.test.ts`
+
+If a corpus contains more than one learning target, the temporal evaluator now refuses to train either neural or transparent candidate as one binary classifier. Readiness is forced to `not-ready` with guidance to split and evaluate each target independently. Legacy unspecified data remains backward-compatible as one target.
+
+Final corpus-foundation head `0c0439e17b379dde5bff2c81bd2a10055b9842f0` passed install, strict build and the full test suite.
+
+---
+
+## TopDeck real-outcome source foundation — milestone complete
+
+TopDeck's current V2 API documentation was re-checked before this work. It exposes completed Magic: The Gathering / EDH tournament search, stable tournament IDs, standings, optional decklists, top-cut information, and documented API-key/rate-limit/attribution requirements.
+
+### Deterministic provider adapter
+
+Files:
+
+- `src/services/topdeck-learning-adapter-v15.ts`
+- `src/services/topdeck-learning-adapter-v15.test.ts`
+
+The adapter intentionally performs **no network access** and produces provider candidates rather than trusted learning records.
+
+Properties:
+
+- accepts only Magic: The Gathering / `EDH` tournament payloads;
+- rejects team-event standings for this one-deck-per-standing learning target;
+- requires a positive physically possible top-cut value;
+- requires stable provider player IDs and does not fall back to mutable display names;
+- converts documented TopDeck text headings such as `~~Commanders~~` / `~~Mainboard~~` into parser section markers without changing card identities or quantities;
+- requires a complete exact 100-card Commander deck before producing a candidate;
+- does not fetch an external deck URL during deterministic adaptation;
+- does not guess the internal shape of optional `deckObj` when inline text is absent;
+- does not assign cross-source independence/leakage identity, features, or a training label;
+- explicit enrichment is required before generic corpus ingestion;
+- required attribution is preserved as `Data provided by TopDeck.gg`.
+
+Important separation: existing `references.ts` contains a more permissive TopDeck/Archidekt human-facing analysis path, including heuristic `deckObj` interpretation. **Do not use that permissive reference-analysis parser as the trusted learning-ingestion path.** Training data stays on the stricter adapter.
+
+### Bounded live TopDeck fetcher
+
+Files:
+
+- `src/services/topdeck-learning-live-v15.ts`
+- `src/services/topdeck-learning-live-v15.test.ts`
+
+Properties:
+
+- uses the existing `TOPDECK_API_KEY` configuration;
+- makes exactly one bounded POST to `/v2/tournaments` per refresh call;
+- requests Magic: The Gathering / EDH standings with stable IDs and inline decklists;
+- applies date/participant bounds and rejects oversized bulk responses instead of silently truncating them;
+- sends the documented authorization header and visible attribution is retained downstream;
+- performs **no automatic retry of the POST**;
+- HTTP 429 becomes a typed error carrying parsed `Retry-After` when present, allowing the caller/scheduler to respect the source rate limit without request amplification;
+- provider-level malformed rows are quarantined while usable rows survive;
+- network fetching still does not assign cross-source identity, features, or training labels.
+
+Current source head `df318ce4e52ec858b39d3a87e80479194009ef2c` passed install, strict build and the full automated suite.
+
+A live corpus refresh has **not** been claimed yet: actual training records still require outcome-safe feature extraction/versioning and explicit cross-source identity/leakage enrichment. The API-key value is not stored in source control and should remain secret.
+
+EDH Top 16 remains useful as a documented legacy API/reference and possible mirror/corroboration source, but it must not automatically be counted as independent evidence when it reflects the same underlying tournament result.
 
 ---
 
@@ -245,7 +334,7 @@ The FF vs unrestricted comparison helps distinguish a user/card-pool ceiling fro
 
 ---
 
-## External oracle strategy
+## External oracle / evidence strategy
 
 Reference families remain:
 
@@ -254,7 +343,9 @@ Reference families remain:
 - `forge` — mature rules/simulation reference;
 - `manabrew` — Forge-family parity methodology.
 
-External mismatches trigger investigation, not obedience. Related systems are deduplicated by independence group. Pin snapshots for deterministic comparisons, keep live external tests separate where appropriate, shrink failures, retain resolved regressions, and respect licenses.
+Observed-result sources currently include TopDeck and EDH Top 16 in the evidence registry. A second website that republishes the same event is not a second independent result.
+
+External mismatches trigger investigation, not obedience. Related systems are deduplicated by independence group. Pin snapshots for deterministic comparisons, keep live external tests separate where appropriate, shrink failures, retain resolved regressions, and respect licenses/source terms.
 
 ---
 
@@ -278,35 +369,46 @@ The engine must distinguish a user/card-pool ceiling from builder failure or ins
 
 ## Next implementation target
 
-### 1. Real learning corpus
+### 1. Outcome-safe feature extraction and corpus materialization
 
-The next major intelligence bottleneck is **data, not a larger neural network**.
+The source plumbing and ingestion safety boundary are now in place. The next bottleneck is converting complete historical decks into **versioned predictor features without leaking the result being predicted**.
 
-Build a substantial real, independently sourced, leakage-safe Commander/cEDH outcome corpus that can support honest future temporal evaluation of the transparent and neural rankers.
+Do this before scheduling a large live TopDeck refresh or claiming the project has a meaningful real training corpus.
 
 Implementation direction:
 
-- inspect `learning-corpus-v15.ts`, `research-learning-v15.ts`, `neural-temporal-eval-v15.ts`, and current source/evidence abstractions first;
-- define explicit ingestion/provenance contracts before collecting large amounts of data;
-- prefer public structured outcome/deck sources with stable identifiers and clear timestamps;
-- distinguish decklist appearances from actual match/event outcomes;
-- preserve exact deck fingerprints when full lists are available;
-- record event/outcome identity so one result mirrored by several sites is not multiplied as independent evidence;
-- track `independentGroup` separately from `leakageGroup`;
-- assign related records to common leakage groups when information could leak across temporal splits;
-- preserve source URL/identifier, observation time, event date, evidence class and freshness metadata;
-- validate malformed/conflicting records and fail closed;
-- keep raw/source facts separate from derived learning features and labels;
-- do not scrape or redistribute source material in ways incompatible with source terms/licensing;
-- add deterministic fixture-based ingestion tests first, then a live/refresh workflow separate from deterministic CI where appropriate;
-- require meaningful source diversity and temporal breadth before model-promotion claims;
-- neural promotion remains blocked until repeated future holdouts show genuine improvement over the transparent baseline.
+- define a raw, versioned deck-feature snapshot separate from labels/outcomes;
+- prefer deck-intrinsic facts that can be recomputed from the exact historical list and historical card/rules identity;
+- reuse deterministic deck metrics where appropriate (curve, fast mana, tutors, interaction, protection, draw/ramp density), but do not hand-wave them into arbitrary normalized scores;
+- if normalized/scaled features are learned from corpus statistics, fit the transformation on the **training split only** and apply it to future holdout records; never use future holdout distribution to normalize training data;
+- do not derive `tournamentSupport`, `communitySupport`, or similar predictors from the same event/result being used as the label;
+- any time-sensitive external predictor must have an evidence snapshot timestamp at or before `outcomeOccurredAt`;
+- version the extractor contract so old records remain reproducible when feature logic changes;
+- fail closed when a required card cannot be resolved or a complete historical feature snapshot cannot be constructed;
+- keep raw structural features/source facts alongside derived normalized model features for auditability;
+- add fixture tests proving that changing standing/win result does not change deck-intrinsic predictors;
+- add temporal-leakage tests proving future outcomes cannot affect earlier normalization/feature snapshots;
+- after the extractor is trustworthy, enrich bounded TopDeck candidates into actual `LearningOutcomeRecordV15` records and persist a deterministic corpus snapshot/manifest with audit counts;
+- keep raw provider payload redistribution/licensing concerns separate; persist only what the source terms allow plus normalized provenance/fingerprint metadata needed for reproducibility.
 
-Potential evidence classes include tournament/event outcomes, deck-change outcomes, independently recorded games, exact-simulation observations, verified winning-package observations and repeated recommendation failures, but they must not be treated as interchangeable labels without an explicit learning target.
+### 2. Cross-source outcome linkage / EDH Top 16 corroboration
 
-### 2. Later probability / gameplay extensions
+Add an explicit conservative linkage layer for determining when TopDeck and EDH Top 16 records refer to the same underlying tournament/entrant outcome. Prefer false negatives (two unlinked records) over false-positive merging unless identity evidence is strong. Once linked, mirrors must share one `canonicalOutcomeId`, `independenceKey`, and appropriate leakage group.
 
-After the real corpus foundation, useful exact/statistical extensions include resource/timing-aware access (tutor mana, cast timing, commander tax/dependence) and broader simulator calibration cases. Do not expand these by silently pretending a full Magic rules engine exists.
+### 3. Live refresh workflow after feature/linkage readiness
+
+Only after feature extraction and linkage are safe:
+
+- add a live/manual refresh script or workflow separate from deterministic CI;
+- require `TOPDECK_API_KEY` from the environment/secret store, never source control;
+- respect TopDeck 429 / `Retry-After` and attribution requirements;
+- keep live-source failures from breaking deterministic CI;
+- produce corpus audit output: accepted, quarantined, duplicates, conflicts, targets, temporal coverage, evidence groups and source coverage;
+- do not promote the neural model merely because corpus volume increases.
+
+### 4. Model evaluation remains blocked pending real data quality
+
+Neural promotion remains blocked until one explicit learning target has enough independent, balanced, temporally broad, leakage-safe records and the neural candidate repeatedly beats the transparent baseline on genuinely future holdouts.
 
 ---
 
@@ -321,7 +423,10 @@ After the real corpus foundation, useful exact/statistical extensions include re
 - failed fixtures are allowed to be wrong — do not corrupt correct math to satisfy a bad test;
 - hard legality/printing truth remains outside ML;
 - model evaluation is leakage-safe;
+- learning targets are not semantically mixed;
 - external evidence is independence-aware;
+- training features cannot see future outcomes;
+- raw source/provenance facts remain auditable;
 - FF-only and unrestricted controls do not regress silently;
 - stable `server-current` is not changed without an explicit release/promotion decision;
 - update this file after every major milestone or active-target change.
