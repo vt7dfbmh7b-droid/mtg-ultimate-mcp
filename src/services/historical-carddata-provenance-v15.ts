@@ -4,6 +4,7 @@ import {
   extractDeckFeatureSnapshotV15,
   type DeckFeatureSnapshotV15,
 } from './deck-feature-snapshot-v15.js';
+import { validateCommanderDeck } from './commander-rules.js';
 import { parseDecklist, type DeckEntry } from './deck.js';
 
 export type HistoricalCardDataProvenanceV15 =
@@ -47,8 +48,22 @@ export interface HistoricalCardDataAssessmentV15 {
   reasons: string[];
 }
 
+export interface HistoricalCommanderValidationSummaryV15 {
+  ruleset: string;
+  status: 'legal' | 'illegal' | 'incomplete';
+  isLegal: boolean;
+  commanderCount: number;
+  commanderColorIdentity: string[];
+  pairingMethod: string;
+  unresolvedEntries: number;
+  commanderLegalityViolations: number;
+  colorIdentityViolations: number;
+  singletonViolations: number;
+}
+
 export interface ProvenancedDeckFeatureSnapshotV15 extends DeckFeatureSnapshotV15 {
   historicalCardDataProvenance: HistoricalCardDataAssessmentV15;
+  historicalCommanderValidation: HistoricalCommanderValidationSummaryV15;
 }
 
 function required(name: string, value: unknown): string {
@@ -173,6 +188,34 @@ function selectHistoricalFeatureCardsV15(
   return [...selected.values()];
 }
 
+function summarizeCommanderValidation(
+  result: ReturnType<typeof validateCommanderDeck>,
+): HistoricalCommanderValidationSummaryV15 {
+  const pairingMethod = typeof result.pairing.method === 'string' ? result.pairing.method : 'unknown';
+  return {
+    ruleset: result.ruleset,
+    status: result.status,
+    isLegal: result.isLegal,
+    commanderCount: result.commanderCount,
+    commanderColorIdentity: [...result.commanderColorIdentity],
+    pairingMethod,
+    unresolvedEntries: result.unresolvedEntries.length,
+    commanderLegalityViolations: result.commanderLegalityViolations.length,
+    colorIdentityViolations: result.colorIdentityViolations.length,
+    singletonViolations: result.singletonViolations.length,
+  };
+}
+
+function commanderValidationFailureReason(summary: HistoricalCommanderValidationSummaryV15): string {
+  const details: string[] = [];
+  if (summary.unresolvedEntries > 0) details.push(`${summary.unresolvedEntries} unresolved entries`);
+  if (summary.commanderLegalityViolations > 0) details.push(`${summary.commanderLegalityViolations} Commander legality violations`);
+  if (summary.colorIdentityViolations > 0) details.push(`${summary.colorIdentityViolations} color identity violations`);
+  if (summary.singletonViolations > 0) details.push(`${summary.singletonViolations} singleton/copy-count violations`);
+  if (summary.commanderCount === 2 && summary.pairingMethod === 'none') details.push('invalid two-commander pairing');
+  return details.length > 0 ? details.join(', ') : 'commander eligibility, pairing, deck size, or another construction rule failed';
+}
+
 /**
  * Decides whether a card-data source is temporally safe for the rich structural
  * feature contract. This contract uses Oracle/type/mana-derived role inference,
@@ -261,7 +304,8 @@ export function assessHistoricalCardDataProvenanceV15(
  * construction unless provenance establishes that the source contents were
  * available before the prediction cutoff. Name-only deck entries are resolved
  * only to dated printings that existed by the cutoff; exact set/collector lines
- * remain exact.
+ * remain exact. The historical Commander deck must also pass the project's hard
+ * construction/legality validator before it can become a learning feature row.
  */
 export function extractProvenancedDeckFeatureSnapshotV15(
   decklist: string,
@@ -277,6 +321,13 @@ export function extractProvenancedDeckFeatureSnapshotV15(
   }
 
   const historicalCards = selectHistoricalFeatureCardsV15(decklist, cards, options.availableAt);
+  const parsed = parseDecklist(decklist);
+  const commanderRules = validateCommanderDeck(parsed, historicalCards);
+  const historicalCommanderValidation = summarizeCommanderValidation(commanderRules);
+  if (!historicalCommanderValidation.isLegal) {
+    throw new Error(`Historical Commander construction is ${historicalCommanderValidation.status}: ${commanderValidationFailureReason(historicalCommanderValidation)}.`);
+  }
+
   const snapshot = extractDeckFeatureSnapshotV15(decklist, historicalCards, {
     availableAt: options.availableAt,
     cardDataObservedAt: assessment.sourceDataAvailableAt,
@@ -284,5 +335,6 @@ export function extractProvenancedDeckFeatureSnapshotV15(
   return {
     ...snapshot,
     historicalCardDataProvenance: assessment,
+    historicalCommanderValidation,
   };
 }
