@@ -51,9 +51,9 @@ function structuralDeck(prefix: string, cheapInteraction: number, threatManaValu
     ].join('\n'),
     cards: [
       card(commanderName, 'Legendary Creature — Test', 2),
-      card(landName, 'Land', 0, '{T}: Add {C}.'),
-      card(answerName, 'Instant', 1, 'Destroy target creature.'),
-      card(threatName, 'Creature — Test', threatManaValue),
+      card(landName, 'Basic Land — Wastes', 0, '{T}: Add {C}.'),
+      card(answerName, 'Instant', 1, `A deck can have any number of cards named ${answerName}.\nDestroy target creature.`),
+      card(threatName, 'Creature — Test', threatManaValue, `A deck can have any number of cards named ${threatName}.`),
     ],
   };
 }
@@ -143,6 +143,7 @@ test('future holdout deck structure cannot change the normalizer fitted on plann
   assert.ok(Object.values(holdout.features).every((value) => value >= -1 && value <= 1));
   assert.equal(holdout.metadata?.historicalCardDataMethod, 'contemporaneous-capture');
   assert.equal(holdout.metadata?.historicalCardDataSourceContentHash, FIXTURE_SOURCE_HASH);
+  assert.equal(holdout.metadata?.historicalCommanderLegalityStatus, 'legal');
   assert.equal(extreme.manifest.audit.uniqueRecords, 5);
   assert.deepEqual(extreme.manifest.refreshAudit, {
     providerCandidates: 5,
