@@ -141,8 +141,9 @@ function buildConstraintAnalysis(
 /**
  * Conservative deck-list assessment. The requested target is deliberately not an input
  * to the power decision; it is only compared with the independently assessed result.
- * Bracket 4 may be supported by an independently evidenced efficient non-combo win plan;
- * Bracket 5 keeps the stricter cEDH construction + intent + metagame evidence gates.
+ * Bracket 4 may be supported by an independently evidenced efficient non-combo win plan.
+ * Current Game Changer limits are applied as floors: 1-3 imply at least Bracket 3,
+ * while 4+ cannot be reported below Bracket 4. Bracket 5 keeps stricter cEDH gates.
  */
 export function assessBracketCeilingV15(
   targetBracket: CommanderBracketV15,
@@ -230,6 +231,7 @@ export function assessBracketCeilingV15(
   if (ruthlessWinning > 0) supportingSignals.push(`${ruthlessWinning} Ruthless-tagged winning combo${ruthlessWinning === 1 ? '' : 's'}.`);
   if (strategic > 0) supportingSignals.push(`${strategic} strategically relevant combo signal${strategic === 1 ? '' : 's'}.`);
   if (efficientWinPlan) supportingSignals.push('Independent evidence supports an efficient non-combo win condition suitable for optimized play.');
+  if (gameChangers > 0) supportingSignals.push(`${gameChangers} current Game Changer${gameChangers === 1 ? '' : 's'}.`);
   if (fastMana > 0) supportingSignals.push(`${fastMana} fast-mana signal${fastMana === 1 ? '' : 's'}.`);
   if (freeInteraction > 0) supportingSignals.push(`${freeInteraction} free-interaction signal${freeInteraction === 1 ? '' : 's'}.`);
   if (tutors > 0) supportingSignals.push(`${tutors} tutor signal${tutors === 1 ? '' : 's'}.`);
@@ -247,8 +249,7 @@ export function assessBracketCeilingV15(
   const optimizedWinEvidence = efficientWinPlan
     || winning > 0
     || ruthlessWinning > 0
-    || tag === 'R'
-    || gameChangers >= 3;
+    || tag === 'R';
   const optimizedSignals = Boolean(signals.optimizedPlanEvidence)
     ? optimizedWinEvidence
     : optimizedStructure && optimizedWinEvidence;
@@ -270,6 +271,11 @@ export function assessBracketCeilingV15(
     assessedBand = bracket5ConstructionCandidate
       ? 'high-bracket-4-cedh-construction-candidate'
       : 'bracket-4-optimized-range';
+  }
+
+  if (gameChangers > 3 && assessed < 4) {
+    assessed = 4;
+    assessedBand = 'bracket-4-game-changer-floor';
   }
 
   const bracket5EvidenceComplete = bracket5ConstructionCandidate
@@ -299,7 +305,7 @@ export function assessBracketCeilingV15(
   let confidence: BracketCeilingAssessmentV15['confidence'] = 'medium';
   if (assessed === 5 && bracket5EvidenceComplete) confidence = 'high';
   else if (assessed <= 2 && !upgradedSignals) confidence = 'medium';
-  else if (tag === 'P' || tag === 'R' || winning > 0 || efficientWinPlan || optimizedSignals) confidence = 'high';
+  else if (tag === 'P' || tag === 'R' || winning > 0 || efficientWinPlan || optimizedSignals || gameChangers > 3) confidence = 'high';
 
   return {
     targetBracket: target,
@@ -317,6 +323,6 @@ export function assessBracketCeilingV15(
     constraints: [...constraints],
     guidance: assessed === 5
       ? 'Bracket 5 is only reported because strong cEDH construction, explicit competitive intent, and independent metagame evidence are all present. Continue to reassess as the metagame changes.'
-      : 'Optimize toward the requested bracket, but report the bracket the finished deck actually supports. Bracket 4 may be supported by an independently evidenced efficient non-combo win plan; Bracket 5 keeps stricter cEDH package and metagame requirements. A target, budget, theme, printing family, or requested label is never evidence for a higher bracket. When restrictions are active, report the measured threshold misses under those restrictions without claiming the restriction alone caused every miss.',
+      : 'Optimize toward the requested bracket, but report the bracket the finished deck actually supports. Current Game Changer limits are enforced as bracket floors, but Game Changers alone are not treated as proof of an optimized win plan. Bracket 4 may also be supported by independently evidenced efficient non-combo wins; Bracket 5 keeps stricter cEDH package and metagame requirements. A target, budget, theme, printing family, or requested label is never evidence for a higher bracket.',
   };
 }
