@@ -29,6 +29,7 @@ export interface ScryfallCard {
   keywords: string[];
   legalities: ScryfallLegalities;
   games?: string[];
+  game_changer?: boolean;
   reserved?: boolean;
   foil?: boolean;
   nonfoil?: boolean;
