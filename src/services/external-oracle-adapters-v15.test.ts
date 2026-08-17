@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { CombatBoardV07 } from './combat-v07.js';
+import { calculateExactPackageAssemblyV15 } from './exact-package-statistics-v15.js';
 import {
   fingerprintExternalBenchmarkJsonV15,
   normalizeCombatBoardForExternalOracleV15,
+  normalizeExactPackageAssemblyForExternalOracleV15,
 } from './external-oracle-adapters-v15.js';
 
 function board(overrides: Partial<CombatBoardV07> = {}): CombatBoardV07 {
@@ -109,4 +111,33 @@ test('benchmark fingerprints ignore object-key order but preserve semantic chang
 
   assert.equal(first, reordered);
   assert.notEqual(first, changed);
+});
+
+test('exact package normalization uses fractions rather than decimal presentation', () => {
+  const exact = calculateExactPackageAssemblyV15({
+    population: 99,
+    draws: 7,
+    packages: [
+      { name: 'piece-a', count: 1, minimum: 1 },
+      { name: 'piece-b', count: 1, minimum: 1 },
+    ],
+  });
+  const normalized = normalizeExactPackageAssemblyForExternalOracleV15(exact);
+
+  assert.deepEqual(normalized, {
+    complement: { denominator: '231', numerator: '230' },
+    draws: 7,
+    favorableHands: '6724520',
+    formula: 'multivariate-hypergeometric-package-v15',
+    packages: [
+      { count: 1, minimum: 1, name: 'piece-a' },
+      { count: 1, minimum: 1, name: 'piece-b' },
+    ],
+    population: 99,
+    probability: { denominator: '231', numerator: '1' },
+    totalHands: '14887031544',
+    untrackedCards: 97,
+  });
+
+  assert.equal(JSON.stringify(normalized).includes('0.004329'), false);
 });
