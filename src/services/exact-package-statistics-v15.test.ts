@@ -38,8 +38,8 @@ function bruteForcePackages(input: {
     for (let card = 0; card < input.population; card += 1) {
       if ((mask & (1 << card)) === 0) continue;
       selected += 1;
-      const owner = ownership[card]!;
-      if (owner >= 0) hits[owner] += 1;
+      const owner = ownership[card] ?? -1;
+      if (owner >= 0) hits[owner] = (hits[owner] ?? 0) + 1;
     }
     if (selected !== input.draws) continue;
     total += 1n;
