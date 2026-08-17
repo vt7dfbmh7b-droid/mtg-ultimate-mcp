@@ -141,7 +141,7 @@ test('temporal neural evaluator fingerprints, splits and scores a corpus through
 
     const drift = await callToolJson(client, 'detect_metagame_drift_v15', {
       records,
-      minimumWindowRecords: 10,
+      minimumWindowRecords: 20,
     });
     assert.equal(drift.severity, 'insufficient');
 
