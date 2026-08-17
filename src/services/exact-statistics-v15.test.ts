@@ -85,8 +85,8 @@ test('event variants share exact expectation and variance independent of event s
     const result = calculateExactHypergeometricV15({ population: 10, successes: 4, draws: 3, event });
     assert.equal(result.expectation.numerator, '6');
     assert.equal(result.expectation.denominator, '5');
-    assert.equal(result.variance.numerator, '28');
-    assert.equal(result.variance.denominator, '75');
+    assert.equal(result.variance.numerator, '14');
+    assert.equal(result.variance.denominator, '25');
   }
 
   const impossible = calculateExactHypergeometricV15({
