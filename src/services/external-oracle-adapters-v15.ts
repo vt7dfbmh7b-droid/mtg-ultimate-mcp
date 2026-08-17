@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import type { CombatBoardV07 } from './combat-v07.js';
+import type { ExactPackageAssemblyResultV15 } from './exact-package-statistics-v15.js';
 import type { ExternalBenchmarkJsonV15 } from './external-oracles-v15.js';
 
 function canonicalize(value: ExternalBenchmarkJsonV15): ExternalBenchmarkJsonV15 {
@@ -47,5 +48,36 @@ export function normalizeCombatBoardForExternalOracleV15(board: CombatBoardV07):
     totalEffectivePower: board.totalEffectivePower,
     commanderPower,
     creatures,
+  });
+}
+
+/**
+ * Normalize exact package assembly for statistics differential tests.
+ * Decimal presentations and explanatory fields are deliberately excluded: exact
+ * numerator/denominator pairs are the equality contract.
+ */
+export function normalizeExactPackageAssemblyForExternalOracleV15(
+  result: ExactPackageAssemblyResultV15,
+): ExternalBenchmarkJsonV15 {
+  return canonicalize({
+    population: result.population,
+    draws: result.draws,
+    packages: result.packages.map((entry) => ({
+      name: entry.name,
+      count: entry.count,
+      minimum: entry.minimum,
+    })),
+    untrackedCards: result.untrackedCards,
+    favorableHands: result.favorableHands,
+    totalHands: result.totalHands,
+    probability: {
+      numerator: result.probability.numerator,
+      denominator: result.probability.denominator,
+    },
+    complement: {
+      numerator: result.complement.numerator,
+      denominator: result.complement.denominator,
+    },
+    formula: result.formula,
   });
 }
