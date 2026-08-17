@@ -4,6 +4,7 @@ import type { ScryfallCard } from '../types/scryfall.js';
 import { extractProvenancedDeckFeatureSnapshotV15 } from './historical-carddata-provenance-v15.js';
 
 const SOURCE_HASH = 'c'.repeat(64);
+const REPEATABLE_THREAT_TEXT = 'A deck can have any number of cards named Historical Threat.';
 
 function card(options: {
   id: string;
@@ -52,7 +53,7 @@ const land = card({
   collector: '2',
   releasedAt: '2024-01-01',
   cmc: 0,
-  typeLine: 'Land',
+  typeLine: 'Basic Land — Wastes',
   oracleText: '{T}: Add {C}.',
 });
 const oldThreat = card({
@@ -63,6 +64,7 @@ const oldThreat = card({
   releasedAt: '2024-01-01',
   cmc: 3,
   typeLine: 'Creature — Test',
+  oracleText: REPEATABLE_THREAT_TEXT,
 });
 const futureThreat = card({
   id: 'threat-future',
@@ -72,6 +74,7 @@ const futureThreat = card({
   releasedAt: '2026-02-01',
   cmc: 9,
   typeLine: 'Creature — Test',
+  oracleText: REPEATABLE_THREAT_TEXT,
 });
 
 const nameOnlyDeck = [
@@ -102,6 +105,7 @@ test('name-only historical entries ignore post-cutoff printings even when future
   );
 
   assert.ok(snapshot.raw.averageNonlandManaValue < 4);
+  assert.equal(snapshot.historicalCommanderValidation.status, 'legal');
 });
 
 test('historical name-only resolution is deterministic regardless of printing input order', () => {
@@ -118,6 +122,7 @@ test('historical name-only resolution is deterministic regardless of printing in
 
   assert.deepEqual(reverse.raw, forward.raw);
   assert.equal(reverse.cardDataSnapshotFingerprint, forward.cardDataSnapshotFingerprint);
+  assert.deepEqual(reverse.historicalCommanderValidation, forward.historicalCommanderValidation);
 });
 
 test('name-only historical resolution fails closed when no dated printing proves the card existed by the cutoff', () => {
@@ -128,6 +133,7 @@ test('name-only historical resolution fails closed when no dated printing proves
     collector: '1',
     cmc: 3,
     typeLine: 'Creature — Test',
+    oracleText: REPEATABLE_THREAT_TEXT,
   });
   assert.throws(
     () => extractProvenancedDeckFeatureSnapshotV15(
@@ -169,6 +175,7 @@ test('when several pre-cutoff name-only printings exist, selection is determinis
     releasedAt: '2025-12-01',
     cmc: 4,
     typeLine: 'Creature — Test',
+    oracleText: REPEATABLE_THREAT_TEXT,
   });
   const snapshot = extractProvenancedDeckFeatureSnapshotV15(
     nameOnlyDeck,
@@ -177,4 +184,5 @@ test('when several pre-cutoff name-only printings exist, selection is determinis
   );
 
   assert.ok(snapshot.raw.averageNonlandManaValue > 3.8 && snapshot.raw.averageNonlandManaValue < 4.1);
+  assert.equal(snapshot.historicalCommanderValidation.status, 'legal');
 });
