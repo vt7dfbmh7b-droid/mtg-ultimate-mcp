@@ -86,3 +86,84 @@ test('hard legality or printing failures make bracket assessment unassessable', 
   assert.equal(result.assessedBand, 'unassessable');
   assert.ok(result.ceilingReasons.length >= 2);
 });
+
+test('a pile of Game Changers without efficient structure or a coherent plan does not become optimized', () => {
+  const result = assessBracketCeilingV15(5, {
+    ...hardPass,
+    spellbookTag: null,
+    verifiedWinningCombos: 0,
+    averageNonlandManaValue: 4.1,
+    earlyPlayCount: 11,
+    fastManaCount: 0,
+    freeInteractionCount: 0,
+    cheapInteractionCount: 2,
+    tutorCount: 0,
+    gameChangerCount: 12,
+    optimizedPlanEvidence: false,
+    cedhIntent: true,
+    competitiveMetagameEvidence: true,
+  });
+  assert.equal(result.assessedBracket, 3);
+  assert.equal(result.bracket5ConstructionCandidate, false);
+  assert.equal(result.bracket5CertifiedByThisAssessment, false);
+});
+
+test('one deterministic combo inside a slow weak shell cannot carry the whole deck to Bracket 4 or 5', () => {
+  const result = assessBracketCeilingV15(5, {
+    ...hardPass,
+    spellbookTag: 'R',
+    verifiedWinningCombos: 1,
+    ruthlessWinningCombos: 1,
+    strategicallyRelevantCombos: 1,
+    averageNonlandManaValue: 4.4,
+    earlyPlayCount: 10,
+    fastManaCount: 0,
+    freeInteractionCount: 0,
+    cheapInteractionCount: 2,
+    tutorCount: 0,
+    gameChangerCount: 0,
+    optimizedPlanEvidence: false,
+    cedhIntent: true,
+    competitiveMetagameEvidence: true,
+  });
+  assert.equal(result.assessedBracket, 3);
+  assert.equal(result.bracket5ConstructionCandidate, false);
+});
+
+test('competitive intent and metagame evidence cannot rescue a list that fails the construction gate', () => {
+  const result = assessBracketCeilingV15(5, {
+    ...hardPass,
+    spellbookTag: 'R',
+    verifiedWinningCombos: 2,
+    ruthlessWinningCombos: 1,
+    averageNonlandManaValue: 2.9,
+    earlyPlayCount: 30,
+    fastManaCount: 2,
+    freeInteractionCount: 0,
+    cheapInteractionCount: 7,
+    tutorCount: 3,
+    optimizedPlanEvidence: true,
+    cedhIntent: true,
+    competitiveMetagameEvidence: true,
+  });
+  assert.equal(result.assessedBracket, 4);
+  assert.equal(result.bracket5ConstructionCandidate, false);
+  assert.equal(result.bracket5CertifiedByThisAssessment, false);
+});
+
+test('theme and budget constraints are reported as ceiling causes rather than silently weakening the standard', () => {
+  const result = assessBracketCeilingV15(5, {
+    ...hardPass,
+    spellbookTag: 'P',
+    verifiedWinningCombos: 0,
+    averageNonlandManaValue: 3.2,
+    earlyPlayCount: 23,
+    fastManaCount: 1,
+    freeInteractionCount: 0,
+    cheapInteractionCount: 5,
+    tutorCount: 1,
+  }, ['FINAL FANTASY physical printings only', 'NZ$20 maximum per card']);
+  assert.equal(result.assessedBracket, 3);
+  assert.ok(result.ceilingReasons.some((reason) => reason.includes('FINAL FANTASY')));
+  assert.ok(result.ceilingReasons.some((reason) => reason.includes('NZ$20')));
+});
