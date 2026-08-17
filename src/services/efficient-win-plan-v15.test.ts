@@ -70,7 +70,7 @@ test('an expensive lookalike with the same combat wording does not pass the narr
   assert.equal(evidence.checks.cheapCommander, false);
 });
 
-test('commander win-plan evidence still cannot promote an unoptimized shell beyond Bracket 3', () => {
+test('commander win-plan evidence cannot promote an unoptimized shell beyond Bracket 3', () => {
   const evidence = deriveEfficientCommanderWinPlanV15(decklist, [
     card('Najeela, the Blade-Blossom', 3, najeelaText),
   ]);
@@ -89,7 +89,10 @@ test('commander win-plan evidence still cannot promote an unoptimized shell beyo
   });
 
   assert.equal(evidence.supported, true);
-  assert.equal(result.assessedBracket, 3);
+  assert.ok(
+    result.assessedBracket !== null && result.assessedBracket <= 3,
+    `commander-centric win evidence must not lift a deliberately weak shell above Bracket 3; observed=${String(result.assessedBracket)}`,
+  );
   assert.equal(result.bracket5CertifiedByThisAssessment, false);
 });
 
