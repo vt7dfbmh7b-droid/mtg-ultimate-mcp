@@ -2,226 +2,270 @@
 
 _Last updated: 2026-08-17 NZST_
 
-This file is the **persistent recovery point for future ChatGPT sessions**. If a chat becomes too long or loses context, start here before making changes.
+This file is the **persistent recovery point for future ChatGPT sessions**. If a chat becomes too long or loses context, start here.
 
-## How to resume in a new chat
+For the complete long-term product/engineering goals, also read **`ULTIMATE_MTG_SPEC.md`**. The spec is the north star; this file is the current implementation handoff.
 
-1. Open this repository: `vt7dfbmh7b-droid/mtg-ultimate-mcp`.
-2. Read this file first.
-3. Inspect the current head of branch `agent/package-probabilities` and recent commits before changing code.
-4. Do **not** assume `main` is the current development state; it is behind the active V0.15 work.
-5. Run/inspect CI before claiming a milestone is complete.
-6. Continue from the **Next implementation target** below unless a newer commit or handoff update says otherwise.
+## Fresh-chat resume instructions
 
-Suggested user prompt for a fresh chat:
+1. Open `vt7dfbmh7b-droid/mtg-ultimate-mcp`.
+2. Read `PROJECT_HANDOFF.md` and `ULTIMATE_MTG_SPEC.md` first.
+3. Inspect the current head and recent commits of `agent/package-probabilities` before making changes.
+4. Inspect CI for that exact head.
+5. Do **not** assume `main` is the current development state.
+6. Do **not** promote `server-current` merely because V0.14/V0.15 code exists.
+7. Continue from **Next implementation target** unless newer commits update this handoff.
 
-> Continue the Ultimate MTG project from `PROJECT_HANDOFF.md` in `vt7dfbmh7b-droid/mtg-ultimate-mcp`. Inspect the current branch/head and CI first, then continue from the next implementation target.
+Suggested fresh-chat prompt:
 
----
-
-## Project goal
-
-Build a genuinely high-confidence **Ultimate Magic: The Gathering MCP/plugin** that combines card knowledge, Commander deck building, combo analysis, legality, exact physical printings, precons, pricing, NZ availability, constrained upgrades, probability, simulation, research, bracket assessment, learning, drift detection, and adversarial/external testing.
-
-The system must prefer **grounded, cross-checked conclusions** over confident guesses.
-
-Core philosophy:
-
-- exact maths when exact maths is available;
-- simulation when the state space requires it;
-- external/reference systems as differential test oracles, not unquestioned truth;
-- disagreements become investigations and then regression fixtures;
-- related oracle projects are deduplicated by independence family;
-- Commander legality, exact deck construction, printing restrictions, and honest bracket ceilings remain hard gates;
-- requested bracket/power must never force the engine to invent evidence or overstate a deck.
+> Continue the Ultimate MTG project from `PROJECT_HANDOFF.md` and `ULTIMATE_MTG_SPEC.md` in `vt7dfbmh7b-droid/mtg-ultimate-mcp`. Inspect the active branch/head and CI first, then continue from the next implementation target.
 
 ---
 
-## Active development branch
+## Repository / release state
 
-**Primary active branch:** `agent/package-probabilities`
+**Active continuation branch:** `agent/package-probabilities`
 
-**Implementation baseline before this handoff file:** `161d3d1acb1129381d9195d39360b7ce0812f610`
+Important current/recent commits:
 
-That head passed the normal GitHub Actions quality gate after the package-probability work and oracle-normalization tests.
+- `d40957ab2d7fd1f7ff758384efbd50c5db561770` — added `ULTIMATE_MTG_SPEC.md` master specification.
+- `75d021932a13fe706ecf7881dc3e9372788c9983` — added initial persistent handoff file.
+- `161d3d1acb1129381d9195d39360b7ce0812f610` — exact package probability + oracle package-order normalization; CI succeeded.
+- `966bffac0a981f9aea5b828c94e6aa091de640ea` — V0.15 foundation baseline before the package branch.
+- `0a4fda12c9b44374bc8f58f5b07ec2da886ea993` — V0.15 external-oracle benchmark documentation.
 
-Important earlier milestones:
+Temporary accidental branches `agent/package-probabilities-2` and `agent/package-probabilities-3` contain no unique work and are not active.
 
-- `0a4fda12c9b44374bc8f58f5b07ec2da886ea993` — documented the V0.15 external-oracle benchmark strategy.
-- `966bffac0a981f9aea5b828c94e6aa091de640ea` — exact hypergeometric engine + resource-boundary tests.
-- `f23c206b08dd0b0f58f3ba9a122112dce1f68c77` — first exact package-assembly implementation.
-- `161d3d1acb1129381d9195d39360b7ce0812f610` — package-order parity normalization; CI succeeded.
+### Stable runtime remains V0.13
 
-Temporary branches `agent/package-probabilities-2` and `agent/package-probabilities-3` were accidentally created while reconnecting write actions. They contain no unique implementation work and should not be treated as active development branches.
+Verified repository facts:
+
+- `package.json` version is `0.13.0`.
+- `src/server-current.ts` returns `createMtgServerV13()`.
+- The draft PR remains intentionally unmerged.
+
+Preserve this separation while V0.14/V0.15 intelligence is hardened.
 
 ---
 
-## Current exact statistics foundation
+## Foundation already present
 
-### Exact univariate hypergeometric engine
+The project already has substantial infrastructure for:
+
+- Commander legality, 100-card validation, color identity, partners/singleton rules;
+- exact Oracle vs physical-printing identity and themed printing restrictions;
+- MTGJSON stock Commander precons;
+- full-deck building and iterative refinement;
+- competing upgrade packages, protected/excluded/must-include cards, exact IN/OUT tracking;
+- NZD-first pricing/budgets with source-value auditability;
+- Scryfall, Commander Spellbook, tournament/deck evidence and source diagnostics;
+- deterministic simulations and real E2E Commander tests;
+- V0.14 cEDH readiness, combo completion, competitive refinement and from-scratch competitive building;
+- V0.15 bracket ceiling/evidence, research/learning, metagame drift, neural ranking, exact statistics and external-oracle work.
+
+Previous engineering judgement put this at roughly **80–85% toward a strong V1 foundation**, but that is not a measured project metric.
+
+---
+
+## Permanent truth hierarchy
+
+Machine learning and optimization **may never override**:
+
+- Commander legality;
+- unresolved-card failures;
+- exact 100-card construction;
+- color identity/singleton constraints;
+- banned/legal facts;
+- exact physical-printing existence/restrictions;
+- known rules facts and verified combo requirements.
+
+Requested power/bracket is a target, not a forced result.
+
+---
+
+## V0.14 competitive / winning-package state
+
+Relevant files include:
+
+- `src/server-v14.ts`
+- `src/services/cedh-workflow-v14.ts`
+- `src/services/cedh-workflow-nzd-v14.ts`
+- `src/services/cedh-combo-completion-v14.ts`
+- `src/services/cedh-win-package-v14.ts`
+- `src/services/cedh-seed-package-v14.ts`
+- `src/services/cedh-refinement-v14.ts`
+- `src/services/cedh-manabase-v14.ts`
+- `src/services/cedh-efficiency-v14.ts`
+
+V0.14 explicitly distinguishes **strong competitive construction signals** from automatic Bracket 5 certification.
+
+General product requirement still stands: deliberate winning-package discovery should find compact Commander-legal packages, verify every component against user restrictions, verify the line actually wins/achieves its claimed result, then seed the best appropriate package before filling the rest of the deck.
+
+A past FF test caught a Ruthless-tagged interaction that generated huge life rather than a true win. Preserve this as a regression principle: popularity/tags/strength signals are not proof of an actual win.
+
+---
+
+## V0.15 research + learning state
+
+Real V0.15 learning code exists on the inherited foundation and therefore in the package continuation branch.
+
+Key files:
+
+- `src/services/research-learning-v15.ts`
+- `src/services/research-learning-v15-quality.test.ts`
+- `src/services/learning-corpus-v15.ts`
+- `src/services/learning-corpus-v15.test.ts`
+- `src/services/neural-ranker-v15.ts`
+- `src/services/neural-ranker-v15.test.ts`
+- `src/services/neural-temporal-eval-v15.ts`
+- `src/services/neural-temporal-eval-v15.test.ts`
+- `src/services/metagame-drift-v15.ts`
+
+### Neural model
+
+Current implementation is a deterministic **two-hidden-layer MLP** with backpropagation and L2 regularisation.
+
+It is a **shadow/experimental model**. It must not be promoted merely because synthetic tests work.
+
+The transparent model remains the baseline. Neural promotion requires meaningful unseen holdout data and repeated evidence that the neural candidate outperforms the transparent model.
+
+### Leakage prevention / corpus
+
+`learning-corpus-v15.ts`:
+
+- fingerprints exact decks using zone, quantity, normalized name, set, collector number and finish;
+- tracks `independentGroup` and `leakageGroup` separately;
+- deduplicates repeated underlying outcomes without treating every identical deck appearance as the same event;
+- detects malformed/conflicting records;
+- performs time-based train/holdout splits while keeping leakage groups together;
+- exposes leakage-check results.
+
+`neural-temporal-eval-v15.ts` evaluates neural and transparent models on the same later temporal holdout and includes metagame-drift gating.
+
+### Intended learning loop
+
+**research → cross-check → build → simulate → test → observe outcome → learn → retest**
+
+Next major ML step is **not a larger neural network**. It is building a real, independently sourced, leakage-safe Commander/cEDH outcome corpus so recommendations can learn from actual deck changes, matches/events, simulations, verified win packages and repeated failures.
+
+---
+
+## Exact statistics foundation
+
+### Univariate exact engine
 
 File: `src/services/exact-statistics-v15.ts`
 
-Current behavior includes:
-
-- BigInt combination arithmetic;
-- reduced exact fractions;
-- decimal presentation only, never used as proof/equality;
-- event forms: exactly / at least / at most / range / zero;
-- exact complement;
-- expectation;
-- variance;
-- physical support bounds;
-- hard population cap = **1,000**;
-- malformed requests fail closed.
+Includes BigInt hypergeometric arithmetic, reduced exact fractions, complement, expectation, variance, physical support, malformed-request checks and population cap 1,000.
 
 Pinned Commander fixture:
 
-- 99-card library
-- 36 lands
-- 7-card opener
-- probability of 3+ lands = `26,736,733 / 53,358,536 ≈ 50.1077%`
+- population/library: 99
+- lands: 36
+- draw: 7
+- P(3+ lands) = `26,736,733 / 53,358,536 ≈ 50.1077%`
 
-Independent brute-force enumeration covers small populations through 8 cards.
+Decimals are presentation only; exact fractions are the proof/equality surface.
 
-A prior variance test expected the wrong answer (`28/75`). The implementation correctly produced `14/25`; the test fixture was corrected instead of changing valid maths. Preserve this testing principle.
-
----
-
-## Current exact package/combo probability layer
+### Disjoint package engine
 
 Files:
 
 - `src/services/exact-package-statistics-v15.ts`
 - `src/services/exact-package-statistics-v15.test.ts`
 
-Current supported model:
-
-- exact probability of satisfying minimum hits from multiple **disjoint** card-role buckets;
-- interchangeable cards within a role;
-- neutral/untracked cards in the rest of the library;
-- reduced probability and complement fractions;
-- favorable-hand / total-hand counts;
-- per-package expectations;
-- maximum package requirement count;
-- explicit dynamic-programming work ceiling;
-- malformed or overlapping-count requests fail closed;
-- exhaustive independent labeled-card enumeration for small two-package populations through 8 cards.
+Supports exact multivariate package assembly for **disjoint physical role buckets**.
 
 Pinned example:
 
 - 99-card library
-- 7 cards drawn
-- two unique singleton combo pieces
-- exact probability of both = `1 / 231 ≈ 0.4329004329%`
+- draw 7
+- two unique singleton pieces
+- probability both appear = `1 / 231 ≈ 0.4329004329%`
 - favorable hands = `64,446,024`
 - total hands = `14,887,031,544`
 
-### Critical limitation
+The implementation intentionally does **not** double-count tutors/multi-role physical cards.
 
-The current package solver assumes the package buckets are **disjoint physical-card sets**.
-
-It deliberately does **not** double-count tutors or cards that can satisfy multiple roles.
-
-Example of what is not yet fully modeled:
-
-- Walking Ballista
-- The Destined White Mage
-- Demonic Tutor
-- Imperial Seal
-- tutors that can find either piece
-- tutors that can only find one piece
-- alternative combo packages sharing cards
-
-A tutor that can satisfy either role cannot simply be counted as an extra copy in both roles.
+Oracle normalization in `external-oracle-adapters-v15.ts` compares exact semantic values, strips presentation decimals, and canonicalizes package order.
 
 ---
 
-## External oracle / benchmark layer
+## Permanent benchmark controls
 
-Key V0.15 files include:
+### Control A — Final Fantasy-only Bracket 5 attempt
 
-- `src/services/external-oracles-v15.ts`
-- `src/services/external-oracle-adapters-v15.ts`
-- `src/services/external-oracle-pins-v15.ts`
-- corresponding tests
-- `docs/V0.15_EXTERNAL_ORACLE_BENCHMARKS.md`
+Keep this forever:
 
-Initial oracle/reference families:
+> Build the strongest possible Commander deck using only legitimate Final Fantasy physical printings, target Bracket 5, and report the honest ceiling if the restriction cannot support Bracket 5.
 
-### `j4th/mtg-mcp-server`
+This tests printing enforcement, legality, color identity, exact deck construction, winning packages, tutor/redundancy reasoning, mana, interaction/protection, multiple win routes, probability, simulation and bracket honesty.
 
-- MIT
-- independent MCP / Commander / deck-workflow comparison target
-- useful for card/deck/rules/workflow behavior
+For FF builds, do not automatically collapse the deck into only one infinite line when combat/value/commander routes materially belong to the deck identity.
 
-### `nccurry/mtg-mcp`
+Relevant E2E/probe files already include:
 
-- AGPL-3.0-or-later
-- statistics/evidence/provenance/reproducibility architecture reference
-- use primarily as behavioral/architecture reference unless licensing is deliberately reconsidered
+- `scripts/e2e-ff-bracket5.ts`
+- `scripts/e2e-ff-cedh-refine.ts`
+- `scripts/probe-ff-win-packages.ts`
 
-### `Card-Forge/forge`
+### Control B — unrestricted cEDH
 
-- GPL-3.0
-- mature rules/simulation reference engine
+Keep this forever:
 
-### `witchesofthehill/manabrew`
+> Build a genuine competitive Commander deck without the FF printing restriction.
 
-- AGPL/GPL-derived
-- parity-harness methodology reference
-- uses Forge as its reference, therefore **Forge + Manabrew count as one `forge-family`**, not two independent confirmations
+`scripts/e2e-unrestricted-cedh-v15.ts` uses **Kinnan, Bonder Prodigy** and asserts:
 
-External mismatch policy:
+- complete 100-card deck;
+- Commander legality;
+- every exact identifier resolves;
+- at least one verified deterministic Commander Spellbook winning combo;
+- low curve;
+- free interaction;
+- fast mana;
+- strong competitive construction signals;
+- no practical fallback to the clunky Leveler line.
 
-1. Same input/scenario/version/seed where possible.
-2. Normalize semantic outputs.
-3. Compare exact paths.
-4. A disagreement means **investigate**, not “obey the oracle.”
-5. Determine whether Ultimate MTG, the external system, adapter, normalization, version pin, or fixture is wrong.
-6. Once understood, save the scenario as a permanent regression fixture.
-
-Long-term target: hundreds or thousands of known tricky MTG situations accumulated as permanent regression cases.
-
-Package-probability normalization now removes presentation decimals and compares exact numerator/denominator semantics. Package order is canonicalized so equivalent role order cannot cause a false mismatch.
+The FF vs unrestricted comparison helps tell whether a ceiling comes from the user's restriction or from the builder itself.
 
 ---
 
-## Permanent real-world benchmark: Final Fantasy-only Bracket 5 challenge
+## External oracle strategy
 
-This test must remain part of development.
+Registered/reference families:
 
-Challenge:
+- `j4th-mtg-mcp` — independent MCP/deck workflow reference, MIT;
+- `nccurry-mtg-mcp` — statistics/evidence/reproducibility architecture reference, AGPL;
+- `forge` — mature rules/simulation reference, GPL;
+- `manabrew` — parity methodology using Forge, therefore the same `forge-family` independence group.
 
-> Build the strongest possible Commander deck using **only legitimate Final Fantasy physical printings**, while targeting Bracket 5, and report the honest ceiling if the restriction cannot truly support Bracket 5.
+Rules:
 
-Why this benchmark matters:
+- external mismatches trigger investigation, not obedience;
+- deduplicate related projects by independence group;
+- pin versions/snapshots for deterministic comparisons;
+- live external benchmarks remain separate from deterministic CI where appropriate;
+- shrink generated failures and save resolved cases as permanent regressions;
+- respect licenses; behavioral comparison is not permission to copy implementation.
 
-It pressures many systems simultaneously:
+---
 
-- exact physical printing verification;
-- Final Fantasy-only restriction enforcement;
-- Commander color identity;
-- 100-card legality and singleton construction;
-- combo discovery and verification;
-- tutors / functional redundancy;
-- mana consistency;
-- interaction and protection density;
-- multiple win routes;
-- exact package probabilities;
-- simulation;
-- research/oracle comparisons;
-- honest bracket ceiling.
+## General honest bracket result format
 
-The engine must **not** call a deck Bracket 5 merely because the user asked for Bracket 5.
+This should become common across precon upgrades, budgets, themes, collection builds and cEDH:
 
-Keep a second control benchmark as well:
+```text
+Requested: Bracket 5
+Achieved: High Bracket 4
+Confidence: High
+Ceiling caused by:
+- specific restriction/weaknesses
+What would be needed to reach 5:
+- specific changes
+```
 
-> Build the strongest unrestricted Bracket 5 / cEDH Commander deck.
-
-Comparing the constrained FF-only deck with the unrestricted deck helps detect optimizer shortcuts, illegal printings, bracket inflation, and restriction leakage.
-
-User preference for FF builds: do not reduce them to a single infinite combo. Preserve viable combat/value/commander routes when they materially improve the deck.
+The engine must distinguish user/card-pool ceiling from builder failure or insufficient evidence.
 
 ---
 
@@ -229,79 +273,72 @@ User preference for FF builds: do not reduce them to a single infinite combo. Pr
 
 ### 1. Overlap-aware exact package solver
 
-Add an exact model for physical cards that can satisfy more than one role without double-counting.
+Continue from the successful disjoint solver.
+
+Need an exact physical-card model where a card may satisfy several possible roles but can only be assigned once in the sampled hand/line.
 
 High-priority cases:
 
-- generic tutors that can find either combo piece;
+- universal tutor can find A or B but cannot count as both simultaneously;
 - role-specific tutors;
-- one physical card shared across multiple alternative packages;
-- redundant pieces;
-- “at least one viable package” across multiple win lines;
-- Commander-zone pieces that are always available rather than drawn;
-- cards beginning in command zone vs library population.
+- cards shared between alternative winning packages;
+- interchangeable/redundant pieces;
+- “at least one viable package” across several win routes.
 
-The representation must make physical-card identity explicit enough that the same card cannot be credited twice in one hand.
+Implementation direction:
 
-### 2. Turn-by-turn access curves
+- aggregate physical cards/categories by capability mask;
+- exact BigInt combinatorics/DP;
+- saturated requirement-state vector or equivalent matching-safe state representation;
+- explicit state/work ceiling;
+- choose role-count limits based on benchmarked exact workload rather than arbitrary optimism.
 
-After exact overlap-aware assembly is reliable:
+Tests must include an **independent exhaustive brute-force enumerator** for small overlapping-card populations.
 
-- opening 7;
-- after draw steps;
-- by turns 1/2/3/4/5;
-- commander-aware availability;
-- simple deterministic draw effects where exact treatment is possible.
+Adversarial fixtures must prove that one universal tutor/dual-role physical card cannot satisfy two simultaneous missing roles by itself.
 
-Desired future query:
+### 2. Commander-zone exact availability
 
-> What is the probability this 99-card Commander deck has access to a viable Cloud/FF win package by turn 4, accounting for tutors, interchangeable pieces and the commander?
+After overlap-aware assembly is trustworthy, model commander(s) as starting outside the library rather than pretending they are normal cards in the 99/98.
 
-### 3. Exact-as-oracle simulation validation
+Verify current Commander draw/library rules before encoding them.
 
-Use exact solvable cases to test the Monte Carlo simulator automatically.
+### 3. Turn-by-turn exact access curves
 
-For a scenario with an exact answer:
+Opening seven + natural draws, then exact/simple deterministic draw effects where feasible.
 
-- exact engine provides truth fixture;
-- simulation runs a pinned seed/sample count;
-- result must fall inside a justified tolerance/confidence interval;
-- meaningful drift becomes a regression failure/investigation.
+### 4. Exact-as-oracle simulation testing
 
-### 4. External snapshot parity for statistics
+For solvable scenarios, use the exact answer as truth and require Monte Carlo results to fall within statistically justified confidence/tolerance, not an arbitrary fixed margin.
 
-Add normalized package-probability benchmark snapshots using the existing external-oracle layer, with `nccurry-mtg-mcp` as the independent statistics-methodology reference where appropriate.
+### 5. Real learning corpus
 
-Do not copy AGPL implementation into the Ultimate MTG core.
+Parallel/next major intelligence work: assemble independently sourced real Commander/cEDH outcomes with exact deck fingerprints, temporal coverage, evidence independence and leakage groups. Do not promote the neural ranker until it repeatedly wins against the transparent baseline on genuinely unseen future records.
 
 ---
 
-## Quality gates
-
-Before declaring a new milestone complete:
+## Quality gates before calling a milestone complete
 
 - dependency install succeeds;
 - strict TypeScript build succeeds;
-- complete automated test suite succeeds;
-- new probability logic has an independent test/oracle where practical;
+- complete automated tests succeed;
+- probability changes have independent brute-force/oracle validation where practical;
 - malformed/boundary requests fail closed;
-- exact equality uses fractions/BigInt, not floating-point decimals;
-- a failed test fixture is allowed to be wrong — never change correct implementation merely to satisfy an incorrect fixture;
-- external agreement is corroboration only;
-- related external projects are lineage-deduplicated;
-- permanent FF-only and unrestricted Commander benchmark behavior is not allowed to regress silently.
+- exact probability equality uses BigInt/fractions, not float decimals;
+- failed fixtures are allowed to be wrong — do not corrupt correct math to satisfy a bad test;
+- hard legality/printing truth remains outside ML;
+- model evaluation is leakage-safe;
+- external evidence is independence-aware;
+- FF-only and unrestricted controls do not regress silently;
+- stable `server-current` is not changed without an explicit release/promotion decision;
+- update this file after the milestone.
 
 ---
 
 ## Handoff maintenance rule
 
-**Update this file after every major project milestone or whenever the active branch/next target changes.**
+**Update `PROJECT_HANDOFF.md` after every major implementation milestone or active-branch/next-target change.**
 
-A future ChatGPT session should be able to recover the project with only:
+**Update `ULTIMATE_MTG_SPEC.md` whenever the long-term product or architectural goals change.**
 
-- repository access;
-- this file;
-- current branch/commit history;
-- CI results.
-
-Do not rely on old chat history being available.
+A future session must be able to recover the project from GitHub alone without needing old chat history.
