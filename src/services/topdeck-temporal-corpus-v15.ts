@@ -56,6 +56,7 @@ function sourceObservedPreflight(item: TopDeckTemporalCorpusItemV15): void {
 
 function historicalProvenanceMetadata(snapshot: ProvenancedDeckFeatureSnapshotV15): Record<string, string | number | boolean | null> {
   const provenance = snapshot.historicalCardDataProvenance;
+  const commanderValidation = snapshot.historicalCommanderValidation;
   return {
     historicalCardDataMethod: provenance.method,
     historicalCardDataSourceId: provenance.sourceId,
@@ -65,12 +66,16 @@ function historicalProvenanceMetadata(snapshot: ProvenancedDeckFeatureSnapshotV1
     historicalCardDataRetrievedAt: provenance.retrievedAt,
     historicalCardDataArchiveVersion: provenance.archiveVersion,
     historicalCardDataSnapshotEffectiveAt: provenance.snapshotEffectiveAt,
+    historicalCommanderRuleset: commanderValidation.ruleset,
+    historicalCommanderLegalityStatus: commanderValidation.status,
+    historicalCommanderCount: commanderValidation.commanderCount,
+    historicalCommanderPairingMethod: commanderValidation.pairingMethod,
   };
 }
 
 /**
  * End-to-end deterministic TopDeck corpus materialization with a crucial order:
- * 1. require and validate historical card-data provenance;
+ * 1. require and validate historical card-data provenance and Commander legality;
  * 2. preflight candidate/snapshot identity and time provenance;
  * 3. plan leakage-safe temporal membership without using labels/features;
  * 4. fit the feature normalizer on planned training snapshots only;
