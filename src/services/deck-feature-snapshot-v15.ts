@@ -9,7 +9,7 @@ import {
 import { fingerprintExactDeckV15 } from './learning-corpus-v15.js';
 import type { LearningFeatureV15 } from './research-learning-v15.js';
 
-export const DECK_FEATURE_EXTRACTOR_ID_V15 = 'deck-structural-v15.1' as const;
+export const DECK_FEATURE_EXTRACTOR_ID_V15 = 'deck-structural-v15.2' as const;
 export const DECK_FEATURE_NORMALIZER_ID_V15 = 'deck-structural-minmax-v15.1' as const;
 export const MAX_DECK_FEATURE_SNAPSHOTS_V15 = 50_000;
 
@@ -36,6 +36,7 @@ export interface RawDeckFeaturesV15 {
 export interface DeckFeatureSnapshotV15 {
   extractorId: typeof DECK_FEATURE_EXTRACTOR_ID_V15;
   deckFingerprint: string;
+  cardDataSnapshotFingerprint: string;
   commanderNames: string[];
   availableAt: string;
   cardDataObservedAt: string;
@@ -89,7 +90,7 @@ function releaseTimestampMs(card: ScryfallCard): number | null {
   return Number.isFinite(ms) ? ms : null;
 }
 
-function assertResolvedEntry(entry: DeckEntry, cards: ScryfallCard[], availableAtMs: number): void {
+function assertResolvedEntry(entry: DeckEntry, cards: ScryfallCard[], availableAtMs: number): ScryfallCard {
   const resolved = resolveEntryCard(entry, cards);
   if (!resolved) throw new Error(`Could not resolve deck entry ${entry.name}.`);
   if (normalize(resolved.name) !== normalize(entry.name)) {
@@ -106,6 +107,59 @@ function assertResolvedEntry(entry: DeckEntry, cards: ScryfallCard[], availableA
   if (releasedAtMs !== null && releasedAtMs > availableAtMs) {
     throw new Error(`Resolved future printing ${resolved.name} (${resolved.set.toUpperCase()} ${resolved.collector_number}) was released after feature availableAt.`);
   }
+  return resolved;
+}
+
+function sortedStrings(values: string[] | undefined): string[] {
+  return [...(values ?? [])].sort((a, b) => a.localeCompare(b));
+}
+
+function canonicalCardData(card: ScryfallCard): Record<string, unknown> {
+  return {
+    id: card.id,
+    oracleId: card.oracle_id ?? null,
+    name: card.name,
+    releasedAt: card.released_at ?? null,
+    manaCost: card.mana_cost ?? null,
+    cmc: card.cmc,
+    typeLine: card.type_line,
+    oracleText: card.oracle_text ?? null,
+    colors: sortedStrings(card.colors),
+    colorIdentity: sortedStrings(card.color_identity),
+    keywords: sortedStrings(card.keywords),
+    producedMana: sortedStrings(card.produced_mana),
+    power: card.power ?? null,
+    toughness: card.toughness ?? null,
+    loyalty: card.loyalty ?? null,
+    defense: card.defense ?? null,
+    set: card.set.toLocaleLowerCase(),
+    collectorNumber: card.collector_number,
+    rarity: card.rarity,
+    commanderLegality: card.legalities.commander ?? null,
+    cardFaces: (card.card_faces ?? []).map((face) => ({
+      name: face.name,
+      manaCost: face.mana_cost ?? null,
+      typeLine: face.type_line ?? null,
+      oracleText: face.oracle_text ?? null,
+      colors: sortedStrings(face.colors),
+      power: face.power ?? null,
+      toughness: face.toughness ?? null,
+      loyalty: face.loyalty ?? null,
+    })),
+  };
+}
+
+function cardDataIdentity(card: ScryfallCard): string {
+  return `${normalize(card.name)}|${card.set.toLocaleLowerCase()}|${card.collector_number.toLocaleLowerCase()}|${card.id}`;
+}
+
+function fingerprintResolvedCardData(cards: ScryfallCard[]): string {
+  const unique = new Map<string, ScryfallCard>();
+  for (const card of cards) unique.set(cardDataIdentity(card), card);
+  const rows = [...unique.values()]
+    .map((card) => JSON.stringify(canonicalCardData(card)))
+    .sort();
+  return createHash('sha256').update(rows.join('\n')).digest('hex');
 }
 
 function finiteNonNegative(name: string, value: number): number {
@@ -118,6 +172,9 @@ function validateSnapshot(snapshot: DeckFeatureSnapshotV15): void {
     throw new Error(`Feature extractor contract mismatch: expected ${DECK_FEATURE_EXTRACTOR_ID_V15}, received ${String(snapshot.extractorId)}.`);
   }
   if (!/^[a-f0-9]{64}$/i.test(snapshot.deckFingerprint)) throw new Error('deckFingerprint must be a SHA-256 hex digest.');
+  if (!/^[a-f0-9]{64}$/i.test(snapshot.cardDataSnapshotFingerprint)) {
+    throw new Error('cardDataSnapshotFingerprint must be a SHA-256 hex digest.');
+  }
   timestamp('snapshot.availableAt', snapshot.availableAt);
   timestamp('snapshot.cardDataObservedAt', snapshot.cardDataObservedAt);
   if (!Array.isArray(snapshot.commanderNames) || snapshot.commanderNames.length < 1 || snapshot.commanderNames.length > 2) {
@@ -161,8 +218,9 @@ export function extractDeckFeatureSnapshotV15(
     throw new Error('Each historical Commander entry must represent exactly one physical card.');
   }
 
+  const resolvedFeatureCards: ScryfallCard[] = [];
   for (const entry of [...parsed.commanders, ...parsed.main]) {
-    assertResolvedEntry(entry, cards, availableAt.ms);
+    resolvedFeatureCards.push(assertResolvedEntry(entry, cards, availableAt.ms));
   }
 
   const metrics = buildDeckMetrics(parsed, cards);
@@ -189,6 +247,7 @@ export function extractDeckFeatureSnapshotV15(
   return {
     extractorId: DECK_FEATURE_EXTRACTOR_ID_V15,
     deckFingerprint: fingerprintExactDeckV15(decklist),
+    cardDataSnapshotFingerprint: fingerprintResolvedCardData(resolvedFeatureCards),
     commanderNames: parsed.commanders.map((entry) => entry.name),
     availableAt: availableAt.iso,
     cardDataObservedAt: cardDataObservedAt.iso,
@@ -199,6 +258,7 @@ export function extractDeckFeatureSnapshotV15(
 function fitFingerprint(snapshots: DeckFeatureSnapshotV15[]): string {
   const rows = snapshots.map((snapshot) => [
     snapshot.deckFingerprint,
+    snapshot.cardDataSnapshotFingerprint,
     snapshot.availableAt,
     snapshot.raw.averageNonlandManaValue,
     snapshot.raw.cheapInteractionCount,
