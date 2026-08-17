@@ -2,6 +2,15 @@ import { createHash } from 'node:crypto';
 import { parseDecklist, type DeckEntry } from './deck.js';
 import { LEARNING_FEATURES_V15, type LearningExampleV15, type LearningFeatureV15 } from './research-learning-v15.js';
 
+export type LearningTargetV15 =
+  | 'match-win'
+  | 'event-top-cut'
+  | 'deck-change-improvement'
+  | 'simulation-outcome'
+  | 'verified-package-success'
+  | 'recommendation-outcome'
+  | 'legacy-unspecified';
+
 export interface LearningOutcomeRecordV15 {
   outcomeId: string;
   observedAt: string;
@@ -13,6 +22,7 @@ export interface LearningOutcomeRecordV15 {
   commanderNames: string[];
   features: Partial<Record<LearningFeatureV15, number>>;
   label: 0 | 1;
+  learningTarget?: LearningTargetV15;
   importance?: number;
   metadata?: Record<string, string | number | boolean | null>;
 }
@@ -31,6 +41,8 @@ export interface LearningCorpusAuditV15 {
   independentEvidenceGroups: number;
   evidenceClassCount: number;
   leakageGroupCount: number;
+  learningTargetCount: number;
+  learningTargets: LearningTargetV15[];
   malformedRecords: number;
   malformedRate: number;
 }
@@ -46,6 +58,15 @@ export interface TemporalLearningSplitV15 {
 }
 
 const LEARNING_FEATURE_SET_V15 = new Set<string>(LEARNING_FEATURES_V15);
+const LEARNING_TARGET_SET_V15 = new Set<string>([
+  'match-win',
+  'event-top-cut',
+  'deck-change-improvement',
+  'simulation-outcome',
+  'verified-package-success',
+  'recommendation-outcome',
+  'legacy-unspecified',
+]);
 const SHA256_HEX = /^[a-f0-9]{64}$/i;
 
 function normalize(value: string): string {
@@ -83,8 +104,12 @@ function timestampMs(value: string): number | null {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
+export function learningTargetForRecordV15(record: Pick<LearningOutcomeRecordV15, 'learningTarget'>): LearningTargetV15 {
+  return record.learningTarget ?? 'legacy-unspecified';
+}
+
 function outcomeKey(record: LearningOutcomeRecordV15): string {
-  return `${normalize(record.independentGroup)}|${normalize(record.outcomeId)}`;
+  return `${learningTargetForRecordV15(record)}|${normalize(record.independentGroup)}|${normalize(record.outcomeId)}`;
 }
 
 function commanderIdentityKey(record: LearningOutcomeRecordV15): string {
@@ -111,6 +136,8 @@ function validRecord(record: LearningOutcomeRecordV15): boolean {
   const commanders = Array.isArray(record.commanderNames) ? record.commanderNames : [];
   const importanceValid = record.importance === undefined
     || (Number.isFinite(record.importance) && record.importance >= 0.1 && record.importance <= 5);
+  const learningTargetValid = record.learningTarget === undefined
+    || (nonEmptyString(record.learningTarget) && LEARNING_TARGET_SET_V15.has(record.learningTarget));
   return Boolean(
     nonEmptyString(record.outcomeId)
     && nonEmptyString(record.sourceId)
@@ -126,6 +153,7 @@ function validRecord(record: LearningOutcomeRecordV15): boolean {
     && commanders.every(nonEmptyString)
     && validFeatures(record.features)
     && importanceValid
+    && learningTargetValid
     && (record.label === 0 || record.label === 1),
   );
 }
@@ -199,6 +227,7 @@ export function auditLearningCorpusV15(records: LearningOutcomeRecordV15[]): Lea
   const duplicateRecords = deduped.duplicateRecords.length;
   const conflictingRecords = deduped.conflictingRecords.length;
   const malformedRecords = deduped.malformedRecords.length;
+  const learningTargets = [...new Set(usable.map(learningTargetForRecordV15))].sort() as LearningTargetV15[];
   return {
     inputRecords: records.length,
     uniqueRecords: usable.length,
@@ -213,6 +242,8 @@ export function auditLearningCorpusV15(records: LearningOutcomeRecordV15[]): Lea
     independentEvidenceGroups: new Set(usable.map((record) => normalize(record.independentGroup))).size,
     evidenceClassCount: new Set(usable.map((record) => normalize(record.evidenceClass))).size,
     leakageGroupCount: new Set(usable.map((record) => normalize(record.leakageGroup))).size,
+    learningTargetCount: learningTargets.length,
+    learningTargets,
     malformedRecords,
     malformedRate: records.length > 0 ? round(malformedRecords / records.length) : 0,
   };
