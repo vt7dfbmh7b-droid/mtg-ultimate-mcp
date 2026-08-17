@@ -216,7 +216,7 @@ export function calculateExactCommanderZonePackageAssemblyV15(input: {
 
   const routeNames = new Set<string>();
   const roleMaximums = new Map<string, number>();
-  const routes: NormalizedRouteV15[] = input.routes.map((entry, routeIndex) => {
+  const routes: NormalizedRouteV15[] = input.routes.map((entry: ExactOverlapRouteV15, routeIndex: number) => {
     if (!entry || typeof entry !== 'object') throw new Error(`routes[${routeIndex}] must be an object.`);
     const name = requireName(`routes[${routeIndex}].name`, entry.name);
     if (routeNames.has(name)) throw new Error(`route names must be unique; duplicate: ${name}.`);
@@ -225,7 +225,7 @@ export function calculateExactCommanderZonePackageAssemblyV15(input: {
 
     const localRoles = new Set<string>();
     const requirementByRole = new Map<string, number>();
-    const requirements = entry.requirements.map((requirement, requirementIndex) => {
+    const requirements = entry.requirements.map((requirement: ExactOverlapRouteRequirementV15, requirementIndex: number) => {
       if (!requirement || typeof requirement !== 'object') {
         throw new Error(`routes[${routeIndex}].requirements[${requirementIndex}] must be an object.`);
       }
@@ -253,10 +253,10 @@ export function calculateExactCommanderZonePackageAssemblyV15(input: {
   }
 
   const roles = [...roleMaximums.keys()];
-  const roleIndexByName = new Map(roles.map((role, index) => [role, index] as const));
-  const caps = roles.map((role) => roleMaximums.get(role) ?? 0);
+  const roleIndexByName = new Map(roles.map((role: string, index: number) => [role, index] as const));
+  const caps = roles.map((role: string) => roleMaximums.get(role) ?? 0);
   const commandZoneNames = new Set<string>();
-  const commandZoneCards = input.commandZoneCards.map((entry, cardIndex) => {
+  const commandZoneCards = input.commandZoneCards.map((entry: ExactCommandZoneCardV15, cardIndex: number) => {
     if (!entry || typeof entry !== 'object') throw new Error(`commandZoneCards[${cardIndex}] must be an object.`);
     const name = requireName(`commandZoneCards[${cardIndex}].name`, entry.name);
     if (commandZoneNames.has(name)) throw new Error(`command-zone card names must be unique; duplicate: ${name}.`);
@@ -264,7 +264,7 @@ export function calculateExactCommanderZonePackageAssemblyV15(input: {
     if (!Array.isArray(entry.roles)) throw new Error(`commandZoneCards[${cardIndex}].roles must be an array.`);
 
     const localRoles = new Set<string>();
-    const cardRoles = entry.roles.map((roleValue, roleIndex) => {
+    const cardRoles = entry.roles.map((roleValue: string, roleIndex: number) => {
       const role = requireName(`commandZoneCards[${cardIndex}].roles[${roleIndex}]`, roleValue);
       if (!roleMaximums.has(role)) throw new Error(`command-zone card ${name} references unknown role: ${role}.`);
       if (localRoles.has(role)) throw new Error(`command-zone card ${name} contains duplicate role capability: ${role}.`);
@@ -286,18 +286,18 @@ export function calculateExactCommanderZonePackageAssemblyV15(input: {
   const work: WorkCounterV15 = { value: 0 };
   let commandZoneFrontier = [new Array<number>(roles.length).fill(0)];
   for (const card of commandZoneCards) {
-    const roleIndexes = card.roles.map((role) => {
+    const roleIndexes = card.roles.map((role: string) => {
       const roleIndex = roleIndexByName.get(role);
       if (roleIndex === undefined) throw new Error(`Internal command-zone role index missing for ${role}.`);
       return roleIndex;
-    }).filter((roleIndex) => (caps[roleIndex] ?? 0) > 0);
+    }).filter((roleIndex: number) => (caps[roleIndex] ?? 0) > 0);
     commandZoneFrontier = addKnownPhysicalCard(commandZoneFrontier, roleIndexes, caps, work);
   }
 
   const residualVectors: number[][] = [];
   for (const route of routes) {
     for (const guaranteed of commandZoneFrontier) {
-      const residual = roles.map((role, roleIndex) => Math.max(
+      const residual = roles.map((role: string, roleIndex: number) => Math.max(
         0,
         (route.requirementByRole.get(role) ?? 0) - (guaranteed[roleIndex] ?? 0),
       ));
@@ -307,9 +307,9 @@ export function calculateExactCommanderZonePackageAssemblyV15(input: {
   }
   const residualFrontier = canonicalizeResidualRouteFrontier(residualVectors);
 
-  const effectiveRoutes: ExactOverlapRouteV15[] = residualFrontier.map((vector, routeIndex) => ({
+  const effectiveRoutes: ExactOverlapRouteV15[] = residualFrontier.map((vector: number[], routeIndex: number) => ({
     name: `command-zone-effective-${routeIndex + 1}`,
-    requirements: roles.map((role, roleIndex) => ({
+    requirements: roles.map((role: string, roleIndex: number) => ({
       role,
       minimum: vector[roleIndex] ?? 0,
     })),
@@ -326,11 +326,14 @@ export function calculateExactCommanderZonePackageAssemblyV15(input: {
     deckSize,
     libraryPopulation,
     draws,
-    commandZoneCards: commandZoneCards.map((card) => ({ name: card.name, roles: [...card.roles] })),
-    roles: roles.map((name) => ({ name, maximumRequired: roleMaximums.get(name) ?? 0 })),
-    routes: routes.map((route) => ({
+    commandZoneCards: commandZoneCards.map((card: { name: string; roles: string[] }) => ({
+      name: card.name,
+      roles: [...card.roles],
+    })),
+    roles: roles.map((name: string) => ({ name, maximumRequired: roleMaximums.get(name) ?? 0 })),
+    routes: routes.map((route: NormalizedRouteV15) => ({
       name: route.name,
-      requirements: route.requirements.map((requirement) => ({ ...requirement })),
+      requirements: route.requirements.map((requirement: ExactOverlapRouteRequirementV15) => ({ ...requirement })),
     })),
     commandZoneFrontierStates: commandZoneFrontier.length,
     effectiveLibraryRouteCount: residualFrontier.length,
