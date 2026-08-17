@@ -54,19 +54,26 @@ export function normalizeCombatBoardForExternalOracleV15(board: CombatBoardV07):
 /**
  * Normalize exact package assembly for statistics differential tests.
  * Decimal presentations and explanatory fields are deliberately excluded: exact
- * numerator/denominator pairs are the equality contract.
+ * numerator/denominator pairs are the equality contract. Package input order is
+ * also excluded so equivalent named role buckets compare identically.
  */
 export function normalizeExactPackageAssemblyForExternalOracleV15(
   result: ExactPackageAssemblyResultV15,
 ): ExternalBenchmarkJsonV15 {
-  return canonicalize({
-    population: result.population,
-    draws: result.draws,
-    packages: result.packages.map((entry) => ({
+  const packages = result.packages
+    .map((entry) => ({
       name: entry.name,
       count: entry.count,
       minimum: entry.minimum,
-    })),
+    }))
+    .sort((left, right) => left.name.localeCompare(right.name)
+      || left.count - right.count
+      || left.minimum - right.minimum);
+
+  return canonicalize({
+    population: result.population,
+    draws: result.draws,
+    packages,
     untrackedCards: result.untrackedCards,
     favorableHands: result.favorableHands,
     totalHands: result.totalHands,
