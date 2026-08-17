@@ -1,0 +1,88 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { assessBracketCeilingV15 } from './bracket-ceiling-v15.js';
+
+const hardPass = {
+  commanderLegal: true,
+  exactCardCount: true,
+  fullyResolved: true,
+  printingPolicyCompliant: true,
+} as const;
+
+const cedhConstruction = {
+  ...hardPass,
+  spellbookTag: 'R',
+  verifiedWinningCombos: 2,
+  ruthlessWinningCombos: 1,
+  strategicallyRelevantCombos: 1,
+  averageNonlandManaValue: 2.1,
+  earlyPlayCount: 44,
+  fastManaCount: 7,
+  freeInteractionCount: 4,
+  cheapInteractionCount: 13,
+  tutorCount: 8,
+  gameChangerCount: 5,
+  optimizedPlanEvidence: true,
+} as const;
+
+test('requested Bracket 5 does not inflate a merely upgraded deck', () => {
+  const result = assessBracketCeilingV15(5, {
+    ...hardPass,
+    spellbookTag: 'P',
+    verifiedWinningCombos: 0,
+    averageNonlandManaValue: 3.4,
+    earlyPlayCount: 20,
+    fastManaCount: 1,
+    freeInteractionCount: 0,
+    cheapInteractionCount: 5,
+    tutorCount: 1,
+  }, ['FINAL FANTASY physical printings only']);
+
+  assert.equal(result.assessedBracket, 3);
+  assert.equal(result.targetGap, 2);
+  assert.equal(result.bracket5CertifiedByThisAssessment, false);
+  assert.ok(result.ceilingReasons.some((reason) => reason.includes('Constraint ceiling')));
+});
+
+test('strong static cEDH construction stays high Bracket 4 without intent and metagame evidence', () => {
+  const result = assessBracketCeilingV15(5, cedhConstruction);
+  assert.equal(result.bracket5ConstructionCandidate, true);
+  assert.equal(result.assessedBracket, 4);
+  assert.equal(result.assessedBand, 'high-bracket-4-cedh-construction-candidate');
+  assert.ok(result.ceilingReasons.some((reason) => reason.includes('intent')));
+  assert.ok(result.ceilingReasons.some((reason) => reason.includes('metagame')));
+});
+
+test('Bracket 5 requires construction, explicit cEDH intent and competitive metagame evidence together', () => {
+  const result = assessBracketCeilingV15(5, {
+    ...cedhConstruction,
+    cedhIntent: true,
+    competitiveMetagameEvidence: true,
+  });
+  assert.equal(result.assessedBracket, 5);
+  assert.equal(result.bracket5CertifiedByThisAssessment, true);
+  assert.equal(result.confidence, 'high');
+  assert.equal(result.ceilingReasons.length, 0);
+});
+
+test('assessment is independent of a lower requested target', () => {
+  const result = assessBracketCeilingV15(2, {
+    ...cedhConstruction,
+    cedhIntent: false,
+    competitiveMetagameEvidence: false,
+  });
+  assert.equal(result.assessedBracket, 4);
+  assert.equal(result.targetGap, -2);
+});
+
+test('hard legality or printing failures make bracket assessment unassessable', () => {
+  const result = assessBracketCeilingV15(4, {
+    ...hardPass,
+    commanderLegal: false,
+    printingPolicyCompliant: false,
+  });
+  assert.equal(result.assessedBracket, null);
+  assert.equal(result.hardGatesPassed, false);
+  assert.equal(result.assessedBand, 'unassessable');
+  assert.ok(result.ceilingReasons.length >= 2);
+});
