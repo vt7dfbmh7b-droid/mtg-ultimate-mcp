@@ -39,6 +39,23 @@ function temporalXorCorpus(size = 200): LearningOutcomeRecordV15[] {
   });
 }
 
+function shiftedCorpus(size = 240): LearningOutcomeRecordV15[] {
+  const records = temporalXorCorpus(size);
+  const recentStart = Math.floor(size * 0.75);
+  return records.map((record, index) => index < recentStart ? record : {
+    ...record,
+    commanderNames: ['Najeela, the Blade-Blossom'],
+    evidenceClass: 'observed-results',
+    label: index % 10 === 0 ? 0 : 1,
+    features: {
+      tournamentSupport: 1,
+      comboVerification: 1,
+      manaEfficiency: 1,
+      interactionEfficiency: 0.9,
+    },
+  });
+}
+
 test('temporal evaluation measures neural and transparent models on the same unseen future records', () => {
   const evaluation = evaluateNeuralOnTemporalCorpusV15(temporalXorCorpus(), {
     epochs: 700,
@@ -56,6 +73,7 @@ test('temporal evaluation measures neural and transparent models on the same uns
   assert.ok((evaluation.neuralTemporalMetrics.accuracy ?? 0) >= 0.95);
   assert.ok((evaluation.transparentTemporalMetrics.accuracy ?? 1) <= 0.75);
   assert.ok((evaluation.temporalAccuracyImprovement ?? 0) >= 0.2);
+  assert.equal(evaluation.metagameDrift.severity, 'stable');
 });
 
 test('strong synthetic model performance still does not bypass real-data readiness requirements', () => {
@@ -67,4 +85,16 @@ test('strong synthetic model performance still does not bypass real-data readine
   assert.equal(evaluation.readiness.status, 'not-ready');
   assert.ok(evaluation.readiness.blockers.some((blocker) => blocker.includes('labelled examples')));
   assert.ok(evaluation.readiness.blockers.some((blocker) => blocker.includes('Temporal holdout')));
+});
+
+test('severe metagame drift is surfaced inside temporal neural evaluation', () => {
+  const evaluation = evaluateNeuralOnTemporalCorpusV15(shiftedCorpus(), {
+    epochs: 300,
+    seed: 9,
+  });
+
+  assert.equal(evaluation.metagameDrift.severity, 'severe');
+  assert.equal(evaluation.metagameDrift.recommendation, 'block-promotion-and-retrain');
+  assert.ok(evaluation.evaluationWarnings.some((warning) => warning.includes('Severe metagame drift')));
+  assert.ok(evaluation.readiness.blockers.some((blocker) => blocker.includes('metagame drift')));
 });
