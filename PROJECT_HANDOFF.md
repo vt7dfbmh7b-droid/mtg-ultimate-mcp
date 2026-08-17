@@ -28,16 +28,18 @@ Suggested fresh-chat prompt:
 
 Important current/recent commits:
 
+- `2f45b1381d525bd2a3bdfaf719894f2c8d5d5c2e` — commander-zone exact availability hardened for impossible alternative routes; CI succeeded.
+- `f5b2c4121655b407d0f78bc85c1ae4b8ef368fb6` — strict TypeScript callback typing fix during commander-zone work.
+- `c33d8a47d732b6aff09758133d8379678e084d2b` — commander-zone exact availability tests, including independent exhaustive enumeration.
+- `d529e326181cf0453eeb68568d51796fd6472293` — added commander-zone exact package availability implementation.
+- `7ccc34b11ad2a0ba5f2fb77b2bb825fbdc0162ea` — advanced the handoff after the overlap-aware exact milestone; CI succeeded.
 - `17bcfcc6819fcf9ef43ed5a8d14bcd9dc371ee6a` — overlap-aware exact package solver exhaustive/adversarial tests; CI succeeded.
 - `e126bf436ae0b1c2cae1b9f2e0ec74127b6311fd` — added the overlap-aware exact physical-card package solver.
-- `111e8f0f9e53bcb79ea3c435c2aa2c27ccb4b42b` — refreshed the persistent project handoff before overlap work; CI succeeded.
-- `d40957ab2d7fd1f7ff758384efbd50c5db561770` — added `ULTIMATE_MTG_SPEC.md` master specification.
-- `75d021932a13fe706ecf7881dc3e9372788c9983` — added initial persistent handoff file.
 - `161d3d1acb1129381d9195d39360b7ce0812f610` — exact disjoint package probability + oracle package-order normalization; CI succeeded.
 - `966bffac0a981f9aea5b828c94e6aa091de640ea` — V0.15 foundation baseline before the package branch.
 - `0a4fda12c9b44374bc8f58f5b07ec2da886ea993` — V0.15 external-oracle benchmark documentation.
 
-The overlap implementation head `17bcfcc6819fcf9ef43ed5a8d14bcd9dc371ee6a` passed the normal CI quality gate: dependency install, strict TypeScript build and the complete automated test suite all succeeded.
+The commander-zone implementation head `2f45b1381d525bd2a3bdfaf719894f2c8d5d5c2e` passed the normal CI quality gate: dependency install, strict TypeScript build and the complete automated test suite all succeeded.
 
 Temporary accidental branches `agent/package-probabilities-2` and `agent/package-probabilities-3` contain no unique work and are not active.
 
@@ -238,6 +240,44 @@ Permanent adversarial regressions include:
 
 CI succeeded for implementation/test head `17bcfcc6819fcf9ef43ed5a8d14bcd9dc371ee6a`.
 
+### Commander-zone exact availability — milestone complete
+
+Files:
+
+- `src/services/exact-commander-zone-statistics-v15.ts`
+- `src/services/exact-commander-zone-statistics-v15.test.ts`
+
+Current Commander rules were verified against the Wizards Comprehensive Rules effective **2026-08-07** before encoding this layer. Relevant rules include:
+
+- 903.5a — a normal Commander deck contains exactly 100 cards including its commander;
+- 103.2c / 903.6 — commander cards are moved from the deck to the command zone before the remaining deck becomes the library;
+- 103.5 / 903.7 — normal starting hand size is seven;
+- configurations with two legal commanders therefore leave 98 physical cards in a normal 100-card Commander library after both commanders begin in the command zone.
+
+The statistical service intentionally does **not** hard-code a 100-card deck. `deckSize` is supplied by the caller and `libraryPopulation` is derived by subtracting the known physical command-zone cards. Commander legality and whether a multi-commander configuration is actually legal remain separate hard-truth concerns.
+
+Implementation properties:
+
+- command-zone cards are guaranteed known physical cards, not random draws;
+- one command-zone physical card may be capable of several roles but can be assigned to at most one simultaneous role;
+- a Pareto-maximal command-zone assignment frontier reduces already-satisfied route requirements before library probability is calculated;
+- residual alternative routes are Pareto-pruned under OR semantics before being passed to the existing overlap-aware library solver;
+- one flexible commander cannot satisfy two missing simultaneous roles by itself;
+- two separate flexible commanders may satisfy two roles separately;
+- impossible alternative routes collapse to exact zero rather than invalidating an otherwise valid OR-query;
+- category counts are checked against the **derived library population**, preventing a commander from being counted both as guaranteed availability and as a fictitious library copy;
+- command-zone frontier and work ceilings fail closed on pathological requests;
+- exact BigInt/fraction results remain the proof surface.
+
+Pinned standard Commander examples:
+
+- one commander, 100-card deck → 99-card library; drawing a unique required payoff in the opening seven is exactly `7 / 99`;
+- two commanders, 100-card deck → 98-card library; drawing a unique required payoff in the opening seven is exactly `1 / 14`.
+
+Validation includes an **independent labeled-card brute-force matcher** combining guaranteed command-zone physical cards with all small sampled library hands. It checks one- and two-commander configurations, A-only/B-only/A-or-B cards, alternative routes and all supported draw counts in the small fixture space.
+
+The first commander-zone CI pass exposed strict callback typing, which was fixed without weakening TypeScript. A later full-test pass exposed two fixture/boundary assumptions; the implementation was hardened so impossible alternative routes are exact-zero cases while truly malformed library populations still fail closed. Final implementation head `2f45b1381d525bd2a3bdfaf719894f2c8d5d5c2e` passed dependency install, strict build and the complete test suite.
+
 ---
 
 ## Permanent benchmark controls
@@ -320,34 +360,36 @@ The engine must distinguish user/card-pool ceiling from builder failure or insuf
 
 ## Next implementation target
 
-### 1. Commander-zone exact availability
+### 1. Turn-by-turn exact access curves
 
-The overlap-aware assembly milestone is complete and trustworthy enough to build on.
+The commander-zone exact availability milestone is complete and trustworthy enough to build on.
 
-Next, model commander(s) as known cards starting outside the library instead of pretending commander-zone pieces are ordinary random draws.
+Next, expose exact access probability at ordered game checkpoints: opening hand, then natural draws by turn, then selected deterministic draw effects where exact treatment remains tractable.
 
-Before encoding this, verify the **current Commander rules** from authoritative/current sources, especially deck construction, command-zone starting state, opening-hand draw behavior, and how partner/multiple-commander configurations affect the library population.
+Current rules nuance verified from the Wizards Comprehensive Rules effective **2026-08-07**:
+
+- rule 103.8a — in a two-player game, the starting player skips the draw step of their first turn;
+- rule 103.8c — in other multiplayer games, no player skips the draw step of their first turn.
+
+Therefore **do not hard-code “opening seven + one card every turn” for every Commander game**. Commander can be played in different player-count/starting-player contexts. The exact curve API should make the natural-draw schedule explicit or derive it from an explicit game context.
 
 Implementation direction:
 
-- keep command-zone known availability separate from library draws;
-- allow package routes to require roles already guaranteed from the command zone;
-- reduce/remove already-satisfied command-zone requirements without adding fictitious draw probability;
-- preserve physical-card one-assignment semantics for any commander capable of multiple roles;
-- support one or multiple legal commanders without baking an unjustified fixed library size into the generic probability engine;
-- exact BigInt equality remains the proof surface;
-- add independent small-population fixtures comparing equivalent formulations where possible;
-- add adversarial tests that prevent commander-zone cards from being counted as both guaranteed availability and library copies.
+- keep the opening hand checkpoint distinct from turn draw checkpoints;
+- support at least: two-player starting player, two-player non-starting player, and ordinary multiplayer Commander natural-draw schedules, or an equivalent explicit schedule input;
+- reuse the commander-zone/overlap exact solver at each cumulative-draw checkpoint rather than reimplement package matching;
+- return exact fractions per checkpoint, with decimals only for presentation;
+- preserve monotonicity for pure cumulative-access curves: additional natural draws cannot reduce probability of having access to an already-defined package;
+- make the library-exhaustion boundary explicit;
+- add independent closed-form/brute-force fixtures for singleton access and small overlapping packages;
+- distinguish “seen/accessed by this turn” from castability/mana/timing — those resource-aware constraints remain a later layer;
+- after natural draws are solid, add only simple deterministic extra-draw effects whose timing and card-count semantics are explicit; do not silently model conditional engines as guaranteed draws.
 
-### 2. Turn-by-turn exact access curves
-
-Opening seven + natural draws, then exact/simple deterministic draw effects where feasible.
-
-### 3. Exact-as-oracle simulation testing
+### 2. Exact-as-oracle simulation testing
 
 For solvable scenarios, use the exact answer as truth and require Monte Carlo results to fall within statistically justified confidence/tolerance, not an arbitrary fixed margin.
 
-### 4. Real learning corpus
+### 3. Real learning corpus
 
 Parallel/next major intelligence work: assemble independently sourced real Commander/cEDH outcomes with exact deck fingerprints, temporal coverage, evidence independence and leakage groups. Do not promote the neural ranker until it repeatedly wins against the transparent baseline on genuinely unseen future records.
 
