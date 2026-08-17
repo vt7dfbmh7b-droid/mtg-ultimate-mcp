@@ -37,7 +37,7 @@ async function main(): Promise<void> {
   assert.equal(parsed.commanders[0]?.name, 'Najeela, the Blade-Blossom', 'the pinned calibration commander must remain Najeela');
 
   console.log('FF NAJEELA HIGH-BRACKET-4 CALIBRATION: verifying the pinned 100-card FINAL FANTASY-only Najeela shell...');
-  console.log('Purpose: prove the assessor can recognize an optimized commander-centric combat win plan as Bracket 4 without inventing a cEDH/Bracket-5 claim.');
+  console.log('Purpose: prove the assessor can recognize an optimized commander-centric combat win plan as high Bracket 4 without inventing a cEDH/Bracket-5 claim.');
 
   const resolved = await getCardsByIdentifiers(identifiers(parsed));
   assert.deepEqual(resolved.notFound, [], 'every exact card/printing identifier in the Najeela calibration must resolve');
@@ -136,6 +136,16 @@ async function main(): Promise<void> {
   );
 
   const failedBracket5 = ceiling.bracket5ThresholdChecks.filter((check) => !check.passed);
+  const failedConstructionKeys = failedBracket5
+    .filter((check) => check.category === 'construction')
+    .map((check) => check.key)
+    .sort();
+  assert.deepEqual(
+    failedConstructionKeys,
+    ['competitive-combo-signal', 'verified-winning-combo'],
+    'high-Bracket-4 calibration requires every measured Bracket-5 efficiency/interaction/tutor construction gate to pass; only the two cEDH win-package gates may remain failed',
+  );
+
   console.log(`COMMANDER: ${parsed.commanders[0]?.name}`);
   console.log(`FINAL CARD COUNT: ${parsed.totalCards}`);
   console.log(`COMMANDER LEGAL: ${rules.isLegal}`);
@@ -151,6 +161,7 @@ async function main(): Promise<void> {
   console.log(`NAJEELA COMBAT WIN-PLAN EVIDENCE: ${JSON.stringify(winPlan, null, 2)}`);
   console.log(`HONEST ASSESSED BRACKET: ${ceiling.assessedBracket ?? 'unassessable'}`);
   console.log(`ASSESSED BAND: ${ceiling.assessedBand}`);
+  console.log(`HIGH-BRACKET-4 CONSTRUCTION TEST: only cEDH win-package construction gates failed = ${JSON.stringify(failedConstructionKeys)}`);
   console.log(`SHADOW ASSESSMENT WITH GAME CHANGERS FORCED TO ZERO: ${withoutGameChangerFloor.assessedBracket ?? 'unassessable'}`);
   console.log(`BRACKET 5 CERTIFIED: ${ceiling.bracket5CertifiedByThisAssessment}`);
   console.log(`FAILED BRACKET 5 THRESHOLDS: ${JSON.stringify(failedBracket5, null, 2)}`);
