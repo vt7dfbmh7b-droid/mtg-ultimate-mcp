@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: ["agent/**"]
-    paths:
+    paths: &najeela_paths
       - "scripts/e2e-ff-najeela-bracket4-v15.ts"
       - "testdata/ff-najeela-powerful-baseline.txt"
       - ".github/workflows/ff-najeela-bracket4-control.yml"
@@ -15,6 +15,9 @@ on:
       - "src/services/printing-policy-v08.ts"
       - "src/services/scryfall.ts"
       - "src/services/spellbook.ts"
+  pull_request:
+    branches: [main]
+    paths: *najeela_paths
 
 permissions:
   contents: read
