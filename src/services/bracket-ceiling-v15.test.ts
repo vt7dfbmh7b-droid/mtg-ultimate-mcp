@@ -87,7 +87,7 @@ test('hard legality or printing failures make bracket assessment unassessable', 
   assert.ok(result.ceilingReasons.length >= 2);
 });
 
-test('a pile of Game Changers without efficient structure or a coherent plan does not become optimized', () => {
+test('many Game Changers create a current Bracket 4 floor but still do not prove Bracket 5 construction', () => {
   const result = assessBracketCeilingV15(5, {
     ...hardPass,
     spellbookTag: null,
@@ -103,7 +103,8 @@ test('a pile of Game Changers without efficient structure or a coherent plan doe
     cedhIntent: true,
     competitiveMetagameEvidence: true,
   });
-  assert.equal(result.assessedBracket, 3);
+  assert.equal(result.assessedBracket, 4);
+  assert.equal(result.assessedBand, 'bracket-4-game-changer-floor');
   assert.equal(result.bracket5ConstructionCandidate, false);
   assert.equal(result.bracket5CertifiedByThisAssessment, false);
 });
