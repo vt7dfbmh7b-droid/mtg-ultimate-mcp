@@ -32,9 +32,20 @@ export interface TemporalModelMetricsV15 {
   brierScore: number | null;
 }
 
+export interface TemporalFeatureContractSafetyV15 {
+  featureExtractorContracts: string[];
+  featureNormalizerFitFingerprints: string[];
+  legacyFeatureContractRecords: number;
+  missingNormalizerProvenanceRecords: number;
+  malformedNormalizerProvenanceRecords: number;
+  safe: boolean;
+  reasons: string[];
+}
+
 export interface NeuralTemporalEvaluationV15 {
   corpusAudit: ReturnType<typeof auditLearningCorpusV15>;
   metagameDrift: ReturnType<typeof detectMetagameDriftV15>;
+  featureContractSafety: TemporalFeatureContractSafetyV15;
   split: {
     trainingRecords: number;
     holdoutRecords: number;
@@ -56,6 +67,8 @@ export interface NeuralTemporalEvaluationV15 {
   evaluationWarnings: string[];
   readiness: ReturnType<typeof evaluateDeepLearningReadinessV15>;
 }
+
+const LEGACY_FEATURE_CONTRACT_V15 = 'legacy-unspecified';
 
 function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
@@ -182,12 +195,91 @@ function nullableDifference(left: number | null, right: number | null): number |
   return left === null || right === null ? null : round(left - right);
 }
 
+function metadataString(record: LearningOutcomeRecordV15, key: string): string | null {
+  const value = record.metadata?.[key];
+  return typeof value === 'string' && value.trim() ? value.trim() : null;
+}
+
+function featureExtractorContract(record: LearningOutcomeRecordV15): string {
+  return metadataString(record, 'featureExtractorId') ?? LEGACY_FEATURE_CONTRACT_V15;
+}
+
+function normalizedContractRequiresFitFingerprint(contract: string): boolean {
+  if (contract === LEGACY_FEATURE_CONTRACT_V15) return false;
+  return /minmax|normaliz|standard|z-?score|scal/i.test(contract);
+}
+
+export function assessTemporalFeatureContractSafetyV15(
+  records: LearningOutcomeRecordV15[],
+): TemporalFeatureContractSafetyV15 {
+  const featureExtractorContracts = [...new Set(records.map(featureExtractorContract))].sort();
+  const featureNormalizerFitFingerprints = new Set<string>();
+  let legacyFeatureContractRecords = 0;
+  let missingNormalizerProvenanceRecords = 0;
+  let malformedNormalizerProvenanceRecords = 0;
+
+  for (const record of records) {
+    const contract = featureExtractorContract(record);
+    if (contract === LEGACY_FEATURE_CONTRACT_V15) legacyFeatureContractRecords += 1;
+    const rawFit = record.metadata?.featureNormalizerFitFingerprint;
+    if (rawFit !== undefined && (typeof rawFit !== 'string' || !/^[a-f0-9]{64}$/i.test(rawFit.trim()))) {
+      malformedNormalizerProvenanceRecords += 1;
+      continue;
+    }
+    const fit = typeof rawFit === 'string' ? rawFit.trim().toLocaleLowerCase() : null;
+    if (fit) featureNormalizerFitFingerprints.add(fit);
+    else if (normalizedContractRequiresFitFingerprint(contract)) missingNormalizerProvenanceRecords += 1;
+  }
+
+  const reasons: string[] = [];
+  if (featureExtractorContracts.length > 1) {
+    reasons.push(`Corpus contains mixed feature extractor contracts (${featureExtractorContracts.join(', ')}).`);
+  }
+  if (featureNormalizerFitFingerprints.size > 1) {
+    reasons.push(`Corpus contains mixed feature normalizer fits (${[...featureNormalizerFitFingerprints].sort().join(', ')}).`);
+  }
+  if (missingNormalizerProvenanceRecords > 0) {
+    reasons.push(`Corpus has ${missingNormalizerProvenanceRecords} normalized-feature record(s) with missing feature normalizer provenance.`);
+  }
+  if (malformedNormalizerProvenanceRecords > 0) {
+    reasons.push(`Corpus has ${malformedNormalizerProvenanceRecords} record(s) with malformed feature normalizer provenance.`);
+  }
+
+  return {
+    featureExtractorContracts,
+    featureNormalizerFitFingerprints: [...featureNormalizerFitFingerprints].sort(),
+    legacyFeatureContractRecords,
+    missingNormalizerProvenanceRecords,
+    malformedNormalizerProvenanceRecords,
+    safe: reasons.length === 0,
+    reasons,
+  };
+}
+
+function featureContractBlockers(safety: TemporalFeatureContractSafetyV15): string[] {
+  const blockers: string[] = [];
+  if (safety.featureExtractorContracts.length > 1) {
+    blockers.push('Mixed feature extractor contracts cannot be trained or evaluated as one model input contract.');
+  }
+  if (safety.featureNormalizerFitFingerprints.length > 1) {
+    blockers.push('Mixed feature normalizer fits cannot be trained or evaluated together because the same numeric feature can represent different scales.');
+  }
+  if (safety.missingNormalizerProvenanceRecords > 0) {
+    blockers.push('Missing feature normalizer provenance prevents leakage-safe temporal model evaluation for normalized feature records.');
+  }
+  if (safety.malformedNormalizerProvenanceRecords > 0) {
+    blockers.push('Malformed feature normalizer provenance prevents trustworthy temporal model evaluation.');
+  }
+  return blockers;
+}
+
 export function evaluateNeuralOnTemporalCorpusV15(
   records: LearningOutcomeRecordV15[],
   options: NeuralRankerOptionsV15 & { holdoutFraction?: number } = {},
 ): NeuralTemporalEvaluationV15 {
   const corpusAudit = auditLearningCorpusV15(records);
   const metagameDrift = detectMetagameDriftV15(records);
+  const featureContractSafety = assessTemporalFeatureContractSafetyV15(records);
   const holdoutFraction = Number.isFinite(options.holdoutFraction) ? options.holdoutFraction ?? 0.2 : 0.2;
   const split = temporalSplitLearningCorpusV15(records, holdoutFraction);
   const trainingExamples = split.trainingExamples;
@@ -200,6 +292,7 @@ export function evaluateNeuralOnTemporalCorpusV15(
   if (!singleLearningTarget) {
     evaluationWarnings.push(`Corpus contains mixed learning targets (${corpusAudit.learningTargets.join(', ')}); one classifier must not treat these different outcome semantics as interchangeable labels.`);
   }
+  evaluationWarnings.push(...featureContractSafety.reasons.map((reason) => `${reason} Model evaluation is blocked until one compatible feature contract is selected.`));
   if (trainingExamples.length < 10) evaluationWarnings.push('Too few leakage-safe training examples to evaluate either model.');
   if (trainingLabels.positive === 0 || trainingLabels.negative === 0) evaluationWarnings.push('Leakage-safe training data contains only one outcome class.');
   if (holdoutExamples.length === 0) evaluationWarnings.push('No leakage-safe future holdout examples are available.');
@@ -219,7 +312,7 @@ export function evaluateNeuralOnTemporalCorpusV15(
   let neuralTemporalMetrics = emptyMetrics();
   let transparentTemporalMetrics = emptyMetrics();
 
-  if (singleLearningTarget && trainingExamples.length >= 10 && holdoutExamples.length > 0) {
+  if (singleLearningTarget && featureContractSafety.safe && trainingExamples.length >= 10 && holdoutExamples.length > 0) {
     neuralModel = trainNeuralRankerV15(trainingExamples, options);
     const neuralEpochs = Number.isFinite(options.epochs) ? options.epochs ?? 400 : 400;
     transparentModel = trainAdaptiveRankerV15(trainingExamples, {
@@ -274,21 +367,34 @@ export function evaluateNeuralOnTemporalCorpusV15(
         guidance: 'Split the corpus by learningTarget, then run leakage-safe temporal evaluation independently for each target before comparing or promoting models.',
       };
 
-  const readiness: ReturnType<typeof evaluateDeepLearningReadinessV15> = metagameDrift.severity === 'severe'
-    ? {
+  const featureSafeReadiness: ReturnType<typeof evaluateDeepLearningReadinessV15> = featureContractSafety.safe
+    ? targetSafeReadiness
+    : {
         ...targetSafeReadiness,
-        status: targetSafeReadiness.status === 'not-ready' ? 'not-ready' : 'experiment-ready',
+        status: 'not-ready',
         blockers: [
           ...targetSafeReadiness.blockers,
+          ...featureContractBlockers(featureContractSafety),
+        ],
+        guidance: 'Select one explicit feature extractor contract and one frozen normalization fit, then rebuild a leakage-safe temporal corpus before training or comparing models.',
+      };
+
+  const readiness: ReturnType<typeof evaluateDeepLearningReadinessV15> = metagameDrift.severity === 'severe'
+    ? {
+        ...featureSafeReadiness,
+        status: featureSafeReadiness.status === 'not-ready' ? 'not-ready' : 'experiment-ready',
+        blockers: [
+          ...featureSafeReadiness.blockers,
           'Severe metagame drift blocks neural-model promotion until the model is retrained and wins again on fresh temporal holdout data.',
         ],
         guidance: 'Retrain both transparent and neural candidates on the shifted metagame, create a new leakage-safe future holdout, and require the neural candidate to re-earn its advantage before promotion.',
       }
-    : targetSafeReadiness;
+    : featureSafeReadiness;
 
   return {
     corpusAudit,
     metagameDrift,
+    featureContractSafety,
     split: {
       trainingRecords: split.training.length,
       holdoutRecords: split.holdout.length,
