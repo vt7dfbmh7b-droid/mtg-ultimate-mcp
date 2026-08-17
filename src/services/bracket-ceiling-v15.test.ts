@@ -167,3 +167,65 @@ test('theme and budget constraints are reported as ceiling causes rather than si
   assert.ok(result.ceilingReasons.some((reason) => reason.includes('FINAL FANTASY')));
   assert.ok(result.ceilingReasons.some((reason) => reason.includes('NZ$20')));
 });
+
+test('Bracket 5 construction misses are reported gate by gate with observed and required values', () => {
+  const result = assessBracketCeilingV15(5, {
+    ...hardPass,
+    spellbookTag: 'P',
+    verifiedWinningCombos: 0,
+    ruthlessWinningCombos: 0,
+    strategicallyRelevantCombos: 0,
+    averageNonlandManaValue: 3.25,
+    earlyPlayCount: 24,
+    fastManaCount: 1,
+    freeInteractionCount: 0,
+    cheapInteractionCount: 5,
+    tutorCount: 2,
+    optimizedPlanEvidence: true,
+    cedhIntent: true,
+    competitiveMetagameEvidence: true,
+  }, ['FINAL FANTASY physical printings only']);
+
+  assert.equal(result.bracket5ConstructionCandidate, false);
+  const byKey = new Map(result.bracket5ThresholdChecks.map((check) => [check.key, check]));
+  assert.equal(byKey.get('average-nonland-mv')?.passed, false);
+  assert.equal(byKey.get('average-nonland-mv')?.observed, 3.25);
+  assert.equal(byKey.get('fast-mana')?.observed, 1);
+  assert.equal(byKey.get('fast-mana')?.required, 'at least 3');
+  assert.equal(byKey.get('free-interaction')?.observed, 0);
+  assert.equal(byKey.get('verified-winning-combo')?.passed, false);
+  assert.ok(result.ceilingReasons.some((reason) => reason.includes('Fast mana') && reason.includes('1') && reason.includes('3')));
+  assert.ok(result.ceilingReasons.some((reason) => reason.includes('Average nonland mana value')));
+});
+
+test('a whole-deck budget gets detailed observed pressure points without a false causal claim', () => {
+  const result = assessBracketCeilingV15(5, {
+    ...hardPass,
+    spellbookTag: 'P',
+    verifiedWinningCombos: 1,
+    ruthlessWinningCombos: 0,
+    strategicallyRelevantCombos: 0,
+    averageNonlandManaValue: 2.95,
+    earlyPlayCount: 29,
+    fastManaCount: 1,
+    freeInteractionCount: 0,
+    cheapInteractionCount: 6,
+    tutorCount: 2,
+    optimizedPlanEvidence: true,
+    cedhIntent: true,
+    competitiveMetagameEvidence: false,
+  }, ['US$100 maximum total deck budget']);
+
+  assert.equal(result.assessedBracket, 4);
+  assert.equal(result.bracket5CertifiedByThisAssessment, false);
+  assert.equal(result.constraintAnalysis.length, 1);
+  const budget = result.constraintAnalysis[0];
+  assert.equal(budget?.kind, 'budget');
+  assert.equal(budget?.causality, 'observed-under-constraint-not-proven-causal');
+  assert.ok(budget?.pressurePoints.includes('speed/curve'));
+  assert.ok(budget?.pressurePoints.includes('fast-mana density'));
+  assert.ok(budget?.pressurePoints.includes('free/cheap interaction'));
+  assert.ok(budget?.pressurePoints.includes('tutor consistency'));
+  assert.ok(budget?.summary.includes('US$100'));
+  assert.ok(budget?.summary.includes('does not prove'));
+});
