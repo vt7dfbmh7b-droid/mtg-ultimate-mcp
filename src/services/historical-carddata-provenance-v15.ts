@@ -4,6 +4,7 @@ import {
   extractDeckFeatureSnapshotV15,
   type DeckFeatureSnapshotV15,
 } from './deck-feature-snapshot-v15.js';
+import { parseDecklist, type DeckEntry } from './deck.js';
 
 export type HistoricalCardDataProvenanceV15 =
   | {
@@ -92,6 +93,86 @@ function baseFields(provenance: HistoricalCardDataProvenanceV15) {
   } as const;
 }
 
+function normalize(value: string): string {
+  return value.trim().toLocaleLowerCase().replace(/\s+/g, ' ');
+}
+
+function releaseMs(card: ScryfallCard): number | null {
+  if (!card.released_at) return null;
+  const ms = Date.parse(`${card.released_at}T00:00:00.000Z`);
+  return Number.isFinite(ms) ? ms : null;
+}
+
+function matchesEntry(card: ScryfallCard, entry: DeckEntry): boolean {
+  if (normalize(card.name) !== normalize(entry.name)) return false;
+  if (entry.set && card.set.toLocaleLowerCase() !== entry.set.toLocaleLowerCase()) return false;
+  if (entry.collectorNumber
+    && card.collector_number.toLocaleLowerCase() !== entry.collectorNumber.toLocaleLowerCase()) return false;
+  return true;
+}
+
+function historicalCandidateCompare(a: ScryfallCard, b: ScryfallCard): number {
+  const releaseDifference = (releaseMs(b) ?? Number.NEGATIVE_INFINITY) - (releaseMs(a) ?? Number.NEGATIVE_INFINITY);
+  if (releaseDifference !== 0) return releaseDifference;
+  const setDifference = a.set.toLocaleLowerCase().localeCompare(b.set.toLocaleLowerCase());
+  if (setDifference !== 0) return setDifference;
+  const collectorDifference = a.collector_number.toLocaleLowerCase().localeCompare(b.collector_number.toLocaleLowerCase());
+  if (collectorDifference !== 0) return collectorDifference;
+  return a.id.localeCompare(b.id);
+}
+
+function selectHistoricalCardForEntry(
+  entry: DeckEntry,
+  cards: ScryfallCard[],
+  featureAvailableAtMs: number,
+): ScryfallCard {
+  const candidates = cards.filter((card) => matchesEntry(card, entry));
+  if (candidates.length === 0) {
+    throw new Error(`Could not resolve historical card entry ${entry.name}.`);
+  }
+
+  const exactPrinting = Boolean(entry.set && entry.collectorNumber);
+  if (exactPrinting) {
+    const exact = [...candidates].sort(historicalCandidateCompare)[0];
+    if (!exact) throw new Error(`Could not resolve exact historical printing ${entry.name}.`);
+    const releasedAt = releaseMs(exact);
+    if (releasedAt === null) {
+      throw new Error(`Exact historical printing ${entry.name} has no release date, so its existence before the feature cutoff cannot be proven.`);
+    }
+    if (releasedAt > featureAvailableAtMs) {
+      throw new Error(`Exact historical printing ${entry.name} was released after the feature cutoff.`);
+    }
+    return exact;
+  }
+
+  const eligible = candidates
+    .filter((card) => {
+      const releasedAt = releaseMs(card);
+      return releasedAt !== null && releasedAt <= featureAvailableAtMs;
+    })
+    .sort(historicalCandidateCompare);
+  const selected = eligible[0];
+  if (!selected) {
+    throw new Error(`No historical printing with a release date proves ${entry.name} existed by the feature cutoff.`);
+  }
+  return selected;
+}
+
+function selectHistoricalFeatureCardsV15(
+  decklist: string,
+  cards: ScryfallCard[],
+  featureAvailableAt: string,
+): ScryfallCard[] {
+  const featureAt = timestamp('featureAvailableAt', featureAvailableAt);
+  const parsed = parseDecklist(decklist);
+  const selected = new Map<string, ScryfallCard>();
+  for (const entry of [...parsed.commanders, ...parsed.main]) {
+    const card = selectHistoricalCardForEntry(entry, cards, featureAt.ms);
+    selected.set(card.id, card);
+  }
+  return [...selected.values()];
+}
+
 /**
  * Decides whether a card-data source is temporally safe for the rich structural
  * feature contract. This contract uses Oracle/type/mana-derived role inference,
@@ -178,7 +259,9 @@ export function assessHistoricalCardDataProvenanceV15(
 /**
  * Safe wrapper for historical feature extraction. It refuses rich feature
  * construction unless provenance establishes that the source contents were
- * available before the prediction cutoff.
+ * available before the prediction cutoff. Name-only deck entries are resolved
+ * only to dated printings that existed by the cutoff; exact set/collector lines
+ * remain exact.
  */
 export function extractProvenancedDeckFeatureSnapshotV15(
   decklist: string,
@@ -193,7 +276,8 @@ export function extractProvenancedDeckFeatureSnapshotV15(
     throw new Error(`Historical card data is not eligible for rich structural features: ${assessment.reasons.join(' ')}`);
   }
 
-  const snapshot = extractDeckFeatureSnapshotV15(decklist, cards, {
+  const historicalCards = selectHistoricalFeatureCardsV15(decklist, cards, options.availableAt);
+  const snapshot = extractDeckFeatureSnapshotV15(decklist, historicalCards, {
     availableAt: options.availableAt,
     cardDataObservedAt: assessment.sourceDataAvailableAt,
   });
