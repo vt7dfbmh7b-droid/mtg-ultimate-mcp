@@ -128,3 +128,49 @@ test('runtime guard revalidates source hash, URI, and archive identity instead o
     /archiveVersion.*non-empty|non-empty.*archiveVersion/i,
   );
 });
+
+test('runtime guard rejects stored provenance with retrieval before source availability', () => {
+  const snapshot = validSnapshot();
+  const altered = {
+    ...snapshot,
+    historicalCardDataProvenance: {
+      ...snapshot.historicalCardDataProvenance,
+      retrievedAt: '2026-01-07T00:00:00.000Z',
+    },
+  };
+  assert.throws(
+    () => assertProvenancedHistoricalFeatureSnapshotV15(altered),
+    /retrieved.*before.*available|retrieval.*source availability|source availability.*retrieval/i,
+  );
+});
+
+test('runtime guard rejects an internally contradictory eligible assessment that still carries failure reasons', () => {
+  const snapshot = validSnapshot();
+  const altered = {
+    ...snapshot,
+    historicalCardDataProvenance: {
+      ...snapshot.historicalCardDataProvenance,
+      eligibleForRichStructuralFeatures: true,
+      reasons: ['This source would contain future knowledge.'],
+    },
+  };
+  assert.throws(
+    () => assertProvenancedHistoricalFeatureSnapshotV15(altered),
+    /eligible.*reasons|reasons.*eligible|contradictory.*provenance/i,
+  );
+});
+
+test('runtime guard rejects a blank source identity even when all other stored fields look valid', () => {
+  const snapshot = validSnapshot();
+  const altered = {
+    ...snapshot,
+    historicalCardDataProvenance: {
+      ...snapshot.historicalCardDataProvenance,
+      sourceId: ' ',
+    },
+  };
+  assert.throws(
+    () => assertProvenancedHistoricalFeatureSnapshotV15(altered),
+    /sourceId.*non-empty|non-empty.*sourceId/i,
+  );
+});
