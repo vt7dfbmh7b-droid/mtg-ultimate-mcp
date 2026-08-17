@@ -28,11 +28,16 @@ Suggested fresh-chat prompt:
 
 Important current/recent commits:
 
+- `17bcfcc6819fcf9ef43ed5a8d14bcd9dc371ee6a` — overlap-aware exact package solver exhaustive/adversarial tests; CI succeeded.
+- `e126bf436ae0b1c2cae1b9f2e0ec74127b6311fd` — added the overlap-aware exact physical-card package solver.
+- `111e8f0f9e53bcb79ea3c435c2aa2c27ccb4b42b` — refreshed the persistent project handoff before overlap work; CI succeeded.
 - `d40957ab2d7fd1f7ff758384efbd50c5db561770` — added `ULTIMATE_MTG_SPEC.md` master specification.
 - `75d021932a13fe706ecf7881dc3e9372788c9983` — added initial persistent handoff file.
-- `161d3d1acb1129381d9195d39360b7ce0812f610` — exact package probability + oracle package-order normalization; CI succeeded.
+- `161d3d1acb1129381d9195d39360b7ce0812f610` — exact disjoint package probability + oracle package-order normalization; CI succeeded.
 - `966bffac0a981f9aea5b828c94e6aa091de640ea` — V0.15 foundation baseline before the package branch.
 - `0a4fda12c9b44374bc8f58f5b07ec2da886ea993` — V0.15 external-oracle benchmark documentation.
+
+The overlap implementation head `17bcfcc6819fcf9ef43ed5a8d14bcd9dc371ee6a` passed the normal CI quality gate: dependency install, strict TypeScript build and the complete automated test suite all succeeded.
 
 Temporary accidental branches `agent/package-probabilities-2` and `agent/package-probabilities-3` contain no unique work and are not active.
 
@@ -189,6 +194,50 @@ The implementation intentionally does **not** double-count tutors/multi-role phy
 
 Oracle normalization in `external-oracle-adapters-v15.ts` compares exact semantic values, strips presentation decimals, and canonicalizes package order.
 
+### Overlap-aware package engine — milestone complete
+
+Files:
+
+- `src/services/exact-overlap-package-statistics-v15.ts`
+- `src/services/exact-overlap-package-statistics-v15.test.ts`
+
+The solver models disjoint **physical-card categories by capability**, allowing a physical card to be capable of several roles while assigning that card to at most one role in any simultaneous package fulfillment.
+
+Implementation properties:
+
+- exact BigInt hand combinatorics;
+- saturated role-requirement vectors;
+- a canonical Pareto frontier of attainable role assignments so physical-card identity remains matching-safe;
+- exact union across several alternative winning/package routes without double-counting the same sampled hand;
+- role-specific tutors, universal tutors, interchangeable pieces and shared cards are representable;
+- irrelevant capability categories collapse into neutral cards for the exact sample-space count;
+- malformed inputs fail closed;
+- explicit role/route/category/frontier/DP-state/work ceilings prevent uncontrolled combinatorial growth.
+
+Current conservative ceilings:
+
+- maximum roles: 16;
+- maximum routes: 32;
+- maximum physical-card categories: 64;
+- maximum frontier states: 512;
+- maximum DP states: 20,000;
+- maximum transition work: 500,000.
+
+The role ceiling was selected from synthetic 99-card / draw-7 workload benchmarking rather than assuming arbitrary unbounded overlap complexity. The independent state/frontier/work ceilings remain the authoritative safety stops.
+
+Validation includes an **independent labeled-card exhaustive brute-force matching enumerator** for small overlapping populations. The exhaustive fixture spans A-only, B-only and A-or-B physical cards across populations 2–6 and all draw counts, comparing exact reduced fractions against the production solver.
+
+Permanent adversarial regressions include:
+
+- one universal A/B tutor by itself cannot satisfy both A and B simultaneously;
+- a universal tutor can satisfy exactly one missing role next to a real piece;
+- alternative routes that share a physical role are unioned without hand double-counting;
+- role-specific and universal tutors remain matching-safe with redundant pieces;
+- impossible package requirements return exact zero;
+- pathological broad-overlap requests stop at the explicit work ceiling.
+
+CI succeeded for implementation/test head `17bcfcc6819fcf9ef43ed5a8d14bcd9dc371ee6a`.
+
 ---
 
 ## Permanent benchmark controls
@@ -271,47 +320,34 @@ The engine must distinguish user/card-pool ceiling from builder failure or insuf
 
 ## Next implementation target
 
-### 1. Overlap-aware exact package solver
+### 1. Commander-zone exact availability
 
-Continue from the successful disjoint solver.
+The overlap-aware assembly milestone is complete and trustworthy enough to build on.
 
-Need an exact physical-card model where a card may satisfy several possible roles but can only be assigned once in the sampled hand/line.
+Next, model commander(s) as known cards starting outside the library instead of pretending commander-zone pieces are ordinary random draws.
 
-High-priority cases:
-
-- universal tutor can find A or B but cannot count as both simultaneously;
-- role-specific tutors;
-- cards shared between alternative winning packages;
-- interchangeable/redundant pieces;
-- “at least one viable package” across several win routes.
+Before encoding this, verify the **current Commander rules** from authoritative/current sources, especially deck construction, command-zone starting state, opening-hand draw behavior, and how partner/multiple-commander configurations affect the library population.
 
 Implementation direction:
 
-- aggregate physical cards/categories by capability mask;
-- exact BigInt combinatorics/DP;
-- saturated requirement-state vector or equivalent matching-safe state representation;
-- explicit state/work ceiling;
-- choose role-count limits based on benchmarked exact workload rather than arbitrary optimism.
+- keep command-zone known availability separate from library draws;
+- allow package routes to require roles already guaranteed from the command zone;
+- reduce/remove already-satisfied command-zone requirements without adding fictitious draw probability;
+- preserve physical-card one-assignment semantics for any commander capable of multiple roles;
+- support one or multiple legal commanders without baking an unjustified fixed library size into the generic probability engine;
+- exact BigInt equality remains the proof surface;
+- add independent small-population fixtures comparing equivalent formulations where possible;
+- add adversarial tests that prevent commander-zone cards from being counted as both guaranteed availability and library copies.
 
-Tests must include an **independent exhaustive brute-force enumerator** for small overlapping-card populations.
-
-Adversarial fixtures must prove that one universal tutor/dual-role physical card cannot satisfy two simultaneous missing roles by itself.
-
-### 2. Commander-zone exact availability
-
-After overlap-aware assembly is trustworthy, model commander(s) as starting outside the library rather than pretending they are normal cards in the 99/98.
-
-Verify current Commander draw/library rules before encoding them.
-
-### 3. Turn-by-turn exact access curves
+### 2. Turn-by-turn exact access curves
 
 Opening seven + natural draws, then exact/simple deterministic draw effects where feasible.
 
-### 4. Exact-as-oracle simulation testing
+### 3. Exact-as-oracle simulation testing
 
 For solvable scenarios, use the exact answer as truth and require Monte Carlo results to fall within statistically justified confidence/tolerance, not an arbitrary fixed margin.
 
-### 5. Real learning corpus
+### 4. Real learning corpus
 
 Parallel/next major intelligence work: assemble independently sourced real Commander/cEDH outcomes with exact deck fingerprints, temporal coverage, evidence independence and leakage groups. Do not promote the neural ranker until it repeatedly wins against the transparent baseline on genuinely unseen future records.
 
