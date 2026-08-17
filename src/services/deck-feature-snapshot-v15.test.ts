@@ -161,7 +161,7 @@ test('normalizer rejects mixed extractor versions instead of silently combining 
   const incompatible = {
     ...snapshot,
     extractorId: 'deck-structural-v15.future',
-  } as DeckFeatureSnapshotV15;
+  } as unknown as DeckFeatureSnapshotV15;
 
   assert.throws(
     () => fitDeckFeatureNormalizerV15([snapshot, incompatible]),
