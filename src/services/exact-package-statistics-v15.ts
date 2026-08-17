@@ -138,7 +138,7 @@ export function calculateExactPackageAssemblyV15(input: {
 
       const next = new Array<bigint>(draws + 1).fill(0n);
       for (let alreadyPicked = 0; alreadyPicked <= draws; alreadyPicked += 1) {
-        const previousWays = waysByTrackedDraws[alreadyPicked];
+        const previousWays = waysByTrackedDraws[alreadyPicked] ?? 0n;
         if (previousWays === 0n) continue;
         const remainingDraws = draws - alreadyPicked;
         const localMaximum = Math.min(maximumPicked, remainingDraws);
@@ -147,14 +147,16 @@ export function calculateExactPackageAssemblyV15(input: {
           if (work > MAX_EXACT_PACKAGE_DP_WORK_V15) {
             throw new Error(`exact package calculation exceeded the ${MAX_EXACT_PACKAGE_DP_WORK_V15} transition work limit.`);
           }
-          next[alreadyPicked + picked] += previousWays * pickWays[picked];
+          const target = alreadyPicked + picked;
+          const localWays = pickWays[picked] ?? 0n;
+          next[target] = (next[target] ?? 0n) + previousWays * localWays;
         }
       }
       waysByTrackedDraws = next;
     }
 
     for (let trackedDraws = 0; trackedDraws <= draws; trackedDraws += 1) {
-      const trackedWays = waysByTrackedDraws[trackedDraws];
+      const trackedWays = waysByTrackedDraws[trackedDraws] ?? 0n;
       if (trackedWays === 0n) continue;
       favorable += trackedWays * choose(untrackedCards, draws - trackedDraws);
     }
