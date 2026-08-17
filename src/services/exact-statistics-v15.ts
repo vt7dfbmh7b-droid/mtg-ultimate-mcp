@@ -1,3 +1,5 @@
+export const MAX_EXACT_STATISTICS_POPULATION_V15 = 1000;
+
 export type HypergeometricEventV15 =
   | { kind: 'exactly'; value: number }
   | { kind: 'at-least'; value: number }
@@ -53,10 +55,14 @@ function fraction(numerator: bigint, denominator: bigint): ExactFractionV15 {
   const divisor = gcd(n, d);
   n /= divisor;
   d /= divisor;
+  const decimal = Number(n) / Number(d);
+  if (!Number.isFinite(decimal)) {
+    throw new Error('Exact fraction decimal presentation exceeded the supported finite range.');
+  }
   return {
     numerator: n.toString(),
     denominator: d.toString(),
-    decimal: Number(n) / Number(d),
+    decimal,
   };
 }
 
@@ -102,7 +108,8 @@ function eventBounds(event: HypergeometricEventV15, supportMinimum: number, supp
 /**
  * Exact univariate hypergeometric probability using integer combinations.
  * Fractions are reduced with BigInt; decimal is presentation only and must not
- * be used for equality/proof checks.
+ * be used for equality/proof checks. Population is bounded to keep MCP requests
+ * predictably cheap and to keep the presentation decimal within finite Number range.
  */
 export function calculateExactHypergeometricV15(input: {
   population: number;
@@ -110,7 +117,7 @@ export function calculateExactHypergeometricV15(input: {
   draws: number;
   event: HypergeometricEventV15;
 }): ExactHypergeometricResultV15 {
-  const population = requireInteger('population', input.population, 0);
+  const population = requireInteger('population', input.population, 0, MAX_EXACT_STATISTICS_POPULATION_V15);
   const successes = requireInteger('successes', input.successes, 0, population);
   const draws = requireInteger('draws', input.draws, 0, population);
   if (!input.event || typeof input.event !== 'object') throw new Error('event is required.');
