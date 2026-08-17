@@ -112,7 +112,7 @@ export function materializeTopDeckTemporalCorpusV15(
   ));
   const ingestion = ingestObservedLearningRecordsV15(observed);
   if (ingestion.rejected.length > 0) {
-    const reasons = [...new Set(ingestion.rejected.map((entry) => `${entry.reason}: ${entry.detail}`))];
+    const reasons = [...new Set(ingestion.rejected.map((entry) => `${entry.code}: ${entry.reason}`))];
     throw new Error(`TopDeck temporal corpus ingestion rejected ${ingestion.rejected.length} record(s): ${reasons.join('; ')}`);
   }
 
