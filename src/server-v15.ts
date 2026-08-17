@@ -2,6 +2,11 @@ import type { McpServer } from '@modelcontextprotocol/server';
 import * as z from 'zod/v4';
 import { createMtgServerV14 } from './server-v14.js';
 import {
+  assessBracketCeilingV15,
+  type BracketAssessmentSignalsV15,
+  type CommanderBracketV15,
+} from './services/bracket-ceiling-v15.js';
+import {
   buildDeepResearchPlanV15,
   evaluateDeepLearningReadinessV15,
   scoreCandidateWithLearningV15,
@@ -51,6 +56,28 @@ const learningFeatureSchema = z.object({
   communitySupport: z.number().min(-1).max(1).optional(),
 });
 
+const bracketSignalSchema = z.object({
+  commanderLegal: z.boolean(),
+  exactCardCount: z.boolean(),
+  fullyResolved: z.boolean(),
+  printingPolicyCompliant: z.boolean(),
+  spellbookTag: z.string().max(10).nullable().optional(),
+  verifiedWinningCombos: z.number().int().min(0).max(10_000).optional(),
+  ruthlessWinningCombos: z.number().int().min(0).max(10_000).optional(),
+  strategicallyRelevantCombos: z.number().int().min(0).max(10_000).optional(),
+  averageNonlandManaValue: z.number().min(0).max(30).nullable().optional(),
+  earlyPlayCount: z.number().int().min(0).max(100).optional(),
+  fastManaCount: z.number().int().min(0).max(100).optional(),
+  freeInteractionCount: z.number().int().min(0).max(100).optional(),
+  cheapInteractionCount: z.number().int().min(0).max(100).optional(),
+  tutorCount: z.number().int().min(0).max(100).optional(),
+  gameChangerCount: z.number().int().min(0).max(100).optional(),
+  optimizedPlanEvidence: z.boolean().optional(),
+  cedhIntent: z.boolean().optional(),
+  competitiveMetagameEvidence: z.boolean().optional(),
+  exhibitionIntent: z.boolean().optional(),
+});
+
 function compactLearningFeatures(input: z.infer<typeof learningFeatureSchema>): Partial<Record<LearningFeatureV15, number>> {
   const output: Partial<Record<LearningFeatureV15, number>> = {};
   for (const [key, value] of Object.entries(input)) {
@@ -59,7 +86,56 @@ function compactLearningFeatures(input: z.infer<typeof learningFeatureSchema>): 
   return output;
 }
 
+function compactBracketSignals(input: z.infer<typeof bracketSignalSchema>): BracketAssessmentSignalsV15 {
+  return {
+    commanderLegal: input.commanderLegal,
+    exactCardCount: input.exactCardCount,
+    fullyResolved: input.fullyResolved,
+    printingPolicyCompliant: input.printingPolicyCompliant,
+    ...(input.spellbookTag !== undefined ? { spellbookTag: input.spellbookTag } : {}),
+    ...(input.verifiedWinningCombos !== undefined ? { verifiedWinningCombos: input.verifiedWinningCombos } : {}),
+    ...(input.ruthlessWinningCombos !== undefined ? { ruthlessWinningCombos: input.ruthlessWinningCombos } : {}),
+    ...(input.strategicallyRelevantCombos !== undefined ? { strategicallyRelevantCombos: input.strategicallyRelevantCombos } : {}),
+    ...(input.averageNonlandManaValue !== undefined ? { averageNonlandManaValue: input.averageNonlandManaValue } : {}),
+    ...(input.earlyPlayCount !== undefined ? { earlyPlayCount: input.earlyPlayCount } : {}),
+    ...(input.fastManaCount !== undefined ? { fastManaCount: input.fastManaCount } : {}),
+    ...(input.freeInteractionCount !== undefined ? { freeInteractionCount: input.freeInteractionCount } : {}),
+    ...(input.cheapInteractionCount !== undefined ? { cheapInteractionCount: input.cheapInteractionCount } : {}),
+    ...(input.tutorCount !== undefined ? { tutorCount: input.tutorCount } : {}),
+    ...(input.gameChangerCount !== undefined ? { gameChangerCount: input.gameChangerCount } : {}),
+    ...(input.optimizedPlanEvidence !== undefined ? { optimizedPlanEvidence: input.optimizedPlanEvidence } : {}),
+    ...(input.cedhIntent !== undefined ? { cedhIntent: input.cedhIntent } : {}),
+    ...(input.competitiveMetagameEvidence !== undefined ? { competitiveMetagameEvidence: input.competitiveMetagameEvidence } : {}),
+    ...(input.exhibitionIntent !== undefined ? { exhibitionIntent: input.exhibitionIntent } : {}),
+  };
+}
+
 export function registerMtgToolsV15(server: McpServer): McpServer {
+  server.registerTool(
+    'assess_bracket_ceiling_v15',
+    {
+      title: 'Conservatively assess the bracket a finished Commander deck actually supports',
+      description: 'Compare a requested bracket with independently measured construction and competitive signals. The requested target never raises the assessment. Bracket 5 requires strong cEDH construction plus explicit competitive intent and independent metagame evidence; restrictions are reported as ceiling reasons rather than hidden or treated as failure.',
+      inputSchema: z.object({
+        targetBracket: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
+        signals: bracketSignalSchema,
+        constraints: z.array(z.string().min(1).max(500)).max(50).optional().default([]),
+      }),
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async ({ targetBracket, signals, constraints }) => {
+      try {
+        return jsonResult(assessBracketCeilingV15(
+          targetBracket as CommanderBracketV15,
+          compactBracketSignals(signals),
+          constraints,
+        ));
+      } catch (error) {
+        return errorResult(error);
+      }
+    },
+  );
+
   server.registerTool(
     'deep_research_plan_v15',
     {
