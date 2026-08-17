@@ -52,5 +52,5 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Run Final Fantasy Bracket 5 E2E
-        run: npm run e2e:ff-bracket5
+      - name: Run Final Fantasy Bracket 5 target E2E
+        run: npx tsx scripts/e2e-ff-bracket5.ts
