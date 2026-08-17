@@ -137,6 +137,7 @@ async function main(): Promise<void> {
 
   const commanderEntry = verified.parsed.commanders[0];
   const bracket5TargetAchieved = ceiling.bracket5CertifiedByThisAssessment;
+  const failedThresholds = ceiling.bracket5ThresholdChecks.filter((check) => !check.passed);
   console.log(`\nCOMMANDER PRINTING: ${commanderEntry?.name ?? commander} (${commanderEntry?.set ?? '?'}) ${commanderEntry?.collectorNumber ?? '?'}`);
   console.log(`FINAL CARD COUNT: ${verified.parsed.totalCards}`);
   console.log(`COMMANDER LEGAL: ${verified.rules.isLegal}`);
@@ -155,6 +156,8 @@ async function main(): Promise<void> {
   console.log(`HONEST ASSESSED BRACKET: ${ceiling.assessedBracket ?? 'unassessable'}`);
   console.log(`ASSESSED BAND: ${ceiling.assessedBand}`);
   console.log(`BRACKET 5 TARGET ACHIEVED: ${bracket5TargetAchieved}`);
+  console.log(`FAILED BRACKET 5 THRESHOLDS: ${JSON.stringify(failedThresholds, null, 2)}`);
+  console.log(`RESTRICTION ANALYSIS: ${JSON.stringify(ceiling.constraintAnalysis, null, 2)}`);
   console.log(`CEILING REASONS: ${JSON.stringify(ceiling.ceilingReasons, null, 2)}`);
   console.log(`COMBO STAGE: ${JSON.stringify(comboStage, null, 2)}`);
   console.log(`EFFICIENCY STAGE: ${JSON.stringify(efficiencyStage, null, 2)}`);
