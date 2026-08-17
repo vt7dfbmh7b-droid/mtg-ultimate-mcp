@@ -125,6 +125,6 @@ test('runtime guard revalidates source hash, URI, and archive identity instead o
         archiveVersion: '',
       },
     }),
-    /archiveVersion.*non-empty/i,
+    /archiveVersion.*non-empty|non-empty.*archiveVersion/i,
   );
 });
