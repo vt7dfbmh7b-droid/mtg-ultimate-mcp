@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import type { ScryfallCard } from '../types/scryfall.js';
+import type { ScryfallCard, ScryfallLegalities } from '../types/scryfall.js';
 import { extractProvenancedDeckFeatureSnapshotV15 } from './historical-carddata-provenance-v15.js';
 
 const SOURCE_HASH = 'f'.repeat(64);
@@ -21,7 +21,7 @@ function card(options: {
   cmc?: number;
   oracleText?: string;
   colorIdentity?: string[];
-  commanderLegality?: string;
+  commanderLegality?: ScryfallLegalities[string];
 }): ScryfallCard {
   const slug = options.name.toLocaleLowerCase().replace(/[^a-z0-9]+/g, '-');
   return {
