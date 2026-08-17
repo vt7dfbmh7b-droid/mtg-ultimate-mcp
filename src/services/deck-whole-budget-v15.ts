@@ -178,9 +178,6 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
   for (const cap of caps) {
     const draftOptions: DeckBuildOptionsV07 = {
       ...options,
-      // Preserve the user's explicit per-card cap as the hard required-card rule.
-      maxUsdPerCard: options.maxUsdPerCard,
-      // Internal whole-deck search pressure applies only to optional candidates/lands.
       candidateMaxUsdPerCard: cap,
     };
     const draft = await buildDraft(commanders, draftOptions);
