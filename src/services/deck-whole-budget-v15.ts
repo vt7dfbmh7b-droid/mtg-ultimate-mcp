@@ -137,20 +137,18 @@ function capSchedule(candidateBudgetUsd: number, optionalSlots: number, userPerC
   const upper = Math.min(candidateBudgetUsd, userPerCardCap ?? candidateBudgetUsd);
   const average = optionalSlots > 0 ? candidateBudgetUsd / optionalSlots : candidateBudgetUsd;
   const derived = [
-    upper,
-    candidateBudgetUsd / 10,
-    candidateBudgetUsd / 20,
-    candidateBudgetUsd / 40,
-    candidateBudgetUsd / 60,
-    candidateBudgetUsd / 80,
     average * 1.5,
     average * 1.25,
     average,
     average * 0.8,
+    candidateBudgetUsd / 40,
+    candidateBudgetUsd / 20,
+    candidateBudgetUsd / 10,
+    upper,
   ]
     .filter((value) => value > 0 && value <= upper + 1e-9)
     .map((value) => Math.max(0.01, money(value)));
-  return [...new Set(derived)].sort((a, b) => b - a);
+  return [...new Set(derived)];
 }
 
 export async function buildCommanderDeckUnderWholeBudgetV15(
