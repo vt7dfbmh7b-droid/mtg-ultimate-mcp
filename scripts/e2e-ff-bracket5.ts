@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict';
+import type { ScryfallCard } from '../src/types/scryfall.js';
 import { assessBracketCeilingV15 } from '../src/services/bracket-ceiling-v15.js';
 import { assessCedhReadinessV14, buildCommanderForCedhV14 } from '../src/services/cedh-workflow-v14.js';
 import { validateCommanderDeck } from '../src/services/commander-rules.js';
 import { parseDecklist, type DeckEntry, type ParsedDeck } from '../src/services/deck.js';
+import { deriveEfficientCommanderWinPlanV15 } from '../src/services/efficient-win-plan-v15.js';
 import { printingMatchesPolicyV08, resolvePrintingPolicyV08 } from '../src/services/printing-policy-v08.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from '../src/services/scryfall.js';
 import { estimateCommanderBracket, findDeckCombos } from '../src/services/spellbook.js';
@@ -31,6 +33,7 @@ async function verifyFinalDeck(decklist: string): Promise<{
   parsed: ParsedDeck;
   rules: ReturnType<typeof validateCommanderDeck>;
   resolvedCount: number;
+  cards: ScryfallCard[];
   gameChangerNames: string[];
 }> {
   const parsed = parseDecklist(decklist);
@@ -52,7 +55,7 @@ async function verifyFinalDeck(decklist: string): Promise<{
     'every physical printing, including commander and basics, must belong to the active FINAL FANTASY printing family',
   );
   const gameChangerNames = resolved.cards.filter((card) => card.game_changer === true).map((card) => card.name).sort();
-  return { parsed, rules, resolvedCount: resolved.cards.length, gameChangerNames };
+  return { parsed, rules, resolvedCount: resolved.cards.length, cards: resolved.cards, gameChangerNames };
 }
 
 async function main(): Promise<void> {
@@ -108,9 +111,11 @@ async function main(): Promise<void> {
   const manaStage = record(stages.manaBase);
 
   // A static FF-only construction run does not, by itself, prove current cEDH metagame performance.
-  // Efficient non-combo win evidence also remains false until a separate win-plan verifier proves it.
+  // The commander-centric combat route is separately proven from resolved Oracle text rather than
+  // inferred from Najeela's name/reputation. The surrounding 99 must still satisfy optimized structure.
   const competitiveMetagameEvidence = false;
-  const efficientWinConditionEvidence = false;
+  const winPlan = deriveEfficientCommanderWinPlanV15(finalDecklist, verified.cards);
+  const efficientWinConditionEvidence = winPlan.supported;
   const ceiling = assessBracketCeilingV15(5, {
     commanderLegal: verified.rules.isLegal,
     exactCardCount: verified.parsed.totalCards === 100,
@@ -161,6 +166,7 @@ async function main(): Promise<void> {
   console.log(`STRATEGICALLY RELEVANT COMBOS: ${strategicallyRelevant}`);
   console.log(`READINESS METRICS: ${JSON.stringify(readinessMetrics, null, 2)}`);
   console.log(`CONSTRUCTION SIGNALS: ${JSON.stringify(constructionSignals, null, 2)}`);
+  console.log(`COMMANDER-CENTRIC WIN-PLAN EVIDENCE: ${JSON.stringify(winPlan, null, 2)}`);
   console.log(`EFFICIENT NON-COMBO WIN EVIDENCE: ${efficientWinConditionEvidence}`);
   console.log(`BRACKET 5 CONSTRUCTION CANDIDATE: ${ceiling.bracket5ConstructionCandidate}`);
   console.log(`INDEPENDENT CURRENT METAGAME EVIDENCE: ${competitiveMetagameEvidence}`);
