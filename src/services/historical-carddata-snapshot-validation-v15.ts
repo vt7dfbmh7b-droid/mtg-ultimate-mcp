@@ -18,6 +18,10 @@ function validSourceUri(value: unknown): boolean {
   }
 }
 
+function nonNegativeInteger(value: unknown): value is number {
+  return typeof value === 'number' && Number.isInteger(value) && value >= 0;
+}
+
 /**
  * Runtime guard for workflows that require historical/as-of feature provenance.
  * The low-level structural extractor remains usable for unit/current analysis,
@@ -75,5 +79,40 @@ export function assertProvenancedHistoricalFeatureSnapshotV15(
     if (effectiveAt.ms > dataAt.ms) {
       throw new Error('Archived snapshot effective time cannot occur after its published availability time.');
     }
+  }
+
+  const commanderValidation = candidate.historicalCommanderValidation;
+  if (!commanderValidation || typeof commanderValidation !== 'object') {
+    throw new Error('Historical corpus materialization requires a stored Commander validation summary.');
+  }
+  if (typeof commanderValidation.ruleset !== 'string' || !commanderValidation.ruleset.trim()) {
+    throw new Error('Historical Commander validation ruleset must be non-empty.');
+  }
+  if (commanderValidation.status !== 'legal' || commanderValidation.isLegal !== true) {
+    throw new Error('Historical Commander validation must be unequivocally legal before corpus materialization.');
+  }
+  if (!Number.isInteger(commanderValidation.commanderCount)
+    || commanderValidation.commanderCount < 1
+    || commanderValidation.commanderCount > 2) {
+    throw new Error('Historical Commander validation commanderCount must be one or two.');
+  }
+  if (!Array.isArray(commanderValidation.commanderColorIdentity)
+    || commanderValidation.commanderColorIdentity.some((color) => typeof color !== 'string')) {
+    throw new Error('Historical Commander validation color identity must be a string array.');
+  }
+  if (typeof commanderValidation.pairingMethod !== 'string' || !commanderValidation.pairingMethod.trim()) {
+    throw new Error('Historical Commander validation pairingMethod must be non-empty.');
+  }
+  const violationCounts = [
+    commanderValidation.unresolvedEntries,
+    commanderValidation.commanderLegalityViolations,
+    commanderValidation.colorIdentityViolations,
+    commanderValidation.singletonViolations,
+  ];
+  if (!violationCounts.every(nonNegativeInteger)) {
+    throw new Error('Historical Commander validation violation counts must be non-negative integers.');
+  }
+  if (violationCounts.some((count) => count !== 0)) {
+    throw new Error('Historical Commander validation is contradictory: a legal snapshot cannot contain stored violations.');
   }
 }
