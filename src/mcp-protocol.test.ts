@@ -56,6 +56,7 @@ test('stable current server completes MCP handshake and advertises V0.13 tools',
   assert.ok(tools.includes('price_card_nzd_v13'));
   assert.ok(tools.includes('refine_precon_v13'));
   assert.ok(tools.includes('build_and_refine_commander_deck_v13'));
+  assert.equal(tools.includes('assess_bracket_ceiling_v15'), false, 'experimental conservative grading must not leak into the stable runtime');
   assert.equal(tools.includes('train_neural_ranker_v15'), false, 'experimental neural tools must not leak into the stable runtime');
   assert.equal(tools.includes('evaluate_neural_temporal_corpus_v15'), false, 'experimental temporal neural evaluation must not leak into the stable runtime');
   assert.equal(tools.includes('detect_metagame_drift_v15'), false, 'experimental drift diagnostics must not leak into the stable runtime');
@@ -64,6 +65,7 @@ test('stable current server completes MCP handshake and advertises V0.13 tools',
 test('experimental V0.15 neural server negotiates modern MCP and advertises research and learning tools', async () => {
   const tools = await listToolNames(createMtgServerV15Neural, 'auto');
 
+  assert.ok(tools.includes('assess_bracket_ceiling_v15'));
   assert.ok(tools.includes('deep_research_commander_v15'));
   assert.ok(tools.includes('synthesize_deep_research_v15'));
   assert.ok(tools.includes('audit_learning_corpus_v15'));
@@ -72,6 +74,41 @@ test('experimental V0.15 neural server negotiates modern MCP and advertises rese
   assert.ok(tools.includes('train_neural_ranker_v15'));
   assert.ok(tools.includes('score_candidate_with_neural_v15'));
   assert.ok(tools.includes('refine_precon_v13'), 'experimental server must retain stable V0.13 tools underneath');
+});
+
+test('conservative bracket ceiling refuses to turn target 5 into evidence for achieved 5', async () => {
+  await withClient(createMtgServerV15Neural, 'auto', async (client) => {
+    const assessment = await callToolJson(client, 'assess_bracket_ceiling_v15', {
+      targetBracket: 5,
+      constraints: ['FINAL FANTASY physical printings only'],
+      signals: {
+        commanderLegal: true,
+        exactCardCount: true,
+        fullyResolved: true,
+        printingPolicyCompliant: true,
+        spellbookTag: 'R',
+        verifiedWinningCombos: 2,
+        ruthlessWinningCombos: 1,
+        strategicallyRelevantCombos: 1,
+        averageNonlandManaValue: 2.1,
+        earlyPlayCount: 44,
+        fastManaCount: 7,
+        freeInteractionCount: 4,
+        cheapInteractionCount: 13,
+        tutorCount: 8,
+        gameChangerCount: 5,
+        optimizedPlanEvidence: true,
+        cedhIntent: true,
+        competitiveMetagameEvidence: false,
+      },
+    });
+
+    assert.equal(assessment.assessedBracket, 4);
+    assert.equal(assessment.assessedBand, 'high-bracket-4-cedh-construction-candidate');
+    assert.equal(assessment.bracket5CertifiedByThisAssessment, false);
+    const reasons = assessment.ceilingReasons as string[];
+    assert.ok(reasons.some((reason) => reason.includes('metagame')));
+  });
 });
 
 test('deep-learning readiness accepts corpus quality rates through the real MCP tool boundary', async () => {
