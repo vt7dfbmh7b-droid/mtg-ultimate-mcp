@@ -18,9 +18,8 @@ export interface DeckBuildOptionsV07 {
   /** User-visible hard cap. Applies to commanders, must-includes, and optional candidates. */
   maxUsdPerCard?: number;
   /**
-   * Internal/search-only cap for optional candidates and lands. When omitted, maxUsdPerCard
-   * remains the candidate cap. This must never relax maxUsdPerCard and deliberately does not
-   * reject a fixed commander/must-include merely because a whole-deck search heuristic tightens.
+   * Search-only cap for optional candidates and lands. When omitted, maxUsdPerCard remains
+   * the candidate cap. It may tighten but never loosen an explicit user maxUsdPerCard.
    */
   candidateMaxUsdPerCard?: number;
   allowedSets?: string[];
@@ -167,10 +166,10 @@ function hasPrintingRestriction(policy: ResolvedPrintingPolicyV08): boolean {
 
 export function candidatePriceCapV07(options: DeckBuildOptionsV07): number | undefined {
   const userCap = options.maxUsdPerCard;
-  const searchCap = options.candidateMaxUsdPerCard;
-  if (searchCap === undefined) return userCap;
-  if (!Number.isFinite(searchCap) || searchCap <= 0) throw new Error('candidateMaxUsdPerCard must be positive and finite when supplied.');
-  return userCap === undefined ? searchCap : Math.min(userCap, searchCap);
+  const candidateCap = options.candidateMaxUsdPerCard;
+  if (candidateCap === undefined) return userCap;
+  if (!Number.isFinite(candidateCap) || candidateCap <= 0) throw new Error('candidateMaxUsdPerCard must be positive and finite when supplied.');
+  return userCap === undefined ? candidateCap : Math.min(userCap, candidateCap);
 }
 
 async function eligibleCardPrinting(
@@ -222,9 +221,9 @@ async function searchPool(
   try {
     const results = await searchCards(query, limit);
     const eligible: ScryfallCard[] = [];
-    const candidateCap = candidatePriceCapV07(options);
+    const priceCap = candidatePriceCapV07(options);
     for (const card of results) {
-      const printing = await eligibleCardPrinting(card, policy, candidateCap, cache);
+      const printing = await eligibleCardPrinting(card, policy, priceCap, cache);
       if (printing) eligible.push(printing);
     }
     return eligible;
@@ -271,9 +270,9 @@ async function basicPrinting(
   const query = [`!"${name}"`, 't:basic', policy.searchClause].filter(Boolean).join(' ');
   try {
     const results = await searchCards(query, 10);
-    const candidateCap = candidatePriceCapV07(options);
+    const priceCap = candidatePriceCapV07(options);
     for (const card of results) {
-      const printing = await eligibleCardPrinting(card, policy, candidateCap, cache);
+      const printing = await eligibleCardPrinting(card, policy, priceCap, cache);
       if (printing) return printing;
     }
     return null;
@@ -429,77 +428,174 @@ export async function buildCommanderDeckDraftV07(
       selectedBasics: [...basicQuantities.entries()].map(([name, quantity]) => ({ name, quantity })),
     },
     exactPrintingPolicy:
-      'Every selected line carries an exact Scryfall set code and collector number. Oracle identity drives rules; the selected physical printing must independently satisfy the active family/set/promo policy. User maxUsdPerCard applies to all required and optional cards; candidateMaxUsdPerCard, when supplied, only tightens optional candidate search.',
+      'Every selected line carries an exact Scryfall set code and collector number. Oracle identity drives rules; the selected physical printing must independently satisfy the active family/set/promo policy. User maxUsdPerCard applies to required and optional cards; candidateMaxUsdPerCard, when supplied, only tightens optional candidate search.',
     selectedPrintingEstimatedUsd: Number(estimatedUsd.toFixed(2)),
     constraints: {
       maxUsdPerCard: options.maxUsdPerCard ?? null,
       candidateMaxUsdPerCard: options.candidateMaxUsdPerCard ?? null,
       allowedSets: options.allowedSets ?? [],
       printingFamily: options.printingFamily ?? null,
-      excludedCards: [...excluded],
+      includePromos: options.includePromos ?? true,
+      includeSpecialReleases: options.includeSpecialReleases ?? true,
+      excludedCards: options.excludedCards ?? [],
       mustInclude: options.mustInclude ?? [],
     },
+    caveats: [
+      'This is an evidence-oriented draft builder, not a claim that the first generated 100 cards are the globally optimal list.',
+      'Role targets are consistency heuristics. Current official bracket classification should still be checked after construction because bracket rules are not just role counts.',
+      'The selected printing is explicit for pricing and shopping. When a printing-family restriction is active, an unrelated edition of the same Oracle card cannot substitute for a qualifying themed edition.',
+      hasPrintingRestriction(printingPolicy)
+        ? 'If the printing family does not contain enough suitable legal cards or basics under the requested price cap, the builder returns an incomplete draft instead of leaking cards from outside the family.'
+        : 'No themed printing-family restriction was requested.',
+      'Promo status alone never qualifies a printing for a themed family; the promo must belong to a matching family set or an exact curated special-release selector.',
+    ],
   };
 }
 
-export async function analyzeDeckBuildV07(
-  decklist: string,
-  options: Pick<DeckBuildOptionsV07, 'targetBracket' | 'themeQuery'> = {},
-): Promise<Record<string, unknown>> {
-  const parsed = parseDecklist(decklist);
-  const ids = [...parsed.commanders, ...parsed.main].map((entry) => ({
-    name: entry.name,
-    ...(entry.set ? { set: entry.set } : {}),
-    ...(entry.collectorNumber ? { collectorNumber: entry.collectorNumber } : {}),
-  }));
-  const { cards, notFound } = await getCardsByIdentifiers(ids);
-  if (notFound.length > 0) {
-    return { status: 'unresolved-cards', unresolved: notFound };
-  }
-  const metrics = buildDeckMetrics(parsed, cards);
-  const commanderRules = validateCommanderDeck(parsed, cards);
+function entryLine(entry: DeckEntry): string {
+  const printing = entry.set && entry.collectorNumber ? ` (${entry.set.toUpperCase()}) ${entry.collectorNumber}` : '';
+  const finish = entry.finish === 'foil' ? ' *F*' : entry.finish === 'etched' ? ' *E*' : entry.finish === 'nonfoil' ? ' *N*' : '';
+  return `${entry.quantity} ${entry.name}${printing}${finish}`;
+}
+
+function candidateName(candidate: Record<string, unknown>): string | null {
+  const card = candidate.card as Record<string, unknown> | undefined;
+  return typeof card?.name === 'string' ? card.name : null;
+}
+
+function candidateLine(candidate: Record<string, unknown>): string | null {
+  const name = candidateName(candidate);
+  if (!name) return null;
+  const printing = candidate.recommendedPrinting as Record<string, unknown> | undefined;
+  const set = typeof printing?.set === 'string' ? printing.set : null;
+  const collector = typeof printing?.collectorNumber === 'string' ? printing.collectorNumber : null;
+  const finish = printing?.finish === 'foil' ? ' *F*' : printing?.finish === 'etched' ? ' *E*' : printing?.finish === 'nonfoil' ? ' *N*' : '';
+  return set && collector ? `1 ${name} (${set}) ${collector}${finish}` : `1 ${name}`;
+}
+
+function simulationSignals(result: Record<string, unknown>): Record<string, number | null> {
+  const baseline = result.baseline as Record<string, unknown> | undefined;
+  const opening = baseline?.openingHands as Record<string, unknown> | undefined;
+  const advanced = result.advanced as Record<string, unknown> | undefined;
+  const commander = advanced?.commanderPressure as Record<string, unknown> | undefined;
+  const interaction = advanced?.interactionPressure as Record<string, unknown> | undefined;
+  const flow = advanced?.cardFlow as Record<string, unknown> | undefined;
+  const resources = advanced?.resources as Record<string, unknown> | undefined;
+  const numeric = (value: unknown): number | null => typeof value === 'number' && Number.isFinite(value) ? value : null;
   return {
-    status: commanderRules.isLegal ? 'ok' : 'illegal',
-    targetBracket: clampBracket(options.targetBracket),
-    themeQuery: options.themeQuery ?? null,
-    commanderRules,
-    metrics,
+    functionalKeepRate: numeric(opening?.functionalKeepRate),
+    commanderUptimePercent: numeric(commander?.battlefieldUptimePercent),
+    protectionWinRate: numeric(interaction?.protectionWinRateWhenChallenged),
+    averageSpellsCast: numeric(flow?.averageSpellsCast),
+    averageTreasuresSpent: numeric(resources?.averageTreasuresSpent),
   };
 }
 
-export async function planDeckUpgradeV07(
-  decklist: string,
+function signalDeltas(before: Record<string, number | null>, after: Record<string, number | null>): Record<string, number | null> {
+  return Object.fromEntries(Object.keys(before).map((key) => {
+    const left = before[key] ?? null;
+    const right = after[key] ?? null;
+    return [key, left === null || right === null ? null : Number((right - left).toFixed(2))];
+  }));
+}
+
+export async function buildSimulationBackedUpgradePlanV07(
+  parsed: ParsedDeck,
+  cards: ScryfallCard[],
+  allowedIdentity: string[],
   options: UpgradePlanOptionsV07 = {},
 ): Promise<Record<string, unknown>> {
-  const initial = await analyzeDeckBuildV07(decklist);
-  if (initial.status === 'unresolved-cards') return initial;
-  const parsed = parseDecklist(decklist);
-  const ids = [...parsed.commanders, ...parsed.main].map((entry) => ({
+  const maxSwaps = Math.max(1, Math.min(15, Math.trunc(options.maxSwaps ?? 8)));
+  const protectedNames = new Set((options.protectedCards ?? []).map((name) => name.toLocaleLowerCase()));
+  const suggestions = await suggestDeckUpgrades(parsed, cards, allowedIdentity, options);
+  const groups = (suggestions.candidateAddsByDeficit ?? []) as Array<Record<string, unknown>>;
+  const cutPool = ((suggestions.candidateCuts ?? []) as Array<Record<string, unknown>>)
+    .filter((cut) => {
+      const card = cut.card as Record<string, unknown> | undefined;
+      return typeof card?.name !== 'string' || !protectedNames.has(card.name.toLocaleLowerCase());
+    });
+
+  const chosenAdds: Array<Record<string, unknown>> = [];
+  const addNames = new Set<string>();
+  for (const group of groups) {
+    for (const candidate of (group.candidates ?? []) as Array<Record<string, unknown>>) {
+      if (chosenAdds.length >= maxSwaps) break;
+      const name = candidateName(candidate);
+      if (!name || addNames.has(name.toLocaleLowerCase())) continue;
+      addNames.add(name.toLocaleLowerCase());
+      chosenAdds.push(candidate);
+    }
+    if (chosenAdds.length >= maxSwaps) break;
+  }
+  const chosenCuts = cutPool.slice(0, chosenAdds.length);
+  const cutNames = new Set(chosenCuts.flatMap((cut) => {
+    const card = cut.card as Record<string, unknown> | undefined;
+    return typeof card?.name === 'string' ? [card.name.toLocaleLowerCase()] : [];
+  }));
+
+  const newMainLines = parsed.main
+    .filter((entry) => !cutNames.has(entry.name.toLocaleLowerCase()))
+    .map(entryLine);
+  const addLines = chosenAdds.map(candidateLine).filter((line): line is string => Boolean(line));
+  const newDecklist = [
+    '// COMMANDER',
+    ...parsed.commanders.map(entryLine),
+    '',
+    '// MAIN',
+    ...newMainLines,
+    ...addLines,
+  ].join('\n');
+  const upgradedParsed = parseDecklist(newDecklist);
+  const identifiers = [...upgradedParsed.commanders, ...upgradedParsed.main].map((entry) => ({
     name: entry.name,
     ...(entry.set ? { set: entry.set } : {}),
     ...(entry.collectorNumber ? { collectorNumber: entry.collectorNumber } : {}),
   }));
-  const resolved = await getCardsByIdentifiers(ids);
-  if (resolved.notFound.length > 0) return { status: 'unresolved-cards', unresolved: resolved.notFound };
+  const resolved = await getCardsByIdentifiers(identifiers);
+  const upgradedRules = validateCommanderDeck(upgradedParsed, resolved.cards);
 
-  const upgrades = await suggestDeckUpgrades(decklist, options);
-  const swaps = Array.isArray(upgrades.suggestedSwaps) ? upgrades.suggestedSwaps : [];
-  const maxSwaps = Math.max(0, Math.min(20, Math.trunc(options.maxSwaps ?? 10)));
-  const protectedSet = new Set((options.protectedCards ?? []).map((name) => name.toLocaleLowerCase()));
-  const chosen = swaps.filter((swap) => !protectedSet.has(swap.remove.toLocaleLowerCase())).slice(0, maxSwaps);
-  const recommendations = chosen.map((swap) => ({ remove: swap.remove, add: swap.add, reasons: swap.reasons }));
-  const simulations = options.simulationIterations && options.simulationIterations > 0
-    ? await simulateDeckGameplayV06(decklist, {
-      iterations: options.simulationIterations,
-      maxTurns: options.simulationTurns,
-      seed: options.seed,
-    })
+  const iterations = Math.max(100, Math.min(5_000, Math.trunc(options.simulationIterations ?? 750)));
+  const turns = Math.max(3, Math.min(12, Math.trunc(options.simulationTurns ?? 7)));
+  const seed = Math.max(1, Math.min(2_147_483_647, Math.trunc(options.seed ?? 20_260_816)));
+  const simulationOptions = { iterations, advancedIterations: Math.min(iterations, 1_500), turns, seed, pressure: 'upgraded' as const };
+  const beforeSimulation = simulateDeckGameplayV06(parsed, cards, simulationOptions);
+  const afterSimulation = resolved.notFound.length === 0 && upgradedRules.isLegal
+    ? simulateDeckGameplayV06(upgradedParsed, resolved.cards, simulationOptions)
     : null;
+  const beforeSignals = simulationSignals(beforeSimulation);
+  const afterSignals = afterSimulation ? simulationSignals(afterSimulation) : null;
 
   return {
-    status: 'ok',
-    initial,
-    recommendations,
-    simulationBaseline: simulations,
+    status: afterSimulation ? 'simulated-candidate-plan' : 'candidate-plan-not-simulated',
+    swaps: chosenAdds.map((add, index) => ({
+      out: (() => {
+        const cut = chosenCuts[index];
+        const card = cut?.card as Record<string, unknown> | undefined;
+        return typeof card?.name === 'string' ? card.name : null;
+      })(),
+      in: candidateName(add),
+      recommendedPrinting: add.recommendedPrinting ?? null,
+      why: add.whyItFits ?? 'Addresses a detected structural deficit.',
+    })),
+    protectedCards: options.protectedCards ?? [],
+    upgradedDecklist: newDecklist,
+    upgradedCommanderRules: upgradedRules,
+    unresolvedAfterSwaps: resolved.notFound,
+    beforeMetrics: buildDeckMetrics(parsed, cards),
+    afterMetrics: resolved.notFound.length === 0 ? buildDeckMetrics(upgradedParsed, resolved.cards) : null,
+    simulation: {
+      seed,
+      iterations,
+      turns,
+      before: beforeSignals,
+      after: afterSignals,
+      delta: afterSignals ? signalDeltas(beforeSignals, afterSignals) : null,
+      guidance: 'Positive deltas can support a swap, but simulation consistency is not the only goal. Preserve the deck’s intended theme, win routes, and cards the player explicitly wants to keep.',
+    },
+    sourceUpgradeAnalysis: suggestions,
+    caveats: [
+      'V0.7 does not automatically claim the suggested swaps are final. It deliberately returns the whole candidate deck and before/after evidence so an AI or player can reject a swap that harms theme or a preferred win route.',
+      'Same-seed simulation improves comparability but does not remove multiplayer variance, pilot decisions, hidden information, or meta effects.',
+    ],
   };
 }
