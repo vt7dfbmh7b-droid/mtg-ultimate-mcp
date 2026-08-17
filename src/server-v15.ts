@@ -278,7 +278,25 @@ export function registerMtgToolsV15(server: McpServer): McpServer {
     },
     async (input) => {
       try {
-        return jsonResult(evaluateDeepLearningReadinessV15(input));
+        return jsonResult(evaluateDeepLearningReadinessV15({
+          labelledExamples: input.labelledExamples,
+          positiveExamples: input.positiveExamples,
+          negativeExamples: input.negativeExamples,
+          temporalCoverageDays: input.temporalCoverageDays,
+          independentEvidenceGroups: input.independentEvidenceGroups,
+          evidenceClassCount: input.evidenceClassCount,
+          duplicateRate: input.duplicateRate,
+          conflictRate: input.conflictRate,
+          malformedRate: input.malformedRate,
+          leakageChecksPassed: input.leakageChecksPassed,
+          transparentBaselineAccuracy: input.transparentBaselineAccuracy,
+          candidateModelAccuracy: input.candidateModelAccuracy,
+          temporalHoldoutExamples: input.temporalHoldoutExamples,
+          ...(input.transparentBaselineLogLoss !== undefined ? { transparentBaselineLogLoss: input.transparentBaselineLogLoss } : {}),
+          ...(input.candidateModelLogLoss !== undefined ? { candidateModelLogLoss: input.candidateModelLogLoss } : {}),
+          ...(input.temporalHoldoutPositiveExamples !== undefined ? { temporalHoldoutPositiveExamples: input.temporalHoldoutPositiveExamples } : {}),
+          ...(input.temporalHoldoutNegativeExamples !== undefined ? { temporalHoldoutNegativeExamples: input.temporalHoldoutNegativeExamples } : {}),
+        }));
       } catch (error) {
         return errorResult(error);
       }
