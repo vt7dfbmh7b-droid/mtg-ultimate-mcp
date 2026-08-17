@@ -222,7 +222,7 @@ function sourceErrorCode(error: Error): LearningIngestionRejectionCodeV15 {
   if (/unknown source/i.test(error.message)) return 'unknown-source';
   if (/evidence class/i.test(error.message)) return 'wrong-evidence-class';
   if (/sourceUrl/i.test(error.message) || /registered source/i.test(error.message)) return 'source-url-mismatch';
-  if (/timestamp|occurred after/i.test(error.message)) return 'invalid-timestamp-order';
+  if (/timestamp|outcomeOccurredAt|sourceObservedAt|occur(?:red)? after/i.test(error.message)) return 'invalid-timestamp-order';
   if (/commander identity/i.test(error.message)) return 'invalid-commander-identity';
   if (/deck|100 cards|commander section/i.test(error.message)) return 'invalid-decklist';
   if (/feature/i.test(error.message)) return 'invalid-features';
