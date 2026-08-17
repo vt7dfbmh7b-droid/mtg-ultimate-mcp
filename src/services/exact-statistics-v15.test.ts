@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
+  MAX_EXACT_STATISTICS_POPULATION_V15,
   calculateExactHypergeometricV15,
   exactFractionSumsToOneV15,
 } from './exact-statistics-v15.js';
@@ -119,6 +120,28 @@ test('boundary populations and draw-all cases remain exact', () => {
   const drawAll = calculateExactHypergeometricV15({ population: 10, successes: 4, draws: 10, event: { kind: 'exactly', value: 4 } });
   assert.equal(drawAll.probability.numerator, '1');
   assert.deepEqual(drawAll.support, { minimum: 4, maximum: 4 });
+});
+
+test('supported ceiling remains finite and exact while oversized requests fail closed', () => {
+  const ceiling = calculateExactHypergeometricV15({
+    population: MAX_EXACT_STATISTICS_POPULATION_V15,
+    successes: 500,
+    draws: 500,
+    event: { kind: 'at-least', value: 250 },
+  });
+  assert.equal(Number.isFinite(ceiling.probability.decimal), true);
+  assert.equal(Number.isFinite(ceiling.complement.decimal), true);
+  assert.equal(exactFractionSumsToOneV15(ceiling.probability, ceiling.complement), true);
+
+  assert.throws(
+    () => calculateExactHypergeometricV15({
+      population: MAX_EXACT_STATISTICS_POPULATION_V15 + 1,
+      successes: 500,
+      draws: 7,
+      event: { kind: 'at-least', value: 1 },
+    }),
+    /population must be at most/,
+  );
 });
 
 test('increasing success count cannot reduce a fixed at-least event', () => {
