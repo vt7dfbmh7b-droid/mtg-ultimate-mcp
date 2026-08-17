@@ -22,6 +22,38 @@ export interface BracketAssessmentSignalsV15 {
   exhibitionIntent?: boolean;
 }
 
+export type Bracket5ThresholdKeyV15 =
+  | 'average-nonland-mv'
+  | 'early-plays'
+  | 'fast-mana'
+  | 'free-interaction'
+  | 'cheap-interaction'
+  | 'tutors'
+  | 'verified-winning-combo'
+  | 'competitive-combo-signal'
+  | 'cedh-intent'
+  | 'competitive-metagame-evidence';
+
+export interface Bracket5ThresholdCheckV15 {
+  key: Bracket5ThresholdKeyV15;
+  category: 'construction' | 'evidence';
+  label: string;
+  observed: number | string | boolean | null;
+  required: string;
+  passed: boolean;
+  detail: string;
+  pressurePoint: string;
+}
+
+export interface ConstraintAnalysisV15 {
+  constraint: string;
+  kind: 'budget' | 'card-price-cap' | 'printing-pool' | 'other';
+  causality: 'observed-under-constraint-not-proven-causal';
+  failedThresholdKeys: Bracket5ThresholdKeyV15[];
+  pressurePoints: string[];
+  summary: string;
+}
+
 export interface BracketCeilingAssessmentV15 {
   targetBracket: CommanderBracketV15;
   assessedBracket: CommanderBracketV15 | null;
@@ -31,6 +63,8 @@ export interface BracketCeilingAssessmentV15 {
   hardGatesPassed: boolean;
   bracket5ConstructionCandidate: boolean;
   bracket5CertifiedByThisAssessment: boolean;
+  bracket5ThresholdChecks: Bracket5ThresholdCheckV15[];
+  constraintAnalysis: ConstraintAnalysisV15[];
   ceilingReasons: string[];
   supportingSignals: string[];
   constraints: string[];
@@ -47,6 +81,60 @@ function nonNegative(value: number | undefined): number {
 
 function clampBracket(value: number): CommanderBracketV15 {
   return Math.min(5, Math.max(1, Math.trunc(value))) as CommanderBracketV15;
+}
+
+function threshold(
+  key: Bracket5ThresholdKeyV15,
+  category: Bracket5ThresholdCheckV15['category'],
+  label: string,
+  observed: Bracket5ThresholdCheckV15['observed'],
+  required: string,
+  passed: boolean,
+  pressurePoint: string,
+): Bracket5ThresholdCheckV15 {
+  return {
+    key,
+    category,
+    label,
+    observed,
+    required,
+    passed,
+    detail: `${label}: observed ${String(observed)}; Bracket-5 ${category === 'construction' ? 'construction gate' : 'evidence gate'} requires ${required}.`,
+    pressurePoint,
+  };
+}
+
+function classifyConstraint(constraint: string): ConstraintAnalysisV15['kind'] {
+  const normalized = constraint.toLocaleLowerCase();
+  if (/whole[- ]deck|total deck|deck budget|budget/.test(normalized)) return 'budget';
+  if (/per[- ]card|max(?:imum)? .*card|card price/.test(normalized)) return 'card-price-cap';
+  if (/printing|printings|printing family|allowed sets?|set[- ]only|set only|themed/.test(normalized)) return 'printing-pool';
+  return 'other';
+}
+
+function unique(values: string[]): string[] {
+  return [...new Set(values)];
+}
+
+function buildConstraintAnalysis(
+  constraints: readonly string[],
+  checks: readonly Bracket5ThresholdCheckV15[],
+): ConstraintAnalysisV15[] {
+  const constructionMisses = checks.filter((check) => check.category === 'construction' && !check.passed);
+  const pressurePoints = unique(constructionMisses.map((check) => check.pressurePoint));
+  const failedThresholdKeys = constructionMisses.map((check) => check.key);
+  const missSummary = constructionMisses.map((check) => `${check.label} (${String(check.observed)} vs ${check.required})`).join('; ');
+
+  return constraints.map((constraint) => ({
+    constraint,
+    kind: classifyConstraint(constraint),
+    causality: 'observed-under-constraint-not-proven-causal' as const,
+    failedThresholdKeys: [...failedThresholdKeys],
+    pressurePoints: [...pressurePoints],
+    summary: constructionMisses.length > 0
+      ? `Constraint "${constraint}" was active while the finished list missed ${constructionMisses.length} Bracket-5 construction gate${constructionMisses.length === 1 ? '' : 's'}: ${missSummary}. These are observed shortfalls in the constrained build; this does not prove the restriction alone caused every miss.`
+      : `Constraint "${constraint}" was active, but the finished list cleared every measured Bracket-5 construction gate. Any remaining Bracket-5 gap comes from non-construction evidence such as competitive intent or current metagame support; this does not prove the restriction caused that gap.`,
+  }));
 }
 
 /**
@@ -81,6 +169,8 @@ export function assessBracketCeilingV15(
       hardGatesPassed: false,
       bracket5ConstructionCandidate: false,
       bracket5CertifiedByThisAssessment: false,
+      bracket5ThresholdChecks: [],
+      constraintAnalysis: [],
       ceilingReasons: failures,
       supportingSignals: [],
       constraints: [...constraints],
@@ -99,6 +189,39 @@ export function assessBracketCeilingV15(
   const cheapInteraction = nonNegative(signals.cheapInteractionCount);
   const tutors = nonNegative(signals.tutorCount);
   const gameChangers = nonNegative(signals.gameChangerCount);
+  const competitiveComboSignal = ruthlessWinning > 0 || strategic > 0 || tag === 'R';
+
+  const bracket5ThresholdChecks: Bracket5ThresholdCheckV15[] = [
+    threshold('average-nonland-mv', 'construction', 'Average nonland mana value', avgMv, 'at most 2.6', avgMv <= 2.6, 'speed/curve'),
+    threshold('early-plays', 'construction', 'Early plays', early, 'at least 35', early >= 35, 'speed/curve'),
+    threshold('fast-mana', 'construction', 'Fast mana', fastMana, 'at least 3', fastMana >= 3, 'fast-mana density'),
+    threshold('free-interaction', 'construction', 'Free interaction', freeInteraction, 'at least 1', freeInteraction >= 1, 'free/cheap interaction'),
+    threshold('cheap-interaction', 'construction', 'Cheap interaction', cheapInteraction, 'at least 8', cheapInteraction >= 8, 'free/cheap interaction'),
+    threshold('tutors', 'construction', 'Tutors', tutors, 'at least 4', tutors >= 4, 'tutor consistency'),
+    threshold('verified-winning-combo', 'construction', 'Verified win-oriented combos', winning, 'at least 1', winning > 0, 'win-package quality/redundancy'),
+    threshold(
+      'competitive-combo-signal',
+      'construction',
+      'Competitive combo signal',
+      `Ruthless=${ruthlessWinning}, strategic=${strategic}, Spellbook=${tag || 'none'}`,
+      'at least one Ruthless/strategically relevant/R-tagged signal',
+      competitiveComboSignal,
+      'win-package quality/redundancy',
+    ),
+    threshold('cedh-intent', 'evidence', 'Explicit cEDH intent', signals.cedhIntent === true, 'true', signals.cedhIntent === true, 'competitive intent'),
+    threshold(
+      'competitive-metagame-evidence',
+      'evidence',
+      'Independent current competitive-metagame evidence',
+      signals.competitiveMetagameEvidence === true,
+      'true',
+      signals.competitiveMetagameEvidence === true,
+      'metagame evidence',
+    ),
+  ];
+  const constructionChecks = bracket5ThresholdChecks.filter((check) => check.category === 'construction');
+  const bracket5ConstructionCandidate = constructionChecks.every((check) => check.passed);
+  const constraintAnalysis = buildConstraintAnalysis(constraints, bracket5ThresholdChecks);
 
   const supportingSignals: string[] = [];
   if (winning > 0) supportingSignals.push(`${winning} verified win-oriented combo${winning === 1 ? '' : 's'}.`);
@@ -122,15 +245,6 @@ export function assessBracketCeilingV15(
       && tutors >= 2
       && (winning > 0 || ruthlessWinning > 0 || tag === 'R' || gameChangers >= 3)
     );
-
-  const bracket5ConstructionCandidate = avgMv <= 2.6
-    && early >= 35
-    && fastMana >= 3
-    && freeInteraction >= 1
-    && cheapInteraction >= 8
-    && tutors >= 4
-    && winning > 0
-    && (ruthlessWinning > 0 || strategic > 0 || tag === 'R');
 
   let assessed: CommanderBracketV15;
   let assessedBand: string;
@@ -162,13 +276,17 @@ export function assessBracketCeilingV15(
   const ceilingReasons: string[] = [];
   if (target > assessed) {
     if (target === 5) {
-      if (!bracket5ConstructionCandidate) ceilingReasons.push('The finished list does not yet satisfy the plugin’s conservative cEDH construction gate.');
+      if (!bracket5ConstructionCandidate) {
+        ceilingReasons.push('The finished list does not yet satisfy the plugin’s conservative cEDH construction gate.');
+        ceilingReasons.push(...constructionChecks.filter((check) => !check.passed).map((check) => check.detail));
+      }
       if (signals.cedhIntent !== true) ceilingReasons.push('Bracket 5 requires explicit cEDH/competitive intent; a static list cannot supply that intent by itself.');
       if (signals.competitiveMetagameEvidence !== true) ceilingReasons.push('No independent competitive-metagame evidence currently supports a Bracket 5 claim.');
     } else {
       ceilingReasons.push(`The finished deck’s independently measured signals support Bracket ${assessed}, below the requested Bracket ${target}.`);
     }
     ceilingReasons.push(...constraints.map((constraint) => `Constraint ceiling: ${constraint}`));
+    ceilingReasons.push(...constraintAnalysis.map((analysis) => `Constraint analysis: ${analysis.summary}`));
   }
 
   let confidence: BracketCeilingAssessmentV15['confidence'] = 'medium';
@@ -185,11 +303,13 @@ export function assessBracketCeilingV15(
     hardGatesPassed: true,
     bracket5ConstructionCandidate,
     bracket5CertifiedByThisAssessment: assessed === 5,
+    bracket5ThresholdChecks,
+    constraintAnalysis,
     ceilingReasons,
     supportingSignals,
     constraints: [...constraints],
     guidance: assessed === 5
       ? 'Bracket 5 is only reported because strong cEDH construction, explicit competitive intent, and independent metagame evidence are all present. Continue to reassess as the metagame changes.'
-      : 'Optimize toward the requested bracket, but report the bracket the finished deck actually supports. A target, budget, theme, printing family, or requested label is never evidence for a higher bracket.',
+      : 'Optimize toward the requested bracket, but report the bracket the finished deck actually supports. A target, budget, theme, printing family, or requested label is never evidence for a higher bracket. When restrictions are active, report the measured threshold misses under those restrictions without claiming the restriction alone caused every miss.',
   };
 }
