@@ -121,6 +121,7 @@ export interface ExternalBenchmarkComparisonV15 {
   caseId: string;
   domain: ExternalBenchmarkDomainV15;
   oracleVersion: string;
+  deterministicSeed: number | null;
   independenceGroup: string;
   agreement: 'exact' | 'mismatch';
   differencePaths: string[];
@@ -169,6 +170,10 @@ function compareJson(
   differences.push(path);
 }
 
+function normalizedSeed(seed: number | null | undefined): number | null {
+  return typeof seed === 'number' && Number.isFinite(seed) ? Math.trunc(seed) : null;
+}
+
 /** Compare normalized Ultimate MTG output against one pinned external snapshot. */
 export function compareExternalOracleSnapshotV15(
   ultimateResult: ExternalBenchmarkJsonV15,
@@ -178,6 +183,9 @@ export function compareExternalOracleSnapshotV15(
   if (!oracle.domains.includes(snapshot.domain)) {
     throw new Error(`${oracle.repository} is not registered for ${String(snapshot.domain)} benchmarks.`);
   }
+  if (!snapshot.caseId.trim()) throw new Error('External benchmark caseId must be non-empty.');
+  if (!snapshot.oracleVersion.trim()) throw new Error('External benchmark oracleVersion must be non-empty.');
+
   const differencePaths: string[] = [];
   compareJson(ultimateResult, snapshot.normalizedResult, '$', differencePaths);
   const agreement = differencePaths.length === 0 ? 'exact' : 'mismatch';
@@ -186,6 +194,7 @@ export function compareExternalOracleSnapshotV15(
     caseId: snapshot.caseId,
     domain: snapshot.domain,
     oracleVersion: snapshot.oracleVersion,
+    deterministicSeed: normalizedSeed(snapshot.deterministicSeed),
     independenceGroup: oracle.independenceGroup,
     agreement,
     differencePaths,
@@ -202,6 +211,11 @@ export interface ExternalBenchmarkSummaryV15 {
   independentExactGroups: number;
   exactGroups: string[];
   mismatchGroups: string[];
+  caseIds: string[];
+  domains: ExternalBenchmarkDomainV15[];
+  deterministicSeeds: Array<number | null>;
+  comparableCase: boolean;
+  boundaryProblems: string[];
   corroboration: 'none' | 'single-family' | 'multi-source';
   guidance: string;
 }
@@ -209,16 +223,32 @@ export interface ExternalBenchmarkSummaryV15 {
 /**
  * Summarize parity without double-counting related implementations.
  * Forge + Manabrew agreeing is one family, not two independent confirmations.
+ * Corroboration is only valid when every comparison describes the same case,
+ * domain, and deterministic seed. Different experiments must never be pooled.
  */
 export function summarizeExternalBenchmarkComparisonsV15(
   comparisons: ExternalBenchmarkComparisonV15[],
 ): ExternalBenchmarkSummaryV15 {
   const exact = comparisons.filter((comparison) => comparison.agreement === 'exact');
   const mismatches = comparisons.filter((comparison) => comparison.agreement === 'mismatch');
+  const caseIds = [...new Set(comparisons.map((comparison) => comparison.caseId))].sort();
+  const domains = [...new Set(comparisons.map((comparison) => comparison.domain))].sort() as ExternalBenchmarkDomainV15[];
+  const deterministicSeeds = [...new Set(comparisons.map((comparison) => comparison.deterministicSeed))]
+    .sort((a, b) => (a ?? Number.MIN_SAFE_INTEGER) - (b ?? Number.MIN_SAFE_INTEGER));
+  const boundaryProblems: string[] = [];
+  if (caseIds.length > 1) boundaryProblems.push(`Mixed benchmark caseIds: ${caseIds.join(', ')}.`);
+  if (domains.length > 1) boundaryProblems.push(`Mixed benchmark domains: ${domains.join(', ')}.`);
+  if (deterministicSeeds.length > 1) {
+    boundaryProblems.push(`Mixed deterministic seeds: ${deterministicSeeds.map((seed) => seed === null ? 'none' : String(seed)).join(', ')}.`);
+  }
+  const comparableCase = comparisons.length > 0 && boundaryProblems.length === 0;
+
   const exactGroups = [...new Set(exact.map((comparison) => comparison.independenceGroup))].sort();
   const mismatchGroups = [...new Set(mismatches.map((comparison) => comparison.independenceGroup))].sort();
   const unresolved = new Set(mismatchGroups);
-  const cleanExactGroups = exactGroups.filter((group) => !unresolved.has(group));
+  const cleanExactGroups = comparableCase
+    ? exactGroups.filter((group) => !unresolved.has(group))
+    : [];
   const corroboration: ExternalBenchmarkSummaryV15['corroboration'] = cleanExactGroups.length >= 2
     ? 'multi-source'
     : cleanExactGroups.length === 1
@@ -232,11 +262,18 @@ export function summarizeExternalBenchmarkComparisonsV15(
     independentExactGroups: cleanExactGroups.length,
     exactGroups: cleanExactGroups,
     mismatchGroups,
+    caseIds,
+    domains,
+    deterministicSeeds,
+    comparableCase,
+    boundaryProblems,
     corroboration,
-    guidance: mismatches.length > 0
-      ? 'At least one external oracle family disagrees. Treat the case as unresolved until the mismatch is explained and converted into a regression fixture.'
-      : corroboration === 'multi-source'
-        ? 'Multiple independent oracle families agree after lineage deduplication. This strengthens confidence but does not override primary MTG facts or internal hard gates.'
-        : 'External agreement is useful corroboration, but broader independent coverage is still needed before treating the behavior as strongly cross-validated.',
+    guidance: boundaryProblems.length > 0
+      ? 'Do not pool unrelated external benchmark experiments. Compare the same case, domain, and deterministic seed before claiming corroboration.'
+      : mismatches.length > 0
+        ? 'At least one external oracle family disagrees. Treat the case as unresolved until the mismatch is explained and converted into a regression fixture.'
+        : corroboration === 'multi-source'
+          ? 'Multiple independent oracle families agree after lineage deduplication. This strengthens confidence but does not override primary MTG facts or internal hard gates.'
+          : 'External agreement is useful corroboration, but broader independent coverage is still needed before treating the behavior as strongly cross-validated.',
   };
 }
