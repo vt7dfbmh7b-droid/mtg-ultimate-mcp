@@ -195,7 +195,11 @@ export function evaluateNeuralOnTemporalCorpusV15(
   const trainingLabels = countLabels(trainingExamples);
   const holdoutLabels = countLabels(holdoutExamples);
   const evaluationWarnings: string[] = [];
+  const singleLearningTarget = corpusAudit.learningTargetCount <= 1;
 
+  if (!singleLearningTarget) {
+    evaluationWarnings.push(`Corpus contains mixed learning targets (${corpusAudit.learningTargets.join(', ')}); one classifier must not treat these different outcome semantics as interchangeable labels.`);
+  }
   if (trainingExamples.length < 10) evaluationWarnings.push('Too few leakage-safe training examples to evaluate either model.');
   if (trainingLabels.positive === 0 || trainingLabels.negative === 0) evaluationWarnings.push('Leakage-safe training data contains only one outcome class.');
   if (holdoutExamples.length === 0) evaluationWarnings.push('No leakage-safe future holdout examples are available.');
@@ -215,7 +219,7 @@ export function evaluateNeuralOnTemporalCorpusV15(
   let neuralTemporalMetrics = emptyMetrics();
   let transparentTemporalMetrics = emptyMetrics();
 
-  if (trainingExamples.length >= 10 && holdoutExamples.length > 0) {
+  if (singleLearningTarget && trainingExamples.length >= 10 && holdoutExamples.length > 0) {
     neuralModel = trainNeuralRankerV15(trainingExamples, options);
     const neuralEpochs = Number.isFinite(options.epochs) ? options.epochs ?? 400 : 400;
     transparentModel = trainAdaptiveRankerV15(trainingExamples, {
@@ -258,17 +262,29 @@ export function evaluateNeuralOnTemporalCorpusV15(
     temporalHoldoutNegativeExamples: holdoutLabels.negative,
   });
 
-  const readiness: ReturnType<typeof evaluateDeepLearningReadinessV15> = metagameDrift.severity === 'severe'
-    ? {
+  const targetSafeReadiness: ReturnType<typeof evaluateDeepLearningReadinessV15> = singleLearningTarget
+    ? baseReadiness
+    : {
         ...baseReadiness,
-        status: baseReadiness.status === 'not-ready' ? 'not-ready' : 'experiment-ready',
+        status: 'not-ready',
         blockers: [
           ...baseReadiness.blockers,
+          'Mixed learning targets cannot be trained or evaluated as one binary outcome. Select one explicit learning target first.',
+        ],
+        guidance: 'Split the corpus by learningTarget, then run leakage-safe temporal evaluation independently for each target before comparing or promoting models.',
+      };
+
+  const readiness: ReturnType<typeof evaluateDeepLearningReadinessV15> = metagameDrift.severity === 'severe'
+    ? {
+        ...targetSafeReadiness,
+        status: targetSafeReadiness.status === 'not-ready' ? 'not-ready' : 'experiment-ready',
+        blockers: [
+          ...targetSafeReadiness.blockers,
           'Severe metagame drift blocks neural-model promotion until the model is retrained and wins again on fresh temporal holdout data.',
         ],
         guidance: 'Retrain both transparent and neural candidates on the shifted metagame, create a new leakage-safe future holdout, and require the neural candidate to re-earn its advantage before promotion.',
       }
-    : baseReadiness;
+    : targetSafeReadiness;
 
   return {
     corpusAudit,
