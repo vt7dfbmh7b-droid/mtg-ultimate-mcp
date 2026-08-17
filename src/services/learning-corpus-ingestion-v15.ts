@@ -223,8 +223,8 @@ function sourceErrorCode(error: Error): LearningIngestionRejectionCodeV15 {
   if (/evidence class/i.test(error.message)) return 'wrong-evidence-class';
   if (/sourceUrl/i.test(error.message) || /registered source/i.test(error.message)) return 'source-url-mismatch';
   if (/timestamp|occurred after/i.test(error.message)) return 'invalid-timestamp-order';
-  if (/deck|100 cards|commander section/i.test(error.message)) return 'invalid-decklist';
   if (/commander identity/i.test(error.message)) return 'invalid-commander-identity';
+  if (/deck|100 cards|commander section/i.test(error.message)) return 'invalid-decklist';
   if (/feature/i.test(error.message)) return 'invalid-features';
   if (/outcome|standing|fieldSize|topCutSize|won/i.test(error.message)) return 'invalid-outcome';
   return 'malformed-record';
@@ -298,7 +298,10 @@ export function ingestObservedLearningRecordsV15(
         if (!Array.isArray(raw.expectedCommanderNames) || raw.expectedCommanderNames.length < 1 || raw.expectedCommanderNames.length > 2) {
           throw new Error('expectedCommanderNames must contain one or two commander names.');
         }
-        const expected = raw.expectedCommanderNames.map((name) => requiredString('expectedCommanderNames entry', name)).map(normalize).sort();
+        const expected = raw.expectedCommanderNames
+          .map((name: string) => requiredString('expectedCommanderNames entry', name))
+          .map(normalize)
+          .sort();
         const actual = commanderNames.map(normalize).sort();
         if (expected.join('|') !== actual.join('|')) {
           throw new Error(`Commander identity mismatch: source expected ${expected.join(' / ')}, decklist contains ${actual.join(' / ')}.`);
