@@ -7,6 +7,7 @@ import {
   temporalSplitLearningCorpusV15,
   type LearningOutcomeRecordV15,
 } from './services/learning-corpus-v15.js';
+import { detectMetagameDriftV15 } from './services/metagame-drift-v15.js';
 import {
   scoreCandidateWithNeuralV15,
   trainNeuralRankerV15,
@@ -154,8 +155,30 @@ export function registerMtgNeuralToolsV15(server: McpServer): McpServer {
         return jsonResult({
           audit: auditLearningCorpusV15(normalized),
           temporalSplit: temporalSplitLearningCorpusV15(normalized, 0.2),
-          guidance: 'Do not train a neural model on duplicated, contradictory, malformed or identity-conflicted outcome data. Related leakage groups stay entirely on one side of the temporal boundary.',
+          metagameDrift: detectMetagameDriftV15(normalized),
+          guidance: 'Do not train a neural model on duplicated, contradictory, malformed or identity-conflicted outcome data. Related leakage groups stay entirely on one side of the temporal boundary, and material metagame drift must be re-tested rather than hidden inside an aggregate score.',
         });
+      } catch (error) {
+        return errorResult(error);
+      }
+    },
+  );
+
+  server.registerTool(
+    'detect_metagame_drift_v15',
+    {
+      title: 'Detect Commander metagame drift before trusting learned weights',
+      description: 'Compare earlier and recent leakage-clean outcome windows across win/positive rates, learned feature means, commander distribution and evidence-class mix. Severe drift blocks neural promotion until retraining and fresh temporal validation.',
+      inputSchema: z.object({
+        records: z.array(corpusRecordSchema).min(1).max(50_000),
+        recentFraction: z.number().min(0.1).max(0.5).optional().default(0.25),
+        minimumWindowRecords: z.number().int().min(10).max(10_000).optional().default(40),
+      }),
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async ({ records, recentFraction, minimumWindowRecords }) => {
+      try {
+        return jsonResult(detectMetagameDriftV15(normalizeCorpus(records), { recentFraction, minimumWindowRecords }));
       } catch (error) {
         return errorResult(error);
       }
@@ -166,7 +189,7 @@ export function registerMtgNeuralToolsV15(server: McpServer): McpServer {
     'evaluate_neural_temporal_corpus_v15',
     {
       title: 'Evaluate neural MTG learning on a leakage-safe future holdout',
-      description: 'Audit and quarantine the learning corpus, split it chronologically without allowing a leakage group onto both sides, train the neural and transparent rankers on the earlier data, score both on the same unseen future records, and apply promotion-readiness gates including duplicate, conflict and malformed-provenance rates.',
+      description: 'Audit and quarantine the learning corpus, measure metagame drift, split it chronologically without allowing a leakage group onto both sides, train the neural and transparent rankers on the earlier data, score both on the same unseen future records, and block promotion when data quality, calibration or metagame stability is inadequate.',
       inputSchema: z.object({
         records: z.array(corpusRecordSchema).min(1).max(50_000),
         holdoutFraction: z.number().min(0.05).max(0.5).optional().default(0.2),
