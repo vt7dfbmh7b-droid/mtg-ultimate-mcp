@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { assessBracketCeilingV15 } from '../src/services/bracket-ceiling-v15.js';
 import { buildCommanderForCedhV14 } from '../src/services/cedh-workflow-v14.js';
 import { validateCommanderDeck } from '../src/services/commander-rules.js';
 import { parseDecklist, type DeckEntry, type ParsedDeck } from '../src/services/deck.js';
@@ -8,6 +9,10 @@ import { estimateCommanderBracket, findDeckCombos } from '../src/services/spellb
 
 function record(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
+}
+
+function number(value: unknown, fallback = 0): number {
+  return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
 }
 
 function allEntries(parsed: ParsedDeck): DeckEntry[] {
@@ -46,9 +51,10 @@ async function verifyFinalDeck(decklist: string): Promise<{ parsed: ParsedDeck; 
 
 async function main(): Promise<void> {
   const commander = 'Najeela, the Blade-Blossom';
-  console.log('FF BRACKET 5 E2E: building a FINAL FANTASY-printings-only Commander deck...');
+  console.log('FF BRACKET 5 TARGET E2E: building a FINAL FANTASY-printings-only Commander deck...');
   console.log(`Commander Oracle identity: ${commander}`);
   console.log('Goal: strongest cEDH-oriented construction the current FF physical-printing pool can support.');
+  console.log('Important: Bracket 5 is a target, not an assumed result. The final reported bracket comes from the conservative V0.15 ceiling assessor.');
 
   const built = await buildCommanderForCedhV14([commander], {
     printingFamily: 'Final Fantasy',
@@ -68,30 +74,69 @@ async function main(): Promise<void> {
   const finalDecklist = typeof built.finalDecklist === 'string' ? built.finalDecklist : '';
   assert.ok(finalDecklist.trim(), 'V0.14 build must return a complete final decklist');
   const verified = await verifyFinalDeck(finalDecklist);
-  const [bracket, combos] = await Promise.all([
+  const [spellbookBracket, combos] = await Promise.all([
     estimateCommanderBracket(finalDecklist),
     findDeckCombos(finalDecklist, 100),
   ]);
   const comboCounts = record(combos.counts);
-  const completeCombos = Number(comboCounts.included ?? 0);
+  const completeCombos = number(comboCounts.included);
   const ruthlessCombos = Array.isArray(combos.included)
     ? combos.included.map(record).filter((combo) => String(combo.bracketTag ?? '') === 'R').length
     : 0;
-  const strategicallyRelevant = Array.isArray(bracket.strategicallyRelevantCombos) ? bracket.strategicallyRelevantCombos.length : 0;
+  const strategicallyRelevant = Array.isArray(spellbookBracket.strategicallyRelevantCombos)
+    ? spellbookBracket.strategicallyRelevantCombos.length
+    : 0;
   const refinement = record(built.refinement);
   const stages = record(refinement.stages);
   const comboStage = record(stages.comboCompletion);
   const efficiencyStage = record(stages.strictEfficiency);
   const manaStage = record(stages.manaBase);
   const finalAssessment = record(refinement.finalAssessment);
+  const metrics = record(finalAssessment.metrics);
+  const winningCombos = number(finalAssessment.winningCombos);
 
   assert.ok(completeCombos >= 1, 'full FF cEDH build must contain at least one independently verified complete combo');
+  assert.ok(winningCombos >= 1, 'full FF cEDH build must contain at least one verified win-oriented combo');
   assert.ok(
-    ruthlessCombos >= 1 || strategicallyRelevant >= 1 || String(bracket.bracketTag ?? '') === 'R',
+    ruthlessCombos >= 1 || strategicallyRelevant >= 1 || String(spellbookBracket.bracketTag ?? '') === 'R',
     'full FF cEDH build must have a Ruthless/strategically relevant competitive combo signal',
   );
   assert.equal(finalAssessment.status, 'strong-competitive-construction-signals');
   assert.equal(refinement.comboWasPreserved, true, 'efficiency and mana-base tuning must preserve the verified win package');
+
+  // A static FF-only construction run does not, by itself, prove current cEDH metagame performance.
+  // This flag must only become true when an independent, time-current metagame/tournament evidence stage exists.
+  const competitiveMetagameEvidence = false;
+  const ceiling = assessBracketCeilingV15(5, {
+    commanderLegal: verified.rules.isLegal,
+    exactCardCount: verified.parsed.totalCards === 100,
+    fullyResolved: true,
+    printingPolicyCompliant: true,
+    spellbookTag: typeof spellbookBracket.bracketTag === 'string' ? spellbookBracket.bracketTag : null,
+    verifiedWinningCombos: winningCombos,
+    ruthlessWinningCombos: ruthlessCombos,
+    strategicallyRelevantCombos: strategicallyRelevant,
+    averageNonlandManaValue: number(metrics.averageNonlandManaValue, 99),
+    earlyPlayCount: number(metrics.earlyPlayCount),
+    fastManaCount: number(metrics.fastManaCount),
+    freeInteractionCount: number(metrics.freeInteractionCount),
+    cheapInteractionCount: number(metrics.cheapInteractionCount),
+    tutorCount: number(metrics.tutorCount),
+    optimizedPlanEvidence: finalAssessment.status === 'strong-competitive-construction-signals',
+    cedhIntent: true,
+    competitiveMetagameEvidence,
+  }, ['Final Fantasy physical printings only.']);
+
+  assert.equal(ceiling.hardGatesPassed, true, 'hard legality/construction/printing gates must pass before a bracket can be reported');
+  assert.equal(
+    ceiling.bracket5CertifiedByThisAssessment,
+    false,
+    'a static FF-only construction test must never certify Bracket 5 without independent current metagame evidence',
+  );
+  assert.ok(
+    ceiling.assessedBracket !== null && ceiling.assessedBracket <= 4,
+    'without independent competitive-metagame evidence, the honest reported ceiling must remain below Bracket 5',
+  );
 
   const commanderEntry = verified.parsed.commanders[0];
   console.log(`\nCOMMANDER PRINTING: ${commanderEntry?.name ?? commander} (${commanderEntry?.set ?? '?'}) ${commanderEntry?.collectorNumber ?? '?'}`);
@@ -99,10 +144,17 @@ async function main(): Promise<void> {
   console.log(`COMMANDER LEGAL: ${verified.rules.isLegal}`);
   console.log(`FF PRINTING POLICY: PASS (${verified.resolvedCount}/${verified.resolvedCount} exact printing entries eligible)`);
   console.log(`BUILD STATUS: ${String(built.status)}`);
-  console.log(`FINAL SPELLBOOK TAG: ${String(bracket.bracketTag ?? 'unknown')}`);
+  console.log(`FINAL SPELLBOOK TAG: ${String(spellbookBracket.bracketTag ?? 'unknown')}`);
   console.log(`COMPLETE COMBOS: ${completeCombos}`);
+  console.log(`WIN-ORIENTED COMBOS: ${winningCombos}`);
   console.log(`RUTHLESS COMBOS: ${ruthlessCombos}`);
   console.log(`STRATEGICALLY RELEVANT COMBOS: ${strategicallyRelevant}`);
+  console.log(`BRACKET 5 CONSTRUCTION CANDIDATE: ${ceiling.bracket5ConstructionCandidate}`);
+  console.log(`INDEPENDENT CURRENT METAGAME EVIDENCE: ${competitiveMetagameEvidence}`);
+  console.log(`HONEST ASSESSED BRACKET: ${ceiling.assessedBracket ?? 'unassessable'}`);
+  console.log(`ASSESSED BAND: ${ceiling.assessedBand}`);
+  console.log(`BRACKET 5 CERTIFIED BY THIS TEST: ${ceiling.bracket5CertifiedByThisAssessment}`);
+  console.log(`CEILING REASONS: ${JSON.stringify(ceiling.ceilingReasons, null, 2)}`);
   console.log(`COMBO STAGE: ${JSON.stringify(comboStage, null, 2)}`);
   console.log(`EFFICIENCY STAGE: ${JSON.stringify(efficiencyStage, null, 2)}`);
   console.log(`MANA STAGE: ${JSON.stringify(manaStage, null, 2)}`);
@@ -110,12 +162,12 @@ async function main(): Promise<void> {
 
   console.log('\nFINAL DECKLIST');
   console.log(finalDecklist.trim());
-  console.log('\nBRACKET 5 / cEDH NOTE: this test proves strong competitive construction signals under the FF-only printing restriction; official Bracket 5 still also depends on cEDH intent, metagame awareness, pilot choices, and tournament-minded play.');
-  console.log('FF BRACKET 5 E2E RESULT: PASS');
+  console.log('\nCONTROL RESULT: PASS means the strongest FF-only construction was built, legally verified, and honestly classified. It does NOT mean Bracket 5 was achieved.');
+  console.log(`FF BRACKET 5 TARGET RESULT: PASS — assessed Bracket ${ceiling.assessedBracket ?? 'unassessable'}; Bracket 5 certification=${ceiling.bracket5CertifiedByThisAssessment}.`);
 }
 
 main().catch((error) => {
-  console.error('\nFF BRACKET 5 E2E RESULT: FAIL');
+  console.error('\nFF BRACKET 5 TARGET RESULT: FAIL');
   console.error(error instanceof Error ? `${error.name}: ${error.message}` : String(error));
   process.exitCode = 1;
 });
