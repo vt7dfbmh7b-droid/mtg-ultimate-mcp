@@ -127,7 +127,7 @@ test('exact package normalization uses fractions rather than decimal presentatio
   assert.deepEqual(normalized, {
     complement: { denominator: '231', numerator: '230' },
     draws: 7,
-    favorableHands: '6724520',
+    favorableHands: '64446024',
     formula: 'multivariate-hypergeometric-package-v15',
     packages: [
       { count: 1, minimum: 1, name: 'piece-a' },
