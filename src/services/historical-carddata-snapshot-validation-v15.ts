@@ -39,8 +39,14 @@ export function assertProvenancedHistoricalFeatureSnapshotV15(
   if (!provenance.eligibleForRichStructuralFeatures) {
     throw new Error('Historical provenance assessment is not eligible for rich structural features.');
   }
+  if (!Array.isArray(provenance.reasons) || provenance.reasons.length !== 0) {
+    throw new Error('Historical provenance is contradictory: an eligible assessment must contain no failure reasons.');
+  }
   if (provenance.method === 'retrospective-current-data') {
     throw new Error('Retrospective current card data cannot be used in the rich historical structural corpus.');
+  }
+  if (typeof provenance.sourceId !== 'string' || !provenance.sourceId.trim()) {
+    throw new Error('Historical provenance sourceId must be non-empty.');
   }
   if (!/^[a-f0-9]{64}$/i.test(provenance.sourceContentHash)) {
     throw new Error('Historical provenance sourceContentHash must be a SHA-256 digest.');
@@ -50,13 +56,16 @@ export function assertProvenancedHistoricalFeatureSnapshotV15(
   }
   const featureAt = timestamp('snapshot.availableAt', snapshot.availableAt);
   const dataAt = timestamp('historicalCardDataProvenance.sourceDataAvailableAt', provenance.sourceDataAvailableAt);
-  timestamp('historicalCardDataProvenance.retrievedAt', provenance.retrievedAt);
+  const retrievedAt = timestamp('historicalCardDataProvenance.retrievedAt', provenance.retrievedAt);
   const recordedAt = timestamp('snapshot.cardDataObservedAt', snapshot.cardDataObservedAt);
   if (dataAt.iso !== recordedAt.iso) {
     throw new Error('Historical provenance source availability time must exactly match snapshot.cardDataObservedAt.');
   }
   if (dataAt.ms > featureAt.ms) {
     throw new Error('Historical card data became available after the feature cutoff.');
+  }
+  if (retrievedAt.ms < dataAt.ms) {
+    throw new Error('Historical card data retrieval cannot occur before source availability.');
   }
   if (provenance.method === 'archived-versioned-snapshot') {
     if (typeof provenance.archiveVersion !== 'string' || !provenance.archiveVersion.trim()) {
