@@ -3,6 +3,7 @@ import {
   temporalSplitLearningCorpusV15,
   type LearningOutcomeRecordV15,
 } from './learning-corpus-v15.js';
+import { detectMetagameDriftV15 } from './metagame-drift-v15.js';
 import {
   scoreCandidateWithNeuralV15,
   trainNeuralRankerV15,
@@ -33,6 +34,7 @@ export interface TemporalModelMetricsV15 {
 
 export interface NeuralTemporalEvaluationV15 {
   corpusAudit: ReturnType<typeof auditLearningCorpusV15>;
+  metagameDrift: ReturnType<typeof detectMetagameDriftV15>;
   split: {
     trainingRecords: number;
     holdoutRecords: number;
@@ -185,6 +187,7 @@ export function evaluateNeuralOnTemporalCorpusV15(
   options: NeuralRankerOptionsV15 & { holdoutFraction?: number } = {},
 ): NeuralTemporalEvaluationV15 {
   const corpusAudit = auditLearningCorpusV15(records);
+  const metagameDrift = detectMetagameDriftV15(records);
   const holdoutFraction = Number.isFinite(options.holdoutFraction) ? options.holdoutFraction ?? 0.2 : 0.2;
   const split = temporalSplitLearningCorpusV15(records, holdoutFraction);
   const trainingExamples = split.trainingExamples;
@@ -198,6 +201,13 @@ export function evaluateNeuralOnTemporalCorpusV15(
   if (holdoutExamples.length === 0) evaluationWarnings.push('No leakage-safe future holdout examples are available.');
   if (holdoutExamples.length > 0 && (holdoutLabels.positive === 0 || holdoutLabels.negative === 0)) {
     evaluationWarnings.push('Future temporal holdout contains only one outcome class; ordinary accuracy is not sufficient promotion evidence.');
+  }
+  if (metagameDrift.severity === 'insufficient') {
+    evaluationWarnings.push('Metagame drift cannot yet be measured reliably because the reference or recent window is too small.');
+  } else if (metagameDrift.severity === 'moderate') {
+    evaluationWarnings.push('Moderate metagame drift detected; both learned models should be re-tested on recent outcomes before relying on old calibration.');
+  } else if (metagameDrift.severity === 'severe') {
+    evaluationWarnings.push('Severe metagame drift detected; neural promotion is blocked until retraining and fresh temporal validation succeed.');
   }
 
   let neuralModel: ReturnType<typeof trainNeuralRankerV15> | null = null;
@@ -228,7 +238,7 @@ export function evaluateNeuralOnTemporalCorpusV15(
     ? null
     : round(transparentTemporalMetrics.logLoss - neuralTemporalMetrics.logLoss);
 
-  const readiness = evaluateDeepLearningReadinessV15({
+  const baseReadiness = evaluateDeepLearningReadinessV15({
     labelledExamples: corpusAudit.uniqueRecords,
     positiveExamples: corpusAudit.positiveExamples,
     negativeExamples: corpusAudit.negativeExamples,
@@ -248,8 +258,21 @@ export function evaluateNeuralOnTemporalCorpusV15(
     temporalHoldoutNegativeExamples: holdoutLabels.negative,
   });
 
+  const readiness: ReturnType<typeof evaluateDeepLearningReadinessV15> = metagameDrift.severity === 'severe'
+    ? {
+        ...baseReadiness,
+        status: baseReadiness.status === 'not-ready' ? 'not-ready' : 'experiment-ready',
+        blockers: [
+          ...baseReadiness.blockers,
+          'Severe metagame drift blocks neural-model promotion until the model is retrained and wins again on fresh temporal holdout data.',
+        ],
+        guidance: 'Retrain both transparent and neural candidates on the shifted metagame, create a new leakage-safe future holdout, and require the neural candidate to re-earn its advantage before promotion.',
+      }
+    : baseReadiness;
+
   return {
     corpusAudit,
+    metagameDrift,
     split: {
       trainingRecords: split.training.length,
       holdoutRecords: split.holdout.length,
