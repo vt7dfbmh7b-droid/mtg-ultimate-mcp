@@ -4,7 +4,7 @@ import type { ScryfallCard } from '../types/scryfall.js';
 import { extractProvenancedDeckFeatureSnapshotV15 } from './historical-carddata-provenance-v15.js';
 import { assertProvenancedHistoricalFeatureSnapshotV15 } from './historical-carddata-snapshot-validation-v15.js';
 
-function card(name: string, typeLine: string, cmc: number): ScryfallCard {
+function card(name: string, typeLine: string, cmc: number, oracleText = ''): ScryfallCard {
   return {
     id: `id-${name}`,
     oracle_id: `oracle-${name}`,
@@ -14,7 +14,7 @@ function card(name: string, typeLine: string, cmc: number): ScryfallCard {
     mana_cost: cmc > 0 ? `{${cmc}}` : '',
     cmc,
     type_line: typeLine,
-    oracle_text: '',
+    oracle_text: oracleText,
     color_identity: [],
     keywords: [],
     legalities: { commander: 'legal' },
@@ -37,8 +37,8 @@ const decklist = [
 
 const cards = [
   card('Guard Commander', 'Legendary Creature — Test', 2),
-  card('Guard Land', 'Land', 0),
-  card('Guard Threat', 'Creature — Test', 3),
+  card('Guard Land', 'Basic Land — Wastes', 0),
+  card('Guard Threat', 'Creature — Test', 3, 'A deck can have any number of cards named Guard Threat.'),
 ];
 
 function validSnapshot() {
