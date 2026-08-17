@@ -2,11 +2,14 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { ScryfallCard } from '../types/scryfall.js';
 import { extractDeckFeatureSnapshotV15 } from './deck-feature-snapshot-v15.js';
+import { extractProvenancedDeckFeatureSnapshotV15 } from './historical-carddata-provenance-v15.js';
 import {
   materializeTopDeckTemporalCorpusV15,
   type TopDeckTemporalCorpusItemV15,
 } from './topdeck-temporal-corpus-v15.js';
 import type { TopDeckLearningCandidateV15 } from './topdeck-learning-adapter-v15.js';
+
+const FIXTURE_SOURCE_HASH = 'd'.repeat(64);
 
 function card(name: string, typeLine: string, cmc: number, oracleText = ''): ScryfallCard {
   return {
@@ -89,9 +92,16 @@ function item(options: {
   };
   return {
     candidate,
-    snapshot: extractDeckFeatureSnapshotV15(fixture.decklist, fixture.cards, {
+    snapshot: extractProvenancedDeckFeatureSnapshotV15(fixture.decklist, fixture.cards, {
       availableAt: snapshotAt,
-      cardDataObservedAt: '2024-12-31T00:00:00.000Z',
+      provenance: {
+        method: 'contemporaneous-capture',
+        sourceId: 'fixture-card-snapshot',
+        sourceUri: `https://example.test/fixtures/${encodeURIComponent(options.id)}.json`,
+        sourceContentHash: FIXTURE_SOURCE_HASH,
+        observedAt: '2024-12-31T00:00:00.000Z',
+        retrievedAt: '2024-12-31T00:05:00.000Z',
+      },
     }),
     linkage: {
       canonicalOutcomeId: `canonical:${options.id}`,
@@ -131,6 +141,8 @@ test('future holdout deck structure cannot change the normalizer fitted on plann
   const holdout = extreme.ingestion.accepted.find((record) => record.outcomeId === 'canonical:future');
   assert.ok(holdout);
   assert.ok(Object.values(holdout.features).every((value) => value >= -1 && value <= 1));
+  assert.equal(holdout.metadata?.historicalCardDataMethod, 'contemporaneous-capture');
+  assert.equal(holdout.metadata?.historicalCardDataSourceContentHash, FIXTURE_SOURCE_HASH);
   assert.equal(extreme.manifest.audit.uniqueRecords, 5);
   assert.deepEqual(extreme.manifest.refreshAudit, {
     providerCandidates: 5,
@@ -163,5 +175,32 @@ test('workflow fails closed when leakage grouping leaves no historical training 
       item({ id: 'same-2', outcomeAt: '2026-02-01T00:00:00Z', standing: 20, cheapInteraction: 8, threatManaValue: 4, leakageKey: 'one-series' }),
     ], { holdoutFraction: 0.5 }),
     /no historical training|training snapshots/i,
+  );
+});
+
+test('historical corpus workflow rejects a plain low-level snapshot without provenance assessment', () => {
+  const safeItem = item({
+    id: 'unprovenanced',
+    outcomeAt: '2026-02-01T00:00:00Z',
+    standing: 2,
+    cheapInteraction: 8,
+    threatManaValue: 3,
+  });
+  const fixture = structuralDeck('unprovenanced', 8, 3);
+  const plainSnapshot = extractDeckFeatureSnapshotV15(fixture.decklist, fixture.cards, {
+    availableAt: '2026-01-31T00:00:00.000Z',
+    cardDataObservedAt: '2024-12-31T00:00:00.000Z',
+  });
+  const unprovenancedItem = {
+    ...safeItem,
+    snapshot: plainSnapshot,
+  } as unknown as TopDeckTemporalCorpusItemV15;
+
+  assert.throws(
+    () => materializeTopDeckTemporalCorpusV15([
+      item({ id: 'historical-train', outcomeAt: '2026-01-01T00:00:00Z', standing: 3, cheapInteraction: 6, threatManaValue: 4 }),
+      unprovenancedItem,
+    ], { holdoutFraction: 0.5 }),
+    /historical.*provenance|provenanced snapshot|provenance assessment/i,
   );
 });
