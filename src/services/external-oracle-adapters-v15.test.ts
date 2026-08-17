@@ -141,3 +141,28 @@ test('exact package normalization uses fractions rather than decimal presentatio
 
   assert.equal(JSON.stringify(normalized).includes('0.004329'), false);
 });
+
+test('package benchmark normalization ignores equivalent role-bucket input order', () => {
+  const first = normalizeExactPackageAssemblyForExternalOracleV15(calculateExactPackageAssemblyV15({
+    population: 99,
+    draws: 7,
+    packages: [
+      { name: 'combo-piece', count: 2, minimum: 1 },
+      { name: 'tutor', count: 4, minimum: 1 },
+    ],
+  }));
+  const reversed = normalizeExactPackageAssemblyForExternalOracleV15(calculateExactPackageAssemblyV15({
+    population: 99,
+    draws: 7,
+    packages: [
+      { name: 'tutor', count: 4, minimum: 1 },
+      { name: 'combo-piece', count: 2, minimum: 1 },
+    ],
+  }));
+
+  assert.deepEqual(reversed, first);
+  assert.equal(
+    fingerprintExternalBenchmarkJsonV15(reversed),
+    fingerprintExternalBenchmarkJsonV15(first),
+  );
+});
