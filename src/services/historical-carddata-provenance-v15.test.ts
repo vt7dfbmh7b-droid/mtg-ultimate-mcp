@@ -44,9 +44,9 @@ const decklist = [
 
 const cards = [
   card('Provenance Commander', 'Legendary Creature — Test', 2),
-  card('Provenance Land', 'Land', 0, '{T}: Add {C}.'),
-  card('Provenance Answer', 'Instant', 1, 'Destroy target creature.'),
-  card('Provenance Threat', 'Creature — Test', 3),
+  card('Provenance Land', 'Basic Land — Wastes', 0, '{T}: Add {C}.'),
+  card('Provenance Answer', 'Instant', 1, 'A deck can have any number of cards named Provenance Answer.\nDestroy target creature.'),
+  card('Provenance Threat', 'Creature — Test', 3, 'A deck can have any number of cards named Provenance Threat.'),
 ];
 
 function contemporaneous(overrides: Partial<Extract<HistoricalCardDataProvenanceV15, { method: 'contemporaneous-capture' }>> = {}): HistoricalCardDataProvenanceV15 {
@@ -188,6 +188,7 @@ test('provenanced extraction grounds cardDataObservedAt in the verified source a
   assert.equal(contemporaneousSnapshot.cardDataObservedAt, '2026-01-09T00:00:00.000Z');
   assert.equal(contemporaneousSnapshot.historicalCardDataProvenance.method, 'contemporaneous-capture');
   assert.equal(contemporaneousSnapshot.historicalCardDataProvenance.sourceContentHash, HASH_A);
+  assert.equal(contemporaneousSnapshot.historicalCommanderValidation.status, 'legal');
 
   const archivedSnapshot = extractProvenancedDeckFeatureSnapshotV15(decklist, cards, {
     availableAt: '2026-01-10T00:00:00.000Z',
@@ -196,6 +197,7 @@ test('provenanced extraction grounds cardDataObservedAt in the verified source a
   assert.equal(archivedSnapshot.cardDataObservedAt, '2026-01-08T06:00:00.000Z');
   assert.equal(archivedSnapshot.historicalCardDataProvenance.method, 'archived-versioned-snapshot');
   assert.equal(archivedSnapshot.historicalCardDataProvenance.archiveVersion, 'cards-v2026-01-08');
+  assert.equal(archivedSnapshot.historicalCommanderValidation.status, 'legal');
 });
 
 test('assessment is deterministic and contains no outcome label or standing surface', () => {
