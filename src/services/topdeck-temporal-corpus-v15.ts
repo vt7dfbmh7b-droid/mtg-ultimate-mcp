@@ -2,8 +2,9 @@ import {
   MAX_DECK_FEATURE_SNAPSHOTS_V15,
   fitDeckFeatureNormalizerV15,
   type DeckFeatureNormalizerV15,
-  type DeckFeatureSnapshotV15,
 } from './deck-feature-snapshot-v15.js';
+import type { ProvenancedDeckFeatureSnapshotV15 } from './historical-carddata-provenance-v15.js';
+import { assertProvenancedHistoricalFeatureSnapshotV15 } from './historical-carddata-snapshot-validation-v15.js';
 import {
   buildLearningCorpusManifestV15,
   type LearningCorpusManifestV15,
@@ -22,7 +23,7 @@ import {
 
 export interface TopDeckTemporalCorpusItemV15 {
   candidate: TopDeckLearningCandidateV15;
-  snapshot: DeckFeatureSnapshotV15;
+  snapshot: ProvenancedDeckFeatureSnapshotV15;
   linkage: TopDeckLearningLinkageV15;
 }
 
@@ -53,14 +54,29 @@ function sourceObservedPreflight(item: TopDeckTemporalCorpusItemV15): void {
   }
 }
 
+function historicalProvenanceMetadata(snapshot: ProvenancedDeckFeatureSnapshotV15): Record<string, string | number | boolean | null> {
+  const provenance = snapshot.historicalCardDataProvenance;
+  return {
+    historicalCardDataMethod: provenance.method,
+    historicalCardDataSourceId: provenance.sourceId,
+    historicalCardDataSourceUri: provenance.sourceUri,
+    historicalCardDataSourceContentHash: provenance.sourceContentHash,
+    historicalCardDataSourceAvailableAt: provenance.sourceDataAvailableAt,
+    historicalCardDataRetrievedAt: provenance.retrievedAt,
+    historicalCardDataArchiveVersion: provenance.archiveVersion,
+    historicalCardDataSnapshotEffectiveAt: provenance.snapshotEffectiveAt,
+  };
+}
+
 /**
  * End-to-end deterministic TopDeck corpus materialization with a crucial order:
- * 1. preflight candidate/snapshot identity and time provenance;
- * 2. plan leakage-safe temporal membership without using labels/features;
- * 3. fit the feature normalizer on planned training snapshots only;
- * 4. transform both training and future holdout snapshots with that frozen fit;
- * 5. derive labels through the generic ingestion boundary;
- * 6. build a content-addressed manifest.
+ * 1. require and validate historical card-data provenance;
+ * 2. preflight candidate/snapshot identity and time provenance;
+ * 3. plan leakage-safe temporal membership without using labels/features;
+ * 4. fit the feature normalizer on planned training snapshots only;
+ * 5. transform both training and future holdout snapshots with that frozen fit;
+ * 6. derive labels through the generic ingestion boundary;
+ * 7. build a content-addressed manifest.
  */
 export function materializeTopDeckTemporalCorpusV15(
   items: TopDeckTemporalCorpusItemV15[],
@@ -77,6 +93,7 @@ export function materializeTopDeckTemporalCorpusV15(
   for (const item of items) {
     if (!item || typeof item !== 'object') throw new Error('Each TopDeck temporal corpus item must be an object.');
     sourceObservedPreflight(item);
+    assertProvenancedHistoricalFeatureSnapshotV15(item.snapshot);
     validateTopDeckFeatureSnapshotV15(item.candidate, item.snapshot);
   }
 
@@ -104,12 +121,21 @@ export function materializeTopDeckTemporalCorpusV15(
     throw new Error('Training snapshot count does not match the pre-feature temporal partition.');
   }
 
-  const observed = items.map((item) => materializeTopDeckLearningCandidateV15(
-    item.candidate,
-    item.snapshot,
-    normalizer,
-    item.linkage,
-  ));
+  const observed = items.map((item) => {
+    const materialized = materializeTopDeckLearningCandidateV15(
+      item.candidate,
+      item.snapshot,
+      normalizer,
+      item.linkage,
+    );
+    return {
+      ...materialized,
+      metadata: {
+        ...(materialized.metadata ?? {}),
+        ...historicalProvenanceMetadata(item.snapshot),
+      },
+    };
+  });
   const ingestion = ingestObservedLearningRecordsV15(observed);
   if (ingestion.rejected.length > 0) {
     const reasons = [...new Set(ingestion.rejected.map((entry) => `${entry.code}: ${entry.reason}`))];
