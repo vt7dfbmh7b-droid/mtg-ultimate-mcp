@@ -37,12 +37,14 @@ function draft(priceEstimate: number, deficits = 0): Record<string, unknown> {
 
 test('whole-deck wrapper accepts only an independently audited total at or below the hard cap', async () => {
   const caps: number[] = [];
+  const userCaps: Array<number | undefined> = [];
   const result = await buildCommanderDeckUnderWholeBudgetV15([commander], {
     targetBracket: 5,
     maxDeckUsd: 100,
   }, {
     buildDraft: async (_commanders, options) => {
-      caps.push(Number(options.maxUsdPerCard));
+      caps.push(Number(options.candidateMaxUsdPerCard));
+      userCaps.push(options.maxUsdPerCard);
       return caps.length === 1 ? draft(150, 0) : draft(90, 2);
     },
     resolveDeckCards: async () => ({
@@ -55,6 +57,7 @@ test('whole-deck wrapper accepts only an independently audited total at or below
   assert.equal((result.budgetAudit as Record<string, unknown>).withinBudget, true);
   assert.equal((result.budgetAudit as Record<string, unknown>).auditedTotalUsd, 80.2);
   assert.ok(caps.length >= 2, 'an over-budget first build must trigger a tighter rebuild');
+  assert.ok(userCaps.every((cap) => cap === undefined), 'internal search pressure must not become a fake user per-card cap');
 });
 
 test('unknown exact-printing prices never count as zero toward a hard whole-deck budget', async () => {
@@ -84,21 +87,40 @@ test('the wrapper never reports compliance when every complete attempt is genuin
   assert.match(String(result.guidance), /cannot honestly claim/i);
 });
 
-test('required max-per-card cap is never loosened while searching for a whole-budget solution', async () => {
-  const seen: number[] = [];
-  await buildCommanderDeckUnderWholeBudgetV15([commander], {
+test('internal candidate cap may fall below commander price without inventing a commander price restriction', async () => {
+  const expensiveCommander = card('Commander', '5.00');
+  const seen: Array<{ userCap: number | undefined; candidateCap: number }> = [];
+  await buildCommanderDeckUnderWholeBudgetV15([expensiveCommander], {
     maxDeckUsd: 100,
-    maxUsdPerCard: 2,
   }, {
     buildDraft: async (_commanders, options) => {
-      seen.push(Number(options.maxUsdPerCard));
+      seen.push({ userCap: options.maxUsdPerCard, candidateCap: Number(options.candidateMaxUsdPerCard) });
       return { status: 'incomplete-draft' };
     },
     resolveDeckCards: async () => ({ cards: [], notFound: [] }),
   });
 
   assert.ok(seen.length > 0);
-  assert.ok(seen.every((cap) => cap <= 2));
+  assert.ok(seen.every((entry) => entry.userCap === undefined));
+  assert.ok(seen.some((entry) => entry.candidateCap < 5), 'search should be allowed to tighten optional cards below the fixed commander price');
+});
+
+test('explicit user max-per-card cap is preserved while candidate search may only tighten it', async () => {
+  const seen: Array<{ userCap: number | undefined; candidateCap: number }> = [];
+  await buildCommanderDeckUnderWholeBudgetV15([commander], {
+    maxDeckUsd: 100,
+    maxUsdPerCard: 2,
+  }, {
+    buildDraft: async (_commanders, options) => {
+      seen.push({ userCap: options.maxUsdPerCard, candidateCap: Number(options.candidateMaxUsdPerCard) });
+      return { status: 'incomplete-draft' };
+    },
+    resolveDeckCards: async () => ({ cards: [], notFound: [] }),
+  });
+
+  assert.ok(seen.length > 0);
+  assert.ok(seen.every((entry) => entry.userCap === 2));
+  assert.ok(seen.every((entry) => entry.candidateCap <= 2));
 });
 
 test('invalid whole-deck budgets are rejected before any build attempt', async () => {
