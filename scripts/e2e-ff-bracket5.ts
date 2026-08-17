@@ -27,7 +27,12 @@ function identifiers(parsed: ParsedDeck): CardIdentifierInput[] {
   }));
 }
 
-async function verifyFinalDeck(decklist: string): Promise<{ parsed: ParsedDeck; rules: ReturnType<typeof validateCommanderDeck>; resolvedCount: number }> {
+async function verifyFinalDeck(decklist: string): Promise<{
+  parsed: ParsedDeck;
+  rules: ReturnType<typeof validateCommanderDeck>;
+  resolvedCount: number;
+  gameChangerNames: string[];
+}> {
   const parsed = parseDecklist(decklist);
   assert.equal(parsed.totalCards, 100, 'final deck must contain exactly 100 cards');
   const resolved = await getCardsByIdentifiers(identifiers(parsed));
@@ -46,7 +51,8 @@ async function verifyFinalDeck(decklist: string): Promise<{ parsed: ParsedDeck; 
     [],
     'every physical printing, including commander and basics, must belong to the active FINAL FANTASY printing family',
   );
-  return { parsed, rules, resolvedCount: resolved.cards.length };
+  const gameChangerNames = resolved.cards.filter((card) => card.game_changer === true).map((card) => card.name).sort();
+  return { parsed, rules, resolvedCount: resolved.cards.length, gameChangerNames };
 }
 
 async function main(): Promise<void> {
@@ -102,8 +108,9 @@ async function main(): Promise<void> {
   const manaStage = record(stages.manaBase);
 
   // A static FF-only construction run does not, by itself, prove current cEDH metagame performance.
-  // This flag must only become true when an independent, time-current metagame/tournament evidence stage exists.
+  // Efficient non-combo win evidence also remains false until a separate win-plan verifier proves it.
   const competitiveMetagameEvidence = false;
+  const efficientWinConditionEvidence = false;
   const ceiling = assessBracketCeilingV15(5, {
     commanderLegal: verified.rules.isLegal,
     exactCardCount: verified.parsed.totalCards === 100,
@@ -119,6 +126,8 @@ async function main(): Promise<void> {
     freeInteractionCount: number(readinessMetrics.freeInteractionCount),
     cheapInteractionCount: number(readinessMetrics.cheapInteractionCount),
     tutorCount: number(readinessMetrics.tutorCount),
+    gameChangerCount: verified.gameChangerNames.length,
+    efficientWinConditionEvidence,
     optimizedPlanEvidence: readiness.status === 'strong-competitive-construction-signals',
     cedhIntent: true,
     competitiveMetagameEvidence,
@@ -142,6 +151,7 @@ async function main(): Promise<void> {
   console.log(`FINAL CARD COUNT: ${verified.parsed.totalCards}`);
   console.log(`COMMANDER LEGAL: ${verified.rules.isLegal}`);
   console.log(`FF PRINTING POLICY: PASS (${verified.resolvedCount}/${verified.resolvedCount} exact printing entries eligible)`);
+  console.log(`CURRENT GAME CHANGERS (${verified.gameChangerNames.length}): ${verified.gameChangerNames.join(', ') || 'none'}`);
   console.log(`BUILD STATUS: ${String(built.status)}`);
   console.log(`INDEPENDENT cEDH READINESS: ${String(readiness.status)}`);
   console.log(`FINAL SPELLBOOK TAG: ${String(spellbookBracket.bracketTag ?? 'unknown')}`);
@@ -151,6 +161,7 @@ async function main(): Promise<void> {
   console.log(`STRATEGICALLY RELEVANT COMBOS: ${strategicallyRelevant}`);
   console.log(`READINESS METRICS: ${JSON.stringify(readinessMetrics, null, 2)}`);
   console.log(`CONSTRUCTION SIGNALS: ${JSON.stringify(constructionSignals, null, 2)}`);
+  console.log(`EFFICIENT NON-COMBO WIN EVIDENCE: ${efficientWinConditionEvidence}`);
   console.log(`BRACKET 5 CONSTRUCTION CANDIDATE: ${ceiling.bracket5ConstructionCandidate}`);
   console.log(`INDEPENDENT CURRENT METAGAME EVIDENCE: ${competitiveMetagameEvidence}`);
   console.log(`HONEST ASSESSED BRACKET: ${ceiling.assessedBracket ?? 'unassessable'}`);
