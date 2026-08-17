@@ -197,12 +197,8 @@ export function calculateExactCommanderZonePackageAssemblyV15(input: {
   routes: readonly ExactOverlapRouteV15[];
   libraryCategories: readonly ExactOverlapCardCategoryV15[];
 }): ExactCommanderZonePackageAssemblyResultV15 {
-  const deckSize = requireInteger(
-    'deckSize',
-    input.deckSize,
-    0,
-    MAX_EXACT_STATISTICS_POPULATION_V15 + MAX_EXACT_COMMAND_ZONE_CARDS_V15,
-  );
+  const maximumModeledDeckSize = MAX_EXACT_STATISTICS_POPULATION_V15 + MAX_EXACT_COMMAND_ZONE_CARDS_V15;
+  const deckSize = requireInteger('deckSize', input.deckSize, 0, maximumModeledDeckSize);
   if (!Array.isArray(input.routes)) throw new Error('routes must be an array.');
   if (input.routes.length < 1) throw new Error('routes must contain at least one route.');
   if (input.routes.length > MAX_EXACT_OVERLAP_ROUTES_V15) {
@@ -239,7 +235,7 @@ export function calculateExactCommanderZonePackageAssemblyV15(input: {
         `routes[${routeIndex}].requirements[${requirementIndex}].minimum`,
         requirement.minimum,
         0,
-        deckSize,
+        maximumModeledDeckSize,
       );
       requirementByRole.set(role, minimum);
       roleMaximums.set(role, Math.max(roleMaximums.get(role) ?? 0, minimum));
@@ -283,6 +279,16 @@ export function calculateExactCommanderZonePackageAssemblyV15(input: {
   }
   const draws = requireInteger('draws', input.draws, 0, libraryPopulation);
 
+  let declaredLibraryCards = 0;
+  for (const category of input.libraryCategories) {
+    if (!category || typeof category !== 'object') continue;
+    if (!Number.isFinite(category.count) || !Number.isInteger(category.count) || category.count < 0) continue;
+    declaredLibraryCards += category.count;
+  }
+  if (declaredLibraryCards > libraryPopulation) {
+    throw new Error('library category counts must sum to no more than population after removing command-zone cards.');
+  }
+
   const work: WorkCounterV15 = { value: 0 };
   let commandZoneFrontier = [new Array<number>(roles.length).fill(0)];
   for (const card of commandZoneCards) {
@@ -301,8 +307,9 @@ export function calculateExactCommanderZonePackageAssemblyV15(input: {
         0,
         (route.requirementByRole.get(role) ?? 0) - (guaranteed[roleIndex] ?? 0),
       ));
-      residualVectors.push(residual);
       bumpWork(work);
+      if (residual.some((minimum) => minimum > libraryPopulation)) continue;
+      residualVectors.push(residual);
     }
   }
   const residualFrontier = canonicalizeResidualRouteFrontier(residualVectors);
@@ -318,9 +325,15 @@ export function calculateExactCommanderZonePackageAssemblyV15(input: {
   const libraryResult = calculateExactOverlapPackageAssemblyV15({
     population: libraryPopulation,
     draws,
-    routes: effectiveRoutes,
+    routes: effectiveRoutes.length > 0
+      ? effectiveRoutes
+      : [{
+          name: 'command-zone-validation-only',
+          requirements: roles.map((role: string) => ({ role, minimum: 0 })),
+        }],
     categories: input.libraryCategories,
   });
+  const noPhysicallyPossibleRoute = effectiveRoutes.length === 0;
 
   return {
     deckSize,
@@ -340,10 +353,14 @@ export function calculateExactCommanderZonePackageAssemblyV15(input: {
     categories: libraryResult.categories,
     untrackedCards: libraryResult.untrackedCards,
     neutralCards: libraryResult.neutralCards,
-    favorableHands: libraryResult.favorableHands,
+    favorableHands: noPhysicallyPossibleRoute ? '0' : libraryResult.favorableHands,
     totalHands: libraryResult.totalHands,
-    probability: libraryResult.probability,
-    complement: libraryResult.complement,
+    probability: noPhysicallyPossibleRoute
+      ? { numerator: '0', denominator: '1', decimal: 0 }
+      : libraryResult.probability,
+    complement: noPhysicallyPossibleRoute
+      ? { numerator: '1', denominator: '1', decimal: 1 }
+      : libraryResult.complement,
     formula: 'commander-zone-overlap-aware-hypergeometric-package-v15',
   };
 }
