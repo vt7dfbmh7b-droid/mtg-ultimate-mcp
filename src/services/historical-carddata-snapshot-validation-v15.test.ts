@@ -174,3 +174,44 @@ test('runtime guard rejects a blank source identity even when all other stored f
     /sourceId.*non-empty|non-empty.*sourceId/i,
   );
 });
+
+test('runtime guard rejects a snapshot whose stored Commander validation summary is missing', () => {
+  const snapshot = validSnapshot();
+  const { historicalCommanderValidation: _removed, ...altered } = snapshot;
+  assert.throws(
+    () => assertProvenancedHistoricalFeatureSnapshotV15(altered),
+    /Commander validation.*required|required.*Commander validation/i,
+  );
+});
+
+test('runtime guard rejects a stored Commander validation summary that is not unequivocally legal', () => {
+  const snapshot = validSnapshot();
+  const altered = {
+    ...snapshot,
+    historicalCommanderValidation: {
+      ...snapshot.historicalCommanderValidation,
+      status: 'illegal' as const,
+      isLegal: false,
+      singletonViolations: 1,
+    },
+  };
+  assert.throws(
+    () => assertProvenancedHistoricalFeatureSnapshotV15(altered),
+    /Commander validation.*legal|legal.*Commander validation|construction.*illegal/i,
+  );
+});
+
+test('runtime guard rejects contradictory legal status with nonzero stored violations', () => {
+  const snapshot = validSnapshot();
+  const altered = {
+    ...snapshot,
+    historicalCommanderValidation: {
+      ...snapshot.historicalCommanderValidation,
+      singletonViolations: 1,
+    },
+  };
+  assert.throws(
+    () => assertProvenancedHistoricalFeatureSnapshotV15(altered),
+    /Commander validation.*violations|violations.*legal|contradictory.*Commander/i,
+  );
+});
