@@ -69,7 +69,7 @@ function extractFixture(
 ): DeckFeatureSnapshotV15 {
   return extractDeckFeatureSnapshotV15(fixture.decklist, fixture.cards, {
     availableAt,
-    cardDataObservedAt: '2025-05-31T00:00:00.000Z',
+    cardDataObservedAt: '2024-12-31T00:00:00.000Z',
   });
 }
 
