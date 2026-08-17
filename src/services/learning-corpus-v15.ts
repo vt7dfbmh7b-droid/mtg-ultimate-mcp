@@ -116,6 +116,42 @@ function commanderIdentityKey(record: LearningOutcomeRecordV15): string {
   return record.commanderNames.map(normalize).sort().join('|');
 }
 
+function canonicalFeaturesKey(record: LearningOutcomeRecordV15): string {
+  return Object.entries(record.features)
+    .filter((entry): entry is [string, number] => typeof entry[1] === 'number' && Number.isFinite(entry[1]))
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([key, value]) => `${key}:${value}`)
+    .join('|');
+}
+
+function canonicalMetadataKey(record: LearningOutcomeRecordV15): string {
+  return Object.entries(record.metadata ?? {})
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([key, value]) => `${key}:${JSON.stringify(value)}`)
+    .join('|');
+}
+
+function recordTieKey(record: LearningOutcomeRecordV15): string {
+  return [
+    normalize(record.sourceId),
+    normalize(record.evidenceClass),
+    normalize(record.leakageGroup),
+    record.deckFingerprint.toLocaleLowerCase(),
+    commanderIdentityKey(record),
+    String(record.label),
+    canonicalFeaturesKey(record),
+    canonicalMetadataKey(record),
+  ].join('||');
+}
+
+function canonicalRecordCompare(a: LearningOutcomeRecordV15, b: LearningOutcomeRecordV15): number {
+  const timeDifference = (timestampMs(a.observedAt) ?? 0) - (timestampMs(b.observedAt) ?? 0);
+  if (timeDifference !== 0) return timeDifference;
+  const outcomeDifference = outcomeKey(a).localeCompare(outcomeKey(b));
+  if (outcomeDifference !== 0) return outcomeDifference;
+  return recordTieKey(a).localeCompare(recordTieKey(b));
+}
+
 function nonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
 }
@@ -181,7 +217,8 @@ export function deduplicateLearningCorpusV15(records: LearningOutcomeRecordV15[]
   }
 
   const usable: LearningOutcomeRecordV15[] = [];
-  for (const group of groups.values()) {
+  for (const unsortedGroup of groups.values()) {
+    const group = [...unsortedGroup].sort(canonicalRecordCompare);
     const labels = new Set(group.map((record) => record.label));
     const deckFingerprints = new Set(group.map((record) => record.deckFingerprint.toLocaleLowerCase()));
     const commanderIdentities = new Set(group.map(commanderIdentityKey));
@@ -190,27 +227,20 @@ export function deduplicateLearningCorpusV15(records: LearningOutcomeRecordV15[]
       continue;
     }
 
-    let strongest = group[0];
+    const ranked = [...group].sort((a, b) => {
+      const importanceDifference = (b.importance ?? 1) - (a.importance ?? 1);
+      return importanceDifference !== 0 ? importanceDifference : recordTieKey(a).localeCompare(recordTieKey(b));
+    });
+    const strongest = ranked[0];
     if (!strongest) continue;
-    for (let index = 1; index < group.length; index += 1) {
-      const candidate = group[index];
-      if (!candidate) continue;
-      const strongestImportance = strongest.importance ?? 1;
-      const candidateImportance = candidate.importance ?? 1;
-      if (candidateImportance > strongestImportance) {
-        duplicateRecords.push(strongest);
-        strongest = candidate;
-      } else {
-        duplicateRecords.push(candidate);
-      }
-    }
     usable.push(strongest);
+    duplicateRecords.push(...ranked.slice(1));
   }
 
   return {
-    records: usable.sort((a, b) => (timestampMs(a.observedAt) ?? 0) - (timestampMs(b.observedAt) ?? 0)),
-    duplicateRecords,
-    conflictingRecords,
+    records: usable.sort(canonicalRecordCompare),
+    duplicateRecords: duplicateRecords.sort(canonicalRecordCompare),
+    conflictingRecords: conflictingRecords.sort(canonicalRecordCompare),
     malformedRecords,
   };
 }
