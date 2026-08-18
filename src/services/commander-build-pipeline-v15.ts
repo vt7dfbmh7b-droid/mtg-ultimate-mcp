@@ -6,7 +6,8 @@ import { discoverGeneralWinPackagesV15, type GeneralWinPackageCandidateV15 } fro
 import { inferNeutralStrategyV15, type NeutralArchetypeV15 } from './neutral-commander-selection-v15.js';
 import { buildNeutralCommanderDeckV15 } from './neutral-deck-builder-v15.js';
 import { buildNeutralThemedCommanderDeckV15 } from './neutral-themed-deck-builder-v15.js';
-import type { PrintingPolicyInputV08 } from './printing-policy-v08.js';
+import { resolveNeutralThemeIntentV15, type NeutralThemeIntentV15 } from './neutral-theme-v15.js';
+import { resolvePrintingPolicyV08, type PrintingPolicyInputV08 } from './printing-policy-v08.js';
 
 export type WinPackageModeV15 = 'auto' | 'prefer' | 'require' | 'forbid';
 export type CommanderBuildLaneV15 = 'neutral-themed' | 'targeted-v07';
@@ -36,6 +37,13 @@ export interface CommanderBuildPipelinePlanV15 {
   discoverWinPackages: boolean;
   seedWinPackage: boolean;
   unsupportedConstraints: string[];
+}
+
+interface NeutralThemePipelineContextV15 {
+  effectiveOptions: CommanderBuildPipelineOptionsV15;
+  themeIntent: NeutralThemeIntentV15 | null;
+  effectivePrintingFamily: string | null;
+  failure: Record<string, unknown> | null;
 }
 
 function normalizeNames(values: string[]): string[] {
@@ -103,6 +111,104 @@ function seededMustIncludes(
   return normalizeNames([...original, ...(seedPackage && selected ? selected.seedNames : [])]);
 }
 
+async function resolveNeutralThemePipelineContextV15(
+  plan: CommanderBuildPipelinePlanV15,
+  options: CommanderBuildPipelineOptionsV15,
+): Promise<NeutralThemePipelineContextV15> {
+  if (plan.lane !== 'neutral-themed' || !options.themeQuery?.trim()) {
+    return {
+      effectiveOptions: options,
+      themeIntent: null,
+      effectivePrintingFamily: options.printingFamily ?? null,
+      failure: null,
+    };
+  }
+
+  const themeIntent = await resolveNeutralThemeIntentV15(options.themeQuery);
+  if (themeIntent.enforceability === 'verification-unavailable') {
+    return {
+      effectiveOptions: options,
+      themeIntent,
+      effectivePrintingFamily: options.printingFamily ?? null,
+      failure: {
+        status: 'neutral-theme-verification-unavailable',
+        guidance: themeIntent.explanation,
+      },
+    };
+  }
+  if (themeIntent.enforceability === 'unsupported') {
+    return {
+      effectiveOptions: options,
+      themeIntent,
+      effectivePrintingFamily: options.printingFamily ?? null,
+      failure: {
+        status: 'unsupported-neutral-theme',
+        guidance: themeIntent.explanation,
+      },
+    };
+  }
+  if (themeIntent.kind !== 'printing-family' || !themeIntent.printingFamily) {
+    return {
+      effectiveOptions: options,
+      themeIntent,
+      effectivePrintingFamily: options.printingFamily ?? null,
+      failure: null,
+    };
+  }
+
+  const themePolicy = await resolvePrintingPolicyV08({
+    printingFamily: themeIntent.printingFamily,
+    ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
+    ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
+  });
+  if (options.printingFamily) {
+    const suppliedPolicy = await resolvePrintingPolicyV08({
+      printingFamily: options.printingFamily,
+      ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
+      ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
+    });
+    if (themePolicy.familyPreset !== suppliedPolicy.familyPreset) {
+      return {
+        effectiveOptions: options,
+        themeIntent,
+        effectivePrintingFamily: options.printingFamily,
+        failure: {
+          status: 'neutral-theme-constraint-conflict',
+          guidance: `Theme ${themeIntent.canonicalLabel ?? themeIntent.original} conflicts with printingFamily=${options.printingFamily}.`,
+        },
+      };
+    }
+  }
+
+  const familySets = new Set(themePolicy.familyMatchedSetCodes.map((set) => set.toLocaleLowerCase()));
+  const conflictingSets = (options.allowedSets ?? [])
+    .map((set) => set.trim())
+    .filter(Boolean)
+    .filter((set) => !familySets.has(set.toLocaleLowerCase()));
+  if (conflictingSets.length > 0) {
+    return {
+      effectiveOptions: options,
+      themeIntent,
+      effectivePrintingFamily: themeIntent.printingFamily,
+      failure: {
+        status: 'neutral-theme-constraint-conflict',
+        guidance: `Theme ${themeIntent.canonicalLabel ?? themeIntent.original} conflicts with allowed set codes outside that printing family: ${conflictingSets.join(', ')}.`,
+      },
+    };
+  }
+
+  const effectiveOptions: CommanderBuildPipelineOptionsV15 = {
+    ...options,
+    printingFamily: themeIntent.printingFamily,
+  };
+  return {
+    effectiveOptions,
+    themeIntent,
+    effectivePrintingFamily: themeIntent.printingFamily,
+    failure: null,
+  };
+}
+
 export async function buildCommanderThroughPipelineV15(
   commanders: ScryfallCard[],
   options: CommanderBuildPipelineOptionsV15 = {},
@@ -117,16 +223,27 @@ export async function buildCommanderThroughPipelineV15(
     };
   }
 
-  const winPackageMode = options.winPackageMode ?? 'auto';
+  const themeContext = await resolveNeutralThemePipelineContextV15(plan, options);
+  if (themeContext.failure) {
+    return {
+      ...themeContext.failure,
+      constructionIntent: 'universal-pipeline-v15',
+      plan,
+      themeIntent: themeContext.themeIntent,
+      effectivePrintingFamily: themeContext.effectivePrintingFamily,
+    };
+  }
+  const effectiveOptions = themeContext.effectiveOptions;
+  const winPackageMode = effectiveOptions.winPackageMode ?? 'auto';
   const packageDiscovery = plan.discoverWinPackages
     ? await discoverGeneralWinPackagesV15(commanders, {
-        ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
-        ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
-        ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
-        ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
-        ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
-        ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
-        maxPackageCards: options.maxWinPackageCards ?? 3,
+        ...(effectiveOptions.printingFamily ? { printingFamily: effectiveOptions.printingFamily } : {}),
+        ...(effectiveOptions.allowedSets ? { allowedSets: effectiveOptions.allowedSets } : {}),
+        ...(effectiveOptions.includePromos !== undefined ? { includePromos: effectiveOptions.includePromos } : {}),
+        ...(effectiveOptions.includeSpecialReleases !== undefined ? { includeSpecialReleases: effectiveOptions.includeSpecialReleases } : {}),
+        ...(effectiveOptions.maxUsdPerCard !== undefined ? { maxUsdPerCard: effectiveOptions.maxUsdPerCard } : {}),
+        ...(effectiveOptions.excludedCards ? { excludedCards: effectiveOptions.excludedCards } : {}),
+        maxPackageCards: effectiveOptions.maxWinPackageCards ?? 3,
       })
     : null;
   const selectedPackage = packageDiscovery?.selected ?? null;
@@ -138,6 +255,8 @@ export async function buildCommanderThroughPipelineV15(
         : 'required-win-package-unavailable',
       constructionIntent: 'universal-pipeline-v15',
       plan,
+      themeIntent: themeContext.themeIntent,
+      effectivePrintingFamily: themeContext.effectivePrintingFamily,
       packageDiscovery,
       guidance: verificationUnavailable
         ? 'A verified winning package was required, but the package-discovery source was unavailable/incomplete. The pipeline fails closed instead of claiming no package exists.'
@@ -145,42 +264,42 @@ export async function buildCommanderThroughPipelineV15(
     };
   }
 
-  const mustInclude = seededMustIncludes(options, selectedPackage, plan.seedWinPackage);
+  const mustInclude = seededMustIncludes(effectiveOptions, selectedPackage, plan.seedWinPackage);
   let built: Record<string, unknown>;
   if (plan.lane === 'neutral-themed') {
     const neutralOptions = {
       archetype: plan.archetype!,
-      ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
-      ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
-      ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
-      ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
-      ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
-      ...(options.candidateMaxUsdPerCard !== undefined ? { candidateMaxUsdPerCard: options.candidateMaxUsdPerCard } : {}),
-      ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
+      ...(effectiveOptions.printingFamily ? { printingFamily: effectiveOptions.printingFamily } : {}),
+      ...(effectiveOptions.allowedSets ? { allowedSets: effectiveOptions.allowedSets } : {}),
+      ...(effectiveOptions.includePromos !== undefined ? { includePromos: effectiveOptions.includePromos } : {}),
+      ...(effectiveOptions.includeSpecialReleases !== undefined ? { includeSpecialReleases: effectiveOptions.includeSpecialReleases } : {}),
+      ...(effectiveOptions.maxUsdPerCard !== undefined ? { maxUsdPerCard: effectiveOptions.maxUsdPerCard } : {}),
+      ...(effectiveOptions.candidateMaxUsdPerCard !== undefined ? { candidateMaxUsdPerCard: effectiveOptions.candidateMaxUsdPerCard } : {}),
+      ...(effectiveOptions.excludedCards ? { excludedCards: effectiveOptions.excludedCards } : {}),
       ...(mustInclude.length > 0 ? { mustInclude } : {}),
-      ...(options.landCount !== undefined ? { landCount: options.landCount } : {}),
-      ...(options.maxNonbasicLands !== undefined ? { maxNonbasicLands: options.maxNonbasicLands } : {}),
+      ...(effectiveOptions.landCount !== undefined ? { landCount: effectiveOptions.landCount } : {}),
+      ...(effectiveOptions.maxNonbasicLands !== undefined ? { maxNonbasicLands: effectiveOptions.maxNonbasicLands } : {}),
     };
-    built = options.themeQuery?.trim()
+    built = effectiveOptions.themeQuery?.trim()
       ? await buildNeutralThemedCommanderDeckV15(commanders.map((card) => card.name), {
           ...neutralOptions,
-          themeQuery: options.themeQuery,
+          themeQuery: effectiveOptions.themeQuery,
         })
       : await buildNeutralCommanderDeckV15(commanders.map((card) => card.name), neutralOptions);
   } else {
     const targetedOptions: DeckBuildOptionsV07 = {
       targetBracket: plan.requestedTargetBracket!,
-      ...(options.themeQuery ? { themeQuery: options.themeQuery } : {}),
-      ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
-      ...(options.candidateMaxUsdPerCard !== undefined ? { candidateMaxUsdPerCard: options.candidateMaxUsdPerCard } : {}),
-      ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
-      ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
-      ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
-      ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
-      ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
+      ...(effectiveOptions.themeQuery ? { themeQuery: effectiveOptions.themeQuery } : {}),
+      ...(effectiveOptions.maxUsdPerCard !== undefined ? { maxUsdPerCard: effectiveOptions.maxUsdPerCard } : {}),
+      ...(effectiveOptions.candidateMaxUsdPerCard !== undefined ? { candidateMaxUsdPerCard: effectiveOptions.candidateMaxUsdPerCard } : {}),
+      ...(effectiveOptions.allowedSets ? { allowedSets: effectiveOptions.allowedSets } : {}),
+      ...(effectiveOptions.printingFamily ? { printingFamily: effectiveOptions.printingFamily } : {}),
+      ...(effectiveOptions.includePromos !== undefined ? { includePromos: effectiveOptions.includePromos } : {}),
+      ...(effectiveOptions.includeSpecialReleases !== undefined ? { includeSpecialReleases: effectiveOptions.includeSpecialReleases } : {}),
+      ...(effectiveOptions.excludedCards ? { excludedCards: effectiveOptions.excludedCards } : {}),
       ...(mustInclude.length > 0 ? { mustInclude } : {}),
-      ...(options.landCount !== undefined ? { landCount: options.landCount } : {}),
-      ...(options.maxNonbasicLands !== undefined ? { maxNonbasicLands: options.maxNonbasicLands } : {}),
+      ...(effectiveOptions.landCount !== undefined ? { landCount: effectiveOptions.landCount } : {}),
+      ...(effectiveOptions.maxNonbasicLands !== undefined ? { maxNonbasicLands: effectiveOptions.maxNonbasicLands } : {}),
     };
     built = await buildCommanderDeckDraftV07(commanders, targetedOptions);
   }
@@ -188,12 +307,14 @@ export async function buildCommanderThroughPipelineV15(
   const decklist = typeof built.decklist === 'string' ? built.decklist : '';
   if (!decklist.trim()) {
     const themedNeutralFailure = plan.lane === 'neutral-themed'
-      && Boolean(options.themeQuery?.trim())
+      && Boolean(effectiveOptions.themeQuery?.trim())
       && typeof built.status === 'string';
     return {
       status: themedNeutralFailure ? built.status : 'construction-failed-before-evaluation',
       constructionIntent: 'universal-pipeline-v15',
       plan,
+      themeIntent: themeContext.themeIntent ?? built.themeIntent ?? null,
+      effectivePrintingFamily: themeContext.effectivePrintingFamily,
       packageDiscovery,
       selectedPackage,
       built,
@@ -201,16 +322,16 @@ export async function buildCommanderThroughPipelineV15(
   }
 
   const evaluation = await evaluateCommanderBuildV15(decklist, {
-    ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
-    ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
-    ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
-    ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
-    ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
-    constraintDescriptions: constraintDescriptions(options),
-    cedhIntent: options.cedhIntent ?? plan.requestedTargetBracket === 5,
-    competitiveMetagameEvidence: options.competitiveMetagameEvidence === true,
-    optimizedPlanEvidence: options.optimizedPlanEvidence === true,
-    exhibitionIntent: options.exhibitionIntent === true,
+    ...(effectiveOptions.printingFamily ? { printingFamily: effectiveOptions.printingFamily } : {}),
+    ...(effectiveOptions.allowedSets ? { allowedSets: effectiveOptions.allowedSets } : {}),
+    ...(effectiveOptions.includePromos !== undefined ? { includePromos: effectiveOptions.includePromos } : {}),
+    ...(effectiveOptions.includeSpecialReleases !== undefined ? { includeSpecialReleases: effectiveOptions.includeSpecialReleases } : {}),
+    ...(effectiveOptions.maxUsdPerCard !== undefined ? { maxUsdPerCard: effectiveOptions.maxUsdPerCard } : {}),
+    constraintDescriptions: constraintDescriptions(effectiveOptions),
+    cedhIntent: effectiveOptions.cedhIntent ?? plan.requestedTargetBracket === 5,
+    competitiveMetagameEvidence: effectiveOptions.competitiveMetagameEvidence === true,
+    optimizedPlanEvidence: effectiveOptions.optimizedPlanEvidence === true,
+    exhibitionIntent: effectiveOptions.exhibitionIntent === true,
   });
   const achieved = evaluation.actualBracket.assessedBracket;
   const targetComparison = plan.requestedTargetBracket !== null
@@ -231,7 +352,7 @@ export async function buildCommanderThroughPipelineV15(
   const requiredPackageVerificationFailed = winPackageMode === 'require'
     && selectedPackage !== null
     && !seededPackageVerifiedInFinalDeck;
-  const themeRequested = plan.lane === 'neutral-themed' && Boolean(options.themeQuery?.trim());
+  const themeRequested = plan.lane === 'neutral-themed' && Boolean(effectiveOptions.themeQuery?.trim());
   const themeAudit = built.themeAudit && typeof built.themeAudit === 'object'
     ? built.themeAudit as { satisfied?: boolean; status?: string }
     : null;
@@ -248,6 +369,8 @@ export async function buildCommanderThroughPipelineV15(
     status,
     constructionIntent: 'universal-pipeline-v15',
     plan,
+    themeIntent: themeContext.themeIntent ?? built.themeIntent ?? null,
+    effectivePrintingFamily: themeContext.effectivePrintingFamily,
     stages: {
       constraintsNormalized: true,
       commanderStrategyInferred: plan.archetype !== null,
