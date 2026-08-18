@@ -2,22 +2,7 @@ name: FF Najeela High-Bracket-4 Control
 
 on:
   workflow_dispatch:
-  push:
-    branches: ["agent/**"]
-    paths: &najeela_paths
-      - "scripts/e2e-ff-najeela-bracket4-v15.ts"
-      - "testdata/ff-najeela-powerful-baseline.txt"
-      - ".github/workflows/ff-najeela-bracket4-control.yml"
-      - "src/services/efficient-win-plan-v15.ts"
-      - "src/services/bracket-ceiling-v15.ts"
-      - "src/services/cedh-workflow-v14.ts"
-      - "src/services/commander-rules.ts"
-      - "src/services/printing-policy-v08.ts"
-      - "src/services/scryfall.ts"
-      - "src/services/spellbook.ts"
-  pull_request:
-    branches: [main]
-    paths: *najeela_paths
+  workflow_call:
 
 permissions:
   contents: read

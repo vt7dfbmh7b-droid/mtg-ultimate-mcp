@@ -2,17 +2,6 @@ name: V0.15 Live Research Smoke
 
 on:
   workflow_dispatch:
-  push:
-    branches: ["agent/**"]
-    paths:
-      - "scripts/live-research-v15.ts"
-      - ".github/workflows/v15-live-research.yml"
-      - "src/services/research-learning-v15.ts"
-      - "src/services/cedh-seed-package-v14.ts"
-      - "src/services/source-health-v12.ts"
-      - "src/services/scryfall.ts"
-      - "src/services/spellbook.ts"
-      - "src/services/evidence-sources-v09.ts"
 
 permissions:
   contents: read

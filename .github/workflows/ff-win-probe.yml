@@ -2,15 +2,6 @@ name: FF Win Package Probe
 
 on:
   workflow_dispatch:
-  push:
-    branches: ["agent/**"]
-    paths:
-      - "scripts/probe-ff-win-packages.ts"
-      - "scripts/probe-spellbook-ruthless.ts"
-      - ".github/workflows/ff-win-probe.yml"
-      - "src/services/printing-policy-v08.ts"
-      - "src/services/scryfall.ts"
-      - "src/services/spellbook.ts"
 
 permissions:
   contents: read

@@ -2,22 +2,7 @@ name: Neutral FF Exact Budget Control
 
 on:
   workflow_dispatch:
-  push:
-    branches: ["agent/neutral-budget"]
-    paths: &control_paths
-      - "scripts/e2e-neutral-ff-exact-budget-v15.ts"
-      - "src/services/budget-printing-selector-v15.ts"
-      - "src/services/exact-printing-budget-v15.ts"
-      - "src/services/neutral-deck-builder-v15.ts"
-      - "src/services/commander-build-pipeline-v15.ts"
-      - "src/services/commander-build-evaluation-v15.ts"
-      - "src/services/printing-policy-v08.ts"
-      - "src/services/scryfall-paged-search-v15.ts"
-      - "src/services/scryfall.ts"
-      - ".github/workflows/neutral-ff-exact-budget-control.yml"
-  pull_request:
-    branches: [main]
-    paths: *control_paths
+  workflow_call:
 
 permissions:
   contents: read
