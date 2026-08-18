@@ -6,6 +6,7 @@ export interface BoundedScryfallSearchOptionsV15 {
   maxCards?: number;
   maxPages?: number;
   minRequestGapMs?: number;
+  unique?: 'cards' | 'prints';
   requestPage?: (url: string) => Promise<ScryfallList<ScryfallCard>>;
 }
 
@@ -14,6 +15,7 @@ export interface BoundedScryfallSearchResultV15 {
   pagesFetched: number;
   providerTotalCards: number | null;
   exhaustiveWithinBounds: true;
+  unique: 'cards' | 'prints';
 }
 
 function sleep(ms: number): Promise<void> {
@@ -37,9 +39,9 @@ function safeProviderUrl(url: string): boolean {
 }
 
 /**
- * Follow Scryfall list pagination with explicit hard ceilings. This is intended for small,
- * bounded discovery pools such as commanders inside a themed printing family. It fails
- * closed instead of returning a silently truncated candidate universe.
+ * Follow Scryfall list pagination with explicit hard ceilings. The caller may request
+ * Oracle-card uniqueness or physical-printing uniqueness; either mode fails closed
+ * rather than returning a silently truncated candidate universe.
  */
 export async function boundedScryfallSearchV15(
   query: string,
@@ -50,6 +52,7 @@ export async function boundedScryfallSearchV15(
   const maxCards = positiveInteger(options.maxCards, 500, 2_000);
   const maxPages = positiveInteger(options.maxPages, 12, 50);
   const minRequestGapMs = Math.max(0, Math.min(2_000, Math.trunc(options.minRequestGapMs ?? 300)));
+  const unique = options.unique ?? 'cards';
   const injected = options.requestPage;
   const requestPage = injected ?? ((url: string) => fetchJson<ScryfallList<ScryfallCard>>(url));
 
@@ -57,7 +60,7 @@ export async function boundedScryfallSearchV15(
   const seenUrls = new Set<string>();
   let pagesFetched = 0;
   let providerTotalCards: number | null = null;
-  let nextUrl: string | undefined = `${config.scryfallApiBase}/cards/search?q=${encodeURIComponent(normalizedQuery)}&unique=cards&order=edhrec`;
+  let nextUrl: string | undefined = `${config.scryfallApiBase}/cards/search?q=${encodeURIComponent(normalizedQuery)}&unique=${unique}&order=edhrec`;
 
   while (nextUrl) {
     if (!safeProviderUrl(nextUrl)) throw new Error('Scryfall pagination returned a next-page URL outside the configured Scryfall API origin.');
@@ -92,5 +95,6 @@ export async function boundedScryfallSearchV15(
     pagesFetched,
     providerTotalCards,
     exhaustiveWithinBounds: true,
+    unique,
   };
 }

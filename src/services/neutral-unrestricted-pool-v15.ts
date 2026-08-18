@@ -1,6 +1,7 @@
 import { config } from '../config.js';
 import { fetchJson, HttpError } from '../lib/http.js';
 import type { ScryfallCard, ScryfallList } from '../types/scryfall.js';
+import { selectBudgetEligiblePrintingV15 } from './budget-printing-selector-v15.js';
 import { exactPrintingBudgetWitnessV15 } from './exact-printing-budget-v15.js';
 import type { NeutralArchetypeV15 } from './neutral-commander-selection-v15.js';
 import {
@@ -203,12 +204,14 @@ async function resolveBasicLands(
   if (lookup.notFound.length > 0) throw new Error(`Neutral unrestricted basic-land resolution failed: ${lookup.notFound.join(', ')}`);
   const basics: ScryfallCard[] = [];
   for (const card of lookup.cards) {
-    const printing = await selectEligiblePrintingV08(card, policy, maxUsdPerCard);
+    const printing = maxUsdPerCard === undefined
+      ? await selectEligiblePrintingV08(card, policy)
+      : await selectBudgetEligiblePrintingV15(card, policy, maxUsdPerCard);
     if (!printing) {
       throw new Error(
         maxUsdPerCard === undefined
           ? `No eligible physical printing found for required basic land ${card.name}.`
-          : `No priced eligible physical printing found for required basic land ${card.name} at or below US$${maxUsdPerCard}.`,
+          : `No priced eligible physical printing found for required basic land ${card.name} at or below US$${maxUsdPerCard} after bounded physical-printing exhaustion.`,
       );
     }
     basics.push(printing.card);
@@ -319,7 +322,7 @@ export async function discoverNeutralUnrestrictedPoolV15(
       budgetRejectedUnknownPrice,
       budgetRejectedUnavailableFinish,
       note: options.maxUsdPerCard !== undefined
-        ? 'The neutral sample remains bounded and non-popularity ordered. Under a per-card search cap, only sampled exact physical printings with a declared priced finish at or below the cap survive; this intentionally prefers false negatives over admitting an unverified over-budget card.'
+        ? 'The neutral sample remains bounded and non-popularity ordered. Under a per-card search cap, sampled exact physical printings must carry a declared priced finish at or below the cap, while required basics use a separate bounded exhaustive physical-printing lookup so deep basic-land histories do not create false budget negatives.'
         : exhaustive
           ? 'Every configured stratum fit inside its one-page sample bound.'
           : 'This is an explicitly bounded stratified candidate sample, not an exhaustive search of every Commander-legal Magic card.',
