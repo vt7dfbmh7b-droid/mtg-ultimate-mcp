@@ -2,16 +2,16 @@
 
 _Last updated: 2026-08-18 NZST_
 
-This file is the persistent recovery point for future ChatGPT sessions. Read it together with `ULTIMATE_MTG_SPEC.md`: the spec is the north star; this file records current implementation state, hard guarantees, and the next target.
+This is the persistent recovery point for future ChatGPT sessions. Read it together with `ULTIMATE_MTG_SPEC.md`: the spec is the north star; this file records the current implementation state, hard guarantees, validated controls, and next target.
 
 ## Fresh-chat resume instructions
 
 1. Open `vt7dfbmh7b-droid/mtg-ultimate-mcp`.
 2. Read `PROJECT_HANDOFF.md` and `ULTIMATE_MTG_SPEC.md` first.
-3. Inspect the current head and recent commits of `agent/package-probabilities`.
-4. Inspect CI for that **exact head** before changing code.
-5. Do **not** assume `main` is the active development state.
-6. Do **not** promote `server-current` merely because V0.14/V0.15 code exists.
+3. Inspect `agent/package-probabilities`; do not assume `main` is the active development state.
+4. Inspect deterministic CI for the exact active-branch head before changing code.
+5. Keep live external controls separate from deterministic CI evidence.
+6. Do not promote `server-current` merely because V0.14/V0.15 code exists.
 7. Continue from **Next implementation target** unless a newer commit changes this handoff.
 
 ---
@@ -20,373 +20,374 @@ This file is the persistent recovery point for future ChatGPT sessions. Read it 
 
 **Active continuation branch:** `agent/package-probabilities`
 
-**Current implementation/test head before this handoff update:**
+**Latest fully validated implementation head before this handoff-only documentation commit:**
 
-- `34e51d7e74b89c9563b2983e397996c0b7c1ba87` — historical card-data content fingerprint persisted into feature/corpus provenance; dependency install, strict TypeScript build, and complete automated tests succeeded.
+- `8d6b8c99a1a9b9a453323af3b056d284fb19e4c0` — live-source reliability hardening, general winning-package discovery, shared post-build Commander evaluation, universal Commander build pipeline foundation, source-outage-aware evidence semantics, and requested-vs-achieved bracket comparison.
 
-Important recent milestone commits:
+Validation on that exact implementation head:
 
-- `d278f6ec7cbc7abf085a9637e6293675fdc013a9` — `deck-structural-v15.2` card-data snapshot fingerprint implementation.
-- `6920e7debf87c38d3a3d7e43ea99f256bb31e258` — historical card-data fingerprint regression tests.
-- `f057b64b75946c5aa3be58f047739279a75fa3f4` — conservative cross-source outcome linkage; full CI succeeded.
-- `0b490b228793cc039ec91baff4209a275721c7ac` — adversarial cross-source linkage tests.
-- `816106a8174b8c5979f7d08890e4ddb42b585b6c` — integrated TopDeck temporal corpus workflow final build fix; full CI succeeded.
-- `a8a3352ca347b8162efaf677a6bbc0b2439b37ae` — split-before-normalization TopDeck temporal corpus workflow.
-- `158081665885885563a405879250de1dd567b4d5` — deterministic pre-feature temporal leakage partition planner.
-- `d331eff686017c442784a493d8ac59fd76f07059` — deterministic content-addressed learning-corpus manifest; full CI succeeded.
-- `93bd86f1ad9e7c4fe2cc21c7b1c046df46d50792` — deterministic equal-strength duplicate/mirror tie-breaking; full CI succeeded.
-- `567bd44172866730f4c0e6f56130ca21ea184422` — strict TopDeck feature materializer; full CI succeeded.
-- `6f402bdbe199292b8279c7cffe7910f5726217b9` — leakage-safe structural feature snapshots/normalizer tests; full CI succeeded.
-- `df318ce4e52ec858b39d3a87e80479194009ef2c` — bounded live TopDeck learning fetcher tests; full CI succeeded.
-- `0c0439e17b379dde5bff2c81bd2a10055b9842f0` — quarantine-first corpus ingestion + mixed-target safety; full CI succeeded.
-- `87f74e6223a27b13bace8f201e1f396e11400ff1` — exact-as-oracle V0.4 simulation calibration; full CI succeeded.
-- `85029cdfbe12bd8ecb0b81cbb11b197bfe35128a` — exact turn/access curves; full CI succeeded.
-- `2f45b1381d525bd2a3bdfaf719894f2c8d5d5c2e` — commander-zone exact availability; full CI succeeded.
-- `17bcfcc6819fcf9ef43ed5a8d14bcd9dc371ee6a` — overlap-aware exact package solver adversarial/exhaustive tests; full CI succeeded.
+- strict TypeScript build: PASS;
+- complete deterministic automated tests: PASS;
+- Universal Commander Build Pipeline live control: PASS;
+- live control case: exact `Najeela, the Blade-Blossom (FCA) 42`, Final Fantasy physical printings only, requested Bracket 4, verified win packages preferred;
+- result: exact legal 100-card deck, FF printing policy satisfied, achieved **Bracket 4 / bracket-4-optimized-range**, target status **reached**, target gap `0`;
+- winning-package discovery completed and honestly returned **no verified FF-valid package**; no package was invented or forced;
+- final external evidence completed successfully;
+- live artifact from the exact-head control: GitHub Actions artifact ID `9313202187`, SHA-256 `16e46988d62f7d2390aae1a4b6910ab63708f3550e7aea7d67f3993f57307bd6`.
 
-Temporary branches `agent/package-probabilities-2` and `agent/package-probabilities-3` contain no unique work and are not active.
+Important preceding reliability commit:
+
+- `33a65f912155692e2c03c76b6d7022e2d830d203` — bounded provider-aware retries for known idempotent live read endpoints; all permanent live Commander controls subsequently completed successfully on the reliability implementation.
 
 ### Stable runtime remains V0.13
 
 - `package.json` remains `0.13.0`.
 - `src/server-current.ts` deliberately returns `createMtgServerV13()`.
-- The draft PR remains intentionally unmerged.
+- V0.14/V0.15 remain experimental.
+- PR #2 remains a draft validation surface, not a release/promotion PR.
 
-Preserve this separation while V0.14/V0.15 intelligence is hardened.
+**Do not change the stable runtime without an explicit release/promotion decision from the user after the V1 quality gates are met.**
 
 ---
 
 ## Permanent truth hierarchy
 
-Machine learning, optimization, simulation, external evidence, or requested bracket may never override:
+Machine learning, optimization, simulation, external evidence, requested power, or popularity may never override:
 
 - Commander legality;
 - unresolved-card failures;
 - exact deck construction;
 - color identity / singleton constraints;
-- banned/legal facts;
+- current banned/legal facts;
 - exact physical-printing existence and restrictions;
 - known rules facts and verified combo requirements.
 
 Requested power/bracket is a target, not a forced result.
 
+A source outage is not evidence that a combo/card/property is absent. Missing verification must be reported as unavailable/incomplete evidence and must never create positive credit.
+
 ---
 
-## Existing project foundation
+## Current Commander/deckbuilding foundation
 
 The branch contains substantial infrastructure for:
 
-- Commander legality, 100-card validation, partners/singleton/color identity;
-- exact Oracle vs physical-printing identity and themed-printing restrictions;
+- Commander legality, exact 100-card validation, partners, singleton and color identity;
+- Oracle identity vs exact physical-printing identity and themed-printing restrictions;
 - MTGJSON stock Commander precons;
-- full-deck building/upgrading with protected/excluded/must-include cards and exact IN/OUT tracking;
+- full-deck building/upgrading with protected, excluded and must-include cards plus exact IN/OUT tracking;
 - NZD-first pricing/budgets with source auditability;
 - Scryfall, Commander Spellbook, tournament/deck evidence and source diagnostics;
 - deterministic simulation and Commander E2E scenarios;
-- V0.14 cEDH readiness/combo completion/refinement/from-scratch competitive building;
-- V0.15 bracket ceiling/evidence, research/learning, drift detection, neural shadow ranking, exact statistics, and real-corpus safety foundations.
+- V0.14 competitive/cEDH workflows;
+- V0.15 target-free bracket assessment, requested-vs-achieved ceiling comparison, research/learning, drift detection, exact statistics and real-corpus safety foundations.
 
-The neural model remains experimental/shadow-only. Real, independent, balanced, leakage-safe future outcome data is required before promotion beyond the transparent baseline.
+### Neutral Commander selection/building
 
----
+The neutral FF experiment remains a permanent anti-bias control:
 
-## Exact statistics milestones — complete foundation
+- no commander supplied;
+- no bracket/power target;
+- no strongest/cEDH/high-power intent;
+- no hidden `targetBracket=5` or V0.7 default-Bracket-4 fallback;
+- commander ranking is semantic/strategy based rather than name, EDHREC rank, color count, mana value or reputation;
+- the completed neutral Najeela build was honestly assessed **Bracket 3**.
 
-### Univariate exact hypergeometric
+This does **not** downgrade the separate optimized FF-only Najeela benchmark, which remains high Bracket 4.
 
-`src/services/exact-statistics-v15.ts`
-
-- BigInt exact fractions, complement, expectation, variance, boundaries and population cap.
-- Pinned Commander fixture: 99-card library, 36 lands, opening seven, P(3+ lands) = `26,736,733 / 53,358,536 ≈ 50.1077%`.
-- Fractions, not display decimals, are the proof surface.
-
-### Disjoint + overlap-aware package assembly
-
-- `src/services/exact-package-statistics-v15.ts`
-- `src/services/exact-overlap-package-statistics-v15.ts`
-
-The overlap solver preserves one-physical-card/one-simultaneous-role semantics, supports alternative routes and role-specific/universal tutors, uses a Pareto frontier to prevent double counting, and has independent brute-force small-population validation. Permanent regression: one universal A/B tutor cannot satisfy both missing A and B by itself.
-
-### Commander-zone exact availability
-
-- `src/services/exact-commander-zone-statistics-v15.ts`
-- `src/services/exact-commander-zone-statistics-v15.test.ts`
-
-Command-zone cards are guaranteed physical cards outside the random library. The generic solver derives library population from deck size minus command-zone card count, so normal one-commander and two-commander 100-card configurations produce 99- and 98-card libraries respectively.
-
-### Turn-by-turn exact access
-
-- `src/services/exact-access-curve-v15.ts`
-- `src/services/exact-access-curve-v15.test.ts`
-
-Explicit draw contexts:
-
-- `two-player-starting` — skips first-turn natural draw;
-- `two-player-non-starting` — draws turn one;
-- `multiplayer` — draws turn one.
-
-Opening hand, cumulative natural access, optional explicitly guaranteed extra draws, monotonicity, library exhaustion and evaluation caps are tested. This is access/visibility, not a pretend full rules engine.
-
-### Exact-as-oracle simulation calibration
-
-- `src/services/simulation-exact-calibration-v15.ts`
-- `src/services/simulation-exact-calibration-v15.test.ts`
-
-The existing seeded V0.4 Monte Carlo path is calibrated against exact singleton and two-piece access probabilities. Acceptance uses a finite-sample Bernstein bound plus only the simulator’s known reporting quantization, not an arbitrary fixed ±percentage.
+DFC regression remains fixed: canonical double-faced commanders such as `Garland, Knight of Cornelia // Chaos, the Endless` use the front-face name only for Scryfall lookup and then revalidate the returned canonical card identity.
 
 ---
 
-## Real learning corpus safety — current state
+## Milestone 1 — live-source reliability complete
 
-### Explicit learning target identity
+### Shared HTTP reliability
 
-`src/services/learning-corpus-v15.ts`
+`src/lib/http.ts`, `src/lib/http.test.ts`, `src/config.ts`
 
-Different binary semantics cannot silently become one classifier. Current targets include `match-win`, `event-top-cut`, `deck-change-improvement`, `simulation-outcome`, `verified-package-success`, `recommendation-outcome`, and legacy compatibility.
+Key behavior:
 
-`neural-temporal-eval-v15.ts` refuses to train one model across mixed target semantics.
+- retries only known idempotent read requests;
+- Scryfall `POST /cards/collection` can retry transient failures;
+- Commander Spellbook read-only analysis POSTs can retry transient failures;
+- arbitrary POSTs such as TopDeck ingestion remain one-shot/no automatic retry;
+- transient HTTP statuses include 408/425/429/500/502/503/504;
+- `Retry-After` is respected;
+- caller aborts are never retried;
+- failures preserve provider, method, URL, attempts, timeout and cause telemetry;
+- provider-specific timeout/retry budgets are configurable by environment.
 
-### Quarantine-first observed-outcome ingestion
+### Evidence-safe Commander Spellbook semantics
 
-- `src/services/learning-corpus-ingestion-v15.ts`
-- `src/services/learning-corpus-ingestion-v15.test.ts`
+`src/services/spellbook.ts`, `src/services/spellbook.test.ts`
 
-Hard properties:
+Three distinct operations now exist intentionally:
 
-- only registered observed-result sources can enter this path;
-- source URL/provider identity is validated;
-- complete exact 100-card Commander lists are required;
-- exact deck fingerprint is derived internally;
-- outcome time is separate from source observation time;
-- event/top-cut or match-win labels are derived from objective outcome facts, not caller labels;
-- malformed rows are quarantined individually;
-- cross-source `canonicalOutcomeId`, independence and leakage identity are explicit;
-- mirrored data is not automatically independent evidence.
+1. strict operations when positive verification is required;
+2. evidence-safe assessment wrappers that return zero positive evidence plus explicit unavailable provenance on transient failure;
+3. advisory bracket evidence that may degrade to unavailable without crashing an otherwise legal build.
 
-### Deterministic corpus core
+Important distinctions:
 
-`src/services/learning-corpus-v15.ts` now has deterministic tie-breaking for equal-strength duplicate/mirror records. Reversing input order cannot change the surviving record or equal-timestamp temporal split membership.
-
-### Versioned leakage-safe deck feature snapshots
-
-- `src/services/deck-feature-snapshot-v15.ts`
-- `src/services/deck-feature-snapshot-v15.test.ts`
-- `src/services/deck-feature-carddata-fingerprint-v15.test.ts`
-
-Current extractor contract: **`deck-structural-v15.2`**.
-
-Raw auditable structural facts include:
-
-- total/main/commander counts;
-- land/nonland density;
-- average nonland mana value;
-- early plays;
-- fast mana/ramp;
-- draw/tutors;
-- interaction/cheap interaction;
-- protection/recursion/board wipes.
-
-Safety properties:
-
-- exactly 100 cards and one/two one-card commanders required;
-- every deck entry must resolve;
-- exact set/collector number is enforced when supplied;
-- future physical printings relative to feature `availableAt` are rejected;
-- `cardDataObservedAt > availableAt` is rejected;
-- standing/result/popularity/price inputs are not accepted by the structural extractor;
-- a SHA-256 `cardDataSnapshotFingerprint` hashes only card-data records actually used by the deck;
-- card-array ordering and unrelated supplied cards do not change that fingerprint;
-- relevant Oracle/card-data changes do change the fingerprint even when normalized structural metrics happen to remain numerically equal.
-
-### Training-only feature normalization
-
-`deck-structural-minmax-v15.1`
-
-Current directly projected learning features are deliberately narrow:
-
-- `manaEfficiency` from average nonland mana value, lower-is-better;
-- `interactionEfficiency` from cheap-interaction count, higher-is-better.
-
-The normalizer is fitted only from supplied training snapshots, clamps future outliers to [-1,1], returns zero for constant fields, has a deterministic fit fingerprint, and rejects mixed extractor contracts.
-
-Tests prove an extreme future holdout cannot change earlier fitted ranges or training projections.
-
-### Pre-feature temporal partition
-
-- `src/services/learning-temporal-partition-v15.ts`
-- `src/services/learning-temporal-partition-v15.test.ts`
-
-The planner sees only ID, timestamp and leakage group. It does not inspect labels, deck metrics, normalized features or model outputs. Whole leakage groups are assigned together. This allows train/holdout membership to be decided **before** fitting normalization.
-
-### Strict TopDeck materialization
-
-- `src/services/topdeck-learning-materializer-v15.ts`
-- `src/services/topdeck-learning-materializer-v15.test.ts`
-
-The materializer accepts no caller-supplied model feature vector. It verifies exact deck fingerprint, commander identity and `featureSnapshot.availableAt <= outcomeOccurredAt`, projects from the frozen normalizer, and stores feature/card-data/normalizer provenance.
-
-Regression: the same deck given a winning/top-cut result and a missed-cut result has identical predictors; only generic ingestion derives different labels.
-
-### Integrated leakage-safe TopDeck temporal corpus
-
-- `src/services/topdeck-temporal-corpus-v15.ts`
-- `src/services/topdeck-temporal-corpus-v15.test.ts`
-
-Required order is now enforced:
-
-1. validate candidate/snapshot/linkage provenance;
-2. decide temporal/leakage partition without features/labels;
-3. fit normalization on planned training snapshots only;
-4. transform training + future holdout with the frozen fit;
-5. derive outcome labels through generic ingestion;
-6. build the deterministic corpus manifest.
-
-Tests prove changing the future holdout deck from ordinary to an extreme structural outlier does not change the partition, normalizer, or materialized training records. If leakage grouping leaves no historical training records, the workflow fails closed.
-
-### Content-addressed corpus manifest
-
-- `src/services/learning-corpus-manifest-v15.ts`
-- `src/services/learning-corpus-manifest-v15.test.ts`
-
-Manifest schema: `learning-corpus-manifest-v15.1`.
-
-It records deterministic content/manifest hashes, usable record digests, duplicate/conflict/malformed audit, temporal range, source/evidence/target/extractor coverage, normalizer fit fingerprints, and refresh counts. It does not persist raw provider payloads/decklists/provider-player identifiers in the manifest.
+- `estimateCommanderBracket()` transient failure => `sourceStatus: unavailable`, no positive bracket/tag signal;
+- `findDeckCombosEvidence()` transient failure => zero positive combo evidence, `verificationComplete: false`; this is **not** proof that no combo exists;
+- `searchSpellbookVariantsEvidence()` transient failure => discovery incomplete/unavailable, not “no package exists”;
+- non-transient client/input failures still throw;
+- strict combo-completion paths remain strict where a verified combo is required.
 
 ---
 
-## TopDeck source foundation
+## Milestone 2 — universal Commander build pipeline foundation complete
 
-### Deterministic provider adapter
+### General winning-package discovery
 
-- `src/services/topdeck-learning-adapter-v15.ts`
-- `src/services/topdeck-learning-adapter-v15.test.ts`
+`src/services/general-win-package-v15.ts`
+`src/services/general-win-package-v15.test.ts`
 
-The adapter produces provider candidates, not trusted learning records. It requires MTG/EDH, valid top cut, stable provider player ID and complete 100-card Commander text. It does not guess undocumented `deckObj` shapes, assign cross-source identity, create model features or derive training labels.
+The system now deliberately searches winning packages before construction instead of hoping a draft happens to contain one.
 
-The existing `references.ts` TopDeck/Archidekt path is intentionally more permissive for human-facing analysis. **Do not use that permissive parser as the trusted training path.**
+Properties:
 
-### Bounded live fetcher
+- searches Commander Spellbook `is:winning` variants without requiring Ruthless/cEDH tags;
+- rejects impressive but non-winning outcomes such as infinite life when they do not actually win;
+- obeys `mustBeCommander`, exclusions and Commander color identity;
+- verifies exact eligible physical printings under the active printing policy;
+- supports package-size bounds;
+- ranks compactness, commander overlap, mana value, reusable utility roles and dead-piece risk;
+- popularity is never a truth gate;
+- exact printing and rejection audit is retained;
+- canonical color identity is always WUBRG-ordered before Spellbook queries (`BGRUW` regression fixed);
+- repeated exact-printing checks are cached inside one discovery run;
+- returns three distinct outcomes: verified package found, completed search found no verified package, or verification unavailable/partial.
 
-- `src/services/topdeck-learning-live-v15.ts`
-- `src/services/topdeck-learning-live-v15.test.ts`
+### Shared post-build truth/evaluation
 
-One bounded POST per refresh, API key from environment, explicit response-size bounds, no automatic POST retry, typed 429/`Retry-After`, malformed-row quarantine, and attribution retained downstream.
+`src/services/commander-build-evaluation-v15.ts`
+`src/services/commander-build-evaluation-v15.test.ts`
 
-A large live training corpus has **not** been claimed yet.
+Every pipeline build can now go through one common judge:
+
+1. parse finished list;
+2. resolve exact physical cards;
+3. Commander legality and exact count;
+4. printing-policy compliance;
+5. structural metrics;
+6. external combo/bracket evidence only after hard gates pass;
+7. efficient commander-centric win-plan evidence;
+8. target-free actual bracket assessment.
+
+The evaluator preserves:
+
+- exact winning combo IDs, not merely combo counts;
+- bracket-source availability/failure;
+- combo-source availability/failure;
+- whether combo verification completed;
+- whether external evidence was attempted and whether it was complete.
+
+A selected seeded combo is considered preserved only when the **exact selected Spellbook combo ID** is verified in the final 100.
+
+### Universal build orchestration
+
+`src/services/commander-build-pipeline-v15.ts`
+`src/services/commander-build-pipeline-v15.test.ts`
+
+Current order:
+
+> constraints → commander/strategy → winning-package discovery → optional verified package seeding → construction → hard truth evaluation → target-free actual bracket → requested-vs-achieved comparison
+
+Key anti-bias/fail-closed rules:
+
+- explicit bracket target uses the targeted construction lane;
+- no target uses the neutral lane and never falls into V0.7's historical default Bracket 4;
+- `winPackageMode` is `auto | prefer | require | forbid`;
+- `prefer/auto` may continue when package discovery is unavailable, but may not invent a package;
+- `require` fails closed when package verification is unavailable or no verified legal package exists;
+- if a required selected package cannot be reverified in the final deck, the final result does not claim success.
 
 ---
 
-## Conservative cross-source outcome linkage — foundation complete
+## Milestone 3 — requested-vs-achieved bracket/ceiling layer complete
 
-- `src/services/learning-outcome-linkage-v15.ts`
-- `src/services/learning-outcome-linkage-v15.test.ts`
+`src/services/bracket-target-comparison-v15.ts`
+`src/services/bracket-target-comparison-v15.test.ts`
 
-The linker deliberately prefers false negatives to false-positive merges.
+Actual bracket assessment remains target-free. The requested target is compared **after** the deck exists and has been independently assessed.
 
-Event grouping is exact:
+Output includes:
 
-- explicit event identity when supplied; otherwise
-- normalized event name + exact UTC event date + exact field size.
+- requested bracket;
+- achieved bracket/band;
+- `reached | exceeded | under-target | unassessable`;
+- target gap;
+- assessment confidence;
+- evidence completeness;
+- target-relevant checks;
+- known blockers;
+- unverified evidence checks;
+- concrete “what would reach target” guidance;
+- restriction observations.
 
-Within the same event standing, cross-source rows are linked only if commander identity agrees **and** every mirror shares one strong proof:
+Target-specific diagnostics prevent misleading leakage:
 
-- exact full-deck SHA-256 fingerprint; or
-- explicit cross-source entrant identity.
+- a Bracket 3 request uses upgraded-deck criteria;
+- a Bracket 4 request uses optimized-structure/win-plan criteria;
+- Bracket 5 alone uses the competitive/cEDH evidence gates;
+- a B4 result cannot be described as missing B5 metagame evidence merely because B5 gates exist;
+- external B5 evidence outage is marked **unverified**, not converted into a false deck weakness or false combo-absence claim.
 
-Safety regressions cover:
-
-- exact TopDeck/other-source mirror linking;
-- explicit entrant identity fallback when deck fingerprint is unavailable;
-- ambiguous same-event/same-standing records quarantined when strong proof is missing;
-- conflicting commander/deck/entrant identity quarantined;
-- same-source duplicate standing quarantined rather than counted as corroboration;
-- field-size/event identity mismatch prevents automatic collapse;
-- different standings remain distinct outcomes while sharing event independence/leakage identity;
-- deterministic output regardless provider input order.
-
-EDH Top 16 currently remains an attributed public-reference source because its legacy filtered structured endpoints were found to redirect rather than return a stable documented dataset. Do not invent structured EDH Top 16 rows merely to exercise the linker.
+Permanent regressions cover B3/B4/B5 target-specific explanations, source outages, reached targets and hard-gate failure.
 
 ---
 
-## Permanent benchmark controls
+## Permanent Commander benchmark controls
 
-### Control A — Final Fantasy-only Bracket 5 attempt
-
-Keep permanently:
+### A. Final Fantasy-only Bracket 5 challenge
 
 > Build the strongest possible Commander deck using only legitimate Final Fantasy physical printings, target Bracket 5, and report the honest ceiling if the restriction cannot support Bracket 5.
 
-This must exercise printing enforcement, legality, exact construction, win packages, tutor/redundancy reasoning, mana, interaction/protection, multiple win routes, probability/simulation and honest bracket ceiling. Do not automatically collapse FF builds into one infinite line when combat/value/commander routes materially belong to the intended identity.
+Failure to reach B5 is acceptable when the card pool/restriction genuinely causes the ceiling. Do not collapse an FF deck into one infinite line when combat/value/commander routes materially belong to its identity.
 
-Relevant scripts include `scripts/e2e-ff-bracket5.ts`, `scripts/e2e-ff-cedh-refine.ts`, and `scripts/probe-ff-win-packages.ts`.
+### B. FF-only high-Bracket-4 Najeela calibration
 
-### Control B — unrestricted cEDH
+The optimized FF-only Najeela benchmark remains a high-B4 proof that the assessor can recognize a strong commander-centric combat plan without inventing B5/cEDH certification.
 
-Keep permanently:
+### C. Neutral FF autonomous build
 
-> Build a genuine competitive Commander deck without the FF printing restriction.
+No commander/power target. Used to catch hidden commander reputation, hidden bracket targets and accidental optimization-to-power bias.
 
-`scripts/e2e-unrestricted-cedh-v15.ts` uses Kinnan, Bonder Prodigy and guards complete legality/resolution, deterministic win packages, low curve, free interaction, fast mana and competitive construction signals.
+### D. Unrestricted cEDH control
 
-The FF vs unrestricted comparison helps distinguish a user/card-pool ceiling from a builder weakness.
+`scripts/e2e-unrestricted-cedh-v15.ts` uses Kinnan, Bonder Prodigy and guards complete legality/resolution, deterministic win packages, low curve, free interaction, fast mana and strong competitive construction signals.
+
+The FF vs unrestricted comparison distinguishes a card-pool/user restriction ceiling from a builder weakness.
+
+### E. Universal pipeline live control
+
+`scripts/e2e-universal-build-pipeline-v15.ts`
+
+Current permanent case verifies:
+
+- exact FF Najeela printing;
+- B4 requested;
+- winning-package discovery attempted before construction;
+- legal exact 100 and FF printing policy;
+- actual bracket assessed after construction;
+- target comparison happens after actual assessment;
+- completed package search vs unavailable package search are distinct;
+- exact selected combo identity must survive when one is seeded and verification completes;
+- B4 explanations contain no cEDH/metagame leakage.
 
 ---
 
-## External oracle / evidence strategy
+## Exact statistics foundation complete
 
-Reference families remain:
+Implemented and independently tested:
 
-- `j4th-mtg-mcp` — independent MCP/deck-workflow reference;
-- `nccurry-mtg-mcp` — statistics/evidence/reproducibility reference;
-- `forge` — mature rules/simulation reference;
-- `manabrew` — Forge-family parity methodology.
+- `exact-statistics-v15.ts` — BigInt hypergeometric fractions, complements, expectation, variance and bounded populations;
+- `exact-package-statistics-v15.ts` — disjoint package assembly;
+- `exact-overlap-package-statistics-v15.ts` — overlap-aware physical-card assignment without double counting;
+- `exact-commander-zone-statistics-v15.ts` — command-zone availability and correct 99/98-card library sizes;
+- `exact-access-curve-v15.ts` — opening hand + turn-by-turn natural/explicit guaranteed draws;
+- `simulation-exact-calibration-v15.ts` — seeded Monte Carlo calibrated against exact mathematical truth.
 
-Observed-result sources include TopDeck and public-reference EDH Top 16 in the evidence registry. A second website that republishes the same event is not a second independent result.
+Permanent overlap regression: one universal A/B tutor cannot satisfy both missing A and B by itself.
 
-External mismatches trigger investigation, not obedience. Related systems are deduplicated by independence group. Pin deterministic snapshots where appropriate, keep live external tests separate from deterministic CI, shrink failures, retain fixed regressions, and respect source terms/licenses.
+---
+
+## Real learning/research foundation
+
+The neural model remains **experimental/shadow-only**. It may not influence hard legality/rules truth and may not be promoted merely because synthetic tests succeed.
+
+Implemented foundations include:
+
+- explicit learning-target identity; mixed target semantics are rejected;
+- quarantine-first observed-outcome ingestion;
+- exact deck fingerprints;
+- deterministic duplicate/mirror handling;
+- versioned structural feature snapshots (`deck-structural-v15.2`);
+- exact card-data snapshot fingerprints;
+- training-only normalization (`deck-structural-minmax-v15.1`);
+- pre-feature temporal/leakage partitioning;
+- strict TopDeck materialization;
+- integrated leakage-safe TopDeck temporal corpus workflow;
+- content-addressed corpus manifests;
+- bounded TopDeck live fetcher with one-shot POST semantics;
+- conservative cross-source outcome linkage that prefers false negatives to false-positive merges;
+- evidence independence groups and source-health concepts.
+
+A large, independently sourced, balanced, leakage-safe real outcome corpus has **not** yet been claimed.
 
 ---
 
 ## Next implementation target
 
-### 1. Retrospective card-data provenance / as-of feature construction
+### 1. Finish neutral universal-build constraint adapters
 
-This is now the main blocker before a meaningful historical live-corpus backfill.
+The universal pipeline deliberately still fails closed on these no-target combinations rather than silently ignoring them:
 
-Important unresolved fact: the current extractor correctly requires `cardDataObservedAt <= feature availableAt`. That is safe for contemporaneously captured feature snapshots, but a **2026 refresh of a 2025 tournament cannot truthfully pretend current Scryfall data was observed before the 2025 result**.
+1. unrestricted neutral card pool;
+2. neutral exact per-card budget enforcement;
+3. neutral free-form theme query.
 
-The new `cardDataSnapshotFingerprint` makes input drift auditable, but it does not by itself solve retrospective time provenance.
+#### Unrestricted neutral card-pool adapter
 
-Do not bypass this by fabricating an old observation timestamp.
+Do **not** route this through `searchCards()` as currently implemented because that helper orders by EDHREC and would silently reintroduce popularity/power bias into a neutral build.
 
-Next work should:
+Implement a bounded, provenance-reported candidate discovery service that:
 
-- define an explicit provenance model distinguishing genuinely historical/contemporaneous card snapshots from retrospective reconstruction;
-- investigate what historical/as-of card identity data can be reconstructed reliably from public structured sources;
-- for name-only historical decklists, do not blindly use a current/default printing whose release may post-date the tournament;
-- separate static/reconstructible fields from Oracle/rules-derived fields that may contain post-event errata or rules knowledge;
-- if a predictor cannot be reconstructed without future knowledge, omit it or mark the record unsuitable for that feature contract rather than silently leaking future information;
-- add deterministic fixture tests before any live implementation;
-- preserve exact card-data content fingerprints and observation/reconstruction method in corpus provenance.
+- uses multiple archetype/functional role query families;
+- has explicit page/card/request ceilings;
+- is not presented as exhaustive when it is sampled/bounded;
+- does not score by EDHREC, famous name, commander reputation, color count or bracket;
+- produces enough candidates for a legal 100-card build or fails closed;
+- preserves exact Scryfall identity and legality;
+- feeds the existing neutral role-based selector;
+- is permanently tested for ordering/reputation invariance where practical.
 
-### 2. Apply conservative linkage to future multi-source normalized records
+#### Neutral per-card budget adapter
 
-The generic linkage engine is ready, but live EDH Top 16 structured ingestion is not currently justified. When another structured source is added, use linkage assignments to derive canonical outcome/event identities; ambiguous/conflicting groups should be quarantined rather than guessed.
+Budget enforcement must be exact-printing/finish aware. A default Oracle-card price is not sufficient. Candidate acceptance must verify an eligible physical printing under the active policy and hard max-per-card budget.
 
-### 3. Manual/live TopDeck corpus refresh only after retrospective feature safety
+#### Neutral free-form theme adapter
 
-Once retrospective feature construction is honest:
+Do not silently treat arbitrary user language as raw Scryfall query grammar. Normalize theme intent into bounded semantic/query constraints, preserve the original user constraint for auditability, and fail closed when the theme cannot be enforced reliably.
 
-- add a live/manual refresh workflow separate from deterministic CI;
-- require `TOPDECK_API_KEY` from environment/secret store;
-- respect TopDeck 429 / `Retry-After` and attribution;
-- persist normalized allowed corpus records/manifests, not raw provider payload dumps;
-- output accepted/quarantined/duplicate/conflict/target/temporal/source coverage audits;
-- do not let live-source failures break deterministic CI.
+After these adapters are safe, remove only the corresponding `unsupportedConstraints` entries from the universal planner and add live controls.
 
-### 4. Model evaluation remains blocked pending real data quality
+### 2. Expose the universal pipeline through the experimental V0.15 MCP tool surface
 
-Neural promotion remains blocked until **one explicit target** has enough independent, balanced, temporally broad, leakage-safe records and the neural candidate repeatedly beats the transparent baseline on genuinely future holdouts.
+`server-v15.ts` currently inherits V0.14 and exposes V0.15 research/bracket tools but does not yet register the new universal Commander build pipeline as its own tool.
+
+Do this only after the neutral adapter semantics above are stable. The tool schema must preserve optional/no-target semantics, package mode, printing/budget/theme constraints, and the common requested-vs-achieved result. Do not change `server-current`.
+
+### 3. Retrospective/as-of card-data provenance
+
+This remains the main blocker before a meaningful historical live-corpus backfill.
+
+A 2026 refresh of a 2025 tournament may not pretend current Scryfall/Oracle data was observed before the 2025 outcome.
+
+Next data work must:
+
+- distinguish genuine historical/contemporaneous snapshots from retrospective reconstruction;
+- investigate reconstructible historical/as-of card identity data from public structured sources;
+- avoid selecting a physical printing released after the historical event for a name-only decklist;
+- separate static/reconstructible fields from Oracle/rules-derived fields that may contain future errata/knowledge;
+- omit or quarantine predictors that cannot be reconstructed without future knowledge;
+- preserve exact data fingerprints and reconstruction method;
+- add deterministic fixtures before live backfill.
+
+### 4. Real corpus refresh and model evaluation
+
+Only after retrospective feature safety:
+
+- run live/manual corpus refresh separately from deterministic CI;
+- respect TopDeck attribution, 429/Retry-After and secret-key handling;
+- persist normalized allowed records/manifests, not raw provider dumps;
+- report accepted/quarantined/duplicate/conflict/temporal/source coverage;
+- train one explicit target at a time;
+- compare transparent and neural models on the same genuinely future holdout;
+- require repeated neural wins on independent unseen data before any promotion;
+- allow metagame drift/source degradation to revoke confidence.
 
 ---
 
@@ -394,19 +395,21 @@ Neural promotion remains blocked until **one explicit target** has enough indepe
 
 - dependency install succeeds;
 - strict TypeScript build succeeds;
-- complete automated tests succeed;
-- probability changes have independent brute-force/oracle validation where practical;
+- complete deterministic tests succeed;
+- live controls used as evidence remain separate from deterministic CI;
 - malformed/boundary requests fail closed;
+- probability changes use independent exact/brute-force oracles where practical;
 - exact probability equality uses BigInt/fractions, never display decimals;
-- failed fixtures are allowed to be wrong — do not corrupt correct math to satisfy a bad test;
-- hard legality/printing truth remains outside ML;
-- learning targets are not semantically mixed;
-- training features cannot see future outcomes or future normalization distribution;
-- cross-source evidence is independence-aware and conservative;
-- raw structural/provenance facts remain auditable;
-- retrospective feature reconstruction must not fake historical observation time;
-- FF-only and unrestricted controls do not regress silently;
-- stable `server-current` is not changed without an explicit release/promotion decision;
+- failed fixtures are allowed to be wrong — do not corrupt correct code/math to satisfy a bad test;
+- hard legality/printing/rules truth remains outside ML;
+- requested bracket never raises actual assessment;
+- no hidden bracket default is allowed for neutral construction;
+- package discovery distinguishes verified absence from unavailable verification;
+- positive combo credit requires actual verified winning outcomes;
+- unavailable external evidence is reported, not fabricated or converted into absence;
+- source independence and temporal leakage safety remain explicit;
+- FF-only, neutral, high-B4 and unrestricted controls do not regress silently;
+- stable `server-current` remains V0.13 until an explicit release/promotion decision;
 - update this file after every major milestone or active-target change.
 
-A future session must be able to recover the project from GitHub alone without needing old chat history.
+A future session must be able to recover the project direction and current engineering state from GitHub alone without old chat history.
