@@ -71,9 +71,6 @@ export function planCommanderBuildPipelineV15(
   }
 
   const unsupportedConstraints: string[] = [];
-  if (!options.printingFamily && (options.allowedSets ?? []).length === 0) {
-    unsupportedConstraints.push('unbounded neutral card pool');
-  }
   if (options.maxUsdPerCard !== undefined || options.candidateMaxUsdPerCard !== undefined) {
     unsupportedConstraints.push('neutral per-card budget enforcement');
   }
