@@ -1,6 +1,10 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import { validateCommanderDeck } from './commander-rules.js';
-import { parseDecklist } from './deck.js';
+import { parseDecklist, type DeckFinish } from './deck.js';
+import {
+  auditExactPerCardBudgetV15,
+  exactPrintingBudgetWitnessV15,
+} from './exact-printing-budget-v15.js';
 import type { NeutralArchetypeV15 } from './neutral-commander-selection-v15.js';
 import { discoverNeutralUnrestrictedPoolV15 } from './neutral-unrestricted-pool-v15.js';
 import {
@@ -8,6 +12,7 @@ import {
   printingMatchesPolicyV08,
   resolvePrintingPolicyV08,
   selectEligiblePrintingV08,
+  type EligiblePrintingChoiceV08,
   type PrintingPolicyInputV08,
   type ResolvedPrintingPolicyV08,
 } from './printing-policy-v08.js';
@@ -26,6 +31,10 @@ export interface NeutralDeckBuildOptionsV15 extends PrintingPolicyInputV08 {
   maxNonbasicLands?: number;
   excludedCards?: string[];
   mustInclude?: string[];
+  /** User-visible hard cap. Applies to commanders, must-includes, and optional cards. */
+  maxUsdPerCard?: number;
+  /** Search-only cap for optional candidates/lands. May tighten but never loosen maxUsdPerCard. */
+  candidateMaxUsdPerCard?: number;
 }
 
 interface NeutralRoleTargetsV15 {
@@ -57,23 +66,27 @@ const NEUTRAL_PROFILES: Record<NeutralArchetypeV15, NeutralProfileV15> = {
 
 const COLOR_ORDER = ['W', 'U', 'B', 'R', 'G'] as const;
 const BASIC_FOR_COLOR: Record<string, string> = {
-  W: 'Plains',
-  U: 'Island',
-  B: 'Swamp',
-  R: 'Mountain',
-  G: 'Forest',
+  W: 'Plains', U: 'Island', B: 'Swamp', R: 'Mountain', G: 'Forest',
 };
 
 function normalize(value: string): string {
   return value.trim().toLocaleLowerCase();
 }
 
-/**
- * Scryfall's collection-by-name endpoint accepts the front-face name of a transform/modal DFC
- * more reliably than the combined "front // back" display name. Discovery deliberately keeps
- * the canonical combined name for auditability, so neutral construction normalizes only the
- * lookup key and then verifies the returned canonical card before accepting it.
- */
+function positiveCap(label: string, value: number | undefined): number | undefined {
+  if (value === undefined) return undefined;
+  if (!Number.isFinite(value) || value <= 0) throw new Error(`${label} must be positive and finite when supplied.`);
+  return value;
+}
+
+export function neutralCandidatePriceCapV15(options: Pick<NeutralDeckBuildOptionsV15, 'maxUsdPerCard' | 'candidateMaxUsdPerCard'>): number | undefined {
+  const userCap = positiveCap('maxUsdPerCard', options.maxUsdPerCard);
+  const candidateCap = positiveCap('candidateMaxUsdPerCard', options.candidateMaxUsdPerCard);
+  if (candidateCap === undefined) return userCap;
+  return userCap === undefined ? candidateCap : Math.min(userCap, candidateCap);
+}
+
+/** Normalize only the lookup key for transform/modal DFC commanders; canonical identity is rechecked afterward. */
 export function neutralCommanderLookupNameV15(value: string): string {
   const trimmed = value.trim();
   const [front] = trimmed.split(/\s+\/\/\s+/, 2);
@@ -94,21 +107,34 @@ function oracleKey(card: ScryfallCard): string {
 }
 
 function identity(commanders: readonly ScryfallCard[]): string[] {
-  const present = new Set(commanders.flatMap((card) => card.color_identity));
+  const present = new Set(commanders.flatMap((card) => card.color_identity.map((color) => color.toUpperCase())));
   return COLOR_ORDER.filter((color) => present.has(color));
 }
 
 function legalIdentity(card: ScryfallCard, colors: readonly string[]): boolean {
-  const allowed = new Set(colors);
-  return card.legalities.commander === 'legal' && card.color_identity.every((color) => allowed.has(color));
+  const allowed = new Set(colors.map((color) => color.toUpperCase()));
+  return card.legalities.commander === 'legal' && card.color_identity.every((color) => allowed.has(color.toUpperCase()));
 }
 
 function identityQuery(colors: readonly string[]): string {
   return colors.length === 0 ? 'id:c' : `id<=${colors.join('').toLocaleLowerCase()}`;
 }
 
-function printingLine(quantity: number, card: ScryfallCard): string {
-  return `${quantity} ${card.name} (${card.set.toUpperCase()}) ${card.collector_number}`;
+function finishSuffix(finish: DeckFinish | null | undefined): string {
+  return finish === 'foil' ? ' *F*' : finish === 'etched' ? ' *E*' : finish === 'nonfoil' ? ' *N*' : '';
+}
+
+function budgetFinish(card: ScryfallCard, cap: number | undefined): DeckFinish | null {
+  if (cap === undefined) return null;
+  const witness = exactPrintingBudgetWitnessV15(card, cap);
+  if (witness.status !== 'within-cap' || witness.finish === null) {
+    throw new Error(`Exact printing ${card.name} (${card.set.toUpperCase()}) ${card.collector_number} lost its required US$${cap} budget witness during emission.`);
+  }
+  return witness.finish;
+}
+
+function printingLine(quantity: number, card: ScryfallCard, cap?: number): string {
+  return `${quantity} ${card.name} (${card.set.toUpperCase()}) ${card.collector_number}${finishSuffix(budgetFinish(card, cap))}`;
 }
 
 function emptyCounts(): NeutralRoleTargetsV15 {
@@ -131,9 +157,7 @@ function roleContribution(card: ScryfallCard): Partial<Record<keyof NeutralRoleT
 
 function incrementCounts(counts: NeutralRoleTargetsV15, card: ScryfallCard): void {
   const contribution = roleContribution(card);
-  for (const key of Object.keys(counts) as Array<keyof NeutralRoleTargetsV15>) {
-    counts[key] += contribution[key] ?? 0;
-  }
+  for (const key of Object.keys(counts) as Array<keyof NeutralRoleTargetsV15>) counts[key] += contribution[key] ?? 0;
 }
 
 function strategyAffinity(card: ScryfallCard, archetype: NeutralArchetypeV15): number {
@@ -143,63 +167,26 @@ function strategyAffinity(card: ScryfallCard, archetype: NeutralArchetypeV15): n
   const add = (condition: boolean, points: number): void => { if (condition) score += points; };
   switch (archetype) {
     case 'combat-tokens':
-      add(roles.has('token production'), 5);
-      add(roles.has('extra combat'), 6);
-      add(roles.has('haste'), 2);
-      add(/attacks|attacking|combat damage/.test(text), 3);
-      break;
+      add(roles.has('token production'), 5); add(roles.has('extra combat'), 6); add(roles.has('haste'), 2); add(/attacks|attacking|combat damage/.test(text), 3); break;
     case 'equipment-voltron':
-      add(roles.has('equipment'), 7);
-      add(roles.has('protection'), 3);
-      add(/equip |equipped creature|attach/.test(text), 5);
-      add(/double strike|trample|first strike/.test(text), 2);
-      break;
+      add(roles.has('equipment'), 7); add(roles.has('protection'), 3); add(/equip |equipped creature|attach/.test(text), 5); add(/double strike|trample|first strike/.test(text), 2); break;
     case 'counters':
-      add(roles.has('+1/+1 counters'), 7);
-      add(/proliferate/.test(text), 6);
-      add(/counter is put|counters? are put|move .*counter/.test(text), 4);
-      break;
+      add(roles.has('+1/+1 counters'), 7); add(/proliferate/.test(text), 6); add(/counter is put|counters? are put|move .*counter/.test(text), 4); break;
     case 'graveyard-reanimator':
-      add(roles.has('graveyard recursion'), 7);
-      add(/graveyard/.test(text), 4);
-      add(/mill|surveil|discard/.test(text), 3);
-      break;
+      add(roles.has('graveyard recursion'), 7); add(/graveyard/.test(text), 4); add(/mill|surveil|discard/.test(text), 3); break;
     case 'aristocrats':
-      add(roles.has('sacrifice synergy'), 6);
-      add(roles.has('sacrifice outlet'), 7);
-      add(roles.has('life drain'), 6);
-      add(/dies|sacrifice/.test(text), 4);
-      break;
+      add(roles.has('sacrifice synergy'), 6); add(roles.has('sacrifice outlet'), 7); add(roles.has('life drain'), 6); add(/dies|sacrifice/.test(text), 4); break;
     case 'spells-control':
-      add(roles.has('countermagic'), 6);
-      add(roles.has('stax/control'), 5);
-      add(roles.has('copy effect'), 4);
-      add(/instant|sorcery|noncreature spell|whenever you cast/.test(text), 4);
-      break;
+      add(roles.has('countermagic'), 6); add(roles.has('stax/control'), 5); add(roles.has('copy effect'), 4); add(/instant|sorcery|noncreature spell|whenever you cast/.test(text), 4); break;
     case 'value-engine':
-      add(roles.has('repeatable draw'), 7);
-      add(roles.has('card draw'), 4);
-      add(roles.has('card selection'), 3);
-      add(roles.has('treasure'), 4);
-      add(roles.has('etb synergy'), 3);
-      add(/you may cast|you may play|exile the top/.test(text), 4);
-      break;
+      add(roles.has('repeatable draw'), 7); add(roles.has('card draw'), 4); add(roles.has('card selection'), 3); add(roles.has('treasure'), 4); add(roles.has('etb synergy'), 3); add(/you may cast|you may play|exile the top/.test(text), 4); break;
     case 'big-mana':
-      add(roles.has('mana acceleration'), 6);
-      add(roles.has('cost reduction'), 6);
-      add(roles.has('untap engine'), 3);
-      add(/add .*mana|costs? .*less to cast/.test(text), 4);
-      break;
+      add(roles.has('mana acceleration'), 6); add(roles.has('cost reduction'), 6); add(roles.has('untap engine'), 3); add(/add .*mana|costs? .*less to cast/.test(text), 4); break;
   }
   return score;
 }
 
-function dynamicCandidateScore(
-  card: ScryfallCard,
-  archetype: NeutralArchetypeV15,
-  counts: NeutralRoleTargetsV15,
-  targets: NeutralRoleTargetsV15,
-): number {
+function dynamicCandidateScore(card: ScryfallCard, archetype: NeutralArchetypeV15, counts: NeutralRoleTargetsV15, targets: NeutralRoleTargetsV15): number {
   const contribution = roleContribution(card);
   let score = strategyAffinity(card, archetype) * 6;
   for (const key of Object.keys(targets) as Array<keyof NeutralRoleTargetsV15>) {
@@ -222,108 +209,104 @@ function landScore(card: ScryfallCard, colors: readonly string[]): number {
   return score;
 }
 
-async function resolveExactCommanders(
-  commanderNames: string[],
+async function requiredPrinting(
+  card: ScryfallCard,
   policy: ResolvedPrintingPolicyV08,
-): Promise<ScryfallCard[]> {
+  maxUsdPerCard: number | undefined,
+  label: string,
+): Promise<EligiblePrintingChoiceV08> {
+  const capped = await selectEligiblePrintingV08(card, policy, maxUsdPerCard);
+  if (capped) return capped;
+  if (maxUsdPerCard === undefined) throw new Error(`No eligible physical printing of ${label} ${card.name} satisfies the neutral printing policy.`);
+  const uncapped = await selectEligiblePrintingV08(card, policy);
+  if (!uncapped) throw new Error(`No eligible physical printing of ${label} ${card.name} satisfies the neutral printing policy.`);
+  if (uncapped.priceUsd === null) {
+    throw new Error(`${label} ${card.name} has eligible physical printings, but none has verifiable USD finish pricing for the US$${maxUsdPerCard} hard per-card cap.`);
+  }
+  throw new Error(`${label} ${card.name} cannot satisfy the US$${maxUsdPerCard} hard per-card cap; the cheapest verified eligible finish found is US$${uncapped.priceUsd}.`);
+}
+
+async function resolveExactCommanders(commanderNames: string[], policy: ResolvedPrintingPolicyV08, maxUsdPerCard: number | undefined): Promise<EligiblePrintingChoiceV08[]> {
   const lookupNames = commanderNames.map(neutralCommanderLookupNameV15);
   const oracleCards = await getCardsByNames(lookupNames);
-  if (oracleCards.notFound.length > 0) {
-    throw new Error(`Neutral commander resolution failed: ${oracleCards.notFound.join(', ')}`);
-  }
-
-  const exact: ScryfallCard[] = [];
+  if (oracleCards.notFound.length > 0) throw new Error(`Neutral commander resolution failed: ${oracleCards.notFound.join(', ')}`);
+  const exact: EligiblePrintingChoiceV08[] = [];
   const consumed = new Set<string>();
   for (const requested of commanderNames) {
     const card = oracleCards.cards.find((candidate) => !consumed.has(oracleKey(candidate)) && commanderNameMatches(requested, candidate));
     if (!card) throw new Error(`Neutral commander resolution failed to match canonical card data for ${requested}.`);
     consumed.add(oracleKey(card));
-    const printing = await selectEligiblePrintingV08(card, policy);
-    if (!printing) throw new Error(`No eligible physical printing of commander ${card.name} satisfies the neutral printing policy.`);
-    exact.push(printing.card);
+    exact.push(await requiredPrinting(card, policy, maxUsdPerCard, 'Commander'));
   }
   return exact;
 }
 
 async function exactSpecialCards(policy: ResolvedPrintingPolicyV08): Promise<ScryfallCard[]> {
-  const selectors = [...new Map(
-    policy.exactSpecialPrintings.map((entry) => [exactPrintingKey(entry.set, entry.collectorNumber), entry]),
-  ).values()];
+  const selectors = [...new Map(policy.exactSpecialPrintings.map((entry) => [exactPrintingKey(entry.set, entry.collectorNumber), entry])).values()];
   if (selectors.length === 0) return [];
-  const resolved = await getCardsByIdentifiers(selectors.map((entry): CardIdentifierInput => ({
-    name: entry.oracleName,
-    set: entry.set,
-    collectorNumber: entry.collectorNumber,
-  })));
-  if (resolved.notFound.length > 0) {
-    throw new Error(`One or more curated special printings could not be resolved for neutral deck construction: ${resolved.notFound.join(', ')}`);
-  }
+  const resolved = await getCardsByIdentifiers(selectors.map((entry): CardIdentifierInput => ({ name: entry.oracleName, set: entry.set, collectorNumber: entry.collectorNumber })));
+  if (resolved.notFound.length > 0) throw new Error(`One or more curated special printings could not be resolved for neutral deck construction: ${resolved.notFound.join(', ')}`);
   return resolved.cards;
 }
 
-async function discoverEligiblePool(
-  colors: readonly string[],
-  policy: ResolvedPrintingPolicyV08,
-): Promise<ScryfallCard[]> {
-  if (policy.family && policy.familyMatchedSetCodes.length === 0) {
-    throw new Error(`Printing-family discovery for ${policy.family} returned no matching set codes; neutral construction fails closed.`);
-  }
+function exactCandidateWithinCap(card: ScryfallCard, cap: number | undefined): boolean {
+  return cap === undefined || exactPrintingBudgetWitnessV15(card, cap).status === 'within-cap';
+}
+
+async function discoverEligiblePool(colors: readonly string[], policy: ResolvedPrintingPolicyV08, candidateCap: number | undefined): Promise<ScryfallCard[]> {
+  if (policy.family && policy.familyMatchedSetCodes.length === 0) throw new Error(`Printing-family discovery for ${policy.family} returned no matching set codes; neutral construction fails closed.`);
   const cards: ScryfallCard[] = [];
   if (policy.allowedSetCodes.length > 0) {
     const setClause = `(${policy.allowedSetCodes.map((set) => `set:${set}`).join(' OR ')})`;
-    const result = await boundedScryfallSearchV15(`${setClause} f:commander ${identityQuery(colors)} game:paper`, {
-      maxCards: 2_000,
-      maxPages: 50,
-      minRequestGapMs: 300,
-    });
+    const result = await boundedScryfallSearchV15(`${setClause} f:commander ${identityQuery(colors)} game:paper`, { maxCards: 2_000, maxPages: 50, minRequestGapMs: 300 });
     cards.push(...result.cards);
   }
   cards.push(...await exactSpecialCards(policy));
   const eligible = cards
     .filter((card) => printingMatchesPolicyV08(card, policy))
-    .filter((card) => legalIdentity(card, colors));
+    .filter((card) => legalIdentity(card, colors))
+    .filter((card) => exactCandidateWithinCap(card, candidateCap));
   const byOracle = new Map<string, ScryfallCard>();
   for (const card of eligible) {
     const key = oracleKey(card);
     const current = byOracle.get(key);
-    if (!current || `${card.set}|${card.collector_number}`.localeCompare(`${current.set}|${current.collector_number}`) < 0) {
-      byOracle.set(key, card);
-    }
+    if (!current) { byOracle.set(key, card); continue; }
+    const cardWitness = candidateCap === undefined ? null : exactPrintingBudgetWitnessV15(card, candidateCap);
+    const currentWitness = candidateCap === undefined ? null : exactPrintingBudgetWitnessV15(current, candidateCap);
+    const priceDelta = cardWitness?.priceUsd !== null && cardWitness?.priceUsd !== undefined && currentWitness?.priceUsd !== null && currentWitness?.priceUsd !== undefined
+      ? cardWitness.priceUsd - currentWitness.priceUsd
+      : 0;
+    if (priceDelta < 0 || (priceDelta === 0 && `${card.set}|${card.collector_number}`.localeCompare(`${current.set}|${current.collector_number}`) < 0)) byOracle.set(key, card);
   }
   return [...byOracle.values()];
 }
 
-async function resolveMustIncludes(
-  names: string[],
-  colors: readonly string[],
-  policy: ResolvedPrintingPolicyV08,
-): Promise<ScryfallCard[]> {
+async function resolveMustIncludes(names: string[], colors: readonly string[], policy: ResolvedPrintingPolicyV08, maxUsdPerCard: number | undefined): Promise<EligiblePrintingChoiceV08[]> {
   if (names.length === 0) return [];
   const result = await getCardsByNames(names);
   if (result.notFound.length > 0) throw new Error(`Neutral must-include resolution failed: ${result.notFound.join(', ')}`);
-  const selected: ScryfallCard[] = [];
+  const selected: EligiblePrintingChoiceV08[] = [];
   for (const card of result.cards) {
     if (!legalIdentity(card, colors)) throw new Error(`Must-include ${card.name} is outside the selected commander's color identity.`);
-    const printing = await selectEligiblePrintingV08(card, policy);
-    if (!printing) throw new Error(`Must-include ${card.name} has no eligible physical printing under the neutral policy.`);
-    selected.push(printing.card);
+    selected.push(await requiredPrinting(card, policy, maxUsdPerCard, 'Must-include'));
   }
   return selected;
 }
 
-/**
- * Strategy-first neutral deck construction. There is intentionally no targetBracket option.
- * Role targets are archetype-specific deck-function heuristics, not bracket profiles, and the
- * finished deck must be independently assessed after construction.
- */
-export async function buildNeutralCommanderDeckV15(
-  commanderNames: string[],
-  options: NeutralDeckBuildOptionsV15,
-): Promise<Record<string, unknown>> {
+/** Strategy-first neutral deck construction. There is intentionally no targetBracket option. */
+export async function buildNeutralCommanderDeckV15(commanderNames: string[], options: NeutralDeckBuildOptionsV15): Promise<Record<string, unknown>> {
   const requested = commanderNames.map((name) => name.trim()).filter(Boolean);
   if (requested.length < 1 || requested.length > 2) throw new Error('Neutral deck construction requires one or two commander names.');
+  const userCap = positiveCap('maxUsdPerCard', options.maxUsdPerCard);
+  const candidateCap = neutralCandidatePriceCapV15(options);
+  const excludedNames = new Set((options.excludedCards ?? []).map(normalize));
+  const mustNames = [...new Set((options.mustInclude ?? []).map((name) => name.trim()).filter(Boolean))];
+  const conflicts = mustNames.filter((name) => excludedNames.has(normalize(name)));
+  if (conflicts.length > 0) throw new Error(`Neutral constraints conflict: cards cannot be both must-include and excluded: ${conflicts.join(', ')}.`);
+
   const policy = await resolvePrintingPolicyV08(options);
-  const commanders = await resolveExactCommanders(requested, policy);
+  const commanderChoices = await resolveExactCommanders(requested, policy, userCap);
+  const commanders = commanderChoices.map((choice) => choice.card);
   const colors = identity(commanders);
   const profile = NEUTRAL_PROFILES[options.archetype];
   const landsWanted = Math.max(30, Math.min(42, Math.trunc(options.landCount ?? profile.lands)));
@@ -332,81 +315,74 @@ export async function buildNeutralCommanderDeckV15(
 
   const unrestricted = !policy.family && policy.allowedSetCodes.length === 0 && policy.exactSpecialPrintings.length === 0;
   const unrestrictedPool = unrestricted
-    ? await discoverNeutralUnrestrictedPoolV15(colors, options.archetype, policy)
+    ? await discoverNeutralUnrestrictedPoolV15(colors, options.archetype, policy, { ...(candidateCap !== undefined ? { maxUsdPerCard: candidateCap } : {}) })
     : null;
-  const pool = unrestrictedPool?.cards ?? await discoverEligiblePool(colors, policy);
+  const pool = unrestrictedPool?.cards ?? await discoverEligiblePool(colors, policy, candidateCap);
   const candidatePoolProvenance: Record<string, unknown> = unrestrictedPool?.provenance ?? {
     mode: 'exhaustive-bounded-printing-policy',
     exhaustive: true,
     edhrecOrderedInput: true,
     rankingUsesPopularity: false,
-    note: 'The bounded printing-family/set search is exhausted inside explicit hard ceilings; EDHREC ordering only affects fetch order, not candidate scoring.',
+    budgetCapUsd: candidateCap ?? null,
+    budgetFilterMode: candidateCap === undefined ? 'not-requested' : 'exact-returned-printing',
+    note: 'The bounded printing-family/set search is exhausted inside explicit hard ceilings; EDHREC ordering only affects fetch order, not candidate scoring. When a candidate price cap is active, only exact returned printings with verified finish pricing under that cap survive.',
   };
 
   const commanderOracleKeys = new Set(commanders.map(oracleKey));
-  const excluded = new Set((options.excludedCards ?? []).map(normalize));
   const nonlands = pool
     .filter((card) => !card.type_line.toLocaleLowerCase().includes('land'))
     .filter((card) => !commanderOracleKeys.has(oracleKey(card)))
-    .filter((card) => !excluded.has(normalize(card.name)));
-  const mustInclude = await resolveMustIncludes(options.mustInclude ?? [], colors, policy);
+    .filter((card) => !excludedNames.has(normalize(card.name)))
+    .filter((card) => exactCandidateWithinCap(card, candidateCap));
+  const mustChoices = await resolveMustIncludes(mustNames, colors, policy, userCap);
+  const mustCards = mustChoices.map((choice) => choice.card);
+  const mustLandNames = mustCards.filter((card) => card.type_line.toLocaleLowerCase().includes('land')).map((card) => card.name);
+  if (mustLandNames.length > 0) {
+    throw new Error(`Neutral must-include land handling is not yet losslessly enforceable in this builder: ${mustLandNames.join(', ')}. The build fails closed instead of silently miscounting land slots.`);
+  }
+  const requiredOracleKeys = new Set(mustCards.map(oracleKey));
+  const requiredNonCommanders = mustCards.filter((card) => !commanderOracleKeys.has(oracleKey(card)) && !excludedNames.has(normalize(card.name)));
+  if (requiredNonCommanders.length > nonlandSlots) throw new Error(`The ${requiredNonCommanders.length} required non-commander cards exceed the ${nonlandSlots} available nonland slots.`);
+
   const selected: ScryfallCard[] = [];
   const selectedKeys = new Set<string>();
   const counts = emptyCounts();
-  for (const card of mustInclude) {
+  for (const card of requiredNonCommanders) {
     const key = oracleKey(card);
-    if (selectedKeys.has(key) || commanderOracleKeys.has(key) || excluded.has(normalize(card.name))) continue;
-    selected.push(card);
-    selectedKeys.add(key);
-    incrementCounts(counts, card);
+    if (selectedKeys.has(key)) continue;
+    selected.push(card); selectedKeys.add(key); incrementCounts(counts, card);
   }
-
   const remaining = nonlands.filter((card) => !selectedKeys.has(oracleKey(card)));
   while (selected.length < nonlandSlots && remaining.length > 0) {
-    remaining.sort((a, b) =>
-      dynamicCandidateScore(b, options.archetype, counts, profile.roles)
-      - dynamicCandidateScore(a, options.archetype, counts, profile.roles)
-      || a.name.localeCompare(b.name));
+    remaining.sort((a, b) => dynamicCandidateScore(b, options.archetype, counts, profile.roles) - dynamicCandidateScore(a, options.archetype, counts, profile.roles) || a.name.localeCompare(b.name));
     const best = remaining.shift();
     if (!best) break;
-    selected.push(best);
-    selectedKeys.add(oracleKey(best));
-    incrementCounts(counts, best);
+    selected.push(best); selectedKeys.add(oracleKey(best)); incrementCounts(counts, best);
   }
 
   const lands = pool
     .filter((card) => card.type_line.toLocaleLowerCase().includes('land'))
-    .filter((card) => !excluded.has(normalize(card.name)));
+    .filter((card) => !excludedNames.has(normalize(card.name)))
+    .filter((card) => exactCandidateWithinCap(card, candidateCap));
   const basics = lands.filter((card) => /basic land/i.test(card.type_line));
-  const nonbasics = lands
-    .filter((card) => !/basic land/i.test(card.type_line))
-    .sort((a, b) => landScore(b, colors) - landScore(a, colors) || a.name.localeCompare(b.name));
-  const nonbasicLimit = Math.max(0, Math.min(
-    landsWanted,
-    Math.trunc(options.maxNonbasicLands ?? Math.max(10, colors.length * 5)),
-  ));
+  const nonbasics = lands.filter((card) => !/basic land/i.test(card.type_line)).sort((a, b) => landScore(b, colors) - landScore(a, colors) || a.name.localeCompare(b.name));
+  const nonbasicLimit = Math.max(0, Math.min(landsWanted, Math.trunc(options.maxNonbasicLands ?? Math.max(10, colors.length * 5))));
   const chosenNonbasics = nonbasics.slice(0, nonbasicLimit);
   const basicsNeeded = Math.max(0, landsWanted - chosenNonbasics.length);
   const basicByName = new Map(basics.map((card) => [normalize(card.name), card]));
-  const desiredBasicNames = colors.length > 0
-    ? colors.map((color) => BASIC_FOR_COLOR[color]).filter((name): name is string => Boolean(name))
-    : ['Wastes'];
-  const availableBasics = desiredBasicNames
-    .map((name) => basicByName.get(normalize(name)))
-    .filter((card): card is ScryfallCard => Boolean(card));
+  const desiredBasicNames = colors.length > 0 ? colors.map((color) => BASIC_FOR_COLOR[color]).filter((name): name is string => Boolean(name)) : ['Wastes'];
+  const availableBasics = desiredBasicNames.map((name) => basicByName.get(normalize(name))).filter((card): card is ScryfallCard => Boolean(card));
   const basicQuantities = new Map<string, number>();
   for (let index = 0; index < basicsNeeded && availableBasics.length > 0; index += 1) {
     const basic = availableBasics[index % availableBasics.length]!;
     basicQuantities.set(basic.name, (basicQuantities.get(basic.name) ?? 0) + 1);
   }
 
-  const commanderLines = commanders.map((card) => printingLine(1, card));
+  const commanderLines = commanderChoices.map((choice) => printingLine(1, choice.card, userCap));
   const mainLines = [
-    ...selected.map((card) => printingLine(1, card)),
-    ...chosenNonbasics.map((card) => printingLine(1, card)),
-    ...availableBasics
-      .filter((card) => (basicQuantities.get(card.name) ?? 0) > 0)
-      .map((card) => printingLine(basicQuantities.get(card.name) ?? 0, card)),
+    ...selected.map((card) => printingLine(1, card, requiredOracleKeys.has(oracleKey(card)) ? userCap : candidateCap)),
+    ...chosenNonbasics.map((card) => printingLine(1, card, candidateCap)),
+    ...availableBasics.filter((card) => (basicQuantities.get(card.name) ?? 0) > 0).map((card) => printingLine(basicQuantities.get(card.name) ?? 0, card, candidateCap)),
   ];
   const decklist = ['// COMMANDER', ...commanderLines, '', '// MAIN', ...mainLines].join('\n');
   const parsed = parseDecklist(decklist);
@@ -415,11 +391,15 @@ export async function buildNeutralCommanderDeckV15(
   const printingPolicySatisfied = validationCards.every((card) => printingMatchesPolicyV08(card, policy));
   const enoughNonlands = selected.length === nonlandSlots;
   const enoughLands = chosenNonbasics.length + [...basicQuantities.values()].reduce((sum, quantity) => sum + quantity, 0) === landsWanted;
-  const complete = parsed.totalCards === 100 && rules.isLegal && printingPolicySatisfied && enoughNonlands && enoughLands;
-  const roleDeficits = Object.fromEntries(
-    (Object.keys(profile.roles) as Array<keyof NeutralRoleTargetsV15>)
-      .map((key) => [key, Math.max(0, profile.roles[key] - counts[key])]),
-  );
+  const perCardBudgetAudit = auditExactPerCardBudgetV15(parsed, validationCards, userCap);
+  const optionalCards = [
+    ...selected.filter((card) => !requiredOracleKeys.has(oracleKey(card))),
+    ...chosenNonbasics,
+    ...availableBasics,
+  ];
+  const candidateBudgetSatisfied = candidateCap === undefined || optionalCards.every((card) => exactPrintingBudgetWitnessV15(card, candidateCap).status === 'within-cap');
+  const complete = parsed.totalCards === 100 && rules.isLegal && printingPolicySatisfied && enoughNonlands && enoughLands && perCardBudgetAudit.satisfied && candidateBudgetSatisfied;
+  const roleDeficits = Object.fromEntries((Object.keys(profile.roles) as Array<keyof NeutralRoleTargetsV15>).map((key) => [key, Math.max(0, profile.roles[key] - counts[key])]));
 
   return {
     status: complete ? 'complete-neutral-draft' : 'incomplete-neutral-draft',
@@ -432,6 +412,8 @@ export async function buildNeutralCommanderDeckV15(
     commanderRules: rules,
     printingPolicySatisfied,
     printingPolicy: describePrintingPolicyV08(policy),
+    perCardBudgetAudit,
+    candidateBudgetSatisfied,
     candidatePoolProvenance,
     roleTargets: profile.roles,
     detectedRoleCounts: counts,
@@ -448,8 +430,11 @@ export async function buildNeutralCommanderDeckV15(
       allowedSets: options.allowedSets ?? [],
       includePromos: options.includePromos ?? true,
       includeSpecialReleases: options.includeSpecialReleases ?? true,
+      maxUsdPerCard: userCap ?? null,
+      candidateMaxUsdPerCard: options.candidateMaxUsdPerCard ?? null,
+      effectiveCandidateMaxUsdPerCard: candidateCap ?? null,
       excludedCards: options.excludedCards ?? [],
-      mustInclude: options.mustInclude ?? [],
+      mustInclude: mustNames,
     },
     constructionExplanation: [
       'No bracket target is accepted or inferred by this builder.',
@@ -458,7 +443,13 @@ export async function buildNeutralCommanderDeckV15(
         ? 'With no printing-family/set restriction, candidate discovery uses an explicitly bounded stratified Scryfall sample across mana bands, lands, and archetype signals; it does not pretend to exhaust every Commander-legal card.'
         : 'With a bounded printing-family/set restriction, the eligible physical-printing pool is exhausted inside explicit safety ceilings before strategy scoring.',
       'Card selection balances archetype affinity with ordinary ramp/draw/interaction/protection/recursion needs; it does not award EDHREC popularity, cEDH intent, Game Changer count, or famous-card-name points.',
-      'Every emitted card line carries an exact set code and collector number and is independently checked against the active printing policy.',
+      userCap === undefined
+        ? 'No user hard per-card USD cap was requested.'
+        : `Every final exact printing is independently audited against the US$${userCap} user hard per-card cap; missing price evidence does not count as zero.`,
+      candidateCap === undefined
+        ? 'No optional candidate-only price cap is active.'
+        : `Optional candidates and lands must carry an exact priced finish at or below the effective US$${candidateCap} search cap; this cap may tighten but never loosen the user hard cap.`,
+      'Every emitted card line carries an exact set code and collector number; when a budget cap proves a specific finish, the deck line also records that finish marker.',
       'Bracket assessment belongs after this construction stage.',
     ],
   };

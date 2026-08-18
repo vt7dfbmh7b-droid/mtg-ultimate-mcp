@@ -5,6 +5,7 @@ import { countWinningCombosV14, isWinResultV14 } from './cedh-win-package-v14.js
 import { validateCommanderDeck } from './commander-rules.js';
 import { buildDeckMetrics, parseDecklist, resolveEntryCard, type ParsedDeck } from './deck.js';
 import { deriveEfficientCommanderWinPlanV15 } from './efficient-win-plan-v15.js';
+import { auditExactPerCardBudgetV15, type ExactPerCardBudgetAuditV15 } from './exact-printing-budget-v15.js';
 import {
   describePrintingPolicyV08,
   printingMatchesPolicyV08,
@@ -16,6 +17,7 @@ import { estimateCommanderBracket, findDeckCombosEvidence } from './spellbook.js
 
 export interface CommanderBuildEvaluationOptionsV15 extends PrintingPolicyInputV08 {
   constraintDescriptions?: string[];
+  maxUsdPerCard?: number;
   cedhIntent?: boolean;
   competitiveMetagameEvidence?: boolean;
   optimizedPlanEvidence?: boolean;
@@ -69,6 +71,8 @@ export interface CommanderBuildEvaluationV15 {
   printingPolicy: Record<string, unknown>;
   printingPolicySatisfied: boolean;
   offPolicyCards: string[];
+  perCardBudgetAudit: ExactPerCardBudgetAuditV15;
+  hardGatesPassed: boolean;
   metrics: ReturnType<typeof buildDeckMetrics>;
   postBuildEvidence: PostBuildEvidenceV15;
   actualBracket: ActualBracketAssessmentV15;
@@ -102,16 +106,11 @@ export function derivePostBuildEvidenceV15(input: PostBuildEvidenceInputV15): Po
   const combos = record(input.combos);
   const included = Array.isArray(combos.included) ? combos.included.map(record) : [];
   const counts = record(combos.counts);
-  const winningIncluded = included.filter((combo) =>
-    Array.isArray(combo.results) && isWinResultV14(combo.results.map(String)));
-  const verifiedWinningComboIds = [...new Set(winningIncluded
-    .map((combo) => String(combo.id ?? '').trim())
-    .filter(Boolean))].sort((a, b) => a.localeCompare(b));
+  const winningIncluded = included.filter((combo) => Array.isArray(combo.results) && isWinResultV14(combo.results.map(String)));
+  const verifiedWinningComboIds = [...new Set(winningIncluded.map((combo) => String(combo.id ?? '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b));
   const verifiedWinningCombos = countWinningCombosV14(combos);
   const ruthlessWinningCombos = winningIncluded.filter((combo) => String(combo.bracketTag ?? '') === 'R').length;
-  const strategicallyRelevantCombos = Array.isArray(bracket.strategicallyRelevantCombos)
-    ? bracket.strategicallyRelevantCombos.length
-    : 0;
+  const strategicallyRelevantCombos = Array.isArray(bracket.strategicallyRelevantCombos) ? bracket.strategicallyRelevantCombos.length : 0;
   const spellbookTag = typeof bracket.bracketTag === 'string' ? bracket.bracketTag : null;
   const spellbookBracketSourceStatus = sourceStatus(bracket.sourceStatus);
   const bracketFailure = record(bracket.sourceFailure);
@@ -161,17 +160,22 @@ export async function evaluateCommanderBuildV15(
   decklist: string,
   options: CommanderBuildEvaluationOptionsV15 = {},
 ): Promise<CommanderBuildEvaluationV15> {
+  if (options.maxUsdPerCard !== undefined && (!Number.isFinite(options.maxUsdPerCard) || options.maxUsdPerCard <= 0)) {
+    throw new Error('maxUsdPerCard must be positive and finite when supplied to post-build evaluation.');
+  }
   const parsed = parseDecklist(decklist);
   const resolved = await getCardsByIdentifiers(identifiers(parsed));
   const rules = validateCommanderDeck(parsed, resolved.cards);
   const policy = await resolvePrintingPolicyV08(options);
   const offPolicy = resolved.cards.filter((card) => !printingMatchesPolicyV08(card, policy));
   const printingPolicySatisfied = offPolicy.length === 0 && resolved.notFound.length === 0;
+  const perCardBudgetAudit = auditExactPerCardBudgetV15(parsed, resolved.cards, options.maxUsdPerCard);
   const metrics = buildDeckMetrics(parsed, resolved.cards);
   const hardGatesPassed = parsed.totalCards === 100
     && rules.isLegal
     && resolved.notFound.length === 0
-    && printingPolicySatisfied;
+    && printingPolicySatisfied
+    && perCardBudgetAudit.satisfied;
 
   let spellbookBracket: Record<string, unknown> = {};
   let combos: Record<string, unknown> = {
@@ -225,6 +229,8 @@ export async function evaluateCommanderBuildV15(
     printingPolicy: describePrintingPolicyV08(policy),
     printingPolicySatisfied,
     offPolicyCards: offPolicy.map((card) => `${card.name} (${card.set.toUpperCase()}) ${card.collector_number}`),
+    perCardBudgetAudit,
+    hardGatesPassed,
     metrics,
     postBuildEvidence: evidence,
     actualBracket,

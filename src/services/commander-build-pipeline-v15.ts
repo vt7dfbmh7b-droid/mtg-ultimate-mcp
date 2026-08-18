@@ -71,9 +71,6 @@ export function planCommanderBuildPipelineV15(
   }
 
   const unsupportedConstraints: string[] = [];
-  if (options.maxUsdPerCard !== undefined || options.candidateMaxUsdPerCard !== undefined) {
-    unsupportedConstraints.push('neutral per-card budget enforcement');
-  }
   if (options.themeQuery?.trim()) unsupportedConstraints.push('neutral free-form theme query');
   const archetype = options.archetype ?? inferNeutralStrategyV15(commanders)[0]!.archetype;
   return {
@@ -91,6 +88,7 @@ function constraintDescriptions(options: CommanderBuildPipelineOptionsV15): stri
   if (options.printingFamily) constraints.push(`${options.printingFamily} physical printings only.`);
   if ((options.allowedSets ?? []).length > 0) constraints.push(`Allowed physical sets: ${(options.allowedSets ?? []).join(', ')}.`);
   if (options.maxUsdPerCard !== undefined) constraints.push(`Maximum USD reference price per card: ${options.maxUsdPerCard}.`);
+  if (options.candidateMaxUsdPerCard !== undefined) constraints.push(`Optional candidate search cap in USD: ${options.candidateMaxUsdPerCard}.`);
   if ((options.excludedCards ?? []).length > 0) constraints.push(`Excluded cards: ${(options.excludedCards ?? []).join(', ')}.`);
   if ((options.mustInclude ?? []).length > 0) constraints.push(`Must-include cards: ${(options.mustInclude ?? []).join(', ')}.`);
   return constraints;
@@ -143,7 +141,7 @@ export async function buildCommanderThroughPipelineV15(
       packageDiscovery,
       guidance: verificationUnavailable
         ? 'A verified winning package was required, but the package-discovery source was unavailable/incomplete. The pipeline fails closed instead of claiming no package exists.'
-        : 'A verified winning package was required, and a completed search found no package surviving Commander legality, exclusions, and exact physical-printing checks.',
+        : 'A verified winning package was required, and a completed search found no package surviving Commander legality, exclusions, exact physical-printing checks, and the user hard per-card cap when supplied.',
     };
   }
 
@@ -156,6 +154,8 @@ export async function buildCommanderThroughPipelineV15(
       ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
       ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
       ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
+      ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
+      ...(options.candidateMaxUsdPerCard !== undefined ? { candidateMaxUsdPerCard: options.candidateMaxUsdPerCard } : {}),
       ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
       ...(mustInclude.length > 0 ? { mustInclude } : {}),
       ...(options.landCount !== undefined ? { landCount: options.landCount } : {}),
@@ -196,6 +196,7 @@ export async function buildCommanderThroughPipelineV15(
     ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
     ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
     ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
+    ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
     constraintDescriptions: constraintDescriptions(options),
     cedhIntent: options.cedhIntent ?? plan.requestedTargetBracket === 5,
     competitiveMetagameEvidence: options.competitiveMetagameEvidence === true,
@@ -221,7 +222,7 @@ export async function buildCommanderThroughPipelineV15(
   const requiredPackageVerificationFailed = winPackageMode === 'require'
     && selectedPackage !== null
     && !seededPackageVerifiedInFinalDeck;
-  const status = !evaluation.actualBracket.hardGatesPassed
+  const status = !evaluation.hardGatesPassed
     ? 'built-but-hard-gates-failed'
     : requiredPackageVerificationFailed
       ? 'required-win-package-not-verified-in-final-deck'
@@ -240,6 +241,7 @@ export async function buildCommanderThroughPipelineV15(
       winPackageSeeded: selectedPackage !== null && plan.seedWinPackage,
       deckConstructed: true,
       hardTruthEvaluationCompleted: true,
+      exactPerCardBudgetVerified: evaluation.perCardBudgetAudit.satisfied,
       actualBracketAssessedAfterConstruction: true,
       targetComparedAfterAssessment: targetComparison !== null,
     },
@@ -248,6 +250,7 @@ export async function buildCommanderThroughPipelineV15(
     seededPackageVerifiedInFinalDeck,
     built,
     evaluation,
+    perCardBudgetAudit: evaluation.perCardBudgetAudit,
     requestedTargetBracket: plan.requestedTargetBracket,
     achievedBracket: achieved,
     achievedBand: evaluation.actualBracket.assessedBand,
