@@ -20,6 +20,27 @@ async function withMockFetch<T>(mock: typeof fetch, run: () => Promise<T>): Prom
   }
 }
 
+test('all Scryfall fetchJson calls share one process-wide start-to-start pacing clock', async () => {
+  const starts: number[] = [];
+  await withMockFetch(
+    (async () => {
+      starts.push(Date.now());
+      return jsonResponse({ object: 'card' });
+    }) as typeof fetch,
+    async () => {
+      await Promise.all([
+        fetchJson(`${config.scryfallApiBase}/cards/named?exact=Alpha`),
+        fetchJson(`${config.scryfallApiBase}/cards/named?exact=Beta`),
+      ]);
+    },
+  );
+  assert.equal(starts.length, 2);
+  assert.ok(
+    starts[1]! - starts[0]! >= config.scryfallMinRequestGapMs - 25,
+    `expected shared Scryfall pacing of about ${config.scryfallMinRequestGapMs}ms; observed ${starts[1]! - starts[0]!}ms`,
+  );
+});
+
 test('retries a transient timeout for Scryfall collection POST because it is an idempotent read', async () => {
   let calls = 0;
   await withMockFetch(
