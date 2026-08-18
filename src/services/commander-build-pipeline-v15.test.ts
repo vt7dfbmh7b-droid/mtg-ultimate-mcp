@@ -58,13 +58,18 @@ test('an explicit target uses the targeted lane and high-power targets can seed 
   assert.equal(plan.seedWinPackage, true);
 });
 
-test('neutral free-form theme remains fail-closed while the budget adapter is supported', () => {
+test('neutral free-form theme and per-card budget are supported without inventing a bracket target', () => {
   const plan = planCommanderBuildPipelineV15([commander()], {
     printingFamily: 'Final Fantasy',
     maxUsdPerCard: 20,
+    candidateMaxUsdPerCard: 5,
     themeQuery: 'vampire',
   });
-  assert.deepEqual(plan.unsupportedConstraints, ['neutral free-form theme query']);
+  assert.equal(plan.requestedTargetBracket, null);
+  assert.equal(plan.lane, 'neutral-themed');
+  assert.equal(plan.archetype, 'combat-tokens');
+  assert.equal(plan.seedWinPackage, false);
+  assert.deepEqual(plan.unsupportedConstraints, []);
 });
 
 test('forbid mode disables package discovery and seeding regardless of requested bracket', () => {
