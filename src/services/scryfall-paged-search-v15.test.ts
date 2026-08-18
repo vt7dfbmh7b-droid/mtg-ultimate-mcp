@@ -49,8 +49,23 @@ test('bounded discovery follows every page and preserves provider order until ex
   assert.equal(result.exhaustiveWithinBounds, true);
   assert.equal(result.pagesFetched, 2);
   assert.equal(result.providerTotalCards, 3);
+  assert.equal(result.unique, 'cards');
   assert.deepEqual(result.cards.map((entry) => entry.name), ['A', 'B', 'C']);
   assert.equal(seen.length, 2);
+});
+
+test('bounded discovery can explicitly exhaust physical printings instead of Oracle-card representatives', async () => {
+  let firstUrl = '';
+  const result = await boundedScryfallSearchV15('!"Island" game:paper', {
+    unique: 'prints',
+    maxCards: 10,
+    requestPage: async (url) => {
+      firstUrl = url;
+      return page([card('Island')], false);
+    },
+  });
+  assert.equal(result.unique, 'prints');
+  assert.match(firstUrl, /unique=prints/);
 });
 
 test('bounded discovery refuses silent card truncation', async () => {

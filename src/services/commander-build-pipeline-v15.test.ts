@@ -40,6 +40,16 @@ test('unrestricted neutral construction is now a supported strategy-first lane',
   assert.deepEqual(plan.unsupportedConstraints, []);
 });
 
+test('neutral per-card budget constraints are supported without inventing a bracket target', () => {
+  const plan = planCommanderBuildPipelineV15([commander()], {
+    maxUsdPerCard: 20,
+    candidateMaxUsdPerCard: 5,
+  });
+  assert.equal(plan.requestedTargetBracket, null);
+  assert.equal(plan.lane, 'neutral-themed');
+  assert.deepEqual(plan.unsupportedConstraints, []);
+});
+
 test('an explicit target uses the targeted lane and high-power targets can seed verified packages', () => {
   const plan = planCommanderBuildPipelineV15([commander()], { targetBracket: 5 });
   assert.equal(plan.lane, 'targeted-v07');
@@ -48,16 +58,13 @@ test('an explicit target uses the targeted lane and high-power targets can seed 
   assert.equal(plan.seedWinPackage, true);
 });
 
-test('neutral unsupported constraints fail closed instead of being silently ignored', () => {
+test('neutral free-form theme remains fail-closed while the budget adapter is supported', () => {
   const plan = planCommanderBuildPipelineV15([commander()], {
     printingFamily: 'Final Fantasy',
     maxUsdPerCard: 20,
     themeQuery: 'vampire',
   });
-  assert.deepEqual(plan.unsupportedConstraints, [
-    'neutral per-card budget enforcement',
-    'neutral free-form theme query',
-  ]);
+  assert.deepEqual(plan.unsupportedConstraints, ['neutral free-form theme query']);
 });
 
 test('forbid mode disables package discovery and seeding regardless of requested bracket', () => {

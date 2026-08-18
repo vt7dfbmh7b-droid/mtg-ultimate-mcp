@@ -1,6 +1,8 @@
 import { config } from '../config.js';
 import { fetchJson, HttpError } from '../lib/http.js';
 import type { ScryfallCard, ScryfallList } from '../types/scryfall.js';
+import { selectBudgetEligiblePrintingV15 } from './budget-printing-selector-v15.js';
+import { exactPrintingBudgetWitnessV15 } from './exact-printing-budget-v15.js';
 import type { NeutralArchetypeV15 } from './neutral-commander-selection-v15.js';
 import {
   printingMatchesPolicyV08,
@@ -52,6 +54,11 @@ export interface NeutralUnrestrictedPoolV15 {
     uniqueEligibleNonlands: number;
     uniqueEligibleLands: number;
     basicLandNames: string[];
+    budgetCapUsd: number | null;
+    budgetFilterMode: 'not-requested' | 'exact-sampled-printing';
+    budgetRejectedOverCap: number;
+    budgetRejectedUnknownPrice: number;
+    budgetRejectedUnavailableFinish: number;
     note: string;
   };
 }
@@ -68,6 +75,7 @@ export interface NeutralUnrestrictedPoolOptionsV15 extends NeutralUnrestrictedSa
   minEligibleNonlands?: number;
   minEligibleLands?: number;
   basicCards?: ScryfallCard[];
+  maxUsdPerCard?: number;
 }
 
 function normalize(value: string): string {
@@ -82,9 +90,13 @@ function sleep(ms: number): Promise<void> {
   return ms <= 0 ? Promise.resolve() : new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function canonicalIdentity(colors: readonly string[]): string {
+function canonicalColors(colors: readonly string[]): string[] {
   const present = new Set(colors.map((color) => color.trim().toUpperCase()));
-  return COLOR_ORDER.filter((color) => present.has(color)).join('').toLocaleLowerCase();
+  return COLOR_ORDER.filter((color) => present.has(color));
+}
+
+function canonicalIdentity(colors: readonly string[]): string {
+  return canonicalColors(colors).join('').toLocaleLowerCase();
 }
 
 function identityClause(colors: readonly string[]): string {
@@ -180,21 +192,43 @@ export async function sampleNeutralUnrestrictedStrataV15(
 async function resolveBasicLands(
   colors: readonly string[],
   policy: ResolvedPrintingPolicyV08,
+  maxUsdPerCard: number | undefined,
   supplied?: ScryfallCard[],
 ): Promise<ScryfallCard[]> {
   if (supplied) return supplied;
-  const names = colors.length > 0
-    ? COLOR_ORDER.filter((color) => colors.includes(color)).map((color) => BASIC_FOR_COLOR[color]!).filter(Boolean)
+  const canonical = canonicalColors(colors);
+  const names = canonical.length > 0
+    ? canonical.map((color) => BASIC_FOR_COLOR[color]!).filter(Boolean)
     : ['Wastes'];
   const lookup = await getCardsByNames(names);
   if (lookup.notFound.length > 0) throw new Error(`Neutral unrestricted basic-land resolution failed: ${lookup.notFound.join(', ')}`);
   const basics: ScryfallCard[] = [];
   for (const card of lookup.cards) {
-    const printing = await selectEligiblePrintingV08(card, policy);
-    if (!printing) throw new Error(`No eligible physical printing found for required basic land ${card.name}.`);
+    const printing = maxUsdPerCard === undefined
+      ? await selectEligiblePrintingV08(card, policy)
+      : await selectBudgetEligiblePrintingV15(card, policy, maxUsdPerCard);
+    if (!printing) {
+      throw new Error(
+        maxUsdPerCard === undefined
+          ? `No eligible physical printing found for required basic land ${card.name}.`
+          : `No priced eligible physical printing found for required basic land ${card.name} at or below US$${maxUsdPerCard} after bounded physical-printing exhaustion.`,
+      );
+    }
     basics.push(printing.card);
   }
   return basics;
+}
+
+function budgetStatus(card: ScryfallCard, maxUsdPerCard: number | undefined): 'within-cap' | 'over-cap' | 'price-unavailable' | 'finish-unavailable' | 'not-requested' {
+  return maxUsdPerCard === undefined
+    ? 'not-requested'
+    : exactPrintingBudgetWitnessV15(card, maxUsdPerCard).status;
+}
+
+function exactPrice(card: ScryfallCard, maxUsdPerCard: number | undefined): number | null {
+  if (maxUsdPerCard === undefined) return null;
+  const witness = exactPrintingBudgetWitnessV15(card, maxUsdPerCard);
+  return witness.status === 'within-cap' ? witness.priceUsd : null;
 }
 
 export async function discoverNeutralUnrestrictedPoolV15(
@@ -206,20 +240,52 @@ export async function discoverNeutralUnrestrictedPoolV15(
   if (policy.family || policy.allowedSetCodes.length > 0 || policy.exactSpecialPrintings.length > 0) {
     throw new Error('Neutral unrestricted pool discovery is only for policies without a bounded family/set/special-printing pool.');
   }
+  if (options.maxUsdPerCard !== undefined && (!Number.isFinite(options.maxUsdPerCard) || options.maxUsdPerCard <= 0)) {
+    throw new Error('Neutral unrestricted maxUsdPerCard must be positive and finite when supplied.');
+  }
   const strata = neutralUnrestrictedStrataV15(colors, archetype, policy.includePromos);
   const sampled = await sampleNeutralUnrestrictedStrataV15(strata, options);
-  const basics = await resolveBasicLands(colors, policy, options.basicCards);
-  const allowedColors = new Set(colors);
-  const eligible = [...sampled.cards, ...basics]
-    .filter((card) => card.legalities.commander === 'legal')
-    .filter((card) => card.color_identity.every((color) => allowedColors.has(color)))
-    .filter((card) => printingMatchesPolicyV08(card, policy));
+  const basics = await resolveBasicLands(colors, policy, options.maxUsdPerCard, options.basicCards);
+  const allowedColors = new Set(canonicalColors(colors));
+  let budgetRejectedOverCap = 0;
+  let budgetRejectedUnknownPrice = 0;
+  let budgetRejectedUnavailableFinish = 0;
+  const eligible: ScryfallCard[] = [];
+
+  for (const card of [...sampled.cards, ...basics]) {
+    if (card.legalities.commander !== 'legal') continue;
+    if (!card.color_identity.every((color) => allowedColors.has(color.toUpperCase()))) continue;
+    if (!printingMatchesPolicyV08(card, policy)) continue;
+    const status = budgetStatus(card, options.maxUsdPerCard);
+    if (status === 'over-cap') {
+      budgetRejectedOverCap += 1;
+      continue;
+    }
+    if (status === 'price-unavailable') {
+      budgetRejectedUnknownPrice += 1;
+      continue;
+    }
+    if (status === 'finish-unavailable') {
+      budgetRejectedUnavailableFinish += 1;
+      continue;
+    }
+    eligible.push(card);
+  }
 
   const byOracle = new Map<string, ScryfallCard>();
   for (const card of eligible) {
     const key = oracleKey(card);
     const current = byOracle.get(key);
-    if (!current || `${card.set}|${card.collector_number}`.localeCompare(`${current.set}|${current.collector_number}`) < 0) {
+    if (!current) {
+      byOracle.set(key, card);
+      continue;
+    }
+    const cardPrice = exactPrice(card, options.maxUsdPerCard);
+    const currentPrice = exactPrice(current, options.maxUsdPerCard);
+    const budgetPreference = cardPrice !== null && currentPrice !== null && cardPrice !== currentPrice
+      ? cardPrice - currentPrice
+      : 0;
+    if (budgetPreference < 0 || (budgetPreference === 0 && `${card.set}|${card.collector_number}`.localeCompare(`${current.set}|${current.collector_number}`) < 0)) {
       byOracle.set(key, card);
     }
   }
@@ -231,7 +297,8 @@ export async function discoverNeutralUnrestrictedPoolV15(
   if (nonlands < minEligibleNonlands || lands < minEligibleLands) {
     throw new Error(
       `Neutral unrestricted sampling produced insufficient eligible candidates: ${nonlands} nonlands/${lands} lands; `
-      + `required at least ${minEligibleNonlands}/${minEligibleLands}.`,
+      + `required at least ${minEligibleNonlands}/${minEligibleLands}`
+      + (options.maxUsdPerCard === undefined ? '.' : ` under the US$${options.maxUsdPerCard} exact-sampled-printing cap.`),
     );
   }
   const basicLandNames = basics.map((card) => card.name).sort((a, b) => a.localeCompare(b));
@@ -249,9 +316,16 @@ export async function discoverNeutralUnrestrictedPoolV15(
       uniqueEligibleNonlands: nonlands,
       uniqueEligibleLands: lands,
       basicLandNames,
-      note: exhaustive
-        ? 'Every configured stratum fit inside its one-page sample bound.'
-        : 'This is an explicitly bounded stratified candidate sample, not an exhaustive search of every Commander-legal Magic card.',
+      budgetCapUsd: options.maxUsdPerCard ?? null,
+      budgetFilterMode: options.maxUsdPerCard === undefined ? 'not-requested' : 'exact-sampled-printing',
+      budgetRejectedOverCap,
+      budgetRejectedUnknownPrice,
+      budgetRejectedUnavailableFinish,
+      note: options.maxUsdPerCard !== undefined
+        ? 'The neutral sample remains bounded and non-popularity ordered. Under a per-card search cap, sampled exact physical printings must carry a declared priced finish at or below the cap, while required basics use a separate bounded exhaustive physical-printing lookup so deep basic-land histories do not create false budget negatives.'
+        : exhaustive
+          ? 'Every configured stratum fit inside its one-page sample bound.'
+          : 'This is an explicitly bounded stratified candidate sample, not an exhaustive search of every Commander-legal Magic card.',
     },
   };
 }
