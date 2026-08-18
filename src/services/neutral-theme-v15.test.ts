@@ -49,9 +49,21 @@ test('creature-type themes are catalog verified, plural aware, and emitted as qu
   assert.equal(vampire.queryClause, 't:"Vampire"');
   assert.equal(vampire.minimumMainMatches, 20);
 
-  const elf = await resolveNeutralThemeIntentV15('Elves typal', { creatureTypes: ['Vampire', 'Elf'] });
+  const elf = await resolveNeutralThemeIntentV15('Elves commander deck', { creatureTypes: ['Vampire', 'Elf'] });
   assert.equal(elf.kind, 'creature-type');
   assert.equal(elf.canonicalLabel, 'Elf typal');
+});
+
+test('creature-type source outage is verification-unavailable, not unsupported or verified absence', async () => {
+  const unavailable = await resolveNeutralThemeIntentV15('Vampires', {
+    creatureTypeProvider: async () => { throw new Error('HTTP 503 from creature-type catalog'); },
+  });
+  assert.equal(unavailable.kind, 'unresolved');
+  assert.equal(unavailable.enforceability, 'verification-unavailable');
+  assert.match(unavailable.explanation, /503/);
+  const audit = auditNeutralThemeV15([], unavailable);
+  assert.equal(audit.status, 'verification-unavailable');
+  assert.equal(audit.satisfied, false);
 });
 
 test('catalog mismatch and raw query-like input fail closed instead of becoming Scryfall grammar', async () => {
