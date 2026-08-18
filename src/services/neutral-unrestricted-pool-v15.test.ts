@@ -4,6 +4,7 @@ import type { ScryfallCard, ScryfallList } from '../types/scryfall.js';
 import type { ResolvedPrintingPolicyV08 } from './printing-policy-v08.js';
 import {
   discoverNeutralUnrestrictedPoolV15,
+  NEUTRAL_UNRESTRICTED_MIN_REQUEST_GAP_MS_V15,
   neutralUnrestrictedSearchUrlV15,
   neutralUnrestrictedStrataV15,
   sampleNeutralUnrestrictedStrataV15,
@@ -52,6 +53,10 @@ function unrestrictedPolicy(): ResolvedPrintingPolicyV08 {
     explanation: 'No themed printing-family restriction is active.',
   };
 }
+
+test('neutral unrestricted live sampling uses the same conservative 300ms Scryfall cadence as the shared client', () => {
+  assert.equal(NEUTRAL_UNRESTRICTED_MIN_REQUEST_GAP_MS_V15, 300);
+});
 
 test('neutral unrestricted strata are deterministic, stratified, and never EDHREC ordered', () => {
   const strata = neutralUnrestrictedStrataV15(['R'], 'combat-tokens', false);
