@@ -6,7 +6,6 @@ import {
   printingMatchesPolicyV08,
   resolvePrintingPolicyV08,
   selectEligiblePrintingV08,
-  type ResolvedPrintingPolicyV08,
 } from './printing-policy-v08.js';
 import {
   getCardsByIdentifiers,

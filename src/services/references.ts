@@ -1,6 +1,5 @@
 import { config } from '../config.js';
 import { fetchJson } from '../lib/http.js';
-import type { ScryfallCard } from '../types/scryfall.js';
 import { buildDeckMetrics, parseDecklist, type DeckMetrics, type ParsedDeck } from './deck.js';
 import { getCardsByNames } from './scryfall.js';
 

@@ -181,14 +181,6 @@ export function resolveEntryCard(entry: DeckEntry, cards: ScryfallCard[]): Scryf
   return cards.find((card) => card.name.toLocaleLowerCase() === entry.name.toLocaleLowerCase());
 }
 
-function resolvedCardMap(cards: ScryfallCard[]): Map<string, ScryfallCard> {
-  const map = new Map<string, ScryfallCard>();
-  for (const card of cards) {
-    if (!map.has(card.name.toLocaleLowerCase())) map.set(card.name.toLocaleLowerCase(), card);
-  }
-  return map;
-}
-
 function curveBucket(cmc: number): string {
   if (cmc <= 0) return '0';
   if (cmc >= 7) return '7+';
