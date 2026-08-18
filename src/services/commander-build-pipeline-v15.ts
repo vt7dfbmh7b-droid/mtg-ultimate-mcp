@@ -1,4 +1,5 @@
 import type { ScryfallCard } from '../types/scryfall.js';
+import { compareRequestedBracketV15 } from './bracket-target-comparison-v15.js';
 import { evaluateCommanderBuildV15 } from './commander-build-evaluation-v15.js';
 import { buildCommanderDeckDraftV07, type DeckBuildOptionsV07 } from './deck-builder-v07.js';
 import { discoverGeneralWinPackagesV15, type GeneralWinPackageCandidateV15 } from './general-win-package-v15.js';
@@ -200,15 +201,32 @@ export async function buildCommanderThroughPipelineV15(
     exhibitionIntent: options.exhibitionIntent === true,
   });
   const achieved = evaluation.actualBracket.assessedBracket;
-  const targetGap = plan.requestedTargetBracket === null || achieved === null
-    ? null
-    : plan.requestedTargetBracket - achieved;
+  const targetComparison = plan.requestedTargetBracket !== null
+    ? compareRequestedBracketV15(
+        plan.requestedTargetBracket,
+        evaluation.actualBracket,
+        evaluation.postBuildEvidence.signals,
+        {
+          spellbookBracketSourceStatus: evaluation.postBuildEvidence.spellbookBracketSourceStatus,
+          spellbookComboSourceStatus: evaluation.postBuildEvidence.spellbookComboSourceStatus,
+          comboVerificationComplete: evaluation.postBuildEvidence.comboVerificationComplete,
+        },
+      )
+    : null;
   const seededPackageVerifiedInFinalDeck = selectedPackage !== null
     && plan.seedWinPackage
     && evaluation.postBuildEvidence.verifiedWinningComboIds.includes(selectedPackage.comboId);
+  const requiredPackageVerificationFailed = winPackageMode === 'require'
+    && selectedPackage !== null
+    && !seededPackageVerifiedInFinalDeck;
+  const status = !evaluation.actualBracket.hardGatesPassed
+    ? 'built-but-hard-gates-failed'
+    : requiredPackageVerificationFailed
+      ? 'required-win-package-not-verified-in-final-deck'
+      : 'complete-evaluated-build';
 
   return {
-    status: evaluation.actualBracket.hardGatesPassed ? 'complete-evaluated-build' : 'built-but-hard-gates-failed',
+    status,
     constructionIntent: 'universal-pipeline-v15',
     plan,
     stages: {
@@ -219,6 +237,7 @@ export async function buildCommanderThroughPipelineV15(
       deckConstructed: true,
       hardTruthEvaluationCompleted: true,
       actualBracketAssessedAfterConstruction: true,
+      targetComparedAfterAssessment: targetComparison !== null,
     },
     packageDiscovery,
     selectedPackage,
@@ -229,9 +248,13 @@ export async function buildCommanderThroughPipelineV15(
     achievedBracket: achieved,
     achievedBand: evaluation.actualBracket.assessedBand,
     bracketConfidence: evaluation.actualBracket.confidence,
-    targetGap,
-    ceilingExplanation: plan.requestedTargetBracket !== null && achieved !== null && achieved < plan.requestedTargetBracket
-      ? evaluation.actualBracket.bracket5ThresholdChecks.filter((check) => !check.passed).map((check) => check.pressurePoint)
-      : [],
+    targetGap: targetComparison?.targetGap ?? null,
+    targetComparison,
+    ceilingExplanation: targetComparison?.whatWouldReachTarget ?? [],
+    ...(requiredPackageVerificationFailed ? {
+      guidance: evaluation.postBuildEvidence.comboVerificationComplete
+        ? 'A winning package was required and seeded, but the exact selected Spellbook combo ID was not verified in the final 100-card deck.'
+        : 'A winning package was required and seeded, but final combo verification was unavailable. The pipeline fails closed rather than claiming the required package survived.',
+    } : {}),
   };
 }
