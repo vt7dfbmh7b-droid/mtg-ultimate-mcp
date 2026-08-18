@@ -45,6 +45,8 @@ interface ParsedCandidateV15 {
   popularity: number;
 }
 
+const COLOR_ORDER = ['W', 'U', 'B', 'R', 'G'] as const;
+
 function record(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
 }
@@ -53,20 +55,29 @@ function normalize(value: string): string {
   return value.trim().toLocaleLowerCase();
 }
 
+export function canonicalIdentityTokenV15(colors: readonly string[]): string {
+  const present = new Set(colors.map((color) => color.trim().toUpperCase()).filter((color) => COLOR_ORDER.includes(color as typeof COLOR_ORDER[number])));
+  const ordered = COLOR_ORDER.filter((color) => present.has(color));
+  return ordered.length > 0 ? ordered.join('') : 'C';
+}
+
 function commanderIdentity(commanders: readonly ScryfallCard[]): string[] {
-  return [...new Set(commanders.flatMap((card) => card.color_identity))].sort();
+  const present = new Set(commanders.flatMap((card) => card.color_identity));
+  return COLOR_ORDER.filter((color) => present.has(color));
 }
 
 function identityToken(commanders: readonly ScryfallCard[]): string {
-  const colors = commanderIdentity(commanders);
-  return colors.length > 0 ? colors.join('') : 'C';
+  return canonicalIdentityTokenV15(commanders.flatMap((card) => card.color_identity));
 }
 
 export function buildGeneralWinPackageQueriesV15(maxPackageCards = 3, identity = 'C'): string[] {
   const maxCards = Math.max(2, Math.min(4, Math.trunc(maxPackageCards)));
-  const queries = [`card<=2 is:winning legal:commander identity<=${identity}`];
-  if (maxCards >= 3) queries.push(`card<=3 is:winning legal:commander identity<=${identity}`);
-  if (maxCards >= 4) queries.push(`card<=4 is:winning legal:commander identity<=${identity}`);
+  const canonicalIdentity = identity.trim().toUpperCase() === 'C'
+    ? 'C'
+    : canonicalIdentityTokenV15([...identity]);
+  const queries = [`card<=2 is:winning legal:commander identity<=${canonicalIdentity}`];
+  if (maxCards >= 3) queries.push(`card<=3 is:winning legal:commander identity<=${canonicalIdentity}`);
+  if (maxCards >= 4) queries.push(`card<=4 is:winning legal:commander identity<=${canonicalIdentity}`);
   return queries;
 }
 
