@@ -136,6 +136,26 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
+      - name: Cool down live providers before neutral theme control
+        if: always()
+        run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
+
+      - name: Neutral free-form theme control
+        id: neutral_theme
+        continue-on-error: true
+        run: npx tsx scripts/e2e-neutral-theme-v15.ts
+
+      - name: Upload neutral theme result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: suite-neutral-theme-${{ github.sha }}
+          path: |
+            neutral-theme-live-result.json
+            neutral-theme-live-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
       - name: Cool down live providers before deep budget printing search
         if: always()
         run: sleep "$LIVE_BUDGET_COOLDOWN_SECONDS"
@@ -185,6 +205,7 @@ jobs:
           UNRESTRICTED_CEDH: ${{ steps.unrestricted_cedh.outcome }}
           UNIVERSAL_PIPELINE: ${{ steps.universal_pipeline.outcome }}
           UNRESTRICTED_NEUTRAL: ${{ steps.unrestricted_neutral.outcome }}
+          NEUTRAL_THEME: ${{ steps.neutral_theme.outcome }}
           NEUTRAL_BUDGET: ${{ steps.neutral_budget.outcome }}
           FF_BUDGET: ${{ steps.ff_budget.outcome }}
         run: |
@@ -195,9 +216,10 @@ jobs:
             "Unrestricted cEDH: $UNRESTRICTED_CEDH" \
             "Universal pipeline: $UNIVERSAL_PIPELINE" \
             "Unrestricted neutral: $UNRESTRICTED_NEUTRAL" \
+            "Neutral theme: $NEUTRAL_THEME" \
             "Neutral exact budget: $NEUTRAL_BUDGET" \
             "FF exact budget: $FF_BUDGET"
-          for result in "$FF_NAJEELA" "$FF_NEUTRAL" "$FF_BRACKET5" "$UNRESTRICTED_CEDH" "$UNIVERSAL_PIPELINE" "$UNRESTRICTED_NEUTRAL" "$NEUTRAL_BUDGET" "$FF_BUDGET"; do
+          for result in "$FF_NAJEELA" "$FF_NEUTRAL" "$FF_BRACKET5" "$UNRESTRICTED_CEDH" "$UNIVERSAL_PIPELINE" "$UNRESTRICTED_NEUTRAL" "$NEUTRAL_THEME" "$NEUTRAL_BUDGET" "$FF_BUDGET"; do
             if [ "$result" != "success" ]; then
               exit 1
             fi
