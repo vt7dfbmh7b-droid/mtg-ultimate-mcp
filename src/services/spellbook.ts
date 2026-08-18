@@ -1,5 +1,5 @@
 import { config } from '../config.js';
-import { fetchJson } from '../lib/http.js';
+import { fetchJson, HttpError, HttpRequestError, isRetryableHttpStatus } from '../lib/http.js';
 
 interface SpellbookPage {
   count?: number;
@@ -18,6 +18,45 @@ function asRecord(value: unknown): UnknownRecord {
 function arrayFrom(record: UnknownRecord, camel: string, snake: string): unknown[] {
   const value = record[camel] ?? record[snake];
   return Array.isArray(value) ? value : [];
+}
+
+function transientSpellbookFailure(error: unknown): boolean {
+  if (error instanceof HttpRequestError) return true;
+  return error instanceof HttpError && isRetryableHttpStatus(error.status);
+}
+
+function advisoryFailure(error: unknown): Record<string, unknown> {
+  const record: Record<string, unknown> = {
+    bracketTag: null,
+    flaggedCards: [],
+    comboCount: 0,
+    strategicallyRelevantCombos: [],
+    source: 'Commander Spellbook bracket estimator',
+    sourceStatus: 'unavailable',
+  };
+  if (error instanceof HttpRequestError) {
+    return {
+      ...record,
+      sourceFailure: {
+        kind: 'request-failed',
+        provider: error.provider,
+        method: error.method,
+        attempts: error.attempts,
+        timeoutMs: error.timeoutMs,
+        causeName: error.causeName,
+      },
+    };
+  }
+  if (error instanceof HttpError) {
+    return {
+      ...record,
+      sourceFailure: {
+        kind: 'http-status',
+        status: error.status,
+      },
+    };
+  }
+  return record;
 }
 
 export function summarizeSpellbookVariant(value: unknown): Record<string, unknown> {
@@ -143,12 +182,24 @@ export async function findDeckCombos(decklist: string, maxResults = 20): Promise
   };
 }
 
+/**
+ * Commander Spellbook's bracket estimator is advisory evidence, not a hard legality/rules gate.
+ * Transient network/429/5xx failures therefore return an explicit unavailable record instead of
+ * crashing an otherwise legal build. Callers must treat the absent tag/strategic signals as
+ * unavailable evidence, never as positive evidence. Non-transient errors still throw.
+ */
 export async function estimateCommanderBracket(
   decklist: string,
   unknownCommanders = false,
 ): Promise<Record<string, unknown>> {
   const query = unknownCommanders ? '?unknown_commanders=true' : '';
-  const raw = asRecord(await postDecklist('/estimate-bracket', decklist, query));
+  let raw: UnknownRecord;
+  try {
+    raw = asRecord(await postDecklist('/estimate-bracket', decklist, query));
+  } catch (error) {
+    if (!transientSpellbookFailure(error)) throw error;
+    return advisoryFailure(error);
+  }
   const bracketTag = raw.bracketTag ?? raw.bracket_tag;
   const cards = Array.isArray(raw.cards) ? raw.cards.map(asRecord) : [];
   const combos = Array.isArray(raw.combos) ? raw.combos.map(asRecord) : [];
@@ -202,5 +253,6 @@ export async function estimateCommanderBracket(
     comboCount: combos.length,
     strategicallyRelevantCombos,
     source: 'Commander Spellbook bracket estimator',
+    sourceStatus: 'available',
   };
 }
