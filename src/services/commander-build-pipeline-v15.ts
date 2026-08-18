@@ -205,7 +205,7 @@ export async function buildCommanderThroughPipelineV15(
     : plan.requestedTargetBracket - achieved;
   const seededPackageVerifiedInFinalDeck = selectedPackage !== null
     && plan.seedWinPackage
-    && evaluation.postBuildEvidence.verifiedWinningCombos > 0;
+    && evaluation.postBuildEvidence.verifiedWinningComboIds.includes(selectedPackage.comboId);
 
   return {
     status: evaluation.actualBracket.hardGatesPassed ? 'complete-evaluated-build' : 'built-but-hard-gates-failed',
