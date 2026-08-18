@@ -5,6 +5,7 @@ import { buildCommanderDeckDraftV07, type DeckBuildOptionsV07 } from './deck-bui
 import { discoverGeneralWinPackagesV15, type GeneralWinPackageCandidateV15 } from './general-win-package-v15.js';
 import { inferNeutralStrategyV15, type NeutralArchetypeV15 } from './neutral-commander-selection-v15.js';
 import { buildNeutralCommanderDeckV15 } from './neutral-deck-builder-v15.js';
+import { buildNeutralThemedCommanderDeckV15 } from './neutral-themed-deck-builder-v15.js';
 import type { PrintingPolicyInputV08 } from './printing-policy-v08.js';
 
 export type WinPackageModeV15 = 'auto' | 'prefer' | 'require' | 'forbid';
@@ -70,8 +71,6 @@ export function planCommanderBuildPipelineV15(
     };
   }
 
-  const unsupportedConstraints: string[] = [];
-  if (options.themeQuery?.trim()) unsupportedConstraints.push('neutral free-form theme query');
   const archetype = options.archetype ?? inferNeutralStrategyV15(commanders)[0]!.archetype;
   return {
     lane: 'neutral-themed',
@@ -79,7 +78,7 @@ export function planCommanderBuildPipelineV15(
     archetype,
     discoverWinPackages,
     seedWinPackage,
-    unsupportedConstraints,
+    unsupportedConstraints: [],
   };
 }
 
@@ -89,6 +88,7 @@ function constraintDescriptions(options: CommanderBuildPipelineOptionsV15): stri
   if ((options.allowedSets ?? []).length > 0) constraints.push(`Allowed physical sets: ${(options.allowedSets ?? []).join(', ')}.`);
   if (options.maxUsdPerCard !== undefined) constraints.push(`Maximum USD reference price per card: ${options.maxUsdPerCard}.`);
   if (options.candidateMaxUsdPerCard !== undefined) constraints.push(`Optional candidate search cap in USD: ${options.candidateMaxUsdPerCard}.`);
+  if (options.themeQuery?.trim()) constraints.push(`Theme constraint: ${options.themeQuery.trim()}.`);
   if ((options.excludedCards ?? []).length > 0) constraints.push(`Excluded cards: ${(options.excludedCards ?? []).join(', ')}.`);
   if ((options.mustInclude ?? []).length > 0) constraints.push(`Must-include cards: ${(options.mustInclude ?? []).join(', ')}.`);
   return constraints;
@@ -148,7 +148,7 @@ export async function buildCommanderThroughPipelineV15(
   const mustInclude = seededMustIncludes(options, selectedPackage, plan.seedWinPackage);
   let built: Record<string, unknown>;
   if (plan.lane === 'neutral-themed') {
-    built = await buildNeutralCommanderDeckV15(commanders.map((card) => card.name), {
+    const neutralOptions = {
       archetype: plan.archetype!,
       ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
       ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
@@ -160,7 +160,13 @@ export async function buildCommanderThroughPipelineV15(
       ...(mustInclude.length > 0 ? { mustInclude } : {}),
       ...(options.landCount !== undefined ? { landCount: options.landCount } : {}),
       ...(options.maxNonbasicLands !== undefined ? { maxNonbasicLands: options.maxNonbasicLands } : {}),
-    });
+    };
+    built = options.themeQuery?.trim()
+      ? await buildNeutralThemedCommanderDeckV15(commanders.map((card) => card.name), {
+          ...neutralOptions,
+          themeQuery: options.themeQuery,
+        })
+      : await buildNeutralCommanderDeckV15(commanders.map((card) => card.name), neutralOptions);
   } else {
     const targetedOptions: DeckBuildOptionsV07 = {
       targetBracket: plan.requestedTargetBracket!,
@@ -181,8 +187,11 @@ export async function buildCommanderThroughPipelineV15(
 
   const decklist = typeof built.decklist === 'string' ? built.decklist : '';
   if (!decklist.trim()) {
+    const themedNeutralFailure = plan.lane === 'neutral-themed'
+      && Boolean(options.themeQuery?.trim())
+      && typeof built.status === 'string';
     return {
-      status: 'construction-failed-before-evaluation',
+      status: themedNeutralFailure ? built.status : 'construction-failed-before-evaluation',
       constructionIntent: 'universal-pipeline-v15',
       plan,
       packageDiscovery,
@@ -222,11 +231,18 @@ export async function buildCommanderThroughPipelineV15(
   const requiredPackageVerificationFailed = winPackageMode === 'require'
     && selectedPackage !== null
     && !seededPackageVerifiedInFinalDeck;
+  const themeRequested = plan.lane === 'neutral-themed' && Boolean(options.themeQuery?.trim());
+  const themeAudit = built.themeAudit && typeof built.themeAudit === 'object'
+    ? built.themeAudit as { satisfied?: boolean; status?: string }
+    : null;
+  const themeConstraintSatisfied = !themeRequested || themeAudit?.satisfied === true;
   const status = !evaluation.hardGatesPassed
     ? 'built-but-hard-gates-failed'
-    : requiredPackageVerificationFailed
-      ? 'required-win-package-not-verified-in-final-deck'
-      : 'complete-evaluated-build';
+    : !themeConstraintSatisfied
+      ? 'built-but-theme-gate-failed'
+      : requiredPackageVerificationFailed
+        ? 'required-win-package-not-verified-in-final-deck'
+        : 'complete-evaluated-build';
 
   return {
     status,
@@ -242,6 +258,8 @@ export async function buildCommanderThroughPipelineV15(
       deckConstructed: true,
       hardTruthEvaluationCompleted: true,
       exactPerCardBudgetVerified: evaluation.perCardBudgetAudit.satisfied,
+      themeConstraintEvaluated: themeRequested ? themeAudit !== null : true,
+      themeConstraintSatisfied,
       actualBracketAssessedAfterConstruction: true,
       targetComparedAfterAssessment: targetComparison !== null,
     },
@@ -251,6 +269,8 @@ export async function buildCommanderThroughPipelineV15(
     built,
     evaluation,
     perCardBudgetAudit: evaluation.perCardBudgetAudit,
+    themeAudit,
+    themeConstraintSatisfied,
     requestedTargetBracket: plan.requestedTargetBracket,
     achievedBracket: achieved,
     achievedBand: evaluation.actualBracket.assessedBand,
@@ -262,6 +282,9 @@ export async function buildCommanderThroughPipelineV15(
       guidance: evaluation.postBuildEvidence.comboVerificationComplete
         ? 'A winning package was required and seeded, but the exact selected Spellbook combo ID was not verified in the final 100-card deck.'
         : 'A winning package was required and seeded, but final combo verification was unavailable. The pipeline fails closed rather than claiming the required package survived.',
+    } : {}),
+    ...(!themeConstraintSatisfied ? {
+      guidance: `The finished deck did not satisfy the independently audited neutral theme constraint${themeAudit?.status ? ` (${themeAudit.status})` : ''}. The pipeline fails closed rather than silently ignoring the requested theme.`,
     } : {}),
   };
 }
