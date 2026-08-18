@@ -1,4 +1,5 @@
 import type { ScryfallCard } from '../types/scryfall.js';
+import { selectBudgetEligiblePrintingV15 } from './budget-printing-selector-v15.js';
 import { validateCommanderDeck } from './commander-rules.js';
 import { parseDecklist, type DeckFinish } from './deck.js';
 import {
@@ -51,6 +52,12 @@ interface NeutralRoleTargetsV15 {
 interface NeutralProfileV15 {
   lands: number;
   roles: NeutralRoleTargetsV15;
+}
+
+interface BasicAllocationV15 {
+  card: ScryfallCard;
+  quantity: number;
+  required: boolean;
 }
 
 const NEUTRAL_PROFILES: Record<NeutralArchetypeV15, NeutralProfileV15> = {
@@ -215,15 +222,14 @@ async function requiredPrinting(
   maxUsdPerCard: number | undefined,
   label: string,
 ): Promise<EligiblePrintingChoiceV08> {
-  const capped = await selectEligiblePrintingV08(card, policy, maxUsdPerCard);
-  if (capped) return capped;
-  if (maxUsdPerCard === undefined) throw new Error(`No eligible physical printing of ${label} ${card.name} satisfies the neutral printing policy.`);
-  const uncapped = await selectEligiblePrintingV08(card, policy);
-  if (!uncapped) throw new Error(`No eligible physical printing of ${label} ${card.name} satisfies the neutral printing policy.`);
-  if (uncapped.priceUsd === null) {
-    throw new Error(`${label} ${card.name} has eligible physical printings, but none has verifiable USD finish pricing for the US$${maxUsdPerCard} hard per-card cap.`);
+  if (maxUsdPerCard === undefined) {
+    const uncapped = await selectEligiblePrintingV08(card, policy);
+    if (!uncapped) throw new Error(`No eligible physical printing of ${label} ${card.name} satisfies the neutral printing policy.`);
+    return uncapped;
   }
-  throw new Error(`${label} ${card.name} cannot satisfy the US$${maxUsdPerCard} hard per-card cap; the cheapest verified eligible finish found is US$${uncapped.priceUsd}.`);
+  const capped = await selectBudgetEligiblePrintingV15(card, policy, maxUsdPerCard);
+  if (capped) return capped;
+  throw new Error(`${label} ${card.name} has no verified eligible physical printing/finish at or below the US$${maxUsdPerCard} hard per-card cap after bounded physical-printing exhaustion.`);
 }
 
 async function resolveExactCommanders(commanderNames: string[], policy: ResolvedPrintingPolicyV08, maxUsdPerCard: number | undefined): Promise<EligiblePrintingChoiceV08[]> {
@@ -258,7 +264,12 @@ async function discoverEligiblePool(colors: readonly string[], policy: ResolvedP
   const cards: ScryfallCard[] = [];
   if (policy.allowedSetCodes.length > 0) {
     const setClause = `(${policy.allowedSetCodes.map((set) => `set:${set}`).join(' OR ')})`;
-    const result = await boundedScryfallSearchV15(`${setClause} f:commander ${identityQuery(colors)} game:paper`, { maxCards: 2_000, maxPages: 50, minRequestGapMs: 300 });
+    const result = await boundedScryfallSearchV15(`${setClause} f:commander ${identityQuery(colors)} game:paper`, {
+      maxCards: 2_000,
+      maxPages: 50,
+      minRequestGapMs: 300,
+      unique: candidateCap === undefined ? 'cards' : 'prints',
+    });
     cards.push(...result.cards);
   }
   cards.push(...await exactSpecialCards(policy));
@@ -324,30 +335,30 @@ export async function buildNeutralCommanderDeckV15(commanderNames: string[], opt
     edhrecOrderedInput: true,
     rankingUsesPopularity: false,
     budgetCapUsd: candidateCap ?? null,
-    budgetFilterMode: candidateCap === undefined ? 'not-requested' : 'exact-returned-printing',
-    note: 'The bounded printing-family/set search is exhausted inside explicit hard ceilings; EDHREC ordering only affects fetch order, not candidate scoring. When a candidate price cap is active, only exact returned printings with verified finish pricing under that cap survive.',
+    budgetFilterMode: candidateCap === undefined ? 'not-requested' : 'exact-physical-printing',
+    note: 'The bounded printing-family/set search is exhausted inside explicit safety ceilings; EDHREC ordering only affects uncapped fetch order, not candidate scoring. With a candidate cap, physical printings are exhausted inside the same ceilings before Oracle deduplication so an affordable eligible printing is not hidden by a different Oracle representative.',
   };
 
   const commanderOracleKeys = new Set(commanders.map(oracleKey));
+  const mustChoices = await resolveMustIncludes(mustNames, colors, policy, userCap);
+  const mustCards = mustChoices.map((choice) => choice.card);
+  const requiredOracleKeys = new Set(mustCards.map(oracleKey));
+  const requiredNonCommanders = mustCards.filter((card) => !commanderOracleKeys.has(oracleKey(card)) && !excludedNames.has(normalize(card.name)));
+  const requiredNonlands = requiredNonCommanders.filter((card) => !card.type_line.toLocaleLowerCase().includes('land'));
+  const requiredLands = requiredNonCommanders.filter((card) => card.type_line.toLocaleLowerCase().includes('land'));
+  if (requiredNonlands.length > nonlandSlots) throw new Error(`The ${requiredNonlands.length} required nonland cards exceed the ${nonlandSlots} available nonland slots.`);
+  if (requiredLands.length > landsWanted) throw new Error(`The ${requiredLands.length} required lands exceed the ${landsWanted} configured land slots.`);
+
   const nonlands = pool
     .filter((card) => !card.type_line.toLocaleLowerCase().includes('land'))
     .filter((card) => !commanderOracleKeys.has(oracleKey(card)))
+    .filter((card) => !requiredOracleKeys.has(oracleKey(card)))
     .filter((card) => !excludedNames.has(normalize(card.name)))
     .filter((card) => exactCandidateWithinCap(card, candidateCap));
-  const mustChoices = await resolveMustIncludes(mustNames, colors, policy, userCap);
-  const mustCards = mustChoices.map((choice) => choice.card);
-  const mustLandNames = mustCards.filter((card) => card.type_line.toLocaleLowerCase().includes('land')).map((card) => card.name);
-  if (mustLandNames.length > 0) {
-    throw new Error(`Neutral must-include land handling is not yet losslessly enforceable in this builder: ${mustLandNames.join(', ')}. The build fails closed instead of silently miscounting land slots.`);
-  }
-  const requiredOracleKeys = new Set(mustCards.map(oracleKey));
-  const requiredNonCommanders = mustCards.filter((card) => !commanderOracleKeys.has(oracleKey(card)) && !excludedNames.has(normalize(card.name)));
-  if (requiredNonCommanders.length > nonlandSlots) throw new Error(`The ${requiredNonCommanders.length} required non-commander cards exceed the ${nonlandSlots} available nonland slots.`);
-
   const selected: ScryfallCard[] = [];
   const selectedKeys = new Set<string>();
   const counts = emptyCounts();
-  for (const card of requiredNonCommanders) {
+  for (const card of requiredNonlands) {
     const key = oracleKey(card);
     if (selectedKeys.has(key)) continue;
     selected.push(card); selectedKeys.add(key); incrementCounts(counts, card);
@@ -360,42 +371,68 @@ export async function buildNeutralCommanderDeckV15(commanderNames: string[], opt
     selected.push(best); selectedKeys.add(oracleKey(best)); incrementCounts(counts, best);
   }
 
-  const lands = pool
+  const candidateLands = pool
     .filter((card) => card.type_line.toLocaleLowerCase().includes('land'))
+    .filter((card) => !requiredOracleKeys.has(oracleKey(card)))
     .filter((card) => !excludedNames.has(normalize(card.name)))
     .filter((card) => exactCandidateWithinCap(card, candidateCap));
-  const basics = lands.filter((card) => /basic land/i.test(card.type_line));
-  const nonbasics = lands.filter((card) => !/basic land/i.test(card.type_line)).sort((a, b) => landScore(b, colors) - landScore(a, colors) || a.name.localeCompare(b.name));
+  const requiredNonbasics = requiredLands.filter((card) => !/basic land/i.test(card.type_line));
+  const requiredBasics = requiredLands.filter((card) => /basic land/i.test(card.type_line));
   const nonbasicLimit = Math.max(0, Math.min(landsWanted, Math.trunc(options.maxNonbasicLands ?? Math.max(10, colors.length * 5))));
-  const chosenNonbasics = nonbasics.slice(0, nonbasicLimit);
-  const basicsNeeded = Math.max(0, landsWanted - chosenNonbasics.length);
-  const basicByName = new Map(basics.map((card) => [normalize(card.name), card]));
+  if (requiredNonbasics.length > nonbasicLimit) {
+    throw new Error(`The ${requiredNonbasics.length} required nonbasic lands exceed maxNonbasicLands=${nonbasicLimit}.`);
+  }
+  const optionalNonbasics = candidateLands
+    .filter((card) => !/basic land/i.test(card.type_line))
+    .sort((a, b) => landScore(b, colors) - landScore(a, colors) || a.name.localeCompare(b.name));
+  const chosenOptionalNonbasics = optionalNonbasics.slice(0, Math.max(0, nonbasicLimit - requiredNonbasics.length));
+  const chosenNonbasics = [...requiredNonbasics, ...chosenOptionalNonbasics];
+  const basicsNeeded = landsWanted - chosenNonbasics.length;
+  if (requiredBasics.length > basicsNeeded) {
+    throw new Error(`The ${requiredBasics.length} required basic lands cannot fit into the ${basicsNeeded} basic-land slots remaining after required/nonbasic lands.`);
+  }
+
+  const optionalBasics = candidateLands.filter((card) => /basic land/i.test(card.type_line));
+  const optionalBasicByName = new Map(optionalBasics.map((card) => [normalize(card.name), card]));
   const desiredBasicNames = colors.length > 0 ? colors.map((color) => BASIC_FOR_COLOR[color]).filter((name): name is string => Boolean(name)) : ['Wastes'];
-  const availableBasics = desiredBasicNames.map((name) => basicByName.get(normalize(name))).filter((card): card is ScryfallCard => Boolean(card));
-  const basicQuantities = new Map<string, number>();
-  for (let index = 0; index < basicsNeeded && availableBasics.length > 0; index += 1) {
-    const basic = availableBasics[index % availableBasics.length]!;
-    basicQuantities.set(basic.name, (basicQuantities.get(basic.name) ?? 0) + 1);
+  const distributionBasics = desiredBasicNames
+    .map((name) => optionalBasicByName.get(normalize(name)))
+    .filter((card): card is ScryfallCard => Boolean(card));
+  const basicAllocations: BasicAllocationV15[] = requiredBasics.map((card) => ({ card, quantity: 1, required: true }));
+  const optionalBasicsNeeded = basicsNeeded - requiredBasics.length;
+  if (optionalBasicsNeeded > 0 && distributionBasics.length === 0) {
+    throw new Error(`Neutral land construction needs ${optionalBasicsNeeded} optional basic-land slots, but no candidate basic printing satisfies the active identity/printing/budget constraints.`);
+  }
+  const optionalBasicQuantities = new Map<string, number>();
+  for (let index = 0; index < optionalBasicsNeeded; index += 1) {
+    const basic = distributionBasics[index % distributionBasics.length]!;
+    const key = exactPrintingKey(basic.set, basic.collector_number);
+    optionalBasicQuantities.set(key, (optionalBasicQuantities.get(key) ?? 0) + 1);
+  }
+  for (const basic of distributionBasics) {
+    const quantity = optionalBasicQuantities.get(exactPrintingKey(basic.set, basic.collector_number)) ?? 0;
+    if (quantity > 0) basicAllocations.push({ card: basic, quantity, required: false });
   }
 
   const commanderLines = commanderChoices.map((choice) => printingLine(1, choice.card, userCap));
   const mainLines = [
     ...selected.map((card) => printingLine(1, card, requiredOracleKeys.has(oracleKey(card)) ? userCap : candidateCap)),
-    ...chosenNonbasics.map((card) => printingLine(1, card, candidateCap)),
-    ...availableBasics.filter((card) => (basicQuantities.get(card.name) ?? 0) > 0).map((card) => printingLine(basicQuantities.get(card.name) ?? 0, card, candidateCap)),
+    ...chosenNonbasics.map((card) => printingLine(1, card, requiredOracleKeys.has(oracleKey(card)) ? userCap : candidateCap)),
+    ...basicAllocations.map((allocation) => printingLine(allocation.quantity, allocation.card, allocation.required ? userCap : candidateCap)),
   ];
   const decklist = ['// COMMANDER', ...commanderLines, '', '// MAIN', ...mainLines].join('\n');
   const parsed = parseDecklist(decklist);
-  const validationCards = [...commanders, ...selected, ...chosenNonbasics, ...availableBasics];
+  const validationCards = [...commanders, ...selected, ...chosenNonbasics, ...basicAllocations.map((allocation) => allocation.card)];
   const rules = validateCommanderDeck(parsed, validationCards);
   const printingPolicySatisfied = validationCards.every((card) => printingMatchesPolicyV08(card, policy));
   const enoughNonlands = selected.length === nonlandSlots;
-  const enoughLands = chosenNonbasics.length + [...basicQuantities.values()].reduce((sum, quantity) => sum + quantity, 0) === landsWanted;
+  const totalBasics = basicAllocations.reduce((sum, allocation) => sum + allocation.quantity, 0);
+  const enoughLands = chosenNonbasics.length + totalBasics === landsWanted;
   const perCardBudgetAudit = auditExactPerCardBudgetV15(parsed, validationCards, userCap);
   const optionalCards = [
     ...selected.filter((card) => !requiredOracleKeys.has(oracleKey(card))),
-    ...chosenNonbasics,
-    ...availableBasics,
+    ...chosenOptionalNonbasics,
+    ...basicAllocations.filter((allocation) => !allocation.required).map((allocation) => allocation.card),
   ];
   const candidateBudgetSatisfied = candidateCap === undefined || optionalCards.every((card) => exactPrintingBudgetWitnessV15(card, candidateCap).status === 'within-cap');
   const complete = parsed.totalCards === 100 && rules.isLegal && printingPolicySatisfied && enoughNonlands && enoughLands && perCardBudgetAudit.satisfied && candidateBudgetSatisfied;
@@ -423,7 +460,15 @@ export async function buildNeutralCommanderDeckV15(commanderNames: string[], opt
     landPlan: {
       targetLands: landsWanted,
       selectedNonbasicLands: chosenNonbasics.length,
-      selectedBasics: [...basicQuantities.entries()].map(([name, quantity]) => ({ name, quantity })),
+      requiredNonbasicLands: requiredNonbasics.map((card) => card.name),
+      requiredBasicLands: requiredBasics.map((card) => card.name),
+      selectedBasics: basicAllocations.map((allocation) => ({
+        name: allocation.card.name,
+        set: allocation.card.set.toUpperCase(),
+        collectorNumber: allocation.card.collector_number,
+        quantity: allocation.quantity,
+        required: allocation.required,
+      })),
     },
     constraints: {
       printingFamily: options.printingFamily ?? null,
@@ -441,8 +486,9 @@ export async function buildNeutralCommanderDeckV15(commanderNames: string[], opt
       `The ${options.archetype} identity was chosen before construction from commander semantics.`,
       unrestricted
         ? 'With no printing-family/set restriction, candidate discovery uses an explicitly bounded stratified Scryfall sample across mana bands, lands, and archetype signals; it does not pretend to exhaust every Commander-legal card.'
-        : 'With a bounded printing-family/set restriction, the eligible physical-printing pool is exhausted inside explicit safety ceilings before strategy scoring.',
+        : 'With a bounded printing-family/set restriction, the eligible physical-printing pool is exhausted inside explicit safety ceilings before strategy scoring; budgeted restricted pools inspect physical printings before Oracle deduplication.',
       'Card selection balances archetype affinity with ordinary ramp/draw/interaction/protection/recursion needs; it does not award EDHREC popularity, cEDH intent, Game Changer count, or famous-card-name points.',
+      'Must-includes are resolved independently under the user hard cap. Required lands consume real land slots; required nonbasics also consume the configured nonbasic-land allowance instead of being silently dropped.',
       userCap === undefined
         ? 'No user hard per-card USD cap was requested.'
         : `Every final exact printing is independently audited against the US$${userCap} user hard per-card cap; missing price evidence does not count as zero.`,

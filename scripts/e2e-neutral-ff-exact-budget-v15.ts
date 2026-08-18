@@ -9,8 +9,8 @@ function record(value: unknown): Record<string, unknown> {
 
 async function main(): Promise<void> {
   console.log('NEUTRAL FINAL FANTASY + PER-CARD BUDGET LIVE CONTROL');
-  console.log('CASE: Najeela, no bracket target, FINAL FANTASY physical printings only, US$100 hard cap, US$20 optional candidate cap.');
-  console.log('PASS CONDITION: both printing restriction and exact finish-aware budget remain hard gates through a legal exact 100-card neutral build.');
+  console.log('CASE: Najeela, no bracket target, FINAL FANTASY physical printings only, US$100 hard cap, US$20 optional candidate cap, Command Tower must-include.');
+  console.log('PASS CONDITION: printing restriction, required land, and exact finish-aware budget remain hard gates through a legal exact 100-card neutral build.');
 
   const commanderLookup = await getCardsByIdentifiers([
     { name: 'Najeela, the Blade-Blossom', set: 'FCA', collectorNumber: '42' },
@@ -25,6 +25,7 @@ async function main(): Promise<void> {
     includeSpecialReleases: true,
     maxUsdPerCard: 100,
     candidateMaxUsdPerCard: 20,
+    mustInclude: ['Command Tower'],
     winPackageMode: 'forbid',
   });
 
@@ -32,7 +33,7 @@ async function main(): Promise<void> {
   assert.equal(result.requestedTargetBracket, null, 'FF budget composition must not invent a bracket target');
   const plan = record(result.plan);
   assert.equal(plan.lane, 'neutral-themed', 'no-target FF budget build must remain neutral');
-  assert.deepEqual(plan.unsupportedConstraints, [], 'FF + exact budget must be a supported neutral composition');
+  assert.deepEqual(plan.unsupportedConstraints, [], 'FF + exact budget + required land must be a supported neutral composition');
 
   const built = record(result.built);
   assert.equal(built.status, 'complete-neutral-draft', 'FF budgeted neutral builder must produce a complete draft');
@@ -44,11 +45,18 @@ async function main(): Promise<void> {
   assert.equal(constraints.maxUsdPerCard, 100, 'user hard cap must survive construction');
   assert.equal(constraints.candidateMaxUsdPerCard, 20, 'candidate cap must survive construction');
   assert.equal(constraints.effectiveCandidateMaxUsdPerCard, 20, 'effective candidate cap must be the tighter US$20 cap');
+  assert.deepEqual(constraints.mustInclude, ['Command Tower'], 'required land must remain explicit in normalized constraints');
+
+  const decklist = String(built.decklist ?? '');
+  assert.match(decklist, /^1 Command Tower \([A-Z0-9]+\) \S+(?: \*(?:N|F|E)\*)?$/m, 'Command Tower must survive as an exact physical printing in the final deck');
+  const landPlan = record(built.landPlan);
+  assert.ok(Array.isArray(landPlan.requiredNonbasicLands) && landPlan.requiredNonbasicLands.includes('Command Tower'), 'Command Tower must consume a real required nonbasic-land slot');
 
   const provenance = record(built.candidatePoolProvenance);
   assert.equal(provenance.mode, 'exhaustive-bounded-printing-policy', 'FF family build must use the bounded restricted-pool lane');
   assert.equal(provenance.rankingUsesPopularity, false, 'restricted budget composition must not score by popularity');
   assert.equal(provenance.budgetCapUsd, 20, 'restricted-pool provenance must report the effective candidate cap');
+  assert.equal(provenance.budgetFilterMode, 'exact-physical-printing', 'budgeted restricted pool must inspect physical printings before Oracle deduplication');
 
   const evaluation = record(result.evaluation);
   assert.equal(evaluation.hardGatesPassed, true, 'post-build hard gates must include FF printing policy and user budget');
@@ -64,13 +72,15 @@ async function main(): Promise<void> {
   assert.deepEqual(budget.unresolvedEntries, [], 'every final FF exact printing must resolve');
 
   const summary = {
-    schema: 'neutral-ff-exact-budget-live-v15.1',
+    schema: 'neutral-ff-exact-budget-live-v15.2',
     requestedTargetBracket: result.requestedTargetBracket,
     achievedBracket: result.achievedBracket,
     achievedBand: result.achievedBand,
     printingFamily: constraints.printingFamily,
     hardCapUsd: constraints.maxUsdPerCard,
     effectiveCandidateCapUsd: constraints.effectiveCandidateMaxUsdPerCard,
+    mustInclude: constraints.mustInclude,
+    landPlan,
     candidatePoolProvenance: provenance,
     postBuildBudgetAudit: budget,
     hardGatesPassed: evaluation.hardGatesPassed,
@@ -83,6 +93,7 @@ async function main(): Promise<void> {
   console.log(`ACHIEVED: Bracket ${String(result.achievedBracket)} / ${String(result.achievedBand)}`);
   console.log(`FF PRINTING POLICY: ${String(evaluation.printingPolicySatisfied)}`);
   console.log(`HARD CAP: US$${String(constraints.maxUsdPerCard)}; OPTIONAL CAP: US$${String(constraints.effectiveCandidateMaxUsdPerCard)}`);
+  console.log(`REQUIRED LAND: Command Tower`);
   console.log(`POST-BUILD BUDGET: ${String(budget.status)}`);
   console.log(`EXTERNAL EVIDENCE COMPLETE: ${String(evaluation.externalEvidenceComplete)}`);
 }
