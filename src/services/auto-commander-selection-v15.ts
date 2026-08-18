@@ -4,7 +4,8 @@ import {
   resolvePrintingPolicyV08,
   type PrintingPolicyInputV08,
 } from './printing-policy-v08.js';
-import { getCardOracleText, inferCardRoles, searchCards } from './scryfall.js';
+import { boundedScryfallSearchV15 } from './scryfall-paged-search-v15.js';
+import { getCardOracleText, getCardsByIdentifiers, inferCardRoles } from './scryfall.js';
 
 export interface AutoCommanderCandidateV15 {
   commanderNames: string[];
@@ -157,6 +158,10 @@ export function rankAutoCommanderCandidatesV15(
     .slice(0, Math.max(1, Math.min(50, Math.trunc(maxCandidates))));
 }
 
+function exactPrintingKey(set: string, collectorNumber: string): string {
+  return `${set.trim().toLocaleLowerCase()}|${collectorNumber.replace(/^0+/, '') || '0'}`;
+}
+
 export async function discoverAutoCommanderCandidatesV15(
   options: DiscoverAutoCommanderOptionsV15 = {},
 ): Promise<{
@@ -166,41 +171,42 @@ export async function discoverAutoCommanderCandidatesV15(
   candidates: AutoCommanderCandidateV15[];
 }> {
   const policy = await resolvePrintingPolicyV08(options);
-  if (!policy.searchClause) throw new Error('Automatic commander discovery requires a bounded printing policy.');
+  if (!policy.family && policy.allowedSetCodes.length === 0 && policy.exactSpecialPrintings.length === 0) {
+    throw new Error('Automatic commander discovery requires a bounded printing policy.');
+  }
 
-  // searchCards intentionally caps one query at 50 records. Partition first by mana
-  // value, then by a mutually exclusive color class. This avoids silent page-2 loss while
-  // keeping every query bounded. If any partition still hits 50, fail closed and split again.
-  const manaFilters = [
-    'cmc=0',
-    'cmc=1',
-    'cmc=2',
-    'cmc=3',
-    'cmc=4',
-    'cmc=5',
-    'cmc=6',
-    'cmc=7',
-    'cmc>=8',
-  ];
-  const colorFilters = ['is:multicolored', 'is:monocolored', 'is:colorless'];
   const discovered: ScryfallCard[] = [];
   const discoveryBuckets: Array<{ filter: string; count: number }> = [];
-  for (const manaFilter of manaFilters) {
-    for (const colorFilter of colorFilters) {
-      const filter = `${manaFilter} ${colorFilter}`;
-      const query = `${policy.searchClause} is:commander game:paper ${filter}`;
-      try {
-        const cards = await searchCards(query, 50);
-        discoveryBuckets.push({ filter, count: cards.length });
-        if (cards.length >= 50) {
-          throw new Error(`Automatic commander discovery bucket ${filter} reached the 50-card query ceiling; split the bucket further before claiming exhaustive discovery.`);
-        }
-        discovered.push(...cards);
-      } catch (error) {
-        if (error instanceof Error && /50-card query ceiling/.test(error.message)) throw error;
-        discoveryBuckets.push({ filter, count: 0 });
-      }
+
+  if (policy.allowedSetCodes.length > 0) {
+    const setClause = `(${policy.allowedSetCodes.map((set) => `set:${set}`).join(' OR ')})`;
+    const familySearch = await boundedScryfallSearchV15(`${setClause} is:commander game:paper`, {
+      maxCards: 1_000,
+      maxPages: 20,
+      minRequestGapMs: 300,
+    });
+    discovered.push(...familySearch.cards);
+    discoveryBuckets.push({
+      filter: `family-sets-paginated:${familySearch.pagesFetched}-pages`,
+      count: familySearch.cards.length,
+    });
+  }
+
+  const dedupedSpecialSelectors = [...new Map(
+    policy.exactSpecialPrintings.map((entry) => [exactPrintingKey(entry.set, entry.collectorNumber), entry]),
+  ).values()];
+  if (dedupedSpecialSelectors.length > 0) {
+    const specials = await getCardsByIdentifiers(dedupedSpecialSelectors.map((entry) => ({
+      name: entry.oracleName,
+      set: entry.set,
+      collectorNumber: entry.collectorNumber,
+    })));
+    if (specials.notFound.length > 0) {
+      throw new Error(`One or more curated special printing selectors could not be resolved during exhaustive commander discovery: ${specials.notFound.join(', ')}`);
     }
+    const specialCommanders = specials.cards.filter(standaloneCommander);
+    discovered.push(...specialCommanders);
+    discoveryBuckets.push({ filter: 'curated-special-printings-exact', count: specialCommanders.length });
   }
 
   const eligible = discovered.filter((card) => printingMatchesPolicyV08(card, policy));
