@@ -55,6 +55,9 @@ interface HttpRequestPolicy {
   retryable: boolean;
 }
 
+let scryfallPacingQueue: Promise<void> = Promise.resolve();
+let lastScryfallAttemptAt = 0;
+
 const defaultHeaders = (): Record<string, string> => ({
   Accept: 'application/json;q=0.9,*/*;q=0.8',
   'User-Agent': config.userAgent,
@@ -154,6 +157,23 @@ function sleep(ms: number): Promise<void> {
   return ms <= 0 ? Promise.resolve() : new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+async function waitForProviderAttemptSlot(provider: HttpProvider): Promise<void> {
+  if (provider !== 'scryfall') return;
+  let releaseQueue: () => void = () => undefined;
+  const previous = scryfallPacingQueue;
+  scryfallPacingQueue = new Promise<void>((resolve) => {
+    releaseQueue = resolve;
+  });
+  await previous;
+  try {
+    const waitMs = Math.max(0, config.scryfallMinRequestGapMs - (Date.now() - lastScryfallAttemptAt));
+    if (waitMs > 0) await sleep(waitMs);
+    lastScryfallAttemptAt = Date.now();
+  } finally {
+    releaseQueue();
+  }
+}
+
 function requestSignal(externalSignal: AbortSignal | null | undefined, timeoutMs: number): AbortSignal {
   const timeoutSignal = AbortSignal.timeout(timeoutMs);
   if (!externalSignal) return timeoutSignal;
@@ -179,6 +199,7 @@ async function fetchWithRetry(
 
   for (let attempt = 1; attempt <= policy.attempts; attempt += 1) {
     try {
+      await waitForProviderAttemptSlot(policy.provider);
       const response = await fetch(url, {
         ...init,
         signal: requestSignal(init.signal, policy.timeoutMs),
