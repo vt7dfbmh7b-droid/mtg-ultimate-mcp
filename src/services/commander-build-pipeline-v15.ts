@@ -136,12 +136,17 @@ export async function buildCommanderThroughPipelineV15(
     : null;
   const selectedPackage = packageDiscovery?.selected ?? null;
   if (winPackageMode === 'require' && !selectedPackage) {
+    const verificationUnavailable = packageDiscovery?.status === 'verification-unavailable';
     return {
-      status: 'required-win-package-unavailable',
+      status: verificationUnavailable
+        ? 'required-win-package-verification-unavailable'
+        : 'required-win-package-unavailable',
       constructionIntent: 'universal-pipeline-v15',
       plan,
       packageDiscovery,
-      guidance: 'A verified winning package was required, but no package survived Commander legality, exclusions, and exact physical-printing checks.',
+      guidance: verificationUnavailable
+        ? 'A verified winning package was required, but the package-discovery source was unavailable/incomplete. The pipeline fails closed instead of claiming no package exists.'
+        : 'A verified winning package was required, and a completed search found no package surviving Commander legality, exclusions, and exact physical-printing checks.',
     };
   }
 
@@ -232,6 +237,8 @@ export async function buildCommanderThroughPipelineV15(
     stages: {
       constraintsNormalized: true,
       commanderStrategyInferred: plan.archetype !== null,
+      winPackageDiscoveryAttempted: plan.discoverWinPackages,
+      winPackageDiscoveryComplete: packageDiscovery?.sourceCompleteness === 'complete',
       winPackagesDiscovered: plan.discoverWinPackages,
       winPackageSeeded: selectedPackage !== null && plan.seedWinPackage,
       deckConstructed: true,
