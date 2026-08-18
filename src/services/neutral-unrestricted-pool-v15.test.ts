@@ -53,6 +53,13 @@ test('neutral unrestricted strata are deterministic, stratified, and never EDHRE
   }
 });
 
+test('colorless unrestricted strata use explicit Scryfall colorless identity syntax', () => {
+  const strata = neutralUnrestrictedStrataV15([], 'big-mana');
+  assert.equal(strata.length, 15);
+  assert.ok(strata.every((item) => item.query.includes('f:commander game:paper id:c')));
+  assert.ok(strata.every((item) => !item.query.includes('id<=c')));
+});
+
 test('sampling is explicitly bounded and reports non-exhaustive strata instead of pretending full discovery', async () => {
   const strata = neutralUnrestrictedStrataV15(['R'], 'combat-tokens').slice(0, 2);
   const providerCards = Array.from({ length: 12 }, (_, index) => card(`Card ${index}`, index));
