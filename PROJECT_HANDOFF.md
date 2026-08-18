@@ -2,15 +2,15 @@
 
 _Last updated: 2026-08-18 NZST_
 
-This is the persistent recovery point for future ChatGPT sessions. Read it together with `ULTIMATE_MTG_SPEC.md`: the spec is the north star; this file records the current implementation state, hard guarantees, validated controls, and next target.
+This is the persistent recovery point for future ChatGPT sessions. Read it together with `ULTIMATE_MTG_SPEC.md`: the spec is the north star; this file records the current implementation state, validated controls, hard guarantees, release state, and the next engineering target.
 
 ## Fresh-chat resume instructions
 
 1. Open `vt7dfbmh7b-droid/mtg-ultimate-mcp`.
 2. Read `PROJECT_HANDOFF.md` and `ULTIMATE_MTG_SPEC.md` first.
 3. Inspect `agent/package-probabilities`; do not assume `main` is the active development state.
-4. Inspect deterministic CI for the exact active-branch head before changing code.
-5. Keep live external controls separate from deterministic CI evidence.
+4. Check the exact active-branch head and its current GitHub Actions status before changing code.
+5. Keep deterministic CI evidence separate from live external-source controls.
 6. Do not promote `server-current` merely because V0.14/V0.15 code exists.
 7. Continue from **Next implementation target** unless a newer commit changes this handoff.
 
@@ -18,41 +18,76 @@ This is the persistent recovery point for future ChatGPT sessions. Read it toget
 
 ## Repository / release state
 
+**Repository:** `vt7dfbmh7b-droid/mtg-ultimate-mcp`
+
+**Visibility:** public as of 2026-08-18. This was intentionally changed so standard GitHub-hosted Actions runners can continue without private-repository hosted-minute billing. No release/promotion decision is implied by public visibility.
+
 **Active continuation branch:** `agent/package-probabilities`
 
-**Latest fully validated implementation head before this handoff-only documentation commit:**
+**Latest fully validated implementation head before this handoff-only documentation update:**
 
-- `8d6b8c99a1a9b9a453323af3b056d284fb19e4c0` — live-source reliability hardening, general winning-package discovery, shared post-build Commander evaluation, universal Commander build pipeline foundation, source-outage-aware evidence semantics, and requested-vs-achieved bracket comparison.
+- `16470a9af9f4d59985f47638a907dbbcd833c3b7` — folds the validated unrestricted-neutral candidate-pool adapter and its permanent live control into the active development branch.
 
-Validation on that exact implementation head:
+Validation on that implementation head:
 
-- strict TypeScript build: PASS;
-- complete deterministic automated tests: PASS;
-- Universal Commander Build Pipeline live control: PASS;
-- live control case: exact `Najeela, the Blade-Blossom (FCA) 42`, Final Fantasy physical printings only, requested Bracket 4, verified win packages preferred;
-- result: exact legal 100-card deck, FF printing policy satisfied, achieved **Bracket 4 / bracket-4-optimized-range**, target status **reached**, target gap `0`;
-- winning-package discovery completed and honestly returned **no verified FF-valid package**; no package was invented or forced;
-- final external evidence completed successfully;
-- live artifact from the exact-head control: GitHub Actions artifact ID `9313202187`, SHA-256 `16e46988d62f7d2390aae1a4b6910ab63708f3550e7aea7d67f3993f57307bd6`.
+- strict TypeScript/build: PASS;
+- complete deterministic CI suite: PASS;
+- unrestricted-neutral live control: PASS;
+- no bracket target was supplied or inferred;
+- neutral lane used;
+- exact legal 100-card Commander deck produced;
+- unrestricted candidate provenance: `bounded-stratified-neutral-sample`;
+- eligible sample retained **679 nonlands / 172 lands**;
+- `popularityOrdered=false`;
+- `edhrecOrdered=false`;
+- post-build achieved result: **Bracket 3 / bracket-3-upgraded-range**;
+- external post-build evidence completed successfully.
 
-Important preceding reliability commit:
+Permanent live-control artifact from the isolated validation run:
 
-- `33a65f912155692e2c03c76b6d7022e2d830d203` — bounded provider-aware retries for known idempotent live read endpoints; all permanent live Commander controls subsequently completed successfully on the reliability implementation.
+- workflow run `32124232445`;
+- artifact ID `9319723186`;
+- artifact ZIP SHA-256 `930f346f7f262b1855ef59c0b6f3494abbfce0daf6c7d9cdb5fdcd035d69e1f8`.
 
 ### Stable runtime remains V0.13
 
 - `package.json` remains `0.13.0`.
 - `src/server-current.ts` deliberately returns `createMtgServerV13()`.
 - V0.14/V0.15 remain experimental.
-- PR #2 remains a draft validation surface, not a release/promotion PR.
+- PR #2 remains an open draft validation surface, not a release/promotion PR.
+- PR #6 was a temporary unrestricted-neutral validation surface and is closed/unmerged after the validated fold.
 
 **Do not change the stable runtime without an explicit release/promotion decision from the user after the V1 quality gates are met.**
 
 ---
 
+## GitHub Actions incident and recovery
+
+On 2026-08-18, hosted Actions for this private repository began failing before step 1. Jobs were created and then ended within seconds with `steps: null`; checkout, install, TypeScript, and tests never ran. The same pattern affected active and isolated branches and multiple workflows together.
+
+Important evidence:
+
+- CI had run normally earlier the same day on the validated implementation.
+- workflow YAML was unchanged and valid;
+- no code/test failure was observed because code never executed;
+- reruns while the repo was still private reproduced the pre-step failure;
+- the connector did not expose a definitive billing/quota/runner-allocation reason, so do not invent one retrospectively.
+
+Recovery:
+
+- repository visibility was changed from private to public;
+- immediately afterward, the exact previously blocked `76cc9e25ebdca6b197dd2dea082cbc405de40d0e` CI rerun acquired a hosted runner and passed checkout, install, build, full deterministic tests, and artifact upload;
+- subsequent unrestricted-neutral and active-branch validation runs also acquired runners and passed.
+
+Operational conclusion: the blocker was at the private GitHub-hosted Actions allocation/usage layer rather than the MTG code. Public standard hosted runners are now working. Exact private-account billing internals remain unproven because GitHub did not expose them through the available connector.
+
+CI efficiency note: temporary validation PRs against the intentionally minimal `main` can match many historical workflow path filters at once. Public hosted minutes remove the billing blocker, but future workflow cleanup should still reduce redundant push+PR live controls and add cancellation/supersession where useful.
+
+---
+
 ## Permanent truth hierarchy
 
-Machine learning, optimization, simulation, external evidence, requested power, or popularity may never override:
+Machine learning, optimization, simulation, external evidence, requested power, popularity, or convenience may never override:
 
 - Commander legality;
 - unresolved-card failures;
@@ -68,348 +103,257 @@ A source outage is not evidence that a combo/card/property is absent. Missing ve
 
 ---
 
-## Current Commander/deckbuilding foundation
+## Completed Commander/deckbuilding milestones
 
-The branch contains substantial infrastructure for:
+### Milestone 1 — live-source reliability
 
-- Commander legality, exact 100-card validation, partners, singleton and color identity;
-- Oracle identity vs exact physical-printing identity and themed-printing restrictions;
-- MTGJSON stock Commander precons;
-- full-deck building/upgrading with protected, excluded and must-include cards plus exact IN/OUT tracking;
-- NZD-first pricing/budgets with source auditability;
-- Scryfall, Commander Spellbook, tournament/deck evidence and source diagnostics;
-- deterministic simulation and Commander E2E scenarios;
-- V0.14 competitive/cEDH workflows;
-- V0.15 target-free bracket assessment, requested-vs-achieved ceiling comparison, research/learning, drift detection, exact statistics and real-corpus safety foundations.
+Key files include `src/lib/http.ts`, `src/config.ts`, `src/services/spellbook.ts`, and tests.
 
-### Neutral Commander selection/building
+Behavior includes:
 
-The neutral FF experiment remains a permanent anti-bias control:
-
-- no commander supplied;
-- no bracket/power target;
-- no strongest/cEDH/high-power intent;
-- no hidden `targetBracket=5` or V0.7 default-Bracket-4 fallback;
-- commander ranking is semantic/strategy based rather than name, EDHREC rank, color count, mana value or reputation;
-- the completed neutral Najeela build was honestly assessed **Bracket 3**.
-
-This does **not** downgrade the separate optimized FF-only Najeela benchmark, which remains high Bracket 4.
-
-DFC regression remains fixed: canonical double-faced commanders such as `Garland, Knight of Cornelia // Chaos, the Endless` use the front-face name only for Scryfall lookup and then revalidate the returned canonical card identity.
-
----
-
-## Milestone 1 — live-source reliability complete
-
-### Shared HTTP reliability
-
-`src/lib/http.ts`, `src/lib/http.test.ts`, `src/config.ts`
-
-Key behavior:
-
-- retries only known idempotent read requests;
-- Scryfall `POST /cards/collection` can retry transient failures;
-- Commander Spellbook read-only analysis POSTs can retry transient failures;
-- arbitrary POSTs such as TopDeck ingestion remain one-shot/no automatic retry;
-- transient HTTP statuses include 408/425/429/500/502/503/504;
+- retry only known idempotent/read-safe operations;
+- Scryfall `POST /cards/collection` and Commander Spellbook read-only analysis POSTs may retry transient failures;
+- arbitrary POSTs such as TopDeck ingestion remain one-shot;
+- transient statuses include 408/425/429/500/502/503/504;
 - `Retry-After` is respected;
-- caller aborts are never retried;
-- failures preserve provider, method, URL, attempts, timeout and cause telemetry;
-- provider-specific timeout/retry budgets are configurable by environment.
+- caller aborts are not retried;
+- provider/method/attempt/timeout/cause telemetry is retained;
+- advisory evidence outages return unavailable/incomplete evidence rather than false absence;
+- strict positive-verification paths remain strict.
 
-### Evidence-safe Commander Spellbook semantics
+Important reliability commit:
 
-`src/services/spellbook.ts`, `src/services/spellbook.test.ts`
+- `33a65f912155692e2c03c76b6d7022e2d830d203`.
 
-Three distinct operations now exist intentionally:
+### Milestone 2 — universal Commander build pipeline foundation
 
-1. strict operations when positive verification is required;
-2. evidence-safe assessment wrappers that return zero positive evidence plus explicit unavailable provenance on transient failure;
-3. advisory bracket evidence that may degrade to unavailable without crashing an otherwise legal build.
+Key files:
 
-Important distinctions:
+- `src/services/general-win-package-v15.ts`;
+- `src/services/commander-build-evaluation-v15.ts`;
+- `src/services/commander-build-pipeline-v15.ts`;
+- associated tests and live control.
 
-- `estimateCommanderBracket()` transient failure => `sourceStatus: unavailable`, no positive bracket/tag signal;
-- `findDeckCombosEvidence()` transient failure => zero positive combo evidence, `verificationComplete: false`; this is **not** proof that no combo exists;
-- `searchSpellbookVariantsEvidence()` transient failure => discovery incomplete/unavailable, not “no package exists”;
-- non-transient client/input failures still throw;
-- strict combo-completion paths remain strict where a verified combo is required.
-
----
-
-## Milestone 2 — universal Commander build pipeline foundation complete
-
-### General winning-package discovery
-
-`src/services/general-win-package-v15.ts`
-`src/services/general-win-package-v15.test.ts`
-
-The system now deliberately searches winning packages before construction instead of hoping a draft happens to contain one.
-
-Properties:
-
-- searches Commander Spellbook `is:winning` variants without requiring Ruthless/cEDH tags;
-- rejects impressive but non-winning outcomes such as infinite life when they do not actually win;
-- obeys `mustBeCommander`, exclusions and Commander color identity;
-- verifies exact eligible physical printings under the active printing policy;
-- supports package-size bounds;
-- ranks compactness, commander overlap, mana value, reusable utility roles and dead-piece risk;
-- popularity is never a truth gate;
-- exact printing and rejection audit is retained;
-- canonical color identity is always WUBRG-ordered before Spellbook queries (`BGRUW` regression fixed);
-- repeated exact-printing checks are cached inside one discovery run;
-- returns three distinct outcomes: verified package found, completed search found no verified package, or verification unavailable/partial.
-
-### Shared post-build truth/evaluation
-
-`src/services/commander-build-evaluation-v15.ts`
-`src/services/commander-build-evaluation-v15.test.ts`
-
-Every pipeline build can now go through one common judge:
-
-1. parse finished list;
-2. resolve exact physical cards;
-3. Commander legality and exact count;
-4. printing-policy compliance;
-5. structural metrics;
-6. external combo/bracket evidence only after hard gates pass;
-7. efficient commander-centric win-plan evidence;
-8. target-free actual bracket assessment.
-
-The evaluator preserves:
-
-- exact winning combo IDs, not merely combo counts;
-- bracket-source availability/failure;
-- combo-source availability/failure;
-- whether combo verification completed;
-- whether external evidence was attempted and whether it was complete.
-
-A selected seeded combo is considered preserved only when the **exact selected Spellbook combo ID** is verified in the final 100.
-
-### Universal build orchestration
-
-`src/services/commander-build-pipeline-v15.ts`
-`src/services/commander-build-pipeline-v15.test.ts`
-
-Current order:
+Pipeline order:
 
 > constraints → commander/strategy → winning-package discovery → optional verified package seeding → construction → hard truth evaluation → target-free actual bracket → requested-vs-achieved comparison
 
-Key anti-bias/fail-closed rules:
+Important rules:
 
 - explicit bracket target uses the targeted construction lane;
-- no target uses the neutral lane and never falls into V0.7's historical default Bracket 4;
+- no target uses the neutral lane and never falls into V0.7's historical hidden Bracket-4 default;
 - `winPackageMode` is `auto | prefer | require | forbid`;
-- `prefer/auto` may continue when package discovery is unavailable, but may not invent a package;
-- `require` fails closed when package verification is unavailable or no verified legal package exists;
-- if a required selected package cannot be reverified in the final deck, the final result does not claim success.
+- `prefer/auto` may continue when package verification is unavailable but may not invent a package;
+- `require` fails closed when verified package evidence is unavailable or no valid package survives;
+- selected seeded combo identity is preserved only when the exact selected Spellbook combo ID is verified in the final 100.
 
----
+Previously validated universal FF control:
 
-## Milestone 3 — requested-vs-achieved bracket/ceiling layer complete
+- exact `Najeela, the Blade-Blossom (FCA) 42`;
+- Final Fantasy physical printings only;
+- requested Bracket 4;
+- verified win packages preferred;
+- exact legal 100;
+- achieved **Bracket 4 / bracket-4-optimized-range**;
+- target reached, gap 0;
+- no verified FF-valid deterministic package found, and no package was forced;
+- final external evidence completed successfully.
 
-`src/services/bracket-target-comparison-v15.ts`
-`src/services/bracket-target-comparison-v15.test.ts`
+Validated implementation for that milestone: `8d6b8c99a1a9b9a453323af3b056d284fb19e4c0`.
 
-Actual bracket assessment remains target-free. The requested target is compared **after** the deck exists and has been independently assessed.
+### Milestone 3 — requested-vs-achieved bracket layer
 
-Output includes:
+`src/services/bracket-target-comparison-v15.ts` and tests.
+
+Actual bracket remains target-free. Requested target is compared only after the finished deck is independently assessed.
+
+Output distinguishes:
 
 - requested bracket;
 - achieved bracket/band;
 - `reached | exceeded | under-target | unassessable`;
 - target gap;
-- assessment confidence;
-- evidence completeness;
-- target-relevant checks;
-- known blockers;
-- unverified evidence checks;
-- concrete “what would reach target” guidance;
-- restriction observations.
+- confidence/evidence completeness;
+- target-relevant blockers/checks;
+- unverified source-dependent checks;
+- concrete guidance.
 
-Target-specific diagnostics prevent misleading leakage:
+Target-specific diagnostics prevent B5/cEDH evidence from leaking into lower-target explanations.
 
-- a Bracket 3 request uses upgraded-deck criteria;
-- a Bracket 4 request uses optimized-structure/win-plan criteria;
-- Bracket 5 alone uses the competitive/cEDH evidence gates;
-- a B4 result cannot be described as missing B5 metagame evidence merely because B5 gates exist;
-- external B5 evidence outage is marked **unverified**, not converted into a false deck weakness or false combo-absence claim.
+### Milestone 4 — unrestricted neutral Commander candidate pool
 
-Permanent regressions cover B3/B4/B5 target-specific explanations, source outages, reached targets and hard-gate failure.
+Validated and folded into `agent/package-probabilities`.
 
----
+Key files:
 
-## Permanent Commander benchmark controls
+- `src/services/neutral-unrestricted-pool-v15.ts`;
+- `src/services/neutral-unrestricted-pool-v15.test.ts`;
+- `src/services/neutral-deck-builder-v15.ts`;
+- `src/services/commander-build-pipeline-v15.ts` + planner tests;
+- `scripts/e2e-unrestricted-neutral-build-v15.ts`;
+- `.github/workflows/unrestricted-neutral-build-control.yml`.
 
-### A. Final Fantasy-only Bracket 5 challenge
+Behavior:
 
-> Build the strongest possible Commander deck using only legitimate Final Fantasy physical printings, target Bracket 5, and report the honest ceiling if the restriction cannot support Bracket 5.
+- no printing-family/set restriction uses a dedicated bounded stratified Scryfall sample rather than EDHREC-ordered `searchCards()`;
+- strata cover early/mid/late nonlands, lands, and archetype-relevant candidates;
+- deterministic views use name/release ordering rather than popularity;
+- provenance reports sampled/exhaustive state, stratum audit, totals, and retained eligible counts;
+- Oracle identities are deduplicated;
+- exact Commander legality, color identity, paper-game legality, and physical-printing policy are enforced;
+- basic lands are supplied explicitly, including `Wastes` for colorless;
+- minimum eligible candidate counts fail closed;
+- restricted FF/family/set builds keep the existing bounded/exhaustive restricted path;
+- no-target planning remains neutral strategy-first;
+- unrestricted neutral planning no longer fails merely because the card pool is unrestricted;
+- neutral exact per-card budgets and free-form theme queries still deliberately fail closed.
 
-Failure to reach B5 is acceptable when the card pool/restriction genuinely causes the ceiling. Do not collapse an FF deck into one infinite line when combat/value/commander routes materially belong to its identity.
+Permanent live anti-bias case:
 
-### B. FF-only high-Bracket-4 Najeela calibration
-
-The optimized FF-only Najeela benchmark remains a high-B4 proof that the assessor can recognize a strong commander-centric combat plan without inventing B5/cEDH certification.
-
-### C. Neutral FF autonomous build
-
-No commander/power target. Used to catch hidden commander reputation, hidden bracket targets and accidental optimization-to-power bias.
-
-### D. Unrestricted cEDH control
-
-`scripts/e2e-unrestricted-cedh-v15.ts` uses Kinnan, Bonder Prodigy and guards complete legality/resolution, deterministic win packages, low curve, free interaction, fast mana and strong competitive construction signals.
-
-The FF vs unrestricted comparison distinguishes a card-pool/user restriction ceiling from a builder weakness.
-
-### E. Universal pipeline live control
-
-`scripts/e2e-universal-build-pipeline-v15.ts`
-
-Current permanent case verifies:
-
-- exact FF Najeela printing;
-- B4 requested;
-- winning-package discovery attempted before construction;
-- legal exact 100 and FF printing policy;
-- actual bracket assessed after construction;
-- target comparison happens after actual assessment;
-- completed package search vs unavailable package search are distinct;
-- exact selected combo identity must survive when one is seeded and verification completes;
-- B4 explanations contain no cEDH/metagame leakage.
+- exact Najeela commander input;
+- no target bracket;
+- no printing family/set restriction;
+- winning-package seeding forbidden to isolate construction;
+- neutral archetype inferred as combat/tokens;
+- result achieved Bracket 3 after construction;
+- candidate pool 679 eligible nonlands / 172 eligible lands;
+- popularity and EDHREC ordering both false;
+- hard gates and exact 100 passed;
+- external evidence complete.
 
 ---
 
-## Exact statistics foundation complete
+## Exact probability/statistics foundation
 
 Implemented and independently tested:
 
-- `exact-statistics-v15.ts` — BigInt hypergeometric fractions, complements, expectation, variance and bounded populations;
+- `exact-statistics-v15.ts` — BigInt hypergeometric fractions, complements, expectation, variance, bounded populations;
 - `exact-package-statistics-v15.ts` — disjoint package assembly;
 - `exact-overlap-package-statistics-v15.ts` — overlap-aware physical-card assignment without double counting;
-- `exact-commander-zone-statistics-v15.ts` — command-zone availability and correct 99/98-card library sizes;
-- `exact-access-curve-v15.ts` — opening hand + turn-by-turn natural/explicit guaranteed draws;
-- `simulation-exact-calibration-v15.ts` — seeded Monte Carlo calibrated against exact mathematical truth.
+- `exact-commander-zone-statistics-v15.ts` — correct command-zone availability and 99/98-card library sizes;
+- `exact-access-curve-v15.ts` — opening hand + turn-by-turn access;
+- `simulation-exact-calibration-v15.ts` — seeded Monte Carlo calibration against exact truth.
 
-Permanent overlap regression: one universal A/B tutor cannot satisfy both missing A and B by itself.
+Permanent regression: one universal A/B tutor cannot simultaneously satisfy both missing A and B roles.
+
+Classic control: 99-card library, 36 lands, 7-card opener, P(3+ lands) = `26,736,733 / 53,358,536 ≈ 50.1077%`.
 
 ---
 
-## Real learning/research foundation
+## Learning/research foundation
 
-The neural model remains **experimental/shadow-only**. It may not influence hard legality/rules truth and may not be promoted merely because synthetic tests succeed.
+Neural/ML remains experimental and shadow-only. It may not override legality/rules/printing truth.
 
 Implemented foundations include:
 
-- explicit learning-target identity; mixed target semantics are rejected;
+- explicit learning-target identity;
 - quarantine-first observed-outcome ingestion;
 - exact deck fingerprints;
-- deterministic duplicate/mirror handling;
-- versioned structural feature snapshots (`deck-structural-v15.2`);
+- duplicate/mirror handling;
+- versioned structural feature snapshots;
 - exact card-data snapshot fingerprints;
-- training-only normalization (`deck-structural-minmax-v15.1`);
-- pre-feature temporal/leakage partitioning;
-- strict TopDeck materialization;
-- integrated leakage-safe TopDeck temporal corpus workflow;
-- content-addressed corpus manifests;
-- bounded TopDeck live fetcher with one-shot POST semantics;
-- conservative cross-source outcome linkage that prefers false negatives to false-positive merges;
-- evidence independence groups and source-health concepts.
+- training-only normalization;
+- temporal/leakage partition before feature fitting;
+- TopDeck materialization and bounded live fetch;
+- leakage-safe temporal corpus workflow;
+- content-addressed manifests;
+- conservative cross-source outcome linkage;
+- source health/drift semantics.
 
-A large, independently sourced, balanced, leakage-safe real outcome corpus has **not** yet been claimed.
+A large, independently sourced, balanced, leakage-safe historical outcome corpus is **not** yet claimed.
 
 ---
 
 ## Next implementation target
 
-### 1. Finish neutral universal-build constraint adapters
+### 1. Neutral exact per-card budget enforcement
 
-The universal pipeline deliberately still fails closed on these no-target combinations rather than silently ignoring them:
+This is now the immediate implementation target.
 
-1. unrestricted neutral card pool;
-2. neutral exact per-card budget enforcement;
-3. neutral free-form theme query.
+Budget semantics must be hard truth, not a ranking preference.
 
-#### Unrestricted neutral card-pool adapter
+Requirements:
 
-Do **not** route this through `searchCards()` as currently implemented because that helper orders by EDHREC and would silently reintroduce popularity/power bias into a neutral build.
+- exact-printing aware;
+- finish aware where price data distinguishes finishes;
+- printing-policy aware;
+- `maxUsdPerCard` is a hard candidate constraint, never a soft score;
+- a candidate is acceptable only if at least one eligible physical printing under the active policy is verifiably at or below the cap;
+- the exact accepted printing/price source and observed price must be auditable;
+- unrestricted neutral builds must support the cap;
+- FF-only / printing-family builds must support the cap;
+- allowed-set builds must support the cap;
+- must-includes and seeded win-package cards must be revalidated against the same cap;
+- conflicts such as a required card with no eligible under-cap printing must fail closed and name the exact conflicting card/constraint;
+- post-build evaluation must independently verify that every emitted exact printing satisfies the cap;
+- source outage/incomplete pricing must not be treated as “under budget”;
+- avoid unbounded per-printing network calls; use bounded queries/caching/batching where possible;
+- user-facing NZD affordability is separate from the reference per-card USD hard cap unless the request explicitly defines the cap in NZD.
 
-Implement a bounded, provenance-reported candidate discovery service that:
+After this is implemented:
 
-- uses multiple archetype/functional role query families;
-- has explicit page/card/request ceilings;
-- is not presented as exhaustive when it is sampled/bounded;
-- does not score by EDHREC, famous name, commander reputation, color count or bracket;
-- produces enough candidates for a legal 100-card build or fails closed;
-- preserves exact Scryfall identity and legality;
-- feeds the existing neutral role-based selector;
-- is permanently tested for ordering/reputation invariance where practical.
+- remove only the neutral per-card budget entry from `unsupportedConstraints`;
+- add deterministic tests for under-cap, over-cap, missing-price, must-include conflict, printing-family/set interaction, seeded package interaction, and independent post-build verification;
+- add a dedicated live budget control before calling the milestone complete.
 
-#### Neutral per-card budget adapter
+### 2. Neutral free-form theme adapter
 
-Budget enforcement must be exact-printing/finish aware. A default Oracle-card price is not sufficient. Candidate acceptance must verify an eligible physical printing under the active policy and hard max-per-card budget.
+After budget validation.
 
-#### Neutral free-form theme adapter
+Required flow:
 
-Do not silently treat arbitrary user language as raw Scryfall query grammar. Normalize theme intent into bounded semantic/query constraints, preserve the original user constraint for auditability, and fail closed when the theme cannot be enforced reliably.
+> original user theme → normalized intent → bounded semantic/search constraints → candidate enforcement → auditability
 
-After these adapters are safe, remove only the corresponding `unsupportedConstraints` entries from the universal planner and add live controls.
+Distinguish creature type, mechanical theme, franchise/printing theme, card-text theme, and vague flavor intent.
 
-### 2. Expose the universal pipeline through the experimental V0.15 MCP tool surface
+Do not pass arbitrary user text directly into Scryfall grammar. If the theme cannot be enforced reliably, fail closed or report explicit partial enforceability; never silently ignore it.
 
-`server-v15.ts` currently inherits V0.14 and exposes V0.15 research/bracket tools but does not yet register the new universal Commander build pipeline as its own tool.
+### 3. Expose universal pipeline through experimental V0.15 MCP surface
 
-Do this only after the neutral adapter semantics above are stable. The tool schema must preserve optional/no-target semantics, package mode, printing/budget/theme constraints, and the common requested-vs-achieved result. Do not change `server-current`.
+Only after neutral budget/theme semantics are stable.
 
-### 3. Retrospective/as-of card-data provenance
+`server-v15.ts` should expose the real universal Commander tool preserving:
 
-This remains the main blocker before a meaningful historical live-corpus backfill.
+- optional target/no-target semantics;
+- printing family / sets / promos;
+- budget/theme;
+- excluded/must-include cards;
+- land/nonbasic controls;
+- `winPackageMode`;
+- exact decklist;
+- requested-vs-achieved result;
+- source health/completeness.
 
-A 2026 refresh of a 2025 tournament may not pretend current Scryfall/Oracle data was observed before the 2025 outcome.
+Do not change `server-current`.
 
-Next data work must:
+### 4. Historical/as-of provenance
 
-- distinguish genuine historical/contemporaneous snapshots from retrospective reconstruction;
-- investigate reconstructible historical/as-of card identity data from public structured sources;
-- avoid selecting a physical printing released after the historical event for a name-only decklist;
-- separate static/reconstructible fields from Oracle/rules-derived fields that may contain future errata/knowledge;
-- omit or quarantine predictors that cannot be reconstructed without future knowledge;
-- preserve exact data fingerprints and reconstruction method;
-- add deterministic fixtures before live backfill.
+Distinguish contemporaneous snapshots from retrospective reconstruction. No future printings, current Oracle facts, or later rules state may silently leak into historical training/evaluation.
 
-### 4. Real corpus refresh and model evaluation
+### 5. Real corpus/model evaluation
 
-Only after retrospective feature safety:
-
-- run live/manual corpus refresh separately from deterministic CI;
-- respect TopDeck attribution, 429/Retry-After and secret-key handling;
-- persist normalized allowed records/manifests, not raw provider dumps;
-- report accepted/quarantined/duplicate/conflict/temporal/source coverage;
-- train one explicit target at a time;
-- compare transparent and neural models on the same genuinely future holdout;
-- require repeated neural wins on independent unseen data before any promotion;
-- allow metagame drift/source degradation to revoke confidence.
+Only after provenance is safe. Promotion must depend on trustworthy future holdout/drift/real-outcome evidence, not feature count or synthetic success.
 
 ---
 
-## Quality gates before calling a milestone complete
+## CI / validation discipline
 
-- dependency install succeeds;
-- strict TypeScript build succeeds;
-- complete deterministic tests succeed;
-- live controls used as evidence remain separate from deterministic CI;
-- malformed/boundary requests fail closed;
-- probability changes use independent exact/brute-force oracles where practical;
-- exact probability equality uses BigInt/fractions, never display decimals;
-- failed fixtures are allowed to be wrong — do not corrupt correct code/math to satisfy a bad test;
-- hard legality/printing/rules truth remains outside ML;
-- requested bracket never raises actual assessment;
-- no hidden bracket default is allowed for neutral construction;
-- package discovery distinguishes verified absence from unavailable verification;
-- positive combo credit requires actual verified winning outcomes;
-- unavailable external evidence is reported, not fabricated or converted into absence;
-- source independence and temporal leakage safety remain explicit;
-- FF-only, neutral, high-B4 and unrestricted controls do not regress silently;
-- stable `server-current` remains V0.13 until an explicit release/promotion decision;
-- update this file after every major milestone or active-target change.
+For implementation milestones:
+
+1. strict TypeScript/build;
+2. complete deterministic tests;
+3. dedicated live control where external data is part of the feature;
+4. inspect actual live output, not only the green status;
+5. fold isolated work into `agent/package-probabilities` only after validation;
+6. revalidate the active branch after the fold;
+7. keep `main` and `server-current` unchanged unless the user explicitly approves release promotion.
+
+Do not weaken truth gates to make CI green.
+
+---
+
+## Maintenance rule
+
+Update this file after every major milestone, blocker/recovery event, or active-target change.
 
 A future session must be able to recover the project direction and current engineering state from GitHub alone without old chat history.
