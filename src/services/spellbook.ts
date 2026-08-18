@@ -81,6 +81,21 @@ function unavailableComboEvidence(error: unknown): Record<string, unknown> {
   };
 }
 
+function unavailableVariantSearch(query: string, error: unknown): Record<string, unknown> {
+  const failure = sourceFailure(error);
+  return {
+    query,
+    count: 0,
+    next: null,
+    previous: null,
+    results: [],
+    source: 'Commander Spellbook variants search',
+    sourceStatus: 'unavailable',
+    verificationComplete: false,
+    ...(failure ? { sourceFailure: failure } : {}),
+  };
+}
+
 export function summarizeSpellbookVariant(value: unknown): Record<string, unknown> {
   const variant = asRecord(value);
   const uses = Array.isArray(variant.uses) ? variant.uses : Array.isArray(variant.cards) ? variant.cards : [];
@@ -161,6 +176,27 @@ export async function searchSpellbookVariants(
     results,
     source: 'Commander Spellbook variants search',
   };
+}
+
+/**
+ * Evidence-safe variant search. A transient outage means discovery is incomplete, not that no
+ * variants exist. Consumers may continue only if their mode allows optional package discovery;
+ * required-package workflows must fail closed when this returns unavailable evidence.
+ */
+export async function searchSpellbookVariantsEvidence(
+  query: string,
+  options: { limit?: number; offset?: number; ordering?: string } = {},
+): Promise<Record<string, unknown>> {
+  try {
+    return {
+      ...(await searchSpellbookVariants(query, options)),
+      sourceStatus: 'available',
+      verificationComplete: true,
+    };
+  } catch (error) {
+    if (!isTransientSpellbookFailure(error)) throw error;
+    return unavailableVariantSearch(query, error);
+  }
 }
 
 export async function findDeckCombos(decklist: string, maxResults = 20): Promise<Record<string, unknown>> {
