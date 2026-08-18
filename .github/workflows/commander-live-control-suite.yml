@@ -47,7 +47,7 @@ jobs:
         run: |
           printf '%s\n' \
             "Ordinary cooldown: ${LIVE_CONTROL_COOLDOWN_SECONDS}s" \
-            "Budget cooldown: ${LIVE_BUDGET_COOLDOWN_SECONDS}s" \
+            "Budget/theme cooldown: ${LIVE_BUDGET_COOLDOWN_SECONDS}s" \
             "HTTP retry base: ${HTTP_RETRY_BASE_MS}ms" \
             "Scryfall attempts: ${SCRYFALL_HTTP_RETRY_ATTEMPTS}" \
             "Commander Spellbook attempts: ${COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS}"
@@ -138,7 +138,7 @@ jobs:
 
       - name: Cool down live providers before neutral theme control
         if: always()
-        run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
+        run: sleep "$LIVE_BUDGET_COOLDOWN_SECONDS"
 
       - name: Neutral free-form theme control
         id: neutral_theme
