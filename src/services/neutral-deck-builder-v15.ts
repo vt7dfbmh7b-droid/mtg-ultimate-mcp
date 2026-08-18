@@ -2,6 +2,7 @@ import type { ScryfallCard } from '../types/scryfall.js';
 import { validateCommanderDeck } from './commander-rules.js';
 import { parseDecklist } from './deck.js';
 import type { NeutralArchetypeV15 } from './neutral-commander-selection-v15.js';
+import { discoverNeutralUnrestrictedPoolV15 } from './neutral-unrestricted-pool-v15.js';
 import {
   describePrintingPolicyV08,
   printingMatchesPolicyV08,
@@ -54,6 +55,7 @@ const NEUTRAL_PROFILES: Record<NeutralArchetypeV15, NeutralProfileV15> = {
   'big-mana': { lands: 37, roles: { ramp: 14, draw: 10, interaction: 8, protection: 4, tutors: 1, recursion: 2, boardWipes: 2, early: 8 } },
 };
 
+const COLOR_ORDER = ['W', 'U', 'B', 'R', 'G'] as const;
 const BASIC_FOR_COLOR: Record<string, string> = {
   W: 'Plains',
   U: 'Island',
@@ -92,7 +94,8 @@ function oracleKey(card: ScryfallCard): string {
 }
 
 function identity(commanders: readonly ScryfallCard[]): string[] {
-  return [...new Set(commanders.flatMap((card) => card.color_identity))].sort();
+  const present = new Set(commanders.flatMap((card) => card.color_identity));
+  return COLOR_ORDER.filter((color) => present.has(color));
 }
 
 function legalIdentity(card: ScryfallCard, colors: readonly string[]): boolean {
@@ -320,9 +323,6 @@ export async function buildNeutralCommanderDeckV15(
   const requested = commanderNames.map((name) => name.trim()).filter(Boolean);
   if (requested.length < 1 || requested.length > 2) throw new Error('Neutral deck construction requires one or two commander names.');
   const policy = await resolvePrintingPolicyV08(options);
-  if (!policy.family && policy.allowedSetCodes.length === 0 && policy.exactSpecialPrintings.length === 0) {
-    throw new Error('Neutral themed construction requires a bounded printing policy.');
-  }
   const commanders = await resolveExactCommanders(requested, policy);
   const colors = identity(commanders);
   const profile = NEUTRAL_PROFILES[options.archetype];
@@ -330,7 +330,19 @@ export async function buildNeutralCommanderDeckV15(
   const nonlandSlots = 100 - commanders.length - landsWanted;
   if (nonlandSlots < 1) throw new Error('Neutral land plan leaves no nonland deck slots.');
 
-  const pool = await discoverEligiblePool(colors, policy);
+  const unrestricted = !policy.family && policy.allowedSetCodes.length === 0 && policy.exactSpecialPrintings.length === 0;
+  const unrestrictedPool = unrestricted
+    ? await discoverNeutralUnrestrictedPoolV15(colors, options.archetype, policy)
+    : null;
+  const pool = unrestrictedPool?.cards ?? await discoverEligiblePool(colors, policy);
+  const candidatePoolProvenance: Record<string, unknown> = unrestrictedPool?.provenance ?? {
+    mode: 'exhaustive-bounded-printing-policy',
+    exhaustive: true,
+    edhrecOrderedInput: true,
+    rankingUsesPopularity: false,
+    note: 'The bounded printing-family/set search is exhausted inside explicit hard ceilings; EDHREC ordering only affects fetch order, not candidate scoring.',
+  };
+
   const commanderOracleKeys = new Set(commanders.map(oracleKey));
   const excluded = new Set((options.excludedCards ?? []).map(normalize));
   const nonlands = pool
@@ -420,6 +432,7 @@ export async function buildNeutralCommanderDeckV15(
     commanderRules: rules,
     printingPolicySatisfied,
     printingPolicy: describePrintingPolicyV08(policy),
+    candidatePoolProvenance,
     roleTargets: profile.roles,
     detectedRoleCounts: counts,
     remainingRoleDeficits: roleDeficits,
@@ -441,6 +454,9 @@ export async function buildNeutralCommanderDeckV15(
     constructionExplanation: [
       'No bracket target is accepted or inferred by this builder.',
       `The ${options.archetype} identity was chosen before construction from commander semantics.`,
+      unrestricted
+        ? 'With no printing-family/set restriction, candidate discovery uses an explicitly bounded stratified Scryfall sample across mana bands, lands, and archetype signals; it does not pretend to exhaust every Commander-legal card.'
+        : 'With a bounded printing-family/set restriction, the eligible physical-printing pool is exhausted inside explicit safety ceilings before strategy scoring.',
       'Card selection balances archetype affinity with ordinary ramp/draw/interaction/protection/recursion needs; it does not award EDHREC popularity, cEDH intent, Game Changer count, or famous-card-name points.',
       'Every emitted card line carries an exact set code and collector number and is independently checked against the active printing policy.',
       'Bracket assessment belongs after this construction stage.',
