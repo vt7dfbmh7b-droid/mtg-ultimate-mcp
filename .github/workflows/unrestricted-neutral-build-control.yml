@@ -1,0 +1,53 @@
+name: Unrestricted Neutral Commander Build Control
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["agent/neutral-unrestricted-pool"]
+    paths: &control_paths
+      - "scripts/e2e-unrestricted-neutral-build-v15.ts"
+      - "src/services/neutral-unrestricted-pool-v15.ts"
+      - "src/services/neutral-deck-builder-v15.ts"
+      - "src/services/neutral-commander-selection-v15.ts"
+      - "src/services/commander-build-pipeline-v15.ts"
+      - "src/services/commander-build-evaluation-v15.ts"
+      - "src/services/commander-rules.ts"
+      - "src/services/printing-policy-v08.ts"
+      - "src/services/scryfall-paged-search-v15.ts"
+      - "src/services/scryfall.ts"
+      - "src/services/spellbook.ts"
+      - ".github/workflows/unrestricted-neutral-build-control.yml"
+  pull_request:
+    branches: [main]
+    paths: *control_paths
+
+permissions:
+  contents: read
+
+jobs:
+  unrestricted-neutral-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install
+      - name: Type-check and build
+        run: npm run build
+      - name: Run unrestricted neutral live control
+        run: npx tsx scripts/e2e-unrestricted-neutral-build-v15.ts
+      - name: Upload unrestricted neutral result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unrestricted-neutral-build-${{ github.sha }}
+          path: |
+            unrestricted-neutral-build-live-result.json
+            unrestricted-neutral-build-live-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
