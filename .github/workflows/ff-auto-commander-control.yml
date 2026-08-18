@@ -1,0 +1,62 @@
+name: FF Auto-Commander Build Control
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/services/auto-commander-selection-v15.ts"
+      - "src/services/auto-commander-selection-v15.test.ts"
+      - "scripts/e2e-ff-auto-commander-v15.ts"
+      - ".github/workflows/ff-auto-commander-control.yml"
+      - "src/services/cedh-workflow-v14.ts"
+      - "src/services/deck-builder-v07.ts"
+      - "src/services/bracket-ceiling-v15.ts"
+      - "src/services/efficient-win-plan-v15.ts"
+      - "src/services/commander-rules.ts"
+      - "src/services/printing-policy-v08.ts"
+      - "src/services/scryfall.ts"
+      - "src/services/spellbook.ts"
+  push:
+    branches: ["agent/**"]
+    paths:
+      - "src/services/auto-commander-selection-v15.ts"
+      - "src/services/auto-commander-selection-v15.test.ts"
+      - "scripts/e2e-ff-auto-commander-v15.ts"
+      - ".github/workflows/ff-auto-commander-control.yml"
+      - "src/services/cedh-workflow-v14.ts"
+      - "src/services/deck-builder-v07.ts"
+      - "src/services/bracket-ceiling-v15.ts"
+      - "src/services/efficient-win-plan-v15.ts"
+      - "src/services/commander-rules.ts"
+      - "src/services/printing-policy-v08.ts"
+      - "src/services/scryfall.ts"
+      - "src/services/spellbook.ts"
+
+permissions:
+  contents: read
+
+jobs:
+  ff-auto-commander:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run build
+      - name: Discover commanders, build competing FF-only decks, and select the strongest verified result
+        run: npx tsx scripts/e2e-ff-auto-commander-v15.ts
+      - name: Upload auto-commander result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ff-auto-commander-result-${{ github.sha }}
+          path: |
+            ff-auto-commander-result.json
+            ff-auto-commander-winning-deck.txt
+            ff-auto-commander-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
