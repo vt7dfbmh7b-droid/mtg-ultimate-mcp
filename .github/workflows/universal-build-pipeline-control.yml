@@ -1,8 +1,8 @@
 name: Universal Commander Build Pipeline Control
 
 on:
-  push:
-    branches: ["agent/universal-build-pipeline"]
+  pull_request:
+    branches: [main]
     paths:
       - "scripts/e2e-universal-build-pipeline-v15.ts"
       - "src/services/commander-build-pipeline-v15.ts"
