@@ -66,6 +66,23 @@ function normalize(value: string): string {
   return value.trim().toLocaleLowerCase();
 }
 
+/**
+ * Scryfall's collection-by-name endpoint accepts the front-face name of a transform/modal DFC
+ * more reliably than the combined "front // back" display name. Discovery deliberately keeps
+ * the canonical combined name for auditability, so neutral construction normalizes only the
+ * lookup key and then verifies the returned canonical card before accepting it.
+ */
+export function neutralCommanderLookupNameV15(value: string): string {
+  const trimmed = value.trim();
+  const [front] = trimmed.split(/\s+\/\/\s+/, 2);
+  return front?.trim() || trimmed;
+}
+
+function commanderNameMatches(requested: string, card: ScryfallCard): boolean {
+  if (normalize(requested) === normalize(card.name)) return true;
+  return normalize(neutralCommanderLookupNameV15(requested)) === normalize(neutralCommanderLookupNameV15(card.name));
+}
+
 function exactPrintingKey(set: string, collectorNumber: string): string {
   return `${set.trim().toLocaleLowerCase()}|${collectorNumber.replace(/^0+/, '') || '0'}`;
 }
@@ -184,8 +201,7 @@ function dynamicCandidateScore(
   let score = strategyAffinity(card, archetype) * 6;
   for (const key of Object.keys(targets) as Array<keyof NeutralRoleTargetsV15>) {
     if (!contribution[key]) continue;
-    const deficit = Math.max(0, targets[key] - counts[key]);
-    score += Math.min(5, deficit) * 5;
+    score += Math.min(5, Math.max(0, targets[key] - counts[key])) * 5;
   }
   if (card.cmc <= 2) score += 2;
   else if (card.cmc <= 4) score += 1;
@@ -207,12 +223,18 @@ async function resolveExactCommanders(
   commanderNames: string[],
   policy: ResolvedPrintingPolicyV08,
 ): Promise<ScryfallCard[]> {
-  const oracleCards = await getCardsByNames(commanderNames);
-  if (oracleCards.notFound.length > 0 || oracleCards.cards.length !== commanderNames.length) {
-    throw new Error(`Neutral commander resolution failed: ${oracleCards.notFound.join(', ') || 'card-count mismatch'}`);
+  const lookupNames = commanderNames.map(neutralCommanderLookupNameV15);
+  const oracleCards = await getCardsByNames(lookupNames);
+  if (oracleCards.notFound.length > 0) {
+    throw new Error(`Neutral commander resolution failed: ${oracleCards.notFound.join(', ')}`);
   }
+
   const exact: ScryfallCard[] = [];
-  for (const card of oracleCards.cards) {
+  const consumed = new Set<string>();
+  for (const requested of commanderNames) {
+    const card = oracleCards.cards.find((candidate) => !consumed.has(oracleKey(candidate)) && commanderNameMatches(requested, candidate));
+    if (!card) throw new Error(`Neutral commander resolution failed to match canonical card data for ${requested}.`);
+    consumed.add(oracleKey(card));
     const printing = await selectEligiblePrintingV08(card, policy);
     if (!printing) throw new Error(`No eligible physical printing of commander ${card.name} satisfies the neutral printing policy.`);
     exact.push(printing.card);
