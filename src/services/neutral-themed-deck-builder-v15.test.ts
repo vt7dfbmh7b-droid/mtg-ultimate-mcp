@@ -100,10 +100,16 @@ test('theme seed ranking ignores EDHREC rank and prefers actual archetype/role u
 test('theme seed selection deduplicates Oracle identities before enforcing density', async () => {
   const intent = await resolveNeutralThemeIntentV15('tokens');
   const firstPrinting = card('Same Token Card', 'Create a 1/1 creature token.', { oracleId: 'shared-oracle' });
-  firstPrinting.prices = { ...(firstPrinting.prices ?? {}), usd: '2.00' } as ScryfallCard['prices'];
+  const firstPrices = firstPrinting.prices;
+  assert.ok(firstPrices, 'test fixture must expose prices');
+  firstPrices.usd = '2.00';
+
   const cheaperPrinting = card('Same Token Card', 'Create a 1/1 creature token.', { oracleId: 'shared-oracle' });
   cheaperPrinting.id = 'second-printing';
-  cheaperPrinting.prices = { ...(cheaperPrinting.prices ?? {}), usd: '0.50' } as ScryfallCard['prices'];
+  const cheaperPrices = cheaperPrinting.prices;
+  assert.ok(cheaperPrices, 'test fixture must expose prices');
+  cheaperPrices.usd = '0.50';
+
   const selected = selectNeutralThemeSeedCandidatesV15([firstPrinting, cheaperPrinting], intent, {
     archetype: 'combat-tokens',
     needed: 2,
