@@ -20,43 +20,65 @@ function arrayFrom(record: UnknownRecord, camel: string, snake: string): unknown
   return Array.isArray(value) ? value : [];
 }
 
-function transientSpellbookFailure(error: unknown): boolean {
+export function isTransientSpellbookFailure(error: unknown): boolean {
   if (error instanceof HttpRequestError) return true;
   return error instanceof HttpError && isRetryableHttpStatus(error.status);
 }
 
+function sourceFailure(error: unknown): Record<string, unknown> | null {
+  if (error instanceof HttpRequestError) {
+    return {
+      kind: 'request-failed',
+      provider: error.provider,
+      method: error.method,
+      attempts: error.attempts,
+      timeoutMs: error.timeoutMs,
+      causeName: error.causeName,
+    };
+  }
+  if (error instanceof HttpError) {
+    return {
+      kind: 'http-status',
+      status: error.status,
+    };
+  }
+  return null;
+}
+
 function advisoryFailure(error: unknown): Record<string, unknown> {
-  const record: Record<string, unknown> = {
+  const failure = sourceFailure(error);
+  return {
     bracketTag: null,
     flaggedCards: [],
     comboCount: 0,
     strategicallyRelevantCombos: [],
     source: 'Commander Spellbook bracket estimator',
     sourceStatus: 'unavailable',
+    ...(failure ? { sourceFailure: failure } : {}),
   };
-  if (error instanceof HttpRequestError) {
-    return {
-      ...record,
-      sourceFailure: {
-        kind: 'request-failed',
-        provider: error.provider,
-        method: error.method,
-        attempts: error.attempts,
-        timeoutMs: error.timeoutMs,
-        causeName: error.causeName,
-      },
-    };
-  }
-  if (error instanceof HttpError) {
-    return {
-      ...record,
-      sourceFailure: {
-        kind: 'http-status',
-        status: error.status,
-      },
-    };
-  }
-  return record;
+}
+
+function unavailableComboEvidence(error: unknown): Record<string, unknown> {
+  const failure = sourceFailure(error);
+  return {
+    identity: null,
+    counts: {
+      included: 0,
+      almostIncluded: 0,
+      includedByChangingCommanders: 0,
+      almostIncludedByAddingColors: 0,
+      almostIncludedByChangingCommanders: 0,
+    },
+    included: [],
+    almostIncluded: [],
+    includedByChangingCommanders: [],
+    almostIncludedByAddingColors: [],
+    almostIncludedByChangingCommanders: [],
+    source: 'Commander Spellbook',
+    sourceStatus: 'unavailable',
+    verificationComplete: false,
+    ...(failure ? { sourceFailure: failure } : {}),
+  };
 }
 
 export function summarizeSpellbookVariant(value: unknown): Record<string, unknown> {
@@ -183,6 +205,28 @@ export async function findDeckCombos(decklist: string, maxResults = 20): Promise
 }
 
 /**
+ * Fail-closed combo evidence wrapper. A transient provider failure returns zero positive combo
+ * evidence plus explicit unavailable provenance. This must never be interpreted as proof that
+ * the deck contains no combo; it means verification could not be completed. Non-transient errors
+ * still throw. Callers that require a positively verified package must reject unavailable evidence.
+ */
+export async function findDeckCombosEvidence(
+  decklist: string,
+  maxResults = 20,
+): Promise<Record<string, unknown>> {
+  try {
+    return {
+      ...(await findDeckCombos(decklist, maxResults)),
+      sourceStatus: 'available',
+      verificationComplete: true,
+    };
+  } catch (error) {
+    if (!isTransientSpellbookFailure(error)) throw error;
+    return unavailableComboEvidence(error);
+  }
+}
+
+/**
  * Commander Spellbook's bracket estimator is advisory evidence, not a hard legality/rules gate.
  * Transient network/429/5xx failures therefore return an explicit unavailable record instead of
  * crashing an otherwise legal build. Callers must treat the absent tag/strategic signals as
@@ -197,7 +241,7 @@ export async function estimateCommanderBracket(
   try {
     raw = asRecord(await postDecklist('/estimate-bracket', decklist, query));
   } catch (error) {
-    if (!transientSpellbookFailure(error)) throw error;
+    if (!isTransientSpellbookFailure(error)) throw error;
     return advisoryFailure(error);
   }
   const bracketTag = raw.bracketTag ?? raw.bracket_tag;
