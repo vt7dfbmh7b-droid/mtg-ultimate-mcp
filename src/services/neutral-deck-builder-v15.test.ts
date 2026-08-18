@@ -15,6 +15,10 @@ test('neutral commander lookup uses the front face for canonical DFC display nam
     neutralCommanderLookupNameV15('  Terra, Magical Adept // Esper Terra  '),
     'Terra, Magical Adept',
   );
+  assert.equal(
+    neutralCommanderLookupNameV15('Grub, Storied Matriarch // Grub, Notorious Auntie'),
+    'Grub, Storied Matriarch',
+  );
 });
 
 test('neutral candidate cap falls back to the user hard per-card cap', () => {
