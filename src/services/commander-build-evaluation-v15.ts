@@ -12,7 +12,7 @@ import {
   type PrintingPolicyInputV08,
 } from './printing-policy-v08.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from './scryfall.js';
-import { estimateCommanderBracket, findDeckCombos } from './spellbook.js';
+import { estimateCommanderBracket, findDeckCombosEvidence } from './spellbook.js';
 
 export interface CommanderBuildEvaluationOptionsV15 extends PrintingPolicyInputV08 {
   constraintDescriptions?: string[];
@@ -49,6 +49,9 @@ export interface PostBuildEvidenceV15 {
   spellbookTag: string | null;
   spellbookBracketSourceStatus: 'available' | 'unavailable' | 'unknown';
   spellbookBracketSourceFailure: Record<string, unknown> | null;
+  spellbookComboSourceStatus: 'available' | 'unavailable' | 'unknown';
+  spellbookComboSourceFailure: Record<string, unknown> | null;
+  comboVerificationComplete: boolean;
   completeComboCount: number;
   verifiedWinningCombos: number;
   verifiedWinningComboIds: string[];
@@ -82,6 +85,10 @@ function finiteNumber(value: unknown): number {
   return typeof value === 'number' && Number.isFinite(value) ? value : 0;
 }
 
+function sourceStatus(value: unknown): PostBuildEvidenceV15['spellbookBracketSourceStatus'] {
+  return value === 'available' ? 'available' : value === 'unavailable' ? 'unavailable' : 'unknown';
+}
+
 function identifiers(parsed: ParsedDeck): CardIdentifierInput[] {
   return [...parsed.commanders, ...parsed.main].map((entry) => ({
     name: entry.name,
@@ -106,13 +113,11 @@ export function derivePostBuildEvidenceV15(input: PostBuildEvidenceInputV15): Po
     ? bracket.strategicallyRelevantCombos.length
     : 0;
   const spellbookTag = typeof bracket.bracketTag === 'string' ? bracket.bracketTag : null;
-  const rawSourceStatus = typeof bracket.sourceStatus === 'string' ? bracket.sourceStatus : 'unknown';
-  const spellbookBracketSourceStatus: PostBuildEvidenceV15['spellbookBracketSourceStatus'] = rawSourceStatus === 'available'
-    ? 'available'
-    : rawSourceStatus === 'unavailable'
-      ? 'unavailable'
-      : 'unknown';
-  const sourceFailure = record(bracket.sourceFailure);
+  const spellbookBracketSourceStatus = sourceStatus(bracket.sourceStatus);
+  const bracketFailure = record(bracket.sourceFailure);
+  const spellbookComboSourceStatus = sourceStatus(combos.sourceStatus);
+  const comboFailure = record(combos.sourceFailure);
+  const comboVerificationComplete = combos.verificationComplete === true || spellbookComboSourceStatus === 'available';
   const gameChangerNames = [...new Set(input.gameChangerNames)].sort((a, b) => a.localeCompare(b));
   return {
     signals: {
@@ -139,7 +144,10 @@ export function derivePostBuildEvidenceV15(input: PostBuildEvidenceInputV15): Po
     },
     spellbookTag,
     spellbookBracketSourceStatus,
-    spellbookBracketSourceFailure: Object.keys(sourceFailure).length > 0 ? sourceFailure : null,
+    spellbookBracketSourceFailure: Object.keys(bracketFailure).length > 0 ? bracketFailure : null,
+    spellbookComboSourceStatus,
+    spellbookComboSourceFailure: Object.keys(comboFailure).length > 0 ? comboFailure : null,
+    comboVerificationComplete,
     completeComboCount: finiteNumber(counts.included),
     verifiedWinningCombos,
     verifiedWinningComboIds,
@@ -166,12 +174,17 @@ export async function evaluateCommanderBuildV15(
     && printingPolicySatisfied;
 
   let spellbookBracket: Record<string, unknown> = {};
-  let combos: Record<string, unknown> = { counts: { included: 0 }, included: [] };
+  let combos: Record<string, unknown> = {
+    counts: { included: 0 },
+    included: [],
+    sourceStatus: 'unknown',
+    verificationComplete: false,
+  };
   let efficientWinPlan: ReturnType<typeof deriveEfficientCommanderWinPlanV15> | null = null;
   if (hardGatesPassed) {
     [spellbookBracket, combos] = await Promise.all([
       estimateCommanderBracket(decklist),
-      findDeckCombos(decklist, Math.max(1, Math.min(100, Math.trunc(options.maxComboResults ?? 100)))),
+      findDeckCombosEvidence(decklist, Math.max(1, Math.min(100, Math.trunc(options.maxComboResults ?? 100)))),
     ]);
     const commanderCards = parsed.commanders
       .map((entry) => resolveEntryCard(entry, resolved.cards))
@@ -216,7 +229,9 @@ export async function evaluateCommanderBuildV15(
     postBuildEvidence: evidence,
     actualBracket,
     externalEvidenceChecked: hardGatesPassed,
-    externalEvidenceComplete: hardGatesPassed && evidence.spellbookBracketSourceStatus !== 'unavailable',
+    externalEvidenceComplete: hardGatesPassed
+      && evidence.spellbookBracketSourceStatus !== 'unavailable'
+      && evidence.spellbookComboSourceStatus !== 'unavailable',
     efficientWinPlan,
   };
 }
