@@ -9,9 +9,14 @@ export type NeutralThemeKindV15 =
   | 'card-type'
   | 'oracle-text'
   | 'printing-family'
+  | 'unresolved'
   | 'unsupported';
 
-export type NeutralThemeEnforceabilityV15 = 'full' | 'delegated-printing-policy' | 'unsupported';
+export type NeutralThemeEnforceabilityV15 =
+  | 'full'
+  | 'delegated-printing-policy'
+  | 'verification-unavailable'
+  | 'unsupported';
 
 export type NeutralThemeMatchRuleV15 =
   | { type: 'creature-type'; creatureType: string }
@@ -42,7 +47,7 @@ export interface NeutralThemeAuditEntryV15 {
 }
 
 export interface NeutralThemeAuditV15 {
-  status: 'satisfied' | 'under-minimum' | 'printing-policy-failed' | 'unsupported';
+  status: 'satisfied' | 'under-minimum' | 'printing-policy-failed' | 'verification-unavailable' | 'unsupported';
   satisfied: boolean;
   original: string;
   kind: NeutralThemeKindV15;
@@ -175,7 +180,7 @@ const FINAL_FANTASY_ALIASES = new Set([
   'final fantasy cards',
 ]);
 
-const THEME_WRAPPERS = /\b(?:theme|themed|deck|commander deck|tribal|typal|matters)\b/g;
+const THEME_WRAPPERS = /\b(?:theme|themed|deck|commander(?: deck)?|tribal|typal|matters)\b/g;
 const CATALOG_TTL_MS = 6 * 60 * 60 * 1_000;
 let creatureTypeCatalog: { loadedAt: number; values: string[] } | null = null;
 
@@ -210,8 +215,7 @@ function pluralizeCreatureType(value: string): string {
   return `${normalized}s`;
 }
 
-async function loadCreatureTypes(supplied?: string[]): Promise<string[]> {
-  if (supplied) return supplied;
+async function defaultCreatureTypeProvider(): Promise<string[]> {
   if (creatureTypeCatalog && Date.now() - creatureTypeCatalog.loadedAt < CATALOG_TTL_MS) return creatureTypeCatalog.values;
   const catalog = await fetchJson<ScryfallCatalogV15>(`${config.scryfallApiBase}/catalog/creature-types`);
   if (!catalog || catalog.object !== 'catalog' || !Array.isArray(catalog.data)) {
@@ -220,6 +224,15 @@ async function loadCreatureTypes(supplied?: string[]): Promise<string[]> {
   const values = catalog.data.map((value) => value.trim()).filter(Boolean);
   creatureTypeCatalog = { loadedAt: Date.now(), values };
   return values;
+}
+
+async function loadCreatureTypes(options: {
+  creatureTypes?: string[];
+  creatureTypeProvider?: () => Promise<string[]>;
+}): Promise<string[]> {
+  if (options.creatureTypes) return options.creatureTypes;
+  if (options.creatureTypeProvider) return options.creatureTypeProvider();
+  return defaultCreatureTypeProvider();
 }
 
 function mechanicIntent(original: string, normalizedInput: string, cleaned: string): NeutralThemeIntentV15 | null {
@@ -310,9 +323,24 @@ function unsupportedTheme(original: string, normalizedInput: string, explanation
   };
 }
 
+function unavailableTheme(original: string, normalizedInput: string, explanation: string): NeutralThemeIntentV15 {
+  return {
+    original,
+    normalizedInput,
+    kind: 'unresolved',
+    enforceability: 'verification-unavailable',
+    canonicalLabel: null,
+    queryClause: null,
+    minimumMainMatches: 0,
+    printingFamily: null,
+    matchRule: { type: 'none' },
+    explanation,
+  };
+}
+
 export async function resolveNeutralThemeIntentV15(
   themeQuery: string,
-  options: { creatureTypes?: string[] } = {},
+  options: { creatureTypes?: string[]; creatureTypeProvider?: () => Promise<string[]> } = {},
 ): Promise<NeutralThemeIntentV15> {
   const original = themeQuery;
   const normalizedInput = normalize(themeQuery);
@@ -351,9 +379,9 @@ export async function resolveNeutralThemeIntentV15(
 
   let creatureTypes: string[];
   try {
-    creatureTypes = await loadCreatureTypes(options.creatureTypes);
+    creatureTypes = await loadCreatureTypes(options);
   } catch (error) {
-    return unsupportedTheme(
+    return unavailableTheme(
       original,
       normalizedInput,
       `Creature-type verification is currently unavailable: ${error instanceof Error ? error.message : String(error)}`,
@@ -412,7 +440,6 @@ export function cardMatchesNeutralThemeV15(card: ScryfallCard, intent: NeutralTh
     case 'oracle-substring':
       return getCardOracleText(card).toLocaleLowerCase().includes(intent.matchRule.phrase);
     case 'printing-family':
-      return false;
     case 'none':
       return false;
   }
@@ -424,6 +451,22 @@ export function auditNeutralThemeV15(
   options: { printingPolicySatisfied?: boolean; activePrintingFamily?: string | null } = {},
 ): NeutralThemeAuditV15 {
   const totalMainCards = entries.filter((entry) => entry.zone === 'main').reduce((sum, entry) => sum + entry.quantity, 0);
+  if (intent.enforceability === 'verification-unavailable') {
+    return {
+      status: 'verification-unavailable',
+      satisfied: false,
+      original: intent.original,
+      kind: intent.kind,
+      canonicalLabel: intent.canonicalLabel,
+      requiredMainMatches: intent.minimumMainMatches,
+      matchedMainCards: 0,
+      totalMainCards,
+      mainCoverage: 0,
+      matchingCardNames: [],
+      entries: [],
+      explanation: intent.explanation,
+    };
+  }
   if (intent.enforceability === 'unsupported') {
     return {
       status: 'unsupported',
