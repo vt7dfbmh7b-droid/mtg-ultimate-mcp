@@ -20,6 +20,8 @@ const BASIC_FOR_COLOR: Record<string, string> = {
   G: 'Forest',
 };
 
+export const NEUTRAL_UNRESTRICTED_MIN_REQUEST_GAP_MS_V15 = 300;
+
 export type NeutralSampleOrderV15 = 'name' | 'released';
 export type NeutralSampleDirectionV15 = 'asc' | 'desc';
 
@@ -163,13 +165,16 @@ export async function sampleNeutralUnrestrictedStrataV15(
   options: NeutralUnrestrictedSamplingOptionsV15 = {},
 ): Promise<{ cards: ScryfallCard[]; audit: NeutralUnrestrictedStratumAuditV15[] }> {
   const maxCardsPerStratum = Math.max(10, Math.min(120, Math.trunc(options.maxCardsPerStratum ?? 60)));
-  const minRequestGapMs = Math.max(0, Math.min(1_000, Math.trunc(options.minRequestGapMs ?? 150)));
+  const minRequestGapMs = Math.max(
+    0,
+    Math.min(1_000, Math.trunc(options.minRequestGapMs ?? NEUTRAL_UNRESTRICTED_MIN_REQUEST_GAP_MS_V15)),
+  );
   const requestSearch = options.requestSearch ?? defaultRequestSearch;
   const cards: ScryfallCard[] = [];
   const audit: NeutralUnrestrictedStratumAuditV15[] = [];
 
   for (let index = 0; index < strata.length; index += 1) {
-    if (index > 0) await sleep(minRequestGapMs);
+    if (minRequestGapMs > 0) await sleep(minRequestGapMs);
     const stratum = strata[index]!;
     const page = await requestSearch(neutralUnrestrictedSearchUrlV15(stratum));
     if (!Array.isArray(page.data)) throw new Error(`Malformed Scryfall neutral sample response for ${stratum.query}.`);
@@ -298,34 +303,31 @@ export async function discoverNeutralUnrestrictedPoolV15(
     throw new Error(
       `Neutral unrestricted sampling produced insufficient eligible candidates: ${nonlands} nonlands/${lands} lands; `
       + `required at least ${minEligibleNonlands}/${minEligibleLands}`
-      + (options.maxUsdPerCard === undefined ? '.' : ` under the US$${options.maxUsdPerCard} exact-sampled-printing cap.`),
+      + `${options.maxUsdPerCard !== undefined ? ` after exact sampled-printing budget filtering at US$${options.maxUsdPerCard}` : ''}.`,
     );
   }
-  const basicLandNames = basics.map((card) => card.name).sort((a, b) => a.localeCompare(b));
-  const exhaustive = sampled.audit.every((item) => item.exhaustive);
+  const basicsNames = basics.map((card) => card.name);
   return {
     cards,
     provenance: {
       mode: 'bounded-stratified-neutral-sample',
-      exhaustive,
+      exhaustive: sampled.audit.every((item) => item.exhaustive),
       popularityOrdered: false,
       edhrecOrdered: false,
       strata: sampled.audit,
-      sampledCardsBeforeDeduplication: sampled.cards.length + basics.length,
+      sampledCardsBeforeDeduplication: sampled.cards.length,
       uniqueEligibleCards: cards.length,
       uniqueEligibleNonlands: nonlands,
       uniqueEligibleLands: lands,
-      basicLandNames,
+      basicLandNames: basicsNames,
       budgetCapUsd: options.maxUsdPerCard ?? null,
       budgetFilterMode: options.maxUsdPerCard === undefined ? 'not-requested' : 'exact-sampled-printing',
       budgetRejectedOverCap,
       budgetRejectedUnknownPrice,
       budgetRejectedUnavailableFinish,
-      note: options.maxUsdPerCard !== undefined
-        ? 'The neutral sample remains bounded and non-popularity ordered. Under a per-card search cap, sampled exact physical printings must carry a declared priced finish at or below the cap, while required basics use a separate bounded exhaustive physical-printing lookup so deep basic-land histories do not create false budget negatives.'
-        : exhaustive
-          ? 'Every configured stratum fit inside its one-page sample bound.'
-          : 'This is an explicitly bounded stratified candidate sample, not an exhaustive search of every Commander-legal Magic card.',
+      note: options.maxUsdPerCard === undefined
+        ? 'Unrestricted neutral discovery uses bounded deterministic name/release views rather than EDHREC ordering. The result is sampled, not a claim that every legal card was exhaustively searched.'
+        : 'Unrestricted neutral discovery uses bounded deterministic physical-printing samples rather than EDHREC ordering; only sampled exact printings with verifiable finish-aware USD evidence under the candidate cap survive. This is sampled, not an exhaustive cheapest-printing claim for the entire unrestricted card pool.',
     },
   };
 }
