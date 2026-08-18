@@ -7,7 +7,7 @@ import {
   type PrintingPolicyInputV08,
 } from './printing-policy-v08.js';
 import { getCardsByNames, inferCardRoles } from './scryfall.js';
-import { searchSpellbookVariants } from './spellbook.js';
+import { searchSpellbookVariantsEvidence } from './spellbook.js';
 
 export interface GeneralWinPackageOptionsV15 extends PrintingPolicyInputV08 {
   maxUsdPerCard?: number;
@@ -176,7 +176,8 @@ export async function discoverGeneralWinPackagesV15(
   commanders: readonly ScryfallCard[],
   options: GeneralWinPackageOptionsV15 = {},
 ): Promise<{
-  status: 'verified-win-packages-found' | 'no-verified-win-package';
+  status: 'verified-win-packages-found' | 'no-verified-win-package' | 'verification-unavailable';
+  sourceCompleteness: 'complete' | 'partial' | 'unavailable';
   selected: GeneralWinPackageCandidateV15 | null;
   candidates: GeneralWinPackageCandidateV15[];
   queryAudit: Array<Record<string, unknown>>;
@@ -193,18 +194,39 @@ export async function discoverGeneralWinPackagesV15(
   const colors = commanderIdentity(commanders);
   const raw: unknown[] = [];
   const queryAudit: Array<Record<string, unknown>> = [];
+  let availableQueries = 0;
+  let unavailableQueries = 0;
   for (const query of buildGeneralWinPackageQueriesV15(maxPackageCards, identityToken(commanders))) {
-    const result = await searchSpellbookVariants(query, { limit: 75, ordering: '-popularity' });
+    const result = await searchSpellbookVariantsEvidence(query, { limit: 75, ordering: '-popularity' });
     const rows = Array.isArray(result.results) ? result.results : [];
-    raw.push(...rows);
-    queryAudit.push({ query, returned: rows.length, totalMatching: result.count ?? null });
+    const available = result.sourceStatus === 'available' && result.verificationComplete === true;
+    if (available) {
+      availableQueries += 1;
+      raw.push(...rows);
+    } else {
+      unavailableQueries += 1;
+    }
+    queryAudit.push({
+      query,
+      returned: rows.length,
+      totalMatching: result.count ?? null,
+      sourceStatus: result.sourceStatus ?? 'unknown',
+      verificationComplete: result.verificationComplete === true,
+      ...(result.sourceFailure ? { sourceFailure: result.sourceFailure } : {}),
+    });
   }
+  const sourceCompleteness: 'complete' | 'partial' | 'unavailable' = unavailableQueries === 0
+    ? 'complete'
+    : availableQueries === 0
+      ? 'unavailable'
+      : 'partial';
 
   const ranked = rankGeneralWinPackageVariantsV15(raw, commanderNames, options).slice(0, maxCandidates).map(record);
   const names = [...new Set(ranked.flatMap((candidate) => Array.isArray(candidate.names) ? candidate.names.map(String) : []))];
   const lookup = names.length > 0 ? await getCardsByNames(names) : { cards: [], notFound: [] };
   const byName = new Map(lookup.cards.map((card) => [normalize(card.name), card]));
   const commanderByName = new Map(commanders.map((card) => [normalize(card.name), card]));
+  const printingCache = new Map<string, Awaited<ReturnType<typeof selectEligiblePrintingV08>>>();
   const candidates: GeneralWinPackageCandidateV15[] = [];
   const rejectionAudit: Array<Record<string, unknown>> = [];
 
@@ -230,7 +252,11 @@ export async function discoverGeneralWinPackagesV15(
         rejected.push(`${name}: outside Commander legality/color identity`);
         continue;
       }
-      const printing = await selectEligiblePrintingV08(oracle, policy, options.maxUsdPerCard);
+      let printing = printingCache.get(normalized);
+      if (!printingCache.has(normalized)) {
+        printing = await selectEligiblePrintingV08(oracle, policy, options.maxUsdPerCard);
+        printingCache.set(normalized, printing ?? null);
+      }
       if (!printing) {
         valid = false;
         rejected.push(`${name}: no eligible physical printing`);
@@ -279,8 +305,14 @@ export async function discoverGeneralWinPackagesV15(
     || b.popularity - a.popularity
     || a.comboId.localeCompare(b.comboId));
 
+  const status = candidates.length > 0
+    ? 'verified-win-packages-found'
+    : sourceCompleteness === 'complete'
+      ? 'no-verified-win-package'
+      : 'verification-unavailable';
   return {
-    status: candidates.length > 0 ? 'verified-win-packages-found' : 'no-verified-win-package',
+    status,
+    sourceCompleteness,
     selected: candidates[0] ?? null,
     candidates,
     queryAudit,
