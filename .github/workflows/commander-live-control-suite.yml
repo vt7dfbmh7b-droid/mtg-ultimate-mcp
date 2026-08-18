@@ -17,68 +17,163 @@ concurrency:
   group: commander-live-suite-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  LIVE_CONTROL_COOLDOWN_SECONDS: 30
+
 jobs:
-  ff-najeela-bracket4:
-    uses: ./.github/workflows/ff-najeela-bracket4-control.yml
-
-  ff-neutral:
-    needs: ff-najeela-bracket4
-    if: always()
-    uses: ./.github/workflows/ff-neutral-build-control.yml
-
-  ff-bracket5:
-    needs: ff-neutral
-    if: always()
-    uses: ./.github/workflows/ff-bracket5-e2e.yml
-
-  unrestricted-cedh:
-    needs: ff-bracket5
-    if: always()
-    uses: ./.github/workflows/unrestricted-cedh-control.yml
-
-  universal-pipeline:
-    needs: unrestricted-cedh
-    if: always()
-    uses: ./.github/workflows/universal-build-pipeline-control.yml
-
-  unrestricted-neutral:
-    needs: universal-pipeline
-    if: always()
-    uses: ./.github/workflows/unrestricted-neutral-build-control.yml
-
-  neutral-exact-budget:
-    needs: unrestricted-neutral
-    if: always()
-    uses: ./.github/workflows/neutral-exact-per-card-budget-control.yml
-
-  neutral-ff-budget:
-    needs: neutral-exact-budget
-    if: always()
-    uses: ./.github/workflows/neutral-ff-exact-budget-control.yml
-
-  require-core-controls:
-    if: always()
-    needs:
-      - ff-najeela-bracket4
-      - ff-neutral
-      - ff-bracket5
-      - unrestricted-cedh
-      - universal-pipeline
-      - unrestricted-neutral
-      - neutral-exact-budget
-      - neutral-ff-budget
+  core-live-controls:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     steps:
-      - name: Require every sequential core control to pass
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies once
+        run: npm install
+
+      - name: Type-check and build once
+        run: npm run build
+
+      - name: FF Najeela high-Bracket-4 control
+        id: ff_najeela
+        continue-on-error: true
+        run: npx tsx scripts/e2e-ff-najeela-bracket4-v15.ts
+
+      - name: Cool down live providers after FF Najeela
+        if: always()
+        run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
+
+      - name: FF neutral autonomous build control
+        id: ff_neutral
+        continue-on-error: true
+        run: npx tsx scripts/e2e-ff-neutral-build-v15.ts
+
+      - name: Upload FF neutral result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: suite-ff-neutral-${{ github.sha }}
+          path: |
+            ff-neutral-build-result.json
+            ff-neutral-build-selected-deck.txt
+            ff-neutral-build-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Cool down live providers after FF neutral
+        if: always()
+        run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
+
+      - name: Final Fantasy Bracket 5 target control
+        id: ff_bracket5
+        continue-on-error: true
+        run: npx tsx scripts/e2e-ff-bracket5.ts
+
+      - name: Cool down live providers after FF Bracket 5
+        if: always()
+        run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
+
+      - name: Unrestricted cEDH control
+        id: unrestricted_cedh
+        continue-on-error: true
+        run: npx tsx scripts/e2e-unrestricted-cedh-v15.ts
+
+      - name: Cool down live providers after unrestricted cEDH
+        if: always()
+        run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
+
+      - name: Universal Commander build pipeline control
+        id: universal_pipeline
+        continue-on-error: true
+        run: npx tsx scripts/e2e-universal-build-pipeline-v15.ts
+
+      - name: Upload universal pipeline result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: suite-universal-build-${{ github.sha }}
+          path: |
+            universal-build-pipeline-live-result.json
+            universal-build-pipeline-live-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Cool down live providers after universal pipeline
+        if: always()
+        run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
+
+      - name: Unrestricted neutral Commander build control
+        id: unrestricted_neutral
+        continue-on-error: true
+        run: npx tsx scripts/e2e-unrestricted-neutral-build-v15.ts
+
+      - name: Upload unrestricted neutral result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: suite-unrestricted-neutral-${{ github.sha }}
+          path: |
+            unrestricted-neutral-build-live-result.json
+            unrestricted-neutral-build-live-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Cool down live providers before deep budget printing search
+        if: always()
+        run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
+
+      - name: Neutral exact per-card budget control
+        id: neutral_budget
+        continue-on-error: true
+        run: npx tsx scripts/e2e-neutral-exact-per-card-budget-v15.ts
+
+      - name: Upload neutral exact-budget result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: suite-neutral-exact-budget-${{ github.sha }}
+          path: |
+            neutral-exact-per-card-budget-live-result.json
+            neutral-exact-per-card-budget-live-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Cool down live providers before FF budget composition
+        if: always()
+        run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
+
+      - name: Neutral Final Fantasy exact-budget control
+        id: ff_budget
+        continue-on-error: true
+        run: npx tsx scripts/e2e-neutral-ff-exact-budget-v15.ts
+
+      - name: Upload FF exact-budget result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: suite-neutral-ff-budget-${{ github.sha }}
+          path: |
+            neutral-ff-exact-budget-live-result.json
+            neutral-ff-exact-budget-live-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Require every core live control to pass
+        if: always()
         env:
-          FF_NAJEELA: ${{ needs.ff-najeela-bracket4.result }}
-          FF_NEUTRAL: ${{ needs.ff-neutral.result }}
-          FF_BRACKET5: ${{ needs.ff-bracket5.result }}
-          UNRESTRICTED_CEDH: ${{ needs.unrestricted-cedh.result }}
-          UNIVERSAL_PIPELINE: ${{ needs.universal-pipeline.result }}
-          UNRESTRICTED_NEUTRAL: ${{ needs.unrestricted-neutral.result }}
-          NEUTRAL_BUDGET: ${{ needs.neutral-exact-budget.result }}
-          FF_BUDGET: ${{ needs.neutral-ff-budget.result }}
+          FF_NAJEELA: ${{ steps.ff_najeela.outcome }}
+          FF_NEUTRAL: ${{ steps.ff_neutral.outcome }}
+          FF_BRACKET5: ${{ steps.ff_bracket5.outcome }}
+          UNRESTRICTED_CEDH: ${{ steps.unrestricted_cedh.outcome }}
+          UNIVERSAL_PIPELINE: ${{ steps.universal_pipeline.outcome }}
+          UNRESTRICTED_NEUTRAL: ${{ steps.unrestricted_neutral.outcome }}
+          NEUTRAL_BUDGET: ${{ steps.neutral_budget.outcome }}
+          FF_BUDGET: ${{ steps.ff_budget.outcome }}
         run: |
           printf '%s\n' \
             "FF Najeela B4: $FF_NAJEELA" \
