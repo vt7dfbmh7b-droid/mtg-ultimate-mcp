@@ -170,7 +170,7 @@ export async function discoverGeneralWinPackagesV15(
   candidates: GeneralWinPackageCandidateV15[];
   queryAudit: Array<Record<string, unknown>>;
   rejectionAudit: Array<Record<string, unknown>>;
-  printingPolicy: string;
+  printingPolicy: Record<string, unknown>;
   source: string;
 }> {
   if (commanders.length < 1 || commanders.length > 2) throw new Error('General win-package discovery requires one or two resolved commanders.');
