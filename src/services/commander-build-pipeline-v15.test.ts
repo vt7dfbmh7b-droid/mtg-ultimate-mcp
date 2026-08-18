@@ -31,6 +31,15 @@ test('missing target never falls through to the legacy hidden-Bracket-4 builder'
   assert.equal(plan.unsupportedConstraints.length, 0);
 });
 
+test('unrestricted neutral construction is now a supported strategy-first lane', () => {
+  const plan = planCommanderBuildPipelineV15([commander()]);
+  assert.equal(plan.requestedTargetBracket, null);
+  assert.equal(plan.lane, 'neutral-themed');
+  assert.equal(plan.archetype, 'combat-tokens');
+  assert.equal(plan.seedWinPackage, false);
+  assert.deepEqual(plan.unsupportedConstraints, []);
+});
+
 test('an explicit target uses the targeted lane and high-power targets can seed verified packages', () => {
   const plan = planCommanderBuildPipelineV15([commander()], { targetBracket: 5 });
   assert.equal(plan.lane, 'targeted-v07');
