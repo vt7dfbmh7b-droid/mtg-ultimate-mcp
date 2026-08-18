@@ -10,12 +10,21 @@ const parseOptionalPositiveFloat = (value: string | undefined): number | null =>
   return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
 };
 
+const clampRetryAttempts = (value: string | undefined, fallback: number): number =>
+  Math.max(1, Math.min(5, parsePositiveInt(value, fallback)));
+
+const defaultHttpRetryAttempts = clampRetryAttempts(process.env.HTTP_RETRY_ATTEMPTS, 3);
+
 export const config = {
   version: '0.13.0',
   port: parsePositiveInt(process.env.PORT, 3000),
   httpTimeoutMs: parsePositiveInt(process.env.HTTP_TIMEOUT_MS, 15_000),
-  httpRetryAttempts: Math.max(1, Math.min(5, parsePositiveInt(process.env.HTTP_RETRY_ATTEMPTS, 3))),
+  httpRetryAttempts: defaultHttpRetryAttempts,
   httpRetryBaseMs: Math.max(25, Math.min(5_000, parsePositiveInt(process.env.HTTP_RETRY_BASE_MS, 250))),
+  scryfallHttpTimeoutMs: parsePositiveInt(process.env.SCRYFALL_HTTP_TIMEOUT_MS, 12_000),
+  scryfallHttpRetryAttempts: clampRetryAttempts(process.env.SCRYFALL_HTTP_RETRY_ATTEMPTS, defaultHttpRetryAttempts),
+  commanderSpellbookHttpTimeoutMs: parsePositiveInt(process.env.COMMANDER_SPELLBOOK_HTTP_TIMEOUT_MS, 25_000),
+  commanderSpellbookHttpRetryAttempts: clampRetryAttempts(process.env.COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS, 2),
   scryfallApiBase: (process.env.SCRYFALL_API_BASE ?? 'https://api.scryfall.com').replace(/\/$/, ''),
   commanderSpellbookApiBase: (process.env.COMMANDER_SPELLBOOK_API_BASE ?? 'https://backend.commanderspellbook.com').replace(/\/$/, ''),
   topDeckApiBase: (process.env.TOPDECK_API_BASE ?? 'https://topdeck.gg/api').replace(/\/$/, ''),
