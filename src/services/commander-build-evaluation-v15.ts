@@ -49,6 +49,7 @@ export interface PostBuildEvidenceV15 {
   spellbookTag: string | null;
   completeComboCount: number;
   verifiedWinningCombos: number;
+  verifiedWinningComboIds: string[];
   ruthlessWinningCombos: number;
   strategicallyRelevantCombos: number;
   gameChangerNames: string[];
@@ -91,11 +92,13 @@ export function derivePostBuildEvidenceV15(input: PostBuildEvidenceInputV15): Po
   const combos = record(input.combos);
   const included = Array.isArray(combos.included) ? combos.included.map(record) : [];
   const counts = record(combos.counts);
+  const winningIncluded = included.filter((combo) =>
+    Array.isArray(combo.results) && isWinResultV14(combo.results.map(String)));
+  const verifiedWinningComboIds = [...new Set(winningIncluded
+    .map((combo) => String(combo.id ?? '').trim())
+    .filter(Boolean))].sort((a, b) => a.localeCompare(b));
   const verifiedWinningCombos = countWinningCombosV14(combos);
-  const ruthlessWinningCombos = included.filter((combo) =>
-    String(combo.bracketTag ?? '') === 'R'
-    && Array.isArray(combo.results)
-    && isWinResultV14(combo.results.map(String))).length;
+  const ruthlessWinningCombos = winningIncluded.filter((combo) => String(combo.bracketTag ?? '') === 'R').length;
   const strategicallyRelevantCombos = Array.isArray(bracket.strategicallyRelevantCombos)
     ? bracket.strategicallyRelevantCombos.length
     : 0;
@@ -127,6 +130,7 @@ export function derivePostBuildEvidenceV15(input: PostBuildEvidenceInputV15): Po
     spellbookTag,
     completeComboCount: finiteNumber(counts.included),
     verifiedWinningCombos,
+    verifiedWinningComboIds,
     ruthlessWinningCombos,
     strategicallyRelevantCombos,
     gameChangerNames,
