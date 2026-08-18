@@ -2,12 +2,6 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { estimateCommanderBracket } from './spellbook.js';
 
-afterEachRestore();
-
-function afterEachRestore(): void {
-  // Kept as a named helper so every test uses try/finally and cannot leak a mocked global fetch.
-}
-
 async function withMockFetch<T>(mock: typeof fetch, run: () => Promise<T>): Promise<T> {
   const original = globalThis.fetch;
   globalThis.fetch = mock;
