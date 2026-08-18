@@ -2,19 +2,6 @@ name: US$100 Whole-Deck Control
 
 on:
   workflow_dispatch:
-  push:
-    branches: ["agent/**"]
-    paths:
-      - "scripts/e2e-budget-100-v15.ts"
-      - ".github/workflows/budget-100-control.yml"
-      - "src/services/deck-whole-budget-v15.ts"
-      - "src/services/deck-budget-planner-v15.ts"
-      - "src/services/deck-builder-v07.ts"
-      - "src/services/bracket-ceiling-v15.ts"
-      - "src/services/commander-rules.ts"
-      - "src/services/printing-policy-v08.ts"
-      - "src/services/scryfall.ts"
-      - "src/services/spellbook.ts"
 
 permissions:
   contents: read

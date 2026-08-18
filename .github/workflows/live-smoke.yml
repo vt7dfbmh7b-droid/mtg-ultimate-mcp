@@ -2,17 +2,6 @@ name: Live MTG smoke
 
 on:
   workflow_dispatch:
-  push:
-    branches: ["agent/**"]
-    paths:
-      - "scripts/live-smoke.ts"
-      - ".github/workflows/live-smoke.yml"
-      - "src/services/source-health-v12.ts"
-      - "src/services/currency-v13.ts"
-      - "src/services/pricing-v13.ts"
-      - "src/services/precons-v10.ts"
-      - "src/services/scryfall.ts"
-      - "src/server-current.ts"
 
 permissions:
   contents: read
@@ -24,14 +13,11 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-
       - name: Install dependencies
         run: npm install
-
       - name: Run live MTG + NZD pricing smoke test
         run: npm run test:live

@@ -2,25 +2,7 @@ name: Unrestricted cEDH Control
 
 on:
   workflow_dispatch:
-  push:
-    branches: ["agent/**"]
-    paths:
-      - "scripts/e2e-unrestricted-cedh-v15.ts"
-      - ".github/workflows/unrestricted-cedh-control.yml"
-      - "src/services/cedh-workflow-v14.ts"
-      - "src/services/cedh-seed-package-v14.ts"
-      - "src/services/cedh-win-package-v14.ts"
-      - "src/services/cedh-efficiency-v14.ts"
-      - "src/services/cedh-manabase-v14.ts"
-      - "src/services/deck-builder-v07.ts"
-      - "src/services/commander-rules.ts"
-      - "src/services/commander-rules-current.test.ts"
-      - "src/services/historical-carddata-provenance-v15.ts"
-      - "src/services/historical-carddata-snapshot-validation-v15.ts"
-      - "src/services/historical-carddata-commander-legality-v15.test.ts"
-      - "src/services/printing-policy-v08.ts"
-      - "src/services/scryfall.ts"
-      - "src/services/spellbook.ts"
+  workflow_call:
 
 permissions:
   contents: read

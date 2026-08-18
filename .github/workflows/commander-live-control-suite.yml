@@ -1,0 +1,96 @@
+name: Commander Live Control Suite
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "scripts/**"
+      - "testdata/**"
+      - ".github/workflows/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: commander-live-suite-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ff-najeela-bracket4:
+    uses: ./.github/workflows/ff-najeela-bracket4-control.yml
+
+  ff-neutral:
+    needs: ff-najeela-bracket4
+    if: always()
+    uses: ./.github/workflows/ff-neutral-build-control.yml
+
+  ff-bracket5:
+    needs: ff-neutral
+    if: always()
+    uses: ./.github/workflows/ff-bracket5-e2e.yml
+
+  unrestricted-cedh:
+    needs: ff-bracket5
+    if: always()
+    uses: ./.github/workflows/unrestricted-cedh-control.yml
+
+  universal-pipeline:
+    needs: unrestricted-cedh
+    if: always()
+    uses: ./.github/workflows/universal-build-pipeline-control.yml
+
+  unrestricted-neutral:
+    needs: universal-pipeline
+    if: always()
+    uses: ./.github/workflows/unrestricted-neutral-build-control.yml
+
+  neutral-exact-budget:
+    needs: unrestricted-neutral
+    if: always()
+    uses: ./.github/workflows/neutral-exact-per-card-budget-control.yml
+
+  neutral-ff-budget:
+    needs: neutral-exact-budget
+    if: always()
+    uses: ./.github/workflows/neutral-ff-exact-budget-control.yml
+
+  require-core-controls:
+    if: always()
+    needs:
+      - ff-najeela-bracket4
+      - ff-neutral
+      - ff-bracket5
+      - unrestricted-cedh
+      - universal-pipeline
+      - unrestricted-neutral
+      - neutral-exact-budget
+      - neutral-ff-budget
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require every sequential core control to pass
+        env:
+          FF_NAJEELA: ${{ needs.ff-najeela-bracket4.result }}
+          FF_NEUTRAL: ${{ needs.ff-neutral.result }}
+          FF_BRACKET5: ${{ needs.ff-bracket5.result }}
+          UNRESTRICTED_CEDH: ${{ needs.unrestricted-cedh.result }}
+          UNIVERSAL_PIPELINE: ${{ needs.universal-pipeline.result }}
+          UNRESTRICTED_NEUTRAL: ${{ needs.unrestricted-neutral.result }}
+          NEUTRAL_BUDGET: ${{ needs.neutral-exact-budget.result }}
+          FF_BUDGET: ${{ needs.neutral-ff-budget.result }}
+        run: |
+          printf '%s\n' \
+            "FF Najeela B4: $FF_NAJEELA" \
+            "FF neutral: $FF_NEUTRAL" \
+            "FF Bracket 5: $FF_BRACKET5" \
+            "Unrestricted cEDH: $UNRESTRICTED_CEDH" \
+            "Universal pipeline: $UNIVERSAL_PIPELINE" \
+            "Unrestricted neutral: $UNRESTRICTED_NEUTRAL" \
+            "Neutral exact budget: $NEUTRAL_BUDGET" \
+            "FF exact budget: $FF_BUDGET"
+          for result in "$FF_NAJEELA" "$FF_NEUTRAL" "$FF_BRACKET5" "$UNRESTRICTED_CEDH" "$UNIVERSAL_PIPELINE" "$UNRESTRICTED_NEUTRAL" "$NEUTRAL_BUDGET" "$FF_BUDGET"; do
+            if [ "$result" != "success" ]; then
+              exit 1
+            fi
+          done

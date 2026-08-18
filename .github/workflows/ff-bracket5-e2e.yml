@@ -1,35 +1,8 @@
 name: Final Fantasy Bracket 5 E2E
 
 on:
-  push:
-    branches: [main, "agent/**"]
-    paths:
-      - "src/services/commander-rules.ts"
-      - "src/services/commander-rules-current.test.ts"
-      - "src/services/historical-carddata-provenance-v15.ts"
-      - "src/services/historical-carddata-snapshot-validation-v15.ts"
-      - "src/services/historical-carddata-commander-legality-v15.test.ts"
-      - "src/services/deck-builder-v07.ts"
-      - "src/services/deck-printing-policy-v08.ts"
-      - "src/services/cedh-**"
-      - "src/services/bracket-**"
-      - "scripts/e2e-ff-bracket5.ts"
-      - ".github/workflows/ff-bracket5-e2e.yml"
-  pull_request:
-    branches: [main]
-    paths:
-      - "src/services/commander-rules.ts"
-      - "src/services/commander-rules-current.test.ts"
-      - "src/services/historical-carddata-provenance-v15.ts"
-      - "src/services/historical-carddata-snapshot-validation-v15.ts"
-      - "src/services/historical-carddata-commander-legality-v15.test.ts"
-      - "src/services/deck-builder-v07.ts"
-      - "src/services/deck-printing-policy-v08.ts"
-      - "src/services/cedh-**"
-      - "src/services/bracket-**"
-      - "scripts/e2e-ff-bracket5.ts"
-      - ".github/workflows/ff-bracket5-e2e.yml"
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
@@ -37,20 +10,17 @@ permissions:
 jobs:
   ff-bracket5-e2e:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-
       - name: Install dependencies
         run: npm install
-
       - name: Build
         run: npm run build
-
       - name: Run Final Fantasy Bracket 5 target E2E
         run: npx tsx scripts/e2e-ff-bracket5.ts

@@ -1,15 +1,8 @@
 name: Universal Commander Build Pipeline Control
 
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - "scripts/e2e-universal-build-pipeline-v15.ts"
-      - "src/services/commander-build-pipeline-v15.ts"
-      - "src/services/commander-build-evaluation-v15.ts"
-      - "src/services/general-win-package-v15.ts"
-      - ".github/workflows/universal-build-pipeline-control.yml"
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
