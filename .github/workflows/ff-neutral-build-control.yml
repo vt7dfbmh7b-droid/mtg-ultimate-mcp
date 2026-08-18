@@ -1,0 +1,72 @@
+name: FF Neutral Autonomous Build Control
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/services/neutral-commander-selection-v15.ts"
+      - "src/services/neutral-commander-selection-v15.test.ts"
+      - "src/services/neutral-deck-builder-v15.ts"
+      - "src/services/neutral-win-routes-v15.ts"
+      - "src/services/neutral-win-routes-v15.test.ts"
+      - "src/services/actual-bracket-assessment-v15.ts"
+      - "src/services/actual-bracket-assessment-v15.test.ts"
+      - "scripts/e2e-ff-neutral-build-v15.ts"
+      - ".github/workflows/ff-neutral-build-control.yml"
+      - "src/services/commander-rules.ts"
+      - "src/services/deck.ts"
+      - "src/services/efficient-win-plan-v15.ts"
+      - "src/services/printing-policy-v08.ts"
+      - "src/services/scryfall-paged-search-v15.ts"
+      - "src/services/scryfall.ts"
+      - "src/services/spellbook.ts"
+      - "src/services/cedh-win-package-v14.ts"
+  push:
+    branches: ["agent/**"]
+    paths:
+      - "src/services/neutral-commander-selection-v15.ts"
+      - "src/services/neutral-commander-selection-v15.test.ts"
+      - "src/services/neutral-deck-builder-v15.ts"
+      - "src/services/neutral-win-routes-v15.ts"
+      - "src/services/neutral-win-routes-v15.test.ts"
+      - "src/services/actual-bracket-assessment-v15.ts"
+      - "src/services/actual-bracket-assessment-v15.test.ts"
+      - "scripts/e2e-ff-neutral-build-v15.ts"
+      - ".github/workflows/ff-neutral-build-control.yml"
+      - "src/services/commander-rules.ts"
+      - "src/services/deck.ts"
+      - "src/services/efficient-win-plan-v15.ts"
+      - "src/services/printing-policy-v08.ts"
+      - "src/services/scryfall-paged-search-v15.ts"
+      - "src/services/scryfall.ts"
+      - "src/services/spellbook.ts"
+      - "src/services/cedh-win-package-v14.ts"
+
+permissions:
+  contents: read
+
+jobs:
+  ff-neutral-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run build
+      - name: Build a neutral FF-only Commander deck and assess it afterward
+        run: npx tsx scripts/e2e-ff-neutral-build-v15.ts
+      - name: Upload neutral build result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ff-neutral-build-result-${{ github.sha }}
+          path: |
+            ff-neutral-build-result.json
+            ff-neutral-build-selected-deck.txt
+            ff-neutral-build-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
