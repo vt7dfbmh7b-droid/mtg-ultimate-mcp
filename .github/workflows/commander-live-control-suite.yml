@@ -21,7 +21,9 @@ env:
   LIVE_CONTROL_COOLDOWN_SECONDS: 30
   LIVE_BUDGET_COOLDOWN_SECONDS: 60
   HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
   SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
   COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
 
 jobs:
@@ -48,7 +50,8 @@ jobs:
           printf '%s\n' \
             "Ordinary cooldown: ${LIVE_CONTROL_COOLDOWN_SECONDS}s" \
             "Budget/theme cooldown: ${LIVE_BUDGET_COOLDOWN_SECONDS}s" \
-            "HTTP retry base: ${HTTP_RETRY_BASE_MS}ms" \
+            "HTTP retry base/max: ${HTTP_RETRY_BASE_MS}/${HTTP_RETRY_MAX_MS}ms" \
+            "Scryfall minimum request gap: ${SCRYFALL_MIN_REQUEST_GAP_MS}ms" \
             "Scryfall attempts: ${SCRYFALL_HTTP_RETRY_ATTEMPTS}" \
             "Commander Spellbook attempts: ${COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS}"
 
