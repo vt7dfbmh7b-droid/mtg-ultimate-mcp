@@ -58,7 +58,7 @@ jobs:
         run: npx tsx scripts/e2e-ff-najeela-bracket4-v15.ts
 
       - name: Cool down live providers after FF Najeela
-        if: always()
+        if: ${{ !cancelled() }}
         run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
 
       - name: FF neutral autonomous build control
@@ -79,7 +79,7 @@ jobs:
           retention-days: 14
 
       - name: Cool down live providers after FF neutral
-        if: always()
+        if: ${{ !cancelled() }}
         run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
 
       - name: Final Fantasy Bracket 5 target control
@@ -88,7 +88,7 @@ jobs:
         run: npx tsx scripts/e2e-ff-bracket5.ts
 
       - name: Cool down live providers after FF Bracket 5
-        if: always()
+        if: ${{ !cancelled() }}
         run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
 
       - name: Unrestricted cEDH control
@@ -97,7 +97,7 @@ jobs:
         run: npx tsx scripts/e2e-unrestricted-cedh-v15.ts
 
       - name: Cool down live providers after unrestricted cEDH
-        if: always()
+        if: ${{ !cancelled() }}
         run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
 
       - name: Universal Commander build pipeline control
@@ -117,7 +117,7 @@ jobs:
           retention-days: 14
 
       - name: Cool down live providers after universal pipeline
-        if: always()
+        if: ${{ !cancelled() }}
         run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
 
       - name: Unrestricted neutral Commander build control
@@ -137,7 +137,7 @@ jobs:
           retention-days: 14
 
       - name: Cool down live providers before neutral theme control
-        if: always()
+        if: ${{ !cancelled() }}
         run: sleep "$LIVE_BUDGET_COOLDOWN_SECONDS"
 
       - name: Neutral free-form theme control
@@ -157,7 +157,7 @@ jobs:
           retention-days: 14
 
       - name: Cool down live providers before deep budget printing search
-        if: always()
+        if: ${{ !cancelled() }}
         run: sleep "$LIVE_BUDGET_COOLDOWN_SECONDS"
 
       - name: Neutral exact per-card budget control
@@ -177,7 +177,7 @@ jobs:
           retention-days: 14
 
       - name: Cool down live providers before FF budget composition
-        if: always()
+        if: ${{ !cancelled() }}
         run: sleep "$LIVE_BUDGET_COOLDOWN_SECONDS"
 
       - name: Neutral Final Fantasy exact-budget control
