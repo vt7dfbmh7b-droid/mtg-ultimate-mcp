@@ -147,7 +147,7 @@ function retryDelayMs(attempt: number, response?: Response): number {
   const headerDelay = response ? parseRetryAfterMs(response.headers.get('retry-after')) : null;
   if (headerDelay !== null) return headerDelay;
   const base = config.httpRetryBaseMs;
-  return Math.min(3_000, base * (2 ** Math.max(0, attempt - 1)));
+  return Math.min(config.httpRetryMaxMs, base * (2 ** Math.max(0, attempt - 1)));
 }
 
 function sleep(ms: number): Promise<void> {
