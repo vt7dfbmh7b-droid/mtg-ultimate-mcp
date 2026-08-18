@@ -29,6 +29,7 @@ test('post-build evidence counts only combos that actually win as Ruthless winni
   });
   assert.equal(evidence.completeComboCount, 2);
   assert.equal(evidence.verifiedWinningCombos, 1);
+  assert.deepEqual(evidence.verifiedWinningComboIds, ['win']);
   assert.equal(evidence.ruthlessWinningCombos, 1);
   assert.equal(evidence.strategicallyRelevantCombos, 2);
   assert.deepEqual(evidence.gameChangerNames, ['A', 'B']);
@@ -57,4 +58,5 @@ test('post-build evidence carries hard failures through instead of manufacturing
   assert.equal(evidence.signals.fullyResolved, false);
   assert.equal(evidence.signals.printingPolicyCompliant, false);
   assert.equal(evidence.verifiedWinningCombos, 0);
+  assert.deepEqual(evidence.verifiedWinningComboIds, []);
 });
