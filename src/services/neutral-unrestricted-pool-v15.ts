@@ -84,8 +84,12 @@ function sleep(ms: number): Promise<void> {
 
 function canonicalIdentity(colors: readonly string[]): string {
   const present = new Set(colors.map((color) => color.trim().toUpperCase()));
-  const ordered = COLOR_ORDER.filter((color) => present.has(color));
-  return ordered.length > 0 ? ordered.join('').toLocaleLowerCase() : 'c';
+  return COLOR_ORDER.filter((color) => present.has(color)).join('').toLocaleLowerCase();
+}
+
+function identityClause(colors: readonly string[]): string {
+  const canonical = canonicalIdentity(colors);
+  return canonical ? `id<=${canonical}` : 'id:c';
 }
 
 function archetypeClause(archetype: NeutralArchetypeV15): string {
@@ -106,7 +110,7 @@ export function neutralUnrestrictedStrataV15(
   archetype: NeutralArchetypeV15,
   includePromos = true,
 ): NeutralUnrestrictedStratumV15[] {
-  const common = `f:commander game:paper id<=${canonicalIdentity(colors)}${includePromos ? '' : ' -is:promo'}`;
+  const common = `f:commander game:paper ${identityClause(colors)}${includePromos ? '' : ' -is:promo'}`;
   const families: Array<{ family: NeutralUnrestrictedStratumV15['family']; clause: string }> = [
     { family: 'early', clause: '-t:land mv<=2' },
     { family: 'mid', clause: '-t:land mv>=3 mv<=4' },
