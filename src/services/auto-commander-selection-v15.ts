@@ -162,22 +162,40 @@ export async function discoverAutoCommanderCandidatesV15(
 ): Promise<{
   policy: Awaited<ReturnType<typeof resolvePrintingPolicyV08>>;
   discoveredCardCount: number;
+  discoveryBuckets: Array<{ filter: string; count: number }>;
   candidates: AutoCommanderCandidateV15[];
 }> {
   const policy = await resolvePrintingPolicyV08(options);
   if (!policy.searchClause) throw new Error('Automatic commander discovery requires a bounded printing policy.');
 
-  const queries = [
-    `${policy.searchClause} is:commander game:paper`,
-    `${policy.searchClause} is:commander game:paper cmc<=3`,
+  // searchCards intentionally caps one query at 50 records. Partition by exact mana value
+  // so a large themed printing family cannot silently hide an eligible commander on page 2.
+  // If any bucket itself reaches the cap, fail closed rather than pretending discovery was exhaustive.
+  const manaFilters = [
+    'cmc=0',
+    'cmc=1',
+    'cmc=2',
+    'cmc=3',
+    'cmc=4',
+    'cmc=5',
+    'cmc=6',
+    'cmc=7',
+    'cmc>=8',
   ];
   const discovered: ScryfallCard[] = [];
-  for (const query of queries) {
+  const discoveryBuckets: Array<{ filter: string; count: number }> = [];
+  for (const filter of manaFilters) {
+    const query = `${policy.searchClause} is:commander game:paper ${filter}`;
     try {
-      discovered.push(...await searchCards(query, 50));
-    } catch {
-      // A supplemental query may have no matches. The union still fails closed below if
-      // no usable commanders were discovered at all.
+      const cards = await searchCards(query, 50);
+      discoveryBuckets.push({ filter, count: cards.length });
+      if (cards.length >= 50) {
+        throw new Error(`Automatic commander discovery bucket ${filter} reached the 50-card query ceiling; split the bucket further before claiming exhaustive discovery.`);
+      }
+      discovered.push(...cards);
+    } catch (error) {
+      if (error instanceof Error && /50-card query ceiling/.test(error.message)) throw error;
+      discoveryBuckets.push({ filter, count: 0 });
     }
   }
 
@@ -189,6 +207,7 @@ export async function discoverAutoCommanderCandidatesV15(
   return {
     policy,
     discoveredCardCount: unique.length,
+    discoveryBuckets,
     candidates,
   };
 }
