@@ -60,7 +60,7 @@ export interface CommanderBuildEvaluationV15 {
   resolvedCards: ScryfallCard[];
   unresolvedCards: string[];
   commanderRules: ReturnType<typeof validateCommanderDeck>;
-  printingPolicy: string;
+  printingPolicy: Record<string, unknown>;
   printingPolicySatisfied: boolean;
   offPolicyCards: string[];
   metrics: ReturnType<typeof buildDeckMetrics>;
@@ -180,10 +180,10 @@ export async function evaluateCommanderBuildV15(
     spellbookBracket,
     combos,
     efficientWinPlanSupported: efficientWinPlan?.supported === true,
-    cedhIntent: options.cedhIntent,
-    competitiveMetagameEvidence: options.competitiveMetagameEvidence,
-    optimizedPlanEvidence: options.optimizedPlanEvidence,
-    exhibitionIntent: options.exhibitionIntent,
+    ...(options.cedhIntent !== undefined ? { cedhIntent: options.cedhIntent } : {}),
+    ...(options.competitiveMetagameEvidence !== undefined ? { competitiveMetagameEvidence: options.competitiveMetagameEvidence } : {}),
+    ...(options.optimizedPlanEvidence !== undefined ? { optimizedPlanEvidence: options.optimizedPlanEvidence } : {}),
+    ...(options.exhibitionIntent !== undefined ? { exhibitionIntent: options.exhibitionIntent } : {}),
   });
   const actualBracket = assessActualBracketV15(evidence.signals, options.constraintDescriptions ?? []);
 
