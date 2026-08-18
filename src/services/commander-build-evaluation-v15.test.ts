@@ -15,7 +15,7 @@ test('post-build evidence counts only combos that actually win as Ruthless winni
     cheapInteractionCount: 9,
     tutorCount: 5,
     gameChangerNames: ['B', 'A', 'A'],
-    spellbookBracket: { bracketTag: 'R', strategicallyRelevantCombos: [{}, {}] },
+    spellbookBracket: { sourceStatus: 'available', bracketTag: 'R', strategicallyRelevantCombos: [{}, {}] },
     combos: {
       counts: { included: 2 },
       included: [
@@ -32,11 +32,13 @@ test('post-build evidence counts only combos that actually win as Ruthless winni
   assert.deepEqual(evidence.verifiedWinningComboIds, ['win']);
   assert.equal(evidence.ruthlessWinningCombos, 1);
   assert.equal(evidence.strategicallyRelevantCombos, 2);
+  assert.equal(evidence.spellbookBracketSourceStatus, 'available');
+  assert.equal(evidence.spellbookBracketSourceFailure, null);
   assert.deepEqual(evidence.gameChangerNames, ['A', 'B']);
   assert.equal(evidence.signals.gameChangerCount, 2);
 });
 
-test('post-build evidence carries hard failures through instead of manufacturing a bracket-ready signal', () => {
+test('post-build evidence carries hard failures and unavailable advisory provenance without manufacturing signals', () => {
   const evidence = derivePostBuildEvidenceV15({
     commanderLegal: false,
     exactCardCount: false,
@@ -49,7 +51,12 @@ test('post-build evidence carries hard failures through instead of manufacturing
     cheapInteractionCount: 0,
     tutorCount: 0,
     gameChangerNames: [],
-    spellbookBracket: {},
+    spellbookBracket: {
+      sourceStatus: 'unavailable',
+      sourceFailure: { kind: 'request-failed', attempts: 2 },
+      bracketTag: null,
+      strategicallyRelevantCombos: [],
+    },
     combos: { counts: { included: 0 }, included: [] },
     efficientWinPlanSupported: false,
   });
@@ -59,4 +66,8 @@ test('post-build evidence carries hard failures through instead of manufacturing
   assert.equal(evidence.signals.printingPolicyCompliant, false);
   assert.equal(evidence.verifiedWinningCombos, 0);
   assert.deepEqual(evidence.verifiedWinningComboIds, []);
+  assert.equal(evidence.spellbookBracketSourceStatus, 'unavailable');
+  assert.deepEqual(evidence.spellbookBracketSourceFailure, { kind: 'request-failed', attempts: 2 });
+  assert.equal(evidence.spellbookTag, null);
+  assert.equal(evidence.strategicallyRelevantCombos, 0);
 });
