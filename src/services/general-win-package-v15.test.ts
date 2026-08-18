@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { buildGeneralWinPackageQueriesV15, rankGeneralWinPackageVariantsV15 } from './general-win-package-v15.js';
+import {
+  buildGeneralWinPackageQueriesV15,
+  canonicalIdentityTokenV15,
+  rankGeneralWinPackageVariantsV15,
+} from './general-win-package-v15.js';
 
 test('general win-package queries are winning-outcome searches without requiring Ruthless/cEDH tags', () => {
   const queries = buildGeneralWinPackageQueriesV15(3, 'WUBRG');
@@ -9,6 +13,15 @@ test('general win-package queries are winning-outcome searches without requiring
     'card<=3 is:winning legal:commander identity<=WUBRG',
   ]);
   assert.equal(queries.some((query) => query.includes('bracket:ruthless')), false);
+});
+
+test('Spellbook identity tokens always use canonical WUBRG ordering', () => {
+  assert.equal(canonicalIdentityTokenV15(['B', 'G', 'R', 'U', 'W']), 'WUBRG');
+  assert.equal(canonicalIdentityTokenV15(['G', 'U']), 'UG');
+  assert.equal(canonicalIdentityTokenV15([]), 'C');
+  assert.deepEqual(buildGeneralWinPackageQueriesV15(2, 'BGRUW'), [
+    'card<=2 is:winning legal:commander identity<=WUBRG',
+  ]);
 });
 
 test('general package ranking rejects impressive non-winning outcomes and excluded pieces', () => {
