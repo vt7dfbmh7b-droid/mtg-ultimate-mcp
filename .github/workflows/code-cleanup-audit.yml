@@ -28,26 +28,32 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
+          import re
 
-          replacements = {
-              Path('src/services/cedh-win-package-v14.ts'): [
-                  ("  type ResolvedPrintingPolicyV08,\n", ""),
-              ],
-              Path('src/services/references.ts'): [
-                  ("import type { ScryfallCard } from '../types/scryfall.js';\n", ""),
-              ],
-              Path('src/services/deck.ts'): [
-                  ("""function resolvedCardMap(cards: ScryfallCard[]): Map<string, ScryfallCard> {\n  const map = new Map<string, ScryfallCard>();\n  for (const card of cards) {\n    if (!map.has(card.name.toLocaleLowerCase())) map.set(card.name.toLocaleLowerCase(), card);\n  }\n  return map;\n}\n\n""", ""),
-              ],
-          }
+          edits = [
+              (
+                  Path('src/services/cedh-win-package-v14.ts'),
+                  r'^\s*type ResolvedPrintingPolicyV08,\r?\n',
+                  '',
+              ),
+              (
+                  Path('src/services/references.ts'),
+                  r"^import type \{ ScryfallCard \} from '../types/scryfall\.js';\r?\n",
+                  '',
+              ),
+              (
+                  Path('src/services/deck.ts'),
+                  r'^function resolvedCardMap\(cards: ScryfallCard\[\]\): Map<string, ScryfallCard> \{.*?^\}\r?\n\r?\n(?=function curveBucket)',
+                  '',
+              ),
+          ]
 
-          for path, edits in replacements.items():
+          for path, pattern, replacement in edits:
               text = path.read_text()
-              for old, new in edits:
-                  if old not in text:
-                      raise SystemExit(f'Expected cleanup target not found in {path}: {old!r}')
-                  text = text.replace(old, new, 1)
-              path.write_text(text)
+              updated, count = re.subn(pattern, replacement, text, count=1, flags=re.MULTILINE | re.DOTALL)
+              if count != 1:
+                  raise SystemExit(f'Expected exactly one cleanup target in {path}; matched {count}')
+              path.write_text(updated)
 
           Path('.github/workflows/code-cleanup-audit.yml').unlink()
       - run: npm install
