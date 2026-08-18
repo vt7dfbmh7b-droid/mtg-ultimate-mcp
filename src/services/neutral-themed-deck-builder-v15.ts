@@ -172,7 +172,7 @@ async function resolveExistingMatchingMustIncludes(
 ): Promise<number> {
   const uniqueNames = [...new Map(names.map((name) => [normalize(name), name.trim()])).values()].filter(Boolean);
   if (uniqueNames.length === 0) return 0;
-  const result = await getCardsByNames(uniqueNames);
+  const result = await getCardsByNames(uniqueNames.map(neutralCommanderLookupNameV15));
   if (result.notFound.length > 0) throw new Error(`Neutral theme must-include resolution failed: ${result.notFound.join(', ')}`);
   const commanderSet = new Set(commanderNames.map((name) => normalize(neutralCommanderLookupNameV15(name))));
   return result.cards.filter((card) => !commanderSet.has(normalize(neutralCommanderLookupNameV15(card.name))) && cardMatchesNeutralThemeV15(card, intent)).length;
@@ -337,6 +337,7 @@ export async function buildNeutralThemedCommanderDeckV15(
   const effectiveOptions: NeutralDeckBuildOptionsV15 = {
     ...options,
     ...(familyCompatibility.effectivePrintingFamily ? { printingFamily: familyCompatibility.effectivePrintingFamily } : {}),
+    ...(options.mustInclude ? { mustInclude: options.mustInclude.map(neutralCommanderLookupNameV15) } : {}),
   };
 
   let generatedThemeSeedNames: string[] = [];
@@ -397,7 +398,7 @@ export async function buildNeutralThemedCommanderDeckV15(
           guidance: 'A completed bounded theme search found too few legal, printing-policy-compliant, budget-compliant nonland cards to guarantee the requested theme density.',
         };
       }
-      generatedThemeSeedNames = selectedSeeds.map((card) => card.name);
+      generatedThemeSeedNames = selectedSeeds.map((card) => neutralCommanderLookupNameV15(card.name));
     }
   }
 
@@ -427,9 +428,9 @@ export async function buildNeutralThemedCommanderDeckV15(
     activePrintingFamily: familyCompatibility.effectivePrintingFamily ?? null,
   });
   const candidateCap = neutralCandidatePriceCapV15(effectiveOptions);
-  const generatedSeedSet = new Set(generatedThemeSeedNames.map(normalize));
+  const generatedSeedSet = new Set(generatedThemeSeedNames.map((name) => normalize(neutralCommanderLookupNameV15(name))));
   const generatedThemeSeedBudgetSatisfied = candidateCap === undefined || finalEntries
-    .filter((entry) => entry.zone === 'main' && generatedSeedSet.has(normalize(entry.card.name)))
+    .filter((entry) => entry.zone === 'main' && generatedSeedSet.has(normalize(neutralCommanderLookupNameV15(entry.card.name))))
     .every((entry) => exactPrintingBudgetWitnessV15(entry.card, candidateCap).status === 'within-cap');
   const baseComplete = built.status === 'complete-neutral-draft';
   const complete = baseComplete && themeAudit.satisfied && generatedThemeSeedBudgetSatisfied;
