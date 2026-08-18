@@ -47,6 +47,8 @@ export interface PostBuildEvidenceInputV15 {
 export interface PostBuildEvidenceV15 {
   signals: BracketAssessmentSignalsV15;
   spellbookTag: string | null;
+  spellbookBracketSourceStatus: 'available' | 'unavailable' | 'unknown';
+  spellbookBracketSourceFailure: Record<string, unknown> | null;
   completeComboCount: number;
   verifiedWinningCombos: number;
   verifiedWinningComboIds: string[];
@@ -68,6 +70,7 @@ export interface CommanderBuildEvaluationV15 {
   postBuildEvidence: PostBuildEvidenceV15;
   actualBracket: ActualBracketAssessmentV15;
   externalEvidenceChecked: boolean;
+  externalEvidenceComplete: boolean;
   efficientWinPlan: ReturnType<typeof deriveEfficientCommanderWinPlanV15> | null;
 }
 
@@ -103,6 +106,13 @@ export function derivePostBuildEvidenceV15(input: PostBuildEvidenceInputV15): Po
     ? bracket.strategicallyRelevantCombos.length
     : 0;
   const spellbookTag = typeof bracket.bracketTag === 'string' ? bracket.bracketTag : null;
+  const rawSourceStatus = typeof bracket.sourceStatus === 'string' ? bracket.sourceStatus : 'unknown';
+  const spellbookBracketSourceStatus: PostBuildEvidenceV15['spellbookBracketSourceStatus'] = rawSourceStatus === 'available'
+    ? 'available'
+    : rawSourceStatus === 'unavailable'
+      ? 'unavailable'
+      : 'unknown';
+  const sourceFailure = record(bracket.sourceFailure);
   const gameChangerNames = [...new Set(input.gameChangerNames)].sort((a, b) => a.localeCompare(b));
   return {
     signals: {
@@ -128,6 +138,8 @@ export function derivePostBuildEvidenceV15(input: PostBuildEvidenceInputV15): Po
       exhibitionIntent: input.exhibitionIntent === true,
     },
     spellbookTag,
+    spellbookBracketSourceStatus,
+    spellbookBracketSourceFailure: Object.keys(sourceFailure).length > 0 ? sourceFailure : null,
     completeComboCount: finiteNumber(counts.included),
     verifiedWinningCombos,
     verifiedWinningComboIds,
@@ -204,6 +216,7 @@ export async function evaluateCommanderBuildV15(
     postBuildEvidence: evidence,
     actualBracket,
     externalEvidenceChecked: hardGatesPassed,
+    externalEvidenceComplete: hardGatesPassed && evidence.spellbookBracketSourceStatus !== 'unavailable',
     efficientWinPlan,
   };
 }
