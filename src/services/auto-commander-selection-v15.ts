@@ -168,9 +168,9 @@ export async function discoverAutoCommanderCandidatesV15(
   const policy = await resolvePrintingPolicyV08(options);
   if (!policy.searchClause) throw new Error('Automatic commander discovery requires a bounded printing policy.');
 
-  // searchCards intentionally caps one query at 50 records. Partition by exact mana value
-  // so a large themed printing family cannot silently hide an eligible commander on page 2.
-  // If any bucket itself reaches the cap, fail closed rather than pretending discovery was exhaustive.
+  // searchCards intentionally caps one query at 50 records. Partition first by mana
+  // value, then by a mutually exclusive color class. This avoids silent page-2 loss while
+  // keeping every query bounded. If any partition still hits 50, fail closed and split again.
   const manaFilters = [
     'cmc=0',
     'cmc=1',
@@ -182,20 +182,24 @@ export async function discoverAutoCommanderCandidatesV15(
     'cmc=7',
     'cmc>=8',
   ];
+  const colorFilters = ['is:multicolored', 'is:monocolored', 'is:colorless'];
   const discovered: ScryfallCard[] = [];
   const discoveryBuckets: Array<{ filter: string; count: number }> = [];
-  for (const filter of manaFilters) {
-    const query = `${policy.searchClause} is:commander game:paper ${filter}`;
-    try {
-      const cards = await searchCards(query, 50);
-      discoveryBuckets.push({ filter, count: cards.length });
-      if (cards.length >= 50) {
-        throw new Error(`Automatic commander discovery bucket ${filter} reached the 50-card query ceiling; split the bucket further before claiming exhaustive discovery.`);
+  for (const manaFilter of manaFilters) {
+    for (const colorFilter of colorFilters) {
+      const filter = `${manaFilter} ${colorFilter}`;
+      const query = `${policy.searchClause} is:commander game:paper ${filter}`;
+      try {
+        const cards = await searchCards(query, 50);
+        discoveryBuckets.push({ filter, count: cards.length });
+        if (cards.length >= 50) {
+          throw new Error(`Automatic commander discovery bucket ${filter} reached the 50-card query ceiling; split the bucket further before claiming exhaustive discovery.`);
+        }
+        discovered.push(...cards);
+      } catch (error) {
+        if (error instanceof Error && /50-card query ceiling/.test(error.message)) throw error;
+        discoveryBuckets.push({ filter, count: 0 });
       }
-      discovered.push(...cards);
-    } catch (error) {
-      if (error instanceof Error && /50-card query ceiling/.test(error.message)) throw error;
-      discoveryBuckets.push({ filter, count: 0 });
     }
   }
 
