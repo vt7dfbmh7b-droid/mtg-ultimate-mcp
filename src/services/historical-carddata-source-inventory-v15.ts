@@ -28,7 +28,7 @@ export interface HistoricalCardDataSourceInventoryEntryV15 {
   retrospectiveRichFeatures: HistoricalCardDataRetrospectiveStatusV15;
   forwardCapture: HistoricalCardDataForwardCaptureStatusV15;
   providerIntegritySurface: 'none-relied-upon-capture-sha256-required' | 'provider-sha256-plus-capture-sha256';
-  historicalArchiveVerified: false;
+  historicalArchiveVerified: boolean;
   temporalNotes: string;
   usageNotes: string;
 }
