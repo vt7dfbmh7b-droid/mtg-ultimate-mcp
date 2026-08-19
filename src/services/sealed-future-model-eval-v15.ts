@@ -57,6 +57,7 @@ export interface SealedFutureModelEvaluationV15 {
   schemaVersion: typeof SEALED_FUTURE_MODEL_EVAL_SCHEMA_V15;
   sealHash: string;
   sealedAt: string;
+  evaluatedAt: string;
   learningTarget: string;
   trainingRecords: number;
   futureHoldoutRecords: number;
@@ -65,6 +66,8 @@ export interface SealedFutureModelEvaluationV15 {
   futureGate: {
     allHoldoutOutcomesOccurredAfterSeal: true;
     allHoldoutEvidenceAvailableAfterSeal: true;
+    allHoldoutEvidenceAvailableByEvaluation: true;
+    sealClockAttested: boolean;
     featureContractMatchesSeal: true;
     featureNormalizerMatchesSeal: true;
     sourceTargetPoliciesPass: true;
@@ -379,11 +382,15 @@ export function evaluateSealedFutureHoldoutV15(
   for (const record of futureHoldoutRecords) assertHistoricalLearningRecordEligibleV15(record);
 
   const sealTime = timestamp('seal.sealedAt', seal.sealedAt);
+  const evaluationDate = new Date();
+  if (!Number.isFinite(evaluationDate.getTime())) throw new Error('Evaluator system clock is invalid.');
+  const evaluatedAt = { iso: evaluationDate.toISOString(), ms: evaluationDate.getTime() };
   for (const record of futureHoldoutRecords) {
     const outcome = timestamp('future.record.observedAt', record.record.observedAt);
     const available = timestamp('future.outcomeEvidence.sourceAvailableAt', record.outcomeEvidence.sourceAvailableAt);
     if (outcome.ms <= sealTime.ms) throw new Error(`Future holdout record ${record.record.outcomeId} did not occur after the precommitment seal.`);
     if (available.ms <= sealTime.ms) throw new Error(`Future holdout record ${record.record.outcomeId} was source-available before or at the precommitment seal.`);
+    if (available.ms > evaluatedAt.ms) throw new Error(`Future holdout record ${record.record.outcomeId} claims source availability after the evaluator system clock.`);
     if (learningTargetForRecordV15(record.record) !== seal.learningTarget) {
       throw new Error(`Future holdout record ${record.record.outcomeId} uses a different learning target from the seal.`);
     }
@@ -447,6 +454,9 @@ export function evaluateSealedFutureHoldoutV15(
     ? Math.min(neuralMetrics.positiveExamples, neuralMetrics.negativeExamples) / futureHoldoutRecords.length
     : 0;
   let usefulness: SealedFutureModelEvaluationV15['usefulness'] = 'no-demonstrated-neural-gain';
+  if (seal.clockAttestation !== 'system-clock') {
+    reasons.push('The holdout seal used an injected test clock, so it cannot support a genuine future-evidence usefulness claim.');
+  }
   if (futureHoldoutRecords.length < seal.evaluationPlan.minimumFutureHoldoutRecordsForUsefulnessClaim) {
     reasons.push(`Need at least ${seal.evaluationPlan.minimumFutureHoldoutRecordsForUsefulnessClaim} genuinely future holdout records before a usefulness claim.`);
   }
@@ -481,6 +491,7 @@ export function evaluateSealedFutureHoldoutV15(
     schemaVersion: SEALED_FUTURE_MODEL_EVAL_SCHEMA_V15,
     sealHash: seal.sealHash,
     sealedAt: seal.sealedAt,
+    evaluatedAt: evaluatedAt.iso,
     learningTarget: seal.learningTarget,
     trainingRecords: trainingRecords.length,
     futureHoldoutRecords: futureHoldoutRecords.length,
@@ -489,6 +500,8 @@ export function evaluateSealedFutureHoldoutV15(
     futureGate: {
       allHoldoutOutcomesOccurredAfterSeal: true,
       allHoldoutEvidenceAvailableAfterSeal: true,
+      allHoldoutEvidenceAvailableByEvaluation: true,
+      sealClockAttested: seal.clockAttestation === 'system-clock',
       featureContractMatchesSeal: true,
       featureNormalizerMatchesSeal: true,
       sourceTargetPoliciesPass: true,
