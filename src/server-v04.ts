@@ -39,7 +39,7 @@ export function createMtgServerV04() {
     {
       title: 'Check Commander deck construction rules',
       description:
-        'Hard-validate a Commander deck against core construction rules: exactly 100 cards, commander eligibility, one/two commander pairing rules, combined color identity, Commander format legality/bans, basic-land-type color restrictions, singleton/copy-count exceptions, and unresolved cards. A red-black commander therefore permits only black, red, black-red, and colorless card identities. Hybrid cards count as all colors in their identity under the current rule.',
+        'Hard-validate a Commander deck against current core construction rules: exactly 100 cards, commander eligibility (including legendary Vehicles/Spacecraft with printed power and toughness), one/two commander pairing rules, combined color identity, Commander format legality/bans, basic-land-type color restrictions, singleton/copy-count exceptions, and unresolved cards. A red-black commander therefore permits only black, red, black-red, and colorless card identities. Hybrid cards count as all colors in their identity under the current rule.',
       inputSchema: z.object({
         decklist: z.string().min(1).max(100_000),
         commanderNames: z.array(z.string().min(1).max(256)).max(2).optional().default([]),
@@ -69,7 +69,7 @@ export function createMtgServerV04() {
     {
       title: 'Check whether a card can go in a Commander deck',
       description:
-        'Check a candidate card against one or two commanders using current Commander color-identity and format-legality rules. This is useful for questions such as whether a blue card, hybrid card, or land is legal in a red-black commander deck.',
+        'Check a candidate card against one or two designated commanders using current commander eligibility, pairing, color-identity, and format-legality rules. This is useful for questions such as whether a blue card, hybrid card, or land is legal in a red-black commander deck.',
       inputSchema: z.object({
         commanderNames: z.array(z.string().min(1).max(256)).min(1).max(2),
         cardName: z.string().min(1).max(256),
@@ -89,6 +89,11 @@ export function createMtgServerV04() {
         );
         const pairingCheck = validateCommanderDeck(commanderDeck, [candidate, ...commanders]);
         const commanderPairingLegal = commanderNames.length === 1 || pairingCheck.pairing.legal === true;
+        const commanderEligibilityLegal = pairingCheck.commanderChecks.every((check) =>
+          check.resolved === true
+          && check.eligible === true
+          && check.commanderFormatLegality === 'legal');
+        const commanderConfigurationLegal = commanderPairingLegal && commanderEligibilityLegal;
         const formatLegal = candidate.legalities.commander === 'legal';
         const colorIdentityLegal = outsideColors.length === 0;
         return jsonResult({
@@ -103,14 +108,18 @@ export function createMtgServerV04() {
           combinedCommanderColorIdentity: commanderIdentity,
           outsideColors,
           commanderPairing: pairingCheck.pairing,
-          legalForTheseCommanders: commanderPairingLegal && formatLegal && colorIdentityLegal,
+          commanderEligibility: pairingCheck.commanderChecks,
+          commanderConfigurationLegal,
+          legalForTheseCommanders: commanderConfigurationLegal && formatLegal && colorIdentityLegal,
           explanation: !commanderPairingLegal
             ? 'The designated two-commanders configuration is not a legal pairing.'
-            : !formatLegal
-              ? 'The candidate is not legal in the Commander format.'
-              : !colorIdentityLegal
-                ? `The candidate contains color identity outside the commanders’ combined identity: ${outsideColors.join(', ')}.`
-                : 'The candidate’s color identity is a subset of the commanders’ combined color identity and it is Commander-legal.',
+            : !commanderEligibilityLegal
+              ? 'One or more designated commanders is not eligible and Commander-legal under the current Commander rules.'
+              : !formatLegal
+                ? 'The candidate is not legal in the Commander format.'
+                : !colorIdentityLegal
+                  ? `The candidate contains color identity outside the commanders’ combined identity: ${outsideColors.join(', ')}.`
+                  : 'The designated commander configuration is legal, the candidate’s color identity is a subset of the commanders’ combined identity, and the candidate is Commander-legal.',
         });
       } catch (error) {
         return errorResult(error);
