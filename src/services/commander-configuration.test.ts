@@ -10,7 +10,7 @@ function card(options: {
   oracleText?: string;
   power?: string;
   toughness?: string;
-  legality?: string;
+  legality?: 'banned' | 'legal' | 'not_legal' | 'restricted';
   colorIdentity?: string[];
 }): ScryfallCard {
   return {
