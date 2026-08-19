@@ -103,6 +103,7 @@ function candidate(
       wins: null,
       draws: null,
       losses: null,
+      standingSource: 'provider-field',
     },
   };
 }
