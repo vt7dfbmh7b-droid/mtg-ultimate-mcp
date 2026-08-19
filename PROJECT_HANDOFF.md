@@ -1,6 +1,6 @@
 # Ultimate MTG — Project Handoff
 
-_Last updated: 2026-08-19 NZST_
+_Last updated: 2026-08-20 NZST_
 
 This is the persistent recovery point for future ChatGPT sessions. Read it together with `ULTIMATE_MTG_SPEC.md`: the spec is the north star; this file records the current validated implementation, release state, hard guarantees, validation discipline, and next engineering target.
 
@@ -10,9 +10,9 @@ This is the persistent recovery point for future ChatGPT sessions. Read it toget
 2. Read `PROJECT_HANDOFF.md` and `ULTIMATE_MTG_SPEC.md` first.
 3. Inspect `agent/package-probabilities`; do not assume `main` is the active development state.
 4. Check the exact active-branch head and current GitHub Actions status before changing code.
-5. Distinguish the latest fully validated **implementation SHA** from any later handoff-only documentation commit.
-6. Keep deterministic CI, TopDeck/source validation, and Commander live controls separate.
-7. Do not promote `server-current` merely because V0.15 experimental code exists.
+5. Distinguish the latest fully validated **implementation SHA** from any later handoff/documentation-only commit.
+6. Keep deterministic CI, Scryfall live, TopDeck live, and Commander live controls separate.
+7. Do not merge PR #2, promote `server-current`, change the package version, or merge to `main` merely because V0.15 experimental code exists.
 8. Continue from **Next implementation target** unless a newer commit updates this handoff.
 
 ---
@@ -23,35 +23,28 @@ This is the persistent recovery point for future ChatGPT sessions. Read it toget
 
 **Active continuation branch:** `agent/package-probabilities`
 
-**Latest fully validated implementation head:**
+**Latest fully validated implementation SHA:**
 
-- `20c4c7d18d148c251b72a750b86336969f74f002` — real TopDeck outcome/deck acquisition plus strict real-corpus/future-model-evaluation infrastructure, folded into the active development lineage.
+- `ee8df38c3a6e6fa90394933acbcc758f4f8089cc`
 
-The active branch was fast-forwarded from the prior handoff head `ffe1e7e7e25658773387e36ea8c2c7f8f565116e` to `20c4c7d...` with `force=false`. No merge to `main` occurred.
+It was fast-forwarded into `agent/package-probabilities` from `7688c47320eec486796f6e003b680138208f8224` with `force=false` after isolated exact-head validation.
 
-The branch may be one documentation-only handoff commit ahead of `20c4c7d...`. If so, inspect the diff: `20c4c7d...` remains the validated runtime implementation milestone.
+Exact-head validation before integration:
 
-### Real-corpus milestone validation
+- deterministic CI `32306415926`: **PASS**;
+- Scryfall Card Data Source Live `32306415977`: **PASS**;
+- TopDeck Learning Source Live `32306415933`: **PASS**;
+- Commander Live Control Suite `32306415937`: **PASS**;
+- every Commander control and the final aggregate passed, including FF Najeela, FF neutral, FF Bracket 5, unrestricted cEDH, universal pipeline, unrestricted neutral, neutral theme, neutral exact-budget and FF exact-budget controls.
 
-Isolated implementation branch:
+Active-branch revalidation on the same implementation object began immediately after the fast-forward. At the handoff refresh:
 
-- branch `agent/v15-real-corpus-evaluation`, created from active handoff head `ffe1e7e7...`;
-- final isolated implementation SHA `20c4c7d18d148c251b72a750b86336969f74f002`;
-- temporary draft PR #12 used only as a validation surface;
-- deterministic CI `32231162434`: **PASS**;
-- TopDeck Learning Source Live `32231162439`: **PASS**;
-- Commander Live Control Suite `32231162554`: **PASS**;
-- every Commander live control + final aggregate passed;
-- PR #12 closed **unmerged**.
+- Scryfall `32307449061`: **PASS**;
+- CI `32307449092`: running;
+- TopDeck `32307449050`: running;
+- Commander `32307449121`: running.
 
-Active fold and revalidation:
-
-- `agent/package-probabilities` fast-forwarded to the exact same `20c4c7d...` object with no force;
-- deterministic CI `32232204742`: **PASS**;
-- TopDeck Learning Source Live `32232204861`: **PASS**;
-- Commander Live Control Suite `32232204897`: **PASS**;
-- every Commander live control + final aggregate passed;
-- PR #2 remains the open draft validation surface for the active experimental branch.
+PR #2 remains the open draft **DO NOT MERGE** validation/recovery surface for the active experimental branch. Its body contains the current implementation and promotion-route summary.
 
 ### Stable runtime remains V0.13
 
@@ -60,7 +53,7 @@ Active fold and revalidation:
 - V0.14/V0.15 remain experimental;
 - `main` remains untouched by these milestones.
 
-**Do not change the stable runtime or merge the experimental branch to `main` without an explicit release/promotion decision from the user after the relevant quality gates are met.**
+**Stable release remains a separate explicit user-approved action.** A successful model evaluation may only become eligible for human review; it may not rewrite `server-current`, change the package version, or merge to `main` automatically.
 
 ---
 
@@ -81,13 +74,13 @@ Machine learning, optimization, simulation, popularity, requested power, or conv
 
 Requested bracket/power is a target, not a forced result.
 
-A source outage is **not** evidence that a card/combo/property is absent. Unavailable verification must remain unavailable/incomplete evidence and never create positive credit.
+A source outage is **not** evidence that a card/combo/property is absent. Unavailable verification remains unavailable/incomplete evidence and never creates positive credit.
 
-Historical evaluation adds another permanent rule: **later knowledge may not leak backward into an earlier `asOf` claim.**
+Historical/model evaluation adds another permanent rule: **later knowledge may not leak backward into an earlier predictor cutoff.** Provider timestamps may not backdate data first observed later.
 
 ---
 
-## Previously completed foundations
+## Previously validated foundations
 
 ### Universal Commander / V0.15 experimental MCP
 
@@ -95,20 +88,18 @@ Experimental tool:
 
 - `build_commander_through_pipeline_v15`
 
-Key guarantees already validated:
+Validated guarantees include:
 
 - one/two exact commander inputs with ordered pair semantics;
 - true no-target behavior;
 - printing/set/promo/special controls;
 - exact per-card budget enforcement using exact printing/finish witnesses;
-- safe free-form themes and exact Final Fantasy printing-family enforcement;
+- free-form themes and exact Final Fantasy printing-family enforcement;
 - excluded/must-include/land controls;
 - verified win-package modes;
 - exact final decklist/printing/audits/provenance/source state;
 - finished deck assessed before requested-vs-achieved bracket comparison;
-- actual protocol-boundary E2E control rather than service-only testing.
-
-Neutral construction uses bounded stratified Scryfall sampling rather than popularity ordering. Source failures stay unavailable rather than becoming false negatives.
+- protocol-boundary E2E validation rather than service-only tests.
 
 ### Exact probability / statistics
 
@@ -127,295 +118,301 @@ Classic control: 99-card library, 36 lands, 7-card opener, `P(3+ lands) = 26,736
 
 ### Historical / as-of provenance
 
-Strict historical work includes:
-
-- `historical-carddata-provenance-v15.ts`;
-- `historical-carddata-snapshot-validation-v15.ts`;
-- `temporal-provenance-v15.ts`;
-- `historical-learning-corpus-v15.ts`;
-- `topdeck-temporal-corpus-v15.ts`;
-- `historical-neural-temporal-eval-v15.ts`.
+Strict historical work includes explicit temporal provenance, historical card-data assessment, historical Commander legality, historical learning records/manifests, leakage-aware TopDeck materialization and sealed future evaluation.
 
 Core guarantees:
 
-- explicit temporal modes distinguish current truth, contemporaneous snapshot, archived/versioned snapshot and retrospective reconstruction;
-- verified absence is distinct from unavailable truth;
 - current truth cannot silently become historical proof;
-- later printing/Oracle/Commander-legality/rules/outcome/source evidence cannot leak backward through an earlier cutoff;
-- archived evidence retrieved later is only accepted when independent version/publication timing proves it existed by the cutoff;
-- retrospective-current/present-day proxy evidence is advisory-only and cannot satisfy strict historical rich-feature training;
-- trusted historical rows bind predictor provenance separately from target/outcome provenance;
-- source version + SHA-256 content hash are required for replayable trusted training evidence;
-- runtime assertions re-check eligibility instead of trusting serialized booleans;
-- historical manifests content-address predictor and target provenance;
-- historical neural evaluation filters by evidence availability before generic temporal evaluation.
-
-Current live Commander/deckbuilding evaluation remains **current-truth by default**. Historical semantics are opt-in through strict provenance APIs.
+- verified absence is distinct from unavailable truth;
+- later printing/Oracle/rules/outcome evidence cannot leak backward;
+- trusted rows bind predictor provenance separately from target provenance;
+- source version + SHA-256 content hash are required for replayable trusted evidence;
+- runtime assertions re-check eligibility instead of trusting serialized booleans.
 
 ---
 
-## Real corpus / model evaluation milestone — PROVIDER FOUNDATION COMPLETE
+# V0.15 promotion route — INFRASTRUCTURE COMPLETE
 
-This milestone turns the previous ML scaffolding into a real-data-capable evaluation boundary without claiming that a trustworthy historical training corpus already exists.
+The old promotion problem was **not CI**. Two architectural issues were blocking a trustworthy promotion story:
 
-### 1. Real source inventory and independence policy
+1. the sealed evaluator deliberately returned `promotionAuthorized: false` and had no intermediate state meaning “the evidence passed and is ready for explicit review”;
+2. completed-event TopDeck decklists and provider `startDate` did not prove that the predictor state existed before the event outcome, creating a potential backward-leakage path.
 
-`real-outcome-source-inventory-v15.ts` classifies provider lineage, target population, replayability and training eligibility.
+The active branch now implements the complete fail-closed route below.
 
-Current policy:
+## 1. Promotion-readiness state
 
-- **TopDeck**: strict historical `event-top-cut` provider when evidence passes the provenance boundary;
-- **EDHTop16**: competitive reference/mirror in the TopDeck tournament-results lineage and therefore **not independent corroboration** of the same underlying TopDeck events;
-- **Playgroup**: separate casual tracked-game population/reference and not silently mixed into the competitive event-top-cut target.
+`promotion-readiness-v15.ts` and `promotion-aware-future-model-eval-v15.ts` add:
 
-Source diversity remains a future requirement; mirrors/reposts may never manufacture independent evidence count.
+- `blocked`;
+- `eligible-for-human-review`.
 
-### 2. Real corpus quality audit
+They deliberately preserve:
 
-`real-corpus-quality-v15.ts` audits real historical records across:
+- legacy sealed evaluator `promotionAuthorized: false`;
+- `automaticStablePromotionAllowed: false`;
+- `stablePromotionAuthorized: false`;
+- `requiresExplicitUserApproval: true`.
 
-- date/temporal coverage;
-- learning target and outcome class;
-- source and lineage family;
-- commander coverage;
-- event field-size buckets;
-- provider event identity;
-- pilot identity;
-- exact deck fingerprints;
-- leakage groups;
-- region when provider metadata exists;
-- archetype when explicit metadata exists;
-- class balance and replayability.
+The older transparent ranker field named `promotable` is a **legacy local deterministic-holdout concept only**. It is not stable/model release authorization.
 
-Quality blockers/warnings remain separate from model performance.
+## 2. Retained Scryfall predictor truth
 
-### 3. Leakage grouping before normalization/fitting
+The retained Scryfall path provides:
 
-`topdeck-leakage-linkage-v15.ts` constructs transitive connected components before the temporal split using:
+- exact gzip JSONL capture;
+- SHA-256 over exact provider bytes;
+- immutable GHCR OCI digest references;
+- retained snapshot manifests;
+- cutoff resolver based on our own observation time, never provider `updated_at` backdating;
+- exact-byte replay through the same bounded Scryfall parser used for live capture;
+- decoded-content hash verification.
 
-- same tournament/event;
-- same provider pilot identity;
-- identical exact deck fingerprint.
+Manual workflow:
 
-If A shares an event with B, B shares a pilot with C, and C shares a deck with D, all four stay in one leakage component. The grouping is input-order invariant and happens before normalization/model fitting.
+- `.github/workflows/scryfall-carddata-retention-v15.yml`
 
-### 4. Genuine future holdout precommitment
+This workflow is `workflow_dispatch` only. It has not been dispatched during implementation.
 
-`future-holdout-seal-v15.ts` content-addresses and freezes:
+## 3. Prospective TopDeck predictor/target evidence
 
-- training historical manifest/corpus identity;
-- training outcome IDs and leakage-group digest;
-- learning target;
-- feature extractor contract;
-- training-fitted normalizer fingerprint;
-- neural hyperparameters/seed;
-- transparent baseline hyperparameters;
-- decision threshold;
-- calibration bins;
-- minimum future sample/class-balance requirements;
-- precommitted improvement criteria.
+The safe prospective route uses known TopDeck events rather than pretending completed-event decklists were pre-event evidence.
 
-A real-clock attestation prevents injected test-clock seals from being represented as genuine future precommitments.
+TopDeck evidence phases:
 
-### 5. Sealed baseline-vs-neural future evaluation
+- `pre-event`: capture exact strict `deckObj` decklists only while provider status is still `Not Started` and observation finishes no later than event start;
+- `event-end`: capture provider `Complete` plus `endDate`;
+- `completed-event`: capture the exact final TID tournament response after completion and hash its exact bytes.
 
-`sealed-future-model-eval-v15.ts` compares on the same locked genuine-future holdout:
+The completed response must agree with the independently captured event identity and `startDate`.
 
-- prevalence baseline;
-- transparent logistic/ranker baseline;
-- neural/shadow model.
+Manual workflow:
 
-Reported metrics include:
+- `.github/workflows/topdeck-prospective-evidence-v15.yml`
 
-- accuracy;
-- balanced accuracy;
-- log loss;
-- Brier score;
-- AUROC;
-- expected calibration error + calibration bins;
-- Wilson 95% accuracy interval;
-- source/commander/field-size subgroup results.
+Sensitive player/deck evidence is written only to a private GHCR package. Public Actions artifacts contain aggregate diagnostics only.
 
-Training/future overlap in leakage group, provider event, pilot or exact deck fingerprint fails closed. Output always keeps `promotionAuthorized: false`; even observed neural gain is evidence for continued shadow testing, not stable promotion.
+## 4. Deterministic promotion evidence join
 
----
+`topdeck-prospective-promotion-join-v15.ts` joins:
 
-## Real TopDeck acquisition milestone — COMPLETE
+- pre-event exact deck evidence;
+- retained Scryfall predictor truth;
+- completed-event TopDeck result/evidence.
 
-A repository Actions secret named `TOPDECK_API_KEY` is now configured and working. Never expose, print or persist its value.
+It requires:
 
-Dedicated workflow:
+- matching event/player/record identity;
+- final deck fingerprint exactly equals the pre-event deck fingerprint;
+- feature availability is the later of deck capture and card-data observation;
+- combined predictor state exists no later than event start;
+- structural features are reconstructed from retained Scryfall truth;
+- final top-cut outcome timing is provider-verified event end, not legacy `startDate`.
 
-- `.github/workflows/topdeck-learning-source-live.yml`
-- `scripts/live-topdeck-learning-source-v15.ts`
+Explicit rejection states include missing pre-event deck, changed final deck, late predictor truth, snapshot failure and promotion-evidence failure.
 
-Network policy:
+Manual workflow:
 
-- bounded one-request bulk EDH query;
-- no automatic POST retry;
-- typed rate-limit handling;
-- required TopDeck attribution;
-- provider/source failures do not become absence evidence;
-- live artifacts contain aggregate diagnostics only.
+- `.github/workflows/topdeck-prospective-promotion-join-v15.yml`
 
-### Current live TopDeck bulk contract
+It accepts only expected-package `@sha256:<digest>` references. Sensitive joined evidence remains private.
 
-Live validation discovered and then codified the actual current provider shape rather than guessing it:
+## 5. Strict promotion corpus admission
 
-- bulk `standing` is not requested as a selectable column; when absent, the documented standings-array order provides rank `index + 1`;
-- an explicit valid standing is still preferred when provided;
-- a malformed explicit standing fails closed;
-- provenance records `standingSource = provider-field | bulk-array-order`;
-- current returned `decklist` values are often one-line provider references rather than multiline deck text;
-- when structured deck data exists, current live `deckObj` exposes `Commanders` and `Mainboard` sections;
-- live aggregate schema auditing established each observed card-name key mapped exactly to an object containing `id` plus numeric `count`;
-- commander sections contained exactly one or two entries in the observed batch.
+`topdeck-promotion-corpus-admission-v15.ts` does **not** trust a serialized eligibility flag.
 
-`materializeTopDeckDeckObjectV15` therefore accepts only the narrow observed contract:
+For every immutable joined artifact it re-checks:
 
-> `Commanders/Mainboard -> card-name key -> { id, count }`
+- promotion assessment and safeguards;
+- provider identities;
+- exact deck fingerprint;
+- predictor/outcome timing;
+- evidence hashes;
+- immutable private GHCR digest reference.
 
-Hard checks:
+It then uses the existing real TopDeck corpus materializer for leakage grouping, temporal partitioning, normalization and labels, but re-creates historical records with immutable promotion-evidence lineage in metadata before rebuilding manifests.
 
-- each structured entry must contain exactly `id` + `count`;
-- `id` must be non-empty;
-- count must be an integer 1–100;
-- exactly one or two commanders;
-- each commander count exactly 1;
-- total physical card count exactly 100;
-- final text is revalidated through the existing Commander parser;
-- unknown future provider shapes fail closed;
-- third-party deck URLs/references are **never fetched or scraped** to fill gaps.
+Changing an underlying joined-evidence artifact changes the historical manifest/corpus hash; tests enforce this.
 
-Candidate metadata records:
+Manual workflow:
 
-- `deckSource = inline-text | topdeck-deckobj`;
-- `deckObjectSchemaVersion` when structured materialization is used;
-- standing source;
-- provider event/player identities;
-- event city/state only when provider supplied them.
+- `.github/workflows/topdeck-promotion-corpus-build-v15.yml`
 
-TopDeck historical outcome source version is now:
+The full corpus remains private. Public audit exposes only counts/hashes.
 
-- `topdeck-v2-materialized-outcome-v15.2`
+## 6. Replay-before-seal
 
-Its replayable SHA-256 binds exact deck fingerprint and commander identity plus provider event/player/record IDs, outcome timing/result, standing/field/top-cut, standing source, deck source, structured schema version, location and W/D/L metadata.
+Before a production future-holdout seal can be created, the system:
 
-### Final real live audit at validated implementation
+- pulls the private corpus;
+- extracts every immutable joined-evidence reference;
+- re-pulls every joined artifact;
+- rebuilds the strict corpus from source evidence;
+- compares evidence-lineage hash, record count, learning/historical manifest hashes, corpus content hash, normalizer fingerprint, observation time and artifact set.
 
-Bounded query:
+Only then can `createFutureHoldoutSealV15` run.
 
-- last 30 days;
-- Magic: The Gathering / EDH;
-- minimum 16 participants;
-- one bulk POST, no automatic retry.
+Production sealing requires:
 
-Observed live batch:
+- real system-clock attestation;
+- existing strict corpus quality gate;
+- at least 20 strict training records.
 
-- **478 tournaments**;
-- **12,121 standings rows**;
-- **5,257** rows with structured `deckObj` containing Commanders + Mainboard;
-- commander-section distribution: **3,525** single-commander and **1,732** two-commander structured decks;
-- **4,395 strict exact Commander deck/outcome candidates accepted**;
-- **173 accepted events**;
-- accepted field size: **16–105 players**;
-- accepted outcome range: **2026-07-21T22:00:00Z to 2026-08-18T22:00:00Z**;
-- rejected: **1,632** standings without usable deck data plus **279** tournaments without a positive usable top cut;
-- no remaining malformed structured-deck rejection in the final live batch.
+Manual workflow:
 
-Privacy-safe audit artifacts persist **no API key, player identifiers, card names, decklists, third-party deck references, or raw rejection reasons**.
+- `.github/workflows/topdeck-promotion-future-holdout-seal-v15.yml`
 
-### Critical interpretation
+The private seal binds the immutable corpus artifact plus all existing sealed training identities/hashes/normalizer/hyperparameters/thresholds.
 
-This is **real exact outcome/deck candidate acquisition**, not yet a trustworthy historical ML training corpus.
+## 7. Frozen-normalizer genuine-future holdout
 
-The historical feature gate still requires predictor card/Oracle/legality data that was independently available no later than the prediction cutoff. Present-day Scryfall/MTGJSON/current Oracle truth may not be assigned an old timestamp or silently used as historical proof.
+`topdeck-sealed-future-holdout-v15.ts` fixes the major future-evaluation leakage risk: **future data never fits a new normalizer**.
 
----
+The future materializer requires:
 
-## Learning / ML standing rules
+- exact training corpus still matches the seal;
+- supplied training normalizer fingerprint exactly matches the seal;
+- future prediction cutoff and feature snapshot are strictly after the seal;
+- future outcomes and outcome evidence are strictly after the seal;
+- training/future provider events are disjoint;
+- training/future pilots are disjoint;
+- training/future exact deck fingerprints are disjoint;
+- training/future leakage groups are disjoint;
+- future rows are projected through the frozen sealed training normalizer;
+- no future temporal repartitioning occurs.
 
-Neural/ML remains experimental and shadow-only.
+Regression tests build a 20-row sealed training corpus and explicitly reject wrong normalizers, pre-seal predictor evidence, reused pilots and reused exact decks.
 
-It may never override legality, rules, printing, budget, theme, combo or other hard truth.
+Manual workflow:
 
-Promotion may not be justified by feature count, synthetic fixtures, retrospective current-state substitution, provider popularity, or a single headline metric.
+- `.github/workflows/topdeck-sealed-future-holdout-build-v15.yml`
+
+## 8. Promotion-aware sealed evaluation
+
+`topdeck-promotion-future-evaluation-v15.yml` pulls immutable:
+
+- future-holdout seal;
+- bound training corpus;
+- sealed future holdout.
+
+Before evaluation it re-checks:
+
+- seal/corpus/holdout artifact bindings;
+- training historical manifest and corpus hashes;
+- frozen normalizer fingerprint;
+- reconstructed future historical manifest;
+- every future record’s seal/training-hash/normalizer metadata.
+
+Then it calls `evaluatePromotionAwareSealedFutureHoldoutV15`.
+
+Possible public readiness status:
+
+- `blocked`;
+- `eligible-for-human-review`.
+
+Even `eligible-for-human-review` keeps stable-runtime authorization false.
+
+All full evaluation material stays private; public audit exposes aggregate model metrics/readiness only and excludes commander subgroup keys, player IDs, decklists and card names.
 
 ---
 
-## Next implementation target
+## Locked genuine-future review criteria
 
-### 1. Provenance-safe historical predictor/card-data acquisition
+The future seal freezes the current precommitted requirements, including:
 
-This is now the immediate blocker to turning the 4,395 real TopDeck candidates into a trustworthy historical training corpus.
+- at least **200** genuine-future holdout records;
+- minority-class share at least **0.20**;
+- neural balanced-accuracy gain over transparent baseline at least **+0.02**;
+- neural AUROC gain over transparent baseline at least **+0.01**;
+- **no log-loss regression** versus the transparent baseline;
+- system-clock-attested seal;
+- exact feature-extractor contract and training-normalizer fingerprint match;
+- disjoint leakage groups, provider events, pilots and exact decks;
+- strict training and future corpus quality gates.
 
-Required direction:
-
-1. inventory candidate **primary/versioned card-data sources** for historical Oracle/type/mana/printing/Commander-legality features;
-2. distinguish a current daily feed from an independently archived/versioned snapshot — a current feed alone is not historical proof;
-3. verify source publication/effective timestamps and preserve source URI, version and SHA-256 content hash;
-4. use `archived-versioned-snapshot` only when the archive was independently published/effective by the requested feature cutoff;
-5. if no adequate historical archive exists, prefer a new **forward contemporaneous-capture pipeline** rather than weakening the historical gate;
-6. never assign an old `availableAt` to data first observed today;
-7. resolve only printings that actually existed by the cutoff and run the existing historical Commander legality/construction validator;
-8. materialize `ProvenancedDeckFeatureSnapshotV15` only after the source passes the existing historical card-data assessment;
-9. join those snapshots to real TopDeck candidates through `topdeck-real-corpus-materializer-v15` and the leakage grouping boundary;
-10. report what fraction of real TopDeck candidates can actually receive trusted predictor snapshots; rejected/unavailable rows must remain visible.
-
-Current research note: MTGJSON provides a current daily build and is MIT-licensed, but **do not assume the current file server is a historical archive**. Verify a replayable archived/versioned data path before using it for retrospective rich features. Sparse software/release tags are not automatically equivalent to daily historical data snapshots.
-
-TopDeck's completed-tournament bulk API provides the outcome/deck side. A genuine future-capture design may also be investigated, but decklists are only exposed before tournament end when the organizer has enabled deck visibility, so do not assume pre-event public deck availability for every event.
-
-### 2. Then materialize and audit the first real historical corpus
-
-Once trusted predictor snapshots exist:
-
-1. build the strict historical TopDeck corpus;
-2. measure usable/rejected coverage by date, commander, field size, region, provider and outcome class;
-3. inspect repeated events/pilots/decks and leakage component sizes;
-4. keep source/provider drift reporting active;
-5. do not fit the neural model until corpus quality gates pass.
-
-### 3. Then seal a genuinely future holdout and evaluate
-
-After a trustworthy historical training corpus exists:
-
-1. create a real-clock `FutureHoldoutSealV15` before future outcomes are admitted;
-2. never use future holdout rows for normalizer fitting, feature selection, hyperparameters or threshold tuning;
-3. compare prevalence, transparent baseline and neural shadow model on the same future holdout;
-4. require the precommitted sample size/class-balance and improvement criteria;
-5. report calibration, discrimination, uncertainty and subgroups/drift;
-6. learned outputs remain shadow/advisory-only even if gain is observed.
-
-Do **not** manufacture corpus scale with synthetic outcomes, current-state historical substitutions, mirrored providers, or third-party deck scraping.
-
-### 4. Promotion remains a later decision
-
-Even successful real-corpus/future evaluation does not automatically promote V0.15 or any learned model. Stable promotion requires a separate explicit user-approved release decision after all quality gates are satisfied.
+Passing those criteria can only earn an explicit promotion review. It does not alter stable V0.13.
 
 ---
 
-## CI / validation discipline
+## Real TopDeck source standing
 
-For every implementation milestone:
+A repository Actions secret named `TOPDECK_API_KEY` is configured and working. Never expose, print or persist its value.
 
-1. isolate material work when useful;
-2. strict TypeScript/build;
-3. complete deterministic tests;
-4. dedicated live source control when external data is part of the feature;
-5. inspect underlying live outcomes rather than only a green aggregate;
-6. remember `continue-on-error` can hide an underlying failed step until aggregate time;
-7. distinguish source outage, credential/configuration failure, provider-shape drift, harness failure and code/assertion failure;
-8. fold into `agent/package-probabilities` only after validation;
-9. revalidate the exact active branch after the fold;
-10. keep `main`, `package.json` stable version and `server-current` unchanged unless the user explicitly approves release promotion.
+The completed-tournament bulk path remains useful for provider/schema/live controls and research, but **completed historical decklists are not silently upgraded into pre-event promotion evidence**.
 
-Never weaken a truth gate just to make CI green.
+The current safe promotion source route is prospective and event-specific: exact deck observed before event start, then exact completion evidence after event end.
+
+TopDeck account/staff event routes and webhooks do not provide a general public upcoming-event feed; do not manufacture a global upcoming-event poller from them.
 
 ---
 
-## Maintenance rule
+# Next implementation target
 
-Update this file after every major milestone, blocker/recovery event, or active-target change.
+The **promotion infrastructure blocker is solved**. The remaining blocker is real evidence quantity and diversity.
 
-A future session must be able to recover the project direction and current engineering state from GitHub alone without old chat history.
+## 1. Begin real prospective evidence collection
+
+Use the manual evidence workflows only for known TopDeck events where exact deck data is actually available before start.
+
+For each qualifying event:
+
+1. ensure retained Scryfall predictor truth exists before the intended predictor cutoff;
+2. run the TopDeck `pre-event` capture before start;
+3. after completion run `completed-event` (event-end timing is captured as part of the strict completion path; the standalone `event-end` phase remains useful for audit/debugging);
+4. run the digest-pinned promotion join;
+5. keep unavailable/changed/late rows rejected rather than weakening the gate.
+
+Do not schedule broad automatic collection until event discovery/access/privacy/rate-limit policy is explicitly designed and validated.
+
+## 2. Build the first real strict promotion corpus
+
+Once enough joined artifacts exist:
+
+1. run the manual corpus build;
+2. inspect accepted/rejected coverage, class balance, dates, commanders, field sizes, regions, pilots, events, exact deck reuse and leakage-component concentration;
+3. do not seal if the real corpus quality gate fails;
+4. do not count EDHTop16 mirrors as independent TopDeck lineage evidence.
+
+## 3. Create the first real system-clock seal
+
+Only when the strict corpus is adequate:
+
+1. run replay-before-seal;
+2. preserve the immutable corpus and seal digest references;
+3. do not alter the training corpus/model thresholds after the seal.
+
+## 4. Accumulate genuinely later holdout evidence
+
+Collect disjoint prospective events after the seal until the locked minimum sample and class balance are reached.
+
+Future holdout rows must use the exact sealed training normalizer. Never refit it with future data.
+
+## 5. Evaluate and request review only if earned
+
+Run the sealed future evaluation only against the immutable seal/training corpus/future holdout chain.
+
+- If `blocked`: continue evidence collection or start a **new precommitted experiment**; do not tune retrospectively against the sealed holdout and then reuse the same seal.
+- If `eligible-for-human-review`: present the evidence to the user and request an explicit release decision.
+
+Only a later explicit user-approved release may change `server-current`, package version or `main`.
+
+---
+
+## Validation discipline
+
+For functional implementation folds, require all four on the exact head:
+
+1. deterministic CI;
+2. Scryfall Card Data Source Live;
+3. TopDeck Learning Source Live;
+4. Commander Live Control Suite, including final aggregate.
+
+Use an isolated branch + temporary draft PR as a validation surface. Integrate only by clean non-force fast-forward after confirming zero divergence. Close temporary PRs unmerged.
+
+Documentation-only handoff commits may sit ahead of the fully validated implementation SHA, but must never be confused with a new runtime implementation milestone.
+
+---
+
+## Fresh-chat prompt
+
+> Continue the Ultimate MTG project in `vt7dfbmh7b-droid/mtg-ultimate-mcp`. Read `PROJECT_HANDOFF.md` and `ULTIMATE_MTG_SPEC.md` first. Inspect `agent/package-probabilities`, the latest validated implementation SHA, and current CI before changing code. Continue from the Next implementation target. Do not promote `server-current` or merge to `main` without an explicit user-approved release decision.
