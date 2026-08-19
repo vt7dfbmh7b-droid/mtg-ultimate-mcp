@@ -1,0 +1,265 @@
+name: TopDeck Prospective Promotion Join V0.15
+
+on:
+  workflow_dispatch:
+    inputs:
+      pre_event_artifact_reference:
+        description: Immutable private GHCR pre-event evidence reference
+        required: true
+        type: string
+      completed_event_artifact_reference:
+        description: Immutable private GHCR completed-event evidence reference
+        required: true
+        type: string
+      scryfall_raw_artifact_reference:
+        description: Immutable GHCR retained Scryfall raw-byte reference
+        required: true
+        type: string
+      scryfall_manifest_artifact_reference:
+        description: Immutable GHCR retained Scryfall manifest reference
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: topdeck-prospective-promotion-join-v15
+  cancel-in-progress: false
+
+env:
+  TOPDECK_PACKAGE_NAME: mtg-ultimate-mcp-topdeck-evidence
+  SCRYFALL_RAW_PACKAGE_NAME: mtg-ultimate-mcp-carddata
+  SCRYFALL_MANIFEST_PACKAGE_NAME: mtg-ultimate-mcp-carddata-manifests
+  TOPDECK_PRIVATE_FILE: topdeck-prospective-private-evidence-v15.json
+  SCRYFALL_RAW_FILE: scryfall-default-cards-retained.jsonl.gz
+  SCRYFALL_MANIFEST_FILE: scryfall-retained-snapshot-manifest-v15.json
+  PRIVATE_JOIN_FILE: topdeck-promotion-joined-private-v15.json
+  AUDIT_FILE: topdeck-promotion-join-audit-v15.json
+  DESCRIPTOR_FILE: topdeck-promotion-join-private-oci-descriptor-v15.json
+  JOIN_ARTIFACT_TYPE: application/vnd.mtg-ultimate.topdeck-promotion-joined-evidence.v1
+  JOIN_LAYER_MEDIA_TYPE: application/vnd.mtg-ultimate.topdeck-promotion-joined-evidence.v1+json
+
+jobs:
+  join:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Type-check and build
+        run: npm run build
+
+      - name: Set up ORAS
+        uses: oras-project/setup-oras@v1
+        with:
+          version: 1.3.3
+
+      - name: Validate immutable evidence references
+        env:
+          PRE_EVENT_REF: ${{ inputs.pre_event_artifact_reference }}
+          COMPLETED_EVENT_REF: ${{ inputs.completed_event_artifact_reference }}
+          SCRYFALL_RAW_REF: ${{ inputs.scryfall_raw_artifact_reference }}
+          SCRYFALL_MANIFEST_REF: ${{ inputs.scryfall_manifest_artifact_reference }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          OWNER=$(printf '%s' "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          TOPDECK_REPO="ghcr.io/${OWNER}/${TOPDECK_PACKAGE_NAME}"
+          SCRYFALL_RAW_REPO="ghcr.io/${OWNER}/${SCRYFALL_RAW_PACKAGE_NAME}"
+          SCRYFALL_MANIFEST_REPO="ghcr.io/${OWNER}/${SCRYFALL_MANIFEST_PACKAGE_NAME}"
+
+          validate_digest_ref() {
+            local ref="$1"
+            local repo="$2"
+            local prefix="${repo}@sha256:"
+            if [[ "$ref" != "$prefix"* ]]; then
+              echo "Evidence reference must use immutable digest form under ${repo}." >&2
+              exit 1
+            fi
+            local digest="${ref#"$prefix"}"
+            if [[ ! "$digest" =~ ^[a-f0-9]{64}$ ]]; then
+              echo "Evidence reference contains an invalid SHA-256 digest." >&2
+              exit 1
+            fi
+          }
+
+          validate_digest_ref "$PRE_EVENT_REF" "$TOPDECK_REPO"
+          validate_digest_ref "$COMPLETED_EVENT_REF" "$TOPDECK_REPO"
+          validate_digest_ref "$SCRYFALL_RAW_REF" "$SCRYFALL_RAW_REPO"
+          validate_digest_ref "$SCRYFALL_MANIFEST_REF" "$SCRYFALL_MANIFEST_REPO"
+
+      - name: Verify TopDeck evidence package is private
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          OWNER=$(printf '%s' "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          ENCODED_PACKAGE=$(node -e "process.stdout.write(encodeURIComponent(process.env.TOPDECK_PACKAGE_NAME))")
+          RESPONSE_FILE=$(mktemp)
+          HTTP_CODE=$(curl -sS -o "$RESPONSE_FILE" -w '%{http_code}' \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/users/${OWNER}/packages/container/${ENCODED_PACKAGE}")
+          if [[ "$HTTP_CODE" != "200" ]]; then
+            echo "Could not verify TopDeck evidence package privacy; HTTP $HTTP_CODE." >&2
+            exit 1
+          fi
+          VISIBILITY=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));process.stdout.write(String(x.visibility||''))" "$RESPONSE_FILE")
+          rm -f "$RESPONSE_FILE"
+          if [[ "$VISIBILITY" != "private" ]]; then
+            echo "Refusing promotion evidence join because TopDeck evidence package visibility is ${VISIBILITY:-unknown}, not private." >&2
+            exit 1
+          fi
+
+      - name: Log in to GitHub Container Registry
+        shell: bash
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | oras login ghcr.io --username "${{ github.actor }}" --password-stdin
+
+      - name: Pull immutable evidence artifacts
+        env:
+          PRE_EVENT_REF: ${{ inputs.pre_event_artifact_reference }}
+          COMPLETED_EVENT_REF: ${{ inputs.completed_event_artifact_reference }}
+          SCRYFALL_RAW_REF: ${{ inputs.scryfall_raw_artifact_reference }}
+          SCRYFALL_MANIFEST_REF: ${{ inputs.scryfall_manifest_artifact_reference }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p pre-event completed-event scryfall-raw scryfall-manifest
+          oras pull "$PRE_EVENT_REF" -o pre-event
+          oras pull "$COMPLETED_EVENT_REF" -o completed-event
+          oras pull "$SCRYFALL_RAW_REF" -o scryfall-raw
+          oras pull "$SCRYFALL_MANIFEST_REF" -o scryfall-manifest
+          test -f "pre-event/$TOPDECK_PRIVATE_FILE"
+          test -f "completed-event/$TOPDECK_PRIVATE_FILE"
+          test -f "scryfall-raw/$SCRYFALL_RAW_FILE"
+          test -f "scryfall-manifest/$SCRYFALL_MANIFEST_FILE"
+
+      - name: Replay and join promotion-grade evidence
+        id: join
+        env:
+          TOPDECK_PRE_EVENT_ARTIFACT_REFERENCE: ${{ inputs.pre_event_artifact_reference }}
+          TOPDECK_COMPLETED_ARTIFACT_REFERENCE: ${{ inputs.completed_event_artifact_reference }}
+          SCRYFALL_RAW_ARTIFACT_REFERENCE: ${{ inputs.scryfall_raw_artifact_reference }}
+          SCRYFALL_MANIFEST_ARTIFACT_REFERENCE: ${{ inputs.scryfall_manifest_artifact_reference }}
+          TOPDECK_PRE_EVENT_PRIVATE_PATH: pre-event/${{ env.TOPDECK_PRIVATE_FILE }}
+          TOPDECK_COMPLETED_PRIVATE_PATH: completed-event/${{ env.TOPDECK_PRIVATE_FILE }}
+          SCRYFALL_RETAINED_RAW_PATH: scryfall-raw/${{ env.SCRYFALL_RAW_FILE }}
+          SCRYFALL_RETAINED_MANIFEST_PATH: scryfall-manifest/${{ env.SCRYFALL_MANIFEST_FILE }}
+          TOPDECK_PROMOTION_JOIN_PRIVATE_PATH: ${{ env.PRIVATE_JOIN_FILE }}
+          TOPDECK_PROMOTION_JOIN_AUDIT_PATH: ${{ env.AUDIT_FILE }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx tsx scripts/join-topdeck-prospective-promotion-evidence-v15.ts
+          EVENT_HASH=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.env.AUDIT_FILE,'utf8'));process.stdout.write(x.providerEventFingerprint||'')")
+          JOINED_ROWS=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.env.AUDIT_FILE,'utf8'));process.stdout.write(String(x.joinedRows ?? ''))")
+          if [[ ! "$EVENT_HASH" =~ ^[a-f0-9]{64}$ ]]; then
+            echo "Join audit did not produce a valid event fingerprint." >&2
+            exit 1
+          fi
+          if [[ ! "$JOINED_ROWS" =~ ^[0-9]+$ ]]; then
+            echo "Join audit did not produce a valid joined-row count." >&2
+            exit 1
+          fi
+          echo "event_hash=$EVENT_HASH" >> "$GITHUB_OUTPUT"
+          echo "joined_rows=$JOINED_ROWS" >> "$GITHUB_OUTPUT"
+
+      - name: Push joined sensitive evidence to private GHCR package
+        if: ${{ steps.join.outputs.joined_rows != '0' }}
+        id: push
+        env:
+          EVENT_HASH: ${{ steps.join.outputs.event_hash }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          OWNER=$(printf '%s' "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          REPOSITORY="ghcr.io/${OWNER}/${TOPDECK_PACKAGE_NAME}"
+          TAG="joined-${EVENT_HASH:0:20}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          TAGGED_REFERENCE="${REPOSITORY}:${TAG}"
+          oras push \
+            --artifact-type "$JOIN_ARTIFACT_TYPE" \
+            "$TAGGED_REFERENCE" \
+            "$PRIVATE_JOIN_FILE:$JOIN_LAYER_MEDIA_TYPE"
+          oras manifest fetch --descriptor "$TAGGED_REFERENCE" > "$DESCRIPTOR_FILE"
+          DIGEST=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.env.DESCRIPTOR_FILE,'utf8'));process.stdout.write(x.digest||'')")
+          if [[ ! "$DIGEST" =~ ^sha256:[a-f0-9]{64}$ ]]; then
+            echo "Joined evidence descriptor did not contain an immutable SHA-256 digest." >&2
+            exit 1
+          fi
+          echo "artifact_reference=${REPOSITORY}@${DIGEST}" >> "$GITHUB_OUTPUT"
+
+      - name: Verify joined evidence package remained private
+        if: ${{ steps.join.outputs.joined_rows != '0' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          OWNER=$(printf '%s' "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          ENCODED_PACKAGE=$(node -e "process.stdout.write(encodeURIComponent(process.env.TOPDECK_PACKAGE_NAME))")
+          RESPONSE_FILE=$(mktemp)
+          HTTP_CODE=$(curl -sS -o "$RESPONSE_FILE" -w '%{http_code}' \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/users/${OWNER}/packages/container/${ENCODED_PACKAGE}")
+          if [[ "$HTTP_CODE" != "200" ]]; then
+            echo "Could not verify joined evidence package privacy; HTTP $HTTP_CODE." >&2
+            exit 1
+          fi
+          VISIBILITY=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));process.stdout.write(String(x.visibility||''))" "$RESPONSE_FILE")
+          rm -f "$RESPONSE_FILE"
+          if [[ "$VISIBILITY" != "private" ]]; then
+            echo "Joined evidence package is not private after write." >&2
+            exit 1
+          fi
+
+      - name: Add immutable joined-evidence reference to audit
+        if: ${{ steps.join.outputs.joined_rows != '0' }}
+        env:
+          JOINED_ARTIFACT_REFERENCE: ${{ steps.push.outputs.artifact_reference }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('node:fs');
+          const path = process.env.AUDIT_FILE;
+          const audit = JSON.parse(fs.readFileSync(path, 'utf8'));
+          audit.privateJoinedEvidenceStorage = {
+            kind: 'ghcr-private-oci',
+            immutableArtifactReference: process.env.JOINED_ARTIFACT_REFERENCE,
+          };
+          audit.privacy.privateArtifactReferencesPersistedInAudit = true;
+          fs.writeFileSync(path, `${JSON.stringify(audit, null, 2)}\n`, 'utf8');
+          NODE
+
+      - name: Upload privacy-safe join audit only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: topdeck-promotion-join-audit-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.AUDIT_FILE }}
+            ${{ env.DESCRIPTOR_FILE }}
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Remove sensitive evidence from runner workspace
+        if: always()
+        shell: bash
+        run: |
+          rm -rf pre-event completed-event scryfall-raw scryfall-manifest
+          rm -f "$PRIVATE_JOIN_FILE"
