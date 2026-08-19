@@ -5,6 +5,7 @@ import { extractDeckFeatureSnapshotV15 } from './deck-feature-snapshot-v15.js';
 import { extractProvenancedDeckFeatureSnapshotV15 } from './historical-carddata-provenance-v15.js';
 import {
   materializeTopDeckTemporalCorpusV15,
+  TOPDECK_HISTORICAL_OUTCOME_SOURCE_VERSION_V15,
   type TopDeckTemporalCorpusItemV15,
 } from './topdeck-temporal-corpus-v15.js';
 import type { TopDeckLearningCandidateV15 } from './topdeck-learning-adapter-v15.js';
@@ -70,6 +71,7 @@ function item(options: {
   const outcomeMs = Date.parse(options.outcomeAt);
   const snapshotAt = new Date(outcomeMs - 86_400_000).toISOString();
   const observedAt = new Date(outcomeMs + 86_400_000).toISOString();
+  const retrievedAt = new Date(outcomeMs + 86_460_000).toISOString();
   const candidate: TopDeckLearningCandidateV15 = {
     sourceId: 'topdeck',
     providerEventId: options.id,
@@ -108,6 +110,7 @@ function item(options: {
       independenceKey: `event:${options.id}`,
       leakageKey: options.leakageKey ?? `event:${options.id}`,
       sourceObservedAt: observedAt,
+      sourceRetrievedAt: retrievedAt,
     },
   };
 }
@@ -144,6 +147,8 @@ test('future holdout deck structure cannot change the normalizer fitted on plann
   assert.equal(holdout.metadata?.historicalCardDataMethod, 'contemporaneous-capture');
   assert.equal(holdout.metadata?.historicalCardDataSourceContentHash, FIXTURE_SOURCE_HASH);
   assert.equal(holdout.metadata?.historicalCommanderLegalityStatus, 'legal');
+  assert.equal(holdout.metadata?.historicalOutcomeSourceVersion, TOPDECK_HISTORICAL_OUTCOME_SOURCE_VERSION_V15);
+  assert.equal(typeof holdout.metadata?.historicalOutcomeSourceContentHash, 'string');
   assert.equal(extreme.manifest.audit.uniqueRecords, 5);
   assert.deepEqual(extreme.manifest.refreshAudit, {
     providerCandidates: 5,
@@ -151,6 +156,18 @@ test('future holdout deck structure cannot change the normalizer fitted on plann
     ingestionAccepted: 5,
     ingestionRejected: 0,
   });
+
+  assert.equal(extreme.historicalRecords.length, 5);
+  assert.equal(extreme.historicalRecords.every((record) => record.eligibleForHistoricalTraining), true);
+  assert.equal(extreme.historicalRecords.every((record) => record.safeguards.outcomeEvidenceTargetOnly), true);
+  assert.equal(extreme.historicalRecords.every((record) => record.outcomeEvidence.replayable), true);
+  assert.equal(extreme.historicalManifest.recordCount, 5);
+  assert.equal(extreme.historicalManifest.eligibleRecordCount, 5);
+  assert.equal(extreme.historicalManifest.ineligibleRecordCount, 0);
+  assert.equal(extreme.historicalManifest.replayableRecords, 5);
+  assert.deepEqual(extreme.historicalManifest.outcomeEvidenceSourceVersions, [
+    TOPDECK_HISTORICAL_OUTCOME_SOURCE_VERSION_V15,
+  ]);
 });
 
 test('planner assigns an entire leakage series before fitting normalization', () => {
@@ -167,6 +184,7 @@ test('planner assigns an entire leakage series before fitting normalization', ()
   ]);
   assert.equal(result.normalizer.fittedSnapshotCount, 2);
   assert.equal(result.partition.leakageChecksPassed, true);
+  assert.equal(result.historicalManifest.eligibleRecordCount, 4);
 });
 
 test('workflow fails closed when leakage grouping leaves no historical training snapshots', () => {
@@ -203,5 +221,24 @@ test('historical corpus workflow rejects a plain low-level snapshot without prov
       unprovenancedItem,
     ], { holdoutFraction: 0.5 }),
     /historical.*provenance|provenanced snapshot|provenance assessment/i,
+  );
+});
+
+test('historical corpus rejects outcome retrieval timestamps that precede source observation', () => {
+  const invalid = item({
+    id: 'bad-retrieval-order',
+    outcomeAt: '2026-02-01T00:00:00Z',
+    standing: 2,
+    cheapInteraction: 8,
+    threatManaValue: 3,
+  });
+  invalid.linkage.sourceRetrievedAt = '2026-02-01T12:00:00.000Z';
+
+  assert.throws(
+    () => materializeTopDeckTemporalCorpusV15([
+      item({ id: 'valid-train', outcomeAt: '2026-01-01T00:00:00Z', standing: 3, cheapInteraction: 6, threatManaValue: 4 }),
+      invalid,
+    ], { holdoutFraction: 0.5 }),
+    /sourceRetrievedAt.*before.*sourceObservedAt/i,
   );
 });
