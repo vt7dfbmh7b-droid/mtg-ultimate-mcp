@@ -26,6 +26,15 @@ function asIsoRange(values: string[]): { earliest: string | null; latest: string
   };
 }
 
+function safeCommanderFailureClass(reason: string): string {
+  const cardCount = reason.match(/exactly 100 cards; found (\d+)/i)?.[1];
+  if (cardCount) return `card-count-found:${cardCount}`;
+  const commanderCount = reason.match(/one or two commander entries; found (\d+)/i)?.[1];
+  if (commanderCount) return `commander-count-found:${commanderCount}`;
+  if (/each TopDeck commander entry must represent exactly one physical card/i.test(reason)) return 'commander-quantity-invalid';
+  return 'other-invalid-commander-deck';
+}
+
 async function main(): Promise<void> {
   const source = realOutcomeSourceByIdV15('topdeck');
   requireCondition(source, 'TopDeck must exist in the real-outcome source inventory.');
@@ -49,12 +58,20 @@ async function main(): Promise<void> {
       .sort()
       .map((code) => [code, result.rejected.filter((item) => item.code === code).length]),
   );
+  const invalidCommanderClasses = result.rejected
+    .filter((item) => item.code === 'invalid-commander-deck')
+    .map((item) => safeCommanderFailureClass(item.reason));
+  const invalidCommanderDiagnostics = Object.fromEntries(
+    [...new Set(invalidCommanderClasses)]
+      .sort()
+      .map((classification) => [classification, invalidCommanderClasses.filter((item) => item === classification).length]),
+  );
   const uniqueEvents = new Set(result.candidates.map((candidate) => candidate.providerEventId)).size;
   const fieldSizes = result.candidates.map((candidate) => candidate.fieldSize);
   const outcomeRange = asIsoRange(result.candidates.map((candidate) => candidate.outcomeOccurredAt));
 
   const audit = {
-    schemaVersion: 'topdeck-learning-source-live-control-v15.2',
+    schemaVersion: 'topdeck-learning-source-live-control-v15.3',
     checkedAt: result.fetchedAt,
     provider: result.source,
     requestUrl: result.requestUrl,
@@ -63,6 +80,7 @@ async function main(): Promise<void> {
     usableCandidates: result.candidates.length,
     rejectedRows: result.rejected.length,
     rejectionCounts,
+    invalidCommanderDiagnostics,
     uniqueCandidateEvents: uniqueEvents,
     fieldSize: {
       minimum: fieldSizes.length > 0 ? Math.min(...fieldSizes) : null,
@@ -83,13 +101,14 @@ async function main(): Promise<void> {
       decklistsPersisted: false,
       playerIdentifiersPersisted: false,
       apiKeyPersisted: false,
+      rawRejectionReasonsPersisted: false,
       aggregateRejectionDiagnosticsOnly: true,
     },
   } as const;
 
   // Persist safe aggregate diagnostics even when the strict usable-candidate gate
   // fails. This lets provider/schema problems be diagnosed without retaining
-  // player identifiers or deck contents from the live response.
+  // player identifiers, card names, raw rejection messages, or deck contents.
   await writeFile(RESULT_PATH, `${JSON.stringify(audit, null, 2)}\n`, 'utf8');
   console.log(JSON.stringify(audit, null, 2));
 
