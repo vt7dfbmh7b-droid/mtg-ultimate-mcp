@@ -78,6 +78,63 @@ test('live fetcher makes exactly one documented bounded EDH POST and adapts the 
   assert.equal(result.fetchedAt, '2026-08-17T10:00:00.000Z');
   assert.equal(result.rateLimitPolicy, 'single-request-no-automatic-retry');
   assert.equal(result.attribution, 'Data provided by TopDeck.gg');
+  assert.deepEqual(result.providerShapeAudit, {
+    tournaments: 1,
+    standingsRows: 1,
+    decklistStringRows: 1,
+    multilineDecklistRows: 1,
+    singleLineDecklistRows: 0,
+    urlLikeDecklistRows: 0,
+    deckObjRows: 0,
+    deckObjWithCommandersSection: 0,
+    deckObjWithMainboardSection: 0,
+    commanderSectionEntryCountDistribution: {},
+    commanderSectionValueShapes: {
+      number: 0,
+      'object-with-quantity': 0,
+      'object-without-quantity': 0,
+      string: 0,
+      other: 0,
+    },
+    mainboardSectionValueShapes: {
+      number: 0,
+      'object-with-quantity': 0,
+      'object-without-quantity': 0,
+      string: 0,
+      other: 0,
+    },
+  });
+});
+
+test('provider shape audit detects URL-like deck references and structured deck sections without retaining card names', async () => {
+  const payload = tournament();
+  payload.standings[0] = {
+    id: 'player-1',
+    name: 'Player One',
+    decklist: 'moxfield.com/decks/example',
+    deckObj: {
+      Commanders: {
+        'Commander Name': { quantity: 1, id: 'card-a' },
+      },
+      Mainboard: {
+        'Main Card': { quantity: 99, id: 'card-b' },
+      },
+    },
+    wins: 4,
+    draws: 1,
+    losses: 0,
+  };
+  const fetchFn: typeof fetch = async () => new Response(JSON.stringify([payload]), { status: 200 });
+  const result = await fetchTopDeckLearningCandidatesV15({ apiKey: 'fixture-key', fetchFn });
+
+  assert.equal(result.providerShapeAudit.singleLineDecklistRows, 1);
+  assert.equal(result.providerShapeAudit.urlLikeDecklistRows, 1);
+  assert.equal(result.providerShapeAudit.deckObjRows, 1);
+  assert.equal(result.providerShapeAudit.deckObjWithCommandersSection, 1);
+  assert.equal(result.providerShapeAudit.deckObjWithMainboardSection, 1);
+  assert.deepEqual(result.providerShapeAudit.commanderSectionEntryCountDistribution, { '1': 1 });
+  assert.equal(result.providerShapeAudit.commanderSectionValueShapes['object-with-quantity'], 1);
+  assert.equal(result.providerShapeAudit.mainboardSectionValueShapes['object-with-quantity'], 1);
 });
 
 test('HTTP 429 is surfaced as a typed rate-limit error with Retry-After and no automatic retry', async () => {
