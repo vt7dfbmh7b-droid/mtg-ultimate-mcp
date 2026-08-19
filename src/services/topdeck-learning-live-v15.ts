@@ -17,12 +17,35 @@ export interface TopDeckLearningFetchQueryV15 {
   participantMin: number;
 }
 
+export type TopDeckStructuredValueShapeV15 =
+  | 'number'
+  | 'object-with-quantity'
+  | 'object-without-quantity'
+  | 'string'
+  | 'other';
+
+export interface TopDeckProviderShapeAuditV15 {
+  tournaments: number;
+  standingsRows: number;
+  decklistStringRows: number;
+  multilineDecklistRows: number;
+  singleLineDecklistRows: number;
+  urlLikeDecklistRows: number;
+  deckObjRows: number;
+  deckObjWithCommandersSection: number;
+  deckObjWithMainboardSection: number;
+  commanderSectionEntryCountDistribution: Record<string, number>;
+  commanderSectionValueShapes: Record<TopDeckStructuredValueShapeV15, number>;
+  mainboardSectionValueShapes: Record<TopDeckStructuredValueShapeV15, number>;
+}
+
 export interface TopDeckLearningFetchResultV15 {
   source: 'topdeck-v2';
   fetchedAt: string;
   requestUrl: string;
   query: TopDeckLearningFetchQueryV15;
   tournamentsReturned: number;
+  providerShapeAudit: TopDeckProviderShapeAuditV15;
   candidates: TopDeckLearningCandidateV15[];
   rejected: TopDeckLearningAdapterRejectionV15[];
   attribution: typeof TOPDECK_V2_ATTRIBUTION_V15;
@@ -80,6 +103,107 @@ function parsePayload(value: unknown): TopDeckV2BulkTournamentV15[] {
   return value as TopDeckV2BulkTournamentV15[];
 }
 
+function emptyShapeCounts(): Record<TopDeckStructuredValueShapeV15, number> {
+  return {
+    number: 0,
+    'object-with-quantity': 0,
+    'object-without-quantity': 0,
+    string: 0,
+    other: 0,
+  };
+}
+
+function structuredValueShape(value: unknown): TopDeckStructuredValueShapeV15 {
+  if (typeof value === 'number' && Number.isFinite(value)) return 'number';
+  if (typeof value === 'string') return 'string';
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    const quantity = (value as Record<string, unknown>).quantity;
+    return typeof quantity === 'number' && Number.isFinite(quantity)
+      ? 'object-with-quantity'
+      : 'object-without-quantity';
+  }
+  return 'other';
+}
+
+function sectionObject(deckObj: Record<string, unknown>, wanted: 'commanders' | 'mainboard'): Record<string, unknown> | null {
+  const match = Object.entries(deckObj).find(([key]) => key.trim().toLocaleLowerCase() === wanted);
+  const value = match?.[1];
+  return value && typeof value === 'object' && !Array.isArray(value)
+    ? value as Record<string, unknown>
+    : null;
+}
+
+function increment(target: Record<string, number>, key: string): void {
+  target[key] = (target[key] ?? 0) + 1;
+}
+
+function looksUrlLikeDecklist(value: string): boolean {
+  const trimmed = value.trim();
+  if (!trimmed || /\r|\n/.test(trimmed)) return false;
+  return /^(?:https?:\/\/|www\.)/i.test(trimmed)
+    || /^[a-z0-9.-]+\.[a-z]{2,}(?:\/|$)/i.test(trimmed);
+}
+
+function auditProviderShape(payload: TopDeckV2BulkTournamentV15[]): TopDeckProviderShapeAuditV15 {
+  const commanderSectionValueShapes = emptyShapeCounts();
+  const mainboardSectionValueShapes = emptyShapeCounts();
+  const commanderSectionEntryCountDistribution: Record<string, number> = {};
+  const audit: TopDeckProviderShapeAuditV15 = {
+    tournaments: payload.length,
+    standingsRows: 0,
+    decklistStringRows: 0,
+    multilineDecklistRows: 0,
+    singleLineDecklistRows: 0,
+    urlLikeDecklistRows: 0,
+    deckObjRows: 0,
+    deckObjWithCommandersSection: 0,
+    deckObjWithMainboardSection: 0,
+    commanderSectionEntryCountDistribution,
+    commanderSectionValueShapes,
+    mainboardSectionValueShapes,
+  };
+
+  for (const tournament of payload) {
+    if (!Array.isArray(tournament.standings)) continue;
+    for (const raw of tournament.standings) {
+      audit.standingsRows += 1;
+      if (!raw || typeof raw !== 'object') continue;
+      const standing = raw as Record<string, unknown>;
+      const decklist = standing.decklist;
+      if (typeof decklist === 'string' && decklist.trim()) {
+        audit.decklistStringRows += 1;
+        if (/\r|\n/.test(decklist)) audit.multilineDecklistRows += 1;
+        else audit.singleLineDecklistRows += 1;
+        if (looksUrlLikeDecklist(decklist)) audit.urlLikeDecklistRows += 1;
+      }
+
+      const deckObjValue = standing.deckObj;
+      if (!deckObjValue || typeof deckObjValue !== 'object' || Array.isArray(deckObjValue)) continue;
+      audit.deckObjRows += 1;
+      const deckObj = deckObjValue as Record<string, unknown>;
+      const commanders = sectionObject(deckObj, 'commanders');
+      const mainboard = sectionObject(deckObj, 'mainboard');
+      if (commanders) {
+        audit.deckObjWithCommandersSection += 1;
+        increment(commanderSectionEntryCountDistribution, String(Object.keys(commanders).length));
+        for (const value of Object.values(commanders)) {
+          const shape = structuredValueShape(value);
+          commanderSectionValueShapes[shape] += 1;
+        }
+      }
+      if (mainboard) {
+        audit.deckObjWithMainboardSection += 1;
+        for (const value of Object.values(mainboard)) {
+          const shape = structuredValueShape(value);
+          mainboardSectionValueShapes[shape] += 1;
+        }
+      }
+    }
+  }
+
+  return audit;
+}
+
 /**
  * Fetch a bounded batch of completed EDH tournament data for later learning
  * ingestion. This performs exactly one TopDeck bulk-search request per call.
@@ -89,9 +213,10 @@ function parsePayload(value: unknown): TopDeckV2BulkTournamentV15[] {
  * request, this function does not automatically retry POSTs. A 429 becomes a
  * typed error exposing the server's Retry-After delay when present.
  *
- * This network layer only produces deterministic source candidates. It does not
- * assign cross-source independence/leakage keys, extract learning features, or
- * create training labels.
+ * This network layer only produces deterministic source candidates plus a
+ * content-free aggregate shape audit. It does not assign cross-source
+ * independence/leakage keys, extract learning features, create training labels,
+ * or persist provider deck/player content.
  */
 export async function fetchTopDeckLearningCandidatesV15(options: {
   lastDays?: number;
@@ -153,6 +278,7 @@ export async function fetchTopDeckLearningCandidatesV15(options: {
   }
 
   const payload = parsePayload(await response.json());
+  const providerShapeAudit = auditProviderShape(payload);
   const candidates: TopDeckLearningCandidateV15[] = [];
   const rejected: TopDeckLearningAdapterRejectionV15[] = [];
   for (const tournament of payload) {
@@ -172,6 +298,7 @@ export async function fetchTopDeckLearningCandidatesV15(options: {
     requestUrl,
     query,
     tournamentsReturned: payload.length,
+    providerShapeAudit,
     candidates,
     rejected,
     attribution: TOPDECK_V2_ATTRIBUTION_V15,
