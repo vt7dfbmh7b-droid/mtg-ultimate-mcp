@@ -36,7 +36,7 @@ const decodedPayloadHash = createHash('sha256').update(jsonlPayload).digest('hex
 const staticUri = 'https://data.scryfall.io/default-cards/default-cards-test.jsonl.gz';
 
 function successFetch(bytes: Uint8Array = compressedPayload, headers: Record<string, string> = {}): typeof fetch {
-  return (async () => new Response(bytes, {
+  return (async () => new Response(Uint8Array.from(bytes), {
     status: 200,
     headers: {
       'content-length': String(bytes.byteLength),
@@ -78,7 +78,7 @@ test('Scryfall forward capture rejects non-Scryfall, non-HTTPS, and non-jsonl.gz
   let requests = 0;
   const fetchImpl = (async () => {
     requests += 1;
-    return new Response(compressedPayload, { status: 200 });
+    return new Response(Uint8Array.from(compressedPayload), { status: 200 });
   }) as typeof fetch;
 
   for (const uri of [
