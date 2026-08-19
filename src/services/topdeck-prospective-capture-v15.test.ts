@@ -140,8 +140,8 @@ test('event-end capture records provider Complete/endDate as later target timing
 
   assert.equal(result.evidence.providerStatus, 'Complete');
   assert.equal(result.evidence.method, 'provider-info-end-date-capture');
-  assert.equal(result.evidence.eventStartedAt, '2026-08-20T11:20:00.000Z');
-  assert.equal(result.evidence.eventEndedAt, '2026-08-20T19:20:00.000Z');
+  assert.equal(result.evidence.eventStartedAt, '2026-08-20T10:00:00.000Z');
+  assert.equal(result.evidence.eventEndedAt, '2026-08-20T18:00:00.000Z');
   assert.match(result.evidence.sourceContentHash, /^[a-f0-9]{64}$/);
 });
 
