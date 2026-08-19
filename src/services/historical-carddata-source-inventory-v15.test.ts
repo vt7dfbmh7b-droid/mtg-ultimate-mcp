@@ -20,7 +20,7 @@ test('current card-data sources are explicitly blocked from retrospective rich-f
 
 test('Scryfall current bulk data is forward-capture enabled without becoming a historical archive', () => {
   const source = historicalCardDataSourceByIdV15('scryfall-default-cards');
-  assert.ok(source);
+  if (!source) throw new Error('Expected Scryfall source inventory entry.');
   assert.equal(source.nativeFormat, 'scryfall-card-array');
   assert.equal(source.forwardCapture, 'enabled-contemporaneous-capture');
   assert.equal(sourceCanCaptureForwardRichFeaturesV15(source.sourceId), true);
@@ -30,7 +30,7 @@ test('Scryfall current bulk data is forward-capture enabled without becoming a h
 
 test('MTGJSON remains a forward adapter candidate and cannot be used as retrospective proof', () => {
   const source = historicalCardDataSourceByIdV15('mtgjson-all-printings');
-  assert.ok(source);
+  if (!source) throw new Error('Expected MTGJSON source inventory entry.');
   assert.equal(source.nativeFormat, 'mtgjson-v5-json');
   assert.equal(source.forwardCapture, 'candidate-adapter-required');
   assert.equal(source.providerIntegritySurface, 'provider-sha256-plus-capture-sha256');
