@@ -51,6 +51,27 @@ function isLegendaryCreature(card: ScryfallCard): boolean {
   return type.includes('legendary') && type.includes('creature');
 }
 
+function hasPrintedPowerAndToughness(value: { power?: string; toughness?: string }): boolean {
+  return typeof value.power === 'string' && value.power.trim().length > 0
+    && typeof value.toughness === 'string' && value.toughness.trim().length > 0;
+}
+
+function isLegendaryVehicleOrSpacecraftFace(value: {
+  type_line?: string;
+  power?: string;
+  toughness?: string;
+}): boolean {
+  const type = value.type_line?.toLowerCase() ?? '';
+  return type.includes('legendary')
+    && (type.includes('vehicle') || type.includes('spacecraft'))
+    && hasPrintedPowerAndToughness(value);
+}
+
+function isLegendaryVehicleOrSpacecraftWithPrintedStats(card: ScryfallCard): boolean {
+  if (isLegendaryVehicleOrSpacecraftFace(card)) return true;
+  return (card.card_faces ?? []).some((face) => isLegendaryVehicleOrSpacecraftFace(face));
+}
+
 function explicitlyCanBeCommander(card: ScryfallCard): boolean {
   return /can be your commander/i.test(getCardOracleText(card));
 }
@@ -96,7 +117,9 @@ function partnerWithTarget(card: ScryfallCard): string | null {
 }
 
 function ordinaryCommanderEligible(card: ScryfallCard): boolean {
-  return isLegendaryCreature(card) || explicitlyCanBeCommander(card);
+  return isLegendaryCreature(card)
+    || isLegendaryVehicleOrSpacecraftWithPrintedStats(card)
+    || explicitlyCanBeCommander(card);
 }
 
 function twoCommanderPairing(first: ScryfallCard, second: ScryfallCard): { legal: boolean; method: string; reason: string } {
@@ -178,9 +201,16 @@ function basicLandTypeColors(card: ScryfallCard): Color[] {
 }
 
 function commanderEligibility(card: ScryfallCard, pairedAsBackground: boolean): { eligible: boolean; reason: string } {
-  if (ordinaryCommanderEligible(card)) return { eligible: true, reason: 'Legendary creature or card text explicitly allows it to be a commander.' };
+  if (ordinaryCommanderEligible(card)) {
+    return {
+      eligible: true,
+      reason: isLegendaryVehicleOrSpacecraftWithPrintedStats(card)
+        ? 'Legendary Vehicle or Spacecraft has printed power and toughness and is commander-eligible under current Commander rules.'
+        : 'Legendary creature or card text explicitly allows it to be a commander.',
+    };
+  }
   if (pairedAsBackground && isBackground(card)) return { eligible: true, reason: 'Legendary Background is legal as the second commander through Choose a Background.' };
-  return { eligible: false, reason: 'Card is not a legendary creature, does not explicitly say it can be your commander, and is not a valid paired Background.' };
+  return { eligible: false, reason: 'Card is not an eligible legendary creature, legendary Vehicle/Spacecraft with printed power and toughness, explicitly permitted commander, or valid paired Background.' };
 }
 
 export function validateCommanderDeck(parsed: ParsedDeck, cards: ScryfallCard[]): CommanderRulesResult {
@@ -293,7 +323,7 @@ export function validateCommanderDeck(parsed: ParsedDeck, cards: ScryfallCard[])
       'Exactly 100 cards including commander(s).',
       'Normally one commander; two only when an applicable pairing mechanic permits them.',
       'Partner variants are distinct: original Partner, Friends forever, Partner—Character select, Doctor’s companion, Choose a Background, and Partner with follow their own pairing conditions.',
-      'Each commander must be eligible to be designated as a commander.',
+      'Commander eligibility includes legendary creatures, cards explicitly allowed to be commanders, and legendary Vehicles/Spacecraft with printed power and toughness; paired Backgrounds follow Choose a Background.',
       'Every card must be legal in the Commander format.',
       'Every card’s color identity must be a subset of the combined commander color identity; colorless cards are allowed.',
       'Hybrid mana contributes all of its colors to color identity under the current rule.',
