@@ -31,7 +31,7 @@ import {
   type TopDeckLearningLinkageV15,
 } from './topdeck-learning-materializer-v15.js';
 
-export const TOPDECK_HISTORICAL_OUTCOME_SOURCE_VERSION_V15 = 'topdeck-v2-materialized-outcome-v15.1' as const;
+export const TOPDECK_HISTORICAL_OUTCOME_SOURCE_VERSION_V15 = 'topdeck-v2-materialized-outcome-v15.2' as const;
 
 export interface TopDeckTemporalCorpusItemV15 {
   candidate: TopDeckLearningCandidateV15;
@@ -112,6 +112,9 @@ function topDeckOutcomeContentHash(candidate: TopDeckLearningCandidateV15): stri
     commanderNames: [...candidate.commanderNames].map((name) => name.trim()).sort(),
     provider: candidate.metadata.provider,
     tournamentName: candidate.metadata.tournamentName,
+    standingSource: candidate.metadata.standingSource,
+    deckSource: candidate.metadata.deckSource,
+    deckObjectSchemaVersion: candidate.metadata.deckObjectSchemaVersion ?? null,
     eventCity: candidate.metadata.eventCity ?? null,
     eventState: candidate.metadata.eventState ?? null,
     wins: candidate.metadata.wins,
