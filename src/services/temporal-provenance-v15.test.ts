@@ -170,10 +170,16 @@ test('retrospective reconstruction is disclosed and cannot satisfy a strict hist
 });
 
 test('strict replayable historical evidence requires both source version and content hash', () => {
-  const incomplete = contemporaneous('source-snapshot', {
-    sourceVersion: undefined,
-    sourceContentHash: undefined,
-  });
+  const incomplete: TemporalEvidenceProvenanceV15 = {
+    mode: 'contemporaneous-snapshot',
+    domain: 'source-snapshot',
+    sourceId: 'fixture-source',
+    sourceUri: 'https://example.test/history/incomplete.json',
+    sourceObservedAt: '2026-01-09T12:00:00.000Z',
+    sourceRetrievedAt: '2026-01-09T12:05:00.000Z',
+    validFrom: '2025-01-01T00:00:00.000Z',
+    truthStatus: 'verified-present',
+  };
   const ordinary = assessTemporalEvidenceAsOfV15(incomplete, '2026-01-10T00:00:00.000Z');
   assert.equal(ordinary.usableForClaim, true);
   assert.equal(ordinary.confidence, 'reduced');
