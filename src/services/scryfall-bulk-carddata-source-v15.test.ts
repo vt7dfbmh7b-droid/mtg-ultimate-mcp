@@ -157,7 +157,7 @@ test('discovery and forward capture use one observation timestamp, exact compres
     requested.push(url);
     if (url === 'https://api.scryfall.com/bulk-data') return jsonResponse(manifest());
     if (url === staticUri) {
-      return new Response(compressedCardPayload, {
+      return new Response(Uint8Array.from(compressedCardPayload), {
         status: 200,
         headers: { 'content-length': String(compressedCardPayload.byteLength) },
       });
