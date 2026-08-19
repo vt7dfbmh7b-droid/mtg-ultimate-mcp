@@ -62,7 +62,7 @@ test('Scryfall forward capture hashes exact compressed bytes, bounds decompressi
   assert.equal(result.acquisition.format, SCRYFALL_JSONL_GZIP_FORMAT_V15);
   assert.equal(result.acquisition.byteLength, compressedPayload.byteLength);
   assert.equal(result.acquisition.decodedByteLength, jsonlPayload.byteLength);
-  assert.deepEqual(result.acquisition.bytes, compressedPayload);
+  assert.deepEqual(result.acquisition.bytes, Uint8Array.from(compressedPayload));
   assert.deepEqual(result.acquisition.cards, [card]);
   assert.equal(result.acquisition.provenance.method, 'contemporaneous-capture');
   assert.equal(result.acquisition.provenance.observedAt, '2026-08-20T00:00:00.000Z');
