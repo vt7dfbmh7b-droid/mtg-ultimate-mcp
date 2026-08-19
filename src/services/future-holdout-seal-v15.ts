@@ -41,6 +41,7 @@ export interface FutureHoldoutEvaluationPlanV15 {
 export interface FutureHoldoutSealV15 {
   schemaVersion: typeof FUTURE_HOLDOUT_SEAL_SCHEMA_V15;
   sealedAt: string;
+  clockAttestation: 'system-clock' | 'injected-test-clock';
   trainingAsOf: string;
   learningTarget: string;
   trainingRecordCount: number;
@@ -71,6 +72,7 @@ export interface FutureHoldoutSealOptionsV15 {
   calibrationBins?: number;
   neural?: NeuralRankerOptionsV15;
   transparent?: { epochs?: number; learningRate?: number; l2?: number };
+  /** Deterministic test hook. Any seal created with this hook is permanently test-attested and cannot support a usefulness claim. */
   now?: () => Date;
 }
 
@@ -166,6 +168,7 @@ export function createFutureHoldoutSealV15(
   }
   for (const record of trainingRecords) assertHistoricalLearningRecordEligibleV15(record);
   const asOf = timestamp('trainingAsOf', trainingAsOf);
+  const clockAttestation: FutureHoldoutSealV15['clockAttestation'] = options.now ? 'injected-test-clock' : 'system-clock';
   const now = options.now ?? (() => new Date());
   const sealedDate = now();
   if (!(sealedDate instanceof Date) || !Number.isFinite(sealedDate.getTime())) throw new Error('now() must return a valid Date.');
@@ -191,6 +194,7 @@ export function createFutureHoldoutSealV15(
   const payload: Omit<FutureHoldoutSealV15, 'sealHash'> = {
     schemaVersion: FUTURE_HOLDOUT_SEAL_SCHEMA_V15,
     sealedAt: sealedAt.iso,
+    clockAttestation,
     trainingAsOf: asOf.iso,
     learningTarget: target,
     trainingRecordCount: trainingRecords.length,
@@ -222,6 +226,9 @@ export function assertFutureHoldoutSealV15(seal: FutureHoldoutSealV15): FutureHo
   if (seal.schemaVersion !== FUTURE_HOLDOUT_SEAL_SCHEMA_V15) throw new Error(`Unsupported future holdout seal schema: ${String(seal.schemaVersion)}.`);
   timestamp('seal.sealedAt', seal.sealedAt);
   timestamp('seal.trainingAsOf', seal.trainingAsOf);
+  if (seal.clockAttestation !== 'system-clock' && seal.clockAttestation !== 'injected-test-clock') {
+    throw new Error(`Unsupported future holdout seal clock attestation: ${String(seal.clockAttestation)}.`);
+  }
   if (!/^[a-f0-9]{64}$/i.test(seal.sealHash)) throw new Error('Future holdout seal hash must be a SHA-256 digest.');
   const { sealHash, ...payload } = seal;
   if (sha256(stableStringify(payload)) !== sealHash.toLocaleLowerCase()) {
