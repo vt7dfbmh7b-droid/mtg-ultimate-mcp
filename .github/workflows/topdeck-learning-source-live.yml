@@ -1,0 +1,54 @@
+name: TopDeck Learning Source Live
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/services/topdeck-learning-live-v15.ts"
+      - "src/services/topdeck-learning-adapter-v15.ts"
+      - "src/services/real-outcome-source-inventory-v15.ts"
+      - "scripts/live-topdeck-learning-source-v15.ts"
+      - ".github/workflows/topdeck-learning-source-live.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: topdeck-learning-source-live-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  topdeck-learning-source-live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TOPDECK_API_KEY: ${{ secrets.TOPDECK_API_KEY }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Type-check and build
+        run: npm run build
+
+      - name: Run bounded one-request TopDeck learning source control
+        run: npx tsx scripts/live-topdeck-learning-source-v15.ts
+
+      - name: Upload provider audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: topdeck-learning-source-${{ github.sha }}
+          path: |
+            topdeck-learning-source-live-result.json
+            topdeck-learning-source-live-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
