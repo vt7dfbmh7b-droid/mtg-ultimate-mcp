@@ -75,6 +75,15 @@ function successFetch(bytes = payloadBytes): typeof fetch {
   })) as typeof fetch;
 }
 
+function chunkedFetch(chunks: Uint8Array[]): typeof fetch {
+  return (async () => new Response(new ReadableStream<Uint8Array>({
+    start(controller) {
+      for (const chunk of chunks) controller.enqueue(chunk);
+      controller.close();
+    },
+  }), { status: 200 })) as typeof fetch;
+}
+
 test('pinned historical acquisition verifies exact bytes, hash, length, and archive provenance', async () => {
   const result = await acquirePinnedHistoricalCardDataV15(
     pin(),
@@ -142,6 +151,23 @@ test('byte length and maximum-size guards reject truncated or unexpectedly large
       { fetchImpl: successFetch(), maxBytes: payloadBytes.byteLength - 1, now: '2026-08-20T00:00:00.000Z' },
     ),
     /safety limit|too large|above/i,
+  );
+});
+
+test('streaming size guard fails closed even when the provider omits Content-Length', async () => {
+  const split = Math.max(1, Math.floor(payloadBytes.byteLength / 2));
+  const chunks = [payloadBytes.slice(0, split), payloadBytes.slice(split)];
+  await assert.rejects(
+    acquirePinnedHistoricalCardDataV15(
+      pin({ expectedByteLength: undefined }),
+      '2026-01-10T00:00:00.000Z',
+      {
+        fetchImpl: chunkedFetch(chunks),
+        maxBytes: payloadBytes.byteLength - 1,
+        now: '2026-08-20T00:00:00.000Z',
+      },
+    ),
+    /safety limit|more than|above/i,
   );
 });
 
