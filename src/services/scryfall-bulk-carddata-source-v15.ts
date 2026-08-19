@@ -6,8 +6,8 @@ import {
   type ScryfallForwardCardDataCaptureV15,
 } from './scryfall-forward-carddata-capture-v15.js';
 
-export const SCRYFALL_BULK_CARD_DATA_SOURCE_SCHEMA_V15 = 'scryfall-bulk-carddata-source-v15.1' as const;
-export const SCRYFALL_BULK_DISCOVERY_ACCEPT_V15 = 'application/json' as const;
+export const SCRYFALL_BULK_CARD_DATA_SOURCE_SCHEMA_V15 = 'scryfall-bulk-carddata-source-v15.2' as const;
+export const SCRYFALL_BULK_DISCOVERY_ACCEPT_V15 = 'application/json;q=0.9,*/*;q=0.8' as const;
 
 const DEFAULT_CARDS_TYPE = 'default_cards';
 
@@ -26,11 +26,10 @@ export interface ScryfallDefaultCardsDiscoveryV15 {
   sourceId: typeof SCRYFALL_DEFAULT_CARDS_SOURCE_ID_V15;
   manifestUri: string;
   discoveredAt: string;
-  providerObjectId: string | null;
+  providerObjectId: string;
+  providerMetadataUri: string;
   providerUpdatedAt: string;
-  providerSizeBytes: number | null;
-  providerContentType: string | null;
-  providerContentEncoding: string | null;
+  providerCompressedSizeBytes: number;
   downloadUri: string;
   requestPolicy: {
     userAgent: string;
@@ -42,6 +41,7 @@ export interface ScryfallDefaultCardsDiscoveryV15 {
 
 export interface DiscoverAndCaptureScryfallDefaultCardsOptionsV15 extends ScryfallBulkDiscoveryOptionsV15 {
   maxBytes?: HistoricalCardDataAcquisitionOptionsV15['maxBytes'];
+  maxDecodedBytes?: number;
 }
 
 export interface DiscoveredScryfallForwardCardDataCaptureV15 {
@@ -83,44 +83,60 @@ function normalizedTimestamp(name: string, value: unknown, code: 'invalid-manife
   return new Date(milliseconds).toISOString();
 }
 
-function positiveIntegerOrNull(name: string, value: unknown): number | null {
-  if (value === undefined || value === null) return null;
+function positiveSafeInteger(name: string, value: unknown): number {
   if (!Number.isSafeInteger(value) || (value as number) <= 0) {
     throw new ScryfallBulkDiscoveryErrorV15(
       'invalid-default-cards-entry',
-      `${name} must be a positive safe integer when present.`,
+      `${name} must be a positive safe integer.`,
     );
   }
   return value as number;
 }
 
-function optionalText(name: string, value: unknown): string | null {
-  if (value === undefined || value === null) return null;
-  if (typeof value !== 'string' || !value.trim()) {
-    throw new ScryfallBulkDiscoveryErrorV15(
-      'invalid-default-cards-entry',
-      `${name} must be a non-empty string when present.`,
-    );
-  }
-  return value.trim();
-}
-
-function absoluteHttpsScryfallStaticUri(value: unknown): string {
-  const text = requiredText('download_uri', value);
+function absoluteHttpsScryfallApiBulkUri(value: unknown): string {
+  const text = requiredText('uri', value);
   let parsed: URL;
   try {
     parsed = new URL(text);
   } catch {
     throw new ScryfallBulkDiscoveryErrorV15(
       'invalid-default-cards-entry',
-      'download_uri must be an absolute HTTPS *.scryfall.io URL.',
+      'uri must be an absolute HTTPS api.scryfall.com/bulk-data URL.',
+    );
+  }
+  if (
+    parsed.protocol !== 'https:'
+    || parsed.hostname.toLocaleLowerCase() !== 'api.scryfall.com'
+    || !parsed.pathname.startsWith('/bulk-data/')
+  ) {
+    throw new ScryfallBulkDiscoveryErrorV15(
+      'invalid-default-cards-entry',
+      'uri must be an absolute HTTPS api.scryfall.com/bulk-data URL.',
+    );
+  }
+  return parsed.toString();
+}
+
+function absoluteHttpsScryfallJsonlGzipUri(value: unknown): string {
+  const text = requiredText('jsonl_download_uri', value);
+  let parsed: URL;
+  try {
+    parsed = new URL(text);
+  } catch {
+    throw new ScryfallBulkDiscoveryErrorV15(
+      'invalid-default-cards-entry',
+      'jsonl_download_uri must be an absolute HTTPS *.scryfall.io .jsonl.gz URL.',
     );
   }
   const hostname = parsed.hostname.toLocaleLowerCase();
-  if (parsed.protocol !== 'https:' || !hostname.endsWith('.scryfall.io')) {
+  if (
+    parsed.protocol !== 'https:'
+    || !hostname.endsWith('.scryfall.io')
+    || !parsed.pathname.toLocaleLowerCase().endsWith('.jsonl.gz')
+  ) {
     throw new ScryfallBulkDiscoveryErrorV15(
       'invalid-default-cards-entry',
-      'download_uri must be an absolute HTTPS *.scryfall.io URL.',
+      'jsonl_download_uri must be an absolute HTTPS *.scryfall.io .jsonl.gz URL.',
     );
   }
   return parsed.toString();
@@ -184,12 +200,11 @@ function parseDefaultCardsEntry(
     sourceId: SCRYFALL_DEFAULT_CARDS_SOURCE_ID_V15,
     manifestUri: shared.manifestUri,
     discoveredAt: shared.discoveredAt,
-    providerObjectId: optionalText('id', entry.id),
+    providerObjectId: requiredText('id', entry.id),
+    providerMetadataUri: absoluteHttpsScryfallApiBulkUri(entry.uri),
     providerUpdatedAt: normalizedTimestamp('updated_at', entry.updated_at, 'invalid-default-cards-entry'),
-    providerSizeBytes: positiveIntegerOrNull('size', entry.size),
-    providerContentType: optionalText('content_type', entry.content_type),
-    providerContentEncoding: optionalText('content_encoding', entry.content_encoding),
-    downloadUri: absoluteHttpsScryfallStaticUri(entry.download_uri),
+    providerCompressedSizeBytes: positiveSafeInteger('compressed_size', entry.compressed_size),
+    downloadUri: absoluteHttpsScryfallJsonlGzipUri(entry.jsonl_download_uri),
     requestPolicy: {
       userAgent: shared.userAgent,
       accept: SCRYFALL_BULK_DISCOVERY_ACCEPT_V15,
@@ -206,8 +221,9 @@ export async function discoverScryfallDefaultCardsV15(
   const url = manifestUri(options.apiBase);
   const agent = userAgent(options.userAgent);
   const discoveredAt = discoveryTime(options.now);
+  const requestTimeoutMs = timeoutMs(options.timeoutMs);
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs(options.timeoutMs));
+  const timer = setTimeout(() => controller.abort(), requestTimeoutMs);
 
   let response: Response;
   try {
@@ -223,7 +239,7 @@ export async function discoverScryfallDefaultCardsV15(
     if (controller.signal.aborted) {
       throw new ScryfallBulkDiscoveryErrorV15(
         'source-timeout',
-        `Scryfall bulk manifest request timed out after ${timeoutMs(options.timeoutMs)}ms.`,
+        `Scryfall bulk manifest request timed out after ${requestTimeoutMs}ms.`,
       );
     }
     const detail = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
@@ -283,18 +299,20 @@ export async function discoverScryfallDefaultCardsV15(
 export async function discoverAndCaptureScryfallDefaultCardsForwardV15(
   options: DiscoverAndCaptureScryfallDefaultCardsOptionsV15 = {},
 ): Promise<DiscoveredScryfallForwardCardDataCaptureV15> {
-  const observedAt = discoveryTime(options.now);
+  const captureObservedAt = discoveryTime(options.now);
   const discovery = await discoverScryfallDefaultCardsV15({
     ...(options.fetchImpl === undefined ? {} : { fetchImpl: options.fetchImpl }),
     ...(options.apiBase === undefined ? {} : { apiBase: options.apiBase }),
     ...(options.userAgent === undefined ? {} : { userAgent: options.userAgent }),
     ...(options.timeoutMs === undefined ? {} : { timeoutMs: options.timeoutMs }),
-    now: observedAt,
+    now: captureObservedAt,
   });
   const capture = await captureScryfallDefaultCardsForwardV15(discovery.downloadUri, {
     ...(options.fetchImpl === undefined ? {} : { fetchImpl: options.fetchImpl }),
     ...(options.maxBytes === undefined ? {} : { maxBytes: options.maxBytes }),
-    now: observedAt,
+    ...(options.maxDecodedBytes === undefined ? {} : { maxDecodedBytes: options.maxDecodedBytes }),
+    expectedCompressedBytes: discovery.providerCompressedSizeBytes,
+    now: captureObservedAt,
   });
   return { discovery, capture };
 }
