@@ -33,7 +33,7 @@ async function callUniversalPipelineThroughMcp(): Promise<Record<string, unknown
         winPackageMode: 'prefer',
         maxWinPackageCards: 3,
       },
-    }) as unknown as {
+    }, { timeout: 5 * 60_000 }) as unknown as {
       content: Array<{ type: string; text?: string }>;
       isError?: boolean;
     };
