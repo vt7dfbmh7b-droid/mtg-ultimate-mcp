@@ -4,7 +4,7 @@ import {
   extractDeckFeatureSnapshotV15,
   type DeckFeatureSnapshotV15,
 } from './deck-feature-snapshot-v15.js';
-import { validateCommanderDeck } from './commander-rules.js';
+import { validateCommanderDeckAsOfV15 } from './commander-rules-temporal-v15.js';
 import { parseDecklist, type DeckEntry } from './deck.js';
 
 export type HistoricalCardDataProvenanceV15 =
@@ -189,7 +189,7 @@ function selectHistoricalFeatureCardsV15(
 }
 
 function summarizeCommanderValidation(
-  result: ReturnType<typeof validateCommanderDeck>,
+  result: ReturnType<typeof validateCommanderDeckAsOfV15>,
 ): HistoricalCommanderValidationSummaryV15 {
   const pairingMethod = typeof result.pairing.method === 'string' ? result.pairing.method : 'unknown';
   return {
@@ -304,8 +304,8 @@ export function assessHistoricalCardDataProvenanceV15(
  * construction unless provenance establishes that the source contents were
  * available before the prediction cutoff. Name-only deck entries are resolved
  * only to dated printings that existed by the cutoff; exact set/collector lines
- * remain exact. The historical Commander deck must also pass the project's hard
- * construction/legality validator before it can become a learning feature row.
+ * remain exact. Historical Commander construction is validated through dated
+ * rule gates so a later eligibility expansion cannot leak backward.
  */
 export function extractProvenancedDeckFeatureSnapshotV15(
   decklist: string,
@@ -322,7 +322,7 @@ export function extractProvenancedDeckFeatureSnapshotV15(
 
   const historicalCards = selectHistoricalFeatureCardsV15(decklist, cards, options.availableAt);
   const parsed = parseDecklist(decklist);
-  const commanderRules = validateCommanderDeck(parsed, historicalCards);
+  const commanderRules = validateCommanderDeckAsOfV15(parsed, historicalCards, options.availableAt);
   const historicalCommanderValidation = summarizeCommanderValidation(commanderRules);
   if (!historicalCommanderValidation.isLegal) {
     throw new Error(`Historical Commander construction is ${historicalCommanderValidation.status}: ${commanderValidationFailureReason(historicalCommanderValidation)}.`);
