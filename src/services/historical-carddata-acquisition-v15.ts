@@ -124,6 +124,75 @@ function expectedByteLength(value: number | undefined): number | null {
   return value;
 }
 
+function sourceTooLarge(total: number, limit: number): HistoricalCardDataAcquisitionErrorV15 {
+  return new HistoricalCardDataAcquisitionErrorV15(
+    'source-too-large',
+    `Historical card-data source returned more than ${limit} bytes (at least ${total}), above the safety limit.`,
+  );
+}
+
+function sourceLengthMismatch(total: number, expectedLength: number): HistoricalCardDataAcquisitionErrorV15 {
+  return new HistoricalCardDataAcquisitionErrorV15(
+    'source-byte-length-mismatch',
+    `Historical card-data source returned ${total} bytes but the archive pin requires ${expectedLength}.`,
+  );
+}
+
+async function readBoundedResponseBytes(
+  response: Response,
+  url: string,
+  limit: number,
+  expectedLength: number | null,
+): Promise<Uint8Array> {
+  const reader = response.body?.getReader();
+  if (!reader) {
+    const bytes = new Uint8Array(await response.arrayBuffer());
+    if (bytes.byteLength > limit) throw sourceTooLarge(bytes.byteLength, limit);
+    if (expectedLength !== null && bytes.byteLength !== expectedLength) {
+      throw sourceLengthMismatch(bytes.byteLength, expectedLength);
+    }
+    return bytes;
+  }
+
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (!value || value.byteLength === 0) continue;
+      total += value.byteLength;
+      if (total > limit) {
+        await reader.cancel().catch(() => undefined);
+        throw sourceTooLarge(total, limit);
+      }
+      if (expectedLength !== null && total > expectedLength) {
+        await reader.cancel().catch(() => undefined);
+        throw sourceLengthMismatch(total, expectedLength);
+      }
+      chunks.push(value);
+    }
+  } catch (error) {
+    if (error instanceof HistoricalCardDataAcquisitionErrorV15) throw error;
+    const detail = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+    throw new HistoricalCardDataAcquisitionErrorV15(
+      'source-request-failed',
+      `Historical card-data response stream failed for ${url}: ${detail}`,
+    );
+  }
+
+  if (expectedLength !== null && total !== expectedLength) {
+    throw sourceLengthMismatch(total, expectedLength);
+  }
+  const bytes = new Uint8Array(total);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return bytes;
+}
+
 async function downloadBytes(
   url: string,
   options: HistoricalCardDataAcquisitionOptionsV15,
@@ -172,20 +241,7 @@ async function downloadBytes(
     }
   }
 
-  const bytes = new Uint8Array(await response.arrayBuffer());
-  if (bytes.byteLength > limit) {
-    throw new HistoricalCardDataAcquisitionErrorV15(
-      'source-too-large',
-      `Historical card-data source returned ${bytes.byteLength} bytes, above the ${limit}-byte safety limit.`,
-    );
-  }
-  if (expectedLength !== null && bytes.byteLength !== expectedLength) {
-    throw new HistoricalCardDataAcquisitionErrorV15(
-      'source-byte-length-mismatch',
-      `Historical card-data source returned ${bytes.byteLength} bytes but the archive pin requires ${expectedLength}.`,
-    );
-  }
-  return bytes;
+  return readBoundedResponseBytes(response, url, limit, expectedLength);
 }
 
 function contentHash(bytes: Uint8Array): string {
