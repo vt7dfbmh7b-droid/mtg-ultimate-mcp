@@ -46,6 +46,7 @@ export interface TopDeckLearningCandidateV15 {
     wins: number | null;
     draws: number | null;
     losses: number | null;
+    standingSource: 'provider-field' | 'bulk-array-order';
     eventCity?: string;
     eventState?: string;
   };
@@ -178,6 +179,13 @@ function validateCommanderDeck(decklist: string): string[] {
 /**
  * Deterministic adapter for TopDeck V2 bulk-tournament responses.
  *
+ * The bulk endpoint's selectable `columns` do not include `standing`; current
+ * TopDeck documentation returns the rows as player standings. Therefore an
+ * explicit numeric `standing` is preferred when present, while a missing field
+ * is derived from the documented standings-array order (`index + 1`). A present
+ * but malformed/out-of-range standing still fails closed instead of falling back.
+ * The chosen source is preserved in metadata for downstream provenance audits.
+ *
  * It intentionally does not assign cross-source `canonicalOutcomeId`,
  * `independenceKey`, `leakageKey`, learning features, or a training label. Those
  * are separate enrichment/ingestion concerns. This prevents provider-local IDs
@@ -251,10 +259,20 @@ export function adaptTopDeckV2TournamentForLearningV15(
       continue;
     }
 
-    const standingNumber = optionalInteger(standing.standing);
-    if (standingNumber === null || standingNumber < 1 || standingNumber > fieldSize) {
-      rejected.push(rejection(tournamentId, index, playerId, 'invalid-standing', `TopDeck standing must be an integer within 1-${fieldSize}.`));
-      continue;
+    const hasExplicitStanding = standing.standing !== undefined && standing.standing !== null;
+    const explicitStanding = optionalInteger(standing.standing);
+    let standingNumber: number;
+    let standingSource: TopDeckLearningCandidateV15['metadata']['standingSource'];
+    if (hasExplicitStanding) {
+      if (explicitStanding === null || explicitStanding < 1 || explicitStanding > fieldSize) {
+        rejected.push(rejection(tournamentId, index, playerId, 'invalid-standing', `TopDeck standing must be an integer within 1-${fieldSize}.`));
+        continue;
+      }
+      standingNumber = explicitStanding;
+      standingSource = 'provider-field';
+    } else {
+      standingNumber = index + 1;
+      standingSource = 'bulk-array-order';
     }
 
     if (typeof standing.decklist !== 'string' || !standing.decklist.trim()) {
@@ -297,6 +315,7 @@ export function adaptTopDeckV2TournamentForLearningV15(
         wins: optionalInteger(standing.wins),
         draws: optionalInteger(standing.draws),
         losses: optionalInteger(standing.losses),
+        standingSource,
         ...(eventCity !== null ? { eventCity } : {}),
         ...(eventState !== null ? { eventState } : {}),
       },
@@ -342,6 +361,7 @@ export function enrichTopDeckLearningCandidateV15(
       wins: candidate.metadata.wins,
       draws: candidate.metadata.draws,
       losses: candidate.metadata.losses,
+      standingSource: candidate.metadata.standingSource,
       ...(candidate.metadata.eventCity !== undefined ? { eventCity: candidate.metadata.eventCity } : {}),
       ...(candidate.metadata.eventState !== undefined ? { eventState: candidate.metadata.eventState } : {}),
       attribution: TOPDECK_V2_ATTRIBUTION_V15,
