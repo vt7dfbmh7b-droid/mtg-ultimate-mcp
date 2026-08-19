@@ -2,7 +2,7 @@
 
 _Last refreshed: 2026-08-20 NZST_
 
-This file is the shortest recovery path for a fresh ChatGPT conversation. It is intentionally concise. For full history and engineering detail, read `PROJECT_HANDOFF.md` after this file, then `ULTIMATE_MTG_SPEC.md`.
+This is the shortest recovery path for a fresh ChatGPT conversation. Read `PROJECT_HANDOFF.md` after this file for the detailed checkpoint, then `ULTIMATE_MTG_SPEC.md` and `BASIC_FEATURES.md`.
 
 ## Start here in a new chat
 
@@ -10,11 +10,9 @@ Use this exact opening request:
 
 > Continue the Ultimate MTG project in `vt7dfbmh7b-droid/mtg-ultimate-mcp`. Read `NEW_CHAT_HANDOFF.md`, `PROJECT_HANDOFF.md`, `ULTIMATE_MTG_SPEC.md`, and `BASIC_FEATURES.md` first. Check `agent/package-probabilities`, PR #2, the exact current head, and CI before changing code. Continue from the next implementation target. Do not promote `server-current`, do not merge to `main`, and do not treat V0.15 as stable without my explicit approval.
 
-A new chat should be able to start work immediately from that message without needing this old conversation.
-
 ---
 
-## Current repository state
+## Repository state
 
 Repository:
 
@@ -24,207 +22,175 @@ Active development branch:
 
 - `agent/package-probabilities`
 
-Latest fully validated **implementation SHA**:
-
-- `7c4996ce8cd74fc885c58d2d0f52aa36b750d2f8`
-
-The active branch was fast-forwarded to that exact validated commit with `force=false` after the basic-feature cleanup passed all gates. Any later commit that only updates handoff documentation should not be confused with a new runtime implementation milestone.
-
 Active validation PR:
 
-- PR #2 — draft validation surface only
+- PR #2 — open/draft validation surface only
 - base: `main`
 - head: `agent/package-probabilities`
-- **DO NOT MERGE** unless the user explicitly authorizes a release/promotion later.
+- **DO NOT MERGE** without explicit user release approval.
 
-Stable release boundary remains unchanged:
+Current implementation candidate:
 
-- package version: `0.13.0`
-- `src/server-current.ts` remains V0.13
-- V0.14/V0.15 remain experimental
-- `main` remains untouched by the experimental development line.
+- `ae113807c609c601de2717c08990f85c0238ee4d`
 
----
+Exact validation already complete on that implementation object:
 
-## Exact validation for the current implementation
+- deterministic CI `32296434358`: **PASS**
+- Scryfall Card Data Source Live `32296434428`: **PASS**
+- TopDeck Learning Source Live `32296434350`: **PASS**
+- Commander Live Control Suite `32296434348`: **IN PROGRESS at handoff preparation — verify PASS before folding this docs checkpoint**
 
-Final basic-feature cleanup head `7c4996ce8cd74fc885c58d2d0f52aa36b750d2f8` passed:
+A later docs-only checkpoint may sit ahead of the implementation object. Always inspect the diff and current Actions rather than assuming the newest SHA changed runtime code.
 
-- deterministic CI run `32237201789`: **PASS**
-- TopDeck Learning Source Live run `32237201769`: **PASS**
-- Commander Live Control Suite run `32237201803`: **PASS**
+Stable boundary remains unchanged:
 
-These are the exact-head results that authorized the non-force fast-forward into `agent/package-probabilities`.
-
-Do not substitute an older or intermediate CI result when validating future work.
-
----
-
-## Basic-feature cleanup just completed
-
-The cleanup audited everyday MTG functions before returning to ML/data work.
-
-### Commander legality
-
-Current Commander eligibility now correctly includes:
-
-- legendary creatures;
-- cards explicitly allowed to be commanders;
-- legendary Vehicles or Spacecraft with printed power and toughness;
-- valid paired Backgrounds and supported two-commander mechanics.
-
-The current-rule fix is covered by adversarial tests, including face-local printed power/toughness.
-
-### Historical rule safety
-
-The 2025 Vehicle/Spacecraft commander-eligibility expansion is date-gated for historical evaluation. Current rules may not leak backward into older prediction cutoffs.
-
-Older Vehicles/Spacecraft only count as historical commanders before that rule change when they independently had valid commander permission at the time.
-
-### Shared command-zone validation
-
-`assessCommanderConfiguration` is now the shared command-zone configuration check used by ordinary card-fit and card-intelligence paths.
-
-A candidate card cannot be called legal for supplied commanders unless the supplied single commander or two-commander configuration is itself valid and Commander-legal.
-
-### Preferred basic MCP surface
-
-`BASIC_FEATURES.md` documents the preferred everyday tools while retaining older generations for backward compatibility.
-
-`src/basic-feature-surface.test.ts` protects the preferred stable surface and ensures V0.15 experimental tools do not silently enter the stable runtime.
-
-### Basic live smoke
-
-The existing manual live smoke now includes a real Scryfall Spacecraft Commander control in addition to:
-
-- source health;
-- Scryfall card resolution;
-- USD→NZD conversion;
-- V0.13 NZD pricing;
-- exact MTGJSON stock-precon reconstruction.
+- package `0.13.0`;
+- `src/server-current.ts` remains V0.13;
+- V0.14/V0.15 remain experimental;
+- `main` remains untouched by this experimental development line.
 
 ---
 
-## Known basic-feature follow-ups — not current blockers
+## Milestone just completed — provenance-safe predictor/card-data acquisition
 
-These are useful maintenance follow-ups but should not replace the main implementation target unless the user asks for them.
+The previous blocker was historical predictor/card data for the 4,395 strict exact Commander TopDeck deck/outcome candidates across 173 accepted events.
 
-1. **Official per-card rulings feed**
-   - `card_intelligence_v05` uses live Oracle data plus local rules heuristics.
-   - `rulesAttention` is not an official Gatherer/Scryfall rulings feed and must not be described as official ruling text.
+That acquisition boundary is now implemented without backdating present-day data.
 
-2. **Combo outage reporting consistency**
-   - the core Commander Spellbook service already has evidence-safe wrappers that return explicit `sourceStatus: unavailable` on transient failures;
-   - the oldest/basic `find_deck_combos` MCP entry still uses the raw path and returns an error on provider failure rather than the richer unavailable-evidence record;
-   - it does **not** fabricate “no combos”, so this is a UX/truth-labeling consistency improvement rather than an urgent correctness failure.
+### Generic historical/current acquisition
 
-3. **Legacy USD fields**
-   - older compatibility tools retain historical USD-oriented output fields;
-   - V0.13 `price_card_nzd_v13` remains the preferred NZ pricing path.
+New service:
 
-Do not delete historical tools merely to make the list shorter; compatibility is intentional.
+- `src/services/historical-carddata-acquisition-v15.ts`
 
----
+It supports:
 
-## Real-data / ML state already completed
+- separately audited pinned archived snapshots with URI/version/effective/publication time/SHA-256;
+- provenance cutoff rejection before network access;
+- bounded streaming and exact size/hash checks;
+- strict data parsing;
+- contemporaneous current capture stamped at observation time;
+- direct integration into existing provenanced historical feature extraction.
 
-The experimental line already contains:
+### Source policy
 
-- universal V0.15 Commander build pipeline;
-- exact BigInt hypergeometric/probability/statistics engine;
-- strict historical/as-of provenance;
-- leakage-safe real-corpus infrastructure;
-- real-source lineage/independence policy;
-- genuine-future holdout sealing;
-- transparent-vs-neural future evaluation;
-- TopDeck leakage linkage by event, pilot and exact deck fingerprint;
-- strict TopDeck `deckObj` materialization;
-- bounded privacy-safe TopDeck live-source validation.
+New service:
 
-TopDeck live acquisition has already demonstrated a real candidate pool of **4,395 strict exact Commander deck/outcome candidates across 173 events** from the bounded 30-day/16+ player audit recorded in `PROJECT_HANDOFF.md`.
+- `src/services/historical-carddata-source-inventory-v15.ts`
 
-Important: those are real outcome/deck candidates, **not automatically trustworthy historical training rows**.
+Current policy:
 
-Present-day Oracle/legal/card truth may not be backdated into historical predictor evidence.
+- Scryfall current bulk: forward capture allowed, retrospective backfill blocked, `historicalArchiveVerified: false`.
+- MTGJSON current build: native adapter still required, retrospective backfill blocked, `historicalArchiveVerified: false`.
 
-ML remains shadow/advisory only and never overrides hard MTG truth.
+No verified replayable daily historical archive has been registered.
+
+### Scryfall provider contract discovered live
+
+New services/workflow:
+
+- `src/services/scryfall-bulk-carddata-source-v15.ts`
+- `src/services/scryfall-forward-carddata-capture-v15.ts`
+- `scripts/live-scryfall-carddata-source-v15.ts`
+- `.github/workflows/scryfall-carddata-source-live.yml`
+
+The current 2026 Scryfall `default_cards` manifest uses:
+
+- provider `id`;
+- `updated_at`;
+- provider metadata `uri`;
+- `compressed_size`;
+- `jsonl_download_uri` on HTTPS `*.scryfall.io` ending `.jsonl.gz`.
+
+An early live control intentionally exposed the obsolete JSON-array assumption; a temporary safe shape probe established the real current provider shape, then was removed after the strict parser was updated.
+
+### Scryfall forward capture is provenance-safe
+
+The current source path:
+
+- requires HTTPS `*.scryfall.io` `.jsonl.gz`;
+- enforces manifest compressed size;
+- bounds compressed download bytes;
+- hashes exact compressed provider bytes before decompression;
+- rejects ambiguous HTTP transport auto-decoding;
+- bounds gzip output with `maxOutputLength`;
+- parses JSON Lines record-by-record with strict UTF-8/JSON/card-shape checks;
+- stamps observation/retrieval time at capture;
+- never treats provider `updated_at` as proof the data was available before observation.
+
+The live Scryfall workflow validates the small manifest only; it does not download/persist the large card dataset in CI.
+
+Detailed source notes:
+
+- `docs/V0.15_HISTORICAL_CARD_DATA_SOURCES.md`
+
+### Important interpretation
+
+The 4,395 TopDeck candidates are still **not** automatically retrospective ML rows. Current Scryfall/MTGJSON truth cannot be assigned an old cutoff. Rich historical features require either independently valid historical archive evidence or a retained contemporaneous capture that actually existed by the requested cutoff.
+
+ML remains shadow/advisory only.
 
 ---
 
 ## NEXT IMPLEMENTATION TARGET
 
-### Provenance-safe historical predictor/card-data acquisition
+### Retained forward capture / content-addressed card-data snapshots
 
-This is the immediate engineering target after this handoff.
+Because no adequate retrospective archive has been verified, continue with a forward evidence pipeline rather than weakening the historical gate.
 
-The new chat should:
+Next work should:
 
-1. verify the active branch and latest exact CI before starting;
-2. create an isolated implementation branch from the current active implementation lineage;
-3. inventory **primary or genuinely versioned/archive card-data sources** capable of proving historical Oracle/type/mana/printing/Commander-legality facts as of an event cutoff;
-4. distinguish a present-day/current feed from an archive that was independently published/effective at the historical cutoff;
-5. preserve source URI, source/version identity, effective/publication time and SHA-256 content hash;
-6. never assign an old `availableAt` timestamp to data first observed today;
-7. use the existing strict historical card-data provenance gate rather than weakening it;
-8. if adequate retrospective archives do not exist, prefer a forward contemporaneous-capture pipeline;
-9. resolve only printings that actually existed by the historical cutoff;
-10. apply the dated historical Commander legality/construction validator;
-11. materialize `ProvenancedDeckFeatureSnapshotV15` only after provenance passes;
-12. join trusted predictor snapshots to real TopDeck outcomes through `topdeck-real-corpus-materializer-v15` and the existing leakage-group boundary;
-13. report accepted/rejected/unavailable coverage honestly rather than manufacturing corpus scale.
+1. define an immutable retained snapshot manifest;
+2. address exact Scryfall `.jsonl.gz` bytes by SHA-256;
+3. preserve source/discovery/observation/provider metadata and compressed size;
+4. make retained snapshots replay-verifiable and mutation-resistant;
+5. resolve the newest trusted capture available no later than a requested cutoff;
+6. report explicit unavailable coverage when no capture existed by the cutoff;
+7. keep retention/indexing bounded;
+8. add a safe recurring capture/retention workflow only after storage semantics are defined;
+9. continue searching for a genuine historical archive in parallel;
+10. once captures overlap real outcomes, measure usable/rejected/unavailable predictor coverage before fitting any model.
 
-Once trusted predictor snapshots exist, the following milestone is to materialize and audit the first real historical corpus before making any neural-model usefulness claim.
+After a trustworthy real corpus exists, seal a genuine future holdout before evaluating neural usefulness.
 
 ---
 
-## Hard rules for all future work
+## Hard rules
 
-Never weaken these to make a test or model look better:
+Never weaken these to create more rows or make a test/model look better:
 
-- Commander legality and banned/current rules truth;
-- exact 100-card construction and command-zone rules;
+- Commander legality and dated rules truth;
+- exact 100-card construction / command-zone rules;
 - singleton/color identity;
 - unresolved-card failures;
-- exact physical-printing existence;
-- exact set/printing-family/finish constraints;
-- must-include / must-exclude constraints;
-- hard per-card budgets;
+- exact printing existence/constraints;
+- must-include / must-exclude;
+- hard budgets;
 - verified combo requirements;
 - source-outage distinction from verified absence;
-- historical no-future-knowledge rule;
+- historical no-future-knowledge;
 - leakage prevention before normalization/model fitting.
 
-TopDeck API credentials are configured through the repository secret `TOPDECK_API_KEY`. Never reveal, print or persist the secret value.
+Never reveal the `TOPDECK_API_KEY` secret.
 
 ---
 
 ## Validation discipline
 
-For material implementation work:
+For material work:
 
-1. branch/isolate first;
-2. strict TypeScript/build;
-3. complete deterministic suite;
-4. dedicated live provider control when the external source is central;
-5. Commander live regression for Commander/build changes;
-6. inspect individual failing steps/logs rather than trusting only aggregate status;
-7. distinguish provider outage/rate-limit/credential failure from code failure;
-8. never weaken truth gates to make CI green;
-9. fold only after exact-head validation;
-10. use non-force fast-forward when possible;
-11. validate the active lineage after fold when appropriate;
-12. update the handoff checkpoint;
-13. keep `main` and stable V0.13 untouched unless the user explicitly authorizes promotion.
+1. check exact head + PR #2 first;
+2. isolate material changes where useful;
+3. strict TypeScript/build;
+4. complete deterministic suite;
+5. dedicated provider live control when source shape matters;
+6. Commander live regression for Commander/build changes or when the PR path gate requires it;
+7. inspect underlying failure artifacts/steps;
+8. distinguish provider outage/drift from code failure;
+9. never weaken truth gates for CI;
+10. fold only with non-force fast-forward when possible;
+11. revalidate exact active lineage;
+12. refresh handoff docs;
+13. keep `main`, stable V0.13 and `server-current` untouched without explicit promotion approval.
 
----
-
-## Files the new chat should read first
-
-In order:
-
-1. `NEW_CHAT_HANDOFF.md` — this fast checkpoint
-2. `PROJECT_HANDOFF.md` — full validated history and next-target detail
-3. `ULTIMATE_MTG_SPEC.md` — north-star product/engineering specification
-4. `BASIC_FEATURES.md` — preferred everyday MCP surface and compatibility guidance
-
-After reading them, check the live repository state rather than assuming this document is still the newest commit.
+After reading these files, always inspect the live repository state because this document may itself be a docs-only commit.
