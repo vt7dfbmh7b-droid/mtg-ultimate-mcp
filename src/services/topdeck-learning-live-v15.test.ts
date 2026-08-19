@@ -107,22 +107,26 @@ test('live fetcher makes exactly one documented bounded EDH POST and adapts the 
 });
 
 test('provider shape audit detects URL-like deck references and structured deck sections without retaining card names', async () => {
-  const payload = tournament();
-  payload.standings[0] = {
-    id: 'player-1',
-    name: 'Player One',
-    decklist: 'moxfield.com/decks/example',
-    deckObj: {
-      Commanders: {
-        'Commander Name': { quantity: 1, id: 'card-a' },
+  const payload = {
+    ...tournament(),
+    standings: [
+      {
+        id: 'player-1',
+        name: 'Player One',
+        decklist: 'moxfield.com/decks/example',
+        deckObj: {
+          Commanders: {
+            'Commander Name': { quantity: 1, id: 'card-a' },
+          },
+          Mainboard: {
+            'Main Card': { quantity: 99, id: 'card-b' },
+          },
+        },
+        wins: 4,
+        draws: 1,
+        losses: 0,
       },
-      Mainboard: {
-        'Main Card': { quantity: 99, id: 'card-b' },
-      },
-    },
-    wins: 4,
-    draws: 1,
-    losses: 0,
+    ],
   };
   const fetchFn: typeof fetch = async () => new Response(JSON.stringify([payload]), { status: 200 });
   const result = await fetchTopDeckLearningCandidatesV15({ apiKey: 'fixture-key', fetchFn });
