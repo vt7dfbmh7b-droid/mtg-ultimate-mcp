@@ -112,6 +112,8 @@ function topDeckOutcomeContentHash(candidate: TopDeckLearningCandidateV15): stri
     commanderNames: [...candidate.commanderNames].map((name) => name.trim()).sort(),
     provider: candidate.metadata.provider,
     tournamentName: candidate.metadata.tournamentName,
+    eventCity: candidate.metadata.eventCity ?? null,
+    eventState: candidate.metadata.eventState ?? null,
     wins: candidate.metadata.wins,
     draws: candidate.metadata.draws,
     losses: candidate.metadata.losses,
