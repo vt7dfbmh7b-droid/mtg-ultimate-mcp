@@ -157,9 +157,11 @@ test('byte length and maximum-size guards reject truncated or unexpectedly large
 test('streaming size guard fails closed even when the provider omits Content-Length', async () => {
   const split = Math.max(1, Math.floor(payloadBytes.byteLength / 2));
   const chunks = [payloadBytes.slice(0, split), payloadBytes.slice(split)];
+  const archivePin = pin();
+  delete archivePin.expectedByteLength;
   await assert.rejects(
     acquirePinnedHistoricalCardDataV15(
-      pin({ expectedByteLength: undefined }),
+      archivePin,
       '2026-01-10T00:00:00.000Z',
       {
         fetchImpl: chunkedFetch(chunks),
