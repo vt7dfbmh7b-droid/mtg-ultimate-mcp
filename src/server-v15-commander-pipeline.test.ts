@@ -59,6 +59,7 @@ async function callToolJson(client: Client, args: Record<string, unknown>): Prom
 function commander(name = 'Najeela, the Blade-Blossom', set = 'fca', collectorNumber = '42'): ScryfallCard {
   return {
     id: `${set}-${collectorNumber}`,
+    lang: 'en',
     oracle_id: `${name}-oracle`,
     name,
     set,
