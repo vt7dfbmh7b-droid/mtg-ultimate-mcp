@@ -37,6 +37,10 @@ export interface TopDeckProviderShapeAuditV15 {
   commanderSectionEntryCountDistribution: Record<string, number>;
   commanderSectionValueShapes: Record<TopDeckStructuredValueShapeV15, number>;
   mainboardSectionValueShapes: Record<TopDeckStructuredValueShapeV15, number>;
+  commanderEntryObjectPropertyCounts: Record<string, number>;
+  mainboardEntryObjectPropertyCounts: Record<string, number>;
+  commanderEntryNumericPropertyCounts: Record<string, number>;
+  mainboardEntryNumericPropertyCounts: Record<string, number>;
 }
 
 export interface TopDeckLearningFetchResultV15 {
@@ -137,6 +141,24 @@ function increment(target: Record<string, number>, key: string): void {
   target[key] = (target[key] ?? 0) + 1;
 }
 
+function safePropertyName(value: string): string {
+  const normalized = value.trim().toLocaleLowerCase();
+  return /^[a-z0-9_-]{1,80}$/.test(normalized) ? normalized : 'other-property-name';
+}
+
+function auditStructuredEntryObject(
+  value: unknown,
+  propertyCounts: Record<string, number>,
+  numericPropertyCounts: Record<string, number>,
+): void {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return;
+  for (const [rawKey, nested] of Object.entries(value as Record<string, unknown>)) {
+    const key = safePropertyName(rawKey);
+    increment(propertyCounts, key);
+    if (typeof nested === 'number' && Number.isFinite(nested)) increment(numericPropertyCounts, key);
+  }
+}
+
 function looksUrlLikeDecklist(value: string): boolean {
   const trimmed = value.trim();
   if (!trimmed || /\r|\n/.test(trimmed)) return false;
@@ -148,6 +170,10 @@ function auditProviderShape(payload: TopDeckV2BulkTournamentV15[]): TopDeckProvi
   const commanderSectionValueShapes = emptyShapeCounts();
   const mainboardSectionValueShapes = emptyShapeCounts();
   const commanderSectionEntryCountDistribution: Record<string, number> = {};
+  const commanderEntryObjectPropertyCounts: Record<string, number> = {};
+  const mainboardEntryObjectPropertyCounts: Record<string, number> = {};
+  const commanderEntryNumericPropertyCounts: Record<string, number> = {};
+  const mainboardEntryNumericPropertyCounts: Record<string, number> = {};
   const audit: TopDeckProviderShapeAuditV15 = {
     tournaments: payload.length,
     standingsRows: 0,
@@ -161,6 +187,10 @@ function auditProviderShape(payload: TopDeckV2BulkTournamentV15[]): TopDeckProvi
     commanderSectionEntryCountDistribution,
     commanderSectionValueShapes,
     mainboardSectionValueShapes,
+    commanderEntryObjectPropertyCounts,
+    mainboardEntryObjectPropertyCounts,
+    commanderEntryNumericPropertyCounts,
+    mainboardEntryNumericPropertyCounts,
   };
 
   for (const tournament of payload) {
@@ -189,6 +219,7 @@ function auditProviderShape(payload: TopDeckV2BulkTournamentV15[]): TopDeckProvi
         for (const value of Object.values(commanders)) {
           const shape = structuredValueShape(value);
           commanderSectionValueShapes[shape] += 1;
+          auditStructuredEntryObject(value, commanderEntryObjectPropertyCounts, commanderEntryNumericPropertyCounts);
         }
       }
       if (mainboard) {
@@ -196,6 +227,7 @@ function auditProviderShape(payload: TopDeckV2BulkTournamentV15[]): TopDeckProvi
         for (const value of Object.values(mainboard)) {
           const shape = structuredValueShape(value);
           mainboardSectionValueShapes[shape] += 1;
+          auditStructuredEntryObject(value, mainboardEntryObjectPropertyCounts, mainboardEntryNumericPropertyCounts);
         }
       }
     }
@@ -216,7 +248,8 @@ function auditProviderShape(payload: TopDeckV2BulkTournamentV15[]): TopDeckProvi
  * This network layer only produces deterministic source candidates plus a
  * content-free aggregate shape audit. It does not assign cross-source
  * independence/leakage keys, extract learning features, create training labels,
- * or persist provider deck/player content.
+ * or persist provider deck/player content. Structured-entry diagnostics retain
+ * only generic property names and aggregate counts, never card names or values.
  */
 export async function fetchTopDeckLearningCandidatesV15(options: {
   lastDays?: number;
