@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import { getUsdNzdRateV13 } from '../src/services/currency-v13.js';
+import { validateCommanderDeck } from '../src/services/commander-rules.js';
+import { parseDecklist } from '../src/services/deck.js';
 import { getPreconStockV10, searchCommanderPreconsV10 } from '../src/services/precons-v10.js';
 import { priceCardNzdV13 } from '../src/services/pricing-v13.js';
 import { lookupCard } from '../src/services/scryfall.js';
@@ -35,6 +37,25 @@ async function main(): Promise<void> {
   assert.equal(solRing.name, 'Sol Ring');
   assert.equal(solRing.legalities.commander, 'legal');
   console.log(`SCRYFALL: ${solRing.name} resolved from ${solRing.set.toUpperCase()} #${solRing.collector_number}`);
+
+  const [spacecraft, wastes] = await Promise.all([
+    lookupCard('Hearthhull, the Worldseed', true),
+    lookupCard('Wastes', true),
+  ]);
+  assert.match(spacecraft.type_line, /Spacecraft/i, 'live EOE commander control should resolve as a Spacecraft');
+  assert.equal(typeof spacecraft.power, 'string', 'Scryfall should expose the Spacecraft printed power for current Commander eligibility');
+  assert.equal(typeof spacecraft.toughness, 'string', 'Scryfall should expose the Spacecraft printed toughness for current Commander eligibility');
+  const spacecraftDeck = parseDecklist([
+    '// COMMANDER',
+    `1 ${spacecraft.name}`,
+    '',
+    '// MAIN',
+    `99 ${wastes.name}`,
+  ].join('\n'));
+  const spacecraftRules = validateCommanderDeck(spacecraftDeck, [spacecraft, wastes]);
+  assert.equal(spacecraftRules.status, 'legal', 'current Commander rules should accept a legendary Spacecraft with printed power/toughness');
+  assert.equal(spacecraftRules.commanderChecks[0]?.eligible, true, 'the live Spacecraft commander should pass the commander-eligibility gate');
+  console.log(`COMMANDER RULES: ${spacecraft.name} accepted as a current legendary Spacecraft commander.`);
 
   const solRingPrice = await priceCardNzdV13({ set: solRing.set, collectorNumber: solRing.collector_number });
   assert.equal(solRingPrice.currency, 'NZD', 'current card-pricing output must be NZD first');
