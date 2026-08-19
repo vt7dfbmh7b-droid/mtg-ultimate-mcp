@@ -1,6 +1,7 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import { analyzeCastingProfileV05 } from './casting-v05.js';
 import { analyzeCommanderDependencyV05, toCombatCreatureV05 } from './combat-v05.js';
+import { assessCommanderConfiguration } from './commander-configuration.js';
 import { analyzeInteractionProfileV05 } from './interaction-v05.js';
 import { getCardOracleText, inferCardRoles, summarizeCard } from './scryfall.js';
 
@@ -20,6 +21,8 @@ export interface CardIntelligenceV05 {
     commanders: string[];
     combinedColorIdentity: string[];
     cardColorIdentity: string[];
+    commanderConfigurationLegal: boolean;
+    commanderPairing: Record<string, unknown>;
     formatLegal: boolean;
     colorIdentityLegal: boolean;
     legalForCommanders: boolean;
@@ -100,22 +103,27 @@ export function buildCardIntelligenceV05(card: ScryfallCard, commanders: Scryfal
   };
 
   if (commanders.length > 0) {
-    const identity = [...new Set(commanders.flatMap((commander) => commander.color_identity))].sort();
+    const configuration = assessCommanderConfiguration(commanders);
+    const identity = configuration.combinedColorIdentity;
     const outside = card.color_identity.filter((color) => !identity.includes(color));
     const formatLegal = card.legalities.commander === 'legal';
     const colorIdentityLegal = outside.length === 0;
     result.commanderFit = {
-      commanders: commanders.map((commander) => commander.name),
+      commanders: configuration.commanders,
       combinedColorIdentity: identity,
       cardColorIdentity: card.color_identity,
+      commanderConfigurationLegal: configuration.legal,
+      commanderPairing: configuration.pairing,
       formatLegal,
       colorIdentityLegal,
-      legalForCommanders: formatLegal && colorIdentityLegal,
-      explanation: !formatLegal
-        ? `${card.name} is not currently legal in Commander.`
-        : !colorIdentityLegal
-          ? `${card.name} has color identity outside the supplied commanders: ${outside.join(', ')}.`
-          : `${card.name} is Commander-legal with the supplied commander(s).`,
+      legalForCommanders: configuration.legal && formatLegal && colorIdentityLegal,
+      explanation: !configuration.legal
+        ? 'The supplied commander or commander pair is not a legal current Commander configuration.'
+        : !formatLegal
+          ? `${card.name} is not currently legal in Commander.`
+          : !colorIdentityLegal
+            ? `${card.name} has color identity outside the supplied commanders: ${outside.join(', ')}.`
+            : `${card.name} is Commander-legal with the supplied commander(s).`,
     };
   }
 
