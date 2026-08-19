@@ -25,6 +25,7 @@ export interface TopDeckV2BulkTournamentV15 {
   topCut?: unknown;
   standings?: unknown;
   isTeamEvent?: unknown;
+  eventData?: unknown;
 }
 
 export interface TopDeckLearningCandidateV15 {
@@ -45,6 +46,8 @@ export interface TopDeckLearningCandidateV15 {
     wins: number | null;
     draws: number | null;
     losses: number | null;
+    eventCity?: string;
+    eventState?: string;
   };
 }
 
@@ -89,6 +92,12 @@ function requireString(name: string, value: unknown, maximum = 300): string {
   const normalized = value.trim();
   if (normalized.length > maximum) throw new Error(`${name} must be at most ${maximum} characters.`);
   return normalized;
+}
+
+function optionalMetadataString(value: unknown, maximum = 120): string | null {
+  if (typeof value !== 'string' || !value.trim()) return null;
+  const normalized = value.trim();
+  return normalized.length <= maximum ? normalized : normalized.slice(0, maximum);
 }
 
 function optionalInteger(value: unknown): number | null {
@@ -221,6 +230,11 @@ export function adaptTopDeckV2TournamentForLearningV15(
   const tournamentName = typeof input.tournamentName === 'string' && input.tournamentName.trim()
     ? input.tournamentName.trim().slice(0, 300)
     : null;
+  const eventData = input.eventData && typeof input.eventData === 'object'
+    ? input.eventData as Record<string, unknown>
+    : null;
+  const eventCity = optionalMetadataString(eventData?.city);
+  const eventState = optionalMetadataString(eventData?.state);
 
   for (let index = 0; index < input.standings.length; index += 1) {
     const raw = input.standings[index];
@@ -283,6 +297,8 @@ export function adaptTopDeckV2TournamentForLearningV15(
         wins: optionalInteger(standing.wins),
         draws: optionalInteger(standing.draws),
         losses: optionalInteger(standing.losses),
+        ...(eventCity !== null ? { eventCity } : {}),
+        ...(eventState !== null ? { eventState } : {}),
       },
     });
   }
@@ -326,6 +342,8 @@ export function enrichTopDeckLearningCandidateV15(
       wins: candidate.metadata.wins,
       draws: candidate.metadata.draws,
       losses: candidate.metadata.losses,
+      ...(candidate.metadata.eventCity !== undefined ? { eventCity: candidate.metadata.eventCity } : {}),
+      ...(candidate.metadata.eventState !== undefined ? { eventState: candidate.metadata.eventState } : {}),
       attribution: TOPDECK_V2_ATTRIBUTION_V15,
     },
   };
