@@ -29,6 +29,7 @@ function candidate(options: {
       draws: null,
       losses: null,
       standingSource: 'provider-field',
+      deckSource: 'inline-text',
     },
   };
 }
@@ -55,14 +56,12 @@ test('leakage planner takes transitive closure across event, pilot, and exact de
     sourceObservedAt: '2026-08-19T00:00:00.000Z',
     sourceRetrievedAt: '2026-08-19T00:01:00.000Z',
   });
-
   assert.equal(plan.candidates, 5);
   assert.equal(plan.components, 2);
   assert.equal(plan.repeatedEvents, 1);
   assert.equal(plan.repeatedPilots, 1);
   assert.equal(plan.repeatedExactDecks, 1);
   assert.equal(plan.maximumComponentSize, 4);
-
   const a = plan.linkagesByProviderRecordId.a;
   const b = plan.linkagesByProviderRecordId.b;
   const c = plan.linkagesByProviderRecordId.c;
@@ -85,10 +84,7 @@ test('leakage planning is input-order invariant for the same candidate batch', (
     candidate({ record: 'c', event: 'event-2', pilot: 'pilot-1', deck: 'deck-Z' }),
     candidate({ record: 'd', event: 'event-3', pilot: 'pilot-3', deck: 'deck-X' }),
   ];
-  const options = {
-    sourceObservedAt: '2026-08-19T00:00:00.000Z',
-    sourceRetrievedAt: '2026-08-19T00:01:00.000Z',
-  };
+  const options = { sourceObservedAt: '2026-08-19T00:00:00.000Z', sourceRetrievedAt: '2026-08-19T00:01:00.000Z' };
   const forward = planTopDeckLeakageLinkagesV15(candidates, options);
   const reversed = planTopDeckLeakageLinkagesV15([...candidates].reverse(), options);
   assert.deepEqual(linkageMap(forward), linkageMap(reversed));
@@ -98,19 +94,14 @@ test('leakage planner rejects duplicate provider rows and impossible observation
   const duplicate = candidate({ record: 'same', event: 'event-1', pilot: 'pilot-1', deck: 'deck-X' });
   assert.throws(
     () => planTopDeckLeakageLinkagesV15([duplicate, { ...duplicate }], {
-      sourceObservedAt: '2026-08-19T00:00:00.000Z',
-      sourceRetrievedAt: '2026-08-19T00:01:00.000Z',
+      sourceObservedAt: '2026-08-19T00:00:00.000Z', sourceRetrievedAt: '2026-08-19T00:01:00.000Z',
     }),
     /duplicate.*providerRecordId/i,
   );
-
   assert.throws(
     () => planTopDeckLeakageLinkagesV15([
       candidate({ record: 'future', event: 'event-future', pilot: 'pilot-future', deck: 'deck-future', outcomeAt: '2026-08-20T00:00:00.000Z' }),
-    ], {
-      sourceObservedAt: '2026-08-19T00:00:00.000Z',
-      sourceRetrievedAt: '2026-08-19T00:01:00.000Z',
-    }),
+    ], { sourceObservedAt: '2026-08-19T00:00:00.000Z', sourceRetrievedAt: '2026-08-19T00:01:00.000Z' }),
     /outcome occurs after source observation/i,
   );
 });
