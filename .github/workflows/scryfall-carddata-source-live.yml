@@ -9,6 +9,7 @@ on:
       - "src/services/scryfall-forward-carddata-capture-v15.ts"
       - "src/services/scryfall-bulk-carddata-source-v15.ts"
       - "scripts/live-scryfall-carddata-source-v15.ts"
+      - "scripts/live-scryfall-carddata-shape-v15.ts"
       - ".github/workflows/scryfall-carddata-source-live.yml"
   workflow_dispatch:
 
@@ -37,6 +38,9 @@ jobs:
 
       - name: Type-check and build
         run: npm run build
+
+      - name: Report safe current Scryfall bulk-manifest shape
+        run: npx tsx scripts/live-scryfall-carddata-shape-v15.ts
 
       - name: Run bounded one-request Scryfall bulk-manifest control
         run: npx tsx scripts/live-scryfall-carddata-source-v15.ts
