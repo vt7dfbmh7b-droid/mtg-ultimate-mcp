@@ -71,12 +71,13 @@ async function main(): Promise<void> {
   const outcomeRange = asIsoRange(result.candidates.map((candidate) => candidate.outcomeOccurredAt));
 
   const audit = {
-    schemaVersion: 'topdeck-learning-source-live-control-v15.3',
+    schemaVersion: 'topdeck-learning-source-live-control-v15.4',
     checkedAt: result.fetchedAt,
     provider: result.source,
     requestUrl: result.requestUrl,
     query: result.query,
     tournamentsReturned: result.tournamentsReturned,
+    providerShapeAudit: result.providerShapeAudit,
     usableCandidates: result.candidates.length,
     rejectedRows: result.rejected.length,
     rejectionCounts,
@@ -101,6 +102,7 @@ async function main(): Promise<void> {
       decklistsPersisted: false,
       playerIdentifiersPersisted: false,
       apiKeyPersisted: false,
+      cardNamesPersisted: false,
       rawRejectionReasonsPersisted: false,
       aggregateRejectionDiagnosticsOnly: true,
     },
@@ -108,7 +110,7 @@ async function main(): Promise<void> {
 
   // Persist safe aggregate diagnostics even when the strict usable-candidate gate
   // fails. This lets provider/schema problems be diagnosed without retaining
-  // player identifiers, card names, raw rejection messages, or deck contents.
+  // player identifiers, card names, raw rejection messages, URLs, or deck contents.
   await writeFile(RESULT_PATH, `${JSON.stringify(audit, null, 2)}\n`, 'utf8');
   console.log(JSON.stringify(audit, null, 2));
 
