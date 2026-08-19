@@ -4,7 +4,6 @@ import {
   buildHistoricalLearningCorpusManifestV15,
   type HistoricalLearningRecordV15,
 } from './historical-learning-corpus-v15.js';
-import { learningTargetForRecordV15 } from './learning-corpus-v15.js';
 import { assessTemporalFeatureContractSafetyV15 } from './neural-temporal-eval-v15.js';
 import type { NeuralRankerOptionsV15 } from './neural-ranker-v15.js';
 import { auditRealCorpusQualityV15 } from './real-corpus-quality-v15.js';
@@ -71,11 +70,7 @@ export interface FutureHoldoutSealOptionsV15 {
   decisionThreshold?: number;
   calibrationBins?: number;
   neural?: NeuralRankerOptionsV15;
-  transparent?: {
-    epochs?: number;
-    learningRate?: number;
-    l2?: number;
-  };
+  transparent?: { epochs?: number; learningRate?: number; l2?: number };
   now?: () => Date;
 }
 
@@ -101,11 +96,9 @@ function clamp(value: number, minimum: number, maximum: number): number {
 function stableValue(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(stableValue);
   if (value && typeof value === 'object') {
-    return Object.fromEntries(
-      Object.entries(value as Record<string, unknown>)
-        .sort(([a], [b]) => a.localeCompare(b))
-        .map(([key, nested]) => [key, stableValue(nested)]),
-    );
+    return Object.fromEntries(Object.entries(value as Record<string, unknown>)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([key, nested]) => [key, stableValue(nested)]));
   }
   return value;
 }
@@ -146,24 +139,11 @@ function normalizedPlan(options: FutureHoldoutSealOptionsV15): FutureHoldoutEval
   };
 }
 
-function sealPayload(seal: Omit<FutureHoldoutSealV15, 'sealHash'>): unknown {
-  return seal;
-}
-
-function sourceAvailableAt(record: HistoricalLearningRecordV15): { iso: string; ms: number } {
-  return timestamp('record.outcomeEvidence.sourceAvailableAt', record.outcomeEvidence.sourceAvailableAt);
-}
-
 function featureContract(records: HistoricalLearningRecordV15[]): { extractor: string; normalizer: string } {
-  const generic = records.map((record) => record.record);
-  const safety = assessTemporalFeatureContractSafetyV15(generic);
+  const safety = assessTemporalFeatureContractSafetyV15(records.map((record) => record.record));
   if (!safety.safe) throw new Error(`Future holdout sealing requires one leakage-safe feature contract: ${safety.reasons.join(' ')}`);
-  if (safety.featureExtractorContracts.length !== 1) {
-    throw new Error('Future holdout sealing requires exactly one feature extractor contract.');
-  }
-  if (safety.featureNormalizerFitFingerprints.length !== 1) {
-    throw new Error('Future holdout sealing requires exactly one explicit feature normalizer fit fingerprint.');
-  }
+  if (safety.featureExtractorContracts.length !== 1) throw new Error('Future holdout sealing requires exactly one feature extractor contract.');
+  if (safety.featureNormalizerFitFingerprints.length !== 1) throw new Error('Future holdout sealing requires exactly one explicit feature normalizer fit fingerprint.');
   const extractor = safety.featureExtractorContracts[0];
   const normalizer = safety.featureNormalizerFitFingerprints[0];
   if (!extractor || !normalizer || !/^[a-f0-9]{64}$/i.test(normalizer)) {
@@ -173,17 +153,9 @@ function featureContract(records: HistoricalLearningRecordV15[]): { extractor: s
 }
 
 function leakageDigest(records: HistoricalLearningRecordV15[]): string {
-  const groups = records.map((record) => normalize(record.record.leakageGroup)).sort();
-  return sha256(groups.join('\n'));
+  return sha256(records.map((record) => normalize(record.record.leakageGroup)).sort().join('\n'));
 }
 
-/**
- * Creates a content-addressed precommitment using only outcome evidence already
- * independently available by trainingAsOf. Holdout rows are deliberately absent:
- * later evaluation accepts only outcomes that occurred after this seal's real
- * creation timestamp, preventing a historical split that had already been seen
- * from being relabelled as a genuinely future holdout.
- */
 export function createFutureHoldoutSealV15(
   trainingRecords: HistoricalLearningRecordV15[],
   trainingAsOf: string,
@@ -193,7 +165,6 @@ export function createFutureHoldoutSealV15(
     throw new Error('Future holdout sealing requires at least 20 strict historical training records.');
   }
   for (const record of trainingRecords) assertHistoricalLearningRecordEligibleV15(record);
-
   const asOf = timestamp('trainingAsOf', trainingAsOf);
   const now = options.now ?? (() => new Date());
   const sealedDate = now();
@@ -202,22 +173,21 @@ export function createFutureHoldoutSealV15(
   if (sealedAt.ms < asOf.ms) throw new Error('sealedAt cannot be earlier than trainingAsOf.');
 
   for (const record of trainingRecords) {
-    const outcome = timestamp('record.record.observedAt', record.record.observedAt);
-    if (outcome.ms > asOf.ms) throw new Error(`Training record ${record.record.outcomeId} occurred after trainingAsOf.`);
-    if (sourceAvailableAt(record).ms > asOf.ms) {
+    if (timestamp('record.record.observedAt', record.record.observedAt).ms > asOf.ms) {
+      throw new Error(`Training record ${record.record.outcomeId} occurred after trainingAsOf.`);
+    }
+    if (timestamp('record.outcomeEvidence.sourceAvailableAt', record.outcomeEvidence.sourceAvailableAt).ms > asOf.ms) {
       throw new Error(`Training record ${record.record.outcomeId} was not independently source-available by trainingAsOf.`);
     }
   }
 
   const quality = auditRealCorpusQualityV15(trainingRecords);
   if (!quality.qualityGatePassed) throw new Error(`Training corpus failed the real-corpus quality gate: ${quality.blockers.join(' ')}`);
-  if (quality.learningTargets.length !== 1) throw new Error('Future holdout sealing requires exactly one learning target.');
-  const target = quality.learningTargets[0];
-  if (!target || target === 'legacy-unspecified') throw new Error('Future holdout sealing requires an explicit non-legacy learning target.');
-
+  const target = quality.learningTargets.length === 1 ? quality.learningTargets[0] : null;
+  if (!target || target === 'legacy-unspecified') throw new Error('Future holdout sealing requires exactly one explicit non-legacy learning target.');
   const contract = featureContract(trainingRecords);
   const manifest = buildHistoricalLearningCorpusManifestV15(trainingRecords);
-  const evaluationPlan = normalizedPlan(options);
+
   const payload: Omit<FutureHoldoutSealV15, 'sealHash'> = {
     schemaVersion: FUTURE_HOLDOUT_SEAL_SCHEMA_V15,
     sealedAt: sealedAt.iso,
@@ -234,7 +204,7 @@ export function createFutureHoldoutSealV15(
     featureExtractorContract: contract.extractor,
     featureNormalizerFitFingerprint: contract.normalizer,
     trainingLeakageGroupDigest: leakageDigest(trainingRecords),
-    evaluationPlan,
+    evaluationPlan: normalizedPlan(options),
     guardrails: [
       'Training corpus identity is content-addressed and may not change after sealing.',
       'Model hyperparameters, threshold, calibration bins, and success criteria are fixed before future outcomes are admitted.',
@@ -244,7 +214,7 @@ export function createFutureHoldoutSealV15(
       'The seal is an application-level precommitment; repository/audit retention should preserve when the seal was created.',
     ],
   };
-  return { ...payload, sealHash: sha256(stableStringify(sealPayload(payload))) };
+  return { ...payload, sealHash: sha256(stableStringify(payload)) };
 }
 
 export function assertFutureHoldoutSealV15(seal: FutureHoldoutSealV15): FutureHoldoutSealV15 {
@@ -254,13 +224,11 @@ export function assertFutureHoldoutSealV15(seal: FutureHoldoutSealV15): FutureHo
   timestamp('seal.trainingAsOf', seal.trainingAsOf);
   if (!/^[a-f0-9]{64}$/i.test(seal.sealHash)) throw new Error('Future holdout seal hash must be a SHA-256 digest.');
   const { sealHash, ...payload } = seal;
-  const expected = sha256(stableStringify(sealPayload(payload)));
-  if (expected !== sealHash.toLocaleLowerCase()) throw new Error('Future holdout seal content hash does not match its payload; the precommitment was modified.');
-  if (!/^[a-f0-9]{64}$/i.test(seal.trainingHistoricalManifestHash)
-    || !/^[a-f0-9]{64}$/i.test(seal.trainingHistoricalCorpusContentHash)
-    || !/^[a-f0-9]{64}$/i.test(seal.trainingLeakageGroupDigest)
-    || !/^[a-f0-9]{64}$/i.test(seal.featureNormalizerFitFingerprint)) {
-    throw new Error('Future holdout seal contains malformed content-addressed provenance.');
+  if (sha256(stableStringify(payload)) !== sealHash.toLocaleLowerCase()) {
+    throw new Error('Future holdout seal content hash does not match its payload; the precommitment was modified.');
+  }
+  for (const digest of [seal.trainingHistoricalManifestHash, seal.trainingHistoricalCorpusContentHash, seal.trainingLeakageGroupDigest, seal.featureNormalizerFitFingerprint]) {
+    if (!/^[a-f0-9]{64}$/i.test(digest)) throw new Error('Future holdout seal contains malformed content-addressed provenance.');
   }
   return seal;
 }
@@ -275,8 +243,7 @@ export function assertTrainingRecordsMatchFutureHoldoutSealV15(
   }
   for (const record of trainingRecords) assertHistoricalLearningRecordEligibleV15(record);
   const manifest = buildHistoricalLearningCorpusManifestV15(trainingRecords);
-  if (manifest.manifestHash !== seal.trainingHistoricalManifestHash
-    || manifest.corpusContentHash !== seal.trainingHistoricalCorpusContentHash) {
+  if (manifest.manifestHash !== seal.trainingHistoricalManifestHash || manifest.corpusContentHash !== seal.trainingHistoricalCorpusContentHash) {
     throw new Error('Training corpus content no longer matches the sealed historical manifest.');
   }
   const ids = trainingRecords.map((record) => record.record.outcomeId).sort();
