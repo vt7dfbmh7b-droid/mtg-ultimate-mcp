@@ -75,16 +75,13 @@ test('card-data fingerprint is deterministic across input order and ignores unre
 test('changing relevant historical Oracle input changes card-data fingerprint even when structural metrics stay the same', () => {
   const before = snapshot(cards('Destroy target creature.'));
   const after = snapshot(cards('Destroy target creature. It can’t be regenerated.'));
-
   assert.deepEqual(after.raw, before.raw);
   assert.notEqual(after.cardDataSnapshotFingerprint, before.cardDataSnapshotFingerprint);
 });
 
 test('changing a relevant card-data value that affects structure changes both fingerprint and raw metrics', () => {
   const baselineCards = cards();
-  const changedCards = cards().map((entry) =>
-    entry.name === 'Audit Threat' ? { ...entry, cmc: 6, mana_cost: '{6}' } : entry);
-
+  const changedCards = cards().map((entry) => entry.name === 'Audit Threat' ? { ...entry, cmc: 6, mana_cost: '{6}' } : entry);
   const before = snapshot(baselineCards);
   const after = snapshot(changedCards);
   assert.notEqual(after.cardDataSnapshotFingerprint, before.cardDataSnapshotFingerprint);
@@ -93,8 +90,7 @@ test('changing a relevant card-data value that affects structure changes both fi
 
 test('TopDeck materialization persists the card-data snapshot fingerprint into corpus provenance', () => {
   const target = snapshot(cards());
-  const trainingOtherCards = cards().map((entry) =>
-    entry.name === 'Audit Threat' ? { ...entry, cmc: 5, mana_cost: '{5}' } : entry);
+  const trainingOtherCards = cards().map((entry) => entry.name === 'Audit Threat' ? { ...entry, cmc: 5, mana_cost: '{5}' } : entry);
   const normalizer = fitDeckFeatureNormalizerV15([target, snapshot(trainingOtherCards)]);
   const candidate: TopDeckLearningCandidateV15 = {
     sourceId: 'topdeck',
@@ -115,6 +111,7 @@ test('TopDeck materialization persists the card-data snapshot fingerprint into c
       draws: null,
       losses: null,
       standingSource: 'provider-field',
+      deckSource: 'inline-text',
     },
   };
 
@@ -124,6 +121,5 @@ test('TopDeck materialization persists the card-data snapshot fingerprint into c
     leakageKey: 'audit:event',
     sourceObservedAt: '2026-01-11T00:00:00.000Z',
   });
-
   assert.equal(observed.metadata?.cardDataSnapshotFingerprint, target.cardDataSnapshotFingerprint);
 });
