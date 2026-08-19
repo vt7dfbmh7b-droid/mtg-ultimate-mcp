@@ -73,12 +73,6 @@ export function evaluateNeuralOnHistoricalCorpusAsOfV15(
   for (const record of records) {
     if (!record || typeof record !== 'object') throw new Error('Every historical model-evaluation input must be a historical learning record.');
     assertHistoricalLearningRecordEligibleV15(record);
-    const predictorAt = normalizedTimestamp('record.predictor.availableAt', record.predictor.availableAt);
-    if (predictorAt.ms > cutoff.ms) {
-      throw new Error(
-        `Historical learning record ${record.record.outcomeId} has predictor state available only after the requested as-of time.`,
-      );
-    }
   }
 
   const evidenceSelection = selectHistoricalLearningEvidenceAsOfV15(records, cutoff.iso);
@@ -89,6 +83,12 @@ export function evaluateNeuralOnHistoricalCorpusAsOfV15(
   }
 
   for (const record of evidenceSelection.usable) {
+    const predictorAt = normalizedTimestamp('record.predictor.availableAt', record.predictor.availableAt);
+    if (predictorAt.ms > cutoff.ms) {
+      throw new Error(
+        `Internal historical evidence gate failure: selected record ${record.record.outcomeId} has predictor state available only after the requested as-of time.`,
+      );
+    }
     if (record.outcomeEvidence.mode === 'retrospective-reconstruction') {
       throw new Error('Internal historical evidence gate failure: retrospective reconstruction reached model training input.');
     }
