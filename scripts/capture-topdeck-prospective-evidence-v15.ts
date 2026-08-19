@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { writeFile } from 'node:fs/promises';
+import { captureTopDeckCompletedTournamentByIdV15 } from '../src/services/topdeck-prospective-completed-capture-v15.js';
 import {
   captureTopDeckEventEndEvidenceV15,
   captureTopDeckPreEventDecklistsV15,
@@ -17,6 +18,14 @@ function eventFingerprint(tournamentId: string): string {
   return createHash('sha256').update(tournamentId, 'utf8').digest('hex');
 }
 
+const privacy = {
+  tournamentIdPersistedInAudit: false,
+  playerIdentifiersPersistedInAudit: false,
+  decklistsPersistedInAudit: false,
+  cardNamesPersistedInAudit: false,
+  apiKeyPersisted: false,
+} as const;
+
 async function main(): Promise<void> {
   const tournamentId = required('TOPDECK_TOURNAMENT_ID', process.env.TOPDECK_TOURNAMENT_ID);
   const phase = required('TOPDECK_CAPTURE_PHASE', process.env.TOPDECK_CAPTURE_PHASE);
@@ -26,7 +35,7 @@ async function main(): Promise<void> {
     const result = await captureTopDeckPreEventDecklistsV15({ tournamentId });
     if (result.status === 'unavailable') {
       const audit = {
-        schemaVersion: 'topdeck-prospective-audit-v15.1',
+        schemaVersion: 'topdeck-prospective-audit-v15.2',
         phase,
         status: 'unavailable',
         providerEventFingerprint,
@@ -36,13 +45,7 @@ async function main(): Promise<void> {
         acceptedDecks: 0,
         rejectedStandingRows: result.rejectedStandingRows,
         privateEvidenceWritten: false,
-        privacy: {
-          tournamentIdPersistedInAudit: false,
-          playerIdentifiersPersistedInAudit: false,
-          decklistsPersistedInAudit: false,
-          cardNamesPersistedInAudit: false,
-          apiKeyPersisted: false,
-        },
+        privacy,
       } as const;
       await writeFile(AUDIT_PATH, `${JSON.stringify(audit, null, 2)}\n`, 'utf8');
       console.log(JSON.stringify(audit, null, 2));
@@ -50,13 +53,13 @@ async function main(): Promise<void> {
     }
 
     const privateEvidence = {
-      schemaVersion: 'topdeck-prospective-private-evidence-v15.1',
+      schemaVersion: 'topdeck-prospective-private-evidence-v15.2',
       phase,
       result,
     } as const;
     await writeFile(PRIVATE_PATH, `${JSON.stringify(privateEvidence, null, 2)}\n`, 'utf8');
     const audit = {
-      schemaVersion: 'topdeck-prospective-audit-v15.1',
+      schemaVersion: 'topdeck-prospective-audit-v15.2',
       phase,
       status: 'captured',
       providerEventFingerprint,
@@ -68,13 +71,7 @@ async function main(): Promise<void> {
       standingsSourceContentHash: result.standingsSourceContentHash,
       infoSourceContentHash: result.infoSourceContentHash,
       privateEvidenceWritten: true,
-      privacy: {
-        tournamentIdPersistedInAudit: false,
-        playerIdentifiersPersistedInAudit: false,
-        decklistsPersistedInAudit: false,
-        cardNamesPersistedInAudit: false,
-        apiKeyPersisted: false,
-      },
+      privacy,
     } as const;
     await writeFile(AUDIT_PATH, `${JSON.stringify(audit, null, 2)}\n`, 'utf8');
     console.log(JSON.stringify(audit, null, 2));
@@ -84,13 +81,13 @@ async function main(): Promise<void> {
   if (phase === 'event-end') {
     const result = await captureTopDeckEventEndEvidenceV15({ tournamentId });
     const privateEvidence = {
-      schemaVersion: 'topdeck-prospective-private-evidence-v15.1',
+      schemaVersion: 'topdeck-prospective-private-evidence-v15.2',
       phase,
       result,
     } as const;
     await writeFile(PRIVATE_PATH, `${JSON.stringify(privateEvidence, null, 2)}\n`, 'utf8');
     const audit = {
-      schemaVersion: 'topdeck-prospective-audit-v15.1',
+      schemaVersion: 'topdeck-prospective-audit-v15.2',
       phase,
       status: 'captured',
       providerEventFingerprint,
@@ -99,20 +96,44 @@ async function main(): Promise<void> {
       capturedAt: result.evidence.observedAt,
       eventEndSourceContentHash: result.evidence.sourceContentHash,
       privateEvidenceWritten: true,
-      privacy: {
-        tournamentIdPersistedInAudit: false,
-        playerIdentifiersPersistedInAudit: false,
-        decklistsPersistedInAudit: false,
-        cardNamesPersistedInAudit: false,
-        apiKeyPersisted: false,
-      },
+      privacy,
     } as const;
     await writeFile(AUDIT_PATH, `${JSON.stringify(audit, null, 2)}\n`, 'utf8');
     console.log(JSON.stringify(audit, null, 2));
     return;
   }
 
-  throw new Error('TOPDECK_CAPTURE_PHASE must be pre-event or event-end.');
+  if (phase === 'completed-event') {
+    const result = await captureTopDeckCompletedTournamentByIdV15({ tournamentId });
+    const privateEvidence = {
+      schemaVersion: 'topdeck-prospective-private-evidence-v15.2',
+      phase,
+      result,
+    } as const;
+    await writeFile(PRIVATE_PATH, `${JSON.stringify(privateEvidence, null, 2)}\n`, 'utf8');
+    const audit = {
+      schemaVersion: 'topdeck-prospective-audit-v15.2',
+      phase,
+      status: 'captured',
+      providerEventFingerprint,
+      eventStartedAt: result.eventEndEvidence.eventStartedAt,
+      eventEndedAt: result.eventEndEvidence.eventEndedAt,
+      capturedAt: result.capturedAt,
+      finalCandidates: result.candidates.length,
+      rejectedRows: result.rejected.length,
+      uniqueFinalDeckFingerprints: new Set(result.candidates.map((candidate) => candidate.decklist)
+        .map((decklist) => createHash('sha256').update(decklist, 'utf8').digest('hex'))).size,
+      completedSourceContentHash: result.sourceContentHash,
+      eventEndSourceContentHash: result.eventEndEvidence.sourceContentHash,
+      privateEvidenceWritten: true,
+      privacy,
+    } as const;
+    await writeFile(AUDIT_PATH, `${JSON.stringify(audit, null, 2)}\n`, 'utf8');
+    console.log(JSON.stringify(audit, null, 2));
+    return;
+  }
+
+  throw new Error('TOPDECK_CAPTURE_PHASE must be pre-event, event-end, or completed-event.');
 }
 
 main().catch((error: unknown) => {
