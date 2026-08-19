@@ -56,8 +56,24 @@ test('completed EDH-style bulk payload becomes deterministic source candidates w
   assert.equal(result.candidates[0]?.topCutSize, 2);
   assert.deepEqual(result.candidates[0]?.commanderNames, ['Kinnan, Bonder Prodigy']);
   assert.equal(result.candidates[0]?.metadata.wins, 4);
+  assert.equal(result.candidates[0]?.metadata.standingSource, 'provider-field');
   assert.equal(result.candidates[0]?.metadata.eventCity, 'Auckland');
   assert.equal(result.candidates[0]?.metadata.eventState, 'Auckland');
+});
+
+test('bulk response without a standing column derives rank from documented standings order', () => {
+  const result = adaptTopDeckV2TournamentForLearningV15(tournament({
+    standings: [
+      { id: 'p1', name: 'Player One', decklist: topdeckDeck, wins: 4, draws: 1, losses: 0 },
+      { id: 'p2', name: 'Player Two', decklist: topdeckDeck, wins: 4, draws: 0, losses: 1 },
+      { id: 'p3', name: 'Player Three', decklist: topdeckDeck, wins: 3, draws: 1, losses: 1 },
+      { id: 'p4', name: 'Player Four', decklist: topdeckDeck, wins: 3, draws: 0, losses: 2 },
+    ],
+  }));
+
+  assert.equal(result.rejected.length, 0);
+  assert.deepEqual(result.candidates.map((candidate) => candidate.standing), [1, 2, 3, 4]);
+  assert.equal(result.candidates.every((candidate) => candidate.metadata.standingSource === 'bulk-array-order'), true);
 });
 
 test('candidate enrichment requires explicit cross-source identity and features before generic ingestion', () => {
@@ -78,6 +94,7 @@ test('candidate enrichment requires explicit cross-source identity and features 
   assert.equal(ingested.accepted[0]?.label, 0);
   assert.equal(ingested.accepted[0]?.independentGroup, 'auckland-open-2026');
   assert.equal(ingested.accepted[0]?.metadata?.attribution, TOPDECK_V2_ATTRIBUTION_V15);
+  assert.equal(ingested.accepted[0]?.metadata?.standingSource, 'provider-field');
   assert.equal(ingested.accepted[0]?.metadata?.eventCity, 'Auckland');
   assert.equal(ingested.accepted[0]?.metadata?.eventState, 'Auckland');
 });
@@ -166,7 +183,7 @@ test('partial or malformed Commander lists are quarantined before learning inges
   assert.match(result.rejected[0]?.reason ?? '', /exactly 100 cards/);
 });
 
-test('malformed tournament and standing bounds fail closed while preserving usable rows', () => {
+test('malformed tournament and explicit standing bounds fail closed while preserving usable rows', () => {
   const malformed = adaptTopDeckV2TournamentForLearningV15({
     TID: 'bad',
     startDate: 'tomorrow',
@@ -183,4 +200,9 @@ test('malformed tournament and standing bounds fail closed while preserving usab
   const partial = adaptTopDeckV2TournamentForLearningV15({ ...payload, standings });
   assert.equal(partial.candidates.length, 3);
   assert.equal(partial.rejected[0]?.code, 'invalid-standing');
+
+  standings[0] = { standing: 'first', id: 'p1', decklist: topdeckDeck };
+  const malformedStanding = adaptTopDeckV2TournamentForLearningV15({ ...payload, standings });
+  assert.equal(malformedStanding.candidates.length, 3);
+  assert.equal(malformedStanding.rejected[0]?.code, 'invalid-standing');
 });
