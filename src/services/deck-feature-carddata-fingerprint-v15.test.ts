@@ -114,6 +114,7 @@ test('TopDeck materialization persists the card-data snapshot fingerprint into c
       wins: null,
       draws: null,
       losses: null,
+      standingSource: 'provider-field',
     },
   };
 
