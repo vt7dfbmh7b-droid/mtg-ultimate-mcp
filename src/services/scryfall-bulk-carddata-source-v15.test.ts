@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import test from 'node:test';
+import { gzipSync } from 'node:zlib';
 import type { ScryfallCard } from '../types/scryfall.js';
 import {
   SCRYFALL_BULK_DISCOVERY_ACCEPT_V15,
@@ -8,35 +9,8 @@ import {
   discoverScryfallDefaultCardsV15,
 } from './scryfall-bulk-carddata-source-v15.js';
 
-const staticUri = 'https://data.scryfall.io/default-cards/default-cards-20260820.json';
-
-function manifestEntry(overrides: Record<string, unknown> = {}): Record<string, unknown> {
-  return {
-    id: 'default-cards-object',
-    type: 'default_cards',
-    updated_at: '2026-08-20T01:02:03.000Z',
-    download_uri: staticUri,
-    size: 123456789,
-    content_type: 'application/json',
-    content_encoding: 'gzip',
-    ...overrides,
-  };
-}
-
-function manifest(entries: unknown[] = [manifestEntry()]): unknown {
-  return {
-    object: 'list',
-    has_more: false,
-    data: entries,
-  };
-}
-
-function jsonResponse(value: unknown, status = 200): Response {
-  return new Response(JSON.stringify(value), {
-    status,
-    headers: { 'content-type': 'application/json' },
-  });
-}
+const providerMetadataUri = 'https://api.scryfall.com/bulk-data/e2ef41e3-5778-4bc2-af3f-78eca4dd9c23';
+const staticUri = 'https://data.scryfall.io/default-cards/default-cards-20260819090521.jsonl.gz';
 
 const capturedCard: ScryfallCard = {
   id: 'captured-card',
@@ -57,10 +31,38 @@ const capturedCard: ScryfallCard = {
   rarity: 'common',
   scryfall_uri: 'https://scryfall.com/card/tst/1/captured-card',
 };
-const cardPayload = new TextEncoder().encode(JSON.stringify([capturedCard]));
-const cardPayloadHash = createHash('sha256').update(cardPayload).digest('hex');
+const decodedCardPayload = new TextEncoder().encode(`${JSON.stringify(capturedCard)}\n`);
+const compressedCardPayload = gzipSync(decodedCardPayload);
+const compressedCardPayloadHash = createHash('sha256').update(compressedCardPayload).digest('hex');
 
-test('Scryfall bulk discovery sends required headers and returns only validated current-provider metadata', async () => {
+function manifestEntry(overrides: Record<string, unknown> = {}): Record<string, unknown> {
+  return {
+    id: 'e2ef41e3-5778-4bc2-af3f-78eca4dd9c23',
+    type: 'default_cards',
+    updated_at: '2026-08-20T01:02:03.000Z',
+    uri: providerMetadataUri,
+    compressed_size: compressedCardPayload.byteLength,
+    jsonl_download_uri: staticUri,
+    ...overrides,
+  };
+}
+
+function manifest(entries: unknown[] = [manifestEntry()]): unknown {
+  return {
+    object: 'list',
+    has_more: false,
+    data: entries,
+  };
+}
+
+function jsonResponse(value: unknown, status = 200): Response {
+  return new Response(JSON.stringify(value), {
+    status,
+    headers: { 'content-type': 'application/json' },
+  });
+}
+
+test('Scryfall bulk discovery sends required headers and returns the validated live JSONL gzip contract', async () => {
   let requestUrl = '';
   let requestInit: RequestInit | undefined;
   const fetchImpl = (async (input: string | URL | Request, init?: RequestInit) => {
@@ -82,11 +84,10 @@ test('Scryfall bulk discovery sends required headers and returns only validated 
   assert.equal(result.sourceId, 'scryfall-default-cards');
   assert.equal(result.manifestUri, 'https://api.scryfall.com/bulk-data');
   assert.equal(result.discoveredAt, '2026-08-20T02:00:00.000Z');
-  assert.equal(result.providerObjectId, 'default-cards-object');
+  assert.equal(result.providerObjectId, 'e2ef41e3-5778-4bc2-af3f-78eca4dd9c23');
+  assert.equal(result.providerMetadataUri, providerMetadataUri);
   assert.equal(result.providerUpdatedAt, '2026-08-20T01:02:03.000Z');
-  assert.equal(result.providerSizeBytes, 123456789);
-  assert.equal(result.providerContentType, 'application/json');
-  assert.equal(result.providerContentEncoding, 'gzip');
+  assert.equal(result.providerCompressedSizeBytes, compressedCardPayload.byteLength);
   assert.equal(result.downloadUri, staticUri);
   assert.equal(result.requestPolicy.automaticRetries, 0);
   assert.equal(result.temporalPolicy, 'current-provider-metadata-only-not-historical-proof');
@@ -111,13 +112,15 @@ test('manifest shape, missing entries, and duplicate default_cards entries fail 
   }
 });
 
-test('malformed default_cards metadata cannot become a trusted static download', async () => {
+test('malformed current default_cards metadata cannot become a trusted static download', async () => {
   const badEntries: Array<{ entry: Record<string, unknown>; pattern: RegExp }> = [
+    { entry: manifestEntry({ id: '' }), pattern: /id must be a non-empty string/i },
     { entry: manifestEntry({ updated_at: 'not-a-date' }), pattern: /updated_at must be a valid timestamp/i },
-    { entry: manifestEntry({ download_uri: 'http://data.scryfall.io/default-cards.json' }), pattern: /absolute HTTPS \*\.scryfall\.io/i },
-    { entry: manifestEntry({ download_uri: 'https://example.test/default-cards.json' }), pattern: /absolute HTTPS \*\.scryfall\.io/i },
-    { entry: manifestEntry({ size: -1 }), pattern: /size must be a positive safe integer/i },
-    { entry: manifestEntry({ content_type: '' }), pattern: /content_type must be a non-empty string/i },
+    { entry: manifestEntry({ uri: 'https://example.test/bulk-data/id' }), pattern: /api\.scryfall\.com\/bulk-data/i },
+    { entry: manifestEntry({ compressed_size: -1 }), pattern: /compressed_size must be a positive safe integer/i },
+    { entry: manifestEntry({ jsonl_download_uri: 'http://data.scryfall.io/default-cards.jsonl.gz' }), pattern: /absolute HTTPS \*\.scryfall\.io \.jsonl\.gz/i },
+    { entry: manifestEntry({ jsonl_download_uri: 'https://example.test/default-cards.jsonl.gz' }), pattern: /absolute HTTPS \*\.scryfall\.io \.jsonl\.gz/i },
+    { entry: manifestEntry({ jsonl_download_uri: 'https://data.scryfall.io/default-cards.json' }), pattern: /\.jsonl\.gz URL/i },
   ];
 
   for (const item of badEntries) {
@@ -147,16 +150,16 @@ test('HTTP and invalid-JSON provider failures are classified without accepting p
   );
 });
 
-test('discovery and forward capture use one observation timestamp but never promote provider updated_at to historical proof', async () => {
+test('discovery and forward capture use one observation timestamp, exact compressed size, and never backdate provider updated_at', async () => {
   const requested: string[] = [];
   const fetchImpl = (async (input: string | URL | Request) => {
     const url = String(input);
     requested.push(url);
     if (url === 'https://api.scryfall.com/bulk-data') return jsonResponse(manifest());
     if (url === staticUri) {
-      return new Response(cardPayload, {
+      return new Response(compressedCardPayload, {
         status: 200,
-        headers: { 'content-length': String(cardPayload.byteLength) },
+        headers: { 'content-length': String(compressedCardPayload.byteLength) },
       });
     }
     return new Response('unexpected', { status: 404 });
@@ -175,6 +178,8 @@ test('discovery and forward capture use one observation timestamp but never prom
   assert.equal(result.capture.acquisition.provenance.method, 'contemporaneous-capture');
   assert.equal(result.capture.acquisition.provenance.observedAt, '2026-08-20T02:00:00.000Z');
   assert.equal(result.capture.acquisition.provenance.retrievedAt, '2026-08-20T02:00:00.000Z');
-  assert.equal(result.capture.acquisition.provenance.sourceContentHash, cardPayloadHash);
+  assert.equal(result.capture.acquisition.provenance.sourceContentHash, compressedCardPayloadHash);
+  assert.equal(result.capture.acquisition.integrity.expectedCompressedByteLength, compressedCardPayload.byteLength);
+  assert.deepEqual(result.capture.acquisition.cards, [capturedCard]);
   assert.equal(result.capture.sourcePolicy.historicalArchiveVerified, false);
 });
