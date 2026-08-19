@@ -252,11 +252,84 @@ export function createHistoricalLearningRecordV15(
   };
 }
 
+/**
+ * Runtime validation is intentionally stricter than the TypeScript interface.
+ * Historical records are expected to cross file/JSON boundaries, so a forged
+ * `eligibleForHistoricalTraining: true` flag must not be enough to reach model
+ * training. Re-normalize the raw provenance and re-check all temporal safeguards.
+ */
 export function assertHistoricalLearningRecordEligibleV15(
   record: HistoricalLearningRecordV15,
 ): HistoricalLearningRecordV15 {
+  if (!record || typeof record !== 'object') throw new Error('Historical learning record must be an object.');
+  if (record.schemaVersion !== HISTORICAL_LEARNING_RECORD_SCHEMA_V15) {
+    throw new Error(`Unsupported historical learning record schema: ${String(record.schemaVersion)}.`);
+  }
+  if (!record.record || typeof record.record !== 'object' || typeof record.record.outcomeId !== 'string' || !record.record.outcomeId.trim()) {
+    throw new Error('Historical learning record must contain a valid generic learning outcome record.');
+  }
   if (!record.eligibleForHistoricalTraining) {
     throw new Error(`Historical learning record ${record.record.outcomeId} is not eligible for training: ${record.reasons.join(' ')}`);
+  }
+  if (!Array.isArray(record.reasons) || record.reasons.length > 0) {
+    throw new Error(`Historical learning record ${record.record.outcomeId} cannot be eligible while provenance reasons remain.`);
+  }
+  if (!record.predictor || typeof record.predictor !== 'object') {
+    throw new Error(`Historical learning record ${record.record.outcomeId} is missing predictor provenance.`);
+  }
+  const predictorAt = timestamp('record.predictor.availableAt', record.predictor.availableAt);
+  const outcomeAt = timestamp('record.record.observedAt', record.record.observedAt);
+  if (predictorAt.ms > outcomeAt.ms) {
+    throw new Error(`Historical learning record ${record.record.outcomeId} has predictor state available after the outcome.`);
+  }
+  if (record.predictor.historicalCardDataMethod === 'retrospective-current-data') {
+    throw new Error(`Historical learning record ${record.record.outcomeId} uses retrospective current card data as predictor truth.`);
+  }
+  if (typeof record.predictor.historicalCardDataSourceId !== 'string' || !record.predictor.historicalCardDataSourceId.trim()) {
+    throw new Error(`Historical learning record ${record.record.outcomeId} is missing historical card-data source identity.`);
+  }
+  if (!/^[a-f0-9]{64}$/i.test(record.predictor.historicalCardDataSourceContentHash)) {
+    throw new Error(`Historical learning record ${record.record.outcomeId} has invalid historical card-data content hash provenance.`);
+  }
+  if (record.predictor.historicalCommanderLegalityStatus !== 'legal') {
+    throw new Error(`Historical learning record ${record.record.outcomeId} does not have verified historical Commander legality.`);
+  }
+  if (!record.safeguards
+    || record.safeguards.predictorProvenanceVerified !== true
+    || record.safeguards.predictorAvailableBeforeOutcome !== true
+    || record.safeguards.outcomeEvidenceTargetOnly !== true
+    || record.safeguards.outcomeSourceAvailableNoEarlierThanOutcome !== true
+    || record.safeguards.outcomeEvidenceReplayable !== true
+    || record.safeguards.outcomeEvidenceModeAccepted !== true) {
+    throw new Error(`Historical learning record ${record.record.outcomeId} is missing one or more required temporal safeguards.`);
+  }
+
+  const normalizedEvidence = normalizeTemporalEvidenceProvenanceV15(record.outcomeEvidenceProvenance);
+  if (stableStringify(normalizedEvidence) !== stableStringify(record.outcomeEvidence)) {
+    throw new Error(`Historical learning record ${record.record.outcomeId} has inconsistent raw and normalized outcome provenance.`);
+  }
+  if (normalize(normalizedEvidence.sourceId) !== normalize(record.record.sourceId)) {
+    throw new Error(`Historical learning record ${record.record.outcomeId} has mismatched outcome source identity.`);
+  }
+  if (normalizedEvidence.domain !== 'tournament-outcome' && normalizedEvidence.domain !== 'recorded-game') {
+    throw new Error(`Historical learning record ${record.record.outcomeId} has a non-outcome temporal evidence domain.`);
+  }
+  if (normalizedEvidence.mode !== 'contemporaneous-snapshot' && normalizedEvidence.mode !== 'archived-versioned-snapshot') {
+    throw new Error(`Historical learning record ${record.record.outcomeId} uses a non-historical outcome evidence mode.`);
+  }
+  if (normalizedEvidence.truthStatus !== 'verified-present' || !normalizedEvidence.replayable) {
+    throw new Error(`Historical learning record ${record.record.outcomeId} lacks replayable verified-present outcome evidence.`);
+  }
+  const sourceAvailableAt = timestamp('record.outcomeEvidence.sourceAvailableAt', normalizedEvidence.sourceAvailableAt);
+  if (sourceAvailableAt.ms < outcomeAt.ms) {
+    throw new Error(`Historical learning record ${record.record.outcomeId} claims outcome evidence availability before the outcome occurred.`);
+  }
+  const metadataObservedAt = record.record.metadata?.sourceObservedAt;
+  if (typeof metadataObservedAt === 'string') {
+    if (timestamp('record.record.metadata.sourceObservedAt', metadataObservedAt).ms
+      !== timestamp('record.outcomeEvidence.sourceObservedAt', normalizedEvidence.sourceObservedAt).ms) {
+      throw new Error(`Historical learning record ${record.record.outcomeId} has inconsistent source observation timestamps.`);
+    }
   }
   return record;
 }
