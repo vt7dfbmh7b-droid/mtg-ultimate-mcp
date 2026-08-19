@@ -103,6 +103,10 @@ test('live fetcher makes exactly one documented bounded EDH POST and adapts the 
       string: 0,
       other: 0,
     },
+    commanderEntryObjectPropertyCounts: {},
+    mainboardEntryObjectPropertyCounts: {},
+    commanderEntryNumericPropertyCounts: {},
+    mainboardEntryNumericPropertyCounts: {},
   });
 });
 
@@ -139,6 +143,10 @@ test('provider shape audit detects URL-like deck references and structured deck 
   assert.deepEqual(result.providerShapeAudit.commanderSectionEntryCountDistribution, { '1': 1 });
   assert.equal(result.providerShapeAudit.commanderSectionValueShapes['object-with-quantity'], 1);
   assert.equal(result.providerShapeAudit.mainboardSectionValueShapes['object-with-quantity'], 1);
+  assert.deepEqual(result.providerShapeAudit.commanderEntryObjectPropertyCounts, { quantity: 1, id: 1 });
+  assert.deepEqual(result.providerShapeAudit.mainboardEntryObjectPropertyCounts, { quantity: 1, id: 1 });
+  assert.deepEqual(result.providerShapeAudit.commanderEntryNumericPropertyCounts, { quantity: 1 });
+  assert.deepEqual(result.providerShapeAudit.mainboardEntryNumericPropertyCounts, { quantity: 1 });
 });
 
 test('HTTP 429 is surfaced as a typed rate-limit error with Retry-After and no automatic retry', async () => {
