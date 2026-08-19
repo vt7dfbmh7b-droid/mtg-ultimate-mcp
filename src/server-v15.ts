@@ -1,6 +1,7 @@
 import type { McpServer } from '@modelcontextprotocol/server';
 import * as z from 'zod/v4';
 import { createMtgServerV14 } from './server-v14.js';
+import { registerUniversalCommanderPipelineToolV15 } from './server-v15-commander-pipeline.js';
 import {
   assessBracketCeilingV15,
   type BracketAssessmentSignalsV15,
@@ -111,6 +112,8 @@ function compactBracketSignals(input: z.infer<typeof bracketSignalSchema>): Brac
 }
 
 export function registerMtgToolsV15(server: McpServer): McpServer {
+  registerUniversalCommanderPipelineToolV15(server);
+
   server.registerTool(
     'assess_bracket_ceiling_v15',
     {
