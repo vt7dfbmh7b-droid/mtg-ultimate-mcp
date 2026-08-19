@@ -18,13 +18,15 @@ test('current card-data sources are explicitly blocked from retrospective rich-f
   }
 });
 
-test('Scryfall current bulk data is forward-capture enabled without becoming a historical archive', () => {
+test('Scryfall current gzip JSON Lines bulk data is forward-capture enabled without becoming a historical archive', () => {
   const source = historicalCardDataSourceByIdV15('scryfall-default-cards');
   if (!source) throw new Error('Expected Scryfall source inventory entry.');
-  assert.equal(source.nativeFormat, 'scryfall-card-array');
+  assert.equal(source.nativeFormat, 'scryfall-jsonl-gzip');
   assert.equal(source.forwardCapture, 'enabled-contemporaneous-capture');
   assert.equal(sourceCanCaptureForwardRichFeaturesV15(source.sourceId), true);
   assert.equal(sourceCanBackfillHistoricalRichFeaturesV15(source.sourceId), false);
+  assert.match(source.usageNotes, /jsonl_download_uri/i);
+  assert.match(source.usageNotes, /compressed source bytes/i);
   assert.deepEqual(assertSourceCannotBackfillWithoutVerifiedArchiveV15(source.sourceId), source);
 });
 
