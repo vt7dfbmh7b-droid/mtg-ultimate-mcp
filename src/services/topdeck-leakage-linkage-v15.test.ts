@@ -28,6 +28,7 @@ function candidate(options: {
       wins: null,
       draws: null,
       losses: null,
+      standingSource: 'provider-field',
     },
   };
 }
