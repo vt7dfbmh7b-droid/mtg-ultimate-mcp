@@ -6,7 +6,7 @@ export type HistoricalCardDataAccessModeV15 =
   | 'official-current-daily-build';
 
 export type HistoricalCardDataNativeFormatV15 =
-  | 'scryfall-card-array'
+  | 'scryfall-jsonl-gzip'
   | 'mtgjson-v5-json';
 
 export type HistoricalCardDataRetrospectiveStatusV15 =
@@ -40,8 +40,8 @@ export interface HistoricalCardDataSourceInventoryEntryV15 {
  * a historical prediction cutoff. No source in this inventory currently has a
  * verified replayable historical archive, so retrospective rich-feature use is
  * blocked across the board. Forward capture is a separate capability: current
- * Scryfall-shaped bulk bytes can be observed, hashed and retained now for future
- * cutoffs without pretending they existed earlier.
+ * source bytes can be observed, hashed and retained now for future cutoffs
+ * without pretending they existed earlier.
  */
 export const HISTORICAL_CARD_DATA_SOURCE_INVENTORY_V15: readonly HistoricalCardDataSourceInventoryEntryV15[] = [
   {
@@ -52,13 +52,13 @@ export const HISTORICAL_CARD_DATA_SOURCE_INVENTORY_V15: readonly HistoricalCardD
     manifestUrl: 'https://api.scryfall.com/bulk-data',
     verifiedAt: HISTORICAL_CARD_DATA_SOURCE_INVENTORY_VERIFIED_AT_V15,
     accessMode: 'official-current-bulk',
-    nativeFormat: 'scryfall-card-array',
+    nativeFormat: 'scryfall-jsonl-gzip',
     retrospectiveRichFeatures: 'blocked-no-verified-replayable-archive',
     forwardCapture: 'enabled-contemporaneous-capture',
     providerIntegritySurface: 'none-relied-upon-capture-sha256-required',
     historicalArchiveVerified: false,
     temporalNotes: 'Current bulk data may be captured prospectively. No official replayable daily historical archive has been verified for arbitrary past predictor cutoffs.',
-    usageNotes: 'Use a descriptive User-Agent and Accept header for Scryfall API discovery. Preserve the exact downloaded bulk bytes, observation time, source URI and locally computed SHA-256.',
+    usageNotes: 'The live 2026-08-20 provider audit exposes default_cards through jsonl_download_uri as a gzip-compressed JSON Lines file. Preserve the exact compressed source bytes, observation time, source URI and locally computed SHA-256; provider updated_at is current metadata only, not historical proof.',
   },
   {
     sourceId: 'mtgjson-all-printings',
