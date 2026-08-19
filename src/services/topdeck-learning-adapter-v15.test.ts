@@ -23,6 +23,7 @@ function tournament(overrides: Partial<TopDeckV2BulkTournamentV15> = {}): TopDec
     game: 'Magic: The Gathering',
     format: 'EDH',
     topCut: 2,
+    eventData: { city: 'Auckland', state: 'Auckland' },
     standings: [
       { standing: 1, id: 'p1', name: 'Player One', decklist: topdeckDeck, wins: 4, draws: 1, losses: 0 },
       { standing: 2, id: 'p2', name: 'Player Two', decklist: topdeckDeck, wins: 4, draws: 0, losses: 1 },
@@ -55,6 +56,8 @@ test('completed EDH-style bulk payload becomes deterministic source candidates w
   assert.equal(result.candidates[0]?.topCutSize, 2);
   assert.deepEqual(result.candidates[0]?.commanderNames, ['Kinnan, Bonder Prodigy']);
   assert.equal(result.candidates[0]?.metadata.wins, 4);
+  assert.equal(result.candidates[0]?.metadata.eventCity, 'Auckland');
+  assert.equal(result.candidates[0]?.metadata.eventState, 'Auckland');
 });
 
 test('candidate enrichment requires explicit cross-source identity and features before generic ingestion', () => {
@@ -75,6 +78,21 @@ test('candidate enrichment requires explicit cross-source identity and features 
   assert.equal(ingested.accepted[0]?.label, 0);
   assert.equal(ingested.accepted[0]?.independentGroup, 'auckland-open-2026');
   assert.equal(ingested.accepted[0]?.metadata?.attribution, TOPDECK_V2_ATTRIBUTION_V15);
+  assert.equal(ingested.accepted[0]?.metadata?.eventCity, 'Auckland');
+  assert.equal(ingested.accepted[0]?.metadata?.eventState, 'Auckland');
+});
+
+test('event location is preserved only when TopDeck supplies usable city/state values', () => {
+  const missing = adaptTopDeckV2TournamentForLearningV15(tournament({ eventData: undefined }));
+  const malformed = adaptTopDeckV2TournamentForLearningV15(tournament({ eventData: { city: 123, state: '' } }));
+  const trimmed = adaptTopDeckV2TournamentForLearningV15(tournament({ eventData: { city: '  Wellington  ', state: ' Wellington ' } }));
+
+  assert.equal(missing.candidates[0]?.metadata.eventCity, undefined);
+  assert.equal(missing.candidates[0]?.metadata.eventState, undefined);
+  assert.equal(malformed.candidates[0]?.metadata.eventCity, undefined);
+  assert.equal(malformed.candidates[0]?.metadata.eventState, undefined);
+  assert.equal(trimmed.candidates[0]?.metadata.eventCity, 'Wellington');
+  assert.equal(trimmed.candidates[0]?.metadata.eventState, 'Wellington');
 });
 
 test('adapter rejects non-EDH or team events instead of coercing their standings into Commander outcomes', () => {
