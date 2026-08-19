@@ -8,12 +8,13 @@ on:
         required: true
         type: string
       phase:
-        description: Capture exact decks before start, or provider end time after completion
+        description: Capture exact decks before start, provider end timing, or exact completed result
         required: true
         type: choice
         options:
           - pre-event
           - event-end
+          - completed-event
 
 permissions:
   contents: read
