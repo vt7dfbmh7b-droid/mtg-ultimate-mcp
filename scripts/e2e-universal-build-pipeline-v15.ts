@@ -1,35 +1,73 @@
 import assert from 'node:assert/strict';
 import { writeFile } from 'node:fs/promises';
-import { buildCommanderThroughPipelineV15 } from '../src/services/commander-build-pipeline-v15.js';
-import { getCardsByIdentifiers } from '../src/services/scryfall.js';
+import { Client, StreamableHTTPClientTransport } from '@modelcontextprotocol/client';
+import { createMcpHandler } from '@modelcontextprotocol/server';
+import { createMtgServerV15 } from '../src/server-v15.js';
 
 function record(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
 }
 
-async function main(): Promise<void> {
-  console.log('UNIVERSAL COMMANDER BUILD PIPELINE LIVE CONTROL');
-  console.log('CASE: Najeela, Final Fantasy physical printings only, requested Bracket 4, verified win packages preferred.');
-  console.log('PASS CONDITION: preserve constraints and ordering, construct a legal exact 100, then report actual achieved bracket honestly.');
-
-  const commanderLookup = await getCardsByIdentifiers([
-    { name: 'Najeela, the Blade-Blossom', set: 'FCA', collectorNumber: '42' },
-  ]);
-  assert.deepEqual(commanderLookup.notFound, [], 'exact FF Najeela commander printing must resolve');
-  const commander = commanderLookup.cards[0];
-  assert.ok(commander, 'Najeela commander must resolve');
-
-  const result = await buildCommanderThroughPipelineV15([commander], {
-    targetBracket: 4,
-    printingFamily: 'Final Fantasy',
-    includePromos: true,
-    includeSpecialReleases: true,
-    winPackageMode: 'prefer',
-    maxWinPackageCards: 3,
+async function callUniversalPipelineThroughMcp(): Promise<Record<string, unknown>> {
+  const handler = createMcpHandler(createMtgServerV15);
+  const client = new Client(
+    { name: 'mtg-ultimate-v15-live-boundary', version: '1.0.0' },
+    { versionNegotiation: { mode: 'auto' } },
+  );
+  const transport = new StreamableHTTPClientTransport(new URL('http://live-control.local/mcp'), {
+    fetch: (url, init) => handler.fetch(new Request(url, init)),
   });
+
+  try {
+    await client.connect(transport);
+    const response = await client.callTool({
+      name: 'build_commander_through_pipeline_v15',
+      arguments: {
+        commanders: [
+          { name: 'Najeela, the Blade-Blossom', set: 'FCA', collectorNumber: '42' },
+        ],
+        targetBracket: 4,
+        printingFamily: 'Final Fantasy',
+        includePromos: true,
+        includeSpecialReleases: true,
+        winPackageMode: 'prefer',
+        maxWinPackageCards: 3,
+      },
+    }) as unknown as {
+      content: Array<{ type: string; text?: string }>;
+      isError?: boolean;
+    };
+    assert.notEqual(response.isError, true, 'live universal pipeline MCP call must not return a transport/tool error');
+    const text = response.content.find((item) => item.type === 'text' && typeof item.text === 'string')?.text;
+    assert.ok(text, 'live universal pipeline MCP call must return JSON text content');
+    return JSON.parse(text) as Record<string, unknown>;
+  } finally {
+    await client.close();
+    await handler.close();
+  }
+}
+
+async function main(): Promise<void> {
+  console.log('UNIVERSAL COMMANDER MCP PIPELINE LIVE CONTROL');
+  console.log('CASE: V0.15 MCP boundary -> Najeela, Final Fantasy physical printings only, requested Bracket 4, verified win packages preferred.');
+  console.log('PASS CONDITION: resolve the exact commander at MCP boundary, preserve constraints, run the real universal pipeline, construct a legal exact 100, and report actual achieved bracket honestly.');
+
+  const result = await callUniversalPipelineThroughMcp();
 
   assert.equal(result.status, 'complete-evaluated-build', `pipeline must complete and pass hard gates; status=${String(result.status)}`);
   assert.equal(result.requestedTargetBracket, 4, 'requested target must remain explicit and unchanged');
+  const boundary = record(result.mcpBoundary);
+  assert.equal(boundary.tool, 'build_commander_through_pipeline_v15', 'live control must cross the actual V0.15 MCP tool boundary');
+  assert.equal(boundary.experimental, true, 'live MCP boundary must remain explicitly experimental');
+  assert.equal(boundary.exactCommanderResolutionPassed, true, 'exact commander resolution must pass before construction');
+  assert.equal(boundary.requestedCommanderCount, 1);
+  assert.equal(boundary.resolvedCommanderCount, 1);
+  const resolvedCommanders = Array.isArray(result.resolvedCommanders) ? result.resolvedCommanders.map(record) : [];
+  assert.equal(resolvedCommanders.length, 1, 'exact resolved commander provenance must be retained');
+  assert.equal(resolvedCommanders[0]?.name, 'Najeela, the Blade-Blossom');
+  assert.equal(resolvedCommanders[0]?.set, 'FCA');
+  assert.equal(resolvedCommanders[0]?.collectorNumber, '42');
+
   const plan = record(result.plan);
   assert.equal(plan.lane, 'targeted-v07', 'an explicit target must use the targeted construction lane');
   const stages = record(result.stages);
@@ -67,6 +105,9 @@ async function main(): Promise<void> {
   const parsed = record(evaluation.parsed);
   assert.equal(parsed.totalCards, 100, 'final deck must contain exactly 100 Commander cards');
   assert.equal(evaluation.externalEvidenceChecked, true, 'external evidence should only be checked after hard gates pass');
+  const built = record(result.built);
+  assert.equal(typeof built.decklist, 'string', 'MCP result must retain the exact final decklist');
+  assert.ok((built.decklist as string).includes('Najeela, the Blade-Blossom'), 'exact final decklist must retain commander identity');
 
   const targetComparison = record(result.targetComparison);
   assert.equal(targetComparison.requestedBracket, 4, 'target comparison must preserve the requested Bracket 4');
@@ -80,7 +121,9 @@ async function main(): Promise<void> {
   );
 
   const summary = {
-    schema: 'universal-build-pipeline-live-v15.2',
+    schema: 'universal-build-pipeline-mcp-live-v15.3',
+    mcpBoundary: boundary,
+    resolvedCommanders,
     requestedTargetBracket: result.requestedTargetBracket,
     achievedBracket: result.achievedBracket,
     achievedBand: result.achievedBand,
@@ -95,12 +138,16 @@ async function main(): Promise<void> {
     hardGatesPassed: actualBracket.hardGatesPassed,
     printingPolicySatisfied: evaluation.printingPolicySatisfied,
     cardCount: parsed.totalCards,
+    exactDecklistRetained: typeof built.decklist === 'string',
     externalEvidenceComplete: evaluation.externalEvidenceComplete,
     postBuildEvidence,
+    perCardBudgetAudit: result.perCardBudgetAudit,
+    themeAudit: result.themeAudit,
     ceilingExplanation: result.ceilingExplanation,
   };
   await writeFile('universal-build-pipeline-live-result.json', `${JSON.stringify(summary, null, 2)}\n`, 'utf8');
 
+  console.log(`MCP BOUNDARY: ${String(boundary.tool)} / exact commander resolution=${String(boundary.exactCommanderResolutionPassed)}`);
   console.log(`ACHIEVED: Bracket ${String(result.achievedBracket)} / ${String(result.achievedBand)}`);
   console.log(`TARGET STATUS: ${String(targetComparison.status)}`);
   console.log(`TARGET GAP: ${String(result.targetGap)}`);
