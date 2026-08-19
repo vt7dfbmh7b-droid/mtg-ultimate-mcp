@@ -43,11 +43,6 @@ async function main(): Promise<void> {
   requireCondition(result.source === 'topdeck-v2', `Unexpected live learning source: ${result.source}.`);
   requireCondition(result.rateLimitPolicy === 'single-request-no-automatic-retry', 'TopDeck live learning control must remain a single-request/no-retry probe.');
   requireCondition(result.attribution === 'Data provided by TopDeck.gg', 'Unexpected or missing TopDeck attribution.');
-  requireCondition(result.tournamentsReturned > 0, 'TopDeck returned no tournaments for the bounded 30-day, 16+ participant EDH probe.');
-  requireCondition(result.candidates.length > 0, 'TopDeck returned tournaments but no usable exact Commander learning candidates.');
-  requireCondition(result.candidates.every((candidate) => candidate.sourceId === 'topdeck'), 'A live TopDeck candidate carried an unexpected source ID.');
-  requireCondition(result.candidates.every((candidate) => candidate.commanderNames.length >= 1 && candidate.commanderNames.length <= 2), 'A live TopDeck candidate violated the one/two-commander boundary.');
-  requireCondition(result.candidates.every((candidate) => candidate.fieldSize >= 16), 'A live TopDeck candidate violated the requested minimum field size.');
 
   const rejectionCounts = Object.fromEntries(
     [...new Set(result.rejected.map((item) => item.code))]
@@ -59,7 +54,7 @@ async function main(): Promise<void> {
   const outcomeRange = asIsoRange(result.candidates.map((candidate) => candidate.outcomeOccurredAt));
 
   const audit = {
-    schemaVersion: 'topdeck-learning-source-live-control-v15.1',
+    schemaVersion: 'topdeck-learning-source-live-control-v15.2',
     checkedAt: result.fetchedAt,
     provider: result.source,
     requestUrl: result.requestUrl,
@@ -70,8 +65,8 @@ async function main(): Promise<void> {
     rejectionCounts,
     uniqueCandidateEvents: uniqueEvents,
     fieldSize: {
-      minimum: Math.min(...fieldSizes),
-      maximum: Math.max(...fieldSizes),
+      minimum: fieldSizes.length > 0 ? Math.min(...fieldSizes) : null,
+      maximum: fieldSizes.length > 0 ? Math.max(...fieldSizes) : null,
     },
     outcomeRange,
     attribution: result.attribution,
@@ -88,11 +83,24 @@ async function main(): Promise<void> {
       decklistsPersisted: false,
       playerIdentifiersPersisted: false,
       apiKeyPersisted: false,
+      aggregateRejectionDiagnosticsOnly: true,
     },
   } as const;
 
+  // Persist safe aggregate diagnostics even when the strict usable-candidate gate
+  // fails. This lets provider/schema problems be diagnosed without retaining
+  // player identifiers or deck contents from the live response.
   await writeFile(RESULT_PATH, `${JSON.stringify(audit, null, 2)}\n`, 'utf8');
   console.log(JSON.stringify(audit, null, 2));
+
+  requireCondition(result.tournamentsReturned > 0, 'TopDeck returned no tournaments for the bounded 30-day, 16+ participant EDH probe.');
+  requireCondition(
+    result.candidates.length > 0,
+    `TopDeck returned tournaments but no usable exact Commander learning candidates. Aggregate rejection counts: ${JSON.stringify(rejectionCounts)}.`,
+  );
+  requireCondition(result.candidates.every((candidate) => candidate.sourceId === 'topdeck'), 'A live TopDeck candidate carried an unexpected source ID.');
+  requireCondition(result.candidates.every((candidate) => candidate.commanderNames.length >= 1 && candidate.commanderNames.length <= 2), 'A live TopDeck candidate violated the one/two-commander boundary.');
+  requireCondition(result.candidates.every((candidate) => candidate.fieldSize >= 16), 'A live TopDeck candidate violated the requested minimum field size.');
 }
 
 main().catch(async (error: unknown) => {
