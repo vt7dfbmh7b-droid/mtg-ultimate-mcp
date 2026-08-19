@@ -90,6 +90,7 @@ function item(options: {
       wins: null,
       draws: null,
       losses: null,
+      standingSource: 'provider-field',
     },
   };
   return {
