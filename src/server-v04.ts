@@ -1,5 +1,6 @@
 import * as z from 'zod/v4';
 import { createMtgServer } from './server.js';
+import { assessCommanderConfiguration } from './services/commander-configuration.js';
 import { validateCommanderDeck } from './services/commander-rules.js';
 import { parseDecklist } from './services/deck.js';
 import { analyzeManaBaseV04 } from './services/mana-v04.js';
@@ -82,18 +83,9 @@ export function createMtgServerV04() {
           lookupCard(cardName, true),
           ...commanderNames.map((name) => lookupCard(name, true)),
         ]);
-        const commanderIdentity = [...new Set(commanders.flatMap((card) => card.color_identity))].sort();
+        const commanderConfiguration = assessCommanderConfiguration(commanders);
+        const commanderIdentity = commanderConfiguration.combinedColorIdentity;
         const outsideColors = candidate.color_identity.filter((color) => !commanderIdentity.includes(color));
-        const commanderDeck = parseDecklist(
-          `// COMMANDER\n${commanders.map((card) => `1 ${card.name}`).join('\n')}\n// MAIN\n1 ${candidate.name}`,
-        );
-        const pairingCheck = validateCommanderDeck(commanderDeck, [candidate, ...commanders]);
-        const commanderPairingLegal = commanderNames.length === 1 || pairingCheck.pairing.legal === true;
-        const commanderEligibilityLegal = pairingCheck.commanderChecks.every((check) =>
-          check.resolved === true
-          && check.eligible === true
-          && check.commanderFormatLegality === 'legal');
-        const commanderConfigurationLegal = commanderPairingLegal && commanderEligibilityLegal;
         const formatLegal = candidate.legalities.commander === 'legal';
         const colorIdentityLegal = outsideColors.length === 0;
         return jsonResult({
@@ -107,13 +99,13 @@ export function createMtgServerV04() {
           commanders: commanders.map((card) => ({ name: card.name, colorIdentity: card.color_identity })),
           combinedCommanderColorIdentity: commanderIdentity,
           outsideColors,
-          commanderPairing: pairingCheck.pairing,
-          commanderEligibility: pairingCheck.commanderChecks,
-          commanderConfigurationLegal,
-          legalForTheseCommanders: commanderConfigurationLegal && formatLegal && colorIdentityLegal,
-          explanation: !commanderPairingLegal
+          commanderPairing: commanderConfiguration.pairing,
+          commanderEligibility: commanderConfiguration.commanderChecks,
+          commanderConfigurationLegal: commanderConfiguration.legal,
+          legalForTheseCommanders: commanderConfiguration.legal && formatLegal && colorIdentityLegal,
+          explanation: !commanderConfiguration.pairingLegal
             ? 'The designated two-commanders configuration is not a legal pairing.'
-            : !commanderEligibilityLegal
+            : !commanderConfiguration.eligibilityAndFormatLegal
               ? 'One or more designated commanders is not eligible and Commander-legal under the current Commander rules.'
               : !formatLegal
                 ? 'The candidate is not legal in the Commander format.'
