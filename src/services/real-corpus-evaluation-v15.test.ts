@@ -97,9 +97,9 @@ function historicalFixture(options: HistoricalFixtureOptions): HistoricalLearnin
       sourceId: 'card-archive',
       sourceUri: `https://example.test/card-archive/${encodeURIComponent(options.id)}.json`,
       sourceContentHash: CARD_HASH,
-      archiveVersion: 'cards-2025-12-31',
-      snapshotEffectiveAt: '2025-12-31T00:00:00.000Z',
-      archivePublishedAt: '2025-12-31T01:00:00.000Z',
+      archiveVersion: 'cards-2025-12-30',
+      snapshotEffectiveAt: '2025-12-30T00:00:00.000Z',
+      archivePublishedAt: '2025-12-30T01:00:00.000Z',
       retrievedAt: '2026-08-19T00:00:00.000Z',
     },
   });
