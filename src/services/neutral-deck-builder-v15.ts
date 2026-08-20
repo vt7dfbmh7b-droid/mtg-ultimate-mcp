@@ -259,7 +259,7 @@ function exactCandidateWithinCap(card: ScryfallCard, cap: number | undefined): b
   return cap === undefined || exactPrintingBudgetWitnessV15(card, cap).status === 'within-cap';
 }
 
-async function discoverEligiblePool(colors: readonly string[], policy: ResolvedPrintingPolicyV08, candidateCap: number | undefined): Promise<ScryfallCard[]> {
+export async function discoverEligiblePoolV15(colors: readonly string[], policy: ResolvedPrintingPolicyV08, candidateCap: number | undefined): Promise<ScryfallCard[]> {
   if (policy.family && policy.familyMatchedSetCodes.length === 0) throw new Error(`Printing-family discovery for ${policy.family} returned no matching set codes; neutral construction fails closed.`);
   const cards: ScryfallCard[] = [];
   if (policy.allowedSetCodes.length > 0) {
@@ -328,7 +328,7 @@ export async function buildNeutralCommanderDeckV15(commanderNames: string[], opt
   const unrestrictedPool = unrestricted
     ? await discoverNeutralUnrestrictedPoolV15(colors, options.archetype, policy, { ...(candidateCap !== undefined ? { maxUsdPerCard: candidateCap } : {}) })
     : null;
-  const pool = unrestrictedPool?.cards ?? await discoverEligiblePool(colors, policy, candidateCap);
+  const pool = unrestrictedPool?.cards ?? await discoverEligiblePoolV15(colors, policy, candidateCap);
   const candidatePoolProvenance: Record<string, unknown> = unrestrictedPool?.provenance ?? {
     mode: 'exhaustive-bounded-printing-policy',
     exhaustive: true,

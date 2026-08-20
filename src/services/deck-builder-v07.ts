@@ -7,6 +7,7 @@ import {
 import { commanderTargetPressureV15, selectTargetAwareWinPackageV15 } from './commander-target-pressure-v15.js';
 import { buildDeckMetrics, parseDecklist, type DeckEntry, type ParsedDeck } from './deck.js';
 import { discoverGeneralWinPackagesV15 } from './general-win-package-v15.js';
+import { discoverEligiblePoolV15 } from './neutral-deck-builder-v15.js';
 import {
   describePrintingPolicyV08,
   printingMatchesPolicyV08,
@@ -330,9 +331,24 @@ export async function buildCommanderDeckDraftV07(
   const candidateMap = new Map<string, ScryfallCard>();
   const themeCandidateNames = new Set<string>();
 
-  const searchRoles: Array<keyof RoleTargetsV07 | 'theme' | 'general'> = [
-    'ramp', 'draw', 'interaction', 'freeInteraction', 'protection', 'tutors', 'recursion', 'boardWipes', 'early', 'theme', 'general',
-  ];
+  // The existing V0.15 neutral builder already exhausts bounded printing-family/set pools before
+  // strategy scoring. Reuse that same pool here so a constrained targeted build does not hide
+  // on-plan cards behind the first 35-50 EDHREC-ordered role-search results.
+  const restrictedPool = hasPrintingRestriction(printingPolicy)
+    ? await discoverEligiblePoolV15(colors, printingPolicy, candidatePriceCapV07(options))
+    : null;
+  if (restrictedPool) {
+    for (const card of restrictedPool) {
+      const key = card.name.toLocaleLowerCase();
+      if (commanderNames.has(key) || excluded.has(key) || card.type_line.toLowerCase().includes('land')) continue;
+      if (!legalIdentity(card, colors)) continue;
+      if (!candidateMap.has(key)) candidateMap.set(key, card);
+    }
+  }
+
+  const searchRoles: Array<keyof RoleTargetsV07 | 'theme' | 'general'> = restrictedPool
+    ? (options.themeQuery?.trim() ? ['theme'] : [])
+    : ['ramp', 'draw', 'interaction', 'freeInteraction', 'protection', 'tutors', 'recursion', 'boardWipes', 'early', 'theme', 'general'];
   for (const role of searchRoles) {
     const results = await searchPool(colors, options, printingPolicy, printingCache, role, role === 'general' ? 50 : 35);
     for (const card of results) {
@@ -503,7 +519,7 @@ export async function buildCommanderDeckDraftV07(
         : 'No V0.15 controlled theme-density minimum was supplied to this legacy-targeted builder.',
       'The selected printing is explicit for pricing and shopping. When a printing-family restriction is active, an unrelated edition of the same Oracle card cannot substitute for a qualifying themed edition.',
       hasPrintingRestriction(printingPolicy)
-        ? 'If the printing family does not contain enough suitable legal cards or basics under the requested price cap, the builder returns an incomplete draft instead of leaking cards from outside the family.'
+        ? 'For bounded printing-family/set builds, the targeted builder now reuses the existing V0.15 exhaustive eligible physical pool before applying its existing role and commander-strategy scores; if that pool does not contain enough suitable legal cards or basics, it returns an incomplete draft instead of leaking cards from outside the family.'
         : 'No themed printing-family restriction was requested.',
       'Promo status alone never qualifies a printing for a themed family; the promo must belong to a matching family set or an exact curated special-release selector.',
     ],
