@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { ScryfallCard } from '../types/scryfall.js';
+import {
+  pairUpgradeSwapsByStructureV15,
+} from './deck-builder-v07.js';
 import { parseDecklist } from './deck.js';
 import {
   cardCommanderStrategyAffinityV15,
@@ -113,6 +116,67 @@ test('strategy-aware cut pressure protects on-plan cards without making them unc
   assert.equal(unrelatedPressure.strategyProtectionApplied, 0);
   assert.equal(unrelatedPressure.cutPressure - onPlanPressure.cutPressure, 4);
   assert.ok(onPlanPressure.cutPressure > 0);
+});
+
+test('upgrade pairing preserves the structural role an incoming card is repairing when a safer cut exists', () => {
+  const additions = [{
+    role: 'ramp' as const,
+    candidate: {
+      card: {
+        name: 'New Ramp',
+        roles: ['mana acceleration'],
+        manaValue: 2,
+        typeLine: 'Artifact',
+      },
+    },
+  }];
+  const cuts = [
+    {
+      card: {
+        name: 'Old Ramp',
+        roles: ['mana acceleration'],
+        manaValue: 3,
+        typeLine: 'Artifact',
+      },
+      heuristicCutPressure: 10,
+    },
+    {
+      card: {
+        name: 'Off-plan Four Drop',
+        roles: [],
+        manaValue: 4,
+        typeLine: 'Creature — Human',
+      },
+      heuristicCutPressure: 8,
+    },
+  ];
+  const pairings = pairUpgradeSwapsByStructureV15(
+    additions,
+    {
+      length: cuts.length,
+      ...cuts,
+    } as unknown as Array<Record<string, unknown>>,
+    {
+      rampCount: 7,
+      drawCount: 8,
+      interactionCount: 8,
+      protectionCount: 3,
+      tutorCount: 1,
+      earlyPlayCount: 10,
+    },
+    {
+      ramp: 8,
+      draw: 8,
+      interaction: 8,
+      protection: 3,
+      tutors: 1,
+      earlyPlays: 10,
+    },
+  );
+
+  assert.equal(pairings.length, 1);
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Off-plan Four Drop');
+  assert.equal(pairings[0]?.structuralDeficitAfterSwap, 0);
 });
 
 test('top-three commander context preserves multiple already-detected deck identities', () => {
