@@ -2,11 +2,16 @@ import type { ScryfallCard } from '../types/scryfall.js';
 import { compareRequestedBracketV15 } from './bracket-target-comparison-v15.js';
 import { evaluateCommanderBuildV15 } from './commander-build-evaluation-v15.js';
 import { buildCommanderDeckDraftV07, type DeckBuildOptionsV07 } from './deck-builder-v07.js';
+import { resolveEntryCard } from './deck.js';
 import { discoverGeneralWinPackagesV15, type GeneralWinPackageCandidateV15 } from './general-win-package-v15.js';
 import { inferNeutralStrategyV15, type NeutralArchetypeV15 } from './neutral-commander-selection-v15.js';
 import { buildNeutralCommanderDeckV15 } from './neutral-deck-builder-v15.js';
 import { buildNeutralThemedCommanderDeckV15 } from './neutral-themed-deck-builder-v15.js';
-import { resolveNeutralThemeIntentV15, type NeutralThemeIntentV15 } from './neutral-theme-v15.js';
+import {
+  auditNeutralThemeV15,
+  resolveNeutralThemeIntentV15,
+  type NeutralThemeIntentV15,
+} from './neutral-theme-v15.js';
 import { resolvePrintingPolicyV08, type PrintingPolicyInputV08 } from './printing-policy-v08.js';
 
 export type WinPackageModeV15 = 'auto' | 'prefer' | 'require' | 'forbid';
@@ -111,11 +116,10 @@ function seededMustIncludes(
   return normalizeNames([...original, ...(seedPackage && selected ? selected.seedNames : [])]);
 }
 
-async function resolveNeutralThemePipelineContextV15(
-  plan: CommanderBuildPipelinePlanV15,
+async function resolveThemePipelineContextV15(
   options: CommanderBuildPipelineOptionsV15,
 ): Promise<NeutralThemePipelineContextV15> {
-  if (plan.lane !== 'neutral-themed' || !options.themeQuery?.trim()) {
+  if (!options.themeQuery?.trim()) {
     return {
       effectiveOptions: options,
       themeIntent: null,
@@ -209,6 +213,28 @@ async function resolveNeutralThemePipelineContextV15(
   };
 }
 
+function auditThemeFromEvaluationV15(
+  evaluation: Awaited<ReturnType<typeof evaluateCommanderBuildV15>>,
+  intent: NeutralThemeIntentV15,
+  effectivePrintingFamily: string | null,
+): ReturnType<typeof auditNeutralThemeV15> | null {
+  const entries: Array<{ card: ScryfallCard; quantity: number; zone: 'commander' | 'main' }> = [];
+  for (const entry of evaluation.parsed.commanders) {
+    const card = resolveEntryCard(entry, evaluation.resolvedCards);
+    if (!card) return null;
+    entries.push({ card, quantity: entry.quantity, zone: 'commander' });
+  }
+  for (const entry of evaluation.parsed.main) {
+    const card = resolveEntryCard(entry, evaluation.resolvedCards);
+    if (!card) return null;
+    entries.push({ card, quantity: entry.quantity, zone: 'main' });
+  }
+  return auditNeutralThemeV15(entries, intent, {
+    printingPolicySatisfied: evaluation.printingPolicySatisfied,
+    activePrintingFamily: effectivePrintingFamily,
+  });
+}
+
 export async function buildCommanderThroughPipelineV15(
   commanders: ScryfallCard[],
   options: CommanderBuildPipelineOptionsV15 = {},
@@ -223,7 +249,7 @@ export async function buildCommanderThroughPipelineV15(
     };
   }
 
-  const themeContext = await resolveNeutralThemePipelineContextV15(plan, options);
+  const themeContext = await resolveThemePipelineContextV15(options);
   if (themeContext.failure) {
     return {
       ...themeContext.failure,
@@ -287,9 +313,15 @@ export async function buildCommanderThroughPipelineV15(
         })
       : await buildNeutralCommanderDeckV15(commanders.map((card) => card.name), neutralOptions);
   } else {
+    const controlledTheme = themeContext.themeIntent?.enforceability === 'full'
+      ? themeContext.themeIntent
+      : null;
     const targetedOptions: DeckBuildOptionsV07 = {
       targetBracket: plan.requestedTargetBracket!,
-      ...(effectiveOptions.themeQuery ? { themeQuery: effectiveOptions.themeQuery } : {}),
+      ...(controlledTheme?.queryClause ? {
+        themeQuery: controlledTheme.queryClause,
+        themeMinimumMainMatches: controlledTheme.minimumMainMatches,
+      } : {}),
       ...(effectiveOptions.maxUsdPerCard !== undefined ? { maxUsdPerCard: effectiveOptions.maxUsdPerCard } : {}),
       ...(effectiveOptions.candidateMaxUsdPerCard !== undefined ? { candidateMaxUsdPerCard: effectiveOptions.candidateMaxUsdPerCard } : {}),
       ...(effectiveOptions.allowedSets ? { allowedSets: effectiveOptions.allowedSets } : {}),
@@ -352,10 +384,14 @@ export async function buildCommanderThroughPipelineV15(
   const requiredPackageVerificationFailed = winPackageMode === 'require'
     && selectedPackage !== null
     && !seededPackageVerifiedInFinalDeck;
-  const themeRequested = plan.lane === 'neutral-themed' && Boolean(effectiveOptions.themeQuery?.trim());
-  const themeAudit = built.themeAudit && typeof built.themeAudit === 'object'
+  const themeRequested = themeContext.themeIntent !== null;
+  const builtThemeAudit = built.themeAudit && typeof built.themeAudit === 'object'
     ? built.themeAudit as { satisfied?: boolean; status?: string }
     : null;
+  const evaluatedThemeAudit = !builtThemeAudit && themeContext.themeIntent
+    ? auditThemeFromEvaluationV15(evaluation, themeContext.themeIntent, themeContext.effectivePrintingFamily)
+    : null;
+  const themeAudit = builtThemeAudit ?? evaluatedThemeAudit;
   const themeConstraintSatisfied = !themeRequested || themeAudit?.satisfied === true;
   const status = !evaluation.hardGatesPassed
     ? 'built-but-hard-gates-failed'
@@ -373,7 +409,7 @@ export async function buildCommanderThroughPipelineV15(
     effectivePrintingFamily: themeContext.effectivePrintingFamily,
     stages: {
       constraintsNormalized: true,
-      commanderStrategyInferred: plan.archetype !== null,
+      commanderStrategyInferred: true,
       winPackageDiscoveryAttempted: plan.discoverWinPackages,
       winPackageDiscoveryComplete: packageDiscovery?.sourceCompleteness === 'complete',
       winPackagesDiscovered: plan.discoverWinPackages,
@@ -407,7 +443,7 @@ export async function buildCommanderThroughPipelineV15(
         : 'A winning package was required and seeded, but final combo verification was unavailable. The pipeline fails closed rather than claiming the required package survived.',
     } : {}),
     ...(!themeConstraintSatisfied ? {
-      guidance: `The finished deck did not satisfy the independently audited neutral theme constraint${themeAudit?.status ? ` (${themeAudit.status})` : ''}. The pipeline fails closed rather than silently ignoring the requested theme.`,
+      guidance: `The finished deck did not satisfy the independently audited theme constraint${themeAudit?.status ? ` (${themeAudit.status})` : ''}. The pipeline fails closed rather than silently ignoring the requested theme.`,
     } : {}),
   };
 }
