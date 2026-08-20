@@ -1,5 +1,4 @@
 import type { ScryfallCard } from '../types/scryfall.js';
-import { isWinResultV14 } from './cedh-win-package-v14.js';
 import {
   describePrintingPolicyV08,
   resolvePrintingPolicyV08,
@@ -8,6 +7,13 @@ import {
 } from './printing-policy-v08.js';
 import { getCardsByNames, inferCardRoles } from './scryfall.js';
 import { searchSpellbookVariantsEvidence } from './spellbook.js';
+import {
+  assessWinResultClosureV15,
+  buildWinPackagePortfolioV15,
+  isStrictDeterministicWinResultV15,
+  type WinClosureKindV15,
+  type WinPackagePortfolioV15,
+} from './win-package-verification-v15.js';
 
 export interface GeneralWinPackageOptionsV15 extends PrintingPolicyInputV08 {
   maxUsdPerCard?: number;
@@ -22,6 +28,9 @@ export interface GeneralWinPackageCandidateV15 {
   comboCardNames: string[];
   seedNames: string[];
   results: string[];
+  closureKind: WinClosureKindV15;
+  closureCaveat: string;
+  resourceOutputs: string[];
   exactPrintings: Array<{
     name: string;
     set: string;
@@ -92,7 +101,7 @@ function parseCandidate(
   const results = Array.isArray(variant.results) ? variant.results.map(String) : [];
   const requirements = Array.isArray(variant.requirements) ? variant.requirements : [];
   const uses = Array.isArray(variant.cards) ? variant.cards.map(record) : [];
-  if (!id || requirements.length > 0 || !isWinResultV14(results)) return null;
+  if (!id || requirements.length > 0 || !isStrictDeterministicWinResultV15(results)) return null;
 
   const names: string[] = [];
   for (const use of uses) {
@@ -180,6 +189,7 @@ export async function discoverGeneralWinPackagesV15(
   sourceCompleteness: 'complete' | 'partial' | 'unavailable';
   selected: GeneralWinPackageCandidateV15 | null;
   candidates: GeneralWinPackageCandidateV15[];
+  portfolio: WinPackagePortfolioV15;
   queryAudit: Array<Record<string, unknown>>;
   rejectionAudit: Array<Record<string, unknown>>;
   printingPolicy: Record<string, unknown>;
@@ -233,6 +243,17 @@ export async function discoverGeneralWinPackagesV15(
   for (const row of ranked) {
     const comboId = String(row.id ?? '');
     const comboNames = Array.isArray(row.names) ? row.names.map(String) : [];
+    const results = Array.isArray(row.results) ? row.results.map(String) : [];
+    const closure = assessWinResultClosureV15(results);
+    if (!closure.verifiedDeterministicWin) {
+      rejectionAudit.push({
+        comboId,
+        status: 'rejected',
+        reasons: [`strict closure failed: ${closure.kind}`],
+        closure,
+      });
+      continue;
+    }
     const exactPrintings: GeneralWinPackageCandidateV15['exactPrintings'] = [];
     const profiles: ScryfallCard[] = [];
     let valid = true;
@@ -287,7 +308,10 @@ export async function discoverGeneralWinPackagesV15(
       bracketTag: typeof row.bracketTag === 'string' ? row.bracketTag : null,
       comboCardNames: comboNames,
       seedNames,
-      results: Array.isArray(row.results) ? row.results.map(String) : [],
+      results,
+      closureKind: closure.kind,
+      closureCaveat: closure.caveat,
+      resourceOutputs: closure.resourceOutputs,
       exactPrintings,
       commanderOverlap: utility.commanderOverlap,
       totalManaValue: Math.round(utility.totalManaValue * 100) / 100,
@@ -305,6 +329,10 @@ export async function discoverGeneralWinPackagesV15(
     || b.popularity - a.popularity
     || a.comboId.localeCompare(b.comboId));
 
+  const portfolio = buildWinPackagePortfolioV15(candidates);
+  const selected = portfolio.primaryComboId
+    ? candidates.find((candidate) => candidate.comboId === portfolio.primaryComboId) ?? null
+    : null;
   const status = candidates.length > 0
     ? 'verified-win-packages-found'
     : sourceCompleteness === 'complete'
@@ -313,11 +341,12 @@ export async function discoverGeneralWinPackagesV15(
   return {
     status,
     sourceCompleteness,
-    selected: candidates[0] ?? null,
+    selected,
     candidates,
+    portfolio,
     queryAudit,
     rejectionAudit,
     printingPolicy: describePrintingPolicyV08(policy),
-    source: 'Commander Spellbook winning variants + Scryfall legality/physical-printing verification',
+    source: 'Commander Spellbook winning variants + strict V0.15 game-ending closure + Scryfall legality/physical-printing verification',
   };
 }
