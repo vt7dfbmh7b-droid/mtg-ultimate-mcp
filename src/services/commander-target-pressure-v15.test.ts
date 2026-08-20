@@ -13,7 +13,7 @@ function candidate(comboId: string, bracketTag: string | null, score: number): G
     comboCardNames: ['A', 'B'],
     seedNames: ['A', 'B'],
     results: ['Win the game.'],
-    closureKind: 'explicit-win',
+    closureKind: 'direct-game-win',
     closureCaveat: '',
     resourceOutputs: [],
     exactPrintings: [],
