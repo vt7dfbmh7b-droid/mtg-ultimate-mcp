@@ -1,0 +1,259 @@
+{
+  "schema": "marvel-target-pressure-diagnostic-v15.1",
+  "commander": [
+    "Najeela, the Blade-Blossom"
+  ],
+  "identity": [
+    "B",
+    "G",
+    "R",
+    "U",
+    "W"
+  ],
+  "suggestionTargetPressure": {
+    "targetBracket": 5,
+    "minimumFreeInteraction": 1,
+    "verifiedWinningPackageRequired": true,
+    "competitiveComboSignalRequired": true,
+    "preferRuthlessPackage": true
+  },
+  "structuralDeficits": [
+    {
+      "role": "free-interaction",
+      "current": 0,
+      "target": 1,
+      "deficit": 1
+    }
+  ],
+  "freeInteractionSuggestionGroup": null,
+  "exhaustiveMarvelFreeInteractionAudit": {
+    "allowedSetCodes": [
+      "MSH",
+      "TMSH",
+      "AMSH",
+      "FMSC",
+      "TMSC",
+      "MSC",
+      "LMAR",
+      "ASPM",
+      "PSPM",
+      "TSPM",
+      "SPM",
+      "MAR",
+      "SPE"
+    ],
+    "physicalPrintingsScanned": 1803,
+    "uniqueFreeInteractionCards": []
+  },
+  "packageDiscovery": {
+    "status": "no-verified-win-package",
+    "sourceCompleteness": "complete",
+    "selected": null,
+    "candidateCount": 0,
+    "candidates": [],
+    "queryAudit": [
+      {
+        "query": "card<=2 is:winning legal:commander identity<=WUBRG",
+        "returned": 75,
+        "totalMatching": 75,
+        "sourceStatus": "available",
+        "verificationComplete": true
+      },
+      {
+        "query": "card<=3 is:winning legal:commander identity<=WUBRG",
+        "returned": 75,
+        "totalMatching": 75,
+        "sourceStatus": "available",
+        "verificationComplete": true
+      }
+    ],
+    "rejectionAudit": [
+      {
+        "comboId": "742-1295",
+        "status": "rejected",
+        "reasons": [
+          "Demonic Consultation: no eligible physical printing",
+          "Thassa's Oracle: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "1295-3093",
+        "status": "rejected",
+        "reasons": [
+          "Tainted Pact: no eligible physical printing",
+          "Thassa's Oracle: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "553-790",
+        "status": "rejected",
+        "reasons": [
+          "Approach of the Second Sun: no eligible physical printing",
+          "Windfall: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "553-2856",
+        "status": "rejected",
+        "reasons": [
+          "Approach of the Second Sun: no eligible physical printing",
+          "Mystical Tutor: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "3011-4847",
+        "status": "rejected",
+        "reasons": [
+          "Solphim, Mayhem Dominus: no eligible physical printing",
+          "Heartless Hidetsugu: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "936-5069",
+        "status": "rejected",
+        "reasons": [
+          "Duskmantle Guildmage: no eligible physical printing",
+          "Mindcrank: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "553-1891",
+        "status": "rejected",
+        "reasons": [
+          "Approach of the Second Sun: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "181-1571",
+        "status": "rejected",
+        "reasons": [
+          "Cybermen Squadron: no eligible physical printing",
+          "Blightsteel Colossus: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "5069-5080",
+        "status": "rejected",
+        "reasons": [
+          "Duskmantle Guildmage: no eligible physical printing",
+          "Maddening Cacophony: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "2429-5211",
+        "status": "rejected",
+        "reasons": [
+          "Brass's Bounty: no eligible physical printing",
+          "Revel in Riches: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "1295-3189",
+        "status": "rejected",
+        "reasons": [
+          "Thassa's Oracle: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "742-2836",
+        "status": "rejected",
+        "reasons": [
+          "Demonic Consultation: no eligible physical printing",
+          "Laboratory Maniac: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "3063-3164",
+        "status": "rejected",
+        "reasons": [
+          "Maze's End: no eligible physical printing",
+          "Reshape the Earth: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "2868-4629",
+        "status": "rejected",
+        "reasons": [
+          "Ojer Axonil, Deepest Might // Temple of Power: unresolved",
+          "Pyrohemia: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "953-3096",
+        "status": "rejected",
+        "reasons": [
+          "Jace, Wielder of Mysteries: no eligible physical printing",
+          "Enter the Infinite: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "953-1295",
+        "status": "rejected",
+        "reasons": [
+          "Enter the Infinite: no eligible physical printing",
+          "Thassa's Oracle: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "11-553",
+        "status": "rejected",
+        "reasons": [
+          "Approach of the Second Sun: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "2047-5471",
+        "status": "rejected",
+        "reasons": [
+          "Obeka, Splitter of Seconds: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "523-3263",
+        "status": "rejected",
+        "reasons": [
+          "Mycosynth Lattice: no eligible physical printing",
+          "Hellkite Tyrant: no eligible physical printing"
+        ]
+      },
+      {
+        "comboId": "1295-4400",
+        "status": "rejected",
+        "reasons": [
+          "Hermit Druid: no eligible physical printing",
+          "Thassa's Oracle: no eligible physical printing"
+        ]
+      }
+    ]
+  },
+  "planner": {
+    "status": "simulated-candidate-plan",
+    "swaps": [],
+    "v15TargetPressure": {
+      "targetPressure": {
+        "targetBracket": 5,
+        "minimumFreeInteraction": 1,
+        "verifiedWinningPackageRequired": true,
+        "competitiveComboSignalRequired": true,
+        "preferRuthlessPackage": true
+      },
+      "winRouteVerificationStatus": "no-verified-route",
+      "winPackageDiscoveryAttempted": true,
+      "winPackageSourceStatus": "no-verified-win-package",
+      "selectedComboId": null,
+      "selectedBracketTag": null,
+      "missingSeedNames": [],
+      "atomicWinPackageInjected": false,
+      "reason": "Completed verified package discovery found no legal package satisfying the active printing/budget/exclusion constraints."
+    },
+    "structuralDeficits": [
+      {
+        "role": "free-interaction",
+        "current": 0,
+        "target": 1,
+        "deficit": 1
+      }
+    ],
+    "candidateAddsByDeficit": []
+  }
+}
