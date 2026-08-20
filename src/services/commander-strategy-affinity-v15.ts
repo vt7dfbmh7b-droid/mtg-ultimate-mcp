@@ -65,7 +65,11 @@ export function deriveCommanderStrategyContextV15(
     return { commanderNames, strategies: [] };
   }
 
-  return deriveCommanderStrategyContextFromCommandersV15(commanders);
+  const resolvedContext = deriveCommanderStrategyContextFromCommandersV15(commanders);
+  return {
+    commanderNames,
+    strategies: resolvedContext.strategies,
+  };
 }
 
 /**
