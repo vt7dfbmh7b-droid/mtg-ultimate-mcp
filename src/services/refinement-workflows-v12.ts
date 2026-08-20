@@ -1,4 +1,5 @@
-import { buildCommanderDeckDraftV07, type DeckBuildOptionsV07 } from './deck-builder-v07.js';
+import { buildCommanderThroughPipelineV15 } from './commander-build-pipeline-v15.js';
+import type { DeckBuildOptionsV07 } from './deck-builder-v07.js';
 import {
   refineCommanderDeckIterativelyV12,
   type IterativeRefinementOptionsV12,
@@ -25,6 +26,10 @@ export interface BuildAndRefineOptionsV12 extends DeckBuildOptionsV07 {
   detailLevel?: RefinementDetailLevelV11;
 }
 
+function asRecord(value: unknown): Record<string, unknown> {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
+}
+
 export async function refinePreconIterativelyV12(options: RefinePreconOptionsV12): Promise<Record<string, unknown>> {
   const fetched = await fetchPreconDeckV10(options.reference);
   const result = await refineCommanderDeckIterativelyV12(fetched.decklist, {
@@ -36,7 +41,7 @@ export async function refinePreconIterativelyV12(options: RefinePreconOptionsV12
     stockCommanders: (fetched.deck.commander ?? []).map((card) => card.name),
     refinement: result,
     sourceBaseline: 'MTGJSON exact stock deck',
-    guidance: 'The stock precon remains the untouched baseline. Each round can compare several competing packages; only the strongest package that clears legality, printing, budget, and improvement checks becomes the next baseline.',
+    guidance: 'The stock precon remains the untouched baseline. Each round can compare several competing packages; only the strongest package that clears legality, printing, budget, theme, win-route preservation, and improvement checks becomes the next baseline.',
   };
 }
 
@@ -56,19 +61,39 @@ export async function buildAndRefineCommanderDeckV12(
     };
   }
 
-  const draft = await buildCommanderDeckDraftV07(resolved.cards, options);
-  if (draft.status !== 'complete-draft' || typeof draft.decklist !== 'string') {
+  // This inherited V0.12 entry point now delegates its first draft to the existing V0.15 universal
+  // pipeline. That keeps the public workflow while ensuring raw theme text, physical printings,
+  // compact win packages, exact card count, legality and requested-vs-achieved bracket truth are
+  // handled by the same modern Build boundary before refinement begins.
+  const initialBuild = await buildCommanderThroughPipelineV15(resolved.cards, {
+    targetBracket: options.targetBracket ?? 4,
+    winPackageMode: 'auto',
+    ...(options.themeQuery ? { themeQuery: options.themeQuery } : {}),
+    ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
+    ...(options.candidateMaxUsdPerCard !== undefined ? { candidateMaxUsdPerCard: options.candidateMaxUsdPerCard } : {}),
+    ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
+    ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
+    ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
+    ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
+    ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
+    ...(options.mustInclude ? { mustInclude: options.mustInclude } : {}),
+    ...(options.landCount !== undefined ? { landCount: options.landCount } : {}),
+    ...(options.maxNonbasicLands !== undefined ? { maxNonbasicLands: options.maxNonbasicLands } : {}),
+  });
+  const draft = asRecord(initialBuild.built);
+  const draftDecklist = typeof draft.decklist === 'string' ? draft.decklist : '';
+  if (initialBuild.status !== 'complete-evaluated-build' || !draftDecklist) {
     return {
       status: 'incomplete-first-draft',
       requestedCommanders: requested,
-      draft,
-      guidance: 'The first draft could not satisfy all legality/printing/card-count constraints, so refinement did not bypass those constraints.',
+      initialBuild,
+      guidance: 'The V0.15 first-draft pipeline could not satisfy every hard truth/theme/printing/card-count gate, so refinement did not bypass those constraints.',
     };
   }
 
   const protectedCards = [...new Set(options.mustInclude ?? [])];
-  const refinement = await refineCommanderDeckIterativelyV12(draft.decklist, {
-    ...(options.targetBracket !== undefined ? { targetBracket: options.targetBracket } : {}),
+  const refinement = await refineCommanderDeckIterativelyV12(draftDecklist, {
+    ...(options.targetBracket !== undefined ? { targetBracket: options.targetBracket } : { targetBracket: 4 }),
     ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
     ...(options.maxPostDraftUpgradeUsd !== undefined ? { maxTotalUsd: options.maxPostDraftUpgradeUsd } : {}),
     ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
@@ -89,23 +114,29 @@ export async function buildAndRefineCommanderDeckV12(
     detailLevel: options.detailLevel ?? 'simple',
   });
 
+  const evaluation = asRecord(initialBuild.evaluation);
+  const commanderRules = asRecord(evaluation.commanderRules);
   return {
     status: 'built-and-refined',
     requestedCommanders: requested,
-    initialDraft: options.detailLevel === 'detailed' ? draft : {
-      status: draft.status,
-      targetBracket: draft.targetBracket,
-      cardCount: draft.cardCount,
-      selectedPrintingEstimatedUsd: draft.selectedPrintingEstimatedUsd,
-      commanderRules: draft.commanderRules,
-      printingPolicy: draft.printingPolicy,
+    initialDraft: options.detailLevel === 'detailed' ? initialBuild : {
+      status: initialBuild.status,
+      constructionLane: asRecord(initialBuild.plan).lane ?? null,
+      targetBracket: initialBuild.requestedTargetBracket ?? options.targetBracket ?? 4,
+      achievedBracket: initialBuild.achievedBracket ?? null,
+      achievedBand: initialBuild.achievedBand ?? null,
+      cardCount: draft.cardCount ?? null,
+      selectedPrintingEstimatedUsd: draft.selectedPrintingEstimatedUsd ?? null,
+      commanderRules,
+      themeConstraintSatisfied: initialBuild.themeConstraintSatisfied ?? null,
+      seededPackageVerifiedInFinalDeck: initialBuild.seededPackageVerifiedInFinalDeck ?? null,
     },
     refinement,
     budgetMeaning: {
       maxUsdPerCard: options.maxUsdPerCard ?? null,
       maxPostDraftUpgradeUsd: options.maxPostDraftUpgradeUsd ?? null,
-      explanation: 'maxUsdPerCard applies to each candidate physical printing. maxPostDraftUpgradeUsd caps the accepted refinement swaps after the initial draft; it is not presented as a full-deck purchase budget.',
+      explanation: 'maxUsdPerCard applies to each candidate physical printing. maxPostDraftUpgradeUsd caps the accepted refinement swaps after the V0.15-verified first draft; it is not presented as a full-deck purchase budget.',
     },
-    guidance: 'Use the refined list when the competing-package optimizer accepted improvements. If no package clears the checks, keep the legal first draft instead of forcing changes.',
+    guidance: 'The first draft now passes through the V0.15 universal Build truth/theme boundary. Use the refined list when the competing-package optimizer accepts improvements; if no package clears legality, theme, route-preservation, printing, budget and improvement checks, keep the verified first draft instead of forcing changes.',
   };
 }
