@@ -1,4 +1,9 @@
 import type { ScryfallCard } from '../types/scryfall.js';
+import {
+  cardCommanderStrategyAffinityV15,
+  deriveCommanderStrategyContextV15,
+  type CommanderStrategyContextV15,
+} from './commander-strategy-affinity-v15.js';
 import { buildDeckMetrics, type ParsedDeck } from './deck.js';
 import {
   describePrintingPolicyV08,
@@ -83,13 +88,18 @@ function cardMatchesRole(card: ScryfallCard, role: string): boolean {
   return false;
 }
 
-function candidateScore(card: ScryfallCard, role: string): number {
+function candidateScore(
+  card: ScryfallCard,
+  role: string,
+  strategyContext: CommanderStrategyContextV15,
+): number {
   const roles = inferCardRoles(card);
   let score = cardMatchesRole(card, role) ? 100 : 0;
   score += Math.max(0, 8 - card.cmc) * 3;
   if (roles.includes('fast mana')) score += 20;
   if (roles.includes('free interaction')) score += 20;
   if (card.edhrec_rank !== undefined) score += Math.max(0, 20 - Math.log10(card.edhrec_rank + 1) * 5);
+  score += cardCommanderStrategyAffinityV15(card, strategyContext).score;
   return score;
 }
 
@@ -127,6 +137,7 @@ export async function suggestDeckUpgrades(
   const targetBracket = clampBracket(options.targetBracket);
   const targets = TARGETS[targetBracket] as StructuralTarget;
   const metrics = buildDeckMetrics(parsed, cards);
+  const strategyContext = deriveCommanderStrategyContextV15(parsed, cards);
   const printingPolicy = await resolvePrintingPolicyV08({
     ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
     ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
@@ -165,7 +176,7 @@ export async function suggestDeckUpgrades(
       .filter((card) => !excluded.has(card.name.toLocaleLowerCase()))
       .filter((card) => card.legalities.commander === 'legal')
       .filter((card) => cardMatchesRole(card, deficit.role))
-      .sort((a, b) => candidateScore(b, deficit.role) - candidateScore(a, deficit.role))
+      .sort((a, b) => candidateScore(b, deficit.role, strategyContext) - candidateScore(a, deficit.role, strategyContext) || a.name.localeCompare(b.name))
       .slice(0, Math.max(maxCandidates * 3, maxCandidates));
 
     const candidates: Array<Record<string, unknown>> = [];
@@ -173,10 +184,12 @@ export async function suggestDeckUpgrades(
       if (candidates.length >= maxCandidates) break;
       const printing = await selectEligiblePrintingV08(card, printingPolicy, options.maxUsdPerCard);
       if (!printing) continue;
+      const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
+      const matchedStrategies = affinity.matches.map((match) => match.archetype);
 
       candidates.push({
         card: summarizeCard(card),
-        score: Number(candidateScore(card, deficit.role).toFixed(1)),
+        score: Number(candidateScore(card, deficit.role, strategyContext).toFixed(1)),
         recommendedPrinting: {
           set: printing.card.set.toUpperCase(),
           setName: printing.card.set_name,
@@ -190,7 +203,9 @@ export async function suggestDeckUpgrades(
           familyMatch: printing.matchedBy,
           scryfallUrl: printing.card.scryfall_uri,
         },
-        whyItFits: `Addresses the detected ${deficit.role} deficit; the recommended physical printing also satisfies the active printing-family/set policy.`,
+        whyItFits: matchedStrategies.length > 0
+          ? `Addresses the detected ${deficit.role} deficit and also supports the existing V0.15 commander strategy signal${matchedStrategies.length === 1 ? '' : 's'}: ${matchedStrategies.join(', ')}. The recommended physical printing satisfies the active printing-family/set policy.`
+          : `Addresses the detected ${deficit.role} deficit; the recommended physical printing also satisfies the active printing-family/set policy.`,
       });
     }
 
@@ -221,7 +236,7 @@ export async function suggestDeckUpgrades(
     },
     caveats: [
       'These role-count targets are engineering heuristics for deck consistency and are not the official Commander bracket definitions.',
-      'Candidate ordering combines role fit, mana efficiency, and EDHREC-rank/community-adoption signal; popularity is not proof of optimality.',
+      'Candidate ordering keeps the existing role fit, mana efficiency, and EDHREC/community-adoption signals, then reuses V0.15 commander strategy inference as an additional deck-context signal. Popularity or strategy affinity alone is not proof of optimality.',
       'Automatic upgrade packages pair the nonland cut pool with nonland additions so a utility land cannot silently replace a spell; dedicated mana-base work should be handled explicitly.',
       'Cut suggestions deliberately avoid claiming thematic/high-mana cards are bad; validate them against simulations, actual games, and reference-deck evidence.',
       'Scryfall USD prices are printing-specific reference values rather than guaranteed store checkout prices, and this version does not yet convert them to NZD.',
