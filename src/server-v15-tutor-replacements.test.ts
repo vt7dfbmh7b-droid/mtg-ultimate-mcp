@@ -5,6 +5,7 @@ import type {
   VerifiedWinningComboDetailV15,
 } from './services/commander-build-evaluation-v15.js';
 import type { TutorReplacementIntelligenceV15 } from './services/tutor-replacement-intelligence-v15.js';
+import type { TutorReplacementPortfolioAuditV15 } from './services/tutor-replacement-portfolio-v15.js';
 import {
   runTutorReplacementToolV15,
   type TutorReplacementToolDependenciesV15,
@@ -87,6 +88,19 @@ function replacementAudit(): TutorReplacementIntelligenceV15 {
   };
 }
 
+function portfolioAudit(routeIds: string[] = ['route-a']): TutorReplacementPortfolioAuditV15 {
+  return {
+    status: 'portfolio-evaluated',
+    routeCount: routeIds.length,
+    maximumRoutes: 8,
+    routeIds,
+    thresholdPercentagePoints: null,
+    candidates: [],
+    unresolvedReplacementPrintings: [],
+    guidance: 'test',
+  };
+}
+
 test('does not guess between multiple verified full-table win routes', async () => {
   let auditCalls = 0;
   const result = await runTutorReplacementToolV15({
@@ -117,9 +131,14 @@ test('Commander Spellbook unavailability remains unknown rather than no replacem
   assert.deepEqual(result.sourceFailure, { message: 'provider down' });
 });
 
-test('forwards explicit printing, budget, source-tutor and access-loss constraints without inventing defaults', async () => {
+test('forwards explicit constraints and sends every verified route to the portfolio safety audit', async () => {
   type ReplacementInput = Parameters<NonNullable<TutorReplacementToolDependenciesV15['auditReplacements']>>[0];
-  const captured: { replacementInput?: ReplacementInput; evaluationOptions?: Record<string, unknown> } = {};
+  type PortfolioInput = Parameters<NonNullable<TutorReplacementToolDependenciesV15['auditPortfolio']>>[0];
+  const captured: {
+    replacementInput?: ReplacementInput;
+    portfolioInput?: PortfolioInput;
+    evaluationOptions?: Record<string, unknown>;
+  } = {};
   const result = await runTutorReplacementToolV15({
     decklist: 'test',
     comboId: 'route-a',
@@ -138,11 +157,15 @@ test('forwards explicit printing, budget, source-tutor and access-loss constrain
   }, {
     evaluateBuild: async (_decklist, options) => {
       captured.evaluationOptions = options as unknown as Record<string, unknown>;
-      return evaluation([route('route-a')]);
+      return evaluation([route('route-a'), route('route-b')]);
     },
     auditReplacements: async (input) => {
       captured.replacementInput = input;
       return replacementAudit();
+    },
+    auditPortfolio: async (input) => {
+      captured.portfolioInput = input;
+      return portfolioAudit(input.routes.map((item) => item.comboId));
     },
   });
 
@@ -163,14 +186,18 @@ test('forwards explicit printing, budget, source-tutor and access-loss constrain
   assert.equal(captured.replacementInput?.constraints?.candidateMaxUsdPerCard, 8);
   assert.deepEqual(captured.replacementInput?.constraints?.excludedCards, ['Excluded Tutor']);
   assert.equal(captured.replacementInput?.constraints?.maxAccessLossPercentagePoints, 0.5);
+  assert.deepEqual(captured.portfolioInput?.routes.map((item) => item.comboId), ['route-a', 'route-b']);
+  assert.equal(captured.portfolioInput?.replacementAudit.status, 'replacement-options-evaluated');
+  assert.deepEqual((result.portfolioSafety as TutorReplacementPortfolioAuditV15).routeIds, ['route-a', 'route-b']);
 });
 
-test('TopDeck failure is separate and cannot erase a successful exact replacement audit', async () => {
+test('TopDeck failure is separate and cannot erase exact replacement or portfolio audits', async () => {
   const result = await runTutorReplacementToolV15({
     decklist: 'test', comboId: 'route-a', includeTopDeckEvidence: true, topDeckLastDays: 30, topDeckParticipantMin: 16,
   }, {
     evaluateBuild: async () => evaluation([route('route-a')]),
     auditReplacements: async () => replacementAudit(),
+    auditPortfolio: async () => portfolioAudit(),
     fetchTopDeck: async () => { throw new Error('TopDeck rate limited'); },
   });
 
@@ -178,4 +205,5 @@ test('TopDeck failure is separate and cannot erase a successful exact replacemen
   assert.equal(result.topDeckEvidence, null);
   assert.deepEqual(result.sourceErrors, { topDeck: 'TopDeck rate limited' });
   assert.equal((result.replacementAudit as TutorReplacementIntelligenceV15).status, 'replacement-options-evaluated');
+  assert.equal((result.portfolioSafety as TutorReplacementPortfolioAuditV15).status, 'portfolio-evaluated');
 });
