@@ -1,0 +1,81 @@
+name: Marvel Target Pressure Diagnostic
+
+on:
+  push:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - "scripts/e2e-marvel-target-pressure-diagnostic-v15.ts"
+      - ".github/workflows/marvel-target-pressure-diagnostic.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: marvel-target-pressure-diagnostic-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check and build
+        run: npm run build
+
+      - name: Diagnose Marvel target pressure
+        id: diagnostic
+        continue-on-error: true
+        run: npx tsx scripts/e2e-marvel-target-pressure-diagnostic-v15.ts
+
+      - name: Persist diagnostic and self-delete
+        if: always()
+        shell: bash
+        env:
+          DIAGNOSTIC_OUTCOME: ${{ steps.diagnostic.outcome }}
+        run: |
+          set -euo pipefail
+          mkdir -p test-results/marvel-bracket5
+          if [ -f marvel-target-pressure-diagnostic-result.json ]; then
+            cp marvel-target-pressure-diagnostic-result.json test-results/marvel-bracket5/target-pressure-diagnostic.json
+          fi
+          if [ -f marvel-target-pressure-diagnostic-failure.txt ]; then
+            cp marvel-target-pressure-diagnostic-failure.txt test-results/marvel-bracket5/target-pressure-diagnostic-failure.txt
+          else
+            rm -f test-results/marvel-bracket5/target-pressure-diagnostic-failure.txt
+          fi
+          printf 'source_sha=%s\noutcome=%s\n' "$GITHUB_SHA" "$DIAGNOSTIC_OUTCOME" > test-results/marvel-bracket5/target-pressure-diagnostic-metadata.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm -- .github/workflows/marvel-target-pressure-diagnostic.yml
+          git add -- test-results/marvel-bracket5
+          git commit -m "test-results: diagnose Marvel target pressure"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Require diagnostic to succeed
+        if: always()
+        env:
+          DIAGNOSTIC_OUTCOME: ${{ steps.diagnostic.outcome }}
+        run: |
+          if [ "$DIAGNOSTIC_OUTCOME" != "success" ]; then
+            exit 1
+          fi
