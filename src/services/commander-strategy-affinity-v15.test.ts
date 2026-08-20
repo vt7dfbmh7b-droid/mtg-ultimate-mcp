@@ -4,6 +4,7 @@ import type { ScryfallCard } from '../types/scryfall.js';
 import { parseDecklist } from './deck.js';
 import {
   cardCommanderStrategyAffinityV15,
+  deriveCommanderStrategyContextFromCommandersV15,
   deriveCommanderStrategyContextV15,
 } from './commander-strategy-affinity-v15.js';
 
@@ -36,6 +37,21 @@ function card(name: string, typeLine: string, oracleText: string): ScryfallCard 
     scryfall_uri: `https://scryfall.com/search?q=${encodeURIComponent(name)}`,
   } as ScryfallCard;
 }
+
+test('builder-side commander context reuses the same V0.15 strategy inference', () => {
+  const commander = card(
+    'Warrior Captain',
+    'Legendary Creature — Human Warrior',
+    'Whenever a Warrior attacks, create a 1/1 white Warrior creature token that is tapped and attacking.',
+  );
+  const parsed = parseDecklist('// COMMANDER\n1 Warrior Captain\n\n// MAIN\n99 Plains');
+
+  const parsedContext = deriveCommanderStrategyContextV15(parsed, [commander]);
+  const builderContext = deriveCommanderStrategyContextFromCommandersV15([commander]);
+
+  assert.deepEqual(builderContext, parsedContext);
+  assert.equal(builderContext.strategies[0]?.archetype, 'combat-tokens');
+});
 
 test('existing V0.15 strategy inference gives on-plan cards more affinity than unrelated utility', () => {
   const commander = card(
