@@ -1,0 +1,93 @@
+name: Middle-earth Bracket 5 Live Control
+
+on:
+  push:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - "scripts/e2e-middle-earth-bracket5-v15.ts"
+      - ".github/workflows/middle-earth-bracket5-live.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: middle-earth-bracket5-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  middle-earth-bracket5:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check and build
+        run: npm run build
+
+      - name: Run Middle-earth Build + Upgrade live control
+        id: live_control
+        continue-on-error: true
+        run: npx tsx scripts/e2e-middle-earth-bracket5-v15.ts
+
+      - name: Upload live result
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: middle-earth-bracket5-${{ github.sha }}
+          path: |
+            middle-earth-bracket5-live-result.json
+            middle-earth-bracket5-selected-deck.txt
+            middle-earth-bracket5-refined-deck.txt
+            middle-earth-bracket5-live-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Persist live result on isolated branch
+        if: always()
+        env:
+          CONTROL_OUTCOME: ${{ steps.live_control.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p test-results/middle-earth-bracket5
+          rm -f test-results/middle-earth-bracket5/result.json \
+                test-results/middle-earth-bracket5/selected-deck.txt \
+                test-results/middle-earth-bracket5/refined-deck.txt \
+                test-results/middle-earth-bracket5/failure.txt
+          [ ! -f middle-earth-bracket5-live-result.json ] || cp middle-earth-bracket5-live-result.json test-results/middle-earth-bracket5/result.json
+          [ ! -f middle-earth-bracket5-selected-deck.txt ] || cp middle-earth-bracket5-selected-deck.txt test-results/middle-earth-bracket5/selected-deck.txt
+          [ ! -f middle-earth-bracket5-refined-deck.txt ] || cp middle-earth-bracket5-refined-deck.txt test-results/middle-earth-bracket5/refined-deck.txt
+          [ ! -f middle-earth-bracket5-live-failure.txt ] || cp middle-earth-bracket5-live-failure.txt test-results/middle-earth-bracket5/failure.txt
+          printf 'source_sha=%s\ncontrol_outcome=%s\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/middle-earth-bracket5/run-metadata.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- test-results/middle-earth-bracket5
+          if ! git diff --cached --quiet; then
+            git commit -m "test-results: persist Middle-earth Bracket 5 live control"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+
+      - name: Require live control success
+        if: always()
+        env:
+          CONTROL_OUTCOME: ${{ steps.live_control.outcome }}
+        run: |
+          test "$CONTROL_OUTCOME" = "success"
