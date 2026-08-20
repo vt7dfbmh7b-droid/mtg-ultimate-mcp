@@ -4,7 +4,9 @@ import {
   cardCommanderStrategyAffinityV15,
   deriveCommanderStrategyContextFromCommandersV15,
 } from './commander-strategy-affinity-v15.js';
+import { commanderTargetPressureV15, selectTargetAwareWinPackageV15 } from './commander-target-pressure-v15.js';
 import { buildDeckMetrics, parseDecklist, type DeckEntry, type ParsedDeck } from './deck.js';
+import { discoverGeneralWinPackagesV15 } from './general-win-package-v15.js';
 import {
   describePrintingPolicyV08,
   printingMatchesPolicyV08,
@@ -41,6 +43,7 @@ export interface DeckBuildOptionsV07 {
 export interface UpgradePlanOptionsV07 extends UpgradeOptions {
   maxSwaps?: number;
   protectedCards?: string[];
+  winRouteVerificationStatus?: 'protected' | 'no-verified-route' | 'verification-unavailable';
   simulationIterations?: number;
   simulationTurns?: number;
   seed?: number;
@@ -50,6 +53,7 @@ interface RoleTargetsV07 {
   ramp: number;
   draw: number;
   interaction: number;
+  freeInteraction: number;
   protection: number;
   tutors: number;
   recursion: number;
@@ -58,11 +62,11 @@ interface RoleTargetsV07 {
 }
 
 const ROLE_TARGETS: Record<number, RoleTargetsV07> = {
-  1: { ramp: 7, draw: 7, interaction: 6, protection: 2, tutors: 0, recursion: 2, boardWipes: 1, early: 8 },
-  2: { ramp: 9, draw: 9, interaction: 8, protection: 3, tutors: 1, recursion: 2, boardWipes: 2, early: 10 },
-  3: { ramp: 10, draw: 10, interaction: 10, protection: 4, tutors: 3, recursion: 3, boardWipes: 2, early: 13 },
-  4: { ramp: 12, draw: 12, interaction: 14, protection: 6, tutors: 6, recursion: 3, boardWipes: 2, early: 16 },
-  5: { ramp: 14, draw: 14, interaction: 18, protection: 8, tutors: 10, recursion: 4, boardWipes: 2, early: 20 },
+  1: { ramp: 7, draw: 7, interaction: 6, freeInteraction: 0, protection: 2, tutors: 0, recursion: 2, boardWipes: 1, early: 8 },
+  2: { ramp: 9, draw: 9, interaction: 8, freeInteraction: 0, protection: 3, tutors: 1, recursion: 2, boardWipes: 2, early: 10 },
+  3: { ramp: 10, draw: 10, interaction: 10, freeInteraction: 0, protection: 4, tutors: 3, recursion: 3, boardWipes: 2, early: 13 },
+  4: { ramp: 12, draw: 12, interaction: 14, freeInteraction: 0, protection: 6, tutors: 6, recursion: 3, boardWipes: 2, early: 16 },
+  5: { ramp: 14, draw: 14, interaction: 18, freeInteraction: 0, protection: 8, tutors: 10, recursion: 4, boardWipes: 2, early: 20 },
 };
 
 const BASIC_FOR_COLOR: Record<string, string> = {
@@ -101,6 +105,7 @@ function roleContribution(card: ScryfallCard): Partial<Record<keyof RoleTargetsV
   if (roles.has('mana acceleration') || roles.has('land ramp') || roles.has('cost reduction') || roles.has('fast mana')) output.ramp = 1;
   if (roles.has('card draw') || roles.has('repeatable draw') || roles.has('card selection')) output.draw = 1;
   if (roles.has('spot interaction') || roles.has('countermagic') || roles.has('board wipe') || roles.has('free interaction')) output.interaction = 1;
+  if (roles.has('free interaction')) output.freeInteraction = 1;
   if (roles.has('protection') || roles.has('board protection')) output.protection = 1;
   if (roles.has('tutor')) output.tutors = 1;
   if (roles.has('graveyard recursion')) output.recursion = 1;
@@ -114,6 +119,7 @@ function roleQuery(role: keyof RoleTargetsV07): string {
     ramp: '(o:"add" OR o:"search your library for" OR o:"costs" OR o:"Treasure")',
     draw: '(o:"draw" OR o:"scry" OR o:"surveil" OR o:"look at the top")',
     interaction: '(o:"counter target" OR o:"destroy target" OR o:"exile target" OR o:"return target")',
+    freeInteraction: '((mv=0 OR o:"rather than pay") (o:"counter target" OR o:"destroy target" OR o:"exile target"))',
     protection: '(o:"hexproof" OR o:"indestructible" OR o:"protection from" OR o:"phase out")',
     tutors: 'o:"search your library for"',
     recursion: '(o:"from your graveyard" OR o:"return" o:"graveyard")',
@@ -152,7 +158,7 @@ function incrementCounts(counts: RoleTargetsV07, card: ScryfallCard): void {
 }
 
 function emptyCounts(): RoleTargetsV07 {
-  return { ramp: 0, draw: 0, interaction: 0, protection: 0, tutors: 0, recursion: 0, boardWipes: 0, early: 0 };
+  return { ramp: 0, draw: 0, interaction: 0, freeInteraction: 0, protection: 0, tutors: 0, recursion: 0, boardWipes: 0, early: 0 };
 }
 
 function selectedPrice(card: ScryfallCard): number | null {
@@ -312,7 +318,11 @@ export async function buildCommanderDeckDraftV07(
   const strategyContext = deriveCommanderStrategyContextFromCommandersV15(eligibleCommanders);
   const colors = identity(eligibleCommanders);
   const bracket = clampBracket(options.targetBracket);
-  const targets = ROLE_TARGETS[bracket] as RoleTargetsV07;
+  const targetPressure = commanderTargetPressureV15(bracket);
+  const targets: RoleTargetsV07 = {
+    ...(ROLE_TARGETS[bracket] as RoleTargetsV07),
+    freeInteraction: targetPressure.minimumFreeInteraction,
+  };
   const landsWanted = targetLands(bracket, options.landCount);
   const nonlandSlots = Math.max(1, 100 - eligibleCommanders.length - landsWanted);
   const excluded = new Set((options.excludedCards ?? []).map((name) => name.toLocaleLowerCase()));
@@ -321,7 +331,7 @@ export async function buildCommanderDeckDraftV07(
   const themeCandidateNames = new Set<string>();
 
   const searchRoles: Array<keyof RoleTargetsV07 | 'theme' | 'general'> = [
-    'ramp', 'draw', 'interaction', 'protection', 'tutors', 'recursion', 'boardWipes', 'early', 'theme', 'general',
+    'ramp', 'draw', 'interaction', 'freeInteraction', 'protection', 'tutors', 'recursion', 'boardWipes', 'early', 'theme', 'general',
   ];
   for (const role of searchRoles) {
     const results = await searchPool(colors, options, printingPolicy, printingCache, role, role === 'general' ? 50 : 35);
@@ -449,6 +459,7 @@ export async function buildCommanderDeckDraftV07(
   return {
     status: commanderRules.isLegal && hasEnoughCards && printingPolicySatisfied && themeSelectionSatisfied ? 'complete-draft' : 'incomplete-draft',
     targetBracket: bracket,
+    targetPressure,
     commanders: eligibleCommanders.map(summarizeCard),
     commanderColorIdentity: colors,
     themeQuery: options.themeQuery ?? null,
@@ -520,17 +531,19 @@ function candidateLine(candidate: Record<string, unknown>): string | null {
   return set && collector ? `1 ${name} (${set}) ${collector}${finish}` : `1 ${name}`;
 }
 
-type UpgradeStructuralRoleV15 = 'ramp' | 'draw' | 'interaction' | 'protection' | 'tutor' | 'early';
+type UpgradeStructuralRoleV15 = 'ramp' | 'draw' | 'interaction' | 'free-interaction' | 'protection' | 'tutor' | 'early';
+type UpgradeAddressedRoleV15 = UpgradeStructuralRoleV15 | 'win-package';
 
 interface UpgradeAddSelectionV15 {
   candidate: Record<string, unknown>;
-  role: UpgradeStructuralRoleV15;
+  role: UpgradeAddressedRoleV15;
 }
 
 interface UpgradeStructuralCountsV15 {
   ramp: number;
   draw: number;
   interaction: number;
+  'free-interaction': number;
   protection: number;
   tutor: number;
   early: number;
@@ -541,12 +554,12 @@ interface UpgradeStructuralTargetsV15 extends UpgradeStructuralCountsV15 {}
 interface UpgradePairingV15 {
   add: Record<string, unknown>;
   cut: Record<string, unknown>;
-  addressedRole: UpgradeStructuralRoleV15;
+  addressedRole: UpgradeAddressedRoleV15;
   structuralDeficitAfterSwap: number;
 }
 
 const UPGRADE_STRUCTURAL_ROLES_V15: UpgradeStructuralRoleV15[] = [
-  'ramp', 'draw', 'interaction', 'protection', 'tutor', 'early',
+  'ramp', 'draw', 'interaction', 'free-interaction', 'protection', 'tutor', 'early',
 ];
 
 function recordNumber(value: unknown): number {
@@ -571,6 +584,7 @@ function summaryMatchesUpgradeRoleV15(card: Record<string, unknown>, role: Upgra
   if (role === 'ramp') return roles.has('mana acceleration') || roles.has('land ramp') || roles.has('cost reduction') || roles.has('fast mana');
   if (role === 'draw') return roles.has('card draw') || roles.has('repeatable draw') || roles.has('card selection');
   if (role === 'interaction') return roles.has('spot interaction') || roles.has('countermagic') || roles.has('board wipe') || roles.has('free interaction');
+  if (role === 'free-interaction') return roles.has('free interaction');
   if (role === 'protection') return roles.has('protection') || roles.has('board protection');
   if (role === 'tutor') return roles.has('tutor');
   return !recordString(card.typeLine).toLocaleLowerCase().includes('land') && recordNumber(card.manaValue) <= 2;
@@ -595,6 +609,12 @@ function structuralDeficitTotalV15(counts: UpgradeStructuralCountsV15, targets: 
   );
 }
 
+function currentRoleCountV15(currentMetrics: Record<string, unknown>, role: string): number {
+  const roleCounts = currentMetrics.roleCounts;
+  if (!roleCounts || typeof roleCounts !== 'object' || Array.isArray(roleCounts)) return 0;
+  return recordNumber((roleCounts as Record<string, unknown>)[role]);
+}
+
 function upgradeStructuralStateV15(
   currentMetrics: Record<string, unknown>,
   structuralTargets: Record<string, unknown>,
@@ -604,6 +624,7 @@ function upgradeStructuralStateV15(
       ramp: recordNumber(currentMetrics.rampCount),
       draw: recordNumber(currentMetrics.drawCount),
       interaction: recordNumber(currentMetrics.interactionCount),
+      'free-interaction': currentRoleCountV15(currentMetrics, 'free interaction'),
       protection: recordNumber(currentMetrics.protectionCount),
       tutor: recordNumber(currentMetrics.tutorCount),
       early: recordNumber(currentMetrics.earlyPlayCount),
@@ -612,6 +633,7 @@ function upgradeStructuralStateV15(
       ramp: recordNumber(structuralTargets.ramp),
       draw: recordNumber(structuralTargets.draw),
       interaction: recordNumber(structuralTargets.interaction),
+      'free-interaction': recordNumber(structuralTargets.freeInteraction),
       protection: recordNumber(structuralTargets.protection),
       tutor: recordNumber(structuralTargets.tutors),
       early: recordNumber(structuralTargets.earlyPlays),
@@ -690,6 +712,164 @@ function signalDeltas(before: Record<string, number | null>, after: Record<strin
   }));
 }
 
+
+interface UpgradeWinPackagePriorityV15 {
+  attempted: boolean;
+  sourceStatus: string;
+  selectedComboId: string | null;
+  selectedBracketTag: string | null;
+  missingSeedNames: string[];
+  selections: UpgradeAddSelectionV15[];
+  reason: string;
+}
+
+function commanderCardsForUpgradeV15(parsed: ParsedDeck, cards: ScryfallCard[]): ScryfallCard[] {
+  return parsed.commanders
+    .map((entry) => cards.find((card) => card.name.toLocaleLowerCase() === entry.name.toLocaleLowerCase()))
+    .filter((card): card is ScryfallCard => Boolean(card));
+}
+
+async function buildWinPackagePriorityV15(
+  parsed: ParsedDeck,
+  cards: ScryfallCard[],
+  options: UpgradePlanOptionsV07,
+): Promise<UpgradeWinPackagePriorityV15> {
+  const pressure = commanderTargetPressureV15(options.targetBracket);
+  const verificationStatus = options.winRouteVerificationStatus ?? 'verification-unavailable';
+  if (!pressure.verifiedWinningPackageRequired) {
+    return {
+      attempted: false,
+      sourceStatus: 'not-required-below-bracket-5',
+      selectedComboId: null,
+      selectedBracketTag: null,
+      missingSeedNames: [],
+      selections: [],
+      reason: 'The requested target does not require a verified winning package.',
+    };
+  }
+  if (verificationStatus !== 'no-verified-route') {
+    return {
+      attempted: false,
+      sourceStatus: verificationStatus,
+      selectedComboId: null,
+      selectedBracketTag: null,
+      missingSeedNames: [],
+      selections: [],
+      reason: verificationStatus === 'protected'
+        ? 'The existing V0.15 route audit already found a verified route, so refinement preserves it instead of adding another package by default.'
+        : 'Win-route verification was unavailable, so refinement does not convert missing evidence into a claim that a package is absent.',
+    };
+  }
+
+  const commanders = commanderCardsForUpgradeV15(parsed, cards);
+  if (commanders.length !== parsed.commanders.length) {
+    return {
+      attempted: false,
+      sourceStatus: 'commander-resolution-incomplete',
+      selectedComboId: null,
+      selectedBracketTag: null,
+      missingSeedNames: [],
+      selections: [],
+      reason: 'The resolved commander cards were incomplete, so package discovery was not attempted.',
+    };
+  }
+
+  const discovery = await discoverGeneralWinPackagesV15(commanders, {
+    ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
+    ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
+    ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
+    ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
+    ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
+    ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
+    maxPackageCards: 3,
+  });
+  const selected = selectTargetAwareWinPackageV15(options.targetBracket, discovery.candidates, discovery.selected);
+  if (!selected) {
+    return {
+      attempted: true,
+      sourceStatus: discovery.status,
+      selectedComboId: null,
+      selectedBracketTag: null,
+      missingSeedNames: [],
+      selections: [],
+      reason: discovery.status === 'verification-unavailable'
+        ? 'Verified package discovery was unavailable/incomplete; no package was invented.'
+        : 'Completed verified package discovery found no legal package satisfying the active printing/budget/exclusion constraints.',
+    };
+  }
+
+  const existing = new Set([...parsed.commanders, ...parsed.main].map((entry) => entry.name.toLocaleLowerCase()));
+  const missingSeedNames = selected.seedNames.filter((name) => !existing.has(name.toLocaleLowerCase()));
+  if (missingSeedNames.length === 0) {
+    return {
+      attempted: true,
+      sourceStatus: discovery.status,
+      selectedComboId: selected.comboId,
+      selectedBracketTag: selected.bracketTag,
+      missingSeedNames: [],
+      selections: [],
+      reason: 'The target-aware verified package has no missing seed cards to add.',
+    };
+  }
+
+  const lookup = await getCardsByNames(missingSeedNames);
+  if (lookup.notFound.length > 0) {
+    return {
+      attempted: true,
+      sourceStatus: 'package-card-resolution-incomplete',
+      selectedComboId: selected.comboId,
+      selectedBracketTag: selected.bracketTag,
+      missingSeedNames,
+      selections: [],
+      reason: `A verified package was selected, but one or more seed cards could not be resolved: ${lookup.notFound.join(', ')}.`,
+    };
+  }
+  const byName = new Map(lookup.cards.map((card) => [card.name.toLocaleLowerCase(), card]));
+  const printings = new Map(selected.exactPrintings.map((printing) => [printing.name.toLocaleLowerCase(), printing]));
+  const selections: UpgradeAddSelectionV15[] = [];
+  for (const name of missingSeedNames) {
+    const card = byName.get(name.toLocaleLowerCase());
+    const printing = printings.get(name.toLocaleLowerCase());
+    if (!card || !printing) {
+      return {
+        attempted: true,
+        sourceStatus: 'package-printing-resolution-incomplete',
+        selectedComboId: selected.comboId,
+        selectedBracketTag: selected.bracketTag,
+        missingSeedNames,
+        selections: [],
+        reason: `The selected verified package did not retain an exact eligible physical printing for ${name}.`,
+      };
+    }
+    selections.push({
+      role: 'win-package',
+      candidate: {
+        card: summarizeCard(card),
+        score: selected.score,
+        recommendedPrinting: {
+          set: printing.set,
+          collectorNumber: printing.collectorNumber,
+          finish: printing.finish,
+          priceUsd: printing.priceUsd,
+          familyMatch: 'verified-win-package',
+        },
+        whyItFits: `Adds the verified ${selected.bracketTag === 'R' ? 'R-tagged competitive ' : ''}winning package ${selected.comboId} because the existing V0.15 route audit found no verified route under a Bracket-5 target.`,
+      },
+    });
+  }
+  return {
+    attempted: true,
+    sourceStatus: discovery.status,
+    selectedComboId: selected.comboId,
+    selectedBracketTag: selected.bracketTag,
+    missingSeedNames,
+    selections,
+    reason: selected.bracketTag === 'R'
+      ? 'Bracket-5 target pressure preferred an existing verified R-tagged package.'
+      : 'No verified R-tagged package survived the active constraints, so the existing verified portfolio selection is used as the fallback winning package.',
+  };
+}
+
 export async function buildSimulationBackedUpgradePlanV07(
   parsed: ParsedDeck,
   cards: ScryfallCard[],
@@ -705,20 +885,33 @@ export async function buildSimulationBackedUpgradePlanV07(
       const card = cut.card as Record<string, unknown> | undefined;
       return typeof card?.name !== 'string' || !protectedNames.has(card.name.toLocaleLowerCase());
     });
+  const targetPressure = commanderTargetPressureV15(options.targetBracket);
+  const winPackagePriority = await buildWinPackagePriorityV15(parsed, cards, options);
+  const swapCapacity = Math.min(maxSwaps, cutPool.length);
 
   const chosenAdds: UpgradeAddSelectionV15[] = [];
   const addNames = new Set<string>();
+  const atomicWinPackageFits = winPackagePriority.selections.length > 0
+    && winPackagePriority.selections.length <= swapCapacity;
+  if (atomicWinPackageFits) {
+    for (const selection of winPackagePriority.selections) {
+      const name = candidateName(selection.candidate);
+      if (!name || addNames.has(name.toLocaleLowerCase())) continue;
+      addNames.add(name.toLocaleLowerCase());
+      chosenAdds.push(selection);
+    }
+  }
   for (const group of groups) {
     const role = recordString(group.role) as UpgradeStructuralRoleV15;
     if (!UPGRADE_STRUCTURAL_ROLES_V15.includes(role)) continue;
     for (const candidate of (group.candidates ?? []) as Array<Record<string, unknown>>) {
-      if (chosenAdds.length >= maxSwaps) break;
+      if (chosenAdds.length >= swapCapacity) break;
       const name = candidateName(candidate);
       if (!name || addNames.has(name.toLocaleLowerCase())) continue;
       addNames.add(name.toLocaleLowerCase());
       chosenAdds.push({ candidate, role });
     }
-    if (chosenAdds.length >= maxSwaps) break;
+    if (chosenAdds.length >= swapCapacity) break;
   }
   const pairings = pairUpgradeSwapsByStructureV15(
     chosenAdds,
@@ -767,6 +960,17 @@ export async function buildSimulationBackedUpgradePlanV07(
 
   return {
     status: afterSimulation ? 'simulated-candidate-plan' : 'candidate-plan-not-simulated',
+    v15TargetPressure: {
+      targetPressure,
+      winRouteVerificationStatus: options.winRouteVerificationStatus ?? 'verification-unavailable',
+      winPackageDiscoveryAttempted: winPackagePriority.attempted,
+      winPackageSourceStatus: winPackagePriority.sourceStatus,
+      selectedComboId: winPackagePriority.selectedComboId,
+      selectedBracketTag: winPackagePriority.selectedBracketTag,
+      missingSeedNames: winPackagePriority.missingSeedNames,
+      atomicWinPackageInjected: atomicWinPackageFits,
+      reason: winPackagePriority.reason,
+    },
     swaps: pairings.map((pair) => ({
       out: (() => {
         const card = pair.cut.card as Record<string, unknown> | undefined;
@@ -798,7 +1002,7 @@ export async function buildSimulationBackedUpgradePlanV07(
     sourceUpgradeAnalysis: suggestions,
     caveats: [
       'V0.7 does not automatically claim the suggested swaps are final. It deliberately returns the whole candidate deck and before/after evidence so an AI or player can reject a swap that harms theme or a preferred win route.',
-      'IN/OUT pairing now minimizes damage to the existing structural role targets before using cut pressure as a tie-breaker; candidate generation, budgets, printing constraints, commander-strategy protection, and same-seed simulation remain unchanged.',
+      'IN/OUT pairing now minimizes damage to the existing structural role targets before using cut pressure as a tie-breaker; Bracket-5 free interaction is treated as its own existing target pressure, and an already-verified missing win package is injected atomically when one survives the current hard constraints.',
       'Same-seed simulation improves comparability but does not remove multiplayer variance, pilot decisions, hidden information, or meta effects.',
     ],
   };

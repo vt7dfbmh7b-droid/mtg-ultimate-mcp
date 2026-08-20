@@ -1,6 +1,7 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import { compareRequestedBracketV15 } from './bracket-target-comparison-v15.js';
 import { evaluateCommanderBuildV15 } from './commander-build-evaluation-v15.js';
+import { selectTargetAwareWinPackageV15 } from './commander-target-pressure-v15.js';
 import { buildCommanderDeckDraftV07, type DeckBuildOptionsV07 } from './deck-builder-v07.js';
 import { resolveEntryCard } from './deck.js';
 import { discoverGeneralWinPackagesV15, type GeneralWinPackageCandidateV15 } from './general-win-package-v15.js';
@@ -272,7 +273,9 @@ export async function buildCommanderThroughPipelineV15(
         maxPackageCards: effectiveOptions.maxWinPackageCards ?? 3,
       })
     : null;
-  const selectedPackage = packageDiscovery?.selected ?? null;
+  const selectedPackage = packageDiscovery
+    ? selectTargetAwareWinPackageV15(plan.requestedTargetBracket, packageDiscovery.candidates, packageDiscovery.selected)
+    : null;
   if (winPackageMode === 'require' && !selectedPackage) {
     const verificationUnavailable = packageDiscovery?.status === 'verification-unavailable';
     return {

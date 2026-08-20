@@ -4,6 +4,7 @@ import {
   deriveCommanderStrategyContextV15,
   type CommanderStrategyContextV15,
 } from './commander-strategy-affinity-v15.js';
+import { commanderTargetPressureV15 } from './commander-target-pressure-v15.js';
 import { buildDeckMetrics, type ParsedDeck } from './deck.js';
 import {
   describePrintingPolicyV08,
@@ -35,17 +36,18 @@ interface StructuralTarget {
   ramp: number;
   draw: number;
   interaction: number;
+  freeInteraction: number;
   protection: number;
   tutors: number;
   earlyPlays: number;
 }
 
 const TARGETS: Record<number, StructuralTarget> = {
-  1: { ramp: 6, draw: 6, interaction: 5, protection: 2, tutors: 0, earlyPlays: 8 },
-  2: { ramp: 8, draw: 8, interaction: 8, protection: 3, tutors: 1, earlyPlays: 10 },
-  3: { ramp: 10, draw: 10, interaction: 10, protection: 4, tutors: 3, earlyPlays: 12 },
-  4: { ramp: 12, draw: 12, interaction: 14, protection: 6, tutors: 6, earlyPlays: 16 },
-  5: { ramp: 14, draw: 14, interaction: 18, protection: 8, tutors: 10, earlyPlays: 20 },
+  1: { ramp: 6, draw: 6, interaction: 5, freeInteraction: 0, protection: 2, tutors: 0, earlyPlays: 8 },
+  2: { ramp: 8, draw: 8, interaction: 8, freeInteraction: 0, protection: 3, tutors: 1, earlyPlays: 10 },
+  3: { ramp: 10, draw: 10, interaction: 10, freeInteraction: 0, protection: 4, tutors: 3, earlyPlays: 12 },
+  4: { ramp: 12, draw: 12, interaction: 14, freeInteraction: 0, protection: 6, tutors: 6, earlyPlays: 16 },
+  5: { ramp: 14, draw: 14, interaction: 18, freeInteraction: 0, protection: 8, tutors: 10, earlyPlays: 20 },
 };
 
 function clampBracket(value: number | undefined): number {
@@ -62,6 +64,7 @@ function roleClause(role: string): string {
     ramp: '(o:"add" OR o:"search your library for" OR o:"costs" )',
     draw: '(o:"draw" OR o:"scry" OR o:"surveil" OR o:"look at the top")',
     interaction: '(o:"counter target spell" OR o:"destroy target" OR o:"exile target" OR o:"return target")',
+    'free-interaction': '((mv=0 OR o:"rather than pay") (o:"counter target" OR o:"destroy target" OR o:"exile target"))',
     protection: '(o:"hexproof" OR o:"indestructible" OR o:"protection from" OR o:"phase out")',
     tutor: 'o:"search your library for"',
     early: 'mv<=2',
@@ -124,6 +127,7 @@ function cardMatchesRole(card: ScryfallCard, role: string): boolean {
   if (role === 'ramp') return roles.has('mana acceleration') || roles.has('land ramp') || roles.has('cost reduction');
   if (role === 'draw') return roles.has('card draw') || roles.has('repeatable draw') || roles.has('card selection');
   if (role === 'interaction') return roles.has('spot interaction') || roles.has('countermagic') || roles.has('board wipe') || roles.has('free interaction');
+  if (role === 'free-interaction') return roles.has('free interaction');
   if (role === 'protection') return roles.has('protection') || roles.has('board protection');
   if (role === 'tutor') return roles.has('tutor');
   if (role === 'early') return !card.type_line.toLowerCase().includes('land') && card.cmc <= 2;
@@ -236,7 +240,11 @@ export async function suggestDeckUpgrades(
   options: UpgradeOptions = {},
 ): Promise<Record<string, unknown>> {
   const targetBracket = clampBracket(options.targetBracket);
-  const targets = TARGETS[targetBracket] as StructuralTarget;
+  const targetPressure = commanderTargetPressureV15(targetBracket);
+  const targets: StructuralTarget = {
+    ...(TARGETS[targetBracket] as StructuralTarget),
+    freeInteraction: targetPressure.minimumFreeInteraction,
+  };
   const metrics = buildDeckMetrics(parsed, cards);
   const strategyContext = deriveCommanderStrategyContextV15(parsed, cards);
   const printingPolicy = await resolvePrintingPolicyV08({
@@ -249,6 +257,7 @@ export async function suggestDeckUpgrades(
     { role: 'ramp', current: metrics.rampCount, target: targets.ramp },
     { role: 'draw', current: metrics.drawCount, target: targets.draw },
     { role: 'interaction', current: metrics.interactionCount, target: targets.interaction },
+    { role: 'free-interaction', current: Number(metrics.roleCounts['free interaction'] ?? 0), target: targets.freeInteraction },
     { role: 'protection', current: metrics.protectionCount, target: targets.protection },
     { role: 'tutor', current: metrics.tutorCount, target: targets.tutors },
     { role: 'early', current: metrics.earlyPlayCount, target: targets.earlyPlays },
@@ -370,6 +379,7 @@ export async function suggestDeckUpgrades(
 
   return {
     targetBracket,
+    targetPressure,
     currentMetrics: metrics,
     structuralTargets: targets,
     structuralDeficits: deficits,
@@ -407,7 +417,7 @@ export async function suggestDeckUpgrades(
         'Candidates are tied to a qualifying physical printing with set code, collector number, finish, promo metadata, and price. A cheaper or more common unrelated printing of the same Oracle card cannot bypass a themed printing-family restriction.',
     },
     caveats: [
-      'These role-count targets are engineering heuristics for deck consistency and are not the official Commander bracket definitions.',
+      'These role-count targets are engineering heuristics for deck consistency and are not the official Commander bracket definitions. The Bracket-5 free-interaction minimum is bridged directly from the existing V0.15 target pressure instead of being hidden inside generic interaction.',
       'Candidate ordering keeps the existing role fit, mana efficiency, and EDHREC/community-adoption signals, then reuses V0.15 commander strategy inference as an additional deck-context signal. Popularity or strategy affinity alone is not proof of optimality.',
       'When a V0.15 controlled theme is below its minimum density, the engine performs an additional bounded theme+role search and merges it with the generic structural search. Theme-matching cards are then preferred within each deficit, while generic ramp, interaction, protection, or other utility remains eligible.',
       'Cut ordering uses the same V0.15 commander strategy context as additions. When the deck is at or below its controlled theme minimum, matching cards also receive a capped four-point cut-protection signal; final theme preservation is still enforced independently by refinement rather than by this heuristic alone.',

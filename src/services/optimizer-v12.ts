@@ -635,7 +635,7 @@ export async function refineCommanderDeckIterativelyV12(
           currentParsed,
           currentCards,
           identity,
-          { ...roundOptions, minimumImprovementScore: minScore },
+          { ...roundOptions, minimumImprovementScore: minScore, winRouteVerificationStatus: winRouteProtection.status },
           attemptSize,
           totalSpend,
           maxTotalUsd,
