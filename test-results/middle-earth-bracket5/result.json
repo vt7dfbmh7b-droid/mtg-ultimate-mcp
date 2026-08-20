@@ -842,6 +842,243 @@
     {
       "candidate": {
         "commanderNames": [
+          "Bilbo, Luckwearer // Burglar's Plot"
+        ],
+        "label": "Bilbo, Luckwearer // Burglar's Plot",
+        "kind": "single",
+        "colorIdentity": [
+          "U"
+        ],
+        "strategy": {
+          "archetype": "value-engine",
+          "score": 20,
+          "evidence": [
+            "repeatable draw +9",
+            "card draw +5",
+            "repeatable card access +6"
+          ]
+        },
+        "alternativeStrategies": [
+          {
+            "archetype": "graveyard-reanimator",
+            "score": 5,
+            "evidence": [
+              "graveyard setup +5"
+            ]
+          },
+          {
+            "archetype": "combat-tokens",
+            "score": 3,
+            "evidence": [
+              "combat-damage trigger +3"
+            ]
+          },
+          {
+            "archetype": "aristocrats",
+            "score": 0,
+            "evidence": []
+          }
+        ],
+        "coherenceScore": 20,
+        "selectionSignals": [
+          "repeatable draw +9",
+          "card draw +5",
+          "repeatable card access +6",
+          "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
+        ]
+      },
+      "commanderRefs": [
+        {
+          "name": "Bilbo, Luckwearer // Burglar's Plot",
+          "set": "HOB",
+          "collectorNumber": "32"
+        }
+      ],
+      "achievedBracket": 3,
+      "achievedBand": "bracket-3-upgraded-range",
+      "bracket5ConstructionCandidate": false,
+      "bracket5Certified": false,
+      "verifiedWinningCombos": 0,
+      "bracket5ThresholdChecks": [
+        {
+          "key": "average-nonland-mv",
+          "category": "construction",
+          "label": "Average nonland mana value",
+          "observed": 2.71,
+          "required": "at most 2.6",
+          "passed": false,
+          "detail": "Average nonland mana value: observed 2.71; Bracket-5 construction gate requires at most 2.6.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "early-plays",
+          "category": "construction",
+          "label": "Early plays",
+          "observed": 37,
+          "required": "at least 35",
+          "passed": true,
+          "detail": "Early plays: observed 37; Bracket-5 construction gate requires at least 35.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "fast-mana",
+          "category": "construction",
+          "label": "Fast mana",
+          "observed": 4,
+          "required": "at least 3",
+          "passed": true,
+          "detail": "Fast mana: observed 4; Bracket-5 construction gate requires at least 3.",
+          "pressurePoint": "fast-mana density"
+        },
+        {
+          "key": "free-interaction",
+          "category": "construction",
+          "label": "Free interaction",
+          "observed": 1,
+          "required": "at least 1",
+          "passed": true,
+          "detail": "Free interaction: observed 1; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "cheap-interaction",
+          "category": "construction",
+          "label": "Cheap interaction",
+          "observed": 5,
+          "required": "at least 8",
+          "passed": false,
+          "detail": "Cheap interaction: observed 5; Bracket-5 construction gate requires at least 8.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "tutors",
+          "category": "construction",
+          "label": "Tutors",
+          "observed": 9,
+          "required": "at least 4",
+          "passed": true,
+          "detail": "Tutors: observed 9; Bracket-5 construction gate requires at least 4.",
+          "pressurePoint": "tutor consistency"
+        },
+        {
+          "key": "verified-winning-combo",
+          "category": "construction",
+          "label": "Verified win-oriented combos",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "competitive-combo-signal",
+          "category": "construction",
+          "label": "Competitive combo signal",
+          "observed": "Ruthless=0, strategic=0, Spellbook=P",
+          "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+          "passed": false,
+          "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "cedh-intent",
+          "category": "evidence",
+          "label": "Explicit cEDH intent",
+          "observed": true,
+          "required": "true",
+          "passed": true,
+          "detail": "Explicit cEDH intent: observed true; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "competitive intent"
+        },
+        {
+          "key": "competitive-metagame-evidence",
+          "category": "evidence",
+          "label": "Independent current competitive-metagame evidence",
+          "observed": false,
+          "required": "true",
+          "passed": false,
+          "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "metagame evidence"
+        }
+      ],
+      "metrics": {
+        "landCount": 31,
+        "nonlandCount": 69,
+        "landRatio": 0.31,
+        "averageNonlandManaValue": 2.71,
+        "manaCurve": {
+          "0": 3,
+          "1": 11,
+          "2": 23,
+          "3": 13,
+          "4": 9,
+          "5": 7,
+          "6": 1,
+          "7+": 2
+        },
+        "coloredPips": {
+          "W": 0,
+          "U": 51,
+          "B": 0,
+          "R": 0,
+          "G": 0
+        },
+        "roleCounts": {
+          "card draw": 41,
+          "repeatable draw": 14,
+          "creature": 16,
+          "mana acceleration": 40,
+          "mana rock": 8,
+          "fast mana": 4,
+          "card selection": 13,
+          "spot interaction": 6,
+          "sacrifice synergy": 10,
+          "land ramp": 5,
+          "tutor": 9,
+          "land tutor": 9,
+          "countermagic": 7,
+          "equipment": 8,
+          "graveyard hate": 3,
+          "graveyard recursion": 6,
+          "protection": 6,
+          "free interaction": 1,
+          "cost reduction": 2,
+          "token production": 6,
+          "+1/+1 counters": 3,
+          "etb synergy": 3,
+          "haste": 1,
+          "sacrifice outlet": 1,
+          "extra turn": 1,
+          "land": 31,
+          "untap engine": 1
+        },
+        "earlyPlayCount": 37,
+        "fastManaCount": 4,
+        "rampCount": 47,
+        "drawCount": 45,
+        "tutorCount": 9,
+        "interactionCount": 12,
+        "cheapInteractionCount": 5,
+        "protectionCount": 6,
+        "recursionCount": 6,
+        "boardWipeCount": 0,
+        "structuralSignals": []
+      },
+      "selectedPackage": null,
+      "exactPrintingVerification": {
+        "cardCount": 100,
+        "commanderLegal": true,
+        "setCodes": [
+          "HOB",
+          "HOC",
+          "LTC",
+          "LTR"
+        ]
+      }
+    },
+    {
+      "candidate": {
+        "commanderNames": [
           "Éomer, Marshal of Rohan"
         ],
         "label": "Éomer, Marshal of Rohan",
@@ -1792,12 +2029,7 @@
       }
     }
   ],
-  "failures": [
-    {
-      "candidate": "Bilbo, Luckwearer // Burglar's Plot",
-      "error": "Bilbo, Luckwearer // Burglar's Plot commander Oracle identities must resolve\n+ actual - expected\n\n+ [\n+   \"Bilbo, Luckwearer // Burglar's Plot\"\n+ ]\n- []\n"
-    }
-  ],
+  "failures": [],
   "selectedBuild": {
     "candidate": {
       "commanderNames": [
