@@ -482,6 +482,150 @@ function candidateLine(candidate: Record<string, unknown>): string | null {
   return set && collector ? `1 ${name} (${set}) ${collector}${finish}` : `1 ${name}`;
 }
 
+type UpgradeStructuralRoleV15 = 'ramp' | 'draw' | 'interaction' | 'protection' | 'tutor' | 'early';
+
+interface UpgradeAddSelectionV15 {
+  candidate: Record<string, unknown>;
+  role: UpgradeStructuralRoleV15;
+}
+
+interface UpgradeStructuralCountsV15 {
+  ramp: number;
+  draw: number;
+  interaction: number;
+  protection: number;
+  tutor: number;
+  early: number;
+}
+
+interface UpgradeStructuralTargetsV15 extends UpgradeStructuralCountsV15 {}
+
+interface UpgradePairingV15 {
+  add: Record<string, unknown>;
+  cut: Record<string, unknown>;
+  addressedRole: UpgradeStructuralRoleV15;
+  structuralDeficitAfterSwap: number;
+}
+
+const UPGRADE_STRUCTURAL_ROLES_V15: UpgradeStructuralRoleV15[] = [
+  'ramp', 'draw', 'interaction', 'protection', 'tutor', 'early',
+];
+
+function recordNumber(value: unknown): number {
+  return typeof value === 'number' && Number.isFinite(value) ? value : 0;
+}
+
+function recordString(value: unknown): string {
+  return typeof value === 'string' ? value : '';
+}
+
+function summarizedCard(item: Record<string, unknown>): Record<string, unknown> {
+  const card = item.card;
+  return card && typeof card === 'object' && !Array.isArray(card) ? card as Record<string, unknown> : {};
+}
+
+function summarizedRoles(card: Record<string, unknown>): Set<string> {
+  return new Set(Array.isArray(card.roles) ? card.roles.filter((role): role is string => typeof role === 'string') : []);
+}
+
+function summaryMatchesUpgradeRoleV15(card: Record<string, unknown>, role: UpgradeStructuralRoleV15): boolean {
+  const roles = summarizedRoles(card);
+  if (role === 'ramp') return roles.has('mana acceleration') || roles.has('land ramp') || roles.has('cost reduction') || roles.has('fast mana');
+  if (role === 'draw') return roles.has('card draw') || roles.has('repeatable draw') || roles.has('card selection');
+  if (role === 'interaction') return roles.has('spot interaction') || roles.has('countermagic') || roles.has('board wipe') || roles.has('free interaction');
+  if (role === 'protection') return roles.has('protection') || roles.has('board protection');
+  if (role === 'tutor') return roles.has('tutor');
+  return !recordString(card.typeLine).toLocaleLowerCase().includes('land') && recordNumber(card.manaValue) <= 2;
+}
+
+function applySummaryToStructuralCountsV15(
+  counts: UpgradeStructuralCountsV15,
+  card: Record<string, unknown>,
+  delta: 1 | -1,
+): UpgradeStructuralCountsV15 {
+  const next = { ...counts };
+  for (const role of UPGRADE_STRUCTURAL_ROLES_V15) {
+    if (summaryMatchesUpgradeRoleV15(card, role)) next[role] += delta;
+  }
+  return next;
+}
+
+function structuralDeficitTotalV15(counts: UpgradeStructuralCountsV15, targets: UpgradeStructuralTargetsV15): number {
+  return UPGRADE_STRUCTURAL_ROLES_V15.reduce(
+    (sum, role) => sum + Math.max(0, targets[role] - counts[role]),
+    0,
+  );
+}
+
+function upgradeStructuralStateV15(
+  currentMetrics: Record<string, unknown>,
+  structuralTargets: Record<string, unknown>,
+): { counts: UpgradeStructuralCountsV15; targets: UpgradeStructuralTargetsV15 } {
+  return {
+    counts: {
+      ramp: recordNumber(currentMetrics.rampCount),
+      draw: recordNumber(currentMetrics.drawCount),
+      interaction: recordNumber(currentMetrics.interactionCount),
+      protection: recordNumber(currentMetrics.protectionCount),
+      tutor: recordNumber(currentMetrics.tutorCount),
+      early: recordNumber(currentMetrics.earlyPlayCount),
+    },
+    targets: {
+      ramp: recordNumber(structuralTargets.ramp),
+      draw: recordNumber(structuralTargets.draw),
+      interaction: recordNumber(structuralTargets.interaction),
+      protection: recordNumber(structuralTargets.protection),
+      tutor: recordNumber(structuralTargets.tutors),
+      early: recordNumber(structuralTargets.earlyPlays),
+    },
+  };
+}
+
+/**
+ * Pair the already-ranked additions with cuts by marginal structural preservation.
+ * Candidate generation, cut pressure, commander-strategy protection, budgets, printings and
+ * simulation remain unchanged; this only stops independent IN/OUT rankings from accidentally
+ * undoing the role deficit that an incoming card is meant to repair.
+ */
+export function pairUpgradeSwapsByStructureV15(
+  additions: UpgradeAddSelectionV15[],
+  cutPool: Array<Record<string, unknown>>,
+  currentMetrics: Record<string, unknown>,
+  structuralTargets: Record<string, unknown>,
+): UpgradePairingV15[] {
+  const state = upgradeStructuralStateV15(currentMetrics, structuralTargets);
+  let counts = state.counts;
+  const remainingCuts = [...cutPool];
+  const pairs: UpgradePairingV15[] = [];
+
+  for (const selection of additions) {
+    if (remainingCuts.length === 0) break;
+    const addCard = summarizedCard(selection.candidate);
+    const afterAdd = applySummaryToStructuralCountsV15(counts, addCard, 1);
+    remainingCuts.sort((left, right) => {
+      const leftCounts = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(left), -1);
+      const rightCounts = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(right), -1);
+      const leftDeficit = structuralDeficitTotalV15(leftCounts, state.targets);
+      const rightDeficit = structuralDeficitTotalV15(rightCounts, state.targets);
+      const leftPressure = recordNumber(left.heuristicCutPressure);
+      const rightPressure = recordNumber(right.heuristicCutPressure);
+      const leftName = recordString(summarizedCard(left).name);
+      const rightName = recordString(summarizedCard(right).name);
+      return leftDeficit - rightDeficit || rightPressure - leftPressure || leftName.localeCompare(rightName);
+    });
+    const cut = remainingCuts.shift();
+    if (!cut) break;
+    counts = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);
+    pairs.push({
+      add: selection.candidate,
+      cut,
+      addressedRole: selection.role,
+      structuralDeficitAfterSwap: structuralDeficitTotalV15(counts, state.targets),
+    });
+  }
+  return pairs;
+}
+
 function simulationSignals(result: Record<string, unknown>): Record<string, number | null> {
   const baseline = result.baseline as Record<string, unknown> | undefined;
   const opening = baseline?.openingHands as Record<string, unknown> | undefined;
@@ -524,19 +668,28 @@ export async function buildSimulationBackedUpgradePlanV07(
       return typeof card?.name !== 'string' || !protectedNames.has(card.name.toLocaleLowerCase());
     });
 
-  const chosenAdds: Array<Record<string, unknown>> = [];
+  const chosenAdds: UpgradeAddSelectionV15[] = [];
   const addNames = new Set<string>();
   for (const group of groups) {
+    const role = recordString(group.role) as UpgradeStructuralRoleV15;
+    if (!UPGRADE_STRUCTURAL_ROLES_V15.includes(role)) continue;
     for (const candidate of (group.candidates ?? []) as Array<Record<string, unknown>>) {
       if (chosenAdds.length >= maxSwaps) break;
       const name = candidateName(candidate);
       if (!name || addNames.has(name.toLocaleLowerCase())) continue;
       addNames.add(name.toLocaleLowerCase());
-      chosenAdds.push(candidate);
+      chosenAdds.push({ candidate, role });
     }
     if (chosenAdds.length >= maxSwaps) break;
   }
-  const chosenCuts = cutPool.slice(0, chosenAdds.length);
+  const pairings = pairUpgradeSwapsByStructureV15(
+    chosenAdds,
+    cutPool,
+    (suggestions.currentMetrics ?? {}) as Record<string, unknown>,
+    (suggestions.structuralTargets ?? {}) as Record<string, unknown>,
+  );
+  const chosenCuts = pairings.map((pair) => pair.cut);
+  const selectedAdds = pairings.map((pair) => pair.add);
   const cutNames = new Set(chosenCuts.flatMap((cut) => {
     const card = cut.card as Record<string, unknown> | undefined;
     return typeof card?.name === 'string' ? [card.name.toLocaleLowerCase()] : [];
@@ -545,7 +698,7 @@ export async function buildSimulationBackedUpgradePlanV07(
   const newMainLines = parsed.main
     .filter((entry) => !cutNames.has(entry.name.toLocaleLowerCase()))
     .map(entryLine);
-  const addLines = chosenAdds.map(candidateLine).filter((line): line is string => Boolean(line));
+  const addLines = selectedAdds.map(candidateLine).filter((line): line is string => Boolean(line));
   const newDecklist = [
     '// COMMANDER',
     ...parsed.commanders.map(entryLine),
@@ -576,15 +729,18 @@ export async function buildSimulationBackedUpgradePlanV07(
 
   return {
     status: afterSimulation ? 'simulated-candidate-plan' : 'candidate-plan-not-simulated',
-    swaps: chosenAdds.map((add, index) => ({
+    swaps: pairings.map((pair) => ({
       out: (() => {
-        const cut = chosenCuts[index];
-        const card = cut?.card as Record<string, unknown> | undefined;
+        const card = pair.cut.card as Record<string, unknown> | undefined;
         return typeof card?.name === 'string' ? card.name : null;
       })(),
-      in: candidateName(add),
-      recommendedPrinting: add.recommendedPrinting ?? null,
-      why: add.whyItFits ?? 'Addresses a detected structural deficit.',
+      in: candidateName(pair.add),
+      recommendedPrinting: pair.add.recommendedPrinting ?? null,
+      why: pair.add.whyItFits ?? 'Addresses a detected structural deficit.',
+      structuralPairing: {
+        addressedRole: pair.addressedRole,
+        remainingStructuralDeficitAfterSwap: pair.structuralDeficitAfterSwap,
+      },
     })),
     protectedCards: options.protectedCards ?? [],
     upgradedDecklist: newDecklist,
@@ -604,6 +760,7 @@ export async function buildSimulationBackedUpgradePlanV07(
     sourceUpgradeAnalysis: suggestions,
     caveats: [
       'V0.7 does not automatically claim the suggested swaps are final. It deliberately returns the whole candidate deck and before/after evidence so an AI or player can reject a swap that harms theme or a preferred win route.',
+      'IN/OUT pairing now minimizes damage to the existing structural role targets before using cut pressure as a tie-breaker; candidate generation, budgets, printing constraints, commander-strategy protection, and same-seed simulation remain unchanged.',
       'Same-seed simulation improves comparability but does not remove multiplayer variance, pilot decisions, hidden information, or meta effects.',
     ],
   };
