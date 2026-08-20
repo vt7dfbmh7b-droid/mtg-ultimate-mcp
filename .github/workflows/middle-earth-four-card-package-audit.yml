@@ -1,0 +1,64 @@
+name: Middle-earth Four-Card Package Audit
+
+on:
+  push:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - "scripts/audit-middle-earth-four-card-packages-v15.ts"
+      - ".github/workflows/middle-earth-four-card-package-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - name: Install dependencies
+        run: npm ci
+      - name: Type-check and build
+        run: npm run build
+      - name: Run package audit
+        id: audit
+        continue-on-error: true
+        run: npx tsx scripts/audit-middle-earth-four-card-packages-v15.ts
+      - name: Persist audit
+        if: always()
+        env:
+          OUTCOME: ${{ steps.audit.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p test-results/middle-earth-four-card-package-audit
+          rm -f test-results/middle-earth-four-card-package-audit/result.json test-results/middle-earth-four-card-package-audit/failure.txt
+          [ ! -f middle-earth-four-card-package-audit.json ] || cp middle-earth-four-card-package-audit.json test-results/middle-earth-four-card-package-audit/result.json
+          [ ! -f middle-earth-four-card-package-audit-failure.txt ] || cp middle-earth-four-card-package-audit-failure.txt test-results/middle-earth-four-card-package-audit/failure.txt
+          printf 'source_sha=%s\noutcome=%s\n' "$GITHUB_SHA" "$OUTCOME" > test-results/middle-earth-four-card-package-audit/run-metadata.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- test-results/middle-earth-four-card-package-audit
+          if ! git diff --cached --quiet; then
+            git commit -m "test-results: persist Middle-earth four-card package audit"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+      - name: Require audit success
+        if: always()
+        env:
+          OUTCOME: ${{ steps.audit.outcome }}
+        run: test "$OUTCOME" = "success"
