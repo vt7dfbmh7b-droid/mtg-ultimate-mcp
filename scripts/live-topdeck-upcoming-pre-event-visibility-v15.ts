@@ -13,6 +13,12 @@ const CANDIDATES = [
   { label: 'invitational', tournamentId: 'topdeck-invitational-2026' },
   { label: 'summer-storm', tournamentId: 'summer-storm-15k-cedh-open' },
   { label: 'forbes-qualifier', tournamentId: 'forbes-cedh-mox-diamond-qualifier-aug-2026' },
+  { label: 'power9-september', tournamentId: 'september-cedh-event' },
+  { label: 'card-wizards-cash', tournamentId: 'cedh-1k-cash-tournament' },
+  { label: 'splash', tournamentId: 'the-splash-2026' },
+  { label: 'card-wizards-mox', tournamentId: 'win-a-dual-land-cedh-tournament' },
+  { label: 'space-coast-q3', tournamentId: 'space-coast-treasures-cedh-tournament-2-1778012169837' },
+  { label: 'journeys-end', tournamentId: 'journeys-end-games-cedh-tournament-commander' },
 ] as const;
 
 function eventFingerprint(value: string): string {
@@ -34,7 +40,8 @@ function failureClass(error: unknown): string {
 async function main(): Promise<void> {
   const results: Array<Record<string, unknown>> = [];
 
-  for (const candidate of CANDIDATES) {
+  for (let index = 0; index < CANDIDATES.length; index += 1) {
+    const candidate = CANDIDATES[index]!;
     try {
       const result = await captureTopDeckPreEventDecklistsV15({
         tournamentId: candidate.tournamentId,
@@ -78,11 +85,14 @@ async function main(): Promise<void> {
         preEventCaptureUsable: false,
       });
     }
+    if (index + 1 < CANDIDATES.length) {
+      await new Promise((resolve) => setTimeout(resolve, 750));
+    }
   }
 
   const usable = results.filter((entry) => entry.preEventCaptureUsable === true);
   const audit = {
-    schemaVersion: 'topdeck-upcoming-pre-event-visibility-v15.1',
+    schemaVersion: 'topdeck-upcoming-pre-event-visibility-v15.2',
     checkedAt: new Date().toISOString(),
     candidatesChecked: CANDIDATES.length,
     candidatesUsableNow: usable.length,
@@ -101,6 +111,7 @@ async function main(): Promise<void> {
       playerIdentifiersPersisted: false,
       apiKeyPersisted: false,
       automaticRetries: 0,
+      interEventDelayMs: 750,
     },
   } as const;
 
