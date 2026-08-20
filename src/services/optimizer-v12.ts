@@ -1,5 +1,5 @@
 import type { ScryfallCard } from '../types/scryfall.js';
-import { derivePostBuildEvidenceV15, evaluateCommanderBuildV15 } from './commander-build-evaluation-v15.js';
+import { derivePostBuildEvidenceV15 } from './commander-build-evaluation-v15.js';
 import { validateCommanderDeck } from './commander-rules.js';
 import { buildSimulationBackedUpgradePlanV07, type UpgradePlanOptionsV07 } from './deck-builder-v07.js';
 import { parseDecklist, resolveEntryCard, type ParsedDeck } from './deck.js';
@@ -15,7 +15,7 @@ import {
   refinementImprovementScoreV11,
   type RefinementDetailLevelV11,
 } from './optimizer-v11.js';
-import { resolvePrintingPolicyV08 } from './printing-policy-v08.js';
+import { printingMatchesPolicyV08, resolvePrintingPolicyV08 } from './printing-policy-v08.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from './scryfall.js';
 import { findDeckCombosEvidence } from './spellbook.js';
 
@@ -206,7 +206,6 @@ function auditResolvedThemeV15(
 }
 
 async function prepareRefinementThemeV15(
-  decklist: string,
   initial: Awaited<ReturnType<typeof resolveDeck>>,
   options: IterativeRefinementOptionsV12,
 ): Promise<RefinementThemePreparationV15> {
@@ -281,14 +280,16 @@ async function prepareRefinementThemeV15(
     }
 
     effectiveOptions.printingFamily = intent.printingFamily;
-    const evaluation = await evaluateCommanderBuildV15(decklist, {
+    const effectiveThemePolicy = await resolvePrintingPolicyV08({
       printingFamily: intent.printingFamily,
       ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
       ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
       ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
     });
+    const printingPolicySatisfied = initial.notFound.length === 0
+      && initial.cards.every((card) => printingMatchesPolicyV08(card, effectiveThemePolicy));
     const initialAudit = auditResolvedThemeV15(initial.parsed, initial.cards, intent, {
-      printingPolicySatisfied: evaluation.printingPolicySatisfied,
+      printingPolicySatisfied,
       activePrintingFamily: intent.printingFamily,
     });
     if (!initialAudit || !initialAudit.satisfied) {
@@ -299,7 +300,7 @@ async function prepareRefinementThemeV15(
           reason: 'The starting deck does not independently prove the requested physical-printing-family theme, so refinement will not pretend later swaps make the whole deck compliant.',
           themeIntent: intent,
           themeAudit: initialAudit,
-          printingPolicySatisfied: evaluation.printingPolicySatisfied,
+          printingPolicySatisfied,
         },
       };
     }
@@ -430,7 +431,7 @@ async function currentWinRouteProtectionV15(
   }
 }
 
-function candidateThemeGateV15(
+export function candidateThemeGateV15(
   before: NeutralThemeAuditV15,
   after: NeutralThemeAuditV15,
 ): { eligible: boolean; reason: string } {
@@ -578,7 +579,7 @@ export async function refineCommanderDeckIterativelyV12(
     };
   }
 
-  const themePreparation = await prepareRefinementThemeV15(decklist, initial, options);
+  const themePreparation = await prepareRefinementThemeV15(initial, options);
   if (!themePreparation.ok) return themePreparation.result;
   const themeContext = themePreparation.context;
   const effectiveOptions = themeContext.effectiveOptions;
