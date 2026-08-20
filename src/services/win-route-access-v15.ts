@@ -223,10 +223,11 @@ export function auditWinRouteAccessV15(input: {
     };
   }
 
+  const mutableResolvedCards = [...input.resolvedCards];
   const mainResolved = input.parsed.main.map((entry, index) => ({
     entry,
     index,
-    card: resolveEntryCard(entry, input.resolvedCards),
+    card: resolveEntryCard(entry, mutableResolvedCards),
   }));
   const targetByPiece = new Map<string, ScryfallCard>();
   for (const piece of libraryPieces) {
