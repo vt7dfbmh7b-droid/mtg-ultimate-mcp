@@ -1,0 +1,99 @@
+name: Marvel Bracket 5 Refinement Live Control
+
+on:
+  push:
+    branches: ["agent/**"]
+    paths:
+      - "scripts/e2e-marvel-bracket5-refine-v15.ts"
+      - ".github/workflows/marvel-bracket5-refine-live.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: marvel-bracket5-refine-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  refine-marvel-bracket5:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check and build
+        run: npm run build
+
+      - name: Refine selected Marvel-only Bracket 5 attempt
+        id: refine_control
+        continue-on-error: true
+        run: npx tsx scripts/e2e-marvel-bracket5-refine-v15.ts
+
+      - name: Upload refinement result
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: marvel-bracket5-refine-${{ github.sha }}
+          path: |
+            marvel-bracket5-refine-result.json
+            marvel-bracket5-refined-deck.txt
+            marvel-bracket5-refine-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Persist refinement result on isolated branch
+        if: always()
+        env:
+          CONTROL_OUTCOME: ${{ steps.refine_control.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p test-results/marvel-bracket5
+          rm -f test-results/marvel-bracket5/refine-result.json \
+                test-results/marvel-bracket5/refined-deck.txt \
+                test-results/marvel-bracket5/refine-failure.txt
+          if [ -f marvel-bracket5-refine-result.json ]; then
+            cp marvel-bracket5-refine-result.json test-results/marvel-bracket5/refine-result.json
+          fi
+          if [ -f marvel-bracket5-refined-deck.txt ]; then
+            cp marvel-bracket5-refined-deck.txt test-results/marvel-bracket5/refined-deck.txt
+          fi
+          if [ -f marvel-bracket5-refine-failure.txt ]; then
+            cp marvel-bracket5-refine-failure.txt test-results/marvel-bracket5/refine-failure.txt
+          fi
+          printf 'source_sha=%s\ncontrol_outcome=%s\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- test-results/marvel-bracket5
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "test-results: persist Marvel Bracket 5 refinement control"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Require refinement control to execute successfully
+        if: always()
+        env:
+          CONTROL_OUTCOME: ${{ steps.refine_control.outcome }}
+        run: |
+          if [ "$CONTROL_OUTCOME" != "success" ]; then
+            exit 1
+          fi
