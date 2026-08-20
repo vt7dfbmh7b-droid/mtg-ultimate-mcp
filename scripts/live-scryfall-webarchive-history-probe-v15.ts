@@ -7,7 +7,7 @@ const USER_AGENT = 'mtg-ultimate-mcp/0.13 historical-provenance research (bounde
 const MANIFEST_URL = 'https://api.scryfall.com/bulk-data';
 const FROM = '20260701';
 const TO = '20260820';
-const MAX_MANIFEST_SAMPLES = 12;
+const MAX_MANIFEST_SAMPLES = 5;
 
 interface CdxRow {
   timestamp: string;
@@ -26,19 +26,30 @@ function requireCondition(condition: unknown, message: string): asserts conditio
   if (!condition) throw new Error(message);
 }
 
-async function fetchJson(url: string, timeoutMs = 20_000): Promise<unknown> {
-  const response = await fetch(url, {
-    headers: {
-      Accept: 'application/json',
-      'User-Agent': USER_AGENT,
-    },
-    signal: AbortSignal.timeout(timeoutMs),
-  });
+async function fetchJson(url: string, label: string, timeoutMs = 60_000): Promise<unknown> {
+  let response: Response;
+  try {
+    response = await fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'User-Agent': USER_AGENT,
+      },
+      signal: AbortSignal.timeout(timeoutMs),
+    });
+  } catch (error) {
+    const message = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+    throw new Error(`${label} network failure: ${message}`);
+  }
   if (!response.ok) {
     await response.body?.cancel().catch(() => undefined);
-    throw new Error(`HTTP ${response.status} from ${new URL(url).hostname}.`);
+    throw new Error(`${label} returned HTTP ${response.status} from ${new URL(url).hostname}.`);
   }
-  return response.json();
+  try {
+    return await response.json();
+  } catch (error) {
+    const message = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+    throw new Error(`${label} JSON parse failure: ${message}`);
+  }
 }
 
 function cdxUrl(target: string, options: { from?: string; to?: string; limit?: number } = {}): string {
@@ -116,17 +127,20 @@ function safeHost(value: string): string {
 }
 
 async function main(): Promise<void> {
-  const manifestCdx = parseCdx(await fetchJson(cdxUrl(MANIFEST_URL, { from: FROM, to: TO })));
+  const manifestIndexUrl = cdxUrl(MANIFEST_URL, { from: FROM, to: TO, limit: 100 });
+  const manifestCdx = parseCdx(await fetchJson(manifestIndexUrl, 'Wayback Scryfall manifest CDX lookup', 60_000));
   const samples = evenlySample(manifestCdx, MAX_MANIFEST_SAMPLES);
   const sampledResults: Array<{
     manifestTimestamp: string;
     manifestDigest: string;
     archivedManifestParsed: boolean;
+    manifestReplayFailureClass: string | null;
     defaultCardsFound: boolean;
     defaultCardsFields: string[];
     downloadHost: string | null;
     downloadUriHash: string | null;
     archivedPayloadCaptures: number;
+    payloadIndexFailureClass: string | null;
     archivedPayloadDigests: string[];
     archivedPayloadEarliest: string | null;
     archivedPayloadLatest: string | null;
@@ -135,17 +149,24 @@ async function main(): Promise<void> {
   for (const row of samples) {
     let manifest: unknown;
     try {
-      manifest = await fetchJson(`https://web.archive.org/web/${encodeURIComponent(row.timestamp)}id_/${MANIFEST_URL}`);
-    } catch {
+      manifest = await fetchJson(
+        `https://web.archive.org/web/${encodeURIComponent(row.timestamp)}id_/${MANIFEST_URL}`,
+        `Wayback manifest replay ${row.timestamp}`,
+        45_000,
+      );
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
       sampledResults.push({
         manifestTimestamp: row.timestamp,
         manifestDigest: row.digest,
         archivedManifestParsed: false,
+        manifestReplayFailureClass: /timeout|aborted/i.test(message) ? 'timeout' : /HTTP \d+/i.test(message) ? 'http-error' : 'other',
         defaultCardsFound: false,
         defaultCardsFields: [],
         downloadHost: null,
         downloadUriHash: null,
         archivedPayloadCaptures: 0,
+        payloadIndexFailureClass: null,
         archivedPayloadDigests: [],
         archivedPayloadEarliest: null,
         archivedPayloadLatest: null,
@@ -156,11 +177,17 @@ async function main(): Promise<void> {
     const entry = defaultCardsEntry(manifest);
     const uri = entry ? downloadUri(entry) : null;
     let payloadRows: CdxRow[] = [];
+    let payloadIndexFailureClass: string | null = null;
     if (uri) {
       try {
-        payloadRows = parseCdx(await fetchJson(cdxUrl(uri, { limit: 20 })));
-      } catch {
-        payloadRows = [];
+        payloadRows = parseCdx(await fetchJson(
+          cdxUrl(uri, { limit: 20 }),
+          `Wayback default_cards payload CDX lookup ${row.timestamp}`,
+          45_000,
+        ));
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        payloadIndexFailureClass = /timeout|aborted/i.test(message) ? 'timeout' : /HTTP \d+/i.test(message) ? 'http-error' : 'other';
       }
     }
     const timestamps = payloadRows.map((payload) => payload.timestamp).sort();
@@ -168,11 +195,13 @@ async function main(): Promise<void> {
       manifestTimestamp: row.timestamp,
       manifestDigest: row.digest,
       archivedManifestParsed: true,
+      manifestReplayFailureClass: null,
       defaultCardsFound: Boolean(entry),
       defaultCardsFields: entry ? Object.keys(entry).sort() : [],
       downloadHost: uri ? safeHost(uri) : null,
       downloadUriHash: uri ? sha256(uri) : null,
       archivedPayloadCaptures: payloadRows.length,
+      payloadIndexFailureClass,
       archivedPayloadDigests: [...new Set(payloadRows.map((payload) => payload.digest))].sort(),
       archivedPayloadEarliest: timestamps[0] ?? null,
       archivedPayloadLatest: timestamps[timestamps.length - 1] ?? null,
@@ -184,7 +213,7 @@ async function main(): Promise<void> {
   const withArchivedPayload = sampledResults.filter((entry) => entry.archivedPayloadCaptures > 0);
   const manifestTimestamps = manifestCdx.map((row) => row.timestamp).sort();
   const audit = {
-    schemaVersion: 'scryfall-webarchive-history-probe-v15.1',
+    schemaVersion: 'scryfall-webarchive-history-probe-v15.2',
     checkedAt: new Date().toISOString(),
     targetHistoricalWindow: {
       from: FROM,
@@ -193,6 +222,7 @@ async function main(): Promise<void> {
     },
     manifestIndex: {
       target: MANIFEST_URL,
+      resultLimit: 100,
       captures: manifestCdx.length,
       uniqueDigests: new Set(manifestCdx.map((row) => row.digest)).size,
       earliest: manifestTimestamps[0] ?? null,
@@ -202,6 +232,7 @@ async function main(): Promise<void> {
       requestedMaximum: MAX_MANIFEST_SAMPLES,
       sampled: sampledResults.length,
       archivedManifestsParsed: parseable.length,
+      manifestReplayFailures: sampledResults.length - parseable.length,
       defaultCardsEntriesFound: withDefaultCards.length,
       samplesWithArchivedDefaultCardsPayload: withArchivedPayload.length,
       samplesWithoutArchivedPayload: sampledResults.length - withArchivedPayload.length,
@@ -211,7 +242,9 @@ async function main(): Promise<void> {
       ? 'The Wayback CDX index returned no archived Scryfall bulk-data manifests in the target window.'
       : withArchivedPayload.length > 0
         ? 'At least one archived Scryfall manifest sample also has archived default_cards payload evidence. This route merits a strict historical replay adapter.'
-        : 'Archived Scryfall bulk-data manifests exist, but sampled default_cards payload URLs were not themselves found in the Wayback CDX index.',
+        : parseable.length > 0
+          ? 'Archived Scryfall bulk-data manifests exist, but sampled default_cards payload URLs were not found in the Wayback CDX index or their payload lookup was unavailable.'
+          : 'Wayback indexed archived Scryfall manifests, but sampled manifest replay was unavailable; do not infer payload absence from replay failure.',
     safeguards: {
       bulkPayloadDownloaded: false,
       scryfallLiveBulkDownloaded: false,
@@ -230,7 +263,7 @@ main().catch(async (error: unknown) => {
   const message = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
   await writeFile(
     FAILURE_PATH,
-    `${JSON.stringify({ schemaVersion: 'scryfall-webarchive-history-probe-failure-v15.1', message }, null, 2)}\n`,
+    `${JSON.stringify({ schemaVersion: 'scryfall-webarchive-history-probe-failure-v15.2', message }, null, 2)}\n`,
     'utf8',
   ).catch(() => undefined);
   console.error(`[Scryfall web-archive history probe] ${message}`);
