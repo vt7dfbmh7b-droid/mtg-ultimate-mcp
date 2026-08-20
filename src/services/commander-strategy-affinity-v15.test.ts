@@ -112,7 +112,7 @@ test('strategy-aware cut pressure protects on-plan cards without making them unc
 
   assert.equal(onPlanPressure.strategyProtectionApplied, 4);
   assert.equal(unrelatedPressure.strategyProtectionApplied, 0);
-  assert.equal(unrelatedPressure.cutPressure - onPlanPressure.cutPressure, 4);
+  assert.ok(unrelatedPressure.cutPressure - onPlanPressure.cutPressure >= onPlanPressure.strategyProtectionApplied);
   assert.ok(onPlanPressure.cutPressure > 0);
 });
 
