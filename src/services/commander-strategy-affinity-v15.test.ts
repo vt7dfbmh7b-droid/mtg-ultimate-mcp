@@ -1,9 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { ScryfallCard } from '../types/scryfall.js';
-import {
-  pairUpgradeSwapsByStructureV15,
-} from './deck-builder-v07.js';
+import { pairUpgradeSwapsByStructureV15 } from './deck-builder-v07.js';
 import { parseDecklist } from './deck.js';
 import {
   cardCommanderStrategyAffinityV15,
@@ -130,7 +128,7 @@ test('upgrade pairing preserves the structural role an incoming card is repairin
       },
     },
   }];
-  const cuts = [
+  const cuts: Array<Record<string, unknown>> = [
     {
       card: {
         name: 'Old Ramp',
@@ -152,10 +150,7 @@ test('upgrade pairing preserves the structural role an incoming card is repairin
   ];
   const pairings = pairUpgradeSwapsByStructureV15(
     additions,
-    {
-      length: cuts.length,
-      ...cuts,
-    } as unknown as Array<Record<string, unknown>>,
+    cuts,
     {
       rampCount: 7,
       drawCount: 8,
