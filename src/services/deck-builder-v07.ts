@@ -19,6 +19,8 @@ import { suggestDeckUpgrades, type UpgradeOptions } from './upgrade.js';
 export interface DeckBuildOptionsV07 {
   targetBracket?: number;
   themeQuery?: string;
+  /** Controlled minimum supplied by the V0.15 theme adapter; zero keeps legacy theme behavior. */
+  themeMinimumMainMatches?: number;
   /** User-visible hard cap. Applies to commanders, must-includes, and optional candidates. */
   maxUsdPerCard?: number;
   /**
@@ -316,6 +318,7 @@ export async function buildCommanderDeckDraftV07(
   const excluded = new Set((options.excludedCards ?? []).map((name) => name.toLocaleLowerCase()));
   const commanderNames = new Set(eligibleCommanders.map((card) => card.name.toLocaleLowerCase()));
   const candidateMap = new Map<string, ScryfallCard>();
+  const themeCandidateNames = new Set<string>();
 
   const searchRoles: Array<keyof RoleTargetsV07 | 'theme' | 'general'> = [
     'ramp', 'draw', 'interaction', 'protection', 'tutors', 'recursion', 'boardWipes', 'early', 'theme', 'general',
@@ -326,6 +329,7 @@ export async function buildCommanderDeckDraftV07(
       const key = card.name.toLocaleLowerCase();
       if (commanderNames.has(key) || excluded.has(key) || card.type_line.toLowerCase().includes('land')) continue;
       if (!legalIdentity(card, colors)) continue;
+      if (role === 'theme') themeCandidateNames.add(key);
       if (!candidateMap.has(key)) candidateMap.set(key, card);
     }
   }
@@ -354,7 +358,30 @@ export async function buildCommanderDeckDraftV07(
     incrementCounts(counts, card);
   }
 
+  const themeMinimumMainMatches = options.themeQuery?.trim()
+    ? Math.max(0, Math.min(nonlandSlots, Math.trunc(options.themeMinimumMainMatches ?? 0)))
+    : 0;
+  let selectedThemeMatches = selected.filter((card) => themeCandidateNames.has(card.name.toLocaleLowerCase())).length;
   const remaining = [...candidateMap.values()].filter((card) => !selectedNames.has(card.name.toLocaleLowerCase()));
+
+  while (selected.length < nonlandSlots && selectedThemeMatches < themeMinimumMainMatches) {
+    const themedRemaining = remaining.filter((card) => themeCandidateNames.has(card.name.toLocaleLowerCase()));
+    if (themedRemaining.length === 0) break;
+    themedRemaining.sort((a, b) => {
+      const aScore = dynamicCandidateScore(a, counts, targets) + cardCommanderStrategyAffinityV15(a, strategyContext).score;
+      const bScore = dynamicCandidateScore(b, counts, targets) + cardCommanderStrategyAffinityV15(b, strategyContext).score;
+      return bScore - aScore || a.name.localeCompare(b.name);
+    });
+    const best = themedRemaining[0];
+    if (!best) break;
+    const index = remaining.findIndex((card) => card.name.toLocaleLowerCase() === best.name.toLocaleLowerCase());
+    if (index >= 0) remaining.splice(index, 1);
+    selected.push(best);
+    selectedNames.add(best.name.toLocaleLowerCase());
+    incrementCounts(counts, best);
+    selectedThemeMatches += 1;
+  }
+
   while (selected.length < nonlandSlots && remaining.length > 0) {
     remaining.sort((a, b) => {
       const aScore = dynamicCandidateScore(a, counts, targets) + cardCommanderStrategyAffinityV15(a, strategyContext).score;
@@ -366,8 +393,10 @@ export async function buildCommanderDeckDraftV07(
     selected.push(best);
     selectedNames.add(best.name.toLocaleLowerCase());
     incrementCounts(counts, best);
+    if (themeCandidateNames.has(best.name.toLocaleLowerCase())) selectedThemeMatches += 1;
   }
 
+  const themeSelectionSatisfied = themeMinimumMainMatches === 0 || selectedThemeMatches >= themeMinimumMainMatches;
   const nonbasicLimit = Math.max(0, Math.min(landsWanted, Math.trunc(options.maxNonbasicLands ?? Math.min(16, Math.max(8, colors.length * 4)))));
   const landPool = (await searchPool(colors, options, printingPolicy, printingCache, 'land', 50))
     .filter((card) => legalIdentity(card, colors))
@@ -418,11 +447,16 @@ export async function buildCommanderDeckDraftV07(
   const hasEnoughCards = parsed.totalCards === 100;
 
   return {
-    status: commanderRules.isLegal && hasEnoughCards && printingPolicySatisfied ? 'complete-draft' : 'incomplete-draft',
+    status: commanderRules.isLegal && hasEnoughCards && printingPolicySatisfied && themeSelectionSatisfied ? 'complete-draft' : 'incomplete-draft',
     targetBracket: bracket,
     commanders: eligibleCommanders.map(summarizeCard),
     commanderColorIdentity: colors,
     themeQuery: options.themeQuery ?? null,
+    themeSelection: {
+      requestedMinimumMainMatches: themeMinimumMainMatches,
+      selectedControlledThemeCandidates: selectedThemeMatches,
+      satisfied: themeSelectionSatisfied,
+    },
     decklist,
     cardCount: parsed.totalCards,
     commanderRules,
@@ -448,10 +482,14 @@ export async function buildCommanderDeckDraftV07(
       includeSpecialReleases: options.includeSpecialReleases ?? true,
       excludedCards: options.excludedCards ?? [],
       mustInclude: options.mustInclude ?? [],
+      themeMinimumMainMatches,
     },
     caveats: [
       'This is an evidence-oriented draft builder, not a claim that the first generated 100 cards are the globally optimal list.',
       'Role targets are consistency heuristics. Current official bracket classification should still be checked after construction because bracket rules are not just role counts.',
+      themeMinimumMainMatches > 0
+        ? `The V0.15 controlled theme adapter reserved at least ${themeMinimumMainMatches} nonland slots from the bounded theme candidate pool before the normal role/strategy ranking filled the remaining spell slots.`
+        : 'No V0.15 controlled theme-density minimum was supplied to this legacy-targeted builder.',
       'The selected printing is explicit for pricing and shopping. When a printing-family restriction is active, an unrelated edition of the same Oracle card cannot substitute for a qualifying themed edition.',
       hasPrintingRestriction(printingPolicy)
         ? 'If the printing family does not contain enough suitable legal cards or basics under the requested price cap, the builder returns an incomplete draft instead of leaking cards from outside the family.'
