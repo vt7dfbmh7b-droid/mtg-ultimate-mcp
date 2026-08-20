@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { derivePostBuildEvidenceV15, type PostBuildEvidenceInputV15 } from './commander-build-evaluation-v15.js';
+import type { ScryfallCard } from '../types/scryfall.js';
+import {
+  derivePostBuildEvidenceV15,
+  deriveWinRouteSetupAuditsV15,
+  type PostBuildEvidenceInputV15,
+} from './commander-build-evaluation-v15.js';
 
 function baseEvidenceInput(): Omit<PostBuildEvidenceInputV15, 'combos'> {
   return {
@@ -20,6 +25,27 @@ function baseEvidenceInput(): Omit<PostBuildEvidenceInputV15, 'combos'> {
     efficientWinPlanSupported: true,
     cedhIntent: true,
     competitiveMetagameEvidence: true,
+  };
+}
+
+function card(name: string, typeLine: string, oracleText = ''): ScryfallCard {
+  return {
+    id: `id-${name}`,
+    oracle_id: `oracle-${name}`,
+    name,
+    lang: 'en',
+    mana_cost: '{2}',
+    cmc: 2,
+    type_line: typeLine,
+    oracle_text: oracleText,
+    color_identity: [],
+    keywords: [],
+    legalities: { commander: 'legal' },
+    set: 'tst',
+    set_name: 'Test Set',
+    collector_number: '1',
+    rarity: 'rare',
+    scryfall_uri: `https://scryfall.com/card/tst/1/${encodeURIComponent(name)}`,
   };
 }
 
@@ -72,7 +98,7 @@ test('post-build evidence requires explicit multiplayer scope for lethal engines
   assert.equal(evidence.ruthlessWinningCombos, 1);
 });
 
-test('post-build winning details preserve explicit dependencies and template-requirement uncertainty', () => {
+test('post-build winning details preserve explicit dependencies, provider setup evidence, and template uncertainty', () => {
   const evidence = derivePostBuildEvidenceV15({
     ...baseEvidenceInput(),
     combos: {
@@ -89,6 +115,9 @@ test('post-build winning details preserve explicit dependencies and template-req
           ],
           results: ['Each opponent loses the game'],
           requirements: [],
+          description: 'Resolve the loop with both permanents on the battlefield.',
+          manaNeeded: { generic: 1, black: 1 },
+          otherPrerequisites: ['Piece A on the battlefield'],
         },
         {
           id: 'templated-route',
@@ -108,6 +137,9 @@ test('post-build winning details preserve explicit dependencies and template-req
     seedNames: ['Piece A'],
     results: ['Each opponent loses the game'],
     requirementNames: [],
+    description: 'Resolve the loop with both permanents on the battlefield.',
+    manaNeeded: { generic: 1, black: 1 },
+    otherPrerequisites: ['Piece A on the battlefield'],
     dependencyCompleteness: 'explicit-cards-only',
     closureKind: 'all-opponents-lose',
     closureTiming: 'immediate',
@@ -116,6 +148,48 @@ test('post-build winning details preserve explicit dependencies and template-req
   assert.equal(evidence.verifiedWinningComboDetails[1]?.dependencyCompleteness, 'template-requirements-present');
   assert.equal(evidence.verifiedWinningComboDetails[1]?.closureKind, 'delayed-game-win');
   assert.equal(evidence.verifiedWinningComboDetails[1]?.closureTiming, 'delayed');
+  assert.equal(evidence.verifiedWinningComboDetails[1]?.description, null);
+  assert.equal(evidence.verifiedWinningComboDetails[1]?.manaNeeded, null);
+  assert.equal(evidence.verifiedWinningComboDetails[1]?.otherPrerequisites, null);
+});
+
+test('post-build setup audit consumes the setup fields retained on verified combo details', () => {
+  const evidence = derivePostBuildEvidenceV15({
+    ...baseEvidenceInput(),
+    combos: {
+      sourceStatus: 'available',
+      verificationComplete: true,
+      counts: { included: 1 },
+      included: [{
+        id: 'wired-route',
+        bracketTag: 'R',
+        cards: [
+          { name: 'Commander', quantity: 1, mustBeCommander: true },
+          { name: 'Piece A', quantity: 1, mustBeCommander: false },
+        ],
+        results: ['Each opponent loses the game'],
+        requirements: [],
+        manaNeeded: { generic: 2 },
+        otherPrerequisites: 'Piece A must be on the battlefield.',
+        description: 'Activate Commander while Piece A is on the battlefield.',
+      }],
+    },
+  });
+  const audits = deriveWinRouteSetupAuditsV15(
+    evidence.verifiedWinningComboDetails,
+    [
+      card('Commander', 'Legendary Creature — Wizard', 'Whenever you cast a spell, draw a card.'),
+      card('Piece A', 'Artifact'),
+    ],
+  );
+  assert.equal(audits.length, 1);
+  assert.equal(audits[0]?.providerSetupStatus, 'provider-explicit');
+  assert.deepEqual(audits[0]?.manaEvidence, ['generic: 2']);
+  assert.deepEqual(audits[0]?.explicitZoneMentions, ['battlefield']);
+  assert.equal(audits[0]?.commanderDependent, true);
+  assert.deepEqual(audits[0]?.commanderDependencyNames, ['Commander']);
+  assert.ok(audits[0]?.interruptionSurfaces.some((entry) => entry.surface === 'creature-removal'));
+  assert.ok(audits[0]?.interruptionSurfaces.some((entry) => entry.surface === 'artifact-removal'));
 });
 
 test('duplicate provider rows do not inflate verified or Ruthless winning-combo counts', () => {
