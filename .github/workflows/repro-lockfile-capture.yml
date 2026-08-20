@@ -1,4 +1,4 @@
-name: Reproducibility lockfile capture
+name: Reproducibility migration
 
 on:
   pull_request:
@@ -11,8 +11,8 @@ permissions:
   contents: write
 
 jobs:
-  lockfile:
-    runs-on: ubuntu-latest
+  migrate:
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out active development branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -25,27 +25,133 @@ jobs:
           node-version: 22.23.2
           package-manager-cache: false
 
-      - name: Generate exact npm lockfile
-        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+      - name: Verify committed lockfile is current
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp package-lock.json /tmp/package-lock.before.json
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          cmp /tmp/package-lock.before.json package-lock.json
 
-      - name: Upload exact lockfile
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
-        with:
-          name: reproducibility-package-lock
-          path: package-lock.json
-          if-no-files-found: error
-          retention-days: 1
+      - name: Audit and harden reproducibility surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+          import sys
 
-      - name: Commit exact generated lockfile to source branch
+          workflow_dir = Path('.github/workflows')
+          self_path = workflow_dir / 'repro-lockfile-capture.yml'
+
+          pins = {
+              'actions/checkout': 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1',
+              'actions/setup-node': 'actions/setup-node@820762786026740c76f36085b0efc47a31fe5020',
+              'actions/upload-artifact': 'actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a',
+              'actions/download-artifact': 'actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131',
+              'oras-project/setup-oras': 'oras-project/setup-oras@22ce207df3b08e061f537244349aac6ae1d214f6',
+          }
+          comments = {
+              'actions/checkout': 'v7.0.1',
+              'actions/setup-node': 'v7',
+              'actions/upload-artifact': 'v7',
+              'actions/download-artifact': 'v7',
+              'oras-project/setup-oras': 'v1',
+          }
+
+          use_pattern = re.compile(r'uses:\s*([^\s#]+)')
+          unknown = []
+          unsupported_node = []
+          workflow_paths = sorted(p for p in workflow_dir.glob('*.yml') if p != self_path)
+
+          for path in workflow_paths:
+              text = path.read_text(encoding='utf-8')
+              for token in use_pattern.findall(text):
+                  if token.startswith('./'):
+                      continue
+                  repo = token.split('@', 1)[0]
+                  if repo not in pins:
+                      unknown.append((str(path), token))
+              for lineno, line in enumerate(text.splitlines(), 1):
+                  if 'node-version:' in line:
+                      value = line.split('node-version:', 1)[1].strip().strip('"\'')
+                      if value != '22':
+                          unsupported_node.append((str(path), lineno, value))
+
+          if unknown:
+              print('Unexpected GitHub Action references:', file=sys.stderr)
+              for path, token in unknown:
+                  print(f'  {path}: {token}', file=sys.stderr)
+              sys.exit(2)
+          if unsupported_node:
+              print('Unexpected Node version inputs:', file=sys.stderr)
+              for path, lineno, value in unsupported_node:
+                  print(f'  {path}:{lineno}: {value}', file=sys.stderr)
+              sys.exit(3)
+
+          for path in workflow_paths:
+              text = path.read_text(encoding='utf-8')
+              text = text.replace('runs-on: ubuntu-latest', 'runs-on: ubuntu-24.04')
+              text = re.sub(
+                  r'(?m)^(\s*)node-version:\s*[\'\"]?22[\'\"]?\s*$',
+                  lambda m: f'{m.group(1)}node-version-file: .node-version\n{m.group(1)}package-manager-cache: false',
+                  text,
+              )
+              text = text.replace('npm install', 'npm ci')
+              for repo, pinned in pins.items():
+                  label = comments[repo]
+                  text = re.sub(
+                      rf'(?m)^(\s*uses:\s*){re.escape(repo)}@[^\s#]+(?:\s+#.*)?$',
+                      lambda m, pinned=pinned, label=label: f'{m.group(1)}{pinned} # {label}',
+                      text,
+                  )
+              path.write_text(text, encoding='utf-8')
+
+          Path('.node-version').write_text('22.23.2\n', encoding='utf-8')
+
+          dockerfile = Path('Dockerfile')
+          docker = dockerfile.read_text(encoding='utf-8')
+          old_base = 'node:22-alpine'
+          new_base = 'node:22.23.2-alpine3.24@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32'
+          if docker.count(old_base) != 2:
+              raise SystemExit(f'Expected exactly two {old_base} Docker bases, found {docker.count(old_base)}')
+          docker = docker.replace(old_base, new_base)
+          if docker.count('COPY package.json ./') != 2:
+              raise SystemExit('Unexpected Docker package copy layout')
+          docker = docker.replace('COPY package.json ./', 'COPY package.json package-lock.json ./')
+          docker = docker.replace('RUN npm install --omit=dev', 'RUN npm ci --omit=dev')
+          docker = docker.replace('RUN npm install', 'RUN npm ci')
+          dockerfile.write_text(docker, encoding='utf-8')
+
+          remaining = []
+          for path in workflow_paths:
+              text = path.read_text(encoding='utf-8')
+              for needle in ('actions/checkout@v', 'actions/setup-node@v', 'actions/upload-artifact@v', 'actions/download-artifact@v', 'oras-project/setup-oras@v', 'runs-on: ubuntu-latest', 'node-version: 22', 'npm install'):
+                  if needle in text:
+                      remaining.append((str(path), needle))
+          for needle in ('node:22-alpine', 'npm install', 'COPY package.json ./'):
+              if needle in dockerfile.read_text(encoding='utf-8'):
+                  remaining.append(('Dockerfile', needle))
+          if remaining:
+              print('Unhardened reproducibility patterns remain:', file=sys.stderr)
+              for path, needle in remaining:
+                  print(f'  {path}: {needle}', file=sys.stderr)
+              sys.exit(4)
+
+          print(f'Hardened {len(workflow_paths)} workflow files plus Dockerfile and .node-version')
+          PY
+
+      - name: Commit reproducibility hardening to source branch
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package-lock.json
+          git add .node-version Dockerfile .github/workflows
           if git diff --cached --quiet; then
-            echo "package-lock.json is already current"
+            echo "Reproducibility surfaces are already current"
             exit 0
           fi
-          git commit -m "Lock npm dependency graph"
+          git commit -m "Harden build reproducibility"
           git push origin "HEAD:${{ github.event.pull_request.head.ref }}"
