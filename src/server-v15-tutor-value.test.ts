@@ -21,7 +21,7 @@ function route(comboId: string): VerifiedWinningComboDetailV15 {
     manaNeeded: null,
     otherPrerequisites: null,
     dependencyCompleteness: 'explicit-cards-only',
-    closureKind: 'explicit-all-opponents-lose',
+    closureKind: 'all-opponents-lose',
     closureTiming: 'immediate',
     closureScope: 'all-opponents',
   };
