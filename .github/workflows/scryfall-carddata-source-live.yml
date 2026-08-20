@@ -1,0 +1,53 @@
+name: Scryfall Card Data Source Live
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/services/historical-carddata-acquisition-v15.ts"
+      - "src/services/historical-carddata-source-inventory-v15.ts"
+      - "src/services/scryfall-forward-carddata-capture-v15.ts"
+      - "src/services/scryfall-bulk-carddata-source-v15.ts"
+      - "scripts/live-scryfall-carddata-source-v15.ts"
+      - ".github/workflows/scryfall-carddata-source-live.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: scryfall-carddata-source-live-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scryfall-carddata-source-live:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check and build
+        run: npm run build
+
+      - name: Run bounded one-request Scryfall bulk-manifest control
+        run: npx tsx scripts/live-scryfall-carddata-source-v15.ts
+
+      - name: Upload provider audit
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: scryfall-carddata-source-${{ github.sha }}
+          path: |
+            scryfall-carddata-source-live-result.json
+            scryfall-carddata-source-live-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14

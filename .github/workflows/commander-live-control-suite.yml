@@ -1,0 +1,229 @@
+name: Commander Live Control Suite
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "scripts/**"
+      - "testdata/**"
+      - ".github/workflows/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: commander-live-suite-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  LIVE_CONTROL_COOLDOWN_SECONDS: 30
+  LIVE_BUDGET_COOLDOWN_SECONDS: 60
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  core-live-controls:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - name: Install dependencies once
+        run: npm ci
+
+      - name: Type-check and build once
+        run: npm run build
+
+      - name: Report live validation recovery policy
+        run: |
+          printf '%s\n' \
+            "Ordinary cooldown: ${LIVE_CONTROL_COOLDOWN_SECONDS}s" \
+            "Budget/theme cooldown: ${LIVE_BUDGET_COOLDOWN_SECONDS}s" \
+            "HTTP retry base/max: ${HTTP_RETRY_BASE_MS}/${HTTP_RETRY_MAX_MS}ms" \
+            "Scryfall minimum request gap: ${SCRYFALL_MIN_REQUEST_GAP_MS}ms" \
+            "Scryfall attempts: ${SCRYFALL_HTTP_RETRY_ATTEMPTS}" \
+            "Commander Spellbook attempts: ${COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS}"
+
+      - name: FF Najeela high-Bracket-4 control
+        id: ff_najeela
+        continue-on-error: true
+        run: npx tsx scripts/e2e-ff-najeela-bracket4-v15.ts
+
+      - name: Cool down live providers after FF Najeela
+        if: ${{ !cancelled() }}
+        run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
+
+      - name: FF neutral autonomous build control
+        id: ff_neutral
+        continue-on-error: true
+        run: npx tsx scripts/e2e-ff-neutral-build-v15.ts
+
+      - name: Upload FF neutral result
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: suite-ff-neutral-${{ github.sha }}
+          path: |
+            ff-neutral-build-result.json
+            ff-neutral-build-selected-deck.txt
+            ff-neutral-build-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Cool down live providers after FF neutral
+        if: ${{ !cancelled() }}
+        run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
+
+      - name: Final Fantasy Bracket 5 target control
+        id: ff_bracket5
+        continue-on-error: true
+        run: npx tsx scripts/e2e-ff-bracket5.ts
+
+      - name: Cool down live providers after FF Bracket 5
+        if: ${{ !cancelled() }}
+        run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
+
+      - name: Unrestricted cEDH control
+        id: unrestricted_cedh
+        continue-on-error: true
+        run: npx tsx scripts/e2e-unrestricted-cedh-v15.ts
+
+      - name: Cool down live providers after unrestricted cEDH
+        if: ${{ !cancelled() }}
+        run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
+
+      - name: Universal Commander build pipeline control
+        id: universal_pipeline
+        continue-on-error: true
+        run: npx tsx scripts/e2e-universal-build-pipeline-v15.ts
+
+      - name: Upload universal pipeline result
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: suite-universal-build-${{ github.sha }}
+          path: |
+            universal-build-pipeline-live-result.json
+            universal-build-pipeline-live-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Cool down live providers after universal pipeline
+        if: ${{ !cancelled() }}
+        run: sleep "$LIVE_CONTROL_COOLDOWN_SECONDS"
+
+      - name: Unrestricted neutral Commander build control
+        id: unrestricted_neutral
+        continue-on-error: true
+        run: npx tsx scripts/e2e-unrestricted-neutral-build-v15.ts
+
+      - name: Upload unrestricted neutral result
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: suite-unrestricted-neutral-${{ github.sha }}
+          path: |
+            unrestricted-neutral-build-live-result.json
+            unrestricted-neutral-build-live-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Cool down live providers before neutral theme control
+        if: ${{ !cancelled() }}
+        run: sleep "$LIVE_BUDGET_COOLDOWN_SECONDS"
+
+      - name: Neutral free-form theme control
+        id: neutral_theme
+        continue-on-error: true
+        run: npx tsx scripts/e2e-neutral-theme-v15.ts
+
+      - name: Upload neutral theme result
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: suite-neutral-theme-${{ github.sha }}
+          path: |
+            neutral-theme-live-result.json
+            neutral-theme-live-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Cool down live providers before deep budget printing search
+        if: ${{ !cancelled() }}
+        run: sleep "$LIVE_BUDGET_COOLDOWN_SECONDS"
+
+      - name: Neutral exact per-card budget control
+        id: neutral_budget
+        continue-on-error: true
+        run: npx tsx scripts/e2e-neutral-exact-per-card-budget-v15.ts
+
+      - name: Upload neutral exact-budget result
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: suite-neutral-exact-budget-${{ github.sha }}
+          path: |
+            neutral-exact-per-card-budget-live-result.json
+            neutral-exact-per-card-budget-live-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Cool down live providers before FF budget composition
+        if: ${{ !cancelled() }}
+        run: sleep "$LIVE_BUDGET_COOLDOWN_SECONDS"
+
+      - name: Neutral Final Fantasy exact-budget control
+        id: ff_budget
+        continue-on-error: true
+        run: npx tsx scripts/e2e-neutral-ff-exact-budget-v15.ts
+
+      - name: Upload FF exact-budget result
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: suite-neutral-ff-budget-${{ github.sha }}
+          path: |
+            neutral-ff-exact-budget-live-result.json
+            neutral-ff-exact-budget-live-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Require every core live control to pass
+        if: always()
+        env:
+          FF_NAJEELA: ${{ steps.ff_najeela.outcome }}
+          FF_NEUTRAL: ${{ steps.ff_neutral.outcome }}
+          FF_BRACKET5: ${{ steps.ff_bracket5.outcome }}
+          UNRESTRICTED_CEDH: ${{ steps.unrestricted_cedh.outcome }}
+          UNIVERSAL_PIPELINE: ${{ steps.universal_pipeline.outcome }}
+          UNRESTRICTED_NEUTRAL: ${{ steps.unrestricted_neutral.outcome }}
+          NEUTRAL_THEME: ${{ steps.neutral_theme.outcome }}
+          NEUTRAL_BUDGET: ${{ steps.neutral_budget.outcome }}
+          FF_BUDGET: ${{ steps.ff_budget.outcome }}
+        run: |
+          printf '%s\n' \
+            "FF Najeela B4: $FF_NAJEELA" \
+            "FF neutral: $FF_NEUTRAL" \
+            "FF Bracket 5: $FF_BRACKET5" \
+            "Unrestricted cEDH: $UNRESTRICTED_CEDH" \
+            "Universal pipeline: $UNIVERSAL_PIPELINE" \
+            "Unrestricted neutral: $UNRESTRICTED_NEUTRAL" \
+            "Neutral theme: $NEUTRAL_THEME" \
+            "Neutral exact budget: $NEUTRAL_BUDGET" \
+            "FF exact budget: $FF_BUDGET"
+          for result in "$FF_NAJEELA" "$FF_NEUTRAL" "$FF_BRACKET5" "$UNRESTRICTED_CEDH" "$UNIVERSAL_PIPELINE" "$UNRESTRICTED_NEUTRAL" "$NEUTRAL_THEME" "$NEUTRAL_BUDGET" "$FF_BUDGET"; do
+            if [ "$result" != "success" ]; then
+              exit 1
+            fi
+          done

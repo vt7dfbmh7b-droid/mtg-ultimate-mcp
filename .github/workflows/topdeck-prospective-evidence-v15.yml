@@ -1,0 +1,200 @@
+name: TopDeck Prospective Evidence V0.15
+
+on:
+  workflow_dispatch:
+    inputs:
+      tournament_id:
+        description: TopDeck tournament ID to capture
+        required: true
+        type: string
+      phase:
+        description: Capture exact decks before start, provider end timing, or exact completed result
+        required: true
+        type: choice
+        options:
+          - pre-event
+          - event-end
+          - completed-event
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: topdeck-prospective-evidence-${{ inputs.tournament_id }}-${{ inputs.phase }}
+  cancel-in-progress: false
+
+env:
+  PRIVATE_FILE: topdeck-prospective-private-evidence-v15.json
+  AUDIT_FILE: topdeck-prospective-audit-v15.json
+  DESCRIPTOR_FILE: topdeck-prospective-private-oci-descriptor-v15.json
+  PACKAGE_NAME: mtg-ultimate-mcp-topdeck-evidence
+  ARTIFACT_TYPE: application/vnd.mtg-ultimate.topdeck-prospective-evidence.v1
+  LAYER_MEDIA_TYPE: application/vnd.mtg-ultimate.topdeck-prospective-evidence.v1+json
+
+jobs:
+  capture:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check and build
+        run: npm run build
+
+      - name: Set up ORAS
+        uses: oras-project/setup-oras@22ce207df3b08e061f537244349aac6ae1d214f6
+        with:
+          version: 1.3.3
+
+      - name: Verify any existing evidence package is private
+        id: privacy_precheck
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          OWNER=$(printf '%s' "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          ENCODED_PACKAGE=$(node -e "process.stdout.write(encodeURIComponent(process.env.PACKAGE_NAME))")
+          RESPONSE_FILE=$(mktemp)
+          HTTP_CODE=$(curl -sS -o "$RESPONSE_FILE" -w '%{http_code}' \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/users/${OWNER}/packages/container/${ENCODED_PACKAGE}")
+          if [[ "$HTTP_CODE" == "200" ]]; then
+            VISIBILITY=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));process.stdout.write(String(x.visibility||''))" "$RESPONSE_FILE")
+            if [[ "$VISIBILITY" != "private" ]]; then
+              echo "Refusing TopDeck evidence write because existing GHCR package visibility is ${VISIBILITY:-unknown}, not private." >&2
+              exit 1
+            fi
+            echo "package_exists=true" >> "$GITHUB_OUTPUT"
+          elif [[ "$HTTP_CODE" == "404" ]]; then
+            echo "package_exists=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Could not verify GHCR package visibility; GitHub API returned HTTP $HTTP_CODE." >&2
+            exit 1
+          fi
+          rm -f "$RESPONSE_FILE"
+
+      - name: Capture prospective TopDeck evidence
+        id: capture
+        env:
+          TOPDECK_API_KEY: ${{ secrets.TOPDECK_API_KEY }}
+          TOPDECK_TOURNAMENT_ID: ${{ inputs.tournament_id }}
+          TOPDECK_CAPTURE_PHASE: ${{ inputs.phase }}
+          TOPDECK_PROSPECTIVE_PRIVATE_PATH: ${{ env.PRIVATE_FILE }}
+          TOPDECK_PROSPECTIVE_AUDIT_PATH: ${{ env.AUDIT_FILE }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx tsx scripts/capture-topdeck-prospective-evidence-v15.ts
+          EVENT_HASH=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.env.AUDIT_FILE,'utf8'));process.stdout.write(x.providerEventFingerprint||'')")
+          STATUS=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.env.AUDIT_FILE,'utf8'));process.stdout.write(x.status||'')")
+          if [[ ! "$EVENT_HASH" =~ ^[a-f0-9]{64}$ ]]; then
+            echo "Prospective audit did not produce a valid event fingerprint." >&2
+            exit 1
+          fi
+          echo "event_hash=$EVENT_HASH" >> "$GITHUB_OUTPUT"
+          echo "capture_status=$STATUS" >> "$GITHUB_OUTPUT"
+
+      - name: Log in to GitHub Container Registry
+        if: ${{ steps.capture.outputs.capture_status == 'captured' }}
+        shell: bash
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | oras login ghcr.io --username "${{ github.actor }}" --password-stdin
+
+      - name: Push sensitive replay evidence to private GHCR package
+        if: ${{ steps.capture.outputs.capture_status == 'captured' }}
+        id: push
+        shell: bash
+        env:
+          EVENT_HASH: ${{ steps.capture.outputs.event_hash }}
+        run: |
+          set -euo pipefail
+          test -f "$PRIVATE_FILE"
+          OWNER=$(printf '%s' "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          REPOSITORY="ghcr.io/${OWNER}/${PACKAGE_NAME}"
+          TAG="${{ inputs.phase }}-${EVENT_HASH:0:20}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          TAGGED_REFERENCE="${REPOSITORY}:${TAG}"
+
+          oras push \
+            --artifact-type "$ARTIFACT_TYPE" \
+            "$TAGGED_REFERENCE" \
+            "$PRIVATE_FILE:$LAYER_MEDIA_TYPE"
+
+          oras manifest fetch --descriptor "$TAGGED_REFERENCE" > "$DESCRIPTOR_FILE"
+          DIGEST=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.env.DESCRIPTOR_FILE,'utf8'));process.stdout.write(x.digest||'')")
+          if [[ ! "$DIGEST" =~ ^sha256:[a-f0-9]{64}$ ]]; then
+            echo "Private TopDeck evidence descriptor did not contain an immutable SHA-256 digest." >&2
+            exit 1
+          fi
+          echo "artifact_reference=${REPOSITORY}@${DIGEST}" >> "$GITHUB_OUTPUT"
+
+      - name: Verify evidence package remained private after write
+        if: ${{ steps.capture.outputs.capture_status == 'captured' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          OWNER=$(printf '%s' "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          ENCODED_PACKAGE=$(node -e "process.stdout.write(encodeURIComponent(process.env.PACKAGE_NAME))")
+          RESPONSE_FILE=$(mktemp)
+          HTTP_CODE=$(curl -sS -o "$RESPONSE_FILE" -w '%{http_code}' \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/users/${OWNER}/packages/container/${ENCODED_PACKAGE}")
+          if [[ "$HTTP_CODE" != "200" ]]; then
+            echo "Could not verify GHCR evidence package after write; HTTP $HTTP_CODE." >&2
+            exit 1
+          fi
+          VISIBILITY=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));process.stdout.write(String(x.visibility||''))" "$RESPONSE_FILE")
+          rm -f "$RESPONSE_FILE"
+          if [[ "$VISIBILITY" != "private" ]]; then
+            echo "TopDeck evidence package is not private after write; refusing to continue." >&2
+            exit 1
+          fi
+
+      - name: Add immutable private artifact reference to privacy-safe audit
+        if: ${{ steps.capture.outputs.capture_status == 'captured' }}
+        env:
+          PRIVATE_ARTIFACT_REFERENCE: ${{ steps.push.outputs.artifact_reference }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('node:fs');
+          const path = process.env.AUDIT_FILE;
+          const audit = JSON.parse(fs.readFileSync(path, 'utf8'));
+          audit.privateEvidenceStorage = {
+            kind: 'ghcr-private-oci',
+            immutableArtifactReference: process.env.PRIVATE_ARTIFACT_REFERENCE,
+          };
+          fs.writeFileSync(path, `${JSON.stringify(audit, null, 2)}\n`, 'utf8');
+          NODE
+
+      - name: Upload privacy-safe audit only
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: topdeck-prospective-audit-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.AUDIT_FILE }}
+            ${{ env.DESCRIPTOR_FILE }}
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Remove sensitive evidence from runner workspace
+        if: always()
+        shell: bash
+        run: rm -f "$PRIVATE_FILE"
