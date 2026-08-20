@@ -65,7 +65,10 @@ function replacementAudit(): TutorReplacementIntelligenceV15 {
       sourceTutorName: 'Premium Tutor',
       sourcePrice: {} as TutorReplacementIntelligenceV15['sources'][number]['sourcePrice'],
       sourceCoversPieces: ['Piece B'],
-      replacements: [{ replacementTutorName: 'Budget Tutor' } as TutorReplacementIntelligenceV15['sources'][number]['replacements'][number]],
+      replacements: [{
+        sourceTutorName: 'Premium Tutor',
+        replacementTutorName: 'Budget Tutor',
+      } as TutorReplacementIntelligenceV15['sources'][number]['replacements'][number]],
       rejected: [],
     }],
     candidatePool: {
