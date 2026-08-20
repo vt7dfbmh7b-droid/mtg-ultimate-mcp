@@ -1,0 +1,2535 @@
+{
+  "schema": "middle-earth-four-card-package-audit-v15.1",
+  "allowedSets": [
+    "LTR",
+    "LTC",
+    "HOB",
+    "HOC"
+  ],
+  "maxPackageCards": 4,
+  "commandersAudited": 12,
+  "commandersWithVerifiedPackages": 0,
+  "results": [
+    {
+      "candidate": "Tom Bombadil",
+      "commanderNames": [
+        "Tom Bombadil"
+      ],
+      "colorIdentity": [
+        "B",
+        "G",
+        "R",
+        "U",
+        "W"
+      ],
+      "status": "no-verified-win-package",
+      "sourceCompleteness": "complete",
+      "selected": null,
+      "candidates": [],
+      "portfolio": {
+        "primaryComboId": null,
+        "backupComboId": null,
+        "verifiedCandidateCount": 0,
+        "distinctLibraryRouteCount": 0,
+        "fullyIndependentRouteCount": 0,
+        "sharedCoreCandidateCount": 0,
+        "resilienceBand": "none",
+        "relationships": [],
+        "selectionRationale": "No candidate supplied strict deterministic game-ending closure evidence."
+      },
+      "queryAudit": [
+        {
+          "query": "card<=2 is:winning legal:commander identity<=WUBRG",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=3 is:winning legal:commander identity<=WUBRG",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=4 is:winning legal:commander identity<=WUBRG",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        }
+      ],
+      "rejectionAudit": [
+        {
+          "comboId": "742-1295",
+          "status": "rejected",
+          "reasons": [
+            "Demonic Consultation: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1295-3093",
+          "status": "rejected",
+          "reasons": [
+            "Tainted Pact: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-790",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Windfall: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-2856",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Mystical Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3011-4847",
+          "status": "rejected",
+          "reasons": [
+            "Solphim, Mayhem Dominus: no eligible physical printing",
+            "Heartless Hidetsugu: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "936-5069",
+          "status": "rejected",
+          "reasons": [
+            "Duskmantle Guildmage: no eligible physical printing",
+            "Mindcrank: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-1891",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "181-1571",
+          "status": "rejected",
+          "reasons": [
+            "Cybermen Squadron: no eligible physical printing",
+            "Blightsteel Colossus: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "5069-5080",
+          "status": "rejected",
+          "reasons": [
+            "Duskmantle Guildmage: no eligible physical printing",
+            "Maddening Cacophony: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2429-5211",
+          "status": "rejected",
+          "reasons": [
+            "Brass's Bounty: no eligible physical printing",
+            "Revel in Riches: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1295-3189",
+          "status": "rejected",
+          "reasons": [
+            "Doomsday: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "742-2836",
+          "status": "rejected",
+          "reasons": [
+            "Demonic Consultation: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3063-3164",
+          "status": "rejected",
+          "reasons": [
+            "Maze's End: no eligible physical printing",
+            "Reshape the Earth: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2868-4629",
+          "status": "rejected",
+          "reasons": [
+            "Ojer Axonil, Deepest Might // Temple of Power: unresolved",
+            "Pyrohemia: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-3096",
+          "status": "rejected",
+          "reasons": [
+            "Jace, Wielder of Mysteries: no eligible physical printing",
+            "Enter the Infinite: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-1295",
+          "status": "rejected",
+          "reasons": [
+            "Enter the Infinite: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "11-553",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Narset's Reversal: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2047-5471",
+          "status": "rejected",
+          "reasons": [
+            "Obeka, Splitter of Seconds: no eligible physical printing",
+            "Mechanized Production: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "523-3263",
+          "status": "rejected",
+          "reasons": [
+            "Mycosynth Lattice: no eligible physical printing",
+            "Hellkite Tyrant: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1295-4400",
+          "status": "rejected",
+          "reasons": [
+            "Hermit Druid: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "Aragorn, the Uniter",
+      "commanderNames": [
+        "Aragorn, the Uniter"
+      ],
+      "colorIdentity": [
+        "G",
+        "R",
+        "U",
+        "W"
+      ],
+      "status": "no-verified-win-package",
+      "sourceCompleteness": "complete",
+      "selected": null,
+      "candidates": [],
+      "portfolio": {
+        "primaryComboId": null,
+        "backupComboId": null,
+        "verifiedCandidateCount": 0,
+        "distinctLibraryRouteCount": 0,
+        "fullyIndependentRouteCount": 0,
+        "sharedCoreCandidateCount": 0,
+        "resilienceBand": "none",
+        "relationships": [],
+        "selectionRationale": "No candidate supplied strict deterministic game-ending closure evidence."
+      },
+      "queryAudit": [
+        {
+          "query": "card<=2 is:winning legal:commander identity<=WURG",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=3 is:winning legal:commander identity<=WURG",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=4 is:winning legal:commander identity<=WURG",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        }
+      ],
+      "rejectionAudit": [
+        {
+          "comboId": "553-790",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Windfall: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-2856",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Mystical Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3011-4847",
+          "status": "rejected",
+          "reasons": [
+            "Solphim, Mayhem Dominus: no eligible physical printing",
+            "Heartless Hidetsugu: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-1891",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "181-1571",
+          "status": "rejected",
+          "reasons": [
+            "Cybermen Squadron: no eligible physical printing",
+            "Blightsteel Colossus: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3063-3164",
+          "status": "rejected",
+          "reasons": [
+            "Maze's End: no eligible physical printing",
+            "Reshape the Earth: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2868-4629",
+          "status": "rejected",
+          "reasons": [
+            "Ojer Axonil, Deepest Might // Temple of Power: unresolved",
+            "Pyrohemia: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-3096",
+          "status": "rejected",
+          "reasons": [
+            "Jace, Wielder of Mysteries: no eligible physical printing",
+            "Enter the Infinite: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-1295",
+          "status": "rejected",
+          "reasons": [
+            "Enter the Infinite: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "11-553",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Narset's Reversal: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "523-3263",
+          "status": "rejected",
+          "reasons": [
+            "Mycosynth Lattice: no eligible physical printing",
+            "Hellkite Tyrant: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1295-4400",
+          "status": "rejected",
+          "reasons": [
+            "Hermit Druid: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-7164",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Solve the Equation: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1744-2743",
+          "status": "rejected",
+          "reasons": [
+            "Biovisionary: no eligible physical printing",
+            "Rite of Replication: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-1271",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Scroll Rack: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-1295",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3063-3261",
+          "status": "rejected",
+          "reasons": [
+            "Maze's End: no eligible physical printing",
+            "Scapeshift: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-2836",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2047-5443",
+          "status": "rejected",
+          "reasons": [
+            "Officious Interrogation: no eligible physical printing",
+            "Mechanized Production: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2836-4400",
+          "status": "rejected",
+          "reasons": [
+            "Hermit Druid: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "Sauron, the Dark Lord",
+      "commanderNames": [
+        "Sauron, the Dark Lord"
+      ],
+      "colorIdentity": [
+        "B",
+        "R",
+        "U"
+      ],
+      "status": "no-verified-win-package",
+      "sourceCompleteness": "complete",
+      "selected": null,
+      "candidates": [],
+      "portfolio": {
+        "primaryComboId": null,
+        "backupComboId": null,
+        "verifiedCandidateCount": 0,
+        "distinctLibraryRouteCount": 0,
+        "fullyIndependentRouteCount": 0,
+        "sharedCoreCandidateCount": 0,
+        "resilienceBand": "none",
+        "relationships": [],
+        "selectionRationale": "No candidate supplied strict deterministic game-ending closure evidence."
+      },
+      "queryAudit": [
+        {
+          "query": "card<=2 is:winning legal:commander identity<=UBR",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=3 is:winning legal:commander identity<=UBR",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=4 is:winning legal:commander identity<=UBR",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        }
+      ],
+      "rejectionAudit": [
+        {
+          "comboId": "742-1295",
+          "status": "rejected",
+          "reasons": [
+            "Demonic Consultation: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1295-3093",
+          "status": "rejected",
+          "reasons": [
+            "Tainted Pact: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3011-4847",
+          "status": "rejected",
+          "reasons": [
+            "Solphim, Mayhem Dominus: no eligible physical printing",
+            "Heartless Hidetsugu: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "936-5069",
+          "status": "rejected",
+          "reasons": [
+            "Duskmantle Guildmage: no eligible physical printing",
+            "Mindcrank: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "181-1571",
+          "status": "rejected",
+          "reasons": [
+            "Cybermen Squadron: no eligible physical printing",
+            "Blightsteel Colossus: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "5069-5080",
+          "status": "rejected",
+          "reasons": [
+            "Duskmantle Guildmage: no eligible physical printing",
+            "Maddening Cacophony: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2429-5211",
+          "status": "rejected",
+          "reasons": [
+            "Brass's Bounty: no eligible physical printing",
+            "Revel in Riches: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1295-3189",
+          "status": "rejected",
+          "reasons": [
+            "Doomsday: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "742-2836",
+          "status": "rejected",
+          "reasons": [
+            "Demonic Consultation: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2868-4629",
+          "status": "rejected",
+          "reasons": [
+            "Ojer Axonil, Deepest Might // Temple of Power: unresolved",
+            "Pyrohemia: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-3096",
+          "status": "rejected",
+          "reasons": [
+            "Jace, Wielder of Mysteries: no eligible physical printing",
+            "Enter the Infinite: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-1295",
+          "status": "rejected",
+          "reasons": [
+            "Enter the Infinite: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2047-5471",
+          "status": "rejected",
+          "reasons": [
+            "Obeka, Splitter of Seconds: no eligible physical printing",
+            "Mechanized Production: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "523-3263",
+          "status": "rejected",
+          "reasons": [
+            "Mycosynth Lattice: no eligible physical printing",
+            "Hellkite Tyrant: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2836-3093",
+          "status": "rejected",
+          "reasons": [
+            "Tainted Pact: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "742-3096",
+          "status": "rejected",
+          "reasons": [
+            "Demonic Consultation: no eligible physical printing",
+            "Jace, Wielder of Mysteries: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-1295",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-2836",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3093-3096",
+          "status": "rejected",
+          "reasons": [
+            "Tainted Pact: no eligible physical printing",
+            "Jace, Wielder of Mysteries: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2047-6465",
+          "status": "rejected",
+          "reasons": [
+            "James, Wandering Dad // Follow Him: unresolved",
+            "Mechanized Production: no eligible physical printing"
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "Frodo + Sam",
+      "commanderNames": [
+        "Frodo, Adventurous Hobbit",
+        "Sam, Loyal Attendant"
+      ],
+      "colorIdentity": [
+        "B",
+        "G",
+        "W"
+      ],
+      "status": "no-verified-win-package",
+      "sourceCompleteness": "complete",
+      "selected": null,
+      "candidates": [],
+      "portfolio": {
+        "primaryComboId": null,
+        "backupComboId": null,
+        "verifiedCandidateCount": 0,
+        "distinctLibraryRouteCount": 0,
+        "fullyIndependentRouteCount": 0,
+        "sharedCoreCandidateCount": 0,
+        "resilienceBand": "none",
+        "relationships": [],
+        "selectionRationale": "No candidate supplied strict deterministic game-ending closure evidence."
+      },
+      "queryAudit": [
+        {
+          "query": "card<=2 is:winning legal:commander identity<=WBG",
+          "returned": 73,
+          "totalMatching": 73,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=3 is:winning legal:commander identity<=WBG",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=4 is:winning legal:commander identity<=WBG",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        }
+      ],
+      "rejectionAudit": [
+        {
+          "comboId": "553-1891",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "181-1571",
+          "status": "rejected",
+          "reasons": [
+            "Cybermen Squadron: no eligible physical printing",
+            "Blightsteel Colossus: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3063-3164",
+          "status": "rejected",
+          "reasons": [
+            "Maze's End: no eligible physical printing",
+            "Reshape the Earth: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2429-3340",
+          "status": "rejected",
+          "reasons": [
+            "Bootleggers' Stash: no eligible physical printing",
+            "Revel in Riches: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-1271",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Scroll Rack: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1800-2429",
+          "status": "rejected",
+          "reasons": [
+            "Old Gnawbone: no eligible physical printing",
+            "Revel in Riches: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-4105",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Demonic Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3063-3261",
+          "status": "rejected",
+          "reasons": [
+            "Maze's End: no eligible physical printing",
+            "Scapeshift: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-1827",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Vampiric Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2612-5035",
+          "status": "rejected",
+          "reasons": [
+            "Plague of Vermin: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "182-6323",
+          "status": "rejected",
+          "reasons": [
+            "Jarad, Golgari Lich Lord: no eligible physical printing",
+            "Jumbo Cactuar: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1571-3851",
+          "status": "rejected",
+          "reasons": [
+            "Blightsteel Colossus: no eligible physical printing",
+            "Blade of Selves: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-5273",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Diabolic Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "182-2749",
+          "status": "rejected",
+          "reasons": [
+            "Jarad, Golgari Lich Lord: no eligible physical printing",
+            "Wall of Blood: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "4475-4794",
+          "status": "rejected",
+          "reasons": [
+            "Fraying Omnipotence: no eligible physical printing",
+            "Wound Reflection: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "4794-5342",
+          "status": "rejected",
+          "reasons": [
+            "Bloodletter of Aclazotz: no eligible physical printing",
+            "Fraying Omnipotence: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "156-5342",
+          "status": "rejected",
+          "reasons": [
+            "Bloodletter of Aclazotz: no eligible physical printing",
+            "Scourge of the Skyclaves: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "4179-5610",
+          "status": "rejected",
+          "reasons": [
+            "Hydra Omnivore: no eligible physical printing",
+            "Triumph of the Hordes: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3681-6714",
+          "status": "rejected",
+          "reasons": [
+            "Super State: no eligible physical printing",
+            "Grafted Exoskeleton: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "5342-7319",
+          "status": "rejected",
+          "reasons": [
+            "Shredder, Shadow Master: no eligible physical printing",
+            "Bloodletter of Aclazotz: no eligible physical printing"
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "Galadriel, Light of Valinor",
+      "commanderNames": [
+        "Galadriel, Light of Valinor"
+      ],
+      "colorIdentity": [
+        "G",
+        "U",
+        "W"
+      ],
+      "status": "no-verified-win-package",
+      "sourceCompleteness": "complete",
+      "selected": null,
+      "candidates": [],
+      "portfolio": {
+        "primaryComboId": null,
+        "backupComboId": null,
+        "verifiedCandidateCount": 0,
+        "distinctLibraryRouteCount": 0,
+        "fullyIndependentRouteCount": 0,
+        "sharedCoreCandidateCount": 0,
+        "resilienceBand": "none",
+        "relationships": [],
+        "selectionRationale": "No candidate supplied strict deterministic game-ending closure evidence."
+      },
+      "queryAudit": [
+        {
+          "query": "card<=2 is:winning legal:commander identity<=WUG",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=3 is:winning legal:commander identity<=WUG",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=4 is:winning legal:commander identity<=WUG",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        }
+      ],
+      "rejectionAudit": [
+        {
+          "comboId": "553-790",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Windfall: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-2856",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Mystical Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-1891",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "181-1571",
+          "status": "rejected",
+          "reasons": [
+            "Cybermen Squadron: no eligible physical printing",
+            "Blightsteel Colossus: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3063-3164",
+          "status": "rejected",
+          "reasons": [
+            "Maze's End: no eligible physical printing",
+            "Reshape the Earth: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-3096",
+          "status": "rejected",
+          "reasons": [
+            "Jace, Wielder of Mysteries: no eligible physical printing",
+            "Enter the Infinite: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-1295",
+          "status": "rejected",
+          "reasons": [
+            "Enter the Infinite: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "11-553",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Narset's Reversal: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1295-4400",
+          "status": "rejected",
+          "reasons": [
+            "Hermit Druid: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-7164",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Solve the Equation: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1744-2743",
+          "status": "rejected",
+          "reasons": [
+            "Biovisionary: no eligible physical printing",
+            "Rite of Replication: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-1271",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Scroll Rack: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-1295",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3063-3261",
+          "status": "rejected",
+          "reasons": [
+            "Maze's End: no eligible physical printing",
+            "Scapeshift: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-2836",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2047-5443",
+          "status": "rejected",
+          "reasons": [
+            "Officious Interrogation: no eligible physical printing",
+            "Mechanized Production: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2836-4400",
+          "status": "rejected",
+          "reasons": [
+            "Hermit Druid: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-2674",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Personal Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2047-6465",
+          "status": "rejected",
+          "reasons": [
+            "James, Wandering Dad // Follow Him: unresolved",
+            "Mechanized Production: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1427-2047",
+          "status": "rejected",
+          "reasons": [
+            "Mechanized Production: no eligible physical printing",
+            "Masterful Replication: no eligible physical printing"
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "Éowyn, Shieldmaiden",
+      "commanderNames": [
+        "Éowyn, Shieldmaiden"
+      ],
+      "colorIdentity": [
+        "R",
+        "U",
+        "W"
+      ],
+      "status": "no-verified-win-package",
+      "sourceCompleteness": "complete",
+      "selected": null,
+      "candidates": [],
+      "portfolio": {
+        "primaryComboId": null,
+        "backupComboId": null,
+        "verifiedCandidateCount": 0,
+        "distinctLibraryRouteCount": 0,
+        "fullyIndependentRouteCount": 0,
+        "sharedCoreCandidateCount": 0,
+        "resilienceBand": "none",
+        "relationships": [],
+        "selectionRationale": "No candidate supplied strict deterministic game-ending closure evidence."
+      },
+      "queryAudit": [
+        {
+          "query": "card<=2 is:winning legal:commander identity<=WUR",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=3 is:winning legal:commander identity<=WUR",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=4 is:winning legal:commander identity<=WUR",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        }
+      ],
+      "rejectionAudit": [
+        {
+          "comboId": "553-790",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Windfall: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-2856",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Mystical Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3011-4847",
+          "status": "rejected",
+          "reasons": [
+            "Solphim, Mayhem Dominus: no eligible physical printing",
+            "Heartless Hidetsugu: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-1891",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "181-1571",
+          "status": "rejected",
+          "reasons": [
+            "Cybermen Squadron: no eligible physical printing",
+            "Blightsteel Colossus: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2868-4629",
+          "status": "rejected",
+          "reasons": [
+            "Ojer Axonil, Deepest Might // Temple of Power: unresolved",
+            "Pyrohemia: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-3096",
+          "status": "rejected",
+          "reasons": [
+            "Jace, Wielder of Mysteries: no eligible physical printing",
+            "Enter the Infinite: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-1295",
+          "status": "rejected",
+          "reasons": [
+            "Enter the Infinite: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "11-553",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Narset's Reversal: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "523-3263",
+          "status": "rejected",
+          "reasons": [
+            "Mycosynth Lattice: no eligible physical printing",
+            "Hellkite Tyrant: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-7164",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Solve the Equation: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-1271",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Scroll Rack: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-1295",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-2836",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2047-5443",
+          "status": "rejected",
+          "reasons": [
+            "Officious Interrogation: no eligible physical printing",
+            "Mechanized Production: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-2674",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Personal Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2047-6465",
+          "status": "rejected",
+          "reasons": [
+            "James, Wandering Dad // Follow Him: unresolved",
+            "Mechanized Production: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1427-2047",
+          "status": "rejected",
+          "reasons": [
+            "Mechanized Production: no eligible physical printing",
+            "Masterful Replication: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2199-4800",
+          "status": "rejected",
+          "reasons": [
+            "Frenetic Efreet: no eligible physical printing",
+            "Chance Encounter: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-3096",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Jace, Wielder of Mysteries: no eligible physical printing"
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "Bilbo, Birthday Celebrant",
+      "commanderNames": [
+        "Bilbo, Birthday Celebrant"
+      ],
+      "colorIdentity": [
+        "B",
+        "G",
+        "W"
+      ],
+      "status": "no-verified-win-package",
+      "sourceCompleteness": "complete",
+      "selected": null,
+      "candidates": [],
+      "portfolio": {
+        "primaryComboId": null,
+        "backupComboId": null,
+        "verifiedCandidateCount": 0,
+        "distinctLibraryRouteCount": 0,
+        "fullyIndependentRouteCount": 0,
+        "sharedCoreCandidateCount": 0,
+        "resilienceBand": "none",
+        "relationships": [],
+        "selectionRationale": "No candidate supplied strict deterministic game-ending closure evidence."
+      },
+      "queryAudit": [
+        {
+          "query": "card<=2 is:winning legal:commander identity<=WBG",
+          "returned": 73,
+          "totalMatching": 73,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=3 is:winning legal:commander identity<=WBG",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=4 is:winning legal:commander identity<=WBG",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        }
+      ],
+      "rejectionAudit": [
+        {
+          "comboId": "553-1891",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "181-1571",
+          "status": "rejected",
+          "reasons": [
+            "Cybermen Squadron: no eligible physical printing",
+            "Blightsteel Colossus: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3063-3164",
+          "status": "rejected",
+          "reasons": [
+            "Maze's End: no eligible physical printing",
+            "Reshape the Earth: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2429-3340",
+          "status": "rejected",
+          "reasons": [
+            "Bootleggers' Stash: no eligible physical printing",
+            "Revel in Riches: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-1271",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Scroll Rack: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1800-2429",
+          "status": "rejected",
+          "reasons": [
+            "Old Gnawbone: no eligible physical printing",
+            "Revel in Riches: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-4105",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Demonic Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3063-3261",
+          "status": "rejected",
+          "reasons": [
+            "Maze's End: no eligible physical printing",
+            "Scapeshift: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-1827",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Vampiric Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2612-5035",
+          "status": "rejected",
+          "reasons": [
+            "Plague of Vermin: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "182-6323",
+          "status": "rejected",
+          "reasons": [
+            "Jarad, Golgari Lich Lord: no eligible physical printing",
+            "Jumbo Cactuar: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1571-3851",
+          "status": "rejected",
+          "reasons": [
+            "Blightsteel Colossus: no eligible physical printing",
+            "Blade of Selves: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-5273",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Diabolic Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "182-2749",
+          "status": "rejected",
+          "reasons": [
+            "Jarad, Golgari Lich Lord: no eligible physical printing",
+            "Wall of Blood: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "4475-4794",
+          "status": "rejected",
+          "reasons": [
+            "Fraying Omnipotence: no eligible physical printing",
+            "Wound Reflection: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "4794-5342",
+          "status": "rejected",
+          "reasons": [
+            "Bloodletter of Aclazotz: no eligible physical printing",
+            "Fraying Omnipotence: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "156-5342",
+          "status": "rejected",
+          "reasons": [
+            "Bloodletter of Aclazotz: no eligible physical printing",
+            "Scourge of the Skyclaves: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "4179-5610",
+          "status": "rejected",
+          "reasons": [
+            "Hydra Omnivore: no eligible physical printing",
+            "Triumph of the Hordes: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3681-6714",
+          "status": "rejected",
+          "reasons": [
+            "Super State: no eligible physical printing",
+            "Grafted Exoskeleton: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "5342-7319",
+          "status": "rejected",
+          "reasons": [
+            "Shredder, Shadow Master: no eligible physical printing",
+            "Bloodletter of Aclazotz: no eligible physical printing"
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "Saruman of Many Colors",
+      "commanderNames": [
+        "Saruman of Many Colors"
+      ],
+      "colorIdentity": [
+        "B",
+        "U",
+        "W"
+      ],
+      "status": "no-verified-win-package",
+      "sourceCompleteness": "complete",
+      "selected": null,
+      "candidates": [],
+      "portfolio": {
+        "primaryComboId": null,
+        "backupComboId": null,
+        "verifiedCandidateCount": 0,
+        "distinctLibraryRouteCount": 0,
+        "fullyIndependentRouteCount": 0,
+        "sharedCoreCandidateCount": 0,
+        "resilienceBand": "none",
+        "relationships": [],
+        "selectionRationale": "No candidate supplied strict deterministic game-ending closure evidence."
+      },
+      "queryAudit": [
+        {
+          "query": "card<=2 is:winning legal:commander identity<=WUB",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=3 is:winning legal:commander identity<=WUB",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=4 is:winning legal:commander identity<=WUB",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        }
+      ],
+      "rejectionAudit": [
+        {
+          "comboId": "742-1295",
+          "status": "rejected",
+          "reasons": [
+            "Demonic Consultation: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1295-3093",
+          "status": "rejected",
+          "reasons": [
+            "Tainted Pact: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-790",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Windfall: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-2856",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Mystical Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "936-5069",
+          "status": "rejected",
+          "reasons": [
+            "Duskmantle Guildmage: no eligible physical printing",
+            "Mindcrank: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-1891",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "181-1571",
+          "status": "rejected",
+          "reasons": [
+            "Cybermen Squadron: no eligible physical printing",
+            "Blightsteel Colossus: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "5069-5080",
+          "status": "rejected",
+          "reasons": [
+            "Duskmantle Guildmage: no eligible physical printing",
+            "Maddening Cacophony: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1295-3189",
+          "status": "rejected",
+          "reasons": [
+            "Doomsday: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "742-2836",
+          "status": "rejected",
+          "reasons": [
+            "Demonic Consultation: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-3096",
+          "status": "rejected",
+          "reasons": [
+            "Jace, Wielder of Mysteries: no eligible physical printing",
+            "Enter the Infinite: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-1295",
+          "status": "rejected",
+          "reasons": [
+            "Enter the Infinite: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "11-553",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Narset's Reversal: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-7164",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Solve the Equation: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2836-3093",
+          "status": "rejected",
+          "reasons": [
+            "Tainted Pact: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "742-3096",
+          "status": "rejected",
+          "reasons": [
+            "Demonic Consultation: no eligible physical printing",
+            "Jace, Wielder of Mysteries: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-1271",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Scroll Rack: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-4105",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Demonic Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-1295",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-2836",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "Bilbo, Luckwearer // Burglar's Plot",
+      "commanderNames": [
+        "Bilbo, Luckwearer // Burglar's Plot"
+      ],
+      "colorIdentity": [
+        "U"
+      ],
+      "status": "no-verified-win-package",
+      "sourceCompleteness": "complete",
+      "selected": null,
+      "candidates": [],
+      "portfolio": {
+        "primaryComboId": null,
+        "backupComboId": null,
+        "verifiedCandidateCount": 0,
+        "distinctLibraryRouteCount": 0,
+        "fullyIndependentRouteCount": 0,
+        "sharedCoreCandidateCount": 0,
+        "resilienceBand": "none",
+        "relationships": [],
+        "selectionRationale": "No candidate supplied strict deterministic game-ending closure evidence."
+      },
+      "queryAudit": [
+        {
+          "query": "card<=2 is:winning legal:commander identity<=U",
+          "returned": 27,
+          "totalMatching": 27,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=3 is:winning legal:commander identity<=U",
+          "returned": 47,
+          "totalMatching": 47,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=4 is:winning legal:commander identity<=U",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        }
+      ],
+      "rejectionAudit": [
+        {
+          "comboId": "181-1571",
+          "status": "rejected",
+          "reasons": [
+            "Cybermen Squadron: no eligible physical printing",
+            "Blightsteel Colossus: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-3096",
+          "status": "rejected",
+          "reasons": [
+            "Jace, Wielder of Mysteries: no eligible physical printing",
+            "Enter the Infinite: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-1295",
+          "status": "rejected",
+          "reasons": [
+            "Enter the Infinite: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-1295",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-2836",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2047-6465",
+          "status": "rejected",
+          "reasons": [
+            "James, Wandering Dad // Follow Him: unresolved",
+            "Mechanized Production: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1427-2047",
+          "status": "rejected",
+          "reasons": [
+            "Mechanized Production: no eligible physical printing",
+            "Masterful Replication: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-3096",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Jace, Wielder of Mysteries: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1571-3851",
+          "status": "rejected",
+          "reasons": [
+            "Blightsteel Colossus: no eligible physical printing",
+            "Blade of Selves: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-5850",
+          "status": "rejected",
+          "reasons": [
+            "Twenty-Toed Toad: no eligible physical printing",
+            "Enter the Infinite: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1295-2853",
+          "status": "rejected",
+          "reasons": [
+            "Thassa's Oracle: no eligible physical printing",
+            "Thought Lash: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2836-2853",
+          "status": "rejected",
+          "reasons": [
+            "Laboratory Maniac: no eligible physical printing",
+            "Thought Lash: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1131-7873",
+          "status": "rejected",
+          "reasons": [
+            "Prologue to Phyresis: no eligible physical printing",
+            "Expansion Algorithm: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1295-3367",
+          "status": "rejected",
+          "reasons": [
+            "Paradigm Shift: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "479-7658",
+          "status": "rejected",
+          "reasons": [
+            "Triskaidekaphile: no eligible physical printing",
+            "Drown in Dreams: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2853-3096",
+          "status": "rejected",
+          "reasons": [
+            "Jace, Wielder of Mysteries: no eligible physical printing",
+            "Thought Lash: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3681-6714",
+          "status": "rejected",
+          "reasons": [
+            "Super State: no eligible physical printing",
+            "Grafted Exoskeleton: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2836-3367",
+          "status": "rejected",
+          "reasons": [
+            "Paradigm Shift: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "479-7100",
+          "status": "rejected",
+          "reasons": [
+            "Triskaidekaphile: no eligible physical printing",
+            "Stroke of Genius: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3096-3367",
+          "status": "rejected",
+          "reasons": [
+            "Paradigm Shift: no eligible physical printing",
+            "Jace, Wielder of Mysteries: no eligible physical printing"
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "Denethor, Ruling Steward",
+      "commanderNames": [
+        "Denethor, Ruling Steward"
+      ],
+      "colorIdentity": [
+        "B",
+        "W"
+      ],
+      "status": "no-verified-win-package",
+      "sourceCompleteness": "complete",
+      "selected": null,
+      "candidates": [],
+      "portfolio": {
+        "primaryComboId": null,
+        "backupComboId": null,
+        "verifiedCandidateCount": 0,
+        "distinctLibraryRouteCount": 0,
+        "fullyIndependentRouteCount": 0,
+        "sharedCoreCandidateCount": 0,
+        "resilienceBand": "none",
+        "relationships": [],
+        "selectionRationale": "No candidate supplied strict deterministic game-ending closure evidence."
+      },
+      "queryAudit": [
+        {
+          "query": "card<=2 is:winning legal:commander identity<=WB",
+          "returned": 48,
+          "totalMatching": 48,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=3 is:winning legal:commander identity<=WB",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=4 is:winning legal:commander identity<=WB",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        }
+      ],
+      "rejectionAudit": [
+        {
+          "comboId": "553-1891",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "181-1571",
+          "status": "rejected",
+          "reasons": [
+            "Cybermen Squadron: no eligible physical printing",
+            "Blightsteel Colossus: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-1271",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Scroll Rack: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-4105",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Demonic Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-1827",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Vampiric Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2612-5035",
+          "status": "rejected",
+          "reasons": [
+            "Plague of Vermin: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1571-3851",
+          "status": "rejected",
+          "reasons": [
+            "Blightsteel Colossus: no eligible physical printing",
+            "Blade of Selves: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-5273",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Diabolic Tutor: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "4475-4794",
+          "status": "rejected",
+          "reasons": [
+            "Fraying Omnipotence: no eligible physical printing",
+            "Wound Reflection: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "4794-5342",
+          "status": "rejected",
+          "reasons": [
+            "Bloodletter of Aclazotz: no eligible physical printing",
+            "Fraying Omnipotence: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "156-5342",
+          "status": "rejected",
+          "reasons": [
+            "Bloodletter of Aclazotz: no eligible physical printing",
+            "Scourge of the Skyclaves: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3681-6714",
+          "status": "rejected",
+          "reasons": [
+            "Super State: no eligible physical printing",
+            "Grafted Exoskeleton: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "5342-7319",
+          "status": "rejected",
+          "reasons": [
+            "Shredder, Shadow Master: no eligible physical printing",
+            "Bloodletter of Aclazotz: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-3591",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Necropotence: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "4475-7319",
+          "status": "rejected",
+          "reasons": [
+            "Shredder, Shadow Master: no eligible physical printing",
+            "Wound Reflection: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-742",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Demonic Consultation: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1624-2749",
+          "status": "rejected",
+          "reasons": [
+            "Near-Death Experience: no eligible physical printing",
+            "Wall of Blood: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1218-6714",
+          "status": "rejected",
+          "reasons": [
+            "Super State: no eligible physical printing",
+            "Tainted Strike: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "4651-6714",
+          "status": "rejected",
+          "reasons": [
+            "Super State: no eligible physical printing",
+            "Phyresis: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "553-3093",
+          "status": "rejected",
+          "reasons": [
+            "Approach of the Second Sun: no eligible physical printing",
+            "Tainted Pact: no eligible physical printing"
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "Sauron, Lord of the Rings",
+      "commanderNames": [
+        "Sauron, Lord of the Rings"
+      ],
+      "colorIdentity": [
+        "B",
+        "R",
+        "U"
+      ],
+      "status": "no-verified-win-package",
+      "sourceCompleteness": "complete",
+      "selected": null,
+      "candidates": [],
+      "portfolio": {
+        "primaryComboId": null,
+        "backupComboId": null,
+        "verifiedCandidateCount": 0,
+        "distinctLibraryRouteCount": 0,
+        "fullyIndependentRouteCount": 0,
+        "sharedCoreCandidateCount": 0,
+        "resilienceBand": "none",
+        "relationships": [],
+        "selectionRationale": "No candidate supplied strict deterministic game-ending closure evidence."
+      },
+      "queryAudit": [
+        {
+          "query": "card<=2 is:winning legal:commander identity<=UBR",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=3 is:winning legal:commander identity<=UBR",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=4 is:winning legal:commander identity<=UBR",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        }
+      ],
+      "rejectionAudit": [
+        {
+          "comboId": "742-1295",
+          "status": "rejected",
+          "reasons": [
+            "Demonic Consultation: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1295-3093",
+          "status": "rejected",
+          "reasons": [
+            "Tainted Pact: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3011-4847",
+          "status": "rejected",
+          "reasons": [
+            "Solphim, Mayhem Dominus: no eligible physical printing",
+            "Heartless Hidetsugu: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "936-5069",
+          "status": "rejected",
+          "reasons": [
+            "Duskmantle Guildmage: no eligible physical printing",
+            "Mindcrank: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "181-1571",
+          "status": "rejected",
+          "reasons": [
+            "Cybermen Squadron: no eligible physical printing",
+            "Blightsteel Colossus: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "5069-5080",
+          "status": "rejected",
+          "reasons": [
+            "Duskmantle Guildmage: no eligible physical printing",
+            "Maddening Cacophony: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2429-5211",
+          "status": "rejected",
+          "reasons": [
+            "Brass's Bounty: no eligible physical printing",
+            "Revel in Riches: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1295-3189",
+          "status": "rejected",
+          "reasons": [
+            "Doomsday: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "742-2836",
+          "status": "rejected",
+          "reasons": [
+            "Demonic Consultation: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2868-4629",
+          "status": "rejected",
+          "reasons": [
+            "Ojer Axonil, Deepest Might // Temple of Power: unresolved",
+            "Pyrohemia: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-3096",
+          "status": "rejected",
+          "reasons": [
+            "Jace, Wielder of Mysteries: no eligible physical printing",
+            "Enter the Infinite: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-1295",
+          "status": "rejected",
+          "reasons": [
+            "Enter the Infinite: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2047-5471",
+          "status": "rejected",
+          "reasons": [
+            "Obeka, Splitter of Seconds: no eligible physical printing",
+            "Mechanized Production: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "523-3263",
+          "status": "rejected",
+          "reasons": [
+            "Mycosynth Lattice: no eligible physical printing",
+            "Hellkite Tyrant: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2836-3093",
+          "status": "rejected",
+          "reasons": [
+            "Tainted Pact: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "742-3096",
+          "status": "rejected",
+          "reasons": [
+            "Demonic Consultation: no eligible physical printing",
+            "Jace, Wielder of Mysteries: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-1295",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-2836",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "3093-3096",
+          "status": "rejected",
+          "reasons": [
+            "Tainted Pact: no eligible physical printing",
+            "Jace, Wielder of Mysteries: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2047-6465",
+          "status": "rejected",
+          "reasons": [
+            "James, Wandering Dad // Follow Him: unresolved",
+            "Mechanized Production: no eligible physical printing"
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "Gandalf the Grey",
+      "commanderNames": [
+        "Gandalf the Grey"
+      ],
+      "colorIdentity": [
+        "R",
+        "U"
+      ],
+      "status": "no-verified-win-package",
+      "sourceCompleteness": "complete",
+      "selected": null,
+      "candidates": [],
+      "portfolio": {
+        "primaryComboId": null,
+        "backupComboId": null,
+        "verifiedCandidateCount": 0,
+        "distinctLibraryRouteCount": 0,
+        "fullyIndependentRouteCount": 0,
+        "sharedCoreCandidateCount": 0,
+        "resilienceBand": "none",
+        "relationships": [],
+        "selectionRationale": "No candidate supplied strict deterministic game-ending closure evidence."
+      },
+      "queryAudit": [
+        {
+          "query": "card<=2 is:winning legal:commander identity<=UR",
+          "returned": 45,
+          "totalMatching": 45,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=3 is:winning legal:commander identity<=UR",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        },
+        {
+          "query": "card<=4 is:winning legal:commander identity<=UR",
+          "returned": 75,
+          "totalMatching": 75,
+          "sourceStatus": "available",
+          "verificationComplete": true
+        }
+      ],
+      "rejectionAudit": [
+        {
+          "comboId": "3011-4847",
+          "status": "rejected",
+          "reasons": [
+            "Solphim, Mayhem Dominus: no eligible physical printing",
+            "Heartless Hidetsugu: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "181-1571",
+          "status": "rejected",
+          "reasons": [
+            "Cybermen Squadron: no eligible physical printing",
+            "Blightsteel Colossus: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2868-4629",
+          "status": "rejected",
+          "reasons": [
+            "Ojer Axonil, Deepest Might // Temple of Power: unresolved",
+            "Pyrohemia: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-3096",
+          "status": "rejected",
+          "reasons": [
+            "Jace, Wielder of Mysteries: no eligible physical printing",
+            "Enter the Infinite: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-1295",
+          "status": "rejected",
+          "reasons": [
+            "Enter the Infinite: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "523-3263",
+          "status": "rejected",
+          "reasons": [
+            "Mycosynth Lattice: no eligible physical printing",
+            "Hellkite Tyrant: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-1295",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-2836",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Laboratory Maniac: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2047-6465",
+          "status": "rejected",
+          "reasons": [
+            "James, Wandering Dad // Follow Him: unresolved",
+            "Mechanized Production: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1427-2047",
+          "status": "rejected",
+          "reasons": [
+            "Mechanized Production: no eligible physical printing",
+            "Masterful Replication: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2199-4800",
+          "status": "rejected",
+          "reasons": [
+            "Frenetic Efreet: no eligible physical printing",
+            "Chance Encounter: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1068-3096",
+          "status": "rejected",
+          "reasons": [
+            "Leveler: no eligible physical printing",
+            "Jace, Wielder of Mysteries: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1571-2560",
+          "status": "rejected",
+          "reasons": [
+            "Blightsteel Colossus: no eligible physical printing",
+            "Chandra's Ignition: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2047-5211",
+          "status": "rejected",
+          "reasons": [
+            "Brass's Bounty: no eligible physical printing",
+            "Mechanized Production: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1571-3851",
+          "status": "rejected",
+          "reasons": [
+            "Blightsteel Colossus: no eligible physical printing",
+            "Blade of Selves: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "953-5850",
+          "status": "rejected",
+          "reasons": [
+            "Twenty-Toed Toad: no eligible physical printing",
+            "Enter the Infinite: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1295-2853",
+          "status": "rejected",
+          "reasons": [
+            "Thassa's Oracle: no eligible physical printing",
+            "Thought Lash: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "2836-2853",
+          "status": "rejected",
+          "reasons": [
+            "Laboratory Maniac: no eligible physical printing",
+            "Thought Lash: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1131-7873",
+          "status": "rejected",
+          "reasons": [
+            "Prologue to Phyresis: no eligible physical printing",
+            "Expansion Algorithm: no eligible physical printing"
+          ]
+        },
+        {
+          "comboId": "1295-3367",
+          "status": "rejected",
+          "reasons": [
+            "Paradigm Shift: no eligible physical printing",
+            "Thassa's Oracle: no eligible physical printing"
+          ]
+        }
+      ]
+    }
+  ]
+}
