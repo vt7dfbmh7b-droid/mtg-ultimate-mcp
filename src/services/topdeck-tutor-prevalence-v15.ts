@@ -39,6 +39,13 @@ export interface TopDeckTutorPrevalenceAuditV15 {
   caveat: string;
 }
 
+interface IndexedCandidateV15 {
+  candidate: TopDeckLearningCandidateV15;
+  normalizedCardNames: Set<string>;
+  commanderKey: string;
+  isTopCut: boolean;
+}
+
 function normalizeName(value: string): string {
   return value.trim().toLocaleLowerCase();
 }
@@ -52,10 +59,19 @@ function normalizedCommanderKey(values: readonly string[]): string {
   return uniqueNames(values).map(normalizeName).sort().join('|');
 }
 
-function candidateContains(candidate: TopDeckLearningCandidateV15, normalizedTutorName: string): boolean {
+function indexCandidate(candidate: TopDeckLearningCandidateV15): IndexedCandidateV15 {
   const parsed = parseDecklist(candidate.decklist);
-  return [...parsed.commanders, ...parsed.main]
-    .some((entry) => normalizeName(entry.name) === normalizedTutorName && entry.quantity > 0);
+  const normalizedCardNames = new Set(
+    [...parsed.commanders, ...parsed.main]
+      .filter((entry) => entry.quantity > 0)
+      .map((entry) => normalizeName(entry.name)),
+  );
+  return {
+    candidate,
+    normalizedCardNames,
+    commanderKey: normalizedCommanderKey(candidate.commanderNames),
+    isTopCut: candidate.standing <= candidate.topCutSize,
+  };
 }
 
 function rate(numerator: number, denominator: number): number {
@@ -65,20 +81,20 @@ function rate(numerator: number, denominator: number): number {
 function scopeAudit(
   scope: TopDeckTutorPrevalenceScopeV15['scope'],
   commanderNames: string[] | null,
-  candidates: readonly TopDeckLearningCandidateV15[],
+  candidates: readonly IndexedCandidateV15[],
   tutorNames: readonly string[],
 ): TopDeckTutorPrevalenceScopeV15 {
-  const topCutCandidates = candidates.filter((candidate) => candidate.standing <= candidate.topCutSize);
-  const nonTopCutCandidates = candidates.filter((candidate) => candidate.standing > candidate.topCutSize);
-  const uniqueEvents = new Set(candidates.map((candidate) => candidate.providerEventId));
-  const topCutEvents = new Set(topCutCandidates.map((candidate) => candidate.providerEventId));
+  const topCutCandidates = candidates.filter((entry) => entry.isTopCut);
+  const nonTopCutCandidates = candidates.filter((entry) => !entry.isTopCut);
+  const uniqueEvents = new Set(candidates.map((entry) => entry.candidate.providerEventId));
+  const topCutEvents = new Set(topCutCandidates.map((entry) => entry.candidate.providerEventId));
 
   const tutors = tutorNames.map((tutorName) => {
     const normalized = normalizeName(tutorName);
-    const allWithTutor = candidates.filter((candidate) => candidateContains(candidate, normalized));
-    const topCutWithTutor = topCutCandidates.filter((candidate) => candidateContains(candidate, normalized));
-    const nonTopCutWithTutor = nonTopCutCandidates.filter((candidate) => candidateContains(candidate, normalized));
-    const eventsWithTutorInTopCut = new Set(topCutWithTutor.map((candidate) => candidate.providerEventId)).size;
+    const allWithTutor = candidates.filter((entry) => entry.normalizedCardNames.has(normalized));
+    const topCutWithTutor = topCutCandidates.filter((entry) => entry.normalizedCardNames.has(normalized));
+    const nonTopCutWithTutor = nonTopCutCandidates.filter((entry) => entry.normalizedCardNames.has(normalized));
+    const eventsWithTutorInTopCut = new Set(topCutWithTutor.map((entry) => entry.candidate.providerEventId)).size;
     return {
       tutorName,
       allDecksWithTutor: allWithTutor.length,
@@ -128,6 +144,7 @@ export function auditTopDeckTutorPrevalenceV15(input: {
     if (!deduplicatedByRecord.has(candidate.providerRecordId)) deduplicatedByRecord.set(candidate.providerRecordId, candidate);
   }
   const candidates = [...deduplicatedByRecord.values()];
+  const indexedCandidates = candidates.map(indexCandidate);
   const dates = candidates
     .map((candidate) => candidate.outcomeOccurredAt)
     .filter(Boolean)
@@ -136,14 +153,14 @@ export function auditTopDeckTutorPrevalenceV15(input: {
   const requestedCommanders = input.commanderNames ? uniqueNames(input.commanderNames) : [];
   const requestedCommanderKey = normalizedCommanderKey(requestedCommanders);
   const sameCommanderCandidates = requestedCommanderKey
-    ? candidates.filter((candidate) => normalizedCommanderKey(candidate.commanderNames) === requestedCommanderKey)
+    ? indexedCandidates.filter((entry) => entry.commanderKey === requestedCommanderKey)
     : [];
 
   return {
     sourceId: 'topdeck',
     sourceSemantics: 'advisory-tournament-prevalence-only',
-    deduplicatedCandidateCount: candidates.length,
-    duplicateRecordsDiscarded: input.candidates.length - candidates.length,
+    deduplicatedCandidateCount: indexedCandidates.length,
+    duplicateRecordsDiscarded: input.candidates.length - indexedCandidates.length,
     observedOutcomeRange: {
       earliest: dates[0] ?? null,
       latest: dates.at(-1) ?? null,
@@ -151,7 +168,7 @@ export function auditTopDeckTutorPrevalenceV15(input: {
     sameCommanders: requestedCommanderKey
       ? scopeAudit('same-commanders', requestedCommanders, sameCommanderCandidates, tutorNames)
       : null,
-    global: scopeAudit('all-edh-candidates', null, candidates, tutorNames),
+    global: scopeAudit('all-edh-candidates', null, indexedCandidates, tutorNames),
     caveat: 'TopDeck prevalence is advisory observational evidence only. Inclusion rates do not prove that a tutor caused a finish, do not override Commander legality or combo truth, and should be interpreted with sample size, commander context, event composition and time window visible.',
   };
 }
