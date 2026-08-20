@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { derivePostBuildEvidenceV15 } from './commander-build-evaluation-v15.js';
+import { derivePostBuildEvidenceV15, type PostBuildEvidenceInputV15 } from './commander-build-evaluation-v15.js';
 
-function baseEvidenceInput() {
+function baseEvidenceInput(): Omit<PostBuildEvidenceInputV15, 'combos'> {
   return {
     commanderLegal: true,
     exactCardCount: true,
@@ -19,7 +19,7 @@ function baseEvidenceInput() {
     efficientWinPlanSupported: true,
     cedhIntent: true,
     competitiveMetagameEvidence: true,
-  } as const;
+  };
 }
 
 test('post-build evidence counts only strict game-ending combos as Ruthless winning combos', () => {
