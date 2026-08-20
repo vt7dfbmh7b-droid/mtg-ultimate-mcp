@@ -1,0 +1,90 @@
+name: Middle-earth Bracket 5 Four-Card Package Control
+
+on:
+  push:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - ".github/workflows/middle-earth-bracket5-four-card-live.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: middle-earth-bracket5-four-card-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  four-card-middle-earth:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check and build
+        run: npm run build
+
+      - name: Raise live-control package ceiling to existing four-card maximum
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/e2e-middle-earth-bracket5-expanded-v15.ts')
+          text = path.read_text()
+          old = 'maxWinPackageCards: 3,'
+          if text.count(old) != 1:
+              raise SystemExit(f'expected one package-limit marker, found {text.count(old)}')
+          path.write_text(text.replace(old, 'maxWinPackageCards: 4,', 1))
+          PY
+
+      - name: Run four-card Middle-earth control
+        id: live_control
+        continue-on-error: true
+        run: npx tsx scripts/e2e-middle-earth-bracket5-expanded-v15.ts
+
+      - name: Persist four-card result
+        if: always()
+        env:
+          CONTROL_OUTCOME: ${{ steps.live_control.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p test-results/middle-earth-bracket5-four-card
+          rm -f test-results/middle-earth-bracket5-four-card/result.json \
+                test-results/middle-earth-bracket5-four-card/selected-deck.txt \
+                test-results/middle-earth-bracket5-four-card/refined-deck.txt \
+                test-results/middle-earth-bracket5-four-card/failure.txt
+          [ ! -f middle-earth-bracket5-expanded-result.json ] || cp middle-earth-bracket5-expanded-result.json test-results/middle-earth-bracket5-four-card/result.json
+          [ ! -f middle-earth-bracket5-expanded-selected-deck.txt ] || cp middle-earth-bracket5-expanded-selected-deck.txt test-results/middle-earth-bracket5-four-card/selected-deck.txt
+          [ ! -f middle-earth-bracket5-expanded-refined-deck.txt ] || cp middle-earth-bracket5-expanded-refined-deck.txt test-results/middle-earth-bracket5-four-card/refined-deck.txt
+          [ ! -f middle-earth-bracket5-expanded-failure.txt ] || cp middle-earth-bracket5-expanded-failure.txt test-results/middle-earth-bracket5-four-card/failure.txt
+          printf 'source_sha=%s\ncontrol_outcome=%s\npackage_limit=4\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/middle-earth-bracket5-four-card/run-metadata.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- test-results/middle-earth-bracket5-four-card
+          if ! git diff --cached --quiet; then
+            git commit -m "test-results: persist four-card Middle-earth Bracket 5 control"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+
+      - name: Require four-card control success
+        if: always()
+        env:
+          CONTROL_OUTCOME: ${{ steps.live_control.outcome }}
+        run: test "$CONTROL_OUTCOME" = "success"
