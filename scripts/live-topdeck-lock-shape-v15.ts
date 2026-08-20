@@ -10,6 +10,7 @@ const CANDIDATE_FIELDS = new Set([
   'decklocked',
   'decklockedat',
   'decklockat',
+  'deckdeadline',
   'decklistdeadline',
   'decksubmissiondeadline',
   'decksubmission',
