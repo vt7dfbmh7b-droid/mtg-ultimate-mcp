@@ -115,8 +115,8 @@ test('Commander Spellbook unavailability remains unknown rather than no replacem
 });
 
 test('forwards explicit printing, budget, source-tutor and access-loss constraints without inventing defaults', async () => {
-  let captured: Parameters<NonNullable<TutorReplacementToolDependenciesV15['auditReplacements']>>[0] | null = null;
-  let capturedEvaluationOptions: Record<string, unknown> | null = null;
+  type ReplacementInput = Parameters<NonNullable<TutorReplacementToolDependenciesV15['auditReplacements']>>[0];
+  const captured: { replacementInput?: ReplacementInput; evaluationOptions?: Record<string, unknown> } = {};
   const result = await runTutorReplacementToolV15({
     decklist: 'test',
     comboId: 'route-a',
@@ -134,32 +134,32 @@ test('forwards explicit printing, budget, source-tutor and access-loss constrain
     topDeckParticipantMin: 16,
   }, {
     evaluateBuild: async (_decklist, options) => {
-      capturedEvaluationOptions = options as unknown as Record<string, unknown>;
+      captured.evaluationOptions = options as unknown as Record<string, unknown>;
       return evaluation([route('route-a')]);
     },
     auditReplacements: async (input) => {
-      captured = input;
+      captured.replacementInput = input;
       return replacementAudit();
     },
   });
 
   assert.equal(result.status, 'verified-route-tutor-replacements-audited');
-  assert.equal(capturedEvaluationOptions?.printingFamily, 'final-fantasy');
-  assert.deepEqual(capturedEvaluationOptions?.allowedSets, ['FIN']);
-  assert.equal(capturedEvaluationOptions?.includePromos, false);
-  assert.equal(capturedEvaluationOptions?.includeSpecialReleases, true);
-  assert.equal(capturedEvaluationOptions?.maxUsdPerCard, 20);
-  assert.equal(capturedEvaluationOptions?.maxComboResults, 100);
-  assert.equal(Object.hasOwn(capturedEvaluationOptions ?? {}, 'candidateMaxUsdPerCard'), false, 'candidate-only cap must not become a baseline hard-deck gate');
-  assert.equal(captured?.sourceTutorName, 'Premium Tutor');
-  assert.equal(captured?.constraints?.printingFamily, 'final-fantasy');
-  assert.deepEqual(captured?.constraints?.allowedSets, ['FIN']);
-  assert.equal(captured?.constraints?.includePromos, false);
-  assert.equal(captured?.constraints?.includeSpecialReleases, true);
-  assert.equal(captured?.constraints?.maxUsdPerCard, 20);
-  assert.equal(captured?.constraints?.candidateMaxUsdPerCard, 8);
-  assert.deepEqual(captured?.constraints?.excludedCards, ['Excluded Tutor']);
-  assert.equal(captured?.constraints?.maxAccessLossPercentagePoints, 0.5);
+  assert.equal(captured.evaluationOptions?.printingFamily, 'final-fantasy');
+  assert.deepEqual(captured.evaluationOptions?.allowedSets, ['FIN']);
+  assert.equal(captured.evaluationOptions?.includePromos, false);
+  assert.equal(captured.evaluationOptions?.includeSpecialReleases, true);
+  assert.equal(captured.evaluationOptions?.maxUsdPerCard, 20);
+  assert.equal(captured.evaluationOptions?.maxComboResults, 100);
+  assert.equal(Object.hasOwn(captured.evaluationOptions ?? {}, 'candidateMaxUsdPerCard'), false, 'candidate-only cap must not become a baseline hard-deck gate');
+  assert.equal(captured.replacementInput?.sourceTutorName, 'Premium Tutor');
+  assert.equal(captured.replacementInput?.constraints?.printingFamily, 'final-fantasy');
+  assert.deepEqual(captured.replacementInput?.constraints?.allowedSets, ['FIN']);
+  assert.equal(captured.replacementInput?.constraints?.includePromos, false);
+  assert.equal(captured.replacementInput?.constraints?.includeSpecialReleases, true);
+  assert.equal(captured.replacementInput?.constraints?.maxUsdPerCard, 20);
+  assert.equal(captured.replacementInput?.constraints?.candidateMaxUsdPerCard, 8);
+  assert.deepEqual(captured.replacementInput?.constraints?.excludedCards, ['Excluded Tutor']);
+  assert.equal(captured.replacementInput?.constraints?.maxAccessLossPercentagePoints, 0.5);
 });
 
 test('TopDeck failure is separate and cannot erase a successful exact replacement audit', async () => {
