@@ -6,6 +6,7 @@ import { createMtgServerV15 } from '../src/server-v15.js';
 import { evaluateCommanderBuildV15 } from '../src/services/commander-build-evaluation-v15.js';
 import { validateCommanderDeck } from '../src/services/commander-rules.js';
 import { parseDecklist, type ParsedDeck } from '../src/services/deck.js';
+import { neutralCommanderLookupNameV15 } from '../src/services/neutral-deck-builder-v15.js';
 import {
   discoverNeutralCommanderCandidatesV15,
   type NeutralCommanderCandidateV15,
@@ -70,12 +71,14 @@ async function exactCommanderRefs(candidate: NeutralCommanderCandidateV15): Prom
   collectorNumber: string;
 }>> {
   const policy = await middleEarthPolicy();
-  const resolved = await getCardsByNames(candidate.commanderNames);
+  const lookupNames = candidate.commanderNames.map(neutralCommanderLookupNameV15);
+  const resolved = await getCardsByNames(lookupNames);
   assert.deepEqual(resolved.notFound, [], `${candidate.label} commander Oracle identities must resolve`);
 
   const refs: Array<{ name: string; set: string; collectorNumber: string }> = [];
   for (const name of candidate.commanderNames) {
-    const oracle = resolved.cards.find((card) => card.name.toLocaleLowerCase() === name.toLocaleLowerCase());
+    const lookup = neutralCommanderLookupNameV15(name).toLocaleLowerCase();
+    const oracle = resolved.cards.find((card) => neutralCommanderLookupNameV15(card.name).toLocaleLowerCase() === lookup);
     assert.ok(oracle, `${name} must bind to resolved Oracle data`);
     const printing = await selectEligiblePrintingV08(oracle, policy);
     assert.ok(printing, `${name} must have an LTR/LTC/HOB/HOC physical printing`);
@@ -236,7 +239,6 @@ async function main(): Promise<void> {
   const selected = successes[0]!;
   console.log(`\nSELECTED: ${selected.candidate.label} / bracket ${selected.achievedBracket} / constructionB5=${selected.bracket5ConstructionCandidate}`);
 
-  // Immediately test whether the existing Upgrade/refinement path can improve the strongest build.
   const handler2 = createMcpHandler(createMtgServerV15);
   const client2 = new Client(
     { name: 'mtg-ultimate-v15-middle-earth-refine-live', version: '1.0.0' },
