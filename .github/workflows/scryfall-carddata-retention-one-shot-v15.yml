@@ -1,0 +1,162 @@
+name: Scryfall Card Data Retention One Shot V0.15
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/scryfall-carddata-retention-one-shot-v15.yml"
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: scryfall-carddata-retention-one-shot-v15
+  cancel-in-progress: false
+
+env:
+  RAW_FILE: scryfall-default-cards-retained.jsonl.gz
+  EVIDENCE_FILE: scryfall-retention-candidate-v15.json
+  MANIFEST_FILE: scryfall-retained-snapshot-manifest-v15.json
+  RAW_DESCRIPTOR_FILE: scryfall-retained-raw-oci-descriptor.json
+  MANIFEST_DESCRIPTOR_FILE: scryfall-retained-manifest-oci-descriptor.json
+  RESULT_FILE: scryfall-retention-result-v15.json
+  RAW_ARTIFACT_TYPE: application/vnd.mtg-ultimate.scryfall-default-cards.v1
+  RAW_LAYER_MEDIA_TYPE: application/vnd.mtg-ultimate.scryfall-default-cards.v1+gzip
+  MANIFEST_ARTIFACT_TYPE: application/vnd.mtg-ultimate.scryfall-retention-manifest.v1
+  MANIFEST_LAYER_MEDIA_TYPE: application/vnd.mtg-ultimate.scryfall-retention-manifest.v1+json
+
+jobs:
+  retain-current-scryfall-default-cards:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Type-check and build
+        run: npm run build
+
+      - name: Set up ORAS
+        uses: oras-project/setup-oras@v1
+        with:
+          version: 1.3.3
+
+      - name: Capture and validate current Scryfall default_cards
+        id: capture
+        env:
+          SCRYFALL_RETENTION_RAW_PATH: ${{ env.RAW_FILE }}
+          SCRYFALL_RETENTION_EVIDENCE_PATH: ${{ env.EVIDENCE_FILE }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx tsx scripts/capture-scryfall-carddata-retention-v15.ts
+          SOURCE_HASH=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.env.EVIDENCE_FILE,'utf8'));process.stdout.write(x.capture.acquisition.integrity.actualHash)")
+          if [[ ! "$SOURCE_HASH" =~ ^[a-f0-9]{64}$ ]]; then
+            echo "Capture did not produce a valid SHA-256 source hash." >&2
+            exit 1
+          fi
+          echo "source_hash=$SOURCE_HASH" >> "$GITHUB_OUTPUT"
+
+      - name: Log in to GitHub Container Registry
+        shell: bash
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | oras login ghcr.io --username "${{ github.actor }}" --password-stdin
+
+      - name: Push exact compressed source bytes
+        id: raw_push
+        shell: bash
+        env:
+          SOURCE_HASH: ${{ steps.capture.outputs.source_hash }}
+        run: |
+          set -euo pipefail
+          OWNER=$(printf '%s' "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          RAW_REPOSITORY="ghcr.io/${OWNER}/mtg-ultimate-mcp-carddata"
+          RAW_TAGGED_REFERENCE="${RAW_REPOSITORY}:sha256-${SOURCE_HASH}"
+          oras push --artifact-type "$RAW_ARTIFACT_TYPE" "$RAW_TAGGED_REFERENCE" "$RAW_FILE:$RAW_LAYER_MEDIA_TYPE"
+          oras manifest fetch --descriptor "$RAW_TAGGED_REFERENCE" > "$RAW_DESCRIPTOR_FILE"
+          RAW_DIGEST=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.env.RAW_DESCRIPTOR_FILE,'utf8'));process.stdout.write(x.digest||'')")
+          if [[ ! "$RAW_DIGEST" =~ ^sha256:[a-f0-9]{64}$ ]]; then
+            echo "GHCR raw descriptor did not contain a valid immutable digest." >&2
+            exit 1
+          fi
+          echo "raw_artifact_reference=${RAW_REPOSITORY}@${RAW_DIGEST}" >> "$GITHUB_OUTPUT"
+
+      - name: Finalize provenance manifest
+        env:
+          RAW_ARTIFACT_REFERENCE: ${{ steps.raw_push.outputs.raw_artifact_reference }}
+          SCRYFALL_RETENTION_RAW_PATH: ${{ env.RAW_FILE }}
+          SCRYFALL_RETENTION_EVIDENCE_PATH: ${{ env.EVIDENCE_FILE }}
+          SCRYFALL_RETENTION_MANIFEST_PATH: ${{ env.MANIFEST_FILE }}
+        run: npx tsx scripts/finalize-scryfall-carddata-retention-v15.ts
+
+      - name: Persist provenance manifest
+        id: manifest_push
+        shell: bash
+        env:
+          SOURCE_HASH: ${{ steps.capture.outputs.source_hash }}
+        run: |
+          set -euo pipefail
+          OWNER=$(printf '%s' "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          MANIFEST_REPOSITORY="ghcr.io/${OWNER}/mtg-ultimate-mcp-carddata-manifests"
+          MANIFEST_TAGGED_REFERENCE="${MANIFEST_REPOSITORY}:capture-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${SOURCE_HASH:0:12}"
+          oras push --artifact-type "$MANIFEST_ARTIFACT_TYPE" "$MANIFEST_TAGGED_REFERENCE" "$MANIFEST_FILE:$MANIFEST_LAYER_MEDIA_TYPE"
+          oras manifest fetch --descriptor "$MANIFEST_TAGGED_REFERENCE" > "$MANIFEST_DESCRIPTOR_FILE"
+          MANIFEST_DIGEST=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.env.MANIFEST_DESCRIPTOR_FILE,'utf8'));process.stdout.write(x.digest||'')")
+          if [[ ! "$MANIFEST_DIGEST" =~ ^sha256:[a-f0-9]{64}$ ]]; then
+            echo "GHCR manifest descriptor did not contain a valid immutable digest." >&2
+            exit 1
+          fi
+          echo "manifest_artifact_reference=${MANIFEST_REPOSITORY}@${MANIFEST_DIGEST}" >> "$GITHUB_OUTPUT"
+
+      - name: Write compact retention result
+        shell: bash
+        env:
+          RAW_ARTIFACT_REFERENCE: ${{ steps.raw_push.outputs.raw_artifact_reference }}
+          MANIFEST_ARTIFACT_REFERENCE: ${{ steps.manifest_push.outputs.manifest_artifact_reference }}
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('node:fs');
+          const manifest = JSON.parse(fs.readFileSync(process.env.MANIFEST_FILE, 'utf8'));
+          const result = {
+            schemaVersion: 'scryfall-retention-result-v15.1',
+            sourceId: manifest.sourceId,
+            observedAt: manifest.observedAt,
+            sourceContentHash: manifest.sourceContentHash,
+            sourceCompressedBytes: manifest.sourceCompressedBytes,
+            manifestFingerprint: manifest.manifestFingerprint,
+            rawArtifactReference: process.env.RAW_ARTIFACT_REFERENCE,
+            provenanceManifestArtifactReference: process.env.MANIFEST_ARTIFACT_REFERENCE,
+            temporalMode: manifest.temporalMode,
+            historicalArchiveVerified: manifest.historicalArchiveVerified,
+            purpose: 'pre-event-prospective-evidence-bank',
+          };
+          fs.writeFileSync(process.env.RESULT_FILE, `${JSON.stringify(result, null, 2)}\n`, 'utf8');
+          console.log(JSON.stringify(result, null, 2));
+          NODE
+
+      - name: Upload compact retention audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scryfall-retention-one-shot-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.MANIFEST_FILE }}
+            ${{ env.RAW_DESCRIPTOR_FILE }}
+            ${{ env.MANIFEST_DESCRIPTOR_FILE }}
+            ${{ env.RESULT_FILE }}
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Remove bulk source bytes from runner workspace
+        if: always()
+        shell: bash
+        run: rm -f "$RAW_FILE" "$EVIDENCE_FILE"
