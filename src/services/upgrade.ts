@@ -20,7 +20,13 @@ export interface UpgradeOptions {
   printingFamily?: string;
   includePromos?: boolean;
   includeSpecialReleases?: boolean;
+  /**
+   * In the V0.12 refinement path this is a V0.15 adapter-generated, bounded Scryfall clause.
+   * It is used as a theme-membership signal rather than being appended to every role search.
+   */
   themeQuery?: string;
+  themeMinimumMainMatches?: number;
+  themeCurrentMainMatches?: number;
   excludedCards?: string[];
   maxCandidatesPerRole?: number;
 }
@@ -54,7 +60,6 @@ function identityQuery(identity: string[]): string {
 function roleSearchQuery(
   role: string,
   identity: string[],
-  options: UpgradeOptions,
   printingPolicy: ResolvedPrintingPolicyV08,
 ): string {
   const roleClause: Record<string, string> = {
@@ -71,7 +76,22 @@ function roleSearchQuery(
     '-t:land',
     roleClause[role] ?? '',
     printingPolicy.searchClause,
-    options.themeQuery?.trim() ?? '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+}
+
+function themeSearchQuery(
+  identity: string[],
+  themeClause: string,
+  printingPolicy: ResolvedPrintingPolicyV08,
+): string {
+  return [
+    'f:commander',
+    identityQuery(identity),
+    '-t:land',
+    themeClause,
+    printingPolicy.searchClause,
   ]
     .filter(Boolean)
     .join(' ');
@@ -143,21 +163,32 @@ function cutCandidates(
   parsed: ParsedDeck,
   cards: ScryfallCard[],
   strategyContext: CommanderStrategyContextV15,
+  themeCandidateNames: ReadonlySet<string>,
+  protectThemeMatches: boolean,
 ): Array<Record<string, unknown>> {
   const mainNames = new Set(parsed.main.map((entry) => entry.name.toLocaleLowerCase()));
   return cards
     .filter((card) => mainNames.has(card.name.toLocaleLowerCase()) && !card.type_line.toLowerCase().includes('land'))
     .map((card) => {
       const context = contextualCutPressureV15(card, strategyContext);
+      const themeMatch = themeCandidateNames.has(card.name.toLocaleLowerCase());
+      const themeProtectionApplied = protectThemeMatches && themeMatch ? 4 : 0;
+      const cutPressure = Number((context.cutPressure - themeProtectionApplied).toFixed(1));
       return {
         card: summarizeCard(card),
-        heuristicCutPressure: context.cutPressure,
+        heuristicCutPressure: cutPressure,
         strategyAffinity: {
           score: context.strategyAffinityScore,
           protectionApplied: context.strategyProtectionApplied,
           matchedStrategies: context.matchedStrategies,
         },
-        reasons: context.reasons,
+        explicitTheme: {
+          matchesControlledTheme: themeMatch,
+          protectionApplied: themeProtectionApplied,
+        },
+        reasons: themeProtectionApplied > 0
+          ? [...context.reasons, 'supports the explicit controlled theme while the deck is at or below its required theme density']
+          : context.reasons,
       };
     })
     .filter((item) => Number(item.heuristicCutPressure) > 0)
@@ -193,13 +224,30 @@ export async function suggestDeckUpgrades(
     .filter((item) => item.deficit > 0)
     .sort((a, b) => b.deficit - a.deficit);
 
+  const themeClause = options.themeQuery?.trim() ?? '';
+  const themeMinimumMainMatches = Math.max(0, Math.trunc(options.themeMinimumMainMatches ?? 0));
+  const themeCurrentMainMatches = Math.max(0, Math.trunc(options.themeCurrentMainMatches ?? 0));
+  const themeDeficit = Math.max(0, themeMinimumMainMatches - themeCurrentMainMatches);
+  const themeCandidateNames = new Set<string>();
+  let controlledThemeSearchQuery: string | null = null;
+  if (themeClause) {
+    controlledThemeSearchQuery = themeSearchQuery(allowedIdentity, themeClause, printingPolicy);
+    try {
+      const themeResults = await searchCards(controlledThemeSearchQuery, 100);
+      for (const card of themeResults) themeCandidateNames.add(card.name.toLocaleLowerCase());
+    } catch {
+      // Theme membership is independently audited by the V0.15 refinement caller. A transient
+      // membership-search failure only removes positive ranking help here; it never proves absence.
+    }
+  }
+
   const existing = new Set([...parsed.commanders, ...parsed.main].map((entry) => entry.name.toLocaleLowerCase()));
   const excluded = new Set((options.excludedCards ?? []).map((name) => name.toLocaleLowerCase()));
   const maxCandidates = Math.max(1, Math.min(10, Math.trunc(options.maxCandidatesPerRole ?? 5)));
   const candidateGroups: Array<Record<string, unknown>> = [];
 
   for (const deficit of deficits.slice(0, 5)) {
-    const query = roleSearchQuery(deficit.role, allowedIdentity, options, printingPolicy);
+    const query = roleSearchQuery(deficit.role, allowedIdentity, printingPolicy);
     let results: ScryfallCard[] = [];
     try {
       results = await searchCards(query, 40);
@@ -213,7 +261,15 @@ export async function suggestDeckUpgrades(
       .filter((card) => !excluded.has(card.name.toLocaleLowerCase()))
       .filter((card) => card.legalities.commander === 'legal')
       .filter((card) => cardMatchesRole(card, deficit.role))
-      .sort((a, b) => candidateScore(b, deficit.role, strategyContext) - candidateScore(a, deficit.role, strategyContext) || a.name.localeCompare(b.name))
+      .sort((a, b) => {
+        if (themeDeficit > 0) {
+          const aTheme = themeCandidateNames.has(a.name.toLocaleLowerCase()) ? 1 : 0;
+          const bTheme = themeCandidateNames.has(b.name.toLocaleLowerCase()) ? 1 : 0;
+          if (aTheme !== bTheme) return bTheme - aTheme;
+        }
+        return candidateScore(b, deficit.role, strategyContext) - candidateScore(a, deficit.role, strategyContext)
+          || a.name.localeCompare(b.name);
+      })
       .slice(0, Math.max(maxCandidates * 3, maxCandidates));
 
     const candidates: Array<Record<string, unknown>> = [];
@@ -223,10 +279,23 @@ export async function suggestDeckUpgrades(
       if (!printing) continue;
       const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
       const matchedStrategies = affinity.matches.map((match) => match.archetype);
+      const matchesControlledTheme = themeCandidateNames.has(card.name.toLocaleLowerCase());
+      const strategyReason = matchedStrategies.length > 0
+        ? ` and also supports the existing V0.15 commander strategy signal${matchedStrategies.length === 1 ? '' : 's'}: ${matchedStrategies.join(', ')}`
+        : '';
+      const themeReason = matchesControlledTheme && themeDeficit > 0
+        ? ' It also helps close the current controlled theme-density deficit.'
+        : '';
 
       candidates.push({
         card: summarizeCard(card),
         score: Number(candidateScore(card, deficit.role, strategyContext).toFixed(1)),
+        explicitTheme: {
+          matchesControlledTheme,
+          currentMainMatches: themeCurrentMainMatches,
+          requiredMainMatches: themeMinimumMainMatches,
+          deficitBeforeSwap: themeDeficit,
+        },
         recommendedPrinting: {
           set: printing.card.set.toUpperCase(),
           setName: printing.card.set_name,
@@ -240,9 +309,7 @@ export async function suggestDeckUpgrades(
           familyMatch: printing.matchedBy,
           scryfallUrl: printing.card.scryfall_uri,
         },
-        whyItFits: matchedStrategies.length > 0
-          ? `Addresses the detected ${deficit.role} deficit and also supports the existing V0.15 commander strategy signal${matchedStrategies.length === 1 ? '' : 's'}: ${matchedStrategies.join(', ')}. The recommended physical printing satisfies the active printing-family/set policy.`
-          : `Addresses the detected ${deficit.role} deficit; the recommended physical printing also satisfies the active printing-family/set policy.`,
+        whyItFits: `Addresses the detected ${deficit.role} deficit${strategyReason}. The recommended physical printing satisfies the active printing-family/set policy.${themeReason}`,
       });
     }
 
@@ -255,7 +322,22 @@ export async function suggestDeckUpgrades(
     structuralTargets: targets,
     structuralDeficits: deficits,
     candidateAddsByDeficit: candidateGroups,
-    candidateCuts: cutCandidates(parsed, cards, strategyContext),
+    candidateCuts: cutCandidates(
+      parsed,
+      cards,
+      strategyContext,
+      themeCandidateNames,
+      themeMinimumMainMatches > 0 && themeCurrentMainMatches <= themeMinimumMainMatches,
+    ),
+    controlledThemeSelection: {
+      active: Boolean(themeClause),
+      queryClause: themeClause || null,
+      searchQuery: controlledThemeSearchQuery,
+      currentMainMatches: themeCurrentMainMatches,
+      requiredMainMatches: themeMinimumMainMatches,
+      deficit: themeDeficit,
+      discoveredThemeCandidateNames: themeCandidateNames.size,
+    },
     constraints: {
       maxUsdPerCard: options.maxUsdPerCard ?? null,
       allowedSets: options.allowedSets ?? [],
@@ -274,7 +356,8 @@ export async function suggestDeckUpgrades(
     caveats: [
       'These role-count targets are engineering heuristics for deck consistency and are not the official Commander bracket definitions.',
       'Candidate ordering keeps the existing role fit, mana efficiency, and EDHREC/community-adoption signals, then reuses V0.15 commander strategy inference as an additional deck-context signal. Popularity or strategy affinity alone is not proof of optimality.',
-      'Cut ordering now uses the same V0.15 commander strategy context as additions, so on-plan cards receive the same four-point protection scale already used for important utility roles without becoming automatically uncuttable.',
+      'When a V0.15 controlled theme is below its minimum density, theme-matching cards are preferred within each structural deficit; the theme is not appended to every role search, so generic ramp, interaction, protection, or other utility can still be selected when appropriate.',
+      'Cut ordering uses the same V0.15 commander strategy context as additions. When the deck is at or below its controlled theme minimum, matching cards also receive a capped four-point cut-protection signal; final theme preservation is still enforced independently by refinement rather than by this heuristic alone.',
       'Automatic upgrade packages pair the nonland cut pool with nonland additions so a utility land cannot silently replace a spell; dedicated mana-base work should be handled explicitly.',
       'Cut suggestions deliberately avoid claiming thematic/high-mana cards are bad; validate them against simulations, actual games, and reference-deck evidence.',
       'Scryfall USD prices are printing-specific reference values rather than guaranteed store checkout prices, and this version does not yet convert them to NZD.',
