@@ -1,14 +1,16 @@
 import type { ScryfallCard } from '../types/scryfall.js';
-import { evaluateCommanderBuildV15 } from './commander-build-evaluation-v15.js';
+import { derivePostBuildEvidenceV15 } from './commander-build-evaluation-v15.js';
 import { validateCommanderDeck } from './commander-rules.js';
 import { buildSimulationBackedUpgradePlanV07, type UpgradePlanOptionsV07 } from './deck-builder-v07.js';
 import { parseDecklist, type ParsedDeck } from './deck.js';
+import { auditFinalWinRoutesV15 } from './final-win-route-audit-v15.js';
 import {
   estimateUpgradeSpendV11,
   refinementImprovementScoreV11,
   type RefinementDetailLevelV11,
 } from './optimizer-v11.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from './scryfall.js';
+import { findDeckCombosEvidence } from './spellbook.js';
 
 export interface IterativeRefinementOptionsV12 extends UpgradePlanOptionsV07 {
   maxTotalUsd?: number;
@@ -201,14 +203,42 @@ export function deriveWinRouteProtectionV15(input: {
   };
 }
 
-async function currentWinRouteProtectionV15(decklist: string): Promise<WinRouteProtectionV15> {
+async function currentWinRouteProtectionV15(
+  decklist: string,
+  parsed: ParsedDeck,
+): Promise<WinRouteProtectionV15> {
   try {
-    const evaluation = await evaluateCommanderBuildV15(decklist);
+    const combos = await findDeckCombosEvidence(decklist, 100);
+    // The current round's deck has already passed resolution and Commander legality. We reuse the
+    // existing V0.15 Spellbook-to-full-table-win derivation here only for verified combo details;
+    // the unrelated bracket/curve signal fields below are deliberately inert and are not surfaced
+    // as an analysis or bracket result by refinement.
+    const evidence = derivePostBuildEvidenceV15({
+      commanderLegal: true,
+      exactCardCount: parsed.totalCards === 100,
+      fullyResolved: true,
+      printingPolicyCompliant: true,
+      averageNonlandManaValue: 0,
+      earlyPlayCount: 0,
+      fastManaCount: 0,
+      freeInteractionCount: 0,
+      cheapInteractionCount: 0,
+      tutorCount: 0,
+      gameChangerNames: [],
+      commanderNames: parsed.commanders.map((entry) => entry.name),
+      spellbookBracket: {},
+      combos,
+      efficientWinPlanSupported: false,
+    });
+    const finalAudit = auditFinalWinRoutesV15({
+      comboVerificationComplete: evidence.comboVerificationComplete,
+      verifiedWinningComboDetails: evidence.verifiedWinningComboDetails,
+    });
     return deriveWinRouteProtectionV15({
-      comboVerificationComplete: evaluation.finalWinRouteAudit.comboVerificationComplete,
-      primaryComboId: evaluation.finalWinRouteAudit.portfolio.primaryComboId,
-      backupComboId: evaluation.finalWinRouteAudit.portfolio.backupComboId,
-      verifiedWinningComboDetails: evaluation.postBuildEvidence.verifiedWinningComboDetails,
+      comboVerificationComplete: finalAudit.comboVerificationComplete,
+      primaryComboId: finalAudit.portfolio.primaryComboId,
+      backupComboId: finalAudit.portfolio.backupComboId,
+      verifiedWinningComboDetails: evidence.verifiedWinningComboDetails,
     });
   } catch {
     return {
@@ -341,7 +371,7 @@ export async function refineCommanderDeckIterativelyV12(
       break;
     }
 
-    const winRouteProtection = await currentWinRouteProtectionV15(currentDecklist);
+    const winRouteProtection = await currentWinRouteProtectionV15(currentDecklist, currentParsed);
     const roundProtectedNames = new Set([
       ...protectedNames,
       ...winRouteProtection.protectedCardNames.map((name) => name.toLocaleLowerCase()),
