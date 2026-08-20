@@ -2,6 +2,3 @@
 > mtg-ultimate-mcp@0.13.0 build
 > tsc -p tsconfig.json
 
-src/services/deck-builder-v07.ts(600,56): error TS2551: Property 'free-interaction' does not exist on type '{ ramp: number; draw: number; interaction: number; freeInteraction: number; protection: number; tutor: number; early: number; }'. Did you mean 'freeInteraction'?
-src/services/deck-builder-v07.ts(607,46): error TS2551: Property 'free-interaction' does not exist on type 'UpgradeStructuralTargetsV15'. Did you mean 'freeInteraction'?
-src/services/deck-builder-v07.ts(607,61): error TS2551: Property 'free-interaction' does not exist on type 'UpgradeStructuralCountsV15'. Did you mean 'freeInteraction'?
