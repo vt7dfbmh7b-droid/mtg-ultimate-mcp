@@ -1,7 +1,6 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import { assessActualBracketV15, type ActualBracketAssessmentV15 } from './actual-bracket-assessment-v15.js';
 import type { BracketAssessmentSignalsV15 } from './bracket-ceiling-v15.js';
-import { countWinningCombosV14, isWinResultV14 } from './cedh-win-package-v14.js';
 import { validateCommanderDeck } from './commander-rules.js';
 import { buildDeckMetrics, parseDecklist, resolveEntryCard, type ParsedDeck } from './deck.js';
 import { deriveEfficientCommanderWinPlanV15 } from './efficient-win-plan-v15.js';
@@ -14,6 +13,7 @@ import {
 } from './printing-policy-v08.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from './scryfall.js';
 import { estimateCommanderBracket, findDeckCombosEvidence } from './spellbook.js';
+import { isStrictDeterministicWinResultV15 } from './win-package-verification-v15.js';
 
 export interface CommanderBuildEvaluationOptionsV15 extends PrintingPolicyInputV08 {
   constraintDescriptions?: string[];
@@ -106,10 +106,18 @@ export function derivePostBuildEvidenceV15(input: PostBuildEvidenceInputV15): Po
   const combos = record(input.combos);
   const included = Array.isArray(combos.included) ? combos.included.map(record) : [];
   const counts = record(combos.counts);
-  const winningIncluded = included.filter((combo) => Array.isArray(combo.results) && isWinResultV14(combo.results.map(String)));
-  const verifiedWinningComboIds = [...new Set(winningIncluded.map((combo) => String(combo.id ?? '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b));
-  const verifiedWinningCombos = countWinningCombosV14(combos);
-  const ruthlessWinningCombos = winningIncluded.filter((combo) => String(combo.bracketTag ?? '') === 'R').length;
+  const winningIncluded = included.filter((combo) =>
+    Array.isArray(combo.results) && isStrictDeterministicWinResultV15(combo.results.map(String)));
+  const verifiedWinningComboIds = [...new Set(winningIncluded
+    .map((combo) => String(combo.id ?? '').trim())
+    .filter(Boolean))].sort((a, b) => a.localeCompare(b));
+  const verifiedWinningCombos = verifiedWinningComboIds.length;
+  const ruthlessWinningCombos = winningIncluded
+    .filter((combo) => String(combo.bracketTag ?? '') === 'R')
+    .map((combo) => String(combo.id ?? '').trim())
+    .filter(Boolean)
+    .filter((id, index, ids) => ids.indexOf(id) === index)
+    .length;
   const strategicallyRelevantCombos = Array.isArray(bracket.strategicallyRelevantCombos) ? bracket.strategicallyRelevantCombos.length : 0;
   const spellbookTag = typeof bracket.bracketTag === 'string' ? bracket.bracketTag : null;
   const spellbookBracketSourceStatus = sourceStatus(bracket.sourceStatus);
