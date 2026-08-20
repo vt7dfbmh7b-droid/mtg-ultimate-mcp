@@ -1,7 +1,11 @@
 import { readFile, writeFile } from 'node:fs/promises';
+import {
+  assertEvaluationCodeIdentityMatchesSealV15,
+  type FutureHoldoutSealV15,
+} from '../src/services/future-holdout-seal-v15.js';
 import { buildHistoricalLearningCorpusManifestV15 } from '../src/services/historical-learning-corpus-v15.js';
-import type { FutureHoldoutSealV15 } from '../src/services/future-holdout-seal-v15.js';
 import { evaluatePromotionAwareSealedFutureHoldoutV15 } from '../src/services/promotion-aware-future-model-eval-v15.js';
+import { currentPromotionRuntimeIdentityV15 } from '../src/services/promotion-runtime-identity-v15.js';
 import type { TopDeckPromotionCorpusAdmissionV15 } from '../src/services/topdeck-promotion-corpus-admission-v15.js';
 import type { TopDeckSealedFutureHoldoutV15 } from '../src/services/topdeck-sealed-future-holdout-v15.js';
 
@@ -27,7 +31,7 @@ async function jsonFile(path: string): Promise<unknown> {
 
 function privateSeal(value: unknown): { corpusArtifactReference: string; seal: FutureHoldoutSealV15 } {
   const wrapper = object('private future holdout seal', value);
-  if (wrapper.schemaVersion !== 'topdeck-promotion-future-holdout-seal-private-v15.1') {
+  if (wrapper.schemaVersion !== 'topdeck-promotion-future-holdout-seal-private-v15.2') {
     throw new Error(`Unsupported private future holdout seal schema: ${String(wrapper.schemaVersion)}.`);
   }
   return {
@@ -50,7 +54,7 @@ function privateHoldout(value: unknown): {
   holdout: TopDeckSealedFutureHoldoutV15;
 } {
   const wrapper = object('private sealed future holdout', value);
-  if (wrapper.schemaVersion !== 'topdeck-sealed-future-holdout-private-v15.1') {
+  if (wrapper.schemaVersion !== 'topdeck-sealed-future-holdout-private-v15.2') {
     throw new Error(`Unsupported private sealed future holdout schema: ${String(wrapper.schemaVersion)}.`);
   }
   return {
@@ -68,6 +72,7 @@ async function main(): Promise<void> {
   const sealArtifactReference = required('TOPDECK_SEAL_ARTIFACT_REFERENCE', process.env.TOPDECK_SEAL_ARTIFACT_REFERENCE);
   const futureHoldoutArtifactReference = required('TOPDECK_FUTURE_HOLDOUT_ARTIFACT_REFERENCE', process.env.TOPDECK_FUTURE_HOLDOUT_ARTIFACT_REFERENCE);
   const storedSeal = privateSeal(await jsonFile(SEAL_PATH));
+  assertEvaluationCodeIdentityMatchesSealV15(storedSeal.seal, await currentPromotionRuntimeIdentityV15());
   const trainingCorpus = privateCorpus(await jsonFile(CORPUS_PATH));
   const future = privateHoldout(await jsonFile(HOLDOUT_PATH));
 
@@ -94,7 +99,7 @@ async function main(): Promise<void> {
     future.holdout.historicalRecords,
   );
   const privateEvaluation = {
-    schemaVersion: 'topdeck-promotion-future-evaluation-private-v15.1',
+    schemaVersion: 'topdeck-promotion-future-evaluation-private-v15.2',
     evaluatedAt: result.evaluation.evaluatedAt,
     sealArtifactReference,
     corpusArtifactReference: storedSeal.corpusArtifactReference,
@@ -107,11 +112,14 @@ async function main(): Promise<void> {
 
   const evaluation = result.evaluation;
   const audit = {
-    schemaVersion: 'topdeck-promotion-future-evaluation-audit-v15.1',
+    schemaVersion: 'topdeck-promotion-future-evaluation-audit-v15.2',
     status: result.promotionReadiness.evidenceStatus,
     evaluatedAt: evaluation.evaluatedAt,
     sealHash: evaluation.sealHash,
     learningTarget: evaluation.learningTarget,
+    claimScope: storedSeal.seal.evaluationPlan.claimScope,
+    promotionFeatures: storedSeal.seal.evaluationPlan.promotionFeatures,
+    evaluationCodeIdentity: storedSeal.seal.evaluationCodeIdentity,
     trainingRecords: evaluation.trainingRecords,
     futureHoldoutRecords: evaluation.futureHoldoutRecords,
     usefulness: evaluation.usefulness,
@@ -131,6 +139,10 @@ async function main(): Promise<void> {
       brierScore: evaluation.transparentMetrics.brierScore,
       auroc: evaluation.transparentMetrics.auroc,
       expectedCalibrationError: evaluation.transparentMetrics.expectedCalibrationError,
+    },
+    prevalenceMetrics: {
+      balancedAccuracy: evaluation.prevalenceMetrics.balancedAccuracy,
+      logLoss: evaluation.prevalenceMetrics.logLoss,
     },
     neuralImprovement: evaluation.neuralImprovement,
     futureQualityGatePassed: evaluation.futureHoldoutQuality.qualityGatePassed,

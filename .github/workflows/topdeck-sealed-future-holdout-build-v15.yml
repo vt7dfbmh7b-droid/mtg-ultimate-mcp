@@ -37,21 +37,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
-      - name: Check out repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-
-      - name: Set up Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
-        with:
-          node-version-file: .node-version
-          package-manager-cache: false
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Type-check and build
-        run: npm run build
-
-      - name: Set up ORAS
+      - name: Set up ORAS before sealed-code checkout
         uses: oras-project/setup-oras@22ce207df3b08e061f537244349aac6ae1d214f6
         with:
           version: 1.3.3
@@ -63,29 +49,20 @@ jobs:
         run: |
           set -euo pipefail
           OWNER=$(printf '%s' "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          ENCODED_PACKAGE=$(node -e "process.stdout.write(encodeURIComponent(process.env.TOPDECK_PACKAGE_NAME))")
+          ENCODED_PACKAGE=$(python3 -c 'import os,urllib.parse; print(urllib.parse.quote(os.environ["TOPDECK_PACKAGE_NAME"], safe=""), end="")')
           RESPONSE_FILE=$(mktemp)
-          HTTP_CODE=$(curl -sS -o "$RESPONSE_FILE" -w '%{http_code}' \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${GH_TOKEN}" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/users/${OWNER}/packages/container/${ENCODED_PACKAGE}")
-          if [[ "$HTTP_CODE" != "200" ]]; then
-            echo "Could not verify TopDeck evidence package privacy; HTTP $HTTP_CODE." >&2
-            exit 1
-          fi
-          VISIBILITY=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));process.stdout.write(String(x.visibility||''))" "$RESPONSE_FILE")
+          HTTP_CODE=$(curl -sS -o "$RESPONSE_FILE" -w '%{http_code}' -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${GH_TOKEN}" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/users/${OWNER}/packages/container/${ENCODED_PACKAGE}")
+          [[ "$HTTP_CODE" == "200" ]] || { echo "Could not verify TopDeck evidence package privacy; HTTP $HTTP_CODE." >&2; exit 1; }
+          VISIBILITY=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("visibility", ""), end="")' "$RESPONSE_FILE")
           rm -f "$RESPONSE_FILE"
-          if [[ "$VISIBILITY" != "private" ]]; then
-            echo "Refusing future holdout build because TopDeck evidence package visibility is ${VISIBILITY:-unknown}, not private." >&2
-            exit 1
-          fi
+          [[ "$VISIBILITY" == "private" ]] || { echo "Refusing future holdout build because TopDeck evidence package is not private." >&2; exit 1; }
 
       - name: Log in to GitHub Container Registry
         shell: bash
         run: echo "${{ secrets.GITHUB_TOKEN }}" | oras login ghcr.io --username "${{ github.actor }}" --password-stdin
 
-      - name: Validate and pull immutable seal
+      - name: Pull immutable seal and extract frozen code revision
+        id: sealed_code
         env:
           SEAL_REF: ${{ inputs.seal_artifact_reference }}
         shell: bash
@@ -93,36 +70,57 @@ jobs:
           set -euo pipefail
           OWNER=$(printf '%s' "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           PREFIX="ghcr.io/${OWNER}/${TOPDECK_PACKAGE_NAME}@sha256:"
-          if [[ "$SEAL_REF" != "$PREFIX"* ]]; then
-            echo "Seal reference must use immutable digest form under the private TopDeck evidence package." >&2
-            exit 1
-          fi
+          [[ "$SEAL_REF" == "$PREFIX"* ]] || { echo "Seal reference must use immutable digest form under the private TopDeck evidence package." >&2; exit 1; }
           DIGEST="${SEAL_REF#"$PREFIX"}"
-          if [[ ! "$DIGEST" =~ ^[a-f0-9]{64}$ ]]; then
-            echo "Seal reference contains an invalid SHA-256 digest." >&2
-            exit 1
-          fi
-          mkdir -p seal
-          oras pull "$SEAL_REF" -o seal
-          test -f "seal/$SEAL_PRIVATE_FILE"
+          [[ "$DIGEST" =~ ^[a-f0-9]{64}$ ]] || { echo "Seal reference contains an invalid SHA-256 digest." >&2; exit 1; }
+          SEAL_DIR="$RUNNER_TEMP/promotion-seal"
+          mkdir -p "$SEAL_DIR"
+          oras pull "$SEAL_REF" -o "$SEAL_DIR"
+          test -f "$SEAL_DIR/$SEAL_PRIVATE_FILE"
+          SEALED_SHA=$(python3 - "$SEAL_DIR/$SEAL_PRIVATE_FILE" <<'PY'
+          import json, re, sys
+          data = json.load(open(sys.argv[1]))
+          if data.get('schemaVersion') != 'topdeck-promotion-future-holdout-seal-private-v15.2':
+              raise SystemExit('Unsupported private future-holdout seal schema.')
+          sha = str(data.get('seal', {}).get('evaluationCodeIdentity', {}).get('gitCommitSha', '')).lower()
+          if not re.fullmatch(r'[0-9a-f]{40}', sha):
+              raise SystemExit('Seal does not contain a valid frozen Git commit SHA.')
+          print(sha, end='')
+          PY
+          )
+          echo "sealed_sha=$SEALED_SHA" >> "$GITHUB_OUTPUT"
+          echo "seal_path=$SEAL_DIR/$SEAL_PRIVATE_FILE" >> "$GITHUB_OUTPUT"
+
+      - name: Check out exact sealed evaluator revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ steps.sealed_code.outputs.sealed_sha }}
+
+      - name: Set up sealed Node.js version
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install exact sealed dependencies
+        run: npm ci
+
+      - name: Type-check and build sealed code
+        run: npm run build
 
       - name: Extract and pull immutable training corpus
         id: corpus
+        env:
+          SEAL_FILE: ${{ steps.sealed_code.outputs.seal_path }}
         shell: bash
         run: |
           set -euo pipefail
-          CORPUS_REF=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync('seal/'+process.env.SEAL_PRIVATE_FILE,'utf8'));process.stdout.write(String(x.corpusArtifactReference||''))")
+          CORPUS_REF=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.env.SEAL_FILE,'utf8'));process.stdout.write(String(x.corpusArtifactReference||''))")
           OWNER=$(printf '%s' "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           PREFIX="ghcr.io/${OWNER}/${TOPDECK_PACKAGE_NAME}@sha256:"
-          if [[ "$CORPUS_REF" != "$PREFIX"* ]]; then
-            echo "Seal contains a non-immutable or wrong-package corpus reference." >&2
-            exit 1
-          fi
+          [[ "$CORPUS_REF" == "$PREFIX"* ]] || { echo "Seal contains a non-immutable or wrong-package corpus reference." >&2; exit 1; }
           DIGEST="${CORPUS_REF#"$PREFIX"}"
-          if [[ ! "$DIGEST" =~ ^[a-f0-9]{64}$ ]]; then
-            echo "Seal corpus reference contains an invalid SHA-256 digest." >&2
-            exit 1
-          fi
+          [[ "$DIGEST" =~ ^[a-f0-9]{64}$ ]] || { echo "Seal corpus reference contains an invalid SHA-256 digest." >&2; exit 1; }
           mkdir -p corpus
           oras pull "$CORPUS_REF" -o corpus
           test -f "corpus/$CORPUS_PRIVATE_FILE"
@@ -155,15 +153,9 @@ jobs:
           FIRST=true
           while IFS= read -r REF; do
             [[ -n "$REF" ]] || continue
-            if [[ "$REF" != "$PREFIX"* ]]; then
-              echo "Future joined evidence reference must use immutable digest form under ${REPOSITORY}." >&2
-              exit 1
-            fi
+            [[ "$REF" == "$PREFIX"* ]] || { echo "Future joined evidence reference must use immutable digest form under ${REPOSITORY}." >&2; exit 1; }
             DIGEST="${REF#"$PREFIX"}"
-            if [[ ! "$DIGEST" =~ ^[a-f0-9]{64}$ ]]; then
-              echo "Future joined evidence reference contains an invalid SHA-256 digest." >&2
-              exit 1
-            fi
+            [[ "$DIGEST" =~ ^[a-f0-9]{64}$ ]] || { echo "Future joined evidence reference contains an invalid SHA-256 digest." >&2; exit 1; }
             DIR="future-joined/${INDEX}"
             mkdir -p "$DIR"
             oras pull "$REF" -o "$DIR"
@@ -178,12 +170,13 @@ jobs:
           printf '\n]\n' >> "$INDEX_FILE"
           test "$INDEX" -gt 0
 
-      - name: Build future holdout with frozen sealed normalizer
+      - name: Build future holdout with exact sealed code and normalizer
         id: holdout
         env:
+          MTG_PROMOTION_CODE_SHA: ${{ steps.sealed_code.outputs.sealed_sha }}
           TOPDECK_SEAL_ARTIFACT_REFERENCE: ${{ inputs.seal_artifact_reference }}
           TOPDECK_CORPUS_ARTIFACT_REFERENCE: ${{ steps.corpus.outputs.artifact_reference }}
-          TOPDECK_PROMOTION_SEAL_PRIVATE_PATH: seal/${{ env.SEAL_PRIVATE_FILE }}
+          TOPDECK_PROMOTION_SEAL_PRIVATE_PATH: ${{ steps.sealed_code.outputs.seal_path }}
           TOPDECK_PROMOTION_CORPUS_PRIVATE_PATH: corpus/${{ env.CORPUS_PRIVATE_FILE }}
           TOPDECK_FUTURE_JOIN_INDEX_PATH: ${{ env.INDEX_FILE }}
           TOPDECK_FUTURE_HOLDOUT_PRIVATE_PATH: ${{ env.PRIVATE_HOLDOUT_FILE }}
@@ -194,16 +187,9 @@ jobs:
           npx tsx scripts/build-topdeck-sealed-future-holdout-v15.ts
           SEAL_HASH=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.env.AUDIT_FILE,'utf8'));process.stdout.write(x.sealHash||'')")
           RECORDS=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.env.AUDIT_FILE,'utf8'));process.stdout.write(String(x.futureRecords ?? ''))")
-          if [[ ! "$SEAL_HASH" =~ ^[a-f0-9]{64}$ ]]; then
-            echo "Future holdout audit did not preserve a valid seal hash." >&2
-            exit 1
-          fi
-          if [[ ! "$RECORDS" =~ ^[0-9]+$ ]] || [[ "$RECORDS" == "0" ]]; then
-            echo "Future holdout build produced no strict records." >&2
-            exit 1
-          fi
+          [[ "$SEAL_HASH" =~ ^[a-f0-9]{64}$ ]] || { echo "Future holdout audit did not preserve a valid seal hash." >&2; exit 1; }
+          [[ "$RECORDS" =~ ^[0-9]+$ ]] && [[ "$RECORDS" -gt 0 ]] || { echo "Future holdout build produced no strict records." >&2; exit 1; }
           echo "seal_hash=$SEAL_HASH" >> "$GITHUB_OUTPUT"
-          echo "future_records=$RECORDS" >> "$GITHUB_OUTPUT"
 
       - name: Push private future holdout
         id: push
@@ -216,16 +202,10 @@ jobs:
           REPOSITORY="ghcr.io/${OWNER}/${TOPDECK_PACKAGE_NAME}"
           TAG="future-holdout-${SEAL_HASH:0:16}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           TAGGED_REFERENCE="${REPOSITORY}:${TAG}"
-          oras push \
-            --artifact-type "$HOLDOUT_ARTIFACT_TYPE" \
-            "$TAGGED_REFERENCE" \
-            "$PRIVATE_HOLDOUT_FILE:$HOLDOUT_LAYER_MEDIA_TYPE"
+          oras push --artifact-type "$HOLDOUT_ARTIFACT_TYPE" "$TAGGED_REFERENCE" "$PRIVATE_HOLDOUT_FILE:$HOLDOUT_LAYER_MEDIA_TYPE"
           oras manifest fetch --descriptor "$TAGGED_REFERENCE" > "$DESCRIPTOR_FILE"
           DIGEST=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.env.DESCRIPTOR_FILE,'utf8'));process.stdout.write(x.digest||'')")
-          if [[ ! "$DIGEST" =~ ^sha256:[a-f0-9]{64}$ ]]; then
-            echo "Private future holdout descriptor did not contain an immutable SHA-256 digest." >&2
-            exit 1
-          fi
+          [[ "$DIGEST" =~ ^sha256:[a-f0-9]{64}$ ]] || { echo "Private future holdout descriptor did not contain an immutable SHA-256 digest." >&2; exit 1; }
           echo "artifact_reference=${REPOSITORY}@${DIGEST}" >> "$GITHUB_OUTPUT"
 
       - name: Verify package remained private
@@ -237,21 +217,11 @@ jobs:
           OWNER=$(printf '%s' "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           ENCODED_PACKAGE=$(node -e "process.stdout.write(encodeURIComponent(process.env.TOPDECK_PACKAGE_NAME))")
           RESPONSE_FILE=$(mktemp)
-          HTTP_CODE=$(curl -sS -o "$RESPONSE_FILE" -w '%{http_code}' \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${GH_TOKEN}" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/users/${OWNER}/packages/container/${ENCODED_PACKAGE}")
-          if [[ "$HTTP_CODE" != "200" ]]; then
-            echo "Could not verify future holdout package privacy; HTTP $HTTP_CODE." >&2
-            exit 1
-          fi
+          HTTP_CODE=$(curl -sS -o "$RESPONSE_FILE" -w '%{http_code}' -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${GH_TOKEN}" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/users/${OWNER}/packages/container/${ENCODED_PACKAGE}")
+          [[ "$HTTP_CODE" == "200" ]] || { echo "Could not verify future holdout package privacy; HTTP $HTTP_CODE." >&2; exit 1; }
           VISIBILITY=$(node -e "const fs=require('node:fs');const x=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));process.stdout.write(String(x.visibility||''))" "$RESPONSE_FILE")
           rm -f "$RESPONSE_FILE"
-          if [[ "$VISIBILITY" != "private" ]]; then
-            echo "Future holdout package is not private after write." >&2
-            exit 1
-          fi
+          [[ "$VISIBILITY" == "private" ]] || { echo "Future holdout package is not private after write." >&2; exit 1; }
 
       - name: Add immutable holdout reference to audit
         env:
@@ -263,10 +233,7 @@ jobs:
           const fs = require('node:fs');
           const path = process.env.AUDIT_FILE;
           const audit = JSON.parse(fs.readFileSync(path, 'utf8'));
-          audit.privateFutureHoldoutStorage = {
-            kind: 'ghcr-private-oci',
-            immutableArtifactReference: process.env.FUTURE_HOLDOUT_ARTIFACT_REFERENCE,
-          };
+          audit.privateFutureHoldoutStorage = { kind: 'ghcr-private-oci', immutableArtifactReference: process.env.FUTURE_HOLDOUT_ARTIFACT_REFERENCE };
           fs.writeFileSync(path, `${JSON.stringify(audit, null, 2)}\n`, 'utf8');
           NODE
 
@@ -285,5 +252,5 @@ jobs:
         if: always()
         shell: bash
         run: |
-          rm -rf seal corpus future-joined future-joined-refs.txt "$INDEX_FILE"
+          rm -rf corpus future-joined future-joined-refs.txt "$INDEX_FILE" "$RUNNER_TEMP/promotion-seal"
           rm -f "$PRIVATE_HOLDOUT_FILE"

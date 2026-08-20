@@ -8,7 +8,38 @@ import { assessTemporalFeatureContractSafetyV15 } from './neural-temporal-eval-v
 import type { NeuralRankerOptionsV15 } from './neural-ranker-v15.js';
 import { auditRealCorpusQualityV15 } from './real-corpus-quality-v15.js';
 
-export const FUTURE_HOLDOUT_SEAL_SCHEMA_V15 = 'future-holdout-seal-v15.1' as const;
+export const FUTURE_HOLDOUT_SEAL_SCHEMA_V15 = 'future-holdout-seal-v15.2' as const;
+export const PROMOTION_EVALUATOR_CONTRACT_V15 = 'promotion-evaluator-v15.2' as const;
+export const PROMOTION_CLAIM_SCOPE_V15 = 'Strict TopDeck event-top-cut prediction from promotion-grade prospective tournament evidence; not universal Commander deck strength.' as const;
+export const PROMOTION_FEATURES_V15 = ['manaEfficiency', 'interactionEfficiency'] as const;
+
+const REQUIRED_METRICS_V15 = ['accuracy', 'balanced-accuracy', 'log-loss', 'brier-score', 'auroc', 'expected-calibration-error'] as const;
+
+const PROMOTION_POLICY_V15 = {
+  minimumTrainingRecordsForProductionSeal: 200,
+  minimumTrainingMinorityShareForProductionSeal: 0.2,
+  minimumTrainingUniqueEvents: 10,
+  minimumTrainingUniquePilots: 20,
+  maximumTrainingLeakageGroupShare: 0.25,
+  requireCompleteTrainingEventIdentity: true,
+  requireCompleteTrainingPilotIdentity: true,
+  minimumFutureHoldoutRecordsForUsefulnessClaim: 200,
+  minimumFutureHoldoutMinorityShare: 0.2,
+  minimumFutureHoldoutUniqueEvents: 10,
+  minimumFutureHoldoutUniquePilots: 20,
+  maximumFutureHoldoutLeakageGroupShare: 0.25,
+  requireCompleteFutureEventIdentity: true,
+  requireCompleteFuturePilotIdentity: true,
+  minimumNeuralBalancedAccuracy: 0.6,
+  minimumNeuralAuRoc: 0.65,
+  minimumBalancedAccuracyGainOverTransparent: 0.02,
+  minimumAuRocGainOverTransparent: 0.01,
+  maximumLogLossRegressionVsTransparent: 0,
+  maximumBrierRegressionVsTransparent: 0,
+  minimumBalancedAccuracyGainOverPrevalence: 0.05,
+  maximumLogLossRegressionVsPrevalence: 0,
+  maximumExpectedCalibrationError: 0.15,
+} as const;
 
 export interface LockedNeuralOptionsV15 {
   hiddenLayerOne: number;
@@ -25,17 +56,45 @@ export interface LockedTransparentOptionsV15 {
   l2: number;
 }
 
+export interface EvaluationCodeIdentityV15 {
+  repositoryFullName: string;
+  gitCommitSha: string;
+  packageLockSha256: string;
+  nodeVersion: string;
+  evaluatorContract: typeof PROMOTION_EVALUATOR_CONTRACT_V15;
+}
+
 export interface FutureHoldoutEvaluationPlanV15 {
   decisionThreshold: number;
   calibrationBins: number;
   neural: LockedNeuralOptionsV15;
   transparent: LockedTransparentOptionsV15;
-  requiredMetrics: readonly ['accuracy', 'balanced-accuracy', 'log-loss', 'brier-score', 'auroc', 'expected-calibration-error'];
-  minimumFutureHoldoutRecordsForUsefulnessClaim: 200;
-  minimumFutureHoldoutMinorityShare: 0.2;
-  minimumBalancedAccuracyGainOverTransparent: 0.02;
-  minimumAuRocGainOverTransparent: 0.01;
-  maximumLogLossRegressionVsTransparent: 0;
+  requiredMetrics: typeof REQUIRED_METRICS_V15;
+  promotionFeatures: typeof PROMOTION_FEATURES_V15;
+  claimScope: typeof PROMOTION_CLAIM_SCOPE_V15;
+  minimumTrainingRecordsForProductionSeal: number;
+  minimumTrainingMinorityShareForProductionSeal: number;
+  minimumTrainingUniqueEvents: number;
+  minimumTrainingUniquePilots: number;
+  maximumTrainingLeakageGroupShare: number;
+  requireCompleteTrainingEventIdentity: boolean;
+  requireCompleteTrainingPilotIdentity: boolean;
+  minimumFutureHoldoutRecordsForUsefulnessClaim: number;
+  minimumFutureHoldoutMinorityShare: number;
+  minimumFutureHoldoutUniqueEvents: number;
+  minimumFutureHoldoutUniquePilots: number;
+  maximumFutureHoldoutLeakageGroupShare: number;
+  requireCompleteFutureEventIdentity: boolean;
+  requireCompleteFuturePilotIdentity: boolean;
+  minimumNeuralBalancedAccuracy: number;
+  minimumNeuralAuRoc: number;
+  minimumBalancedAccuracyGainOverTransparent: number;
+  minimumAuRocGainOverTransparent: number;
+  maximumLogLossRegressionVsTransparent: number;
+  maximumBrierRegressionVsTransparent: number;
+  minimumBalancedAccuracyGainOverPrevalence: number;
+  maximumLogLossRegressionVsPrevalence: number;
+  maximumExpectedCalibrationError: number;
 }
 
 export interface FutureHoldoutSealV15 {
@@ -55,16 +114,10 @@ export interface FutureHoldoutSealV15 {
   featureExtractorContract: string;
   featureNormalizerFitFingerprint: string;
   trainingLeakageGroupDigest: string;
+  evaluationCodeIdentity: EvaluationCodeIdentityV15;
   evaluationPlan: FutureHoldoutEvaluationPlanV15;
   sealHash: string;
-  guardrails: readonly [
-    'Training corpus identity is content-addressed and may not change after sealing.',
-    'Model hyperparameters, threshold, calibration bins, and success criteria are fixed before future outcomes are admitted.',
-    'Future holdout outcomes must occur and become source-available after sealedAt.',
-    'Future holdout features must use the exact training-fitted feature normalizer fingerprint.',
-    'Training and future holdout leakage groups may not overlap.',
-    'The seal is an application-level precommitment; repository/audit retention should preserve when the seal was created.'
-  ];
+  guardrails: readonly string[];
 }
 
 export interface FutureHoldoutSealOptionsV15 {
@@ -72,9 +125,18 @@ export interface FutureHoldoutSealOptionsV15 {
   calibrationBins?: number;
   neural?: NeuralRankerOptionsV15;
   transparent?: { epochs?: number; learningRate?: number; l2?: number };
+  evaluationCodeIdentity?: EvaluationCodeIdentityV15;
   /** Deterministic test hook. Any seal created with this hook is permanently test-attested and cannot support a usefulness claim. */
   now?: () => Date;
 }
+
+const TEST_CODE_IDENTITY_V15: EvaluationCodeIdentityV15 = {
+  repositoryFullName: 'test/injected-clock',
+  gitCommitSha: '0'.repeat(40),
+  packageLockSha256: '0'.repeat(64),
+  nodeVersion: 'test',
+  evaluatorContract: PROMOTION_EVALUATOR_CONTRACT_V15,
+};
 
 function normalize(value: string): string {
   return value.trim().toLocaleLowerCase().replace(/\s+/g, ' ');
@@ -113,6 +175,10 @@ function sha256(value: string): string {
   return createHash('sha256').update(value).digest('hex');
 }
 
+function sameArray(left: readonly string[], right: readonly string[]): boolean {
+  return left.length === right.length && left.every((value, index) => value === right[index]);
+}
+
 function normalizedPlan(options: FutureHoldoutSealOptionsV15): FutureHoldoutEvaluationPlanV15 {
   const neural = options.neural ?? {};
   const transparent = options.transparent ?? {};
@@ -132,13 +198,87 @@ function normalizedPlan(options: FutureHoldoutSealOptionsV15): FutureHoldoutEval
       learningRate: clamp(finite(transparent.learningRate, 0.08), 0.001, 0.5),
       l2: clamp(finite(transparent.l2, 0.01), 0, 0.2),
     },
-    requiredMetrics: ['accuracy', 'balanced-accuracy', 'log-loss', 'brier-score', 'auroc', 'expected-calibration-error'],
-    minimumFutureHoldoutRecordsForUsefulnessClaim: 200,
-    minimumFutureHoldoutMinorityShare: 0.2,
-    minimumBalancedAccuracyGainOverTransparent: 0.02,
-    minimumAuRocGainOverTransparent: 0.01,
-    maximumLogLossRegressionVsTransparent: 0,
+    requiredMetrics: REQUIRED_METRICS_V15,
+    promotionFeatures: PROMOTION_FEATURES_V15,
+    claimScope: PROMOTION_CLAIM_SCOPE_V15,
+    ...PROMOTION_POLICY_V15,
   };
+}
+
+function finiteInRange(name: string, value: unknown, minimum: number, maximum: number): number {
+  if (typeof value !== 'number' || !Number.isFinite(value) || value < minimum || value > maximum) {
+    throw new Error(`${name} must be finite and between ${minimum} and ${maximum}.`);
+  }
+  return value;
+}
+
+export function assertApprovedFutureHoldoutEvaluationPlanV15(plan: FutureHoldoutEvaluationPlanV15): FutureHoldoutEvaluationPlanV15 {
+  if (!plan || typeof plan !== 'object') throw new Error('Future holdout evaluation plan must be an object.');
+  finiteInRange('evaluationPlan.decisionThreshold', plan.decisionThreshold, 0.05, 0.95);
+  if (!Number.isInteger(plan.calibrationBins) || plan.calibrationBins < 5 || plan.calibrationBins > 20) {
+    throw new Error('evaluationPlan.calibrationBins must be an integer between 5 and 20.');
+  }
+  finiteInRange('evaluationPlan.neural.hiddenLayerOne', plan.neural.hiddenLayerOne, 2, 32);
+  finiteInRange('evaluationPlan.neural.hiddenLayerTwo', plan.neural.hiddenLayerTwo, 2, 16);
+  finiteInRange('evaluationPlan.neural.epochs', plan.neural.epochs, 1, 2_000);
+  finiteInRange('evaluationPlan.neural.learningRate', plan.neural.learningRate, 0.0001, 0.3);
+  finiteInRange('evaluationPlan.neural.l2', plan.neural.l2, 0, 0.1);
+  finiteInRange('evaluationPlan.neural.seed', plan.neural.seed, 1, 2_147_483_647);
+  finiteInRange('evaluationPlan.transparent.epochs', plan.transparent.epochs, 1, 500);
+  finiteInRange('evaluationPlan.transparent.learningRate', plan.transparent.learningRate, 0.001, 0.5);
+  finiteInRange('evaluationPlan.transparent.l2', plan.transparent.l2, 0, 0.2);
+  if (!sameArray(plan.requiredMetrics, REQUIRED_METRICS_V15)) throw new Error('Future holdout required-metric contract is not the approved V0.15 contract.');
+  if (!sameArray(plan.promotionFeatures, PROMOTION_FEATURES_V15)) throw new Error('Future holdout feature projection is not the approved two-feature V0.15 contract.');
+  if (plan.claimScope !== PROMOTION_CLAIM_SCOPE_V15) throw new Error('Future holdout claim scope is not the approved narrow V0.15 scope.');
+  for (const [key, expected] of Object.entries(PROMOTION_POLICY_V15)) {
+    const actual = (plan as unknown as Record<string, unknown>)[key];
+    if (actual !== expected) throw new Error(`Future holdout policy ${key} does not match the approved precommitted V0.15 value.`);
+  }
+  return plan;
+}
+
+export function assertEvaluationCodeIdentityV15(identity: EvaluationCodeIdentityV15): EvaluationCodeIdentityV15 {
+  if (!identity || typeof identity !== 'object') throw new Error('Evaluation code identity must be an object.');
+  if (!/^[^/\s]+\/[^/\s]+$/.test(identity.repositoryFullName)) throw new Error('Evaluation repository identity must use owner/repository form.');
+  if (!/^[a-f0-9]{40}$/i.test(identity.gitCommitSha)) throw new Error('Evaluation Git commit identity must be a 40-character SHA-1 hex digest.');
+  if (!/^[a-f0-9]{64}$/i.test(identity.packageLockSha256)) throw new Error('Evaluation package-lock identity must be a SHA-256 hex digest.');
+  if (typeof identity.nodeVersion !== 'string' || !identity.nodeVersion.trim()) throw new Error('Evaluation Node version must be non-empty.');
+  if (identity.evaluatorContract !== PROMOTION_EVALUATOR_CONTRACT_V15) throw new Error('Evaluation code contract is not the approved V0.15 evaluator contract.');
+  return {
+    repositoryFullName: identity.repositoryFullName.toLocaleLowerCase(),
+    gitCommitSha: identity.gitCommitSha.toLocaleLowerCase(),
+    packageLockSha256: identity.packageLockSha256.toLocaleLowerCase(),
+    nodeVersion: identity.nodeVersion.trim(),
+    evaluatorContract: PROMOTION_EVALUATOR_CONTRACT_V15,
+  };
+}
+
+export function assertEvaluationCodeIdentityMatchesSealV15(
+  seal: FutureHoldoutSealV15,
+  actual: EvaluationCodeIdentityV15,
+): void {
+  const expected = assertEvaluationCodeIdentityV15(seal.evaluationCodeIdentity);
+  const observed = assertEvaluationCodeIdentityV15(actual);
+  if (stableStringify(expected) !== stableStringify(observed)) {
+    throw new Error('Current evaluation code/dependency identity does not match the immutable future-holdout seal.');
+  }
+}
+
+export function assertPromotionFeatureProjectionV15(records: HistoricalLearningRecordV15[]): void {
+  const expectedKeys = [...PROMOTION_FEATURES_V15].sort();
+  for (const historical of records) {
+    const features = historical.record.features;
+    const keys = Object.keys(features).sort();
+    if (!sameArray(keys, expectedKeys)) {
+      throw new Error(`Promotion record ${historical.record.outcomeId} must use exactly ${PROMOTION_FEATURES_V15.join(' and ')}; received ${keys.join(', ') || 'no features'}.`);
+    }
+    for (const feature of PROMOTION_FEATURES_V15) {
+      const value = features[feature];
+      if (typeof value !== 'number' || !Number.isFinite(value)) {
+        throw new Error(`Promotion record ${historical.record.outcomeId} has non-finite ${feature}.`);
+      }
+    }
+  }
 }
 
 function featureContract(records: HistoricalLearningRecordV15[]): { extractor: string; normalizer: string } {
@@ -158,6 +298,21 @@ function leakageDigest(records: HistoricalLearningRecordV15[]): string {
   return sha256(records.map((record) => normalize(record.record.leakageGroup)).sort().join('\n'));
 }
 
+function assertProductionTrainingQuality(
+  quality: ReturnType<typeof auditRealCorpusQualityV15>,
+  plan: FutureHoldoutEvaluationPlanV15,
+): void {
+  const blockers: string[] = [];
+  if (quality.records < plan.minimumTrainingRecordsForProductionSeal) blockers.push(`at least ${plan.minimumTrainingRecordsForProductionSeal} strict training records are required`);
+  if (quality.minorityShare < plan.minimumTrainingMinorityShareForProductionSeal) blockers.push(`training minority share must be at least ${plan.minimumTrainingMinorityShareForProductionSeal}`);
+  if (quality.eventCoverage.uniqueEvents < plan.minimumTrainingUniqueEvents) blockers.push(`at least ${plan.minimumTrainingUniqueEvents} unique training events are required`);
+  if (quality.pilotCoverage.uniquePilots < plan.minimumTrainingUniquePilots) blockers.push(`at least ${plan.minimumTrainingUniquePilots} unique training pilots are required`);
+  if (quality.leakageCoverage.maximumGroupShare > plan.maximumTrainingLeakageGroupShare) blockers.push(`no training leakage group may exceed share ${plan.maximumTrainingLeakageGroupShare}`);
+  if (plan.requireCompleteTrainingEventIdentity && quality.eventCoverage.missingEventIdentityRecords > 0) blockers.push('every production training record must have explicit provider event identity');
+  if (plan.requireCompleteTrainingPilotIdentity && quality.pilotCoverage.missingPilotIdentityRecords > 0) blockers.push('every production training record must have explicit provider pilot identity');
+  if (blockers.length > 0) throw new Error(`Production future-holdout seal training contract failed: ${blockers.join('; ')}.`);
+}
+
 export function createFutureHoldoutSealV15(
   trainingRecords: HistoricalLearningRecordV15[],
   trainingAsOf: string,
@@ -167,6 +322,7 @@ export function createFutureHoldoutSealV15(
     throw new Error('Future holdout sealing requires at least 20 strict historical training records.');
   }
   for (const record of trainingRecords) assertHistoricalLearningRecordEligibleV15(record);
+  assertPromotionFeatureProjectionV15(trainingRecords);
   const asOf = timestamp('trainingAsOf', trainingAsOf);
   const clockAttestation: FutureHoldoutSealV15['clockAttestation'] = options.now ? 'injected-test-clock' : 'system-clock';
   const now = options.now ?? (() => new Date());
@@ -190,6 +346,13 @@ export function createFutureHoldoutSealV15(
   if (!target || target === 'legacy-unspecified') throw new Error('Future holdout sealing requires exactly one explicit non-legacy learning target.');
   const contract = featureContract(trainingRecords);
   const manifest = buildHistoricalLearningCorpusManifestV15(trainingRecords);
+  const evaluationPlan = assertApprovedFutureHoldoutEvaluationPlanV15(normalizedPlan(options));
+  if (clockAttestation === 'system-clock') assertProductionTrainingQuality(quality, evaluationPlan);
+
+  const suppliedIdentity = options.evaluationCodeIdentity
+    ?? (clockAttestation === 'injected-test-clock' ? TEST_CODE_IDENTITY_V15 : null);
+  if (!suppliedIdentity) throw new Error('Production future-holdout sealing requires exact evaluation code/dependency identity.');
+  const evaluationCodeIdentity = assertEvaluationCodeIdentityV15(suppliedIdentity);
 
   const payload: Omit<FutureHoldoutSealV15, 'sealHash'> = {
     schemaVersion: FUTURE_HOLDOUT_SEAL_SCHEMA_V15,
@@ -208,10 +371,13 @@ export function createFutureHoldoutSealV15(
     featureExtractorContract: contract.extractor,
     featureNormalizerFitFingerprint: contract.normalizer,
     trainingLeakageGroupDigest: leakageDigest(trainingRecords),
-    evaluationPlan: normalizedPlan(options),
+    evaluationCodeIdentity,
+    evaluationPlan,
     guardrails: [
       'Training corpus identity is content-addressed and may not change after sealing.',
-      'Model hyperparameters, threshold, calibration bins, and success criteria are fixed before future outcomes are admitted.',
+      'Model hyperparameters, threshold, metrics, absolute floors, baseline criteria, and diversity criteria are fixed before future outcomes are admitted.',
+      'The promotion experiment is explicitly limited to manaEfficiency and interactionEfficiency under the sealed narrow TopDeck claim scope.',
+      'Exact repository revision, dependency lockfile, Node version, and evaluator-contract identity are frozen before future outcomes are admitted.',
       'Future holdout outcomes must occur and become source-available after sealedAt.',
       'Future holdout features must use the exact training-fitted feature normalizer fingerprint.',
       'Training and future holdout leakage groups may not overlap.',
@@ -229,6 +395,8 @@ export function assertFutureHoldoutSealV15(seal: FutureHoldoutSealV15): FutureHo
   if (seal.clockAttestation !== 'system-clock' && seal.clockAttestation !== 'injected-test-clock') {
     throw new Error(`Unsupported future holdout seal clock attestation: ${String(seal.clockAttestation)}.`);
   }
+  assertEvaluationCodeIdentityV15(seal.evaluationCodeIdentity);
+  assertApprovedFutureHoldoutEvaluationPlanV15(seal.evaluationPlan);
   if (!/^[a-f0-9]{64}$/i.test(seal.sealHash)) throw new Error('Future holdout seal hash must be a SHA-256 digest.');
   const { sealHash, ...payload } = seal;
   if (sha256(stableStringify(payload)) !== sealHash.toLocaleLowerCase()) {
@@ -249,6 +417,7 @@ export function assertTrainingRecordsMatchFutureHoldoutSealV15(
     throw new Error('Training record count no longer matches the future holdout seal.');
   }
   for (const record of trainingRecords) assertHistoricalLearningRecordEligibleV15(record);
+  assertPromotionFeatureProjectionV15(trainingRecords);
   const manifest = buildHistoricalLearningCorpusManifestV15(trainingRecords);
   if (manifest.manifestHash !== seal.trainingHistoricalManifestHash || manifest.corpusContentHash !== seal.trainingHistoricalCorpusContentHash) {
     throw new Error('Training corpus content no longer matches the sealed historical manifest.');

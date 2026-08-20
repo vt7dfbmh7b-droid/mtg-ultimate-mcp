@@ -1,5 +1,8 @@
 import { readFile, writeFile } from 'node:fs/promises';
-import { createFutureHoldoutSealV15 } from '../src/services/future-holdout-seal-v15.js';
+import {
+  createFutureHoldoutSealV15,
+} from '../src/services/future-holdout-seal-v15.js';
+import { currentPromotionRuntimeIdentityV15 } from '../src/services/promotion-runtime-identity-v15.js';
 import {
   materializeTopDeckPromotionCorpusFromJoinedEvidenceV15,
   type TopDeckPromotionCorpusAdmissionV15,
@@ -97,12 +100,11 @@ async function main(): Promise<void> {
   }
 
   const trainingAsOf = new Date().toISOString();
-  const seal = createFutureHoldoutSealV15(replayed.historicalRecords, trainingAsOf);
-  if (seal.clockAttestation !== 'system-clock') {
-    throw new Error('Production promotion seal must be system-clock attested.');
-  }
+  const evaluationCodeIdentity = await currentPromotionRuntimeIdentityV15();
+  const seal = createFutureHoldoutSealV15(replayed.historicalRecords, trainingAsOf, { evaluationCodeIdentity });
+  if (seal.clockAttestation !== 'system-clock') throw new Error('Production promotion seal must be system-clock attested.');
   const privateSeal = {
-    schemaVersion: 'topdeck-promotion-future-holdout-seal-private-v15.1',
+    schemaVersion: 'topdeck-promotion-future-holdout-seal-private-v15.2',
     corpusArtifactReference,
     evidenceLineageHash: replayed.evidenceLineageHash,
     historicalManifestHash: replayed.historicalManifest.manifestHash,
@@ -112,7 +114,7 @@ async function main(): Promise<void> {
   await writeFile(PRIVATE_SEAL_PATH, `${JSON.stringify(privateSeal, null, 2)}\n`, 'utf8');
 
   const audit = {
-    schemaVersion: 'topdeck-promotion-future-holdout-seal-audit-v15.1',
+    schemaVersion: 'topdeck-promotion-future-holdout-seal-audit-v15.2',
     status: 'future-holdout-precommitment-sealed',
     sealedAt: seal.sealedAt,
     trainingAsOf: seal.trainingAsOf,
@@ -126,12 +128,28 @@ async function main(): Promise<void> {
     featureNormalizerFitFingerprint: seal.featureNormalizerFitFingerprint,
     evidenceLineageHash: replayed.evidenceLineageHash,
     sealHash: seal.sealHash,
+    claimScope: seal.evaluationPlan.claimScope,
+    promotionFeatures: seal.evaluationPlan.promotionFeatures,
+    evaluationCodeIdentity: seal.evaluationCodeIdentity,
+    productionTrainingRequirements: {
+      minimumRecords: seal.evaluationPlan.minimumTrainingRecordsForProductionSeal,
+      minimumMinorityShare: seal.evaluationPlan.minimumTrainingMinorityShareForProductionSeal,
+      minimumUniqueEvents: seal.evaluationPlan.minimumTrainingUniqueEvents,
+      minimumUniquePilots: seal.evaluationPlan.minimumTrainingUniquePilots,
+      maximumLeakageGroupShare: seal.evaluationPlan.maximumTrainingLeakageGroupShare,
+    },
     futureEvaluationRequirements: {
       minimumFutureHoldoutRecords: seal.evaluationPlan.minimumFutureHoldoutRecordsForUsefulnessClaim,
       minimumFutureHoldoutMinorityShare: seal.evaluationPlan.minimumFutureHoldoutMinorityShare,
+      minimumNeuralBalancedAccuracy: seal.evaluationPlan.minimumNeuralBalancedAccuracy,
+      minimumNeuralAuRoc: seal.evaluationPlan.minimumNeuralAuRoc,
       minimumBalancedAccuracyGainOverTransparent: seal.evaluationPlan.minimumBalancedAccuracyGainOverTransparent,
       minimumAuRocGainOverTransparent: seal.evaluationPlan.minimumAuRocGainOverTransparent,
+      minimumBalancedAccuracyGainOverPrevalence: seal.evaluationPlan.minimumBalancedAccuracyGainOverPrevalence,
       maximumLogLossRegressionVsTransparent: seal.evaluationPlan.maximumLogLossRegressionVsTransparent,
+      maximumBrierRegressionVsTransparent: seal.evaluationPlan.maximumBrierRegressionVsTransparent,
+      maximumLogLossRegressionVsPrevalence: seal.evaluationPlan.maximumLogLossRegressionVsPrevalence,
+      maximumExpectedCalibrationError: seal.evaluationPlan.maximumExpectedCalibrationError,
     },
     releaseAuthorization: {
       modelPromotionAuthorized: false,

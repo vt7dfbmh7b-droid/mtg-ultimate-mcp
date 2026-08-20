@@ -6,3 +6,18 @@ dist/
 coverage/
 .DS_Store
 npm-debug.log*
+
+# Local promotion/evidence working data. These can contain private provider,
+# player, deck, or card payloads and must never be committed to this public repo.
+*-private-*.json
+joined/
+future-joined/
+corpus/
+seal/
+future-holdout/
+joined-refs.txt
+future-joined-refs.txt
+joined-evidence-index-v15.json
+future-joined-evidence-index-v15.json
+scryfall-default-cards-retained.jsonl.gz
+scryfall-retention-candidate-v15.json

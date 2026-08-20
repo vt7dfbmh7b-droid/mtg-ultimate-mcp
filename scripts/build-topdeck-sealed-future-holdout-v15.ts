@@ -1,5 +1,9 @@
 import { readFile, writeFile } from 'node:fs/promises';
-import type { FutureHoldoutSealV15 } from '../src/services/future-holdout-seal-v15.js';
+import {
+  assertEvaluationCodeIdentityMatchesSealV15,
+  type FutureHoldoutSealV15,
+} from '../src/services/future-holdout-seal-v15.js';
+import { currentPromotionRuntimeIdentityV15 } from '../src/services/promotion-runtime-identity-v15.js';
 import type { TopDeckPromotionCorpusAdmissionV15, TopDeckPromotionJoinArtifactInputV15 } from '../src/services/topdeck-promotion-corpus-admission-v15.js';
 import type { TopDeckProspectivePromotionJoinV15 } from '../src/services/topdeck-prospective-promotion-join-v15.js';
 import { materializeTopDeckSealedFutureHoldoutV15 } from '../src/services/topdeck-sealed-future-holdout-v15.js';
@@ -31,7 +35,7 @@ async function jsonFile(path: string): Promise<unknown> {
 
 function privateSeal(value: unknown): { corpusArtifactReference: string; seal: FutureHoldoutSealV15 } {
   const wrapper = object('private future holdout seal', value);
-  if (wrapper.schemaVersion !== 'topdeck-promotion-future-holdout-seal-private-v15.1') {
+  if (wrapper.schemaVersion !== 'topdeck-promotion-future-holdout-seal-private-v15.2') {
     throw new Error(`Unsupported private future holdout seal schema: ${String(wrapper.schemaVersion)}.`);
   }
   return {
@@ -72,6 +76,7 @@ async function main(): Promise<void> {
   const sealArtifactReference = required('TOPDECK_SEAL_ARTIFACT_REFERENCE', process.env.TOPDECK_SEAL_ARTIFACT_REFERENCE);
   const corpusArtifactReference = required('TOPDECK_CORPUS_ARTIFACT_REFERENCE', process.env.TOPDECK_CORPUS_ARTIFACT_REFERENCE);
   const storedSeal = privateSeal(await jsonFile(SEAL_PATH));
+  assertEvaluationCodeIdentityMatchesSealV15(storedSeal.seal, await currentPromotionRuntimeIdentityV15());
   if (storedSeal.corpusArtifactReference.toLocaleLowerCase() !== corpusArtifactReference.toLocaleLowerCase()) {
     throw new Error('Future holdout seal is bound to a different immutable training corpus artifact.');
   }
@@ -92,7 +97,7 @@ async function main(): Promise<void> {
     futureJoinedEvidence,
   });
   const privateHoldout = {
-    schemaVersion: 'topdeck-sealed-future-holdout-private-v15.1',
+    schemaVersion: 'topdeck-sealed-future-holdout-private-v15.2',
     builtAt: new Date().toISOString(),
     sealArtifactReference,
     corpusArtifactReference,
@@ -106,11 +111,12 @@ async function main(): Promise<void> {
     ? Math.min(positiveRecords, negativeRecords) / holdout.historicalRecords.length
     : 0;
   const audit = {
-    schemaVersion: 'topdeck-sealed-future-holdout-audit-v15.1',
+    schemaVersion: 'topdeck-sealed-future-holdout-audit-v15.2',
     status: 'sealed-future-holdout-built',
     builtAt: privateHoldout.builtAt,
     sealHash: holdout.sealHash,
     sealedAt: holdout.sealedAt,
+    evaluationCodeIdentity: storedSeal.seal.evaluationCodeIdentity,
     evidenceArtifactCount: holdout.evidenceArtifactCount,
     futureRecords: holdout.historicalRecords.length,
     positiveRecords,
@@ -123,6 +129,9 @@ async function main(): Promise<void> {
     evaluationThresholds: {
       minimumFutureHoldoutRecords: storedSeal.seal.evaluationPlan.minimumFutureHoldoutRecordsForUsefulnessClaim,
       minimumFutureHoldoutMinorityShare: storedSeal.seal.evaluationPlan.minimumFutureHoldoutMinorityShare,
+      minimumFutureHoldoutUniqueEvents: storedSeal.seal.evaluationPlan.minimumFutureHoldoutUniqueEvents,
+      minimumFutureHoldoutUniquePilots: storedSeal.seal.evaluationPlan.minimumFutureHoldoutUniquePilots,
+      maximumFutureHoldoutLeakageGroupShare: storedSeal.seal.evaluationPlan.maximumFutureHoldoutLeakageGroupShare,
     },
     releaseAuthorization: {
       modelPromotionAuthorized: false,
