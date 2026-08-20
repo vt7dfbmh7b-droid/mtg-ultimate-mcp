@@ -14,6 +14,10 @@ import {
   type TopDeckLearningFetchResultV15,
 } from './services/topdeck-learning-live-v15.js';
 import {
+  auditTutorReplacementPortfolioV15,
+  type TutorReplacementPortfolioAuditV15,
+} from './services/tutor-replacement-portfolio-v15.js';
+import {
   auditTutorReplacementsV15,
   type TutorReplacementIntelligenceV15,
 } from './services/tutor-replacement-intelligence-v15.js';
@@ -40,6 +44,7 @@ type TutorReplacementInputV15 = z.infer<typeof tutorReplacementInputSchemaV15>;
 export interface TutorReplacementToolDependenciesV15 {
   evaluateBuild?: typeof evaluateCommanderBuildV15;
   auditReplacements?: typeof auditTutorReplacementsV15;
+  auditPortfolio?: typeof auditTutorReplacementPortfolioV15;
   fetchTopDeck?: typeof fetchTopDeckLearningCandidatesV15;
   auditTopDeck?: typeof auditTopDeckTutorPrevalenceV15;
 }
@@ -157,6 +162,7 @@ export async function runTutorReplacementToolV15(
 ): Promise<Record<string, unknown>> {
   const evaluateBuild = dependencies.evaluateBuild ?? evaluateCommanderBuildV15;
   const auditReplacements = dependencies.auditReplacements ?? auditTutorReplacementsV15;
+  const auditPortfolio = dependencies.auditPortfolio ?? auditTutorReplacementPortfolioV15;
   const fetchTopDeck = dependencies.fetchTopDeck ?? fetchTopDeckLearningCandidatesV15;
   const auditTopDeck = dependencies.auditTopDeck ?? auditTopDeckTutorPrevalenceV15;
 
@@ -195,7 +201,7 @@ export async function runTutorReplacementToolV15(
       verifiedRoutes: routes.map(routeSummary),
       guidance: input.comboId
         ? 'The requested comboId is not one of the deck’s verified full-table winning routes. No arbitrary route was substituted.'
-        : 'Multiple verified full-table winning routes are present. Select a comboId so replacement access is measured against the intended route rather than guessed.',
+        : 'Multiple verified full-table winning routes are present. Select a comboId so primary replacement access is measured against the intended route rather than guessed; accepted candidates are then cross-checked against the complete bounded verified-route portfolio.',
     };
   }
 
@@ -216,6 +222,13 @@ export async function runTutorReplacementToolV15(
     },
   });
 
+  const portfolioSafety: TutorReplacementPortfolioAuditV15 = await auditPortfolio({
+    routes: routes.map(exactRouteInput),
+    parsed: evaluation.parsed,
+    resolvedCards: evaluation.resolvedCards,
+    replacementAudit,
+  });
+
   const topDeck = await optionalTopDeckEvidence({
     enabled: input.includeTopDeckEvidence,
     lastDays: input.topDeckLastDays,
@@ -229,17 +242,20 @@ export async function runTutorReplacementToolV15(
   return {
     status: 'verified-route-tutor-replacements-audited',
     route: routeSummary(selected),
+    verifiedRoutePortfolio: routes.map(routeSummary),
     replacementAudit,
+    portfolioSafety,
     sameTutorCheaperPrintingAlternatives: sameTutorCheaperPrintingAlternatives(replacementAudit),
     topDeckEvidenceRequested: input.includeTopDeckEvidence,
     topDeckEvidence: topDeck.evidence,
     sourceErrors: topDeck.sourceError ? { topDeck: topDeck.sourceError } : {},
     guidance: [
       'Commander legality, route verification, exact card access and exact eligible-printing price are the hard layers for a replacement comparison.',
+      'Primary replacement classifications describe the selected verified route only. Treat portfolioSafety.safeNoExactAccessLossAcrossPortfolio=true as the conservative signal that the swap also preserves exact selected-checkpoint access across every verified route in the bounded portfolio audit.',
       'Rows where sourceTutorName and replacementTutorName are the same Oracle card are surfaced separately as cheaper-printing alternatives; they are not different tutor-card substitutions.',
       'The Scryfall candidate pool is bounded and EDHREC-ordered, so an empty result is not proof that the current tutor is globally optimal.',
       'Near-equivalent is only emitted when maxAccessLossPercentagePoints is explicitly supplied; otherwise every exact access loss remains visible without a hidden tolerance.',
-      'TopDeck prevalence, when requested and available, is advisory observational evidence only and cannot override legality, route truth, exact access or printing/budget constraints.',
+      'TopDeck prevalence, when requested and available, is advisory observational evidence only and cannot override legality, route truth, exact access, portfolio safety or printing/budget constraints.',
     ],
   };
 }
@@ -260,7 +276,7 @@ export function registerTutorReplacementToolV15(
     'audit_verified_route_tutor_replacements_v15',
     {
       title: 'Find cheaper legal tutor replacements for a verified Commander win route',
-      description: 'Verify a finished Commander deck and full-table winning route, then search a bounded Commander-legal Scryfall candidate pool for one-for-one tutor replacements that satisfy explicit printing/theme/budget constraints. Every proposed swap is revalidated for Commander legality and exact route access. Optional TopDeck prevalence remains advisory.',
+      description: 'Verify a finished Commander deck and full-table winning route, then search a bounded Commander-legal Scryfall candidate pool for one-for-one tutor replacements that satisfy explicit printing/theme/budget constraints. Every proposed swap is revalidated for Commander legality and exact primary-route access, then cross-checked against the bounded portfolio of verified full-table win routes. Optional TopDeck prevalence remains advisory.',
       inputSchema: tutorReplacementInputSchemaV15,
       annotations: { readOnlyHint: true, openWorldHint: true },
     },
