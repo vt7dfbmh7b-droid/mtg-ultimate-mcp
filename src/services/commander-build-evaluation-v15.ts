@@ -18,6 +18,10 @@ import {
 } from './printing-policy-v08.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from './scryfall.js';
 import { estimateCommanderBracket, findDeckCombosEvidence } from './spellbook.js';
+import {
+  auditWinRouteSetupInterruptionV15,
+  type WinRouteSetupInterruptionAuditV15,
+} from './win-route-setup-interruption-v15.js';
 
 export interface CommanderBuildEvaluationOptionsV15 extends PrintingPolicyInputV08 {
   constraintDescriptions?: string[];
@@ -58,6 +62,9 @@ export interface VerifiedWinningComboDetailV15 {
   seedNames: string[];
   results: string[];
   requirementNames: string[];
+  description: unknown;
+  manaNeeded: unknown;
+  otherPrerequisites: unknown;
   dependencyCompleteness: 'explicit-cards-only' | 'template-requirements-present';
   closureKind: FullTableWinClosureKindV15;
   closureTiming: 'immediate' | 'delayed' | 'not-proven';
@@ -95,6 +102,7 @@ export interface CommanderBuildEvaluationV15 {
   metrics: ReturnType<typeof buildDeckMetrics>;
   postBuildEvidence: PostBuildEvidenceV15;
   finalWinRouteAudit: FinalWinRouteAuditV15;
+  winRouteSetupAudits: WinRouteSetupInterruptionAuditV15[];
   actualBracket: ActualBracketAssessmentV15;
   externalEvidenceChecked: boolean;
   externalEvidenceComplete: boolean;
@@ -158,6 +166,9 @@ function comboDetail(
     seedNames: uniqueSorted(seedNames),
     results,
     requirementNames,
+    description: combo.description ?? null,
+    manaNeeded: combo.manaNeeded ?? null,
+    otherPrerequisites: combo.otherPrerequisites ?? null,
     dependencyCompleteness: requirementNames.length > 0 ? 'template-requirements-present' : 'explicit-cards-only',
     closureKind: closure.kind,
     closureTiming: closure.timing,
@@ -228,6 +239,25 @@ export function derivePostBuildEvidenceV15(input: PostBuildEvidenceInputV15): Po
   };
 }
 
+export function deriveWinRouteSetupAuditsV15(
+  details: readonly VerifiedWinningComboDetailV15[],
+  resolvedCards: readonly ScryfallCard[],
+): WinRouteSetupInterruptionAuditV15[] {
+  return details.map((detail) => auditWinRouteSetupInterruptionV15({
+    route: {
+      comboId: detail.comboId,
+      comboCardNames: detail.comboCardNames,
+      seedNames: detail.seedNames,
+      requirementNames: detail.requirementNames,
+      manaNeeded: detail.manaNeeded,
+      otherPrerequisites: detail.otherPrerequisites,
+      description: detail.description,
+      closureTiming: detail.closureTiming,
+    },
+    resolvedCards,
+  }));
+}
+
 export async function evaluateCommanderBuildV15(
   decklist: string,
   options: CommanderBuildEvaluationOptionsV15 = {},
@@ -295,6 +325,7 @@ export async function evaluateCommanderBuildV15(
     comboVerificationComplete: evidence.comboVerificationComplete,
     verifiedWinningComboDetails: evidence.verifiedWinningComboDetails,
   });
+  const winRouteSetupAudits = deriveWinRouteSetupAuditsV15(evidence.verifiedWinningComboDetails, resolved.cards);
   const actualBracket = assessActualBracketV15(evidence.signals, options.constraintDescriptions ?? []);
 
   return {
@@ -311,6 +342,7 @@ export async function evaluateCommanderBuildV15(
     metrics,
     postBuildEvidence: evidence,
     finalWinRouteAudit,
+    winRouteSetupAudits,
     actualBracket,
     externalEvidenceChecked: hardGatesPassed,
     externalEvidenceComplete: hardGatesPassed
