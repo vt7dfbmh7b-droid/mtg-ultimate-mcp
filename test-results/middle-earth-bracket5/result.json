@@ -1,0 +1,2231 @@
+{
+  "schema": "middle-earth-bracket5-live-v15.1",
+  "request": {
+    "allowedSets": [
+      "LTR",
+      "LTC",
+      "HOB",
+      "HOC"
+    ],
+    "includesLordOfTheRings": [
+      "LTR",
+      "LTC"
+    ],
+    "includesTheHobbit": [
+      "HOB",
+      "HOC"
+    ],
+    "targetBracket": 5,
+    "competitiveMetagameEvidence": false
+  },
+  "discovery": {
+    "discoveredCardCount": 192,
+    "discoveryBuckets": [
+      {
+        "filter": "family-sets-paginated:2-pages",
+        "count": 192
+      }
+    ],
+    "attemptedCandidates": [
+      {
+        "commanderNames": [
+          "Denethor, Ruling Steward"
+        ],
+        "label": "Denethor, Ruling Steward",
+        "kind": "single",
+        "colorIdentity": [
+          "B",
+          "W"
+        ],
+        "strategy": {
+          "archetype": "aristocrats",
+          "score": 27,
+          "evidence": [
+            "sacrifice synergy +7",
+            "sacrifice outlet +8",
+            "opponent drain +7",
+            "sacrifice text +5"
+          ]
+        },
+        "alternativeStrategies": [
+          {
+            "archetype": "combat-tokens",
+            "score": 6,
+            "evidence": [
+              "token production +6"
+            ]
+          },
+          {
+            "archetype": "big-mana",
+            "score": 0,
+            "evidence": []
+          },
+          {
+            "archetype": "counters",
+            "score": 0,
+            "evidence": []
+          }
+        ],
+        "coherenceScore": 27,
+        "selectionSignals": [
+          "sacrifice synergy +7",
+          "sacrifice outlet +8",
+          "opponent drain +7",
+          "sacrifice text +5",
+          "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
+        ]
+      },
+      {
+        "commanderNames": [
+          "Sauron, Lord of the Rings"
+        ],
+        "label": "Sauron, Lord of the Rings",
+        "kind": "single",
+        "colorIdentity": [
+          "B",
+          "R",
+          "U"
+        ],
+        "strategy": {
+          "archetype": "graveyard-reanimator",
+          "score": 26,
+          "evidence": [
+            "graveyard recursion +9",
+            "graveyard access +6",
+            "graveyard setup +5",
+            "reanimation text +6"
+          ]
+        },
+        "alternativeStrategies": [
+          {
+            "archetype": "aristocrats",
+            "score": 6,
+            "evidence": [
+              "death trigger +6"
+            ]
+          },
+          {
+            "archetype": "big-mana",
+            "score": 0,
+            "evidence": []
+          },
+          {
+            "archetype": "combat-tokens",
+            "score": 0,
+            "evidence": []
+          }
+        ],
+        "coherenceScore": 26,
+        "selectionSignals": [
+          "graveyard recursion +9",
+          "graveyard access +6",
+          "graveyard setup +5",
+          "reanimation text +6",
+          "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
+        ]
+      },
+      {
+        "commanderNames": [
+          "Bilbo, Luckwearer // Burglar's Plot"
+        ],
+        "label": "Bilbo, Luckwearer // Burglar's Plot",
+        "kind": "single",
+        "colorIdentity": [
+          "U"
+        ],
+        "strategy": {
+          "archetype": "value-engine",
+          "score": 20,
+          "evidence": [
+            "repeatable draw +9",
+            "card draw +5",
+            "repeatable card access +6"
+          ]
+        },
+        "alternativeStrategies": [
+          {
+            "archetype": "graveyard-reanimator",
+            "score": 5,
+            "evidence": [
+              "graveyard setup +5"
+            ]
+          },
+          {
+            "archetype": "combat-tokens",
+            "score": 3,
+            "evidence": [
+              "combat-damage trigger +3"
+            ]
+          },
+          {
+            "archetype": "aristocrats",
+            "score": 0,
+            "evidence": []
+          }
+        ],
+        "coherenceScore": 20,
+        "selectionSignals": [
+          "repeatable draw +9",
+          "card draw +5",
+          "repeatable card access +6",
+          "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
+        ]
+      },
+      {
+        "commanderNames": [
+          "Éomer, Marshal of Rohan"
+        ],
+        "label": "Éomer, Marshal of Rohan",
+        "kind": "single",
+        "colorIdentity": [
+          "R"
+        ],
+        "strategy": {
+          "archetype": "combat-tokens",
+          "score": 20,
+          "evidence": [
+            "extra combat +8",
+            "combat untap potential +4",
+            "haste +2",
+            "attack trigger +6"
+          ]
+        },
+        "alternativeStrategies": [
+          {
+            "archetype": "big-mana",
+            "score": 4,
+            "evidence": [
+              "untap engine +4"
+            ]
+          },
+          {
+            "archetype": "aristocrats",
+            "score": 0,
+            "evidence": []
+          },
+          {
+            "archetype": "counters",
+            "score": 0,
+            "evidence": []
+          }
+        ],
+        "coherenceScore": 20,
+        "selectionSignals": [
+          "extra combat +8",
+          "combat untap potential +4",
+          "haste +2",
+          "attack trigger +6",
+          "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
+        ]
+      },
+      {
+        "commanderNames": [
+          "Dáin Ironfoot"
+        ],
+        "label": "Dáin Ironfoot",
+        "kind": "single",
+        "colorIdentity": [
+          "R"
+        ],
+        "strategy": {
+          "archetype": "equipment-voltron",
+          "score": 18,
+          "evidence": [
+            "equipment role +8",
+            "equip/attach text +7",
+            "combat scaling +3"
+          ]
+        },
+        "alternativeStrategies": [
+          {
+            "archetype": "combat-tokens",
+            "score": 12,
+            "evidence": [
+              "token production +6",
+              "attack trigger +6"
+            ]
+          },
+          {
+            "archetype": "aristocrats",
+            "score": 0,
+            "evidence": []
+          },
+          {
+            "archetype": "big-mana",
+            "score": 0,
+            "evidence": []
+          }
+        ],
+        "coherenceScore": 18,
+        "selectionSignals": [
+          "equipment role +8",
+          "equip/attach text +7",
+          "combat scaling +3",
+          "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
+        ]
+      },
+      {
+        "commanderNames": [
+          "Gandalf the Grey"
+        ],
+        "label": "Gandalf the Grey",
+        "kind": "single",
+        "colorIdentity": [
+          "R",
+          "U"
+        ],
+        "strategy": {
+          "archetype": "spells-control",
+          "score": 18,
+          "evidence": [
+            "copy effect +6",
+            "cast trigger +7",
+            "spell-type payoff +5"
+          ]
+        },
+        "alternativeStrategies": [
+          {
+            "archetype": "big-mana",
+            "score": 4,
+            "evidence": [
+              "untap engine +4"
+            ]
+          },
+          {
+            "archetype": "combat-tokens",
+            "score": 4,
+            "evidence": [
+              "combat untap potential +4"
+            ]
+          },
+          {
+            "archetype": "aristocrats",
+            "score": 0,
+            "evidence": []
+          }
+        ],
+        "coherenceScore": 18,
+        "selectionSignals": [
+          "copy effect +6",
+          "cast trigger +7",
+          "spell-type payoff +5",
+          "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
+        ]
+      },
+      {
+        "commanderNames": [
+          "Gwaihir the Windlord"
+        ],
+        "label": "Gwaihir the Windlord",
+        "kind": "single",
+        "colorIdentity": [
+          "U",
+          "W"
+        ],
+        "strategy": {
+          "archetype": "big-mana",
+          "score": 14,
+          "evidence": [
+            "cost reduction +8",
+            "cost-reduction text +6"
+          ]
+        },
+        "alternativeStrategies": [
+          {
+            "archetype": "aristocrats",
+            "score": 0,
+            "evidence": []
+          },
+          {
+            "archetype": "combat-tokens",
+            "score": 0,
+            "evidence": []
+          },
+          {
+            "archetype": "counters",
+            "score": 0,
+            "evidence": []
+          }
+        ],
+        "coherenceScore": 14,
+        "selectionSignals": [
+          "cost reduction +8",
+          "cost-reduction text +6",
+          "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
+        ]
+      }
+    ]
+  },
+  "successes": [
+    {
+      "candidate": {
+        "commanderNames": [
+          "Denethor, Ruling Steward"
+        ],
+        "label": "Denethor, Ruling Steward",
+        "kind": "single",
+        "colorIdentity": [
+          "B",
+          "W"
+        ],
+        "strategy": {
+          "archetype": "aristocrats",
+          "score": 27,
+          "evidence": [
+            "sacrifice synergy +7",
+            "sacrifice outlet +8",
+            "opponent drain +7",
+            "sacrifice text +5"
+          ]
+        },
+        "alternativeStrategies": [
+          {
+            "archetype": "combat-tokens",
+            "score": 6,
+            "evidence": [
+              "token production +6"
+            ]
+          },
+          {
+            "archetype": "big-mana",
+            "score": 0,
+            "evidence": []
+          },
+          {
+            "archetype": "counters",
+            "score": 0,
+            "evidence": []
+          }
+        ],
+        "coherenceScore": 27,
+        "selectionSignals": [
+          "sacrifice synergy +7",
+          "sacrifice outlet +8",
+          "opponent drain +7",
+          "sacrifice text +5",
+          "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
+        ]
+      },
+      "commanderRefs": [
+        {
+          "name": "Denethor, Ruling Steward",
+          "set": "LTR",
+          "collectorNumber": "198"
+        }
+      ],
+      "achievedBracket": 3,
+      "achievedBand": "bracket-3-upgraded-range",
+      "bracket5ConstructionCandidate": false,
+      "bracket5Certified": false,
+      "verifiedWinningCombos": 0,
+      "bracket5ThresholdChecks": [
+        {
+          "key": "average-nonland-mv",
+          "category": "construction",
+          "label": "Average nonland mana value",
+          "observed": 2.38,
+          "required": "at most 2.6",
+          "passed": true,
+          "detail": "Average nonland mana value: observed 2.38; Bracket-5 construction gate requires at most 2.6.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "early-plays",
+          "category": "construction",
+          "label": "Early plays",
+          "observed": 42,
+          "required": "at least 35",
+          "passed": true,
+          "detail": "Early plays: observed 42; Bracket-5 construction gate requires at least 35.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "fast-mana",
+          "category": "construction",
+          "label": "Fast mana",
+          "observed": 4,
+          "required": "at least 3",
+          "passed": true,
+          "detail": "Fast mana: observed 4; Bracket-5 construction gate requires at least 3.",
+          "pressurePoint": "fast-mana density"
+        },
+        {
+          "key": "free-interaction",
+          "category": "construction",
+          "label": "Free interaction",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Free interaction: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "cheap-interaction",
+          "category": "construction",
+          "label": "Cheap interaction",
+          "observed": 13,
+          "required": "at least 8",
+          "passed": true,
+          "detail": "Cheap interaction: observed 13; Bracket-5 construction gate requires at least 8.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "tutors",
+          "category": "construction",
+          "label": "Tutors",
+          "observed": 10,
+          "required": "at least 4",
+          "passed": true,
+          "detail": "Tutors: observed 10; Bracket-5 construction gate requires at least 4.",
+          "pressurePoint": "tutor consistency"
+        },
+        {
+          "key": "verified-winning-combo",
+          "category": "construction",
+          "label": "Verified win-oriented combos",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "competitive-combo-signal",
+          "category": "construction",
+          "label": "Competitive combo signal",
+          "observed": "Ruthless=0, strategic=0, Spellbook=P",
+          "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+          "passed": false,
+          "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "cedh-intent",
+          "category": "evidence",
+          "label": "Explicit cEDH intent",
+          "observed": true,
+          "required": "true",
+          "passed": true,
+          "detail": "Explicit cEDH intent: observed true; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "competitive intent"
+        },
+        {
+          "key": "competitive-metagame-evidence",
+          "category": "evidence",
+          "label": "Independent current competitive-metagame evidence",
+          "observed": false,
+          "required": "true",
+          "passed": false,
+          "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "metagame evidence"
+        }
+      ],
+      "metrics": {
+        "landCount": 31,
+        "nonlandCount": 69,
+        "landRatio": 0.31,
+        "averageNonlandManaValue": 2.38,
+        "manaCurve": {
+          "0": 2,
+          "1": 14,
+          "2": 26,
+          "3": 16,
+          "4": 8,
+          "5": 2,
+          "6": 0,
+          "7+": 1
+        },
+        "coloredPips": {
+          "W": 22,
+          "U": 0,
+          "B": 34,
+          "R": 0,
+          "G": 0
+        },
+        "roleCounts": {
+          "token production": 22,
+          "sacrifice synergy": 39,
+          "sacrifice outlet": 5,
+          "life drain": 7,
+          "creature": 26,
+          "mana acceleration": 42,
+          "mana rock": 8,
+          "fast mana": 4,
+          "card selection": 5,
+          "spot interaction": 15,
+          "land ramp": 5,
+          "card draw": 18,
+          "tutor": 10,
+          "land tutor": 7,
+          "treasure": 5,
+          "stax/control": 2,
+          "equipment": 6,
+          "graveyard hate": 3,
+          "protection": 8,
+          "graveyard recursion": 5,
+          "countermagic": 1,
+          "board wipe": 2,
+          "artifact/enchantment interaction": 1,
+          "cost reduction": 1,
+          "repeatable draw": 1,
+          "mana dork": 1,
+          "+1/+1 counters": 6,
+          "creature tutor": 1,
+          "haste": 1,
+          "land": 31
+        },
+        "earlyPlayCount": 42,
+        "fastManaCount": 4,
+        "rampCount": 48,
+        "drawCount": 23,
+        "tutorCount": 10,
+        "interactionCount": 18,
+        "cheapInteractionCount": 13,
+        "protectionCount": 8,
+        "recursionCount": 5,
+        "boardWipeCount": 2,
+        "structuralSignals": []
+      },
+      "selectedPackage": null,
+      "exactPrintingVerification": {
+        "cardCount": 100,
+        "commanderLegal": true,
+        "setCodes": [
+          "HOB",
+          "HOC",
+          "LTC",
+          "LTR"
+        ]
+      }
+    },
+    {
+      "candidate": {
+        "commanderNames": [
+          "Sauron, Lord of the Rings"
+        ],
+        "label": "Sauron, Lord of the Rings",
+        "kind": "single",
+        "colorIdentity": [
+          "B",
+          "R",
+          "U"
+        ],
+        "strategy": {
+          "archetype": "graveyard-reanimator",
+          "score": 26,
+          "evidence": [
+            "graveyard recursion +9",
+            "graveyard access +6",
+            "graveyard setup +5",
+            "reanimation text +6"
+          ]
+        },
+        "alternativeStrategies": [
+          {
+            "archetype": "aristocrats",
+            "score": 6,
+            "evidence": [
+              "death trigger +6"
+            ]
+          },
+          {
+            "archetype": "big-mana",
+            "score": 0,
+            "evidence": []
+          },
+          {
+            "archetype": "combat-tokens",
+            "score": 0,
+            "evidence": []
+          }
+        ],
+        "coherenceScore": 26,
+        "selectionSignals": [
+          "graveyard recursion +9",
+          "graveyard access +6",
+          "graveyard setup +5",
+          "reanimation text +6",
+          "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
+        ]
+      },
+      "commanderRefs": [
+        {
+          "name": "Sauron, Lord of the Rings",
+          "set": "LTC",
+          "collectorNumber": "84"
+        }
+      ],
+      "achievedBracket": 3,
+      "achievedBand": "bracket-3-upgraded-range",
+      "bracket5ConstructionCandidate": false,
+      "bracket5Certified": false,
+      "verifiedWinningCombos": 0,
+      "bracket5ThresholdChecks": [
+        {
+          "key": "average-nonland-mv",
+          "category": "construction",
+          "label": "Average nonland mana value",
+          "observed": 2.59,
+          "required": "at most 2.6",
+          "passed": true,
+          "detail": "Average nonland mana value: observed 2.59; Bracket-5 construction gate requires at most 2.6.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "early-plays",
+          "category": "construction",
+          "label": "Early plays",
+          "observed": 41,
+          "required": "at least 35",
+          "passed": true,
+          "detail": "Early plays: observed 41; Bracket-5 construction gate requires at least 35.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "fast-mana",
+          "category": "construction",
+          "label": "Fast mana",
+          "observed": 4,
+          "required": "at least 3",
+          "passed": true,
+          "detail": "Fast mana: observed 4; Bracket-5 construction gate requires at least 3.",
+          "pressurePoint": "fast-mana density"
+        },
+        {
+          "key": "free-interaction",
+          "category": "construction",
+          "label": "Free interaction",
+          "observed": 1,
+          "required": "at least 1",
+          "passed": true,
+          "detail": "Free interaction: observed 1; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "cheap-interaction",
+          "category": "construction",
+          "label": "Cheap interaction",
+          "observed": 9,
+          "required": "at least 8",
+          "passed": true,
+          "detail": "Cheap interaction: observed 9; Bracket-5 construction gate requires at least 8.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "tutors",
+          "category": "construction",
+          "label": "Tutors",
+          "observed": 10,
+          "required": "at least 4",
+          "passed": true,
+          "detail": "Tutors: observed 10; Bracket-5 construction gate requires at least 4.",
+          "pressurePoint": "tutor consistency"
+        },
+        {
+          "key": "verified-winning-combo",
+          "category": "construction",
+          "label": "Verified win-oriented combos",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "competitive-combo-signal",
+          "category": "construction",
+          "label": "Competitive combo signal",
+          "observed": "Ruthless=0, strategic=0, Spellbook=P",
+          "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+          "passed": false,
+          "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "cedh-intent",
+          "category": "evidence",
+          "label": "Explicit cEDH intent",
+          "observed": true,
+          "required": "true",
+          "passed": true,
+          "detail": "Explicit cEDH intent: observed true; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "competitive intent"
+        },
+        {
+          "key": "competitive-metagame-evidence",
+          "category": "evidence",
+          "label": "Independent current competitive-metagame evidence",
+          "observed": false,
+          "required": "true",
+          "passed": false,
+          "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "metagame evidence"
+        }
+      ],
+      "metrics": {
+        "landCount": 31,
+        "nonlandCount": 69,
+        "landRatio": 0.31,
+        "averageNonlandManaValue": 2.59,
+        "manaCurve": {
+          "0": 3,
+          "1": 15,
+          "2": 23,
+          "3": 11,
+          "4": 8,
+          "5": 6,
+          "6": 0,
+          "7+": 3
+        },
+        "coloredPips": {
+          "W": 0,
+          "U": 19,
+          "B": 27,
+          "R": 16,
+          "G": 0
+        },
+        "roleCounts": {
+          "graveyard recursion": 22,
+          "creature": 11,
+          "mana acceleration": 41,
+          "mana rock": 7,
+          "fast mana": 4,
+          "card selection": 9,
+          "spot interaction": 12,
+          "sacrifice synergy": 20,
+          "land ramp": 5,
+          "card draw": 23,
+          "tutor": 10,
+          "land tutor": 7,
+          "countermagic": 4,
+          "equipment": 6,
+          "treasure": 2,
+          "token production": 10,
+          "graveyard hate": 6,
+          "protection": 8,
+          "free interaction": 1,
+          "cost reduction": 3,
+          "board wipe": 1,
+          "artifact/enchantment interaction": 3,
+          "haste": 3,
+          "sacrifice outlet": 2,
+          "+1/+1 counters": 5,
+          "life drain": 1,
+          "repeatable draw": 1,
+          "etb synergy": 1,
+          "land": 31
+        },
+        "earlyPlayCount": 41,
+        "fastManaCount": 4,
+        "rampCount": 49,
+        "drawCount": 29,
+        "tutorCount": 10,
+        "interactionCount": 17,
+        "cheapInteractionCount": 9,
+        "protectionCount": 8,
+        "recursionCount": 22,
+        "boardWipeCount": 1,
+        "structuralSignals": []
+      },
+      "selectedPackage": null,
+      "exactPrintingVerification": {
+        "cardCount": 100,
+        "commanderLegal": true,
+        "setCodes": [
+          "HOB",
+          "HOC",
+          "LTC",
+          "LTR"
+        ]
+      }
+    },
+    {
+      "candidate": {
+        "commanderNames": [
+          "Éomer, Marshal of Rohan"
+        ],
+        "label": "Éomer, Marshal of Rohan",
+        "kind": "single",
+        "colorIdentity": [
+          "R"
+        ],
+        "strategy": {
+          "archetype": "combat-tokens",
+          "score": 20,
+          "evidence": [
+            "extra combat +8",
+            "combat untap potential +4",
+            "haste +2",
+            "attack trigger +6"
+          ]
+        },
+        "alternativeStrategies": [
+          {
+            "archetype": "big-mana",
+            "score": 4,
+            "evidence": [
+              "untap engine +4"
+            ]
+          },
+          {
+            "archetype": "aristocrats",
+            "score": 0,
+            "evidence": []
+          },
+          {
+            "archetype": "counters",
+            "score": 0,
+            "evidence": []
+          }
+        ],
+        "coherenceScore": 20,
+        "selectionSignals": [
+          "extra combat +8",
+          "combat untap potential +4",
+          "haste +2",
+          "attack trigger +6",
+          "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
+        ]
+      },
+      "commanderRefs": [
+        {
+          "name": "Éomer, Marshal of Rohan",
+          "set": "LTR",
+          "collectorNumber": "120"
+        }
+      ],
+      "achievedBracket": 3,
+      "achievedBand": "bracket-3-upgraded-range",
+      "bracket5ConstructionCandidate": false,
+      "bracket5Certified": false,
+      "verifiedWinningCombos": 0,
+      "bracket5ThresholdChecks": [
+        {
+          "key": "average-nonland-mv",
+          "category": "construction",
+          "label": "Average nonland mana value",
+          "observed": 2.84,
+          "required": "at most 2.6",
+          "passed": false,
+          "detail": "Average nonland mana value: observed 2.84; Bracket-5 construction gate requires at most 2.6.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "early-plays",
+          "category": "construction",
+          "label": "Early plays",
+          "observed": 29,
+          "required": "at least 35",
+          "passed": false,
+          "detail": "Early plays: observed 29; Bracket-5 construction gate requires at least 35.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "fast-mana",
+          "category": "construction",
+          "label": "Fast mana",
+          "observed": 4,
+          "required": "at least 3",
+          "passed": true,
+          "detail": "Fast mana: observed 4; Bracket-5 construction gate requires at least 3.",
+          "pressurePoint": "fast-mana density"
+        },
+        {
+          "key": "free-interaction",
+          "category": "construction",
+          "label": "Free interaction",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Free interaction: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "cheap-interaction",
+          "category": "construction",
+          "label": "Cheap interaction",
+          "observed": 5,
+          "required": "at least 8",
+          "passed": false,
+          "detail": "Cheap interaction: observed 5; Bracket-5 construction gate requires at least 8.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "tutors",
+          "category": "construction",
+          "label": "Tutors",
+          "observed": 9,
+          "required": "at least 4",
+          "passed": true,
+          "detail": "Tutors: observed 9; Bracket-5 construction gate requires at least 4.",
+          "pressurePoint": "tutor consistency"
+        },
+        {
+          "key": "verified-winning-combo",
+          "category": "construction",
+          "label": "Verified win-oriented combos",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "competitive-combo-signal",
+          "category": "construction",
+          "label": "Competitive combo signal",
+          "observed": "Ruthless=0, strategic=1, Spellbook=P",
+          "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+          "passed": true,
+          "detail": "Competitive combo signal: observed Ruthless=0, strategic=1, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "cedh-intent",
+          "category": "evidence",
+          "label": "Explicit cEDH intent",
+          "observed": true,
+          "required": "true",
+          "passed": true,
+          "detail": "Explicit cEDH intent: observed true; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "competitive intent"
+        },
+        {
+          "key": "competitive-metagame-evidence",
+          "category": "evidence",
+          "label": "Independent current competitive-metagame evidence",
+          "observed": false,
+          "required": "true",
+          "passed": false,
+          "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "metagame evidence"
+        }
+      ],
+      "metrics": {
+        "landCount": 31,
+        "nonlandCount": 69,
+        "landRatio": 0.31,
+        "averageNonlandManaValue": 2.84,
+        "manaCurve": {
+          "0": 2,
+          "1": 8,
+          "2": 19,
+          "3": 25,
+          "4": 7,
+          "5": 4,
+          "6": 3,
+          "7+": 1
+        },
+        "coloredPips": {
+          "W": 0,
+          "U": 0,
+          "B": 0,
+          "R": 45,
+          "G": 0
+        },
+        "roleCounts": {
+          "haste": 11,
+          "extra combat": 4,
+          "untap engine": 4,
+          "creature": 18,
+          "mana acceleration": 49,
+          "mana rock": 12,
+          "fast mana": 4,
+          "card selection": 4,
+          "spot interaction": 7,
+          "sacrifice synergy": 15,
+          "land ramp": 5,
+          "card draw": 12,
+          "tutor": 9,
+          "land tutor": 6,
+          "equipment": 11,
+          "graveyard hate": 1,
+          "protection": 6,
+          "graveyard recursion": 3,
+          "artifact/enchantment interaction": 4,
+          "repeatable draw": 1,
+          "token production": 25,
+          "sacrifice outlet": 1,
+          "treasure": 13,
+          "+1/+1 counters": 8,
+          "etb synergy": 2,
+          "cost reduction": 2,
+          "stax/control": 1,
+          "land": 31
+        },
+        "earlyPlayCount": 29,
+        "fastManaCount": 4,
+        "rampCount": 56,
+        "drawCount": 16,
+        "tutorCount": 9,
+        "interactionCount": 7,
+        "cheapInteractionCount": 5,
+        "protectionCount": 6,
+        "recursionCount": 3,
+        "boardWipeCount": 0,
+        "structuralSignals": [
+          "Low detected interaction density for a multiplayer Commander table."
+        ]
+      },
+      "selectedPackage": null,
+      "exactPrintingVerification": {
+        "cardCount": 100,
+        "commanderLegal": true,
+        "setCodes": [
+          "HOB",
+          "HOC",
+          "LTC",
+          "LTR"
+        ]
+      }
+    },
+    {
+      "candidate": {
+        "commanderNames": [
+          "Dáin Ironfoot"
+        ],
+        "label": "Dáin Ironfoot",
+        "kind": "single",
+        "colorIdentity": [
+          "R"
+        ],
+        "strategy": {
+          "archetype": "equipment-voltron",
+          "score": 18,
+          "evidence": [
+            "equipment role +8",
+            "equip/attach text +7",
+            "combat scaling +3"
+          ]
+        },
+        "alternativeStrategies": [
+          {
+            "archetype": "combat-tokens",
+            "score": 12,
+            "evidence": [
+              "token production +6",
+              "attack trigger +6"
+            ]
+          },
+          {
+            "archetype": "aristocrats",
+            "score": 0,
+            "evidence": []
+          },
+          {
+            "archetype": "big-mana",
+            "score": 0,
+            "evidence": []
+          }
+        ],
+        "coherenceScore": 18,
+        "selectionSignals": [
+          "equipment role +8",
+          "equip/attach text +7",
+          "combat scaling +3",
+          "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
+        ]
+      },
+      "commanderRefs": [
+        {
+          "name": "Dáin Ironfoot",
+          "set": "HOB",
+          "collectorNumber": "91"
+        }
+      ],
+      "achievedBracket": 3,
+      "achievedBand": "bracket-3-upgraded-range",
+      "bracket5ConstructionCandidate": false,
+      "bracket5Certified": false,
+      "verifiedWinningCombos": 0,
+      "bracket5ThresholdChecks": [
+        {
+          "key": "average-nonland-mv",
+          "category": "construction",
+          "label": "Average nonland mana value",
+          "observed": 2.54,
+          "required": "at most 2.6",
+          "passed": true,
+          "detail": "Average nonland mana value: observed 2.54; Bracket-5 construction gate requires at most 2.6.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "early-plays",
+          "category": "construction",
+          "label": "Early plays",
+          "observed": 38,
+          "required": "at least 35",
+          "passed": true,
+          "detail": "Early plays: observed 38; Bracket-5 construction gate requires at least 35.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "fast-mana",
+          "category": "construction",
+          "label": "Fast mana",
+          "observed": 4,
+          "required": "at least 3",
+          "passed": true,
+          "detail": "Fast mana: observed 4; Bracket-5 construction gate requires at least 3.",
+          "pressurePoint": "fast-mana density"
+        },
+        {
+          "key": "free-interaction",
+          "category": "construction",
+          "label": "Free interaction",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Free interaction: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "cheap-interaction",
+          "category": "construction",
+          "label": "Cheap interaction",
+          "observed": 5,
+          "required": "at least 8",
+          "passed": false,
+          "detail": "Cheap interaction: observed 5; Bracket-5 construction gate requires at least 8.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "tutors",
+          "category": "construction",
+          "label": "Tutors",
+          "observed": 9,
+          "required": "at least 4",
+          "passed": true,
+          "detail": "Tutors: observed 9; Bracket-5 construction gate requires at least 4.",
+          "pressurePoint": "tutor consistency"
+        },
+        {
+          "key": "verified-winning-combo",
+          "category": "construction",
+          "label": "Verified win-oriented combos",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "competitive-combo-signal",
+          "category": "construction",
+          "label": "Competitive combo signal",
+          "observed": "Ruthless=0, strategic=0, Spellbook=P",
+          "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+          "passed": false,
+          "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "cedh-intent",
+          "category": "evidence",
+          "label": "Explicit cEDH intent",
+          "observed": true,
+          "required": "true",
+          "passed": true,
+          "detail": "Explicit cEDH intent: observed true; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "competitive intent"
+        },
+        {
+          "key": "competitive-metagame-evidence",
+          "category": "evidence",
+          "label": "Independent current competitive-metagame evidence",
+          "observed": false,
+          "required": "true",
+          "passed": false,
+          "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "metagame evidence"
+        }
+      ],
+      "metrics": {
+        "landCount": 31,
+        "nonlandCount": 69,
+        "landRatio": 0.31,
+        "averageNonlandManaValue": 2.54,
+        "manaCurve": {
+          "0": 2,
+          "1": 10,
+          "2": 26,
+          "3": 19,
+          "4": 6,
+          "5": 4,
+          "6": 2,
+          "7+": 0
+        },
+        "coloredPips": {
+          "W": 0,
+          "U": 0,
+          "B": 0,
+          "R": 38,
+          "G": 0
+        },
+        "roleCounts": {
+          "token production": 14,
+          "equipment": 29,
+          "creature": 13,
+          "mana acceleration": 41,
+          "mana rock": 8,
+          "fast mana": 4,
+          "card selection": 5,
+          "spot interaction": 7,
+          "sacrifice synergy": 10,
+          "land ramp": 5,
+          "card draw": 11,
+          "tutor": 9,
+          "land tutor": 6,
+          "protection": 6,
+          "graveyard hate": 1,
+          "graveyard recursion": 3,
+          "repeatable draw": 1,
+          "artifact/enchantment interaction": 4,
+          "sacrifice outlet": 1,
+          "haste": 8,
+          "treasure": 7,
+          "+1/+1 counters": 5,
+          "extra combat": 3,
+          "untap engine": 3,
+          "etb synergy": 2,
+          "land": 31
+        },
+        "earlyPlayCount": 38,
+        "fastManaCount": 4,
+        "rampCount": 46,
+        "drawCount": 16,
+        "tutorCount": 9,
+        "interactionCount": 7,
+        "cheapInteractionCount": 5,
+        "protectionCount": 6,
+        "recursionCount": 3,
+        "boardWipeCount": 0,
+        "structuralSignals": [
+          "Low detected interaction density for a multiplayer Commander table."
+        ]
+      },
+      "selectedPackage": null,
+      "exactPrintingVerification": {
+        "cardCount": 100,
+        "commanderLegal": true,
+        "setCodes": [
+          "HOB",
+          "HOC",
+          "LTC",
+          "LTR"
+        ]
+      }
+    },
+    {
+      "candidate": {
+        "commanderNames": [
+          "Gandalf the Grey"
+        ],
+        "label": "Gandalf the Grey",
+        "kind": "single",
+        "colorIdentity": [
+          "R",
+          "U"
+        ],
+        "strategy": {
+          "archetype": "spells-control",
+          "score": 18,
+          "evidence": [
+            "copy effect +6",
+            "cast trigger +7",
+            "spell-type payoff +5"
+          ]
+        },
+        "alternativeStrategies": [
+          {
+            "archetype": "big-mana",
+            "score": 4,
+            "evidence": [
+              "untap engine +4"
+            ]
+          },
+          {
+            "archetype": "combat-tokens",
+            "score": 4,
+            "evidence": [
+              "combat untap potential +4"
+            ]
+          },
+          {
+            "archetype": "aristocrats",
+            "score": 0,
+            "evidence": []
+          }
+        ],
+        "coherenceScore": 18,
+        "selectionSignals": [
+          "copy effect +6",
+          "cast trigger +7",
+          "spell-type payoff +5",
+          "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
+        ]
+      },
+      "commanderRefs": [
+        {
+          "name": "Gandalf the Grey",
+          "set": "LTR",
+          "collectorNumber": "322"
+        }
+      ],
+      "achievedBracket": 3,
+      "achievedBand": "bracket-3-upgraded-range",
+      "bracket5ConstructionCandidate": false,
+      "bracket5Certified": false,
+      "verifiedWinningCombos": 0,
+      "bracket5ThresholdChecks": [
+        {
+          "key": "average-nonland-mv",
+          "category": "construction",
+          "label": "Average nonland mana value",
+          "observed": 2.65,
+          "required": "at most 2.6",
+          "passed": false,
+          "detail": "Average nonland mana value: observed 2.65; Bracket-5 construction gate requires at most 2.6.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "early-plays",
+          "category": "construction",
+          "label": "Early plays",
+          "observed": 34,
+          "required": "at least 35",
+          "passed": false,
+          "detail": "Early plays: observed 34; Bracket-5 construction gate requires at least 35.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "fast-mana",
+          "category": "construction",
+          "label": "Fast mana",
+          "observed": 4,
+          "required": "at least 3",
+          "passed": true,
+          "detail": "Fast mana: observed 4; Bracket-5 construction gate requires at least 3.",
+          "pressurePoint": "fast-mana density"
+        },
+        {
+          "key": "free-interaction",
+          "category": "construction",
+          "label": "Free interaction",
+          "observed": 1,
+          "required": "at least 1",
+          "passed": true,
+          "detail": "Free interaction: observed 1; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "cheap-interaction",
+          "category": "construction",
+          "label": "Cheap interaction",
+          "observed": 8,
+          "required": "at least 8",
+          "passed": true,
+          "detail": "Cheap interaction: observed 8; Bracket-5 construction gate requires at least 8.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "tutors",
+          "category": "construction",
+          "label": "Tutors",
+          "observed": 9,
+          "required": "at least 4",
+          "passed": true,
+          "detail": "Tutors: observed 9; Bracket-5 construction gate requires at least 4.",
+          "pressurePoint": "tutor consistency"
+        },
+        {
+          "key": "verified-winning-combo",
+          "category": "construction",
+          "label": "Verified win-oriented combos",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "competitive-combo-signal",
+          "category": "construction",
+          "label": "Competitive combo signal",
+          "observed": "Ruthless=0, strategic=0, Spellbook=P",
+          "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+          "passed": false,
+          "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "cedh-intent",
+          "category": "evidence",
+          "label": "Explicit cEDH intent",
+          "observed": true,
+          "required": "true",
+          "passed": true,
+          "detail": "Explicit cEDH intent: observed true; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "competitive intent"
+        },
+        {
+          "key": "competitive-metagame-evidence",
+          "category": "evidence",
+          "label": "Independent current competitive-metagame evidence",
+          "observed": false,
+          "required": "true",
+          "passed": false,
+          "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "metagame evidence"
+        }
+      ],
+      "metrics": {
+        "landCount": 31,
+        "nonlandCount": 69,
+        "landRatio": 0.31,
+        "averageNonlandManaValue": 2.65,
+        "manaCurve": {
+          "0": 3,
+          "1": 9,
+          "2": 22,
+          "3": 20,
+          "4": 7,
+          "5": 6,
+          "6": 2,
+          "7+": 0
+        },
+        "coloredPips": {
+          "W": 0,
+          "U": 30,
+          "B": 0,
+          "R": 23,
+          "G": 0
+        },
+        "roleCounts": {
+          "copy effect": 1,
+          "untap engine": 3,
+          "creature": 14,
+          "mana acceleration": 45,
+          "mana rock": 10,
+          "fast mana": 4,
+          "card selection": 6,
+          "spot interaction": 11,
+          "sacrifice synergy": 12,
+          "land ramp": 5,
+          "card draw": 18,
+          "tutor": 9,
+          "land tutor": 7,
+          "countermagic": 7,
+          "equipment": 9,
+          "graveyard hate": 3,
+          "protection": 7,
+          "cost reduction": 3,
+          "graveyard recursion": 5,
+          "free interaction": 1,
+          "token production": 9,
+          "artifact/enchantment interaction": 5,
+          "repeatable draw": 2,
+          "+1/+1 counters": 4,
+          "treasure": 3,
+          "haste": 3,
+          "stax/control": 1,
+          "extra combat": 1,
+          "mana dork": 1,
+          "land": 31
+        },
+        "earlyPlayCount": 34,
+        "fastManaCount": 4,
+        "rampCount": 53,
+        "drawCount": 22,
+        "tutorCount": 9,
+        "interactionCount": 17,
+        "cheapInteractionCount": 8,
+        "protectionCount": 7,
+        "recursionCount": 5,
+        "boardWipeCount": 0,
+        "structuralSignals": []
+      },
+      "selectedPackage": null,
+      "exactPrintingVerification": {
+        "cardCount": 100,
+        "commanderLegal": true,
+        "setCodes": [
+          "HOB",
+          "HOC",
+          "LTC",
+          "LTR"
+        ]
+      }
+    },
+    {
+      "candidate": {
+        "commanderNames": [
+          "Gwaihir the Windlord"
+        ],
+        "label": "Gwaihir the Windlord",
+        "kind": "single",
+        "colorIdentity": [
+          "U",
+          "W"
+        ],
+        "strategy": {
+          "archetype": "big-mana",
+          "score": 14,
+          "evidence": [
+            "cost reduction +8",
+            "cost-reduction text +6"
+          ]
+        },
+        "alternativeStrategies": [
+          {
+            "archetype": "aristocrats",
+            "score": 0,
+            "evidence": []
+          },
+          {
+            "archetype": "combat-tokens",
+            "score": 0,
+            "evidence": []
+          },
+          {
+            "archetype": "counters",
+            "score": 0,
+            "evidence": []
+          }
+        ],
+        "coherenceScore": 14,
+        "selectionSignals": [
+          "cost reduction +8",
+          "cost-reduction text +6",
+          "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
+        ]
+      },
+      "commanderRefs": [
+        {
+          "name": "Gwaihir the Windlord",
+          "set": "LTR",
+          "collectorNumber": "210"
+        }
+      ],
+      "achievedBracket": 3,
+      "achievedBand": "bracket-3-upgraded-range",
+      "bracket5ConstructionCandidate": false,
+      "bracket5Certified": false,
+      "verifiedWinningCombos": 0,
+      "bracket5ThresholdChecks": [
+        {
+          "key": "average-nonland-mv",
+          "category": "construction",
+          "label": "Average nonland mana value",
+          "observed": 2.51,
+          "required": "at most 2.6",
+          "passed": true,
+          "detail": "Average nonland mana value: observed 2.51; Bracket-5 construction gate requires at most 2.6.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "early-plays",
+          "category": "construction",
+          "label": "Early plays",
+          "observed": 38,
+          "required": "at least 35",
+          "passed": true,
+          "detail": "Early plays: observed 38; Bracket-5 construction gate requires at least 35.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "fast-mana",
+          "category": "construction",
+          "label": "Fast mana",
+          "observed": 4,
+          "required": "at least 3",
+          "passed": true,
+          "detail": "Fast mana: observed 4; Bracket-5 construction gate requires at least 3.",
+          "pressurePoint": "fast-mana density"
+        },
+        {
+          "key": "free-interaction",
+          "category": "construction",
+          "label": "Free interaction",
+          "observed": 1,
+          "required": "at least 1",
+          "passed": true,
+          "detail": "Free interaction: observed 1; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "cheap-interaction",
+          "category": "construction",
+          "label": "Cheap interaction",
+          "observed": 11,
+          "required": "at least 8",
+          "passed": true,
+          "detail": "Cheap interaction: observed 11; Bracket-5 construction gate requires at least 8.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "tutors",
+          "category": "construction",
+          "label": "Tutors",
+          "observed": 9,
+          "required": "at least 4",
+          "passed": true,
+          "detail": "Tutors: observed 9; Bracket-5 construction gate requires at least 4.",
+          "pressurePoint": "tutor consistency"
+        },
+        {
+          "key": "verified-winning-combo",
+          "category": "construction",
+          "label": "Verified win-oriented combos",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "competitive-combo-signal",
+          "category": "construction",
+          "label": "Competitive combo signal",
+          "observed": "Ruthless=0, strategic=0, Spellbook=P",
+          "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+          "passed": false,
+          "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "cedh-intent",
+          "category": "evidence",
+          "label": "Explicit cEDH intent",
+          "observed": true,
+          "required": "true",
+          "passed": true,
+          "detail": "Explicit cEDH intent: observed true; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "competitive intent"
+        },
+        {
+          "key": "competitive-metagame-evidence",
+          "category": "evidence",
+          "label": "Independent current competitive-metagame evidence",
+          "observed": false,
+          "required": "true",
+          "passed": false,
+          "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "metagame evidence"
+        }
+      ],
+      "metrics": {
+        "landCount": 31,
+        "nonlandCount": 69,
+        "landRatio": 0.31,
+        "averageNonlandManaValue": 2.51,
+        "manaCurve": {
+          "0": 3,
+          "1": 15,
+          "2": 20,
+          "3": 18,
+          "4": 6,
+          "5": 5,
+          "6": 1,
+          "7+": 1
+        },
+        "coloredPips": {
+          "W": 25,
+          "U": 20,
+          "B": 0,
+          "R": 0,
+          "G": 0
+        },
+        "roleCounts": {
+          "cost reduction": 9,
+          "creature": 11,
+          "mana acceleration": 53,
+          "mana rock": 16,
+          "fast mana": 4,
+          "card selection": 9,
+          "spot interaction": 11,
+          "sacrifice synergy": 12,
+          "land ramp": 5,
+          "card draw": 19,
+          "tutor": 9,
+          "land tutor": 8,
+          "treasure": 3,
+          "token production": 5,
+          "stax/control": 2,
+          "countermagic": 5,
+          "equipment": 7,
+          "graveyard hate": 2,
+          "protection": 9,
+          "graveyard recursion": 5,
+          "free interaction": 1,
+          "repeatable draw": 2,
+          "board wipe": 3,
+          "+1/+1 counters": 1,
+          "creature tutor": 1,
+          "mana dork": 1,
+          "haste": 1,
+          "etb synergy": 1,
+          "land": 31
+        },
+        "earlyPlayCount": 38,
+        "fastManaCount": 4,
+        "rampCount": 67,
+        "drawCount": 23,
+        "tutorCount": 9,
+        "interactionCount": 18,
+        "cheapInteractionCount": 11,
+        "protectionCount": 9,
+        "recursionCount": 5,
+        "boardWipeCount": 3,
+        "structuralSignals": []
+      },
+      "selectedPackage": null,
+      "exactPrintingVerification": {
+        "cardCount": 100,
+        "commanderLegal": true,
+        "setCodes": [
+          "HOB",
+          "HOC",
+          "LTC",
+          "LTR"
+        ]
+      }
+    }
+  ],
+  "failures": [
+    {
+      "candidate": "Bilbo, Luckwearer // Burglar's Plot",
+      "error": "Bilbo, Luckwearer // Burglar's Plot commander Oracle identities must resolve\n+ actual - expected\n\n+ [\n+   \"Bilbo, Luckwearer // Burglar's Plot\"\n+ ]\n- []\n"
+    }
+  ],
+  "selectedBuild": {
+    "candidate": {
+      "commanderNames": [
+        "Denethor, Ruling Steward"
+      ],
+      "label": "Denethor, Ruling Steward",
+      "kind": "single",
+      "colorIdentity": [
+        "B",
+        "W"
+      ],
+      "strategy": {
+        "archetype": "aristocrats",
+        "score": 27,
+        "evidence": [
+          "sacrifice synergy +7",
+          "sacrifice outlet +8",
+          "opponent drain +7",
+          "sacrifice text +5"
+        ]
+      },
+      "alternativeStrategies": [
+        {
+          "archetype": "combat-tokens",
+          "score": 6,
+          "evidence": [
+            "token production +6"
+          ]
+        },
+        {
+          "archetype": "big-mana",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "archetype": "counters",
+          "score": 0,
+          "evidence": []
+        }
+      ],
+      "coherenceScore": 27,
+      "selectionSignals": [
+        "sacrifice synergy +7",
+        "sacrifice outlet +8",
+        "opponent drain +7",
+        "sacrifice text +5",
+        "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
+      ]
+    },
+    "commanderRefs": [
+      {
+        "name": "Denethor, Ruling Steward",
+        "set": "LTR",
+        "collectorNumber": "198"
+      }
+    ],
+    "achievedBracket": 3,
+    "achievedBand": "bracket-3-upgraded-range",
+    "bracket5ConstructionCandidate": false,
+    "bracket5Certified": false,
+    "verifiedWinningCombos": 0,
+    "bracket5ThresholdChecks": [
+      {
+        "key": "average-nonland-mv",
+        "category": "construction",
+        "label": "Average nonland mana value",
+        "observed": 2.38,
+        "required": "at most 2.6",
+        "passed": true,
+        "detail": "Average nonland mana value: observed 2.38; Bracket-5 construction gate requires at most 2.6.",
+        "pressurePoint": "speed/curve"
+      },
+      {
+        "key": "early-plays",
+        "category": "construction",
+        "label": "Early plays",
+        "observed": 42,
+        "required": "at least 35",
+        "passed": true,
+        "detail": "Early plays: observed 42; Bracket-5 construction gate requires at least 35.",
+        "pressurePoint": "speed/curve"
+      },
+      {
+        "key": "fast-mana",
+        "category": "construction",
+        "label": "Fast mana",
+        "observed": 4,
+        "required": "at least 3",
+        "passed": true,
+        "detail": "Fast mana: observed 4; Bracket-5 construction gate requires at least 3.",
+        "pressurePoint": "fast-mana density"
+      },
+      {
+        "key": "free-interaction",
+        "category": "construction",
+        "label": "Free interaction",
+        "observed": 0,
+        "required": "at least 1",
+        "passed": false,
+        "detail": "Free interaction: observed 0; Bracket-5 construction gate requires at least 1.",
+        "pressurePoint": "free/cheap interaction"
+      },
+      {
+        "key": "cheap-interaction",
+        "category": "construction",
+        "label": "Cheap interaction",
+        "observed": 13,
+        "required": "at least 8",
+        "passed": true,
+        "detail": "Cheap interaction: observed 13; Bracket-5 construction gate requires at least 8.",
+        "pressurePoint": "free/cheap interaction"
+      },
+      {
+        "key": "tutors",
+        "category": "construction",
+        "label": "Tutors",
+        "observed": 10,
+        "required": "at least 4",
+        "passed": true,
+        "detail": "Tutors: observed 10; Bracket-5 construction gate requires at least 4.",
+        "pressurePoint": "tutor consistency"
+      },
+      {
+        "key": "verified-winning-combo",
+        "category": "construction",
+        "label": "Verified win-oriented combos",
+        "observed": 0,
+        "required": "at least 1",
+        "passed": false,
+        "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1.",
+        "pressurePoint": "win-package quality/redundancy"
+      },
+      {
+        "key": "competitive-combo-signal",
+        "category": "construction",
+        "label": "Competitive combo signal",
+        "observed": "Ruthless=0, strategic=0, Spellbook=P",
+        "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+        "passed": false,
+        "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+        "pressurePoint": "win-package quality/redundancy"
+      },
+      {
+        "key": "cedh-intent",
+        "category": "evidence",
+        "label": "Explicit cEDH intent",
+        "observed": true,
+        "required": "true",
+        "passed": true,
+        "detail": "Explicit cEDH intent: observed true; Bracket-5 evidence gate requires true.",
+        "pressurePoint": "competitive intent"
+      },
+      {
+        "key": "competitive-metagame-evidence",
+        "category": "evidence",
+        "label": "Independent current competitive-metagame evidence",
+        "observed": false,
+        "required": "true",
+        "passed": false,
+        "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true.",
+        "pressurePoint": "metagame evidence"
+      }
+    ],
+    "metrics": {
+      "landCount": 31,
+      "nonlandCount": 69,
+      "landRatio": 0.31,
+      "averageNonlandManaValue": 2.38,
+      "manaCurve": {
+        "0": 2,
+        "1": 14,
+        "2": 26,
+        "3": 16,
+        "4": 8,
+        "5": 2,
+        "6": 0,
+        "7+": 1
+      },
+      "coloredPips": {
+        "W": 22,
+        "U": 0,
+        "B": 34,
+        "R": 0,
+        "G": 0
+      },
+      "roleCounts": {
+        "token production": 22,
+        "sacrifice synergy": 39,
+        "sacrifice outlet": 5,
+        "life drain": 7,
+        "creature": 26,
+        "mana acceleration": 42,
+        "mana rock": 8,
+        "fast mana": 4,
+        "card selection": 5,
+        "spot interaction": 15,
+        "land ramp": 5,
+        "card draw": 18,
+        "tutor": 10,
+        "land tutor": 7,
+        "treasure": 5,
+        "stax/control": 2,
+        "equipment": 6,
+        "graveyard hate": 3,
+        "protection": 8,
+        "graveyard recursion": 5,
+        "countermagic": 1,
+        "board wipe": 2,
+        "artifact/enchantment interaction": 1,
+        "cost reduction": 1,
+        "repeatable draw": 1,
+        "mana dork": 1,
+        "+1/+1 counters": 6,
+        "creature tutor": 1,
+        "haste": 1,
+        "land": 31
+      },
+      "earlyPlayCount": 42,
+      "fastManaCount": 4,
+      "rampCount": 48,
+      "drawCount": 23,
+      "tutorCount": 10,
+      "interactionCount": 18,
+      "cheapInteractionCount": 13,
+      "protectionCount": 8,
+      "recursionCount": 5,
+      "boardWipeCount": 2,
+      "structuralSignals": []
+    },
+    "exactPrintingVerification": {
+      "cardCount": 100,
+      "commanderLegal": true,
+      "setCodes": [
+        "HOB",
+        "HOC",
+        "LTC",
+        "LTR"
+      ]
+    }
+  },
+  "refinement": {
+    "status": "no-supported-improvement",
+    "stopReason": "no-supported-swaps-found",
+    "roundsAccepted": 0,
+    "totalSwaps": 0,
+    "swaps": [],
+    "finalBracket": 3,
+    "finalBand": "bracket-3-upgraded-range",
+    "finalBracket5ConstructionCandidate": false,
+    "finalBracket5Certified": false,
+    "finalThresholdChecks": [
+      {
+        "key": "average-nonland-mv",
+        "category": "construction",
+        "label": "Average nonland mana value",
+        "observed": 2.38,
+        "required": "at most 2.6",
+        "passed": true,
+        "detail": "Average nonland mana value: observed 2.38; Bracket-5 construction gate requires at most 2.6.",
+        "pressurePoint": "speed/curve"
+      },
+      {
+        "key": "early-plays",
+        "category": "construction",
+        "label": "Early plays",
+        "observed": 42,
+        "required": "at least 35",
+        "passed": true,
+        "detail": "Early plays: observed 42; Bracket-5 construction gate requires at least 35.",
+        "pressurePoint": "speed/curve"
+      },
+      {
+        "key": "fast-mana",
+        "category": "construction",
+        "label": "Fast mana",
+        "observed": 4,
+        "required": "at least 3",
+        "passed": true,
+        "detail": "Fast mana: observed 4; Bracket-5 construction gate requires at least 3.",
+        "pressurePoint": "fast-mana density"
+      },
+      {
+        "key": "free-interaction",
+        "category": "construction",
+        "label": "Free interaction",
+        "observed": 0,
+        "required": "at least 1",
+        "passed": false,
+        "detail": "Free interaction: observed 0; Bracket-5 construction gate requires at least 1.",
+        "pressurePoint": "free/cheap interaction"
+      },
+      {
+        "key": "cheap-interaction",
+        "category": "construction",
+        "label": "Cheap interaction",
+        "observed": 13,
+        "required": "at least 8",
+        "passed": true,
+        "detail": "Cheap interaction: observed 13; Bracket-5 construction gate requires at least 8.",
+        "pressurePoint": "free/cheap interaction"
+      },
+      {
+        "key": "tutors",
+        "category": "construction",
+        "label": "Tutors",
+        "observed": 10,
+        "required": "at least 4",
+        "passed": true,
+        "detail": "Tutors: observed 10; Bracket-5 construction gate requires at least 4.",
+        "pressurePoint": "tutor consistency"
+      },
+      {
+        "key": "verified-winning-combo",
+        "category": "construction",
+        "label": "Verified win-oriented combos",
+        "observed": 0,
+        "required": "at least 1",
+        "passed": false,
+        "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1.",
+        "pressurePoint": "win-package quality/redundancy"
+      },
+      {
+        "key": "competitive-combo-signal",
+        "category": "construction",
+        "label": "Competitive combo signal",
+        "observed": "Ruthless=0, strategic=0, Spellbook=P",
+        "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+        "passed": false,
+        "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+        "pressurePoint": "win-package quality/redundancy"
+      },
+      {
+        "key": "cedh-intent",
+        "category": "evidence",
+        "label": "Explicit cEDH intent",
+        "observed": true,
+        "required": "true",
+        "passed": true,
+        "detail": "Explicit cEDH intent: observed true; Bracket-5 evidence gate requires true.",
+        "pressurePoint": "competitive intent"
+      },
+      {
+        "key": "competitive-metagame-evidence",
+        "category": "evidence",
+        "label": "Independent current competitive-metagame evidence",
+        "observed": false,
+        "required": "true",
+        "passed": false,
+        "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true.",
+        "pressurePoint": "metagame evidence"
+      }
+    ],
+    "finalMetrics": {
+      "landCount": 31,
+      "nonlandCount": 69,
+      "landRatio": 0.31,
+      "averageNonlandManaValue": 2.38,
+      "manaCurve": {
+        "0": 2,
+        "1": 14,
+        "2": 26,
+        "3": 16,
+        "4": 8,
+        "5": 2,
+        "6": 0,
+        "7+": 1
+      },
+      "coloredPips": {
+        "W": 22,
+        "U": 0,
+        "B": 34,
+        "R": 0,
+        "G": 0
+      },
+      "roleCounts": {
+        "token production": 22,
+        "sacrifice synergy": 39,
+        "sacrifice outlet": 5,
+        "life drain": 7,
+        "creature": 26,
+        "mana acceleration": 42,
+        "mana rock": 8,
+        "fast mana": 4,
+        "card selection": 5,
+        "spot interaction": 15,
+        "land ramp": 5,
+        "card draw": 18,
+        "tutor": 10,
+        "land tutor": 7,
+        "treasure": 5,
+        "stax/control": 2,
+        "equipment": 6,
+        "graveyard hate": 3,
+        "protection": 8,
+        "graveyard recursion": 5,
+        "countermagic": 1,
+        "board wipe": 2,
+        "artifact/enchantment interaction": 1,
+        "cost reduction": 1,
+        "repeatable draw": 1,
+        "mana dork": 1,
+        "+1/+1 counters": 6,
+        "creature tutor": 1,
+        "haste": 1,
+        "land": 31
+      },
+      "earlyPlayCount": 42,
+      "fastManaCount": 4,
+      "rampCount": 48,
+      "drawCount": 23,
+      "tutorCount": 10,
+      "interactionCount": 18,
+      "cheapInteractionCount": 13,
+      "protectionCount": 8,
+      "recursionCount": 5,
+      "boardWipeCount": 2,
+      "structuralSignals": []
+    },
+    "finalVerifiedWinningCombos": 0,
+    "exactPrintingVerification": {
+      "cardCount": 100,
+      "commanderLegal": true,
+      "setCodes": [
+        "HOB",
+        "HOC",
+        "LTC",
+        "LTR"
+      ]
+    }
+  }
+}

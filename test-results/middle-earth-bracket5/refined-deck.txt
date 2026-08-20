@@ -1,0 +1,82 @@
+// COMMANDER
+1 Denethor, Ruling Steward (LTR) 198
+
+// MAIN
+1 Giant's Boulder (HOB) 173
+1 Hithlain Rope (LTC) 76
+1 Mind Stone (LTC) 282
+1 Wayfarer's Bauble (HOC) 211
+1 Gorbag of Minas Morgul (LTR) 86
+1 Bilbo's Gambit (HOB) 5
+1 Sword of the Animist (LTC) 355
+1 Reprieve (LTR) 26
+1 Stone of Erech (LTR) 251
+1 Stone by Sunlight (HOB) 27
+1 Troop of Ponies (HOB) 3
+1 Thrór's Map (HOB) 179
+1 Sword of Hearth and Home (LTC) 354
+1 Haunt of the Dead Marshes (HOC) 186
+1 Lash of the Balrog (LTR) 92
+1 Frontline Medic (LTC) 169
+1 Swords to Plowshares (LTC) 178
+1 Decree of Pain (LTC) 199
+1 Path to Exile (LTC) 175
+1 Feed the Swarm (LTC) 200
+1 Commander's Sphere (LTC) 276
+1 Westfold Rider (HOC) 172
+1 My Precious // Allure of Power (HOB) 176
+1 Trading Post (LTC) 288
+1 Bitter Downfall (HOC) 185
+1 Diabolic Intent (LTC) 526
+1 The Battle of Bywater (LTR) 2
+1 Sol Ring (LTC) 284
+1 Bilbo's Ring (LTR) 298
+1 Sauron, the Necromancer (LTR) 106
+1 The One Ring (LTR) 246
+1 Roads Go Ever, Ever On (HOB) 25
+1 Lotho, Corrupt Shirriff (LTR) 213
+1 Gollum, Patient Plotter (LTR) 84
+1 Stir Up Trouble (HOB) 84
+1 Mox Amber (HOC) 96
+1 Shadowspear (LTC) 353
+1 Mirkwood Bats (LTR) 95
+1 Rhovanion Rampager (HOB) 82
+1 Shire Shirriff (LTR) 30
+1 Cirith Ungol Patrol (LTR) 80
+1 War of the Last Alliance (LTR) 36
+1 Gríma Wormtongue (LTR) 88
+1 Everflowing Chalice (LTC) 278
+1 The Sackville-Bagginses (HOB) 83
+1 Orcish Medicine (LTR) 104
+1 Oath of the Grey Host (LTR) 101
+1 Rosie Cotton of South Lane (LTR) 27
+1 Nasty End (LTR) 99
+1 Shelob's Ambush (LTR) 108
+1 Arcane Signet (HOC) 95
+1 Rapacious Guest (LTC) 28
+1 Lightning Greaves (LTC) 281
+1 Lobelia, Defender of Bag End (LTC) 27
+1 One Ring to Rule Them All (LTR) 102
+1 Of Herbs and Stewed Rabbit (LTC) 17
+1 Go for the Throat (LTC) 201
+1 Gollum the Abandoned (HOB) 72
+1 Lake-town Lookout (HOB) 18
+1 Weathered Wayfarer (LTC) 183
+1 Nimble Hobbit (LTR) 23
+1 Easterling Vanguard (LTR) 83
+1 Eastfarthing Farmer (LTR) 8
+1 Second Breakfast (LTR) 29
+1 The Master of Lake-town (HOB) 77
+1 Thought Vessel (LTC) 287
+1 Reanimate (LTC) 206
+1 Bill the Pony (LTR) 3
+1 Command Tower (LTC) 301
+1 Exotic Orchard (LTC) 307
+1 Cavern of Souls (LTC) 392z
+1 Reflecting Pool (LTC) 373
+1 Gemstone Caverns (LTC) 364
+1 Secluded Courtyard (LTC) 330
+1 Path of Ancestry (LTC) 322
+1 The Grey Havens (LTR) 255
+12 Swamp (HOB) 191
+11 Plains (HOB) 189
