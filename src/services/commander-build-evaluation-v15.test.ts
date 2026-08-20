@@ -15,6 +15,7 @@ function baseEvidenceInput(): Omit<PostBuildEvidenceInputV15, 'combos'> {
     cheapInteractionCount: 9,
     tutorCount: 5,
     gameChangerNames: ['B', 'A', 'A'],
+    commanderNames: ['Commander'],
     spellbookBracket: { sourceStatus: 'available', bracketTag: 'R', strategicallyRelevantCombos: [{}, {}] },
     efficientWinPlanSupported: true,
     cedhIntent: true,
@@ -22,22 +23,23 @@ function baseEvidenceInput(): Omit<PostBuildEvidenceInputV15, 'combos'> {
   };
 }
 
-test('post-build evidence counts only strict game-ending combos as Ruthless winning combos', () => {
+test('post-build evidence counts only full-table game-ending combos as Ruthless winning combos', () => {
   const evidence = derivePostBuildEvidenceV15({
     ...baseEvidenceInput(),
     combos: {
       sourceStatus: 'available',
       verificationComplete: true,
-      counts: { included: 4 },
+      counts: { included: 5 },
       included: [
         { id: 'life', bracketTag: 'R', results: ['Infinite life'] },
         { id: 'mana', bracketTag: 'R', results: ['Infinite mana'] },
-        { id: 'combat', bracketTag: 'R', results: ['Infinite combat phases'] },
+        { id: 'single', bracketTag: 'R', results: ['Target opponent loses the game'] },
+        { id: 'damage', bracketTag: 'R', results: ['Infinite damage'] },
         { id: 'win', bracketTag: 'R', results: ['Win the game'] },
       ],
     },
   });
-  assert.equal(evidence.completeComboCount, 4);
+  assert.equal(evidence.completeComboCount, 5);
   assert.equal(evidence.verifiedWinningCombos, 1);
   assert.deepEqual(evidence.verifiedWinningComboIds, ['win']);
   assert.equal(evidence.ruthlessWinningCombos, 1);
@@ -51,7 +53,26 @@ test('post-build evidence counts only strict game-ending combos as Ruthless winn
   assert.equal(evidence.signals.gameChangerCount, 2);
 });
 
-test('post-build evidence accepts a resource loop only when the same result includes lethal closure', () => {
+test('post-build evidence requires explicit multiplayer scope for lethal engines', () => {
+  const evidence = derivePostBuildEvidenceV15({
+    ...baseEvidenceInput(),
+    combos: {
+      sourceStatus: 'available',
+      verificationComplete: true,
+      counts: { included: 3 },
+      included: [
+        { id: 'mana-only', bracketTag: 'R', results: ['Infinite mana'] },
+        { id: 'generic-damage', bracketTag: 'R', results: ['Infinite damage'] },
+        { id: 'table-damage', bracketTag: 'R', results: ['Infinite damage to each opponent'] },
+      ],
+    },
+  });
+  assert.equal(evidence.verifiedWinningCombos, 1);
+  assert.deepEqual(evidence.verifiedWinningComboIds, ['table-damage']);
+  assert.equal(evidence.ruthlessWinningCombos, 1);
+});
+
+test('post-build winning details preserve explicit dependencies and template-requirement uncertainty', () => {
   const evidence = derivePostBuildEvidenceV15({
     ...baseEvidenceInput(),
     combos: {
@@ -59,14 +80,42 @@ test('post-build evidence accepts a resource loop only when the same result incl
       verificationComplete: true,
       counts: { included: 2 },
       included: [
-        { id: 'mana-only', bracketTag: 'R', results: ['Infinite mana'] },
-        { id: 'mana-damage', bracketTag: 'R', results: ['Infinite mana', 'Infinite damage'] },
+        {
+          id: 'commander-route',
+          bracketTag: 'R',
+          cards: [
+            { name: 'Commander', quantity: 1, mustBeCommander: false },
+            { name: 'Piece A', quantity: 1, mustBeCommander: false },
+          ],
+          results: ['Each opponent loses the game'],
+          requirements: [],
+        },
+        {
+          id: 'templated-route',
+          bracketTag: null,
+          cards: [{ name: 'Piece B', quantity: 1, mustBeCommander: false }],
+          results: ['Win the game at the beginning of your next upkeep'],
+          requirements: [{ name: 'A creature you control' }],
+        },
       ],
     },
   });
-  assert.equal(evidence.verifiedWinningCombos, 1);
-  assert.deepEqual(evidence.verifiedWinningComboIds, ['mana-damage']);
-  assert.equal(evidence.ruthlessWinningCombos, 1);
+  assert.deepEqual(evidence.verifiedWinningComboIds, ['commander-route', 'templated-route']);
+  assert.deepEqual(evidence.verifiedWinningComboDetails[0], {
+    comboId: 'commander-route',
+    bracketTag: 'R',
+    comboCardNames: ['Commander', 'Piece A'],
+    seedNames: ['Piece A'],
+    results: ['Each opponent loses the game'],
+    requirementNames: [],
+    dependencyCompleteness: 'explicit-cards-only',
+    closureKind: 'all-opponents-lose',
+    closureTiming: 'immediate',
+    closureScope: 'all-opponents',
+  });
+  assert.equal(evidence.verifiedWinningComboDetails[1]?.dependencyCompleteness, 'template-requirements-present');
+  assert.equal(evidence.verifiedWinningComboDetails[1]?.closureKind, 'delayed-game-win');
+  assert.equal(evidence.verifiedWinningComboDetails[1]?.closureTiming, 'delayed');
 });
 
 test('duplicate provider rows do not inflate verified or Ruthless winning-combo counts', () => {
@@ -85,6 +134,7 @@ test('duplicate provider rows do not inflate verified or Ruthless winning-combo 
   assert.equal(evidence.completeComboCount, 2);
   assert.equal(evidence.verifiedWinningCombos, 1);
   assert.deepEqual(evidence.verifiedWinningComboIds, ['same-win']);
+  assert.equal(evidence.verifiedWinningComboDetails.length, 1);
   assert.equal(evidence.ruthlessWinningCombos, 1);
 });
 
@@ -122,6 +172,7 @@ test('post-build evidence carries unavailable source provenance without manufact
   assert.equal(evidence.signals.printingPolicyCompliant, false);
   assert.equal(evidence.verifiedWinningCombos, 0);
   assert.deepEqual(evidence.verifiedWinningComboIds, []);
+  assert.deepEqual(evidence.verifiedWinningComboDetails, []);
   assert.equal(evidence.spellbookBracketSourceStatus, 'unavailable');
   assert.deepEqual(evidence.spellbookBracketSourceFailure, { kind: 'request-failed', attempts: 2 });
   assert.equal(evidence.spellbookComboSourceStatus, 'unavailable');
