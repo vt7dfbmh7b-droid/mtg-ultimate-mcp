@@ -19,6 +19,10 @@ import {
 import { getCardsByIdentifiers, type CardIdentifierInput } from './scryfall.js';
 import { estimateCommanderBracket, findDeckCombosEvidence } from './spellbook.js';
 import {
+  auditWinRouteAccessPortfolioV15,
+  type WinRouteAccessAuditV15,
+} from './win-route-access-v15.js';
+import {
   auditWinRouteSetupInterruptionV15,
   type WinRouteSetupInterruptionAuditV15,
 } from './win-route-setup-interruption-v15.js';
@@ -103,6 +107,7 @@ export interface CommanderBuildEvaluationV15 {
   postBuildEvidence: PostBuildEvidenceV15;
   finalWinRouteAudit: FinalWinRouteAuditV15;
   winRouteSetupAudits: WinRouteSetupInterruptionAuditV15[];
+  winRouteAccessAudits: WinRouteAccessAuditV15[];
   actualBracket: ActualBracketAssessmentV15;
   externalEvidenceChecked: boolean;
   externalEvidenceComplete: boolean;
@@ -258,6 +263,23 @@ export function deriveWinRouteSetupAuditsV15(
   }));
 }
 
+export function deriveWinRouteAccessAuditsV15(
+  details: readonly VerifiedWinningComboDetailV15[],
+  parsed: ParsedDeck,
+  resolvedCards: readonly ScryfallCard[],
+): WinRouteAccessAuditV15[] {
+  return auditWinRouteAccessPortfolioV15({
+    routes: details.map((detail) => ({
+      comboId: detail.comboId,
+      comboCardNames: detail.comboCardNames,
+      seedNames: detail.seedNames,
+      dependencyCompleteness: detail.dependencyCompleteness,
+    })),
+    parsed,
+    resolvedCards,
+  });
+}
+
 export async function evaluateCommanderBuildV15(
   decklist: string,
   options: CommanderBuildEvaluationOptionsV15 = {},
@@ -326,6 +348,7 @@ export async function evaluateCommanderBuildV15(
     verifiedWinningComboDetails: evidence.verifiedWinningComboDetails,
   });
   const winRouteSetupAudits = deriveWinRouteSetupAuditsV15(evidence.verifiedWinningComboDetails, resolved.cards);
+  const winRouteAccessAudits = deriveWinRouteAccessAuditsV15(evidence.verifiedWinningComboDetails, parsed, resolved.cards);
   const actualBracket = assessActualBracketV15(evidence.signals, options.constraintDescriptions ?? []);
 
   return {
@@ -343,6 +366,7 @@ export async function evaluateCommanderBuildV15(
     postBuildEvidence: evidence,
     finalWinRouteAudit,
     winRouteSetupAudits,
+    winRouteAccessAudits,
     actualBracket,
     externalEvidenceChecked: hardGatesPassed,
     externalEvidenceComplete: hardGatesPassed
