@@ -1,5 +1,6 @@
 import type { McpServer } from '@modelcontextprotocol/server';
 import * as z from 'zod/v4';
+import { registerTutorValueForMoneyToolV15 } from './server-v15-tutor-value.js';
 import {
   buildCommanderThroughPipelineV15,
   type CommanderBuildPipelineOptionsV15,
@@ -223,5 +224,6 @@ export function registerUniversalCommanderPipelineToolV15(
       }
     },
   );
+  registerTutorValueForMoneyToolV15(server);
   return server;
 }
