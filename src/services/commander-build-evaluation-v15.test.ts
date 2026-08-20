@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { derivePostBuildEvidenceV15 } from './commander-build-evaluation-v15.js';
 
-test('post-build evidence counts only combos that actually win as Ruthless winning combos', () => {
-  const evidence = derivePostBuildEvidenceV15({
+function baseEvidenceInput() {
+  return {
     commanderLegal: true,
     exactCardCount: true,
     fullyResolved: true,
@@ -16,20 +16,28 @@ test('post-build evidence counts only combos that actually win as Ruthless winni
     tutorCount: 5,
     gameChangerNames: ['B', 'A', 'A'],
     spellbookBracket: { sourceStatus: 'available', bracketTag: 'R', strategicallyRelevantCombos: [{}, {}] },
-    combos: {
-      sourceStatus: 'available',
-      verificationComplete: true,
-      counts: { included: 2 },
-      included: [
-        { id: 'life', bracketTag: 'R', results: ['Infinite life'] },
-        { id: 'win', bracketTag: 'R', results: ['Win the game'] },
-      ],
-    },
     efficientWinPlanSupported: true,
     cedhIntent: true,
     competitiveMetagameEvidence: true,
+  } as const;
+}
+
+test('post-build evidence counts only strict game-ending combos as Ruthless winning combos', () => {
+  const evidence = derivePostBuildEvidenceV15({
+    ...baseEvidenceInput(),
+    combos: {
+      sourceStatus: 'available',
+      verificationComplete: true,
+      counts: { included: 4 },
+      included: [
+        { id: 'life', bracketTag: 'R', results: ['Infinite life'] },
+        { id: 'mana', bracketTag: 'R', results: ['Infinite mana'] },
+        { id: 'combat', bracketTag: 'R', results: ['Infinite combat phases'] },
+        { id: 'win', bracketTag: 'R', results: ['Win the game'] },
+      ],
+    },
   });
-  assert.equal(evidence.completeComboCount, 2);
+  assert.equal(evidence.completeComboCount, 4);
   assert.equal(evidence.verifiedWinningCombos, 1);
   assert.deepEqual(evidence.verifiedWinningComboIds, ['win']);
   assert.equal(evidence.ruthlessWinningCombos, 1);
@@ -41,6 +49,43 @@ test('post-build evidence counts only combos that actually win as Ruthless winni
   assert.equal(evidence.comboVerificationComplete, true);
   assert.deepEqual(evidence.gameChangerNames, ['A', 'B']);
   assert.equal(evidence.signals.gameChangerCount, 2);
+});
+
+test('post-build evidence accepts a resource loop only when the same result includes lethal closure', () => {
+  const evidence = derivePostBuildEvidenceV15({
+    ...baseEvidenceInput(),
+    combos: {
+      sourceStatus: 'available',
+      verificationComplete: true,
+      counts: { included: 2 },
+      included: [
+        { id: 'mana-only', bracketTag: 'R', results: ['Infinite mana'] },
+        { id: 'mana-damage', bracketTag: 'R', results: ['Infinite mana', 'Infinite damage'] },
+      ],
+    },
+  });
+  assert.equal(evidence.verifiedWinningCombos, 1);
+  assert.deepEqual(evidence.verifiedWinningComboIds, ['mana-damage']);
+  assert.equal(evidence.ruthlessWinningCombos, 1);
+});
+
+test('duplicate provider rows do not inflate verified or Ruthless winning-combo counts', () => {
+  const evidence = derivePostBuildEvidenceV15({
+    ...baseEvidenceInput(),
+    combos: {
+      sourceStatus: 'available',
+      verificationComplete: true,
+      counts: { included: 2 },
+      included: [
+        { id: 'same-win', bracketTag: 'R', results: ['Win the game'] },
+        { id: 'same-win', bracketTag: 'R', results: ['Win the game'] },
+      ],
+    },
+  });
+  assert.equal(evidence.completeComboCount, 2);
+  assert.equal(evidence.verifiedWinningCombos, 1);
+  assert.deepEqual(evidence.verifiedWinningComboIds, ['same-win']);
+  assert.equal(evidence.ruthlessWinningCombos, 1);
 });
 
 test('post-build evidence carries unavailable source provenance without manufacturing positive combo signals', () => {
