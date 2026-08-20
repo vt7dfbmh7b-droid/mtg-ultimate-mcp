@@ -5,6 +5,7 @@ on:
     branches: ["agent/v15-native-deck-intelligence"]
     paths:
       - "scripts/apply-v15-target-pressure-pass.py"
+      - "scripts/fix-v15-target-pressure-types.py"
       - ".github/workflows/apply-v15-target-pressure-pass.yml"
   workflow_dispatch:
 
@@ -35,7 +36,10 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          python3 scripts/apply-v15-target-pressure-pass.py 2>&1 | tee target-pressure-apply.log
+          {
+            python3 scripts/apply-v15-target-pressure-pass.py
+            python3 scripts/fix-v15-target-pressure-types.py
+          } 2>&1 | tee target-pressure-apply.log
 
       - name: Show scoped diff
         if: steps.apply_patch.outcome == 'success'
@@ -75,7 +79,9 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git rm -- scripts/apply-v15-target-pressure-pass.py .github/workflows/apply-v15-target-pressure-pass.yml
+          git rm -- scripts/apply-v15-target-pressure-pass.py \
+                    scripts/fix-v15-target-pressure-types.py \
+                    .github/workflows/apply-v15-target-pressure-pass.yml
           git add -- src/services/upgrade.ts \
                      src/services/deck-builder-v07.ts \
                      src/services/optimizer-v12.ts \
