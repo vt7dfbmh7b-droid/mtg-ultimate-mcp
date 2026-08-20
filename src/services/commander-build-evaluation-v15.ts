@@ -5,6 +5,7 @@ import { validateCommanderDeck } from './commander-rules.js';
 import { buildDeckMetrics, parseDecklist, resolveEntryCard, type ParsedDeck } from './deck.js';
 import { deriveEfficientCommanderWinPlanV15 } from './efficient-win-plan-v15.js';
 import { auditExactPerCardBudgetV15, type ExactPerCardBudgetAuditV15 } from './exact-printing-budget-v15.js';
+import { auditFinalWinRoutesV15, type FinalWinRouteAuditV15 } from './final-win-route-audit-v15.js';
 import {
   assessFullTableWinClosureV15,
   type FullTableWinClosureKindV15,
@@ -93,6 +94,7 @@ export interface CommanderBuildEvaluationV15 {
   hardGatesPassed: boolean;
   metrics: ReturnType<typeof buildDeckMetrics>;
   postBuildEvidence: PostBuildEvidenceV15;
+  finalWinRouteAudit: FinalWinRouteAuditV15;
   actualBracket: ActualBracketAssessmentV15;
   externalEvidenceChecked: boolean;
   externalEvidenceComplete: boolean;
@@ -289,6 +291,10 @@ export async function evaluateCommanderBuildV15(
     ...(options.optimizedPlanEvidence !== undefined ? { optimizedPlanEvidence: options.optimizedPlanEvidence } : {}),
     ...(options.exhibitionIntent !== undefined ? { exhibitionIntent: options.exhibitionIntent } : {}),
   });
+  const finalWinRouteAudit = auditFinalWinRoutesV15({
+    comboVerificationComplete: evidence.comboVerificationComplete,
+    verifiedWinningComboDetails: evidence.verifiedWinningComboDetails,
+  });
   const actualBracket = assessActualBracketV15(evidence.signals, options.constraintDescriptions ?? []);
 
   return {
@@ -304,6 +310,7 @@ export async function evaluateCommanderBuildV15(
     hardGatesPassed,
     metrics,
     postBuildEvidence: evidence,
+    finalWinRouteAudit,
     actualBracket,
     externalEvidenceChecked: hardGatesPassed,
     externalEvidenceComplete: hardGatesPassed
