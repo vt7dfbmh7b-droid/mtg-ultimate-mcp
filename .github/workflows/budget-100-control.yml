@@ -1,0 +1,16 @@
+name: US$100 Whole-Deck Control
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  registration-only:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: |
+          echo "Default-branch registration stub only."
+          echo "Run this workflow with ref agent/package-probabilities to execute the validated experimental implementation."
+          exit 1

@@ -1,0 +1,15 @@
+name: Live MTG smoke
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  registration-only:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: |
+          echo "Default-branch registration stub only. Run with ref agent/package-probabilities."
+          exit 1

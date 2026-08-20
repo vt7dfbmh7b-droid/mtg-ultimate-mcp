@@ -1,0 +1,32 @@
+name: TopDeck Prospective Promotion Join V0.15
+
+on:
+  workflow_dispatch:
+    inputs:
+      pre_event_artifact_reference:
+        description: Immutable private GHCR pre-event evidence reference
+        required: true
+        type: string
+      completed_event_artifact_reference:
+        description: Immutable private GHCR completed-event evidence reference
+        required: true
+        type: string
+      scryfall_raw_artifact_reference:
+        description: Immutable GHCR retained Scryfall raw-byte reference
+        required: true
+        type: string
+      scryfall_manifest_artifact_reference:
+        description: Immutable GHCR retained Scryfall manifest reference
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  registration-only:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: |
+          echo "Default-branch registration stub only. Run with ref agent/package-probabilities."
+          exit 1
