@@ -104,3 +104,5 @@ jobs:
           if [ "$CONTROL_OUTCOME" != "success" ]; then
             exit 1
           fi
+
+# Validation retrigger after the V0.15 target-pressure Build/Upgrade pass.
