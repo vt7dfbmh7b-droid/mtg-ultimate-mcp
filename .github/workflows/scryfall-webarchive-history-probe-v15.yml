@@ -1,0 +1,49 @@
+name: Scryfall Web Archive History Probe V15
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/live-scryfall-webarchive-history-probe-v15.ts"
+      - ".github/workflows/scryfall-webarchive-history-probe-v15.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: scryfall-webarchive-history-probe-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Type-check and build
+        run: npm run build
+
+      - name: Probe archived Scryfall manifest and payload metadata
+        run: npx tsx scripts/live-scryfall-webarchive-history-probe-v15.ts
+
+      - name: Upload public provenance audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scryfall-webarchive-history-${{ github.sha }}
+          path: |
+            scryfall-webarchive-history-probe-result.json
+            scryfall-webarchive-history-probe-failure.txt
+          if-no-files-found: ignore
+          retention-days: 7
