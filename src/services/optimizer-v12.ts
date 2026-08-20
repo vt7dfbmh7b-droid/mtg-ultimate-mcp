@@ -1,4 +1,5 @@
 import type { ScryfallCard } from '../types/scryfall.js';
+import { evaluateCommanderBuildV15 } from './commander-build-evaluation-v15.js';
 import { validateCommanderDeck } from './commander-rules.js';
 import { buildSimulationBackedUpgradePlanV07, type UpgradePlanOptionsV07 } from './deck-builder-v07.js';
 import { parseDecklist, type ParsedDeck } from './deck.js';
@@ -17,6 +18,13 @@ export interface IterativeRefinementOptionsV12 extends UpgradePlanOptionsV07 {
   preserveAcceptedAdds?: boolean;
   candidatePackagesPerRound?: number;
   detailLevel?: RefinementDetailLevelV11;
+}
+
+export interface WinRouteProtectionV15 {
+  status: 'protected' | 'no-verified-route' | 'verification-unavailable';
+  protectedComboIds: string[];
+  protectedCardNames: string[];
+  source: 'existing-v15-final-win-route-audit';
 }
 
 interface CandidateEvaluationV12 {
@@ -44,6 +52,7 @@ interface RoundSummaryV12 {
   winningCandidate: number | null;
   estimatedSpendUsd: number;
   improvementScore: number;
+  winRouteProtection: WinRouteProtectionV15;
   stopReason?: string;
   swaps: Array<Record<string, unknown>>;
   candidateComparisons: Array<Record<string, unknown>>;
@@ -132,6 +141,83 @@ function diversifyNextPackage(blocked: Set<string>, plan: Record<string, unknown
   // Block roughly half of the prior package's additions so the next package must explore a materially different path.
   const count = Math.max(1, Math.ceil(incoming.length / 2));
   for (const name of incoming.slice(0, count)) blocked.add(name.toLocaleLowerCase());
+}
+
+function uniqueNames(values: readonly string[]): string[] {
+  return [...new Map(values
+    .map((value) => value.trim())
+    .filter(Boolean)
+    .map((value) => [value.toLocaleLowerCase(), value] as const)).values()]
+    .sort((a, b) => a.localeCompare(b));
+}
+
+/**
+ * Convert the existing V0.15 final-route portfolio into cut protection for the existing V0.12
+ * optimizer. We protect the portfolio primary + backup rather than every incidental verified combo;
+ * a single verified route is protected when the portfolio cannot name a route because dependencies
+ * are partially unresolved. Verification unavailable never becomes a false "no routes" claim.
+ */
+export function deriveWinRouteProtectionV15(input: {
+  comboVerificationComplete: boolean;
+  primaryComboId: string | null;
+  backupComboId: string | null;
+  verifiedWinningComboDetails: ReadonlyArray<{
+    comboId: string;
+    comboCardNames: readonly string[];
+  }>;
+}): WinRouteProtectionV15 {
+  if (!input.comboVerificationComplete) {
+    return {
+      status: 'verification-unavailable',
+      protectedComboIds: [],
+      protectedCardNames: [],
+      source: 'existing-v15-final-win-route-audit',
+    };
+  }
+
+  const byId = new Map(input.verifiedWinningComboDetails.map((detail) => [detail.comboId, detail] as const));
+  const selectedIds = uniqueNames([
+    ...(input.primaryComboId ? [input.primaryComboId] : []),
+    ...(input.backupComboId ? [input.backupComboId] : []),
+  ]).filter((id) => byId.has(id));
+  if (selectedIds.length === 0 && input.verifiedWinningComboDetails.length === 1) {
+    selectedIds.push(input.verifiedWinningComboDetails[0]!.comboId);
+  }
+  if (selectedIds.length === 0) {
+    return {
+      status: 'no-verified-route',
+      protectedComboIds: [],
+      protectedCardNames: [],
+      source: 'existing-v15-final-win-route-audit',
+    };
+  }
+
+  const protectedCardNames = uniqueNames(selectedIds.flatMap((id) => byId.get(id)?.comboCardNames ?? []));
+  return {
+    status: protectedCardNames.length > 0 ? 'protected' : 'no-verified-route',
+    protectedComboIds: selectedIds,
+    protectedCardNames,
+    source: 'existing-v15-final-win-route-audit',
+  };
+}
+
+async function currentWinRouteProtectionV15(decklist: string): Promise<WinRouteProtectionV15> {
+  try {
+    const evaluation = await evaluateCommanderBuildV15(decklist);
+    return deriveWinRouteProtectionV15({
+      comboVerificationComplete: evaluation.finalWinRouteAudit.comboVerificationComplete,
+      primaryComboId: evaluation.finalWinRouteAudit.portfolio.primaryComboId,
+      backupComboId: evaluation.finalWinRouteAudit.portfolio.backupComboId,
+      verifiedWinningComboDetails: evaluation.postBuildEvidence.verifiedWinningComboDetails,
+    });
+  } catch {
+    return {
+      status: 'verification-unavailable',
+      protectedComboIds: [],
+      protectedCardNames: [],
+      source: 'existing-v15-final-win-route-audit',
+    };
+  }
 }
 
 async function evaluateCandidate(
@@ -255,6 +341,11 @@ export async function refineCommanderDeckIterativelyV12(
       break;
     }
 
+    const winRouteProtection = await currentWinRouteProtectionV15(currentDecklist);
+    const roundProtectedNames = new Set([
+      ...protectedNames,
+      ...winRouteProtection.protectedCardNames.map((name) => name.toLocaleLowerCase()),
+    ]);
     let attemptSize = Math.min(swapsPerRound, swapsRemaining);
     let winner: CandidateEvaluationV12 | null = null;
     let evaluatedAtWinningSize: CandidateEvaluationV12[] = [];
@@ -273,7 +364,7 @@ export async function refineCommanderDeckIterativelyV12(
           attemptSize,
           totalSpend,
           maxTotalUsd,
-          protectedNames,
+          roundProtectedNames,
           excludedNames,
           diversityBlocked,
           round,
@@ -305,6 +396,7 @@ export async function refineCommanderDeckIterativelyV12(
         winningCandidate: null,
         estimatedSpendUsd: 0,
         improvementScore: 0,
+        winRouteProtection,
         stopReason: lastReason,
         swaps: [],
         candidateComparisons: evaluatedAtWinningSize.map(candidateSummary),
@@ -334,12 +426,14 @@ export async function refineCommanderDeckIterativelyV12(
       winningCandidate: winner.candidate,
       estimatedSpendUsd: winner.estimatedSpendUsd,
       improvementScore: winner.improvementScore,
+      winRouteProtection,
       swaps: roundSwaps,
       candidateComparisons: evaluatedAtWinningSize.map(candidateSummary),
     });
   }
 
   const finalRules = validateCommanderDeck(currentParsed, currentCards);
+  const protectedRouteNames = uniqueNames(rounds.flatMap((round) => round.winRouteProtection.protectedCardNames));
   const simple = {
     status: acceptedSwaps.length > 0 ? 'refined' : 'no-supported-improvement',
     stopReason,
@@ -351,9 +445,15 @@ export async function refineCommanderDeckIterativelyV12(
     swaps: acceptedSwaps.map(simpleSwap),
     finalDecklist: currentDecklist,
     finalCommanderRules: finalRules,
+    winRouteProtection: {
+      evaluatedEachRound: true,
+      source: 'existing-v15-final-win-route-audit',
+      protectedCardNamesObservedAcrossRounds: protectedRouteNames,
+      verificationUnavailableRounds: rounds.filter((round) => round.winRouteProtection.status === 'verification-unavailable').map((round) => round.round),
+    },
     explanation: acceptedSwaps.length > 0
-      ? `Each round compared up to ${candidatePackagesPerRound} materially different upgrade packages using the same simulation seed, then accepted the strongest package that stayed legal and passed printing, budget, regression, and minimum-improvement checks.`
-      : `The engine compared up to ${candidatePackagesPerRound} competing packages per round but none cleared every legality, budget, printing and improvement check, so it kept the starting list.`,
+      ? `Each round compared up to ${candidatePackagesPerRound} materially different upgrade packages using the same simulation seed, protected the existing V0.15 verified primary/backup win-route pieces when verification was available, then accepted the strongest package that stayed legal and passed printing, budget, regression, and minimum-improvement checks.`
+      : `The engine compared up to ${candidatePackagesPerRound} competing packages per round while protecting existing V0.15 verified primary/backup win-route pieces when verification was available, but none cleared every legality, budget, printing and improvement check, so it kept the starting list.`,
   };
 
   if (detailLevel === 'simple') return simple;
@@ -368,6 +468,7 @@ export async function refineCommanderDeckIterativelyV12(
       winningCandidate: round.winningCandidate,
       estimatedSpendUsd: round.estimatedSpendUsd,
       improvementScore: round.improvementScore,
+      winRouteProtection: round.winRouteProtection,
       ...(round.stopReason ? { stopReason: round.stopReason } : {}),
     })),
     constraints: {
@@ -391,5 +492,6 @@ export async function refineCommanderDeckIterativelyV12(
     detailedRounds: rounds,
     scoringGuidance: 'Competing packages are compared with the same per-round seed. The improvement score is still a within-deck heuristic, not a universal power score or measured multiplayer win rate.',
     diversityGuidance: 'Later candidates temporarily exclude part of earlier candidates’ incoming package so the optimizer explores alternatives rather than resimulating the same swap set repeatedly.',
+    winRouteGuidance: 'Route protection is derived from the existing V0.15 final full-table win-route portfolio. Verification unavailable is surfaced explicitly and never treated as evidence that the deck has no route.',
   };
 }
