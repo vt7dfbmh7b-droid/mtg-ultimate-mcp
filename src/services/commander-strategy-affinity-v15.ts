@@ -28,6 +28,26 @@ function normalizeName(value: string): string {
 }
 
 /**
+ * Reuse the existing V0.15 command-zone strategy inference when the commander cards are
+ * already resolved, including during construction before a full ParsedDeck exists.
+ */
+export function deriveCommanderStrategyContextFromCommandersV15(
+  commanders: readonly ScryfallCard[],
+): CommanderStrategyContextV15 {
+  const commanderNames = commanders.map((card) => card.name);
+  if (commanders.length < 1 || commanders.length > 2) {
+    return { commanderNames, strategies: [] };
+  }
+
+  return {
+    commanderNames,
+    strategies: inferNeutralStrategyV15(commanders)
+      .filter((strategy) => strategy.score > 0)
+      .slice(0, 3),
+  };
+}
+
+/**
  * Bridge existing V0.15 commander strategy inference into card-selection callers.
  *
  * This does not define another strategy model. It preserves the top three already-inferred
@@ -45,12 +65,7 @@ export function deriveCommanderStrategyContextV15(
     return { commanderNames, strategies: [] };
   }
 
-  return {
-    commanderNames,
-    strategies: inferNeutralStrategyV15(commanders)
-      .filter((strategy) => strategy.score > 0)
-      .slice(0, 3),
-  };
+  return deriveCommanderStrategyContextFromCommandersV15(commanders);
 }
 
 /**
