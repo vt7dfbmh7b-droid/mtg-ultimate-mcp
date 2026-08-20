@@ -1,0 +1,167 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import type {
+  CommanderBuildEvaluationV15,
+  VerifiedWinningComboDetailV15,
+} from './services/commander-build-evaluation-v15.js';
+import type { TutorReplacementIntelligenceV15 } from './services/tutor-replacement-intelligence-v15.js';
+import {
+  runTutorReplacementToolV15,
+  type TutorReplacementToolDependenciesV15,
+} from './server-v15-tutor-replacements.js';
+
+function route(comboId: string): VerifiedWinningComboDetailV15 {
+  return {
+    comboId,
+    bracketTag: 'R',
+    comboCardNames: ['Commander', 'Piece B'],
+    seedNames: ['Piece B'],
+    results: ['Each opponent loses the game'],
+    requirementNames: [],
+    description: null,
+    manaNeeded: null,
+    otherPrerequisites: null,
+    dependencyCompleteness: 'explicit-cards-only',
+    closureKind: 'all-opponents-lose',
+    closureTiming: 'immediate',
+    closureScope: 'all-opponents',
+  };
+}
+
+function evaluation(routes: VerifiedWinningComboDetailV15[], options: {
+  hardGatesPassed?: boolean;
+  comboStatus?: 'available' | 'unavailable' | 'unknown';
+} = {}): CommanderBuildEvaluationV15 {
+  return {
+    hardGatesPassed: options.hardGatesPassed ?? true,
+    parsed: {
+      main: [],
+      commanders: [{ name: 'Commander', quantity: 1 }],
+      totalMain: 99,
+      totalCommanders: 1,
+      totalCards: 100,
+    },
+    commanderRules: { isLegal: true },
+    unresolvedCards: [],
+    printingPolicySatisfied: true,
+    perCardBudgetAudit: { status: 'not-requested' },
+    resolvedCards: [],
+    postBuildEvidence: {
+      spellbookComboSourceStatus: options.comboStatus ?? 'available',
+      spellbookComboSourceFailure: options.comboStatus === 'unavailable' ? { message: 'provider down' } : null,
+      comboVerificationComplete: options.comboStatus !== 'unavailable',
+      verifiedWinningComboDetails: routes,
+    },
+  } as unknown as CommanderBuildEvaluationV15;
+}
+
+function replacementAudit(): TutorReplacementIntelligenceV15 {
+  return {
+    comboId: 'route-a',
+    status: 'replacement-options-evaluated',
+    baselineValue: {} as TutorReplacementIntelligenceV15['baselineValue'],
+    sourceTutorChoices: ['Premium Tutor'],
+    sources: [{
+      sourceTutorName: 'Premium Tutor',
+      sourcePrice: {} as TutorReplacementIntelligenceV15['sources'][number]['sourcePrice'],
+      sourceCoversPieces: ['Piece B'],
+      replacements: [{ replacementTutorName: 'Budget Tutor' } as TutorReplacementIntelligenceV15['sources'][number]['replacements'][number]],
+      rejected: [],
+    }],
+    candidatePool: {
+      query: 'test',
+      ordering: 'scryfall-edhrec',
+      maximumSearchResults: 50,
+      returnedSearchResults: 1,
+      eligibleExactPrintings: 1,
+      completeness: 'bounded-top-results-not-exhaustive',
+    },
+    threshold: {
+      maxAccessLossPercentagePoints: null,
+      semantics: 'applies-independently-to-opening-turn3-turn5',
+    },
+    guidance: 'test',
+  };
+}
+
+test('does not guess between multiple verified full-table win routes', async () => {
+  let auditCalls = 0;
+  const result = await runTutorReplacementToolV15({
+    decklist: 'test',
+    includeTopDeckEvidence: false,
+    topDeckLastDays: 30,
+    topDeckParticipantMin: 16,
+  }, {
+    evaluateBuild: async () => evaluation([route('route-a'), route('route-b')]),
+    auditReplacements: async () => {
+      auditCalls += 1;
+      return replacementAudit();
+    },
+  });
+
+  assert.equal(result.status, 'route-selection-required');
+  assert.equal(auditCalls, 0);
+  assert.equal((result.verifiedRoutes as unknown[]).length, 2);
+});
+
+test('Commander Spellbook unavailability remains unknown rather than no replacement', async () => {
+  const result = await runTutorReplacementToolV15({
+    decklist: 'test', comboId: 'route-a', includeTopDeckEvidence: false, topDeckLastDays: 30, topDeckParticipantMin: 16,
+  }, {
+    evaluateBuild: async () => evaluation([], { comboStatus: 'unavailable' }),
+  });
+  assert.equal(result.status, 'combo-source-unavailable');
+  assert.deepEqual(result.sourceFailure, { message: 'provider down' });
+});
+
+test('forwards explicit printing, budget, source-tutor and access-loss constraints without inventing defaults', async () => {
+  let captured: Parameters<NonNullable<TutorReplacementToolDependenciesV15['auditReplacements']>>[0] | null = null;
+  const result = await runTutorReplacementToolV15({
+    decklist: 'test',
+    comboId: 'route-a',
+    sourceTutorName: 'Premium Tutor',
+    printingFamily: 'final-fantasy',
+    allowedSets: ['FIN'],
+    includePromos: false,
+    includeSpecialReleases: true,
+    maxUsdPerCard: 20,
+    candidateMaxUsdPerCard: 8,
+    excludedCards: ['Excluded Tutor'],
+    maxAccessLossPercentagePoints: 0.5,
+    includeTopDeckEvidence: false,
+    topDeckLastDays: 30,
+    topDeckParticipantMin: 16,
+  }, {
+    evaluateBuild: async () => evaluation([route('route-a')]),
+    auditReplacements: async (input) => {
+      captured = input;
+      return replacementAudit();
+    },
+  });
+
+  assert.equal(result.status, 'verified-route-tutor-replacements-audited');
+  assert.equal(captured?.sourceTutorName, 'Premium Tutor');
+  assert.equal(captured?.constraints?.printingFamily, 'final-fantasy');
+  assert.deepEqual(captured?.constraints?.allowedSets, ['FIN']);
+  assert.equal(captured?.constraints?.includePromos, false);
+  assert.equal(captured?.constraints?.includeSpecialReleases, true);
+  assert.equal(captured?.constraints?.maxUsdPerCard, 20);
+  assert.equal(captured?.constraints?.candidateMaxUsdPerCard, 8);
+  assert.deepEqual(captured?.constraints?.excludedCards, ['Excluded Tutor']);
+  assert.equal(captured?.constraints?.maxAccessLossPercentagePoints, 0.5);
+});
+
+test('TopDeck failure is separate and cannot erase a successful exact replacement audit', async () => {
+  const result = await runTutorReplacementToolV15({
+    decklist: 'test', comboId: 'route-a', includeTopDeckEvidence: true, topDeckLastDays: 30, topDeckParticipantMin: 16,
+  }, {
+    evaluateBuild: async () => evaluation([route('route-a')]),
+    auditReplacements: async () => replacementAudit(),
+    fetchTopDeck: async () => { throw new Error('TopDeck rate limited'); },
+  });
+
+  assert.equal(result.status, 'verified-route-tutor-replacements-audited');
+  assert.equal(result.topDeckEvidence, null);
+  assert.deepEqual(result.sourceErrors, { topDeck: 'TopDeck rate limited' });
+  assert.equal((result.replacementAudit as TutorReplacementIntelligenceV15).status, 'replacement-options-evaluated');
+});
