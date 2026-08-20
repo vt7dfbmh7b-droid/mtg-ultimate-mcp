@@ -57,12 +57,8 @@ function identityQuery(identity: string[]): string {
   return `id<=${identity.join('').toLowerCase()}`;
 }
 
-function roleSearchQuery(
-  role: string,
-  identity: string[],
-  printingPolicy: ResolvedPrintingPolicyV08,
-): string {
-  const roleClause: Record<string, string> = {
+function roleClause(role: string): string {
+  const roleClauses: Record<string, string> = {
     ramp: '(o:"add" OR o:"search your library for" OR o:"costs" )',
     draw: '(o:"draw" OR o:"scry" OR o:"surveil" OR o:"look at the top")',
     interaction: '(o:"counter target spell" OR o:"destroy target" OR o:"exile target" OR o:"return target")',
@@ -70,11 +66,19 @@ function roleSearchQuery(
     tutor: 'o:"search your library for"',
     early: 'mv<=2',
   };
+  return roleClauses[role] ?? '';
+}
+
+function roleSearchQuery(
+  role: string,
+  identity: string[],
+  printingPolicy: ResolvedPrintingPolicyV08,
+): string {
   return [
     'f:commander',
     identityQuery(identity),
     '-t:land',
-    roleClause[role] ?? '',
+    roleClause(role),
     printingPolicy.searchClause,
   ]
     .filter(Boolean)
@@ -90,6 +94,24 @@ function themeSearchQuery(
     'f:commander',
     identityQuery(identity),
     '-t:land',
+    themeClause,
+    printingPolicy.searchClause,
+  ]
+    .filter(Boolean)
+    .join(' ');
+}
+
+function themedRoleSearchQuery(
+  role: string,
+  identity: string[],
+  themeClause: string,
+  printingPolicy: ResolvedPrintingPolicyV08,
+): string {
+  return [
+    'f:commander',
+    identityQuery(identity),
+    '-t:land',
+    roleClause(role),
     themeClause,
     printingPolicy.searchClause,
   ]
@@ -196,6 +218,17 @@ function cutCandidates(
     .slice(0, 15);
 }
 
+function mergeCardsByName(...groups: ScryfallCard[][]): ScryfallCard[] {
+  const merged = new Map<string, ScryfallCard>();
+  for (const group of groups) {
+    for (const card of group) {
+      const key = card.name.toLocaleLowerCase();
+      if (!merged.has(key)) merged.set(key, card);
+    }
+  }
+  return [...merged.values()];
+}
+
 export async function suggestDeckUpgrades(
   parsed: ParsedDeck,
   cards: ScryfallCard[],
@@ -248,13 +281,27 @@ export async function suggestDeckUpgrades(
 
   for (const deficit of deficits.slice(0, 5)) {
     const query = roleSearchQuery(deficit.role, allowedIdentity, printingPolicy);
-    let results: ScryfallCard[] = [];
+    let genericResults: ScryfallCard[] = [];
     try {
-      results = await searchCards(query, 40);
+      genericResults = await searchCards(query, 40);
     } catch {
-      continue;
+      // A supplemental controlled-theme query can still provide candidates below.
     }
 
+    let themedQuery: string | null = null;
+    let themedResults: ScryfallCard[] = [];
+    if (themeDeficit > 0 && themeClause) {
+      themedQuery = themedRoleSearchQuery(deficit.role, allowedIdentity, themeClause, printingPolicy);
+      try {
+        themedResults = await searchCards(themedQuery, 40);
+        for (const card of themedResults) themeCandidateNames.add(card.name.toLocaleLowerCase());
+      } catch {
+        // The generic structural search remains usable. Final theme truth is independently audited.
+      }
+    }
+
+    const results = mergeCardsByName(themedResults, genericResults);
+    if (results.length === 0) continue;
     const ranked = results
       .filter((card) => !card.type_line.toLowerCase().includes('land'))
       .filter((card) => !existing.has(card.name.toLocaleLowerCase()))
@@ -313,7 +360,12 @@ export async function suggestDeckUpgrades(
       });
     }
 
-    candidateGroups.push({ ...deficit, searchQuery: query, candidates });
+    candidateGroups.push({
+      ...deficit,
+      searchQuery: query,
+      supplementalThemeRoleQuery: themedQuery,
+      candidates,
+    });
   }
 
   return {
@@ -337,6 +389,7 @@ export async function suggestDeckUpgrades(
       requiredMainMatches: themeMinimumMainMatches,
       deficit: themeDeficit,
       discoveredThemeCandidateNames: themeCandidateNames.size,
+      supplementalRoleSearchesEnabled: themeDeficit > 0 && Boolean(themeClause),
     },
     constraints: {
       maxUsdPerCard: options.maxUsdPerCard ?? null,
@@ -356,7 +409,7 @@ export async function suggestDeckUpgrades(
     caveats: [
       'These role-count targets are engineering heuristics for deck consistency and are not the official Commander bracket definitions.',
       'Candidate ordering keeps the existing role fit, mana efficiency, and EDHREC/community-adoption signals, then reuses V0.15 commander strategy inference as an additional deck-context signal. Popularity or strategy affinity alone is not proof of optimality.',
-      'When a V0.15 controlled theme is below its minimum density, theme-matching cards are preferred within each structural deficit; the theme is not appended to every role search, so generic ramp, interaction, protection, or other utility can still be selected when appropriate.',
+      'When a V0.15 controlled theme is below its minimum density, the engine performs an additional bounded theme+role search and merges it with the generic structural search. Theme-matching cards are then preferred within each deficit, while generic ramp, interaction, protection, or other utility remains eligible.',
       'Cut ordering uses the same V0.15 commander strategy context as additions. When the deck is at or below its controlled theme minimum, matching cards also receive a capped four-point cut-protection signal; final theme preservation is still enforced independently by refinement rather than by this heuristic alone.',
       'Automatic upgrade packages pair the nonland cut pool with nonland additions so a utility land cannot silently replace a spell; dedicated mana-base work should be handled explicitly.',
       'Cut suggestions deliberately avoid claiming thematic/high-mana cards are bad; validate them against simulations, actual games, and reference-deck evidence.',
