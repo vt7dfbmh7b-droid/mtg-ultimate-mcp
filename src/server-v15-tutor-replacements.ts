@@ -85,6 +85,33 @@ function replacementTutorNames(audit: TutorReplacementIntelligenceV15): string[]
   ]))].sort((left, right) => left.localeCompare(right));
 }
 
+function sameTutorCheaperPrintingAlternatives(audit: TutorReplacementIntelligenceV15): Array<Record<string, unknown>> {
+  return audit.sources.flatMap((source) => source.replacements
+    .filter((replacement) =>
+      replacement.sourceTutorName.trim().toLocaleLowerCase() === replacement.replacementTutorName.trim().toLocaleLowerCase()
+      && replacement.priceSavingsUsd !== null
+      && replacement.priceSavingsUsd > 0)
+    .map((replacement) => ({
+      tutorName: replacement.sourceTutorName,
+      replacementPrinting: replacement.replacementPrice.printing,
+      finish: replacement.replacementPrice.finish,
+      priceUsd: replacement.replacementPrice.priceUsd,
+      savingsUsd: replacement.priceSavingsUsd,
+      note: 'This is a cheaper physical printing/finish of the same Oracle tutor, not a different tutor-card substitution.',
+    })));
+}
+
+function evaluationOptions(input: TutorReplacementInputV15) {
+  return {
+    maxComboResults: 100,
+    ...(input.printingFamily !== undefined ? { printingFamily: input.printingFamily } : {}),
+    ...(input.allowedSets !== undefined ? { allowedSets: input.allowedSets } : {}),
+    ...(input.includePromos !== undefined ? { includePromos: input.includePromos } : {}),
+    ...(input.includeSpecialReleases !== undefined ? { includeSpecialReleases: input.includeSpecialReleases } : {}),
+    ...(input.maxUsdPerCard !== undefined ? { maxUsdPerCard: input.maxUsdPerCard } : {}),
+  };
+}
+
 async function optionalTopDeckEvidence(input: {
   enabled: boolean;
   lastDays: number;
@@ -133,12 +160,12 @@ export async function runTutorReplacementToolV15(
   const fetchTopDeck = dependencies.fetchTopDeck ?? fetchTopDeckLearningCandidatesV15;
   const auditTopDeck = dependencies.auditTopDeck ?? auditTopDeckTutorPrevalenceV15;
 
-  const evaluation = await evaluateBuild(input.decklist, { maxComboResults: 100 });
+  const evaluation = await evaluateBuild(input.decklist, evaluationOptions(input));
   if (!evaluation.hardGatesPassed) {
     return {
       status: 'invalid-finished-deck',
       evaluation: invalidEvaluationSummary(evaluation),
-      guidance: 'Tutor replacement is not evaluated until exact 100-card construction, Commander legality, card resolution and printing gates pass.',
+      guidance: 'Tutor replacement is not evaluated until exact 100-card construction, Commander legality, card resolution, the supplied physical-printing policy and any supplied hard per-card budget all pass.',
     };
   }
   if (evaluation.postBuildEvidence.spellbookComboSourceStatus === 'unavailable') {
@@ -203,11 +230,13 @@ export async function runTutorReplacementToolV15(
     status: 'verified-route-tutor-replacements-audited',
     route: routeSummary(selected),
     replacementAudit,
+    sameTutorCheaperPrintingAlternatives: sameTutorCheaperPrintingAlternatives(replacementAudit),
     topDeckEvidenceRequested: input.includeTopDeckEvidence,
     topDeckEvidence: topDeck.evidence,
     sourceErrors: topDeck.sourceError ? { topDeck: topDeck.sourceError } : {},
     guidance: [
       'Commander legality, route verification, exact card access and exact eligible-printing price are the hard layers for a replacement comparison.',
+      'Rows where sourceTutorName and replacementTutorName are the same Oracle card are surfaced separately as cheaper-printing alternatives; they are not different tutor-card substitutions.',
       'The Scryfall candidate pool is bounded and EDHREC-ordered, so an empty result is not proof that the current tutor is globally optimal.',
       'Near-equivalent is only emitted when maxAccessLossPercentagePoints is explicitly supplied; otherwise every exact access loss remains visible without a hidden tolerance.',
       'TopDeck prevalence, when requested and available, is advisory observational evidence only and cannot override legality, route truth, exact access or printing/budget constraints.',
