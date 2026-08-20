@@ -27,4 +27,4 @@ replace_once(
 )
 
 print('Fixed target-pressure structural role key mapping.')
-# Touch-only validation retrigger; removed with this one-shot script on success.
+# Touch-only validation retrigger after the regression-test assertion fix; removed on success.
