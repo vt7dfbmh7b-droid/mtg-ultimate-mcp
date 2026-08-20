@@ -1,0 +1,92 @@
+// COMMANDER
+1 Aragorn, the Uniter (LTR) 192
+
+// MAIN
+1 Giant's Boulder (HOB) 173
+1 Hithlain Rope (LTC) 76
+1 Arcane Denial (LTC) 184
+1 Bilbo's Gambit (HOB) 5
+1 Mind Stone (LTC) 282
+1 Sword of the Animist (LTC) 355
+1 Farseek (LTC) 244
+1 Reprieve (LTR) 26
+1 Stone of Erech (LTR) 251
+1 Paradise Druid (LTC) 255
+1 Rampant Growth (LTC) 257
+1 Stone by Sunlight (HOB) 27
+1 Thrór's Map (HOB) 179
+1 Warg Tactics (HOB) 139
+1 Faithless Looting (LTC) 215
+1 Pact of Negation (LTC) 523
+1 Sword of Hearth and Home (LTC) 354
+1 Sound the Trumpets (HOB) 55
+1 Mystic Confluence (LTC) 193
+1 Frontline Medic (LTC) 169
+1 Bilbo, Thief in the Night (HOB) 33
+1 Wayfarer's Bauble (HOC) 211
+1 Confusticate and Bebother (HOB) 35
+1 Swords to Plowshares (LTC) 178
+1 Éowyn, Fearless Knight (LTR) 201
+1 The Bath Song (LTR) 40
+1 The Battle of Bywater (LTR) 2
+1 Sol Ring (LTC) 284
+1 Bilbo's Ring (LTR) 298
+1 Cultivate (LTC) 236
+1 Path to Exile (LTC) 175
+1 Saruman's Trickery (LTR) 68
+1 Courageous Resolve (LTC) 506
+1 Many Partings (LTR) 176
+1 Summons of Saruman (LTC) 70
+1 Gilded Goose (LTC) 246
+1 Birds of Paradise (LTC) 235
+1 Legolas's Quick Reflexes (LTC) 493
+1 Mox Amber (HOC) 96
+1 Glóin, Dwarf Emissary (LTR) 132
+1 Elvish Mystic (HOC) 205
+1 Everflowing Chalice (LTC) 278
+1 Supreme Verdict (LTC) 272
+1 The Queen of Dale (HOB) 24
+1 Delighted Halfling (LTR) 158
+1 Rammas Echor, Ancient Shield (LTC) 505
+1 Tireless Provisioner (LTC) 262
+1 There and Back Again (LTR) 151
+1 Glamdring (LTR) 239
+1 Flamerush Rider (LTC) 216
+1 Arcane Signet (HOC) 95
+1 The Reaver Cleaver (HOC) 94
+1 Lightning Greaves (LTC) 281
+1 Prosperous Innkeeper (LTC) 256
+1 Heroic Intervention (LTC) 249
+1 Boromir, Warden of the Tower (LTR) 4
+1 Spiteful Banditry (LTR) 149
+1 Samwise Gamgee (LTR) 222
+1 Dawn of Hope (LTC) 164
+1 Vanquisher's Banner (LTC) 289
+1 Bothersome Noisemaker (HOB) 89
+1 Opt (LTC) 194
+1 The One Ring (LTR) 246
+1 Preordain (LTC) 196
+1 Dancing from Dark to Dawn (HOB) 123
+1 Shiny Impetus (LTC) 227
+1 Commander's Sphere (LTC) 276
+1 Horn of the Mark (LTR) 241
+1 Command Tower (LTC) 301
+1 Exotic Orchard (LTC) 307
+1 Cavern of Souls (LTC) 392z
+1 Reflecting Pool (LTC) 373
+1 Gemstone Caverns (LTC) 364
+1 Secluded Courtyard (LTC) 330
+1 Path of Ancestry (LTC) 322
+1 Battlefield Forge (LTC) 296
+1 Brushland (LTC) 297
+1 Flooded Grove (LTC) 309
+1 Sulfur Falls (LTC) 333
+1 Clifftop Retreat (LTC) 300
+1 Glacial Fortress (LTC) 315
+1 Hinterland Harbor (LTC) 317
+1 Canopy Vista (LTC) 298
+1 Prairie Stream (LTC) 324
+4 Forest (HOB) 193
+4 Mountain (HOB) 192
+4 Island (HOB) 190
+3 Plains (HOB) 189
