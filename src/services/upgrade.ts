@@ -103,24 +103,61 @@ function candidateScore(
   return score;
 }
 
-function cutCandidates(parsed: ParsedDeck, cards: ScryfallCard[]): Array<Record<string, unknown>> {
+export function contextualCutPressureV15(
+  card: ScryfallCard,
+  strategyContext: CommanderStrategyContextV15,
+): {
+  cutPressure: number;
+  strategyAffinityScore: number;
+  strategyProtectionApplied: number;
+  matchedStrategies: string[];
+  reasons: string[];
+} {
+  const roles = inferCardRoles(card).filter((role) => !['creature', 'equipment', 'etb synergy'].includes(role));
+  let cutPressure = Math.max(0, card.cmc - 3) * 2;
+  if (roles.length === 0) cutPressure += 5;
+  if (card.cmc >= 6) cutPressure += 4;
+  if (roles.includes('card draw') || roles.includes('tutor') || roles.includes('spot interaction') || roles.includes('countermagic') || roles.includes('protection')) cutPressure -= 4;
+
+  const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
+  // Reuse the existing four-point protection scale already applied to important utility roles.
+  // Strategy fit lowers cut pressure but never makes an on-plan card automatically untouchable.
+  const strategyProtectionApplied = Math.min(4, affinity.score);
+  cutPressure -= strategyProtectionApplied;
+
+  const reasons: string[] = [];
+  if (card.cmc >= 6) reasons.push('high mana value');
+  if (roles.length === 0) reasons.push('few detected utility roles');
+  if (card.cmc >= 4 && roles.length <= 1) reasons.push('expensive relative to detected flexibility');
+
+  return {
+    cutPressure: Number(cutPressure.toFixed(1)),
+    strategyAffinityScore: Number(affinity.score.toFixed(1)),
+    strategyProtectionApplied: Number(strategyProtectionApplied.toFixed(1)),
+    matchedStrategies: affinity.matches.map((match) => match.archetype),
+    reasons: reasons.length > 0 ? reasons : ['no strong structural cut signal; only consider if it underperforms in actual games'],
+  };
+}
+
+function cutCandidates(
+  parsed: ParsedDeck,
+  cards: ScryfallCard[],
+  strategyContext: CommanderStrategyContextV15,
+): Array<Record<string, unknown>> {
   const mainNames = new Set(parsed.main.map((entry) => entry.name.toLocaleLowerCase()));
   return cards
     .filter((card) => mainNames.has(card.name.toLocaleLowerCase()) && !card.type_line.toLowerCase().includes('land'))
     .map((card) => {
-      const roles = inferCardRoles(card).filter((role) => !['creature', 'equipment', 'etb synergy'].includes(role));
-      let cutPressure = Math.max(0, card.cmc - 3) * 2;
-      if (roles.length === 0) cutPressure += 5;
-      if (card.cmc >= 6) cutPressure += 4;
-      if (roles.includes('card draw') || roles.includes('tutor') || roles.includes('spot interaction') || roles.includes('countermagic') || roles.includes('protection')) cutPressure -= 4;
-      const reasons: string[] = [];
-      if (card.cmc >= 6) reasons.push('high mana value');
-      if (roles.length === 0) reasons.push('few detected utility roles');
-      if (card.cmc >= 4 && roles.length <= 1) reasons.push('expensive relative to detected flexibility');
+      const context = contextualCutPressureV15(card, strategyContext);
       return {
         card: summarizeCard(card),
-        heuristicCutPressure: Number(cutPressure.toFixed(1)),
-        reasons: reasons.length > 0 ? reasons : ['no strong structural cut signal; only consider if it underperforms in actual games'],
+        heuristicCutPressure: context.cutPressure,
+        strategyAffinity: {
+          score: context.strategyAffinityScore,
+          protectionApplied: context.strategyProtectionApplied,
+          matchedStrategies: context.matchedStrategies,
+        },
+        reasons: context.reasons,
       };
     })
     .filter((item) => Number(item.heuristicCutPressure) > 0)
@@ -218,7 +255,7 @@ export async function suggestDeckUpgrades(
     structuralTargets: targets,
     structuralDeficits: deficits,
     candidateAddsByDeficit: candidateGroups,
-    candidateCuts: cutCandidates(parsed, cards),
+    candidateCuts: cutCandidates(parsed, cards, strategyContext),
     constraints: {
       maxUsdPerCard: options.maxUsdPerCard ?? null,
       allowedSets: options.allowedSets ?? [],
@@ -237,6 +274,7 @@ export async function suggestDeckUpgrades(
     caveats: [
       'These role-count targets are engineering heuristics for deck consistency and are not the official Commander bracket definitions.',
       'Candidate ordering keeps the existing role fit, mana efficiency, and EDHREC/community-adoption signals, then reuses V0.15 commander strategy inference as an additional deck-context signal. Popularity or strategy affinity alone is not proof of optimality.',
+      'Cut ordering now uses the same V0.15 commander strategy context as additions, so on-plan cards receive the same four-point protection scale already used for important utility roles without becoming automatically uncuttable.',
       'Automatic upgrade packages pair the nonland cut pool with nonland additions so a utility land cannot silently replace a spell; dedicated mana-base work should be handled explicitly.',
       'Cut suggestions deliberately avoid claiming thematic/high-mana cards are bad; validate them against simulations, actual games, and reference-deck evidence.',
       'Scryfall USD prices are printing-specific reference values rather than guaranteed store checkout prices, and this version does not yet convert them to NZD.',
