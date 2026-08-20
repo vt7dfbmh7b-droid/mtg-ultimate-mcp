@@ -7,6 +7,7 @@ import {
   deriveCommanderStrategyContextFromCommandersV15,
   deriveCommanderStrategyContextV15,
 } from './commander-strategy-affinity-v15.js';
+import { contextualCutPressureV15 } from './upgrade.js';
 
 function card(name: string, typeLine: string, oracleText: string): ScryfallCard {
   return {
@@ -79,6 +80,39 @@ test('existing V0.15 strategy inference gives on-plan cards more affinity than u
   const unrelatedAffinity = cardCommanderStrategyAffinityV15(unrelated, context);
   assert.ok(onPlanAffinity.score > unrelatedAffinity.score);
   assert.ok(onPlanAffinity.matches.some((match) => match.archetype === 'combat-tokens'));
+});
+
+test('strategy-aware cut pressure protects on-plan cards without making them uncuttable', () => {
+  const commander = card(
+    'Warrior Captain',
+    'Legendary Creature — Human Warrior',
+    'Whenever a Warrior attacks, create a 1/1 white Warrior creature token that is tapped and attacking.',
+  );
+  const context = deriveCommanderStrategyContextFromCommandersV15([commander]);
+  const onPlan = {
+    ...card(
+      'Expensive Warband',
+      'Creature — Human Warrior',
+      'Whenever Expensive Warband attacks, create a 1/1 white Warrior creature token that is tapped and attacking.',
+    ),
+    cmc: 6,
+  } as ScryfallCard;
+  const unrelated = {
+    ...card(
+      'Expensive Observer',
+      'Creature — Human Advisor',
+      'When Expensive Observer enters, you gain 1 life.',
+    ),
+    cmc: 6,
+  } as ScryfallCard;
+
+  const onPlanPressure = contextualCutPressureV15(onPlan, context);
+  const unrelatedPressure = contextualCutPressureV15(unrelated, context);
+
+  assert.equal(onPlanPressure.strategyProtectionApplied, 4);
+  assert.equal(unrelatedPressure.strategyProtectionApplied, 0);
+  assert.equal(unrelatedPressure.cutPressure - onPlanPressure.cutPressure, 4);
+  assert.ok(onPlanPressure.cutPressure > 0);
 });
 
 test('top-three commander context preserves multiple already-detected deck identities', () => {
