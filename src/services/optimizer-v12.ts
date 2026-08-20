@@ -1,14 +1,21 @@
 import type { ScryfallCard } from '../types/scryfall.js';
-import { derivePostBuildEvidenceV15 } from './commander-build-evaluation-v15.js';
+import { derivePostBuildEvidenceV15, evaluateCommanderBuildV15 } from './commander-build-evaluation-v15.js';
 import { validateCommanderDeck } from './commander-rules.js';
 import { buildSimulationBackedUpgradePlanV07, type UpgradePlanOptionsV07 } from './deck-builder-v07.js';
-import { parseDecklist, type ParsedDeck } from './deck.js';
+import { parseDecklist, resolveEntryCard, type ParsedDeck } from './deck.js';
 import { auditFinalWinRoutesV15 } from './final-win-route-audit-v15.js';
+import {
+  auditNeutralThemeV15,
+  resolveNeutralThemeIntentV15,
+  type NeutralThemeAuditV15,
+  type NeutralThemeIntentV15,
+} from './neutral-theme-v15.js';
 import {
   estimateUpgradeSpendV11,
   refinementImprovementScoreV11,
   type RefinementDetailLevelV11,
 } from './optimizer-v11.js';
+import { resolvePrintingPolicyV08 } from './printing-policy-v08.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from './scryfall.js';
 import { findDeckCombosEvidence } from './spellbook.js';
 
@@ -39,6 +46,7 @@ interface CandidateEvaluationV12 {
   unknownPriceCount: number;
   improvementScore: number;
   significantRegression: boolean;
+  themeAudit: NeutralThemeAuditV15 | null;
   plan: Record<string, unknown> | null;
   nextDecklist: string | null;
   resolved: Awaited<ReturnType<typeof resolveDeck>> | null;
@@ -55,10 +63,21 @@ interface RoundSummaryV12 {
   estimatedSpendUsd: number;
   improvementScore: number;
   winRouteProtection: WinRouteProtectionV15;
+  themeAuditBefore: NeutralThemeAuditV15 | null;
   stopReason?: string;
   swaps: Array<Record<string, unknown>>;
   candidateComparisons: Array<Record<string, unknown>>;
 }
+
+interface RefinementThemeContextV15 {
+  intent: NeutralThemeIntentV15 | null;
+  effectiveOptions: IterativeRefinementOptionsV12;
+  initialAudit: NeutralThemeAuditV15 | null;
+}
+
+type RefinementThemePreparationV15 =
+  | { ok: true; context: RefinementThemeContextV15 }
+  | { ok: false; result: Record<string, unknown> };
 
 function asRecord(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
@@ -108,6 +127,18 @@ function simpleSwap(swap: Record<string, unknown>): Record<string, unknown> {
   };
 }
 
+function compactThemeAudit(audit: NeutralThemeAuditV15 | null): Record<string, unknown> | null {
+  if (!audit) return null;
+  return {
+    status: audit.status,
+    satisfied: audit.satisfied,
+    canonicalLabel: audit.canonicalLabel,
+    matchedMainCards: audit.matchedMainCards,
+    requiredMainMatches: audit.requiredMainMatches,
+    mainCoverage: audit.mainCoverage,
+  };
+}
+
 function candidateSummary(candidate: CandidateEvaluationV12): Record<string, unknown> {
   return {
     candidate: candidate.candidate,
@@ -119,6 +150,7 @@ function candidateSummary(candidate: CandidateEvaluationV12): Record<string, unk
     unknownPriceCount: candidate.unknownPriceCount,
     improvementScore: candidate.improvementScore,
     significantRegression: candidate.significantRegression,
+    themeAudit: compactThemeAudit(candidate.themeAudit),
     swaps: candidate.plan && Array.isArray(candidate.plan.swaps)
       ? candidate.plan.swaps.map(asRecord).map(simpleSwap)
       : [],
@@ -151,6 +183,154 @@ function uniqueNames(values: readonly string[]): string[] {
     .filter(Boolean)
     .map((value) => [value.toLocaleLowerCase(), value] as const)).values()]
     .sort((a, b) => a.localeCompare(b));
+}
+
+function auditResolvedThemeV15(
+  parsed: ParsedDeck,
+  cards: ScryfallCard[],
+  intent: NeutralThemeIntentV15,
+  options: { printingPolicySatisfied?: boolean; activePrintingFamily?: string | null } = {},
+): NeutralThemeAuditV15 | null {
+  const entries: Array<{ card: ScryfallCard; quantity: number; zone: 'commander' | 'main' }> = [];
+  for (const entry of parsed.commanders) {
+    const card = resolveEntryCard(entry, cards);
+    if (!card) return null;
+    entries.push({ card, quantity: entry.quantity, zone: 'commander' });
+  }
+  for (const entry of parsed.main) {
+    const card = resolveEntryCard(entry, cards);
+    if (!card) return null;
+    entries.push({ card, quantity: entry.quantity, zone: 'main' });
+  }
+  return auditNeutralThemeV15(entries, intent, options);
+}
+
+async function prepareRefinementThemeV15(
+  decklist: string,
+  initial: Awaited<ReturnType<typeof resolveDeck>>,
+  options: IterativeRefinementOptionsV12,
+): Promise<RefinementThemePreparationV15> {
+  const effectiveOptions: IterativeRefinementOptionsV12 = { ...options };
+  delete effectiveOptions.themeQuery;
+  delete effectiveOptions.themeMinimumMainMatches;
+  delete effectiveOptions.themeCurrentMainMatches;
+  const requestedTheme = options.themeQuery?.trim();
+  if (!requestedTheme) {
+    return { ok: true, context: { intent: null, effectiveOptions, initialAudit: null } };
+  }
+
+  const intent = await resolveNeutralThemeIntentV15(requestedTheme);
+  if (intent.enforceability === 'verification-unavailable') {
+    return {
+      ok: false,
+      result: {
+        status: 'theme-verification-unavailable',
+        reason: intent.explanation,
+        themeIntent: intent,
+      },
+    };
+  }
+  if (intent.enforceability === 'unsupported') {
+    return {
+      ok: false,
+      result: {
+        status: 'unsupported-theme',
+        reason: intent.explanation,
+        themeIntent: intent,
+      },
+    };
+  }
+
+  if (intent.kind === 'printing-family' && intent.printingFamily) {
+    const themePolicy = await resolvePrintingPolicyV08({
+      printingFamily: intent.printingFamily,
+      ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
+      ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
+    });
+    if (options.printingFamily) {
+      const suppliedPolicy = await resolvePrintingPolicyV08({
+        printingFamily: options.printingFamily,
+        ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
+        ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
+      });
+      if (themePolicy.familyPreset !== suppliedPolicy.familyPreset) {
+        return {
+          ok: false,
+          result: {
+            status: 'theme-constraint-conflict',
+            reason: `Theme ${intent.canonicalLabel ?? intent.original} conflicts with printingFamily=${options.printingFamily}.`,
+            themeIntent: intent,
+          },
+        };
+      }
+    }
+    const familySets = new Set(themePolicy.familyMatchedSetCodes.map((set) => set.toLocaleLowerCase()));
+    const conflictingSets = (options.allowedSets ?? [])
+      .map((set) => set.trim())
+      .filter(Boolean)
+      .filter((set) => !familySets.has(set.toLocaleLowerCase()));
+    if (conflictingSets.length > 0) {
+      return {
+        ok: false,
+        result: {
+          status: 'theme-constraint-conflict',
+          reason: `Theme ${intent.canonicalLabel ?? intent.original} conflicts with allowed set codes outside that printing family: ${conflictingSets.join(', ')}.`,
+          themeIntent: intent,
+        },
+      };
+    }
+
+    effectiveOptions.printingFamily = intent.printingFamily;
+    const evaluation = await evaluateCommanderBuildV15(decklist, {
+      printingFamily: intent.printingFamily,
+      ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
+      ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
+      ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
+    });
+    const initialAudit = auditResolvedThemeV15(initial.parsed, initial.cards, intent, {
+      printingPolicySatisfied: evaluation.printingPolicySatisfied,
+      activePrintingFamily: intent.printingFamily,
+    });
+    if (!initialAudit || !initialAudit.satisfied) {
+      return {
+        ok: false,
+        result: {
+          status: 'starting-deck-theme-gate-failed',
+          reason: 'The starting deck does not independently prove the requested physical-printing-family theme, so refinement will not pretend later swaps make the whole deck compliant.',
+          themeIntent: intent,
+          themeAudit: initialAudit,
+          printingPolicySatisfied: evaluation.printingPolicySatisfied,
+        },
+      };
+    }
+    return { ok: true, context: { intent, effectiveOptions, initialAudit } };
+  }
+
+  if (intent.enforceability !== 'full' || !intent.queryClause) {
+    return {
+      ok: false,
+      result: {
+        status: 'unsupported-theme',
+        reason: intent.explanation,
+        themeIntent: intent,
+      },
+    };
+  }
+
+  effectiveOptions.themeQuery = intent.queryClause;
+  effectiveOptions.themeMinimumMainMatches = intent.minimumMainMatches;
+  const initialAudit = auditResolvedThemeV15(initial.parsed, initial.cards, intent);
+  if (!initialAudit) {
+    return {
+      ok: false,
+      result: {
+        status: 'theme-verification-unavailable',
+        reason: 'The resolved starting deck could not be bound back to every exact deck entry for the V0.15 theme audit.',
+        themeIntent: intent,
+      },
+    };
+  }
+  return { ok: true, context: { intent, effectiveOptions, initialAudit } };
 }
 
 /**
@@ -250,6 +430,21 @@ async function currentWinRouteProtectionV15(
   }
 }
 
+function candidateThemeGateV15(
+  before: NeutralThemeAuditV15,
+  after: NeutralThemeAuditV15,
+): { eligible: boolean; reason: string } {
+  if (before.satisfied) {
+    return after.satisfied
+      ? { eligible: true, reason: 'theme-preserved' }
+      : { eligible: false, reason: 'package-would-break-required-theme-density' };
+  }
+  if (after.matchedMainCards > before.matchedMainCards) {
+    return { eligible: true, reason: after.satisfied ? 'theme-target-reached' : 'theme-density-advanced' };
+  }
+  return { eligible: false, reason: 'package-does-not-advance-required-theme-density' };
+}
+
 async function evaluateCandidate(
   candidateNumber: number,
   currentParsed: ParsedDeck,
@@ -263,6 +458,8 @@ async function evaluateCandidate(
   excludedNames: Set<string>,
   diversityBlocked: Set<string>,
   round: number,
+  themeIntent: NeutralThemeIntentV15 | null,
+  currentThemeAudit: NeutralThemeAuditV15 | null,
 ): Promise<CandidateEvaluationV12> {
   const plan = await buildSimulationBackedUpgradePlanV07(
     currentParsed,
@@ -289,6 +486,7 @@ async function evaluateCandidate(
     unknownPriceCount: spend.unknownPriceCount,
     improvementScore: score.score,
     significantRegression: score.significantRegression,
+    themeAudit: null,
     plan,
   };
 
@@ -316,6 +514,33 @@ async function evaluateCandidate(
   if (resolved.notFound.length > 0 || !rules.isLegal) {
     return { ...base, eligible: false, reason: 'candidate-plan-failed-post-build-resolution-or-legality', nextDecklist, resolved };
   }
+
+  if (themeIntent?.enforceability === 'full' && currentThemeAudit) {
+    const themeAudit = auditResolvedThemeV15(resolved.parsed, resolved.cards, themeIntent);
+    if (!themeAudit) {
+      return {
+        ...base,
+        themeAudit: null,
+        eligible: false,
+        reason: 'candidate-theme-verification-unavailable',
+        nextDecklist,
+        resolved,
+      };
+    }
+    const gate = candidateThemeGateV15(currentThemeAudit, themeAudit);
+    if (!gate.eligible) {
+      return {
+        ...base,
+        themeAudit,
+        eligible: false,
+        reason: gate.reason,
+        nextDecklist,
+        resolved,
+      };
+    }
+    return { ...base, themeAudit, eligible: true, reason: gate.reason, nextDecklist, resolved };
+  }
+
   return { ...base, eligible: true, reason: 'eligible', nextDecklist, resolved };
 }
 
@@ -353,12 +578,17 @@ export async function refineCommanderDeckIterativelyV12(
     };
   }
 
+  const themePreparation = await prepareRefinementThemeV15(decklist, initial, options);
+  if (!themePreparation.ok) return themePreparation.result;
+  const themeContext = themePreparation.context;
+  const effectiveOptions = themeContext.effectiveOptions;
+
   let currentDecklist = decklist;
   let currentParsed = initial.parsed;
   let currentCards = initial.cards;
   const identity = commanderIdentity(currentParsed, currentCards);
-  const protectedNames = new Set((options.protectedCards ?? []).map((name) => name.toLocaleLowerCase()));
-  const excludedNames = new Set((options.excludedCards ?? []).map((name) => name.toLocaleLowerCase()));
+  const protectedNames = new Set((effectiveOptions.protectedCards ?? []).map((name) => name.toLocaleLowerCase()));
+  const excludedNames = new Set((effectiveOptions.excludedCards ?? []).map((name) => name.toLocaleLowerCase()));
   const acceptedSwaps: Array<Record<string, unknown>> = [];
   const rounds: RoundSummaryV12[] = [];
   let totalSpend = 0;
@@ -369,6 +599,20 @@ export async function refineCommanderDeckIterativelyV12(
     if (swapsRemaining <= 0) {
       stopReason = 'maximum-swaps-reached';
       break;
+    }
+
+    const currentThemeAudit = themeContext.intent?.enforceability === 'full'
+      ? auditResolvedThemeV15(currentParsed, currentCards, themeContext.intent)
+      : themeContext.initialAudit;
+    if (themeContext.intent?.enforceability === 'full' && !currentThemeAudit) {
+      stopReason = 'theme-verification-unavailable-after-accepted-swap';
+      break;
+    }
+    const roundOptions: IterativeRefinementOptionsV12 = { ...effectiveOptions };
+    if (themeContext.intent?.enforceability === 'full' && currentThemeAudit && themeContext.intent.queryClause) {
+      roundOptions.themeQuery = themeContext.intent.queryClause;
+      roundOptions.themeMinimumMainMatches = themeContext.intent.minimumMainMatches;
+      roundOptions.themeCurrentMainMatches = currentThemeAudit.matchedMainCards;
     }
 
     const winRouteProtection = await currentWinRouteProtectionV15(currentDecklist, currentParsed);
@@ -390,7 +634,7 @@ export async function refineCommanderDeckIterativelyV12(
           currentParsed,
           currentCards,
           identity,
-          { ...options, minimumImprovementScore: minScore },
+          { ...roundOptions, minimumImprovementScore: minScore },
           attemptSize,
           totalSpend,
           maxTotalUsd,
@@ -398,6 +642,8 @@ export async function refineCommanderDeckIterativelyV12(
           excludedNames,
           diversityBlocked,
           round,
+          themeContext.intent,
+          currentThemeAudit,
         );
         candidates.push(evaluated);
         if (evaluated.plan) diversifyNextPackage(diversityBlocked, evaluated.plan);
@@ -410,7 +656,11 @@ export async function refineCommanderDeckIterativelyV12(
           ? 'all-competing-packages-below-improvement-threshold'
           : reasons.includes('package-exceeds-total-budget')
             ? 'all-competing-packages-failed-budget-or-quality-checks'
-            : reasons[0] ?? 'no-acceptable-package';
+            : reasons.includes('package-would-break-required-theme-density')
+              ? 'all-competing-packages-would-break-theme-density'
+              : reasons.includes('package-does-not-advance-required-theme-density')
+                ? 'all-competing-packages-failed-to-advance-theme-density'
+                : reasons[0] ?? 'no-acceptable-package';
         attemptSize -= 1;
       }
     }
@@ -427,6 +677,7 @@ export async function refineCommanderDeckIterativelyV12(
         estimatedSpendUsd: 0,
         improvementScore: 0,
         winRouteProtection,
+        themeAuditBefore: currentThemeAudit,
         stopReason: lastReason,
         swaps: [],
         candidateComparisons: evaluatedAtWinningSize.map(candidateSummary),
@@ -457,15 +708,22 @@ export async function refineCommanderDeckIterativelyV12(
       estimatedSpendUsd: winner.estimatedSpendUsd,
       improvementScore: winner.improvementScore,
       winRouteProtection,
+      themeAuditBefore: currentThemeAudit,
       swaps: roundSwaps,
       candidateComparisons: evaluatedAtWinningSize.map(candidateSummary),
     });
   }
 
   const finalRules = validateCommanderDeck(currentParsed, currentCards);
+  const finalThemeAudit = themeContext.intent?.enforceability === 'full'
+    ? auditResolvedThemeV15(currentParsed, currentCards, themeContext.intent)
+    : themeContext.initialAudit;
+  const themeConstraintSatisfied = themeContext.intent === null || finalThemeAudit?.satisfied === true;
   const protectedRouteNames = uniqueNames(rounds.flatMap((round) => round.winRouteProtection.protectedCardNames));
   const simple = {
-    status: acceptedSwaps.length > 0 ? 'refined' : 'no-supported-improvement',
+    status: !themeConstraintSatisfied
+      ? 'theme-target-not-satisfied'
+      : acceptedSwaps.length > 0 ? 'refined' : 'no-supported-improvement',
     stopReason,
     roundsAccepted: rounds.filter((round) => round.accepted).length,
     totalSwaps: acceptedSwaps.length,
@@ -475,6 +733,17 @@ export async function refineCommanderDeckIterativelyV12(
     swaps: acceptedSwaps.map(simpleSwap),
     finalDecklist: currentDecklist,
     finalCommanderRules: finalRules,
+    themeConstraint: {
+      requested: options.themeQuery ?? null,
+      intent: themeContext.intent,
+      audit: finalThemeAudit,
+      satisfied: themeConstraintSatisfied,
+      explanation: themeContext.intent === null
+        ? 'No explicit theme constraint was requested.'
+        : themeConstraintSatisfied
+          ? 'The final deck independently satisfies the resolved V0.15 theme constraint. Generic utility cards remain allowed; only the required deck-level density or exact printing-family truth is hard-gated.'
+          : 'The optimizer may have improved other supported signals, but the final deck has not yet reached the requested V0.15 theme minimum and is not presented as theme-compliant.',
+    },
     winRouteProtection: {
       evaluatedEachRound: true,
       source: 'existing-v15-final-win-route-audit',
@@ -482,8 +751,8 @@ export async function refineCommanderDeckIterativelyV12(
       verificationUnavailableRounds: rounds.filter((round) => round.winRouteProtection.status === 'verification-unavailable').map((round) => round.round),
     },
     explanation: acceptedSwaps.length > 0
-      ? `Each round compared up to ${candidatePackagesPerRound} materially different upgrade packages using the same simulation seed, protected the existing V0.15 verified primary/backup win-route pieces when verification was available, then accepted the strongest package that stayed legal and passed printing, budget, regression, and minimum-improvement checks.`
-      : `The engine compared up to ${candidatePackagesPerRound} competing packages per round while protecting existing V0.15 verified primary/backup win-route pieces when verification was available, but none cleared every legality, budget, printing and improvement check, so it kept the starting list.`,
+      ? `Each round compared up to ${candidatePackagesPerRound} materially different upgrade packages using the same simulation seed, protected the existing V0.15 verified primary/backup win-route pieces when verification was available, independently enforced the resolved V0.15 theme at deck level when requested, then accepted the strongest package that stayed legal and passed printing, budget, regression, and minimum-improvement checks.`
+      : `The engine compared up to ${candidatePackagesPerRound} competing packages per round while protecting existing V0.15 verified primary/backup win-route pieces and independently enforcing the resolved V0.15 theme when requested, but none cleared every legality, theme, budget, printing and improvement check, so it kept the starting list.`,
   };
 
   if (detailLevel === 'simple') return simple;
@@ -499,21 +768,24 @@ export async function refineCommanderDeckIterativelyV12(
       estimatedSpendUsd: round.estimatedSpendUsd,
       improvementScore: round.improvementScore,
       winRouteProtection: round.winRouteProtection,
+      themeAuditBefore: compactThemeAudit(round.themeAuditBefore),
       ...(round.stopReason ? { stopReason: round.stopReason } : {}),
     })),
     constraints: {
-      targetBracket: options.targetBracket ?? 4,
-      maxUsdPerCard: options.maxUsdPerCard ?? null,
+      targetBracket: effectiveOptions.targetBracket ?? 4,
+      maxUsdPerCard: effectiveOptions.maxUsdPerCard ?? null,
       maxTotalUsd: maxTotalUsd ?? null,
       maxTotalSwaps,
       swapsPerRound,
       maxRounds,
       candidatePackagesPerRound,
       minimumImprovementScore: minScore,
-      printingFamily: options.printingFamily ?? null,
-      allowedSets: options.allowedSets ?? [],
-      protectedCards: options.protectedCards ?? [],
-      excludedCards: options.excludedCards ?? [],
+      printingFamily: effectiveOptions.printingFamily ?? null,
+      allowedSets: effectiveOptions.allowedSets ?? [],
+      requestedTheme: options.themeQuery ?? null,
+      resolvedTheme: themeContext.intent?.canonicalLabel ?? null,
+      protectedCards: effectiveOptions.protectedCards ?? [],
+      excludedCards: effectiveOptions.excludedCards ?? [],
     },
   };
   if (detailLevel === 'standard') return standard;
@@ -523,5 +795,6 @@ export async function refineCommanderDeckIterativelyV12(
     scoringGuidance: 'Competing packages are compared with the same per-round seed. The improvement score is still a within-deck heuristic, not a universal power score or measured multiplayer win rate.',
     diversityGuidance: 'Later candidates temporarily exclude part of earlier candidates’ incoming package so the optimizer explores alternatives rather than resimulating the same swap set repeatedly.',
     winRouteGuidance: 'Route protection is derived from the existing V0.15 final full-table win-route portfolio. Verification unavailable is surfaced explicitly and never treated as evidence that the deck has no route.',
+    themeGuidance: 'User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck, while physical printing-family themes are delegated to the exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches.',
   };
 }
