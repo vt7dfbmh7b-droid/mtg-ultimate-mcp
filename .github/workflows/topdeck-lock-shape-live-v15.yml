@@ -1,0 +1,51 @@
+name: TopDeck Lock Shape Probe V15
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/live-topdeck-lock-shape-v15.ts"
+      - ".github/workflows/topdeck-lock-shape-live-v15.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: topdeck-lock-shape-live-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  topdeck-lock-shape-live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TOPDECK_API_KEY: ${{ secrets.TOPDECK_API_KEY }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Type-check and build
+        run: npm run build
+
+      - name: Run one-request privacy-safe TopDeck lock field probe
+        run: npx tsx scripts/live-topdeck-lock-shape-v15.ts
+
+      - name: Upload aggregate lock-shape audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: topdeck-lock-shape-${{ github.sha }}
+          path: |
+            topdeck-lock-shape-live-result.json
+            topdeck-lock-shape-live-failure.txt
+          if-no-files-found: ignore
+          retention-days: 7
