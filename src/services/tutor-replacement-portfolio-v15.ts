@@ -1,6 +1,5 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import {
-  resolveEntryCard,
   type DeckEntry,
   type ParsedDeck,
 } from './deck.js';
