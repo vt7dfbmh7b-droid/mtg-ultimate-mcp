@@ -6,6 +6,10 @@ import { buildDeckMetrics, parseDecklist, resolveEntryCard, type ParsedDeck } fr
 import { deriveEfficientCommanderWinPlanV15 } from './efficient-win-plan-v15.js';
 import { auditExactPerCardBudgetV15, type ExactPerCardBudgetAuditV15 } from './exact-printing-budget-v15.js';
 import {
+  assessFullTableWinClosureV15,
+  type FullTableWinClosureKindV15,
+} from './full-table-win-closure-v15.js';
+import {
   describePrintingPolicyV08,
   printingMatchesPolicyV08,
   resolvePrintingPolicyV08,
@@ -13,7 +17,6 @@ import {
 } from './printing-policy-v08.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from './scryfall.js';
 import { estimateCommanderBracket, findDeckCombosEvidence } from './spellbook.js';
-import { isStrictDeterministicWinResultV15 } from './win-package-verification-v15.js';
 
 export interface CommanderBuildEvaluationOptionsV15 extends PrintingPolicyInputV08 {
   constraintDescriptions?: string[];
@@ -37,6 +40,7 @@ export interface PostBuildEvidenceInputV15 {
   cheapInteractionCount: number;
   tutorCount: number;
   gameChangerNames: string[];
+  commanderNames?: string[];
   spellbookBracket: Record<string, unknown>;
   combos: Record<string, unknown>;
   efficientWinPlanSupported: boolean;
@@ -44,6 +48,19 @@ export interface PostBuildEvidenceInputV15 {
   competitiveMetagameEvidence?: boolean;
   optimizedPlanEvidence?: boolean;
   exhibitionIntent?: boolean;
+}
+
+export interface VerifiedWinningComboDetailV15 {
+  comboId: string;
+  bracketTag: string | null;
+  comboCardNames: string[];
+  seedNames: string[];
+  results: string[];
+  requirementNames: string[];
+  dependencyCompleteness: 'explicit-cards-only' | 'template-requirements-present';
+  closureKind: FullTableWinClosureKindV15;
+  closureTiming: 'immediate' | 'delayed' | 'not-proven';
+  closureScope: 'self-win' | 'all-opponents' | 'single-opponent' | 'unscoped' | 'none';
 }
 
 export interface PostBuildEvidenceV15 {
@@ -57,6 +74,7 @@ export interface PostBuildEvidenceV15 {
   completeComboCount: number;
   verifiedWinningCombos: number;
   verifiedWinningComboIds: string[];
+  verifiedWinningComboDetails: VerifiedWinningComboDetailV15[];
   ruthlessWinningCombos: number;
   strategicallyRelevantCombos: number;
   gameChangerNames: string[];
@@ -93,6 +111,14 @@ function sourceStatus(value: unknown): PostBuildEvidenceV15['spellbookBracketSou
   return value === 'available' ? 'available' : value === 'unavailable' ? 'unavailable' : 'unknown';
 }
 
+function normalizeName(value: string): string {
+  return value.trim().toLocaleLowerCase();
+}
+
+function uniqueSorted(values: readonly string[]): string[] {
+  return [...new Set(values.map((value) => value.trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+}
+
 function identifiers(parsed: ParsedDeck): CardIdentifierInput[] {
   return [...parsed.commanders, ...parsed.main].map((entry) => ({
     name: entry.name,
@@ -101,23 +127,58 @@ function identifiers(parsed: ParsedDeck): CardIdentifierInput[] {
   }));
 }
 
+function comboDetail(
+  combo: Record<string, unknown>,
+  commanderNames: Set<string>,
+): VerifiedWinningComboDetailV15 | null {
+  const comboId = String(combo.id ?? '').trim();
+  const results = Array.isArray(combo.results) ? combo.results.map(String) : [];
+  const closure = assessFullTableWinClosureV15(results);
+  if (!comboId || !closure.verifiedFullTableWin) return null;
+
+  const cards = Array.isArray(combo.cards) ? combo.cards.map(record) : [];
+  const comboCardNames: string[] = [];
+  const seedNames: string[] = [];
+  for (const card of cards) {
+    const name = String(card.name ?? '').trim();
+    if (!name || name === 'Unknown card') continue;
+    comboCardNames.push(name);
+    const commanderDependency = card.mustBeCommander === true || commanderNames.has(normalizeName(name));
+    if (!commanderDependency) seedNames.push(name);
+  }
+  const requirements = Array.isArray(combo.requirements) ? combo.requirements.map(record) : [];
+  const requirementNames = uniqueSorted(requirements.map((requirement) => String(requirement.name ?? '')).filter(Boolean));
+
+  return {
+    comboId,
+    bracketTag: typeof combo.bracketTag === 'string' ? combo.bracketTag : null,
+    comboCardNames: uniqueSorted(comboCardNames),
+    seedNames: uniqueSorted(seedNames),
+    results,
+    requirementNames,
+    dependencyCompleteness: requirementNames.length > 0 ? 'template-requirements-present' : 'explicit-cards-only',
+    closureKind: closure.kind,
+    closureTiming: closure.timing,
+    closureScope: closure.scope,
+  };
+}
+
 export function derivePostBuildEvidenceV15(input: PostBuildEvidenceInputV15): PostBuildEvidenceV15 {
   const bracket = record(input.spellbookBracket);
   const combos = record(input.combos);
   const included = Array.isArray(combos.included) ? combos.included.map(record) : [];
   const counts = record(combos.counts);
-  const winningIncluded = included.filter((combo) =>
-    Array.isArray(combo.results) && isStrictDeterministicWinResultV15(combo.results.map(String)));
-  const verifiedWinningComboIds = [...new Set(winningIncluded
-    .map((combo) => String(combo.id ?? '').trim())
-    .filter(Boolean))].sort((a, b) => a.localeCompare(b));
+  const commanderNames = new Set((input.commanderNames ?? []).map(normalizeName));
+  const detailsById = new Map<string, VerifiedWinningComboDetailV15>();
+  for (const combo of included) {
+    const detail = comboDetail(combo, commanderNames);
+    if (!detail || detailsById.has(detail.comboId)) continue;
+    detailsById.set(detail.comboId, detail);
+  }
+  const verifiedWinningComboDetails = [...detailsById.values()].sort((a, b) => a.comboId.localeCompare(b.comboId));
+  const verifiedWinningComboIds = verifiedWinningComboDetails.map((detail) => detail.comboId);
   const verifiedWinningCombos = verifiedWinningComboIds.length;
-  const ruthlessWinningCombos = winningIncluded
-    .filter((combo) => String(combo.bracketTag ?? '') === 'R')
-    .map((combo) => String(combo.id ?? '').trim())
-    .filter(Boolean)
-    .filter((id, index, ids) => ids.indexOf(id) === index)
-    .length;
+  const ruthlessWinningCombos = verifiedWinningComboDetails.filter((detail) => detail.bracketTag === 'R').length;
   const strategicallyRelevantCombos = Array.isArray(bracket.strategicallyRelevantCombos) ? bracket.strategicallyRelevantCombos.length : 0;
   const spellbookTag = typeof bracket.bracketTag === 'string' ? bracket.bracketTag : null;
   const spellbookBracketSourceStatus = sourceStatus(bracket.sourceStatus);
@@ -158,6 +219,7 @@ export function derivePostBuildEvidenceV15(input: PostBuildEvidenceInputV15): Po
     completeComboCount: finiteNumber(counts.included),
     verifiedWinningCombos,
     verifiedWinningComboIds,
+    verifiedWinningComboDetails,
     ruthlessWinningCombos,
     strategicallyRelevantCombos,
     gameChangerNames,
@@ -218,6 +280,7 @@ export async function evaluateCommanderBuildV15(
     cheapInteractionCount: metrics.cheapInteractionCount,
     tutorCount: metrics.tutorCount,
     gameChangerNames: resolved.cards.filter((card) => card.game_changer === true).map((card) => card.name),
+    commanderNames: parsed.commanders.map((entry) => entry.name),
     spellbookBracket,
     combos,
     efficientWinPlanSupported: efficientWinPlan?.supported === true,
