@@ -52,6 +52,33 @@ test('general package ranking rejects impressive non-winning outcomes and exclud
   assert.deepEqual(ranked.map((row) => row.id), ['actual-win']);
 });
 
+test('general package ranking does not treat resource loops or combat loops as deterministic wins', () => {
+  const ranked = rankGeneralWinPackageVariantsV15([
+    {
+      id: 'mana-only',
+      cards: [{ name: 'A' }, { name: 'B' }],
+      results: ['Infinite mana'],
+      requirements: [],
+      popularity: 9999,
+    },
+    {
+      id: 'combat-only',
+      cards: [{ name: 'C' }, { name: 'D' }],
+      results: ['Infinite combat phases'],
+      requirements: [],
+      popularity: 9999,
+    },
+    {
+      id: 'mana-with-outlet',
+      cards: [{ name: 'E' }, { name: 'F' }],
+      results: ['Infinite mana', 'Infinite damage'],
+      requirements: [],
+      popularity: 1,
+    },
+  ], []);
+  assert.deepEqual(ranked.map((row) => row.id), ['mana-with-outlet']);
+});
+
 test('a package requiring the commander is rejected when that commander is not selected', () => {
   const ranked = rankGeneralWinPackageVariantsV15([
     {
@@ -61,5 +88,17 @@ test('a package requiring the commander is rejected when that commander is not s
       requirements: [],
     },
   ], ['Chosen Commander']);
+  assert.deepEqual(ranked, []);
+});
+
+test('a package requiring two copies of a card is rejected for Commander singleton safety', () => {
+  const ranked = rankGeneralWinPackageVariantsV15([
+    {
+      id: 'quantity-two',
+      cards: [{ name: 'A', quantity: 2 }, { name: 'B' }],
+      results: ['Win the game'],
+      requirements: [],
+    },
+  ], []);
   assert.deepEqual(ranked, []);
 });
