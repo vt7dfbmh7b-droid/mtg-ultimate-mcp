@@ -1,5 +1,9 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import { validateCommanderDeck } from './commander-rules.js';
+import {
+  cardCommanderStrategyAffinityV15,
+  deriveCommanderStrategyContextFromCommandersV15,
+} from './commander-strategy-affinity-v15.js';
 import { buildDeckMetrics, parseDecklist, type DeckEntry, type ParsedDeck } from './deck.js';
 import {
   describePrintingPolicyV08,
@@ -303,6 +307,7 @@ export async function buildCommanderDeckDraftV07(
     eligibleCommanders.push(printing);
   }
 
+  const strategyContext = deriveCommanderStrategyContextFromCommandersV15(eligibleCommanders);
   const colors = identity(eligibleCommanders);
   const bracket = clampBracket(options.targetBracket);
   const targets = ROLE_TARGETS[bracket] as RoleTargetsV07;
@@ -351,7 +356,11 @@ export async function buildCommanderDeckDraftV07(
 
   const remaining = [...candidateMap.values()].filter((card) => !selectedNames.has(card.name.toLocaleLowerCase()));
   while (selected.length < nonlandSlots && remaining.length > 0) {
-    remaining.sort((a, b) => dynamicCandidateScore(b, counts, targets) - dynamicCandidateScore(a, counts, targets) || a.name.localeCompare(b.name));
+    remaining.sort((a, b) => {
+      const aScore = dynamicCandidateScore(a, counts, targets) + cardCommanderStrategyAffinityV15(a, strategyContext).score;
+      const bScore = dynamicCandidateScore(b, counts, targets) + cardCommanderStrategyAffinityV15(b, strategyContext).score;
+      return bScore - aScore || a.name.localeCompare(b.name);
+    });
     const best = remaining.shift();
     if (!best) break;
     selected.push(best);
