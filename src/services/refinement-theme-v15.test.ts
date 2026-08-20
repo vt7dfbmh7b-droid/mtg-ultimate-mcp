@@ -5,6 +5,7 @@ import {
   auditNeutralThemeV15,
   type NeutralThemeIntentV15,
 } from './neutral-theme-v15.js';
+import { candidateThemeGateV15 } from './optimizer-v12.js';
 
 function card(name: string, typeLine: string): ScryfallCard {
   return {
@@ -76,24 +77,39 @@ test('controlled theme audit is satisfied exactly at the required main-deck dens
   assert.equal(audit.mainCoverage, 0.6);
 });
 
-test('controlled theme audit fails closed when a candidate deck drops below the minimum', () => {
+test('a satisfied theme cannot regress below its required density', () => {
   const before = auditNeutralThemeV15(entries(3, 2), artifactIntent);
   const after = auditNeutralThemeV15(entries(2, 3), artifactIntent);
+  const gate = candidateThemeGateV15(before, after);
 
   assert.equal(before.satisfied, true);
   assert.equal(after.status, 'under-minimum');
-  assert.equal(after.satisfied, false);
-  assert.equal(after.matchedMainCards, 2);
+  assert.equal(gate.eligible, false);
+  assert.equal(gate.reason, 'package-would-break-required-theme-density');
 });
 
-test('an under-minimum deck can measurably advance theme density without being falsely called compliant', () => {
+test('an under-minimum theme must measurably advance instead of spending swaps elsewhere', () => {
   const before = auditNeutralThemeV15(entries(1, 4), artifactIntent);
-  const after = auditNeutralThemeV15(entries(2, 3), artifactIntent);
+  const unchanged = auditNeutralThemeV15(entries(1, 4), artifactIntent);
+  const advanced = auditNeutralThemeV15(entries(2, 3), artifactIntent);
 
-  assert.equal(before.satisfied, false);
-  assert.equal(after.satisfied, false);
-  assert.ok(after.matchedMainCards > before.matchedMainCards);
-  assert.equal(after.status, 'under-minimum');
+  const unchangedGate = candidateThemeGateV15(before, unchanged);
+  const advancedGate = candidateThemeGateV15(before, advanced);
+  assert.equal(unchangedGate.eligible, false);
+  assert.equal(unchangedGate.reason, 'package-does-not-advance-required-theme-density');
+  assert.equal(advancedGate.eligible, true);
+  assert.equal(advancedGate.reason, 'theme-density-advanced');
+  assert.equal(advanced.satisfied, false);
+});
+
+test('an under-minimum theme can reach its target without being confused with partial progress', () => {
+  const before = auditNeutralThemeV15(entries(2, 3), artifactIntent);
+  const after = auditNeutralThemeV15(entries(3, 2), artifactIntent);
+  const gate = candidateThemeGateV15(before, after);
+
+  assert.equal(gate.eligible, true);
+  assert.equal(gate.reason, 'theme-target-reached');
+  assert.equal(after.satisfied, true);
 });
 
 test('printing-family theme requires both the matching active family and an independently passing printing policy', () => {
