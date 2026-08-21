@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFromProjectStateUpdatedAt": "2026-08-21T21:32:00+12:00",
+  "generatedFromProjectStateUpdatedAt": "2026-08-21T21:36:00+12:00",
   "developmentCheckpointSha": "303a474e4a1ec8cb80c9dc5babaafe42c1828472",
   "records": [
     {
@@ -13,19 +13,22 @@
       ],
       "metadataPath": "test-results/project-management/integrity.txt",
       "exists": true,
-      "sourceSha": "b920087e41d22a1575404620815c4882801cae9b",
-      "outcome": "pass",
+      "sourceSha": "222e9bfbfc3c22b956ffe181509b779774f8dcc0",
+      "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "b920087e41d22a1575404620815c4882801cae9b",
-        "active_milestone": "PM-02",
+        "source_sha": "222e9bfbfc3c22b956ffe181509b779774f8dcc0",
+        "active_milestone": "INTEL-02",
         "typecheck_outcome": "success",
-        "state_validate_outcome": "success",
-        "validation_index_outcome": "success",
+        "state_validate_outcome": "failure",
+        "validation_index_outcome": "failure",
         "recovery_smoke_outcome": "success",
         "source_build_outcome": "success"
       },
-      "unmetPassConditions": []
+      "unmetPassConditions": [
+        "state_validate_outcome=success",
+        "validation_index_outcome=success"
+      ]
     },
     {
       "id": "MARVEL-B5-REFINE",
