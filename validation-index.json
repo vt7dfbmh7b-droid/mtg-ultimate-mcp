@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedFromProjectStateUpdatedAt": "2026-08-21T22:14:00+12:00",
-  "developmentCheckpointSha": "e11826caa0c758c3c637828e71e8782ade8a8532",
+  "generatedFromProjectStateUpdatedAt": "2026-08-21T22:58:13+12:00",
+  "developmentCheckpointSha": "758c5658e1f10a961c15a330ee9b5832ea7005b3",
   "records": [
     {
       "id": "PM-STATE-INTEGRITY",
@@ -37,14 +37,14 @@
       ],
       "metadataPath": "test-results/marvel-bracket5/refine-run-metadata.txt",
       "exists": true,
-      "sourceSha": "e11826caa0c758c3c637828e71e8782ade8a8532",
-      "outcome": "fail",
+      "sourceSha": "758c5658e1f10a961c15a330ee9b5832ea7005b3",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": true,
       "metadata": {
-        "source_sha": "e11826caa0c758c3c637828e71e8782ade8a8532",
-        "control_outcome": "failure",
+        "source_sha": "758c5658e1f10a961c15a330ee9b5832ea7005b3",
+        "control_outcome": "success",
         "execution_outcome": "success",
-        "target_gate_quality_outcome": "failure",
+        "target_gate_quality_outcome": "success",
         "policy": "checked-in-very-good-candidate",
         "max_win_package_cards": "4",
         "spellbook_max_rows_per_query": "400",
@@ -57,9 +57,7 @@
         "swap_feasible_win_package_selection": "true",
         "protect_existing_package_pieces": "true"
       },
-      "unmetPassConditions": [
-        "control_outcome=success"
-      ]
+      "unmetPassConditions": []
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T22:14:00+12:00",
+  "updatedAt": "2026-08-21T22:58:13+12:00",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
   "stable": {
@@ -12,8 +12,8 @@
   "experimental": {
     "activeBranch": "agent/v15-native-deck-intelligence",
     "activePullRequest": 29,
-    "developmentCheckpointSha": "e11826caa0c758c3c637828e71e8782ade8a8532",
-    "developmentCheckpointNote": "Exact checked-in INTEL-02 source with the explicit Bracket-5 zero-target-progress rejection and persisted per-candidate diagnostics. TypeScript/project integrity, 751 deterministic tests, focused regressions and exact-head CI passed. The Marvel control executed successfully but failed scenario intelligence because every candidate made zero target progress; this checkpoint is executable and current, not a validated intelligence milestone. Later result or documentation commits do not replace this tested source SHA.",
+    "developmentCheckpointSha": "758c5658e1f10a961c15a330ee9b5832ea7005b3",
+    "developmentCheckpointNote": "Exact checked-in INTEL-02 source for authoritative target-gate candidate priority and full per-attempt candidate provenance. Project integrity, TypeScript/build, 757 deterministic tests, focused regressions and exact-head CI passed. The fresh Marvel control executed on this SHA and earned a scenario-intelligence pass: two legal Marvel swaps repaired average nonland mana value from 2.71 to 2.54 without regressing a previously passing construction gate; exact 100 and printing policy remained true. This is still one constrained scenario with zero verified winning combos, so INTEL-01/INTEL-02 remain unvalidated. Later evidence or state commits do not replace this tested source SHA.",
     "lastFullyValidatedExperimentalBaseline": {
       "branch": "agent/package-probabilities",
       "sha": "63bb7274004060eea507f7991a04b84921d0cd47",
@@ -23,7 +23,7 @@
   "workMode": {
     "intelligenceDevelopmentPaused": false,
     "activeMilestone": "INTEL-02",
-    "reason": "The hard Bracket-5 zero-target-progress guard is implemented and live-proven. Continue INTEL-02 at the now-observed candidate-generation/selection blocker: the Marvel control generated five candidates, accepted none, and retained the original deck because no package repaired or advanced average mana value or the missing verified win route."
+    "reason": "INTEL-02 cleared the observed target-aware candidate-generation blocker in the Marvel control. Continue at the narrower proof gaps: explicitly audit cut/strategy preservation and reproduce whole-deck improvement across fresh constrained and unrestricted controls, while INTEL-01's missing verified full-table route remains validation-pending."
   },
   "milestones": [
     {
@@ -70,18 +70,18 @@
     }
   ],
   "validation": {
-    "activeBranchStatus": "incomplete",
+    "activeBranchStatus": "scenario-pass-broader-validation-pending",
     "latestPersistedMarvelControl": {
-      "sourceSha": "e11826caa0c758c3c637828e71e8782ade8a8532",
-      "outcome": "failure",
-      "note": "Current checked-in-source control: execution succeeded, the hard guard rejected the old Aurelia -> The Masters of Evil cosmetic tutor swap, and target-quality correctly failed because the deck stayed unchanged. Candidate diagnostics show five final one-swap comparisons: one positive-scoring tutor-only package rejected for zero target progress and four no-supported-swap results. The current blocker is target-aware candidate generation/selection, not guard enforcement."
+      "sourceSha": "758c5658e1f10a961c15a330ee9b5832ea7005b3",
+      "outcome": "success",
+      "note": "Current checked-in-source scenario control: execution and target quality passed. Vanquish the Horde -> Skullclamp and Aurelia, the Warleader -> Reanimate moved average nonland mana value 2.71 -> 2.54, removed that failed construction gate, added no failed gate, preserved legal exact-100 Marvel printings, and retained per-attempt provenance distinguishing completed no-verified-package discovery. The workflow artifact was recovered after KF-013 rejected only the concurrent result push. The final deck remains Bracket 4 with zero verified winning combos, and strategy preservation is not yet independently audited, so this is not broad milestone validation."
     },
     "requiredBeforeResumingIntelligenceClaims": [
-      "Build and unit/regression suite pass on checked-in source",
-      "Fresh Marvel Bracket 5 control executes on the post-hardening lineage",
-      "Accepted deck changes repair or measurably advance actual failed target gates",
-      "Verified full-table win-route claims independently agree with final evaluation",
-      "Commander legality, exact 100 cards, printing-family/set restrictions, budgets, and meaningful deck strategy remain intact"
+      "Fresh constrained and unrestricted controls reproduce whole-deck target improvement beyond the single Marvel scenario",
+      "Every accepted package includes an explicit cut-impact and meaningful-strategy preservation audit, not only aggregate role counts",
+      "Verified full-table win-route discovery, injection and final evaluation agree in a scenario where an eligible route exists",
+      "Negative win-package conclusions distinguish completed bounded absence from provider unavailability or selection failure",
+      "Commander legality, exact 100 cards, printing-family/set restrictions and budgets remain intact across the expanded controls"
     ]
   },
   "truthBoundary": [
@@ -93,11 +93,11 @@
     "No merge, stable/current promotion, version bump, or release without explicit user approval."
   ],
   "nextActions": [
-    "Inspect the persisted e11826c candidate comparisons and the V0.7/V0.12 plan provenance to distinguish two observed paths: the surviving tutor-only package ignores already-passing real tutor pressure, while the other candidates produce no supported swaps.",
-    "Make Bracket-5 candidate generation prioritize currently failed authoritative gates before aspirational role deficits: first average-nonland-mv progress or a verified full-table package, without weakening lower-bracket behavior or the zero-progress rejection.",
-    "Persist win-package discovery/injection provenance and candidate comparisons across every attempted swap size, not only the final one-swap fallback, so completed absence, provider unavailability and selection failure remain distinguishable.",
-    "Add deterministic regressions for the diagnosed generation/selection root cause, then rerun project integrity, TypeScript/build, the full regression suite and exact-head CI.",
-    "Rerun the checked-in-source Marvel Bracket 5 control and require a legal constrained deck that repairs or measurably advances a failed gate; keep INTEL-01/INTEL-02 unvalidated if it again returns honest no-supported-improvement."
+    "Add explicit strategy-preservation and cut-impact evidence to candidate comparison, beginning with the accepted Marvel cuts against Najeela's primary combat and secondary extra-combat plans; do not treat curve repair alone as proof of whole-deck improvement.",
+    "Add deterministic regressions that reject a target-gate repair when its structural-card or route damage outweighs the gain, while retaining the current legal average-mana-value repair and lower-bracket behavior.",
+    "Run fresh constrained and unrestricted INTEL-02 controls on materially different archetypes and persist exact source, before/after gates, strategy evidence and per-attempt candidate provenance.",
+    "Run an eligible verified full-table package scenario to validate INTEL-01 discovery, feasibility, atomic injection, protection and independent final recognition end to end; Marvel's completed no-package result cannot prove injection.",
+    "Before relying on concurrent live controls again, harden KF-013 result persistence with isolated evidence paths plus fetch/reconcile/retry or a single consolidated writer."
   ],
   "handoffProtocol": {
     "readFirst": [

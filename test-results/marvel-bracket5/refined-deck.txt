@@ -19,7 +19,6 @@
 1 Spectacular Tactics (MSC) 775
 1 The Ruinous Wrecking Crew (MSH) 224
 1 Negative Zone Portal (MSC) 111
-1 Vanquish the Horde (MSC) 146
 1 The Mind Stone (MSH) 21
 1 Swords to Plowshares (MSC) 143
 1 Steelshaper's Gift (MAR) 50
@@ -40,7 +39,6 @@
 1 Loki, the Deceiver (MSC) 86
 1 Dark Ritual (MSC) 793
 1 Birds of Paradise (MSC) 170
-1 Aurelia, the Warleader (MAR) 86
 1 Stark Industries Executive (MSH) 153
 1 Counterspell (MAR) 52
 1 Sun-Spider, Nimble Webber (SPM) 154
@@ -91,3 +89,5 @@
 3 Mountain (MSC) 858
 3 Island (MSH) 289
 3 Plains (MSC) 866
+1 Skullclamp (MSC) 210 *N*
+1 Reanimate (MAR) 20 *N*

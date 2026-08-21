@@ -78,7 +78,9 @@ Required capabilities:
 - preserve meaningful primary/secondary strategy;
 - choose coherent IN→OUT pairings and know when no change is better.
 
-The hard zero-target-progress guard is implemented and live-proven at source checkpoint `e11826c...`: it rejected the former positive-scoring tutor-only swap and preserved the starting list. The current narrow blocker is upstream candidate generation/selection. The same Marvel control produced five final one-swap comparisons, one cosmetic tutor candidate and four no-supported-swap results, with no candidate advancing average mana value or installing a verified full-table route. Next work must make failed authoritative gates drive candidate generation and retain discovery/injection provenance across every attempted swap size before adding unrelated intelligence features.
+The hard zero-target-progress guard remains live-proven at `e11826c...`. Source checkpoint `758c565...` cleared the observed upstream candidate-generation blocker: failed Bracket-5 gates now precede aspirational role deficits, full candidate and win-package provenance survives every attempted swap size, and the fresh Marvel control accepted two legal Marvel swaps that repaired average nonland mana value from 2.71 to 2.54 without regressing a previously passing construction gate.
+
+That result is one scenario-intelligence pass, not milestone validation. The final deck remains Bracket 4 with zero verified winning combos; Marvel's completed no-eligible-package result cannot prove package injection; and the control currently infers strategy preservation from coarse role counts rather than independently auditing the consequences of cutting an extra-combat card and a board wipe. Next work must make cut/route preservation explicit, then reproduce improvement in fresh constrained and unrestricted archetypes before INTEL-02 can advance.
 
 ## BENCH-01 — Adversarial Commander benchmark suite — PLANNED
 

@@ -10,7 +10,7 @@ Risk: optimizer improves an aspirational role count rather than the requested ta
 
 Protection: target-gate scoring plus explicit V0.11/V0.12 eligibility rejection while known Bracket-5 construction gates remain failed. Tutor growth above the real gate receives zero target credit and cannot be accepted through simulation score or a permissive score threshold.
 
-Status: prevented in source and live-proven at `e11826c...`; the old Aurelia → The Masters of Evil candidate scored positively but was rejected with `package-does-not-repair-or-advance-failed-bracket-5-target-gate`.
+Status: prevented in source and live-proven at `e11826c...`; the old Aurelia → The Masters of Evil candidate scored positively but was rejected with `package-does-not-repair-or-advance-failed-bracket-5-target-gate`. The next source checkpoint `758c565...` also generated and accepted a package for the actually failed curve gate instead of retrying cosmetic tutor growth.
 
 ## KF-002 — Hidden caller overrides package-card ceiling
 
@@ -124,13 +124,23 @@ Status: partially prevented / BENCH-01 required.
 
 ## KF-013 — Concurrent live controls race to persist evidence
 
-Observed: changing the Marvel refinement script triggered both the focused refinement control and the broader permanent-family control from the same source SHA. The focused control pushed its scoped result first; the broader control completed successfully but its result commit was rejected as non-fast-forward.
+Observed: changing the Marvel refinement script triggered both the focused refinement control and the broader permanent-family control from the same source SHA. The focused control pushed its scoped result first; the broader control completed successfully but its result commit was rejected as non-fast-forward. The race recurred at `758c565...` in the opposite order: a printing-family proof advanced the branch first, while both successful Marvel controls uploaded valid artifacts but had their result pushes rejected.
 
 Risk: valid evidence can remain only in workflow logs/artifacts, while the branch records whichever writer won rather than every completed control.
 
 Protection: pending. Live controls that can run together must write isolated evidence paths and use a safe fetch/reconcile/retry protocol, or persistence must be consolidated into one writer after both controls finish.
 
-Status: open project-management workflow issue; it does not invalidate the focused persisted `e11826c...` result.
+Status: open project-management workflow issue. The `758c565...` refinement artifact was digest-verified and recovered on top of the winning writer; the race does not invalidate the scenario result, but it must be fixed before concurrent result persistence can be trusted unattended.
+
+## KF-014 — Failed target gate omitted from candidate generation
+
+Observed: the `e11826c...` Marvel deck failed average nonland mana value and verified-winning-combo gates, but V0.7 candidate generation followed aspirational role counts and produced a tutor-only survivor even though the real tutor gate already passed.
+
+Risk: the evaluator and zero-progress guard can diagnose and reject bad changes correctly while the optimizer remains unable to generate any package that addresses the real blocker.
+
+Protection: Bracket-5 candidate generation now places authoritative failed target gates before aspirational deficits. The average-nonland-mv lane requires positive mana-value reduction, preserves lower-bracket behavior, and records its priority plus win-package discovery outcome in every attempted swap size. Deterministic protection lives in `upgrade-target-priority-v15.test.ts` and `optimizer-v12-attempt-provenance.test.ts`.
+
+Status: prevented for the observed curve-generation path and live-proven at `758c565...`: two swaps repaired average nonland mana value from 2.71 to 2.54. Other gate types and archetypes still require broader controls.
 
 ## Adding a failure
 
