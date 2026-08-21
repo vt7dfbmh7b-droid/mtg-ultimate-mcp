@@ -136,7 +136,7 @@ jobs:
       - name: Require refinement control to execute successfully
         if: always()
         env:
-          CONTROL_OUTCOME: ${{ steps.marvel_refine.outcome }}
+          CONTROL_OUTCOME: ${{ steps.refine_control.outcome }}
         run: |
           if [ "$CONTROL_OUTCOME" != "success" ]; then
             exit 1
