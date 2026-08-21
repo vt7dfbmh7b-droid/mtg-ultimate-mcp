@@ -1,2 +1,7 @@
-source_sha=12d8d874ee1f9245d6dd33d0e3a947c788ae9a19
-control_outcome=success
+workflow_source_sha=a4a1450d34c337c97b76fbbec688dbcf0ac7388e
+executed_head_sha=a4a1450d34c337c97b76fbbec688dbcf0ac7388e
+control_outcome=skipped
+max_win_package_cards=4
+spellbook_max_rows_per_query=400
+restricted_pool_prefilter=true
+full_table_closure=true
