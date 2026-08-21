@@ -8,16 +8,36 @@ Build the best evidence-backed autonomous Commander deck-building intelligence w
 
 The intended end state is a Commander specialist that can outperform a strong general-purpose AI on Commander deck construction through deeper domain focus, structured evidence, exhaustive checking, counterfactual comparison, and consistent verification.
 
-## PM-01 — Persistent Project State & Handoff Automation — ACTIVE
+## PM-01 — Persistent Project State & Handoff Automation — VALIDATED
 
 Goal: stop treating chat history as project memory.
 
-Exit criteria:
+Delivered:
 - `project-state.json` is the machine-readable current-state authority;
 - `docs/PROJECT-STATE.md` and `PROJECT_HANDOFF.md` are generated from it;
 - architecture decisions, known failures, roadmap and validation matrix are committed;
 - CI detects state/handoff drift;
-- a fresh chat can recover active branch, stable boundary, validated baseline, active milestone, blockers and next actions without reconstructing history manually.
+- a self-reporting integrity control binds project-management typecheck/state validation/source build to an exact source SHA.
+
+Validated control:
+- `test-results/project-management/integrity.txt`
+- source `73366cf57c055fc0ae7831209ad155b360bf036f`
+- project-management typecheck: success
+- state validation: success
+- normal source build: success
+
+## PM-02 — Validation State Indexing — ACTIVE
+
+Goal: stop making fresh chats hunt through individual result directories to determine what is current, stale, passing or failing.
+
+Exit criteria:
+- `validation-registry.json` registers only high-value controls needed for recovery and milestone claims;
+- `validation-index.json` is deterministically generated from registry + persisted metadata + project state;
+- `docs/VALIDATION-STATE.md` is the generated human snapshot;
+- index records bind exact tested source SHA, pass/fail/unknown state, claim level and checkpoint match;
+- CI fails on a stale validation index;
+- the self-reporting PM integrity control regenerates the index whenever it updates its own persisted result so it cannot make the index stale by succeeding;
+- a fresh-chat recovery smoke can identify PM validity and stale Marvel evidence without opening individual `test-results/**` directories.
 
 ## INTEL-01 — Win-package intelligence — PAUSED / VALIDATION PENDING
 
