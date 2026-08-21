@@ -1,5 +1,6 @@
-source_sha=bc8693dc5bf82de59fbde3167af99a9e389de094
+source_sha=c4f4bc8b93f83796578ef713f818cb5514dc1210
 active_milestone=PM-02
 typecheck_outcome=success
 state_validate_outcome=failure
+validation_index_outcome=failure
 source_build_outcome=success
