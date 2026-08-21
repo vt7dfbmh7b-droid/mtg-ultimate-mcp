@@ -13,6 +13,7 @@
     "scripts/update-project-state.ts",
     "scripts/validation-index-lib.ts",
     "scripts/build-validation-index.ts",
-    "scripts/validate-validation-index.ts"
+    "scripts/validate-validation-index.ts",
+    "scripts/project-resume.ts"
   ]
 }
