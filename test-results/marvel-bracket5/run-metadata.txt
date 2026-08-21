@@ -1,2 +1,5 @@
-source_sha=f95f4e6d947b943eb5d6d3a66eac37a28e13c088
-control_outcome=skipped
+source_sha=1a2c46289ad41f15d01e0664b388e3d45d6cc5e7
+control_outcome=failure
+refine_outcome=skipped
+policy=permanent-production-presets
+max_win_package_cards=4
