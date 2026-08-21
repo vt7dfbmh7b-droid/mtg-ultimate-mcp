@@ -804,7 +804,7 @@ async function buildWinPackagePriorityV15(
     ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
     ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
     ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
-    maxPackageCards: 3,
+    maxPackageCards: 4,
   });
   const selected = selectTargetAwareWinPackageV15(options.targetBracket, discovery.candidates, discovery.selected);
   if (!selected) {
