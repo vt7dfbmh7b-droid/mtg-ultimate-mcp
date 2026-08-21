@@ -102,3 +102,5 @@ jobs:
         run: |
           test "$CONTROL_OUTCOME" = "success"
           test "$REFINE_OUTCOME" = "success"
+
+# full-family retrigger after Middle-earth result persisted
