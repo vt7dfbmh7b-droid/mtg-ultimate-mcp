@@ -158,10 +158,18 @@ function basicLandRampOnlySearch(text: string): boolean {
   });
 }
 
+function hasManaFreeEvoke(text: string): boolean {
+  const costs = [...text.matchAll(/evoke[—-]([^\n.]+)/g)]
+    .map((match) => match[1]?.trim() ?? '')
+    .filter(Boolean);
+  return costs.some((cost) => !/\{[^}]+\}/.test(cost));
+}
+
 function hasFreeCastAlternative(card: ScryfallCard, manaCost: string, text: string, isLand: boolean): boolean {
   if (!isLand && card.cmc === 0 && /\{0\}/.test(manaCost)) return true;
   if (/rather than pay (?:this spell's|its|the)?\s*mana cost/.test(text)) return true;
-  return /cast this spell without paying (?:its|this spell's) mana cost/.test(text);
+  if (/cast this spell without paying (?:its|this spell's) mana cost/.test(text)) return true;
+  return !isLand && hasManaFreeEvoke(text);
 }
 
 function hasDirectInteractionText(text: string): boolean {
