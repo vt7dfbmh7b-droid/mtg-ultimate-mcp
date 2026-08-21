@@ -7,6 +7,7 @@ import {
 } from './printing-policy-v08.js';
 import { getCardsByNames, inferCardRoles } from './scryfall.js';
 import { searchSpellbookVariantsEvidence } from './spellbook.js';
+import { collectBoundedSpellbookVariantsV15 } from './win-package-pagination-v15.js';
 import {
   assessWinResultClosureV15,
   buildWinPackagePortfolioV15,
@@ -206,26 +207,33 @@ export async function discoverGeneralWinPackagesV15(
   const queryAudit: Array<Record<string, unknown>> = [];
   let availableQueries = 0;
   let unavailableQueries = 0;
+  let incompleteQueries = 0;
   for (const query of buildGeneralWinPackageQueriesV15(maxPackageCards, identityToken(commanders))) {
-    const result = await searchSpellbookVariantsEvidence(query, { limit: 75, ordering: '-popularity' });
-    const rows = Array.isArray(result.results) ? result.results : [];
-    const available = result.sourceStatus === 'available' && result.verificationComplete === true;
-    if (available) {
-      availableQueries += 1;
-      raw.push(...rows);
-    } else {
+    const result = await collectBoundedSpellbookVariantsV15(
+      query,
+      searchSpellbookVariantsEvidence,
+      { pageSize: 100, maxRows: 400, ordering: '-popularity' },
+    );
+    if (result.rows.length > 0) raw.push(...result.rows);
+    if (result.sourceStatus === 'unavailable') {
       unavailableQueries += 1;
+    } else {
+      availableQueries += 1;
+      if (!result.verificationComplete) incompleteQueries += 1;
     }
     queryAudit.push({
       query,
-      returned: rows.length,
-      totalMatching: result.count ?? null,
-      sourceStatus: result.sourceStatus ?? 'unknown',
-      verificationComplete: result.verificationComplete === true,
+      returned: result.rowsFetched,
+      totalMatching: result.totalMatching,
+      pagesFetched: result.pagesFetched,
+      exhausted: result.exhausted,
+      truncated: result.truncated,
+      sourceStatus: result.sourceStatus,
+      verificationComplete: result.verificationComplete,
       ...(result.sourceFailure ? { sourceFailure: result.sourceFailure } : {}),
     });
   }
-  const sourceCompleteness: 'complete' | 'partial' | 'unavailable' = unavailableQueries === 0
+  const sourceCompleteness: 'complete' | 'partial' | 'unavailable' = unavailableQueries === 0 && incompleteQueries === 0
     ? 'complete'
     : availableQueries === 0
       ? 'unavailable'
