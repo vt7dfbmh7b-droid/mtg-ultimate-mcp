@@ -155,3 +155,5 @@ jobs:
         env:
           CONTROL_OUTCOME: ${{ steps.live_control.outcome }}
         run: test "$CONTROL_OUTCOME" = "success"
+
+# Blocker validation retrigger after legacy fixture compatibility fixes.
