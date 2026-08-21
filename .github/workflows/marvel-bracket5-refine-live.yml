@@ -9,6 +9,8 @@ on:
       - "src/services/deck-builder-win-package-ceiling-v15.test.ts"
       - "src/services/general-win-package-v15.ts"
       - "src/services/general-win-package-v15.test.ts"
+      - "src/services/win-package-pagination-v15.ts"
+      - "src/services/win-package-pagination-v15.test.ts"
       - ".github/workflows/marvel-bracket5-refine-live.yml"
   workflow_dispatch:
 
@@ -43,11 +45,46 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Integrate bounded Spellbook pagination into general win-package discovery
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('src/services/general-win-package-v15.ts')
+          text = p.read_text()
+          old_import = "import { searchSpellbookVariantsEvidence } from './spellbook.js';\n"
+          new_import = old_import + "import { collectBoundedSpellbookVariantsV15 } from './win-package-pagination-v15.js';\n"
+          if new_import not in text:
+              if old_import not in text:
+                  raise SystemExit('expected Spellbook import not found')
+              text = text.replace(old_import, new_import, 1)
+
+          old_block = """  let availableQueries = 0;\n  let unavailableQueries = 0;\n  for (const query of buildGeneralWinPackageQueriesV15(maxPackageCards, identityToken(commanders))) {\n    const result = await searchSpellbookVariantsEvidence(query, { limit: 75, ordering: '-popularity' });\n    const rows = Array.isArray(result.results) ? result.results : [];\n    const available = result.sourceStatus === 'available' && result.verificationComplete === true;\n    if (available) {\n      availableQueries += 1;\n      raw.push(...rows);\n    } else {\n      unavailableQueries += 1;\n    }\n    queryAudit.push({\n      query,\n      returned: rows.length,\n      totalMatching: result.count ?? null,\n      sourceStatus: result.sourceStatus ?? 'unknown',\n      verificationComplete: result.verificationComplete === true,\n      ...(result.sourceFailure ? { sourceFailure: result.sourceFailure } : {}),\n    });\n  }\n  const sourceCompleteness: 'complete' | 'partial' | 'unavailable' = unavailableQueries === 0\n    ? 'complete'\n    : availableQueries === 0\n      ? 'unavailable'\n      : 'partial';\n"""
+          new_block = """  let availableQueries = 0;\n  let unavailableQueries = 0;\n  let incompleteQueries = 0;\n  for (const query of buildGeneralWinPackageQueriesV15(maxPackageCards, identityToken(commanders))) {\n    const result = await collectBoundedSpellbookVariantsV15(\n      query,\n      searchSpellbookVariantsEvidence,\n      { pageSize: 100, maxRows: 400, ordering: '-popularity' },\n    );\n    if (result.rows.length > 0) raw.push(...result.rows);\n    if (result.sourceStatus === 'unavailable') {\n      unavailableQueries += 1;\n    } else {\n      availableQueries += 1;\n      if (!result.verificationComplete) incompleteQueries += 1;\n    }\n    queryAudit.push({\n      query,\n      returned: result.rowsFetched,\n      totalMatching: result.totalMatching,\n      pagesFetched: result.pagesFetched,\n      exhausted: result.exhausted,\n      truncated: result.truncated,\n      sourceStatus: result.sourceStatus,\n      verificationComplete: result.verificationComplete,\n      ...(result.sourceFailure ? { sourceFailure: result.sourceFailure } : {}),\n    });\n  }\n  const sourceCompleteness: 'complete' | 'partial' | 'unavailable' = unavailableQueries === 0 && incompleteQueries === 0\n    ? 'complete'\n    : availableQueries === 0\n      ? 'unavailable'\n      : 'partial';\n"""
+          if new_block not in text:
+              if old_block not in text:
+                  raise SystemExit('expected first-page discovery block not found')
+              text = text.replace(old_block, new_block, 1)
+          p.write_text(text)
+          PY
+
       - name: Type-check and build
         run: npm run build
 
-      - name: Run autonomous win-package ceiling regression
-        run: npx tsx --test src/services/deck-builder-win-package-ceiling-v15.test.ts
+      - name: Run win-package regressions
+        run: npx tsx --test src/services/deck-builder-win-package-ceiling-v15.test.ts src/services/win-package-pagination-v15.test.ts src/services/general-win-package-v15.test.ts
+
+      - name: Persist bounded win-package pagination source integration
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- src/services/general-win-package-v15.ts
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "fix(v15): paginate constrained win-package discovery [skip ci]"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Refine selected Marvel-only Bracket 5 attempt
         id: refine_control
@@ -56,7 +93,8 @@ jobs:
 
       - name: Upload refinement result
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@043fb46d1a935ba805825da76410c181273ba90b1
+        continue-on-error: true
         with:
           name: marvel-bracket5-refine-${{ github.sha }}
           path: |
@@ -86,7 +124,7 @@ jobs:
           if [ -f marvel-bracket5-refine-failure.txt ]; then
             cp marvel-bracket5-refine-failure.txt test-results/marvel-bracket5/refine-failure.txt
           fi
-          printf 'source_sha=%s\ncontrol_outcome=%s\nmax_win_package_cards=4\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
+          printf 'workflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\n' "$GITHUB_SHA" "$(git rev-parse HEAD)" "$CONTROL_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- test-results/marvel-bracket5
