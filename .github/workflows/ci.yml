@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Type-check project-management tooling
+        run: npm run project:typecheck
+
       - name: Validate project-management state
         run: npm run project:validate
 
