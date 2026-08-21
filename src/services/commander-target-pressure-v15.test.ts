@@ -2,16 +2,22 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   commanderTargetPressureV15,
+  selectInjectableTargetAwareWinPackageV15,
   selectTargetAwareWinPackageV15,
 } from './commander-target-pressure-v15.js';
 import type { GeneralWinPackageCandidateV15 } from './general-win-package-v15.js';
 
-function candidate(comboId: string, bracketTag: string | null, score: number): GeneralWinPackageCandidateV15 {
+function candidate(
+  comboId: string,
+  bracketTag: string | null,
+  score: number,
+  seedNames: string[] = ['A', 'B'],
+): GeneralWinPackageCandidateV15 {
   return {
     comboId,
     bracketTag,
-    comboCardNames: ['A', 'B'],
-    seedNames: ['A', 'B'],
+    comboCardNames: [...seedNames],
+    seedNames,
     results: ['Win the game.'],
     closureKind: 'direct-game-win',
     closureCaveat: '',
@@ -45,4 +51,45 @@ test('Bracket 5 prefers an existing R-tagged verified package but falls back to 
   assert.equal(selectTargetAwareWinPackageV15(5, [popularP, ruthless], popularP)?.comboId, 'r-package');
   assert.equal(selectTargetAwareWinPackageV15(4, [popularP, ruthless], popularP)?.comboId, 'p-package');
   assert.equal(selectTargetAwareWinPackageV15(5, [popularP], popularP)?.comboId, 'p-package');
+});
+
+test('injectable selection does not let an oversized R package hide a smaller verified route', () => {
+  const ruthlessFour = candidate('r-four', 'R', 3000, ['A', 'B', 'C', 'D']);
+  const compactP = candidate('p-two', 'P', 2000, ['E', 'F']);
+  const selected = selectInjectableTargetAwareWinPackageV15({
+    targetBracket: 5,
+    candidates: [ruthlessFour, compactP],
+    existingSelected: ruthlessFour,
+    existingCardNames: [],
+    maxMissingSeedCards: 3,
+  });
+  assert.equal(selected?.candidate.comboId, 'p-two');
+  assert.deepEqual(selected?.missingSeedNames, ['E', 'F']);
+});
+
+test('injectable selection still prefers R when the R route fits the current swap capacity', () => {
+  const compactP = candidate('p-two', 'P', 3000, ['A', 'B']);
+  const ruthless = candidate('r-three', 'R', 2000, ['C', 'D', 'E']);
+  const selected = selectInjectableTargetAwareWinPackageV15({
+    targetBracket: 5,
+    candidates: [compactP, ruthless],
+    existingSelected: compactP,
+    existingCardNames: [],
+    maxMissingSeedCards: 3,
+  });
+  assert.equal(selected?.candidate.comboId, 'r-three');
+});
+
+test('injectable selection reports already-present route pieces for temporary cut protection', () => {
+  const route = candidate('partial-route', 'R', 2000, ['Already Here', 'Missing A', 'Missing B']);
+  route.comboCardNames = ['Commander', 'Already Here', 'Missing A', 'Missing B'];
+  const selected = selectInjectableTargetAwareWinPackageV15({
+    targetBracket: 5,
+    candidates: [route],
+    existingSelected: route,
+    existingCardNames: ['Commander', 'Already Here', 'Other Card'],
+    maxMissingSeedCards: 2,
+  });
+  assert.deepEqual(selected?.missingSeedNames, ['Missing A', 'Missing B']);
+  assert.deepEqual(selected?.existingComboCardNames, ['Commander', 'Already Here']);
 });
