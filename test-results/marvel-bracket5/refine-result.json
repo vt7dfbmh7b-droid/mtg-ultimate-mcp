@@ -1,5 +1,5 @@
 {
-  "schema": "marvel-bracket5-refinement-live-v15.1",
+  "schema": "marvel-bracket5-refinement-live-v15.2",
   "startingDeck": {
     "commander": [
       "Najeela, the Blade-Blossom"
@@ -169,6 +169,7 @@
     "stopReason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
     "roundsAccepted": 0,
     "totalSwaps": 0,
+    "candidatePackagesPerRound": 5,
     "estimatedUpgradeSpendUsd": 0,
     "swaps": [],
     "rounds": [
@@ -191,6 +192,218 @@
         "stopReason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate"
       }
     ],
+    "detailedRounds": [
+      {
+        "round": 1,
+        "accepted": false,
+        "attemptedSwaps": 5,
+        "acceptedSwaps": 0,
+        "candidatePackagesGenerated": 5,
+        "candidatePackagesEligible": 0,
+        "winningCandidate": null,
+        "estimatedSpendUsd": 0,
+        "improvementScore": 0,
+        "winRouteProtection": {
+          "status": "no-verified-route",
+          "protectedComboIds": [],
+          "protectedCardNames": [],
+          "source": "existing-v15-final-win-route-audit"
+        },
+        "themeAuditBefore": null,
+        "stopReason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
+        "swaps": [],
+        "candidateComparisons": [
+          {
+            "candidate": 1,
+            "eligible": false,
+            "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
+            "attemptedSwaps": 1,
+            "actualSwaps": 1,
+            "estimatedSpendUsd": 0.21,
+            "unknownPriceCount": 0,
+            "improvementScore": 7.972,
+            "significantRegression": false,
+            "zeroTargetProgressWhileFailedGatesRemain": true,
+            "targetGate": {
+              "applicable": true,
+              "score": 0,
+              "failedBefore": [
+                "average-nonland-mv",
+                "verified-winning-combo"
+              ],
+              "failedAfter": [
+                "average-nonland-mv",
+                "verified-winning-combo"
+              ],
+              "repairedGates": [],
+              "advancedFailedGates": [],
+              "regressedGates": [],
+              "ignoredUnverifiedGates": [
+                "competitive-combo-signal"
+              ]
+            },
+            "themeAudit": null,
+            "swaps": [
+              {
+                "out": "Aurelia, the Warleader",
+                "in": "The Masters of Evil",
+                "why": "Addresses the detected tutor deficit. The recommended physical printing satisfies the active printing-family/set policy.",
+                "recommendedPrinting": {
+                  "set": "MSH",
+                  "collectorNumber": "105",
+                  "finish": "nonfoil",
+                  "priceUsd": 0.21
+                }
+              }
+            ]
+          },
+          {
+            "candidate": 2,
+            "eligible": false,
+            "reason": "no-supported-swaps-found",
+            "attemptedSwaps": 1,
+            "actualSwaps": 0,
+            "estimatedSpendUsd": 0,
+            "unknownPriceCount": 0,
+            "improvementScore": 0,
+            "significantRegression": false,
+            "zeroTargetProgressWhileFailedGatesRemain": true,
+            "targetGate": {
+              "applicable": true,
+              "score": 0,
+              "failedBefore": [
+                "average-nonland-mv",
+                "verified-winning-combo"
+              ],
+              "failedAfter": [
+                "average-nonland-mv",
+                "verified-winning-combo"
+              ],
+              "repairedGates": [],
+              "advancedFailedGates": [],
+              "regressedGates": [],
+              "ignoredUnverifiedGates": [
+                "competitive-combo-signal"
+              ]
+            },
+            "themeAudit": null,
+            "swaps": []
+          },
+          {
+            "candidate": 3,
+            "eligible": false,
+            "reason": "no-supported-swaps-found",
+            "attemptedSwaps": 1,
+            "actualSwaps": 0,
+            "estimatedSpendUsd": 0,
+            "unknownPriceCount": 0,
+            "improvementScore": 0,
+            "significantRegression": false,
+            "zeroTargetProgressWhileFailedGatesRemain": true,
+            "targetGate": {
+              "applicable": true,
+              "score": 0,
+              "failedBefore": [
+                "average-nonland-mv",
+                "verified-winning-combo"
+              ],
+              "failedAfter": [
+                "average-nonland-mv",
+                "verified-winning-combo"
+              ],
+              "repairedGates": [],
+              "advancedFailedGates": [],
+              "regressedGates": [],
+              "ignoredUnverifiedGates": [
+                "competitive-combo-signal"
+              ]
+            },
+            "themeAudit": null,
+            "swaps": []
+          },
+          {
+            "candidate": 4,
+            "eligible": false,
+            "reason": "no-supported-swaps-found",
+            "attemptedSwaps": 1,
+            "actualSwaps": 0,
+            "estimatedSpendUsd": 0,
+            "unknownPriceCount": 0,
+            "improvementScore": 0,
+            "significantRegression": false,
+            "zeroTargetProgressWhileFailedGatesRemain": true,
+            "targetGate": {
+              "applicable": true,
+              "score": 0,
+              "failedBefore": [
+                "average-nonland-mv",
+                "verified-winning-combo"
+              ],
+              "failedAfter": [
+                "average-nonland-mv",
+                "verified-winning-combo"
+              ],
+              "repairedGates": [],
+              "advancedFailedGates": [],
+              "regressedGates": [],
+              "ignoredUnverifiedGates": [
+                "competitive-combo-signal"
+              ]
+            },
+            "themeAudit": null,
+            "swaps": []
+          },
+          {
+            "candidate": 5,
+            "eligible": false,
+            "reason": "no-supported-swaps-found",
+            "attemptedSwaps": 1,
+            "actualSwaps": 0,
+            "estimatedSpendUsd": 0,
+            "unknownPriceCount": 0,
+            "improvementScore": 0,
+            "significantRegression": false,
+            "zeroTargetProgressWhileFailedGatesRemain": true,
+            "targetGate": {
+              "applicable": true,
+              "score": 0,
+              "failedBefore": [
+                "average-nonland-mv",
+                "verified-winning-combo"
+              ],
+              "failedAfter": [
+                "average-nonland-mv",
+                "verified-winning-combo"
+              ],
+              "repairedGates": [],
+              "advancedFailedGates": [],
+              "regressedGates": [],
+              "ignoredUnverifiedGates": [
+                "competitive-combo-signal"
+              ]
+            },
+            "themeAudit": null,
+            "swaps": []
+          }
+        ]
+      }
+    ],
+    "constraints": {
+      "targetBracket": 5,
+      "maxUsdPerCard": null,
+      "maxTotalUsd": null,
+      "maxTotalSwaps": 20,
+      "swapsPerRound": 5,
+      "maxRounds": 5,
+      "candidatePackagesPerRound": 5,
+      "minimumImprovementScore": 0.1,
+      "printingFamily": "Marvel",
+      "allowedSets": [],
+      "requestedTheme": null,
+      "resolvedTheme": null,
+      "protectedCards": [],
+      "excludedCards": []
+    },
     "winRouteProtection": {
       "evaluatedEachRound": true,
       "source": "existing-v15-final-win-route-audit",
