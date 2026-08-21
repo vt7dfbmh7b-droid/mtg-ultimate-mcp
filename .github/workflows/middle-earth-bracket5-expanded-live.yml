@@ -5,6 +5,8 @@ on:
     branches: ["agent/v15-native-deck-intelligence"]
     paths:
       - "scripts/e2e-middle-earth-bracket5-expanded-v15.ts"
+      - "scripts/audit-marvel-middle-earth-special-printings-v15.ts"
+      - "scripts/apply-themed-special-presets-from-audit.py"
       - ".github/workflows/middle-earth-bracket5-expanded-live.yml"
   workflow_dispatch:
 
@@ -25,28 +27,40 @@ env:
 jobs:
   expanded-middle-earth-bracket5:
     runs-on: ubuntu-24.04
-    timeout-minutes: 120
+    timeout-minutes: 150
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-
       - name: Set up Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
           node-version-file: .node-version
           package-manager-cache: false
-
       - name: Install dependencies
         run: npm ci
-
-      - name: Type-check and build
+      - name: Resolve exact official Marvel / Middle-earth special printings
+        run: npx tsx scripts/audit-marvel-middle-earth-special-printings-v15.ts
+      - name: Apply test-only Marvel and Middle-earth family presets
+        run: python3 scripts/apply-themed-special-presets-from-audit.py
+      - name: Use Middle-earth family policy and four-card package maximum
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('scripts/e2e-middle-earth-bracket5-expanded-v15.ts')
+          t=p.read_text()
+          t=t.replace("resolvePrintingPolicyV08({ allowedSets: [...SETS], includePromos: true, includeSpecialReleases: true })", "resolvePrintingPolicyV08({ printingFamily: 'Middle-earth', includePromos: true, includeSpecialReleases: true })")
+          t=t.replace('allowedSets: [...SETS],', "printingFamily: 'Middle-earth',")
+          t=t.replace('maxWinPackageCards: 3,','maxWinPackageCards: 4,')
+          p.write_text(t)
+          PY
+      - name: Type-check and build broadened policy
         run: npm run build
-
-      - name: Run expanded Middle-earth control
+      - name: Run unit suite under broadened policy
+        run: npm test
+      - name: Run expanded Middle-earth full-family control
         id: live_control
         continue-on-error: true
         run: npx tsx scripts/e2e-middle-earth-bracket5-expanded-v15.ts
-
       - name: Persist result
         if: always()
         env:
@@ -55,23 +69,17 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p test-results/middle-earth-bracket5-expanded
-          rm -f test-results/middle-earth-bracket5-expanded/result.json \
-                test-results/middle-earth-bracket5-expanded/selected-deck.txt \
-                test-results/middle-earth-bracket5-expanded/refined-deck.txt \
-                test-results/middle-earth-bracket5-expanded/failure.txt
+          rm -f test-results/middle-earth-bracket5-expanded/result.json test-results/middle-earth-bracket5-expanded/selected-deck.txt test-results/middle-earth-bracket5-expanded/refined-deck.txt test-results/middle-earth-bracket5-expanded/special-printing-audit.json test-results/middle-earth-bracket5-expanded/failure.txt
           [ ! -f middle-earth-bracket5-expanded-result.json ] || cp middle-earth-bracket5-expanded-result.json test-results/middle-earth-bracket5-expanded/result.json
           [ ! -f middle-earth-bracket5-expanded-selected-deck.txt ] || cp middle-earth-bracket5-expanded-selected-deck.txt test-results/middle-earth-bracket5-expanded/selected-deck.txt
           [ ! -f middle-earth-bracket5-expanded-refined-deck.txt ] || cp middle-earth-bracket5-expanded-refined-deck.txt test-results/middle-earth-bracket5-expanded/refined-deck.txt
+          [ ! -f themed-special-printing-audit.json ] || cp themed-special-printing-audit.json test-results/middle-earth-bracket5-expanded/special-printing-audit.json
           [ ! -f middle-earth-bracket5-expanded-failure.txt ] || cp middle-earth-bracket5-expanded-failure.txt test-results/middle-earth-bracket5-expanded/failure.txt
-          printf 'source_sha=%s\ncontrol_outcome=%s\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/middle-earth-bracket5-expanded/run-metadata.txt
+          printf 'source_sha=%s\ncontrol_outcome=%s\npolicy=full-family-promos-curated-sld\nmax_win_package_cards=4\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/middle-earth-bracket5-expanded/run-metadata.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- test-results/middle-earth-bracket5-expanded
-          if ! git diff --cached --quiet; then
-            git commit -m "test-results: persist expanded Middle-earth Bracket 5 control"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
-          fi
-
+          if ! git diff --cached --quiet; then git commit -m "test-results: persist Middle-earth full-family Bracket 5 control" && git push origin "HEAD:${GITHUB_REF_NAME}"; fi
       - name: Require expanded control success
         if: always()
         env:
