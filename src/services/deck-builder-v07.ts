@@ -17,7 +17,11 @@ import {
 } from './printing-policy-v08.js';
 import { getCardsByIdentifiers, getCardsByNames, inferCardRoles, searchCards, summarizeCard } from './scryfall.js';
 import { simulateDeckGameplayV06 } from './simulation-v06.js';
-import { suggestDeckUpgrades, type UpgradeOptions } from './upgrade.js';
+import {
+  BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15,
+  suggestDeckUpgrades,
+  type UpgradeOptions,
+} from './upgrade.js';
 
 export interface DeckBuildOptionsV07 {
   targetBracket?: number;
@@ -871,6 +875,12 @@ export function pairUpgradeSwapsByStructureV15(
   structuralTargets: Record<string, unknown>,
 ): UpgradePairingV15[] {
   const state = upgradeStructuralStateV15(currentMetrics, structuralTargets);
+  const currentAverageNonlandManaValue = recordNumber(currentMetrics.averageNonlandManaValue);
+  const currentNonlandCount = recordNumber(currentMetrics.nonlandCount);
+  const requiredCurveReduction = currentAverageNonlandManaValue > BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15
+    && currentNonlandCount > 0
+    ? (currentAverageNonlandManaValue - BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15) * currentNonlandCount
+    : Number.POSITIVE_INFINITY;
   let counts = state.counts;
   const remainingCuts = [...cutPool];
   const pairs: UpgradePairingV15[] = [];
@@ -897,7 +907,12 @@ export function pairUpgradeSwapsByStructureV15(
       if (selection.role === 'average-nonland-mv') {
         const leftReduction = recordNumber(summarizedCard(left).manaValue) - addManaValue;
         const rightReduction = recordNumber(summarizedCard(right).manaValue) - addManaValue;
-        if (leftReduction !== rightReduction) return rightReduction - leftReduction;
+        const leftSufficient = leftReduction + 0.0001 >= requiredCurveReduction;
+        const rightSufficient = rightReduction + 0.0001 >= requiredCurveReduction;
+        if (leftSufficient !== rightSufficient) return leftSufficient ? -1 : 1;
+        if (leftReduction !== rightReduction) {
+          return leftSufficient ? leftReduction - rightReduction : rightReduction - leftReduction;
+        }
       }
       const leftPressure = recordNumber(left.heuristicCutPressure);
       const rightPressure = recordNumber(right.heuristicCutPressure);

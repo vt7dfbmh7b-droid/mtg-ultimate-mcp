@@ -172,6 +172,26 @@ Protection: each active control now has its own non-cancelling concurrency group
 
 Status: workflow fix implemented; live concurrent revalidation pending.
 
+## KF-018 — Curve repair stops one step short after positive-pressure cuts are exhausted
+
+Observed: the `efcffc2...` broad Marvel control safely replaced Vanquish the Horde with Ponder and moved average nonland mana value from 2.71 to 2.61, but the next round exposed only Aurelia as a cut candidate. The generic cut pool discarded every non-positive-pressure card even though the deck needed only one more mana-value point of reduction and had heavily surplus ramp/utility structure.
+
+Risk: a refiner can make honest progress yet stop immediately short of a real threshold, or pressure the only protected strategy card, because a generic heuristic hides safe marginal cuts that become relevant near the target.
+
+Protection: when the authoritative Bracket-5 curve gate is active, cut discovery may inspect the bounded top 15 nonland cuts even when their heuristic pressure is non-positive. Strategy preservation and structural-deficit ordering still apply first; among structurally equal safe cuts, pairing now chooses the smallest reduction that is sufficient to cross the curve threshold, and only maximizes reduction when no candidate can cross it. Deterministic regressions cover both fallback-pool activation and the 2.61-to-2.60-style marginal choice.
+
+Status: prevented in deterministic source tests; live Marvel revalidation pending.
+
+## KF-019 — Concurrent provider backoff outlives the focused MCP timeout
+
+Observed: the first focused Marvel run at `efcffc2...` reached the MCP client's fixed ten-minute timeout while broad Marvel and Middle-earth were exercising the same bounded live providers. Build, regressions, artifact upload and result persistence all worked; the live refinement call alone ended with `SdkError: Request timed out`, while the broad copy completed successfully and the focused job was then rerun alone.
+
+Risk: a valid bounded control can be classified as an intelligence failure when provider pacing/retry time, rather than deck logic, exhausts an overly tight transport budget.
+
+Protection: the focused refinement transport budget is now fifteen minutes inside the existing sixty-minute job timeout. Execution and target-quality outcomes remain separately persisted, so a real intelligence failure cannot be hidden as transport delay. A deterministic source regression prevents the ten-minute timeout from returning.
+
+Status: timeout fix implemented; exact-source live revalidation pending.
+
 ## Adding a failure
 
 Every new material failure should record:

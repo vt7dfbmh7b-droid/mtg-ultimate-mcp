@@ -51,3 +51,9 @@ test('live controls gate intelligence and persistence independently', () => {
   assert.match(middleEarth, /name: Require expanded control success/);
   assert.match(middleEarth, /name: Require evidence persistence/);
 });
+
+test('focused Marvel live refinement allows bounded provider backoff to finish', () => {
+  const source = readFileSync('scripts/e2e-marvel-bracket5-refine-v15.ts', 'utf8');
+  assert.match(source, /timeout: 15 \* 60_000/);
+  assert.doesNotMatch(source, /timeout: 10 \* 60_000/);
+});

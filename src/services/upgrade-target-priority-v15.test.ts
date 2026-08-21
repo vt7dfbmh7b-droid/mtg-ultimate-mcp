@@ -8,6 +8,7 @@ import {
 import { candidateStrategyPreservationGateV15 } from './optimizer-v12.js';
 import {
   restrictedUpgradeCandidatesForRoleV15,
+  selectUpgradeCutCandidatesV15,
   upgradeCandidatePrioritiesV15,
   type UpgradeCandidateMetricsV15,
   type UpgradeStructuralTargetsV15,
@@ -125,6 +126,62 @@ test('curve-priority pairing chooses a positive mana-value reduction and records
   assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Five Drop');
   assert.equal(pairings[0]?.authoritativeTargetGate, 'average-nonland-mv');
   assert.equal(pairings[0]?.nonlandManaValueReduction, 4);
+});
+
+test('curve repair can inspect non-positive-pressure cuts only when the real curve gate is active', () => {
+  const candidates = [
+    { card: { name: 'Positive Cut' }, heuristicCutPressure: 2 },
+    { card: { name: 'Neutral Cut' }, heuristicCutPressure: 0 },
+    { card: { name: 'Protected Cut' }, heuristicCutPressure: -2 },
+  ];
+
+  assert.deepEqual(
+    selectUpgradeCutCandidatesV15(candidates, false).map((candidate) => (candidate.card as { name: string }).name),
+    ['Positive Cut'],
+  );
+  assert.deepEqual(
+    selectUpgradeCutCandidatesV15(candidates, true).map((candidate) => (candidate.card as { name: string }).name),
+    ['Positive Cut', 'Neutral Cut', 'Protected Cut'],
+  );
+});
+
+test('near the curve threshold, pairing uses the smallest sufficient safe mana reduction', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{
+      role: 'average-nonland-mv' as const,
+      candidate: {
+        card: { name: 'One Drop', roles: ['card draw'], manaValue: 1, typeLine: 'Artifact' },
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    }],
+    [
+      {
+        card: { name: 'Safe Two Drop', roles: ['mana acceleration'], manaValue: 2, typeLine: 'Artifact' },
+        heuristicCutPressure: -2,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+      {
+        card: { name: 'Safe Five Drop', roles: [], manaValue: 5, typeLine: 'Creature — Test' },
+        heuristicCutPressure: 4,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    ],
+    {
+      rampCount: 20,
+      drawCount: 20,
+      interactionCount: 18,
+      protectionCount: 8,
+      tutorCount: 8,
+      earlyPlayCount: 41,
+      averageNonlandManaValue: 2.61,
+      nonlandCount: 69,
+      roleCounts: { 'free interaction': 1 },
+    },
+    { ...bracketFiveTargets },
+  );
+
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Safe Two Drop');
+  assert.equal(pairings[0]?.nonlandManaValueReduction, 1);
 });
 
 test('Najeela curve repair preserves Aurelia-style combat strategy before maximizing mana reduction', () => {

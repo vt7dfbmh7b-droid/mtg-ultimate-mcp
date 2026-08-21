@@ -70,6 +70,7 @@ const TARGETS: Record<number, UpgradeStructuralTargetsV15> = {
   4: { ramp: 12, draw: 12, interaction: 14, freeInteraction: 0, protection: 6, tutors: 6, earlyPlays: 16 },
   5: { ramp: 14, draw: 14, interaction: 18, freeInteraction: 0, protection: 8, tutors: 10, earlyPlays: 20 },
 };
+export const BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15 = 2.6;
 
 function clampBracket(value: number | undefined): number {
   return Math.max(1, Math.min(5, Math.trunc(value ?? 4)));
@@ -86,12 +87,12 @@ export function upgradeCandidatePrioritiesV15(
   targetBracket: number,
 ): UpgradeCandidatePriorityV15[] {
   const authoritative: UpgradeCandidatePriorityV15[] = [];
-  if (clampBracket(targetBracket) >= 5 && metrics.averageNonlandManaValue > 2.6) {
+  if (clampBracket(targetBracket) >= 5 && metrics.averageNonlandManaValue > BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15) {
     authoritative.push({
       role: 'average-nonland-mv',
       current: metrics.averageNonlandManaValue,
-      target: 2.6,
-      deficit: Number((metrics.averageNonlandManaValue - 2.6).toFixed(3)),
+      target: BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15,
+      deficit: Number((metrics.averageNonlandManaValue - BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15).toFixed(3)),
       prioritySource: 'authoritative-target-gate',
       targetGate: 'average-nonland-mv',
     });
@@ -227,7 +228,7 @@ function candidateScore(
 ): number {
   const roles = inferCardRoles(card);
   let score = cardMatchesRole(card, role) ? 100 : 0;
-  if (role === 'average-nonland-mv') score += Math.max(0, 2.6 - card.cmc) * 20;
+  if (role === 'average-nonland-mv') score += Math.max(0, BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15 - card.cmc) * 20;
   score += Math.max(0, 8 - card.cmc) * 3;
   if (roles.includes('fast mana')) score += 20;
   if (roles.includes('free interaction')) score += 20;
@@ -278,9 +279,10 @@ function cutCandidates(
   strategyContext: CommanderStrategyContextV15,
   themeCandidateNames: ReadonlySet<string>,
   protectThemeMatches: boolean,
+  allowCurveFallback: boolean,
 ): Array<Record<string, unknown>> {
   const mainNames = new Set(parsed.main.map((entry) => entry.name.toLocaleLowerCase()));
-  return cards
+  const candidates = cards
     .filter((card) => mainNames.has(card.name.toLocaleLowerCase()) && !card.type_line.toLowerCase().includes('land'))
     .map((card) => {
       const context = contextualCutPressureV15(card, strategyContext);
@@ -304,8 +306,16 @@ function cutCandidates(
           ? [...context.reasons, 'supports the explicit controlled theme while the deck is at or below its required theme density']
           : context.reasons,
       };
-    })
-    .filter((item) => Number(item.heuristicCutPressure) > 0)
+    });
+  return selectUpgradeCutCandidatesV15(candidates, allowCurveFallback);
+}
+
+export function selectUpgradeCutCandidatesV15(
+  candidates: Array<Record<string, unknown>>,
+  allowNonPositivePressure: boolean,
+): Array<Record<string, unknown>> {
+  return candidates
+    .filter((item) => Number(item.heuristicCutPressure) > 0 || allowNonPositivePressure)
     .sort((a, b) => Number(b.heuristicCutPressure) - Number(a.heuristicCutPressure))
     .slice(0, 15);
 }
@@ -510,6 +520,7 @@ export async function suggestDeckUpgrades(
       strategyContext,
       themeCandidateNames,
       themeMinimumMainMatches > 0 && themeCurrentMainMatches <= themeMinimumMainMatches,
+      authoritativeTargetGatePriorities.some((priority) => priority.targetGate === 'average-nonland-mv'),
     ),
     controlledThemeSelection: {
       active: Boolean(themeClause),

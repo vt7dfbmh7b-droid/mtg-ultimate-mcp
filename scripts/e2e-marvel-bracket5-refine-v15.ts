@@ -69,7 +69,7 @@ async function main(): Promise<void> {
         seed: 20260821,
         detailLevel: 'detailed',
       },
-    }, { timeout: 10 * 60_000 }) as unknown as {
+    }, { timeout: 15 * 60_000 }) as unknown as {
       content: Array<{ type: string; text?: string }>;
       isError?: boolean;
     };
