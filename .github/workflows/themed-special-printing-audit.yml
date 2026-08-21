@@ -41,3 +41,4 @@ jobs:
         env:
           OUTCOME: ${{ steps.audit.outcome }}
         run: test "$OUTCOME" = "success"
+# retrigger: 2026-08-21
