@@ -128,9 +128,9 @@ Observed: changing the Marvel refinement script triggered both the focused refin
 
 Risk: valid evidence can remain only in workflow logs/artifacts, while the branch records whichever writer won rather than every completed control.
 
-Protection: pending. Live controls that can run together must write isolated evidence paths and use a safe fetch/reconcile/retry protocol, or persistence must be consolidated into one writer after both controls finish.
+Protection: active INTEL-02 writers now share one non-cancelling branch-scoped concurrency group, sync the latest branch before copying their isolated result paths, and keep intelligence execution independent from persistence. The project-state writer also regenerates metadata after synchronizing so it cannot commit stale self-references. Legacy evidence writers still require migration or a consolidated writer before this is globally closed.
 
-Status: open project-management workflow issue. The `758c565...` refinement artifact was digest-verified and recovered on top of the winning writer; the race does not invalidate the scenario result, but it must be fixed before concurrent result persistence can be trusted unattended.
+Status: active-path fix implemented locally after the race reproduced at `7fcd3ca...`; workflow revalidation pending. The `758c565...` refinement artifact was digest-verified and recovered on top of the winning writer, while legacy concurrent writers remain an open project-management issue.
 
 ## KF-014 — Failed target gate omitted from candidate generation
 
@@ -151,6 +151,16 @@ Risk: an autonomous package can pass a numeric target gate while weakening the c
 Protection: additions and cuts now retain the existing V0.15 per-strategy affinity evidence. Pairing places meaningful strategy preservation and structural-deficit preservation before the size of a curve reduction. Every candidate package carries per-swap lost-role evidence plus an aggregate strategy audit, and refinement fails closed when that audit is missing or reports an uncompensated loss from a card that received the maximum existing cut-protection signal. Deterministic protection lives in `upgrade-target-priority-v15.test.ts` and includes a Najeela/Aurelia-style ordering regression, explicit rejection, missing-evidence rejection, and a compensated-replacement control.
 
 Status: prevented in deterministic source tests; fresh Marvel live revalidation remains required before claiming the observed scenario is strategically improved.
+
+## KF-016 — Weak secondary commander signal blocks every safe target repair
+
+Observed: the first `7fcd3ca...` Marvel revalidation correctly rejected cuts to Aurelia's strong `combat-tokens` plan, but it also treated Najeela's four-point `big-mana` inference as a meaningful deck identity. That made Vanquish the Horde's generic cost-reduction overlap look equally protected, left all 25 bounded candidates ineligible, and stopped with zero accepted rounds even though a safer curve cut existed.
+
+Risk: fail-closed strategy protection can become overbroad and paralyse autonomous improvement, protecting a weak incidental overlap as strongly as the commander's substantive plan.
+
+Protection: meaningful-loss gating now requires both at least four net affinity points removed and at least six points of command-zone evidence for that strategy. Pairing still protects Aurelia's strong combat affinity, while an exact weak-secondary-signal regression proves the safer Vanquish curve cut remains eligible and carries complete preservation evidence.
+
+Status: prevented in deterministic source tests; fresh Marvel live revalidation required.
 
 ## Adding a failure
 

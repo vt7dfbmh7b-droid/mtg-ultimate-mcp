@@ -39,8 +39,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: marvel-bracket5-live-${{ github.ref }}
-  cancel-in-progress: true
+  group: ultimate-mtg-evidence-writer-${{ github.ref }}
+  cancel-in-progress: false
 
 env:
   HTTP_RETRY_BASE_MS: 5000
@@ -86,25 +86,29 @@ jobs:
           cp marvel-bracket5-selected-deck.txt test-results/marvel-bracket5/selected-deck.txt
           npx tsx scripts/e2e-marvel-bracket5-refine-v15.ts
       - name: Persist live result on isolated branch
+        id: persist_result
         if: ${{ always() && github.event_name == 'push' }}
+        continue-on-error: true
         env:
           CONTROL_OUTCOME: ${{ steps.marvel_control.outcome }}
           REFINE_OUTCOME: ${{ steps.marvel_refine.outcome }}
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p test-results/marvel-bracket5
-          rm -f test-results/marvel-bracket5/live-result.json test-results/marvel-bracket5/selected-deck.txt test-results/marvel-bracket5/refine-result.json test-results/marvel-bracket5/refined-deck.txt test-results/marvel-bracket5/failure.txt
-          [ ! -f marvel-bracket5-live-result.json ] || cp marvel-bracket5-live-result.json test-results/marvel-bracket5/live-result.json
-          [ ! -f marvel-bracket5-selected-deck.txt ] || cp marvel-bracket5-selected-deck.txt test-results/marvel-bracket5/selected-deck.txt
-          [ ! -f marvel-bracket5-refine-result.json ] || cp marvel-bracket5-refine-result.json test-results/marvel-bracket5/refine-result.json
-          [ ! -f marvel-bracket5-refined-deck.txt ] || cp marvel-bracket5-refined-deck.txt test-results/marvel-bracket5/refined-deck.txt
-          [ ! -f marvel-bracket5-live-failure.txt ] || cp marvel-bracket5-live-failure.txt test-results/marvel-bracket5/failure.txt
-          printf 'source_sha=%s\ncontrol_outcome=%s\nrefine_outcome=%s\npolicy=permanent-production-presets\nmax_win_package_cards=4\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" "$REFINE_OUTCOME" > test-results/marvel-bracket5/run-metadata.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- test-results/marvel-bracket5
-          if ! git diff --cached --quiet; then git commit -m "test-results: persist Marvel permanent-family Bracket 5 control" && git push origin "HEAD:${GITHUB_REF_NAME}"; fi
+          git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+          git reset --hard "origin/${GITHUB_REF_NAME}"
+          mkdir -p test-results/marvel-bracket5-broad
+          rm -f test-results/marvel-bracket5-broad/live-result.json test-results/marvel-bracket5-broad/selected-deck.txt test-results/marvel-bracket5-broad/refine-result.json test-results/marvel-bracket5-broad/refined-deck.txt test-results/marvel-bracket5-broad/failure.txt
+          [ ! -f marvel-bracket5-live-result.json ] || cp marvel-bracket5-live-result.json test-results/marvel-bracket5-broad/live-result.json
+          [ ! -f marvel-bracket5-selected-deck.txt ] || cp marvel-bracket5-selected-deck.txt test-results/marvel-bracket5-broad/selected-deck.txt
+          [ ! -f marvel-bracket5-refine-result.json ] || cp marvel-bracket5-refine-result.json test-results/marvel-bracket5-broad/refine-result.json
+          [ ! -f marvel-bracket5-refined-deck.txt ] || cp marvel-bracket5-refined-deck.txt test-results/marvel-bracket5-broad/refined-deck.txt
+          [ ! -f marvel-bracket5-live-failure.txt ] || cp marvel-bracket5-live-failure.txt test-results/marvel-bracket5-broad/failure.txt
+          printf 'source_sha=%s\ncontrol_outcome=%s\nrefine_outcome=%s\npolicy=permanent-production-presets\nmax_win_package_cards=4\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" "$REFINE_OUTCOME" > test-results/marvel-bracket5-broad/run-metadata.txt
+          git add -- test-results/marvel-bracket5-broad
+          if ! git diff --cached --quiet; then git commit -m "test-results: persist Marvel permanent-family Bracket 5 control [skip ci]" && git push origin "HEAD:${GITHUB_REF_NAME}"; fi
       - name: Require Marvel controls to execute successfully
         if: always()
         env:
@@ -113,3 +117,8 @@ jobs:
         run: |
           test "$CONTROL_OUTCOME" = "success"
           test "$REFINE_OUTCOME" = "success"
+      - name: Require live-result persistence
+        if: ${{ always() && github.event_name == 'push' }}
+        env:
+          PERSIST_OUTCOME: ${{ steps.persist_result.outcome }}
+        run: test "$PERSIST_OUTCOME" = "success"

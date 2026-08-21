@@ -21,8 +21,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: middle-earth-bracket5-expanded-${{ github.ref }}
-  cancel-in-progress: true
+  group: ultimate-mtg-evidence-writer-${{ github.ref }}
+  cancel-in-progress: false
 
 env:
   HTTP_RETRY_BASE_MS: 5000
@@ -73,7 +73,9 @@ jobs:
           npx tsx scripts/e2e-printing-family-policy-v15.ts 2>&1 | tee printing-family-production-proof.log
 
       - name: Persist production printing-family proof
+        id: persist_production_proof
         if: always()
+        continue-on-error: true
         env:
           BUILD_OUTCOME: ${{ steps.production_build.outcome }}
           TEST_OUTCOME: ${{ steps.production_tests.outcome }}
@@ -81,6 +83,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+          git reset --hard "origin/${GITHUB_REF_NAME}"
           mkdir -p test-results/printing-family-production-proof
           rm -f test-results/printing-family-production-proof/result.json \
                 test-results/printing-family-production-proof/failure.txt \
@@ -95,15 +101,14 @@ jobs:
           printf 'source_sha=%s\nbuild_outcome=%s\ntest_outcome=%s\nproof_outcome=%s\npolicy=permanent-production-presets\n' \
             "$GITHUB_SHA" "$BUILD_OUTCOME" "$TEST_OUTCOME" "$PROOF_OUTCOME" \
             > test-results/printing-family-production-proof/run-metadata.txt
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- test-results/printing-family-production-proof
           if ! git diff --cached --quiet; then
-            git commit -m "test-results: persist production printing-family proof"
+            git commit -m "test-results: persist production printing-family proof [skip ci]"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
 
       - name: Require production family-policy validation
+        if: always()
         env:
           BUILD_OUTCOME: ${{ steps.production_build.outcome }}
           TEST_OUTCOME: ${{ steps.production_tests.outcome }}
@@ -115,16 +120,23 @@ jobs:
 
       - name: Run expanded Middle-earth permanent-family control
         id: live_control
+        if: ${{ always() && steps.production_build.outcome == 'success' && steps.production_tests.outcome == 'success' && steps.production_proof.outcome == 'success' }}
         continue-on-error: true
         run: npx tsx scripts/e2e-middle-earth-bracket5-expanded-v15.ts
 
       - name: Persist Middle-earth benchmark result
+        id: persist_middle_earth
         if: always()
+        continue-on-error: true
         env:
           CONTROL_OUTCOME: ${{ steps.live_control.outcome }}
         shell: bash
         run: |
           set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+          git reset --hard "origin/${GITHUB_REF_NAME}"
           mkdir -p test-results/middle-earth-bracket5-expanded
           rm -f test-results/middle-earth-bracket5-expanded/result.json \
                 test-results/middle-earth-bracket5-expanded/selected-deck.txt \
@@ -135,11 +147,9 @@ jobs:
           [ ! -f middle-earth-bracket5-expanded-refined-deck.txt ] || cp middle-earth-bracket5-expanded-refined-deck.txt test-results/middle-earth-bracket5-expanded/refined-deck.txt
           [ ! -f middle-earth-bracket5-expanded-failure.txt ] || cp middle-earth-bracket5-expanded-failure.txt test-results/middle-earth-bracket5-expanded/failure.txt
           printf 'source_sha=%s\ncontrol_outcome=%s\npolicy=permanent-production-presets\nmax_win_package_cards=4\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/middle-earth-bracket5-expanded/run-metadata.txt
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- test-results/middle-earth-bracket5-expanded
           if ! git diff --cached --quiet; then
-            git commit -m "test-results: persist Middle-earth production-family control"
+            git commit -m "test-results: persist Middle-earth production-family control [skip ci]"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
 
@@ -148,3 +158,12 @@ jobs:
         env:
           CONTROL_OUTCOME: ${{ steps.live_control.outcome }}
         run: test "$CONTROL_OUTCOME" = "success"
+
+      - name: Require evidence persistence
+        if: always()
+        env:
+          PRODUCTION_PERSIST_OUTCOME: ${{ steps.persist_production_proof.outcome }}
+          MIDDLE_EARTH_PERSIST_OUTCOME: ${{ steps.persist_middle_earth.outcome }}
+        run: |
+          test "$PRODUCTION_PERSIST_OUTCOME" = "success"
+          test "$MIDDLE_EARTH_PERSIST_OUTCOME" = "success"

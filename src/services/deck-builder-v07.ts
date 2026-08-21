@@ -591,6 +591,7 @@ interface UpgradeStrategyAffinityEvidenceV15 {
   protectionApplied: number;
   matchedStrategies: string[];
   scoreByStrategy: Map<string, number>;
+  commanderScoreByStrategy: Map<string, number>;
 }
 
 export interface UpgradeSwapStrategyPreservationV15 {
@@ -612,6 +613,7 @@ export interface UpgradeStrategyPreservationAuditV15 {
   evidenceComplete: true;
   meaningfulLosses: Array<{
     strategy: string;
+    commanderStrategyScore: number;
     cutAffinityScore: number;
     addAffinityScore: number;
     netAffinityLoss: number;
@@ -633,6 +635,8 @@ const UPGRADE_STRUCTURAL_ROLES_V15: UpgradeStructuralRoleV15[] = [
 const UPGRADE_CANDIDATE_ROLES_V15: UpgradeAddressedRoleV15[] = [
   'average-nonland-mv', ...UPGRADE_STRUCTURAL_ROLES_V15, 'win-package',
 ];
+const MEANINGFUL_COMMANDER_STRATEGY_SCORE_V15 = 6;
+const MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15 = 4;
 
 function recordNumber(value: unknown): number {
   return typeof value === 'number' && Number.isFinite(value) ? value : 0;
@@ -670,6 +674,7 @@ function strategyAffinityEvidenceV15(item: Record<string, unknown>): UpgradeStra
     ? affinity.matches.map(recordObject).map((match) => ({
         strategy: recordString(match.archetype),
         score: recordNumber(match.overlapScore),
+        commanderScore: recordNumber(match.commanderScore),
       })).filter((match) => match.strategy.length > 0 && match.score > 0)
     : [];
   const matchedStrategies = recordStrings([
@@ -677,14 +682,24 @@ function strategyAffinityEvidenceV15(item: Record<string, unknown>): UpgradeStra
     ...explicitMatches.map((match) => match.strategy),
   ]);
   const scoreByStrategy = new Map<string, number>();
+  const commanderScoreByStrategy = new Map<string, number>();
   for (const match of explicitMatches) {
     scoreByStrategy.set(match.strategy, (scoreByStrategy.get(match.strategy) ?? 0) + match.score);
+    commanderScoreByStrategy.set(
+      match.strategy,
+      Math.max(commanderScoreByStrategy.get(match.strategy) ?? 0, match.commanderScore),
+    );
   }
   if (scoreByStrategy.size === 0 && matchedStrategies.length > 0 && score > 0) {
     const fallback = score / matchedStrategies.length;
-    for (const strategy of matchedStrategies) scoreByStrategy.set(strategy, fallback);
+    for (const strategy of matchedStrategies) {
+      scoreByStrategy.set(strategy, fallback);
+      // Backward-compatible evidence without explicit V0.15 matches treats its affinity
+      // score as command-zone support. Production callers always provide explicit matches.
+      commanderScoreByStrategy.set(strategy, fallback);
+    }
   }
-  return { score, protectionApplied, matchedStrategies, scoreByStrategy };
+  return { score, protectionApplied, matchedStrategies, scoreByStrategy, commanderScoreByStrategy };
 }
 
 function upgradeSwapStrategyPreservationV15(
@@ -698,7 +713,14 @@ function upgradeSwapStrategyPreservationV15(
   const addRoles = [...summarizedRoles(summarizedCard(add))].sort((left, right) => left.localeCompare(right));
   const addRoleSet = new Set(addRoles);
   const locallyUnreplacedStrategies = cutAffinity.matchedStrategies.filter((strategy) => !addStrategies.has(strategy));
-  const meaningfulStrategyLoss = cutAffinity.protectionApplied >= 4 && locallyUnreplacedStrategies.length > 0;
+  const meaningfulStrategyLoss = cutAffinity.protectionApplied >= 4
+    && cutAffinity.matchedStrategies.some((strategy) => {
+      const commanderScore = cutAffinity.commanderScoreByStrategy.get(strategy) ?? 0;
+      const cutScore = cutAffinity.scoreByStrategy.get(strategy) ?? 0;
+      const addScore = addAffinity.scoreByStrategy.get(strategy) ?? 0;
+      return commanderScore >= MEANINGFUL_COMMANDER_STRATEGY_SCORE_V15
+        && cutScore - addScore >= MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15;
+    });
   return {
     cutStrategyAffinityScore: Number(cutAffinity.score.toFixed(3)),
     addStrategyAffinityScore: Number(addAffinity.score.toFixed(3)),
@@ -720,6 +742,7 @@ export function auditUpgradeStrategyPreservationV15(
   const cutScores = new Map<string, number>();
   const addScores = new Map<string, number>();
   const strongestCutProtection = new Map<string, number>();
+  const strongestCommanderScore = new Map<string, number>();
   const swapImpacts = pairings.map((pair) => upgradeSwapStrategyPreservationV15(pair.add, pair.cut));
 
   for (const pair of pairings) {
@@ -728,6 +751,10 @@ export function auditUpgradeStrategyPreservationV15(
     for (const [strategy, strategyScore] of cut.scoreByStrategy) {
       cutScores.set(strategy, (cutScores.get(strategy) ?? 0) + strategyScore);
       strongestCutProtection.set(strategy, Math.max(strongestCutProtection.get(strategy) ?? 0, cut.protectionApplied));
+      strongestCommanderScore.set(
+        strategy,
+        Math.max(strongestCommanderScore.get(strategy) ?? 0, cut.commanderScoreByStrategy.get(strategy) ?? 0),
+      );
     }
     for (const [strategy, strategyScore] of add.scoreByStrategy) {
       addScores.set(strategy, (addScores.get(strategy) ?? 0) + strategyScore);
@@ -746,9 +773,12 @@ export function auditUpgradeStrategyPreservationV15(
     };
   });
   const meaningfulLosses = strategyDeltas
-    .filter((delta) => (strongestCutProtection.get(delta.strategy) ?? 0) >= 4 && delta.netAffinityDelta <= -4)
+    .filter((delta) => (strongestCutProtection.get(delta.strategy) ?? 0) >= 4
+      && (strongestCommanderScore.get(delta.strategy) ?? 0) >= MEANINGFUL_COMMANDER_STRATEGY_SCORE_V15
+      && delta.netAffinityDelta <= -MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15)
     .map((delta) => ({
       strategy: delta.strategy,
+      commanderStrategyScore: Number((strongestCommanderScore.get(delta.strategy) ?? 0).toFixed(3)),
       cutAffinityScore: delta.cutAffinityScore,
       addAffinityScore: delta.addAffinityScore,
       netAffinityLoss: Number((-delta.netAffinityDelta).toFixed(3)),
@@ -761,7 +791,7 @@ export function auditUpgradeStrategyPreservationV15(
     meaningfulLosses,
     strategyDeltas,
     swapImpacts,
-    acceptanceRule: 'Reject an autonomous package when it removes at least four points of an existing commander-strategy signal from a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity.',
+    acceptanceRule: 'Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity.',
   };
 }
 

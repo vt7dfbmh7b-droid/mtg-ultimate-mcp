@@ -30,8 +30,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: marvel-bracket5-refine-${{ github.ref }}
-  cancel-in-progress: true
+  group: ultimate-mtg-evidence-writer-${{ github.ref }}
+  cancel-in-progress: false
 
 env:
   HTTP_RETRY_BASE_MS: 5000
@@ -99,6 +99,19 @@ jobs:
           if (repaired.length === 0 && advanced.length === 0) {
             throw new Error('Refinement changed the deck without repairing or measurably advancing any failed Bracket-5 construction gate.');
           }
+          for (const round of result.refinement?.detailedRounds ?? []) {
+            if (!round.accepted) continue;
+            const winner = (round.candidateComparisons ?? []).find((candidate) => candidate.candidate === round.winningCandidate);
+            const strategy = winner?.strategyPreservation;
+            if (!strategy?.evidenceComplete || strategy.status !== 'preserved' || (strategy.meaningfulLosses ?? []).length > 0) {
+              throw new Error(`Accepted round ${round.round} lacks passing commander-strategy preservation evidence.`);
+            }
+            for (const swap of winner.swaps ?? []) {
+              if (!swap.structuralPairing?.strategyPreservation) {
+                throw new Error(`Accepted round ${round.round} is missing per-swap cut-impact evidence.`);
+              }
+            }
+          }
           console.log(`Target quality gate passed. Repaired=${repaired.join(',') || 'none'}; advanced=${advanced.join(',') || 'none'}`);
           NODE
 
@@ -115,13 +128,19 @@ jobs:
           retention-days: 14
 
       - name: Persist checked-in-source refinement result
+        id: persist_result
         if: always()
+        continue-on-error: true
         env:
           EXECUTION_OUTCOME: ${{ steps.refine_control.outcome }}
           TARGET_QUALITY_OUTCOME: ${{ steps.target_quality.outcome }}
         shell: bash
         run: |
           set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+          git reset --hard "origin/${GITHUB_REF_NAME}"
           mkdir -p test-results/marvel-bracket5
           rm -f test-results/marvel-bracket5/refine-result.json \
                 test-results/marvel-bracket5/refined-deck.txt \
@@ -131,10 +150,8 @@ jobs:
           [ ! -f marvel-bracket5-refine-failure.txt ] || cp marvel-bracket5-refine-failure.txt test-results/marvel-bracket5/refine-failure.txt
           CONTROL_OUTCOME=failure
           if [ "$EXECUTION_OUTCOME" = success ] && [ "$TARGET_QUALITY_OUTCOME" = success ]; then CONTROL_OUTCOME=success; fi
-          printf 'source_sha=%s\ncontrol_outcome=%s\nexecution_outcome=%s\ntarget_gate_quality_outcome=%s\npolicy=checked-in-very-good-candidate\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\nrestricted_pool_prefilter=true\nfull_table_closure=true\ntarget_gate_priority=true\nzero_progress_guard=true\nzero_target_progress_guard=true\nlower_bracket_behavior_preserved=true\nswap_feasible_win_package_selection=true\nprotect_existing_package_pieces=true\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" "$EXECUTION_OUTCOME" "$TARGET_QUALITY_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
+          printf 'source_sha=%s\ncontrol_outcome=%s\nexecution_outcome=%s\ntarget_gate_quality_outcome=%s\npolicy=checked-in-very-good-candidate\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\nrestricted_pool_prefilter=true\nfull_table_closure=true\ntarget_gate_priority=true\nzero_progress_guard=true\nzero_target_progress_guard=true\nlower_bracket_behavior_preserved=true\nswap_feasible_win_package_selection=true\nprotect_existing_package_pieces=true\nstrategy_preservation_evidence=true\nmeaningful_strategy_loss_rejected=true\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" "$EXECUTION_OUTCOME" "$TARGET_QUALITY_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
           npm run validation:index
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- test-results/marvel-bracket5 validation-index.json docs/VALIDATION-STATE.md
           if ! git diff --cached --quiet; then
             git commit -m "test-results: persist Marvel Bracket 5 very-good control [skip ci]"
@@ -149,3 +166,8 @@ jobs:
         run: |
           test "$EXECUTION_OUTCOME" = success
           test "$TARGET_QUALITY_OUTCOME" = success
+      - name: Require checked-in-source result persistence
+        if: always()
+        env:
+          PERSIST_OUTCOME: ${{ steps.persist_result.outcome }}
+        run: test "$PERSIST_OUTCOME" = success

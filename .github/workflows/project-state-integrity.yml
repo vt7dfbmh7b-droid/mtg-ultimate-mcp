@@ -31,6 +31,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: ultimate-mtg-evidence-writer-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   validate-project-state:
     runs-on: ubuntu-24.04
@@ -100,8 +104,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          cp test-results/project-management/integrity.txt "$RUNNER_TEMP/project-management-integrity.txt"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+          git reset --hard "origin/${GITHUB_REF_NAME}"
+          mkdir -p test-results/project-management
+          cp "$RUNNER_TEMP/project-management-integrity.txt" test-results/project-management/integrity.txt
+          npm run validation:index
           git add -- test-results/project-management/integrity.txt validation-index.json docs/VALIDATION-STATE.md
           if ! git diff --cached --quiet; then
             git commit -m "test-results(PM-02): persist self-consistent project integrity [skip ci]"

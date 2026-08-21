@@ -175,6 +175,74 @@ test('Najeela curve repair preserves Aurelia-style combat strategy before maximi
   assert.deepEqual(pairings[0]?.strategyPreservation.locallyUnreplacedStrategies, []);
 });
 
+test('a weak secondary commander signal does not turn every matching curve cut into strategy loss', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{
+      role: 'average-nonland-mv' as const,
+      candidate: {
+        card: { name: 'Skullclamp', roles: ['card draw', 'equipment'], manaValue: 1, typeLine: 'Artifact — Equipment' },
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [], matches: [] },
+      },
+    }],
+    [
+      {
+        card: {
+          name: 'Aurelia, the Warleader',
+          roles: ['extra combat', 'haste', 'untap engine'],
+          manaValue: 6,
+          typeLine: 'Creature — Angel',
+        },
+        heuristicCutPressure: 9,
+        strategyAffinity: {
+          score: 24,
+          protectionApplied: 4,
+          matchedStrategies: ['big-mana', 'combat-tokens'],
+          matches: [
+            { archetype: 'combat-tokens', commanderScore: 20, cardScore: 20, overlapScore: 20 },
+            { archetype: 'big-mana', commanderScore: 4, cardScore: 4, overlapScore: 4 },
+          ],
+        },
+      },
+      {
+        card: {
+          name: 'Vanquish the Horde',
+          roles: ['board wipe', 'cost reduction'],
+          manaValue: 8,
+          typeLine: 'Sorcery',
+        },
+        heuristicCutPressure: 8,
+        strategyAffinity: {
+          score: 4,
+          protectionApplied: 4,
+          matchedStrategies: ['big-mana'],
+          matches: [
+            { archetype: 'big-mana', commanderScore: 4, cardScore: 8, overlapScore: 4 },
+          ],
+        },
+      },
+    ],
+    {
+      rampCount: 14,
+      drawCount: 14,
+      interactionCount: 18,
+      protectionCount: 8,
+      tutorCount: 8,
+      earlyPlayCount: 41,
+      roleCounts: { 'free interaction': 1 },
+    },
+    { ...bracketFiveTargets },
+  );
+
+  const audit = auditUpgradeStrategyPreservationV15(pairings);
+  const gate = candidateStrategyPreservationGateV15({ strategyPreservation: audit });
+
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Vanquish the Horde');
+  assert.equal(pairings[0]?.nonlandManaValueReduction, 7);
+  assert.equal(pairings[0]?.strategyPreservation.verdict, 'preserved');
+  assert.equal(audit.status, 'preserved');
+  assert.equal(gate.eligible, true);
+});
+
 test('an uncompensated fully protected commander-strategy cut is explicit and ineligible', () => {
   const pairings = pairUpgradeSwapsByStructureV15(
     [{
