@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { ScryfallCard } from '../types/scryfall.js';
 import {
+  familySetTypeEligibleV08,
+  inspectPrintingFamilyPresetV08,
   printingMatchesPolicyV08,
   type ResolvedPrintingPolicyV08,
 } from './printing-policy-v08.js';
@@ -39,10 +41,41 @@ function finalFantasyPolicy(overrides: Partial<ResolvedPrintingPolicyV08> = {}):
       { set: 'sld', collectorNumber: '909', oracleName: 'Gilded Lotus' },
     ],
     specialOracleNames: ['Cyclonic Rift', 'Silence', 'Gilded Lotus'],
+    specialReleaseCoverageAsOf: null,
+    specialReleaseCoverageNote: null,
     searchClause: '(set:fin OR set:fic OR set:pfin OR !"Cyclonic Rift" OR !"Silence" OR !"Gilded Lotus")',
     explanation: 'test',
     ...overrides,
   };
+}
+
+function inspectedPolicy(family: string, allowedSetCodes: string[] = []): ResolvedPrintingPolicyV08 {
+  const inspected = inspectPrintingFamilyPresetV08(family);
+  assert.ok(inspected, `${family} must resolve to a curated printing-family preset`);
+  return {
+    family,
+    familyPreset: inspected.id,
+    allowedSetCodes,
+    familyMatchedSetCodes: allowedSetCodes,
+    includePromos: true,
+    includeSpecialReleases: true,
+    exactSpecialPrintings: inspected.specialPrintingSelectors,
+    specialOracleNames: [...new Set(inspected.specialPrintingSelectors.map((entry) => entry.oracleName))],
+    specialReleaseCoverageAsOf: inspected.specialReleaseCoverageAsOf,
+    specialReleaseCoverageNote: inspected.specialReleaseCoverageNote,
+    searchClause: 'test',
+    explanation: 'test',
+  };
+}
+
+function hasSelector(family: string, oracleName: string, collectorNumber: string): boolean {
+  const inspected = inspectPrintingFamilyPresetV08(family);
+  assert.ok(inspected);
+  return inspected.specialPrintingSelectors.some((entry) =>
+    entry.set === 'sld'
+    && entry.collectorNumber === collectorNumber
+    && entry.oracleName === oracleName
+  );
 }
 
 test('family set printings qualify even when marked promo by default', () => {
@@ -73,4 +106,69 @@ test('special releases can be disabled without disabling normal family sets', ()
 test('bundle promo selector treats leading-zero collector numbers as the same physical selector', () => {
   const lotus = card({ name: 'Gilded Lotus', set: 'sld', set_name: 'Secret Lair Drop', collector_number: '0909', promo: true });
   assert.equal(printingMatchesPolicyV08(lotus, finalFantasyPolicy()), true);
+});
+
+test('Marvel is a first-class curated family with released main, bonus, and promo Secret Lair selectors', () => {
+  const marvel = inspectPrintingFamilyPresetV08('MTG Marvel');
+  assert.ok(marvel);
+  assert.equal(marvel.id, 'marvel');
+  assert.ok(marvel.specialPrintingCount >= 100);
+  assert.equal(marvel.specialReleaseCoverageAsOf, '2026-08-21');
+  assert.equal(hasSelector('Marvel', 'Flawless Maneuver', '1728'), true);
+  assert.equal(hasSelector('Marvel', 'Nature\'s Lore', '867'), true);
+  assert.equal(hasSelector('Marvel', 'Deadly Rollick', '1754'), true);
+  assert.equal(hasSelector('Marvel', 'Brainstorm', '7013'), true);
+  assert.equal(hasSelector('Marvel', 'Counterspell', '7117'), true);
+  assert.equal(hasSelector('Marvel', 'Ponder', '7125'), true);
+  assert.equal(hasSelector('Marvel', 'Sol Ring', 'IFIYW-5'), true);
+});
+
+test('Marvel policy admits exact themed Secret Lair bonus but rejects unrelated SLD printing of same Oracle card', () => {
+  const policy = inspectedPolicy('Marvel', ['mar', 'spm', 'pspm', 'msh', 'msc']);
+  const themed = card({ name: 'Brainstorm', set: 'sld', set_name: 'Secret Lair Drop', collector_number: '7013', promo: true });
+  const unrelated = card({ name: 'Brainstorm', set: 'sld', set_name: 'Secret Lair Drop', collector_number: '1162', promo: true });
+  assert.equal(printingMatchesPolicyV08(themed, policy), true);
+  assert.equal(printingMatchesPolicyV08(unrelated, policy), false);
+});
+
+test('Marvel special releases can be disabled without opening or closing normal Marvel family sets incorrectly', () => {
+  const policy = inspectedPolicy('Marvel', ['msh', 'msc', 'pspm']);
+  const noSpecials = { ...policy, includeSpecialReleases: false };
+  const special = card({ name: 'Deadly Rollick', set: 'sld', set_name: 'Secret Lair Drop', collector_number: '1754', promo: true });
+  const main = card({ name: 'Lightning Greaves', set: 'msc', set_name: 'Marvel Super Heroes Commander', collector_number: '202' });
+  assert.equal(printingMatchesPolicyV08(special, noSpecials), false);
+  assert.equal(printingMatchesPolicyV08(main, noSpecials), true);
+});
+
+test('Middle-earth aliases include both LOTR and Hobbit set patterns with curated Secret Lair truth', () => {
+  const middleEarth = inspectPrintingFamilyPresetV08('LOTR');
+  assert.ok(middleEarth);
+  assert.equal(middleEarth.id, 'middle-earth');
+  assert.deepEqual(middleEarth.setNamePatterns, ['middle-earth', 'the hobbit']);
+  assert.ok(middleEarth.specialPrintingCount >= 25);
+  assert.equal(middleEarth.specialReleaseCoverageAsOf, '2026-08-21');
+  assert.equal(hasSelector('Middle Earth', 'Mirror of Galadriel', '1295'), true);
+  assert.equal(hasSelector('Middle Earth', 'Gríma Wormtongue', '734'), true);
+  assert.equal(hasSelector('Middle Earth', 'Diabolic Intent', '2563'), true);
+  assert.equal(hasSelector('Middle Earth', 'Arcane Signet', '916'), true);
+});
+
+test('Middle-earth policy admits exact Hobbit Secret Lair and rejects unrelated SLD printing', () => {
+  const policy = inspectedPolicy('Middle Earth', ['ltr', 'ltc', 'pltr', 'pltc', 'hob', 'hoc']);
+  const themed = card({ name: 'Diabolic Intent', set: 'sld', set_name: 'Secret Lair Drop', collector_number: '2563', promo: false });
+  const unrelated = card({ name: 'Diabolic Intent', set: 'sld', set_name: 'Secret Lair Drop', collector_number: '9999', promo: false });
+  assert.equal(printingMatchesPolicyV08(themed, policy), true);
+  assert.equal(printingMatchesPolicyV08(unrelated, policy), false);
+});
+
+test('family discovery excludes non-playable product set types without excluding real promo/card-bearing products', () => {
+  assert.equal(familySetTypeEligibleV08('expansion'), true);
+  assert.equal(familySetTypeEligibleV08('commander'), true);
+  assert.equal(familySetTypeEligibleV08('promo'), true);
+  assert.equal(familySetTypeEligibleV08('eternal'), true);
+  assert.equal(familySetTypeEligibleV08('masterpiece'), true);
+  assert.equal(familySetTypeEligibleV08('token'), false);
+  assert.equal(familySetTypeEligibleV08('memorabilia'), false);
+  assert.equal(familySetTypeEligibleV08('minigame'), false);
+  assert.equal(familySetTypeEligibleV08('expansion', true), false);
 });
