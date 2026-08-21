@@ -31,6 +31,9 @@ jobs:
       - name: Validate project-management state
         run: npm run project:validate
 
+      - name: Validate consolidated validation index
+        run: npm run validation:validate
+
       - name: Type-check and build
         run: npm run build
 
