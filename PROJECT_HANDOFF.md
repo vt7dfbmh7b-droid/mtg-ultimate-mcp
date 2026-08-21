@@ -13,8 +13,8 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 
 ## Current mode
 
-- Active milestone: **PM-02 — Validation State Indexing**
-- Intelligence development paused: **yes**
+- Active milestone: **INTEL-02 — Actual autonomous deck improvement**
+- Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
 - Development checkpoint at pause: `303a474e4a1ec8cb80c9dc5babaafe42c1828472`
 - Active branch validation: **incomplete**
@@ -31,15 +31,15 @@ Latest fully validated executable experimental baseline documented by the prior 
 
 ## Important pending validation
 
-The last persisted Marvel control is `a4a1450d34c337c97b76fbbec688dbcf0ac7388e` with outcome **skipped**. This is stale pre-hardening metadata and must not be used as proof of the current branch.
+The last persisted Marvel control is `a4a1450d34c337c97b76fbbec688dbcf0ac7388e` with outcome **skipped**. This is stale pre-hardening metadata and must not be used as proof of the current branch. The validation index independently marks it as failing and not matching the development checkpoint.
 
 ## Next actions
 
-1. Finish PM-02 validation-registry/index tooling and strict integrity checks.
-2. Validate PM-02 on checked-in source and persist the exact tested SHA/outcomes.
-3. Expand the validation registry only with high-value controls needed for current milestone recovery; do not turn it into noisy workflow inventory.
-4. Run a fresh-chat recovery smoke using only project state, validation index, live branch/PR state and referenced decision/failure docs.
-5. After PM-02 is validated, resume INTEL-01/INTEL-02 from the deck-intelligence pause checkpoint and run the fresh Marvel control before further feature work.
+1. Inspect the current checked-in INTEL-02 scorer/builder against the deck-intelligence pause checkpoint and confirm the hard zero-target-progress guard is still the next unresolved source change.
+2. Implement the hard Bracket-5 zero-target-progress rejection with direct shared-scorer and iterative-refinement regressions, without weakening lower-bracket behavior.
+3. Run project-management integrity, TypeScript/build, autonomous-refinement regressions and win-package regressions on checked-in source.
+4. Run the fresh checked-in-source Marvel Bracket 5 refinement control and persist its exact tested source SHA plus before/after target-gate and verified full-table route evidence.
+5. Use validation-index.json to decide whether INTEL-01/INTEL-02 can move to validated or whether the next blocker is discovery, injection, recognition or candidate selection; do not add unrelated features first.
 
 ## Permanent recovery references
 
