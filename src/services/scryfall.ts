@@ -70,6 +70,14 @@ const searchCache = new Map<string, TimedCardCacheEntry>();
 const printingsCache = new Map<string, TimedCardCacheEntry>();
 const identifierCache = new Map<string, ScryfallCard>();
 
+const LEGACY_FREE_INTERACTION_SEARCH_CLAUSE_V15 = '((mv=0 OR o:"rather than pay") (o:"counter target" OR o:"destroy target" OR o:"exile target"))';
+export const FREE_INTERACTION_SEARCH_CLAUSE_V15 = '((mv=0 OR o:"rather than pay" OR o:"without paying" OR kw:evoke OR is:phyrexian) (o:counter OR o:destroy OR o:exile OR o:"return target" OR o:"choose new targets" OR o:"puts it on the top" OR o:"puts it on the bottom"))';
+
+/** Keep older Build/Upgrade role queries aligned with the shared card-role truth boundary. */
+export function normalizeScryfallSearchQueryV15(query: string): string {
+  return query.trim().replace(LEGACY_FREE_INTERACTION_SEARCH_CLAUSE_V15, FREE_INTERACTION_SEARCH_CLAUSE_V15);
+}
+
 function sleep(ms: number): Promise<void> {
   return ms <= 0 ? Promise.resolve() : new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -165,18 +173,32 @@ function hasManaFreeEvoke(text: string): boolean {
   return costs.some((cost) => !/\{[^}]+\}/.test(cost));
 }
 
+function manaCostPayableWithoutMana(manaCost: string): boolean {
+  return manaCost.split(/\s*\/\/\s*/).some((faceCost) => {
+    const symbols = [...faceCost.matchAll(/\{([^}]+)\}/g)]
+      .map((match) => match[1]?.trim().toUpperCase() ?? '')
+      .filter(Boolean);
+    return symbols.length > 0 && symbols.every((symbol) =>
+      symbol === '0' || /^[WUBRG]\/P$/.test(symbol) || /^P\/[WUBRG]$/.test(symbol));
+  });
+}
+
 function hasFreeCastAlternative(card: ScryfallCard, manaCost: string, text: string, isLand: boolean): boolean {
   if (!isLand && card.cmc === 0 && /\{0\}/.test(manaCost)) return true;
   if (/rather than pay (?:this spell's|its|the)?\s*mana cost/.test(text)) return true;
   if (/cast this spell without paying (?:its|this spell's) mana cost/.test(text)) return true;
+  if (!isLand && manaCostPayableWithoutMana(manaCost)) return true;
   return !isLand && hasManaFreeEvoke(text);
 }
 
 function hasDirectInteractionText(text: string): boolean {
   return /counter target/.test(text)
     || /(?:destroy|exile)(?: up to [^.]{0,80})? target/.test(text)
+    || /exile any number of target/.test(text)
     || /return target .* to (?:its|their) owner's hand/.test(text)
+    || /put target [^.]{0,100} on (?:the )?top of (?:its|their) owner's library/.test(text)
     || /choose up to one target (?:creature|planeswalker) spell[\s\S]*owner puts it on the (?:top|bottom)/.test(text)
+    || /choose new targets? for target (?:spell|ability)/.test(text)
     || /deals? [^.]{0,120} damage [^.]{0,120} target/.test(text)
     || /target opponent reveals their hand/.test(text)
     || /target player [^.]{0,120}graveyard[^.]{0,120}bottom/.test(text);
@@ -300,7 +322,7 @@ export async function lookupPrinting(set: string, collectorNumber: string, lang?
 
 export async function searchCards(query: string, limit = 10): Promise<ScryfallCard[]> {
   const safeLimit = Math.max(1, Math.min(limit, 50));
-  const normalizedQuery = query.trim();
+  const normalizedQuery = normalizeScryfallSearchQueryV15(query);
   const cached = freshTimedCards(searchCache.get(normalizedQuery));
   if (cached) return cached.slice(0, safeLimit);
 
