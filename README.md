@@ -10,11 +10,12 @@ Long-running project state is repository-backed rather than chat-backed.
 
 - `project-state.json` is the authoritative machine-readable current development state.
 - `docs/PROJECT-STATE.md` is the generated human snapshot.
+- `validation-index.json` / `docs/VALIDATION-STATE.md` consolidate registered validation evidence and flag stale source lineages.
 - `PROJECT_HANDOFF.md` is a short generated compatibility entry point.
 - `docs/PROJECT-MANAGEMENT.md` defines the fresh-chat recovery/update protocol.
 - `ULTIMATE_MTG_SPEC.md` remains the north-star product/engineering specification.
 
-A fresh development session should read project state first, inspect the live active-branch head/PR, then continue from the active milestone and next actions instead of reconstructing old chats.
+A fresh development session should read project state and validation state first, inspect the live active-branch head/PR, then continue from the active milestone and next actions instead of reconstructing old chats. `npm run project:resume` produces the same deterministic repo-only recovery brief locally/CI.
 
 ## Release state
 
@@ -25,7 +26,7 @@ A fresh development session should read project state first, inspect the live ac
 - V0.14/V0.15 code on development branches is experimental and is not stable merely because it exists or passes tests.
 - No project-state, benchmark, model, workflow, or handoff can authorize stable promotion automatically.
 
-Current active development is recorded in `project-state.json`. At the PM-01 checkpoint, the active experimental line is `agent/v15-native-deck-intelligence` / PR #29 and Commander-intelligence feature development is deliberately paused while the persistent project-management layer is established. The older `agent/package-probabilities` line remains the recorded fully validated executable experimental baseline/recovery surface until newer intelligence work earns its own validation claim.
+Current active development is recorded in `project-state.json`. PM-01/PM-02 established and validated the repo-first recovery layer; Commander-intelligence development has resumed on `agent/v15-native-deck-intelligence` / PR #29 with INTEL-02 as the active milestone. The older `agent/package-probabilities` line remains the recorded fully validated executable experimental baseline/recovery surface until newer V0.15 deck-intelligence work earns its own validation claim.
 
 ## Hard truth hierarchy
 
@@ -117,12 +118,20 @@ Normal deterministic checks:
 npm run check
 ```
 
-Project-state checks/generation:
+Project-state / recovery checks:
 
 ```bash
 npm run project:typecheck
 npm run project:validate
+npm run validation:validate
+npm run project:resume
+```
+
+Regenerate state-derived artifacts after intentional state/result changes:
+
+```bash
 npm run project:handoff
+npm run validation:index
 ```
 
 Live dependency smoke:
@@ -161,4 +170,4 @@ The preferred engineering loop is:
 
 > **hard truth → research/cross-check → build → verify → exact maths/simulate → test → observe → learn → retest**
 
-For current development branch, pause/checkpoint state, active milestone, validation status, blockers and exact next work, read `project-state.json` and `docs/PROJECT-STATE.md` before changing anything.
+For current development branch, checkpoint state, active milestone, validation status, blockers and exact next work, read `project-state.json`, `docs/PROJECT-STATE.md` and `validation-index.json` before changing anything.
