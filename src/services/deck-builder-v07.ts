@@ -4,7 +4,7 @@ import {
   cardCommanderStrategyAffinityV15,
   deriveCommanderStrategyContextFromCommandersV15,
 } from './commander-strategy-affinity-v15.js';
-import { commanderTargetPressureV15, selectTargetAwareWinPackageV15 } from './commander-target-pressure-v15.js';
+import { commanderTargetPressureV15, selectInjectableTargetAwareWinPackageV15 } from './commander-target-pressure-v15.js';
 import { buildDeckMetrics, parseDecklist, type DeckEntry, type ParsedDeck } from './deck.js';
 import { discoverGeneralWinPackagesV15 } from './general-win-package-v15.js';
 import { discoverEligiblePoolV15 } from './neutral-deck-builder-v15.js';
@@ -742,6 +742,7 @@ interface UpgradeWinPackagePriorityV15 {
   selectedComboId: string | null;
   selectedBracketTag: string | null;
   missingSeedNames: string[];
+  protectedExistingPackageNames?: string[];
   selections: UpgradeAddSelectionV15[];
   reason: string;
 }
@@ -806,8 +807,16 @@ async function buildWinPackagePriorityV15(
     ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
     maxPackageCards: 4,
   });
-  const selected = selectTargetAwareWinPackageV15(options.targetBracket, discovery.candidates, discovery.selected);
-  if (!selected) {
+  const existingCardNames = [...parsed.commanders, ...parsed.main].map((entry) => entry.name);
+  const injection = selectInjectableTargetAwareWinPackageV15({
+    targetBracket: options.targetBracket,
+    candidates: discovery.candidates,
+    existingSelected: discovery.selected,
+    existingCardNames,
+    maxMissingSeedCards: Math.max(1, Math.min(15, Math.trunc(options.maxSwaps ?? 8))),
+  });
+  const selected = injection?.candidate ?? null;
+  if (!selected || !injection) {
     return {
       attempted: true,
       sourceStatus: discovery.status,
@@ -817,12 +826,11 @@ async function buildWinPackagePriorityV15(
       selections: [],
       reason: discovery.status === 'verification-unavailable'
         ? 'Verified package discovery was unavailable/incomplete; no package was invented.'
-        : 'Completed verified package discovery found no legal package satisfying the active printing/budget/exclusion constraints.',
+        : 'Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.',
     };
   }
 
-  const existing = new Set([...parsed.commanders, ...parsed.main].map((entry) => entry.name.toLocaleLowerCase()));
-  const missingSeedNames = selected.seedNames.filter((name) => !existing.has(name.toLocaleLowerCase()));
+  const missingSeedNames = injection.missingSeedNames;
   if (missingSeedNames.length === 0) {
     return {
       attempted: true,
@@ -886,6 +894,7 @@ async function buildWinPackagePriorityV15(
     selectedComboId: selected.comboId,
     selectedBracketTag: selected.bracketTag,
     missingSeedNames,
+    protectedExistingPackageNames: injection.existingComboCardNames,
     selections,
     reason: selected.bracketTag === 'R'
       ? 'Bracket-5 target pressure preferred an existing verified R-tagged package.'
@@ -903,13 +912,18 @@ export async function buildSimulationBackedUpgradePlanV07(
   const protectedNames = new Set((options.protectedCards ?? []).map((name) => name.toLocaleLowerCase()));
   const suggestions = await suggestDeckUpgrades(parsed, cards, allowedIdentity, options);
   const groups = (suggestions.candidateAddsByDeficit ?? []) as Array<Record<string, unknown>>;
+  const targetPressure = commanderTargetPressureV15(options.targetBracket);
+  const winPackagePriority = await buildWinPackagePriorityV15(parsed, cards, options);
+  const packageProtectedNames = new Set(
+    (winPackagePriority.protectedExistingPackageNames ?? []).map((name) => name.toLocaleLowerCase()),
+  );
   const cutPool = ((suggestions.candidateCuts ?? []) as Array<Record<string, unknown>>)
     .filter((cut) => {
       const card = cut.card as Record<string, unknown> | undefined;
-      return typeof card?.name !== 'string' || !protectedNames.has(card.name.toLocaleLowerCase());
+      if (typeof card?.name !== 'string') return true;
+      const name = card.name.toLocaleLowerCase();
+      return !protectedNames.has(name) && !packageProtectedNames.has(name);
     });
-  const targetPressure = commanderTargetPressureV15(options.targetBracket);
-  const winPackagePriority = await buildWinPackagePriorityV15(parsed, cards, options);
   const swapCapacity = Math.min(maxSwaps, cutPool.length);
 
   const chosenAdds: UpgradeAddSelectionV15[] = [];
@@ -991,6 +1005,7 @@ export async function buildSimulationBackedUpgradePlanV07(
       selectedComboId: winPackagePriority.selectedComboId,
       selectedBracketTag: winPackagePriority.selectedBracketTag,
       missingSeedNames: winPackagePriority.missingSeedNames,
+      protectedExistingPackageNames: winPackagePriority.protectedExistingPackageNames ?? [],
       atomicWinPackageInjected: atomicWinPackageFits,
       reason: winPackagePriority.reason,
     },
@@ -1025,7 +1040,7 @@ export async function buildSimulationBackedUpgradePlanV07(
     sourceUpgradeAnalysis: suggestions,
     caveats: [
       'V0.7 does not automatically claim the suggested swaps are final. It deliberately returns the whole candidate deck and before/after evidence so an AI or player can reject a swap that harms theme or a preferred win route.',
-      'IN/OUT pairing now minimizes damage to the existing structural role targets before using cut pressure as a tie-breaker; Bracket-5 free interaction is treated as its own existing target pressure, and an already-verified missing win package is injected atomically when one survives the current hard constraints.',
+      'IN/OUT pairing minimizes damage to existing structural role targets before cut pressure tie-breaks; Bracket-5 verified packages are selected only when their missing seeds fit the current swap package, and any already-present pieces of that selected route are temporarily protected from cuts during atomic injection.',
       'Same-seed simulation improves comparability but does not remove multiplayer variance, pilot decisions, hidden information, or meta effects.',
     ],
   };
