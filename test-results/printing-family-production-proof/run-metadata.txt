@@ -1,5 +1,5 @@
-source_sha=416c3998e6d66b7e3e9ee06249f89e4fa3404792
-build_outcome=success
-test_outcome=success
-proof_outcome=success
+source_sha=416dc18feabed2231712eb4b8e9019d82f24802e
+build_outcome=failure
+test_outcome=skipped
+proof_outcome=skipped
 policy=permanent-production-presets
