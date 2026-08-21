@@ -3,6 +3,7 @@ import { validateCommanderDeck } from './commander-rules.js';
 import { buildSimulationBackedUpgradePlanV07, type UpgradePlanOptionsV07 } from './deck-builder-v07.js';
 import { parseDecklist, type ParsedDeck } from './deck.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from './scryfall.js';
+import { assessPlanTargetGateImprovementV15 } from './target-gate-improvement-v15.js';
 
 export type RefinementDetailLevelV11 = 'simple' | 'standard' | 'detailed';
 
@@ -90,7 +91,8 @@ export function refinementImprovementScoreV11(plan: Record<string, unknown>): {
   add('protectionWinRate', 0.45);
   add('averageSpellsCast', 6.0);
 
-  // Structural deltas are deliberately a smaller part of the score than actual simulated consistency.
+  // Structural deltas remain deliberately small. The authoritative target-gate component below
+  // decides whether a change actually repairs/advances a failed requested construction gate.
   components.interactionStructure = Number((metricDelta(plan, 'interactionCount') * 0.05).toFixed(3));
   components.protectionStructure = Number((metricDelta(plan, 'protectionCount') * 0.05).toFixed(3));
   components.drawStructure = Number((metricDelta(plan, 'drawCount') * 0.03).toFixed(3));
@@ -104,11 +106,28 @@ export function refinementImprovementScoreV11(plan: Record<string, unknown>): {
     components.manaValueEfficiency = Number(((beforeMv - afterMv) * 0.2).toFixed(3));
   }
 
+  const pressure = asRecord(plan.v15TargetPressure);
+  const rawStatus = pressure.winRouteVerificationStatus;
+  const beforeWinRouteStatus = rawStatus === 'protected' || rawStatus === 'no-verified-route' || rawStatus === 'verification-unavailable'
+    ? rawStatus
+    : 'verification-unavailable';
+  const pressureTarget = asRecord(pressure.targetPressure);
+  const targetBracket = numeric(pressureTarget.targetBracket) ?? 4;
+  const targetGate = assessPlanTargetGateImprovementV15({
+    targetBracket,
+    plan,
+    beforeWinRouteStatus,
+  });
+  components.targetGatePriority = targetGate.score;
+
   const score = Object.values(components).reduce((sum, value) => sum + value, 0);
   const keepDelta = numeric(delta.functionalKeepRate) ?? 0;
   const commanderDelta = numeric(delta.commanderUptimePercent) ?? 0;
   const spellsDelta = numeric(delta.averageSpellsCast) ?? 0;
-  const significantRegression = keepDelta <= -4 || commanderDelta <= -6 || spellsDelta <= -0.35;
+  const significantRegression = keepDelta <= -4
+    || commanderDelta <= -6
+    || spellsDelta <= -0.35
+    || targetGate.regressedGates.length > 0;
 
   return {
     score: Number(score.toFixed(3)),
@@ -256,7 +275,7 @@ export async function refineCommanderDeckIterativelyV11(
         continue;
       }
       if (score.significantRegression) {
-        lastReason = 'package-causes-a-significant-simulated-regression';
+        lastReason = 'package-causes-a-significant-simulated-or-target-gate-regression';
         attemptSize -= 1;
         continue;
       }
@@ -340,8 +359,8 @@ export async function refineCommanderDeckIterativelyV11(
     finalDecklist: currentDecklist,
     finalCommanderRules: finalRules,
     explanation: acceptedSwaps.length > 0
-      ? 'The engine accepted only upgrade packages that stayed legal, respected the active printing/price constraints, fit the total budget when supplied, and cleared the minimum before/after improvement threshold.'
-      : 'No package cleared all legality, budget and improvement checks, so the starting list was kept instead of forcing weaker swaps.',
+      ? 'The engine accepted only upgrade packages that stayed legal, respected the active printing/price constraints, fit the total budget when supplied, and cleared the target-gate-aware before/after improvement threshold.'
+      : 'No package cleared all legality, budget, target-gate and improvement checks, so the starting list was kept instead of forcing weaker swaps.',
   };
 
   if (detailLevel === 'simple') return simple;
@@ -366,6 +385,6 @@ export async function refineCommanderDeckIterativelyV11(
   return {
     ...standard,
     detailedRounds: rounds,
-    scoringGuidance: 'The refinement score combines same-seed simulation deltas with smaller structural-role adjustments. It is a comparison heuristic, not a universal Commander power score or measured win rate.',
+    scoringGuidance: 'The refinement score combines authoritative requested target-gate movement with same-seed simulation deltas and smaller structural-role adjustments. It is a within-deck comparison heuristic, not a universal Commander power score or measured win rate.',
   };
 }
