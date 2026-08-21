@@ -14,7 +14,6 @@ import {
 } from '../src/services/printing-policy-v08.js';
 import { getCardsByIdentifiers, getCardsByNames, type CardIdentifierInput } from '../src/services/scryfall.js';
 
-const SETS = ['LTR', 'LTC', 'HOB', 'HOC'] as const;
 const CANDIDATES: Array<{ label: string; commanderNames: string[] }> = [
   { label: 'Tom Bombadil', commanderNames: ['Tom Bombadil'] },
   { label: 'Aragorn, the Uniter', commanderNames: ['Aragorn, the Uniter'] },
@@ -41,7 +40,7 @@ function ids(parsed: ParsedDeck): CardIdentifierInput[] {
   }));
 }
 async function policy() {
-  return resolvePrintingPolicyV08({ allowedSets: [...SETS], includePromos: true, includeSpecialReleases: true });
+  return resolvePrintingPolicyV08({ printingFamily: 'Middle-earth', includePromos: true, includeSpecialReleases: true });
 }
 async function refs(names: string[]): Promise<Array<{ name: string; set: string; collectorNumber: string }>> {
   const p = await policy();
@@ -54,7 +53,7 @@ async function refs(names: string[]): Promise<Array<{ name: string; set: string;
     const card = resolved.cards.find((candidate) => neutralCommanderLookupNameV15(candidate.name).toLocaleLowerCase() === lookup);
     assert.ok(card, `${requested} did not bind to Oracle data`);
     const printing = await selectEligiblePrintingV08(card, p);
-    assert.ok(printing, `${requested} has no eligible LTR/LTC/HOB/HOC printing`);
+    assert.ok(printing, `${requested} has no eligible Middle-earth/Hobbit physical printing`);
     output.push({ name: printing.card.name, set: printing.card.set.toUpperCase(), collectorNumber: printing.card.collector_number });
   }
   return output;
@@ -94,11 +93,11 @@ async function main(): Promise<void> {
           arguments: {
             commanders: commanderRefs,
             targetBracket: 5,
-            allowedSets: [...SETS],
+            printingFamily: 'Middle-earth',
             includePromos: true,
             includeSpecialReleases: true,
             winPackageMode: 'prefer',
-            maxWinPackageCards: 3,
+            maxWinPackageCards: 4,
             cedhIntent: true,
             optimizedPlanEvidence: true,
             competitiveMetagameEvidence: false,
@@ -165,7 +164,7 @@ async function main(): Promise<void> {
       arguments: {
         decklist: selected.decklist,
         targetBracket: 5,
-        allowedSets: [...SETS],
+        printingFamily: 'Middle-earth',
         includePromos: true,
         includeSpecialReleases: true,
         maxSwaps: 20,
@@ -190,13 +189,16 @@ async function main(): Promise<void> {
   const finalDeck = typeof refinement.finalDecklist === 'string' && refinement.finalDecklist.trim() ? refinement.finalDecklist : selected.decklist;
   const finalTruth = await verify(finalDeck);
   const finalEvaluation = await evaluateCommanderBuildV15(finalDeck, {
-    allowedSets: [...SETS], includePromos: true, includeSpecialReleases: true,
+    printingFamily: 'Middle-earth', includePromos: true, includeSpecialReleases: true,
     cedhIntent: true, optimizedPlanEvidence: true, competitiveMetagameEvidence: false,
   });
 
   const output = {
-    schema: 'middle-earth-bracket5-expanded-v15.1',
-    allowedSets: [...SETS],
+    schema: 'middle-earth-bracket5-expanded-v15.2',
+    printingFamily: 'Middle-earth',
+    includePromos: true,
+    includeSpecialReleases: true,
+    maxWinPackageCards: 4,
     successes: successes.map(({ decklist: _decklist, scoreKey: _scoreKey, ...item }) => item),
     failures,
     selected: (() => { const { decklist: _decklist, scoreKey: _scoreKey, ...item } = selected; return item; })(),
