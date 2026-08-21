@@ -1,5 +1,6 @@
 name: V0.15 Zero Progress Guard Integration
 
+# Re-triggered after PM-01/PM-02 validation so the guard lands on the current checked-in lineage.
 on:
   push:
     branches: ["agent/v15-native-deck-intelligence"]
