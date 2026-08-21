@@ -1,0 +1,43 @@
+name: Themed Special Printing Audit
+on:
+  push:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - "scripts/audit-marvel-middle-earth-special-printings-v15.ts"
+      - ".github/workflows/themed-special-printing-audit.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm run build
+      - id: audit
+        continue-on-error: true
+        run: npx tsx scripts/audit-marvel-middle-earth-special-printings-v15.ts
+      - if: always()
+        env:
+          OUTCOME: ${{ steps.audit.outcome }}
+        run: |
+          set -euo pipefail
+          mkdir -p test-results/themed-special-printing-audit
+          rm -f test-results/themed-special-printing-audit/result.json test-results/themed-special-printing-audit/failure.txt
+          [ ! -f themed-special-printing-audit.json ] || cp themed-special-printing-audit.json test-results/themed-special-printing-audit/result.json
+          [ ! -f themed-special-printing-audit-failure.txt ] || cp themed-special-printing-audit-failure.txt test-results/themed-special-printing-audit/failure.txt
+          printf 'source_sha=%s\noutcome=%s\n' "$GITHUB_SHA" "$OUTCOME" > test-results/themed-special-printing-audit/run-metadata.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- test-results/themed-special-printing-audit
+          if ! git diff --cached --quiet; then git commit -m "test-results: persist themed special printing audit" && git push origin "HEAD:${GITHUB_REF_NAME}"; fi
+      - if: always()
+        env:
+          OUTCOME: ${{ steps.audit.outcome }}
+        run: test "$OUTCOME" = "success"
