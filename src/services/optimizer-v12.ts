@@ -55,6 +55,26 @@ interface CandidateEvaluationV12 {
   resolved: Awaited<ReturnType<typeof resolveDeck>> | null;
 }
 
+export interface RefinementCandidateAttemptV15 {
+  attemptSize: number;
+  candidatePackagesGenerated: number;
+  candidatePackagesEligible: number;
+  winningCandidate: number | null;
+  reasonCounts: Record<string, number>;
+  candidateComparisons: Array<Record<string, unknown>>;
+}
+
+export interface RefinementCandidateAttemptInputV15 {
+  attemptSize: number;
+  winningCandidate: number | null;
+  candidates: ReadonlyArray<{
+    candidate: number;
+    eligible: boolean;
+    reason: string;
+    comparison: Record<string, unknown>;
+  }>;
+}
+
 interface RoundSummaryV12 {
   round: number;
   accepted: boolean;
@@ -70,6 +90,7 @@ interface RoundSummaryV12 {
   stopReason?: string;
   swaps: Array<Record<string, unknown>>;
   candidateComparisons: Array<Record<string, unknown>>;
+  candidateAttempts: RefinementCandidateAttemptV15[];
 }
 
 interface RefinementThemeContextV15 {
@@ -142,6 +163,78 @@ function compactThemeAudit(audit: NeutralThemeAuditV15 | null): Record<string, u
   };
 }
 
+export function candidatePlanProvenanceV15(plan: Record<string, unknown> | null): Record<string, unknown> {
+  const pressure = asRecord(plan?.v15TargetPressure);
+  const source = asRecord(plan?.sourceUpgradeAnalysis);
+  const attempted = pressure.winPackageDiscoveryAttempted === true;
+  const sourceStatus = typeof pressure.winPackageSourceStatus === 'string'
+    ? pressure.winPackageSourceStatus
+    : 'not-reported';
+  const selectedComboId = typeof pressure.selectedComboId === 'string' ? pressure.selectedComboId : null;
+  const atomicInjected = pressure.atomicWinPackageInjected === true;
+  const normalizedStatus = sourceStatus.toLocaleLowerCase();
+  const winPackageOutcome = !attempted
+    ? 'not-attempted'
+    : atomicInjected
+      ? 'verified-package-injected'
+      : selectedComboId
+        ? 'verified-package-selected-not-injected'
+        : normalizedStatus === 'no-verified-win-package'
+          ? 'completed-no-verified-package'
+          : normalizedStatus.includes('unavailable') || normalizedStatus.includes('incomplete')
+            ? 'verification-unavailable'
+            : normalizedStatus === 'verified-win-packages-found'
+              ? 'selection-failed-after-discovery'
+              : 'no-package-selected';
+  const candidateGroups = Array.isArray(source.candidateAddsByDeficit)
+    ? source.candidateAddsByDeficit.map(asRecord).map((group) => ({
+        role: group.role ?? null,
+        prioritySource: group.prioritySource ?? null,
+        targetGate: group.targetGate ?? null,
+        current: group.current ?? null,
+        target: group.target ?? null,
+        deficit: group.deficit ?? null,
+        candidateDiscoveryMode: group.candidateDiscoveryMode ?? null,
+        candidateCount: Array.isArray(group.candidates) ? group.candidates.length : 0,
+      }))
+    : [];
+  return {
+    targetBracket: asRecord(pressure.targetPressure).targetBracket ?? null,
+    winRouteVerificationStatus: pressure.winRouteVerificationStatus ?? null,
+    winPackageDiscoveryAttempted: attempted,
+    winPackageSourceStatus: sourceStatus,
+    winPackageOutcome,
+    selectedComboId,
+    selectedBracketTag: pressure.selectedBracketTag ?? null,
+    missingSeedNames: Array.isArray(pressure.missingSeedNames) ? pressure.missingSeedNames : [],
+    atomicWinPackageInjected: atomicInjected,
+    winPackageReason: pressure.reason ?? null,
+    candidateDiscovery: source.candidateDiscovery ?? null,
+    authoritativeTargetGatePriorities: Array.isArray(source.authoritativeTargetGatePriorities)
+      ? source.authoritativeTargetGatePriorities
+      : [],
+    structuralDeficits: Array.isArray(source.structuralDeficits) ? source.structuralDeficits : [],
+    candidateGroups,
+  };
+}
+
+export function appendRefinementCandidateAttemptV15(
+  existing: readonly RefinementCandidateAttemptV15[],
+  input: RefinementCandidateAttemptInputV15,
+): RefinementCandidateAttemptV15[] {
+  const counts = new Map<string, number>();
+  for (const candidate of input.candidates) counts.set(candidate.reason, (counts.get(candidate.reason) ?? 0) + 1);
+  const reasonCounts = Object.fromEntries([...counts.entries()].sort(([left], [right]) => left.localeCompare(right)));
+  return [...existing, {
+    attemptSize: Math.max(1, Math.trunc(input.attemptSize)),
+    candidatePackagesGenerated: input.candidates.length,
+    candidatePackagesEligible: input.candidates.filter((candidate) => candidate.eligible).length,
+    winningCandidate: input.winningCandidate,
+    reasonCounts,
+    candidateComparisons: input.candidates.map((candidate) => candidate.comparison),
+  }];
+}
+
 function candidateSummary(candidate: CandidateEvaluationV12): Record<string, unknown> {
   return {
     candidate: candidate.candidate,
@@ -165,6 +258,7 @@ function candidateSummary(candidate: CandidateEvaluationV12): Record<string, unk
       ignoredUnverifiedGates: candidate.targetGate.ignoredUnverifiedGates,
     },
     themeAudit: compactThemeAudit(candidate.themeAudit),
+    planProvenance: candidatePlanProvenanceV15(candidate.plan),
     swaps: candidate.plan && Array.isArray(candidate.plan.swaps)
       ? candidate.plan.swaps.map(asRecord).map(simpleSwap)
       : [],
@@ -661,6 +755,7 @@ export async function refineCommanderDeckIterativelyV12(
     let attemptSize = Math.min(swapsPerRound, swapsRemaining);
     let winner: CandidateEvaluationV12 | null = null;
     let evaluatedAtWinningSize: CandidateEvaluationV12[] = [];
+    let candidateAttempts: RefinementCandidateAttemptV15[] = [];
     let lastReason = 'no-acceptable-package';
 
     while (attemptSize >= 1 && !winner) {
@@ -688,6 +783,16 @@ export async function refineCommanderDeckIterativelyV12(
       }
       winner = chooseWinner(candidates);
       evaluatedAtWinningSize = candidates;
+      candidateAttempts = appendRefinementCandidateAttemptV15(candidateAttempts, {
+        attemptSize,
+        winningCandidate: winner?.candidate ?? null,
+        candidates: candidates.map((candidate) => ({
+          candidate: candidate.candidate,
+          eligible: candidate.eligible,
+          reason: candidate.reason,
+          comparison: candidateSummary(candidate),
+        })),
+      });
       if (!winner) {
         const reasons = candidates.map((candidate) => candidate.reason);
         lastReason = reasons.includes('improvement-below-threshold')
@@ -719,6 +824,7 @@ export async function refineCommanderDeckIterativelyV12(
         stopReason: lastReason,
         swaps: [],
         candidateComparisons: evaluatedAtWinningSize.map(candidateSummary),
+        candidateAttempts,
       });
       stopReason = lastReason;
       break;
@@ -749,6 +855,7 @@ export async function refineCommanderDeckIterativelyV12(
       themeAuditBefore: currentThemeAudit,
       swaps: roundSwaps,
       candidateComparisons: evaluatedAtWinningSize.map(candidateSummary),
+      candidateAttempts,
     });
   }
 
@@ -802,6 +909,9 @@ export async function refineCommanderDeckIterativelyV12(
       acceptedSwaps: round.acceptedSwaps,
       candidatePackagesGenerated: round.candidatePackagesGenerated,
       candidatePackagesEligible: round.candidatePackagesEligible,
+      candidateAttemptSizes: round.candidateAttempts.map((attempt) => attempt.attemptSize),
+      candidatePackagesGeneratedAcrossAttempts: round.candidateAttempts
+        .reduce((sum, attempt) => sum + attempt.candidatePackagesGenerated, 0),
       winningCandidate: round.winningCandidate,
       estimatedSpendUsd: round.estimatedSpendUsd,
       improvementScore: round.improvementScore,

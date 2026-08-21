@@ -33,7 +33,7 @@ export interface UpgradeOptions {
   maxCandidatesPerRole?: number;
 }
 
-interface StructuralTarget {
+export interface UpgradeStructuralTargetsV15 {
   ramp: number;
   draw: number;
   interaction: number;
@@ -43,7 +43,27 @@ interface StructuralTarget {
   earlyPlays: number;
 }
 
-const TARGETS: Record<number, StructuralTarget> = {
+export interface UpgradeCandidateMetricsV15 {
+  rampCount: number;
+  drawCount: number;
+  interactionCount: number;
+  protectionCount: number;
+  tutorCount: number;
+  earlyPlayCount: number;
+  averageNonlandManaValue: number;
+  roleCounts: Record<string, number>;
+}
+
+export interface UpgradeCandidatePriorityV15 {
+  role: 'average-nonland-mv' | 'ramp' | 'draw' | 'interaction' | 'free-interaction' | 'protection' | 'tutor' | 'early';
+  current: number;
+  target: number;
+  deficit: number;
+  prioritySource: 'authoritative-target-gate' | 'aspirational-role-target';
+  targetGate: 'average-nonland-mv' | null;
+}
+
+const TARGETS: Record<number, UpgradeStructuralTargetsV15> = {
   1: { ramp: 6, draw: 6, interaction: 5, freeInteraction: 0, protection: 2, tutors: 0, earlyPlays: 8 },
   2: { ramp: 8, draw: 8, interaction: 8, freeInteraction: 0, protection: 3, tutors: 1, earlyPlays: 10 },
   3: { ramp: 10, draw: 10, interaction: 10, freeInteraction: 0, protection: 4, tutors: 3, earlyPlays: 12 },
@@ -53,6 +73,49 @@ const TARGETS: Record<number, StructuralTarget> = {
 
 function clampBracket(value: number | undefined): number {
   return Math.max(1, Math.min(5, Math.trunc(value ?? 4)));
+}
+
+/**
+ * Put currently failed authoritative Bracket-5 construction gates ahead of aspirational role
+ * targets. The verified-win-route lane is handled atomically by deck-builder-v07; this helper
+ * supplies the measurable curve lane that the old role-only planner could not generate.
+ */
+export function upgradeCandidatePrioritiesV15(
+  metrics: UpgradeCandidateMetricsV15,
+  targets: UpgradeStructuralTargetsV15,
+  targetBracket: number,
+): UpgradeCandidatePriorityV15[] {
+  const authoritative: UpgradeCandidatePriorityV15[] = [];
+  if (clampBracket(targetBracket) >= 5 && metrics.averageNonlandManaValue > 2.6) {
+    authoritative.push({
+      role: 'average-nonland-mv',
+      current: metrics.averageNonlandManaValue,
+      target: 2.6,
+      deficit: Number((metrics.averageNonlandManaValue - 2.6).toFixed(3)),
+      prioritySource: 'authoritative-target-gate',
+      targetGate: 'average-nonland-mv',
+    });
+  }
+
+  const aspirational = [
+    { role: 'ramp' as const, current: metrics.rampCount, target: targets.ramp },
+    { role: 'draw' as const, current: metrics.drawCount, target: targets.draw },
+    { role: 'interaction' as const, current: metrics.interactionCount, target: targets.interaction },
+    { role: 'free-interaction' as const, current: Number(metrics.roleCounts['free interaction'] ?? 0), target: targets.freeInteraction },
+    { role: 'protection' as const, current: metrics.protectionCount, target: targets.protection },
+    { role: 'tutor' as const, current: metrics.tutorCount, target: targets.tutors },
+    { role: 'early' as const, current: metrics.earlyPlayCount, target: targets.earlyPlays },
+  ]
+    .map((item): UpgradeCandidatePriorityV15 => ({
+      ...item,
+      deficit: Math.max(0, item.target - item.current),
+      prioritySource: 'aspirational-role-target',
+      targetGate: null,
+    }))
+    .filter((item) => item.deficit > 0)
+    .sort((a, b) => b.deficit - a.deficit || a.role.localeCompare(b.role));
+
+  return [...authoritative, ...aspirational];
 }
 
 function identityQuery(identity: string[]): string {
@@ -69,6 +132,7 @@ function roleClause(role: string): string {
     protection: '(o:"hexproof" OR o:"indestructible" OR o:"protection from" OR o:"phase out")',
     tutor: 'o:"search your library for"',
     early: 'mv<=2',
+    'average-nonland-mv': 'mv<=2',
   };
   return roleClauses[role] ?? '';
 }
@@ -132,6 +196,7 @@ function cardMatchesRole(card: ScryfallCard, role: string): boolean {
   if (role === 'protection') return roles.has('protection') || roles.has('board protection');
   if (role === 'tutor') return roles.has('tutor');
   if (role === 'early') return !card.type_line.toLowerCase().includes('land') && card.cmc <= 2;
+  if (role === 'average-nonland-mv') return !card.type_line.toLowerCase().includes('land') && card.cmc <= 2;
   return false;
 }
 
@@ -162,6 +227,7 @@ function candidateScore(
 ): number {
   const roles = inferCardRoles(card);
   let score = cardMatchesRole(card, role) ? 100 : 0;
+  if (role === 'average-nonland-mv') score += Math.max(0, 2.6 - card.cmc) * 20;
   score += Math.max(0, 8 - card.cmc) * 3;
   if (roles.includes('fast mana')) score += 20;
   if (roles.includes('free interaction')) score += 20;
@@ -262,8 +328,8 @@ export async function suggestDeckUpgrades(
 ): Promise<Record<string, unknown>> {
   const targetBracket = clampBracket(options.targetBracket);
   const targetPressure = commanderTargetPressureV15(targetBracket);
-  const targets: StructuralTarget = {
-    ...(TARGETS[targetBracket] as StructuralTarget),
+  const targets: UpgradeStructuralTargetsV15 = {
+    ...(TARGETS[targetBracket] as UpgradeStructuralTargetsV15),
     freeInteraction: targetPressure.minimumFreeInteraction,
   };
   const metrics = buildDeckMetrics(parsed, cards);
@@ -274,18 +340,11 @@ export async function suggestDeckUpgrades(
     ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
     ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
   });
-  const deficits = [
-    { role: 'ramp', current: metrics.rampCount, target: targets.ramp },
-    { role: 'draw', current: metrics.drawCount, target: targets.draw },
-    { role: 'interaction', current: metrics.interactionCount, target: targets.interaction },
-    { role: 'free-interaction', current: Number(metrics.roleCounts['free interaction'] ?? 0), target: targets.freeInteraction },
-    { role: 'protection', current: metrics.protectionCount, target: targets.protection },
-    { role: 'tutor', current: metrics.tutorCount, target: targets.tutors },
-    { role: 'early', current: metrics.earlyPlayCount, target: targets.earlyPlays },
-  ]
-    .map((item) => ({ ...item, deficit: Math.max(0, item.target - item.current) }))
-    .filter((item) => item.deficit > 0)
-    .sort((a, b) => b.deficit - a.deficit);
+  const candidatePriorities = upgradeCandidatePrioritiesV15(metrics, targets, targetBracket);
+  const authoritativeTargetGatePriorities = candidatePriorities
+    .filter((priority) => priority.prioritySource === 'authoritative-target-gate');
+  const deficits = candidatePriorities
+    .filter((priority) => priority.prioritySource === 'aspirational-role-target');
 
   const themeClause = options.themeQuery?.trim() ?? '';
   const themeMinimumMainMatches = Math.max(0, Math.trunc(options.themeMinimumMainMatches ?? 0));
@@ -328,7 +387,7 @@ export async function suggestDeckUpgrades(
         note: 'Unrestricted Upgrade still uses bounded role-specific discovery; final candidates remain independently filtered by role and Commander legality.',
       };
 
-  for (const deficit of deficits.slice(0, 5)) {
+  for (const deficit of candidatePriorities.slice(0, 5)) {
     const query = restrictedPoolActive ? null : roleSearchQuery(deficit.role, allowedIdentity, printingPolicy);
     let genericResults: ScryfallCard[] = [];
     if (restrictedEligiblePool) {
@@ -390,6 +449,9 @@ export async function suggestDeckUpgrades(
         ? ' It also helps close the current controlled theme-density deficit.'
         : '';
 
+      const targetReason = deficit.prioritySource === 'authoritative-target-gate'
+        ? `Advances the currently failed authoritative Bracket-5 ${deficit.targetGate} gate (${deficit.current} must fall to ${deficit.target} or lower)`
+        : `Addresses the detected ${deficit.role} deficit`;
       candidates.push({
         card: summarizeCard(card),
         score: Number(candidateScore(card, deficit.role, strategyContext).toFixed(1)),
@@ -412,7 +474,7 @@ export async function suggestDeckUpgrades(
           familyMatch: printing.matchedBy,
           scryfallUrl: printing.card.scryfall_uri,
         },
-        whyItFits: `Addresses the detected ${deficit.role} deficit${strategyReason}. The recommended physical printing satisfies the active printing-family/set policy.${themeReason}`,
+        whyItFits: `${targetReason}${strategyReason}. The recommended physical printing satisfies the active printing-family/set policy.${themeReason}`,
       });
     }
 
@@ -431,6 +493,8 @@ export async function suggestDeckUpgrades(
     currentMetrics: metrics,
     structuralTargets: targets,
     structuralDeficits: deficits,
+    authoritativeTargetGatePriorities,
+    candidateGenerationPriorities: candidatePriorities,
     candidateDiscovery,
     candidateAddsByDeficit: candidateGroups,
     candidateCuts: cutCandidates(

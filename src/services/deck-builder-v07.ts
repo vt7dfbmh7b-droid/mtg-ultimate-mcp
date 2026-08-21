@@ -556,7 +556,8 @@ function candidateLine(candidate: Record<string, unknown>): string | null {
 }
 
 type UpgradeStructuralRoleV15 = 'ramp' | 'draw' | 'interaction' | 'free-interaction' | 'protection' | 'tutor' | 'early';
-type UpgradeAddressedRoleV15 = UpgradeStructuralRoleV15 | 'win-package';
+type UpgradeTargetGateRoleV15 = 'average-nonland-mv';
+type UpgradeAddressedRoleV15 = UpgradeStructuralRoleV15 | UpgradeTargetGateRoleV15 | 'win-package';
 
 interface UpgradeAddSelectionV15 {
   candidate: Record<string, unknown>;
@@ -580,10 +581,15 @@ interface UpgradePairingV15 {
   cut: Record<string, unknown>;
   addressedRole: UpgradeAddressedRoleV15;
   structuralDeficitAfterSwap: number;
+  authoritativeTargetGate?: UpgradeTargetGateRoleV15;
+  nonlandManaValueReduction?: number;
 }
 
 const UPGRADE_STRUCTURAL_ROLES_V15: UpgradeStructuralRoleV15[] = [
   'ramp', 'draw', 'interaction', 'free-interaction', 'protection', 'tutor', 'early',
+];
+const UPGRADE_CANDIDATE_ROLES_V15: UpgradeAddressedRoleV15[] = [
+  'average-nonland-mv', ...UPGRADE_STRUCTURAL_ROLES_V15, 'win-package',
 ];
 
 function recordNumber(value: unknown): number {
@@ -666,7 +672,8 @@ function upgradeStructuralStateV15(
 }
 
 /**
- * Pair the already-ranked additions with cuts by marginal structural preservation.
+ * Pair the already-ranked additions with cuts by authoritative target movement first, then
+ * marginal structural preservation.
  * Candidate generation, cut pressure, commander-strategy protection, budgets, printings and
  * simulation remain unchanged; this only stops independent IN/OUT rankings from accidentally
  * undoing the role deficit that an incoming card is meant to repair.
@@ -685,26 +692,43 @@ export function pairUpgradeSwapsByStructureV15(
   for (const selection of additions) {
     if (remainingCuts.length === 0) break;
     const addCard = summarizedCard(selection.candidate);
+    const addManaValue = recordNumber(addCard.manaValue);
     const afterAdd = applySummaryToStructuralCountsV15(counts, addCard, 1);
-    remainingCuts.sort((left, right) => {
+    const candidateCuts = selection.role === 'average-nonland-mv'
+      ? remainingCuts.filter((cut) => recordNumber(summarizedCard(cut).manaValue) > addManaValue)
+      : [...remainingCuts];
+    candidateCuts.sort((left, right) => {
       const leftCounts = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(left), -1);
       const rightCounts = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(right), -1);
       const leftDeficit = structuralDeficitTotalV15(leftCounts, state.targets);
       const rightDeficit = structuralDeficitTotalV15(rightCounts, state.targets);
+      if (selection.role === 'average-nonland-mv') {
+        const leftReduction = recordNumber(summarizedCard(left).manaValue) - addManaValue;
+        const rightReduction = recordNumber(summarizedCard(right).manaValue) - addManaValue;
+        if (leftReduction !== rightReduction) return rightReduction - leftReduction;
+      }
       const leftPressure = recordNumber(left.heuristicCutPressure);
       const rightPressure = recordNumber(right.heuristicCutPressure);
       const leftName = recordString(summarizedCard(left).name);
       const rightName = recordString(summarizedCard(right).name);
       return leftDeficit - rightDeficit || rightPressure - leftPressure || leftName.localeCompare(rightName);
     });
-    const cut = remainingCuts.shift();
-    if (!cut) break;
+    const cut = candidateCuts[0];
+    if (!cut) continue;
+    const cutIndex = remainingCuts.indexOf(cut);
+    if (cutIndex < 0) continue;
+    remainingCuts.splice(cutIndex, 1);
     counts = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);
+    const nonlandManaValueReduction = recordNumber(summarizedCard(cut).manaValue) - addManaValue;
     pairs.push({
       add: selection.candidate,
       cut,
       addressedRole: selection.role,
       structuralDeficitAfterSwap: structuralDeficitTotalV15(counts, state.targets),
+      ...(selection.role === 'average-nonland-mv' ? {
+        authoritativeTargetGate: 'average-nonland-mv' as const,
+        nonlandManaValueReduction: Number(nonlandManaValueReduction.toFixed(3)),
+      } : {}),
     });
   }
   return pairs;
@@ -939,8 +963,8 @@ export async function buildSimulationBackedUpgradePlanV07(
     }
   }
   for (const group of groups) {
-    const role = recordString(group.role) as UpgradeStructuralRoleV15;
-    if (!UPGRADE_STRUCTURAL_ROLES_V15.includes(role)) continue;
+    const role = recordString(group.role) as UpgradeAddressedRoleV15;
+    if (!UPGRADE_CANDIDATE_ROLES_V15.includes(role) || role === 'win-package') continue;
     for (const candidate of (group.candidates ?? []) as Array<Record<string, unknown>>) {
       if (chosenAdds.length >= swapCapacity) break;
       const name = candidateName(candidate);
@@ -1020,6 +1044,8 @@ export async function buildSimulationBackedUpgradePlanV07(
       structuralPairing: {
         addressedRole: pair.addressedRole,
         remainingStructuralDeficitAfterSwap: pair.structuralDeficitAfterSwap,
+        authoritativeTargetGate: pair.authoritativeTargetGate ?? null,
+        nonlandManaValueReduction: pair.nonlandManaValueReduction ?? null,
       },
     })),
     protectedCards: options.protectedCards ?? [],
