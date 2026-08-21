@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { ScryfallCard } from '../types/scryfall.js';
 import { buildDeckMetrics, parseDecklist } from './deck.js';
-import { inferCardRoles } from './scryfall.js';
+import { inferCardRoles, normalizeScryfallSearchQueryV15 } from './scryfall.js';
 
 function card(input: {
   name: string;
@@ -104,6 +104,22 @@ const fierceGuardianship = card({
   manaCost: '{2}{U}',
 });
 
+const deflectingSwat = card({
+  name: 'Deflecting Swat',
+  typeLine: 'Instant',
+  oracleText: 'If you control a commander, you may cast this spell without paying its mana cost. You may choose new targets for target spell or ability.',
+  cmc: 3,
+  manaCost: '{2}{R}',
+});
+
+const submerge = card({
+  name: 'Submerge',
+  typeLine: 'Instant',
+  oracleText: "If an opponent controls a Forest and you control an Island, you may cast this spell without paying its mana cost. Put target creature on top of its owner's library.",
+  cmc: 5,
+  manaCost: '{4}{U}',
+});
+
 const forceOfWill = card({
   name: 'Force of Will',
   typeLine: 'Instant',
@@ -118,6 +134,22 @@ const solitude = card({
   oracleText: "Flash\nLifelink\nWhen Solitude enters, exile up to one other target creature. That creature's controller gains life equal to its power.\nEvoke—Exile a white card from your hand.",
   cmc: 5,
   manaCost: '{3}{W}{W}',
+});
+
+const mentalMisstep = card({
+  name: 'Mental Misstep',
+  typeLine: 'Instant',
+  oracleText: 'Counter target spell with mana value 1.',
+  cmc: 1,
+  manaCost: '{U/P}',
+});
+
+const phyrexianButNotFree = card({
+  name: 'Phyrexian But Not Free',
+  typeLine: 'Instant',
+  oracleText: 'Destroy target creature.',
+  cmc: 3,
+  manaCost: '{1}{B/P}{B/P}',
 });
 
 const counterspell = card({
@@ -152,12 +184,27 @@ test('basic-land ramp is not promoted to strategic tutor while unrestricted land
   assert.equal(inferCardRoles(demonicTutor).includes('tutor'), true);
 });
 
-test('commander-enabled, pitch, and mana-free evoke interaction is recognized as free while normally paid interaction is not', () => {
+test('free interaction recognizes commander-enabled, pitch, evoke, retarget, library-top, and zero-mana Phyrexian lines', () => {
   assert.equal(inferCardRoles(deadlyRollick).includes('free interaction'), true);
   assert.equal(inferCardRoles(fierceGuardianship).includes('free interaction'), true);
+  assert.equal(inferCardRoles(deflectingSwat).includes('free interaction'), true);
+  assert.equal(inferCardRoles(submerge).includes('free interaction'), true);
   assert.equal(inferCardRoles(forceOfWill).includes('free interaction'), true);
   assert.equal(inferCardRoles(solitude).includes('free interaction'), true);
+  assert.equal(inferCardRoles(mentalMisstep).includes('free interaction'), true);
+  assert.equal(inferCardRoles(phyrexianButNotFree).includes('free interaction'), false);
   assert.equal(inferCardRoles(counterspell).includes('free interaction'), false);
+});
+
+test('legacy Build and Upgrade free-interaction searches are expanded to the shared semantics before Scryfall lookup', () => {
+  const legacy = 'f:commander id<=ubr -t:land ((mv=0 OR o:"rather than pay") (o:"counter target" OR o:"destroy target" OR o:"exile target"))';
+  const normalized = normalizeScryfallSearchQueryV15(legacy);
+  assert.match(normalized, /o:"without paying"/);
+  assert.match(normalized, /kw:evoke/);
+  assert.match(normalized, /is:phyrexian/);
+  assert.match(normalized, /o:"choose new targets"/);
+  assert.match(normalized, /o:"puts it on the top"/);
+  assert.doesNotMatch(normalized, /\(\(mv=0 OR o:"rather than pay"\) \(o:"counter target"/);
 });
 
 test('deck metrics no longer let basic lands or Farseek-style ramp satisfy ramp and tutor targets simultaneously', () => {
