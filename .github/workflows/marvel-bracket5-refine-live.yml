@@ -9,6 +9,7 @@ on:
       - "src/services/deck-builder-win-package-ceiling-v15.test.ts"
       - "src/services/general-win-package-v15.ts"
       - "src/services/general-win-package-v15.test.ts"
+      - "src/services/full-table-win-closure-v15.ts"
       - "src/services/win-package-pagination-v15.ts"
       - "src/services/win-package-pagination-v15.test.ts"
       - "src/services/win-package-restricted-pool-v15.ts"
@@ -47,40 +48,40 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Integrate restricted physical-pool prefilter
+      - name: Align win-package discovery with full-table Commander closure
         run: |
           python3 - <<'PY'
           from pathlib import Path
           p = Path('src/services/general-win-package-v15.ts')
           text = p.read_text()
 
-          anchor = "import { getCardsByNames, inferCardRoles } from './scryfall.js';\n"
-          imports = anchor + "import { discoverEligiblePoolV15 } from './neutral-deck-builder-v15.js';\n"
-          if "discoverEligiblePoolV15" not in text:
+          anchor = "import type { ScryfallCard } from '../types/scryfall.js';\n"
+          full_import = anchor + "import { assessFullTableWinClosureV15, isStrictFullTableWinResultV15 } from './full-table-win-closure-v15.js';\n"
+          if "isStrictFullTableWinResultV15" not in text:
               if anchor not in text:
-                  raise SystemExit('expected Scryfall import anchor not found')
-              text = text.replace(anchor, imports, 1)
+                  raise SystemExit('expected top import anchor not found')
+              text = text.replace(anchor, full_import, 1)
 
-          anchor2 = "import { collectBoundedSpellbookVariantsV15 } from './win-package-pagination-v15.js';\n"
-          imports2 = anchor2 + "import { prefilterRestrictedWinPackageCandidatesV15 } from './win-package-restricted-pool-v15.js';\n"
-          if "prefilterRestrictedWinPackageCandidatesV15" not in text:
-              if anchor2 not in text:
-                  raise SystemExit('expected pagination import anchor not found')
-              text = text.replace(anchor2, imports2, 1)
+          old_parse = "  if (!id || requirements.length > 0 || !isStrictDeterministicWinResultV15(results)) return null;\n"
+          new_parse = "  if (!id || requirements.length > 0 || !isStrictFullTableWinResultV15(results)) return null;\n"
+          if old_parse in text:
+              text = text.replace(old_parse, new_parse, 1)
+          elif new_parse not in text:
+              raise SystemExit('expected parse closure boundary not found')
 
-          colors_anchor = "  const colors = commanderIdentity(commanders);\n  const raw: unknown[] = [];\n"
-          colors_replacement = """  const colors = commanderIdentity(commanders);\n  const hasRestrictedPhysicalPool = Boolean(policy.family) || policy.allowedSetCodes.length > 0 || policy.exactSpecialPrintings.length > 0;\n  const restrictedEligiblePool = hasRestrictedPhysicalPool\n    ? await discoverEligiblePoolV15(colors, policy, options.maxUsdPerCard)\n    : null;\n  const raw: unknown[] = [];\n"""
-          if "const restrictedEligiblePool" not in text:
-              if colors_anchor not in text:
-                  raise SystemExit('expected colors/raw anchor not found')
-              text = text.replace(colors_anchor, colors_replacement, 1)
+          old_loop = """    const results = Array.isArray(row.results) ? row.results.map(String) : [];\n    const closure = assessWinResultClosureV15(results);\n    if (!closure.verifiedDeterministicWin) {\n      rejectionAudit.push({\n        comboId,\n        status: 'rejected',\n        reasons: [`strict closure failed: ${closure.kind}`],\n        closure,\n      });\n      continue;\n    }\n"""
+          new_loop = """    const results = Array.isArray(row.results) ? row.results.map(String) : [];\n    const fullTableClosure = assessFullTableWinClosureV15(results);\n    const closure = assessWinResultClosureV15(results);\n    if (!fullTableClosure.verifiedFullTableWin) {\n      rejectionAudit.push({\n        comboId,\n        status: 'rejected',\n        reasons: [`full-table closure failed: ${fullTableClosure.kind}`],\n        fullTableClosure,\n      });\n      continue;\n    }\n"""
+          if old_loop in text:
+              text = text.replace(old_loop, new_loop, 1)
+          elif "const fullTableClosure = assessFullTableWinClosureV15(results);" not in text:
+              raise SystemExit('expected candidate closure block not found')
 
-          ranked_anchor = "  const ranked = rankGeneralWinPackageVariantsV15(raw, commanderNames, options).map(record);\n  const names = [...new Set(ranked.flatMap((candidate) => Array.isArray(candidate.names) ? candidate.names.map(String) : []))];\n"
-          ranked_replacement = """  const rankedBeforeRestrictedPool = rankGeneralWinPackageVariantsV15(raw, commanderNames, options);\n  const restrictedPrefilter = restrictedEligiblePool\n    ? prefilterRestrictedWinPackageCandidatesV15(\n        rankedBeforeRestrictedPool,\n        commanderNames,\n        restrictedEligiblePool.map((card) => card.name),\n      )\n    : null;\n  const ranked = (restrictedPrefilter?.candidates ?? rankedBeforeRestrictedPool).map(record);\n  if (restrictedPrefilter) {\n    queryAudit.push({\n      kind: 'restricted-physical-pool-prefilter',\n      ...restrictedPrefilter.audit,\n    });\n  }\n  const names = [...new Set(ranked.flatMap((candidate) => Array.isArray(candidate.names) ? candidate.names.map(String) : []))];\n"""
-          if "rankedBeforeRestrictedPool" not in text:
-              if ranked_anchor not in text:
-                  raise SystemExit('expected ranked discovery anchor not found')
-              text = text.replace(ranked_anchor, ranked_replacement, 1)
+          old_caveat = "      closureCaveat: closure.caveat,\n"
+          new_caveat = "      closureCaveat: fullTableClosure.caveat,\n"
+          if old_caveat in text:
+              text = text.replace(old_caveat, new_caveat, 1)
+          elif new_caveat not in text:
+              raise SystemExit('expected closure caveat assignment not found')
 
           p.write_text(text)
           PY
@@ -89,9 +90,9 @@ jobs:
         run: npm run build
 
       - name: Run win-package regressions
-        run: npx tsx --test src/services/deck-builder-win-package-ceiling-v15.test.ts src/services/win-package-pagination-v15.test.ts src/services/win-package-restricted-pool-v15.test.ts src/services/general-win-package-v15.test.ts
+        run: npx tsx --test src/services/deck-builder-win-package-ceiling-v15.test.ts src/services/win-package-pagination-v15.test.ts src/services/win-package-restricted-pool-v15.test.ts src/services/general-win-package-v15.test.ts src/services/full-table-win-closure-v15.test.ts
 
-      - name: Persist restricted-pool integration
+      - name: Persist full-table closure integration
         shell: bash
         run: |
           set -euo pipefail
@@ -99,7 +100,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- src/services/general-win-package-v15.ts
           if ! git diff --cached --quiet; then
-            git commit -m "fix(v15): prefilter constrained win packages [skip ci]"
+            git commit -m "fix(v15): align package discovery with full-table closure [skip ci]"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
 
@@ -134,7 +135,7 @@ jobs:
           [ ! -f marvel-bracket5-refine-result.json ] || cp marvel-bracket5-refine-result.json test-results/marvel-bracket5/refine-result.json
           [ ! -f marvel-bracket5-refined-deck.txt ] || cp marvel-bracket5-refined-deck.txt test-results/marvel-bracket5/refined-deck.txt
           [ ! -f marvel-bracket5-refine-failure.txt ] || cp marvel-bracket5-refine-failure.txt test-results/marvel-bracket5/refine-failure.txt
-          printf 'workflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\nrestricted_pool_prefilter=true\n' "$GITHUB_SHA" "$(git rev-parse HEAD)" "$CONTROL_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
+          printf 'workflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\nrestricted_pool_prefilter=true\nfull_table_closure=true\n' "$GITHUB_SHA" "$(git rev-parse HEAD)" "$CONTROL_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- test-results/marvel-bracket5
