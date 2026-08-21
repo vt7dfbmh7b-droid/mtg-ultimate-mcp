@@ -424,7 +424,11 @@ export async function buildCommanderDeckDraftV07(
 
   const themeSelectionSatisfied = themeMinimumMainMatches === 0 || selectedThemeMatches >= themeMinimumMainMatches;
   const nonbasicLimit = Math.max(0, Math.min(landsWanted, Math.trunc(options.maxNonbasicLands ?? Math.min(16, Math.max(8, colors.length * 4)))));
-  const landPool = (await searchPool(colors, options, printingPolicy, printingCache, 'land', 50))
+  const restrictedLandPool = restrictedPool
+    ? restrictedPool.filter((card) => card.type_line.toLowerCase().includes('land'))
+    : null;
+  const landPool = (restrictedLandPool ?? await searchPool(colors, options, printingPolicy, printingCache, 'land', 50))
+    .filter((card) => !card.type_line.toLowerCase().includes('basic land'))
     .filter((card) => legalIdentity(card, colors))
     .filter((card) => !excluded.has(card.name.toLocaleLowerCase()))
     .sort((a, b) => landScore(b, colors) - landScore(a, colors));
@@ -444,7 +448,10 @@ export async function buildCommanderDeckDraftV07(
     : ['Wastes'];
   const basicCards: ScryfallCard[] = [];
   for (const name of basicNames) {
-    const printing = await basicPrinting(name, options, printingPolicy, printingCache);
+    if (excluded.has(name.toLocaleLowerCase())) continue;
+    const printing = restrictedPool
+      ? restrictedPool.find((card) => card.name.toLocaleLowerCase() === name.toLocaleLowerCase() && card.type_line.toLowerCase().includes('basic land')) ?? null
+      : await basicPrinting(name, options, printingPolicy, printingCache);
     if (printing) basicCards.push(printing);
   }
   const basicQuantities = new Map<string, number>();
@@ -496,6 +503,7 @@ export async function buildCommanderDeckDraftV07(
       targetLands: landsWanted,
       selectedNonbasicLands: nonbasics.length,
       selectedBasics: [...basicQuantities.entries()].map(([name, quantity]) => ({ name, quantity })),
+      candidateSource: restrictedPool ? 'exhaustive-bounded-eligible-pool' : 'role-search',
     },
     exactPrintingPolicy:
       'Every selected line carries an exact Scryfall set code and collector number. Oracle identity drives rules; the selected physical printing must independently satisfy the active family/set/promo policy. User maxUsdPerCard applies to required and optional cards; candidateMaxUsdPerCard, when supplied, only tightens optional candidate search.',
@@ -519,7 +527,7 @@ export async function buildCommanderDeckDraftV07(
         : 'No V0.15 controlled theme-density minimum was supplied to this legacy-targeted builder.',
       'The selected printing is explicit for pricing and shopping. When a printing-family restriction is active, an unrelated edition of the same Oracle card cannot substitute for a qualifying themed edition.',
       hasPrintingRestriction(printingPolicy)
-        ? 'For bounded printing-family/set builds, the targeted builder now reuses the existing V0.15 exhaustive eligible physical pool before applying its existing role and commander-strategy scores; if that pool does not contain enough suitable legal cards or basics, it returns an incomplete draft instead of leaking cards from outside the family.'
+        ? 'For bounded printing-family/set builds, the targeted builder reuses the existing V0.15 exhaustive eligible physical pool for both spells and mana-base cards before applying role/strategy or land scoring. This keeps curated exact special-release lands visible without allowing unrelated editions to leak into the deck.'
         : 'No themed printing-family restriction was requested.',
       'Promo status alone never qualifies a printing for a themed family; the promo must belong to a matching family set or an exact curated special-release selector.',
     ],
@@ -727,7 +735,6 @@ function signalDeltas(before: Record<string, number | null>, after: Record<strin
     return [key, left === null || right === null ? null : Number((right - left).toFixed(2))];
   }));
 }
-
 
 interface UpgradeWinPackagePriorityV15 {
   attempted: boolean;
