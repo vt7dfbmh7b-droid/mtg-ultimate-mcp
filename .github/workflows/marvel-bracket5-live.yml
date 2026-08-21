@@ -97,5 +97,5 @@ jobs:
           CONTROL_OUTCOME: ${{ steps.marvel_control.outcome }}
           REFINE_OUTCOME: ${{ steps.marvel_refine.outcome }}
         run: |
-          test "$MARVEL_CONTROL" = "success"
+          test "$CONTROL_OUTCOME" = "success"
           test "$REFINE_OUTCOME" = "success"
