@@ -68,6 +68,7 @@ jobs:
               text = text.replace(old_parse, new_parse, 1)
           elif new_parse not in text:
               raise SystemExit('expected parse closure boundary not found')
+          text = text.replace("  isStrictDeterministicWinResultV15,\n", "")
 
           old_loop = """    const results = Array.isArray(row.results) ? row.results.map(String) : [];\n    const closure = assessWinResultClosureV15(results);\n    if (!closure.verifiedDeterministicWin) {\n      rejectionAudit.push({\n        comboId,\n        status: 'rejected',\n        reasons: [`strict closure failed: ${closure.kind}`],\n        closure,\n      });\n      continue;\n    }\n"""
           new_loop = """    const results = Array.isArray(row.results) ? row.results.map(String) : [];\n    const fullTableClosure = assessFullTableWinClosureV15(results);\n    const closure = assessWinResultClosureV15(results);\n    if (!fullTableClosure.verifiedFullTableWin) {\n      rejectionAudit.push({\n        comboId,\n        status: 'rejected',\n        reasons: [`full-table closure failed: ${fullTableClosure.kind}`],\n        fullTableClosure,\n      });\n      continue;\n    }\n"""
