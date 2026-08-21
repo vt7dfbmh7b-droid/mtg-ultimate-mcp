@@ -41,7 +41,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Probe autonomous four-card win-package ceiling
+      - name: Apply autonomous four-card win-package ceiling
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -58,6 +58,19 @@ jobs:
 
       - name: Type-check and build
         run: npm run build
+
+      - name: Persist autonomous four-card ceiling source fix
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- src/services/deck-builder-v07.ts
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "fix(v15): align autonomous win-package ceiling"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Refine selected Marvel-only Bracket 5 attempt
         id: refine_control
@@ -96,7 +109,7 @@ jobs:
           if [ -f marvel-bracket5-refine-failure.txt ]; then
             cp marvel-bracket5-refine-failure.txt test-results/marvel-bracket5/refine-failure.txt
           fi
-          printf 'source_sha=%s\ncontrol_outcome=%s\nprobe=autonomous-max-win-package-cards-4\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
+          printf 'workflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nprobe=autonomous-max-win-package-cards-4\n' "$GITHUB_SHA" "$(git rev-parse HEAD)" "$CONTROL_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- test-results/marvel-bracket5
