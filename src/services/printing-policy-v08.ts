@@ -1,4 +1,12 @@
 import type { ScryfallCard } from '../types/scryfall.js';
+import {
+  MARVEL_SPECIAL_COVERAGE_V08,
+  MARVEL_SPECIALS_V08,
+  MIDDLE_EARTH_SPECIAL_COVERAGE_V08,
+  MIDDLE_EARTH_SPECIALS_V08,
+  type ThemedSpecialCoverageV08,
+  type ThemedSpecialPrintingV08,
+} from './printing-family-specials-v08.js';
 import { getCardPrintings, getScryfallSets } from './scryfall.js';
 
 export interface PrintingPolicyInputV08 {
@@ -8,18 +16,14 @@ export interface PrintingPolicyInputV08 {
   includeSpecialReleases?: boolean;
 }
 
-interface ExactPrintingSelectorV08 {
-  set: string;
-  collectorNumber: string;
-  oracleName: string;
-  label?: string;
-}
+type ExactPrintingSelectorV08 = ThemedSpecialPrintingV08;
 
 interface PrintingFamilyPresetV08 {
   id: string;
   aliases: string[];
   setNamePatterns: string[];
   exactSpecialPrintings: ExactPrintingSelectorV08[];
+  specialReleaseCoverage?: ThemedSpecialCoverageV08;
 }
 
 export interface ResolvedPrintingPolicyV08 {
@@ -31,8 +35,23 @@ export interface ResolvedPrintingPolicyV08 {
   includeSpecialReleases: boolean;
   exactSpecialPrintings: ExactPrintingSelectorV08[];
   specialOracleNames: string[];
+  specialReleaseCoverageAsOf: string | null;
+  specialReleaseCoverageNote: string | null;
   searchClause: string;
   explanation: string;
+}
+
+export interface PrintingFamilyPresetInspectionV08 {
+  id: string;
+  setNamePatterns: string[];
+  specialPrintingCount: number;
+  specialPrintingSelectors: Array<{
+    set: string;
+    collectorNumber: string;
+    oracleName: string;
+  }>;
+  specialReleaseCoverageAsOf: string | null;
+  specialReleaseCoverageNote: string | null;
 }
 
 export interface EligiblePrintingChoiceV08 {
@@ -77,7 +96,23 @@ const PRESETS: PrintingFamilyPresetV08[] = [
     setNamePatterns: ['final fantasy'],
     exactSpecialPrintings: FINAL_FANTASY_SPECIALS,
   },
+  {
+    id: 'marvel',
+    aliases: ['marvel', 'mtg marvel', 'magic marvel', 'marvel universe'],
+    setNamePatterns: ['marvel'],
+    exactSpecialPrintings: MARVEL_SPECIALS_V08,
+    specialReleaseCoverage: MARVEL_SPECIAL_COVERAGE_V08,
+  },
+  {
+    id: 'middle-earth',
+    aliases: ['middle-earth', 'middle earth', 'the lord of the rings', 'lord of the rings', 'lotr', 'tolkien'],
+    setNamePatterns: ['middle-earth', 'the hobbit'],
+    exactSpecialPrintings: MIDDLE_EARTH_SPECIALS_V08,
+    specialReleaseCoverage: MIDDLE_EARTH_SPECIAL_COVERAGE_V08,
+  },
 ];
+
+const NON_PLAYABLE_FAMILY_SET_TYPES = new Set(['token', 'memorabilia', 'minigame']);
 
 function normalize(value: string): string {
   return value.toLocaleLowerCase().replace(/[™®]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
@@ -90,7 +125,28 @@ function normalizeSetCodes(values: string[] | undefined): string[] {
 function findPreset(family: string | undefined): PrintingFamilyPresetV08 | null {
   if (!family?.trim()) return null;
   const needle = normalize(family);
-  return PRESETS.find((preset) => preset.id === needle || preset.aliases.some((alias) => normalize(alias) === needle)) ?? null;
+  return PRESETS.find((preset) => normalize(preset.id) === needle || preset.aliases.some((alias) => normalize(alias) === needle)) ?? null;
+}
+
+export function inspectPrintingFamilyPresetV08(family: string | undefined): PrintingFamilyPresetInspectionV08 | null {
+  const preset = findPreset(family);
+  if (!preset) return null;
+  return {
+    id: preset.id,
+    setNamePatterns: [...preset.setNamePatterns],
+    specialPrintingCount: preset.exactSpecialPrintings.length,
+    specialPrintingSelectors: preset.exactSpecialPrintings.map(({ set, collectorNumber, oracleName }) => ({
+      set,
+      collectorNumber,
+      oracleName,
+    })),
+    specialReleaseCoverageAsOf: preset.specialReleaseCoverage?.asOf ?? null,
+    specialReleaseCoverageNote: preset.specialReleaseCoverage?.note ?? null,
+  };
+}
+
+export function familySetTypeEligibleV08(setType: string, digital = false): boolean {
+  return !digital && !NON_PLAYABLE_FAMILY_SET_TYPES.has(setType.toLocaleLowerCase());
 }
 
 function exactPrintingKey(set: string, collectorNumber: string): string {
@@ -122,7 +178,7 @@ export async function resolvePrintingPolicyV08(input: PrintingPolicyInputV08 = {
     try {
       const sets = await getScryfallSets();
       familyMatchedSetCodes = sets
-        .filter((set) => !set.digital)
+        .filter((set) => familySetTypeEligibleV08(set.set_type, Boolean(set.digital)))
         .filter((set) => {
           const name = normalize(set.name);
           return familyPatterns.some((pattern) => name.includes(normalize(pattern)));
@@ -137,6 +193,11 @@ export async function resolvePrintingPolicyV08(input: PrintingPolicyInputV08 = {
   const exactSpecialPrintings = includeSpecialReleases ? preset?.exactSpecialPrintings ?? [] : [];
   const specialOracleNames = [...new Set(exactSpecialPrintings.map((entry) => entry.oracleName))];
   const searchClause = buildSearchClause(allowedSetCodes, specialOracleNames);
+  const specialReleaseCoverageAsOf = preset?.specialReleaseCoverage?.asOf ?? null;
+  const specialReleaseCoverageNote = preset?.specialReleaseCoverage?.note ?? null;
+  const coverageSuffix = specialReleaseCoverageAsOf
+    ? ` Curated special-release coverage is verified through ${specialReleaseCoverageAsOf}.${specialReleaseCoverageNote ? ` ${specialReleaseCoverageNote}` : ''}`
+    : '';
 
   return {
     family: rawFamily,
@@ -147,9 +208,11 @@ export async function resolvePrintingPolicyV08(input: PrintingPolicyInputV08 = {
     includeSpecialReleases,
     exactSpecialPrintings,
     specialOracleNames,
+    specialReleaseCoverageAsOf,
+    specialReleaseCoverageNote,
     searchClause,
     explanation: rawFamily
-      ? `Only physical printings belonging to the ${rawFamily} printing family are eligible. Matching family sets${includePromos ? ', promos' : ''}${includeSpecialReleases ? ', and curated special releases' : ''} qualify; an unrelated printing of the same Oracle card does not.`
+      ? `Only physical printings belonging to the ${rawFamily} printing family are eligible. Matching playable family sets${includePromos ? ', promos' : ''}${includeSpecialReleases ? ', and curated special releases' : ''} qualify; an unrelated printing of the same Oracle card does not.${coverageSuffix}`
       : explicitSets.length > 0
         ? `Only physical printings from the allowed set codes are eligible${includePromos ? ', including promos inside those sets' : ', excluding promo-marked printings'}.`
         : 'No themed printing-family restriction is active.',
@@ -237,6 +300,8 @@ export function describePrintingPolicyV08(policy: ResolvedPrintingPolicyV08): Re
     includeSpecialReleases: policy.includeSpecialReleases,
     specialPrintingCount: policy.exactSpecialPrintings.length,
     specialOracleNames: policy.specialOracleNames,
+    specialReleaseCoverageAsOf: policy.specialReleaseCoverageAsOf,
+    specialReleaseCoverageNote: policy.specialReleaseCoverageNote,
     explanation: policy.explanation,
   };
 }
