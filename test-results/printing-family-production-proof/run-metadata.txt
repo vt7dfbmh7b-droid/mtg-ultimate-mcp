@@ -1,0 +1,5 @@
+source_sha=ce9a447556d6081513b9b665ac466888ea33a85f
+build_outcome=failure
+test_outcome=skipped
+proof_outcome=skipped
+policy=permanent-production-presets
