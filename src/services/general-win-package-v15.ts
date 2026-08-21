@@ -6,8 +6,10 @@ import {
   type PrintingPolicyInputV08,
 } from './printing-policy-v08.js';
 import { getCardsByNames, inferCardRoles } from './scryfall.js';
+import { discoverEligiblePoolV15 } from './neutral-deck-builder-v15.js';
 import { searchSpellbookVariantsEvidence } from './spellbook.js';
 import { collectBoundedSpellbookVariantsV15 } from './win-package-pagination-v15.js';
+import { prefilterRestrictedWinPackageCandidatesV15 } from './win-package-restricted-pool-v15.js';
 import {
   assessWinResultClosureV15,
   buildWinPackagePortfolioV15,
@@ -203,6 +205,10 @@ export async function discoverGeneralWinPackagesV15(
   const commanderNames = commanders.map((card) => card.name);
   const commanderSet = new Set(commanderNames.map(normalize));
   const colors = commanderIdentity(commanders);
+  const hasRestrictedPhysicalPool = Boolean(policy.family) || policy.allowedSetCodes.length > 0 || policy.exactSpecialPrintings.length > 0;
+  const restrictedEligiblePool = hasRestrictedPhysicalPool
+    ? await discoverEligiblePoolV15(colors, policy, options.maxUsdPerCard)
+    : null;
   const raw: unknown[] = [];
   const queryAudit: Array<Record<string, unknown>> = [];
   let availableQueries = 0;
@@ -243,7 +249,21 @@ export async function discoverGeneralWinPackagesV15(
   // budget on globally popular packages before testing whether their pieces are eligible.
   // Rank the bounded Spellbook window, resolve that window, then stop only after we have
   // collected maxCandidates *eligible* verified packages (or exhaust the window).
-  const ranked = rankGeneralWinPackageVariantsV15(raw, commanderNames, options).map(record);
+  const rankedBeforeRestrictedPool = rankGeneralWinPackageVariantsV15(raw, commanderNames, options);
+  const restrictedPrefilter = restrictedEligiblePool
+    ? prefilterRestrictedWinPackageCandidatesV15(
+        rankedBeforeRestrictedPool,
+        commanderNames,
+        restrictedEligiblePool.map((card) => card.name),
+      )
+    : null;
+  const ranked = (restrictedPrefilter?.candidates ?? rankedBeforeRestrictedPool).map(record);
+  if (restrictedPrefilter) {
+    queryAudit.push({
+      kind: 'restricted-physical-pool-prefilter',
+      ...restrictedPrefilter.audit,
+    });
+  }
   const names = [...new Set(ranked.flatMap((candidate) => Array.isArray(candidate.names) ? candidate.names.map(String) : []))];
   const lookup = names.length > 0 ? await getCardsByNames(names) : { cards: [], notFound: [] };
   const byName = new Map(lookup.cards.map((card) => [normalize(card.name), card]));
