@@ -1,0 +1,4304 @@
+
+> mtg-ultimate-mcp@0.13.0 test
+> tsx --test src/*.test.ts src/**/*.test.ts
+
+TAP version 13
+# Subtest: stable runtime exposes one documented preferred surface for ordinary MTG/Commander jobs
+ok 1 - stable runtime exposes one documented preferred surface for ordinary MTG/Commander jobs
+  ---
+  duration_ms: 284.429655
+  type: 'test'
+  ...
+# Subtest: all Scryfall fetchJson calls share one process-wide start-to-start pacing clock
+ok 2 - all Scryfall fetchJson calls share one process-wide start-to-start pacing clock
+  ---
+  duration_ms: 779.557075
+  type: 'test'
+  ...
+# Subtest: retries a transient timeout for Scryfall collection POST because it is an idempotent read
+ok 3 - retries a transient timeout for Scryfall collection POST because it is an idempotent read
+  ---
+  duration_ms: 5756.018489
+  type: 'test'
+  ...
+# Subtest: retries transient Commander Spellbook read POST responses but respects Retry-After
+ok 4 - retries transient Commander Spellbook read POST responses but respects Retry-After
+  ---
+  duration_ms: 3.97048
+  type: 'test'
+  ...
+# Subtest: does not retry arbitrary POST requests such as TopDeck ingestion
+ok 5 - does not retry arbitrary POST requests such as TopDeck ingestion
+  ---
+  duration_ms: 1.031194
+  type: 'test'
+  ...
+# Subtest: does not retry an explicit caller abort even on an idempotent read endpoint
+ok 6 - does not retry an explicit caller abort even on an idempotent read endpoint
+  ---
+  duration_ms: 745.044788
+  type: 'test'
+  ...
+# Subtest: stable current server completes MCP handshake and advertises V0.13 tools
+ok 7 - stable current server completes MCP handshake and advertises V0.13 tools
+  ---
+  duration_ms: 350.690288
+  type: 'test'
+  ...
+# Subtest: experimental V0.15 neural server negotiates modern MCP and advertises research and learning tools
+ok 8 - experimental V0.15 neural server negotiates modern MCP and advertises research and learning tools
+  ---
+  duration_ms: 193.625827
+  type: 'test'
+  ...
+# Subtest: conservative bracket ceiling refuses to turn target 5 into evidence for achieved 5
+ok 9 - conservative bracket ceiling refuses to turn target 5 into evidence for achieved 5
+  ---
+  duration_ms: 140.207875
+  type: 'test'
+  ...
+# Subtest: deep-learning readiness accepts corpus quality rates through the real MCP tool boundary
+ok 10 - deep-learning readiness accepts corpus quality rates through the real MCP tool boundary
+  ---
+  duration_ms: 136.857033
+  type: 'test'
+  ...
+# Subtest: temporal neural evaluator fingerprints, splits and scores a corpus through MCP
+ok 11 - temporal neural evaluator fingerprints, splits and scores a corpus through MCP
+  ---
+  duration_ms: 333.087618
+  type: 'test'
+  ...
+# Subtest: current MTG Ultimate MCP server constructs with current release metadata
+ok 12 - current MTG Ultimate MCP server constructs with current release metadata
+  ---
+  duration_ms: 73.430985
+  type: 'test'
+  ...
+# Subtest: experimental V0.15 registers the universal pipeline schema while stable current remains V0.13
+ok 13 - experimental V0.15 registers the universal pipeline schema while stable current remains V0.13
+  ---
+  duration_ms: 393.283083
+  type: 'test'
+  ...
+# Subtest: MCP boundary preserves exact commander identity, true no-target behavior, budgets, decklist, audits, provenance and source evidence
+ok 14 - MCP boundary preserves exact commander identity, true no-target behavior, budgets, decklist, audits, provenance and source evidence
+  ---
+  duration_ms: 115.355722
+  type: 'test'
+  ...
+# Subtest: Final Fantasy theme-only request reaches the real pipeline contract without an invented printingFamily and preserves derived theme evidence
+ok 15 - Final Fantasy theme-only request reaches the real pipeline contract without an invented printingFamily and preserves derived theme evidence
+  ---
+  duration_ms: 106.091394
+  type: 'test'
+  ...
+# Subtest: MCP boundary preserves unsupported, verification-unavailable and hard-constraint failure surfaces
+ok 16 - MCP boundary preserves unsupported, verification-unavailable and hard-constraint failure surfaces
+  ---
+  duration_ms: 197.960563
+  type: 'test'
+  ...
+# Subtest: unresolved or duplicate commander input fails before construction
+ok 17 - unresolved or duplicate commander input fails before construction
+  ---
+  duration_ms: 184.863021
+  type: 'test'
+  ...
+# Subtest: two exact commander refs preserve caller order at the MCP boundary
+ok 18 - two exact commander refs preserve caller order at the MCP boundary
+  ---
+  duration_ms: 84.354164
+  type: 'test'
+  ...
+# Subtest: V0.15 neural experimental server can be constructed
+ok 19 - V0.15 neural experimental server can be constructed
+  ---
+  duration_ms: 104.452084
+  type: 'test'
+  ...
+# Subtest: tutor replacement audit is registered only on experimental V0.15
+ok 20 - tutor replacement audit is registered only on experimental V0.15
+  ---
+  duration_ms: 396.858672
+  type: 'test'
+  ...
+# Subtest: does not guess between multiple verified full-table win routes
+ok 21 - does not guess between multiple verified full-table win routes
+  ---
+  duration_ms: 1.128095
+  type: 'test'
+  ...
+# Subtest: Commander Spellbook unavailability remains unknown rather than no replacement
+ok 22 - Commander Spellbook unavailability remains unknown rather than no replacement
+  ---
+  duration_ms: 0.756412
+  type: 'test'
+  ...
+# Subtest: forwards explicit constraints and sends every verified route to the portfolio safety audit
+ok 23 - forwards explicit constraints and sends every verified route to the portfolio safety audit
+  ---
+  duration_ms: 7.578965
+  type: 'test'
+  ...
+# Subtest: TopDeck failure is separate and cannot erase exact replacement or portfolio audits
+ok 24 - TopDeck failure is separate and cannot erase exact replacement or portfolio audits
+  ---
+  duration_ms: 0.358884
+  type: 'test'
+  ...
+# Subtest: experimental V0.15 exposes verified-route tutor value while stable current V0.13 does not
+ok 25 - experimental V0.15 exposes verified-route tutor value while stable current V0.13 does not
+  ---
+  duration_ms: 379.38405
+  type: 'test'
+  ...
+# Subtest: does not guess which verified route to value when multiple full-table routes exist
+ok 26 - does not guess which verified route to value when multiple full-table routes exist
+  ---
+  duration_ms: 0.963212
+  type: 'test'
+  ...
+# Subtest: provider unavailability stays distinct from absence of a winning route
+ok 27 - provider unavailability stays distinct from absence of a winning route
+  ---
+  duration_ms: 0.666212
+  type: 'test'
+  ...
+# Subtest: requested combo id must already be a verified full-table route
+ok 28 - requested combo id must already be a verified full-table route
+  ---
+  duration_ms: 0.196498
+  type: 'test'
+  ...
+# Subtest: TopDeck failure is reported separately and does not erase a successful exact tutor-value audit
+ok 29 - TopDeck failure is reported separately and does not erase a successful exact tutor-value audit
+  ---
+  duration_ms: 0.391174
+  type: 'test'
+  ...
+# Subtest: optional TopDeck evidence receives only the evaluated tutor names and exact commander context
+ok 30 - optional TopDeck evidence receives only the evaluated tutor names and exact commander context
+  ---
+  duration_ms: 0.266369
+  type: 'test'
+  ...
+# Subtest: V0.15 experimental server can be constructed
+ok 31 - V0.15 experimental server can be constructed
+  ---
+  duration_ms: 103.235686
+  type: 'test'
+  ...
+# Subtest: target-free assessor refuses to assign power before hard truth gates pass
+ok 32 - target-free assessor refuses to assign power before hard truth gates pass
+  ---
+  duration_ms: 0.977435
+  type: 'test'
+  ...
+# Subtest: target-free assessor matches the established actual result across core, upgraded, and optimized fixtures
+ok 33 - target-free assessor matches the established actual result across core, upgraded, and optimized fixtures
+  ---
+  duration_ms: 1.841348
+  type: 'test'
+  ...
+# Subtest: target-free assessor does not certify Bracket 5 from construction alone
+ok 34 - target-free assessor does not certify Bracket 5 from construction alone
+  ---
+  duration_ms: 0.144982
+  type: 'test'
+  ...
+# Subtest: Bracket 5 remains possible only when construction, explicit intent, and independent evidence are all present
+ok 35 - Bracket 5 remains possible only when construction, explicit intent, and independent evidence are all present
+  ---
+  duration_ms: 0.104381
+  type: 'test'
+  ...
+# Subtest: automatic ranking rewards command-zone efficiency, color access, and card-text engines rather than a famous commander name
+ok 36 - automatic ranking rewards command-zone efficiency, color access, and card-text engines rather than a famous commander name
+  ---
+  duration_ms: 3.670687
+  type: 'test'
+  ...
+# Subtest: renaming a commander does not change its numeric score
+ok 37 - renaming a commander does not change its numeric score
+  ---
+  duration_ms: 0.352633
+  type: 'test'
+  ...
+# Subtest: unrestricted Partner commanders create legal candidate pairs while ordinary legends do not
+ok 38 - unrestricted Partner commanders create legal candidate pairs while ordinary legends do not
+  ---
+  duration_ms: 7.625448
+  type: 'test'
+  ...
+# Subtest: Partner with and other restricted pairing mechanics are not treated as unrestricted Partner
+ok 39 - Partner with and other restricted pairing mechanics are not treated as unrestricted Partner
+  ---
+  duration_ms: 0.408535
+  type: 'test'
+  ...
+# Subtest: ranking is deterministic across provider input order and obeys the bounded candidate cap
+ok 40 - ranking is deterministic across provider input order and obeys the bounded candidate cap
+  ---
+  duration_ms: 0.432923
+  type: 'test'
+  ...
+# Subtest: requested Bracket 5 does not inflate a merely upgraded deck
+ok 41 - requested Bracket 5 does not inflate a merely upgraded deck
+  ---
+  duration_ms: 1.693418
+  type: 'test'
+  ...
+# Subtest: strong static cEDH construction stays high Bracket 4 without intent and metagame evidence
+ok 42 - strong static cEDH construction stays high Bracket 4 without intent and metagame evidence
+  ---
+  duration_ms: 0.185895
+  type: 'test'
+  ...
+# Subtest: Bracket 5 requires construction, explicit cEDH intent and competitive metagame evidence together
+ok 43 - Bracket 5 requires construction, explicit cEDH intent and competitive metagame evidence together
+  ---
+  duration_ms: 0.125177
+  type: 'test'
+  ...
+# Subtest: assessment is independent of a lower requested target
+ok 44 - assessment is independent of a lower requested target
+  ---
+  duration_ms: 0.131576
+  type: 'test'
+  ...
+# Subtest: hard legality or printing failures make bracket assessment unassessable
+ok 45 - hard legality or printing failures make bracket assessment unassessable
+  ---
+  duration_ms: 0.11407
+  type: 'test'
+  ...
+# Subtest: many Game Changers create a current Bracket 4 floor but still do not prove Bracket 5 construction
+ok 46 - many Game Changers create a current Bracket 4 floor but still do not prove Bracket 5 construction
+  ---
+  duration_ms: 0.141638
+  type: 'test'
+  ...
+# Subtest: one deterministic combo inside a slow weak shell cannot carry the whole deck to Bracket 4 or 5
+ok 47 - one deterministic combo inside a slow weak shell cannot carry the whole deck to Bracket 4 or 5
+  ---
+  duration_ms: 0.115428
+  type: 'test'
+  ...
+# Subtest: competitive intent and metagame evidence cannot rescue a list that fails the construction gate
+ok 48 - competitive intent and metagame evidence cannot rescue a list that fails the construction gate
+  ---
+  duration_ms: 0.117605
+  type: 'test'
+  ...
+# Subtest: theme and budget constraints are reported as ceiling causes rather than silently weakening the standard
+ok 49 - theme and budget constraints are reported as ceiling causes rather than silently weakening the standard
+  ---
+  duration_ms: 0.504372
+  type: 'test'
+  ...
+# Subtest: Bracket 5 construction misses are reported gate by gate with observed and required values
+ok 50 - Bracket 5 construction misses are reported gate by gate with observed and required values
+  ---
+  duration_ms: 0.488245
+  type: 'test'
+  ...
+# Subtest: a whole-deck budget gets detailed observed pressure points without a false causal claim
+ok 51 - a whole-deck budget gets detailed observed pressure points without a false causal claim
+  ---
+  duration_ms: 0.185519
+  type: 'test'
+  ...
+# Subtest: an optimized efficient non-combo win plan can support Bracket 4 without pretending it is cEDH
+ok 52 - an optimized efficient non-combo win plan can support Bracket 4 without pretending it is cEDH
+  ---
+  duration_ms: 1.219815
+  type: 'test'
+  ...
+# Subtest: raw speed and interaction alone do not invent a Bracket 4 win plan when win-condition evidence is absent
+ok 53 - raw speed and interaction alone do not invent a Bracket 4 win plan when win-condition evidence is absent
+  ---
+  duration_ms: 0.190304
+  type: 'test'
+  ...
+# Subtest: efficient non-combo win evidence never satisfies the stricter Bracket 5 win-package gate by itself
+ok 54 - efficient non-combo win evidence never satisfies the stricter Bracket 5 win-package gate by itself
+  ---
+  duration_ms: 0.214512
+  type: 'test'
+  ...
+# Subtest: four Game Changers force at least Bracket 4 under the current Commander bracket limits
+ok 55 - four Game Changers force at least Bracket 4 under the current Commander bracket limits
+  ---
+  duration_ms: 1.231101
+  type: 'test'
+  ...
+# Subtest: three Game Changers are still permitted in Bracket 3 and do not prove an optimized win plan
+ok 56 - three Game Changers are still permitted in Bracket 3 and do not prove an optimized win plan
+  ---
+  duration_ms: 0.192619
+  type: 'test'
+  ...
+# Subtest: zero Game Changers does not cap a genuinely optimized deck below Bracket 4
+ok 57 - zero Game Changers does not cap a genuinely optimized deck below Bracket 4
+  ---
+  duration_ms: 0.153114
+  type: 'test'
+  ...
+# Subtest: research-grounded assessment can reach Bracket 5 when construction, intent and fresh independent evidence all pass
+ok 58 - research-grounded assessment can reach Bracket 5 when construction, intent and fresh independent evidence all pass
+  ---
+  duration_ms: 1.775445
+  type: 'test'
+  ...
+# Subtest: the same cEDH-quality construction stays high Bracket 4 when research evidence is stale
+ok 59 - the same cEDH-quality construction stays high Bracket 4 when research evidence is stale
+  ---
+  duration_ms: 0.246469
+  type: 'test'
+  ...
+# Subtest: caller cannot smuggle a true competitiveMetagameEvidence flag past research provenance checks
+ok 60 - caller cannot smuggle a true competitiveMetagameEvidence flag past research provenance checks
+  ---
+  duration_ms: 0.16449
+  type: 'test'
+  ...
+# Subtest: fresh contradictory evidence blocks Bracket 5 even with a perfect-looking static construction shell
+ok 61 - fresh contradictory evidence blocks Bracket 5 even with a perfect-looking static construction shell
+  ---
+  duration_ms: 0.283041
+  type: 'test'
+  ...
+# Subtest: requested Bracket 3 uses upgraded-deck criteria rather than leaking Bracket-5 diagnostics
+ok 62 - requested Bracket 3 uses upgraded-deck criteria rather than leaking Bracket-5 diagnostics
+  ---
+  duration_ms: 1.899896
+  type: 'test'
+  ...
+# Subtest: requested Bracket 4 reports optimized structure and win-plan blockers, not cEDH evidence gates
+ok 63 - requested Bracket 4 reports optimized structure and win-plan blockers, not cEDH evidence gates
+  ---
+  duration_ms: 0.455965
+  type: 'test'
+  ...
+# Subtest: Bracket 5 source outages become unverified evidence rather than false combo-absence claims
+ok 64 - Bracket 5 source outages become unverified evidence rather than false combo-absence claims
+  ---
+  duration_ms: 0.516733
+  type: 'test'
+  ...
+# Subtest: meeting the requested Bracket 4 produces reached status with no upgrade prescription
+ok 65 - meeting the requested Bracket 4 produces reached status with no upgrade prescription
+  ---
+  duration_ms: 0.16353
+  type: 'test'
+  ...
+# Subtest: hard truth failure makes target comparison unassessable
+ok 66 - hard truth failure makes target comparison unassessable
+  ---
+  duration_ms: 0.163801
+  type: 'test'
+  ...
+# Subtest: budget selector exhausts physical-printing pages and can find a cheap older basic beyond the first page
+ok 67 - budget selector exhausts physical-printing pages and can find a cheap older basic beyond the first page
+  ---
+  duration_ms: 1.819274
+  type: 'test'
+  ...
+# Subtest: budget selector fails closed when exhaustive physical printings have no priced finish under the cap
+ok 68 - budget selector fails closed when exhaustive physical printings have no priced finish under the cap
+  ---
+  duration_ms: 0.363492
+  type: 'test'
+  ...
+# Subtest: maps low-interaction structures to lower pressure and dense structures higher
+ok 69 - maps low-interaction structures to lower pressure and dense structures higher
+  ---
+  duration_ms: 0.819785
+  type: 'test'
+  ...
+# Subtest: reads the high-performing cohort from tournament analysis
+ok 70 - reads the high-performing cohort from tournament analysis
+  ---
+  duration_ms: 0.216733
+  type: 'test'
+  ...
+# Subtest: card intelligence combines role, casting, and commander fit
+ok 71 - card intelligence combines role, casting, and commander fit
+  ---
+  duration_ms: 6.318525
+  type: 'test'
+  ...
+# Subtest: card intelligence rejects off-color Commander fit
+ok 72 - card intelligence rejects off-color Commander fit
+  ---
+  duration_ms: 1.918233
+  type: 'test'
+  ...
+# Subtest: rules attention distinguishes indestructible from broader protection
+ok 73 - rules attention distinguishes indestructible from broader protection
+  ---
+  duration_ms: 0.441778
+  type: 'test'
+  ...
+# Subtest: simple card intelligence is compact by default
+ok 74 - simple card intelligence is compact by default
+  ---
+  duration_ms: 0.929948
+  type: 'test'
+  ...
+# Subtest: detailed card intelligence preserves the full report
+ok 75 - detailed card intelligence preserves the full report
+  ---
+  duration_ms: 1.263618
+  type: 'test'
+  ...
+# Subtest: detects convoke, improvise, delve, affinity and Phyrexian mana
+ok 76 - detects convoke, improvise, delve, affinity and Phyrexian mana
+  ---
+  duration_ms: 3.621414
+  type: 'test'
+  ...
+# Subtest: detects named and pitch-style alternative costs
+ok 77 - detects named and pitch-style alternative costs
+  ---
+  duration_ms: 1.084306
+  type: 'test'
+  ...
+# Subtest: detects immediate and recurring Treasure creation
+ok 78 - detects immediate and recurring Treasure creation
+  ---
+  duration_ms: 0.445654
+  type: 'test'
+  ...
+# Subtest: detects free-cast text separately from alternative costs
+ok 79 - detects free-cast text separately from alternative costs
+  ---
+  duration_ms: 0.314322
+  type: 'test'
+  ...
+# Subtest: seed queries stay compact and can scope to commander identity
+ok 80 - seed queries stay compact and can scope to commander identity
+  ---
+  duration_ms: 1.585515
+  type: 'test'
+  ...
+# Subtest: seed ranking rejects non-Ruthless, non-winning and template-dependent packages
+ok 81 - seed ranking rejects non-Ruthless, non-winning and template-dependent packages
+  ---
+  duration_ms: 3.696161
+  type: 'test'
+  ...
+# Subtest: must-be-commander requirements are only accepted for the supplied commander
+ok 82 - must-be-commander requirements are only accepted for the supplied commander
+  ---
+  duration_ms: 0.210605
+  type: 'test'
+  ...
+# Subtest: compact packages rank ahead of otherwise equal larger packages
+ok 83 - compact packages rank ahead of otherwise equal larger packages
+  ---
+  duration_ms: 0.261188
+  type: 'test'
+  ...
+# Subtest: duplicate card packages keep the stronger evidence record rather than first-seen order
+ok 84 - duplicate card packages keep the stronger evidence record rather than first-seen order
+  ---
+  duration_ms: 0.212231
+  type: 'test'
+  ...
+# Subtest: packages requiring duplicate nonbasic combo pieces are rejected
+ok 85 - packages requiring duplicate nonbasic combo pieces are rejected
+  ---
+  duration_ms: 0.106104
+  type: 'test'
+  ...
+# Subtest: practical seed scoring prefers cheap commander-centric utility over expensive dead-card spectacle
+ok 86 - practical seed scoring prefers cheap commander-centric utility over expensive dead-card spectacle
+  ---
+  duration_ms: 0.571708
+  type: 'test'
+  ...
+# Subtest: winning-result gate accepts deterministic game-ending outputs
+ok 87 - winning-result gate accepts deterministic game-ending outputs
+  ---
+  duration_ms: 3.695676
+  type: 'test'
+  ...
+# Subtest: winning-result gate rejects non-winning infinite engines
+ok 88 - winning-result gate rejects non-winning infinite engines
+  ---
+  duration_ms: 0.387223
+  type: 'test'
+  ...
+# Subtest: winning-result gate rejects bounded damage, life-loss and mill text
+ok 89 - winning-result gate rejects bounded damage, life-loss and mill text
+  ---
+  duration_ms: 0.11843
+  type: 'test'
+  ...
+# Subtest: winning combo counter only counts distinct included deterministic win variants
+ok 90 - winning combo counter only counts distinct included deterministic win variants
+  ---
+  duration_ms: 0.193388
+  type: 'test'
+  ...
+# Subtest: missing or malformed combo payloads do not become winning evidence
+ok 91 - missing or malformed combo payloads do not become winning evidence
+  ---
+  duration_ms: 0.092027
+  type: 'test'
+  ...
+# Subtest: flying attacker cannot be blocked by a ground creature
+ok 92 - flying attacker cannot be blocked by a ground creature
+  ---
+  duration_ms: 1.879646
+  type: 'test'
+  ...
+# Subtest: reach can block flying
+ok 93 - reach can block flying
+  ---
+  duration_ms: 0.76319
+  type: 'test'
+  ...
+# Subtest: menace needs two legal blockers
+ok 94 - menace needs two legal blockers
+  ---
+  duration_ms: 0.178196
+  type: 'test'
+  ...
+# Subtest: trample assigns excess damage after lethal
+ok 95 - trample assigns excess damage after lethal
+  ---
+  duration_ms: 0.155293
+  type: 'test'
+  ...
+# Subtest: commander damage is tracked separately
+ok 96 - commander damage is tracked separately
+  ---
+  duration_ms: 0.288434
+  type: 'test'
+  ...
+# Subtest: variable stats are not silently treated as zero
+ok 97 - variable stats are not silently treated as zero
+  ---
+  duration_ms: 0.159769
+  type: 'test'
+  ...
+# Subtest: commander-dependent text is surfaced
+ok 98 - commander-dependent text is surfaced
+  ---
+  duration_ms: 0.403922
+  type: 'test'
+  ...
+# Subtest: applies counters, equipment, auras, and tribal lords
+ok 99 - applies counters, equipment, auras, and tribal lords
+  ---
+  duration_ms: 3.028829
+  type: 'test'
+  ...
+# Subtest: keeps variable printed stats unresolved instead of inventing a number
+ok 100 - keeps variable printed stats unresolved instead of inventing a number
+  ---
+  duration_ms: 0.193521
+  type: 'test'
+  ...
+# Subtest: detects graveyard permissions and blocks normal cards stranded there
+ok 101 - detects graveyard permissions and blocks normal cards stranded there
+  ---
+  duration_ms: 2.28825
+  type: 'test'
+  ...
+# Subtest: honors explicit combo zone requirements
+ok 102 - honors explicit combo zone requirements
+  ---
+  duration_ms: 0.309814
+  type: 'test'
+  ...
+# Subtest: finished-deck winning evidence feeds commander-aware exact tutor access without changing closure truth
+ok 103 - finished-deck winning evidence feeds commander-aware exact tutor access without changing closure truth
+  ---
+  duration_ms: 18.265284
+  type: 'test'
+  ...
+# Subtest: non-winning Spellbook rows never enter the route-access layer
+ok 104 - non-winning Spellbook rows never enter the route-access layer
+  ---
+  duration_ms: 3.046307
+  type: 'test'
+  ...
+# Subtest: post-build evidence counts only full-table game-ending combos as Ruthless winning combos
+ok 105 - post-build evidence counts only full-table game-ending combos as Ruthless winning combos
+  ---
+  duration_ms: 12.6536
+  type: 'test'
+  ...
+# Subtest: post-build evidence requires explicit multiplayer scope for lethal engines
+ok 106 - post-build evidence requires explicit multiplayer scope for lethal engines
+  ---
+  duration_ms: 0.384987
+  type: 'test'
+  ...
+# Subtest: post-build winning details preserve explicit dependencies, provider setup evidence, and template uncertainty
+ok 107 - post-build winning details preserve explicit dependencies, provider setup evidence, and template uncertainty
+  ---
+  duration_ms: 0.692707
+  type: 'test'
+  ...
+# Subtest: post-build setup audit consumes the setup fields retained on verified combo details
+ok 108 - post-build setup audit consumes the setup fields retained on verified combo details
+  ---
+  duration_ms: 3.080107
+  type: 'test'
+  ...
+# Subtest: duplicate provider rows do not inflate verified or Ruthless winning-combo counts
+ok 109 - duplicate provider rows do not inflate verified or Ruthless winning-combo counts
+  ---
+  duration_ms: 0.405333
+  type: 'test'
+  ...
+# Subtest: post-build evidence carries unavailable source provenance without manufacturing positive combo signals
+ok 110 - post-build evidence carries unavailable source provenance without manufacturing positive combo signals
+  ---
+  duration_ms: 0.171262
+  type: 'test'
+  ...
+# Subtest: no-target neutral planning accepts a theme for the enforceable theme adapter
+ok 111 - no-target neutral planning accepts a theme for the enforceable theme adapter
+  ---
+  duration_ms: 1.795215
+  type: 'test'
+  ...
+# Subtest: targeted planning remains on the legacy targeted lane when a target and theme are supplied
+ok 112 - targeted planning remains on the legacy targeted lane when a target and theme are supplied
+  ---
+  duration_ms: 0.215319
+  type: 'test'
+  ...
+# Subtest: missing target never falls through to the legacy hidden-Bracket-4 builder
+ok 113 - missing target never falls through to the legacy hidden-Bracket-4 builder
+  ---
+  duration_ms: 14.369761
+  type: 'test'
+  ...
+# Subtest: unrestricted neutral construction is now a supported strategy-first lane
+ok 114 - unrestricted neutral construction is now a supported strategy-first lane
+  ---
+  duration_ms: 2.264091
+  type: 'test'
+  ...
+# Subtest: neutral per-card budget constraints are supported without inventing a bracket target
+ok 115 - neutral per-card budget constraints are supported without inventing a bracket target
+  ---
+  duration_ms: 0.292176
+  type: 'test'
+  ...
+# Subtest: an explicit target uses the targeted lane and high-power targets can seed verified packages
+ok 116 - an explicit target uses the targeted lane and high-power targets can seed verified packages
+  ---
+  duration_ms: 0.176565
+  type: 'test'
+  ...
+# Subtest: neutral free-form theme and per-card budget are supported without inventing a bracket target
+ok 117 - neutral free-form theme and per-card budget are supported without inventing a bracket target
+  ---
+  duration_ms: 0.297727
+  type: 'test'
+  ...
+# Subtest: forbid mode disables package discovery and seeding regardless of requested bracket
+ok 118 - forbid mode disables package discovery and seeding regardless of requested bracket
+  ---
+  duration_ms: 0.158595
+  type: 'test'
+  ...
+# Subtest: shared commander configuration accepts ordinary and current Vehicle commanders
+ok 119 - shared commander configuration accepts ordinary and current Vehicle commanders
+  ---
+  duration_ms: 5.079446
+  type: 'test'
+  ...
+# Subtest: shared commander configuration rejects ineligible or Commander-banned commanders
+ok 120 - shared commander configuration rejects ineligible or Commander-banned commanders
+  ---
+  duration_ms: 0.522898
+  type: 'test'
+  ...
+# Subtest: shared commander configuration rejects an arbitrary two-commander pair
+ok 121 - shared commander configuration rejects an arbitrary two-commander pair
+  ---
+  duration_ms: 1.340619
+  type: 'test'
+  ...
+# Subtest: shared commander configuration accepts a valid original Partner pair
+ok 122 - shared commander configuration accepts a valid original Partner pair
+  ---
+  duration_ms: 0.963737
+  type: 'test'
+  ...
+# Subtest: card intelligence refuses to call a candidate legal when the supplied commander is invalid
+ok 123 - card intelligence refuses to call a candidate legal when the supplied commander is invalid
+  ---
+  duration_ms: 6.886248
+  type: 'test'
+  ...
+# Subtest: commander configuration helper rejects zero or more than two commanders
+ok 124 - commander configuration helper rejects zero or more than two commanders
+  ---
+  duration_ms: 0.640874
+  type: 'test'
+  ...
+# Subtest: legendary Vehicle with printed power and toughness is commander-eligible
+ok 125 - legendary Vehicle with printed power and toughness is commander-eligible
+  ---
+  duration_ms: 11.667709
+  type: 'test'
+  ...
+# Subtest: legendary Spacecraft with printed power and toughness is commander-eligible
+ok 126 - legendary Spacecraft with printed power and toughness is commander-eligible
+  ---
+  duration_ms: 0.729465
+  type: 'test'
+  ...
+# Subtest: Vehicle or Spacecraft without a printed power/toughness pair is not automatically commander-eligible
+ok 127 - Vehicle or Spacecraft without a printed power/toughness pair is not automatically commander-eligible
+  ---
+  duration_ms: 1.043749
+  type: 'test'
+  ...
+# Subtest: printed stats do not make an arbitrary legendary artifact commander-eligible
+ok 128 - printed stats do not make an arbitrary legendary artifact commander-eligible
+  ---
+  duration_ms: 0.611012
+  type: 'test'
+  ...
+# Subtest: existing explicit can-be-your-commander permission remains supported
+ok 129 - existing explicit can-be-your-commander permission remains supported
+  ---
+  duration_ms: 0.369537
+  type: 'test'
+  ...
+# Subtest: face-local Vehicle/Spacecraft stats are accepted, but type and stats cannot be borrowed across faces
+ok 130 - face-local Vehicle/Spacecraft stats are accepted, but type and stats cannot be borrowed across faces
+  ---
+  duration_ms: 0.6603
+  type: 'test'
+  ...
+# Subtest: Doctor's companion requires exactly Time Lord Doctor creature subtypes
+ok 131 - Doctor's companion requires exactly Time Lord Doctor creature subtypes
+  ---
+  duration_ms: 3.921462
+  type: 'test'
+  ...
+# Subtest: Partner—Character select pairs only with the same partner variant
+ok 132 - Partner—Character select pairs only with the same partner variant
+  ---
+  duration_ms: 2.160765
+  type: 'test'
+  ...
+# Subtest: current rule accepts an older legendary Vehicle with printed stats, but pre-EOE historical rules do not
+ok 133 - current rule accepts an older legendary Vehicle with printed stats, but pre-EOE historical rules do not
+  ---
+  duration_ms: 4.551663
+  type: 'test'
+  ...
+# Subtest: explicit can-be-your-commander permission remains valid before the 2025 broad Vehicle rule
+ok 134 - explicit can-be-your-commander permission remains valid before the 2025 broad Vehicle rule
+  ---
+  duration_ms: 0.453851
+  type: 'test'
+  ...
+# Subtest: historical feature extraction uses the dated Commander gate instead of current eligibility
+ok 135 - historical feature extraction uses the dated Commander gate instead of current eligibility
+  ---
+  duration_ms: 6.492764
+  type: 'test'
+  ...
+# Subtest: invalid historical rules timestamps fail closed
+ok 136 - invalid historical rules timestamps fail closed
+  ---
+  duration_ms: 0.281324
+  type: 'test'
+  ...
+# Subtest: Rakdos commander rejects blue, white, and green identities but allows colorless
+ok 137 - Rakdos commander rejects blue, white, and green identities but allows colorless
+  ---
+  duration_ms: 3.0078
+  type: 'test'
+  ...
+# Subtest: hybrid identity counts as both colors for Commander construction
+ok 138 - hybrid identity counts as both colors for Commander construction
+  ---
+  duration_ms: 0.884458
+  type: 'test'
+  ...
+# Subtest: combined Partner identities permit cards inside the combined identity
+ok 139 - combined Partner identities permit cards inside the combined identity
+  ---
+  duration_ms: 0.806718
+  type: 'test'
+  ...
+# Subtest: invalid two-commander pairing is rejected
+ok 140 - invalid two-commander pairing is rejected
+  ---
+  duration_ms: 0.580452
+  type: 'test'
+  ...
+# Subtest: Choose a Background combines identities
+ok 141 - Choose a Background combines identities
+  ---
+  duration_ms: 0.439983
+  type: 'test'
+  ...
+# Subtest: Doctor companion pairing is recognized
+ok 142 - Doctor companion pairing is recognized
+  ---
+  duration_ms: 0.270966
+  type: 'test'
+  ...
+# Subtest: card-specific copy-count exceptions are honored
+ok 143 - card-specific copy-count exceptions are honored
+  ---
+  duration_ms: 0.20882
+  type: 'test'
+  ...
+# Subtest: builder-side commander context reuses the same V0.15 strategy inference
+ok 144 - builder-side commander context reuses the same V0.15 strategy inference
+  ---
+  duration_ms: 18.634754
+  type: 'test'
+  ...
+# Subtest: existing V0.15 strategy inference gives on-plan cards more affinity than unrelated utility
+ok 145 - existing V0.15 strategy inference gives on-plan cards more affinity than unrelated utility
+  ---
+  duration_ms: 0.797885
+  type: 'test'
+  ...
+# Subtest: strategy-aware cut pressure protects on-plan cards without making them uncuttable
+ok 146 - strategy-aware cut pressure protects on-plan cards without making them uncuttable
+  ---
+  duration_ms: 0.924371
+  type: 'test'
+  ...
+# Subtest: upgrade pairing preserves the structural role an incoming card is repairing when a safer cut exists
+ok 147 - upgrade pairing preserves the structural role an incoming card is repairing when a safer cut exists
+  ---
+  duration_ms: 0.84886
+  type: 'test'
+  ...
+# Subtest: top-three commander context preserves multiple already-detected deck identities
+ok 148 - top-three commander context preserves multiple already-detected deck identities
+  ---
+  duration_ms: 0.965164
+  type: 'test'
+  ...
+# Subtest: Bracket 5 exposes existing free-interaction and win-package pressure without changing lower brackets
+ok 149 - Bracket 5 exposes existing free-interaction and win-package pressure without changing lower brackets
+  ---
+  duration_ms: 1.179986
+  type: 'test'
+  ...
+# Subtest: Bracket 5 prefers an existing R-tagged verified package but falls back to the existing portfolio selection
+ok 150 - Bracket 5 prefers an existing R-tagged verified package but falls back to the existing portfolio selection
+  ---
+  duration_ms: 0.337964
+  type: 'test'
+  ...
+# Subtest: fresh independent observed results plus curated cEDH evidence can support the metagame gate
+ok 151 - fresh independent observed results plus curated cEDH evidence can support the metagame gate
+  ---
+  duration_ms: 1.897375
+  type: 'test'
+  ...
+# Subtest: two mirrors of the same tournament evidence do not count as independent corroboration
+ok 152 - two mirrors of the same tournament evidence do not count as independent corroboration
+  ---
+  duration_ms: 0.309896
+  type: 'test'
+  ...
+# Subtest: stale competitive references decay out instead of certifying Bracket 5 forever
+ok 153 - stale competitive references decay out instead of certifying Bracket 5 forever
+  ---
+  duration_ms: 0.350403
+  type: 'test'
+  ...
+# Subtest: fresh contradictory independent evidence blocks a confident Bracket 5 claim
+ok 154 - fresh contradictory independent evidence blocks a confident Bracket 5 claim
+  ---
+  duration_ms: 0.388361
+  type: 'test'
+  ...
+# Subtest: opposite reports inside one underlying evidence group are neutralized rather than averaged into false confidence
+ok 155 - opposite reports inside one underlying evidence group are neutralized rather than averaged into false confidence
+  ---
+  duration_ms: 0.475947
+  type: 'test'
+  ...
+# Subtest: community popularity and decklists alone cannot become competitive metagame evidence
+ok 156 - community popularity and decklists alone cannot become competitive metagame evidence
+  ---
+  duration_ms: 0.231233
+  type: 'test'
+  ...
+# Subtest: USD and NZD conversion helpers round currency values
+ok 157 - USD and NZD conversion helpers round currency values
+  ---
+  duration_ms: 51.730843
+  type: 'test'
+  ...
+# Subtest: NZD annotation makes converted values primary while preserving USD reference values
+ok 158 - NZD annotation makes converted values primary while preserving USD reference values
+  ---
+  duration_ms: 0.365327
+  type: 'test'
+  ...
+# Subtest: planner fills every requested slot without exceeding the whole-deck budget
+ok 159 - planner fills every requested slot without exceeding the whole-deck budget
+  ---
+  duration_ms: 1.944101
+  type: 'test'
+  ...
+# Subtest: planner skips a higher-score card when it would make the remaining slots impossible
+ok 160 - planner skips a higher-score card when it would make the remaining slots impossible
+  ---
+  duration_ms: 11.628742
+  type: 'test'
+  ...
+# Subtest: planner fails closed when known prices prove the requested number of cards cannot fit
+ok 161 - planner fails closed when known prices prove the requested number of cards cannot fit
+  ---
+  duration_ms: 0.378358
+  type: 'test'
+  ...
+# Subtest: required cards are never silently dropped to manufacture budget compliance
+ok 162 - required cards are never silently dropped to manufacture budget compliance
+  ---
+  duration_ms: 0.211429
+  type: 'test'
+  ...
+# Subtest: unknown or invalid candidate prices are rejected rather than treated as free
+ok 163 - unknown or invalid candidate prices are rejected rather than treated as free
+  ---
+  duration_ms: 0.665473
+  type: 'test'
+  ...
+# Subtest: input order does not change a deterministic budget selection
+ok 164 - input order does not change a deterministic budget selection
+  ---
+  duration_ms: 0.346695
+  type: 'test'
+  ...
+# Subtest: candidate search falls back to the user per-card cap when no internal cap exists
+ok 165 - candidate search falls back to the user per-card cap when no internal cap exists
+  ---
+  duration_ms: 1.039113
+  type: 'test'
+  ...
+# Subtest: candidate-only search cap works without creating a user required-card cap
+ok 166 - candidate-only search cap works without creating a user required-card cap
+  ---
+  duration_ms: 0.188943
+  type: 'test'
+  ...
+# Subtest: candidate search may tighten but never loosen an explicit user per-card cap
+ok 167 - candidate search may tighten but never loosen an explicit user per-card cap
+  ---
+  duration_ms: 0.168993
+  type: 'test'
+  ...
+# Subtest: invalid internal candidate cap fails closed
+ok 168 - invalid internal candidate cap fails closed
+  ---
+  duration_ms: 2.186116
+  type: 'test'
+  ...
+# Subtest: card-data fingerprint is deterministic across input order and ignores unrelated supplied cards
+ok 169 - card-data fingerprint is deterministic across input order and ignores unrelated supplied cards
+  ---
+  duration_ms: 5.924719
+  type: 'test'
+  ...
+# Subtest: changing relevant historical Oracle input changes card-data fingerprint even when structural metrics stay the same
+ok 170 - changing relevant historical Oracle input changes card-data fingerprint even when structural metrics stay the same
+  ---
+  duration_ms: 1.134284
+  type: 'test'
+  ...
+# Subtest: changing a relevant card-data value that affects structure changes both fingerprint and raw metrics
+ok 171 - changing a relevant card-data value that affects structure changes both fingerprint and raw metrics
+  ---
+  duration_ms: 0.559367
+  type: 'test'
+  ...
+# Subtest: TopDeck materialization persists the card-data snapshot fingerprint into corpus provenance
+ok 172 - TopDeck materialization persists the card-data snapshot fingerprint into corpus provenance
+  ---
+  duration_ms: 2.477703
+  type: 'test'
+  ...
+# Subtest: deck-intrinsic predictors are invariant when the same TopDeck deck has a different result
+ok 173 - deck-intrinsic predictors are invariant when the same TopDeck deck has a different result
+  ---
+  duration_ms: 26.286797
+  type: 'test'
+  ...
+# Subtest: feature extraction fails closed when any physical deck entry is unresolved
+ok 174 - feature extraction fails closed when any physical deck entry is unresolved
+  ---
+  duration_ms: 2.398699
+  type: 'test'
+  ...
+# Subtest: feature extraction refuses card data observed after the feature snapshot and future printings
+ok 175 - feature extraction refuses card data observed after the feature snapshot and future printings
+  ---
+  duration_ms: 1.246106
+  type: 'test'
+  ...
+# Subtest: raw structural features remain auditable and projected model features stay bounded
+ok 176 - raw structural features remain auditable and projected model features stay bounded
+  ---
+  duration_ms: 5.961458
+  type: 'test'
+  ...
+# Subtest: temporal preparation fits normalization on training only so future holdout outliers cannot change earlier features
+ok 177 - temporal preparation fits normalization on training only so future holdout outliers cannot change earlier features
+  ---
+  duration_ms: 14.532044
+  type: 'test'
+  ...
+# Subtest: normalizer rejects mixed extractor versions instead of silently combining incompatible feature contracts
+ok 178 - normalizer rejects mixed extractor versions instead of silently combining incompatible feature contracts
+  ---
+  duration_ms: 3.785049
+  type: 'test'
+  ...
+# Subtest: whole-deck wrapper accepts only an independently audited total at or below the hard cap
+ok 179 - whole-deck wrapper accepts only an independently audited total at or below the hard cap
+  ---
+  duration_ms: 3.45546
+  type: 'test'
+  ...
+# Subtest: unknown exact-printing prices never count as zero toward a hard whole-deck budget
+ok 180 - unknown exact-printing prices never count as zero toward a hard whole-deck budget
+  ---
+  duration_ms: 1.321071
+  type: 'test'
+  ...
+# Subtest: the wrapper never reports compliance when every complete attempt is genuinely over budget
+ok 181 - the wrapper never reports compliance when every complete attempt is genuinely over budget
+  ---
+  duration_ms: 1.004921
+  type: 'test'
+  ...
+# Subtest: internal candidate cap may fall below commander price without inventing a commander price restriction
+ok 182 - internal candidate cap may fall below commander price without inventing a commander price restriction
+  ---
+  duration_ms: 0.438872
+  type: 'test'
+  ...
+# Subtest: explicit user max-per-card cap is preserved while candidate search may only tighten it
+ok 183 - explicit user max-per-card cap is preserved while candidate search may only tighten it
+  ---
+  duration_ms: 0.415321
+  type: 'test'
+  ...
+# Subtest: invalid whole-deck budgets are rejected before any build attempt
+ok 184 - invalid whole-deck budgets are rejected before any build attempt
+  ---
+  duration_ms: 0.693324
+  type: 'test'
+  ...
+# Subtest: parseDecklist preserves Commander and physical printing annotations
+ok 185 - parseDecklist preserves Commander and physical printing annotations
+  ---
+  duration_ms: 3.259195
+  type: 'test'
+  ...
+# Subtest: different physical printings of the same card remain distinct entries
+ok 186 - different physical printings of the same card remain distinct entries
+  ---
+  duration_ms: 0.326279
+  type: 'test'
+  ...
+# Subtest: deck pricing uses the exact set, collector number, and requested finish
+ok 187 - deck pricing uses the exact set, collector number, and requested finish
+  ---
+  duration_ms: 1.088678
+  type: 'test'
+  ...
+# Subtest: parseDecklist can promote supplied commander names
+ok 188 - parseDecklist can promote supplied commander names
+  ---
+  duration_ms: 0.826178
+  type: 'test'
+  ...
+# Subtest: parseDecklist recognizes commander tags
+ok 189 - parseDecklist recognizes commander tags
+  ---
+  duration_ms: 0.191371
+  type: 'test'
+  ...
+# Subtest: color identity subset validation is order independent
+ok 190 - color identity subset validation is order independent
+  ---
+  duration_ms: 0.155878
+  type: 'test'
+  ...
+# Subtest: Najeela-style Oracle semantics prove an efficient commander-centric combat win plan without using the commander name as the proof
+ok 191 - Najeela-style Oracle semantics prove an efficient commander-centric combat win plan without using the commander name as the proof
+  ---
+  duration_ms: 2.85092
+  type: 'test'
+  ...
+# Subtest: the Najeela name alone cannot manufacture win-plan evidence when the Oracle semantics are incomplete
+ok 192 - the Najeela name alone cannot manufacture win-plan evidence when the Oracle semantics are incomplete
+  ---
+  duration_ms: 0.65348
+  type: 'test'
+  ...
+# Subtest: an expensive lookalike with the same combat wording does not pass the narrow efficient-command-zone proof
+ok 193 - an expensive lookalike with the same combat wording does not pass the narrow efficient-command-zone proof
+  ---
+  duration_ms: 0.406806
+  type: 'test'
+  ...
+# Subtest: commander win-plan evidence cannot promote an unoptimized shell beyond Bracket 3
+ok 194 - commander win-plan evidence cannot promote an unoptimized shell beyond Bracket 3
+  ---
+  duration_ms: 1.48494
+  type: 'test'
+  ...
+# Subtest: the same proven commander win plan plus an optimized surrounding shell supports Bracket 4 but never substitutes for Bracket 5 evidence
+ok 195 - the same proven commander win plan plus an optimized surrounding shell supports Bracket 4 but never substitutes for Bracket 5 evidence
+  ---
+  duration_ms: 0.61844
+  type: 'test'
+  ...
+# Subtest: collapses the same event and player across TopDeck and EDHTop16
+ok 196 - collapses the same event and player across TopDeck and EDHTop16
+  ---
+  duration_ms: 2.117507
+  type: 'test'
+  ...
+# Subtest: does not deduplicate a reused deck URL across different events
+ok 197 - does not deduplicate a reused deck URL across different events
+  ---
+  duration_ms: 0.397736
+  type: 'test'
+  ...
+# Subtest: does not merge records only because player and commander match
+ok 198 - does not merge records only because player and commander match
+  ---
+  duration_ms: 0.220307
+  type: 'test'
+  ...
+# Subtest: competitive evidence includes structured, public-reference and curated sources
+ok 199 - competitive evidence includes structured, public-reference and curated sources
+  ---
+  duration_ms: 0.802529
+  type: 'test'
+  ...
+# Subtest: EDHTop16 compatibility helper returns an explicit reference packet instead of fabricated structured rows
+ok 200 - EDHTop16 compatibility helper returns an explicit reference packet instead of fabricated structured rows
+  ---
+  duration_ms: 0.628656
+  type: 'test'
+  ...
+# Subtest: NZ pricing evidence includes TCGfind and exact printing identity support
+ok 201 - NZ pricing evidence includes TCGfind and exact printing identity support
+  ---
+  duration_ms: 0.132977
+  type: 'test'
+  ...
+# Subtest: research links preserve paired commanders and card lookup intent
+ok 202 - research links preserve paired commanders and card lookup intent
+  ---
+  duration_ms: 0.565663
+  type: 'test'
+  ...
+# Subtest: weighting guide does not equate popularity with optimality
+ok 203 - weighting guide does not equate popularity with optimality
+  ---
+  duration_ms: 0.270736
+  type: 'test'
+  ...
+# Subtest: multiplayer Commander draws on turn one, so singleton access rises from 7/99 to 8/99
+ok 204 - multiplayer Commander draws on turn one, so singleton access rises from 7/99 to 8/99
+  ---
+  duration_ms: 5.308541
+  type: 'test'
+  ...
+# Subtest: two-player starting player skips the first draw step while the non-starting player does not
+ok 205 - two-player starting player skips the first draw step while the non-starting player does not
+  ---
+  duration_ms: 1.736189
+  type: 'test'
+  ...
+# Subtest: explicit guaranteed extra draws change cumulative exact access without pretending conditional engines are guaranteed
+ok 206 - explicit guaranteed extra draws change cumulative exact access without pretending conditional engines are guaranteed
+  ---
+  duration_ms: 11.327235
+  type: 'test'
+  ...
+# Subtest: small overlapping command-zone access curve matches an independent labeled-card enumerator at every checkpoint
+ok 207 - small overlapping command-zone access curve matches an independent labeled-card enumerator at every checkpoint
+  ---
+  duration_ms: 1.000213
+  type: 'test'
+  ...
+# Subtest: pure cumulative access is monotone and matches closed-form singleton sampling
+ok 208 - pure cumulative access is monotone and matches closed-form singleton sampling
+  ---
+  duration_ms: 0.710263
+  type: 'test'
+  ...
+# Subtest: library exhaustion is explicit and later checkpoints reuse the all-library exact result
+ok 209 - library exhaustion is explicit and later checkpoints reuse the all-library exact result
+  ---
+  duration_ms: 0.352416
+  type: 'test'
+  ...
+# Subtest: opening-hand-only query stays exact without inventing turn draws
+ok 210 - opening-hand-only query stays exact without inventing turn draws
+  ---
+  duration_ms: 0.304931
+  type: 'test'
+  ...
+# Subtest: broad curves stop before multiplying expensive exact solver calls without bound
+ok 211 - broad curves stop before multiplying expensive exact solver calls without bound
+  ---
+  duration_ms: 0.65024
+  type: 'test'
+  ...
+# Subtest: malformed access-curve schedules fail closed
+ok 212 - malformed access-curve schedules fail closed
+  ---
+  duration_ms: 0.638346
+  type: 'test'
+  ...
+# Subtest: single commander is guaranteed while the opening seven comes from the remaining 99 cards
+ok 213 - single commander is guaranteed while the opening seven comes from the remaining 99 cards
+  ---
+  duration_ms: 3.394593
+  type: 'test'
+  ...
+# Subtest: two known commanders leave a 98-card library without changing the seven-card opening hand
+ok 214 - two known commanders leave a 98-card library without changing the seven-card opening hand
+  ---
+  duration_ms: 0.345152
+  type: 'test'
+  ...
+# Subtest: one flexible commander cannot satisfy two simultaneous roles by itself
+ok 215 - one flexible commander cannot satisfy two simultaneous roles by itself
+  ---
+  duration_ms: 0.316519
+  type: 'test'
+  ...
+# Subtest: flexible commander can cover the missing role next to one drawn physical piece
+ok 216 - flexible commander can cover the missing role next to one drawn physical piece
+  ---
+  duration_ms: 0.338479
+  type: 'test'
+  ...
+# Subtest: two flexible commanders may be assigned separately to two simultaneous roles
+ok 217 - two flexible commanders may be assigned separately to two simultaneous roles
+  ---
+  duration_ms: 0.283103
+  type: 'test'
+  ...
+# Subtest: an irrelevant commander is removed from the library sample space instead of becoming a fictitious draw
+ok 218 - an irrelevant commander is removed from the library sample space instead of becoming a fictitious draw
+  ---
+  duration_ms: 0.407598
+  type: 'test'
+  ...
+# Subtest: alternative routes can choose different assignments for the same flexible commander
+ok 219 - alternative routes can choose different assignments for the same flexible commander
+  ---
+  duration_ms: 0.351812
+  type: 'test'
+  ...
+# Subtest: all small command-zone plus A/B/AB library populations match independent labeled-card enumeration
+ok 220 - all small command-zone plus A/B/AB library populations match independent labeled-card enumeration
+  ---
+  duration_ms: 146.660387
+  type: 'test'
+  ...
+# Subtest: derived library size rejects category counts that accidentally keep command-zone cards in the draw population
+ok 221 - derived library size rejects category counts that accidentally keep command-zone cards in the draw population
+  ---
+  duration_ms: 0.926163
+  type: 'test'
+  ...
+# Subtest: pathologically broad guaranteed-role assignments stop at the explicit frontier ceiling
+ok 222 - pathologically broad guaranteed-role assignments stop at the explicit frontier ceiling
+  ---
+  duration_ms: 14.738538
+  type: 'test'
+  ...
+# Subtest: malformed command-zone requests fail closed
+ok 223 - malformed command-zone requests fail closed
+  ---
+  duration_ms: 0.591824
+  type: 'test'
+  ...
+# Subtest: one universal tutor cannot satisfy two simultaneous missing roles by itself
+ok 224 - one universal tutor cannot satisfy two simultaneous missing roles by itself
+  ---
+  duration_ms: 3.693078
+  type: 'test'
+  ...
+# Subtest: universal tutor can fill exactly one missing role next to a real piece
+ok 225 - universal tutor can fill exactly one missing role next to a real piece
+  ---
+  duration_ms: 0.899893
+  type: 'test'
+  ...
+# Subtest: alternative winning routes sharing a physical role are unioned without double-counting
+ok 226 - alternative winning routes sharing a physical role are unioned without double-counting
+  ---
+  duration_ms: 0.697642
+  type: 'test'
+  ...
+# Subtest: role-specific and universal tutors stay matching-safe with redundant pieces
+ok 227 - role-specific and universal tutors stay matching-safe with redundant pieces
+  ---
+  duration_ms: 2.021727
+  type: 'test'
+  ...
+# Subtest: all small A/B/AB populations match an independent labeled-card matching enumerator
+ok 228 - all small A/B/AB populations match an independent labeled-card matching enumerator
+  ---
+  duration_ms: 114.225725
+  type: 'test'
+  ...
+# Subtest: zero-requirement route preserves the whole sample space
+ok 229 - zero-requirement route preserves the whole sample space
+  ---
+  duration_ms: 0.226646
+  type: 'test'
+  ...
+# Subtest: routes requiring more physical assignments than draws return exact zero
+ok 230 - routes requiring more physical assignments than draws return exact zero
+  ---
+  duration_ms: 0.316471
+  type: 'test'
+  ...
+# Subtest: pathologically broad overlap requests stop at the explicit transition work ceiling
+ok 231 - pathologically broad overlap requests stop at the explicit transition work ceiling
+  ---
+  duration_ms: 763.306276
+  type: 'test'
+  ...
+# Subtest: malformed overlap requests fail closed at role, route, category and physical-card boundaries
+ok 232 - malformed overlap requests fail closed at role, route, category and physical-card boundaries
+  ---
+  duration_ms: 1.117662
+  type: 'test'
+  ...
+# Subtest: two unique combo pieces in a 99-card Commander library are exact
+ok 233 - two unique combo pieces in a 99-card Commander library are exact
+  ---
+  duration_ms: 1.214399
+  type: 'test'
+  ...
+# Subtest: interchangeable role buckets match inclusion-exclusion fixture
+ok 234 - interchangeable role buckets match inclusion-exclusion fixture
+  ---
+  duration_ms: 0.820618
+  type: 'test'
+  ...
+# Subtest: all small two-package populations match independent labeled-card enumeration
+ok 235 - all small two-package populations match independent labeled-card enumeration
+  ---
+  duration_ms: 234.735807
+  type: 'test'
+  ...
+# Subtest: impossible assembly requirements return exact zero instead of partial success
+ok 236 - impossible assembly requirements return exact zero instead of partial success
+  ---
+  duration_ms: 0.250734
+  type: 'test'
+  ...
+# Subtest: empty and zero-minimum package requests preserve the whole sample space
+ok 237 - empty and zero-minimum package requests preserve the whole sample space
+  ---
+  duration_ms: 0.314764
+  type: 'test'
+  ...
+# Subtest: pathologically broad package requests stop at the explicit DP work ceiling
+ok 238 - pathologically broad package requests stop at the explicit DP work ceiling
+  ---
+  duration_ms: 56.321491
+  type: 'test'
+  ...
+# Subtest: malformed or overlapping bucket-count requests fail closed
+ok 239 - malformed or overlapping bucket-count requests fail closed
+  ---
+  duration_ms: 0.500643
+  type: 'test'
+  ...
+# Subtest: exact printing price choices keep finish identity and sort cheapest first
+ok 240 - exact printing price choices keep finish identity and sort cheapest first
+  ---
+  duration_ms: 1.789253
+  type: 'test'
+  ...
+# Subtest: hard per-card cap accepts an exact printing only with a priced finish at or below the cap
+ok 241 - hard per-card cap accepts an exact printing only with a priced finish at or below the cap
+  ---
+  duration_ms: 0.338227
+  type: 'test'
+  ...
+# Subtest: requested finish is audited instead of silently substituting a cheaper finish
+ok 242 - requested finish is audited instead of silently substituting a cheaper finish
+  ---
+  duration_ms: 0.200296
+  type: 'test'
+  ...
+# Subtest: a price field for a finish the exact printing does not declare is not usable evidence
+ok 243 - a price field for a finish the exact printing does not declare is not usable evidence
+  ---
+  duration_ms: 0.25857
+  type: 'test'
+  ...
+# Subtest: missing price evidence fails closed rather than being treated as zero dollars
+ok 244 - missing price evidence fails closed rather than being treated as zero dollars
+  ---
+  duration_ms: 0.173528
+  type: 'test'
+  ...
+# Subtest: post-build budget audit respects the exact deck finish marker
+ok 245 - post-build budget audit respects the exact deck finish marker
+  ---
+  duration_ms: 1.355399
+  type: 'test'
+  ...
+# Subtest: post-build budget audit reports exact over-cap, unavailable-finish, unknown-price and unresolved failures
+ok 246 - post-build budget audit reports exact over-cap, unavailable-finish, unknown-price and unresolved failures
+  ---
+  duration_ms: 0.955056
+  type: 'test'
+  ...
+# Subtest: invalid hard caps are rejected deterministically
+ok 247 - invalid hard caps are rejected deterministically
+  ---
+  duration_ms: 0.76418
+  type: 'test'
+  ...
+# Subtest: 99-card Commander opening hand exact 3+ land probability matches pinned mathematical fixture
+ok 248 - 99-card Commander opening hand exact 3+ land probability matches pinned mathematical fixture
+  ---
+  duration_ms: 2.329004
+  type: 'test'
+  ...
+# Subtest: all small exact-success masses match independent labeled-card enumeration
+ok 249 - all small exact-success masses match independent labeled-card enumeration
+  ---
+  duration_ms: 21.744011
+  type: 'test'
+  ...
+# Subtest: event variants share exact expectation and variance independent of event selection
+ok 250 - event variants share exact expectation and variance independent of event selection
+  ---
+  duration_ms: 0.247965
+  type: 'test'
+  ...
+# Subtest: physical support handles forced successes when failures are insufficient
+ok 251 - physical support handles forced successes when failures are insufficient
+  ---
+  duration_ms: 0.121187
+  type: 'test'
+  ...
+# Subtest: boundary populations and draw-all cases remain exact
+ok 252 - boundary populations and draw-all cases remain exact
+  ---
+  duration_ms: 0.142645
+  type: 'test'
+  ...
+# Subtest: supported ceiling remains finite and exact while oversized requests fail closed
+ok 253 - supported ceiling remains finite and exact while oversized requests fail closed
+  ---
+  duration_ms: 15.062139
+  type: 'test'
+  ...
+# Subtest: increasing success count cannot reduce a fixed at-least event
+ok 254 - increasing success count cannot reduce a fixed at-least event
+  ---
+  duration_ms: 0.915077
+  type: 'test'
+  ...
+# Subtest: malformed requests fail closed instead of returning partial-looking probabilities
+ok 255 - malformed requests fail closed instead of returning partial-looking probabilities
+  ---
+  duration_ms: 0.573825
+  type: 'test'
+  ...
+# Subtest: combat normalization keeps semantic state and removes implementation prose
+ok 256 - combat normalization keeps semantic state and removes implementation prose
+  ---
+  duration_ms: 12.482473
+  type: 'test'
+  ...
+# Subtest: changing notes or modifier wording does not create a false parity mismatch
+ok 257 - changing notes or modifier wording does not create a false parity mismatch
+  ---
+  duration_ms: 0.40284
+  type: 'test'
+  ...
+# Subtest: a semantic combat-state change changes the normalized result
+ok 258 - a semantic combat-state change changes the normalized result
+  ---
+  duration_ms: 0.279961
+  type: 'test'
+  ...
+# Subtest: benchmark fingerprints ignore object-key order but preserve semantic changes
+ok 259 - benchmark fingerprints ignore object-key order but preserve semantic changes
+  ---
+  duration_ms: 0.357796
+  type: 'test'
+  ...
+# Subtest: exact package normalization uses fractions rather than decimal presentation
+ok 260 - exact package normalization uses fractions rather than decimal presentation
+  ---
+  duration_ms: 0.860613
+  type: 'test'
+  ...
+# Subtest: package benchmark normalization ignores equivalent role-bucket input order
+ok 261 - package benchmark normalization ignores equivalent role-bucket input order
+  ---
+  duration_ms: 0.591478
+  type: 'test'
+  ...
+# Subtest: every registered external oracle has one explicit baseline revision pin
+ok 262 - every registered external oracle has one explicit baseline revision pin
+  ---
+  duration_ms: 1.676881
+  type: 'test'
+  ...
+# Subtest: baseline pins are full immutable-looking Git commit SHAs
+ok 263 - baseline pins are full immutable-looking Git commit SHAs
+  ---
+  duration_ms: 0.469675
+  type: 'test'
+  ...
+# Subtest: pin helpers require exact revision equality rather than prefixes or whitespace tricks
+ok 264 - pin helpers require exact revision equality rather than prefixes or whitespace tricks
+  ---
+  duration_ms: 0.235897
+  type: 'test'
+  ...
+# Subtest: Forge and Manabrew share one independence family
+ok 265 - Forge and Manabrew share one independence family
+  ---
+  duration_ms: 1.297267
+  type: 'test'
+  ...
+# Subtest: rules benchmarks expose both Forge-family references
+ok 266 - rules benchmarks expose both Forge-family references
+  ---
+  duration_ms: 0.279282
+  type: 'test'
+  ...
+# Subtest: exact normalized snapshot comparison reports parity
+ok 267 - exact normalized snapshot comparison reports parity
+  ---
+  duration_ms: 1.085255
+  type: 'test'
+  ...
+# Subtest: nested mismatch reports the precise normalized path
+ok 268 - nested mismatch reports the precise normalized path
+  ---
+  duration_ms: 0.336606
+  type: 'test'
+  ...
+# Subtest: Forge plus Manabrew agreement counts as one family, not two sources
+ok 269 - Forge plus Manabrew agreement counts as one family, not two sources
+  ---
+  duration_ms: 0.673562
+  type: 'test'
+  ...
+# Subtest: independent MCP and Forge-family agreement produces multi-source corroboration
+ok 270 - independent MCP and Forge-family agreement produces multi-source corroboration
+  ---
+  duration_ms: 0.244527
+  type: 'test'
+  ...
+# Subtest: a mismatch in an oracle family keeps that family unresolved
+ok 271 - a mismatch in an oracle family keeps that family unresolved
+  ---
+  duration_ms: 0.362592
+  type: 'test'
+  ...
+# Subtest: different case IDs cannot be pooled into fake multi-source corroboration
+ok 272 - different case IDs cannot be pooled into fake multi-source corroboration
+  ---
+  duration_ms: 0.268962
+  type: 'test'
+  ...
+# Subtest: different domains cannot be pooled even when case labels happen to match
+ok 273 - different domains cannot be pooled even when case labels happen to match
+  ---
+  duration_ms: 0.447738
+  type: 'test'
+  ...
+# Subtest: different deterministic seeds cannot be pooled as one simulation experiment
+ok 274 - different deterministic seeds cannot be pooled as one simulation experiment
+  ---
+  duration_ms: 0.623793
+  type: 'test'
+  ...
+# Subtest: blank benchmark identity metadata is rejected before comparison
+ok 275 - blank benchmark identity metadata is rejected before comparison
+  ---
+  duration_ms: 0.601352
+  type: 'test'
+  ...
+# Subtest: unavailable combo verification never manufactures route resilience
+ok 276 - unavailable combo verification never manufactures route resilience
+  ---
+  duration_ms: 1.441285
+  type: 'test'
+  ...
+# Subtest: one full-table combo is reported as a single route
+ok 277 - one full-table combo is reported as a single route
+  ---
+  duration_ms: 13.967334
+  type: 'test'
+  ...
+# Subtest: preferred seeded combo remains the primary final route when it survived verification
+ok 278 - preferred seeded combo remains the primary final route when it survived verification
+  ---
+  duration_ms: 1.446548
+  type: 'test'
+  ...
+# Subtest: disjoint explicit packages earn independent-backup resilience
+ok 279 - disjoint explicit packages earn independent-backup resilience
+  ---
+  duration_ms: 0.434027
+  type: 'test'
+  ...
+# Subtest: two combo IDs sharing a core do not earn independent redundancy
+ok 280 - two combo IDs sharing a core do not earn independent redundancy
+  ---
+  duration_ms: 0.547527
+  type: 'test'
+  ...
+# Subtest: shared commander is reported as commander-coupled rather than fully independent
+ok 281 - shared commander is reported as commander-coupled rather than fully independent
+  ---
+  duration_ms: 0.498299
+  type: 'test'
+  ...
+# Subtest: template requirements block a complete independence claim without deleting the verified win
+ok 282 - template requirements block a complete independence claim without deleting the verified win
+  ---
+  duration_ms: 1.260638
+  type: 'test'
+  ...
+# Subtest: delayed wins are retained but exposed separately for speed/resilience consumers
+ok 283 - delayed wins are retained but exposed separately for speed/resilience consumers
+  ---
+  duration_ms: 2.635097
+  type: 'test'
+  ...
+# Subtest: explicit self win is a full-table win
+ok 284 - explicit self win is a full-table win
+  ---
+  duration_ms: 2.557499
+  type: 'test'
+  ...
+# Subtest: delayed alternate wins remain wins but expose their slower timing
+ok 285 - delayed alternate wins remain wins but expose their slower timing
+  ---
+  duration_ms: 0.463627
+  type: 'test'
+  ...
+# Subtest: each opponent loses closes a multiplayer table
+ok 286 - each opponent loses closes a multiplayer table
+  ---
+  duration_ms: 0.200614
+  type: 'test'
+  ...
+# Subtest: target opponent loses does not masquerade as a multiplayer win
+ok 287 - target opponent loses does not masquerade as a multiplayer win
+  ---
+  duration_ms: 2.697306
+  type: 'test'
+  ...
+# Subtest: generic infinite damage is lethal-scale but not full-table scoped
+ok 288 - generic infinite damage is lethal-scale but not full-table scoped
+  ---
+  duration_ms: 1.082158
+  type: 'test'
+  ...
+# Subtest: infinite damage explicitly to each opponent is full-table lethal
+ok 289 - infinite damage explicitly to each opponent is full-table lethal
+  ---
+  duration_ms: 0.18092
+  type: 'test'
+  ...
+# Subtest: generic infinite lifeloss is not assumed to hit the whole table
+ok 290 - generic infinite lifeloss is not assumed to hit the whole table
+  ---
+  duration_ms: 0.89089
+  type: 'test'
+  ...
+# Subtest: infinite life loss explicitly for all opponents is full-table lethal
+ok 291 - infinite life loss explicitly for all opponents is full-table lethal
+  ---
+  duration_ms: 0.210323
+  type: 'test'
+  ...
+# Subtest: infinite mana and near-infinite value are resource engines, not table closure
+ok 292 - infinite mana and near-infinite value are resource engines, not table closure
+  ---
+  duration_ms: 0.839634
+  type: 'test'
+  ...
+# Subtest: a target-opponent result cannot override explicit all-opponent closure in the same variant
+ok 293 - a target-opponent result cannot override explicit all-opponent closure in the same variant
+  ---
+  duration_ms: 0.513338
+  type: 'test'
+  ...
+# Subtest: general win-package queries are winning-outcome searches without requiring Ruthless/cEDH tags
+ok 294 - general win-package queries are winning-outcome searches without requiring Ruthless/cEDH tags
+  ---
+  duration_ms: 1.91448
+  type: 'test'
+  ...
+# Subtest: Spellbook identity tokens always use canonical WUBRG ordering
+ok 295 - Spellbook identity tokens always use canonical WUBRG ordering
+  ---
+  duration_ms: 0.21908
+  type: 'test'
+  ...
+# Subtest: general package ranking rejects impressive non-winning outcomes and excluded pieces
+ok 296 - general package ranking rejects impressive non-winning outcomes and excluded pieces
+  ---
+  duration_ms: 5.570443
+  type: 'test'
+  ...
+# Subtest: general package ranking does not treat resource loops or combat loops as deterministic wins
+ok 297 - general package ranking does not treat resource loops or combat loops as deterministic wins
+  ---
+  duration_ms: 0.733926
+  type: 'test'
+  ...
+# Subtest: a package requiring the commander is rejected when that commander is not selected
+ok 298 - a package requiring the commander is rejected when that commander is not selected
+  ---
+  duration_ms: 0.14687
+  type: 'test'
+  ...
+# Subtest: a package requiring two copies of a card is rejected for Commander singleton safety
+ok 299 - a package requiring two copies of a card is rejected for Commander singleton safety
+  ---
+  duration_ms: 0.100408
+  type: 'test'
+  ...
+# Subtest: pinned historical acquisition verifies exact bytes, hash, length, and archive provenance
+ok 300 - pinned historical acquisition verifies exact bytes, hash, length, and archive provenance
+  ---
+  duration_ms: 30.119322
+  type: 'test'
+  ...
+# Subtest: archive publication after the requested feature cutoff fails before network access
+ok 301 - archive publication after the requested feature cutoff fails before network access
+  ---
+  duration_ms: 1.850422
+  type: 'test'
+  ...
+# Subtest: a mismatched content hash fails closed before card data can be used
+ok 302 - a mismatched content hash fails closed before card data can be used
+  ---
+  duration_ms: 0.791271
+  type: 'test'
+  ...
+# Subtest: byte length and maximum-size guards reject truncated or unexpectedly large sources
+ok 303 - byte length and maximum-size guards reject truncated or unexpectedly large sources
+  ---
+  duration_ms: 1.27558
+  type: 'test'
+  ...
+# Subtest: streaming size guard fails closed even when the provider omits Content-Length
+ok 304 - streaming size guard fails closed even when the provider omits Content-Length
+  ---
+  duration_ms: 1.347013
+  type: 'test'
+  ...
+# Subtest: invalid JSON and invalid card shapes are never accepted as verified historical card data
+ok 305 - invalid JSON and invalid card shapes are never accepted as verified historical card data
+  ---
+  duration_ms: 1.294977
+  type: 'test'
+  ...
+# Subtest: pinned acquisition is wired directly into provenanced historical feature extraction
+ok 306 - pinned acquisition is wired directly into provenanced historical feature extraction
+  ---
+  duration_ms: 8.468494
+  type: 'test'
+  ...
+# Subtest: forward capture timestamps current bytes at observation time and cannot be backdated into historical features
+ok 307 - forward capture timestamps current bytes at observation time and cannot be backdated into historical features
+  ---
+  duration_ms: 2.331078
+  type: 'test'
+  ...
+# Subtest: historical rich feature extraction rejects duplicate nonbasic cards without a copy-count exception
+ok 308 - historical rich feature extraction rejects duplicate nonbasic cards without a copy-count exception
+  ---
+  duration_ms: 16.322018
+  type: 'test'
+  ...
+# Subtest: historical rich feature extraction accepts a card whose archived Oracle text explicitly permits repeated copies
+ok 309 - historical rich feature extraction accepts a card whose archived Oracle text explicitly permits repeated copies
+  ---
+  duration_ms: 5.223613
+  type: 'test'
+  ...
+# Subtest: historical rich feature extraction rejects cards marked nonlegal in the archived Commander legality data
+ok 310 - historical rich feature extraction rejects cards marked nonlegal in the archived Commander legality data
+  ---
+  duration_ms: 0.829817
+  type: 'test'
+  ...
+# Subtest: historical rich feature extraction rejects cards outside the combined commander color identity
+ok 311 - historical rich feature extraction rejects cards outside the combined commander color identity
+  ---
+  duration_ms: 0.734871
+  type: 'test'
+  ...
+# Subtest: historical rich feature extraction rejects two commanders that do not form a legal pairing
+ok 312 - historical rich feature extraction rejects two commanders that do not form a legal pairing
+  ---
+  duration_ms: 1.341694
+  type: 'test'
+  ...
+# Subtest: name-only historical entries ignore post-cutoff printings even when future cards appear first
+ok 313 - name-only historical entries ignore post-cutoff printings even when future cards appear first
+  ---
+  duration_ms: 8.684422
+  type: 'test'
+  ...
+# Subtest: historical name-only resolution is deterministic regardless of printing input order
+ok 314 - historical name-only resolution is deterministic regardless of printing input order
+  ---
+  duration_ms: 2.736154
+  type: 'test'
+  ...
+# Subtest: name-only historical resolution fails closed when no dated printing proves the card existed by the cutoff
+ok 315 - name-only historical resolution fails closed when no dated printing proves the card existed by the cutoff
+  ---
+  duration_ms: 0.863107
+  type: 'test'
+  ...
+# Subtest: an exact set/collector deck line remains exact and a future exact printing is rejected
+ok 316 - an exact set/collector deck line remains exact and a future exact printing is rejected
+  ---
+  duration_ms: 1.847117
+  type: 'test'
+  ...
+# Subtest: when several pre-cutoff name-only printings exist, selection is deterministic and prefers the latest known available printing
+ok 317 - when several pre-cutoff name-only printings exist, selection is deterministic and prefers the latest known available printing
+  ---
+  duration_ms: 1.002765
+  type: 'test'
+  ...
+# Subtest: genuinely contemporaneous capture is eligible only when the source was observable before the feature cutoff
+ok 318 - genuinely contemporaneous capture is eligible only when the source was observable before the feature cutoff
+  ---
+  duration_ms: 2.583273
+  type: 'test'
+  ...
+# Subtest: a verifiable archive published before the event may be retrieved later without becoming future leakage
+ok 319 - a verifiable archive published before the event may be retrieved later without becoming future leakage
+  ---
+  duration_ms: 0.279159
+  type: 'test'
+  ...
+# Subtest: an archive published after the predicted event is rejected even if it claims an older effective date
+ok 320 - an archive published after the predicted event is rejected even if it claims an older effective date
+  ---
+  duration_ms: 0.272888
+  type: 'test'
+  ...
+# Subtest: current data retrieved retrospectively is never eligible for the rich Oracle-derived feature contract
+ok 321 - current data retrieved retrospectively is never eligible for the rich Oracle-derived feature contract
+  ---
+  duration_ms: 0.39469
+  type: 'test'
+  ...
+# Subtest: archive time ordering, content hashes, source URI, and version identity fail closed
+ok 322 - archive time ordering, content hashes, source URI, and version identity fail closed
+  ---
+  duration_ms: 1.447599
+  type: 'test'
+  ...
+# Subtest: provenanced extraction rejects retrospective current data before constructing a rich snapshot
+ok 323 - provenanced extraction rejects retrospective current data before constructing a rich snapshot
+  ---
+  duration_ms: 0.464416
+  type: 'test'
+  ...
+# Subtest: provenanced extraction grounds cardDataObservedAt in the verified source availability time
+ok 324 - provenanced extraction grounds cardDataObservedAt in the verified source availability time
+  ---
+  duration_ms: 9.806529
+  type: 'test'
+  ...
+# Subtest: assessment is deterministic and contains no outcome label or standing surface
+ok 325 - assessment is deterministic and contains no outcome label or standing surface
+  ---
+  duration_ms: 0.467174
+  type: 'test'
+  ...
+# Subtest: runtime guard accepts a genuine provenanced snapshot
+ok 326 - runtime guard accepts a genuine provenanced snapshot
+  ---
+  duration_ms: 11.941979
+  type: 'test'
+  ...
+# Subtest: runtime guard rejects provenance whose source availability no longer matches recorded cardDataObservedAt
+ok 327 - runtime guard rejects provenance whose source availability no longer matches recorded cardDataObservedAt
+  ---
+  duration_ms: 1.889831
+  type: 'test'
+  ...
+# Subtest: runtime guard rejects a retrospective-current method even if an object falsely marks itself eligible
+ok 328 - runtime guard rejects a retrospective-current method even if an object falsely marks itself eligible
+  ---
+  duration_ms: 1.300316
+  type: 'test'
+  ...
+# Subtest: runtime guard revalidates source hash, URI, and archive identity instead of trusting stored eligible=true
+ok 329 - runtime guard revalidates source hash, URI, and archive identity instead of trusting stored eligible=true
+  ---
+  duration_ms: 1.163788
+  type: 'test'
+  ...
+# Subtest: runtime guard rejects stored provenance with retrieval before source availability
+ok 330 - runtime guard rejects stored provenance with retrieval before source availability
+  ---
+  duration_ms: 0.966403
+  type: 'test'
+  ...
+# Subtest: runtime guard rejects an internally contradictory eligible assessment that still carries failure reasons
+ok 331 - runtime guard rejects an internally contradictory eligible assessment that still carries failure reasons
+  ---
+  duration_ms: 0.750797
+  type: 'test'
+  ...
+# Subtest: runtime guard rejects a blank source identity even when all other stored fields look valid
+ok 332 - runtime guard rejects a blank source identity even when all other stored fields look valid
+  ---
+  duration_ms: 0.616022
+  type: 'test'
+  ...
+# Subtest: runtime guard rejects a snapshot whose stored Commander validation summary is missing
+ok 333 - runtime guard rejects a snapshot whose stored Commander validation summary is missing
+  ---
+  duration_ms: 0.807837
+  type: 'test'
+  ...
+# Subtest: runtime guard rejects a stored Commander validation summary that is not unequivocally legal
+ok 334 - runtime guard rejects a stored Commander validation summary that is not unequivocally legal
+  ---
+  duration_ms: 1.039805
+  type: 'test'
+  ...
+# Subtest: runtime guard rejects contradictory legal status with nonzero stored violations
+ok 335 - runtime guard rejects contradictory legal status with nonzero stored violations
+  ---
+  duration_ms: 1.080903
+  type: 'test'
+  ...
+# Subtest: current card-data sources are explicitly blocked from retrospective rich-feature backfill
+ok 336 - current card-data sources are explicitly blocked from retrospective rich-feature backfill
+  ---
+  duration_ms: 1.124992
+  type: 'test'
+  ...
+# Subtest: Scryfall current gzip JSON Lines bulk data is forward-capture enabled without becoming a historical archive
+ok 337 - Scryfall current gzip JSON Lines bulk data is forward-capture enabled without becoming a historical archive
+  ---
+  duration_ms: 1.145252
+  type: 'test'
+  ...
+# Subtest: MTGJSON remains a forward adapter candidate and cannot be used as retrospective proof
+ok 338 - MTGJSON remains a forward adapter candidate and cannot be used as retrospective proof
+  ---
+  duration_ms: 0.191348
+  type: 'test'
+  ...
+# Subtest: inventory reads are deterministic, case-normalized, and returned as copies
+ok 339 - inventory reads are deterministic, case-normalized, and returned as copies
+  ---
+  duration_ms: 0.767637
+  type: 'test'
+  ...
+# Subtest: historical learning record keeps predictor provenance separate from later target-only outcome evidence
+ok 340 - historical learning record keeps predictor provenance separate from later target-only outcome evidence
+  ---
+  duration_ms: 22.2013
+  type: 'test'
+  ...
+# Subtest: a predictor snapshot created after the outcome fails historical training eligibility
+ok 341 - a predictor snapshot created after the outcome fails historical training eligibility
+  ---
+  duration_ms: 2.198735
+  type: 'test'
+  ...
+# Subtest: outcome evidence that claims availability before the event fails closed
+ok 342 - outcome evidence that claims availability before the event fails closed
+  ---
+  duration_ms: 3.357738
+  type: 'test'
+  ...
+# Subtest: retrospective or current-truth outcome evidence cannot become trusted historical training labels
+ok 343 - retrospective or current-truth outcome evidence cannot become trusted historical training labels
+  ---
+  duration_ms: 2.002227
+  type: 'test'
+  ...
+# Subtest: changing only source version/content provenance changes the historical corpus content hash
+ok 344 - changing only source version/content provenance changes the historical corpus content hash
+  ---
+  duration_ms: 3.045252
+  type: 'test'
+  ...
+# Subtest: later tournament outcomes present in today’s corpus are excluded from an earlier as-of evidence query
+ok 345 - later tournament outcomes present in today’s corpus are excluded from an earlier as-of evidence query
+  ---
+  duration_ms: 1.909724
+  type: 'test'
+  ...
+# Subtest: manifest exposes temporal/source-version coverage without embedding raw decklists
+ok 346 - manifest exposes temporal/source-version coverage without embedding raw decklists
+  ---
+  duration_ms: 2.250813
+  type: 'test'
+  ...
+# Subtest: historical neural evaluation excludes outcomes whose evidence was not available by the requested as-of time
+ok 347 - historical neural evaluation excludes outcomes whose evidence was not available by the requested as-of time
+  ---
+  duration_ms: 149.133936
+  type: 'test'
+  ...
+# Subtest: changing only future records cannot change an earlier as-of model evaluation
+ok 348 - changing only future records cannot change an earlier as-of model evaluation
+  ---
+  duration_ms: 226.903995
+  type: 'test'
+  ...
+# Subtest: runtime validation rejects a forged eligible flag with inconsistent raw and normalized provenance
+ok 349 - runtime validation rejects a forged eligible flag with inconsistent raw and normalized provenance
+  ---
+  duration_ms: 0.914158
+  type: 'test'
+  ...
+# Subtest: a plain generic learning row cannot be relabelled historical through a type cast
+ok 350 - a plain generic learning row cannot be relabelled historical through a type cast
+  ---
+  duration_ms: 0.381657
+  type: 'test'
+  ...
+# Subtest: historical model evaluation fails closed when no verified outcome source was available by as-of
+ok 351 - historical model evaluation fails closed when no verified outcome source was available by as-of
+  ---
+  duration_ms: 1.88742
+  type: 'test'
+  ...
+# Subtest: hard counter matches a spell on the stack
+ok 352 - hard counter matches a spell on the stack
+  ---
+  duration_ms: 2.648881
+  type: 'test'
+  ...
+# Subtest: noncreature counter does not match a creature spell
+ok 353 - noncreature counter does not match a creature spell
+  ---
+  duration_ms: 0.897992
+  type: 'test'
+  ...
+# Subtest: soft counter is reported as conditional
+ok 354 - soft counter is reported as conditional
+  ---
+  duration_ms: 0.333125
+  type: 'test'
+  ...
+# Subtest: indestructible protects against destroy but not exile
+ok 355 - indestructible protects against destroy but not exile
+  ---
+  duration_ms: 0.631478
+  type: 'test'
+  ...
+# Subtest: profile detects phasing and hexproof
+ok 356 - profile detects phasing and hexproof
+  ---
+  duration_ms: 0.261116
+  type: 'test'
+  ...
+# Subtest: parses and pays supported Ward mana and life costs
+ok 357 - parses and pays supported Ward mana and life costs
+  ---
+  duration_ms: 2.565809
+  type: 'test'
+  ...
+# Subtest: target ranking favors combo engines but accounts for unpaid Ward
+ok 358 - target ranking favors combo engines but accounts for unpaid Ward
+  ---
+  duration_ms: 6.487964
+  type: 'test'
+  ...
+# Subtest: multiplayer counter wars resolve in LIFO order
+ok 359 - multiplayer counter wars resolve in LIFO order
+  ---
+  duration_ms: 1.908934
+  type: 'test'
+  ...
+# Subtest: equal-importance mirrors select the same canonical survivor regardless of input order
+ok 360 - equal-importance mirrors select the same canonical survivor regardless of input order
+  ---
+  duration_ms: 13.265815
+  type: 'test'
+  ...
+# Subtest: temporal split membership is reproducible when equal timestamps and input order are reversed
+ok 361 - temporal split membership is reproducible when equal timestamps and input order are reversed
+  ---
+  duration_ms: 1.31414
+  type: 'test'
+  ...
+# Subtest: event result ingestion derives provenance, exact deck fingerprint, target and label
+ok 362 - event result ingestion derives provenance, exact deck fingerprint, target and label
+  ---
+  duration_ms: 4.941115
+  type: 'test'
+  ...
+# Subtest: event top-cut label is derived from standing rather than supplied by the caller
+ok 363 - event top-cut label is derived from standing rather than supplied by the caller
+  ---
+  duration_ms: 0.558957
+  type: 'test'
+  ...
+# Subtest: match outcome creates a distinct learning target and objective win label
+ok 364 - match outcome creates a distinct learning target and objective win label
+  ---
+  duration_ms: 0.494046
+  type: 'test'
+  ...
+# Subtest: mirrors of the same underlying result do not multiply independent evidence
+ok 365 - mirrors of the same underlying result do not multiply independent evidence
+  ---
+  duration_ms: 12.743888
+  type: 'test'
+  ...
+# Subtest: different learning targets with the same external identity are not silently treated as the same label
+ok 366 - different learning targets with the same external identity are not silently treated as the same label
+  ---
+  duration_ms: 0.761672
+  type: 'test'
+  ...
+# Subtest: community decklist sources are rejected as performance-outcome evidence
+ok 367 - community decklist sources are rejected as performance-outcome evidence
+  ---
+  duration_ms: 0.408652
+  type: 'test'
+  ...
+# Subtest: registered source identity is checked against the supplied provenance URL
+ok 368 - registered source identity is checked against the supplied provenance URL
+  ---
+  duration_ms: 0.405188
+  type: 'test'
+  ...
+# Subtest: partial decklists are quarantined instead of receiving a fabricated exact fingerprint
+ok 369 - partial decklists are quarantined instead of receiving a fabricated exact fingerprint
+  ---
+  duration_ms: 0.691018
+  type: 'test'
+  ...
+# Subtest: commander identity mismatch between source metadata and decklist is quarantined
+ok 370 - commander identity mismatch between source metadata and decklist is quarantined
+  ---
+  duration_ms: 0.702308
+  type: 'test'
+  ...
+# Subtest: source observation cannot predate the claimed outcome
+ok 371 - source observation cannot predate the claimed outcome
+  ---
+  duration_ms: 0.547163
+  type: 'test'
+  ...
+# Subtest: invalid event bounds and non-finite derived features are quarantined individually
+ok 372 - invalid event bounds and non-finite derived features are quarantined individually
+  ---
+  duration_ms: 0.784074
+  type: 'test'
+  ...
+# Subtest: duplicate rows from the same source are quarantined before corpus-level cross-source deduplication
+ok 373 - duplicate rows from the same source are quarantined before corpus-level cross-source deduplication
+  ---
+  duration_ms: 0.284779
+  type: 'test'
+  ...
+# Subtest: all participants from one event remain in one leakage group across the temporal split
+ok 374 - all participants from one event remain in one leakage group across the temporal split
+  ---
+  duration_ms: 1.048595
+  type: 'test'
+  ...
+# Subtest: ingestion audit exposes accepted sources and targets without counting rejected rows
+ok 375 - ingestion audit exposes accepted sources and targets without counting rejected rows
+  ---
+  duration_ms: 0.396891
+  type: 'test'
+  ...
+# Subtest: manifest is content-addressed and identical regardless of input order
+ok 376 - manifest is content-addressed and identical regardless of input order
+  ---
+  duration_ms: 10.224779
+  type: 'test'
+  ...
+# Subtest: exact duplicate leaves corpus content hash unchanged but changes audit-bearing manifest hash
+ok 377 - exact duplicate leaves corpus content hash unchanged but changes audit-bearing manifest hash
+  ---
+  duration_ms: 0.899954
+  type: 'test'
+  ...
+# Subtest: changing a usable label or predictor changes the corpus content hash
+ok 378 - changing a usable label or predictor changes the corpus content hash
+  ---
+  duration_ms: 1.812252
+  type: 'test'
+  ...
+# Subtest: manifest reports source/target/extractor coverage without embedding raw provider records or decklists
+ok 379 - manifest reports source/target/extractor coverage without embedding raw provider records or decklists
+  ---
+  duration_ms: 0.53326
+  type: 'test'
+  ...
+# Subtest: conflicting and malformed inputs are excluded from record digests but remain visible in audit counts
+ok 380 - conflicting and malformed inputs are excluded from record digests but remain visible in audit counts
+  ---
+  duration_ms: 0.673368
+  type: 'test'
+  ...
+# Subtest: refresh audit rejects negative or non-integer counts
+ok 381 - refresh audit rejects negative or non-integer counts
+  ---
+  duration_ms: 0.65183
+  type: 'test'
+  ...
+# Subtest: exact deck fingerprint is order-independent but printing-sensitive
+ok 382 - exact deck fingerprint is order-independent but printing-sensitive
+  ---
+  duration_ms: 3.704905
+  type: 'test'
+  ...
+# Subtest: exact deck fingerprint refuses empty or unparseable input
+ok 383 - exact deck fingerprint refuses empty or unparseable input
+  ---
+  duration_ms: 0.801422
+  type: 'test'
+  ...
+# Subtest: learning corpus deduplicates the same observed outcome but not the same deck in a different event
+ok 384 - learning corpus deduplicates the same observed outcome but not the same deck in a different event
+  ---
+  duration_ms: 13.36249
+  type: 'test'
+  ...
+# Subtest: contradictory labels for the same observed outcome are quarantined instead of training both answers
+ok 385 - contradictory labels for the same observed outcome are quarantined instead of training both answers
+  ---
+  duration_ms: 1.771945
+  type: 'test'
+  ...
+# Subtest: same outcome with conflicting exact deck identity is quarantined even when labels agree
+ok 386 - same outcome with conflicting exact deck identity is quarantined even when labels agree
+  ---
+  duration_ms: 0.442765
+  type: 'test'
+  ...
+# Subtest: same outcome with conflicting commander identity is quarantined
+ok 387 - same outcome with conflicting commander identity is quarantined
+  ---
+  duration_ms: 0.353513
+  type: 'test'
+  ...
+# Subtest: malformed provenance and non-finite learning features are quarantined before training
+ok 388 - malformed provenance and non-finite learning features are quarantined before training
+  ---
+  duration_ms: 0.545898
+  type: 'test'
+  ...
+# Subtest: temporal split keeps a leakage group entirely on one side of the holdout boundary
+ok 389 - temporal split keeps a leakage group entirely on one side of the holdout boundary
+  ---
+  duration_ms: 0.52338
+  type: 'test'
+  ...
+# Subtest: learning corpus audit reports duplicate, balance, diversity and temporal coverage signals
+ok 390 - learning corpus audit reports duplicate, balance, diversity and temporal coverage signals
+  ---
+  duration_ms: 0.600237
+  type: 'test'
+  ...
+# Subtest: exact deck fingerprint plus exact event/standing/commander evidence links cross-source mirrors
+ok 391 - exact deck fingerprint plus exact event/standing/commander evidence links cross-source mirrors
+  ---
+  duration_ms: 12.202104
+  type: 'test'
+  ...
+# Subtest: explicit entrant identity can link mirrors when exact deck fingerprint is unavailable
+ok 392 - explicit entrant identity can link mirrors when exact deck fingerprint is unavailable
+  ---
+  duration_ms: 0.468115
+  type: 'test'
+  ...
+# Subtest: same event/standing/commander without a shared strong entrant proof is quarantined as ambiguous
+ok 393 - same event/standing/commander without a shared strong entrant proof is quarantined as ambiguous
+  ---
+  duration_ms: 0.600291
+  type: 'test'
+  ...
+# Subtest: conflicting commander or strong identity evidence is quarantined rather than guessed
+ok 394 - conflicting commander or strong identity evidence is quarantined rather than guessed
+  ---
+  duration_ms: 0.541995
+  type: 'test'
+  ...
+# Subtest: different standings are treated as distinct entrant outcomes but share event leakage/independence identity
+ok 395 - different standings are treated as distinct entrant outcomes but share event leakage/independence identity
+  ---
+  duration_ms: 0.422867
+  type: 'test'
+  ...
+# Subtest: field-size mismatch prevents automatic event collapse even when other fallback fields match
+ok 396 - field-size mismatch prevents automatic event collapse even when other fallback fields match
+  ---
+  duration_ms: 0.228837
+  type: 'test'
+  ...
+# Subtest: explicit event identity is authoritative and mismatched explicit keys do not fall back to fuzzy merging
+ok 397 - explicit event identity is authoritative and mismatched explicit keys do not fall back to fuzzy merging
+  ---
+  duration_ms: 0.33516
+  type: 'test'
+  ...
+# Subtest: same-source duplicate standing is quarantined instead of being mistaken for corroboration
+ok 398 - same-source duplicate standing is quarantined instead of being mistaken for corroboration
+  ---
+  duration_ms: 1.7881
+  type: 'test'
+  ...
+# Subtest: linkage output is deterministic regardless of provider input order
+ok 399 - linkage output is deterministic regardless of provider input order
+  ---
+  duration_ms: 1.54936
+  type: 'test'
+  ...
+# Subtest: malformed fingerprints and impossible standings fail closed
+ok 400 - malformed fingerprints and impossible standings fail closed
+  ---
+  duration_ms: 1.029946
+  type: 'test'
+  ...
+# Subtest: pre-feature partition is deterministic for equal timestamps regardless of input order
+ok 401 - pre-feature partition is deterministic for equal timestamps regardless of input order
+  ---
+  duration_ms: 11.083496
+  type: 'test'
+  ...
+# Subtest: entire leakage group moves to holdout when its latest record crosses the cutoff
+ok 402 - entire leakage group moves to holdout when its latest record crosses the cutoff
+  ---
+  duration_ms: 0.501299
+  type: 'test'
+  ...
+# Subtest: partition rejects duplicate IDs and malformed temporal provenance
+ok 403 - partition rejects duplicate IDs and malformed temporal provenance
+  ---
+  duration_ms: 0.751769
+  type: 'test'
+  ...
+# Subtest: classifies common land entry conditions
+ok 404 - classifies common land entry conditions
+  ---
+  duration_ms: 2.419044
+  type: 'test'
+  ...
+# Subtest: fetch analysis counts only legal targets present in the resolved deck
+ok 405 - fetch analysis counts only legal targets present in the resolved deck
+  ---
+  duration_ms: 5.580721
+  type: 'test'
+  ...
+# Subtest: commander identity mana source is restricted to combined commander identity
+ok 406 - commander identity mana source is restricted to combined commander identity
+  ---
+  duration_ms: 1.200933
+  type: 'test'
+  ...
+# Subtest: stable temporal corpus does not invent metagame drift
+ok 407 - stable temporal corpus does not invent metagame drift
+  ---
+  duration_ms: 8.718974
+  type: 'test'
+  ...
+# Subtest: large recent outcome, feature and commander shifts block model promotion
+ok 408 - large recent outcome, feature and commander shifts block model promotion
+  ---
+  duration_ms: 4.245628
+  type: 'test'
+  ...
+# Subtest: small corpora are marked insufficient rather than falsely stable
+ok 409 - small corpora are marked insufficient rather than falsely stable
+  ---
+  duration_ms: 1.21241
+  type: 'test'
+  ...
+# Subtest: two-hidden-layer neural ranker can learn a nonlinear interaction the transparent baseline cannot
+ok 410 - two-hidden-layer neural ranker can learn a nonlinear interaction the transparent baseline cannot
+  ---
+  duration_ms: 609.135358
+  type: 'test'
+  ...
+# Subtest: neural training is deterministic for the same data and seed
+ok 411 - neural training is deterministic for the same data and seed
+  ---
+  duration_ms: 221.146555
+  type: 'test'
+  ...
+# Subtest: neural score is blocked before inference when hard deck gates fail
+ok 412 - neural score is blocked before inference when hard deck gates fail
+  ---
+  duration_ms: 78.989165
+  type: 'test'
+  ...
+# Subtest: non-finite feature and importance values cannot poison neural weights or inference
+ok 413 - non-finite feature and importance values cannot poison neural weights or inference
+  ---
+  duration_ms: 116.587643
+  type: 'test'
+  ...
+# Subtest: non-finite neural hyperparameters fall back to safe defaults
+ok 414 - non-finite neural hyperparameters fall back to safe defaults
+  ---
+  duration_ms: 150.664881
+  type: 'test'
+  ...
+# Subtest: temporal evaluation measures neural and transparent models on the same unseen future records
+ok 415 - temporal evaluation measures neural and transparent models on the same unseen future records
+  ---
+  duration_ms: 606.315627
+  type: 'test'
+  ...
+# Subtest: strong synthetic model performance still does not bypass real-data readiness requirements
+ok 416 - strong synthetic model performance still does not bypass real-data readiness requirements
+  ---
+  duration_ms: 488.540418
+  type: 'test'
+  ...
+# Subtest: severe metagame drift is surfaced inside temporal neural evaluation
+ok 417 - severe metagame drift is surfaced inside temporal neural evaluation
+  ---
+  duration_ms: 364.530628
+  type: 'test'
+  ...
+# Subtest: temporal model evaluation refuses to mix different known feature extractor contracts
+ok 418 - temporal model evaluation refuses to mix different known feature extractor contracts
+  ---
+  duration_ms: 6.27008
+  type: 'test'
+  ...
+# Subtest: temporal model evaluation refuses to mix different frozen normalizer fits for the same normalized feature contract
+ok 419 - temporal model evaluation refuses to mix different frozen normalizer fits for the same normalized feature contract
+  ---
+  duration_ms: 3.63735
+  type: 'test'
+  ...
+# Subtest: normalized structural feature records fail closed when some rows omit the normalizer fit fingerprint
+ok 420 - normalized structural feature records fail closed when some rows omit the normalizer fit fingerprint
+  ---
+  duration_ms: 2.953461
+  type: 'test'
+  ...
+# Subtest: legacy records with no feature-contract metadata remain backward-compatible as one legacy feature contract
+ok 421 - legacy records with no feature-contract metadata remain backward-compatible as one legacy feature contract
+  ---
+  duration_ms: 43.432667
+  type: 'test'
+  ...
+# Subtest: known feature-contract records cannot be silently combined with legacy records that have no extractor identity
+ok 422 - known feature-contract records cannot be silently combined with legacy records that have no extractor identity
+  ---
+  duration_ms: 2.349381
+  type: 'test'
+  ...
+# Subtest: temporal model evaluation refuses to mix different outcome semantics into one classifier
+ok 423 - temporal model evaluation refuses to mix different outcome semantics into one classifier
+  ---
+  duration_ms: 7.41989
+  type: 'test'
+  ...
+# Subtest: legacy records without explicit target remain one backward-compatible target
+ok 424 - legacy records without explicit target remain one backward-compatible target
+  ---
+  duration_ms: 35.003327
+  type: 'test'
+  ...
+# Subtest: neutral inference finds a combat-token identity from semantics
+ok 425 - neutral inference finds a combat-token identity from semantics
+  ---
+  duration_ms: 14.553907
+  type: 'test'
+  ...
+# Subtest: neutral inference distinguishes graveyard and equipment identities
+ok 426 - neutral inference distinguishes graveyard and equipment identities
+  ---
+  duration_ms: 1.714616
+  type: 'test'
+  ...
+# Subtest: renaming an identical commander does not change neutral coherence score
+ok 427 - renaming an identical commander does not change neutral coherence score
+  ---
+  duration_ms: 1.267937
+  type: 'test'
+  ...
+# Subtest: colour access and low mana value do not secretly award neutral selection points
+ok 428 - colour access and low mana value do not secretly award neutral selection points
+  ---
+  duration_ms: 0.768682
+  type: 'test'
+  ...
+# Subtest: generic Partner pairs are considered only when the two commanders share semantic strategy support
+ok 429 - generic Partner pairs are considered only when the two commanders share semantic strategy support
+  ---
+  duration_ms: 0.613877
+  type: 'test'
+  ...
+# Subtest: restricted Partner with cards are not treated as generic Partner pairs
+ok 430 - restricted Partner with cards are not treated as generic Partner pairs
+  ---
+  duration_ms: 0.555396
+  type: 'test'
+  ...
+# Subtest: neutral ranking is deterministic across provider ordering
+ok 431 - neutral ranking is deterministic across provider ordering
+  ---
+  duration_ms: 1.712938
+  type: 'test'
+  ...
+# Subtest: neutral commander lookup preserves ordinary single-face names
+ok 432 - neutral commander lookup preserves ordinary single-face names
+  ---
+  duration_ms: 1.028015
+  type: 'test'
+  ...
+# Subtest: neutral commander lookup uses the front face for canonical DFC display names
+ok 433 - neutral commander lookup uses the front face for canonical DFC display names
+  ---
+  duration_ms: 0.21565
+  type: 'test'
+  ...
+# Subtest: neutral candidate cap falls back to the user hard per-card cap
+ok 434 - neutral candidate cap falls back to the user hard per-card cap
+  ---
+  duration_ms: 0.173759
+  type: 'test'
+  ...
+# Subtest: neutral candidate-only cap works without becoming a commander or must-include cap
+ok 435 - neutral candidate-only cap works without becoming a commander or must-include cap
+  ---
+  duration_ms: 0.102994
+  type: 'test'
+  ...
+# Subtest: neutral candidate cap may tighten but never loosen a user hard cap
+ok 436 - neutral candidate cap may tighten but never loosen a user hard cap
+  ---
+  duration_ms: 0.204128
+  type: 'test'
+  ...
+# Subtest: invalid neutral price caps fail closed
+ok 437 - invalid neutral price caps fail closed
+  ---
+  duration_ms: 0.592195
+  type: 'test'
+  ...
+# Subtest: mechanical themes normalize to controlled clauses instead of executing user text
+ok 438 - mechanical themes normalize to controlled clauses instead of executing user text
+  ---
+  duration_ms: 2.731149
+  type: 'test'
+  ...
+# Subtest: creature-type themes are catalog verified, plural aware, and emitted as quoted type clauses
+ok 439 - creature-type themes are catalog verified, plural aware, and emitted as quoted type clauses
+  ---
+  duration_ms: 0.980936
+  type: 'test'
+  ...
+# Subtest: creature-type source outage is verification-unavailable, not unsupported or verified absence
+ok 440 - creature-type source outage is verification-unavailable, not unsupported or verified absence
+  ---
+  duration_ms: 0.690632
+  type: 'test'
+  ...
+# Subtest: catalog mismatch and raw query-like input fail closed instead of becoming Scryfall grammar
+ok 441 - catalog mismatch and raw query-like input fail closed instead of becoming Scryfall grammar
+  ---
+  duration_ms: 0.367369
+  type: 'test'
+  ...
+# Subtest: compound free-form themes fail closed instead of silently choosing one half
+ok 442 - compound free-form themes fail closed instead of silently choosing one half
+  ---
+  duration_ms: 0.382928
+  type: 'test'
+  ...
+# Subtest: explicit Oracle-text themes are bounded literal phrases and reject query grammar characters
+ok 443 - explicit Oracle-text themes are bounded literal phrases and reject query grammar characters
+  ---
+  duration_ms: 0.375603
+  type: 'test'
+  ...
+# Subtest: supported card-type themes use fixed type clauses
+ok 444 - supported card-type themes use fixed type clauses
+  ---
+  duration_ms: 0.369948
+  type: 'test'
+  ...
+# Subtest: Final Fantasy free-form theme delegates to exact physical-printing policy
+ok 445 - Final Fantasy free-form theme delegates to exact physical-printing policy
+  ---
+  duration_ms: 0.155989
+  type: 'test'
+  ...
+# Subtest: creature-type matcher checks exact subtype words and Changeling rules identity
+ok 446 - creature-type matcher checks exact subtype words and Changeling rules identity
+  ---
+  duration_ms: 0.890569
+  type: 'test'
+  ...
+# Subtest: mechanic and card-type matchers are independent of candidate ordering/popularity
+ok 447 - mechanic and card-type matchers are independent of candidate ordering/popularity
+  ---
+  duration_ms: 2.934656
+  type: 'test'
+  ...
+# Subtest: theme audit counts main-deck quantities, excludes commander from density, and fails below minimum
+ok 448 - theme audit counts main-deck quantities, excludes commander from density, and fails below minimum
+  ---
+  duration_ms: 0.443497
+  type: 'test'
+  ...
+# Subtest: printing-family audit succeeds only when the matching exact-printing policy independently passed
+ok 449 - printing-family audit succeeds only when the matching exact-printing policy independently passed
+  ---
+  duration_ms: 0.207552
+  type: 'test'
+  ...
+# Subtest: theme seed selection keeps only matching nonland cards and respects exclusions/protected cards
+ok 450 - theme seed selection keeps only matching nonland cards and respects exclusions/protected cards
+  ---
+  duration_ms: 5.213628
+  type: 'test'
+  ...
+# Subtest: theme seed ranking ignores EDHREC rank and prefers actual archetype/role utility
+ok 451 - theme seed ranking ignores EDHREC rank and prefers actual archetype/role utility
+  ---
+  duration_ms: 1.066037
+  type: 'test'
+  ...
+# Subtest: theme seed selection deduplicates Oracle identities before enforcing density
+ok 452 - theme seed selection deduplicates Oracle identities before enforcing density
+  ---
+  duration_ms: 0.489097
+  type: 'test'
+  ...
+# Subtest: neutral unrestricted live sampling uses the same conservative 300ms Scryfall cadence as the shared client
+ok 453 - neutral unrestricted live sampling uses the same conservative 300ms Scryfall cadence as the shared client
+  ---
+  duration_ms: 0.715713
+  type: 'test'
+  ...
+# Subtest: neutral unrestricted strata are deterministic, stratified, and never EDHREC ordered
+ok 454 - neutral unrestricted strata are deterministic, stratified, and never EDHREC ordered
+  ---
+  duration_ms: 1.352378
+  type: 'test'
+  ...
+# Subtest: colorless unrestricted strata use explicit Scryfall colorless identity syntax
+ok 455 - colorless unrestricted strata use explicit Scryfall colorless identity syntax
+  ---
+  duration_ms: 0.164683
+  type: 'test'
+  ...
+# Subtest: sampling is explicitly bounded and reports non-exhaustive strata instead of pretending full discovery
+ok 456 - sampling is explicitly bounded and reports non-exhaustive strata instead of pretending full discovery
+  ---
+  duration_ms: 0.515112
+  type: 'test'
+  ...
+# Subtest: sampling can truthfully report an exhaustive small stratum
+ok 457 - sampling can truthfully report an exhaustive small stratum
+  ---
+  duration_ms: 0.213832
+  type: 'test'
+  ...
+# Subtest: budgeted unrestricted discovery admits only sampled exact printings with a verified finish under cap
+ok 458 - budgeted unrestricted discovery admits only sampled exact printings with a verified finish under cap
+  ---
+  duration_ms: 12.292055
+  type: 'test'
+  ...
+# Subtest: budgeted unrestricted discovery fails closed when filtering leaves too few candidates
+ok 459 - budgeted unrestricted discovery fails closed when filtering leaves too few candidates
+  ---
+  duration_ms: 1.277981
+  type: 'test'
+  ...
+# Subtest: neutral route derivation keeps inferred archetype as primary even when a verified combo exists
+ok 460 - neutral route derivation keeps inferred archetype as primary even when a verified combo exists
+  ---
+  duration_ms: 3.563558
+  type: 'test'
+  ...
+# Subtest: neutral route derivation does not invent a deterministic combo when none is verified
+ok 461 - neutral route derivation does not invent a deterministic combo when none is verified
+  ---
+  duration_ms: 0.735849
+  type: 'test'
+  ...
+# Subtest: independent efficient commander evidence may become the primary route without relying on commander name
+ok 462 - independent efficient commander evidence may become the primary route without relying on commander name
+  ---
+  duration_ms: 0.210252
+  type: 'test'
+  ...
+# Subtest: V0.11 totals exact recommended printing prices across swaps
+ok 463 - V0.11 totals exact recommended printing prices across swaps
+  ---
+  duration_ms: 1.062287
+  type: 'test'
+  ...
+# Subtest: V0.11 rewards simulated and structural improvements
+ok 464 - V0.11 rewards simulated and structural improvements
+  ---
+  duration_ms: 0.599652
+  type: 'test'
+  ...
+# Subtest: V0.11 flags material keep-rate regressions
+ok 465 - V0.11 flags material keep-rate regressions
+  ---
+  duration_ms: 0.220417
+  type: 'test'
+  ...
+# Subtest: route protection keeps the V0.15 portfolio primary and backup but not unrelated incidental combos
+ok 466 - route protection keeps the V0.15 portfolio primary and backup but not unrelated incidental combos
+  ---
+  duration_ms: 14.66468
+  type: 'test'
+  ...
+# Subtest: one verified route is protected even when portfolio independence cannot name a primary
+ok 467 - one verified route is protected even when portfolio independence cannot name a primary
+  ---
+  duration_ms: 0.251507
+  type: 'test'
+  ...
+# Subtest: verification unavailable never becomes a false no-route claim
+ok 468 - verification unavailable never becomes a false no-route claim
+  ---
+  duration_ms: 0.170126
+  type: 'test'
+  ...
+# Subtest: commander tax remains on a free-cast line
+ok 469 - commander tax remains on a free-cast line
+  ---
+  duration_ms: 4.249932
+  type: 'test'
+  ...
+# Subtest: convoke can pay colored mana using creature colors and generic with other creatures
+ok 470 - convoke can pay colored mana using creature colors and generic with other creatures
+  ---
+  duration_ms: 0.697001
+  type: 'test'
+  ...
+# Subtest: improvise pays generic but not colored requirements
+ok 471 - improvise pays generic but not colored requirements
+  ---
+  duration_ms: 0.669175
+  type: 'test'
+  ...
+# Subtest: delve pays generic from graveyard cards
+ok 472 - delve pays generic from graveyard cards
+  ---
+  duration_ms: 1.463745
+  type: 'test'
+  ...
+# Subtest: Treasures can cover missing colors
+ok 473 - Treasures can cover missing colors
+  ---
+  duration_ms: 0.304223
+  type: 'test'
+  ...
+# Subtest: Phyrexian mana can use life when colored mana is missing
+ok 474 - Phyrexian mana can use life when colored mana is missing
+  ---
+  duration_ms: 0.393852
+  type: 'test'
+  ...
+# Subtest: affinity reduces generic cost using supplied affinity count
+ok 475 - affinity reduces generic cost using supplied affinity count
+  ---
+  duration_ms: 0.310316
+  type: 'test'
+  ...
+# Subtest: catalog recognizes Commander precons and excludes ordinary intro decks
+ok 476 - catalog recognizes Commander precons and excludes ordinary intro decks
+  ---
+  duration_ms: 1.18038
+  type: 'test'
+  ...
+# Subtest: stock lines preserve set code collector number and finish
+ok 477 - stock lines preserve set code collector number and finish
+  ---
+  duration_ms: 0.227675
+  type: 'test'
+  ...
+# Subtest: stock deck formatter keeps commander and main sections separate
+ok 478 - stock deck formatter keeps commander and main sections separate
+  ---
+  duration_ms: 0.327807
+  type: 'test'
+  ...
+# Subtest: precon summary keeps exact product variant identity
+ok 479 - precon summary keeps exact product variant identity
+  ---
+  duration_ms: 0.847294
+  type: 'test'
+  ...
+# Subtest: EDHREC precon route uses stable precon slug form
+ok 480 - EDHREC precon route uses stable precon slug form
+  ---
+  duration_ms: 0.309278
+  type: 'test'
+  ...
+# Subtest: upgrade profiles expose light through optimized paths
+ok 481 - upgrade profiles expose light through optimized paths
+  ---
+  duration_ms: 0.25303
+  type: 'test'
+  ...
+# Subtest: pod pressure simulation is deterministic for a fixed seed
+ok 482 - pod pressure simulation is deterministic for a fixed seed
+  ---
+  duration_ms: 267.76594
+  type: 'test'
+  ...
+# Subtest: goldfish profile does not remove commanders
+ok 483 - goldfish profile does not remove commanders
+  ---
+  duration_ms: 68.142448
+  type: 'test'
+  ...
+# Subtest: family set printings qualify even when marked promo by default
+ok 484 - family set printings qualify even when marked promo by default
+  ---
+  duration_ms: 1.948185
+  type: 'test'
+  ...
+# Subtest: promos can be explicitly excluded
+ok 485 - promos can be explicitly excluded
+  ---
+  duration_ms: 0.228077
+  type: 'test'
+  ...
+# Subtest: curated Final Fantasy Secret Lair printing qualifies without opening all SLD cards
+ok 486 - curated Final Fantasy Secret Lair printing qualifies without opening all SLD cards
+  ---
+  duration_ms: 0.361557
+  type: 'test'
+  ...
+# Subtest: special releases can be disabled without disabling normal family sets
+ok 487 - special releases can be disabled without disabling normal family sets
+  ---
+  duration_ms: 0.341939
+  type: 'test'
+  ...
+# Subtest: bundle promo selector treats leading-zero collector numbers as the same physical selector
+ok 488 - bundle promo selector treats leading-zero collector numbers as the same physical selector
+  ---
+  duration_ms: 0.207549
+  type: 'test'
+  ...
+# Subtest: release-date truth admits released family printings and rejects future family printings
+ok 489 - release-date truth admits released family printings and rejects future family printings
+  ---
+  duration_ms: 0.235612
+  type: 'test'
+  ...
+# Subtest: release-date truth gates exact curated specials until release and still rejects unrelated SLD printings
+ok 490 - release-date truth gates exact curated specials until release and still rejects unrelated SLD printings
+  ---
+  duration_ms: 0.409727
+  type: 'test'
+  ...
+# Subtest: unrestricted physical printing truth also rejects future or undated printings
+ok 491 - unrestricted physical printing truth also rejects future or undated printings
+  ---
+  duration_ms: 0.241096
+  type: 'test'
+  ...
+# Subtest: Marvel is a first-class curated family with released main, bonus, and promo Secret Lair selectors
+ok 492 - Marvel is a first-class curated family with released main, bonus, and promo Secret Lair selectors
+  ---
+  duration_ms: 1.030284
+  type: 'test'
+  ...
+# Subtest: Marvel policy admits exact themed Secret Lair bonus but rejects unrelated SLD printing of same Oracle card
+ok 493 - Marvel policy admits exact themed Secret Lair bonus but rejects unrelated SLD printing of same Oracle card
+  ---
+  duration_ms: 0.703866
+  type: 'test'
+  ...
+# Subtest: Marvel special releases can be disabled without opening or closing normal Marvel family sets incorrectly
+ok 494 - Marvel special releases can be disabled without opening or closing normal Marvel family sets incorrectly
+  ---
+  duration_ms: 0.309192
+  type: 'test'
+  ...
+# Subtest: Middle-earth aliases include both LOTR and Hobbit set patterns with curated Secret Lair truth
+ok 495 - Middle-earth aliases include both LOTR and Hobbit set patterns with curated Secret Lair truth
+  ---
+  duration_ms: 3.906823
+  type: 'test'
+  ...
+# Subtest: Middle-earth policy admits exact Hobbit Secret Lair and rejects unrelated SLD printing
+ok 496 - Middle-earth policy admits exact Hobbit Secret Lair and rejects unrelated SLD printing
+  ---
+  duration_ms: 0.230845
+  type: 'test'
+  ...
+# Subtest: family discovery excludes non-playable product set types without excluding real promo/card-bearing products
+ok 497 - family discovery excludes non-playable product set types without excluding real promo/card-bearing products
+  ---
+  duration_ms: 0.155691
+  type: 'test'
+  ...
+# Subtest: promotion-aware wrapper exposes review readiness without changing evaluator authorization
+ok 498 - promotion-aware wrapper exposes review readiness without changing evaluator authorization
+  ---
+  duration_ms: 1.104982
+  type: 'test'
+  ...
+# Subtest: promotion-aware wrapper reports failed model evidence as blocked
+ok 499 - promotion-aware wrapper reports failed model evidence as blocked
+  ---
+  duration_ms: 0.227503
+  type: 'test'
+  ...
+# Subtest: promotion evaluation contract accepts evidence that clears every frozen gate
+ok 500 - promotion evaluation contract accepts evidence that clears every frozen gate
+  ---
+  duration_ms: 2.043244
+  type: 'test'
+  ...
+# Subtest: promotion evaluation contract blocks weak absolute quality, calibration, baseline, and diversity
+ok 501 - promotion evaluation contract blocks weak absolute quality, calibration, baseline, and diversity
+  ---
+  duration_ms: 0.681587
+  type: 'test'
+  ...
+# Subtest: successful genuine-future evidence becomes eligible for explicit human promotion review
+ok 502 - successful genuine-future evidence becomes eligible for explicit human promotion review
+  ---
+  duration_ms: 1.864979
+  type: 'test'
+  ...
+# Subtest: no demonstrated neural gain stays blocked instead of pretending CI equals model promotion
+ok 503 - no demonstrated neural gain stays blocked instead of pretending CI equals model promotion
+  ---
+  duration_ms: 0.415937
+  type: 'test'
+  ...
+# Subtest: a test-clock holdout cannot qualify for promotion review even with apparent neural gain
+ok 504 - a test-clock holdout cannot qualify for promotion review even with apparent neural gain
+  ---
+  duration_ms: 0.225736
+  type: 'test'
+  ...
+# Subtest: failed corpus quality remains a promotion blocker
+ok 505 - failed corpus quality remains a promotion blocker
+  ---
+  duration_ms: 0.196115
+  type: 'test'
+  ...
+# Subtest: promotion readiness refuses any tampered evaluation claiming automatic authorization
+ok 506 - promotion readiness refuses any tampered evaluation claiming automatic authorization
+  ---
+  duration_ms: 0.649774
+  type: 'test'
+  ...
+# Subtest: real outcome source inventory keeps mirrors and different populations distinct
+ok 507 - real outcome source inventory keeps mirrors and different populations distinct
+  ---
+  duration_ms: 1.160129
+  type: 'test'
+  ...
+# Subtest: real corpus quality audit reports event, pilot, deck, region, bucket, and mirror-lineage concentration
+ok 508 - real corpus quality audit reports event, pilot, deck, region, bucket, and mirror-lineage concentration
+  ---
+  duration_ms: 26.949738
+  type: 'test'
+  ...
+# Subtest: future holdout seal freezes training corpus, feature normalization, hyperparameters, threshold, and success criteria
+ok 509 - future holdout seal freezes training corpus, feature normalization, hyperparameters, threshold, and success criteria
+  ---
+  duration_ms: 32.188627
+  type: 'test'
+  ...
+# Subtest: sealed future evaluator uses only genuinely later unseen outcomes and remains advisory
+ok 510 - sealed future evaluator uses only genuinely later unseen outcomes and remains advisory
+  ---
+  duration_ms: 158.781469
+  type: 'test'
+  ...
+# Subtest: sealed future evaluator rejects fake-future time, normalizer drift, repeated pilot, and exact-deck leakage
+ok 511 - sealed future evaluator rejects fake-future time, normalizer drift, repeated pilot, and exact-deck leakage
+  ---
+  duration_ms: 24.527607
+  type: 'test'
+  ...
+# Subtest: controlled theme audit is satisfied exactly at the required main-deck density
+ok 512 - controlled theme audit is satisfied exactly at the required main-deck density
+  ---
+  duration_ms: 7.786558
+  type: 'test'
+  ...
+# Subtest: a satisfied theme cannot regress below its required density
+ok 513 - a satisfied theme cannot regress below its required density
+  ---
+  duration_ms: 0.514324
+  type: 'test'
+  ...
+# Subtest: an under-minimum theme must measurably advance instead of spending swaps elsewhere
+ok 514 - an under-minimum theme must measurably advance instead of spending swaps elsewhere
+  ---
+  duration_ms: 0.736555
+  type: 'test'
+  ...
+# Subtest: an under-minimum theme can reach its target without being confused with partial progress
+ok 515 - an under-minimum theme can reach its target without being confused with partial progress
+  ---
+  duration_ms: 0.308712
+  type: 'test'
+  ...
+# Subtest: printing-family theme requires both the matching active family and an independently passing printing policy
+ok 516 - printing-family theme requires both the matching active family and an independently passing printing policy
+  ---
+  duration_ms: 0.606335
+  type: 'test'
+  ...
+# Subtest: high conflicting-outcome rate blocks deep-learning experimentation and promotion
+ok 517 - high conflicting-outcome rate blocks deep-learning experimentation and promotion
+  ---
+  duration_ms: 1.746446
+  type: 'test'
+  ...
+# Subtest: high malformed-provenance rate blocks deep-learning experimentation and promotion
+ok 518 - high malformed-provenance rate blocks deep-learning experimentation and promotion
+  ---
+  duration_ms: 0.285215
+  type: 'test'
+  ...
+# Subtest: low quarantined conflict and malformed rates still permit a clean promotion candidate
+ok 519 - low quarantined conflict and malformed rates still permit a clean promotion candidate
+  ---
+  duration_ms: 0.193555
+  type: 'test'
+  ...
+# Subtest: deep research collapses dependent copies instead of double counting one dataset
+ok 520 - deep research collapses dependent copies instead of double counting one dataset
+  ---
+  duration_ms: 1.970667
+  type: 'test'
+  ...
+# Subtest: deep research keeps strong contradictory independent evidence visible as disputed
+ok 521 - deep research keeps strong contradictory independent evidence visible as disputed
+  ---
+  duration_ms: 0.315617
+  type: 'test'
+  ...
+# Subtest: opposite reports from one underlying dataset share one evidence budget instead of counting twice
+ok 522 - opposite reports from one underlying dataset share one evidence budget instead of counting twice
+  ---
+  duration_ms: 1.060145
+  type: 'test'
+  ...
+# Subtest: deep research skips malformed subject or claim values instead of crashing internal callers
+ok 523 - deep research skips malformed subject or claim values instead of crashing internal callers
+  ---
+  duration_ms: 0.223772
+  type: 'test'
+  ...
+# Subtest: fast-changing pricing evidence decays much faster than stable rules evidence
+ok 524 - fast-changing pricing evidence decays much faster than stable rules evidence
+  ---
+  duration_ms: 0.147922
+  type: 'test'
+  ...
+# Subtest: non-finite research outcome strength falls back safely instead of poisoning evidence scores
+ok 525 - non-finite research outcome strength falls back safely instead of poisoning evidence scores
+  ---
+  duration_ms: 0.108916
+  type: 'test'
+  ...
+# Subtest: deep research plan deliberately spans different evidence classes
+ok 526 - deep research plan deliberately spans different evidence classes
+  ---
+  duration_ms: 10.384023
+  type: 'test'
+  ...
+# Subtest: adaptive ranker learns from labelled outcomes but requires holdout evaluation
+ok 527 - adaptive ranker learns from labelled outcomes but requires holdout evaluation
+  ---
+  duration_ms: 24.400043
+  type: 'test'
+  ...
+# Subtest: small datasets cannot silently promote learned weights
+ok 528 - small datasets cannot silently promote learned weights
+  ---
+  duration_ms: 3.417472
+  type: 'test'
+  ...
+# Subtest: transparent ranker rejects non-finite influence by falling back to safe numeric defaults
+ok 529 - transparent ranker rejects non-finite influence by falling back to safe numeric defaults
+  ---
+  duration_ms: 14.466044
+  type: 'test'
+  ...
+# Subtest: learned score can never override Commander legality or printing policy
+ok 530 - learned score can never override Commander legality or printing policy
+  ---
+  duration_ms: 26.263202
+  type: 'test'
+  ...
+# Subtest: deep-learning readiness blocks small duplicated or leaky datasets
+ok 531 - deep-learning readiness blocks small duplicated or leaky datasets
+  ---
+  duration_ms: 0.760427
+  type: 'test'
+  ...
+# Subtest: clean corpus can be experiment-ready before a neural candidate or baseline exists
+ok 532 - clean corpus can be experiment-ready before a neural candidate or baseline exists
+  ---
+  duration_ms: 0.212549
+  type: 'test'
+  ...
+# Subtest: deep-learning promotion requires a balanced temporal win in accuracy and log loss
+ok 533 - deep-learning promotion requires a balanced temporal win in accuracy and log loss
+  ---
+  duration_ms: 0.156719
+  type: 'test'
+  ...
+# Subtest: deep-learning candidate cannot promote if it does not beat transparent baseline
+ok 534 - deep-learning candidate cannot promote if it does not beat transparent baseline
+  ---
+  duration_ms: 0.135853
+  type: 'test'
+  ...
+# Subtest: accuracy gain cannot promote a neural model when temporal log loss is worse
+ok 535 - accuracy gain cannot promote a neural model when temporal log loss is worse
+  ---
+  duration_ms: 0.137303
+  type: 'test'
+  ...
+# Subtest: one-class temporal holdout cannot promote a neural model despite high accuracy
+ok 536 - one-class temporal holdout cannot promote a neural model despite high accuracy
+  ---
+  duration_ms: 0.152
+  type: 'test'
+  ...
+# Subtest: deep-learning candidate cannot promote without a transparent baseline comparison
+ok 537 - deep-learning candidate cannot promote without a transparent baseline comparison
+  ---
+  duration_ms: 0.131151
+  type: 'test'
+  ...
+# Subtest: deep-learning readiness rejects inconsistent label totals
+ok 538 - deep-learning readiness rejects inconsistent label totals
+  ---
+  duration_ms: 0.119666
+  type: 'test'
+  ...
+# Subtest: retained bytes replay through the live parser with original contemporaneous provenance
+ok 539 - retained bytes replay through the live parser with original contemporaneous provenance
+  ---
+  duration_ms: 38.141491
+  type: 'test'
+  ...
+# Subtest: retained replay fails if decoded contents do not match the manifest evidence
+ok 540 - retained replay fails if decoded contents do not match the manifest evidence
+  ---
+  duration_ms: 2.305355
+  type: 'test'
+  ...
+# Subtest: retained replay rejects changed source bytes before parsing
+ok 541 - retained replay rejects changed source bytes before parsing
+  ---
+  duration_ms: 0.884854
+  type: 'test'
+  ...
+# Subtest: retained manifest binds exact source bytes to an immutable GHCR artifact without claiming retrospective archive status
+ok 542 - retained manifest binds exact source bytes to an immutable GHCR artifact without claiming retrospective archive status
+  ---
+  duration_ms: 2.054411
+  type: 'test'
+  ...
+# Subtest: resolver selects newest capture observed no later than the feature cutoff
+ok 543 - resolver selects newest capture observed no later than the feature cutoff
+  ---
+  duration_ms: 0.548033
+  type: 'test'
+  ...
+# Subtest: provider updated_at never backdates a capture first observed later
+ok 544 - provider updated_at never backdates a capture first observed later
+  ---
+  duration_ms: 0.361184
+  type: 'test'
+  ...
+# Subtest: empty retained inventory reports unavailable instead of manufacturing historical coverage
+ok 545 - empty retained inventory reports unavailable instead of manufacturing historical coverage
+  ---
+  duration_ms: 0.133695
+  type: 'test'
+  ...
+# Subtest: retained bytes must match both exact byte length and SHA-256
+ok 546 - retained bytes must match both exact byte length and SHA-256
+  ---
+  duration_ms: 0.582949
+  type: 'test'
+  ...
+# Subtest: mutable GHCR tags are rejected; storage must be pinned by digest
+ok 547 - mutable GHCR tags are rejected; storage must be pinned by digest
+  ---
+  duration_ms: 0.268687
+  type: 'test'
+  ...
+# Subtest: OCI source layer digest must be the digest of the exact captured provider bytes
+ok 548 - OCI source layer digest must be the digest of the exact captured provider bytes
+  ---
+  duration_ms: 0.275821
+  type: 'test'
+  ...
+# Subtest: tampering with a retained manifest is detected by its canonical fingerprint
+ok 549 - tampering with a retained manifest is detected by its canonical fingerprint
+  ---
+  duration_ms: 0.347368
+  type: 'test'
+  ...
+# Subtest: retained snapshot rehydrates only contemporaneous provenance, never archived-versioned provenance
+ok 550 - retained snapshot rehydrates only contemporaneous provenance, never archived-versioned provenance
+  ---
+  duration_ms: 0.478928
+  type: 'test'
+  ...
+# Subtest: Scryfall bulk discovery sends required headers and returns the validated live JSONL gzip contract
+ok 551 - Scryfall bulk discovery sends required headers and returns the validated live JSONL gzip contract
+  ---
+  duration_ms: 28.02898
+  type: 'test'
+  ...
+# Subtest: manifest shape, missing entries, and duplicate default_cards entries fail closed
+ok 552 - manifest shape, missing entries, and duplicate default_cards entries fail closed
+  ---
+  duration_ms: 2.396195
+  type: 'test'
+  ...
+# Subtest: malformed current default_cards metadata cannot become a trusted static download
+ok 553 - malformed current default_cards metadata cannot become a trusted static download
+  ---
+  duration_ms: 5.315707
+  type: 'test'
+  ...
+# Subtest: HTTP and invalid-JSON provider failures are classified without accepting partial metadata
+ok 554 - HTTP and invalid-JSON provider failures are classified without accepting partial metadata
+  ---
+  duration_ms: 1.090952
+  type: 'test'
+  ...
+# Subtest: discovery and forward capture use one observation timestamp, exact compressed size, and never backdate provider updated_at
+ok 555 - discovery and forward capture use one observation timestamp, exact compressed size, and never backdate provider updated_at
+  ---
+  duration_ms: 2.630793
+  type: 'test'
+  ...
+# Subtest: Scryfall forward capture hashes exact compressed bytes, bounds decompression, and parses JSON Lines
+ok 556 - Scryfall forward capture hashes exact compressed bytes, bounds decompression, and parses JSON Lines
+  ---
+  duration_ms: 26.683299
+  type: 'test'
+  ...
+# Subtest: Scryfall forward capture rejects non-Scryfall, non-HTTPS, and non-jsonl.gz origins before network access
+ok 557 - Scryfall forward capture rejects non-Scryfall, non-HTTPS, and non-jsonl.gz origins before network access
+  ---
+  duration_ms: 1.019388
+  type: 'test'
+  ...
+# Subtest: manifest compressed-size mismatch fails before decompression or card parsing
+ok 558 - manifest compressed-size mismatch fails before decompression or card parsing
+  ---
+  duration_ms: 0.915146
+  type: 'test'
+  ...
+# Subtest: decoded output is bounded to prevent gzip expansion from bypassing source limits
+ok 559 - decoded output is bounded to prevent gzip expansion from bypassing source limits
+  ---
+  duration_ms: 1.1312
+  type: 'test'
+  ...
+# Subtest: invalid gzip and invalid JSON Lines fail closed
+ok 560 - invalid gzip and invalid JSON Lines fail closed
+  ---
+  duration_ms: 6.353127
+  type: 'test'
+  ...
+# Subtest: HTTP transport content encoding is rejected because it can obscure exact compressed provider bytes
+ok 561 - HTTP transport content encoding is rejected because it can obscure exact compressed provider bytes
+  ---
+  duration_ms: 0.831637
+  type: 'test'
+  ...
+# Subtest: bounded discovery follows every page and preserves provider order until exhaustion
+ok 562 - bounded discovery follows every page and preserves provider order until exhaustion
+  ---
+  duration_ms: 2.670992
+  type: 'test'
+  ...
+# Subtest: bounded discovery can explicitly exhaust physical printings instead of Oracle-card representatives
+ok 563 - bounded discovery can explicitly exhaust physical printings instead of Oracle-card representatives
+  ---
+  duration_ms: 0.477752
+  type: 'test'
+  ...
+# Subtest: bounded discovery refuses silent card truncation
+ok 564 - bounded discovery refuses silent card truncation
+  ---
+  duration_ms: 0.943831
+  type: 'test'
+  ...
+# Subtest: bounded discovery refuses a page-count truncation before provider exhaustion
+ok 565 - bounded discovery refuses a page-count truncation before provider exhaustion
+  ---
+  duration_ms: 0.398051
+  type: 'test'
+  ...
+# Subtest: bounded discovery rejects malformed pagination and foreign next-page URLs
+ok 566 - bounded discovery rejects malformed pagination and foreign next-page URLs
+  ---
+  duration_ms: 0.822639
+  type: 'test'
+  ...
+# Subtest: bounded discovery rejects repeated next-page URLs instead of looping
+ok 567 - bounded discovery rejects repeated next-page URLs instead of looping
+  ---
+  duration_ms: 0.455279
+  type: 'test'
+  ...
+# Subtest: existing V0.4 natural-draw simulation stays inside exact singleton and two-piece probability bands
+ok 568 - existing V0.4 natural-draw simulation stays inside exact singleton and two-piece probability bands
+  ---
+  duration_ms: 1705.612798
+  type: 'test'
+  ...
+# Subtest: calibration is deterministic and recomputes the exact fraction instead of trusting its display decimal
+ok 569 - calibration is deterministic and recomputes the exact fraction instead of trusting its display decimal
+  ---
+  duration_ms: 0.675847
+  type: 'test'
+  ...
+# Subtest: Bernstein statistical tolerance shrinks as the Monte Carlo sample grows
+ok 570 - Bernstein statistical tolerance shrinks as the Monte Carlo sample grows
+  ---
+  duration_ms: 0.285231
+  type: 'test'
+  ...
+# Subtest: rare exact events get a probability-aware band rather than a fixed percentage margin
+ok 571 - rare exact events get a probability-aware band rather than a fixed percentage margin
+  ---
+  duration_ms: 0.147967
+  type: 'test'
+  ...
+# Subtest: a materially biased Monte Carlo result is rejected
+ok 572 - a materially biased Monte Carlo result is rejected
+  ---
+  duration_ms: 0.103016
+  type: 'test'
+  ...
+# Subtest: p=0 and p=1 are deterministic boundaries, with only declared reporting quantization allowed
+ok 573 - p=0 and p=1 are deterministic boundaries, with only declared reporting quantization allowed
+  ---
+  duration_ms: 0.09515
+  type: 'test'
+  ...
+# Subtest: known simulator percentage rounding is accounted for explicitly and only by half its resolution
+ok 574 - known simulator percentage rounding is accounted for explicitly and only by half its resolution
+  ---
+  duration_ms: 0.140912
+  type: 'test'
+  ...
+# Subtest: malformed calibration requests fail closed
+ok 575 - malformed calibration requests fail closed
+  ---
+  duration_ms: 0.465728
+  type: 'test'
+  ...
+# Subtest: parses common restricted mana rules
+ok 576 - parses common restricted mana rules
+  ---
+  duration_ms: 1.430437
+  type: 'test'
+  ...
+# Subtest: parses tutor restrictions and destination
+ok 577 - parses tutor restrictions and destination
+  ---
+  duration_ms: 1.744232
+  type: 'test'
+  ...
+# Subtest: separates immediate draw from recurring draw engine text
+ok 578 - separates immediate draw from recurring draw engine text
+  ---
+  duration_ms: 0.966351
+  type: 'test'
+  ...
+# Subtest: V0.4 simulation is deterministic and tutors mutate the library for requested combos
+ok 579 - V0.4 simulation is deterministic and tutors mutate the library for requested combos
+  ---
+  duration_ms: 519.682254
+  type: 'test'
+  ...
+# Subtest: V0.4 simulation produces real extra card flow and fetch decisions
+ok 580 - V0.4 simulation produces real extra card flow and fetch decisions
+  ---
+  duration_ms: 110.657324
+  type: 'test'
+  ...
+# Subtest: V0.6 advanced simulation is deterministic
+ok 581 - V0.6 advanced simulation is deterministic
+  ---
+  duration_ms: 683.85314
+  type: 'test'
+  ...
+# Subtest: V0.6 creates and spends Treasure inside simulated turns
+ok 582 - V0.6 creates and spends Treasure inside simulated turns
+  ---
+  duration_ms: 260.393443
+  type: 'test'
+  ...
+# Subtest: V0.6 uses supported named alternative costs during turn sequencing
+ok 583 - V0.6 uses supported named alternative costs during turn sequencing
+  ---
+  duration_ms: 305.393376
+  type: 'test'
+  ...
+# Subtest: buildDeckMetrics exposes curve, colored pips, and strategic density
+ok 584 - buildDeckMetrics exposes curve, colored pips, and strategic density
+  ---
+  duration_ms: 3.920414
+  type: 'test'
+  ...
+# Subtest: simulateDeckConsistency is deterministic for a fixed seed
+ok 585 - simulateDeckConsistency is deterministic for a fixed seed
+  ---
+  duration_ms: 168.856328
+  type: 'test'
+  ...
+# Subtest: transient Spellbook bracket timeouts degrade to explicit unavailable advisory evidence
+ok 586 - transient Spellbook bracket timeouts degrade to explicit unavailable advisory evidence
+  ---
+  duration_ms: 45054.727266
+  type: 'test'
+  ...
+# Subtest: transient combo verification failures return zero positive evidence with incomplete provenance
+ok 587 - transient combo verification failures return zero positive evidence with incomplete provenance
+  ---
+  duration_ms: 45017.225507
+  type: 'test'
+  ...
+# Subtest: transient variant-search failures mean discovery unavailable rather than no package exists
+ok 588 - transient variant-search failures mean discovery unavailable rather than no package exists
+  ---
+  duration_ms: 45013.647442
+  type: 'test'
+  ...
+# Subtest: non-transient Spellbook bracket errors still fail instead of being hidden
+ok 589 - non-transient Spellbook bracket errors still fail instead of being hidden
+  ---
+  duration_ms: 3.037566
+  type: 'test'
+  ...
+# Subtest: non-transient combo verification errors still fail instead of becoming zero evidence
+ok 590 - non-transient combo verification errors still fail instead of becoming zero evidence
+  ---
+  duration_ms: 0.636652
+  type: 'test'
+  ...
+# Subtest: non-transient variant-search errors still fail instead of becoming no-package evidence
+ok 591 - non-transient variant-search errors still fail instead of becoming no-package evidence
+  ---
+  duration_ms: 0.52907
+  type: 'test'
+  ...
+# Subtest: current truth remains the default when no historical as-of time is requested
+ok 592 - current truth remains the default when no historical as-of time is requested
+  ---
+  duration_ms: 2.060728
+  type: 'test'
+  ...
+# Subtest: future printings cannot leak backward into an earlier as-of evaluation
+ok 593 - future printings cannot leak backward into an earlier as-of evaluation
+  ---
+  duration_ms: 0.461627
+  type: 'test'
+  ...
+# Subtest: later Oracle, Commander legality, rules, and tournament evidence are all excluded from an earlier date
+ok 594 - later Oracle, Commander legality, rules, and tournament evidence are all excluded from an earlier date
+  ---
+  duration_ms: 0.521329
+  type: 'test'
+  ...
+# Subtest: verified historical absence is usable negative evidence while unavailable truth remains unavailable
+ok 595 - verified historical absence is usable negative evidence while unavailable truth remains unavailable
+  ---
+  duration_ms: 0.583554
+  type: 'test'
+  ...
+# Subtest: a versioned archive published before the as-of date may be retrieved later
+ok 596 - a versioned archive published before the as-of date may be retrieved later
+  ---
+  duration_ms: 0.405704
+  type: 'test'
+  ...
+# Subtest: an archive published after the historical date cannot backdate itself with an older effective date
+ok 597 - an archive published after the historical date cannot backdate itself with an older effective date
+  ---
+  duration_ms: 0.451683
+  type: 'test'
+  ...
+# Subtest: retrospective reconstruction is disclosed and cannot satisfy a strict historical truth gate
+ok 598 - retrospective reconstruction is disclosed and cannot satisfy a strict historical truth gate
+  ---
+  duration_ms: 1.200611
+  type: 'test'
+  ...
+# Subtest: strict replayable historical evidence requires both source version and content hash
+ok 599 - strict replayable historical evidence requires both source version and content hash
+  ---
+  duration_ms: 0.459658
+  type: 'test'
+  ...
+# Subtest: partition preserves verified absence separately from unavailable and future evidence
+ok 600 - partition preserves verified absence separately from unavailable and future evidence
+  ---
+  duration_ms: 0.685371
+  type: 'test'
+  ...
+# Subtest: timestamp ordering, validity windows, source URL, and content hashes fail closed
+ok 601 - timestamp ordering, validity windows, source URL, and content hashes fail closed
+  ---
+  duration_ms: 1.436198
+  type: 'test'
+  ...
+# Subtest: leakage planner takes transitive closure across event, pilot, and exact deck reuse before splitting
+ok 602 - leakage planner takes transitive closure across event, pilot, and exact deck reuse before splitting
+  ---
+  duration_ms: 3.778587
+  type: 'test'
+  ...
+# Subtest: leakage planning is input-order invariant for the same candidate batch
+ok 603 - leakage planning is input-order invariant for the same candidate batch
+  ---
+  duration_ms: 10.727992
+  type: 'test'
+  ...
+# Subtest: leakage planner rejects duplicate provider rows and impossible observation timing
+ok 604 - leakage planner rejects duplicate provider rows and impossible observation timing
+  ---
+  duration_ms: 0.736434
+  type: 'test'
+  ...
+# Subtest: TopDeck headings normalize without changing card identities or quantities
+ok 605 - TopDeck headings normalize without changing card identities or quantities
+  ---
+  duration_ms: 1.35857
+  type: 'test'
+  ...
+# Subtest: completed EDH-style bulk payload becomes deterministic source candidates with no inferred cross-source identity
+ok 606 - completed EDH-style bulk payload becomes deterministic source candidates with no inferred cross-source identity
+  ---
+  duration_ms: 3.302
+  type: 'test'
+  ...
+# Subtest: bulk response without a standing column derives rank from documented standings order
+ok 607 - bulk response without a standing column derives rank from documented standings order
+  ---
+  duration_ms: 1.624278
+  type: 'test'
+  ...
+# Subtest: strict deckObj id+count contract materializes an exact Commander deck without fetching its one-line deck reference
+ok 608 - strict deckObj id+count contract materializes an exact Commander deck without fetching its one-line deck reference
+  ---
+  duration_ms: 1.045951
+  type: 'test'
+  ...
+# Subtest: candidate enrichment preserves standing and deck provenance before generic ingestion
+ok 609 - candidate enrichment preserves standing and deck provenance before generic ingestion
+  ---
+  duration_ms: 1.476082
+  type: 'test'
+  ...
+# Subtest: event location is preserved only when TopDeck supplies usable city/state values
+ok 610 - event location is preserved only when TopDeck supplies usable city/state values
+  ---
+  duration_ms: 0.510569
+  type: 'test'
+  ...
+# Subtest: adapter rejects non-EDH or team events instead of coercing their standings into Commander outcomes
+ok 611 - adapter rejects non-EDH or team events instead of coercing their standings into Commander outcomes
+  ---
+  duration_ms: 0.327438
+  type: 'test'
+  ...
+# Subtest: event-top-cut adapter requires a positive physically possible top cut
+ok 612 - event-top-cut adapter requires a positive physically possible top cut
+  ---
+  duration_ms: 0.201578
+  type: 'test'
+  ...
+# Subtest: missing stable player id is quarantined instead of falling back to mutable display name
+ok 613 - missing stable player id is quarantined instead of falling back to mutable display name
+  ---
+  duration_ms: 0.514075
+  type: 'test'
+  ...
+# Subtest: external deck references are never fetched when strict deckObj is unavailable
+ok 614 - external deck references are never fetched when strict deckObj is unavailable
+  ---
+  duration_ms: 0.604929
+  type: 'test'
+  ...
+# Subtest: structured deck contract fails closed on wrong fields, wrong quantity, or non-100-card totals
+ok 615 - structured deck contract fails closed on wrong fields, wrong quantity, or non-100-card totals
+  ---
+  duration_ms: 1.10279
+  type: 'test'
+  ...
+# Subtest: partial or malformed inline Commander lists are quarantined before learning ingestion
+ok 616 - partial or malformed inline Commander lists are quarantined before learning ingestion
+  ---
+  duration_ms: 0.275781
+  type: 'test'
+  ...
+# Subtest: malformed tournament and explicit standing bounds fail closed while preserving usable rows
+ok 617 - malformed tournament and explicit standing bounds fail closed while preserving usable rows
+  ---
+  duration_ms: 0.312759
+  type: 'test'
+  ...
+# Subtest: live fetcher makes exactly one documented bounded EDH POST and adapts the response
+ok 618 - live fetcher makes exactly one documented bounded EDH POST and adapts the response
+  ---
+  duration_ms: 29.432873
+  type: 'test'
+  ...
+# Subtest: provider shape audit detects URL-like deck references and structured deck sections without retaining card names
+ok 619 - provider shape audit detects URL-like deck references and structured deck sections without retaining card names
+  ---
+  duration_ms: 1.673395
+  type: 'test'
+  ...
+# Subtest: HTTP 429 is surfaced as a typed rate-limit error with Retry-After and no automatic retry
+ok 620 - HTTP 429 is surfaced as a typed rate-limit error with Retry-After and no automatic retry
+  ---
+  duration_ms: 1.263013
+  type: 'test'
+  ...
+# Subtest: non-rate-limit HTTP errors preserve bounded response body through HttpError
+ok 621 - non-rate-limit HTTP errors preserve bounded response body through HttpError
+  ---
+  duration_ms: 0.884889
+  type: 'test'
+  ...
+# Subtest: mixed provider rows are adapted quarantine-first instead of failing the whole live refresh
+ok 622 - mixed provider rows are adapted quarantine-first instead of failing the whole live refresh
+  ---
+  duration_ms: 0.975894
+  type: 'test'
+  ...
+# Subtest: oversized bulk responses fail closed and require a narrower refresh query
+ok 623 - oversized bulk responses fail closed and require a narrower refresh query
+  ---
+  duration_ms: 5.113421
+  type: 'test'
+  ...
+# Subtest: missing API key and malformed bounds fail before any network request
+ok 624 - missing API key and malformed bounds fail before any network request
+  ---
+  duration_ms: 0.59263
+  type: 'test'
+  ...
+# Subtest: invalid JSON shape and invalid deterministic clock fail closed
+ok 625 - invalid JSON shape and invalid deterministic clock fail closed
+  ---
+  duration_ms: 2.681017
+  type: 'test'
+  ...
+# Subtest: same historical deck materializes identical predictors even when TopDeck outcome labels differ
+ok 626 - same historical deck materializes identical predictors even when TopDeck outcome labels differ
+  ---
+  duration_ms: 8.626048
+  type: 'test'
+  ...
+# Subtest: materializer rejects a feature snapshot created after the tournament outcome
+ok 627 - materializer rejects a feature snapshot created after the tournament outcome
+  ---
+  duration_ms: 1.241704
+  type: 'test'
+  ...
+# Subtest: materializer rejects deck fingerprint and commander identity mismatches
+ok 628 - materializer rejects deck fingerprint and commander identity mismatches
+  ---
+  duration_ms: 1.040952
+  type: 'test'
+  ...
+# Subtest: promotion corpus admission revalidates joined rows and binds immutable evidence lineage into historical records
+ok 629 - promotion corpus admission revalidates joined rows and binds immutable evidence lineage into historical records
+  ---
+  duration_ms: 37.351312
+  type: 'test'
+  ...
+# Subtest: promotion corpus admission rejects mutable or wrong-package evidence references
+ok 630 - promotion corpus admission rejects mutable or wrong-package evidence references
+  ---
+  duration_ms: 3.937239
+  type: 'test'
+  ...
+# Subtest: promotion corpus admission rejects a serialized eligibility row whose timing was tampered after joining
+ok 631 - promotion corpus admission rejects a serialized eligibility row whose timing was tampered after joining
+  ---
+  duration_ms: 2.096769
+  type: 'test'
+  ...
+# Subtest: promotion corpus admission rejects duplicate provider records across immutable artifacts
+ok 632 - promotion corpus admission rejects duplicate provider records across immutable artifacts
+  ---
+  duration_ms: 3.199616
+  type: 'test'
+  ...
+# Subtest: historical manifest changes when the immutable joined-evidence artifact identity changes
+ok 633 - historical manifest changes when the immutable joined-evidence artifact identity changes
+  ---
+  duration_ms: 15.290968
+  type: 'test'
+  ...
+# Subtest: pre-event decklist + card data + provider event end qualifies the row for promotion-grade training
+ok 634 - pre-event decklist + card data + provider event end qualifies the row for promotion-grade training
+  ---
+  duration_ms: 1.903447
+  type: 'test'
+  ...
+# Subtest: completed-event decklist first observed after tournament start cannot be backdated into a pre-event predictor
+ok 635 - completed-event decklist first observed after tournament start cannot be backdated into a pre-event predictor
+  ---
+  duration_ms: 0.656998
+  type: 'test'
+  ...
+# Subtest: feature snapshot cannot claim availability before the exact decklist was observed
+ok 636 - feature snapshot cannot claim availability before the exact decklist was observed
+  ---
+  duration_ms: 0.348525
+  type: 'test'
+  ...
+# Subtest: feature snapshot cannot claim availability before card data was captured
+ok 637 - feature snapshot cannot claim availability before card data was captured
+  ---
+  duration_ms: 0.292819
+  type: 'test'
+  ...
+# Subtest: mismatched deck fingerprint is rejected even if timestamps look safe
+ok 638 - mismatched deck fingerprint is rejected even if timestamps look safe
+  ---
+  duration_ms: 0.27417
+  type: 'test'
+  ...
+# Subtest: mismatched provider identities are rejected
+ok 639 - mismatched provider identities are rejected
+  ---
+  duration_ms: 0.197895
+  type: 'test'
+  ...
+# Subtest: provider startDate disagreement is rejected rather than silently changing the prediction cutoff
+ok 640 - provider startDate disagreement is rejected rather than silently changing the prediction cutoff
+  ---
+  duration_ms: 0.277574
+  type: 'test'
+  ...
+# Subtest: final outcome evidence must be observed no earlier than provider-verified event end
+ok 641 - final outcome evidence must be observed no earlier than provider-verified event end
+  ---
+  duration_ms: 0.227111
+  type: 'test'
+  ...
+# Subtest: prepared promotion-grade candidate replaces legacy startDate outcome timestamp with provider event end
+ok 642 - prepared promotion-grade candidate replaces legacy startDate outcome timestamp with provider event end
+  ---
+  duration_ms: 0.489175
+  type: 'test'
+  ...
+# Subtest: known TopDeck event captures exact strict decklists before provider startDate
+ok 643 - known TopDeck event captures exact strict decklists before provider startDate
+  ---
+  duration_ms: 25.975234
+  type: 'test'
+  ...
+# Subtest: pre-event capture reports unavailable when provider exposes no strict deckObj before start
+ok 644 - pre-event capture reports unavailable when provider exposes no strict deckObj before start
+  ---
+  duration_ms: 0.816769
+  type: 'test'
+  ...
+# Subtest: pre-event capture fails closed if network work finishes after tournament start
+ok 645 - pre-event capture fails closed if network work finishes after tournament start
+  ---
+  duration_ms: 1.170222
+  type: 'test'
+  ...
+# Subtest: event-end capture records provider Complete/endDate as later target timing evidence
+ok 646 - event-end capture records provider Complete/endDate as later target timing evidence
+  ---
+  duration_ms: 0.762823
+  type: 'test'
+  ...
+# Subtest: event-end capture rejects events that are not complete
+ok 647 - event-end capture rejects events that are not complete
+  ---
+  duration_ms: 0.54233
+  type: 'test'
+  ...
+# Subtest: TopDeck prospective capture does not automatically retry a 429
+ok 648 - TopDeck prospective capture does not automatically retry a 429
+  ---
+  duration_ms: 1.035779
+  type: 'test'
+  ...
+# Subtest: completed prospective capture binds exact TID response to provider event end
+ok 649 - completed prospective capture binds exact TID response to provider event end
+  ---
+  duration_ms: 27.701658
+  type: 'test'
+  ...
+# Subtest: completed capture rejects a provider startDate that disagrees with event-end evidence
+ok 650 - completed capture rejects a provider startDate that disagrees with event-end evidence
+  ---
+  duration_ms: 2.572459
+  type: 'test'
+  ...
+# Subtest: completed capture performs no automatic retry when the final TID POST is rate limited
+ok 651 - completed capture performs no automatic retry when the final TID POST is rate limited
+  ---
+  duration_ms: 1.122623
+  type: 'test'
+  ...
+# Subtest: prospective join produces a promotion-grade row only when pre-event deck, retained card truth, and final deck all match
+ok 652 - prospective join produces a promotion-grade row only when pre-event deck, retained card truth, and final deck all match
+  ---
+  duration_ms: 7.519618
+  type: 'test'
+  ...
+# Subtest: prospective join rejects a final deck that changed from the pre-event fingerprint
+ok 653 - prospective join rejects a final deck that changed from the pre-event fingerprint
+  ---
+  duration_ms: 0.338481
+  type: 'test'
+  ...
+# Subtest: prospective join rejects retained card truth first observed after tournament start
+ok 654 - prospective join rejects retained card truth first observed after tournament start
+  ---
+  duration_ms: 0.210041
+  type: 'test'
+  ...
+# Subtest: sealed future holdout uses the exact training normalizer without refitting future data
+ok 655 - sealed future holdout uses the exact training normalizer without refitting future data
+  ---
+  duration_ms: 75.017743
+  type: 'test'
+  ...
+# Subtest: sealed future holdout rejects any normalizer other than the exact sealed training fit
+ok 656 - sealed future holdout rejects any normalizer other than the exact sealed training fit
+  ---
+  duration_ms: 29.536638
+  type: 'test'
+  ...
+# Subtest: sealed future holdout rejects predictor evidence that was available before the seal
+ok 657 - sealed future holdout rejects predictor evidence that was available before the seal
+  ---
+  duration_ms: 29.278511
+  type: 'test'
+  ...
+# Subtest: sealed future holdout rejects a pilot reused from sealed training
+ok 658 - sealed future holdout rejects a pilot reused from sealed training
+  ---
+  duration_ms: 29.984505
+  type: 'test'
+  ...
+# Subtest: sealed future holdout rejects an exact deck fingerprint reused from sealed training
+ok 659 - sealed future holdout rejects an exact deck fingerprint reused from sealed training
+  ---
+  duration_ms: 23.82921
+  type: 'test'
+  ...
+# Subtest: future holdout deck structure cannot change the normalizer fitted on planned training snapshots
+ok 660 - future holdout deck structure cannot change the normalizer fitted on planned training snapshots
+  ---
+  duration_ms: 38.550237
+  type: 'test'
+  ...
+# Subtest: planner assigns an entire leakage series before fitting normalization
+ok 661 - planner assigns an entire leakage series before fitting normalization
+  ---
+  duration_ms: 4.178805
+  type: 'test'
+  ...
+# Subtest: workflow fails closed when leakage grouping leaves no historical training snapshots
+ok 662 - workflow fails closed when leakage grouping leaves no historical training snapshots
+  ---
+  duration_ms: 1.336233
+  type: 'test'
+  ...
+# Subtest: historical corpus workflow rejects a plain low-level snapshot without provenance assessment
+ok 663 - historical corpus workflow rejects a plain low-level snapshot without provenance assessment
+  ---
+  duration_ms: 1.379052
+  type: 'test'
+  ...
+# Subtest: historical corpus rejects outcome retrieval timestamps that precede source observation
+ok 664 - historical corpus rejects outcome retrieval timestamps that precede source observation
+  ---
+  duration_ms: 1.016292
+  type: 'test'
+  ...
+# Subtest: reports same-commander top-cut versus non-top-cut tutor prevalence without causal claims
+ok 665 - reports same-commander top-cut versus non-top-cut tutor prevalence without causal claims
+  ---
+  duration_ms: 10.222303
+  type: 'test'
+  ...
+# Subtest: deduplicates provider records before computing prevalence
+ok 666 - deduplicates provider records before computing prevalence
+  ---
+  duration_ms: 0.293863
+  type: 'test'
+  ...
+# Subtest: same-commander scope is exact while global scope remains separately visible
+ok 667 - same-commander scope is exact while global scope remains separately visible
+  ---
+  duration_ms: 0.286126
+  type: 'test'
+  ...
+# Subtest: omitting commander context does not silently label global evidence as commander-specific
+ok 668 - omitting commander context does not silently label global evidence as commander-specific
+  ---
+  duration_ms: 0.205013
+  type: 'test'
+  ...
+# Subtest: finds a cheaper exact-printing universal tutor with identical exact route access
+ok 669 - finds a cheaper exact-printing universal tutor with identical exact route access
+  ---
+  duration_ms: 19.816136
+  type: 'test'
+  ...
+# Subtest: accepts a cheaper restricted tutor when the existing matcher proves it finds the route piece
+ok 670 - accepts a cheaper restricted tutor when the existing matcher proves it finds the route piece
+  ---
+  duration_ms: 2.508337
+  type: 'test'
+  ...
+# Subtest: rejects a graveyard-destination tutor rather than treating it as direct route access
+ok 671 - rejects a graveyard-destination tutor rather than treating it as direct route access
+  ---
+  duration_ms: 1.666113
+  type: 'test'
+  ...
+# Subtest: filters a cheaper tutor outside commander color identity before exact-printing evaluation
+ok 672 - filters a cheaper tutor outside commander color identity before exact-printing evaluation
+  ---
+  duration_ms: 0.993116
+  type: 'test'
+  ...
+# Subtest: treats printing-policy or exact-budget failure as ineligible rather than weakening constraints
+ok 673 - treats printing-policy or exact-budget failure as ineligible rather than weakening constraints
+  ---
+  duration_ms: 2.605402
+  type: 'test'
+  ...
+# Subtest: preserves singleton legality and rejects replacing a tutor with a second copy already in the deck
+ok 674 - preserves singleton legality and rejects replacing a tutor with a second copy already in the deck
+  ---
+  duration_ms: 2.724475
+  type: 'test'
+  ...
+# Subtest: exposes access loss when a cheaper restricted tutor cannot cover every piece the source can find
+ok 675 - exposes access loss when a cheaper restricted tutor cannot cover every piece the source can find
+  ---
+  duration_ms: 2.580245
+  type: 'test'
+  ...
+# Subtest: near-equivalent classification appears only when an explicit access-loss threshold is supplied
+ok 676 - near-equivalent classification appears only when an explicit access-loss threshold is supplied
+  ---
+  duration_ms: 4.059309
+  type: 'test'
+  ...
+# Subtest: candidate-search failure remains unknown availability rather than no replacement
+ok 677 - candidate-search failure remains unknown availability rather than no replacement
+  ---
+  duration_ms: 2.383422
+  type: 'test'
+  ...
+# Subtest: an empty bounded Scryfall sample does not claim the source tutor is optimal
+ok 678 - an empty bounded Scryfall sample does not claim the source tutor is optimal
+  ---
+  duration_ms: 1.05582
+  type: 'test'
+  ...
+# Subtest: a primary-route equivalent creature tutor is not portfolio-safe when it weakens a second artifact route
+ok 679 - a primary-route equivalent creature tutor is not portfolio-safe when it weakens a second artifact route
+  ---
+  duration_ms: 16.3871
+  type: 'test'
+  ...
+# Subtest: a universal replacement that preserves both routes is explicitly portfolio-safe
+ok 680 - a universal replacement that preserves both routes is explicitly portfolio-safe
+  ---
+  duration_ms: 4.521599
+  type: 'test'
+  ...
+# Subtest: near-equivalent portfolio safety only uses an explicit caller threshold
+ok 681 - near-equivalent portfolio safety only uses an explicit caller threshold
+  ---
+  duration_ms: 1.403099
+  type: 'test'
+  ...
+# Subtest: too many verified routes fails closed instead of labelling a partial portfolio safe
+ok 682 - too many verified routes fails closed instead of labelling a partial portfolio safe
+  ---
+  duration_ms: 0.376381
+  type: 'test'
+  ...
+# Subtest: candidate printing resolution failure remains unknown rather than a safe replacement claim
+ok 683 - candidate printing resolution failure remains unknown rather than a safe replacement claim
+  ---
+  duration_ms: 0.367528
+  type: 'test'
+  ...
+# Subtest: computes exact positive marginal route access by replacing one tutor with a neutral slot
+ok 684 - computes exact positive marginal route access by replacing one tutor with a neutral slot
+  ---
+  duration_ms: 24.637415
+  type: 'test'
+  ...
+# Subtest: uses the requested exact printing finish instead of a cheaper finish when the deck line specifies foil
+ok 685 - uses the requested exact printing finish instead of a cheaper finish when the deck line specifies foil
+  ---
+  duration_ms: 1.798155
+  type: 'test'
+  ...
+# Subtest: a cheaper tutor Pareto-dominates an otherwise equivalent expensive tutor without inventing a weighted score
+ok 686 - a cheaper tutor Pareto-dominates an otherwise equivalent expensive tutor without inventing a weighted score
+  ---
+  duration_ms: 3.537173
+  type: 'test'
+  ...
+# Subtest: unknown exact-printing price does not suppress exact marginal access or fabricate cost efficiency
+ok 687 - unknown exact-printing price does not suppress exact marginal access or fabricate cost efficiency
+  ---
+  duration_ms: 0.800724
+  type: 'test'
+  ...
+# Subtest: a tutor that cannot directly find a route component is excluded rather than assigned fake value
+ok 688 - a tutor that cannot directly find a route component is excluded rather than assigned fake value
+  ---
+  duration_ms: 0.472758
+  type: 'test'
+  ...
+# Subtest: explicit game wins and opponent-loss results pass strict closure
+ok 689 - explicit game wins and opponent-loss results pass strict closure
+  ---
+  duration_ms: 2.97333
+  type: 'test'
+  ...
+# Subtest: unbounded damage or life loss supplies a lethal outlet in the same result
+ok 690 - unbounded damage or life loss supplies a lethal outlet in the same result
+  ---
+  duration_ms: 1.312121
+  type: 'test'
+  ...
+# Subtest: infinite mana does not become a win merely because the resource is unbounded
+ok 691 - infinite mana does not become a win merely because the resource is unbounded
+  ---
+  duration_ms: 2.020619
+  type: 'test'
+  ...
+# Subtest: resource generation plus explicit lethal closure is accepted
+ok 692 - resource generation plus explicit lethal closure is accepted
+  ---
+  duration_ms: 0.174085
+  type: 'test'
+  ...
+# Subtest: generic infinite mill is not assumed to target opponents
+ok 693 - generic infinite mill is not assumed to target opponents
+  ---
+  duration_ms: 0.503619
+  type: 'test'
+  ...
+# Subtest: infinite combat phases alone remain conditional rather than deterministic
+ok 694 - infinite combat phases alone remain conditional rather than deterministic
+  ---
+  duration_ms: 0.123066
+  type: 'test'
+  ...
+# Subtest: two packages sharing half of the smaller seed package are a shared core, not independent redundancy
+ok 695 - two packages sharing half of the smaller seed package are a shared core, not independent redundancy
+  ---
+  duration_ms: 0.466384
+  type: 'test'
+  ...
+# Subtest: disjoint library packages that share the commander are commander-coupled, not fully independent
+ok 696 - disjoint library packages that share the commander are commander-coupled, not fully independent
+  ---
+  duration_ms: 0.14765
+  type: 'test'
+  ...
+# Subtest: portfolio selection prefers a genuinely independent backup over a slightly higher-scoring shared core
+ok 697 - portfolio selection prefers a genuinely independent backup over a slightly higher-scoring shared core
+  ---
+  duration_ms: 8.061529
+  type: 'test'
+  ...
+# Subtest: resource-only loops receive no portfolio redundancy credit
+ok 698 - resource-only loops receive no portfolio redundancy credit
+  ---
+  duration_ms: 0.417195
+  type: 'test'
+  ...
+# Subtest: portfolio ordering is deterministic on equal scores
+ok 699 - portfolio ordering is deterministic on equal scores
+  ---
+  duration_ms: 0.339791
+  type: 'test'
+  ...
+# Subtest: provider absence can remain an empty route portfolio without fabricating route failure
+ok 700 - provider absence can remain an empty route portfolio without fabricating route failure
+  ---
+  duration_ms: 1.022175
+  type: 'test'
+  ...
+# Subtest: a verified route with no explicit card components remains unknown rather than zero access
+ok 701 - a verified route with no explicit card components remains unknown rather than zero access
+  ---
+  duration_ms: 0.50156
+  type: 'test'
+  ...
+# Subtest: one universal tutor cannot cover two simultaneously missing library pieces
+ok 702 - one universal tutor cannot cover two simultaneously missing library pieces
+  ---
+  duration_ms: 13.549014
+  type: 'test'
+  ...
+# Subtest: a command-zone combo piece is guaranteed separately and is not charged as a library requirement
+ok 703 - a command-zone combo piece is guaranteed separately and is not charged as a library requirement
+  ---
+  duration_ms: 1.501375
+  type: 'test'
+  ...
+# Subtest: universal plus restricted tutors use a distinct matching across different route pieces
+ok 704 - universal plus restricted tutors use a distinct matching across different route pieces
+  ---
+  duration_ms: 1.267822
+  type: 'test'
+  ...
+# Subtest: two restricted tutors that both find only the same piece cannot cover a two-piece route
+ok 705 - two restricted tutors that both find only the same piece cannot cover a two-piece route
+  ---
+  duration_ms: 1.87043
+  type: 'test'
+  ...
+# Subtest: graveyard and top-deck tutors are audited but excluded from conservative direct access
+ok 706 - graveyard and top-deck tutors are audited but excluded from conservative direct access
+  ---
+  duration_ms: 0.932608
+  type: 'test'
+  ...
+# Subtest: unsupported tutor restrictions fail closed instead of becoming fake universal access
+ok 707 - unsupported tutor restrictions fail closed instead of becoming fake universal access
+  ---
+  duration_ms: 0.524348
+  type: 'test'
+  ...
+# Subtest: artifact tutor does not fabricate coverage for a creature piece
+ok 708 - artifact tutor does not fabricate coverage for a creature piece
+  ---
+  duration_ms: 0.407138
+  type: 'test'
+  ...
+# Subtest: an unresolved verified route piece stays unknown rather than becoming zero-access evidence
+ok 709 - an unresolved verified route piece stays unknown rather than becoming zero-access evidence
+  ---
+  duration_ms: 0.254256
+  type: 'test'
+  ...
+# Subtest: template requirements remain explicitly outside the card-only exact probability
+ok 710 - template requirements remain explicitly outside the card-only exact probability
+  ---
+  duration_ms: 0.461039
+  type: 'test'
+  ...
+# Subtest: setup audit preserves provider mana/prerequisite evidence and explicit zone mentions
+ok 711 - setup audit preserves provider mana/prerequisite evidence and explicit zone mentions
+  ---
+  duration_ms: 11.152317
+  type: 'test'
+  ...
+# Subtest: missing provider setup fields stay unknown rather than becoming proof of trivial setup
+ok 712 - missing provider setup fields stay unknown rather than becoming proof of trivial setup
+  ---
+  duration_ms: 0.547721
+  type: 'test'
+  ...
+# Subtest: instant or sorcery pieces expose stack interaction while delayed wins expose an extra response window
+ok 713 - instant or sorcery pieces expose stack interaction while delayed wins expose an extra response window
+  ---
+  duration_ms: 0.271669
+  type: 'test'
+  ...
+# Subtest: deck support is role-level advisory and does not claim exact tutor or recovery coverage
+ok 714 - deck support is role-level advisory and does not claim exact tutor or recovery coverage
+  ---
+  duration_ms: 0.448798
+  type: 'test'
+  ...
+# Subtest: unresolved combo-piece profiles are surfaced instead of silently omitted
+ok 715 - unresolved combo-piece profiles are surfaced instead of silently omitted
+  ---
+  duration_ms: 0.290602
+  type: 'test'
+  ...
+1..715
+# tests 715
+# suites 0
+# pass 715
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 153235.620199

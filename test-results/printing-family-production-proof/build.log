@@ -2,6 +2,3 @@
 > mtg-ultimate-mcp@0.13.0 build
 > tsc -p tsconfig.json
 
-src/services/printing-policy-v08.test.ts(146,24): error TS2379: Argument of type '{ set: string; collector_number: string; released_at: undefined; }' is not assignable to parameter of type 'Partial<ScryfallCard>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-  Types of property 'released_at' are incompatible.
-    Type 'undefined' is not assignable to type 'string'.
