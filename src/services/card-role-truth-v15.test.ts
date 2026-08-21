@@ -196,6 +196,8 @@ test('free interaction recognizes commander-enabled, pitch, evoke, retarget, lib
   assert.equal(inferCardRoles(counterspell).includes('free interaction'), false);
 });
 
+// This shared-query regression intentionally exercises the exact legacy clause still emitted by
+// both targeted Build and unrestricted Upgrade so their discovery semantics cannot drift again.
 test('legacy Build and Upgrade free-interaction searches are expanded to the shared semantics before Scryfall lookup', () => {
   const legacy = 'f:commander id<=ubr -t:land ((mv=0 OR o:"rather than pay") (o:"counter target" OR o:"destroy target" OR o:"exile target"))';
   const normalized = normalizeScryfallSearchQueryV15(legacy);
