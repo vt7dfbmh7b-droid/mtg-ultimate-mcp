@@ -57,6 +57,7 @@
 1 Lightning Greaves (LTC) 281
 1 Prosperous Innkeeper (LTC) 256
 1 Heroic Intervention (LTC) 249
+1 Seize the Spoils (SLD) 2556
 1 Boromir, Warden of the Tower (LTR) 4
 1 Spiteful Banditry (LTR) 149
 1 Samwise Gamgee (LTR) 222
@@ -69,7 +70,6 @@
 1 Dancing from Dark to Dawn (HOB) 123
 1 Shiny Impetus (LTC) 227
 1 Commander's Sphere (LTC) 276
-1 Horn of the Mark (LTR) 241
 1 Command Tower (LTC) 301
 1 Exotic Orchard (LTC) 307
 1 Cavern of Souls (LTC) 392z

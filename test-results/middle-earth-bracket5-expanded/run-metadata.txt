@@ -1,2 +1,4 @@
-source_sha=c58e24e6016bbf3870cedfbd5b659144af8dc745
+source_sha=fcadac23b273e5e885fbb7b5343b6aee394f8583
 control_outcome=success
+policy=full-family-promos-curated-sld
+max_win_package_cards=4

@@ -1,0 +1,1107 @@
+{
+  "schema": "themed-special-printing-audit-v15.1",
+  "marvel": {
+    "setCodes": [
+      {
+        "code": "MSH",
+        "name": "Marvel Super Heroes",
+        "type": "expansion",
+        "releasedAt": "2026-06-26"
+      },
+      {
+        "code": "TMSH",
+        "name": "Marvel Super Heroes Tokens",
+        "type": "token",
+        "releasedAt": "2026-06-26"
+      },
+      {
+        "code": "AMSH",
+        "name": "Marvel Super Heroes Art Series",
+        "type": "memorabilia",
+        "releasedAt": "2026-06-26"
+      },
+      {
+        "code": "FMSC",
+        "name": "Marvel Super Heroes Jumpstart Front Cards",
+        "type": "memorabilia",
+        "releasedAt": "2026-06-26"
+      },
+      {
+        "code": "TMSC",
+        "name": "Marvel Super Heroes Commander Tokens",
+        "type": "token",
+        "releasedAt": "2026-06-26"
+      },
+      {
+        "code": "MSC",
+        "name": "Marvel Super Heroes Commander",
+        "type": "commander",
+        "releasedAt": "2026-06-26"
+      },
+      {
+        "code": "LMAR",
+        "name": "Marvel Legends Series Inserts",
+        "type": "promo",
+        "releasedAt": "2025-09-30"
+      },
+      {
+        "code": "ASPM",
+        "name": "Marvel's Spider-Man Art Series",
+        "type": "memorabilia",
+        "releasedAt": "2025-09-26"
+      },
+      {
+        "code": "PSPM",
+        "name": "Marvel's Spider-Man Promos",
+        "type": "promo",
+        "releasedAt": "2025-09-26"
+      },
+      {
+        "code": "TSPM",
+        "name": "Marvel's Spider-Man Tokens",
+        "type": "token",
+        "releasedAt": "2025-09-26"
+      },
+      {
+        "code": "SPM",
+        "name": "Marvel's Spider-Man",
+        "type": "expansion",
+        "releasedAt": "2025-09-26"
+      },
+      {
+        "code": "MAR",
+        "name": "Marvel Universe",
+        "type": "masterpiece",
+        "releasedAt": "2025-09-26"
+      },
+      {
+        "code": "SPE",
+        "name": "Marvel's Spider-Man Eternal",
+        "type": "eternal",
+        "releasedAt": "2025-09-26"
+      }
+    ],
+    "specials": [
+      {
+        "name": "Black Panther, Wakandan King",
+        "set": "SLD",
+        "collectorNumber": "1747",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Secure the Wastes",
+        "set": "SLD",
+        "collectorNumber": "1748",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Primal Vigor",
+        "set": "SLD",
+        "collectorNumber": "1749",
+        "releasedAt": "2024-11-04",
+        "flavorName": "Bast's Blessing",
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Heroic Intervention",
+        "set": "SLD",
+        "collectorNumber": "1750",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Karn's Bastion",
+        "set": "SLD",
+        "collectorNumber": "1751",
+        "releasedAt": "2024-11-04",
+        "flavorName": "Wakandan Skyscraper",
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Captain America, First Avenger",
+        "set": "SLD",
+        "collectorNumber": "1726",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Sigarda's Aid",
+        "set": "SLD",
+        "collectorNumber": "1727",
+        "releasedAt": "2024-11-04",
+        "flavorName": "Captain America's Aid",
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Flawless Maneuver",
+        "set": "SLD",
+        "collectorNumber": "1728",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "In the Trenches",
+        "set": "SLD",
+        "collectorNumber": "1729",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Sword of War and Peace",
+        "set": "SLD",
+        "collectorNumber": "1730",
+        "releasedAt": "2024-11-04",
+        "flavorName": "Shield of War and Peace",
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Iron Man, Titan of Innovation",
+        "set": "SLD",
+        "collectorNumber": "1731",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Galvanic Blast",
+        "set": "SLD",
+        "collectorNumber": "1732",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Commander's Plate",
+        "set": "SLD",
+        "collectorNumber": "1733",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Sol Ring",
+        "set": "SLD",
+        "collectorNumber": "1734",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Inventors' Fair",
+        "set": "SLD",
+        "collectorNumber": "1735",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Storm, Force of Nature",
+        "set": "SLD",
+        "collectorNumber": "1742",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Lightning Bolt",
+        "set": "SLD",
+        "collectorNumber": "1743",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Jeska's Will",
+        "set": "SLD",
+        "collectorNumber": "1744",
+        "releasedAt": "2024-11-04",
+        "flavorName": "Storm's Will",
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Ice Storm",
+        "set": "SLD",
+        "collectorNumber": "1745",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Manamorphose",
+        "set": "SLD",
+        "collectorNumber": "1746",
+        "releasedAt": "2024-11-04",
+        "flavorName": "Ororo Borealis",
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Wolverine, Best There Is",
+        "set": "SLD",
+        "collectorNumber": "1737",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Berserk",
+        "set": "SLD",
+        "collectorNumber": "1738",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Rite of Passage",
+        "set": "SLD",
+        "collectorNumber": "1739",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Rhythm of the Wild",
+        "set": "SLD",
+        "collectorNumber": "1740",
+        "releasedAt": "2024-11-04",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "The Ozolith",
+        "set": "SLD",
+        "collectorNumber": "1741",
+        "releasedAt": "2024-11-04",
+        "flavorName": "Adamantium Bonding Tank",
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Arcane Signet",
+        "set": "SLD",
+        "collectorNumber": "908",
+        "releasedAt": "2024-11-04",
+        "flavorName": "Earth's Mightiest Emblem",
+        "promo": true,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Fact or Fiction",
+        "set": "SLD",
+        "collectorNumber": "1995",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "poster",
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Frantic Search",
+        "set": "SLD",
+        "collectorNumber": "1996",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "poster",
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Scheming Symmetry",
+        "set": "SLD",
+        "collectorNumber": "1997",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "poster",
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Blasphemous Act",
+        "set": "SLD",
+        "collectorNumber": "1998",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "poster",
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Impact Tremors",
+        "set": "SLD",
+        "collectorNumber": "1999",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "poster",
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Ephemerate",
+        "set": "SLD",
+        "collectorNumber": "1990",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Three Visits",
+        "set": "SLD",
+        "collectorNumber": "1991",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Lightning Greaves",
+        "set": "SLD",
+        "collectorNumber": "1992",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Lightning Greaves",
+        "set": "SLD",
+        "collectorNumber": "1987",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Sol Ring",
+        "set": "SLD",
+        "collectorNumber": "1993",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Sol Ring",
+        "set": "SLD",
+        "collectorNumber": "1988",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Command Tower",
+        "set": "SLD",
+        "collectorNumber": "1994",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Command Tower",
+        "set": "SLD",
+        "collectorNumber": "1989",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Plains",
+        "set": "SLD",
+        "collectorNumber": "1945",
+        "releasedAt": "2025-09-25",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "poster"
+        ]
+      },
+      {
+        "name": "Plains",
+        "set": "SLD",
+        "collectorNumber": "1950",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "raisedfoil",
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Island",
+        "set": "SLD",
+        "collectorNumber": "1946",
+        "releasedAt": "2025-09-25",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "poster"
+        ]
+      },
+      {
+        "name": "Island",
+        "set": "SLD",
+        "collectorNumber": "1951",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "raisedfoil",
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Swamp",
+        "set": "SLD",
+        "collectorNumber": "1947",
+        "releasedAt": "2025-09-25",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "poster"
+        ]
+      },
+      {
+        "name": "Swamp",
+        "set": "SLD",
+        "collectorNumber": "1952",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "raisedfoil",
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Mountain",
+        "set": "SLD",
+        "collectorNumber": "1948",
+        "releasedAt": "2025-09-25",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "poster"
+        ]
+      },
+      {
+        "name": "Mountain",
+        "set": "SLD",
+        "collectorNumber": "1953",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "raisedfoil",
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Forest",
+        "set": "SLD",
+        "collectorNumber": "1949",
+        "releasedAt": "2025-09-25",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "poster"
+        ]
+      },
+      {
+        "name": "Forest",
+        "set": "SLD",
+        "collectorNumber": "1954",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "raisedfoil",
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Damnation",
+        "set": "SLD",
+        "collectorNumber": "2019",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Damnation",
+        "set": "SLD",
+        "collectorNumber": "2000",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Dark Ritual",
+        "set": "SLD",
+        "collectorNumber": "2020",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Dark Ritual",
+        "set": "SLD",
+        "collectorNumber": "2001",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Peer into the Abyss",
+        "set": "SLD",
+        "collectorNumber": "2021",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Peer into the Abyss",
+        "set": "SLD",
+        "collectorNumber": "2002",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Surgical Extraction",
+        "set": "SLD",
+        "collectorNumber": "2022",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Surgical Extraction",
+        "set": "SLD",
+        "collectorNumber": "2003",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Tendrils of Agony",
+        "set": "SLD",
+        "collectorNumber": "2023",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Tendrils of Agony",
+        "set": "SLD",
+        "collectorNumber": "2004",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Deadly Dispute",
+        "set": "SLD",
+        "collectorNumber": "1985",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Go for the Throat",
+        "set": "SLD",
+        "collectorNumber": "1986",
+        "releasedAt": "2025-09-22",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Hammerhead, Maggia Boss",
+        "set": "SLD",
+        "collectorNumber": "2622",
+        "releasedAt": "2026-07-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Undead Hand Ninja",
+        "set": "SLD",
+        "collectorNumber": "2623",
+        "releasedAt": "2026-07-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Hex Magic",
+        "set": "SLD",
+        "collectorNumber": "2624",
+        "releasedAt": "2026-07-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Tippy-Toe, Terrific Partner",
+        "set": "SLD",
+        "collectorNumber": "2625",
+        "releasedAt": "2026-07-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Baxter Building",
+        "set": "SLD",
+        "collectorNumber": "2626",
+        "releasedAt": "2026-07-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      }
+    ]
+  },
+  "middleEarth": {
+    "setCodes": [
+      {
+        "code": "HOC",
+        "name": "The Hobbit Eternal",
+        "type": "eternal",
+        "releasedAt": "2026-08-14"
+      },
+      {
+        "code": "THOB",
+        "name": "The Hobbit Tokens",
+        "type": "token",
+        "releasedAt": "2026-08-14"
+      },
+      {
+        "code": "HOB",
+        "name": "The Hobbit",
+        "type": "expansion",
+        "releasedAt": "2026-08-14"
+      },
+      {
+        "code": "PLTC",
+        "name": "Tales of Middle-earth Deluxe Commander Kit",
+        "type": "promo",
+        "releasedAt": "2024-10-16"
+      },
+      {
+        "code": "ALTC",
+        "name": "Tales of Middle-earth Scene Box",
+        "type": "memorabilia",
+        "releasedAt": "2023-11-04"
+      },
+      {
+        "code": "PLTR",
+        "name": "Tales of Middle-earth Promos",
+        "type": "promo",
+        "releasedAt": "2023-06-23"
+      },
+      {
+        "code": "LTC",
+        "name": "Tales of Middle-earth Commander",
+        "type": "commander",
+        "releasedAt": "2023-06-23"
+      },
+      {
+        "code": "ALTR",
+        "name": "Tales of Middle-earth Art Series",
+        "type": "memorabilia",
+        "releasedAt": "2023-06-23"
+      },
+      {
+        "code": "TLTC",
+        "name": "Tales of Middle-earth Commander Tokens",
+        "type": "token",
+        "releasedAt": "2023-06-23"
+      },
+      {
+        "code": "LTR",
+        "name": "The Lord of the Rings: Tales of Middle-earth",
+        "type": "draft_innovation",
+        "releasedAt": "2023-06-23"
+      },
+      {
+        "code": "TLTR",
+        "name": "Tales of Middle-earth Tokens",
+        "type": "token",
+        "releasedAt": "2023-06-23"
+      },
+      {
+        "code": "MLTR",
+        "name": "The Lord of the Rings: Tales of Middle-earth Minigames",
+        "type": "minigame",
+        "releasedAt": "2023-06-23"
+      },
+      {
+        "code": "FLTR",
+        "name": "Tales of Middle-earth Front Cards",
+        "type": "memorabilia",
+        "releasedAt": "2023-06-23"
+      }
+    ],
+    "specials": [
+      {
+        "name": "Cloudshift",
+        "set": "SLD",
+        "collectorNumber": "2552",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Tocasia's Welcome",
+        "set": "SLD",
+        "collectorNumber": "2553",
+        "releasedAt": "2026-08-17",
+        "flavorName": "Quite a Merry Gathering",
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Stony Silence",
+        "set": "SLD",
+        "collectorNumber": "2554",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Imp's Mischief",
+        "set": "SLD",
+        "collectorNumber": "2555",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Seize the Spoils",
+        "set": "SLD",
+        "collectorNumber": "2556",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Fellwar Stone",
+        "set": "SLD",
+        "collectorNumber": "2557",
+        "releasedAt": "2026-08-17",
+        "flavorName": "Erebor Heirloom",
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Lightning Greaves",
+        "set": "SLD",
+        "collectorNumber": "2558",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Liquimetal Torque",
+        "set": "SLD",
+        "collectorNumber": "2559",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Sol Ring",
+        "set": "SLD",
+        "collectorNumber": "2560",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Thought Vessel",
+        "set": "SLD",
+        "collectorNumber": "2561",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": [
+          "universesbeyond"
+        ]
+      },
+      {
+        "name": "Defile",
+        "set": "SLD",
+        "collectorNumber": "2562",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": []
+      },
+      {
+        "name": "Diabolic Intent",
+        "set": "SLD",
+        "collectorNumber": "2563",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": []
+      },
+      {
+        "name": "Dread Return",
+        "set": "SLD",
+        "collectorNumber": "2564",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": []
+      },
+      {
+        "name": "Mirkwood Bats",
+        "set": "SLD",
+        "collectorNumber": "2565",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": []
+      },
+      {
+        "name": "Read the Bones",
+        "set": "SLD",
+        "collectorNumber": "2566",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": []
+      },
+      {
+        "name": "Arcane Heist",
+        "set": "SLD",
+        "collectorNumber": "2567",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": []
+      },
+      {
+        "name": "Contentious Plan",
+        "set": "SLD",
+        "collectorNumber": "2568",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": []
+      },
+      {
+        "name": "Curiosity",
+        "set": "SLD",
+        "collectorNumber": "2569",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": []
+      },
+      {
+        "name": "Solve the Equation",
+        "set": "SLD",
+        "collectorNumber": "2570",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": []
+      },
+      {
+        "name": "Windfall",
+        "set": "SLD",
+        "collectorNumber": "2571",
+        "releasedAt": "2026-08-17",
+        "flavorName": null,
+        "promo": false,
+        "promoTypes": []
+      }
+    ]
+  }
+}
