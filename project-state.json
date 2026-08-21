@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T21:15:00+12:00",
+  "updatedAt": "2026-08-21T21:32:00+12:00",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build the best evidence-backed autonomous Commander deck-building intelligence we can, then prove it deserves to be trusted.",
   "stable": {
@@ -13,7 +13,7 @@
     "activeBranch": "agent/v15-native-deck-intelligence",
     "activePullRequest": 29,
     "developmentCheckpointSha": "303a474e4a1ec8cb80c9dc5babaafe42c1828472",
-    "developmentCheckpointNote": "Intelligence development paused while PM-01 project-management infrastructure is built. Always inspect the live branch head before editing; this SHA is the pause checkpoint, not a claim that later documentation commits are source-validation milestones.",
+    "developmentCheckpointNote": "Intelligence development is paused while the repo-first project-management layer is completed. This SHA is the deck-intelligence pause checkpoint, not a claim that later PM/documentation commits are executable intelligence validation milestones.",
     "lastFullyValidatedExperimentalBaseline": {
       "branch": "agent/package-probabilities",
       "sha": "63bb7274004060eea507f7991a04b84921d0cd47",
@@ -22,15 +22,21 @@
   },
   "workMode": {
     "intelligenceDevelopmentPaused": true,
-    "activeMilestone": "PM-01",
-    "reason": "Build persistent repo-backed project memory, generated handoffs, validation tracking, and decision history before resuming intelligence development."
+    "activeMilestone": "PM-02",
+    "reason": "Consolidate persisted validation results into one deterministic machine-readable index before resuming Commander intelligence development."
   },
   "milestones": [
     {
       "id": "PM-01",
       "name": "Persistent Project State & Handoff Automation",
-      "status": "active",
+      "status": "validated",
       "goal": "Make repository state authoritative so a fresh chat can recover exact project context with minimal rechecking."
+    },
+    {
+      "id": "PM-02",
+      "name": "Validation State Indexing",
+      "status": "active",
+      "goal": "Consolidate key persisted control metadata into one deterministic validation index so fresh chats can identify current, stale, passing and failing evidence immediately."
     },
     {
       "id": "INTEL-01",
@@ -87,23 +93,25 @@
     "No merge, stable/current promotion, version bump, or release without explicit user approval."
   ],
   "nextActions": [
-    "Complete PM-01 authoritative project-state files and generated handoff tooling.",
-    "Add project-state validation to CI so stale handoffs fail fast.",
-    "Record permanent architecture decisions and known failure regressions.",
-    "Build a validation matrix mapping every control to the claim it proves.",
-    "After PM-01 is validated, resume INTEL-01/INTEL-02 from the pause checkpoint and run the fresh Marvel control before further feature work."
+    "Finish PM-02 validation-registry/index tooling and strict integrity checks.",
+    "Validate PM-02 on checked-in source and persist the exact tested SHA/outcomes.",
+    "Expand the validation registry only with high-value controls needed for current milestone recovery; do not turn it into noisy workflow inventory.",
+    "Run a fresh-chat recovery smoke using only project state, validation index, live branch/PR state and referenced decision/failure docs.",
+    "After PM-02 is validated, resume INTEL-01/INTEL-02 from the deck-intelligence pause checkpoint and run the fresh Marvel control before further feature work."
   ],
   "handoffProtocol": {
     "readFirst": [
       "project-state.json",
       "docs/PROJECT-STATE.md",
+      "validation-index.json",
+      "docs/VALIDATION-STATE.md",
       "ULTIMATE_MTG_SPEC.md",
       "docs/ROADMAP.md",
       "docs/DECISIONS.md",
       "docs/VALIDATION-MATRIX.md",
       "docs/KNOWN-FAILURES.md"
     ],
-    "then": "Inspect the live active-branch head, PR state, and validation outputs. Continue only from the active milestone and nextActions.",
+    "then": "Inspect the live active-branch head and PR state. Use the validation index to decide which persisted controls are current or stale, then continue only from the active milestone and nextActions.",
     "compatibilityEntryPoint": "PROJECT_HANDOFF.md"
   }
 }
