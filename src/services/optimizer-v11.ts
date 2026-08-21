@@ -3,7 +3,10 @@ import { validateCommanderDeck } from './commander-rules.js';
 import { buildSimulationBackedUpgradePlanV07, type UpgradePlanOptionsV07 } from './deck-builder-v07.js';
 import { parseDecklist, type ParsedDeck } from './deck.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from './scryfall.js';
-import { assessPlanTargetGateImprovementV15 } from './target-gate-improvement-v15.js';
+import {
+  assessPlanTargetGateImprovementV15,
+  type TargetGateImprovementV15,
+} from './target-gate-improvement-v15.js';
 
 export type RefinementDetailLevelV11 = 'simple' | 'standard' | 'detailed';
 
@@ -14,6 +17,14 @@ export interface IterativeRefinementOptionsV11 extends UpgradePlanOptionsV07 {
   minimumImprovementScore?: number;
   preserveAcceptedAdds?: boolean;
   detailLevel?: RefinementDetailLevelV11;
+}
+
+export interface RefinementImprovementScoreV11 {
+  score: number;
+  significantRegression: boolean;
+  zeroTargetProgressWhileFailedGatesRemain: boolean;
+  targetGate: TargetGateImprovementV15;
+  components: Record<string, number>;
 }
 
 interface RoundSummaryV11 {
@@ -70,11 +81,7 @@ function metricDelta(plan: Record<string, unknown>, key: string): number {
   return left === null || right === null ? 0 : right - left;
 }
 
-export function refinementImprovementScoreV11(plan: Record<string, unknown>): {
-  score: number;
-  significantRegression: boolean;
-  components: Record<string, number>;
-} {
+export function refinementImprovementScoreV11(plan: Record<string, unknown>): RefinementImprovementScoreV11 {
   const simulation = asRecord(plan.simulation);
   const delta = asRecord(simulation.delta);
   const components: Record<string, number> = {};
@@ -120,22 +127,7 @@ export function refinementImprovementScoreV11(plan: Record<string, unknown>): {
   });
   components.targetGatePriority = targetGate.score;
 
-  const knownConstructionGateCount = Math.max(0, 8 - targetGate.ignoredUnverifiedGates.length);
-  const failedKnownGateCount = Math.max(0, knownConstructionGateCount - targetGate.passingBefore.length);
-  const hasTargetProgress = targetGate.repairedGates.length > 0 || targetGate.advancedFailedGates.length > 0;
-  const zeroProgressBlocked = targetGate.applicable
-    && failedKnownGateCount > 0
-    && !hasTargetProgress
-    && targetGate.regressedGates.length === 0;
-
-  let score = Object.values(components).reduce((sum, value) => sum + value, 0);
-  // Bracket-5 refinement must advance a known failed construction gate while any remain.
-  // Force zero-progress packages below the minimum configurable acceptance floor (-10), so even
-  // unusually strong simulation deltas cannot make cosmetic changes outrank the actual target.
-  if (zeroProgressBlocked && score > -10.001) {
-    components.targetGateNoProgressGuard = Number((-10.001 - score).toFixed(3));
-    score = Object.values(components).reduce((sum, value) => sum + value, 0);
-  }
+  const score = Object.values(components).reduce((sum, value) => sum + value, 0);
 
   const keepDelta = numeric(delta.functionalKeepRate) ?? 0;
   const commanderDelta = numeric(delta.commanderUptimePercent) ?? 0;
@@ -144,10 +136,16 @@ export function refinementImprovementScoreV11(plan: Record<string, unknown>): {
     || commanderDelta <= -6
     || spellsDelta <= -0.35
     || targetGate.regressedGates.length > 0;
+  const zeroTargetProgressWhileFailedGatesRemain = targetGate.applicable
+    && targetGate.failedBefore.length > 0
+    && targetGate.repairedGates.length === 0
+    && targetGate.advancedFailedGates.length === 0;
 
   return {
     score: Number(score.toFixed(3)),
     significantRegression,
+    zeroTargetProgressWhileFailedGatesRemain,
+    targetGate,
     components,
   };
 }
@@ -292,6 +290,11 @@ export async function refineCommanderDeckIterativelyV11(
       }
       if (score.significantRegression) {
         lastReason = 'package-causes-a-significant-simulated-or-target-gate-regression';
+        attemptSize -= 1;
+        continue;
+      }
+      if (score.zeroTargetProgressWhileFailedGatesRemain) {
+        lastReason = 'package-does-not-repair-or-advance-failed-bracket-5-target-gate';
         attemptSize -= 1;
         continue;
       }

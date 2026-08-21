@@ -120,46 +120,44 @@ test('shared refinement score treats regression of an already-passing Bracket-5 
   assert.ok((result.components.targetGatePriority ?? 0) < 0);
 });
 
-test('shared refinement score hard-blocks cosmetic B5 changes while known construction gates remain failed', () => {
+test('shared refinement score exposes positive cosmetic movement as zero target progress while Bracket-5 gates still fail', () => {
   const result = refinementImprovementScoreV11({
-    simulation: {
-      delta: {
-        functionalKeepRate: 10,
-        commanderUptimePercent: 10,
-        protectionWinRate: 5,
-        averageSpellsCast: 2,
-      },
-    },
+    simulation: { delta: { functionalKeepRate: 3 } },
     beforeMetrics: bracket5Metrics(),
     afterMetrics: bracket5Metrics({ tutorCount: 9 }),
     v15TargetPressure: bracket5Pressure(),
   });
-  assert.equal(result.components.targetGatePriority, 0);
-  assert.ok((result.components.targetGateNoProgressGuard ?? 0) < 0);
-  assert.ok(result.score < -10);
+
+  assert.ok(result.score > 0, 'cosmetic/simulation movement can still make the legacy aggregate score positive');
+  assert.equal(result.zeroTargetProgressWhileFailedGatesRemain, true);
+  assert.ok(result.targetGate.failedBefore.includes('verified-winning-combo'));
+  assert.deepEqual(result.targetGate.repairedGates, []);
+  assert.deepEqual(result.targetGate.advancedFailedGates, []);
 });
 
-test('shared refinement score still allows measurable movement toward a failed B5 gate', () => {
+test('shared refinement score does not activate the hard target-progress guard below Bracket 5', () => {
+  const result = refinementImprovementScoreV11({
+    simulation: { delta: { functionalKeepRate: 3 } },
+    beforeMetrics: bracket5Metrics(),
+    afterMetrics: bracket5Metrics({ tutorCount: 9 }),
+    v15TargetPressure: bracket5Pressure({ targetPressure: { targetBracket: 4 } }),
+  });
+
+  assert.equal(result.targetGate.applicable, false);
+  assert.equal(result.zeroTargetProgressWhileFailedGatesRemain, false);
+  assert.ok(result.score > 0);
+});
+
+test('shared refinement score allows measurable movement toward a failed B5 gate', () => {
   const result = refinementImprovementScoreV11({
     simulation: { delta: {} },
     beforeMetrics: bracket5Metrics({ averageNonlandManaValue: 2.71 }),
     afterMetrics: bracket5Metrics({ averageNonlandManaValue: 2.65 }),
     v15TargetPressure: bracket5Pressure(),
   });
-  assert.ok((result.components.targetGatePriority ?? 0) > 0);
-  assert.equal(result.components.targetGateNoProgressGuard, undefined);
-  assert.ok(result.score > 0);
-});
 
-test('shared refinement score leaves lower-bracket scoring unchanged by the B5 zero-progress guard', () => {
-  const result = refinementImprovementScoreV11({
-    simulation: { delta: { functionalKeepRate: 1 } },
-    beforeMetrics: bracket5Metrics(),
-    afterMetrics: bracket5Metrics({ tutorCount: 9 }),
-    v15TargetPressure: bracket5Pressure({ targetPressure: { targetBracket: 4 } }),
-  });
-  assert.equal(result.components.targetGatePriority, 0);
-  assert.equal(result.components.targetGateNoProgressGuard, undefined);
+  assert.deepEqual(result.targetGate.advancedFailedGates, ['average-nonland-mv']);
+  assert.equal(result.zeroTargetProgressWhileFailedGatesRemain, false);
   assert.ok(result.score > 0);
 });
 
@@ -171,7 +169,8 @@ test('shared refinement score does not invent a B5 failure when the only unresol
     afterMetrics: passingKnownMetrics,
     v15TargetPressure: bracket5Pressure({ winRouteVerificationStatus: 'verification-unavailable' }),
   });
-  assert.equal(result.components.targetGatePriority, 0);
-  assert.equal(result.components.targetGateNoProgressGuard, undefined);
+
+  assert.deepEqual(result.targetGate.failedBefore, []);
+  assert.equal(result.zeroTargetProgressWhileFailedGatesRemain, false);
   assert.ok(result.score > 0);
 });

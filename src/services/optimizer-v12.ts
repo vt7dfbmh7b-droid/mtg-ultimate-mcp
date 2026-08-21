@@ -13,6 +13,7 @@ import {
 import {
   estimateUpgradeSpendV11,
   refinementImprovementScoreV11,
+  type RefinementImprovementScoreV11,
   type RefinementDetailLevelV11,
 } from './optimizer-v11.js';
 import { printingMatchesPolicyV08, resolvePrintingPolicyV08 } from './printing-policy-v08.js';
@@ -46,6 +47,8 @@ interface CandidateEvaluationV12 {
   unknownPriceCount: number;
   improvementScore: number;
   significantRegression: boolean;
+  zeroTargetProgressWhileFailedGatesRemain: boolean;
+  targetGate: RefinementImprovementScoreV11['targetGate'];
   themeAudit: NeutralThemeAuditV15 | null;
   plan: Record<string, unknown> | null;
   nextDecklist: string | null;
@@ -150,6 +153,17 @@ function candidateSummary(candidate: CandidateEvaluationV12): Record<string, unk
     unknownPriceCount: candidate.unknownPriceCount,
     improvementScore: candidate.improvementScore,
     significantRegression: candidate.significantRegression,
+    zeroTargetProgressWhileFailedGatesRemain: candidate.zeroTargetProgressWhileFailedGatesRemain,
+    targetGate: {
+      applicable: candidate.targetGate.applicable,
+      score: candidate.targetGate.score,
+      failedBefore: candidate.targetGate.failedBefore,
+      failedAfter: candidate.targetGate.failedAfter,
+      repairedGates: candidate.targetGate.repairedGates,
+      advancedFailedGates: candidate.targetGate.advancedFailedGates,
+      regressedGates: candidate.targetGate.regressedGates,
+      ignoredUnverifiedGates: candidate.targetGate.ignoredUnverifiedGates,
+    },
     themeAudit: compactThemeAudit(candidate.themeAudit),
     swaps: candidate.plan && Array.isArray(candidate.plan.swaps)
       ? candidate.plan.swaps.map(asRecord).map(simpleSwap)
@@ -446,6 +460,23 @@ export function candidateThemeGateV15(
   return { eligible: false, reason: 'package-does-not-advance-required-theme-density' };
 }
 
+export function candidateTargetGateProgressGateV15(
+  score: Pick<RefinementImprovementScoreV11, 'zeroTargetProgressWhileFailedGatesRemain' | 'targetGate'>,
+): { eligible: boolean; reason: string } {
+  if (score.zeroTargetProgressWhileFailedGatesRemain) {
+    return {
+      eligible: false,
+      reason: 'package-does-not-repair-or-advance-failed-bracket-5-target-gate',
+    };
+  }
+  return {
+    eligible: true,
+    reason: score.targetGate.applicable
+      ? 'package-repairs-or-advances-a-failed-bracket-5-target-gate-or-none-remain'
+      : 'bracket-5-target-progress-gate-not-applicable',
+  };
+}
+
 async function evaluateCandidate(
   candidateNumber: number,
   currentParsed: ParsedDeck,
@@ -487,6 +518,8 @@ async function evaluateCandidate(
     unknownPriceCount: spend.unknownPriceCount,
     improvementScore: score.score,
     significantRegression: score.significantRegression,
+    zeroTargetProgressWhileFailedGatesRemain: score.zeroTargetProgressWhileFailedGatesRemain,
+    targetGate: score.targetGate,
     themeAudit: null,
     plan,
   };
@@ -500,6 +533,10 @@ async function evaluateCandidate(
   }
   if (score.significantRegression) {
     return { ...base, eligible: false, reason: 'package-causes-a-significant-simulated-regression', nextDecklist: null, resolved: null };
+  }
+  const targetProgressGate = candidateTargetGateProgressGateV15(score);
+  if (!targetProgressGate.eligible) {
+    return { ...base, eligible: false, reason: targetProgressGate.reason, nextDecklist: null, resolved: null };
   }
   const minScore = Number.isFinite(options.minimumImprovementScore)
     ? Math.max(-10, Math.min(100, options.minimumImprovementScore ?? 0.1))

@@ -18,6 +18,7 @@ on:
       - "src/services/optimizer-v11.ts"
       - "src/services/optimizer-v11.test.ts"
       - "src/services/optimizer-v12.ts"
+      - "src/services/optimizer-v12-target-progress.test.ts"
       - "src/services/win-package-pagination-v15.ts"
       - "src/services/win-package-pagination-v15.test.ts"
       - "src/services/win-package-restricted-pool-v15.ts"
@@ -59,41 +60,46 @@ jobs:
       - name: Type-check and build checked-in source
         run: npm run build
 
-      - name: Require checked-in zero-progress guard
-        run: grep -q "targetGateNoProgressGuard" src/services/optimizer-v11.ts
-
       - name: Run autonomous and win-package regressions
-        run: npx tsx --test src/services/optimizer-v11.test.ts src/services/commander-target-pressure-v15.test.ts src/services/target-gate-improvement-v15.test.ts src/services/deck-builder-win-package-ceiling-v15.test.ts src/services/win-package-pagination-v15.test.ts src/services/win-package-restricted-pool-v15.test.ts src/services/general-win-package-v15.test.ts src/services/full-table-win-closure-v15.test.ts
+        run: npx tsx --test src/services/optimizer-v11.test.ts src/services/optimizer-v12-target-progress.test.ts src/services/commander-target-pressure-v15.test.ts src/services/target-gate-improvement-v15.test.ts src/services/deck-builder-win-package-ceiling-v15.test.ts src/services/win-package-pagination-v15.test.ts src/services/win-package-restricted-pool-v15.test.ts src/services/general-win-package-v15.test.ts src/services/full-table-win-closure-v15.test.ts
 
       - name: Refine selected Marvel-only Bracket 5 attempt
         id: refine_control
         continue-on-error: true
         run: npx tsx scripts/e2e-marvel-bracket5-refine-v15.ts
 
-      - name: Require refinement control to execute successfully
-        if: always()
-        env:
-          CONTROL_OUTCOME: ${{ steps.refine_control.outcome }}
-        run: test "$CONTROL_OUTCOME" = "success"
-
       - name: Require accepted changes to advance an actual failed construction gate
-        if: success()
+        id: target_quality
+        if: steps.refine_control.outcome == 'success'
+        continue-on-error: true
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
           const result = JSON.parse(fs.readFileSync('marvel-bracket5-refine-result.json', 'utf8'));
-          if (!result?.delta?.deckChanged) process.exit(0);
+          if (!result?.delta?.deckChanged) {
+            throw new Error('Refinement kept the original deck and therefore did not demonstrate INTEL-02 target improvement.');
+          }
           const before = new Map((result.startingDeck?.bracket5ThresholdChecks ?? []).map((c) => [c.key, c]));
           const after = new Map((result.finalDeck?.bracket5ThresholdChecks ?? []).map((c) => [c.key, c]));
           const construction = [...before.values()].filter((c) => c.category === 'construction' && c.passed === false);
           const repaired = construction.filter((c) => after.get(c.key)?.passed === true).map((c) => c.key);
-          const beforeMv = Number(before.get('average-nonland-mv')?.observed);
-          const afterMv = Number(after.get('average-nonland-mv')?.observed);
-          const measurableCurveAdvance = Number.isFinite(beforeMv) && Number.isFinite(afterMv) && beforeMv > 2.6 && afterMv < beforeMv;
-          if (repaired.length === 0 && !measurableCurveAdvance) {
-            throw new Error(`Refinement changed the deck without repairing a failed Bracket-5 construction gate or advancing the failed curve gate. Before=${beforeMv}, after=${afterMv}`);
+          const advanced = construction.filter((check) => {
+            if (after.get(check.key)?.passed === true) return false;
+            const beforeValue = Number(check.observed);
+            const afterValue = Number(after.get(check.key)?.observed);
+            if (!Number.isFinite(beforeValue) || !Number.isFinite(afterValue)) return false;
+            return check.key === 'average-nonland-mv' ? afterValue < beforeValue : afterValue > beforeValue;
+          }).map((c) => c.key);
+          const regressed = [...before.values()]
+            .filter((c) => c.category === 'construction' && c.passed === true && after.get(c.key)?.passed === false)
+            .map((c) => c.key);
+          if (regressed.length > 0) {
+            throw new Error(`Refinement regressed previously passing Bracket-5 construction gates: ${regressed.join(',')}`);
           }
-          console.log(`Target quality gate passed. Repaired=${repaired.join(',') || 'none'}; curveAdvance=${measurableCurveAdvance}`);
+          if (repaired.length === 0 && advanced.length === 0) {
+            throw new Error('Refinement changed the deck without repairing or measurably advancing any failed Bracket-5 construction gate.');
+          }
+          console.log(`Target quality gate passed. Repaired=${repaired.join(',') || 'none'}; advanced=${advanced.join(',') || 'none'}`);
           NODE
 
       - name: Upload refinement result
@@ -109,9 +115,10 @@ jobs:
           retention-days: 14
 
       - name: Persist checked-in-source refinement result
-        if: success()
+        if: always()
         env:
-          CONTROL_OUTCOME: ${{ steps.refine_control.outcome }}
+          EXECUTION_OUTCOME: ${{ steps.refine_control.outcome }}
+          TARGET_QUALITY_OUTCOME: ${{ steps.target_quality.outcome }}
         shell: bash
         run: |
           set -euo pipefail
@@ -122,11 +129,23 @@ jobs:
           [ ! -f marvel-bracket5-refine-result.json ] || cp marvel-bracket5-refine-result.json test-results/marvel-bracket5/refine-result.json
           [ ! -f marvel-bracket5-refined-deck.txt ] || cp marvel-bracket5-refined-deck.txt test-results/marvel-bracket5/refined-deck.txt
           [ ! -f marvel-bracket5-refine-failure.txt ] || cp marvel-bracket5-refine-failure.txt test-results/marvel-bracket5/refine-failure.txt
-          printf 'source_sha=%s\ncontrol_outcome=%s\npolicy=checked-in-very-good-candidate\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\nrestricted_pool_prefilter=true\nfull_table_closure=true\ntarget_gate_priority=true\nzero_progress_guard=true\nswap_feasible_win_package_selection=true\nprotect_existing_package_pieces=true\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
+          CONTROL_OUTCOME=failure
+          if [ "$EXECUTION_OUTCOME" = success ] && [ "$TARGET_QUALITY_OUTCOME" = success ]; then CONTROL_OUTCOME=success; fi
+          printf 'source_sha=%s\ncontrol_outcome=%s\nexecution_outcome=%s\ntarget_gate_quality_outcome=%s\npolicy=checked-in-very-good-candidate\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\nrestricted_pool_prefilter=true\nfull_table_closure=true\ntarget_gate_priority=true\nzero_progress_guard=true\nzero_target_progress_guard=true\nlower_bracket_behavior_preserved=true\nswap_feasible_win_package_selection=true\nprotect_existing_package_pieces=true\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" "$EXECUTION_OUTCOME" "$TARGET_QUALITY_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
+          npm run validation:index
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- test-results/marvel-bracket5
+          git add -- test-results/marvel-bracket5 validation-index.json docs/VALIDATION-STATE.md
           if ! git diff --cached --quiet; then
             git commit -m "test-results: persist Marvel Bracket 5 very-good control [skip ci]"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
+
+      - name: Require checked-in-source scenario intelligence
+        if: always()
+        env:
+          EXECUTION_OUTCOME: ${{ steps.refine_control.outcome }}
+          TARGET_QUALITY_OUTCOME: ${{ steps.target_quality.outcome }}
+        run: |
+          test "$EXECUTION_OUTCOME" = success
+          test "$TARGET_QUALITY_OUTCOME" = success

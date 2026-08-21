@@ -13,6 +13,8 @@ export interface TargetGateImprovementV15 {
   score: number;
   thresholdScore: number;
   progressScore: number;
+  failedBefore: string[];
+  failedAfter: string[];
   repairedGates: string[];
   advancedFailedGates: string[];
   regressedGates: string[];
@@ -98,6 +100,8 @@ function emptyResult(targetBracket: number, rationale: string): TargetGateImprov
     score: 0,
     thresholdScore: 0,
     progressScore: 0,
+    failedBefore: [],
+    failedAfter: [],
     repairedGates: [],
     advancedFailedGates: [],
     regressedGates: [],
@@ -135,6 +139,8 @@ export function assessTargetGateImprovementV15(input: {
   const repairedGates: string[] = [];
   const advancedFailedGates: string[] = [];
   const regressedGates: string[] = [];
+  const failedBefore: string[] = [];
+  const failedAfter: string[] = [];
   const passingBefore: string[] = [];
   const passingAfter: string[] = [];
   let thresholdScore = 0;
@@ -145,7 +151,9 @@ export function assessTargetGateImprovementV15(input: {
     const wasPassing = before.get(key) === true;
     const isPassing = after.get(key) === true;
     if (wasPassing) passingBefore.push(key);
+    else failedBefore.push(key);
     if (isPassing) passingAfter.push(key);
+    else failedAfter.push(key);
     if (!wasPassing && isPassing) {
       repairedGates.push(key);
       thresholdScore += weight;
@@ -164,6 +172,8 @@ export function assessTargetGateImprovementV15(input: {
   repairedGates.sort();
   advancedFailedGates.sort();
   regressedGates.sort();
+  failedBefore.sort();
+  failedAfter.sort();
   passingBefore.sort();
   passingAfter.sort();
   const ignoredUnverifiedGates = [...ignored].sort();
@@ -174,6 +184,8 @@ export function assessTargetGateImprovementV15(input: {
     score,
     thresholdScore,
     progressScore: Number(progressScore.toFixed(3)),
+    failedBefore,
+    failedAfter,
     repairedGates,
     advancedFailedGates,
     regressedGates,

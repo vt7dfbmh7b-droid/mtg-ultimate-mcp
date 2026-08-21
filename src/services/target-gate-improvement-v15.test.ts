@@ -35,6 +35,8 @@ test('first verified full-table route outranks cosmetic tutor growth when tutor 
   assert.deepEqual(routeRepair.repairedGates, ['verified-winning-combo']);
   assert.equal(routeRepair.score, 24);
   assert.equal(tutorNine.score, 0);
+  assert.ok(tutorNine.failedBefore.includes('verified-winning-combo'));
+  assert.ok(tutorNine.failedAfter.includes('verified-winning-combo'));
   assert.deepEqual(tutorNine.advancedFailedGates, []);
 });
 
