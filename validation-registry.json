@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "controls": [
+    {
+      "id": "PM-STATE-INTEGRITY",
+      "label": "Project State Integrity",
+      "claimLevel": "engineering+truth",
+      "milestones": ["PM-01", "PM-02"],
+      "metadataPath": "test-results/project-management/integrity.txt",
+      "sourceKeys": ["source_sha"],
+      "passWhen": {
+        "typecheck_outcome": "success",
+        "state_validate_outcome": "success",
+        "source_build_outcome": "success"
+      }
+    },
+    {
+      "id": "MARVEL-B5-REFINE",
+      "label": "Marvel Bracket 5 autonomous refinement",
+      "claimLevel": "scenario-intelligence",
+      "milestones": ["INTEL-01", "INTEL-02"],
+      "metadataPath": "test-results/marvel-bracket5/refine-run-metadata.txt",
+      "sourceKeys": ["source_sha", "workflow_source_sha", "executed_head_sha"],
+      "passWhen": {
+        "control_outcome": "success"
+      }
+    }
+  ]
+}
