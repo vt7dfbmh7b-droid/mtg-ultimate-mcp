@@ -19,43 +19,52 @@ Delivered:
 - CI detects state/handoff drift;
 - a self-reporting integrity control binds project-management typecheck/state validation/source build to an exact source SHA.
 
-Validated control:
+Initial validated control:
 - `test-results/project-management/integrity.txt`
 - source `73366cf57c055fc0ae7831209ad155b360bf036f`
 - project-management typecheck: success
 - state validation: success
 - normal source build: success
 
-## PM-02 — Validation State Indexing — ACTIVE
+## PM-02 — Validation State Indexing — VALIDATED
 
 Goal: stop making fresh chats hunt through individual result directories to determine what is current, stale, passing or failing.
 
-Exit criteria:
-- `validation-registry.json` registers only high-value controls needed for recovery and milestone claims;
+Delivered:
+- `validation-registry.json` registers high-value controls needed for recovery and milestone claims;
 - `validation-index.json` is deterministically generated from registry + persisted metadata + project state;
 - `docs/VALIDATION-STATE.md` is the generated human snapshot;
-- index records bind exact tested source SHA, pass/fail/unknown state, claim level and checkpoint match;
+- index records bind tested source SHA, pass/fail/unknown state, claim level and checkpoint match;
 - CI fails on a stale validation index;
-- the self-reporting PM integrity control regenerates the index whenever it updates its own persisted result so it cannot make the index stale by succeeding;
-- a fresh-chat recovery smoke can identify PM validity and stale Marvel evidence without opening individual `test-results/**` directories.
+- the self-reporting PM integrity control regenerates the index whenever it updates its own persisted result;
+- `npm run project:resume` derives a fresh-session recovery brief without old chat history or individual result-folder inspection.
 
-## INTEL-01 — Win-package intelligence — PAUSED / VALIDATION PENDING
+Validated PM-02 control:
+- tested source `b920087e41d22a1575404620815c4882801cae9b`;
+- management tooling typecheck: success;
+- generated project-state validation: success;
+- consolidated validation-index validation: success;
+- fresh-session recovery smoke: success;
+- normal MTG source build: success;
+- validation index regenerated self-consistently and shows no unmet PM pass conditions.
+
+## INTEL-01 — Win-package intelligence — IMPLEMENTED / VALIDATION PENDING
 
 Goal: very-good verified win-package reasoning.
 
-Required capabilities:
+Implemented direction includes:
 - bounded but deep Commander Spellbook discovery with honest incomplete-evidence semantics;
 - exact commander legality/color/printing/budget filtering;
-- multiplayer full-table closure identical to final evaluation semantics;
-- package feasibility against available swap capacity;
+- multiplayer full-table closure aligned with final evaluation semantics;
+- package feasibility against swap capacity;
 - atomic package injection;
 - protection of already-present package pieces;
-- R/competitive preference only among feasible verified packages;
+- R/competitive preference among feasible verified packages;
 - no false absence when discovery is truncated or unavailable.
 
-Exit evidence must include multiple constrained and unrestricted controls, not Marvel alone.
+Exit evidence must include fresh constrained and unrestricted controls, not Marvel alone.
 
-## INTEL-02 — Actual autonomous deck improvement — PAUSED / VALIDATION PENDING
+## INTEL-02 — Actual autonomous deck improvement — ACTIVE
 
 Goal: improve the deck that exists, not an abstract score.
 
@@ -68,6 +77,8 @@ Required capabilities:
 - reject zero-target-progress changes while known target construction failures remain;
 - preserve meaningful primary/secondary strategy;
 - choose coherent IN→OUT pairings and know when no change is better.
+
+Immediate resumed work is deliberately narrow: finish the hard zero-target-progress guard and run the fresh checked-in-source Marvel Bracket-5 control before adding unrelated intelligence features.
 
 ## BENCH-01 — Adversarial Commander benchmark suite — PLANNED
 
