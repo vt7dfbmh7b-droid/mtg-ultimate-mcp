@@ -6,6 +6,7 @@ import {
 } from './commander-strategy-affinity-v15.js';
 import { commanderTargetPressureV15 } from './commander-target-pressure-v15.js';
 import { buildDeckMetrics, type ParsedDeck } from './deck.js';
+import { discoverEligiblePoolV15 } from './neutral-deck-builder-v15.js';
 import {
   describePrintingPolicyV08,
   resolvePrintingPolicyV08,
@@ -132,6 +133,26 @@ function cardMatchesRole(card: ScryfallCard, role: string): boolean {
   if (role === 'tutor') return roles.has('tutor');
   if (role === 'early') return !card.type_line.toLowerCase().includes('land') && card.cmc <= 2;
   return false;
+}
+
+function hasPrintingRestriction(policy: ResolvedPrintingPolicyV08): boolean {
+  return Boolean(policy.family) || policy.allowedSetCodes.length > 0 || policy.exactSpecialPrintings.length > 0;
+}
+
+export function restrictedUpgradeCandidatesForRoleV15(
+  pool: readonly ScryfallCard[],
+  role: string,
+  existingNames: ReadonlySet<string> = new Set<string>(),
+  excludedNames: ReadonlySet<string> = new Set<string>(),
+): ScryfallCard[] {
+  return pool.filter((card) => {
+    const key = card.name.toLocaleLowerCase();
+    return !card.type_line.toLocaleLowerCase().includes('land')
+      && !existingNames.has(key)
+      && !excludedNames.has(key)
+      && card.legalities.commander === 'legal'
+      && cardMatchesRole(card, role);
+  });
 }
 
 function candidateScore(
@@ -287,14 +308,37 @@ export async function suggestDeckUpgrades(
   const excluded = new Set((options.excludedCards ?? []).map((name) => name.toLocaleLowerCase()));
   const maxCandidates = Math.max(1, Math.min(10, Math.trunc(options.maxCandidatesPerRole ?? 5)));
   const candidateGroups: Array<Record<string, unknown>> = [];
+  const restrictedPoolActive = hasPrintingRestriction(printingPolicy);
+  const restrictedEligiblePool = restrictedPoolActive
+    ? await discoverEligiblePoolV15(allowedIdentity, printingPolicy, options.maxUsdPerCard)
+    : null;
+  const candidateDiscovery = restrictedPoolActive
+    ? {
+        mode: 'exhaustive-bounded-printing-policy',
+        exhaustiveWithinSafetyCeilings: true,
+        eligiblePoolCards: restrictedEligiblePool?.length ?? 0,
+        roleSearchResultCap: null,
+        note: 'Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card.',
+      }
+    : {
+        mode: 'bounded-role-search',
+        exhaustiveWithinSafetyCeilings: false,
+        eligiblePoolCards: null,
+        roleSearchResultCap: 40,
+        note: 'Unrestricted Upgrade still uses bounded role-specific discovery; final candidates remain independently filtered by role and Commander legality.',
+      };
 
   for (const deficit of deficits.slice(0, 5)) {
-    const query = roleSearchQuery(deficit.role, allowedIdentity, printingPolicy);
+    const query = restrictedPoolActive ? null : roleSearchQuery(deficit.role, allowedIdentity, printingPolicy);
     let genericResults: ScryfallCard[] = [];
-    try {
-      genericResults = await searchCards(query, 40);
-    } catch {
-      // A supplemental controlled-theme query can still provide candidates below.
+    if (restrictedEligiblePool) {
+      genericResults = restrictedUpgradeCandidatesForRoleV15(restrictedEligiblePool, deficit.role, existing, excluded);
+    } else if (query) {
+      try {
+        genericResults = await searchCards(query, 40);
+      } catch {
+        // A supplemental controlled-theme query can still provide candidates below.
+      }
     }
 
     let themedQuery: string | null = null;
@@ -305,11 +349,14 @@ export async function suggestDeckUpgrades(
         themedResults = await searchCards(themedQuery, 40);
         for (const card of themedResults) themeCandidateNames.add(card.name.toLocaleLowerCase());
       } catch {
-        // The generic structural search remains usable. Final theme truth is independently audited.
+        // Generic structural discovery remains usable. Final theme truth is independently audited.
       }
     }
 
-    const results = mergeCardsByName(themedResults, genericResults);
+    // Under a printing-family/set restriction the exhaustive eligible pool is the candidate universe.
+    // The supplemental theme search only marks which pool cards support the controlled theme; it cannot
+    // inject a card that the shared physical-printing truth boundary did not admit.
+    const results = restrictedPoolActive ? genericResults : mergeCardsByName(themedResults, genericResults);
     if (results.length === 0) continue;
     const ranked = results
       .filter((card) => !card.type_line.toLowerCase().includes('land'))
@@ -371,6 +418,7 @@ export async function suggestDeckUpgrades(
 
     candidateGroups.push({
       ...deficit,
+      candidateDiscoveryMode: candidateDiscovery.mode,
       searchQuery: query,
       supplementalThemeRoleQuery: themedQuery,
       candidates,
@@ -383,6 +431,7 @@ export async function suggestDeckUpgrades(
     currentMetrics: metrics,
     structuralTargets: targets,
     structuralDeficits: deficits,
+    candidateDiscovery,
     candidateAddsByDeficit: candidateGroups,
     candidateCuts: cutCandidates(
       parsed,
@@ -419,7 +468,8 @@ export async function suggestDeckUpgrades(
     caveats: [
       'These role-count targets are engineering heuristics for deck consistency and are not the official Commander bracket definitions. The Bracket-5 free-interaction minimum is bridged directly from the existing V0.15 target pressure instead of being hidden inside generic interaction.',
       'Candidate ordering keeps the existing role fit, mana efficiency, and EDHREC/community-adoption signals, then reuses V0.15 commander strategy inference as an additional deck-context signal. Popularity or strategy affinity alone is not proof of optimality.',
-      'When a V0.15 controlled theme is below its minimum density, the engine performs an additional bounded theme+role search and merges it with the generic structural search. Theme-matching cards are then preferred within each deficit, while generic ramp, interaction, protection, or other utility remains eligible.',
+      'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window. Unrestricted Upgrade retains bounded role search for now.',
+      'When a V0.15 controlled theme is below its minimum density, the engine uses the controlled theme query as a positive membership/ranking signal. Under a printing restriction, only cards already admitted by the exhaustive shared eligible pool can become candidates.',
       'Cut ordering uses the same V0.15 commander strategy context as additions. When the deck is at or below its controlled theme minimum, matching cards also receive a capped four-point cut-protection signal; final theme preservation is still enforced independently by refinement rather than by this heuristic alone.',
       'Automatic upgrade packages pair the nonland cut pool with nonland additions so a utility land cannot silently replace a spell; dedicated mana-base work should be handled explicitly.',
       'Cut suggestions deliberately avoid claiming thematic/high-mana cards are bad; validate them against simulations, actual games, and reference-deck evidence.',
