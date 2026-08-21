@@ -1,4 +1,4 @@
-source_sha=fcadac23b273e5e885fbb7b5343b6aee394f8583
-control_outcome=success
-policy=full-family-promos-curated-sld
+source_sha=ce9a447556d6081513b9b665ac466888ea33a85f
+control_outcome=skipped
+policy=permanent-production-presets
 max_win_package_cards=4
