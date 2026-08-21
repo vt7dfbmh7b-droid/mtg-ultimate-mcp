@@ -29,10 +29,12 @@
 1 Captain America, Liberator (MSC) 587
 1 Deadly Rollick (SLD) 1754
 1 Fabricate (SLD) 7118
+1 Lethal Scheme (MSC) 157
 1 Sol Ring (MSC) 211
 1 Silver Surfer, Galactus's Herald (MSC) 10
 1 Path to Exile (MSC) 141
 1 T'Challa, the Black Panther (MSC) 7
+1 Defense of the Heart (MAR) 76
 1 Doom's Time Platform (MSC) 103
 1 Loki, the Deceiver (MSC) 86
 1 Dark Ritual (MSC) 793
@@ -40,7 +42,7 @@
 1 Aurelia, the Warleader (MAR) 86
 1 Stark Industries Executive (MSH) 153
 1 Counterspell (MAR) 52
-1 Arcane Signet (MSC) 191
+1 Sun-Spider, Nimble Webber (SPM) 154
 1 Swiftfoot Boots (MSC) 216
 1 Relentless Assault (MAR) 25
 1 Seize the Day (MSC) 166
@@ -50,6 +52,7 @@
 1 Thought Vessel (MSC) 222
 1 Big Score (MSC) 802
 1 Savage Beating (MAR) 26
+1 Lightning Greaves (MSC) 202
 1 Unexpected Windfall (MAR) 29
 1 Heroic Intervention (MAR) 78
 1 Jocasta, Automaton Avenger (MSC) 108
@@ -86,8 +89,5 @@
 3 Mountain (MSC) 858
 3 Island (MSH) 289
 3 Plains (MSC) 866
-1 Commander's Plate (SLD) 1733 *N*
-1 Spinneret and Spiderling (SPM) 94 *N*
-1 City Pigeon (SPM) 4 *N*
-1 General Thunderbolt Ross (MSC) 595 *N*
-1 Iconic Shield (MSC) 520 *N*
+1 Vandalblast (MSC) 168 *N*
+1 Ponder (MAR) 13 *N*
