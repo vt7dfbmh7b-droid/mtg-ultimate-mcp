@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "noEmit": true,
+    "declaration": false,
+    "sourceMap": false
+  },
+  "include": [
+    "scripts/project-state-lib.ts",
+    "scripts/generate-handoff.ts",
+    "scripts/validate-project-state.ts",
+    "scripts/update-project-state.ts"
+  ]
+}
