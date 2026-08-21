@@ -4,17 +4,28 @@ An MCP-powered Magic: The Gathering / Commander knowledge, rules, deck-building,
 
 The goal is an **MTG brain for AI clients**: enforce hard game/card truth first, then use simulations, research, tournament evidence, and experimental learning only where they are appropriate.
 
+## Development recovery
+
+Long-running project state is repository-backed rather than chat-backed.
+
+- `project-state.json` is the authoritative machine-readable current development state.
+- `docs/PROJECT-STATE.md` is the generated human snapshot.
+- `PROJECT_HANDOFF.md` is a short generated compatibility entry point.
+- `docs/PROJECT-MANAGEMENT.md` defines the fresh-chat recovery/update protocol.
+- `ULTIMATE_MTG_SPEC.md` remains the north-star product/engineering specification.
+
+A fresh development session should read project state first, inspect the live active-branch head/PR, then continue from the active milestone and next actions instead of reconstructing old chats.
+
 ## Release state
 
 **Stable runtime remains V0.13.**
 
 - `package.json` remains `0.13.0`.
 - `src/server-current.ts` deliberately returns the V0.13 server.
-- V0.14/V0.15 code on the development branch is experimental and is not stable merely because it exists or passes tests.
-- `PROJECT_HANDOFF.md` is the authoritative current development-state document.
-- `ULTIMATE_MTG_SPEC.md` is the north-star product/engineering specification.
+- V0.14/V0.15 code on development branches is experimental and is not stable merely because it exists or passes tests.
+- No project-state, benchmark, model, workflow, or handoff can authorize stable promotion automatically.
 
-The active experimental development line is `agent/package-probabilities`. PR #2 is a long-lived recovery/validation surface and is explicitly **DO NOT MERGE** until a separate user-approved release decision exists.
+Current active development is recorded in `project-state.json`. At the PM-01 checkpoint, the active experimental line is `agent/v15-native-deck-intelligence` / PR #29 and Commander-intelligence feature development is deliberately paused while the persistent project-management layer is established. The older `agent/package-probabilities` line remains the recorded fully validated executable experimental baseline/recovery surface until newer intelligence work earns its own validation claim.
 
 ## Hard truth hierarchy
 
@@ -67,7 +78,7 @@ Commander precons are sourced from maintained MTGJSON data rather than a frozen 
 
 ## Experimental V0.15
 
-The experimental branch contains broader Commander building, exact probability, win-package verification, tutor access/value/replacement analysis, prospective tournament evidence, and shadow learning infrastructure.
+The experimental branches contain broader Commander building, exact probability, win-package verification, tutor access/value/replacement analysis, prospective tournament evidence, shadow learning infrastructure, and ongoing native deck-intelligence work.
 
 The promotion experiment is deliberately narrow:
 
@@ -106,6 +117,14 @@ Normal deterministic checks:
 npm run check
 ```
 
+Project-state checks/generation:
+
+```bash
+npm run project:typecheck
+npm run project:validate
+npm run project:handoff
+```
+
 Live dependency smoke:
 
 ```bash
@@ -120,11 +139,11 @@ npm run test:e2e
 
 ## Manual GitHub workflows
 
-GitHub requires a `workflow_dispatch` workflow to exist on the default branch before it can be manually dispatched. The default branch therefore contains **registration stubs only** for the experimental manual workflows.
+GitHub requires a `workflow_dispatch` workflow to exist on the default branch before it can be manually dispatched. The default branch therefore contains **registration stubs only** for the historical experimental manual workflows.
 
-To run an experimental workflow, select/use ref `agent/package-probabilities`. Running a registration stub directly on `main` intentionally fails rather than pretending the empty/stable default branch contains the experimental runtime.
+Use `project-state.json` to determine the active development branch before dispatching development-specific controls. Older registered V0.15 workflows may still intentionally target `agent/package-probabilities`; running a registration stub directly on `main` intentionally fails rather than pretending the stable default branch contains the experimental runtime.
 
-A separate default-branch `Dependency Security Audit` runs weekly and checks the active branch's locked dependency graph for high/critical npm advisories. It is intentionally separate from deterministic CI because registry/advisory availability is external.
+A separate default-branch `Dependency Security Audit` runs weekly and checks the locked dependency graph for high/critical npm advisories. It is intentionally separate from deterministic CI because registry/advisory availability is external.
 
 ## Privacy-sensitive evidence
 
@@ -142,4 +161,4 @@ The preferred engineering loop is:
 
 > **hard truth → research/cross-check → build → verify → exact maths/simulate → test → observe → learn → retest**
 
-For current development SHA, validation runs, branch cleanup state, promotion blockers, and exact next work, read `PROJECT_HANDOFF.md` before changing anything.
+For current development branch, pause/checkpoint state, active milestone, validation status, blockers and exact next work, read `project-state.json` and `docs/PROJECT-STATE.md` before changing anything.
