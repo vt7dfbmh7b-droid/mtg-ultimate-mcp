@@ -11,6 +11,7 @@
       "passWhen": {
         "typecheck_outcome": "success",
         "state_validate_outcome": "success",
+        "validation_index_outcome": "success",
         "source_build_outcome": "success"
       }
     },
