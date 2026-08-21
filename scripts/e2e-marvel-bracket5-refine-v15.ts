@@ -99,11 +99,12 @@ async function main(): Promise<void> {
 
   const swaps = Array.isArray(refinement.swaps) ? refinement.swaps.map(record) : [];
   const rounds = Array.isArray(refinement.rounds) ? refinement.rounds.map(record) : [];
+  const detailedRounds = Array.isArray(refinement.detailedRounds) ? refinement.detailedRounds.map(record) : [];
   const beforeFailed = before.actualBracket.bracket5ThresholdChecks.filter((check) => !check.passed).map((check) => check.key);
   const afterFailed = after.actualBracket.bracket5ThresholdChecks.filter((check) => !check.passed).map((check) => check.key);
 
   const result = {
-    schema: 'marvel-bracket5-refinement-live-v15.1',
+    schema: 'marvel-bracket5-refinement-live-v15.2',
     startingDeck: {
       commander: before.parsed.commanders.map((entry) => entry.name),
       assessedBracket: before.actualBracket.assessedBracket,
@@ -119,9 +120,12 @@ async function main(): Promise<void> {
       stopReason: refinement.stopReason ?? null,
       roundsAccepted: refinement.roundsAccepted ?? null,
       totalSwaps: refinement.totalSwaps ?? null,
+      candidatePackagesPerRound: refinement.candidatePackagesPerRound ?? null,
       estimatedUpgradeSpendUsd: refinement.estimatedUpgradeSpendUsd ?? null,
       swaps,
       rounds,
+      detailedRounds,
+      constraints: refinement.constraints ?? null,
       winRouteProtection: refinement.winRouteProtection ?? null,
       themeConstraint: refinement.themeConstraint ?? null,
     },
