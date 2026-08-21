@@ -61,3 +61,61 @@ test('V0.11 flags material keep-rate regressions', () => {
   });
   assert.equal(result.significantRegression, true);
 });
+
+function bracket5Metrics(overrides: Record<string, unknown> = {}): Record<string, unknown> {
+  return {
+    interactionCount: 18,
+    protectionCount: 13,
+    drawCount: 22,
+    rampCount: 31,
+    tutorCount: 8,
+    earlyPlayCount: 41,
+    averageNonlandManaValue: 2.71,
+    fastManaCount: 5,
+    cheapInteractionCount: 13,
+    roleCounts: { 'free interaction': 1 },
+    ...overrides,
+  };
+}
+
+function bracket5Pressure(overrides: Record<string, unknown> = {}): Record<string, unknown> {
+  return {
+    targetPressure: { targetBracket: 5 },
+    winRouteVerificationStatus: 'no-verified-route',
+    atomicWinPackageInjected: false,
+    selectedBracketTag: null,
+    ...overrides,
+  };
+}
+
+test('shared refinement score strongly prefers the first verified route over tutor #9 after the real tutor gate already passes', () => {
+  const route = refinementImprovementScoreV11({
+    simulation: { delta: {} },
+    beforeMetrics: bracket5Metrics(),
+    afterMetrics: bracket5Metrics(),
+    v15TargetPressure: bracket5Pressure({
+      atomicWinPackageInjected: true,
+      selectedBracketTag: 'P',
+    }),
+  });
+  const tutorNine = refinementImprovementScoreV11({
+    simulation: { delta: {} },
+    beforeMetrics: bracket5Metrics(),
+    afterMetrics: bracket5Metrics({ tutorCount: 9 }),
+    v15TargetPressure: bracket5Pressure(),
+  });
+  assert.equal(route.components.targetGatePriority, 24);
+  assert.equal(tutorNine.components.targetGatePriority, 0);
+  assert.ok(route.score > tutorNine.score + 20);
+});
+
+test('shared refinement score treats regression of an already-passing Bracket-5 gate as significant', () => {
+  const result = refinementImprovementScoreV11({
+    simulation: { delta: {} },
+    beforeMetrics: bracket5Metrics({ fastManaCount: 3 }),
+    afterMetrics: bracket5Metrics({ fastManaCount: 2 }),
+    v15TargetPressure: bracket5Pressure(),
+  });
+  assert.equal(result.significantRegression, true);
+  assert.ok((result.components.targetGatePriority ?? 0) < 0);
+});
