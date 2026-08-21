@@ -55,75 +55,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Integrate swap-feasible verified package injection when needed
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p = Path('src/services/deck-builder-v07.ts')
-          text = p.read_text()
-
-          old_import = "import { commanderTargetPressureV15, selectTargetAwareWinPackageV15 } from './commander-target-pressure-v15.js';\n"
-          new_import = "import { commanderTargetPressureV15, selectInjectableTargetAwareWinPackageV15 } from './commander-target-pressure-v15.js';\n"
-          if old_import in text:
-              text = text.replace(old_import, new_import, 1)
-          elif new_import not in text:
-              raise SystemExit('commander target pressure import anchor not found')
-
-          old_iface = """  selectedBracketTag: string | null;\n  missingSeedNames: string[];\n  selections: UpgradeAddSelectionV15[];\n"""
-          new_iface = """  selectedBracketTag: string | null;\n  missingSeedNames: string[];\n  protectedExistingPackageNames?: string[];\n  selections: UpgradeAddSelectionV15[];\n"""
-          if 'protectedExistingPackageNames?: string[];' not in text:
-              if old_iface not in text: raise SystemExit('win package priority interface anchor not found')
-              text = text.replace(old_iface, new_iface, 1)
-
-          old_select = """  const selected = selectTargetAwareWinPackageV15(options.targetBracket, discovery.candidates, discovery.selected);\n  if (!selected) {\n    return {\n      attempted: true,\n      sourceStatus: discovery.status,\n      selectedComboId: null,\n      selectedBracketTag: null,\n      missingSeedNames: [],\n      selections: [],\n      reason: discovery.status === 'verification-unavailable'\n        ? 'Verified package discovery was unavailable/incomplete; no package was invented.'\n        : 'Completed verified package discovery found no legal package satisfying the active printing/budget/exclusion constraints.',\n    };\n  }\n\n  const existing = new Set([...parsed.commanders, ...parsed.main].map((entry) => entry.name.toLocaleLowerCase()));\n  const missingSeedNames = selected.seedNames.filter((name) => !existing.has(name.toLocaleLowerCase()));\n"""
-          new_select = """  const existingCardNames = [...parsed.commanders, ...parsed.main].map((entry) => entry.name);\n  const injection = selectInjectableTargetAwareWinPackageV15({\n    targetBracket: options.targetBracket,\n    candidates: discovery.candidates,\n    existingSelected: discovery.selected,\n    existingCardNames,\n    maxMissingSeedCards: Math.max(1, Math.min(15, Math.trunc(options.maxSwaps ?? 8))),\n  });\n  const selected = injection?.candidate ?? null;\n  if (!selected || !injection) {\n    return {\n      attempted: true,\n      sourceStatus: discovery.status,\n      selectedComboId: null,\n      selectedBracketTag: null,\n      missingSeedNames: [],\n      selections: [],\n      reason: discovery.status === 'verification-unavailable'\n        ? 'Verified package discovery was unavailable/incomplete; no package was invented.'\n        : 'Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.',\n    };\n  }\n\n  const missingSeedNames = injection.missingSeedNames;\n"""
-          if 'const injection = selectInjectableTargetAwareWinPackageV15({' not in text:
-              if old_select not in text: raise SystemExit('old target-aware package selection block not found')
-              text = text.replace(old_select, new_select, 1)
-
-          old_success = """    selectedBracketTag: selected.bracketTag,\n    missingSeedNames,\n    selections,\n    reason: selected.bracketTag === 'R'\n"""
-          new_success = """    selectedBracketTag: selected.bracketTag,\n    missingSeedNames,\n    protectedExistingPackageNames: injection.existingComboCardNames,\n    selections,\n    reason: selected.bracketTag === 'R'\n"""
-          if 'protectedExistingPackageNames: injection.existingComboCardNames' not in text:
-              if old_success not in text: raise SystemExit('successful package priority return anchor not found')
-              text = text.replace(old_success, new_success, 1)
-
-          old_cut = """  const suggestions = await suggestDeckUpgrades(parsed, cards, allowedIdentity, options);\n  const groups = (suggestions.candidateAddsByDeficit ?? []) as Array<Record<string, unknown>>;\n  const cutPool = ((suggestions.candidateCuts ?? []) as Array<Record<string, unknown>>)\n    .filter((cut) => {\n      const card = cut.card as Record<string, unknown> | undefined;\n      return typeof card?.name !== 'string' || !protectedNames.has(card.name.toLocaleLowerCase());\n    });\n  const targetPressure = commanderTargetPressureV15(options.targetBracket);\n  const winPackagePriority = await buildWinPackagePriorityV15(parsed, cards, options);\n  const swapCapacity = Math.min(maxSwaps, cutPool.length);\n"""
-          new_cut = """  const suggestions = await suggestDeckUpgrades(parsed, cards, allowedIdentity, options);\n  const groups = (suggestions.candidateAddsByDeficit ?? []) as Array<Record<string, unknown>>;\n  const targetPressure = commanderTargetPressureV15(options.targetBracket);\n  const winPackagePriority = await buildWinPackagePriorityV15(parsed, cards, options);\n  const packageProtectedNames = new Set(\n    (winPackagePriority.protectedExistingPackageNames ?? []).map((name) => name.toLocaleLowerCase()),\n  );\n  const cutPool = ((suggestions.candidateCuts ?? []) as Array<Record<string, unknown>>)\n    .filter((cut) => {\n      const card = cut.card as Record<string, unknown> | undefined;\n      if (typeof card?.name !== 'string') return true;\n      const name = card.name.toLocaleLowerCase();\n      return !protectedNames.has(name) && !packageProtectedNames.has(name);\n    });\n  const swapCapacity = Math.min(maxSwaps, cutPool.length);\n"""
-          if 'const packageProtectedNames = new Set(' not in text:
-              if old_cut not in text: raise SystemExit('cut pool ordering anchor not found')
-              text = text.replace(old_cut, new_cut, 1)
-
-          old_pressure = """      selectedBracketTag: winPackagePriority.selectedBracketTag,\n      missingSeedNames: winPackagePriority.missingSeedNames,\n      atomicWinPackageInjected: atomicWinPackageFits,\n"""
-          new_pressure = """      selectedBracketTag: winPackagePriority.selectedBracketTag,\n      missingSeedNames: winPackagePriority.missingSeedNames,\n      protectedExistingPackageNames: winPackagePriority.protectedExistingPackageNames ?? [],\n      atomicWinPackageInjected: atomicWinPackageFits,\n"""
-          if 'protectedExistingPackageNames: winPackagePriority.protectedExistingPackageNames ?? []' not in text:
-              if old_pressure not in text: raise SystemExit('target pressure provenance anchor not found')
-              text = text.replace(old_pressure, new_pressure, 1)
-
-          old_caveat = "'IN/OUT pairing now minimizes damage to the existing structural role targets before using cut pressure as a tie-breaker; Bracket-5 free interaction is treated as its own existing target pressure, and an already-verified missing win package is injected atomically when one survives the current hard constraints.',"
-          new_caveat = "'IN/OUT pairing minimizes damage to existing structural role targets before cut pressure tie-breaks; Bracket-5 verified packages are selected only when their missing seeds fit the current swap package, and any already-present pieces of that selected route are temporarily protected from cuts during atomic injection.',"
-          if old_caveat in text:
-              text = text.replace(old_caveat, new_caveat, 1)
-
-          p.write_text(text)
-          PY
-
-      - name: Type-check and build candidate source
+      - name: Type-check and build checked-in source
         run: npm run build
 
       - name: Run autonomous and win-package regressions
         run: npx tsx --test src/services/commander-target-pressure-v15.test.ts src/services/target-gate-improvement-v15.test.ts src/services/deck-builder-win-package-ceiling-v15.test.ts src/services/win-package-pagination-v15.test.ts src/services/win-package-restricted-pool-v15.test.ts src/services/general-win-package-v15.test.ts src/services/full-table-win-closure-v15.test.ts
-
-      - name: Persist swap-feasible package injection when newly integrated
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- src/services/deck-builder-v07.ts
-          if ! git diff --cached --quiet; then
-            git commit -m "fix(v15): make win-package injection swap-feasible"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
-          fi
 
       - name: Refine selected Marvel-only Bracket 5 attempt
         id: refine_control
