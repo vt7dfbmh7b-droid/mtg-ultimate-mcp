@@ -117,6 +117,29 @@ async function verifyMarvelDeck(decklist: string): Promise<{
   };
 }
 
+function incompleteBuildDiagnostics(result: Record<string, unknown>): Record<string, unknown> {
+  const built = record(result.built);
+  const evaluation = record(result.evaluation);
+  const parsed = record(evaluation.parsed);
+  const commanderRules = record(evaluation.commanderRules);
+  const budget = record(evaluation.perCardBudgetAudit);
+  return {
+    pipelineStatus: result.status ?? null,
+    builtStatus: built.status ?? null,
+    builtCardCount: record(built.parsed).totalCards ?? null,
+    builtPrintingPolicySatisfied: built.printingPolicySatisfied ?? null,
+    evaluationHardGatesPassed: evaluation.hardGatesPassed ?? null,
+    evaluationCardCount: parsed.totalCards ?? null,
+    commanderLegal: commanderRules.isLegal ?? null,
+    commanderRuleErrors: commanderRules.errors ?? [],
+    unresolvedCards: evaluation.unresolvedCards ?? [],
+    printingPolicySatisfied: evaluation.printingPolicySatisfied ?? null,
+    offPolicyCards: evaluation.offPolicyCards ?? [],
+    perCardBudgetSatisfied: budget.satisfied ?? null,
+    guidance: result.guidance ?? null,
+  };
+}
+
 interface CandidateResult {
   candidate: NeutralCommanderCandidateV15;
   commanderRefs: Array<{ name: string; set: string; collectorNumber: string }>;
@@ -199,12 +222,13 @@ async function main(): Promise<void> {
         assert.ok(text, `${candidate.label} MCP call must return JSON text`);
         const result = JSON.parse(text) as Record<string, unknown>;
         if (result.status !== 'complete-evaluated-build') {
+          const diagnostics = incompleteBuildDiagnostics(result);
           failures.push({
             candidate: candidate.label,
             status: String(result.status ?? 'unknown'),
-            error: String(result.guidance ?? 'pipeline did not return a complete evaluated build'),
+            error: JSON.stringify(diagnostics),
           });
-          console.log(`INCOMPLETE ${candidate.label}: status=${String(result.status)} guidance=${String(result.guidance ?? '')}`);
+          console.log(`INCOMPLETE ${candidate.label}: ${JSON.stringify(diagnostics, null, 2)}`);
           continue;
         }
 
