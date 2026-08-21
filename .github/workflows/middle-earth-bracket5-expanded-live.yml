@@ -108,19 +108,7 @@ jobs:
           test "$TEST_OUTCOME" = "success"
           test "$PROOF_OUTCOME" = "success"
 
-      - name: Use permanent Middle-earth family policy and four-card package maximum
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p=Path('scripts/e2e-middle-earth-bracket5-expanded-v15.ts')
-          t=p.read_text()
-          t=t.replace("resolvePrintingPolicyV08({ allowedSets: [...SETS], includePromos: true, includeSpecialReleases: true })", "resolvePrintingPolicyV08({ printingFamily: 'Middle-earth', includePromos: true, includeSpecialReleases: true })")
-          t=t.replace('allowedSets: [...SETS],', "printingFamily: 'Middle-earth',")
-          t=t.replace('maxWinPackageCards: 3,','maxWinPackageCards: 4,')
-          p.write_text(t)
-          PY
-
-      - name: Run expanded Middle-earth full-family control
+      - name: Run expanded Middle-earth permanent-family control
         id: live_control
         continue-on-error: true
         run: npx tsx scripts/e2e-middle-earth-bracket5-expanded-v15.ts
@@ -155,5 +143,3 @@ jobs:
         env:
           CONTROL_OUTCOME: ${{ steps.live_control.outcome }}
         run: test "$CONTROL_OUTCOME" = "success"
-
-# Blocker validation retrigger after legacy fixture compatibility fixes.
