@@ -56,3 +56,4 @@ async function main() {
   console.log(JSON.stringify({ marvelSets:marvelSetCodes.length, marvelSpecials:marvelSpecials.length, middleEarthSets:middleEarthSetCodes.length, middleEarthSpecials:middleEarthSpecials.length },null,2));
 }
 main().catch(async (e)=>{ const m=e instanceof Error?`${e.name}: ${e.message}\n${e.stack??''}`:String(e); await writeFile('themed-special-printing-audit-failure.txt',m+'\n').catch(()=>{}); console.error(m); process.exitCode=1; });
+// retrigger: exact official themed SLD audit
