@@ -1,0 +1,5 @@
+SdkError: Request timed out
+SdkError: Request timed out
+    at Timeout.timeoutHandler (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/node_modules/@modelcontextprotocol/core-internal/src/shared/protocol.ts:1555:49)
+    at listOnTimeout (node:internal/timers:585:17)
+    at process.processTimers (node:internal/timers:521:7)
