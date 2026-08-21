@@ -5,6 +5,8 @@ on:
     paths:
       - "scripts/apply-themed-special-presets-from-audit.py"
       - ".github/workflows/marvel-middle-earth-full-family-bracket5.yml"
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: write
@@ -37,10 +39,8 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           p = Path('scripts/e2e-marvel-bracket5-v15.ts')
-          t = p.read_text()
-          t = t.replace('maxWinPackageCards: 3,', 'maxWinPackageCards: 4,')
+          t = p.read_text().replace('maxWinPackageCards: 3,', 'maxWinPackageCards: 4,')
           p.write_text(t)
-
           p = Path('scripts/e2e-middle-earth-bracket5-expanded-v15.ts')
           t = p.read_text()
           t = t.replace("resolvePrintingPolicyV08({ allowedSets: [...SETS], includePromos: true, includeSpecialReleases: true })", "resolvePrintingPolicyV08({ printingFamily: 'Middle-earth', includePromos: true, includeSpecialReleases: true })")
@@ -69,7 +69,7 @@ jobs:
         continue-on-error: true
         run: npx tsx scripts/e2e-middle-earth-bracket5-expanded-v15.ts
       - name: Persist full-family results
-        if: always()
+        if: always() && github.event_name == 'push'
         env:
           MARVEL_BUILD: ${{ steps.marvel_build.outcome }}
           MARVEL_REFINE: ${{ steps.marvel_refine.outcome }}
