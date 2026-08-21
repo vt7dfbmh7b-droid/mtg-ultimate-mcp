@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T22:10:11+12:00",
+  "updatedAt": "2026-08-21T22:14:00+12:00",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
-  "northStar": "Build the best evidence-backed autonomous Commander deck-building intelligence we can, then prove it deserves to be trusted.",
+  "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
   "stable": {
     "branch": "main",
     "version": "0.13.0",
@@ -106,6 +106,7 @@
       "validation-index.json",
       "docs/VALIDATION-STATE.md",
       "ULTIMATE_MTG_SPEC.md",
+      "docs/COMMANDER-SPECIALIST-OBJECTIVE.md",
       "docs/ROADMAP.md",
       "docs/DECISIONS.md",
       "docs/VALIDATION-MATRIX.md",

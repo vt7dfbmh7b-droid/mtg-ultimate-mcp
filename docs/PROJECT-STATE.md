@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-08-21T22:10:11+12:00**.
+Generated from `project-state.json`. Last state update: **2026-08-21T22:14:00+12:00**.
 
 ## Current mode
 
@@ -86,9 +86,10 @@ Read in this order:
 3. `validation-index.json`
 4. `docs/VALIDATION-STATE.md`
 5. `ULTIMATE_MTG_SPEC.md`
-6. `docs/ROADMAP.md`
-7. `docs/DECISIONS.md`
-8. `docs/VALIDATION-MATRIX.md`
-9. `docs/KNOWN-FAILURES.md`
+6. `docs/COMMANDER-SPECIALIST-OBJECTIVE.md`
+7. `docs/ROADMAP.md`
+8. `docs/DECISIONS.md`
+9. `docs/VALIDATION-MATRIX.md`
+10. `docs/KNOWN-FAILURES.md`
 
 Then: Inspect the live active-branch head and PR state. Use the validation index to decide which persisted controls are current or stale, then continue only from the active milestone and nextActions.
