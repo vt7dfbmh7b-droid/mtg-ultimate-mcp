@@ -11,7 +11,10 @@ export interface TargetGateImprovementV15 {
   applicable: boolean;
   targetBracket: number;
   score: number;
+  thresholdScore: number;
+  progressScore: number;
   repairedGates: string[];
+  advancedFailedGates: string[];
   regressedGates: string[];
   passingBefore: string[];
   passingAfter: string[];
@@ -76,11 +79,40 @@ function constructionState(
   );
 }
 
+function failedGateProgress(beforeValue: unknown, afterValue: unknown, key: string): number {
+  const before = record(beforeValue);
+  const after = record(afterValue);
+  if (key === 'average-nonland-mv') return Math.max(0, Math.min(3, (finite(before.averageNonlandManaValue) - finite(after.averageNonlandManaValue)) * 20));
+  if (key === 'early-plays') return Math.max(0, Math.min(3, (finite(after.earlyPlayCount) - finite(before.earlyPlayCount)) * 0.5));
+  if (key === 'fast-mana') return Math.max(0, Math.min(4, (finite(after.fastManaCount) - finite(before.fastManaCount)) * 2));
+  if (key === 'free-interaction') return Math.max(0, Math.min(4, (roleCount(after, 'free interaction') - roleCount(before, 'free interaction')) * 3));
+  if (key === 'cheap-interaction') return Math.max(0, Math.min(3, (finite(after.cheapInteractionCount) - finite(before.cheapInteractionCount)) * 0.5));
+  if (key === 'tutors') return Math.max(0, Math.min(3, (finite(after.tutorCount) - finite(before.tutorCount)) * 0.5));
+  return 0;
+}
+
+function emptyResult(targetBracket: number, rationale: string): TargetGateImprovementV15 {
+  return {
+    applicable: false,
+    targetBracket,
+    score: 0,
+    thresholdScore: 0,
+    progressScore: 0,
+    repairedGates: [],
+    advancedFailedGates: [],
+    regressedGates: [],
+    passingBefore: [],
+    passingAfter: [],
+    ignoredUnverifiedGates: [],
+    rationale,
+  };
+}
+
 /**
  * Compare a proposed autonomous refinement against the same Bracket-5 construction gates used by
- * final V0.15 assessment. This deliberately does not invent evidence: route-dependent gates are
- * omitted when route verification is unavailable, and a competitive signal is only counted when
- * it is positively known.
+ * final V0.15 assessment. Threshold repairs dominate. Smaller progress credit is only available
+ * when a gate is currently failing, so an aspirational role target cannot reward adding tutor #9
+ * when the real Bracket-5 tutor gate already passed at four.
  */
 export function assessTargetGateImprovementV15(input: {
   targetBracket?: number | null;
@@ -91,17 +123,7 @@ export function assessTargetGateImprovementV15(input: {
 }): TargetGateImprovementV15 {
   const targetBracket = Math.max(1, Math.min(5, Math.trunc(input.targetBracket ?? 4)));
   if (targetBracket < 5) {
-    return {
-      applicable: false,
-      targetBracket,
-      score: 0,
-      repairedGates: [],
-      regressedGates: [],
-      passingBefore: [],
-      passingAfter: [],
-      ignoredUnverifiedGates: [],
-      rationale: 'Target-gate prioritisation is inactive below Bracket 5; ordinary strategy and simulation scoring remains authoritative.',
-    };
+    return emptyResult(targetBracket, 'Target-gate prioritisation is inactive below Bracket 5; ordinary strategy and simulation scoring remains authoritative.');
   }
 
   const before = constructionState(input.beforeMetrics, input.beforeRoute);
@@ -111,10 +133,12 @@ export function assessTargetGateImprovementV15(input: {
   if (input.beforeRoute.competitiveComboSignal === null || input.afterRoute.competitiveComboSignal === null) ignored.add('competitive-combo-signal');
 
   const repairedGates: string[] = [];
+  const advancedFailedGates: string[] = [];
   const regressedGates: string[] = [];
   const passingBefore: string[] = [];
   const passingAfter: string[] = [];
-  let score = 0;
+  let thresholdScore = 0;
+  let progressScore = 0;
 
   for (const [key, weight] of Object.entries(CONSTRUCTION_WEIGHTS)) {
     if (ignored.has(key)) continue;
@@ -124,23 +148,34 @@ export function assessTargetGateImprovementV15(input: {
     if (isPassing) passingAfter.push(key);
     if (!wasPassing && isPassing) {
       repairedGates.push(key);
-      score += weight;
+      thresholdScore += weight;
     } else if (wasPassing && !isPassing) {
       regressedGates.push(key);
-      score -= weight * 2;
+      thresholdScore -= weight * 2;
+    } else if (!wasPassing && !isPassing) {
+      const progress = failedGateProgress(input.beforeMetrics, input.afterMetrics, key);
+      if (progress > 0) {
+        advancedFailedGates.push(key);
+        progressScore += progress;
+      }
     }
   }
 
   repairedGates.sort();
+  advancedFailedGates.sort();
   regressedGates.sort();
   passingBefore.sort();
   passingAfter.sort();
   const ignoredUnverifiedGates = [...ignored].sort();
+  const score = Number((thresholdScore + progressScore).toFixed(3));
   return {
     applicable: true,
     targetBracket,
     score,
+    thresholdScore,
+    progressScore: Number(progressScore.toFixed(3)),
     repairedGates,
+    advancedFailedGates,
     regressedGates,
     passingBefore,
     passingAfter,
@@ -149,7 +184,9 @@ export function assessTargetGateImprovementV15(input: {
       ? `The candidate regresses ${regressedGates.length} Bracket-5 construction gate(s) that were already passing.`
       : repairedGates.length > 0
         ? `The candidate repairs ${repairedGates.length} currently failed Bracket-5 construction gate(s).`
-        : 'The candidate does not cross an authoritative Bracket-5 construction threshold; generic simulation/strategy scoring decides among such candidates.',
+        : advancedFailedGates.length > 0
+          ? `The candidate makes measurable progress toward ${advancedFailedGates.length} currently failed Bracket-5 construction gate(s).`
+          : 'The candidate does not repair or advance an authoritative failed Bracket-5 construction gate; generic simulation/strategy scoring is only a tie-breaker.',
   };
 }
 
@@ -164,20 +201,11 @@ export function assessPlanTargetGateImprovementV15(input: {
   plan: Record<string, unknown>;
   beforeWinRouteStatus: 'protected' | 'no-verified-route' | 'verification-unavailable';
 }): TargetGateImprovementV15 {
+  const targetBracket = Math.max(1, Math.min(5, Math.trunc(input.targetBracket ?? 4)));
   const beforeMetrics = record(input.plan.beforeMetrics);
   const afterMetrics = record(input.plan.afterMetrics);
   if (Object.keys(beforeMetrics).length === 0 || Object.keys(afterMetrics).length === 0) {
-    return {
-      applicable: false,
-      targetBracket: Math.max(1, Math.min(5, Math.trunc(input.targetBracket ?? 4))),
-      score: 0,
-      repairedGates: [],
-      regressedGates: [],
-      passingBefore: [],
-      passingAfter: [],
-      ignoredUnverifiedGates: [],
-      rationale: 'Target-gate comparison is unavailable because the candidate plan did not retain complete before/after deck metrics.',
-    };
+    return emptyResult(targetBracket, 'Target-gate comparison is unavailable because the candidate plan did not retain complete before/after deck metrics.');
   }
 
   const pressure = record(input.plan.v15TargetPressure);
@@ -195,7 +223,7 @@ export function assessPlanTargetGateImprovementV15(input: {
     : beforeRoute;
 
   return assessTargetGateImprovementV15({
-    targetBracket: input.targetBracket,
+    targetBracket,
     beforeMetrics,
     afterMetrics,
     beforeRoute,
