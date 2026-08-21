@@ -12,7 +12,7 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 
 ## Current mode
 
-- Active milestone: **PM-01 — Persistent Project State & Handoff Automation**
+- Active milestone: **PM-02 — Validation State Indexing**
 - Intelligence development paused: **yes**
 - Experimental branch: `agent/v15-native-deck-intelligence`
 - Development checkpoint at pause: `303a474e4a1ec8cb80c9dc5babaafe42c1828472`
@@ -34,11 +34,11 @@ The last persisted Marvel control is `a4a1450d34c337c97b76fbbec688dbcf0ac7388e` 
 
 ## Next actions
 
-1. Complete PM-01 authoritative project-state files and generated handoff tooling.
-2. Add project-state validation to CI so stale handoffs fail fast.
-3. Record permanent architecture decisions and known failure regressions.
-4. Build a validation matrix mapping every control to the claim it proves.
-5. After PM-01 is validated, resume INTEL-01/INTEL-02 from the pause checkpoint and run the fresh Marvel control before further feature work.
+1. Finish PM-02 validation-registry/index tooling and strict integrity checks.
+2. Validate PM-02 on checked-in source and persist the exact tested SHA/outcomes.
+3. Expand the validation registry only with high-value controls needed for current milestone recovery; do not turn it into noisy workflow inventory.
+4. Run a fresh-chat recovery smoke using only project state, validation index, live branch/PR state and referenced decision/failure docs.
+5. After PM-02 is validated, resume INTEL-01/INTEL-02 from the deck-intelligence pause checkpoint and run the fresh Marvel control before further feature work.
 
 ## Permanent recovery references
 
