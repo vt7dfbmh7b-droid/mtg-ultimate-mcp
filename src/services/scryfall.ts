@@ -137,17 +137,39 @@ export function getCardManaCost(card: ScryfallCard): string {
     .join(' // ');
 }
 
+function landProducesExtraMana(text: string): boolean {
+  return /\badd \{[^}]+\}\{[^}]+\}/.test(text)
+    || /\badd (?:two|three|four|five|six|seven|eight|nine|ten)(?:\s+mana|\s+\{)/.test(text)
+    || /\badd [^.]*\bfor each\b/.test(text)
+    || /\badd an amount of mana [^.]*\bequal to\b/.test(text)
+    || /\badd [^.]*\bequal to\b/.test(text);
+}
+
+function basicLandRampOnlySearch(text: string): boolean {
+  const fragments = [...text.matchAll(/search your library for ([^.]+)/g)]
+    .map((match) => match[1]?.trim() ?? '')
+    .filter(Boolean);
+  if (fragments.length === 0) return false;
+  return fragments.every((fragment) => {
+    if (/\b(?:creature|artifact|enchantment|instant|sorcery|planeswalker|battle) cards?\b/.test(fragment)) return false;
+    if (/\ba cards?\b/.test(fragment) && !/\b(?:basic )?land cards?\b/.test(fragment)) return false;
+    return /\bbasic land cards?\b/.test(fragment)
+      || /\b(?:plains|island|swamp|mountain|forest)(?:\s*,|\s+or|\s+and|\s+cards?\b)/.test(fragment);
+  });
+}
+
 export function inferCardRoles(card: ScryfallCard): string[] {
   const text = getCardOracleText(card).toLowerCase();
   const type = card.type_line.toLowerCase();
   const manaCost = getCardManaCost(card);
   const roles = new Set<string>();
+  const isLand = type.includes('land');
 
   const addsMana = /\badd (?:\{|one mana|two mana|three mana|four mana|five mana|mana)/.test(text);
-  if (addsMana) roles.add('mana acceleration');
+  if (addsMana && (!isLand || landProducesExtraMana(text))) roles.add('mana acceleration');
   if (type.includes('artifact') && addsMana && !type.includes('creature')) roles.add('mana rock');
   if (type.includes('creature') && /\{t\}:\s*add|whenever .* add .* mana/.test(text)) roles.add('mana dork');
-  if (card.cmc <= 1 && addsMana && !type.includes('land')) roles.add('fast mana');
+  if (card.cmc <= 1 && addsMana && !isLand) roles.add('fast mana');
   if (/search your library for .*land/.test(text) && /battlefield/.test(text)) roles.add('land ramp');
   if (/costs? .* less to cast/.test(text)) roles.add('cost reduction');
   if (/create .* treasure token/.test(text)) roles.add('treasure');
@@ -157,7 +179,8 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (/scry|surveil|look at the top .* cards|exile the top .* you may play/.test(text)) roles.add('card selection');
   if (/discard your hand.*draw|each player discards .* hand.*draw/.test(text)) roles.add('wheel');
 
-  if (/search your library for/.test(text)) roles.add('tutor');
+  const searchesLibrary = /search your library for/.test(text);
+  if (searchesLibrary && !basicLandRampOnlySearch(text)) roles.add('tutor');
   if (/search your library for .*creature/.test(text)) roles.add('creature tutor');
   if (/search your library for .*land/.test(text)) roles.add('land tutor');
 
@@ -185,7 +208,7 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (/copy target .* spell|copy .* triggered ability|copy .* activated ability/.test(text)) roles.add('copy effect');
   if (/untap target|untap all|untap another/.test(text)) roles.add('untap engine');
   if (/whenever .* enters|enters the battlefield/.test(text)) roles.add('etb synergy');
-  if (type.includes('land')) roles.add('land');
+  if (isLand) roles.add('land');
   if (type.includes('creature')) roles.add('creature');
 
   return [...roles];
