@@ -9,6 +9,10 @@ on:
       - "src/services/printing-policy-v08.ts"
       - "src/services/printing-policy-v08.test.ts"
       - "src/services/printing-family-specials-v08.ts"
+      - "src/services/scryfall.ts"
+      - "src/services/card-role-truth-v15.test.ts"
+      - "src/services/upgrade.ts"
+      - "src/services/upgrade-restricted-pool-v15.test.ts"
       - ".github/workflows/marvel-bracket5-live.yml"
   pull_request:
     branches: [main]
@@ -18,6 +22,10 @@ on:
       - "src/services/printing-policy-v08.ts"
       - "src/services/printing-policy-v08.test.ts"
       - "src/services/printing-family-specials-v08.ts"
+      - "src/services/scryfall.ts"
+      - "src/services/card-role-truth-v15.test.ts"
+      - "src/services/upgrade.ts"
+      - "src/services/upgrade-restricted-pool-v15.test.ts"
       - ".github/workflows/marvel-bracket5-live.yml"
   workflow_dispatch:
 
