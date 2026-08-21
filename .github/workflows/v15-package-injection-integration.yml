@@ -30,6 +30,7 @@ jobs:
 
       - name: Patch builder to use injectable package selection
         id: patch
+        continue-on-error: true
         shell: bash
         run: |
           python3 - <<'PY'
@@ -65,8 +66,8 @@ jobs:
               if old_cut not in text: raise SystemExit('cut pool anchor missing')
               text = text.replace(old_cut, new_cut, 1)
 
-          old_pressure = "    missingSeedNames: winPackagePriority.missingSeedNames,\n      atomicWinPackageInjected: atomicWinPackageFits,\n"
-          new_pressure = "    missingSeedNames: winPackagePriority.missingSeedNames,\n      protectedExistingPackageNames: winPackagePriority.protectedExistingPackageNames ?? [],\n      atomicWinPackageInjected: atomicWinPackageFits,\n"
+          old_pressure = "      missingSeedNames: winPackagePriority.missingSeedNames,\n      atomicWinPackageInjected: atomicWinPackageFits,\n"
+          new_pressure = "      missingSeedNames: winPackagePriority.missingSeedNames,\n      protectedExistingPackageNames: winPackagePriority.protectedExistingPackageNames ?? [],\n      atomicWinPackageInjected: atomicWinPackageFits,\n"
           if 'protectedExistingPackageNames: winPackagePriority.protectedExistingPackageNames ?? []' not in text:
               if old_pressure not in text: raise SystemExit('provenance anchor missing')
               text = text.replace(old_pressure, new_pressure, 1)
@@ -76,16 +77,18 @@ jobs:
 
       - name: Build
         id: build
+        if: steps.patch.outcome == 'success'
         continue-on-error: true
         run: npm run build
 
       - name: Regression tests
         id: tests
+        if: steps.patch.outcome == 'success' && steps.build.outcome == 'success'
         continue-on-error: true
         run: npx tsx --test src/services/commander-target-pressure-v15.test.ts src/services/target-gate-improvement-v15.test.ts src/services/deck-builder-win-package-ceiling-v15.test.ts src/services/general-win-package-v15.test.ts src/services/full-table-win-closure-v15.test.ts src/services/win-package-pagination-v15.test.ts src/services/win-package-restricted-pool-v15.test.ts
 
       - name: Commit validated builder integration
-        if: steps.build.outcome == 'success' && steps.tests.outcome == 'success'
+        if: steps.patch.outcome == 'success' && steps.build.outcome == 'success' && steps.tests.outcome == 'success'
         shell: bash
         run: |
           set -euo pipefail
@@ -98,13 +101,14 @@ jobs:
           fi
 
       - name: Persist integration diagnostics on failure
-        if: steps.build.outcome != 'success' || steps.tests.outcome != 'success'
+        if: always() && (steps.patch.outcome != 'success' || steps.build.outcome == 'failure' || steps.tests.outcome == 'failure')
         env:
+          PATCH_OUTCOME: ${{ steps.patch.outcome }}
           BUILD_OUTCOME: ${{ steps.build.outcome }}
           TEST_OUTCOME: ${{ steps.tests.outcome }}
         run: |
           mkdir -p test-results/marvel-bracket5
-          printf 'source_sha=%s\nbuild_outcome=%s\ntest_outcome=%s\n' "$GITHUB_SHA" "$BUILD_OUTCOME" "$TEST_OUTCOME" > test-results/marvel-bracket5/package-injection-integration.txt
+          printf 'source_sha=%s\npatch_outcome=%s\nbuild_outcome=%s\ntest_outcome=%s\n' "$GITHUB_SHA" "$PATCH_OUTCOME" "$BUILD_OUTCOME" "$TEST_OUTCOME" > test-results/marvel-bracket5/package-injection-integration.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- test-results/marvel-bracket5/package-injection-integration.txt
