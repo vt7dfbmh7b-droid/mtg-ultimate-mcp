@@ -105,3 +105,13 @@ Ultimate MTG should aim to outperform general-purpose AI specifically at Command
 Status: accepted.
 
 The project-management layer must be machine-checkable: structured state, generated recovery documents, milestone IDs, durable decisions, validation mapping and known-failure regressions. New chats should resume from repo state, not rebuild it manually.
+
+## D-018 — Strategic understanding plus machine verification is the superiority target
+
+Status: accepted.
+
+The intended advantage is not simply knowing more card names or producing a higher optimizer score. Ultimate MTG should combine the strategic understanding of a strong human Commander deck builder with machine-level consistency: whole-deck reasoning, commander and archetype understanding, structural-card and cut-consequence analysis, multiple real win routes, exact legality/printing/budget truth, probability, simulation, exhaustive candidate search and counterfactual comparison.
+
+A claim that Ultimate MTG is better than general-purpose AI must be earned through comparative adversarial benchmarks using the same Commander problem, constraints and evidence. Single metrics, feature count, pipeline success or one favorable control are insufficient. If a strong general-purpose AI or knowledgeable Commander specialist can reliably make a better legal whole-deck decision from the same evidence, the product objective has not yet been met.
+
+The detailed standing objective and proof standard live in `docs/COMMANDER-SPECIALIST-OBJECTIVE.md` and should be read during fresh-session recovery.
