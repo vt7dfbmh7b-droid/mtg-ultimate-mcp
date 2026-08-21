@@ -8,13 +8,15 @@ When recovering the project, use this order:
 
 1. `project-state.json` — machine-readable current-state authority.
 2. `docs/PROJECT-STATE.md` — generated human snapshot.
-3. live GitHub branch/PR/workflow state — confirms anything that may have changed after the snapshot.
-4. `ULTIMATE_MTG_SPEC.md` — north-star system principles.
-5. `docs/ROADMAP.md` — milestone sequence and exit criteria.
-6. `docs/DECISIONS.md` — permanent architecture decisions.
-7. `docs/VALIDATION-MATRIX.md` — what each control actually proves.
-8. `docs/KNOWN-FAILURES.md` — failure modes that must remain prevented.
-9. historical implementation docs and chat history — supporting context only.
+3. `validation-index.json` — consolidated machine-readable status of registered high-value controls.
+4. `docs/VALIDATION-STATE.md` — generated human validation snapshot.
+5. live GitHub branch/PR/workflow state — confirms anything that may have changed after the snapshots.
+6. `ULTIMATE_MTG_SPEC.md` — north-star system principles.
+7. `docs/ROADMAP.md` — milestone sequence and exit criteria.
+8. `docs/DECISIONS.md` — permanent architecture decisions.
+9. `docs/VALIDATION-MATRIX.md` — what each control actually proves.
+10. `docs/KNOWN-FAILURES.md` — failure modes that must remain prevented.
+11. historical implementation docs and chat history — supporting context only.
 
 `PROJECT_HANDOFF.md` remains the compatibility entry point but is generated from project state. It should never become an independently maintained second truth source again.
 
@@ -23,10 +25,11 @@ When recovering the project, use this order:
 A new development chat should perform only this recovery work before editing:
 
 1. read `project-state.json` and `docs/PROJECT-STATE.md`;
-2. inspect the live head of `experimental.activeBranch` and its active PR;
-3. check only validation artifacts relevant to the active milestone;
-4. read any `D-*` decisions and `KF-*` failures referenced by that milestone;
-5. continue from `nextActions`.
+2. read `validation-index.json` / `docs/VALIDATION-STATE.md` to identify current, stale, passing and failing registered evidence;
+3. inspect the live head of `experimental.activeBranch` and its active PR;
+4. inspect individual validation artifacts only when the index says they are relevant, ambiguous or stale;
+5. read any `D-*` decisions and `KF-*` failures referenced by the active milestone;
+6. continue from `nextActions`.
 
 Do not re-audit the whole repository unless state integrity fails or a next action explicitly requires it.
 
@@ -37,7 +40,7 @@ Work is grouped into stable IDs (`PM-*`, `INTEL-*`, `BENCH-*`).
 Every substantial commit should ideally mention the active milestone, for example:
 - `feat(INTEL-03): add structural-card dependency graph`
 - `test(BENCH-01): add aristocrats cut-quality adversary`
-- `chore(PM-01): sync generated project handoff`
+- `chore(PM-02): sync validation index`
 
 A milestone can be:
 - `planned`;
@@ -58,7 +61,7 @@ A **development checkpoint** says where work paused or where the current impleme
 
 A **validated milestone SHA** says a specific source revision passed a defined validation matrix.
 
-Documentation-only commits after a validated source do not create a new executable validation claim.
+Documentation-only or project-management commits after a validated deck-intelligence source do not create a new executable deck-intelligence validation claim.
 
 ## State update rule
 
@@ -73,6 +76,31 @@ Update `project-state.json` when any of these materially changes:
 - a significant known failure or architectural decision.
 
 After changing machine state, run the generator and commit the generated `docs/PROJECT-STATE.md` and `PROJECT_HANDOFF.md` in the same logical change.
+
+Because the validation index records the project-state update timestamp/checkpoint, rebuild `validation-index.json` and `docs/VALIDATION-STATE.md` after a material project-state change.
+
+## Validation registry/index rule
+
+`validation-registry.json` contains only high-value controls needed to recover current milestone truth. It is not intended to list every GitHub workflow.
+
+Each registered control must declare:
+- stable control ID;
+- claim level;
+- milestone relevance;
+- persisted metadata path;
+- candidate source-SHA keys;
+- explicit pass conditions.
+
+`validation-index.json` is generated deterministically from:
+- `validation-registry.json`;
+- persisted `test-results/**` metadata;
+- `project-state.json`.
+
+It records whether the control metadata exists, pass/fail/unknown status, exact tested source SHA where available, and whether that SHA matches the current development checkpoint.
+
+A pass from another SHA is historical evidence, not proof of the current checkpoint.
+
+A workflow that changes registered persisted metadata must regenerate the validation index in the same logical result commit so successful validation cannot make the index stale.
 
 ## Validation result rule
 
@@ -123,3 +151,16 @@ PM-01 is complete when a fresh chat can receive only `Continue Ultimate MTG`, re
 - unresolved validation/blockers;
 - next actions;
 without reconstructing previous chats.
+
+PM-01 passed its self-reporting integrity control at source `73366cf57c055fc0ae7831209ad155b360bf036f`.
+
+## PM-02 exit test
+
+PM-02 is complete when the same fresh-chat recovery can also identify, without browsing individual result folders:
+- which registered controls pass/fail/are unknown;
+- exact tested source SHA for each available result;
+- whether each result matches the current development checkpoint;
+- which evidence is only historical/stale;
+- which scenario-intelligence result blocks the next milestone.
+
+The validation index and its generated human snapshot must be strict-CI checked and self-consistent after self-reporting workflow updates.
