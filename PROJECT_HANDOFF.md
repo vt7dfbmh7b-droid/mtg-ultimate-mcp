@@ -6,9 +6,10 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 ## Resume in under five minutes
 
 1. Read `project-state.json` and `docs/PROJECT-STATE.md`.
-2. Inspect live head of `agent/v15-native-deck-intelligence` and PR #29.
-3. Read `ULTIMATE_MTG_SPEC.md`, then only the decision/failure/validation docs relevant to the active milestone.
-4. Continue from the Next actions below. Do not reconstruct old chats unless state integrity fails.
+2. Read `validation-index.json` and `docs/VALIDATION-STATE.md` to identify current versus stale registered evidence.
+3. Inspect live head of `agent/v15-native-deck-intelligence` and PR #29.
+4. Read `ULTIMATE_MTG_SPEC.md`, then only the decision/failure/validation docs relevant to the active milestone.
+5. Continue from the Next actions below. Do not reconstruct old chats unless state integrity fails.
 
 ## Current mode
 
@@ -42,6 +43,7 @@ The last persisted Marvel control is `a4a1450d34c337c97b76fbbec688dbcf0ac7388e` 
 
 ## Permanent recovery references
 
+- `validation-index.json` / `docs/VALIDATION-STATE.md` — consolidated registered validation status.
 - `ULTIMATE_MTG_SPEC.md` — north-star behavior.
 - `docs/ROADMAP.md` — milestone plan.
 - `docs/DECISIONS.md` — durable architectural decisions.
