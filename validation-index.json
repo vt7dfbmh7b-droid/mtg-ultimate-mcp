@@ -14,7 +14,7 @@
       "metadataPath": "test-results/project-management/integrity.txt",
       "exists": true,
       "sourceSha": "8a98dcc40b7750fe85d5f6ff6520d1f4b427497a",
-      "outcome": "pass",
+      "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
         "source_sha": "8a98dcc40b7750fe85d5f6ff6520d1f4b427497a",
@@ -24,7 +24,9 @@
         "validation_index_outcome": "success",
         "source_build_outcome": "success"
       },
-      "unmetPassConditions": []
+      "unmetPassConditions": [
+        "recovery_smoke_outcome=success"
+      ]
     },
     {
       "id": "MARVEL-B5-REFINE",
