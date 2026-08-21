@@ -1,4 +1,5 @@
 import type { ScryfallCard } from '../types/scryfall.js';
+import { assessFullTableWinClosureV15, isStrictFullTableWinResultV15 } from './full-table-win-closure-v15.js';
 import {
   describePrintingPolicyV08,
   resolvePrintingPolicyV08,
@@ -13,7 +14,6 @@ import { prefilterRestrictedWinPackageCandidatesV15 } from './win-package-restri
 import {
   assessWinResultClosureV15,
   buildWinPackagePortfolioV15,
-  isStrictDeterministicWinResultV15,
   type WinClosureKindV15,
   type WinPackagePortfolioV15,
 } from './win-package-verification-v15.js';
@@ -104,7 +104,7 @@ function parseCandidate(
   const results = Array.isArray(variant.results) ? variant.results.map(String) : [];
   const requirements = Array.isArray(variant.requirements) ? variant.requirements : [];
   const uses = Array.isArray(variant.cards) ? variant.cards.map(record) : [];
-  if (!id || requirements.length > 0 || !isStrictDeterministicWinResultV15(results)) return null;
+  if (!id || requirements.length > 0 || !isStrictFullTableWinResultV15(results)) return null;
 
   const names: string[] = [];
   for (const use of uses) {
@@ -276,13 +276,14 @@ export async function discoverGeneralWinPackagesV15(
     const comboId = String(row.id ?? '');
     const comboNames = Array.isArray(row.names) ? row.names.map(String) : [];
     const results = Array.isArray(row.results) ? row.results.map(String) : [];
+    const fullTableClosure = assessFullTableWinClosureV15(results);
     const closure = assessWinResultClosureV15(results);
-    if (!closure.verifiedDeterministicWin) {
+    if (!fullTableClosure.verifiedFullTableWin) {
       rejectionAudit.push({
         comboId,
         status: 'rejected',
-        reasons: [`strict closure failed: ${closure.kind}`],
-        closure,
+        reasons: [`full-table closure failed: ${fullTableClosure.kind}`],
+        fullTableClosure,
       });
       continue;
     }
@@ -342,7 +343,7 @@ export async function discoverGeneralWinPackagesV15(
       seedNames,
       results,
       closureKind: closure.kind,
-      closureCaveat: closure.caveat,
+      closureCaveat: fullTableClosure.caveat,
       resourceOutputs: closure.resourceOutputs,
       exactPrintings,
       commanderOverlap: utility.commanderOverlap,
