@@ -22,6 +22,7 @@ on:
       - "scripts/validation-index-lib.ts"
       - "scripts/build-validation-index.ts"
       - "scripts/validate-validation-index.ts"
+      - "scripts/project-resume.ts"
       - "tsconfig.project-state.json"
       - "package.json"
       - ".github/workflows/project-state-integrity.yml"
@@ -61,6 +62,11 @@ jobs:
         continue-on-error: true
         run: npm run validation:validate
 
+      - name: Run fresh-session recovery smoke
+        id: recovery_smoke
+        continue-on-error: true
+        run: npm run project:resume > project-resume.json
+
       - name: Confirm normal source still builds
         id: source_build
         continue-on-error: true
@@ -72,14 +78,15 @@ jobs:
           TYPECHECK_OUTCOME: ${{ steps.pm_typecheck.outcome }}
           VALIDATE_OUTCOME: ${{ steps.pm_validate.outcome }}
           INDEX_VALIDATE_OUTCOME: ${{ steps.pm_index_validate.outcome }}
+          RECOVERY_SMOKE_OUTCOME: ${{ steps.recovery_smoke.outcome }}
           BUILD_OUTCOME: ${{ steps.source_build.outcome }}
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p test-results/project-management
           ACTIVE_MILESTONE="$(node -p "JSON.parse(require('fs').readFileSync('project-state.json','utf8')).workMode.activeMilestone")"
-          printf 'source_sha=%s\nactive_milestone=%s\ntypecheck_outcome=%s\nstate_validate_outcome=%s\nvalidation_index_outcome=%s\nsource_build_outcome=%s\n' \
-            "$GITHUB_SHA" "$ACTIVE_MILESTONE" "$TYPECHECK_OUTCOME" "$VALIDATE_OUTCOME" "$INDEX_VALIDATE_OUTCOME" "$BUILD_OUTCOME" \
+          printf 'source_sha=%s\nactive_milestone=%s\ntypecheck_outcome=%s\nstate_validate_outcome=%s\nvalidation_index_outcome=%s\nrecovery_smoke_outcome=%s\nsource_build_outcome=%s\n' \
+            "$GITHUB_SHA" "$ACTIVE_MILESTONE" "$TYPECHECK_OUTCOME" "$VALIDATE_OUTCOME" "$INDEX_VALIDATE_OUTCOME" "$RECOVERY_SMOKE_OUTCOME" "$BUILD_OUTCOME" \
             > test-results/project-management/integrity.txt
 
       - name: Regenerate validation index with current integrity result
@@ -107,11 +114,13 @@ jobs:
           TYPECHECK_OUTCOME: ${{ steps.pm_typecheck.outcome }}
           VALIDATE_OUTCOME: ${{ steps.pm_validate.outcome }}
           INDEX_VALIDATE_OUTCOME: ${{ steps.pm_index_validate.outcome }}
+          RECOVERY_SMOKE_OUTCOME: ${{ steps.recovery_smoke.outcome }}
           BUILD_OUTCOME: ${{ steps.source_build.outcome }}
           INDEX_REBUILD_OUTCOME: ${{ steps.pm_index_rebuild.outcome }}
         run: |
           test "$TYPECHECK_OUTCOME" = success
           test "$VALIDATE_OUTCOME" = success
           test "$INDEX_VALIDATE_OUTCOME" = success
+          test "$RECOVERY_SMOKE_OUTCOME" = success
           test "$BUILD_OUTCOME" = success
           test "$INDEX_REBUILD_OUTCOME" = success
