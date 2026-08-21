@@ -227,3 +227,63 @@ jobs:
               exit 1
             fi
           done
+
+  marvel-full-family-validation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - name: Install dependencies
+        run: npm ci
+      - name: Reuse audited official Marvel and Middle-earth special printings
+        run: cp test-results/middle-earth-bracket5-expanded/special-printing-audit.json themed-special-printing-audit.json
+      - name: Apply the existing exact-special printing mechanism in this checkout
+        run: python3 scripts/apply-themed-special-presets-from-audit.py
+      - name: Use existing four-card win-package maximum
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('scripts/e2e-marvel-bracket5-v15.ts')
+          p.write_text(p.read_text().replace('maxWinPackageCards: 3,','maxWinPackageCards: 4,'))
+          PY
+      - name: Type-check broadened policy
+        run: npm run build
+      - name: Marvel full-family Bracket 5 build
+        id: marvel_build
+        continue-on-error: true
+        run: npx tsx scripts/e2e-marvel-bracket5-v15.ts
+      - name: Refine Marvel full-family winner
+        id: marvel_refine
+        if: steps.marvel_build.outcome == 'success'
+        continue-on-error: true
+        run: |
+          mkdir -p test-results/marvel-bracket5
+          cp marvel-bracket5-selected-deck.txt test-results/marvel-bracket5/selected-deck.txt
+          npx tsx scripts/e2e-marvel-bracket5-refine-v15.ts
+      - name: Upload Marvel full-family result
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: suite-marvel-full-family-${{ github.sha }}
+          path: |
+            marvel-bracket5-live-result.json
+            marvel-bracket5-selected-deck.txt
+            marvel-bracket5-refine-result.json
+            marvel-bracket5-refined-deck.txt
+            themed-special-printing-audit.json
+          if-no-files-found: error
+          retention-days: 14
+      - name: Require Marvel full-family controls
+        if: always()
+        env:
+          BUILD: ${{ steps.marvel_build.outcome }}
+          REFINE: ${{ steps.marvel_refine.outcome }}
+        run: |
+          test "$BUILD" = "success"
+          test "$REFINE" = "success"
