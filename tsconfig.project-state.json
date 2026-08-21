@@ -10,6 +10,9 @@
     "scripts/project-state-lib.ts",
     "scripts/generate-handoff.ts",
     "scripts/validate-project-state.ts",
-    "scripts/update-project-state.ts"
+    "scripts/update-project-state.ts",
+    "scripts/validation-index-lib.ts",
+    "scripts/build-validation-index.ts",
+    "scripts/validate-validation-index.ts"
   ]
 }
