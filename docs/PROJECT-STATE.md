@@ -1,16 +1,16 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-08-21T21:32:00+12:00**.
+Generated from `project-state.json`. Last state update: **2026-08-21T21:36:00+12:00**.
 
 ## Current mode
 
 - Repository: `vt7dfbmh7b-droid/mtg-ultimate-mcp`
 - Active experimental branch: `agent/v15-native-deck-intelligence`
 - Active PR: #29
-- Active milestone: **PM-02**
-- Intelligence development paused: **yes**
-- Reason: Consolidate persisted validation results into one deterministic machine-readable index before resuming Commander intelligence development.
+- Active milestone: **INTEL-02**
+- Intelligence development paused: **no**
+- Reason: Resume target-aware autonomous refinement at the exact pre-PM blocker: finish the zero-target-progress guard, then run the fresh checked-in-source Marvel Bracket 5 control before adding further intelligence features.
 
 ## Stable boundary
 
@@ -23,7 +23,7 @@ Generated from `project-state.json`. Last state update: **2026-08-21T21:32:00+12
 
 Development checkpoint at pause: `303a474e4a1ec8cb80c9dc5babaafe42c1828472`
 
-Intelligence development is paused while the repo-first project-management layer is completed. This SHA is the deck-intelligence pause checkpoint, not a claim that later PM/documentation commits are executable intelligence validation milestones.
+PM-01 and PM-02 are validated and Commander intelligence development has resumed from the deck-intelligence pause checkpoint. Later project-management/result commits do not replace this checkpoint as an executable deck-intelligence validation claim.
 
 Latest fully validated executable experimental baseline recorded by project state:
 
@@ -38,9 +38,9 @@ Always inspect the live active-branch head before editing. A later documentation
 | ID | Milestone | Status | Goal |
 |---|---|---|---|
 | PM-01 | Persistent Project State & Handoff Automation | validated | Make repository state authoritative so a fresh chat can recover exact project context with minimal rechecking. |
-| PM-02 | Validation State Indexing | active | Consolidate key persisted control metadata into one deterministic validation index so fresh chats can identify current, stale, passing and failing evidence immediately. |
-| INTEL-01 | Win-package intelligence | paused-validation-pending | Very-good verified full-table win-package discovery, feasibility, injection, and protection. |
-| INTEL-02 | Actual autonomous deck improvement | paused-validation-pending | Very-good target-aware autonomous refinement that repairs real deck weaknesses rather than cosmetic metrics. |
+| PM-02 | Validation State Indexing | validated | Consolidate key persisted control metadata into one deterministic validation index so fresh chats can identify current, stale, passing and failing evidence immediately. |
+| INTEL-01 | Win-package intelligence | implemented-validation-pending | Very-good verified full-table win-package discovery, feasibility, injection, and protection. |
+| INTEL-02 | Actual autonomous deck improvement | active | Very-good target-aware autonomous refinement that repairs real deck weaknesses rather than cosmetic metrics. |
 | BENCH-01 | Adversarial Commander benchmark suite | planned | Prove deck-building quality across combo, combat, control, aristocrats, typal, budget, theme-restricted, cEDH-ish, and hybrid decks. |
 | INTEL-03 | Human-level strategic reasoning layer | planned | Model commander role, synergy networks, structural-card importance, cut consequences, primary/secondary plans, and coherent package trade-offs. |
 | INTEL-04 | Counterfactual deck comparison & expert explanation | planned | Compare complete 100-card alternatives and explain why one deck state is stronger under the exact requested constraints. |
@@ -50,7 +50,7 @@ Always inspect the live active-branch head before editing. A later documentation
 - Active branch status: **incomplete**
 - Last persisted Marvel control source: `a4a1450d34c337c97b76fbbec688dbcf0ac7388e`
 - Last persisted Marvel control outcome: **skipped**
-- Note: This is stale pre-hardening metadata and must not be used as proof of the current branch.
+- Note: This is stale pre-hardening metadata and must not be used as proof of the current branch. The validation index independently marks it as failing and not matching the development checkpoint.
 
 Required before resuming broad INTEL-01/INTEL-02 claims:
 
@@ -62,11 +62,11 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 
 ## Next actions
 
-1. Finish PM-02 validation-registry/index tooling and strict integrity checks.
-2. Validate PM-02 on checked-in source and persist the exact tested SHA/outcomes.
-3. Expand the validation registry only with high-value controls needed for current milestone recovery; do not turn it into noisy workflow inventory.
-4. Run a fresh-chat recovery smoke using only project state, validation index, live branch/PR state and referenced decision/failure docs.
-5. After PM-02 is validated, resume INTEL-01/INTEL-02 from the deck-intelligence pause checkpoint and run the fresh Marvel control before further feature work.
+1. Inspect the current checked-in INTEL-02 scorer/builder against the deck-intelligence pause checkpoint and confirm the hard zero-target-progress guard is still the next unresolved source change.
+2. Implement the hard Bracket-5 zero-target-progress rejection with direct shared-scorer and iterative-refinement regressions, without weakening lower-bracket behavior.
+3. Run project-management integrity, TypeScript/build, autonomous-refinement regressions and win-package regressions on checked-in source.
+4. Run the fresh checked-in-source Marvel Bracket 5 refinement control and persist its exact tested source SHA plus before/after target-gate and verified full-table route evidence.
+5. Use validation-index.json to decide whether INTEL-01/INTEL-02 can move to validated or whether the next blocker is discovery, injection, recognition or candidate selection; do not add unrelated features first.
 
 ## Permanent truth boundary
 
