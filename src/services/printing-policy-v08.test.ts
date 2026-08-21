@@ -143,7 +143,8 @@ test('release-date truth gates exact curated specials until release and still re
 test('unrestricted physical printing truth also rejects future or undated printings', () => {
   const released = card({ set: 'tst', collector_number: '1', released_at: '2026-08-20' });
   const future = card({ set: 'tst', collector_number: '2', released_at: '2026-08-22' });
-  const undated = card({ set: 'tst', collector_number: '3', released_at: undefined });
+  const undated = card({ set: 'tst', collector_number: '3' });
+  delete undated.released_at;
   assert.equal(printingMatchesPolicyV08(released, unrestrictedPolicy(), EVALUATION_DATE), true);
   assert.equal(printingMatchesPolicyV08(future, unrestrictedPolicy(), EVALUATION_DATE), false);
   assert.equal(printingMatchesPolicyV08(undated, unrestrictedPolicy(), EVALUATION_DATE), false);
