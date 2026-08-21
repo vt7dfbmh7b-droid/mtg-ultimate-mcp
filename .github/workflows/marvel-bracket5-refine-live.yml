@@ -122,6 +122,18 @@ jobs:
       - name: Run autonomous and win-package regressions
         run: npx tsx --test src/services/target-gate-improvement-v15.test.ts src/services/deck-builder-win-package-ceiling-v15.test.ts src/services/win-package-pagination-v15.test.ts src/services/win-package-restricted-pool-v15.test.ts src/services/general-win-package-v15.test.ts src/services/full-table-win-closure-v15.test.ts
 
+      - name: Persist target-gate optimizer source when newly integrated
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- src/services/optimizer-v12.ts
+          if ! git diff --cached --quiet; then
+            git commit -m "feat(v15): prioritize actual target-gate improvement"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+
       - name: Refine selected Marvel-only Bracket 5 attempt
         id: refine_control
         continue-on-error: true
@@ -165,7 +177,7 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
-      - name: Persist validated optimizer and refinement result
+      - name: Persist checked-in-source refinement result
         if: success()
         env:
           CONTROL_OUTCOME: ${{ steps.refine_control.outcome }}
@@ -179,11 +191,11 @@ jobs:
           [ ! -f marvel-bracket5-refine-result.json ] || cp marvel-bracket5-refine-result.json test-results/marvel-bracket5/refine-result.json
           [ ! -f marvel-bracket5-refined-deck.txt ] || cp marvel-bracket5-refined-deck.txt test-results/marvel-bracket5/refined-deck.txt
           [ ! -f marvel-bracket5-refine-failure.txt ] || cp marvel-bracket5-refine-failure.txt test-results/marvel-bracket5/refine-failure.txt
-          printf 'workflow_source_sha=%s\ncontrol_outcome=%s\npolicy=validated-target-gate-first-workspace\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\nrestricted_pool_prefilter=true\nfull_table_closure=true\ntarget_gate_priority=true\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
+          printf 'source_sha=%s\ncontrol_outcome=%s\npolicy=checked-in-target-gate-first-source\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\nrestricted_pool_prefilter=true\nfull_table_closure=true\ntarget_gate_priority=true\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- src/services/optimizer-v12.ts test-results/marvel-bracket5
+          git add -- test-results/marvel-bracket5
           if ! git diff --cached --quiet; then
-            git commit -m "feat(v15): prioritize actual target-gate improvement [skip ci]"
+            git commit -m "test-results: persist Marvel Bracket 5 target-gate control [skip ci]"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
