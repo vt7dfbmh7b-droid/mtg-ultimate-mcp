@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "generatedFromProjectStateUpdatedAt": "2026-08-21T21:15:00+12:00",
+  "developmentCheckpointSha": "303a474e4a1ec8cb80c9dc5babaafe42c1828472",
+  "records": [
+    {
+      "id": "PM-STATE-INTEGRITY",
+      "label": "Project State Integrity",
+      "claimLevel": "engineering+truth",
+      "milestones": [
+        "PM-01",
+        "PM-02"
+      ],
+      "metadataPath": "test-results/project-management/integrity.txt",
+      "exists": true,
+      "sourceSha": "73366cf57c055fc0ae7831209ad155b360bf036f",
+      "outcome": "pass",
+      "matchesDevelopmentCheckpoint": false,
+      "metadata": {
+        "source_sha": "73366cf57c055fc0ae7831209ad155b360bf036f",
+        "active_milestone": "PM-01",
+        "typecheck_outcome": "success",
+        "state_validate_outcome": "success",
+        "source_build_outcome": "success"
+      },
+      "unmetPassConditions": []
+    },
+    {
+      "id": "MARVEL-B5-REFINE",
+      "label": "Marvel Bracket 5 autonomous refinement",
+      "claimLevel": "scenario-intelligence",
+      "milestones": [
+        "INTEL-01",
+        "INTEL-02"
+      ],
+      "metadataPath": "test-results/marvel-bracket5/refine-run-metadata.txt",
+      "exists": true,
+      "sourceSha": "a4a1450d34c337c97b76fbbec688dbcf0ac7388e",
+      "outcome": "fail",
+      "matchesDevelopmentCheckpoint": false,
+      "metadata": {
+        "workflow_source_sha": "a4a1450d34c337c97b76fbbec688dbcf0ac7388e",
+        "executed_head_sha": "a4a1450d34c337c97b76fbbec688dbcf0ac7388e",
+        "control_outcome": "skipped",
+        "max_win_package_cards": "4",
+        "spellbook_max_rows_per_query": "400",
+        "restricted_pool_prefilter": "true",
+        "full_table_closure": "true"
+      },
+      "unmetPassConditions": [
+        "control_outcome=success"
+      ]
+    }
+  ]
+}
