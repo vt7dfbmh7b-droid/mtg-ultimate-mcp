@@ -45,11 +45,13 @@ jobs:
       - name: Run full unit/regression suite
         run: npm test
 
-      - name: Require checked-in zero-progress guard and focused regressions
+      - name: Require checked-in target-progress guard and focused regressions
         run: |
-          grep -q "targetGateNoProgressGuard" src/services/optimizer-v11.ts
+          grep -q "zeroTargetProgressWhileFailedGatesRemain" src/services/optimizer-v11.ts
+          grep -q "candidateTargetGateProgressGateV15" src/services/optimizer-v12.ts
           npx tsx --test \
             src/services/optimizer-v11.test.ts \
+            src/services/optimizer-v12-target-progress.test.ts \
             src/services/commander-target-pressure-v15.test.ts \
             src/services/target-gate-improvement-v15.test.ts \
             src/services/deck-builder-win-package-ceiling-v15.test.ts \
@@ -64,26 +66,37 @@ jobs:
         run: npx tsx scripts/e2e-marvel-bracket5-refine-v15.ts
 
       - name: Require accepted changes to advance a real failed Bracket-5 construction gate
+        id: target_quality
         if: steps.refine_control.outcome == 'success'
+        continue-on-error: true
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
           const result = JSON.parse(fs.readFileSync('marvel-bracket5-refine-result.json', 'utf8'));
           if (!result?.delta?.deckChanged) {
-            console.log('Deck unchanged: no unsupported swap was forced.');
-            process.exit(0);
+            throw new Error('Refinement kept the original deck and therefore did not demonstrate INTEL-02 target improvement.');
           }
           const before = new Map((result.startingDeck?.bracket5ThresholdChecks ?? []).map((c) => [c.key, c]));
           const after = new Map((result.finalDeck?.bracket5ThresholdChecks ?? []).map((c) => [c.key, c]));
           const failedConstruction = [...before.values()].filter((c) => c.category === 'construction' && c.passed === false);
           const repaired = failedConstruction.filter((c) => after.get(c.key)?.passed === true).map((c) => c.key);
-          const beforeMv = Number(before.get('average-nonland-mv')?.observed);
-          const afterMv = Number(after.get('average-nonland-mv')?.observed);
-          const measurableCurveAdvance = Number.isFinite(beforeMv) && Number.isFinite(afterMv) && beforeMv > 2.6 && afterMv < beforeMv;
-          if (repaired.length === 0 && !measurableCurveAdvance) {
-            throw new Error(`Deck changed without repairing a failed B5 construction gate or measurably advancing the failed curve gate. Before=${beforeMv}, after=${afterMv}`);
+          const advanced = failedConstruction.filter((check) => {
+            if (after.get(check.key)?.passed === true) return false;
+            const beforeValue = Number(check.observed);
+            const afterValue = Number(after.get(check.key)?.observed);
+            if (!Number.isFinite(beforeValue) || !Number.isFinite(afterValue)) return false;
+            return check.key === 'average-nonland-mv' ? afterValue < beforeValue : afterValue > beforeValue;
+          }).map((c) => c.key);
+          const regressed = [...before.values()]
+            .filter((c) => c.category === 'construction' && c.passed === true && after.get(c.key)?.passed === false)
+            .map((c) => c.key);
+          if (regressed.length > 0) {
+            throw new Error(`Refinement regressed previously passing B5 construction gates: ${regressed.join(',')}`);
           }
-          console.log(`Target quality gate passed. Repaired=${repaired.join(',') || 'none'}; curveAdvance=${measurableCurveAdvance}`);
+          if (repaired.length === 0 && advanced.length === 0) {
+            throw new Error('Refinement changed the deck without repairing or measurably advancing any failed B5 construction gate.');
+          }
+          console.log(`Target quality gate passed. Repaired=${repaired.join(',') || 'none'}; advanced=${advanced.join(',') || 'none'}`);
           NODE
 
       - name: Upload Marvel evidence
@@ -98,8 +111,11 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
-      - name: Require Marvel refinement control success
+      - name: Require Marvel refinement control and target-quality success
         if: always()
         env:
-          CONTROL_OUTCOME: ${{ steps.refine_control.outcome }}
-        run: test "$CONTROL_OUTCOME" = "success"
+          EXECUTION_OUTCOME: ${{ steps.refine_control.outcome }}
+          TARGET_QUALITY_OUTCOME: ${{ steps.target_quality.outcome }}
+        run: |
+          test "$EXECUTION_OUTCOME" = success
+          test "$TARGET_QUALITY_OUTCOME" = success
