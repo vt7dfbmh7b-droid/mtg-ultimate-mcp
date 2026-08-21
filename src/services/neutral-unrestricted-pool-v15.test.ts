@@ -49,6 +49,8 @@ function unrestrictedPolicy(): ResolvedPrintingPolicyV08 {
     includeSpecialReleases: true,
     exactSpecialPrintings: [],
     specialOracleNames: [],
+    specialReleaseCoverageAsOf: null,
+    specialReleaseCoverageNote: null,
     searchClause: '',
     explanation: 'No themed printing-family restriction is active.',
   };
