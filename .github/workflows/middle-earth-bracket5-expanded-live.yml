@@ -44,19 +44,28 @@ jobs:
       - name: Type-check and build permanent printing-family policy
         id: production_build
         continue-on-error: true
-        run: npm run build
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee printing-family-production-build.log
 
       - name: Run full unit suite against permanent policy
         id: production_tests
         if: steps.production_build.outcome == 'success'
         continue-on-error: true
-        run: npm test
+        shell: bash
+        run: |
+          set -o pipefail
+          npm test 2>&1 | tee printing-family-production-tests.log
 
       - name: Prove normal Marvel and Middle-earth Build paths
         id: production_proof
         if: steps.production_build.outcome == 'success' && steps.production_tests.outcome == 'success'
         continue-on-error: true
-        run: npx tsx scripts/e2e-printing-family-policy-v15.ts
+        shell: bash
+        run: |
+          set -o pipefail
+          npx tsx scripts/e2e-printing-family-policy-v15.ts 2>&1 | tee printing-family-production-proof.log
 
       - name: Persist production printing-family proof
         if: always()
@@ -69,9 +78,15 @@ jobs:
           set -euo pipefail
           mkdir -p test-results/printing-family-production-proof
           rm -f test-results/printing-family-production-proof/result.json \
-                test-results/printing-family-production-proof/failure.txt
+                test-results/printing-family-production-proof/failure.txt \
+                test-results/printing-family-production-proof/build.log \
+                test-results/printing-family-production-proof/tests.log \
+                test-results/printing-family-production-proof/proof.log
           [ ! -f printing-family-production-proof.json ] || cp printing-family-production-proof.json test-results/printing-family-production-proof/result.json
           [ ! -f printing-family-production-proof-failure.txt ] || cp printing-family-production-proof-failure.txt test-results/printing-family-production-proof/failure.txt
+          [ ! -f printing-family-production-build.log ] || cp printing-family-production-build.log test-results/printing-family-production-proof/build.log
+          [ ! -f printing-family-production-tests.log ] || cp printing-family-production-tests.log test-results/printing-family-production-proof/tests.log
+          [ ! -f printing-family-production-proof.log ] || cp printing-family-production-proof.log test-results/printing-family-production-proof/proof.log
           printf 'source_sha=%s\nbuild_outcome=%s\ntest_outcome=%s\nproof_outcome=%s\npolicy=permanent-production-presets\n' \
             "$GITHUB_SHA" "$BUILD_OUTCOME" "$TEST_OUTCOME" "$PROOF_OUTCOME" \
             > test-results/printing-family-production-proof/run-metadata.txt
