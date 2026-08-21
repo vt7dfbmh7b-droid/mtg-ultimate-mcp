@@ -158,6 +158,22 @@ function basicLandRampOnlySearch(text: string): boolean {
   });
 }
 
+function hasFreeCastAlternative(card: ScryfallCard, manaCost: string, text: string, isLand: boolean): boolean {
+  if (!isLand && card.cmc === 0 && /\{0\}/.test(manaCost)) return true;
+  if (/rather than pay (?:this spell's|its|the)?\s*mana cost/.test(text)) return true;
+  return /cast this spell without paying (?:its|this spell's) mana cost/.test(text);
+}
+
+function hasDirectInteractionText(text: string): boolean {
+  return /counter target/.test(text)
+    || /(?:destroy|exile)(?: up to [^.]{0,80})? target/.test(text)
+    || /return target .* to (?:its|their) owner's hand/.test(text)
+    || /choose up to one target (?:creature|planeswalker) spell[\s\S]*owner puts it on the (?:top|bottom)/.test(text)
+    || /deals? [^.]{0,120} damage [^.]{0,120} target/.test(text)
+    || /target opponent reveals their hand/.test(text)
+    || /target player [^.]{0,120}graveyard[^.]{0,120}bottom/.test(text);
+}
+
 export function inferCardRoles(card: ScryfallCard): string[] {
   const text = getCardOracleText(card).toLowerCase();
   const type = card.type_line.toLowerCase();
@@ -185,7 +201,7 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (/search your library for .*land/.test(text)) roles.add('land tutor');
 
   if (/counter target spell/.test(text)) roles.add('countermagic');
-  if ((manaCost === '' || /\{0\}/.test(manaCost) || /rather than pay .* mana cost/.test(text)) && /counter target|destroy target|exile target/.test(text)) roles.add('free interaction');
+  if (hasFreeCastAlternative(card, manaCost, text, isLand) && hasDirectInteractionText(text)) roles.add('free interaction');
   if (/(destroy|exile) target/.test(text) || /return target .* to (?:its|their) owner's hand/.test(text)) roles.add('spot interaction');
   if (/destroy target artifact|destroy target enchantment|exile target artifact|exile target enchantment/.test(text)) roles.add('artifact/enchantment interaction');
   if (/exile .* graveyard|cards? in graveyards? can't|players? can't cast .* graveyards?/.test(text)) roles.add('graveyard hate');
