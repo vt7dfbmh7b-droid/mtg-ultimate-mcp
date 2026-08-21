@@ -11,6 +11,9 @@ on:
       - "src/services/general-win-package-v15.test.ts"
       - "src/services/full-table-win-closure-v15.ts"
       - "src/services/full-table-win-closure-v15.test.ts"
+      - "src/services/target-gate-improvement-v15.ts"
+      - "src/services/target-gate-improvement-v15.test.ts"
+      - "src/services/optimizer-v12.ts"
       - "src/services/win-package-pagination-v15.ts"
       - "src/services/win-package-pagination-v15.test.ts"
       - "src/services/win-package-restricted-pool-v15.ts"
@@ -49,16 +52,106 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Type-check and build checked-in source
+      - name: Integrate target-gate-first candidate scoring in workspace
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('src/services/optimizer-v12.ts')
+          text = p.read_text()
+
+          anchor = "import { findDeckCombosEvidence } from './spellbook.js';\n"
+          addition = anchor + "import { assessPlanTargetGateImprovementV15, type TargetGateImprovementV15 } from './target-gate-improvement-v15.js';\n"
+          if "assessPlanTargetGateImprovementV15" not in text:
+              if anchor not in text: raise SystemExit('optimizer target-gate import anchor not found')
+              text = text.replace(anchor, addition, 1)
+
+          old = """  improvementScore: number;\n  significantRegression: boolean;\n  themeAudit: NeutralThemeAuditV15 | null;\n"""
+          new = """  improvementScore: number;\n  significantRegression: boolean;\n  targetGateImprovement: TargetGateImprovementV15;\n  themeAudit: NeutralThemeAuditV15 | null;\n"""
+          if "targetGateImprovement: TargetGateImprovementV15" not in text:
+              if old not in text: raise SystemExit('candidate interface anchor not found')
+              text = text.replace(old, new, 1)
+
+          old = """    improvementScore: candidate.improvementScore,\n    significantRegression: candidate.significantRegression,\n    themeAudit: compactThemeAudit(candidate.themeAudit),\n"""
+          new = """    improvementScore: candidate.improvementScore,\n    targetGateImprovement: candidate.targetGateImprovement,\n    significantRegression: candidate.significantRegression,\n    themeAudit: compactThemeAudit(candidate.themeAudit),\n"""
+          if "targetGateImprovement: candidate.targetGateImprovement" not in text:
+              if old not in text: raise SystemExit('candidate summary anchor not found')
+              text = text.replace(old, new, 1)
+
+          old = """    .sort((a, b) =>\n      b.improvementScore - a.improvementScore\n      || a.estimatedSpendUsd - b.estimatedSpendUsd\n"""
+          new = """    .sort((a, b) =>\n      b.targetGateImprovement.score - a.targetGateImprovement.score\n      || b.targetGateImprovement.repairedGates.length - a.targetGateImprovement.repairedGates.length\n      || b.targetGateImprovement.advancedFailedGates.length - a.targetGateImprovement.advancedFailedGates.length\n      || b.improvementScore - a.improvementScore\n      || a.estimatedSpendUsd - b.estimatedSpendUsd\n"""
+          if "b.targetGateImprovement.score - a.targetGateImprovement.score" not in text:
+              if old not in text: raise SystemExit('winner sort anchor not found')
+              text = text.replace(old, new, 1)
+
+          old = """  const spend = estimateUpgradeSpendV11(plan);\n  const score = refinementImprovementScoreV11(plan);\n\n  const base: Omit<CandidateEvaluationV12, 'eligible' | 'reason' | 'nextDecklist' | 'resolved'> = {\n"""
+          new = """  const spend = estimateUpgradeSpendV11(plan);\n  const score = refinementImprovementScoreV11(plan);\n  const targetGateImprovement = assessPlanTargetGateImprovementV15({\n    targetBracket: options.targetBracket,\n    plan,\n    beforeWinRouteStatus: options.winRouteVerificationStatus ?? 'verification-unavailable',\n  });\n\n  const base: Omit<CandidateEvaluationV12, 'eligible' | 'reason' | 'nextDecklist' | 'resolved'> = {\n"""
+          if "const targetGateImprovement = assessPlanTargetGateImprovementV15" not in text:
+              if old not in text: raise SystemExit('candidate score anchor not found')
+              text = text.replace(old, new, 1)
+
+          old = """    improvementScore: score.score,\n    significantRegression: score.significantRegression,\n    themeAudit: null,\n"""
+          new = """    improvementScore: score.score,\n    significantRegression: score.significantRegression,\n    targetGateImprovement,\n    themeAudit: null,\n"""
+          if "    targetGateImprovement,\n    themeAudit" not in text:
+              if old not in text: raise SystemExit('candidate base anchor not found')
+              text = text.replace(old, new, 1)
+
+          old = """  if (score.significantRegression) {\n    return { ...base, eligible: false, reason: 'package-causes-a-significant-simulated-regression', nextDecklist: null, resolved: null };\n  }\n  const minScore = Number.isFinite(options.minimumImprovementScore)\n"""
+          new = """  if (score.significantRegression) {\n    return { ...base, eligible: false, reason: 'package-causes-a-significant-simulated-regression', nextDecklist: null, resolved: null };\n  }\n  if (targetGateImprovement.regressedGates.length > 0) {\n    return { ...base, eligible: false, reason: 'package-regresses-an-already-passing-target-gate', nextDecklist: null, resolved: null };\n  }\n  const minScore = Number.isFinite(options.minimumImprovementScore)\n"""
+          if "package-regresses-an-already-passing-target-gate" not in text:
+              if old not in text: raise SystemExit('regression gate anchor not found')
+              text = text.replace(old, new, 1)
+
+          old = """  if (score.score < minScore) {\n    return { ...base, eligible: false, reason: 'improvement-below-threshold', nextDecklist: null, resolved: null };\n  }\n"""
+          new = """  if (score.score < minScore && targetGateImprovement.score <= 0) {\n    return { ...base, eligible: false, reason: 'improvement-below-threshold-with-no-target-gate-progress', nextDecklist: null, resolved: null };\n  }\n"""
+          if "improvement-below-threshold-with-no-target-gate-progress" not in text:
+              if old not in text: raise SystemExit('minimum score anchor not found')
+              text = text.replace(old, new, 1)
+
+          old = """  return { ...base, eligible: true, reason: 'eligible', nextDecklist, resolved };\n"""
+          new = """  return {\n    ...base,\n    eligible: true,\n    reason: targetGateImprovement.score > 0 ? 'eligible-target-gate-progress' : 'eligible',\n    nextDecklist,\n    resolved,\n  };\n"""
+          if "eligible-target-gate-progress" not in text:
+              if old not in text: raise SystemExit('eligible return anchor not found')
+              text = text.replace(old, new, 1)
+
+          p.write_text(text)
+          PY
+
+      - name: Type-check and build candidate source
         run: npm run build
 
-      - name: Run win-package regressions
-        run: npx tsx --test src/services/deck-builder-win-package-ceiling-v15.test.ts src/services/win-package-pagination-v15.test.ts src/services/win-package-restricted-pool-v15.test.ts src/services/general-win-package-v15.test.ts src/services/full-table-win-closure-v15.test.ts
+      - name: Run autonomous and win-package regressions
+        run: npx tsx --test src/services/target-gate-improvement-v15.test.ts src/services/deck-builder-win-package-ceiling-v15.test.ts src/services/win-package-pagination-v15.test.ts src/services/win-package-restricted-pool-v15.test.ts src/services/general-win-package-v15.test.ts src/services/full-table-win-closure-v15.test.ts
 
       - name: Refine selected Marvel-only Bracket 5 attempt
         id: refine_control
         continue-on-error: true
         run: npx tsx scripts/e2e-marvel-bracket5-refine-v15.ts
+
+      - name: Require refinement control to execute successfully
+        if: always()
+        env:
+          CONTROL_OUTCOME: ${{ steps.refine_control.outcome }}
+        run: test "$CONTROL_OUTCOME" = "success"
+
+      - name: Require accepted changes to advance an actual failed construction gate
+        if: success()
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const result = JSON.parse(fs.readFileSync('marvel-bracket5-refine-result.json', 'utf8'));
+          if (!result?.delta?.deckChanged) process.exit(0);
+          const before = new Map((result.startingDeck?.bracket5ThresholdChecks ?? []).map((c) => [c.key, c]));
+          const after = new Map((result.finalDeck?.bracket5ThresholdChecks ?? []).map((c) => [c.key, c]));
+          const construction = [...before.values()].filter((c) => c.category === 'construction' && c.passed === false);
+          const repaired = construction.filter((c) => after.get(c.key)?.passed === true).map((c) => c.key);
+          const beforeMv = Number(before.get('average-nonland-mv')?.observed);
+          const afterMv = Number(after.get('average-nonland-mv')?.observed);
+          const measurableCurveAdvance = Number.isFinite(beforeMv) && Number.isFinite(afterMv) && beforeMv > 2.6 && afterMv < beforeMv;
+          if (repaired.length === 0 && !measurableCurveAdvance) {
+            throw new Error(`Refinement changed the deck without repairing a failed Bracket-5 construction gate or advancing the failed curve gate. Before=${beforeMv}, after=${afterMv}`);
+          }
+          console.log(`Target quality gate passed. Repaired=${repaired.join(',') || 'none'}; curveAdvance=${measurableCurveAdvance}`);
+          NODE
 
       - name: Upload refinement result
         if: always()
@@ -72,8 +165,8 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
-      - name: Persist refinement result on isolated branch
-        if: always()
+      - name: Persist validated optimizer and refinement result
+        if: success()
         env:
           CONTROL_OUTCOME: ${{ steps.refine_control.outcome }}
         shell: bash
@@ -86,17 +179,11 @@ jobs:
           [ ! -f marvel-bracket5-refine-result.json ] || cp marvel-bracket5-refine-result.json test-results/marvel-bracket5/refine-result.json
           [ ! -f marvel-bracket5-refined-deck.txt ] || cp marvel-bracket5-refined-deck.txt test-results/marvel-bracket5/refined-deck.txt
           [ ! -f marvel-bracket5-refine-failure.txt ] || cp marvel-bracket5-refine-failure.txt test-results/marvel-bracket5/refine-failure.txt
-          printf 'source_sha=%s\ncontrol_outcome=%s\npolicy=checked-in-source\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\nrestricted_pool_prefilter=true\nfull_table_closure=true\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
+          printf 'workflow_source_sha=%s\ncontrol_outcome=%s\npolicy=validated-target-gate-first-workspace\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\nrestricted_pool_prefilter=true\nfull_table_closure=true\ntarget_gate_priority=true\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- test-results/marvel-bracket5
+          git add -- src/services/optimizer-v12.ts test-results/marvel-bracket5
           if ! git diff --cached --quiet; then
-            git commit -m "test-results: persist Marvel Bracket 5 refinement control"
+            git commit -m "feat(v15): prioritize actual target-gate improvement [skip ci]"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
-
-      - name: Require refinement control to execute successfully
-        if: always()
-        env:
-          CONTROL_OUTCOME: ${{ steps.refine_control.outcome }}
-        run: test "$CONTROL_OUTCOME" = "success"
