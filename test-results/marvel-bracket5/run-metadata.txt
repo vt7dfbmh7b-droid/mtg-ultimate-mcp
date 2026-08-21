@@ -1,5 +1,5 @@
-source_sha=ec58efbceacbf2d35804585be39b0662aae141a6
-control_outcome=failure
-refine_outcome=skipped
+source_sha=e24829418f5cf9a31ba8d4135bfe1e7211959ed2
+control_outcome=success
+refine_outcome=success
 policy=permanent-production-presets
 max_win_package_cards=4

@@ -1,0 +1,407 @@
+{
+  "schema": "marvel-bracket5-refinement-live-v15.1",
+  "startingDeck": {
+    "commander": [
+      "Najeela, the Blade-Blossom"
+    ],
+    "assessedBracket": 4,
+    "assessedBand": "bracket-4-optimized-range",
+    "bracket5ConstructionCandidate": false,
+    "failedBracket5Checks": [
+      "average-nonland-mv",
+      "verified-winning-combo",
+      "competitive-combo-signal",
+      "competitive-metagame-evidence"
+    ],
+    "bracket5ThresholdChecks": [
+      {
+        "key": "average-nonland-mv",
+        "category": "construction",
+        "observed": 2.71,
+        "required": "at most 2.6",
+        "passed": false,
+        "pressurePoint": "speed/curve"
+      },
+      {
+        "key": "early-plays",
+        "category": "construction",
+        "observed": 41,
+        "required": "at least 35",
+        "passed": true,
+        "pressurePoint": "speed/curve"
+      },
+      {
+        "key": "fast-mana",
+        "category": "construction",
+        "observed": 5,
+        "required": "at least 3",
+        "passed": true,
+        "pressurePoint": "fast-mana density"
+      },
+      {
+        "key": "free-interaction",
+        "category": "construction",
+        "observed": 1,
+        "required": "at least 1",
+        "passed": true,
+        "pressurePoint": "free/cheap interaction"
+      },
+      {
+        "key": "cheap-interaction",
+        "category": "construction",
+        "observed": 13,
+        "required": "at least 8",
+        "passed": true,
+        "pressurePoint": "free/cheap interaction"
+      },
+      {
+        "key": "tutors",
+        "category": "construction",
+        "observed": 8,
+        "required": "at least 4",
+        "passed": true,
+        "pressurePoint": "tutor consistency"
+      },
+      {
+        "key": "verified-winning-combo",
+        "category": "construction",
+        "observed": 0,
+        "required": "at least 1",
+        "passed": false,
+        "pressurePoint": "win-package quality/redundancy"
+      },
+      {
+        "key": "competitive-combo-signal",
+        "category": "construction",
+        "observed": "Ruthless=0, strategic=0, Spellbook=E",
+        "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+        "passed": false,
+        "pressurePoint": "win-package quality/redundancy"
+      },
+      {
+        "key": "cedh-intent",
+        "category": "evidence",
+        "observed": true,
+        "required": "true",
+        "passed": true,
+        "pressurePoint": "competitive intent"
+      },
+      {
+        "key": "competitive-metagame-evidence",
+        "category": "evidence",
+        "observed": false,
+        "required": "true",
+        "passed": false,
+        "pressurePoint": "metagame evidence"
+      }
+    ],
+    "metrics": {
+      "landCount": 31,
+      "nonlandCount": 69,
+      "landRatio": 0.31,
+      "averageNonlandManaValue": 2.71,
+      "manaCurve": {
+        "0": 0,
+        "1": 12,
+        "2": 29,
+        "3": 7,
+        "4": 13,
+        "5": 6,
+        "6": 1,
+        "7+": 1
+      },
+      "coloredPips": {
+        "W": 21,
+        "U": 12,
+        "B": 11,
+        "R": 21,
+        "G": 9
+      },
+      "roleCounts": {
+        "token production": 21,
+        "haste": 8,
+        "extra combat": 5,
+        "untap engine": 5,
+        "creature": 19,
+        "mana acceleration": 26,
+        "mana rock": 14,
+        "graveyard recursion": 5,
+        "protection": 13,
+        "cost reduction": 4,
+        "card draw": 19,
+        "+1/+1 counters": 9,
+        "treasure": 9,
+        "sacrifice synergy": 12,
+        "fast mana": 5,
+        "board wipe": 2,
+        "countermagic": 3,
+        "mana dork": 3,
+        "board protection": 2,
+        "spot interaction": 13,
+        "graveyard hate": 2,
+        "tutor": 8,
+        "equipment": 6,
+        "free interaction": 1,
+        "etb synergy": 3,
+        "creature tutor": 1,
+        "repeatable draw": 1,
+        "land ramp": 1,
+        "land tutor": 1,
+        "land": 31,
+        "card selection": 3
+      },
+      "earlyPlayCount": 41,
+      "fastManaCount": 5,
+      "rampCount": 31,
+      "drawCount": 22,
+      "tutorCount": 8,
+      "interactionCount": 18,
+      "cheapInteractionCount": 13,
+      "protectionCount": 13,
+      "recursionCount": 5,
+      "boardWipeCount": 2,
+      "structuralSignals": []
+    },
+    "verifiedWinningCombos": 0
+  },
+  "refinement": {
+    "status": "refined",
+    "stopReason": "no-supported-swaps-found",
+    "roundsAccepted": 1,
+    "totalSwaps": 1,
+    "estimatedUpgradeSpendUsd": 0.21,
+    "swaps": [
+      {
+        "out": "Aurelia, the Warleader",
+        "in": "The Masters of Evil",
+        "why": "Addresses the detected tutor deficit. The recommended physical printing satisfies the active printing-family/set policy.",
+        "recommendedPrinting": {
+          "set": "MSH",
+          "collectorNumber": "105",
+          "finish": "nonfoil",
+          "priceUsd": 0.21
+        }
+      }
+    ],
+    "rounds": [
+      {
+        "round": 1,
+        "accepted": true,
+        "acceptedSwaps": 1,
+        "candidatePackagesGenerated": 5,
+        "candidatePackagesEligible": 1,
+        "winningCandidate": 1,
+        "estimatedSpendUsd": 0.21,
+        "improvementScore": 7.972,
+        "winRouteProtection": {
+          "status": "no-verified-route",
+          "protectedComboIds": [],
+          "protectedCardNames": [],
+          "source": "existing-v15-final-win-route-audit"
+        },
+        "themeAuditBefore": null
+      },
+      {
+        "round": 2,
+        "accepted": false,
+        "acceptedSwaps": 0,
+        "candidatePackagesGenerated": 5,
+        "candidatePackagesEligible": 0,
+        "winningCandidate": null,
+        "estimatedSpendUsd": 0,
+        "improvementScore": 0,
+        "winRouteProtection": {
+          "status": "no-verified-route",
+          "protectedComboIds": [],
+          "protectedCardNames": [],
+          "source": "existing-v15-final-win-route-audit"
+        },
+        "themeAuditBefore": null,
+        "stopReason": "no-supported-swaps-found"
+      }
+    ],
+    "winRouteProtection": {
+      "evaluatedEachRound": true,
+      "source": "existing-v15-final-win-route-audit",
+      "protectedCardNamesObservedAcrossRounds": [],
+      "verificationUnavailableRounds": []
+    },
+    "themeConstraint": {
+      "requested": null,
+      "intent": null,
+      "audit": null,
+      "satisfied": true,
+      "explanation": "No explicit theme constraint was requested."
+    }
+  },
+  "finalDeck": {
+    "assessedBracket": 4,
+    "assessedBand": "bracket-4-optimized-range",
+    "bracket5ConstructionCandidate": false,
+    "bracket5Certified": false,
+    "failedBracket5Checks": [
+      "average-nonland-mv",
+      "verified-winning-combo",
+      "competitive-combo-signal",
+      "competitive-metagame-evidence"
+    ],
+    "bracket5ThresholdChecks": [
+      {
+        "key": "average-nonland-mv",
+        "category": "construction",
+        "observed": 2.71,
+        "required": "at most 2.6",
+        "passed": false,
+        "pressurePoint": "speed/curve"
+      },
+      {
+        "key": "early-plays",
+        "category": "construction",
+        "observed": 41,
+        "required": "at least 35",
+        "passed": true,
+        "pressurePoint": "speed/curve"
+      },
+      {
+        "key": "fast-mana",
+        "category": "construction",
+        "observed": 5,
+        "required": "at least 3",
+        "passed": true,
+        "pressurePoint": "fast-mana density"
+      },
+      {
+        "key": "free-interaction",
+        "category": "construction",
+        "observed": 1,
+        "required": "at least 1",
+        "passed": true,
+        "pressurePoint": "free/cheap interaction"
+      },
+      {
+        "key": "cheap-interaction",
+        "category": "construction",
+        "observed": 13,
+        "required": "at least 8",
+        "passed": true,
+        "pressurePoint": "free/cheap interaction"
+      },
+      {
+        "key": "tutors",
+        "category": "construction",
+        "observed": 9,
+        "required": "at least 4",
+        "passed": true,
+        "pressurePoint": "tutor consistency"
+      },
+      {
+        "key": "verified-winning-combo",
+        "category": "construction",
+        "observed": 0,
+        "required": "at least 1",
+        "passed": false,
+        "pressurePoint": "win-package quality/redundancy"
+      },
+      {
+        "key": "competitive-combo-signal",
+        "category": "construction",
+        "observed": "Ruthless=0, strategic=0, Spellbook=E",
+        "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+        "passed": false,
+        "pressurePoint": "win-package quality/redundancy"
+      },
+      {
+        "key": "cedh-intent",
+        "category": "evidence",
+        "observed": true,
+        "required": "true",
+        "passed": true,
+        "pressurePoint": "competitive intent"
+      },
+      {
+        "key": "competitive-metagame-evidence",
+        "category": "evidence",
+        "observed": false,
+        "required": "true",
+        "passed": false,
+        "pressurePoint": "metagame evidence"
+      }
+    ],
+    "metrics": {
+      "landCount": 31,
+      "nonlandCount": 69,
+      "landRatio": 0.31,
+      "averageNonlandManaValue": 2.71,
+      "manaCurve": {
+        "0": 0,
+        "1": 12,
+        "2": 29,
+        "3": 7,
+        "4": 13,
+        "5": 6,
+        "6": 1,
+        "7+": 1
+      },
+      "coloredPips": {
+        "W": 19,
+        "U": 12,
+        "B": 12,
+        "R": 19,
+        "G": 9
+      },
+      "roleCounts": {
+        "token production": 21,
+        "haste": 7,
+        "extra combat": 4,
+        "untap engine": 4,
+        "creature": 19,
+        "mana acceleration": 26,
+        "mana rock": 14,
+        "graveyard recursion": 5,
+        "protection": 13,
+        "cost reduction": 4,
+        "card draw": 19,
+        "+1/+1 counters": 9,
+        "treasure": 9,
+        "sacrifice synergy": 12,
+        "fast mana": 5,
+        "board wipe": 2,
+        "countermagic": 3,
+        "mana dork": 3,
+        "board protection": 2,
+        "spot interaction": 13,
+        "graveyard hate": 2,
+        "tutor": 9,
+        "equipment": 6,
+        "free interaction": 1,
+        "etb synergy": 3,
+        "creature tutor": 1,
+        "repeatable draw": 1,
+        "land ramp": 1,
+        "land tutor": 1,
+        "land": 31,
+        "card selection": 3
+      },
+      "earlyPlayCount": 41,
+      "fastManaCount": 5,
+      "rampCount": 31,
+      "drawCount": 22,
+      "tutorCount": 9,
+      "interactionCount": 18,
+      "cheapInteractionCount": 13,
+      "protectionCount": 13,
+      "recursionCount": 5,
+      "boardWipeCount": 2,
+      "structuralSignals": []
+    },
+    "verifiedWinningCombos": 0,
+    "printingPolicySatisfied": true,
+    "cardCount": 100
+  },
+  "delta": {
+    "bracket": 0,
+    "failedBracket5ChecksRemoved": [],
+    "failedBracket5ChecksAdded": [],
+    "deckChanged": true
+  }
+}
