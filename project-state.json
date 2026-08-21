@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T21:36:00+12:00",
+  "updatedAt": "2026-08-21T22:10:11+12:00",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build the best evidence-backed autonomous Commander deck-building intelligence we can, then prove it deserves to be trusted.",
   "stable": {
@@ -12,8 +12,8 @@
   "experimental": {
     "activeBranch": "agent/v15-native-deck-intelligence",
     "activePullRequest": 29,
-    "developmentCheckpointSha": "303a474e4a1ec8cb80c9dc5babaafe42c1828472",
-    "developmentCheckpointNote": "PM-01 and PM-02 are validated and Commander intelligence development has resumed from the deck-intelligence pause checkpoint. Later project-management/result commits do not replace this checkpoint as an executable deck-intelligence validation claim.",
+    "developmentCheckpointSha": "e11826caa0c758c3c637828e71e8782ade8a8532",
+    "developmentCheckpointNote": "Exact checked-in INTEL-02 source with the explicit Bracket-5 zero-target-progress rejection and persisted per-candidate diagnostics. TypeScript/project integrity, 751 deterministic tests, focused regressions and exact-head CI passed. The Marvel control executed successfully but failed scenario intelligence because every candidate made zero target progress; this checkpoint is executable and current, not a validated intelligence milestone. Later result or documentation commits do not replace this tested source SHA.",
     "lastFullyValidatedExperimentalBaseline": {
       "branch": "agent/package-probabilities",
       "sha": "63bb7274004060eea507f7991a04b84921d0cd47",
@@ -23,7 +23,7 @@
   "workMode": {
     "intelligenceDevelopmentPaused": false,
     "activeMilestone": "INTEL-02",
-    "reason": "Resume target-aware autonomous refinement at the exact pre-PM blocker: finish the zero-target-progress guard, then run the fresh checked-in-source Marvel Bracket 5 control before adding further intelligence features."
+    "reason": "The hard Bracket-5 zero-target-progress guard is implemented and live-proven. Continue INTEL-02 at the now-observed candidate-generation/selection blocker: the Marvel control generated five candidates, accepted none, and retained the original deck because no package repaired or advanced average mana value or the missing verified win route."
   },
   "milestones": [
     {
@@ -72,9 +72,9 @@
   "validation": {
     "activeBranchStatus": "incomplete",
     "latestPersistedMarvelControl": {
-      "sourceSha": "a4a1450d34c337c97b76fbbec688dbcf0ac7388e",
-      "outcome": "skipped",
-      "note": "This is stale pre-hardening metadata and must not be used as proof of the current branch. The validation index independently marks it as failing and not matching the development checkpoint."
+      "sourceSha": "e11826caa0c758c3c637828e71e8782ade8a8532",
+      "outcome": "failure",
+      "note": "Current checked-in-source control: execution succeeded, the hard guard rejected the old Aurelia -> The Masters of Evil cosmetic tutor swap, and target-quality correctly failed because the deck stayed unchanged. Candidate diagnostics show five final one-swap comparisons: one positive-scoring tutor-only package rejected for zero target progress and four no-supported-swap results. The current blocker is target-aware candidate generation/selection, not guard enforcement."
     },
     "requiredBeforeResumingIntelligenceClaims": [
       "Build and unit/regression suite pass on checked-in source",
@@ -93,11 +93,11 @@
     "No merge, stable/current promotion, version bump, or release without explicit user approval."
   ],
   "nextActions": [
-    "Inspect the current checked-in INTEL-02 scorer/builder against the deck-intelligence pause checkpoint and confirm the hard zero-target-progress guard is still the next unresolved source change.",
-    "Implement the hard Bracket-5 zero-target-progress rejection with direct shared-scorer and iterative-refinement regressions, without weakening lower-bracket behavior.",
-    "Run project-management integrity, TypeScript/build, autonomous-refinement regressions and win-package regressions on checked-in source.",
-    "Run the fresh checked-in-source Marvel Bracket 5 refinement control and persist its exact tested source SHA plus before/after target-gate and verified full-table route evidence.",
-    "Use validation-index.json to decide whether INTEL-01/INTEL-02 can move to validated or whether the next blocker is discovery, injection, recognition or candidate selection; do not add unrelated features first."
+    "Inspect the persisted e11826c candidate comparisons and the V0.7/V0.12 plan provenance to distinguish two observed paths: the surviving tutor-only package ignores already-passing real tutor pressure, while the other candidates produce no supported swaps.",
+    "Make Bracket-5 candidate generation prioritize currently failed authoritative gates before aspirational role deficits: first average-nonland-mv progress or a verified full-table package, without weakening lower-bracket behavior or the zero-progress rejection.",
+    "Persist win-package discovery/injection provenance and candidate comparisons across every attempted swap size, not only the final one-swap fallback, so completed absence, provider unavailability and selection failure remain distinguishable.",
+    "Add deterministic regressions for the diagnosed generation/selection root cause, then rerun project integrity, TypeScript/build, the full regression suite and exact-head CI.",
+    "Rerun the checked-in-source Marvel Bracket 5 control and require a legal constrained deck that repairs or measurably advances a failed gate; keep INTEL-01/INTEL-02 unvalidated if it again returns honest no-supported-improvement."
   ],
   "handoffProtocol": {
     "readFirst": [

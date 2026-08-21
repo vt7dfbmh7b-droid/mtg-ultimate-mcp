@@ -78,7 +78,7 @@ Required capabilities:
 - preserve meaningful primary/secondary strategy;
 - choose coherent IN→OUT pairings and know when no change is better.
 
-Immediate resumed work is deliberately narrow: finish the hard zero-target-progress guard and run the fresh checked-in-source Marvel Bracket-5 control before adding unrelated intelligence features.
+The hard zero-target-progress guard is implemented and live-proven at source checkpoint `e11826c...`: it rejected the former positive-scoring tutor-only swap and preserved the starting list. The current narrow blocker is upstream candidate generation/selection. The same Marvel control produced five final one-swap comparisons, one cosmetic tutor candidate and four no-supported-swap results, with no candidate advancing average mana value or installing a verified full-table route. Next work must make failed authoritative gates drive candidate generation and retain discovery/injection provenance across every attempted swap size before adding unrelated intelligence features.
 
 ## BENCH-01 — Adversarial Commander benchmark suite — PLANNED
 

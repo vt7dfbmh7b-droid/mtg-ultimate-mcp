@@ -4,7 +4,7 @@ A passing workflow proves only the claim listed for that control. Do not general
 
 | Control / evidence | Primary claim | Hard assertions | Intelligence assertion | Current state |
 |---|---|---|---|---|
-| CI / TypeScript / unit tests | Source compiles and deterministic regressions pass | build, types, unit tests | none by itself | historically green on validated baseline; PM-01 changes pending validation |
+| CI / TypeScript / unit tests | Source compiles and deterministic regressions pass | build, types, unit tests | none by itself | exact-head CI green at `e11826c...`; local full suite 751/751 |
 | Scryfall live | Card/printing provider path works | live card data accessible | none | validated baseline green |
 | TopDeck live | Tournament evidence path works when configured/available | provider integration/source health | none | validated baseline green |
 | Commander live aggregate suite | Core Commander pipeline survives representative controls | legality, exact count, constraints, protocol boundary | bounded by included scenarios | validated at `63bb727...` on prior experimental baseline |
@@ -22,10 +22,10 @@ A passing workflow proves only the claim listed for that control. Do not general
 | win-package pagination tests | bounded search truth | truncated/partial != absence | deeper package discovery | implemented |
 | restricted physical-pool tests | early constrained package rejection | printing-family eligible pool truth | efficient constrained discovery | implemented |
 | package ceiling regression | autonomous caller searches through four-card packages | caller policy matches discovery ceiling | expanded package coverage | implemented |
-| target-gate improvement tests | real B5 construction gates drive progress scoring | threshold/progress/regression semantics | target-aware refinement | implemented; hard zero-progress guard pending at PM pause |
-| shared refinement score tests | production scorer rewards first verified route over cosmetic tutor growth | route +24 target priority, tutor 8→9 zero target credit | better candidate ordering | implemented |
+| target-gate improvement tests | real B5 construction gates drive progress scoring | threshold/progress/regression semantics | target-aware refinement | implemented; explicit hard rejection covered in V0.11/V0.12 and live-proven at `e11826c...` |
+| shared refinement score tests | production scorer rewards first verified route over cosmetic tutor growth | route +24 target priority, tutor 8→9 zero target credit; lower brackets unchanged | better candidate ordering | implemented and green |
 | injectable package selector tests | selected package can fit requested swap capacity | missing seeds <= capacity; R preference only among feasible | practical win-package selection | implemented |
-| Marvel Bracket-5 live refinement | end-to-end constrained autonomous improvement | legal 100, Marvel exact physical printings, route verification | must actually repair/advance failed B5 gates | **NOT CURRENTLY VALIDATED**; last persisted result is stale/skipped |
+| Marvel Bracket-5 live refinement | end-to-end constrained autonomous improvement | legal 100, Marvel exact physical printings, route verification | must actually repair/advance failed B5 gates | **CURRENT FAILURE at `e11826c...`**; execution succeeded, 5 candidates generated / 0 eligible, deck unchanged, hard guard worked |
 | BENCH-01 adversarial suite | cross-archetype autonomous intelligence | all scenario constraints | human/expert-level decision quality | planned |
 
 ## Claim levels

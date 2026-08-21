@@ -8,9 +8,9 @@ Observed: Marvel Bracket-5 refinement accepted `Aurelia, the Warleader` OUT → 
 
 Risk: optimizer improves an aspirational role count rather than the requested target.
 
-Protection: target-gate scoring; tutor growth above the real gate receives zero target credit. Zero-target-progress hard guard remains the final pending refinement before INTEL-02 validation resumes.
+Protection: target-gate scoring plus explicit V0.11/V0.12 eligibility rejection while known Bracket-5 construction gates remain failed. Tutor growth above the real gate receives zero target credit and cannot be accepted through simulation score or a permissive score threshold.
 
-Status: partially prevented / final live proof pending.
+Status: prevented in source and live-proven at `e11826c...`; the old Aurelia → The Masters of Evil candidate scored positively but was rejected with `package-does-not-repair-or-advance-failed-bracket-5-target-gate`.
 
 ## KF-002 — Hidden caller overrides package-card ceiling
 
@@ -80,7 +80,7 @@ Risk: metadata suggests validation activity but the live control never executed.
 
 Protection: permanent controls should validate checked-in source only. One-shot integration workflows must be isolated from read-only live controls.
 
-Status: process rule accepted; PM-01 will make this visible in validation state.
+Status: original one-shot source-editing workflow removed; permanent focused control now validates checked-in source. See KF-013 for the remaining concurrent evidence-writer race.
 
 ## KF-009 — Skipped/stale result mistaken for current validation
 
@@ -90,7 +90,7 @@ Risk: false green status from stale artifacts.
 
 Protection: project state separates development checkpoint from validated SHA and explicitly records stale validation outputs. Future CI state update must bind result SHA to tested source lineage.
 
-Status: PM-01 in progress.
+Status: prevented by validated PM-01/PM-02 state and validation indexing; current `e11826c...` failure is explicitly recorded as current rather than green.
 
 ## KF-010 — Pipeline success mistaken for autonomous quality
 
@@ -100,7 +100,7 @@ Risk: engineering green masks intelligence failure.
 
 Protection: validation matrix must distinguish execution controls from intelligence outcome controls.
 
-Status: process protection in PM-01; adversarial BENCH-01 planned.
+Status: process protection live-proven at `e11826c...`: execution succeeded but scenario intelligence correctly failed because the deck did not change; adversarial BENCH-01 remains planned.
 
 ## KF-011 — Universal tutor double-counts mutually missing combo pieces
 
@@ -121,6 +121,16 @@ Risk: numerically stronger-looking list no longer matches the deck's strategic i
 Protection: route protection, strategy-aware cuts, hybrid/multi-route design decision D-013; adversarial benchmark coverage required.
 
 Status: partially prevented / BENCH-01 required.
+
+## KF-013 — Concurrent live controls race to persist evidence
+
+Observed: changing the Marvel refinement script triggered both the focused refinement control and the broader permanent-family control from the same source SHA. The focused control pushed its scoped result first; the broader control completed successfully but its result commit was rejected as non-fast-forward.
+
+Risk: valid evidence can remain only in workflow logs/artifacts, while the branch records whichever writer won rather than every completed control.
+
+Protection: pending. Live controls that can run together must write isolated evidence paths and use a safe fetch/reconcile/retry protocol, or persistence must be consolidated into one writer after both controls finish.
+
+Status: open project-management workflow issue; it does not invalidate the focused persisted `e11826c...` result.
 
 ## Adding a failure
 
