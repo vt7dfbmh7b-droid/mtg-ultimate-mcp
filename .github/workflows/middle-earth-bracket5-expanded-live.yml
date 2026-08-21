@@ -21,7 +21,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: ultimate-mtg-evidence-writer-${{ github.ref }}
+  group: middle-earth-bracket5-expanded-${{ github.ref }}
   cancel-in-progress: false
 
 env:
@@ -85,27 +85,31 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
-          git reset --hard "origin/${GITHUB_REF_NAME}"
-          mkdir -p test-results/printing-family-production-proof
-          rm -f test-results/printing-family-production-proof/result.json \
-                test-results/printing-family-production-proof/failure.txt \
-                test-results/printing-family-production-proof/build.log \
-                test-results/printing-family-production-proof/tests.log \
-                test-results/printing-family-production-proof/proof.log
-          [ ! -f printing-family-production-proof.json ] || cp printing-family-production-proof.json test-results/printing-family-production-proof/result.json
-          [ ! -f printing-family-production-proof-failure.txt ] || cp printing-family-production-proof-failure.txt test-results/printing-family-production-proof/failure.txt
-          [ ! -f printing-family-production-build.log ] || cp printing-family-production-build.log test-results/printing-family-production-proof/build.log
-          [ ! -f printing-family-production-tests.log ] || cp printing-family-production-tests.log test-results/printing-family-production-proof/tests.log
-          [ ! -f printing-family-production-proof.log ] || cp printing-family-production-proof.log test-results/printing-family-production-proof/proof.log
-          printf 'source_sha=%s\nbuild_outcome=%s\ntest_outcome=%s\nproof_outcome=%s\npolicy=permanent-production-presets\n' \
-            "$GITHUB_SHA" "$BUILD_OUTCOME" "$TEST_OUTCOME" "$PROOF_OUTCOME" \
-            > test-results/printing-family-production-proof/run-metadata.txt
-          git add -- test-results/printing-family-production-proof
-          if ! git diff --cached --quiet; then
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            mkdir -p test-results/printing-family-production-proof
+            rm -f test-results/printing-family-production-proof/result.json \
+                  test-results/printing-family-production-proof/failure.txt \
+                  test-results/printing-family-production-proof/build.log \
+                  test-results/printing-family-production-proof/tests.log \
+                  test-results/printing-family-production-proof/proof.log
+            [ ! -f printing-family-production-proof.json ] || cp printing-family-production-proof.json test-results/printing-family-production-proof/result.json
+            [ ! -f printing-family-production-proof-failure.txt ] || cp printing-family-production-proof-failure.txt test-results/printing-family-production-proof/failure.txt
+            [ ! -f printing-family-production-build.log ] || cp printing-family-production-build.log test-results/printing-family-production-proof/build.log
+            [ ! -f printing-family-production-tests.log ] || cp printing-family-production-tests.log test-results/printing-family-production-proof/tests.log
+            [ ! -f printing-family-production-proof.log ] || cp printing-family-production-proof.log test-results/printing-family-production-proof/proof.log
+            printf 'source_sha=%s\nbuild_outcome=%s\ntest_outcome=%s\nproof_outcome=%s\npolicy=permanent-production-presets\n' \
+              "$GITHUB_SHA" "$BUILD_OUTCOME" "$TEST_OUTCOME" "$PROOF_OUTCOME" \
+              > test-results/printing-family-production-proof/run-metadata.txt
+            git add -- test-results/printing-family-production-proof
+            if git diff --cached --quiet; then exit 0; fi
             git commit -m "test-results: persist production printing-family proof [skip ci]"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
-          fi
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "Evidence persistence attempt ${attempt} lost a branch race; retrying against the latest head."
+          done
+          echo 'Production-proof persistence exhausted eight branch-race retries.' >&2
+          exit 1
 
       - name: Require production family-policy validation
         if: always()
@@ -135,23 +139,27 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
-          git reset --hard "origin/${GITHUB_REF_NAME}"
-          mkdir -p test-results/middle-earth-bracket5-expanded
-          rm -f test-results/middle-earth-bracket5-expanded/result.json \
-                test-results/middle-earth-bracket5-expanded/selected-deck.txt \
-                test-results/middle-earth-bracket5-expanded/refined-deck.txt \
-                test-results/middle-earth-bracket5-expanded/failure.txt
-          [ ! -f middle-earth-bracket5-expanded-result.json ] || cp middle-earth-bracket5-expanded-result.json test-results/middle-earth-bracket5-expanded/result.json
-          [ ! -f middle-earth-bracket5-expanded-selected-deck.txt ] || cp middle-earth-bracket5-expanded-selected-deck.txt test-results/middle-earth-bracket5-expanded/selected-deck.txt
-          [ ! -f middle-earth-bracket5-expanded-refined-deck.txt ] || cp middle-earth-bracket5-expanded-refined-deck.txt test-results/middle-earth-bracket5-expanded/refined-deck.txt
-          [ ! -f middle-earth-bracket5-expanded-failure.txt ] || cp middle-earth-bracket5-expanded-failure.txt test-results/middle-earth-bracket5-expanded/failure.txt
-          printf 'source_sha=%s\ncontrol_outcome=%s\npolicy=permanent-production-presets\nmax_win_package_cards=4\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/middle-earth-bracket5-expanded/run-metadata.txt
-          git add -- test-results/middle-earth-bracket5-expanded
-          if ! git diff --cached --quiet; then
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            mkdir -p test-results/middle-earth-bracket5-expanded
+            rm -f test-results/middle-earth-bracket5-expanded/result.json \
+                  test-results/middle-earth-bracket5-expanded/selected-deck.txt \
+                  test-results/middle-earth-bracket5-expanded/refined-deck.txt \
+                  test-results/middle-earth-bracket5-expanded/failure.txt
+            [ ! -f middle-earth-bracket5-expanded-result.json ] || cp middle-earth-bracket5-expanded-result.json test-results/middle-earth-bracket5-expanded/result.json
+            [ ! -f middle-earth-bracket5-expanded-selected-deck.txt ] || cp middle-earth-bracket5-expanded-selected-deck.txt test-results/middle-earth-bracket5-expanded/selected-deck.txt
+            [ ! -f middle-earth-bracket5-expanded-refined-deck.txt ] || cp middle-earth-bracket5-expanded-refined-deck.txt test-results/middle-earth-bracket5-expanded/refined-deck.txt
+            [ ! -f middle-earth-bracket5-expanded-failure.txt ] || cp middle-earth-bracket5-expanded-failure.txt test-results/middle-earth-bracket5-expanded/failure.txt
+            printf 'source_sha=%s\ncontrol_outcome=%s\npolicy=permanent-production-presets\nmax_win_package_cards=4\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/middle-earth-bracket5-expanded/run-metadata.txt
+            git add -- test-results/middle-earth-bracket5-expanded
+            if git diff --cached --quiet; then exit 0; fi
             git commit -m "test-results: persist Middle-earth production-family control [skip ci]"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
-          fi
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "Evidence persistence attempt ${attempt} lost a branch race; retrying against the latest head."
+          done
+          echo 'Middle-earth persistence exhausted eight branch-race retries.' >&2
+          exit 1
 
       - name: Require expanded control success
         if: always()

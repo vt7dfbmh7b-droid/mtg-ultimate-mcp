@@ -5,6 +5,7 @@ A passing workflow proves only the claim listed for that control. Do not general
 | Control / evidence | Primary claim | Hard assertions | Intelligence assertion | Current state |
 |---|---|---|---|---|
 | CI / TypeScript / unit tests | Source compiles and deterministic regressions pass | build, types, unit tests | none by itself | exact-head CI green at `758c565...`; local full suite 757/757 |
+| active evidence-writer reconciliation | concurrent live controls execute and persist isolated evidence without cancelling or losing a non-fast-forward race | independent non-cancelling workflow groups; eight bounded latest-head recompute/push attempts; explicit persistence gate | none by itself | first shared-group design at `b6657a0...` exposed KF-017; corrected workflow revalidation pending |
 | Scryfall live | Card/printing provider path works | live card data accessible | none | validated baseline green |
 | TopDeck live | Tournament evidence path works when configured/available | provider integration/source health | none | validated baseline green |
 | Commander live aggregate suite | Core Commander pipeline survives representative controls | legality, exact count, constraints, protocol boundary | bounded by included scenarios | validated at `63bb727...` on prior experimental baseline |

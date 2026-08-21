@@ -39,7 +39,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: ultimate-mtg-evidence-writer-${{ github.ref }}
+  group: marvel-bracket5-live-${{ github.ref }}
   cancel-in-progress: false
 
 env:
@@ -97,18 +97,25 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
-          git reset --hard "origin/${GITHUB_REF_NAME}"
-          mkdir -p test-results/marvel-bracket5-broad
-          rm -f test-results/marvel-bracket5-broad/live-result.json test-results/marvel-bracket5-broad/selected-deck.txt test-results/marvel-bracket5-broad/refine-result.json test-results/marvel-bracket5-broad/refined-deck.txt test-results/marvel-bracket5-broad/failure.txt
-          [ ! -f marvel-bracket5-live-result.json ] || cp marvel-bracket5-live-result.json test-results/marvel-bracket5-broad/live-result.json
-          [ ! -f marvel-bracket5-selected-deck.txt ] || cp marvel-bracket5-selected-deck.txt test-results/marvel-bracket5-broad/selected-deck.txt
-          [ ! -f marvel-bracket5-refine-result.json ] || cp marvel-bracket5-refine-result.json test-results/marvel-bracket5-broad/refine-result.json
-          [ ! -f marvel-bracket5-refined-deck.txt ] || cp marvel-bracket5-refined-deck.txt test-results/marvel-bracket5-broad/refined-deck.txt
-          [ ! -f marvel-bracket5-live-failure.txt ] || cp marvel-bracket5-live-failure.txt test-results/marvel-bracket5-broad/failure.txt
-          printf 'source_sha=%s\ncontrol_outcome=%s\nrefine_outcome=%s\npolicy=permanent-production-presets\nmax_win_package_cards=4\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" "$REFINE_OUTCOME" > test-results/marvel-bracket5-broad/run-metadata.txt
-          git add -- test-results/marvel-bracket5-broad
-          if ! git diff --cached --quiet; then git commit -m "test-results: persist Marvel permanent-family Bracket 5 control [skip ci]" && git push origin "HEAD:${GITHUB_REF_NAME}"; fi
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            mkdir -p test-results/marvel-bracket5-broad
+            rm -f test-results/marvel-bracket5-broad/live-result.json test-results/marvel-bracket5-broad/selected-deck.txt test-results/marvel-bracket5-broad/refine-result.json test-results/marvel-bracket5-broad/refined-deck.txt test-results/marvel-bracket5-broad/failure.txt
+            [ ! -f marvel-bracket5-live-result.json ] || cp marvel-bracket5-live-result.json test-results/marvel-bracket5-broad/live-result.json
+            [ ! -f marvel-bracket5-selected-deck.txt ] || cp marvel-bracket5-selected-deck.txt test-results/marvel-bracket5-broad/selected-deck.txt
+            [ ! -f marvel-bracket5-refine-result.json ] || cp marvel-bracket5-refine-result.json test-results/marvel-bracket5-broad/refine-result.json
+            [ ! -f marvel-bracket5-refined-deck.txt ] || cp marvel-bracket5-refined-deck.txt test-results/marvel-bracket5-broad/refined-deck.txt
+            [ ! -f marvel-bracket5-live-failure.txt ] || cp marvel-bracket5-live-failure.txt test-results/marvel-bracket5-broad/failure.txt
+            printf 'source_sha=%s\ncontrol_outcome=%s\nrefine_outcome=%s\npolicy=permanent-production-presets\nmax_win_package_cards=4\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" "$REFINE_OUTCOME" > test-results/marvel-bracket5-broad/run-metadata.txt
+            git add -- test-results/marvel-bracket5-broad
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "test-results: persist Marvel permanent-family Bracket 5 control [skip ci]"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "Evidence persistence attempt ${attempt} lost a branch race; retrying against the latest head."
+          done
+          echo 'Evidence persistence exhausted eight branch-race retries.' >&2
+          exit 1
       - name: Require Marvel controls to execute successfully
         if: always()
         env:

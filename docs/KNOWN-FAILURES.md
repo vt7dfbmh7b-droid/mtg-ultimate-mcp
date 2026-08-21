@@ -128,9 +128,9 @@ Observed: changing the Marvel refinement script triggered both the focused refin
 
 Risk: valid evidence can remain only in workflow logs/artifacts, while the branch records whichever writer won rather than every completed control.
 
-Protection: active INTEL-02 writers now share one non-cancelling branch-scoped concurrency group, sync the latest branch before copying their isolated result paths, and keep intelligence execution independent from persistence. The project-state writer also regenerates metadata after synchronizing so it cannot commit stale self-references. Legacy evidence writers still require migration or a consolidated writer before this is globally closed.
+Protection: active INTEL-02 writers keep isolated result paths and use bounded fetch/reset/recompute/push retries against the latest branch head. Intelligence execution remains independent from persistence, and the project-state writer regenerates metadata on every retry so it cannot commit stale self-references. Legacy evidence writers still require migration or a consolidated writer before this is globally closed.
 
-Status: active-path fix implemented locally after the race reproduced at `7fcd3ca...`; workflow revalidation pending. The `758c565...` refinement artifact was digest-verified and recovered on top of the winning writer, while legacy concurrent writers remain an open project-management issue.
+Status: second active-path fix implemented after the race reproduced at `7fcd3ca...` and the first serialization design exposed KF-017 at `b6657a0...`; workflow revalidation pending. The `758c565...` refinement artifact was digest-verified and recovered on top of the winning writer, while legacy concurrent writers remain an open project-management issue.
 
 ## KF-014 — Failed target gate omitted from candidate generation
 
@@ -161,6 +161,16 @@ Risk: fail-closed strategy protection can become overbroad and paralyse autonomo
 Protection: meaningful-loss gating now requires both at least four net affinity points removed and at least six points of command-zone evidence for that strategy. Pairing still protects Aurelia's strong combat affinity, while an exact weak-secondary-signal regression proves the safer Vanquish curve cut remains eligible and carries complete preservation evidence.
 
 Status: prevented in deterministic source tests; fresh Marvel live revalidation required.
+
+## KF-017 — Shared concurrency group cancels older pending controls
+
+Observed: `b6657a0...` placed the focused Marvel, broad Marvel, Middle-earth, and project-state writers in one branch-scoped concurrency group with `cancel-in-progress: false`. GitHub still retained only one pending run in that group: while project-state integrity ran, the two Marvel controls were cancelled as later pending controls arrived, leaving Middle-earth as the sole queued run.
+
+Risk: a workflow design intended to serialize evidence can silently skip entire intelligence scenarios, so a green surviving control says nothing about the cancelled controls.
+
+Protection: each active control now has its own non-cancelling concurrency group and executes independently. Persistence no longer relies on cross-workflow serialization; every active writer retries up to eight times from the latest branch head, rebuilds shared generated evidence where applicable, and fails explicitly if reconciliation is exhausted. `workflow-evidence-writer-v15.test.ts` prevents a shared group from returning and requires every active push to remain inside a bounded latest-head retry loop.
+
+Status: workflow fix implemented; live concurrent revalidation pending.
 
 ## Adding a failure
 

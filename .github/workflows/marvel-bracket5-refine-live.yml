@@ -30,7 +30,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: ultimate-mtg-evidence-writer-${{ github.ref }}
+  group: marvel-bracket5-refine-${{ github.ref }}
   cancel-in-progress: false
 
 env:
@@ -139,24 +139,28 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
-          git reset --hard "origin/${GITHUB_REF_NAME}"
-          mkdir -p test-results/marvel-bracket5
-          rm -f test-results/marvel-bracket5/refine-result.json \
-                test-results/marvel-bracket5/refined-deck.txt \
-                test-results/marvel-bracket5/refine-failure.txt
-          [ ! -f marvel-bracket5-refine-result.json ] || cp marvel-bracket5-refine-result.json test-results/marvel-bracket5/refine-result.json
-          [ ! -f marvel-bracket5-refined-deck.txt ] || cp marvel-bracket5-refined-deck.txt test-results/marvel-bracket5/refined-deck.txt
-          [ ! -f marvel-bracket5-refine-failure.txt ] || cp marvel-bracket5-refine-failure.txt test-results/marvel-bracket5/refine-failure.txt
-          CONTROL_OUTCOME=failure
-          if [ "$EXECUTION_OUTCOME" = success ] && [ "$TARGET_QUALITY_OUTCOME" = success ]; then CONTROL_OUTCOME=success; fi
-          printf 'source_sha=%s\ncontrol_outcome=%s\nexecution_outcome=%s\ntarget_gate_quality_outcome=%s\npolicy=checked-in-very-good-candidate\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\nrestricted_pool_prefilter=true\nfull_table_closure=true\ntarget_gate_priority=true\nzero_progress_guard=true\nzero_target_progress_guard=true\nlower_bracket_behavior_preserved=true\nswap_feasible_win_package_selection=true\nprotect_existing_package_pieces=true\nstrategy_preservation_evidence=true\nmeaningful_strategy_loss_rejected=true\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" "$EXECUTION_OUTCOME" "$TARGET_QUALITY_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
-          npm run validation:index
-          git add -- test-results/marvel-bracket5 validation-index.json docs/VALIDATION-STATE.md
-          if ! git diff --cached --quiet; then
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            mkdir -p test-results/marvel-bracket5
+            rm -f test-results/marvel-bracket5/refine-result.json \
+                  test-results/marvel-bracket5/refined-deck.txt \
+                  test-results/marvel-bracket5/refine-failure.txt
+            [ ! -f marvel-bracket5-refine-result.json ] || cp marvel-bracket5-refine-result.json test-results/marvel-bracket5/refine-result.json
+            [ ! -f marvel-bracket5-refined-deck.txt ] || cp marvel-bracket5-refined-deck.txt test-results/marvel-bracket5/refined-deck.txt
+            [ ! -f marvel-bracket5-refine-failure.txt ] || cp marvel-bracket5-refine-failure.txt test-results/marvel-bracket5/refine-failure.txt
+            CONTROL_OUTCOME=failure
+            if [ "$EXECUTION_OUTCOME" = success ] && [ "$TARGET_QUALITY_OUTCOME" = success ]; then CONTROL_OUTCOME=success; fi
+            printf 'source_sha=%s\ncontrol_outcome=%s\nexecution_outcome=%s\ntarget_gate_quality_outcome=%s\npolicy=checked-in-very-good-candidate\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\nrestricted_pool_prefilter=true\nfull_table_closure=true\ntarget_gate_priority=true\nzero_progress_guard=true\nzero_target_progress_guard=true\nlower_bracket_behavior_preserved=true\nswap_feasible_win_package_selection=true\nprotect_existing_package_pieces=true\nstrategy_preservation_evidence=true\nmeaningful_strategy_loss_rejected=true\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" "$EXECUTION_OUTCOME" "$TARGET_QUALITY_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
+            npm run validation:index
+            git add -- test-results/marvel-bracket5 validation-index.json docs/VALIDATION-STATE.md
+            if git diff --cached --quiet; then exit 0; fi
             git commit -m "test-results: persist Marvel Bracket 5 very-good control [skip ci]"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
-          fi
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "Evidence persistence attempt ${attempt} lost a branch race; retrying against the latest head."
+          done
+          echo 'Evidence persistence exhausted eight branch-race retries.' >&2
+          exit 1
 
       - name: Require checked-in-source scenario intelligence
         if: always()
