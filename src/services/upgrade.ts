@@ -2,6 +2,7 @@ import type { ScryfallCard } from '../types/scryfall.js';
 import {
   cardCommanderStrategyAffinityV15,
   deriveCommanderStrategyContextV15,
+  substantiveCommanderStrategyAffinityScoreV15,
   type CommanderStrategyContextV15,
 } from './commander-strategy-affinity-v15.js';
 import { commanderTargetPressureV15 } from './commander-target-pressure-v15.js';
@@ -256,7 +257,7 @@ export function contextualCutPressureV15(
   const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
   // Reuse the existing four-point protection scale already applied to important utility roles.
   // Strategy fit lowers cut pressure but never makes an on-plan card automatically untouchable.
-  const strategyProtectionApplied = Math.min(4, affinity.score);
+  const strategyProtectionApplied = Math.min(4, substantiveCommanderStrategyAffinityScoreV15(affinity));
   cutPressure -= strategyProtectionApplied;
 
   const reasons: string[] = [];
@@ -451,6 +452,7 @@ export async function suggestDeckUpgrades(
       const printing = await selectEligiblePrintingV08(card, printingPolicy, options.maxUsdPerCard);
       if (!printing) continue;
       const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
+      const substantiveAffinityScore = substantiveCommanderStrategyAffinityScoreV15(affinity);
       const matchedStrategies = affinity.matches.map((match) => match.archetype);
       const matchesControlledTheme = themeCandidateNames.has(card.name.toLocaleLowerCase());
       const strategyReason = matchedStrategies.length > 0
@@ -468,7 +470,7 @@ export async function suggestDeckUpgrades(
         score: Number(candidateScore(card, deficit.role, strategyContext).toFixed(1)),
         strategyAffinity: {
           score: Number(affinity.score.toFixed(1)),
-          protectionApplied: Number(Math.min(4, affinity.score).toFixed(1)),
+          protectionApplied: Number(Math.min(4, substantiveAffinityScore).toFixed(1)),
           matchedStrategies,
           matches: affinity.matches,
         },

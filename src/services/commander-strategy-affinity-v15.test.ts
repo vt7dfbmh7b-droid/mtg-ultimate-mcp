@@ -116,6 +116,32 @@ test('strategy-aware cut pressure protects on-plan cards without making them unc
   assert.ok(onPlanPressure.cutPressure > 0);
 });
 
+test('weak incidental commander archetypes do not protect surplus utility over a substantive plan', () => {
+  const commander = card(
+    'Five-Color Battle Captain',
+    'Legendary Creature — Human Warrior',
+    'Whenever a creature you control attacks, untap all attacking creatures. They gain haste until end of turn.',
+  );
+  const context = deriveCommanderStrategyContextFromCommandersV15([commander]);
+  const weakBigMana = {
+    ...card('Surplus Mana Rock', 'Artifact', '{T}: Add one mana of any color.'),
+    cmc: 2,
+  } as ScryfallCard;
+  const substantiveCombat = {
+    ...card('Haste Equipment', 'Artifact — Equipment', 'Equipped creature has haste. Equip {1}.'),
+    cmc: 2,
+  } as ScryfallCard;
+
+  const rockPressure = contextualCutPressureV15(weakBigMana, context);
+  const equipmentPressure = contextualCutPressureV15(substantiveCombat, context);
+
+  assert.equal(context.strategies.find((strategy) => strategy.archetype === 'big-mana')?.score, 4);
+  assert.ok((context.strategies.find((strategy) => strategy.archetype === 'combat-tokens')?.score ?? 0) >= 6);
+  assert.equal(rockPressure.strategyProtectionApplied, 0);
+  assert.equal(equipmentPressure.strategyProtectionApplied, 2);
+  assert.ok(rockPressure.cutPressure > equipmentPressure.cutPressure);
+});
+
 test('upgrade pairing preserves the structural role an incoming card is repairing when a safer cut exists', () => {
   const additions = [{
     role: 'ramp' as const,

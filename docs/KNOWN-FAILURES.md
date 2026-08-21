@@ -178,9 +178,9 @@ Observed: the `efcffc2...` broad Marvel control safely replaced Vanquish the Hor
 
 Risk: a refiner can make honest progress yet stop immediately short of a real threshold, or pressure the only protected strategy card, because a generic heuristic hides safe marginal cuts that become relevant near the target.
 
-Protection: when the authoritative Bracket-5 curve gate is active, cut discovery may inspect the bounded top 15 nonland cuts even when their heuristic pressure is non-positive. Strategy preservation and structural-deficit ordering still apply first; among structurally equal safe cuts, pairing now chooses the smallest reduction that is sufficient to cross the curve threshold, and only maximizes reduction when no candidate can cross it. Deterministic regressions cover both fallback-pool activation and the 2.61-to-2.60-style marginal choice.
+Protection: when the authoritative Bracket-5 curve gate is active, cut discovery may inspect the bounded top 15 nonland cuts even when their heuristic pressure is non-positive. Strategy preservation remains first, and curve pairing can use marginal cuts after the main high-pressure repair. Deterministic regressions cover both fallback-pool activation and the 2.61-to-2.60-style marginal choice; KF-020 adds the required package-wide stopping rule.
 
-Status: prevented in deterministic source tests; live Marvel revalidation pending.
+Status: fallback discovery prevented in deterministic source tests; the first `a45c338...` live run exposed the package-level over-repair in KF-020.
 
 ## KF-019 — Concurrent provider backoff outlives the focused MCP timeout
 
@@ -191,6 +191,16 @@ Risk: a valid bounded control can be classified as an intelligence failure when 
 Protection: the focused refinement transport budget is now fifteen minutes inside the existing sixty-minute job timeout. Execution and target-quality outcomes remain separately persisted, so a real intelligence failure cannot be hidden as transport delay. A deterministic source regression prevents the ten-minute timeout from returning.
 
 Status: timeout fix implemented; exact-source live revalidation pending.
+
+## KF-020 — Curve package over-repairs and cuts core utility after crossing the target
+
+Observed: `a45c338...` passed the focused quality gate but applied five curve swaps in one accepted round, dropping average nonland mana value from 2.71 to 2.46. It removed Lightning Greaves, Defense of the Heart, Lethal Scheme and Sun-Spider after the package already had enough cumulative reduction. The pairer compared every swap against the original whole-deck reduction requirement, never reduced the remaining requirement, and still gave Najeela's weak four-point `big-mana` inference full cut-order protection over surplus mana rocks.
+
+Risk: a locally strategy-labelled package can satisfy a numeric gate while making unnecessary changes, eroding tutors, interaction and core commander utility. A green target-quality check would then overstate whole-deck improvement.
+
+Protection: curve pairing now tracks the remaining package-wide mana-value reduction, stops adding curve swaps immediately after crossing the threshold, and chooses the largest safe reduction only while every option remains insufficient. Cut-order protection uses only archetypes with at least six points of command-zone evidence, so Najeela's substantive combat support still protects haste cards while incidental `big-mana` overlap does not shelter surplus ramp. Deterministic regressions reproduce the 7+1 cumulative repair and weak-signal utility ordering.
+
+Status: prevented in deterministic source tests; fresh live Marvel revalidation required before accepting the five-swap result.
 
 ## Adding a failure
 

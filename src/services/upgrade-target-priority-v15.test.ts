@@ -184,6 +184,60 @@ test('near the curve threshold, pairing uses the smallest sufficient safe mana r
   assert.equal(pairings[0]?.nonlandManaValueReduction, 1);
 });
 
+test('curve packages stop once cumulative safe reduction crosses the real threshold', () => {
+  const additions = ['First One Drop', 'Second One Drop', 'Third One Drop'].map((name) => ({
+    role: 'average-nonland-mv' as const,
+    candidate: {
+      card: { name, roles: ['card draw'], manaValue: 1, typeLine: 'Artifact' },
+      strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+    },
+  }));
+  const pairings = pairUpgradeSwapsByStructureV15(
+    additions,
+    [
+      {
+        card: { name: 'Vanquish the Horde', roles: ['board wipe'], manaValue: 8, typeLine: 'Sorcery' },
+        heuristicCutPressure: 10,
+        strategyAffinity: { score: 4, protectionApplied: 0, matchedStrategies: ['big-mana'] },
+      },
+      {
+        card: { name: 'Surplus Two-Mana Rock', roles: ['mana acceleration'], manaValue: 2, typeLine: 'Artifact' },
+        heuristicCutPressure: 0,
+        strategyAffinity: { score: 4, protectionApplied: 0, matchedStrategies: ['big-mana'] },
+      },
+      {
+        card: { name: 'Lightning Greaves', roles: ['equipment', 'haste'], manaValue: 2, typeLine: 'Artifact — Equipment' },
+        heuristicCutPressure: -2,
+        strategyAffinity: { score: 2, protectionApplied: 2, matchedStrategies: ['combat-tokens'] },
+      },
+      {
+        card: { name: 'Unneeded Four Drop', roles: [], manaValue: 4, typeLine: 'Creature — Test' },
+        heuristicCutPressure: 1,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    ],
+    {
+      rampCount: 30,
+      drawCount: 20,
+      interactionCount: 18,
+      protectionCount: 8,
+      tutorCount: 10,
+      earlyPlayCount: 41,
+      averageNonlandManaValue: 2.71,
+      nonlandCount: 69,
+      roleCounts: { 'free interaction': 1 },
+    },
+    { ...bracketFiveTargets },
+  );
+
+  assert.equal(pairings.length, 2);
+  assert.deepEqual(
+    pairings.map((pairing) => (pairing.cut.card as Record<string, unknown>).name),
+    ['Vanquish the Horde', 'Surplus Two-Mana Rock'],
+  );
+  assert.equal(pairings.reduce((total, pairing) => total + (pairing.nonlandManaValueReduction ?? 0), 0), 8);
+});
+
 test('Najeela curve repair preserves Aurelia-style combat strategy before maximizing mana reduction', () => {
   const pairings = pairUpgradeSwapsByStructureV15(
     [{

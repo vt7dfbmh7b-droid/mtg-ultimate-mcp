@@ -3,6 +3,7 @@ import { validateCommanderDeck } from './commander-rules.js';
 import {
   cardCommanderStrategyAffinityV15,
   deriveCommanderStrategyContextFromCommandersV15,
+  SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15,
 } from './commander-strategy-affinity-v15.js';
 import { commanderTargetPressureV15, selectInjectableTargetAwareWinPackageV15 } from './commander-target-pressure-v15.js';
 import { buildDeckMetrics, parseDecklist, type DeckEntry, type ParsedDeck } from './deck.js';
@@ -639,7 +640,6 @@ const UPGRADE_STRUCTURAL_ROLES_V15: UpgradeStructuralRoleV15[] = [
 const UPGRADE_CANDIDATE_ROLES_V15: UpgradeAddressedRoleV15[] = [
   'average-nonland-mv', ...UPGRADE_STRUCTURAL_ROLES_V15, 'win-package',
 ];
-const MEANINGFUL_COMMANDER_STRATEGY_SCORE_V15 = 6;
 const MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15 = 4;
 
 function recordNumber(value: unknown): number {
@@ -722,7 +722,7 @@ function upgradeSwapStrategyPreservationV15(
       const commanderScore = cutAffinity.commanderScoreByStrategy.get(strategy) ?? 0;
       const cutScore = cutAffinity.scoreByStrategy.get(strategy) ?? 0;
       const addScore = addAffinity.scoreByStrategy.get(strategy) ?? 0;
-      return commanderScore >= MEANINGFUL_COMMANDER_STRATEGY_SCORE_V15
+      return commanderScore >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15
         && cutScore - addScore >= MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15;
     });
   return {
@@ -778,7 +778,7 @@ export function auditUpgradeStrategyPreservationV15(
   });
   const meaningfulLosses = strategyDeltas
     .filter((delta) => (strongestCutProtection.get(delta.strategy) ?? 0) >= 4
-      && (strongestCommanderScore.get(delta.strategy) ?? 0) >= MEANINGFUL_COMMANDER_STRATEGY_SCORE_V15
+      && (strongestCommanderScore.get(delta.strategy) ?? 0) >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15
       && delta.netAffinityDelta <= -MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15)
     .map((delta) => ({
       strategy: delta.strategy,
@@ -881,11 +881,13 @@ export function pairUpgradeSwapsByStructureV15(
     && currentNonlandCount > 0
     ? (currentAverageNonlandManaValue - BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15) * currentNonlandCount
     : Number.POSITIVE_INFINITY;
+  let remainingCurveReduction = requiredCurveReduction;
   let counts = state.counts;
   const remainingCuts = [...cutPool];
   const pairs: UpgradePairingV15[] = [];
 
   for (const selection of additions) {
+    if (selection.role === 'average-nonland-mv' && remainingCurveReduction <= 0.0001) continue;
     if (remainingCuts.length === 0) break;
     const addCard = summarizedCard(selection.candidate);
     const addManaValue = recordNumber(addCard.manaValue);
@@ -903,17 +905,17 @@ export function pairUpgradeSwapsByStructureV15(
       if (leftStrategy.meaningfulStrategyLoss !== rightStrategy.meaningfulStrategyLoss) {
         return leftStrategy.meaningfulStrategyLoss ? 1 : -1;
       }
-      if (leftDeficit !== rightDeficit) return leftDeficit - rightDeficit;
       if (selection.role === 'average-nonland-mv') {
         const leftReduction = recordNumber(summarizedCard(left).manaValue) - addManaValue;
         const rightReduction = recordNumber(summarizedCard(right).manaValue) - addManaValue;
-        const leftSufficient = leftReduction + 0.0001 >= requiredCurveReduction;
-        const rightSufficient = rightReduction + 0.0001 >= requiredCurveReduction;
+        const leftSufficient = leftReduction + 0.0001 >= remainingCurveReduction;
+        const rightSufficient = rightReduction + 0.0001 >= remainingCurveReduction;
         if (leftSufficient !== rightSufficient) return leftSufficient ? -1 : 1;
         if (leftReduction !== rightReduction) {
           return leftSufficient ? leftReduction - rightReduction : rightReduction - leftReduction;
         }
       }
+      if (leftDeficit !== rightDeficit) return leftDeficit - rightDeficit;
       const leftPressure = recordNumber(left.heuristicCutPressure);
       const rightPressure = recordNumber(right.heuristicCutPressure);
       const leftName = recordString(summarizedCard(left).name);
@@ -927,6 +929,9 @@ export function pairUpgradeSwapsByStructureV15(
     remainingCuts.splice(cutIndex, 1);
     counts = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);
     const nonlandManaValueReduction = recordNumber(summarizedCard(cut).manaValue) - addManaValue;
+    if (selection.role === 'average-nonland-mv') {
+      remainingCurveReduction = Math.max(0, remainingCurveReduction - nonlandManaValueReduction);
+    }
     pairs.push({
       add: selection.candidate,
       cut,

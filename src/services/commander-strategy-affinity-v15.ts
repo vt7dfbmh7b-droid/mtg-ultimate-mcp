@@ -23,6 +23,16 @@ export interface CardCommanderStrategyAffinityV15 {
   matches: CommanderStrategyMatchV15[];
 }
 
+export const SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15 = 6;
+
+export function substantiveCommanderStrategyAffinityScoreV15(
+  affinity: CardCommanderStrategyAffinityV15,
+): number {
+  return affinity.matches
+    .filter((match) => match.commanderScore >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15)
+    .reduce((sum, match) => sum + match.overlapScore, 0);
+}
+
 function normalizeName(value: string): string {
   return value.trim().toLocaleLowerCase();
 }
