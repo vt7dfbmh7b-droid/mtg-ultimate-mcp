@@ -152,3 +152,53 @@ export function assessTargetGateImprovementV15(input: {
         : 'The candidate does not cross an authoritative Bracket-5 construction threshold; generic simulation/strategy scoring decides among such candidates.',
   };
 }
+
+/**
+ * Translate the existing V0.15 upgrade-plan provenance into target-gate evidence without another
+ * network lookup. A package only becomes a verified post-swap route when the planner says it was
+ * injected atomically from verified package discovery. Existing verified routes remain verified
+ * because the refinement caller protects their route cards from cuts.
+ */
+export function assessPlanTargetGateImprovementV15(input: {
+  targetBracket?: number | null;
+  plan: Record<string, unknown>;
+  beforeWinRouteStatus: 'protected' | 'no-verified-route' | 'verification-unavailable';
+}): TargetGateImprovementV15 {
+  const beforeMetrics = record(input.plan.beforeMetrics);
+  const afterMetrics = record(input.plan.afterMetrics);
+  if (Object.keys(beforeMetrics).length === 0 || Object.keys(afterMetrics).length === 0) {
+    return {
+      applicable: false,
+      targetBracket: Math.max(1, Math.min(5, Math.trunc(input.targetBracket ?? 4))),
+      score: 0,
+      repairedGates: [],
+      regressedGates: [],
+      passingBefore: [],
+      passingAfter: [],
+      ignoredUnverifiedGates: [],
+      rationale: 'Target-gate comparison is unavailable because the candidate plan did not retain complete before/after deck metrics.',
+    };
+  }
+
+  const pressure = record(input.plan.v15TargetPressure);
+  const atomicInjected = pressure.atomicWinPackageInjected === true;
+  const selectedBracketTag = typeof pressure.selectedBracketTag === 'string'
+    ? pressure.selectedBracketTag.toUpperCase()
+    : null;
+  const beforeRoute: TargetGateRouteStateV15 = input.beforeWinRouteStatus === 'protected'
+    ? { winRoute: 'verified', competitiveComboSignal: null }
+    : input.beforeWinRouteStatus === 'no-verified-route'
+      ? { winRoute: 'absent', competitiveComboSignal: null }
+      : { winRoute: 'unavailable', competitiveComboSignal: null };
+  const afterRoute: TargetGateRouteStateV15 = atomicInjected
+    ? { winRoute: 'verified', competitiveComboSignal: selectedBracketTag === 'R' ? true : null }
+    : beforeRoute;
+
+  return assessTargetGateImprovementV15({
+    targetBracket: input.targetBracket,
+    beforeMetrics,
+    afterMetrics,
+    beforeRoute,
+    afterRoute,
+  });
+}
