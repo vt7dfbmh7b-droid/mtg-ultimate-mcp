@@ -138,6 +138,8 @@ function commanderIdentity(parsed: ParsedDeck, cards: ScryfallCard[]): string[] 
 
 function simpleSwap(swap: Record<string, unknown>): Record<string, unknown> {
   const printing = asRecord(swap.recommendedPrinting);
+  const structuralPairing = asRecord(swap.structuralPairing);
+  const strategyPreservation = asRecord(structuralPairing.strategyPreservation);
   return {
     out: swap.out ?? null,
     in: swap.in ?? null,
@@ -147,6 +149,13 @@ function simpleSwap(swap: Record<string, unknown>): Record<string, unknown> {
       collectorNumber: printing.collectorNumber ?? null,
       finish: printing.finish ?? null,
       priceUsd: printing.priceUsd ?? null,
+    } : null,
+    structuralPairing: Object.keys(structuralPairing).length > 0 ? {
+      addressedRole: structuralPairing.addressedRole ?? null,
+      remainingStructuralDeficitAfterSwap: structuralPairing.remainingStructuralDeficitAfterSwap ?? null,
+      authoritativeTargetGate: structuralPairing.authoritativeTargetGate ?? null,
+      nonlandManaValueReduction: structuralPairing.nonlandManaValueReduction ?? null,
+      strategyPreservation: Object.keys(strategyPreservation).length > 0 ? strategyPreservation : null,
     } : null,
   };
 }
@@ -160,6 +169,44 @@ function compactThemeAudit(audit: NeutralThemeAuditV15 | null): Record<string, u
     matchedMainCards: audit.matchedMainCards,
     requiredMainMatches: audit.requiredMainMatches,
     mainCoverage: audit.mainCoverage,
+  };
+}
+
+function compactStrategyPreservationV15(plan: Record<string, unknown> | null): Record<string, unknown> | null {
+  const audit = asRecord(plan?.strategyPreservation);
+  if (Object.keys(audit).length === 0) return null;
+  return {
+    status: audit.status ?? null,
+    evidenceComplete: audit.evidenceComplete === true,
+    meaningfulLosses: Array.isArray(audit.meaningfulLosses) ? audit.meaningfulLosses : [],
+    strategyDeltas: Array.isArray(audit.strategyDeltas) ? audit.strategyDeltas : [],
+    acceptanceRule: audit.acceptanceRule ?? null,
+  };
+}
+
+export function candidateStrategyPreservationGateV15(
+  plan: Record<string, unknown> | null,
+): { eligible: boolean; reason: string; audit: Record<string, unknown> | null } {
+  const audit = compactStrategyPreservationV15(plan);
+  if (!audit || audit.evidenceComplete !== true) {
+    return {
+      eligible: false,
+      reason: 'strategy-preservation-evidence-missing',
+      audit,
+    };
+  }
+  const meaningfulLosses = Array.isArray(audit.meaningfulLosses) ? audit.meaningfulLosses : [];
+  if (audit.status === 'meaningful-strategy-loss' || meaningfulLosses.length > 0) {
+    return {
+      eligible: false,
+      reason: 'package-causes-a-meaningful-commander-strategy-loss',
+      audit,
+    };
+  }
+  return {
+    eligible: true,
+    reason: 'commander-strategy-preserved',
+    audit,
   };
 }
 
@@ -258,6 +305,7 @@ function candidateSummary(candidate: CandidateEvaluationV12): Record<string, unk
       ignoredUnverifiedGates: candidate.targetGate.ignoredUnverifiedGates,
     },
     themeAudit: compactThemeAudit(candidate.themeAudit),
+    strategyPreservation: compactStrategyPreservationV15(candidate.plan),
     planProvenance: candidatePlanProvenanceV15(candidate.plan),
     swaps: candidate.plan && Array.isArray(candidate.plan.swaps)
       ? candidate.plan.swaps.map(asRecord).map(simpleSwap)
@@ -624,6 +672,10 @@ async function evaluateCandidate(
   }
   if (maxTotalUsd !== undefined && totalSpend + spend.estimatedSpendUsd > maxTotalUsd + 0.0001) {
     return { ...base, eligible: false, reason: 'package-exceeds-total-budget', nextDecklist: null, resolved: null };
+  }
+  const strategyPreservationGate = candidateStrategyPreservationGateV15(plan);
+  if (!strategyPreservationGate.eligible) {
+    return { ...base, eligible: false, reason: strategyPreservationGate.reason, nextDecklist: null, resolved: null };
   }
   if (score.significantRegression) {
     return { ...base, eligible: false, reason: 'package-causes-a-significant-simulated-regression', nextDecklist: null, resolved: null };

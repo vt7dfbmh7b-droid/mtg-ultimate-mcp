@@ -581,8 +581,50 @@ interface UpgradePairingV15 {
   cut: Record<string, unknown>;
   addressedRole: UpgradeAddressedRoleV15;
   structuralDeficitAfterSwap: number;
+  strategyPreservation: UpgradeSwapStrategyPreservationV15;
   authoritativeTargetGate?: UpgradeTargetGateRoleV15;
   nonlandManaValueReduction?: number;
+}
+
+interface UpgradeStrategyAffinityEvidenceV15 {
+  score: number;
+  protectionApplied: number;
+  matchedStrategies: string[];
+  scoreByStrategy: Map<string, number>;
+}
+
+export interface UpgradeSwapStrategyPreservationV15 {
+  cutStrategyAffinityScore: number;
+  addStrategyAffinityScore: number;
+  cutStrategyProtectionApplied: number;
+  cutMatchedStrategies: string[];
+  addMatchedStrategies: string[];
+  locallyUnreplacedStrategies: string[];
+  cutRoles: string[];
+  addRoles: string[];
+  unreplacedRoles: string[];
+  meaningfulStrategyLoss: boolean;
+  verdict: 'preserved' | 'meaningful-strategy-loss';
+}
+
+export interface UpgradeStrategyPreservationAuditV15 {
+  status: 'preserved' | 'meaningful-strategy-loss';
+  evidenceComplete: true;
+  meaningfulLosses: Array<{
+    strategy: string;
+    cutAffinityScore: number;
+    addAffinityScore: number;
+    netAffinityLoss: number;
+    strongestCutProtectionApplied: number;
+  }>;
+  strategyDeltas: Array<{
+    strategy: string;
+    cutAffinityScore: number;
+    addAffinityScore: number;
+    netAffinityDelta: number;
+  }>;
+  swapImpacts: UpgradeSwapStrategyPreservationV15[];
+  acceptanceRule: string;
 }
 
 const UPGRADE_STRUCTURAL_ROLES_V15: UpgradeStructuralRoleV15[] = [
@@ -607,6 +649,120 @@ function summarizedCard(item: Record<string, unknown>): Record<string, unknown> 
 
 function summarizedRoles(card: Record<string, unknown>): Set<string> {
   return new Set(Array.isArray(card.roles) ? card.roles.filter((role): role is string => typeof role === 'string') : []);
+}
+
+function recordObject(value: unknown): Record<string, unknown> {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
+}
+
+function recordStrings(value: unknown): string[] {
+  return Array.isArray(value)
+    ? [...new Set(value.filter((item): item is string => typeof item === 'string' && item.trim().length > 0))]
+      .sort((left, right) => left.localeCompare(right))
+    : [];
+}
+
+function strategyAffinityEvidenceV15(item: Record<string, unknown>): UpgradeStrategyAffinityEvidenceV15 {
+  const affinity = recordObject(item.strategyAffinity);
+  const score = recordNumber(affinity.score);
+  const protectionApplied = recordNumber(affinity.protectionApplied);
+  const explicitMatches = Array.isArray(affinity.matches)
+    ? affinity.matches.map(recordObject).map((match) => ({
+        strategy: recordString(match.archetype),
+        score: recordNumber(match.overlapScore),
+      })).filter((match) => match.strategy.length > 0 && match.score > 0)
+    : [];
+  const matchedStrategies = recordStrings([
+    ...recordStrings(affinity.matchedStrategies),
+    ...explicitMatches.map((match) => match.strategy),
+  ]);
+  const scoreByStrategy = new Map<string, number>();
+  for (const match of explicitMatches) {
+    scoreByStrategy.set(match.strategy, (scoreByStrategy.get(match.strategy) ?? 0) + match.score);
+  }
+  if (scoreByStrategy.size === 0 && matchedStrategies.length > 0 && score > 0) {
+    const fallback = score / matchedStrategies.length;
+    for (const strategy of matchedStrategies) scoreByStrategy.set(strategy, fallback);
+  }
+  return { score, protectionApplied, matchedStrategies, scoreByStrategy };
+}
+
+function upgradeSwapStrategyPreservationV15(
+  add: Record<string, unknown>,
+  cut: Record<string, unknown>,
+): UpgradeSwapStrategyPreservationV15 {
+  const addAffinity = strategyAffinityEvidenceV15(add);
+  const cutAffinity = strategyAffinityEvidenceV15(cut);
+  const addStrategies = new Set(addAffinity.matchedStrategies);
+  const cutRoles = [...summarizedRoles(summarizedCard(cut))].sort((left, right) => left.localeCompare(right));
+  const addRoles = [...summarizedRoles(summarizedCard(add))].sort((left, right) => left.localeCompare(right));
+  const addRoleSet = new Set(addRoles);
+  const locallyUnreplacedStrategies = cutAffinity.matchedStrategies.filter((strategy) => !addStrategies.has(strategy));
+  const meaningfulStrategyLoss = cutAffinity.protectionApplied >= 4 && locallyUnreplacedStrategies.length > 0;
+  return {
+    cutStrategyAffinityScore: Number(cutAffinity.score.toFixed(3)),
+    addStrategyAffinityScore: Number(addAffinity.score.toFixed(3)),
+    cutStrategyProtectionApplied: Number(cutAffinity.protectionApplied.toFixed(3)),
+    cutMatchedStrategies: cutAffinity.matchedStrategies,
+    addMatchedStrategies: addAffinity.matchedStrategies,
+    locallyUnreplacedStrategies,
+    cutRoles,
+    addRoles,
+    unreplacedRoles: cutRoles.filter((role) => !addRoleSet.has(role)),
+    meaningfulStrategyLoss,
+    verdict: meaningfulStrategyLoss ? 'meaningful-strategy-loss' : 'preserved',
+  };
+}
+
+export function auditUpgradeStrategyPreservationV15(
+  pairings: ReadonlyArray<Pick<UpgradePairingV15, 'add' | 'cut'>>,
+): UpgradeStrategyPreservationAuditV15 {
+  const cutScores = new Map<string, number>();
+  const addScores = new Map<string, number>();
+  const strongestCutProtection = new Map<string, number>();
+  const swapImpacts = pairings.map((pair) => upgradeSwapStrategyPreservationV15(pair.add, pair.cut));
+
+  for (const pair of pairings) {
+    const cut = strategyAffinityEvidenceV15(pair.cut);
+    const add = strategyAffinityEvidenceV15(pair.add);
+    for (const [strategy, strategyScore] of cut.scoreByStrategy) {
+      cutScores.set(strategy, (cutScores.get(strategy) ?? 0) + strategyScore);
+      strongestCutProtection.set(strategy, Math.max(strongestCutProtection.get(strategy) ?? 0, cut.protectionApplied));
+    }
+    for (const [strategy, strategyScore] of add.scoreByStrategy) {
+      addScores.set(strategy, (addScores.get(strategy) ?? 0) + strategyScore);
+    }
+  }
+
+  const strategies = [...new Set([...cutScores.keys(), ...addScores.keys()])].sort((left, right) => left.localeCompare(right));
+  const strategyDeltas = strategies.map((strategy) => {
+    const cutAffinityScore = Number((cutScores.get(strategy) ?? 0).toFixed(3));
+    const addAffinityScore = Number((addScores.get(strategy) ?? 0).toFixed(3));
+    return {
+      strategy,
+      cutAffinityScore,
+      addAffinityScore,
+      netAffinityDelta: Number((addAffinityScore - cutAffinityScore).toFixed(3)),
+    };
+  });
+  const meaningfulLosses = strategyDeltas
+    .filter((delta) => (strongestCutProtection.get(delta.strategy) ?? 0) >= 4 && delta.netAffinityDelta <= -4)
+    .map((delta) => ({
+      strategy: delta.strategy,
+      cutAffinityScore: delta.cutAffinityScore,
+      addAffinityScore: delta.addAffinityScore,
+      netAffinityLoss: Number((-delta.netAffinityDelta).toFixed(3)),
+      strongestCutProtectionApplied: Number((strongestCutProtection.get(delta.strategy) ?? 0).toFixed(3)),
+    }));
+
+  return {
+    status: meaningfulLosses.length > 0 ? 'meaningful-strategy-loss' : 'preserved',
+    evidenceComplete: true,
+    meaningfulLosses,
+    strategyDeltas,
+    swapImpacts,
+    acceptanceRule: 'Reject an autonomous package when it removes at least four points of an existing commander-strategy signal from a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity.',
+  };
 }
 
 function summaryMatchesUpgradeRoleV15(card: Record<string, unknown>, role: UpgradeStructuralRoleV15): boolean {
@@ -702,6 +858,12 @@ export function pairUpgradeSwapsByStructureV15(
       const rightCounts = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(right), -1);
       const leftDeficit = structuralDeficitTotalV15(leftCounts, state.targets);
       const rightDeficit = structuralDeficitTotalV15(rightCounts, state.targets);
+      const leftStrategy = upgradeSwapStrategyPreservationV15(selection.candidate, left);
+      const rightStrategy = upgradeSwapStrategyPreservationV15(selection.candidate, right);
+      if (leftStrategy.meaningfulStrategyLoss !== rightStrategy.meaningfulStrategyLoss) {
+        return leftStrategy.meaningfulStrategyLoss ? 1 : -1;
+      }
+      if (leftDeficit !== rightDeficit) return leftDeficit - rightDeficit;
       if (selection.role === 'average-nonland-mv') {
         const leftReduction = recordNumber(summarizedCard(left).manaValue) - addManaValue;
         const rightReduction = recordNumber(summarizedCard(right).manaValue) - addManaValue;
@@ -711,7 +873,7 @@ export function pairUpgradeSwapsByStructureV15(
       const rightPressure = recordNumber(right.heuristicCutPressure);
       const leftName = recordString(summarizedCard(left).name);
       const rightName = recordString(summarizedCard(right).name);
-      return leftDeficit - rightDeficit || rightPressure - leftPressure || leftName.localeCompare(rightName);
+      return rightPressure - leftPressure || leftName.localeCompare(rightName);
     });
     const cut = candidateCuts[0];
     if (!cut) continue;
@@ -725,6 +887,7 @@ export function pairUpgradeSwapsByStructureV15(
       cut,
       addressedRole: selection.role,
       structuralDeficitAfterSwap: structuralDeficitTotalV15(counts, state.targets),
+      strategyPreservation: upgradeSwapStrategyPreservationV15(selection.candidate, cut),
       ...(selection.role === 'average-nonland-mv' ? {
         authoritativeTargetGate: 'average-nonland-mv' as const,
         nonlandManaValueReduction: Number(nonlandManaValueReduction.toFixed(3)),
@@ -980,6 +1143,7 @@ export async function buildSimulationBackedUpgradePlanV07(
     (suggestions.currentMetrics ?? {}) as Record<string, unknown>,
     (suggestions.structuralTargets ?? {}) as Record<string, unknown>,
   );
+  const strategyPreservation = auditUpgradeStrategyPreservationV15(pairings);
   const chosenCuts = pairings.map((pair) => pair.cut);
   const selectedAdds = pairings.map((pair) => pair.add);
   const cutNames = new Set(chosenCuts.flatMap((cut) => {
@@ -1046,8 +1210,10 @@ export async function buildSimulationBackedUpgradePlanV07(
         remainingStructuralDeficitAfterSwap: pair.structuralDeficitAfterSwap,
         authoritativeTargetGate: pair.authoritativeTargetGate ?? null,
         nonlandManaValueReduction: pair.nonlandManaValueReduction ?? null,
+        strategyPreservation: pair.strategyPreservation,
       },
     })),
+    strategyPreservation,
     protectedCards: options.protectedCards ?? [],
     upgradedDecklist: newDecklist,
     upgradedCommanderRules: upgradedRules,
@@ -1066,7 +1232,7 @@ export async function buildSimulationBackedUpgradePlanV07(
     sourceUpgradeAnalysis: suggestions,
     caveats: [
       'V0.7 does not automatically claim the suggested swaps are final. It deliberately returns the whole candidate deck and before/after evidence so an AI or player can reject a swap that harms theme or a preferred win route.',
-      'IN/OUT pairing minimizes damage to existing structural role targets before cut pressure tie-breaks; Bracket-5 verified packages are selected only when their missing seeds fit the current swap package, and any already-present pieces of that selected route are temporarily protected from cuts during atomic injection.',
+      'IN/OUT pairing rejects meaningful commander-strategy losses before comparing structural deficits, target-gate movement and cut pressure. Every package carries explicit cut-role and strategy-affinity evidence; Bracket-5 verified packages are selected only when their missing seeds fit the current swap package, and any already-present pieces of that selected route are temporarily protected from cuts during atomic injection.',
       'Same-seed simulation improves comparability but does not remove multiplayer variance, pilot decisions, hidden information, or meta effects.',
     ],
   };

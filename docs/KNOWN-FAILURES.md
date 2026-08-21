@@ -142,6 +142,16 @@ Protection: Bracket-5 candidate generation now places authoritative failed targe
 
 Status: prevented for the observed curve-generation path and live-proven at `758c565...`: two swaps repaired average nonland mana value from 2.71 to 2.54. Other gate types and archetypes still require broader controls.
 
+## KF-015 — Curve repair cuts a strongly protected commander-strategy card
+
+Observed: the `758c565...` Marvel refinement repaired average nonland mana value by cutting Aurelia, the Warleader for Reanimate. The pairing sorter maximized mana-value reduction before structural preservation and cut pressure, so Aurelia's fully protected `combat-tokens` affinity and extra-combat/untap/haste roles could not prevent the cut.
+
+Risk: an autonomous package can pass a numeric target gate while weakening the commander's primary or secondary plan, turning a cosmetic metric repair into a strategically worse whole deck.
+
+Protection: additions and cuts now retain the existing V0.15 per-strategy affinity evidence. Pairing places meaningful strategy preservation and structural-deficit preservation before the size of a curve reduction. Every candidate package carries per-swap lost-role evidence plus an aggregate strategy audit, and refinement fails closed when that audit is missing or reports an uncompensated loss from a card that received the maximum existing cut-protection signal. Deterministic protection lives in `upgrade-target-priority-v15.test.ts` and includes a Najeela/Aurelia-style ordering regression, explicit rejection, missing-evidence rejection, and a compensated-replacement control.
+
+Status: prevented in deterministic source tests; fresh Marvel live revalidation remains required before claiming the observed scenario is strategically improved.
+
 ## Adding a failure
 
 Every new material failure should record:

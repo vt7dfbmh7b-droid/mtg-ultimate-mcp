@@ -294,6 +294,7 @@ function cutCandidates(
           score: context.strategyAffinityScore,
           protectionApplied: context.strategyProtectionApplied,
           matchedStrategies: context.matchedStrategies,
+          matches: cardCommanderStrategyAffinityV15(card, strategyContext).matches,
         },
         explicitTheme: {
           matchesControlledTheme: themeMatch,
@@ -455,6 +456,12 @@ export async function suggestDeckUpgrades(
       candidates.push({
         card: summarizeCard(card),
         score: Number(candidateScore(card, deficit.role, strategyContext).toFixed(1)),
+        strategyAffinity: {
+          score: Number(affinity.score.toFixed(1)),
+          protectionApplied: Number(Math.min(4, affinity.score).toFixed(1)),
+          matchedStrategies,
+          matches: affinity.matches,
+        },
         explicitTheme: {
           matchesControlledTheme,
           currentMainMatches: themeCurrentMainMatches,

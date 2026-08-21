@@ -1,7 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { ScryfallCard } from '../types/scryfall.js';
-import { pairUpgradeSwapsByStructureV15 } from './deck-builder-v07.js';
+import {
+  auditUpgradeStrategyPreservationV15,
+  pairUpgradeSwapsByStructureV15,
+} from './deck-builder-v07.js';
+import { candidateStrategyPreservationGateV15 } from './optimizer-v12.js';
 import {
   restrictedUpgradeCandidatesForRoleV15,
   upgradeCandidatePrioritiesV15,
@@ -121,4 +125,132 @@ test('curve-priority pairing chooses a positive mana-value reduction and records
   assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Five Drop');
   assert.equal(pairings[0]?.authoritativeTargetGate, 'average-nonland-mv');
   assert.equal(pairings[0]?.nonlandManaValueReduction, 4);
+});
+
+test('Najeela curve repair preserves Aurelia-style combat strategy before maximizing mana reduction', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{
+      role: 'average-nonland-mv' as const,
+      candidate: {
+        card: { name: 'One Drop', roles: [], manaValue: 1, typeLine: 'Creature — Test' },
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    }],
+    [
+      {
+        card: {
+          name: 'Aurelia, the Warleader',
+          roles: ['extra combat', 'untap engine', 'haste'],
+          manaValue: 6,
+          typeLine: 'Creature — Test',
+        },
+        heuristicCutPressure: 9,
+        strategyAffinity: {
+          score: 12,
+          protectionApplied: 4,
+          matchedStrategies: ['combat-tokens'],
+        },
+      },
+      {
+        card: { name: 'Safe Five Drop', roles: [], manaValue: 5, typeLine: 'Creature — Test' },
+        heuristicCutPressure: 4,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    ],
+    {
+      rampCount: 14,
+      drawCount: 14,
+      interactionCount: 18,
+      protectionCount: 8,
+      tutorCount: 8,
+      earlyPlayCount: 41,
+      roleCounts: { 'free interaction': 1 },
+    },
+    { ...bracketFiveTargets },
+  );
+
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Safe Five Drop');
+  assert.equal(pairings[0]?.nonlandManaValueReduction, 4);
+  assert.equal(pairings[0]?.strategyPreservation.verdict, 'preserved');
+  assert.deepEqual(pairings[0]?.strategyPreservation.locallyUnreplacedStrategies, []);
+});
+
+test('an uncompensated fully protected commander-strategy cut is explicit and ineligible', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{
+      role: 'average-nonland-mv' as const,
+      candidate: {
+        card: { name: 'One Drop', roles: ['card draw'], manaValue: 1, typeLine: 'Artifact' },
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    }],
+    [{
+      card: {
+        name: 'Extra Combat Engine',
+        roles: ['extra combat', 'untap engine', 'haste'],
+        manaValue: 6,
+        typeLine: 'Creature — Test',
+      },
+      heuristicCutPressure: 9,
+      strategyAffinity: {
+        score: 12,
+        protectionApplied: 4,
+        matchedStrategies: ['combat-tokens'],
+      },
+    }],
+    {
+      rampCount: 14,
+      drawCount: 14,
+      interactionCount: 18,
+      protectionCount: 8,
+      tutorCount: 8,
+      earlyPlayCount: 41,
+      roleCounts: { 'free interaction': 1 },
+    },
+    { ...bracketFiveTargets },
+  );
+
+  const audit = auditUpgradeStrategyPreservationV15(pairings);
+  const gate = candidateStrategyPreservationGateV15({ strategyPreservation: audit });
+
+  assert.equal(pairings[0]?.strategyPreservation.verdict, 'meaningful-strategy-loss');
+  assert.deepEqual(pairings[0]?.strategyPreservation.unreplacedRoles, ['extra combat', 'haste', 'untap engine']);
+  assert.equal(audit.status, 'meaningful-strategy-loss');
+  assert.deepEqual(audit.meaningfulLosses.map((loss) => loss.strategy), ['combat-tokens']);
+  assert.equal(gate.eligible, false);
+  assert.equal(gate.reason, 'package-causes-a-meaningful-commander-strategy-loss');
+});
+
+test('candidate strategy preservation evidence fails closed when it is absent', () => {
+  const gate = candidateStrategyPreservationGateV15({ swaps: [] });
+
+  assert.equal(gate.eligible, false);
+  assert.equal(gate.reason, 'strategy-preservation-evidence-missing');
+});
+
+test('a strategically matched incoming card can compensate a protected strategy cut', () => {
+  const audit = auditUpgradeStrategyPreservationV15([{
+    cut: {
+      card: { name: 'Outgoing Combat Engine', roles: ['extra combat'], manaValue: 6 },
+      strategyAffinity: {
+        score: 8,
+        protectionApplied: 4,
+        matchedStrategies: ['combat-tokens'],
+      },
+    },
+    add: {
+      card: { name: 'Incoming Combat Engine', roles: ['extra combat'], manaValue: 4 },
+      strategyAffinity: {
+        score: 8,
+        protectionApplied: 4,
+        matchedStrategies: ['combat-tokens'],
+      },
+    },
+  }]);
+  const gate = candidateStrategyPreservationGateV15({ strategyPreservation: audit });
+
+  assert.equal(audit.status, 'preserved');
+  assert.deepEqual(audit.meaningfulLosses, []);
+  assert.equal(gate.eligible, true);
+  assert.equal(gate.reason, 'commander-strategy-preserved');
 });
