@@ -15,6 +15,14 @@ test('general win-package queries are winning-outcome searches without requiring
   assert.equal(queries.some((query) => query.includes('bracket:ruthless')), false);
 });
 
+test('general win-package discovery defaults to the production four-card ceiling', () => {
+  assert.deepEqual(buildGeneralWinPackageQueriesV15(undefined, 'WUBRG'), [
+    'card<=2 is:winning legal:commander identity<=WUBRG',
+    'card<=3 is:winning legal:commander identity<=WUBRG',
+    'card<=4 is:winning legal:commander identity<=WUBRG',
+  ]);
+});
+
 test('Spellbook identity tokens always use canonical WUBRG ordering', () => {
   assert.equal(canonicalIdentityTokenV15(['B', 'G', 'R', 'U', 'W']), 'WUBRG');
   assert.equal(canonicalIdentityTokenV15(['G', 'U']), 'UG');
@@ -22,6 +30,19 @@ test('Spellbook identity tokens always use canonical WUBRG ordering', () => {
   assert.deepEqual(buildGeneralWinPackageQueriesV15(2, 'BGRUW'), [
     'card<=2 is:winning legal:commander identity<=WUBRG',
   ]);
+});
+
+test('general package ranking accepts four-card wins by default', () => {
+  const ranked = rankGeneralWinPackageVariantsV15([
+    {
+      id: 'four-card-win',
+      cards: [{ name: 'A' }, { name: 'B' }, { name: 'C' }, { name: 'D' }],
+      results: ['Win the game'],
+      requirements: [],
+      popularity: 1,
+    },
+  ], []);
+  assert.deepEqual(ranked.map((row) => row.id), ['four-card-win']);
 });
 
 test('general package ranking rejects impressive non-winning outcomes and excluded pieces', () => {

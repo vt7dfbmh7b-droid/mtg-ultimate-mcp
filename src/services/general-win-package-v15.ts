@@ -79,7 +79,7 @@ function identityToken(commanders: readonly ScryfallCard[]): string {
   return canonicalIdentityTokenV15(commanders.flatMap((card) => card.color_identity));
 }
 
-export function buildGeneralWinPackageQueriesV15(maxPackageCards = 3, identity = 'C'): string[] {
+export function buildGeneralWinPackageQueriesV15(maxPackageCards = 4, identity = 'C'): string[] {
   const maxCards = Math.max(2, Math.min(4, Math.trunc(maxPackageCards)));
   const canonicalIdentity = identity.trim().toUpperCase() === 'C'
     ? 'C'
@@ -135,7 +135,7 @@ export function rankGeneralWinPackageVariantsV15(
 ): Array<Record<string, unknown>> {
   const commanders = new Set(commanderNames.map(normalize));
   const excluded = new Set((options.excludedCards ?? []).map(normalize));
-  const maxCards = Math.max(2, Math.min(4, Math.trunc(options.maxPackageCards ?? 3)));
+  const maxCards = Math.max(2, Math.min(4, Math.trunc(options.maxPackageCards ?? 4)));
   const byPackage = new Map<string, ParsedCandidateV15>();
   for (const variant of variants) {
     const parsed = parseCandidate(variant, commanders, excluded, maxCards);
@@ -196,7 +196,7 @@ export async function discoverGeneralWinPackagesV15(
   source: string;
 }> {
   if (commanders.length < 1 || commanders.length > 2) throw new Error('General win-package discovery requires one or two resolved commanders.');
-  const maxPackageCards = Math.max(2, Math.min(4, Math.trunc(options.maxPackageCards ?? 3)));
+  const maxPackageCards = Math.max(2, Math.min(4, Math.trunc(options.maxPackageCards ?? 4)));
   const maxCandidates = Math.max(1, Math.min(20, Math.trunc(options.maxCandidatesToVerify ?? 12)));
   const policy = await resolvePrintingPolicyV08(options);
   const commanderNames = commanders.map((card) => card.name);
@@ -231,7 +231,11 @@ export async function discoverGeneralWinPackagesV15(
       ? 'unavailable'
       : 'partial';
 
-  const ranked = rankGeneralWinPackageVariantsV15(raw, commanderNames, options).slice(0, maxCandidates).map(record);
+  // Important for restricted physical-printing families: do not spend the verification
+  // budget on globally popular packages before testing whether their pieces are eligible.
+  // Rank the bounded Spellbook window, resolve that window, then stop only after we have
+  // collected maxCandidates *eligible* verified packages (or exhaust the window).
+  const ranked = rankGeneralWinPackageVariantsV15(raw, commanderNames, options).map(record);
   const names = [...new Set(ranked.flatMap((candidate) => Array.isArray(candidate.names) ? candidate.names.map(String) : []))];
   const lookup = names.length > 0 ? await getCardsByNames(names) : { cards: [], notFound: [] };
   const byName = new Map(lookup.cards.map((card) => [normalize(card.name), card]));
@@ -320,6 +324,7 @@ export async function discoverGeneralWinPackagesV15(
       score: Math.round(score * 100) / 100,
       popularity: typeof row.popularity === 'number' ? row.popularity : 0,
     });
+    if (candidates.length >= maxCandidates) break;
   }
 
   candidates.sort((a, b) =>

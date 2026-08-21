@@ -5,6 +5,8 @@ on:
     branches: ["agent/**"]
     paths:
       - "scripts/e2e-marvel-bracket5-refine-v15.ts"
+      - "src/services/general-win-package-v15.ts"
+      - "src/services/general-win-package-v15.test.ts"
       - ".github/workflows/marvel-bracket5-refine-live.yml"
   workflow_dispatch:
 
