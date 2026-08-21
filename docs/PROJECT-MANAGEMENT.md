@@ -33,6 +33,14 @@ A new development chat should perform only this recovery work before editing:
 
 Do not re-audit the whole repository unless state integrity fails or a next action explicitly requires it.
 
+For a deterministic repo-only recovery summary, run:
+
+```bash
+npm run project:resume
+```
+
+This command derives stable boundary, active milestone, pause/resume state, development checkpoint, registered passing/failing/stale evidence and next actions without reading chat history.
+
 ## Milestone IDs
 
 Work is grouped into stable IDs (`PM-*`, `INTEL-*`, `BENCH-*`).
@@ -152,7 +160,7 @@ PM-01 is complete when a fresh chat can receive only `Continue Ultimate MTG`, re
 - next actions;
 without reconstructing previous chats.
 
-PM-01 passed its self-reporting integrity control at source `73366cf57c055fc0ae7831209ad155b360bf036f`.
+PM-01 passed its initial self-reporting integrity control at source `73366cf57c055fc0ae7831209ad155b360bf036f`.
 
 ## PM-02 exit test
 
@@ -164,3 +172,7 @@ PM-02 is complete when the same fresh-chat recovery can also identify, without b
 - which scenario-intelligence result blocks the next milestone.
 
 The validation index and its generated human snapshot must be strict-CI checked and self-consistent after self-reporting workflow updates.
+
+PM-02 passed at source `b920087e41d22a1575404620815c4882801cae9b`: project-management typecheck, generated-state validation, validation-index validation, fresh-session recovery smoke and normal MTG source build all succeeded, and the result was persisted together with the regenerated validation index.
+
+After PM-02 validation, normal Commander-intelligence development may resume only from the active milestone recorded in `project-state.json`; the management layer does not itself authorize stable promotion.
