@@ -274,6 +274,8 @@ test('treats printing-policy or exact-budget failure as ineligible rather than w
       includeSpecialReleases: true,
       exactSpecialPrintings: [],
       specialOracleNames: [],
+      specialReleaseCoverageAsOf: null,
+      specialReleaseCoverageNote: null,
       searchClause: '(set:fin)',
       explanation: 'test policy',
     }),
