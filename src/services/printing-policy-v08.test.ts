@@ -8,6 +8,8 @@ import {
   type ResolvedPrintingPolicyV08,
 } from './printing-policy-v08.js';
 
+const EVALUATION_DATE = '2026-08-21';
+
 function card(overrides: Partial<ScryfallCard>): ScryfallCard {
   return {
     id: 'test',
@@ -22,6 +24,7 @@ function card(overrides: Partial<ScryfallCard>): ScryfallCard {
     set_name: 'Test Set',
     collector_number: '1',
     rarity: 'rare',
+    released_at: '2020-01-01',
     scryfall_uri: 'https://example.invalid/card',
     ...overrides,
   };
@@ -47,6 +50,18 @@ function finalFantasyPolicy(overrides: Partial<ResolvedPrintingPolicyV08> = {}):
     explanation: 'test',
     ...overrides,
   };
+}
+
+function unrestrictedPolicy(): ResolvedPrintingPolicyV08 {
+  return finalFantasyPolicy({
+    family: null,
+    familyPreset: null,
+    allowedSetCodes: [],
+    familyMatchedSetCodes: [],
+    exactSpecialPrintings: [],
+    specialOracleNames: [],
+    searchClause: '',
+  });
 }
 
 function inspectedPolicy(family: string, allowedSetCodes: string[] = []): ResolvedPrintingPolicyV08 {
@@ -106,6 +121,32 @@ test('special releases can be disabled without disabling normal family sets', ()
 test('bundle promo selector treats leading-zero collector numbers as the same physical selector', () => {
   const lotus = card({ name: 'Gilded Lotus', set: 'sld', set_name: 'Secret Lair Drop', collector_number: '0909', promo: true });
   assert.equal(printingMatchesPolicyV08(lotus, finalFantasyPolicy()), true);
+});
+
+test('release-date truth admits released family printings and rejects future family printings', () => {
+  const released = card({ set: 'fin', set_name: 'Magic: The Gathering—FINAL FANTASY', collector_number: '10', released_at: EVALUATION_DATE });
+  const future = card({ set: 'fin', set_name: 'Magic: The Gathering—FINAL FANTASY', collector_number: '11', released_at: '2026-08-22' });
+  assert.equal(printingMatchesPolicyV08(released, finalFantasyPolicy(), EVALUATION_DATE), true);
+  assert.equal(printingMatchesPolicyV08(future, finalFantasyPolicy(), EVALUATION_DATE), false);
+});
+
+test('release-date truth gates exact curated specials until release and still rejects unrelated SLD printings', () => {
+  const futureSpecial = card({ name: 'Cyclonic Rift', set: 'sld', set_name: 'Secret Lair Drop', collector_number: '1869', promo: true, released_at: '2026-08-22' });
+  const releasedSpecial = card({ name: 'Cyclonic Rift', set: 'sld', set_name: 'Secret Lair Drop', collector_number: '1869', promo: true, released_at: '2026-08-20' });
+  const unrelated = card({ name: 'Cyclonic Rift', set: 'sld', set_name: 'Secret Lair Drop', collector_number: '9999', promo: true, released_at: '2026-08-20' });
+  assert.equal(printingMatchesPolicyV08(futureSpecial, finalFantasyPolicy(), EVALUATION_DATE), false);
+  assert.equal(printingMatchesPolicyV08(futureSpecial, finalFantasyPolicy(), '2026-08-22'), true);
+  assert.equal(printingMatchesPolicyV08(releasedSpecial, finalFantasyPolicy(), EVALUATION_DATE), true);
+  assert.equal(printingMatchesPolicyV08(unrelated, finalFantasyPolicy(), EVALUATION_DATE), false);
+});
+
+test('unrestricted physical printing truth also rejects future or undated printings', () => {
+  const released = card({ set: 'tst', collector_number: '1', released_at: '2026-08-20' });
+  const future = card({ set: 'tst', collector_number: '2', released_at: '2026-08-22' });
+  const undated = card({ set: 'tst', collector_number: '3', released_at: undefined });
+  assert.equal(printingMatchesPolicyV08(released, unrestrictedPolicy(), EVALUATION_DATE), true);
+  assert.equal(printingMatchesPolicyV08(future, unrestrictedPolicy(), EVALUATION_DATE), false);
+  assert.equal(printingMatchesPolicyV08(undated, unrestrictedPolicy(), EVALUATION_DATE), false);
 });
 
 test('Marvel is a first-class curated family with released main, bonus, and promo Secret Lair selectors', () => {

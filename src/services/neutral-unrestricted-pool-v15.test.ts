@@ -34,6 +34,7 @@ function card(name: string, index: number, overrides: Partial<ScryfallCard> = {}
     collector_number: String(index + 1),
     rarity: 'common',
     prices: { usd: '0.10', usd_foil: null, usd_etched: null },
+    released_at: '2020-01-01',
     scryfall_uri: `https://scryfall.com/card/tst/${index + 1}`,
     ...overrides,
   };

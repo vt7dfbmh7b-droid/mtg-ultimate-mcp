@@ -149,6 +149,28 @@ export function familySetTypeEligibleV08(setType: string, digital = false): bool
   return !digital && !NON_PLAYABLE_FAMILY_SET_TYPES.has(setType.toLocaleLowerCase());
 }
 
+function currentEvaluationDateV08(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function canonicalCalendarDateV08(value: string | undefined): string | null {
+  const trimmed = value?.trim();
+  if (!trimmed || !/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) return null;
+  const parsed = new Date(`${trimmed}T00:00:00.000Z`);
+  if (!Number.isFinite(parsed.getTime())) return null;
+  return parsed.toISOString().slice(0, 10) === trimmed ? trimmed : null;
+}
+
+/** Hard current-physical-printing truth. Missing/invalid release dates fail closed. */
+export function printingReleasedByV08(
+  card: Pick<ScryfallCard, 'released_at'>,
+  evaluationDate = currentEvaluationDateV08(),
+): boolean {
+  const releasedAt = canonicalCalendarDateV08(card.released_at);
+  const asOf = canonicalCalendarDateV08(evaluationDate);
+  return releasedAt !== null && asOf !== null && releasedAt <= asOf;
+}
+
 function exactPrintingKey(set: string, collectorNumber: string): string {
   return `${set.toLocaleLowerCase()}|${collectorNumber.replace(/^0+/, '') || '0'}`;
 }
@@ -219,8 +241,13 @@ export async function resolvePrintingPolicyV08(input: PrintingPolicyInputV08 = {
   };
 }
 
-export function printingMatchesPolicyV08(card: ScryfallCard, policy: ResolvedPrintingPolicyV08): boolean {
+export function printingMatchesPolicyV08(
+  card: ScryfallCard,
+  policy: ResolvedPrintingPolicyV08,
+  evaluationDate = currentEvaluationDateV08(),
+): boolean {
   if (card.digital) return false;
+  if (!printingReleasedByV08(card, evaluationDate)) return false;
   if (!policy.includePromos && card.promo) return false;
 
   const hasRestriction = Boolean(policy.family) || policy.allowedSetCodes.length > 0 || policy.exactSpecialPrintings.length > 0;
@@ -234,8 +261,12 @@ export function printingMatchesPolicyV08(card: ScryfallCard, policy: ResolvedPri
   return policy.exactSpecialPrintings.some((entry) => exactPrintingKey(entry.set, entry.collectorNumber) === key);
 }
 
-export function printingMatchReasonV08(card: ScryfallCard, policy: ResolvedPrintingPolicyV08): EligiblePrintingChoiceV08['matchedBy'] | null {
-  if (!printingMatchesPolicyV08(card, policy)) return null;
+export function printingMatchReasonV08(
+  card: ScryfallCard,
+  policy: ResolvedPrintingPolicyV08,
+  evaluationDate = currentEvaluationDateV08(),
+): EligiblePrintingChoiceV08['matchedBy'] | null {
+  if (!printingMatchesPolicyV08(card, policy, evaluationDate)) return null;
   if (!policy.family && policy.allowedSetCodes.length === 0 && policy.exactSpecialPrintings.length === 0) return 'unrestricted';
   const set = card.set.toLocaleLowerCase();
   const key = exactPrintingKey(set, card.collector_number);
@@ -274,11 +305,12 @@ export async function selectEligiblePrintingV08(
     printings = [card];
   }
 
+  const evaluationDate = currentEvaluationDateV08();
   const choices = printings
-    .filter((printing) => printingMatchesPolicyV08(printing, policy))
+    .filter((printing) => printingMatchesPolicyV08(printing, policy, evaluationDate))
     .flatMap((printing) => choicesForPrinting(printing).map((choice) => ({
       ...choice,
-      matchedBy: printingMatchReasonV08(printing, policy) ?? 'unrestricted',
+      matchedBy: printingMatchReasonV08(printing, policy, evaluationDate) ?? 'unrestricted',
     })))
     .filter((choice) => maxUsdPerCard === undefined || (choice.priceUsd !== null && choice.priceUsd <= maxUsdPerCard))
     .sort((a, b) => {
