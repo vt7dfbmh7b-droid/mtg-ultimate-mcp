@@ -152,10 +152,11 @@ test('basic-land ramp is not promoted to strategic tutor while unrestricted land
   assert.equal(inferCardRoles(demonicTutor).includes('tutor'), true);
 });
 
-test('commander-enabled and alternate-cost interaction is recognized as free while normally paid interaction is not', () => {
+test('commander-enabled, pitch, and mana-free evoke interaction is recognized as free while normally paid interaction is not', () => {
   assert.equal(inferCardRoles(deadlyRollick).includes('free interaction'), true);
   assert.equal(inferCardRoles(fierceGuardianship).includes('free interaction'), true);
   assert.equal(inferCardRoles(forceOfWill).includes('free interaction'), true);
+  assert.equal(inferCardRoles(solitude).includes('free interaction'), true);
   assert.equal(inferCardRoles(counterspell).includes('free interaction'), false);
 });
 
