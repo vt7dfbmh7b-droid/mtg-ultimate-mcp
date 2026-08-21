@@ -93,8 +93,7 @@ jobs:
 
       - name: Upload refinement result
         if: always()
-        uses: actions/upload-artifact@043fb46d1a935ba805825da76410c181273ba90b1
-        continue-on-error: true
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: marvel-bracket5-refine-${{ github.sha }}
           path: |
@@ -137,7 +136,7 @@ jobs:
       - name: Require refinement control to execute successfully
         if: always()
         env:
-          CONTROL_OUTCOME: ${{ steps.refine_control.outcome }}
+          CONTROL_OUTCOME: ${{ steps.marvel_refine.outcome }}
         run: |
           if [ "$CONTROL_OUTCOME" != "success" ]; then
             exit 1
