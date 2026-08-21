@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-08-21T21:15:00+12:00",
+  "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
+  "northStar": "Build the best evidence-backed autonomous Commander deck-building intelligence we can, then prove it deserves to be trusted.",
+  "stable": {
+    "branch": "main",
+    "version": "0.13.0",
+    "serverCurrent": "V0.13",
+    "promotionAuthorized": false
+  },
+  "experimental": {
+    "activeBranch": "agent/v15-native-deck-intelligence",
+    "activePullRequest": 29,
+    "developmentCheckpointSha": "303a474e4a1ec8cb80c9dc5babaafe42c1828472",
+    "developmentCheckpointNote": "Intelligence development paused while PM-01 project-management infrastructure is built. Always inspect the live branch head before editing; this SHA is the pause checkpoint, not a claim that later documentation commits are source-validation milestones.",
+    "lastFullyValidatedExperimentalBaseline": {
+      "branch": "agent/package-probabilities",
+      "sha": "63bb7274004060eea507f7991a04b84921d0cd47",
+      "scope": "Latest fully validated executable experimental baseline documented by the prior authoritative handoff. Later V0.15 deck-intelligence work on PR #29 remains experimental until its own controls complete."
+    }
+  },
+  "workMode": {
+    "intelligenceDevelopmentPaused": true,
+    "activeMilestone": "PM-01",
+    "reason": "Build persistent repo-backed project memory, generated handoffs, validation tracking, and decision history before resuming intelligence development."
+  },
+  "milestones": [
+    {
+      "id": "PM-01",
+      "name": "Persistent Project State & Handoff Automation",
+      "status": "active",
+      "goal": "Make repository state authoritative so a fresh chat can recover exact project context with minimal rechecking."
+    },
+    {
+      "id": "INTEL-01",
+      "name": "Win-package intelligence",
+      "status": "paused-validation-pending",
+      "goal": "Very-good verified full-table win-package discovery, feasibility, injection, and protection."
+    },
+    {
+      "id": "INTEL-02",
+      "name": "Actual autonomous deck improvement",
+      "status": "paused-validation-pending",
+      "goal": "Very-good target-aware autonomous refinement that repairs real deck weaknesses rather than cosmetic metrics."
+    },
+    {
+      "id": "BENCH-01",
+      "name": "Adversarial Commander benchmark suite",
+      "status": "planned",
+      "goal": "Prove deck-building quality across combo, combat, control, aristocrats, typal, budget, theme-restricted, cEDH-ish, and hybrid decks."
+    },
+    {
+      "id": "INTEL-03",
+      "name": "Human-level strategic reasoning layer",
+      "status": "planned",
+      "goal": "Model commander role, synergy networks, structural-card importance, cut consequences, primary/secondary plans, and coherent package trade-offs."
+    },
+    {
+      "id": "INTEL-04",
+      "name": "Counterfactual deck comparison & expert explanation",
+      "status": "planned",
+      "goal": "Compare complete 100-card alternatives and explain why one deck state is stronger under the exact requested constraints."
+    }
+  ],
+  "validation": {
+    "activeBranchStatus": "incomplete",
+    "latestPersistedMarvelControl": {
+      "sourceSha": "a4a1450d34c337c97b76fbbec688dbcf0ac7388e",
+      "outcome": "skipped",
+      "note": "This is stale pre-hardening metadata and must not be used as proof of the current branch."
+    },
+    "requiredBeforeResumingIntelligenceClaims": [
+      "Build and unit/regression suite pass on checked-in source",
+      "Fresh Marvel Bracket 5 control executes on the post-hardening lineage",
+      "Accepted deck changes repair or measurably advance actual failed target gates",
+      "Verified full-table win-route claims independently agree with final evaluation",
+      "Commander legality, exact 100 cards, printing-family/set restrictions, budgets, and meaningful deck strategy remain intact"
+    ]
+  },
+  "truthBoundary": [
+    "Commander legality, exact card count, singleton and color identity outrank optimization scores.",
+    "Exact physical-printing existence/restrictions and hard budgets are fail-closed truths.",
+    "Provider unavailable is not evidence of absence.",
+    "A generic infinite-damage statement is not a verified multiplayer full-table win unless opponent scope is proven.",
+    "Pipeline execution is not proof of intelligent deck improvement.",
+    "No merge, stable/current promotion, version bump, or release without explicit user approval."
+  ],
+  "nextActions": [
+    "Complete PM-01 authoritative project-state files and generated handoff tooling.",
+    "Add project-state validation to CI so stale handoffs fail fast.",
+    "Record permanent architecture decisions and known failure regressions.",
+    "Build a validation matrix mapping every control to the claim it proves.",
+    "After PM-01 is validated, resume INTEL-01/INTEL-02 from the pause checkpoint and run the fresh Marvel control before further feature work."
+  ],
+  "handoffProtocol": {
+    "readFirst": [
+      "project-state.json",
+      "docs/PROJECT-STATE.md",
+      "ULTIMATE_MTG_SPEC.md",
+      "docs/ROADMAP.md",
+      "docs/DECISIONS.md",
+      "docs/VALIDATION-MATRIX.md",
+      "docs/KNOWN-FAILURES.md"
+    ],
+    "then": "Inspect the live active-branch head, PR state, and validation outputs. Continue only from the active milestone and nextActions.",
+    "compatibilityEntryPoint": "PROJECT_HANDOFF.md"
+  }
+}
