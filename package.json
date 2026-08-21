@@ -17,7 +17,8 @@
     "project:handoff": "tsx scripts/generate-handoff.ts",
     "project:validate": "tsx scripts/validate-project-state.ts",
     "project:update": "tsx scripts/update-project-state.ts",
-    "check": "npm run project:validate && npm run build && npm test"
+    "project:typecheck": "tsc -p tsconfig.project-state.json",
+    "check": "npm run project:typecheck && npm run project:validate && npm run build && npm test"
   },
   "dependencies": {
     "@modelcontextprotocol/node": "2.0.0",
