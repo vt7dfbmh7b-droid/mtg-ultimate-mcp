@@ -88,6 +88,46 @@ const demonicTutor = card({
   manaCost: '{1}{B}',
 });
 
+const deadlyRollick = card({
+  name: 'Deadly Rollick',
+  typeLine: 'Instant',
+  oracleText: 'If you control a commander, you may cast this spell without paying its mana cost. Exile target creature.',
+  cmc: 4,
+  manaCost: '{3}{B}',
+});
+
+const fierceGuardianship = card({
+  name: 'Fierce Guardianship',
+  typeLine: 'Instant',
+  oracleText: 'If you control a commander, you may cast this spell without paying its mana cost. Counter target noncreature spell.',
+  cmc: 3,
+  manaCost: '{2}{U}',
+});
+
+const forceOfWill = card({
+  name: 'Force of Will',
+  typeLine: 'Instant',
+  oracleText: "You may pay 1 life and exile a blue card from your hand rather than pay this spell's mana cost. Counter target spell.",
+  cmc: 5,
+  manaCost: '{3}{U}{U}',
+});
+
+const solitude = card({
+  name: 'Solitude',
+  typeLine: 'Creature — Elemental Incarnation',
+  oracleText: "Flash\nLifelink\nWhen Solitude enters, exile up to one other target creature. That creature's controller gains life equal to its power.\nEvoke—Exile a white card from your hand.",
+  cmc: 5,
+  manaCost: '{3}{W}{W}',
+});
+
+const counterspell = card({
+  name: 'Counterspell',
+  typeLine: 'Instant',
+  oracleText: 'Counter target spell.',
+  cmc: 2,
+  manaCost: '{U}{U}',
+});
+
 test('ordinary lands are mana sources, not mana acceleration, while true multi-mana lands remain acceleration', () => {
   assert.equal(inferCardRoles(forest).includes('mana acceleration'), false);
   assert.equal(inferCardRoles(forest).includes('land'), true);
@@ -110,6 +150,13 @@ test('basic-land ramp is not promoted to strategic tutor while unrestricted land
   assert.equal(cropRoles.includes('tutor'), true);
 
   assert.equal(inferCardRoles(demonicTutor).includes('tutor'), true);
+});
+
+test('commander-enabled and alternate-cost interaction is recognized as free while normally paid interaction is not', () => {
+  assert.equal(inferCardRoles(deadlyRollick).includes('free interaction'), true);
+  assert.equal(inferCardRoles(fierceGuardianship).includes('free interaction'), true);
+  assert.equal(inferCardRoles(forceOfWill).includes('free interaction'), true);
+  assert.equal(inferCardRoles(counterspell).includes('free interaction'), false);
 });
 
 test('deck metrics no longer let basic lands or Farseek-style ramp satisfy ramp and tutor targets simultaneously', () => {
