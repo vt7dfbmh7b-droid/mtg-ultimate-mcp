@@ -73,7 +73,7 @@ test('general package ranking rejects impressive non-winning outcomes and exclud
   assert.deepEqual(ranked.map((row) => row.id), ['actual-win']);
 });
 
-test('general package ranking does not treat resource loops or combat loops as deterministic wins', () => {
+test('general package ranking uses full-table Commander closure rather than generic lethal-scale output', () => {
   const ranked = rankGeneralWinPackageVariantsV15([
     {
       id: 'mana-only',
@@ -90,14 +90,28 @@ test('general package ranking does not treat resource loops or combat loops as d
       popularity: 9999,
     },
     {
-      id: 'mana-with-outlet',
+      id: 'unscoped-damage',
       cards: [{ name: 'E' }, { name: 'F' }],
       results: ['Infinite mana', 'Infinite damage'],
+      requirements: [],
+      popularity: 100,
+    },
+    {
+      id: 'single-opponent',
+      cards: [{ name: 'G' }, { name: 'H' }],
+      results: ['Target opponent loses the game'],
+      requirements: [],
+      popularity: 100,
+    },
+    {
+      id: 'table-kill',
+      cards: [{ name: 'I' }, { name: 'J' }],
+      results: ['Infinite damage to each opponent'],
       requirements: [],
       popularity: 1,
     },
   ], []);
-  assert.deepEqual(ranked.map((row) => row.id), ['mana-with-outlet']);
+  assert.deepEqual(ranked.map((row) => row.id), ['table-kill']);
 });
 
 test('a package requiring the commander is rejected when that commander is not selected', () => {
