@@ -12,6 +12,8 @@ on:
       - "src/services/scryfall.ts"
       - "src/services/card-role-truth-v15.test.ts"
       - "src/services/win-route-setup-interruption-v15.test.ts"
+      - "src/services/upgrade.ts"
+      - "src/services/upgrade-restricted-pool-v15.test.ts"
       - ".github/workflows/middle-earth-bracket5-expanded-live.yml"
   workflow_dispatch:
 
