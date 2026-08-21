@@ -3,14 +3,14 @@ import test from 'node:test';
 import type { ScryfallCard } from '../types/scryfall.js';
 import { auditWinRouteSetupInterruptionV15 } from './win-route-setup-interruption-v15.js';
 
-function card(name: string, typeLine: string, oracleText = '', manaCost = '{2}'): ScryfallCard {
+function card(name: string, typeLine: string, oracleText = '', manaCost = '{2}', cmc = 2): ScryfallCard {
   return {
     id: `id-${name}`,
     oracle_id: `oracle-${name}`,
     name,
     lang: 'en',
     mana_cost: manaCost,
-    cmc: 2,
+    cmc,
     type_line: typeLine,
     oracle_text: oracleText,
     color_identity: [],
@@ -102,7 +102,7 @@ test('deck support is role-level advisory and does not claim exact tutor or reco
   const protection = card('Protection Spell', 'Instant', 'Target creature gains hexproof until end of turn.', '{G}');
   const recursion = card('Recursion Spell', 'Sorcery', 'Return target creature card from your graveyard to your hand.', '{1}{B}');
   const counter = card('Counter Spell', 'Instant', 'Counter target spell.', '{U}{U}');
-  const freeCounter = card('Free Counter', 'Instant', 'Counter target spell.', '{0}');
+  const freeCounter = card('Free Counter', 'Instant', 'Counter target spell.', '{0}', 0);
 
   const audit = auditWinRouteSetupInterruptionV15({
     route: {
