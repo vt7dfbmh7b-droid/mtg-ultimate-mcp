@@ -11,6 +11,8 @@ on:
       - "src/services/general-win-package-v15.test.ts"
       - "src/services/win-package-pagination-v15.ts"
       - "src/services/win-package-pagination-v15.test.ts"
+      - "src/services/win-package-restricted-pool-v15.ts"
+      - "src/services/win-package-restricted-pool-v15.test.ts"
       - ".github/workflows/marvel-bracket5-refine-live.yml"
   workflow_dispatch:
 
@@ -45,25 +47,41 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Integrate bounded Spellbook pagination into general win-package discovery
+      - name: Integrate restricted physical-pool prefilter
         run: |
           python3 - <<'PY'
           from pathlib import Path
           p = Path('src/services/general-win-package-v15.ts')
           text = p.read_text()
-          old_import = "import { searchSpellbookVariantsEvidence } from './spellbook.js';\n"
-          new_import = old_import + "import { collectBoundedSpellbookVariantsV15 } from './win-package-pagination-v15.js';\n"
-          if new_import not in text:
-              if old_import not in text:
-                  raise SystemExit('expected Spellbook import not found')
-              text = text.replace(old_import, new_import, 1)
 
-          old_block = """  let availableQueries = 0;\n  let unavailableQueries = 0;\n  for (const query of buildGeneralWinPackageQueriesV15(maxPackageCards, identityToken(commanders))) {\n    const result = await searchSpellbookVariantsEvidence(query, { limit: 75, ordering: '-popularity' });\n    const rows = Array.isArray(result.results) ? result.results : [];\n    const available = result.sourceStatus === 'available' && result.verificationComplete === true;\n    if (available) {\n      availableQueries += 1;\n      raw.push(...rows);\n    } else {\n      unavailableQueries += 1;\n    }\n    queryAudit.push({\n      query,\n      returned: rows.length,\n      totalMatching: result.count ?? null,\n      sourceStatus: result.sourceStatus ?? 'unknown',\n      verificationComplete: result.verificationComplete === true,\n      ...(result.sourceFailure ? { sourceFailure: result.sourceFailure } : {}),\n    });\n  }\n  const sourceCompleteness: 'complete' | 'partial' | 'unavailable' = unavailableQueries === 0\n    ? 'complete'\n    : availableQueries === 0\n      ? 'unavailable'\n      : 'partial';\n"""
-          new_block = """  let availableQueries = 0;\n  let unavailableQueries = 0;\n  let incompleteQueries = 0;\n  for (const query of buildGeneralWinPackageQueriesV15(maxPackageCards, identityToken(commanders))) {\n    const result = await collectBoundedSpellbookVariantsV15(\n      query,\n      searchSpellbookVariantsEvidence,\n      { pageSize: 100, maxRows: 400, ordering: '-popularity' },\n    );\n    if (result.rows.length > 0) raw.push(...result.rows);\n    if (result.sourceStatus === 'unavailable') {\n      unavailableQueries += 1;\n    } else {\n      availableQueries += 1;\n      if (!result.verificationComplete) incompleteQueries += 1;\n    }\n    queryAudit.push({\n      query,\n      returned: result.rowsFetched,\n      totalMatching: result.totalMatching,\n      pagesFetched: result.pagesFetched,\n      exhausted: result.exhausted,\n      truncated: result.truncated,\n      sourceStatus: result.sourceStatus,\n      verificationComplete: result.verificationComplete,\n      ...(result.sourceFailure ? { sourceFailure: result.sourceFailure } : {}),\n    });\n  }\n  const sourceCompleteness: 'complete' | 'partial' | 'unavailable' = unavailableQueries === 0 && incompleteQueries === 0\n    ? 'complete'\n    : availableQueries === 0\n      ? 'unavailable'\n      : 'partial';\n"""
-          if new_block not in text:
-              if old_block not in text:
-                  raise SystemExit('expected first-page discovery block not found')
-              text = text.replace(old_block, new_block, 1)
+          anchor = "import { getCardsByNames, inferCardRoles } from './scryfall.js';\n"
+          imports = anchor + "import { discoverEligiblePoolV15 } from './neutral-deck-builder-v15.js';\n"
+          if "discoverEligiblePoolV15" not in text:
+              if anchor not in text:
+                  raise SystemExit('expected Scryfall import anchor not found')
+              text = text.replace(anchor, imports, 1)
+
+          anchor2 = "import { collectBoundedSpellbookVariantsV15 } from './win-package-pagination-v15.js';\n"
+          imports2 = anchor2 + "import { prefilterRestrictedWinPackageCandidatesV15 } from './win-package-restricted-pool-v15.js';\n"
+          if "prefilterRestrictedWinPackageCandidatesV15" not in text:
+              if anchor2 not in text:
+                  raise SystemExit('expected pagination import anchor not found')
+              text = text.replace(anchor2, imports2, 1)
+
+          colors_anchor = "  const colors = commanderIdentity(commanders);\n  const raw: unknown[] = [];\n"
+          colors_replacement = """  const colors = commanderIdentity(commanders);\n  const hasRestrictedPhysicalPool = Boolean(policy.family) || policy.allowedSetCodes.length > 0 || policy.exactSpecialPrintings.length > 0;\n  const restrictedEligiblePool = hasRestrictedPhysicalPool\n    ? await discoverEligiblePoolV15(colors, policy, options.maxUsdPerCard)\n    : null;\n  const raw: unknown[] = [];\n"""
+          if "const restrictedEligiblePool" not in text:
+              if colors_anchor not in text:
+                  raise SystemExit('expected colors/raw anchor not found')
+              text = text.replace(colors_anchor, colors_replacement, 1)
+
+          ranked_anchor = "  const ranked = rankGeneralWinPackageVariantsV15(raw, commanderNames, options).map(record);\n  const names = [...new Set(ranked.flatMap((candidate) => Array.isArray(candidate.names) ? candidate.names.map(String) : []))];\n"
+          ranked_replacement = """  const rankedBeforeRestrictedPool = rankGeneralWinPackageVariantsV15(raw, commanderNames, options);\n  const restrictedPrefilter = restrictedEligiblePool\n    ? prefilterRestrictedWinPackageCandidatesV15(\n        rankedBeforeRestrictedPool,\n        commanderNames,\n        restrictedEligiblePool.map((card) => card.name),\n      )\n    : null;\n  const ranked = (restrictedPrefilter?.candidates ?? rankedBeforeRestrictedPool).map(record);\n  if (restrictedPrefilter) {\n    queryAudit.push({\n      kind: 'restricted-physical-pool-prefilter',\n      ...restrictedPrefilter.audit,\n    });\n  }\n  const names = [...new Set(ranked.flatMap((candidate) => Array.isArray(candidate.names) ? candidate.names.map(String) : []))];\n"""
+          if "rankedBeforeRestrictedPool" not in text:
+              if ranked_anchor not in text:
+                  raise SystemExit('expected ranked discovery anchor not found')
+              text = text.replace(ranked_anchor, ranked_replacement, 1)
+
           p.write_text(text)
           PY
 
@@ -71,20 +89,19 @@ jobs:
         run: npm run build
 
       - name: Run win-package regressions
-        run: npx tsx --test src/services/deck-builder-win-package-ceiling-v15.test.ts src/services/win-package-pagination-v15.test.ts src/services/general-win-package-v15.test.ts
+        run: npx tsx --test src/services/deck-builder-win-package-ceiling-v15.test.ts src/services/win-package-pagination-v15.test.ts src/services/win-package-restricted-pool-v15.test.ts src/services/general-win-package-v15.test.ts
 
-      - name: Persist bounded win-package pagination source integration
+      - name: Persist restricted-pool integration
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- src/services/general-win-package-v15.ts
-          if git diff --cached --quiet; then
-            exit 0
+          if ! git diff --cached --quiet; then
+            git commit -m "fix(v15): prefilter constrained win packages [skip ci]"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
-          git commit -m "fix(v15): paginate constrained win-package discovery [skip ci]"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Refine selected Marvel-only Bracket 5 attempt
         id: refine_control
@@ -114,30 +131,20 @@ jobs:
           rm -f test-results/marvel-bracket5/refine-result.json \
                 test-results/marvel-bracket5/refined-deck.txt \
                 test-results/marvel-bracket5/refine-failure.txt
-          if [ -f marvel-bracket5-refine-result.json ]; then
-            cp marvel-bracket5-refine-result.json test-results/marvel-bracket5/refine-result.json
-          fi
-          if [ -f marvel-bracket5-refined-deck.txt ]; then
-            cp marvel-bracket5-refined-deck.txt test-results/marvel-bracket5/refined-deck.txt
-          fi
-          if [ -f marvel-bracket5-refine-failure.txt ]; then
-            cp marvel-bracket5-refine-failure.txt test-results/marvel-bracket5/refine-failure.txt
-          fi
-          printf 'workflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\n' "$GITHUB_SHA" "$(git rev-parse HEAD)" "$CONTROL_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
+          [ ! -f marvel-bracket5-refine-result.json ] || cp marvel-bracket5-refine-result.json test-results/marvel-bracket5/refine-result.json
+          [ ! -f marvel-bracket5-refined-deck.txt ] || cp marvel-bracket5-refined-deck.txt test-results/marvel-bracket5/refined-deck.txt
+          [ ! -f marvel-bracket5-refine-failure.txt ] || cp marvel-bracket5-refine-failure.txt test-results/marvel-bracket5/refine-failure.txt
+          printf 'workflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\nrestricted_pool_prefilter=true\n' "$GITHUB_SHA" "$(git rev-parse HEAD)" "$CONTROL_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- test-results/marvel-bracket5
-          if git diff --cached --quiet; then
-            exit 0
+          if ! git diff --cached --quiet; then
+            git commit -m "test-results: persist Marvel Bracket 5 refinement control"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
-          git commit -m "test-results: persist Marvel Bracket 5 refinement control"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Require refinement control to execute successfully
         if: always()
         env:
           CONTROL_OUTCOME: ${{ steps.refine_control.outcome }}
-        run: |
-          if [ "$CONTROL_OUTCOME" != "success" ]; then
-            exit 1
-          fi
+        run: test "$CONTROL_OUTCOME" = "success"
