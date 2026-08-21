@@ -5,11 +5,19 @@ on:
     branches: ["agent/**"]
     paths:
       - "scripts/e2e-marvel-bracket5-v15.ts"
+      - "scripts/e2e-marvel-bracket5-refine-v15.ts"
+      - "src/services/printing-policy-v08.ts"
+      - "src/services/printing-policy-v08.test.ts"
+      - "src/services/printing-family-specials-v08.ts"
       - ".github/workflows/marvel-bracket5-live.yml"
   pull_request:
     branches: [main]
     paths:
       - "scripts/e2e-marvel-bracket5-v15.ts"
+      - "scripts/e2e-marvel-bracket5-refine-v15.ts"
+      - "src/services/printing-policy-v08.ts"
+      - "src/services/printing-policy-v08.test.ts"
+      - "src/services/printing-family-specials-v08.ts"
       - ".github/workflows/marvel-bracket5-live.yml"
   workflow_dispatch:
 
@@ -41,10 +49,8 @@ jobs:
           package-manager-cache: false
       - name: Install dependencies
         run: npm ci
-      - name: Reuse exact special-printing audit already validated by Middle-earth control
-        run: cp test-results/middle-earth-bracket5-expanded/special-printing-audit.json themed-special-printing-audit.json
-      - name: Apply test-only Marvel and Middle-earth family presets
-        run: python3 scripts/apply-themed-special-presets-from-audit.py
+      - name: Type-check permanent Marvel printing-family policy
+        run: npm run build
       - name: Use existing four-card win-package maximum
         run: |
           python3 - <<'PY'
@@ -53,13 +59,11 @@ jobs:
           t=p.read_text().replace('maxWinPackageCards: 3,','maxWinPackageCards: 4,')
           p.write_text(t)
           PY
-      - name: Type-check broadened policy
-        run: npm run build
-      - name: Run Marvel full-family Bracket 5 target control
+      - name: Run Marvel permanent-family Bracket 5 target control
         id: marvel_control
         continue-on-error: true
         run: npx tsx scripts/e2e-marvel-bracket5-v15.ts
-      - name: Refine Marvel full-family winner
+      - name: Refine Marvel permanent-family winner
         id: marvel_refine
         if: steps.marvel_control.outcome == 'success'
         continue-on-error: true
@@ -76,22 +80,22 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p test-results/marvel-bracket5
-          rm -f test-results/marvel-bracket5/live-result.json test-results/marvel-bracket5/selected-deck.txt test-results/marvel-bracket5/refine-result.json test-results/marvel-bracket5/refined-deck.txt test-results/marvel-bracket5/special-printing-audit.json test-results/marvel-bracket5/failure.txt
+          rm -f test-results/marvel-bracket5/live-result.json test-results/marvel-bracket5/selected-deck.txt test-results/marvel-bracket5/refine-result.json test-results/marvel-bracket5/refined-deck.txt test-results/marvel-bracket5/failure.txt
           [ ! -f marvel-bracket5-live-result.json ] || cp marvel-bracket5-live-result.json test-results/marvel-bracket5/live-result.json
           [ ! -f marvel-bracket5-selected-deck.txt ] || cp marvel-bracket5-selected-deck.txt test-results/marvel-bracket5/selected-deck.txt
           [ ! -f marvel-bracket5-refine-result.json ] || cp marvel-bracket5-refine-result.json test-results/marvel-bracket5/refine-result.json
           [ ! -f marvel-bracket5-refined-deck.txt ] || cp marvel-bracket5-refined-deck.txt test-results/marvel-bracket5/refined-deck.txt
-          cp themed-special-printing-audit.json test-results/marvel-bracket5/special-printing-audit.json
-          printf 'source_sha=%s\ncontrol_outcome=%s\nrefine_outcome=%s\npolicy=full-family-promos-curated-sld\nmax_win_package_cards=4\nshared_policy_unit_suite=passed-in-middle-earth-full-family-control\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" "$REFINE_OUTCOME" > test-results/marvel-bracket5/run-metadata.txt
+          [ ! -f marvel-bracket5-live-failure.txt ] || cp marvel-bracket5-live-failure.txt test-results/marvel-bracket5/failure.txt
+          printf 'source_sha=%s\ncontrol_outcome=%s\nrefine_outcome=%s\npolicy=permanent-production-presets\nmax_win_package_cards=4\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" "$REFINE_OUTCOME" > test-results/marvel-bracket5/run-metadata.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- test-results/marvel-bracket5
-          if ! git diff --cached --quiet; then git commit -m "test-results: persist Marvel full-family Bracket 5 control" && git push origin "HEAD:${GITHUB_REF_NAME}"; fi
+          if ! git diff --cached --quiet; then git commit -m "test-results: persist Marvel permanent-family Bracket 5 control" && git push origin "HEAD:${GITHUB_REF_NAME}"; fi
       - name: Require Marvel controls to execute successfully
         if: always()
         env:
           CONTROL_OUTCOME: ${{ steps.marvel_control.outcome }}
           REFINE_OUTCOME: ${{ steps.marvel_refine.outcome }}
         run: |
-          test "$CONTROL_OUTCOME" = "success"
+          test "$MARVEL_CONTROL" = "success"
           test "$REFINE_OUTCOME" = "success"
