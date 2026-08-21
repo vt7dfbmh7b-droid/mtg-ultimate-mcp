@@ -13,11 +13,11 @@
       ],
       "metadataPath": "test-results/project-management/integrity.txt",
       "exists": true,
-      "sourceSha": "4aaaaa188c9b268feaeb3270f25d1aa1a53d80ae",
+      "sourceSha": "8a98dcc40b7750fe85d5f6ff6520d1f4b427497a",
       "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "4aaaaa188c9b268feaeb3270f25d1aa1a53d80ae",
+        "source_sha": "8a98dcc40b7750fe85d5f6ff6520d1f4b427497a",
         "active_milestone": "PM-02",
         "typecheck_outcome": "success",
         "state_validate_outcome": "success",
