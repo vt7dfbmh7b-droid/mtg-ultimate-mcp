@@ -1,16 +1,16 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-08-21T21:15:00+12:00**.
+Generated from `project-state.json`. Last state update: **2026-08-21T21:32:00+12:00**.
 
 ## Current mode
 
 - Repository: `vt7dfbmh7b-droid/mtg-ultimate-mcp`
 - Active experimental branch: `agent/v15-native-deck-intelligence`
 - Active PR: #29
-- Active milestone: **PM-01**
+- Active milestone: **PM-02**
 - Intelligence development paused: **yes**
-- Reason: Build persistent repo-backed project memory, generated handoffs, validation tracking, and decision history before resuming intelligence development.
+- Reason: Consolidate persisted validation results into one deterministic machine-readable index before resuming Commander intelligence development.
 
 ## Stable boundary
 
@@ -23,7 +23,7 @@ Generated from `project-state.json`. Last state update: **2026-08-21T21:15:00+12
 
 Development checkpoint at pause: `303a474e4a1ec8cb80c9dc5babaafe42c1828472`
 
-Intelligence development paused while PM-01 project-management infrastructure is built. Always inspect the live branch head before editing; this SHA is the pause checkpoint, not a claim that later documentation commits are source-validation milestones.
+Intelligence development is paused while the repo-first project-management layer is completed. This SHA is the deck-intelligence pause checkpoint, not a claim that later PM/documentation commits are executable intelligence validation milestones.
 
 Latest fully validated executable experimental baseline recorded by project state:
 
@@ -37,7 +37,8 @@ Always inspect the live active-branch head before editing. A later documentation
 
 | ID | Milestone | Status | Goal |
 |---|---|---|---|
-| PM-01 | Persistent Project State & Handoff Automation | active | Make repository state authoritative so a fresh chat can recover exact project context with minimal rechecking. |
+| PM-01 | Persistent Project State & Handoff Automation | validated | Make repository state authoritative so a fresh chat can recover exact project context with minimal rechecking. |
+| PM-02 | Validation State Indexing | active | Consolidate key persisted control metadata into one deterministic validation index so fresh chats can identify current, stale, passing and failing evidence immediately. |
 | INTEL-01 | Win-package intelligence | paused-validation-pending | Very-good verified full-table win-package discovery, feasibility, injection, and protection. |
 | INTEL-02 | Actual autonomous deck improvement | paused-validation-pending | Very-good target-aware autonomous refinement that repairs real deck weaknesses rather than cosmetic metrics. |
 | BENCH-01 | Adversarial Commander benchmark suite | planned | Prove deck-building quality across combo, combat, control, aristocrats, typal, budget, theme-restricted, cEDH-ish, and hybrid decks. |
@@ -61,11 +62,11 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 
 ## Next actions
 
-1. Complete PM-01 authoritative project-state files and generated handoff tooling.
-2. Add project-state validation to CI so stale handoffs fail fast.
-3. Record permanent architecture decisions and known failure regressions.
-4. Build a validation matrix mapping every control to the claim it proves.
-5. After PM-01 is validated, resume INTEL-01/INTEL-02 from the pause checkpoint and run the fresh Marvel control before further feature work.
+1. Finish PM-02 validation-registry/index tooling and strict integrity checks.
+2. Validate PM-02 on checked-in source and persist the exact tested SHA/outcomes.
+3. Expand the validation registry only with high-value controls needed for current milestone recovery; do not turn it into noisy workflow inventory.
+4. Run a fresh-chat recovery smoke using only project state, validation index, live branch/PR state and referenced decision/failure docs.
+5. After PM-02 is validated, resume INTEL-01/INTEL-02 from the deck-intelligence pause checkpoint and run the fresh Marvel control before further feature work.
 
 ## Permanent truth boundary
 
@@ -82,10 +83,12 @@ Read in this order:
 
 1. `project-state.json`
 2. `docs/PROJECT-STATE.md`
-3. `ULTIMATE_MTG_SPEC.md`
-4. `docs/ROADMAP.md`
-5. `docs/DECISIONS.md`
-6. `docs/VALIDATION-MATRIX.md`
-7. `docs/KNOWN-FAILURES.md`
+3. `validation-index.json`
+4. `docs/VALIDATION-STATE.md`
+5. `ULTIMATE_MTG_SPEC.md`
+6. `docs/ROADMAP.md`
+7. `docs/DECISIONS.md`
+8. `docs/VALIDATION-MATRIX.md`
+9. `docs/KNOWN-FAILURES.md`
 
-Then: Inspect the live active-branch head, PR state, and validation outputs. Continue only from the active milestone and nextActions.
+Then: Inspect the live active-branch head and PR state. Use the validation index to decide which persisted controls are current or stale, then continue only from the active milestone and nextActions.
