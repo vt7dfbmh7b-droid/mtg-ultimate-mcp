@@ -120,7 +120,23 @@ export function refinementImprovementScoreV11(plan: Record<string, unknown>): {
   });
   components.targetGatePriority = targetGate.score;
 
-  const score = Object.values(components).reduce((sum, value) => sum + value, 0);
+  const knownConstructionGateCount = Math.max(0, 8 - targetGate.ignoredUnverifiedGates.length);
+  const failedKnownGateCount = Math.max(0, knownConstructionGateCount - targetGate.passingBefore.length);
+  const hasTargetProgress = targetGate.repairedGates.length > 0 || targetGate.advancedFailedGates.length > 0;
+  const zeroProgressBlocked = targetGate.applicable
+    && failedKnownGateCount > 0
+    && !hasTargetProgress
+    && targetGate.regressedGates.length === 0;
+
+  let score = Object.values(components).reduce((sum, value) => sum + value, 0);
+  // Bracket-5 refinement must advance a known failed construction gate while any remain.
+  // Force zero-progress packages below the minimum configurable acceptance floor (-10), so even
+  // unusually strong simulation deltas cannot make cosmetic changes outrank the actual target.
+  if (zeroProgressBlocked && score > -10.001) {
+    components.targetGateNoProgressGuard = Number((-10.001 - score).toFixed(3));
+    score = Object.values(components).reduce((sum, value) => sum + value, 0);
+  }
+
   const keepDelta = numeric(delta.functionalKeepRate) ?? 0;
   const commanderDelta = numeric(delta.commanderUptimePercent) ?? 0;
   const spellsDelta = numeric(delta.averageSpellsCast) ?? 0;

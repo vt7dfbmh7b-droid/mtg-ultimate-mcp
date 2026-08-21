@@ -119,3 +119,59 @@ test('shared refinement score treats regression of an already-passing Bracket-5 
   assert.equal(result.significantRegression, true);
   assert.ok((result.components.targetGatePriority ?? 0) < 0);
 });
+
+test('shared refinement score hard-blocks cosmetic B5 changes while known construction gates remain failed', () => {
+  const result = refinementImprovementScoreV11({
+    simulation: {
+      delta: {
+        functionalKeepRate: 10,
+        commanderUptimePercent: 10,
+        protectionWinRate: 5,
+        averageSpellsCast: 2,
+      },
+    },
+    beforeMetrics: bracket5Metrics(),
+    afterMetrics: bracket5Metrics({ tutorCount: 9 }),
+    v15TargetPressure: bracket5Pressure(),
+  });
+  assert.equal(result.components.targetGatePriority, 0);
+  assert.ok((result.components.targetGateNoProgressGuard ?? 0) < 0);
+  assert.ok(result.score < -10);
+});
+
+test('shared refinement score still allows measurable movement toward a failed B5 gate', () => {
+  const result = refinementImprovementScoreV11({
+    simulation: { delta: {} },
+    beforeMetrics: bracket5Metrics({ averageNonlandManaValue: 2.71 }),
+    afterMetrics: bracket5Metrics({ averageNonlandManaValue: 2.65 }),
+    v15TargetPressure: bracket5Pressure(),
+  });
+  assert.ok((result.components.targetGatePriority ?? 0) > 0);
+  assert.equal(result.components.targetGateNoProgressGuard, undefined);
+  assert.ok(result.score > 0);
+});
+
+test('shared refinement score leaves lower-bracket scoring unchanged by the B5 zero-progress guard', () => {
+  const result = refinementImprovementScoreV11({
+    simulation: { delta: { functionalKeepRate: 1 } },
+    beforeMetrics: bracket5Metrics(),
+    afterMetrics: bracket5Metrics({ tutorCount: 9 }),
+    v15TargetPressure: bracket5Pressure({ targetPressure: { targetBracket: 4 } }),
+  });
+  assert.equal(result.components.targetGatePriority, 0);
+  assert.equal(result.components.targetGateNoProgressGuard, undefined);
+  assert.ok(result.score > 0);
+});
+
+test('shared refinement score does not invent a B5 failure when the only unresolved construction evidence is unavailable', () => {
+  const passingKnownMetrics = bracket5Metrics({ averageNonlandManaValue: 2.5 });
+  const result = refinementImprovementScoreV11({
+    simulation: { delta: { functionalKeepRate: 1 } },
+    beforeMetrics: passingKnownMetrics,
+    afterMetrics: passingKnownMetrics,
+    v15TargetPressure: bracket5Pressure({ winRouteVerificationStatus: 'verification-unavailable' }),
+  });
+  assert.equal(result.components.targetGatePriority, 0);
+  assert.equal(result.components.targetGateNoProgressGuard, undefined);
+  assert.ok(result.score > 0);
+});
