@@ -4,9 +4,11 @@ on:
   push:
     branches: ["agent/v15-native-deck-intelligence"]
     paths:
+      - "scripts/e2e-printing-family-policy-v15.ts"
       - "scripts/e2e-middle-earth-bracket5-expanded-v15.ts"
-      - "scripts/audit-marvel-middle-earth-special-printings-v15.ts"
-      - "scripts/apply-themed-special-presets-from-audit.py"
+      - "src/services/printing-policy-v08.ts"
+      - "src/services/printing-policy-v08.test.ts"
+      - "src/services/printing-family-specials-v08.ts"
       - ".github/workflows/middle-earth-bracket5-expanded-live.yml"
   workflow_dispatch:
 
@@ -38,11 +40,60 @@ jobs:
           package-manager-cache: false
       - name: Install dependencies
         run: npm ci
-      - name: Resolve exact official Marvel / Middle-earth special printings
-        run: npx tsx scripts/audit-marvel-middle-earth-special-printings-v15.ts
-      - name: Apply test-only Marvel and Middle-earth family presets
-        run: python3 scripts/apply-themed-special-presets-from-audit.py
-      - name: Use Middle-earth family policy and four-card package maximum
+
+      - name: Type-check and build permanent printing-family policy
+        id: production_build
+        continue-on-error: true
+        run: npm run build
+
+      - name: Run full unit suite against permanent policy
+        id: production_tests
+        if: steps.production_build.outcome == 'success'
+        continue-on-error: true
+        run: npm test
+
+      - name: Prove normal Marvel and Middle-earth Build paths
+        id: production_proof
+        if: steps.production_build.outcome == 'success' && steps.production_tests.outcome == 'success'
+        continue-on-error: true
+        run: npx tsx scripts/e2e-printing-family-policy-v15.ts
+
+      - name: Persist production printing-family proof
+        if: always()
+        env:
+          BUILD_OUTCOME: ${{ steps.production_build.outcome }}
+          TEST_OUTCOME: ${{ steps.production_tests.outcome }}
+          PROOF_OUTCOME: ${{ steps.production_proof.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p test-results/printing-family-production-proof
+          rm -f test-results/printing-family-production-proof/result.json \
+                test-results/printing-family-production-proof/failure.txt
+          [ ! -f printing-family-production-proof.json ] || cp printing-family-production-proof.json test-results/printing-family-production-proof/result.json
+          [ ! -f printing-family-production-proof-failure.txt ] || cp printing-family-production-proof-failure.txt test-results/printing-family-production-proof/failure.txt
+          printf 'source_sha=%s\nbuild_outcome=%s\ntest_outcome=%s\nproof_outcome=%s\npolicy=permanent-production-presets\n' \
+            "$GITHUB_SHA" "$BUILD_OUTCOME" "$TEST_OUTCOME" "$PROOF_OUTCOME" \
+            > test-results/printing-family-production-proof/run-metadata.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- test-results/printing-family-production-proof
+          if ! git diff --cached --quiet; then
+            git commit -m "test-results: persist production printing-family proof"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+
+      - name: Require production family-policy validation
+        env:
+          BUILD_OUTCOME: ${{ steps.production_build.outcome }}
+          TEST_OUTCOME: ${{ steps.production_tests.outcome }}
+          PROOF_OUTCOME: ${{ steps.production_proof.outcome }}
+        run: |
+          test "$BUILD_OUTCOME" = "success"
+          test "$TEST_OUTCOME" = "success"
+          test "$PROOF_OUTCOME" = "success"
+
+      - name: Use permanent Middle-earth family policy and four-card package maximum
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -53,15 +104,13 @@ jobs:
           t=t.replace('maxWinPackageCards: 3,','maxWinPackageCards: 4,')
           p.write_text(t)
           PY
-      - name: Type-check and build broadened policy
-        run: npm run build
-      - name: Run unit suite under broadened policy
-        run: npm test
+
       - name: Run expanded Middle-earth full-family control
         id: live_control
         continue-on-error: true
         run: npx tsx scripts/e2e-middle-earth-bracket5-expanded-v15.ts
-      - name: Persist result
+
+      - name: Persist Middle-earth benchmark result
         if: always()
         env:
           CONTROL_OUTCOME: ${{ steps.live_control.outcome }}
@@ -69,17 +118,23 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p test-results/middle-earth-bracket5-expanded
-          rm -f test-results/middle-earth-bracket5-expanded/result.json test-results/middle-earth-bracket5-expanded/selected-deck.txt test-results/middle-earth-bracket5-expanded/refined-deck.txt test-results/middle-earth-bracket5-expanded/special-printing-audit.json test-results/middle-earth-bracket5-expanded/failure.txt
+          rm -f test-results/middle-earth-bracket5-expanded/result.json \
+                test-results/middle-earth-bracket5-expanded/selected-deck.txt \
+                test-results/middle-earth-bracket5-expanded/refined-deck.txt \
+                test-results/middle-earth-bracket5-expanded/failure.txt
           [ ! -f middle-earth-bracket5-expanded-result.json ] || cp middle-earth-bracket5-expanded-result.json test-results/middle-earth-bracket5-expanded/result.json
           [ ! -f middle-earth-bracket5-expanded-selected-deck.txt ] || cp middle-earth-bracket5-expanded-selected-deck.txt test-results/middle-earth-bracket5-expanded/selected-deck.txt
           [ ! -f middle-earth-bracket5-expanded-refined-deck.txt ] || cp middle-earth-bracket5-expanded-refined-deck.txt test-results/middle-earth-bracket5-expanded/refined-deck.txt
-          [ ! -f themed-special-printing-audit.json ] || cp themed-special-printing-audit.json test-results/middle-earth-bracket5-expanded/special-printing-audit.json
           [ ! -f middle-earth-bracket5-expanded-failure.txt ] || cp middle-earth-bracket5-expanded-failure.txt test-results/middle-earth-bracket5-expanded/failure.txt
-          printf 'source_sha=%s\ncontrol_outcome=%s\npolicy=full-family-promos-curated-sld\nmax_win_package_cards=4\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/middle-earth-bracket5-expanded/run-metadata.txt
+          printf 'source_sha=%s\ncontrol_outcome=%s\npolicy=permanent-production-presets\nmax_win_package_cards=4\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/middle-earth-bracket5-expanded/run-metadata.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- test-results/middle-earth-bracket5-expanded
-          if ! git diff --cached --quiet; then git commit -m "test-results: persist Middle-earth full-family Bracket 5 control" && git push origin "HEAD:${GITHUB_REF_NAME}"; fi
+          if ! git diff --cached --quiet; then
+            git commit -m "test-results: persist Middle-earth production-family control"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+
       - name: Require expanded control success
         if: always()
         env:
