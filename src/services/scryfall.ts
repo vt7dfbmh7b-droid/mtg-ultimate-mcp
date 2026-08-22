@@ -271,10 +271,12 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (teamWideStatPayoff || boardScalingEquipment) roles.add('go-wide payoff');
   if (/sacrifice (?:a|another|target|this)/.test(text)) roles.add('sacrifice synergy');
   if (/sacrifice (?:a|another) creature\s*:|sacrifice (?:a|another) permanent\s*:/.test(text)) roles.add('sacrifice outlet');
+  const delayedDeathReturn = /(?:when|whenever) [^.]{0,120}\bdies?\b[^.]{0,160}\breturn (?:it|that card|that creature|them) to the battlefield\b/.test(text);
   if (
     /from your graveyard/.test(text)
     || /return .* from .* graveyard/.test(text)
     || /put target [^.]{0,120} from (?:a|the|your) graveyard onto the battlefield/.test(text)
+    || delayedDeathReturn
     || massGraveyardExchange
   ) roles.add('graveyard recursion');
   const boardProtection = /(?:other )?(?:creatures|permanents|artifacts|enchantments) you control\s+(?:have|gain)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text)
