@@ -250,7 +250,27 @@ Risk: semantic false negatives can make a safe, role-balanced repair appear stru
 
 Protection: spot-interaction truth now covers direct damage to a target and target-tap conditional removal; recursion truth covers putting a target card from any graveyard onto the battlefield. Card-role regressions cover all three observed Oracle patterns, and a near-threshold five-color pairing regression proves surplus interaction is selected before a protected combat engine while the colored-mana floor remains intact.
 
-Status: deterministic fix implemented locally; exact-source broad Marvel revalidation pending.
+Status: deterministic and focused exact-source validation passed at `77a5383...`; the broad control at the same source still failed target-quality and strategy-preservation gates, so broad Marvel remains pending.
+
+## KF-026 — Graveyard hate and generic artifacts impersonate a precon's engine
+
+Observed: the nominal Necron Dynasties pass at `98d4b264...`, repeated with cumulative retention at `5dc7641...`, classified Szarekh correctly as graveyard-reanimator plus artifact-engine but gave generic artifacts and any card mentioning a graveyard enough affinity to replace real engine pieces. The twelve-swap package cut Trazyn the Infinite and Resurrection Orb while adding Tormod's Crypt, Soul-Guide Lantern and generic equipment. Aggregate graveyard/artifact totals rose, so every mechanical gate stayed green even though the deck's recursive engine was hollowed out.
+
+Risk: an archetype label can become a bag-of-words score. Graveyard hate then counts as graveyard support, and card type alone lets any artifact compensate numerically for an actual artifact engine. A legal, cheaper, higher-role-count deck can therefore be strategically worse.
+
+Protection: graveyard-reanimator affinity now requires own-graveyard access, true recursion, setup or mass exchange semantics; graveyard hate alone contributes zero. A generic artifact permanent retains only a relevant but sub-substantive three-point signal, while explicit artifact/Vehicle engine text is required for substantive affinity. Trazyn-, Anrakyr-, Ghost Ark-, Living Death- and Soul-Guide-Lantern-style generic fixtures cover the boundary. The Necron live workflow independently requires both substantive identities, non-decreasing support/affinity, a recursion floor and per-swap meaningful-loss rejection.
+
+Status: deterministic repair passes locally; the prior green evidence is explicitly rejected and exact-source Necron revalidation is pending.
+
+## KF-027 — Aggregate token-strategy retention hides cuts to core payoffs
+
+Observed: the Squirreled Away control at `51621b4...` passed legality, budget, target progress, per-round strategy audit and a 90% cumulative affinity threshold, yet cut Chatterfang, Squirrel General; Squirrel Sovereign; Beastmaster Ascension; End-Raze Forerunners; and other core token payoffs for generic protection and tutors. The final aggregate combat-token affinity retained 97.3%, masking the loss of individual engines and finishers.
+
+Risk: ratio-based whole-deck retention allows several uniquely important cards to disappear when many lower-value cards still share the same broad archetype label. The optimizer can turn a coherent precon into generic good-stuff while claiming the commander plan was preserved.
+
+Protection: generic role truth now recognizes token replacement/multiplication text and team-wide or typal anthem text. Those semantics produce substantive combat-token affinity and maximum cut protection, so a token multiplier or go-wide payoff cannot be exchanged for unrelated protection/tutor density. Deterministic fixtures use unnamed Chatterfang-, Beastmaster- and typal-anthem-style text, and the Squirreled Away evidence registry requires the semantic regression in addition to cumulative retention.
+
+Status: deterministic repair passes locally; the nominal Squirreled Away green is retained only as adversarial regression evidence and exact-source revalidation is pending.
 
 ## Adding a failure
 

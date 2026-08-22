@@ -173,19 +173,22 @@ function strategyAffinity(card: ScryfallCard, archetype: NeutralArchetypeV15): n
   const roles = new Set(inferCardRoles(card));
   const text = getCardOracleText(card).toLocaleLowerCase();
   const type = card.type_line.toLocaleLowerCase();
+  const usesOwnGraveyard = /\bfrom your graveyard\b|\bfrom your hand or graveyard\b|\b(?:artifact )?(?:creature )?cards? in your graveyard\b|\bpermanents? in your graveyard\b/.test(text);
+  const graveyardHateOnly = roles.has('graveyard hate') && !roles.has('graveyard recursion');
+  const usesArtifactEngine = /\bartifacts? you control\b|\bartifact spells? you cast\b|\bartifact (?:creature )?cards?[^.]{0,100}\byour (?:graveyard|hand|library)\b|\bartifact spells?[^.]{0,80}\bfrom your\b|\bcreate\b[^.]{0,100}\bartifact\b[^.]{0,60}\btokens?\b|\bsacrifice (?:an|another|one or more) artifacts?\b|\bwhenever\b[^.]{0,100}\bartifacts?\b|\bvehicles? you control\b|\bvehicle cards?\b|\bcrew\b/.test(text);
   let score = 0;
   const add = (condition: boolean, points: number): void => { if (condition) score += points; };
   switch (archetype) {
     case 'combat-tokens':
-      add(roles.has('token production'), 5); add(roles.has('extra combat'), 6); add(roles.has('haste'), 2); add(/attacks|attacking|combat damage/.test(text), 3); break;
+      add(roles.has('token production'), 5); add(roles.has('go-wide payoff'), 6); add(roles.has('extra combat'), 6); add(roles.has('haste'), 2); add(/attacks|attacking|combat damage/.test(text), 3); break;
     case 'equipment-voltron':
       add(roles.has('equipment'), 7); add(roles.has('protection'), 3); add(/equip |equipped creature|attach/.test(text), 5); add(/double strike|trample|first strike/.test(text), 2); break;
     case 'counters':
       add(roles.has('+1/+1 counters'), 7); add(/proliferate/.test(text), 6); add(/counter is put|counters? are put|move .*counter/.test(text), 4); break;
     case 'graveyard-reanimator':
-      add(roles.has('graveyard recursion'), 7); add(/graveyard/.test(text), 4); add(/mill|surveil|discard/.test(text), 3); break;
+      add(roles.has('graveyard recursion'), 7); add(usesOwnGraveyard && !graveyardHateOnly, 4); add(/mill|surveil|discard/.test(text), 3); break;
     case 'artifact-engine':
-      add(type.includes('artifact'), 3); add(/\bartifact(?:s| creature| creatures| card| cards| permanent| permanents| spell| spells| token| tokens)?\b|\bvehicles?\b/.test(text), 6); add(roles.has('graveyard recursion'), 2); break;
+      add(type.includes('artifact'), 3); add(usesArtifactEngine, 6); add(roles.has('graveyard recursion'), 2); break;
     case 'aristocrats':
       add(roles.has('sacrifice synergy'), 6); add(roles.has('sacrifice outlet'), 7); add(roles.has('life drain'), 6); add(/dies|sacrifice/.test(text), 4); break;
     case 'food-lifegain':

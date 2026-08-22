@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedFromProjectStateUpdatedAt": "2026-08-22T03:45:00Z",
-  "developmentCheckpointSha": "98d4b264e08540b529a5ad23ba81f6732fe3e172",
+  "generatedFromProjectStateUpdatedAt": "2026-08-22T03:57:49Z",
+  "developmentCheckpointSha": "77a5383fa7490aa91360b8186a4bda890f632157",
   "records": [
     {
       "id": "PM-STATE-INTEGRITY",
@@ -43,7 +43,7 @@
       "exists": true,
       "sourceSha": "77a5383fa7490aa91360b8186a4bda890f632157",
       "outcome": "pass",
-      "matchesDevelopmentCheckpoint": false,
+      "matchesDevelopmentCheckpoint": true,
       "metadata": {
         "source_sha": "77a5383fa7490aa91360b8186a4bda890f632157",
         "control_outcome": "success",
@@ -77,7 +77,7 @@
       "exists": true,
       "sourceSha": "77a5383fa7490aa91360b8186a4bda890f632157",
       "outcome": "fail",
-      "matchesDevelopmentCheckpoint": false,
+      "matchesDevelopmentCheckpoint": true,
       "metadata": {
         "source_sha": "77a5383fa7490aa91360b8186a4bda890f632157",
         "workflow_source_sha": "77a5383fa7490aa91360b8186a4bda890f632157",
@@ -137,6 +137,113 @@
         "negative_win_evidence_complete": "true"
       },
       "unmetPassConditions": []
+    },
+    {
+      "id": "PRECON-GENERALIZATION",
+      "label": "Necron Dynasties unrestricted precon generalization",
+      "claimLevel": "scenario-intelligence",
+      "milestones": [
+        "INTEL-02"
+      ],
+      "metadataPath": "test-results/precon-generalization/run-metadata.txt",
+      "exists": true,
+      "sourceSha": "5dc764117afb03951e4ebb091781a5b1c0ee4511",
+      "outcome": "fail",
+      "matchesDevelopmentCheckpoint": false,
+      "metadata": {
+        "source_sha": "5dc764117afb03951e4ebb091781a5b1c0ee4511",
+        "workflow_source_sha": "5dc764117afb03951e4ebb091781a5b1c0ee4511",
+        "executed_head_sha": "5dc764117afb03951e4ebb091781a5b1c0ee4511",
+        "control_outcome": "success",
+        "build_outcome": "success",
+        "regression_outcome": "success",
+        "execution_outcome": "success",
+        "hard_truth_outcome": "success",
+        "target_quality_outcome": "success",
+        "strategy_preservation_outcome": "success",
+        "policy": "exact-necron-stock-unrestricted-budgeted-upgrade",
+        "printing_family": "unrestricted",
+        "exact_card_count": "true",
+        "commander_legality": "true",
+        "hard_budget_truth": "true",
+        "substantive_commander_strategy_required": "true",
+        "structural_floors_required": "true",
+        "meaningful_strategy_loss_rejected": "true"
+      },
+      "unmetPassConditions": [
+        "graveyard_reanimator_identity_required=true",
+        "artifact_engine_identity_required=true",
+        "graveyard_recursion_floor=true"
+      ]
+    },
+    {
+      "id": "STRATEGY-INFERENCE-GENERALIZATION",
+      "label": "Generic commander strategy inference regression",
+      "claimLevel": "engineering+truth",
+      "milestones": [
+        "INTEL-02"
+      ],
+      "metadataPath": "test-results/strategy-inference-generalization/run-metadata.txt",
+      "exists": true,
+      "sourceSha": "98d4b264e08540b529a5ad23ba81f6732fe3e172",
+      "outcome": "fail",
+      "matchesDevelopmentCheckpoint": false,
+      "metadata": {
+        "source_sha": "98d4b264e08540b529a5ad23ba81f6732fe3e172",
+        "workflow_source_sha": "98d4b264e08540b529a5ad23ba81f6732fe3e172",
+        "executed_head_sha": "98d4b264e08540b529a5ad23ba81f6732fe3e172",
+        "control_outcome": "success",
+        "build_outcome": "success",
+        "regression_outcome": "success",
+        "name_specific_rule": "false",
+        "incidental_attack_trigger_substantive": "false",
+        "self_mill_recovery_substantive": "true",
+        "artifact_engine_substantive": "true",
+        "mass_graveyard_return_substantive": "true"
+      },
+      "unmetPassConditions": [
+        "generic_artifact_substantive=false",
+        "own_graveyard_engine_substantive=true",
+        "graveyard_hate_not_support=true",
+        "mass_graveyard_exchange_substantive=true"
+      ]
+    },
+    {
+      "id": "SQUIRRELED-AWAY-GENERALIZATION",
+      "label": "Squirreled Away unrestricted precon generalization",
+      "claimLevel": "scenario-intelligence",
+      "milestones": [
+        "INTEL-02"
+      ],
+      "metadataPath": "test-results/precon-generalization-squirrels/run-metadata.txt",
+      "exists": true,
+      "sourceSha": "51621b449c43a9d54d5e38f0e0e68f8a6ade9043",
+      "outcome": "fail",
+      "matchesDevelopmentCheckpoint": false,
+      "metadata": {
+        "source_sha": "51621b449c43a9d54d5e38f0e0e68f8a6ade9043",
+        "workflow_source_sha": "51621b449c43a9d54d5e38f0e0e68f8a6ade9043",
+        "executed_head_sha": "51621b449c43a9d54d5e38f0e0e68f8a6ade9043",
+        "control_outcome": "success",
+        "build_outcome": "success",
+        "regression_outcome": "success",
+        "execution_outcome": "success",
+        "hard_truth_outcome": "success",
+        "target_quality_outcome": "success",
+        "strategy_preservation_outcome": "success",
+        "policy": "exact-squirreled-away-stock-unrestricted-budgeted-upgrade",
+        "printing_family": "unrestricted",
+        "exact_card_count": "true",
+        "commander_legality": "true",
+        "hard_budget_truth": "true",
+        "substantive_combat_token_strategy_required": "true",
+        "cumulative_strategy_retention_required": "true",
+        "structural_floors_required": "true",
+        "meaningful_strategy_loss_rejected": "true"
+      },
+      "unmetPassConditions": [
+        "core_token_engine_semantics_required=true"
+      ]
     }
   ]
 }

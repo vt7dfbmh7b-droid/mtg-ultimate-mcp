@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T03:45:00Z",
+  "updatedAt": "2026-08-22T03:57:49Z",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
   "stable": {
@@ -12,8 +12,8 @@
   "experimental": {
     "activeBranch": "agent/v15-native-deck-intelligence",
     "activePullRequest": 29,
-    "developmentCheckpointSha": "98d4b264e08540b529a5ad23ba81f6732fe3e172",
-    "developmentCheckpointNote": "Exact checked-in INTEL-02 source for the first materially different unrestricted precon generalization pass. Build and name-agnostic strategy regressions passed, including weak incidental attack handling, self-mill recovery, artifact-engine semantics, mass-graveyard-return semantics, artifact-specific unrestricted discovery and artifact-engine win-route reporting. The exact MTGJSON Necron Dynasties stock control also passed hard legality/budget truth, target-quality and strategy-preservation gates at this source. Independent before/after evaluation moved the deck from Bracket 2 to Bracket 3, average nonland mana value 3.79 -> 3.29, early plays 15 -> 18, cheap interaction 1 -> 5, tutors 0 -> 4, interaction 7 -> 13 and protection 1 -> 5 while graveyard affinity increased 237 -> 249 and artifact affinity increased 333 -> 339. The requested Bracket 4 was not achieved, so this is a whole-deck improvement/generalization pass, not target certification. Earlier Necron runs that misclassified Szarekh as combat-tokens and hollowed the artifact/graveyard engine are regression evidence, not successful intelligence evidence. Later evidence/state-only commits do not replace this tested source SHA.",
+    "developmentCheckpointSha": "77a5383fa7490aa91360b8186a4bda890f632157",
+    "developmentCheckpointNote": "Last accepted exact-source INTEL-02 checkpoint before the unrestricted precon false-greens. TypeScript and 785 deterministic tests passed; project integrity, focused Marvel, Food and Fellowship, and expanded Middle-earth controls passed. Focused Marvel made a legal two-swap curve repair, Food and Fellowship made four supported swaps while preserving identity and structural floors, and expanded Middle-earth honestly refused unsupported change. The broad Marvel control at this same source failed its target-quality and strategy-preservation gates, so restricted-theme validation is not yet uniformly green. Later Necron and Squirreled Away workflow exits are retained as regression evidence but are not accepted intelligence passes because manual swap audit found semantic engine loss.",
     "lastFullyValidatedExperimentalBaseline": {
       "branch": "agent/package-probabilities",
       "sha": "63bb7274004060eea507f7991a04b84921d0cd47",
@@ -23,7 +23,7 @@
   "workMode": {
     "intelligenceDevelopmentPaused": false,
     "activeMilestone": "INTEL-02",
-    "reason": "INTEL-02 now has restricted Marvel and Food and Fellowship whole-deck improvement evidence plus a materially different unrestricted Necron Dynasties precon pass at 98d4b264.... The Necron challenge exposed and fixed generic strategy-inference gaps instead of receiving a false green. INTEL-02 remains active because one unrestricted artifact/graveyard archetype is not broad enough to close autonomous deck-improvement validation; more varied archetypes and conditions are required. INTEL-01 still lacks a positive eligible verified full-table route control."
+    "reason": "INTEL-02 remains active. Restricted focused Marvel and Food and Fellowship have accepted scenario evidence, while broad Marvel is still red. Manual audit rejected the nominal Necron and Squirreled Away greens: generic artifact/graveyard labels concealed cuts to real graveyard engines, and aggregate combat-token retention concealed cuts to Chatterfang, Squirrel Sovereign, Beastmaster Ascension and other core payoffs. Repair and exact-source revalidation must finish before conditions broaden further. INTEL-01 still lacks a positive eligible verified full-table route control."
   },
   "milestones": [
     {
@@ -70,26 +70,33 @@
     }
   ],
   "validation": {
-    "activeBranchStatus": "restricted-and-first-unrestricted-generalization-passes-more-archetypes-pending",
+    "activeBranchStatus": "restricted-partial-pass-precon-false-greens-under-repair",
     "latestPersistedMarvelControl": {
-      "sourceSha": "3cfca39c194df72727bcd1fae19e81080e543e41",
-      "outcome": "success",
-      "note": "Exact-source focused and broad restricted Marvel controls passed at this checkpoint. Two swaps—Vanquish the Horde -> Vandalblast and Arcane Signet -> Ponder—moved average nonland mana value 2.71 -> 2.59, repaired that failed construction gate, added no failed construction gate, preserved exact 100 Marvel-family printings, retained Lightning Greaves and all eight tutors, and carried complete passing strategy/cut evidence. The final deck remained Bracket 4 with zero verified winning combos, so this is restricted INTEL-02 evidence rather than INTEL-01 validation."
+      "sourceSha": "77a5383fa7490aa91360b8186a4bda890f632157",
+      "outcome": "focused-pass-broad-fail",
+      "note": "At exact source 77a5383..., focused Marvel passed with Vanquish the Horde -> Reanimate and Arcane Signet -> Brainstorm, moving average nonland mana value 2.71 -> 2.59 while preserving legal exact-100 Marvel printings and substantive strategy. The independently persisted broad Marvel control at the same source failed target-quality and strategy-preservation gates. This is restricted focused-scenario evidence, not a broad Marvel pass."
     },
     "latestPersistedFoodPreconControl": {
-      "sourceSha": "cf3eedb",
+      "sourceSha": "77a5383fa7490aa91360b8186a4bda890f632157",
       "outcome": "success",
       "note": "Exact Food and Fellowship stock-precon control made four supported swaps while retaining Food/lifegain affinity, recursion, board wipes and persistent colored mana. This supplied the materially different restricted/precon-style whole-deck improvement evidence required before broadening conditions."
     },
     "latestPersistedUnrestrictedPreconControl": {
-      "sourceSha": "98d4b264e08540b529a5ad23ba81f6732fe3e172",
-      "outcome": "success",
+      "sourceSha": "5dc764117afb03951e4ebb091781a5b1c0ee4511",
+      "outcome": "rejected-false-green",
       "precon": "Necron Dynasties",
-      "note": "Exact MTGJSON stock baseline, unrestricted Commander-legal physical upgrades under NZ$35/card and NZ$200 total. The final legal exact-100 list used 12 swaps for NZ$134.61, assessed Bracket 2 -> 3, improved MV 3.79 -> 3.29, early plays 15 -> 18, cheap interaction 1 -> 5, tutors 0 -> 4, interaction 7 -> 13, protection 1 -> 5, and increased both graveyard and artifact aggregate affinity. It remained one bracket below the requested Bracket 4 and is therefore recorded as a high-quality whole-deck improvement/generalization pass, not target achievement."
+      "note": "Mechanical gates passed, but manual audit rejected the decision. Graveyard hate and generic artifacts were credited as engine replacements; the twelve-swap package cut Trazyn the Infinite, Resurrection Orb and other substantive pieces while adding Tormod's Crypt, Soul-Guide Lantern and generic equipment. Aggregate affinity increased only because the semantics were too broad. This source is regression evidence, not an INTEL-02 pass."
+    },
+    "latestPersistedSquirrelPreconControl": {
+      "sourceSha": "51621b449c43a9d54d5e38f0e0e68f8a6ade9043",
+      "outcome": "rejected-false-green",
+      "precon": "Squirreled Away",
+      "note": "Mechanical and cumulative-retention gates passed, but the six accepted swaps cut Chatterfang, Squirrel General; Squirrel Sovereign; Beastmaster Ascension; End-Raze Forerunners; and other core token payoffs for generic protection and tutors. A 90% aggregate affinity ratio is insufficient when individual structural engines are erased. This run is retained only as adversarial regression evidence."
     },
     "requiredBeforeResumingIntelligenceClaims": [
-      "Repeat unrestricted or materially different-condition whole-deck improvement on additional archetypes beyond the current Necron artifact/graveyard engine before closing INTEL-02",
-      "Keep explicit cut-impact, structural-card importance and per-strategy preservation evidence active so generic role gains cannot hollow out secondary or engine identities",
+      "Revalidate the semantic repair on exact-source Necron and Squirreled Away controls and manually audit every accepted swap before either workflow may count as scenario intelligence",
+      "Make graveyard hate and generic artifacts non-substantive replacements for own-graveyard/artifact engines, and make token multipliers plus team-wide combat payoffs structurally protected rather than recoverable by aggregate ratios",
+      "Obtain a broad Marvel pass at the same restricted-theme quality standard as focused Marvel and Food and Fellowship before claiming the restricted lane is uniformly green",
       "Verified full-table win-route discovery, injection and final evaluation agree in a scenario where an eligible route exists",
       "Negative win-package conclusions distinguish completed bounded absence from provider unavailability or selection failure",
       "Commander legality, exact 100 cards, printing-family/set restrictions and budgets remain intact across the expanded controls"
@@ -104,9 +111,10 @@
     "No merge, stable/current promotion, version bump, or release without explicit user approval."
   ],
   "nextActions": [
-    "Run the next materially different unrestricted/precon INTEL-02 challenge on an archetype that is not artifact/graveyard recursion, and require independent before/after whole-deck improvement plus generic commander-strategy preservation rather than a forced target hit.",
-    "Use the Necron false-green history as a regression boundary: incidental command-zone text must not define the deck identity, and every substantive commander strategy must survive the complete accepted package, not merely individual score gains.",
-    "After at least one more materially different unrestricted archetype succeeds, vary budget and card-pool pressure to test whether the refiner can make smaller coherent upgrades or truthfully stop when no supported improvement exists.",
+    "Publish and exact-source validate the generic semantic repair: own-graveyard engines must outrank graveyard hate, explicit artifact engines must outrank generic artifacts, and token multipliers/team-wide payoffs must receive maximum cut protection.",
+    "Rerun and manually audit Necron Dynasties and Squirreled Away. Reject any package that still cuts Trazyn/Resurrection Orb-style graveyard engines or Chatterfang/anthem/overrun-style token engines for generic role-count gains.",
+    "Keep Marvel and Middle-earth restricted controls active during the repair. Broad Marvel must pass its whole-deck target and strategy gates; Food and Fellowship must retain its exact four-swap quality or improve honestly.",
+    "Only after those controls meet the same high standard should budget, card-pool and new-archetype conditions broaden further.",
     "Run an eligible verified full-table package scenario to validate INTEL-01 discovery, feasibility, atomic injection, protection and independent final recognition end to end; current Marvel, Middle-earth, Food and Necron controls do not provide that positive win-route proof.",
     "Migrate legacy KF-013 evidence writers to isolated paths plus bounded latest-head reconciliation before treating concurrent persistence as globally closed."
   ],

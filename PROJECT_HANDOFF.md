@@ -16,8 +16,8 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Active milestone: **INTEL-02 — Actual autonomous deck improvement**
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
-- Development checkpoint at pause: `3cfca39c194df72727bcd1fae19e81080e543e41`
-- Active branch validation: **restricted-scenario-pass-broader-validation-pending**
+- Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
+- Active branch validation: **restricted-partial-pass-precon-false-greens-under-repair**
 
 ## Stable safety boundary
 
@@ -27,19 +27,20 @@ Stable remains **V0.13 / 0.13.0** on `main`. No merge, stable/current promotion,
 
 `63bb7274004060eea507f7991a04b84921d0cd47` on `agent/package-probabilities`.
 
-Latest fully validated executable experimental baseline documented by the prior authoritative handoff. Later V0.15 deck-intelligence work on PR #29 remains experimental until its own controls complete.
+Latest fully validated executable experimental baseline documented by the prior authoritative handoff. Later V0.15 deck-intelligence work on PR #29 remains experimental until milestone controls complete.
 
 ## Important pending validation
 
-The last persisted Marvel control is `3cfca39c194df72727bcd1fae19e81080e543e41` with outcome **success**. Current exact-source focused and broad controls both passed. Two swaps—Vanquish the Horde -> Vandalblast and Arcane Signet -> Ponder—moved average nonland mana value 2.71 -> 2.59, repaired that failed construction gate, added no failed construction gate, preserved exact 100 Marvel-family printings, retained Lightning Greaves and all eight tutors, and carried complete passing strategy/cut evidence. The final deck remains Bracket 4 with zero verified winning combos, so this is one restricted scenario pass rather than broad INTEL-01/INTEL-02 validation.
+The last persisted Marvel control is `77a5383fa7490aa91360b8186a4bda890f632157` with outcome **focused-pass-broad-fail**. At exact source 77a5383..., focused Marvel passed with Vanquish the Horde -> Reanimate and Arcane Signet -> Brainstorm, moving average nonland mana value 2.71 -> 2.59 while preserving legal exact-100 Marvel printings and substantive strategy. The independently persisted broad Marvel control at the same source failed target-quality and strategy-preservation gates. This is restricted focused-scenario evidence, not a broad Marvel pass.
 
 ## Next actions
 
-1. Keep the current Marvel and Middle-earth restrictions active and create an addressable Middle-earth/precon-style INTEL-02 scenario whose starting list has a safely repairable weakness; persist exact source, before/after gates, strategy evidence, cut importance and per-attempt candidate provenance.
-2. Require the restricted Middle-earth/precon control to improve the whole deck without weakening its commander plan, legal exact-100 list, printing policy or already-passing gates; a truthful no-supported-improvement remains engineering/constraint evidence, not an intelligence pass.
-3. Only after the restricted-theme scenarios meet the same high standard, vary budget, card-pool and unrestricted conditions across materially different archetypes.
-4. Run an eligible verified full-table package scenario to validate INTEL-01 discovery, feasibility, atomic injection, protection and independent final recognition end to end; Marvel and Middle-earth both currently end with zero verified winning combos.
-5. Migrate legacy KF-013 evidence writers to isolated paths plus bounded latest-head reconciliation before treating concurrent persistence as globally closed.
+1. Publish and exact-source validate the generic semantic repair: own-graveyard engines must outrank graveyard hate, explicit artifact engines must outrank generic artifacts, and token multipliers/team-wide payoffs must receive maximum cut protection.
+2. Rerun and manually audit Necron Dynasties and Squirreled Away. Reject any package that still cuts Trazyn/Resurrection Orb-style graveyard engines or Chatterfang/anthem/overrun-style token engines for generic role-count gains.
+3. Keep Marvel and Middle-earth restricted controls active during the repair. Broad Marvel must pass its whole-deck target and strategy gates; Food and Fellowship must retain its exact four-swap quality or improve honestly.
+4. Only after those controls meet the same high standard should budget, card-pool and new-archetype conditions broaden further.
+5. Run an eligible verified full-table package scenario to validate INTEL-01 discovery, feasibility, atomic injection, protection and independent final recognition end to end; current Marvel, Middle-earth, Food and Necron controls do not provide that positive win-route proof.
+6. Migrate legacy KF-013 evidence writers to isolated paths plus bounded latest-head reconciliation before treating concurrent persistence as globally closed.
 
 ## Permanent recovery references
 

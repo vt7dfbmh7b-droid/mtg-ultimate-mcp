@@ -249,22 +249,33 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   ) roles.add('spot interaction');
   if (/destroy target artifact|destroy target enchantment|exile target artifact|exile target enchantment/.test(text)) roles.add('artifact/enchantment interaction');
   if (/exile .* graveyard|cards? in graveyards? can't|players? can't cast .* graveyards?/.test(text)) roles.add('graveyard hate');
+  const massGraveyardExchange = /each player exiles all creature cards from [^.]{0,80}graveyard[^.]{0,120}then sacrifices all creatures[^.]{0,80}then puts all cards [^.]{0,80}exiled this way onto the battlefield/.test(text);
   if (
-    /(destroy|exile) (?:all|each) (?:creatures|artifacts|enchantments|nonland permanents|permanents)/.test(text)
+    /(destroy|exile) (?:all|each) (?:[a-z-]+ ){0,3}(?:creatures|artifacts|enchantments|nonland permanents|permanents)/.test(text)
     || /(?:all creatures get|each creature gets) -(?:x|\d+)\/-(?:x|\d+)/.test(text)
     || /put [^.]*-1\/-1 counters? on each creature/.test(text)
     || /deals? [^.]* damage to each creature/.test(text)
     || /return (?:all|each) (?:creatures|nonland permanents|permanents)[^.]*owners?' hands?/.test(text)
     || /each player sacrifices [^.]*creatures?/.test(text)
+    || massGraveyardExchange
   ) roles.add('board wipe');
 
-  if (/create .* token/.test(text)) roles.add('token production');
+  const createsOrMultipliesTokens = /create [^.]* tokens?/.test(text)
+    || /\bif (?:one or more )?tokens? would be created under your control\b/.test(text)
+    || /\bif you would create [^.]{0,80}tokens?\b/.test(text)
+    || /\bthose tokens plus\b/.test(text)
+    || /\bcreate twice that many [^.]{0,40}tokens?\b/.test(text);
+  if (createsOrMultipliesTokens) roles.add('token production');
+  if (/(?<!target )\b(?:other )?(?:creatures|[a-z][a-z'-]*s) you control (?:get|gain) \+\d+\/\+\d+/.test(text)) {
+    roles.add('go-wide payoff');
+  }
   if (/sacrifice (?:a|another|target|this)/.test(text)) roles.add('sacrifice synergy');
   if (/sacrifice (?:a|another) creature\s*:|sacrifice (?:a|another) permanent\s*:/.test(text)) roles.add('sacrifice outlet');
   if (
     /from your graveyard/.test(text)
     || /return .* from .* graveyard/.test(text)
     || /put target [^.]{0,120} from (?:a|the|your) graveyard onto the battlefield/.test(text)
+    || massGraveyardExchange
   ) roles.add('graveyard recursion');
   const boardProtection = /(?:other [^.]* you control|(?:creatures?|permanents?|artifacts?|enchantments?) you control)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text)
     || /(?:all |any number of )?(?:permanents?|creatures?) you control phase out/.test(text);

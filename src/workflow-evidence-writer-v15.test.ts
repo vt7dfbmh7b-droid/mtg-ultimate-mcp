@@ -7,7 +7,10 @@ const activeWriterPaths = [
   '.github/workflows/marvel-bracket5-refine-live.yml',
   '.github/workflows/middle-earth-bracket5-expanded-live.yml',
   '.github/workflows/middle-earth-precon-refine-live.yml',
+  '.github/workflows/precon-generalization-live.yml',
+  '.github/workflows/precon-generalization-squirrels-live.yml',
   '.github/workflows/project-state-integrity.yml',
+  '.github/workflows/strategy-inference-generalization.yml',
 ] as const;
 
 function workflow(path: string): string {
@@ -45,6 +48,8 @@ test('live controls gate intelligence and persistence independently', () => {
   const broad = workflow('.github/workflows/marvel-bracket5-live.yml');
   const middleEarth = workflow('.github/workflows/middle-earth-bracket5-expanded-live.yml');
   const middleEarthPrecon = workflow('.github/workflows/middle-earth-precon-refine-live.yml');
+  const preconGeneralization = workflow('.github/workflows/precon-generalization-live.yml');
+  const squirrelGeneralization = workflow('.github/workflows/precon-generalization-squirrels-live.yml');
 
   assert.match(focused, /name: Require checked-in-source scenario intelligence/);
   assert.match(focused, /name: Require checked-in-source result persistence/);
@@ -54,6 +59,10 @@ test('live controls gate intelligence and persistence independently', () => {
   assert.match(middleEarth, /name: Require evidence persistence/);
   assert.match(middleEarthPrecon, /name: Require checked-in-source precon intelligence/);
   assert.match(middleEarthPrecon, /name: Require checked-in-source precon evidence persistence/);
+  assert.match(preconGeneralization, /name: Require checked-in-source generalization intelligence/);
+  assert.match(preconGeneralization, /name: Require checked-in-source evidence persistence/);
+  assert.match(squirrelGeneralization, /name: Require checked-in-source Squirreled Away intelligence/);
+  assert.match(squirrelGeneralization, /name: Require checked-in-source evidence persistence/);
 });
 
 test('focused Marvel live refinement allows bounded provider backoff to finish', () => {
@@ -77,6 +86,38 @@ test('Middle-earth precon evidence separates execution, hard truth, target quali
   assert.match(workflowSource, /structural_floors_required=true/);
   assert.match(workflowSource, /persistent_colored_mana_floor=true/);
   assert.match(workflowSource, /negative_win_evidence_complete=true/);
+});
+
+test('precon generalization requires both inferred engines and the recursion floor to survive', () => {
+  const workflowSource = workflow('.github/workflows/precon-generalization-live.yml');
+
+  assert.match(workflowSource, /graveyard-reanimator/);
+  assert.match(workflowSource, /artifact-engine/);
+  assert.match(workflowSource, /afterStrategy\?\.supportCount/);
+  assert.match(workflowSource, /afterStrategy\?\.affinityTotal/);
+  assert.match(workflowSource, /afterRecursion < beforeRecursion/);
+  assert.match(workflowSource, /graveyard_reanimator_identity_required=true/);
+  assert.match(workflowSource, /artifact_engine_identity_required=true/);
+  assert.match(workflowSource, /graveyard_recursion_floor=true/);
+});
+
+test('strategy-inference evidence distinguishes engines from generic artifacts and graveyard hate', () => {
+  const workflowSource = workflow('.github/workflows/strategy-inference-generalization.yml');
+
+  assert.match(workflowSource, /artifact_engine_substantive=true/);
+  assert.match(workflowSource, /generic_artifact_substantive=false/);
+  assert.match(workflowSource, /own_graveyard_engine_substantive=true/);
+  assert.match(workflowSource, /graveyard_hate_not_support=true/);
+  assert.match(workflowSource, /mass_graveyard_exchange_substantive=true/);
+});
+
+test('Squirreled Away evidence requires generic token-engine semantics and cumulative retention', () => {
+  const workflowSource = workflow('.github/workflows/precon-generalization-squirrels-live.yml');
+
+  assert.match(workflowSource, /substantive_combat_token_strategy_required=true/);
+  assert.match(workflowSource, /core_token_engine_semantics_required=true/);
+  assert.match(workflowSource, /cumulative_strategy_retention_required=true/);
+  assert.match(workflowSource, /meaningful_strategy_loss_rejected=true/);
 });
 
 test('Marvel controls fail closed on whole-deck quality and persistent colored-mana access', () => {

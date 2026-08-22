@@ -6,6 +6,7 @@ on:
     paths:
       - "src/services/neutral-commander-selection-v15.ts"
       - "src/services/neutral-deck-builder-v15.ts"
+      - "src/services/neutral-themed-deck-builder-v15.ts"
       - "src/services/neutral-unrestricted-pool-v15.ts"
       - "src/services/neutral-win-routes-v15.ts"
       - "src/services/strategy-inference-generalization-v15.test.ts"
@@ -67,7 +68,7 @@ jobs:
             if [ "$BUILD_OUTCOME" = success ] && [ "$REGRESSION_OUTCOME" = success ]; then
               CONTROL_OUTCOME=success
             fi
-            printf 'source_sha=%s\nworkflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nbuild_outcome=%s\nregression_outcome=%s\nname_specific_rule=false\nincidental_attack_trigger_substantive=false\nself_mill_recovery_substantive=true\nartifact_engine_substantive=true\nmass_graveyard_return_substantive=true\n' \
+            printf 'source_sha=%s\nworkflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nbuild_outcome=%s\nregression_outcome=%s\nname_specific_rule=false\nincidental_attack_trigger_substantive=false\nself_mill_recovery_substantive=true\nartifact_engine_substantive=true\ngeneric_artifact_substantive=false\nown_graveyard_engine_substantive=true\ngraveyard_hate_not_support=true\nmass_graveyard_exchange_substantive=true\n' \
               "$GITHUB_SHA" "$GITHUB_SHA" "$GITHUB_SHA" "$CONTROL_OUTCOME" "$BUILD_OUTCOME" "$REGRESSION_OUTCOME" \
               > test-results/strategy-inference-generalization/run-metadata.txt
             git add -- test-results/strategy-inference-generalization/run-metadata.txt
@@ -75,6 +76,7 @@ jobs:
             git commit -m "test-results: persist strategy inference regression [skip ci]"
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
           done
+          echo 'Strategy-inference evidence persistence exhausted eight branch-race retries.' >&2
           exit 1
 
       - name: Require strategy inference regression

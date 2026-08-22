@@ -112,10 +112,13 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
     && /\b(?:target|each|an) opponent\b[^.]*\bloses?\b[^.]*\blife\b/i.test(text);
   const recoversMilledCardsToHand = /\bcards? milled (?:this way )?[^.]{0,120}\binto your hand\b/i.test(text);
   const massGraveyardReturn = /\bexiles? [^.]{0,180}\bfrom (?:your|their|a|any|all|each|the) graveyards?\b[^.]{0,240}\bputs? [^.]{0,180}\bexiled this way\b[^.]{0,100}\bonto the battlefield\b/i.test(text);
+  const usesOwnGraveyard = /\bfrom your graveyard\b|\bfrom your hand or graveyard\b|\b(?:artifact )?(?:creature )?cards? in your graveyard\b|\bpermanents? in your graveyard\b/i.test(text);
+  const graveyardHateOnly = roles.has('graveyard hate') && !roles.has('graveyard recursion');
   const artifactPermanent = /\bartifact\b/i.test(typeText);
-  const artifactEngineText = /\bartifact(?:s| creature| creatures| card| cards| permanent| permanents| spell| spells| token| tokens)?\b|\bvehicles?\b/i.test(text);
+  const artifactEngineText = /\bartifacts? you control\b|\bartifact spells? you cast\b|\bartifact (?:creature )?cards?[^.]{0,100}\byour (?:graveyard|hand|library)\b|\bartifact spells?[^.]{0,80}\bfrom your\b|\bcreate\b[^.]{0,100}\bartifact\b[^.]{0,60}\btokens?\b|\bsacrifice (?:an|another|one or more) artifacts?\b|\bwhenever\b[^.]{0,100}\bartifacts?\b|\bvehicles? you control\b|\bvehicle cards?\b|\bcrew\b/i.test(text);
 
   addSignal(table, 'combat-tokens', roles.has('token production'), 6, 'token production');
+  addSignal(table, 'combat-tokens', roles.has('go-wide payoff'), 6, 'go-wide combat payoff');
   addSignal(table, 'combat-tokens', roles.has('extra combat'), 8, 'extra combat');
   addSignal(table, 'combat-tokens', roles.has('untap engine'), 4, 'combat untap potential');
   addSignal(table, 'combat-tokens', roles.has('haste'), 2, 'haste');
@@ -134,12 +137,14 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   addSignal(table, 'counters', /counter is put|counters? (?:are|is) put|with .* counters?/i.test(text), 3, 'counter placement');
 
   addSignal(table, 'graveyard-reanimator', roles.has('graveyard recursion'), 9, 'graveyard recursion');
-  addSignal(table, 'graveyard-reanimator', /\bfrom (?:your|their|a|any|all|each|the) graveyards?\b/i.test(text), 6, 'graveyard access');
+  addSignal(table, 'graveyard-reanimator', usesOwnGraveyard && !graveyardHateOnly, 6, 'own-graveyard access');
   addSignal(table, 'graveyard-reanimator', /mill|surveil|discard/i.test(text), 5, 'graveyard setup');
   addSignal(table, 'graveyard-reanimator', recoversMilledCardsToHand, 7, 'milled-card recovery');
   addSignal(table, 'graveyard-reanimator', massGraveyardReturn, 7, 'mass graveyard return');
   addSignal(table, 'graveyard-reanimator', /return .* graveyard .* battlefield|put .* graveyard .* battlefield/i.test(text), 6, 'reanimation text');
 
+  // A generic artifact permanent is relevant but deliberately sub-substantive by itself.
+  // Explicit artifact/Vehicle rules text is required to infer an artifact-engine identity.
   addSignal(table, 'artifact-engine', artifactPermanent, 3, 'artifact permanent');
   addSignal(table, 'artifact-engine', artifactEngineText, 6, 'artifact/Vehicle engine text');
 

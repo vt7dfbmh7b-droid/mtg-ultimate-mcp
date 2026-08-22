@@ -317,3 +317,119 @@ test('Food/lifegain payoffs receive cut protection and uncompensated removal fai
   assert.equal(audit.status, 'meaningful-strategy-loss');
   assert.deepEqual(audit.meaningfulLosses.map((loss) => loss.strategy), ['food-lifegain']);
 });
+
+test('artifact graveyard engines receive cut protection while graveyard hate cannot replace them', () => {
+  const commander = card(
+    'Unnamed Self-Mill Recycler',
+    'Legendary Artifact Creature — Test Construct',
+    'Whenever this creature attacks, mill three cards. You may put an artifact creature card from among the cards milled this way into your hand.',
+  );
+  const context = deriveCommanderStrategyContextFromCommandersV15([commander]);
+  const engine = card(
+    'Unnamed Static Graveyard Engine',
+    'Artifact Creature — Test Construct',
+    'As long as this creature is on the battlefield, it has all activated abilities of all artifact cards in your graveyard.',
+  );
+  const hate = card(
+    'Unnamed Graveyard Lantern',
+    'Artifact',
+    "When this artifact enters, exile a card from a graveyard. {T}, Sacrifice this artifact: Exile each opponent's graveyard. Draw a card.",
+  );
+
+  assert.equal(context.strategies[0]?.archetype, 'graveyard-reanimator');
+  assert.ok(context.strategies.some((strategy) => strategy.archetype === 'artifact-engine' && strategy.score >= 6));
+  const engineAffinity = cardCommanderStrategyAffinityV15(engine, context);
+  const hateAffinity = cardCommanderStrategyAffinityV15(hate, context);
+  const enginePressure = contextualCutPressureV15(engine, context);
+  assert.ok(engineAffinity.matches.some((match) => match.archetype === 'graveyard-reanimator' && match.overlapScore >= 6));
+  assert.ok(engineAffinity.matches.some((match) => match.archetype === 'artifact-engine' && match.overlapScore >= 6));
+  assert.equal(hateAffinity.matches.some((match) => match.archetype === 'graveyard-reanimator'), false);
+  assert.ok((hateAffinity.matches.find((match) => match.archetype === 'artifact-engine')?.overlapScore ?? 0) < 6);
+  assert.equal(enginePressure.strategyProtectionApplied, 4);
+
+  const audit = auditUpgradeStrategyPreservationV15([{
+    cut: {
+      card: { name: engine.name, roles: [], manaValue: engine.cmc, typeLine: engine.type_line },
+      strategyAffinity: {
+        score: engineAffinity.score,
+        protectionApplied: enginePressure.strategyProtectionApplied,
+        matchedStrategies: engineAffinity.matches.map((match) => match.archetype),
+        matches: engineAffinity.matches,
+      },
+    },
+    add: {
+      card: { name: hate.name, roles: ['graveyard hate'], manaValue: hate.cmc, typeLine: hate.type_line },
+      strategyAffinity: {
+        score: hateAffinity.score,
+        protectionApplied: 0,
+        matchedStrategies: hateAffinity.matches.map((match) => match.archetype),
+        matches: hateAffinity.matches,
+      },
+    },
+  }]);
+
+  assert.equal(audit.status, 'meaningful-strategy-loss');
+  assert.deepEqual(audit.meaningfulLosses.map((loss) => loss.strategy), ['artifact-engine', 'graveyard-reanimator']);
+});
+
+test('token multipliers and team-wide payoffs cannot be traded for generic role gains', () => {
+  const commander = card(
+    'Unnamed Token Commander',
+    'Legendary Creature — Test Druid',
+    'At the beginning of your end step, create a token that is a copy of target token you control.',
+  );
+  const context = deriveCommanderStrategyContextFromCommandersV15([commander]);
+  const engines = [
+    card(
+      'Unnamed Token Multiplier',
+      'Creature — Test Warrior',
+      'If one or more tokens would be created under your control, those tokens plus that many 1/1 green creature tokens are created instead.',
+    ),
+    card(
+      'Unnamed Team Anthem',
+      'Enchantment',
+      'Creatures you control get +5/+5 as long as this permanent has seven or more quest counters on it.',
+    ),
+    card(
+      'Unnamed Typal Anthem',
+      'Creature — Test Noble',
+      'Other Squirrels you control get +1/+1.',
+    ),
+  ];
+  const genericProtection = card(
+    'Unnamed Generic Protection',
+    'Instant',
+    'Target creature you control gains hexproof and indestructible until end of turn.',
+  );
+  const addAffinity = cardCommanderStrategyAffinityV15(genericProtection, context);
+  const pairings = engines.map((engine) => {
+    const cutAffinity = cardCommanderStrategyAffinityV15(engine, context);
+    const cutPressure = contextualCutPressureV15(engine, context);
+    assert.ok(cutAffinity.matches.some((match) => match.archetype === 'combat-tokens' && match.overlapScore >= 6));
+    assert.equal(cutPressure.strategyProtectionApplied, 4);
+    return {
+      cut: {
+        card: { name: engine.name, roles: [], manaValue: engine.cmc, typeLine: engine.type_line },
+        strategyAffinity: {
+          score: cutAffinity.score,
+          protectionApplied: cutPressure.strategyProtectionApplied,
+          matchedStrategies: cutAffinity.matches.map((match) => match.archetype),
+          matches: cutAffinity.matches,
+        },
+      },
+      add: {
+        card: { name: genericProtection.name, roles: ['protection'], manaValue: genericProtection.cmc, typeLine: genericProtection.type_line },
+        strategyAffinity: {
+          score: addAffinity.score,
+          protectionApplied: 0,
+          matchedStrategies: addAffinity.matches.map((match) => match.archetype),
+          matches: addAffinity.matches,
+        },
+      },
+    };
+  });
+
+  const audit = auditUpgradeStrategyPreservationV15(pairings);
+  assert.equal(audit.status, 'meaningful-strategy-loss');
+  assert.deepEqual(audit.meaningfulLosses.map((loss) => loss.strategy), ['combat-tokens']);
+});

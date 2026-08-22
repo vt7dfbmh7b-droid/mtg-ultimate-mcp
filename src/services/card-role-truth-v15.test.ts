@@ -216,6 +216,46 @@ const massMinusWipe = card({
   manaCost: '{2}{B}',
 });
 
+const qualifiedMassWipe = card({
+  name: 'Qualified Mass Wipe',
+  typeLine: 'Sorcery',
+  oracleText: 'Destroy all nonartifact creatures.',
+  cmc: 6,
+  manaCost: '{3}{B}{B}{B}',
+});
+
+const graveyardExchange = card({
+  name: 'Graveyard Exchange',
+  typeLine: 'Sorcery',
+  oracleText: 'Each player exiles all creature cards from their graveyard, then sacrifices all creatures they control, then puts all cards they exiled this way onto the battlefield.',
+  cmc: 5,
+  manaCost: '{3}{B}{B}',
+});
+
+const tokenMultiplier = card({
+  name: 'Generic Token Multiplier',
+  typeLine: 'Creature — Test Warrior',
+  oracleText: 'If one or more tokens would be created under your control, those tokens plus that many 1/1 green creature tokens are created instead.',
+  cmc: 3,
+  manaCost: '{2}{G}',
+});
+
+const teamAnthem = card({
+  name: 'Generic Team Anthem',
+  typeLine: 'Enchantment',
+  oracleText: 'Whenever a creature you control attacks, put a quest counter on this permanent. Creatures you control get +5/+5 as long as it has seven or more quest counters on it.',
+  cmc: 3,
+  manaCost: '{2}{G}',
+});
+
+const typalAnthem = card({
+  name: 'Generic Typal Anthem',
+  typeLine: 'Creature — Test Noble',
+  oracleText: 'Other Squirrels you control get +1/+1.',
+  cmc: 2,
+  manaCost: '{1}{G}',
+});
+
 const persistentRainbowRock = card({
   name: 'Persistent Rainbow Rock',
   typeLine: 'Artifact',
@@ -279,6 +319,18 @@ test('self-only hexproof is not deck protection while targeted and board-wide gr
 
 test('mass negative-power removal is recognized as a board wipe', () => {
   assert.equal(inferCardRoles(massMinusWipe).includes('board wipe'), true);
+});
+
+test('qualified mass destruction and graveyard exchanges retain wipe and recursion truth', () => {
+  assert.equal(inferCardRoles(qualifiedMassWipe).includes('board wipe'), true);
+  assert.equal(inferCardRoles(graveyardExchange).includes('board wipe'), true);
+  assert.equal(inferCardRoles(graveyardExchange).includes('graveyard recursion'), true);
+});
+
+test('token multipliers and team-wide payoffs retain combat-engine truth', () => {
+  assert.ok(inferCardRoles(tokenMultiplier).includes('token production'));
+  assert.ok(inferCardRoles(teamAnthem).includes('go-wide payoff'));
+  assert.ok(inferCardRoles(typalAnthem).includes('go-wide payoff'));
 });
 
 test('direct damage and conditional tap-exile cards count as spot interaction', () => {

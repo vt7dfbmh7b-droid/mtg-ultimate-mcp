@@ -47,14 +47,35 @@ test('self-mill recovery outranks an incidental attack trigger without commander
   assert.ok(graveyard?.evidence.some((entry) => entry.includes('milled-card recovery')));
 });
 
-test('artifact permanents retain generic affinity inside a substantive artifact engine', () => {
-  const artifact = inferNeutralStrategyV15([card({
-    name: 'Unnamed Utility Engine',
+test('own-graveyard engines are substantive while graveyard hate is not reanimator support', () => {
+  const ownGraveyardTexts = [
+    'As long as this creature is on the battlefield, it has all activated abilities of all artifact cards in your graveyard.',
+    'Whenever this creature attacks, you may cast an artifact spell from your hand or graveyard by paying life rather than paying its mana cost.',
+    'Whenever this Vehicle becomes crewed, each artifact creature card in your graveyard gains unearth {3} until end of turn.',
+  ];
+  for (const oracleText of ownGraveyardTexts) {
+    const graveyard = inferNeutralStrategyV15([card({
+      name: `Unnamed Own-Graveyard Engine ${oracleText.length}`,
+      typeLine: 'Artifact Creature — Test Construct',
+      oracleText,
+    })]).find((strategy) => strategy.archetype === 'graveyard-reanimator');
+    assert.ok((graveyard?.score ?? 0) >= 6, `own-graveyard engine was missed: ${oracleText}`);
+  }
+
+  const hate = inferNeutralStrategyV15([card({
+    name: 'Unnamed Graveyard Lantern',
+    typeLine: 'Artifact',
+    oracleText: 'When this artifact enters, exile a card from a graveyard. {T}, Sacrifice this artifact: Exile each opponent\'s graveyard. Draw a card.',
+  })]).find((strategy) => strategy.archetype === 'graveyard-reanimator');
+  assert.equal(hate?.score ?? 0, 0, 'graveyard hate must not masquerade as reanimator support');
+
+  const genericArtifact = inferNeutralStrategyV15([card({
+    name: 'Unnamed Utility Rock',
     typeLine: 'Artifact',
     oracleText: '{T}: Add {C}.',
   })]).find((strategy) => strategy.archetype === 'artifact-engine');
-
-  assert.ok((artifact?.score ?? 0) > 0, 'artifact permanents must retain nonzero artifact-engine affinity');
+  assert.ok((genericArtifact?.score ?? 0) > 0, 'generic artifacts retain relevant nonzero affinity');
+  assert.ok((genericArtifact?.score ?? 0) < 6, 'a generic artifact alone must not masquerade as a substantive engine');
 });
 
 test('mass graveyard exchange text is recognized as graveyard-reanimator support', () => {
@@ -70,15 +91,37 @@ test('mass graveyard exchange text is recognized as graveyard-reanimator support
   assert.ok(graveyard?.evidence.some((entry) => entry.includes('mass graveyard return')));
 });
 
-test('artifact-engine unrestricted discovery includes a dedicated artifact stratum', () => {
-  const strata = neutralUnrestrictedStrataV15(['B'], 'artifact-engine');
-  const artifactQueries = strata.filter((stratum) => stratum.family === 'archetype').map((stratum) => stratum.query);
-
-  assert.equal(artifactQueries.length, 3);
-  assert.ok(artifactQueries.every((query) => query.includes('t:artifact OR o:artifact OR o:Vehicle')));
+test('token multipliers and team-wide payoffs are substantive combat-token support', () => {
+  const supportCards = [
+    card({
+      name: 'Unnamed Token Multiplier',
+      typeLine: 'Creature — Test Warrior',
+      oracleText: 'If one or more tokens would be created under your control, those tokens plus that many 1/1 green creature tokens are created instead.',
+    }),
+    card({
+      name: 'Unnamed Team Anthem',
+      typeLine: 'Enchantment',
+      oracleText: 'Creatures you control get +5/+5 as long as this permanent has seven or more quest counters on it.',
+    }),
+    card({
+      name: 'Unnamed Typal Anthem',
+      typeLine: 'Creature — Test Noble',
+      oracleText: 'Other Squirrels you control get +1/+1.',
+    }),
+  ];
+  for (const support of supportCards) {
+    const combat = inferNeutralStrategyV15([support])
+      .find((strategy) => strategy.archetype === 'combat-tokens');
+    assert.ok((combat?.score ?? 0) >= 6, `${support.name} was not protected as substantive go-wide support`);
+  }
 });
 
-test('artifact-engine win-route reporting describes artifact pressure rather than generic combat', () => {
+test('artifact-engine construction and route reporting have dedicated generic boundaries', () => {
+  const strata = neutralUnrestrictedStrataV15(['B'], 'artifact-engine');
+  const artifactQueries = strata.filter((stratum) => stratum.family === 'archetype').map((stratum) => stratum.query);
+  assert.equal(artifactQueries.length, 3);
+  assert.ok(artifactQueries.every((query) => query.includes('t:artifact OR o:artifact OR o:Vehicle')));
+
   const engine = card({
     name: 'Unnamed Artifact Engine',
     typeLine: 'Artifact Creature — Construct',
@@ -90,7 +133,6 @@ test('artifact-engine win-route reporting describes artifact pressure rather tha
     verifiedWinningCombos: 0,
     efficientWinPlanSupported: false,
   });
-
   assert.equal(routes.primary.kind, 'control-value');
   assert.match(routes.primary.label, /Artifact engine/i);
   assert.ok(routes.primary.evidence.some((entry) => entry.includes('artifact cards')));

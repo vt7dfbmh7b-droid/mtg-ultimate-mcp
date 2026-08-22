@@ -79,6 +79,78 @@
         "meaningful_strategy_loss_rejected": "true",
         "negative_win_evidence_complete": "true"
       }
+    },
+    {
+      "id": "PRECON-GENERALIZATION",
+      "label": "Necron Dynasties unrestricted precon generalization",
+      "claimLevel": "scenario-intelligence",
+      "milestones": ["INTEL-02"],
+      "metadataPath": "test-results/precon-generalization/run-metadata.txt",
+      "sourceKeys": ["source_sha", "workflow_source_sha", "executed_head_sha"],
+      "passWhen": {
+        "control_outcome": "success",
+        "build_outcome": "success",
+        "regression_outcome": "success",
+        "execution_outcome": "success",
+        "hard_truth_outcome": "success",
+        "target_quality_outcome": "success",
+        "strategy_preservation_outcome": "success",
+        "exact_card_count": "true",
+        "commander_legality": "true",
+        "hard_budget_truth": "true",
+        "substantive_commander_strategy_required": "true",
+        "graveyard_reanimator_identity_required": "true",
+        "artifact_engine_identity_required": "true",
+        "graveyard_recursion_floor": "true",
+        "structural_floors_required": "true",
+        "meaningful_strategy_loss_rejected": "true"
+      }
+    },
+    {
+      "id": "STRATEGY-INFERENCE-GENERALIZATION",
+      "label": "Generic commander strategy inference regression",
+      "claimLevel": "engineering+truth",
+      "milestones": ["INTEL-02"],
+      "metadataPath": "test-results/strategy-inference-generalization/run-metadata.txt",
+      "sourceKeys": ["source_sha", "workflow_source_sha", "executed_head_sha"],
+      "passWhen": {
+        "control_outcome": "success",
+        "build_outcome": "success",
+        "regression_outcome": "success",
+        "name_specific_rule": "false",
+        "incidental_attack_trigger_substantive": "false",
+        "self_mill_recovery_substantive": "true",
+        "artifact_engine_substantive": "true",
+        "generic_artifact_substantive": "false",
+        "own_graveyard_engine_substantive": "true",
+        "graveyard_hate_not_support": "true",
+        "mass_graveyard_exchange_substantive": "true"
+      }
+    },
+    {
+      "id": "SQUIRRELED-AWAY-GENERALIZATION",
+      "label": "Squirreled Away unrestricted precon generalization",
+      "claimLevel": "scenario-intelligence",
+      "milestones": ["INTEL-02"],
+      "metadataPath": "test-results/precon-generalization-squirrels/run-metadata.txt",
+      "sourceKeys": ["source_sha", "workflow_source_sha", "executed_head_sha"],
+      "passWhen": {
+        "control_outcome": "success",
+        "build_outcome": "success",
+        "regression_outcome": "success",
+        "execution_outcome": "success",
+        "hard_truth_outcome": "success",
+        "target_quality_outcome": "success",
+        "strategy_preservation_outcome": "success",
+        "exact_card_count": "true",
+        "commander_legality": "true",
+        "hard_budget_truth": "true",
+        "substantive_combat_token_strategy_required": "true",
+        "core_token_engine_semantics_required": "true",
+        "cumulative_strategy_retention_required": "true",
+        "structural_floors_required": "true",
+        "meaningful_strategy_loss_rejected": "true"
+      }
     }
   ]
 }
