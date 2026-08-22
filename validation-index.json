@@ -107,20 +107,20 @@
       ],
       "metadataPath": "test-results/middle-earth-precon-refine/run-metadata.txt",
       "exists": true,
-      "sourceSha": "ca96f0e9be603e746bf2e46acc14eb9348b64eb8",
-      "outcome": "fail",
+      "sourceSha": "e160f68c297fd220037c771d27bf29e0f85634e9",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "ca96f0e9be603e746bf2e46acc14eb9348b64eb8",
-        "workflow_source_sha": "ca96f0e9be603e746bf2e46acc14eb9348b64eb8",
-        "executed_head_sha": "ca96f0e9be603e746bf2e46acc14eb9348b64eb8",
-        "control_outcome": "failure",
-        "build_outcome": "failure",
-        "regression_outcome": "skipped",
-        "execution_outcome": "skipped",
-        "hard_truth_outcome": "skipped",
-        "target_quality_outcome": "skipped",
-        "strategy_preservation_outcome": "skipped",
+        "source_sha": "e160f68c297fd220037c771d27bf29e0f85634e9",
+        "workflow_source_sha": "e160f68c297fd220037c771d27bf29e0f85634e9",
+        "executed_head_sha": "e160f68c297fd220037c771d27bf29e0f85634e9",
+        "control_outcome": "success",
+        "build_outcome": "success",
+        "regression_outcome": "success",
+        "execution_outcome": "success",
+        "hard_truth_outcome": "success",
+        "target_quality_outcome": "success",
+        "strategy_preservation_outcome": "success",
         "policy": "exact-food-and-fellowship-middle-earth-precon",
         "printing_family": "Middle-earth",
         "exact_card_count": "true",
@@ -132,15 +132,7 @@
         "meaningful_strategy_loss_rejected": "true",
         "negative_win_evidence_complete": "true"
       },
-      "unmetPassConditions": [
-        "control_outcome=success",
-        "build_outcome=success",
-        "regression_outcome=success",
-        "execution_outcome=success",
-        "hard_truth_outcome=success",
-        "target_quality_outcome=success",
-        "strategy_preservation_outcome=success"
-      ]
+      "unmetPassConditions": []
     }
   ]
 }
