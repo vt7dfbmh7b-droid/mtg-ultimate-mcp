@@ -89,5 +89,5 @@
 3 Mountain (MSC) 858
 3 Island (MSH) 289
 3 Plains (MSC) 866
-1 Vandalblast (MSC) 168 *N*
-1 Ponder (MAR) 13 *N*
+1 Reanimate (MAR) 20 *N*
+1 Brainstorm (SLD) 7019 *N*
