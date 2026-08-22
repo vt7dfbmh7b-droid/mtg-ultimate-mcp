@@ -1,0 +1,39 @@
+name: Y'shtola FF-only persisted ad-hoc refinement
+
+on:
+  push:
+    branches:
+      - test/yshtola-ff-only-20260822
+    paths:
+      - scripts/ad-hoc-yshtola-ff-only.ts
+
+permissions:
+  contents: write
+
+jobs:
+  refine:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm run build
+      - name: Run exact FF-only Y'shtola refinement
+        run: npx tsx scripts/ad-hoc-yshtola-ff-only.ts
+      - name: Persist result to isolated test branch
+        if: always()
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add yshtola-ff-only-result.json yshtola-ff-only-normalized.txt yshtola-ff-only-final.txt 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No result files to persist"
+            exit 0
+          fi
+          git commit -m "test-results: persist Y'shtola FF-only ad-hoc result [skip ci]"
+          git push origin HEAD:test/yshtola-ff-only-20260822
