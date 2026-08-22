@@ -8,7 +8,7 @@ Development checkpoint: `3cfca39c194df72727bcd1fae19e81080e543e41`
 | PM-STATE-INTEGRITY | engineering+truth | pass | `77a5383fa7490aa91360b8186a4bda890f632157` | no | `test-results/project-management/integrity.txt` |
 | MARVEL-B5-REFINE | scenario-intelligence | pass | `77a5383fa7490aa91360b8186a4bda890f632157` | no | `test-results/marvel-bracket5/refine-run-metadata.txt` |
 | MARVEL-B5-BROAD | scenario-intelligence | fail | `77a5383fa7490aa91360b8186a4bda890f632157` | no | `test-results/marvel-bracket5-broad/run-metadata.txt` |
-| MIDDLE-EARTH-PRECON-REFINE | scenario-intelligence | pass | `9efd52d8f7f02f8b3632e4b18c830c4bc6049dd0` | no | `test-results/middle-earth-precon-refine/run-metadata.txt` |
+| MIDDLE-EARTH-PRECON-REFINE | scenario-intelligence | fail | `6815bace96eddc610516f9f3aa99825525625458` | no | `test-results/middle-earth-precon-refine/run-metadata.txt` |
 
 ## Interpretation
 
