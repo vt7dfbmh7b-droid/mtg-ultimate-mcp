@@ -10009,7 +10009,6 @@
                     "equipment"
                   ],
                   "addRoles": [
-                    "board protection",
                     "protection"
                   ],
                   "unreplacedRoles": [
@@ -10250,7 +10249,6 @@
                       "equipment"
                     ],
                     "addRoles": [
-                      "board protection",
                       "protection"
                     ],
                     "unreplacedRoles": [
@@ -10364,7 +10362,6 @@
                     "creature"
                   ],
                   "addRoles": [
-                    "board protection",
                     "protection"
                   ],
                   "unreplacedRoles": [
@@ -10560,7 +10557,6 @@
                       "creature"
                     ],
                     "addRoles": [
-                      "board protection",
                       "protection"
                     ],
                     "unreplacedRoles": [
@@ -11650,7 +11646,6 @@
                         "equipment"
                       ],
                       "addRoles": [
-                        "board protection",
                         "protection"
                       ],
                       "unreplacedRoles": [
@@ -11891,7 +11886,6 @@
                           "equipment"
                         ],
                         "addRoles": [
-                          "board protection",
                           "protection"
                         ],
                         "unreplacedRoles": [
@@ -12005,7 +11999,6 @@
                         "creature"
                       ],
                       "addRoles": [
-                        "board protection",
                         "protection"
                       ],
                       "unreplacedRoles": [
@@ -12201,7 +12194,6 @@
                           "creature"
                         ],
                         "addRoles": [
-                          "board protection",
                           "protection"
                         ],
                         "unreplacedRoles": [
