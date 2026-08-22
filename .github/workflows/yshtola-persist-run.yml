@@ -6,6 +6,11 @@ on:
       - test/yshtola-ff-only-20260822
     paths:
       - scripts/ad-hoc-yshtola-ff-only.ts
+  pull_request:
+    branches: [main]
+    paths:
+      - scripts/ad-hoc-yshtola-ff-only.ts
+      - .github/workflows/yshtola-persist-run.yml
 
 permissions:
   contents: write
