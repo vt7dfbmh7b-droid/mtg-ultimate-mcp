@@ -112,10 +112,15 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
     && /\b(?:target|each|an) opponent\b[^.]*\bloses?\b[^.]*\blife\b/i.test(text);
   const recoversMilledCardsToHand = /\bcards? milled (?:this way )?[^.]{0,120}\binto your hand\b/i.test(text);
   const massGraveyardReturn = /\bexiles? [^.]{0,180}\bfrom (?:your|their|a|any|all|each|the) graveyards?\b[^.]{0,240}\bputs? [^.]{0,180}\bexiled this way\b[^.]{0,100}\bonto the battlefield\b/i.test(text);
-  const usesOwnGraveyard = /\bfrom your graveyard\b|\bfrom your hand or graveyard\b|\b(?:artifact )?(?:creature )?cards? in your graveyard\b|\bpermanents? in your graveyard\b/i.test(text);
+  const selectsOwnGraveyardCards = /\b(?:artifact |creature )?cards?[^.]{0,120}\bin your graveyard\b/i.test(text);
+  const returnsSelectedGraveyardCards = /\b(?:choose|target)\b[^.]{0,180}\bcards?\b[^.]{0,180}\bin your graveyard\b[^.]*\.\s*\breturn (?:each(?: of them)?|them|those cards?|that card|it)\b[^.]{0,120}\bto the battlefield\b/i.test(text);
+  const usesOwnGraveyard = /\bfrom your graveyard\b|\bfrom your hand or graveyard\b|\bpermanents? in your graveyard\b/i.test(text)
+    || selectsOwnGraveyardCards;
   const graveyardHateOnly = roles.has('graveyard hate') && !roles.has('graveyard recursion');
   const artifactPermanent = /\bartifact\b/i.test(typeText);
-  const artifactEngineText = /\bartifacts? you control\b|\bartifact spells? you cast\b|\bartifact (?:creature )?cards?[^.]{0,100}\byour (?:graveyard|hand|library)\b|\bartifact spells?[^.]{0,100}\bfrom (?:the top of )?your\b|\bcreate\b[^.]{0,100}\bartifact\b[^.]{0,60}\btokens?\b|\bsacrifice (?:an|another|one or more) artifacts?\b|\bwhenever\b[^.]{0,100}\bartifacts?\b|\bvehicles? you control\b|\bvehicle cards?\b|\bcrew\b/i.test(text);
+  const artifactCopyEngine = /\b(?:enter|enters|have|has)\b[^.]{0,80}\bas a copy of (?:any|an|another|target) artifact\b|\bcopy (?:of )?(?:any|an|another|target) artifact\b/i.test(text);
+  const artifactEngineText = /\bartifacts? you control\b|\bartifact spells? you cast\b|\bartifact (?:creature )?cards?[^.]{0,100}\byour (?:graveyard|hand|library)\b|\bartifact spells?[^.]{0,100}\bfrom (?:the top of )?your\b|\bcreate\b[^.]{0,100}\bartifact\b[^.]{0,60}\btokens?\b|\bsacrifice (?:an|another|one or more) artifacts?\b|\bwhenever\b[^.]{0,100}\bartifacts?\b|\bvehicles? you control\b|\bvehicle cards?\b|\bcrew\b/i.test(text)
+    || artifactCopyEngine;
 
   addSignal(table, 'combat-tokens', roles.has('token production'), 6, 'token production');
   addSignal(table, 'combat-tokens', roles.has('go-wide payoff'), 6, 'go-wide combat payoff');
@@ -141,12 +146,13 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   addSignal(table, 'graveyard-reanimator', /mill|surveil|discard/i.test(text), 5, 'graveyard setup');
   addSignal(table, 'graveyard-reanimator', recoversMilledCardsToHand, 7, 'milled-card recovery');
   addSignal(table, 'graveyard-reanimator', massGraveyardReturn, 7, 'mass graveyard return');
+  addSignal(table, 'graveyard-reanimator', returnsSelectedGraveyardCards, 8, 'selected graveyard cards returned to battlefield');
   addSignal(table, 'graveyard-reanimator', /return .* graveyard .* battlefield|put .* graveyard .* battlefield/i.test(text), 6, 'reanimation text');
 
   // A generic artifact permanent is relevant but deliberately sub-substantive by itself.
-  // Explicit artifact/Vehicle rules text is required to infer an artifact-engine identity.
+  // Explicit artifact/Vehicle rules text, including copying another artifact, is required to infer an artifact-engine identity.
   addSignal(table, 'artifact-engine', artifactPermanent, 3, 'artifact permanent');
-  addSignal(table, 'artifact-engine', artifactEngineText, 6, 'artifact/Vehicle engine text');
+  addSignal(table, 'artifact-engine', artifactEngineText, 6, artifactCopyEngine ? 'artifact-copy engine text' : 'artifact/Vehicle engine text');
 
   addSignal(table, 'aristocrats', roles.has('sacrifice synergy'), 7, 'sacrifice synergy');
   addSignal(table, 'aristocrats', roles.has('sacrifice outlet'), 8, 'sacrifice outlet');
