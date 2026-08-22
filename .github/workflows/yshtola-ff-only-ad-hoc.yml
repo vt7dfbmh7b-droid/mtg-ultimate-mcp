@@ -1,0 +1,297 @@
+name: Y'shtola FF-only ad-hoc refinement
+
+on:
+  push:
+    branches:
+      - test/yshtola-ff-only-20260822
+    paths:
+      - .github/workflows/yshtola-ff-only-ad-hoc.yml
+
+permissions:
+  contents: read
+
+jobs:
+  refine:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm run build
+      - name: Run exact FF-only Y'shtola refinement
+        shell: bash
+        run: |
+          cat > /tmp/run-yshtola.ts <<'TS'
+          import { writeFile } from 'node:fs/promises';
+          import { parseDecklist } from '${{ github.workspace }}/src/services/deck.js';
+          import { validateCommanderDeck } from '${{ github.workspace }}/src/services/commander-rules.js';
+          import { refineCommanderDeckIterativelyV12 } from '${{ github.workspace }}/src/services/optimizer-v12.js';
+          import { resolvePrintingPolicyV08, selectEligiblePrintingV08, printingMatchesPolicyV08 } from '${{ github.workspace }}/src/services/printing-policy-v08.js';
+          import { getCardsByNames, getCardsByIdentifiers } from '${{ github.workspace }}/src/services/scryfall.js';
+          import { findDeckCombos, estimateCommanderBracket } from '${{ github.workspace }}/src/services/spellbook.js';
+          import { assessCedhReadinessV14 } from '${{ github.workspace }}/src/services/cedh-workflow-v14.js';
+
+          const userDeck = `1 Y'shtola, Night's Blessed
+          1 Akroma's Will
+          1 Ambrosia Whiteheart
+          1 An Offer You Can't Refuse
+          1 Arcane Denial
+          1 Arcane Signet
+          1 Ash Barrens
+          1 Baleful Strix
+          1 Bolas's Citadel
+          1 Brainstorm
+          1 Choked Estuary
+          1 City of Brass
+          1 Clever Concealment
+          1 Cloud, Midgar Mercenary
+          1 Command Tower
+          1 Conqueror's Flail
+          1 Counterspell
+          1 Cyclonic Rift
+          1 Damn
+          1 Dark Confidant
+          1 Dark Ritual
+          1 Darkwater Catacombs
+          1 Deadly Dispute
+          1 Delivery Moogle
+          1 Diabolic Intent
+          1 Dig Through Time
+          1 Dovin's Veto
+          1 Drowned Catacomb
+          1 Elena, Turk Recruit
+          1 Emet-Selch of the Third Seat
+          1 Everflowing Chalice
+          1 Exotic Orchard
+          1 Exsanguinate
+          1 Fetid Heath
+          1 Force of Negation
+          1 Glacial Fortress
+          1 Grief
+          6 Island
+          1 Isolated Chapel
+          1 Lightning Greaves
+          1 Loran of the Third Path
+          1 Louisoix's Sacrifice
+          1 Millikin
+          1 Mind Stone
+          1 Night's Whisper
+          1 Papalymo Totolymo
+          1 Phoenix Down
+          3 Plains
+          1 Port Town
+          1 Praetor's Grasp
+          1 Prairie Stream
+          1 Preordain
+          1 Prismatic Ending
+          1 Ranger-Captain of Eos
+          1 Reanimate
+          1 Rhystic Study
+          1 Scavenger Grounds
+          1 Search for Dagger
+          1 Shineshadow Snarl
+          1 Silence
+          1 Skullclamp
+          1 Skycloud Expanse
+          1 Snapcaster Mage
+          1 Snuff Out
+          1 Sol Ring
+          1 Solitude
+          1 Spire of Industry
+          1 Staff of the Storyteller
+          1 Starting Town
+          1 Subtlety
+          1 Sunken Hollow
+          1 Sunken Ruins
+          4 Swamp
+          1 Swiftfoot Boots
+          1 Swords to Plowshares
+          1 Talisman of Dominance
+          1 Talisman of Hierarchy
+          1 Talisman of Progress
+          1 Tataru Taru
+          1 The Destined Black Mage
+          1 The Destined White Mage
+          1 Thought Vessel
+          1 Toxic Deluge
+          1 Tymna the Weaver
+          1 Underground River
+          1 Urza, Lord High Artificer
+          1 Varragoth, Bloodsky Sire
+          1 Void Rend
+          1 Walking Ballista
+          1 Yoshimaru, Ever Faithful`;
+
+          const sourceDeck = `// COMMANDER\n1 Y'shtola, Night's Blessed\n\n// MAIN\n${userDeck.split('\n').slice(1).join('\n')}`;
+          const parsed = parseDecklist(sourceDeck);
+          if (parsed.totalCards !== 100 || parsed.commanders.length !== 1) {
+            throw new Error(`Input parse failed: total=${parsed.totalCards}, commanders=${parsed.commanders.length}`);
+          }
+
+          const names = [...new Set([...parsed.commanders, ...parsed.main].map((entry) => entry.name))];
+          const generic = await getCardsByNames(names);
+          if (generic.notFound.length > 0) {
+            await writeFile('yshtola-ff-only-result.json', JSON.stringify({ stage: 'name-resolution', notFound: generic.notFound }, null, 2));
+            throw new Error(`Unresolved card names: ${generic.notFound.join(', ')}`);
+          }
+
+          const policyOptions = { printingFamily: 'Final Fantasy', includePromos: true, includeSpecialReleases: true } as const;
+          const policy = await resolvePrintingPolicyV08(policyOptions);
+          const genericByName = new Map(generic.cards.map((card) => [card.name.toLocaleLowerCase(), card]));
+          const exactByName = new Map<string, any>();
+          const noEligiblePrinting: string[] = [];
+          for (const name of names) {
+            const card = genericByName.get(name.toLocaleLowerCase());
+            if (!card) {
+              noEligiblePrinting.push(name);
+              continue;
+            }
+            const choice = await selectEligiblePrintingV08(card, policy, undefined);
+            if (!choice?.card || !printingMatchesPolicyV08(choice.card, policy)) {
+              noEligiblePrinting.push(name);
+              continue;
+            }
+            exactByName.set(name.toLocaleLowerCase(), choice.card);
+          }
+
+          if (noEligiblePrinting.length > 0) {
+            const failure = {
+              stage: 'ff-printing-policy',
+              parsedTotalCards: parsed.totalCards,
+              commander: parsed.commanders[0]?.name ?? null,
+              noEligiblePrinting,
+            };
+            await writeFile('yshtola-ff-only-result.json', JSON.stringify(failure, null, 2));
+            console.log(JSON.stringify(failure, null, 2));
+            throw new Error(`Cards without eligible FINAL FANTASY physical printings: ${noEligiblePrinting.join(', ')}`);
+          }
+
+          const line = (entry: any) => {
+            const card = exactByName.get(entry.name.toLocaleLowerCase());
+            return `${entry.quantity} ${entry.name} (${String(card.set).toUpperCase()}) ${card.collector_number}`;
+          };
+          const normalizedDeck = ['// COMMANDER', ...parsed.commanders.map(line), '', '// MAIN', ...parsed.main.map(line)].join('\n');
+          await writeFile('yshtola-ff-only-normalized.txt', normalizedDeck);
+
+          const exactParsed = parseDecklist(normalizedDeck);
+          const exactIds = [...exactParsed.commanders, ...exactParsed.main].map((entry) => ({
+            name: entry.name,
+            ...(entry.set ? { set: entry.set } : {}),
+            ...(entry.collectorNumber ? { collectorNumber: entry.collectorNumber } : {}),
+          }));
+          const exactResolved = await getCardsByIdentifiers(exactIds);
+          const initialRules = validateCommanderDeck(exactParsed, exactResolved.cards);
+          if (exactResolved.notFound.length > 0 || !initialRules.isLegal) {
+            const failure = { stage: 'normalized-deck-validation', notFound: exactResolved.notFound, rules: initialRules };
+            await writeFile('yshtola-ff-only-result.json', JSON.stringify(failure, null, 2));
+            console.log(JSON.stringify(failure, null, 2));
+            throw new Error('Normalized FF deck failed hard validation.');
+          }
+
+          const result = await refineCommanderDeckIterativelyV12(normalizedDeck, {
+            targetBracket: 5,
+            maxSwaps: 20,
+            maxRounds: 5,
+            swapsPerRound: 5,
+            candidatePackagesPerRound: 5,
+            minimumImprovementScore: 0,
+            preserveAcceptedAdds: true,
+            protectedCards: [],
+            excludedCards: [],
+            printingFamily: 'Final Fantasy',
+            includePromos: true,
+            includeSpecialReleases: true,
+            simulationIterations: 1000,
+            simulationTurns: 7,
+            seed: 20260822,
+            detailLevel: 'detailed',
+          });
+
+          const finalDecklist = typeof result.finalDecklist === 'string' ? result.finalDecklist : normalizedDeck;
+          const finalParsed = parseDecklist(finalDecklist);
+          const finalIds = [...finalParsed.commanders, ...finalParsed.main].map((entry) => ({
+            name: entry.name,
+            ...(entry.set ? { set: entry.set } : {}),
+            ...(entry.collectorNumber ? { collectorNumber: entry.collectorNumber } : {}),
+          }));
+          const finalResolved = await getCardsByIdentifiers(finalIds);
+          const finalRules = validateCommanderDeck(finalParsed, finalResolved.cards);
+          const offPolicy = finalResolved.cards
+            .filter((card) => !printingMatchesPolicyV08(card, policy))
+            .map((card) => `${card.name} (${card.set.toUpperCase()}) ${card.collector_number}`);
+
+          const [combos, bracket, readiness] = await Promise.all([
+            findDeckCombos(finalDecklist, 100),
+            estimateCommanderBracket(finalDecklist),
+            assessCedhReadinessV14(finalDecklist, policyOptions),
+          ]);
+
+          const output = {
+            test: 'Y\'shtola FF-only maximum-power upgrade',
+            sourceHead: process.env.GITHUB_SHA ?? null,
+            constraints: {
+              commanderLocked: "Y'shtola, Night's Blessed",
+              targetBracket: 5,
+              printingFamily: 'Final Fantasy',
+              budgetCap: null,
+              maxSwaps: 20,
+              maxRounds: 5,
+            },
+            initial: {
+              totalCards: exactParsed.totalCards,
+              commander: exactParsed.commanders[0]?.name ?? null,
+              legal: initialRules.isLegal,
+              exactFFPrintingsResolved: exactResolved.notFound.length === 0,
+            },
+            refinement: result,
+            finalAudit: {
+              totalCards: finalParsed.totalCards,
+              commander: finalParsed.commanders[0]?.name ?? null,
+              legal: finalRules.isLegal,
+              unresolved: finalResolved.notFound,
+              offPolicy,
+              spellbook: bracket,
+              combos,
+              readiness,
+            },
+          };
+          await writeFile('yshtola-ff-only-result.json', JSON.stringify(output, null, 2));
+          await writeFile('yshtola-ff-only-final.txt', finalDecklist);
+
+          console.log('=== YSHTOLA ULTIMATE MTG COMPACT RESULT ===');
+          console.log(JSON.stringify({
+            constraints: output.constraints,
+            initial: output.initial,
+            status: result.status ?? null,
+            stopReason: result.stopReason ?? null,
+            rounds: result.rounds ?? null,
+            totalAcceptedSwaps: result.totalAcceptedSwaps ?? null,
+            finalAudit: {
+              totalCards: output.finalAudit.totalCards,
+              commander: output.finalAudit.commander,
+              legal: output.finalAudit.legal,
+              unresolved: output.finalAudit.unresolved,
+              offPolicy: output.finalAudit.offPolicy,
+              readinessStatus: (readiness as any).status ?? null,
+              readinessMetrics: (readiness as any).metrics ?? null,
+              winningCombos: (readiness as any).winningCombos ?? null,
+              spellbookBracketTag: (bracket as any).bracketTag ?? null,
+            },
+          }, null, 2));
+          TS
+          npx tsx /tmp/run-yshtola.ts
+      - name: Upload result
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: yshtola-ff-only-result-${{ github.sha }}
+          path: |
+            yshtola-ff-only-result.json
+            yshtola-ff-only-normalized.txt
+            yshtola-ff-only-final.txt
+          if-no-files-found: warn
+          retention-days: 7
