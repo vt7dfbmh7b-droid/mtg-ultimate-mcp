@@ -1,0 +1,63 @@
+name: INTEL-02 Failure Isolator
+
+on:
+  push:
+    branches: [agent/v15-native-deck-intelligence]
+    paths: [.github/workflows/intel02-failure-isolator.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  isolate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/v15-native-deck-intelligence
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Replay repair and isolate failure
+        shell: bash
+        run: |
+          set +e
+          git show 4e2b1110a8cb089892f3837e8f573ce80400b976:.github/workflows/intel02-shared-truth-repair.yml > /tmp/staged.yml
+          python3 - <<'PY'
+          from pathlib import Path
+          source = Path('/tmp/staged.yml').read_text().splitlines()
+          start = next(i for i, line in enumerate(source) if line.strip() == "python3 - <<'PY'") + 1
+          end = next(i for i in range(start, len(source)) if source[i].strip() == 'PY')
+          Path('/tmp/repair.py').write_text('\n'.join((line[10:] if line.startswith('          ') else line) for line in source[start:end]) + '\n')
+          PY
+          python3 /tmp/repair.py > /tmp/patch.log 2>&1
+          patch_status=$?
+          npm ci > /tmp/install.log 2>&1
+          install_status=$?
+          npm run build > /tmp/build.log 2>&1
+          build_status=$?
+          npm test > /tmp/tests.log 2>&1
+          test_status=$?
+
+          git reset --hard HEAD
+          mkdir -p test-results/intel02-shared-truth-repair
+          {
+            echo "source=$(git rev-parse HEAD)"
+            echo "patch_status=$patch_status"
+            echo "install_status=$install_status"
+            echo "build_status=$build_status"
+            echo "test_status=$test_status"
+            echo "--- failing test contexts ---"
+            grep -n -B 35 -A 55 '^not ok ' /tmp/tests.log || true
+            echo "--- assertions/errors ---"
+            grep -n -B 12 -A 30 -E 'AssertionError|ERR_ASSERTION|actual:|expected:|error:' /tmp/tests.log | head -n 260 || true
+          } > test-results/intel02-shared-truth-repair/failure-context.txt
+          rm .github/workflows/intel02-failure-isolator.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add test-results/intel02-shared-truth-repair/failure-context.txt .github/workflows/intel02-failure-isolator.yml
+          git commit -m "test(intel02): isolate shared-truth regression"
+          git push origin HEAD:agent/v15-native-deck-intelligence
+          exit 0
