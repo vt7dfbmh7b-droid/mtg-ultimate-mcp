@@ -1,0 +1,149 @@
+source=21721a2ea0b8504abdeeec004d2df18f3d267633
+patch_status=0
+install_status=0
+build_status=0
+test_status=1
+--- failing test contexts ---
+3712-ok 742 - a tutor that cannot directly find a route component is excluded rather than assigned fake value
+3713-  ---
+3714-  duration_ms: 0.780218
+3715-  ...
+3716-# Subtest: restricted Upgrade role selection sees an eligible card beyond the old 40-result role-search window
+3717-ok 743 - restricted Upgrade role selection sees an eligible card beyond the old 40-result role-search window
+3718-  ---
+3719-  duration_ms: 10.105398
+3720-  ...
+3721-# Subtest: restricted Upgrade pool filtering preserves existing-card, exclusion, land, legality, and role boundaries
+3722-ok 744 - restricted Upgrade pool filtering preserves existing-card, exclusion, land, legality, and role boundaries
+3723-  ---
+3724-  duration_ms: 1.138759
+3725-  ...
+3726-# Subtest: Bracket-5 candidate generation puts the failed real curve gate ahead of tutor ten
+3727-ok 745 - Bracket-5 candidate generation puts the failed real curve gate ahead of tutor ten
+3728-  ---
+3729-  duration_ms: 1.659684
+3730-  ...
+3731-# Subtest: lower-bracket candidate generation does not inherit the Bracket-5 curve lane
+3732-ok 746 - lower-bracket candidate generation does not inherit the Bracket-5 curve lane
+3733-  ---
+3734-  duration_ms: 0.3716
+3735-  ...
+3736-# Subtest: Bracket-4 candidate generation exposes actual failed construction gates before aspirational role targets
+3737-ok 747 - Bracket-4 candidate generation exposes actual failed construction gates before aspirational role targets
+3738-  ---
+3739-  duration_ms: 1.258319
+3740-  ...
+3741-# Subtest: restricted curve discovery admits only legal nonland additions at mana value two or less
+3742-ok 748 - restricted curve discovery admits only legal nonland additions at mana value two or less
+3743-  ---
+3744-  duration_ms: 5.752781
+3745-  ...
+3746-# Subtest: curve-priority pairing chooses a positive mana-value reduction and records the gate provenance
+3747:not ok 749 - curve-priority pairing chooses a positive mana-value reduction and records the gate provenance
+3748-  ---
+3749-  duration_ms: 10.445912
+3750-  location: '/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/services/upgrade-target-priority-v15.test.ts:139:1'
+3751-  failureType: 'testCodeFailure'
+3752-  error: |-
+3753-    Expected values to be strictly equal:
+3754-    + actual - expected
+3755-    
+3756-    + undefined
+3757-    - 'average-nonland-mv'
+3758-  code: 'ERR_ASSERTION'
+3759-  name: 'AssertionError'
+3760-  expected: 'average-nonland-mv'
+3761-  operator: 'strictEqual'
+3762-  stack: |-
+3763-    TestContext.<anonymous> (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/services/upgrade-target-priority-v15.test.ts:162:10)
+3764-    Test.runInAsyncScope (node:async_hooks:206:9)
+3765-    Test.run (node:internal/test_runner/test:796:25)
+3766-    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+3767-    Test.postRun (node:internal/test_runner/test:889:19)
+3768-    Test.run (node:internal/test_runner/test:835:12)
+3769-    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+3770-  ...
+3771-# Subtest: curve repair can inspect non-positive-pressure cuts only when the real curve gate is active
+3772-ok 750 - curve repair can inspect non-positive-pressure cuts only when the real curve gate is active
+3773-  ---
+3774-  duration_ms: 0.362938
+3775-  ...
+3776-# Subtest: swap pairing preserves board-wipe and recursion minima before heuristic cut pressure
+3777-ok 751 - swap pairing preserves board-wipe and recursion minima before heuristic cut pressure
+3778-  ---
+3779-  duration_ms: 12.665635
+3780-  ...
+3781-# Subtest: later aspirational swaps cannot cut away a currently failed authoritative cheap-interaction gate
+3782-ok 752 - later aspirational swaps cannot cut away a currently failed authoritative cheap-interaction gate
+3783-  ---
+3784-  duration_ms: 0.707838
+3785-  ...
+3786-# Subtest: swap pairing declines an apparent repair when every cut would create a new structural hole
+3787-ok 753 - swap pairing declines an apparent repair when every cut would create a new structural hole
+3788-  ---
+3789-  duration_ms: 0.45076
+3790-  ...
+3791-# Subtest: five-color curve repair cannot strip persistent colored mana below its floor
+3792-ok 754 - five-color curve repair cannot strip persistent colored mana below its floor
+3793-  ---
+3794-  duration_ms: 3.584619
+3795-  ...
+3796-# Subtest: near the curve threshold, pairing uses the smallest sufficient safe mana reduction
+3797-ok 755 - near the curve threshold, pairing uses the smallest sufficient safe mana reduction
+3798-  ---
+3799-  duration_ms: 0.608778
+3800-  ...
+3801-# Subtest: near-threshold five-color repair uses surplus interaction before a protected combat engine
+3802-ok 756 - near-threshold five-color repair uses surplus interaction before a protected combat engine
+--- assertions/errors ---
+3740-  ...
+3741-# Subtest: restricted curve discovery admits only legal nonland additions at mana value two or less
+3742-ok 748 - restricted curve discovery admits only legal nonland additions at mana value two or less
+3743-  ---
+3744-  duration_ms: 5.752781
+3745-  ...
+3746-# Subtest: curve-priority pairing chooses a positive mana-value reduction and records the gate provenance
+3747-not ok 749 - curve-priority pairing chooses a positive mana-value reduction and records the gate provenance
+3748-  ---
+3749-  duration_ms: 10.445912
+3750-  location: '/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/services/upgrade-target-priority-v15.test.ts:139:1'
+3751-  failureType: 'testCodeFailure'
+3752:  error: |-
+3753-    Expected values to be strictly equal:
+3754-    + actual - expected
+3755-    
+3756-    + undefined
+3757-    - 'average-nonland-mv'
+3758:  code: 'ERR_ASSERTION'
+3759:  name: 'AssertionError'
+3760:  expected: 'average-nonland-mv'
+3761-  operator: 'strictEqual'
+3762-  stack: |-
+3763-    TestContext.<anonymous> (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/services/upgrade-target-priority-v15.test.ts:162:10)
+3764-    Test.runInAsyncScope (node:async_hooks:206:9)
+3765-    Test.run (node:internal/test_runner/test:796:25)
+3766-    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+3767-    Test.postRun (node:internal/test_runner/test:889:19)
+3768-    Test.run (node:internal/test_runner/test:835:12)
+3769-    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+3770-  ...
+3771-# Subtest: curve repair can inspect non-positive-pressure cuts only when the real curve gate is active
+3772-ok 750 - curve repair can inspect non-positive-pressure cuts only when the real curve gate is active
+3773-  ---
+3774-  duration_ms: 0.362938
+3775-  ...
+3776-# Subtest: swap pairing preserves board-wipe and recursion minima before heuristic cut pressure
+3777-ok 751 - swap pairing preserves board-wipe and recursion minima before heuristic cut pressure
+3778-  ---
+3779-  duration_ms: 12.665635
+3780-  ...
+3781-# Subtest: later aspirational swaps cannot cut away a currently failed authoritative cheap-interaction gate
+3782-ok 752 - later aspirational swaps cannot cut away a currently failed authoritative cheap-interaction gate
+3783-  ---
+3784-  duration_ms: 0.707838
+3785-  ...
+3786-# Subtest: swap pairing declines an apparent repair when every cut would create a new structural hole
+3787-ok 753 - swap pairing declines an apparent repair when every cut would create a new structural hole
+3788-  ---
+3789-  duration_ms: 0.45076
+3790-  ...
