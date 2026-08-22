@@ -210,7 +210,7 @@ Risk: generic curve, interaction and protection gains can turn an addressable pr
 
 Protection: Food/lifegain is now a semantic commander archetype; upgrade evidence tracks recursion and board-wipe structure; pairing preserves every pre-existing structural floor up to the target and declines a package when every cut creates another hole. Card-role truth excludes self-only hexproof or indestructible from deck protection and recognizes mass negative-power, counters, damage, bounce and sacrifice effects as board wipes. Deterministic regressions cover the archetype, structural floors, no-safe-cut refusal and both role-classification errors. The exact Food and Fellowship live control separately gates hard truth, target improvement and strategy preservation.
 
-Status: prevented in deterministic tests and live-validated at `48a7c3f...`; the exact Food and Fellowship control made four supported swaps without reducing Food/lifegain affinity, recursion or wipes.
+Status: prevented in deterministic tests and live-validated at `28e5616...`; the exact Food and Fellowship control made four supported swaps without reducing Food/lifegain affinity, recursion, wipes or persistent colored mana.
 
 ## KF-022 — Generic ramp count hides loss of five-color mana access
 
@@ -220,7 +220,27 @@ Risk: treasure, rituals, cost reduction and colorless acceleration can keep the 
 
 Protection: role truth now distinguishes persistent colored mana from one-shot filtering and other generic ramp. Pairing tracks the count across the complete package and every accepted round, with color-count floors of four, six, seven and eight for two- through five-color command zones. Focused and broad live controls fail closed on missing or non-finite evidence, enforce whole-deck structural floors, require per-swap colored-mana evidence, and persist target-quality and strategy-quality outcomes separately. The exact five-color regression starts at 12 sources and proves no more than four may be cut below the floor of eight.
 
-Status: prevented in deterministic source tests; exact-source Marvel live revalidation is required before the broad lane may be counted as a scenario pass.
+Status: the engine floor was live-observed at `28e5616...` (focused 13→12; broad 13→8), but KF-023 and KF-024 kept the Marvel controls correctly red. Exact-source revalidation remains required before the broad lane may be counted as a scenario pass.
+
+## KF-023 — Compact refinement evidence drops a newly enforced safety field
+
+Observed: the focused Marvel run at `28e5616...` produced the safe two-swap result and kept persistent colored sources at 12 from a starting 13, but the final workflow gate failed. The optimizer's compact candidate projection retained strategy and curve fields while silently omitting the new per-swap colored-source count and floor, so the persisted detailed-round evidence contained `null` for both values.
+
+Risk: a safe deck can be rejected as unverifiable, and a workflow that correctly fails closed cannot distinguish missing evidence from an actual floor violation. Adding an engine safeguard without tracing it through every evidence projection leaves the live control permanently red.
+
+Protection: the refinement evidence projector now carries `persistentColoredManaSourcesAfterSwap` and `persistentColoredManaSourceFloor` into every candidate comparison. A direct projection regression prevents either field from being dropped again, and the exact-source workflow remains fail closed until both values are finite.
+
+Status: deterministic fix implemented locally; exact-source Marvel live revalidation pending.
+
+## KF-024 — Aggregate archetype points hide a critical per-swap strategy loss
+
+Observed: the broad Marvel run at `28e5616...` accepted a second-round package containing Aurelia, the Warleader → General Thunderbolt Ross. That pairing explicitly reported `meaningful-strategy-loss` and removed extra-combat, haste and untap roles. The package-level audit nevertheless reported `preserved` because two other generic combat/token additions raised aggregate `combat-tokens` affinity enough to reduce the net label-score loss to two points.
+
+Risk: broad archetype points from unrelated cards can numerically compensate for removal of a deck's actual secondary engine. The optimizer may accept a package that its own per-swap evidence identifies as strategically unsafe.
+
+Protection: optimizer eligibility now requires both the aggregate audit and every per-swap impact to be preserved. Compact audit evidence retains `swapImpacts`, and a deterministic regression proves that aggregate archetype compensation cannot conceal one meaningful pairing loss. A genuinely matched replacement still passes the existing compensated-replacement control.
+
+Status: deterministic fix implemented locally; exact-source broad Marvel revalidation pending.
 
 ## Adding a failure
 

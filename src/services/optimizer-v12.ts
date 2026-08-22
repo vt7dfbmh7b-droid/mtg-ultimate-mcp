@@ -136,7 +136,7 @@ function commanderIdentity(parsed: ParsedDeck, cards: ScryfallCard[]): string[] 
   )].sort();
 }
 
-function simpleSwap(swap: Record<string, unknown>): Record<string, unknown> {
+export function refinementSwapEvidenceV15(swap: Record<string, unknown>): Record<string, unknown> {
   const printing = asRecord(swap.recommendedPrinting);
   const structuralPairing = asRecord(swap.structuralPairing);
   const strategyPreservation = asRecord(structuralPairing.strategyPreservation);
@@ -155,6 +155,8 @@ function simpleSwap(swap: Record<string, unknown>): Record<string, unknown> {
       remainingStructuralDeficitAfterSwap: structuralPairing.remainingStructuralDeficitAfterSwap ?? null,
       authoritativeTargetGate: structuralPairing.authoritativeTargetGate ?? null,
       nonlandManaValueReduction: structuralPairing.nonlandManaValueReduction ?? null,
+      persistentColoredManaSourcesAfterSwap: structuralPairing.persistentColoredManaSourcesAfterSwap ?? null,
+      persistentColoredManaSourceFloor: structuralPairing.persistentColoredManaSourceFloor ?? null,
       strategyPreservation: Object.keys(strategyPreservation).length > 0 ? strategyPreservation : null,
     } : null,
   };
@@ -180,6 +182,7 @@ function compactStrategyPreservationV15(plan: Record<string, unknown> | null): R
     evidenceComplete: audit.evidenceComplete === true,
     meaningfulLosses: Array.isArray(audit.meaningfulLosses) ? audit.meaningfulLosses : [],
     strategyDeltas: Array.isArray(audit.strategyDeltas) ? audit.strategyDeltas : [],
+    swapImpacts: Array.isArray(audit.swapImpacts) ? audit.swapImpacts : [],
     acceptanceRule: audit.acceptanceRule ?? null,
   };
 }
@@ -196,7 +199,11 @@ export function candidateStrategyPreservationGateV15(
     };
   }
   const meaningfulLosses = Array.isArray(audit.meaningfulLosses) ? audit.meaningfulLosses : [];
-  if (audit.status === 'meaningful-strategy-loss' || meaningfulLosses.length > 0) {
+  const swapImpacts = Array.isArray(audit.swapImpacts) ? audit.swapImpacts.map(asRecord) : [];
+  const perSwapMeaningfulLoss = swapImpacts.some((impact) => (
+    impact.meaningfulStrategyLoss === true || impact.verdict === 'meaningful-strategy-loss'
+  ));
+  if (audit.status === 'meaningful-strategy-loss' || meaningfulLosses.length > 0 || perSwapMeaningfulLoss) {
     return {
       eligible: false,
       reason: 'package-causes-a-meaningful-commander-strategy-loss',
@@ -308,7 +315,7 @@ function candidateSummary(candidate: CandidateEvaluationV12): Record<string, unk
     strategyPreservation: compactStrategyPreservationV15(candidate.plan),
     planProvenance: candidatePlanProvenanceV15(candidate.plan),
     swaps: candidate.plan && Array.isArray(candidate.plan.swaps)
-      ? candidate.plan.swaps.map(asRecord).map(simpleSwap)
+      ? candidate.plan.swaps.map(asRecord).map(refinementSwapEvidenceV15)
       : [],
   };
 }
@@ -927,7 +934,7 @@ export async function refineCommanderDeckIterativelyV12(
     candidatePackagesPerRound,
     estimatedUpgradeSpendUsd: totalSpend,
     maxTotalUsd: maxTotalUsd ?? null,
-    swaps: acceptedSwaps.map(simpleSwap),
+    swaps: acceptedSwaps.map(refinementSwapEvidenceV15),
     finalDecklist: currentDecklist,
     finalCommanderRules: finalRules,
     themeConstraint: {

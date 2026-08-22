@@ -23,6 +23,7 @@ on:
       - "src/services/optimizer-v11.ts"
       - "src/services/optimizer-v11.test.ts"
       - "src/services/optimizer-v12.ts"
+      - "src/services/optimizer-v12-attempt-provenance.test.ts"
       - "src/services/optimizer-v12-target-progress.test.ts"
       - "src/services/win-package-pagination-v15.ts"
       - "src/services/win-package-pagination-v15.test.ts"
@@ -66,7 +67,7 @@ jobs:
         run: npm run build
 
       - name: Run autonomous and win-package regressions
-        run: npx tsx --test src/services/optimizer-v11.test.ts src/services/optimizer-v12-target-progress.test.ts src/services/commander-target-pressure-v15.test.ts src/services/target-gate-improvement-v15.test.ts src/services/deck-builder-win-package-ceiling-v15.test.ts src/services/win-package-pagination-v15.test.ts src/services/win-package-restricted-pool-v15.test.ts src/services/general-win-package-v15.test.ts src/services/full-table-win-closure-v15.test.ts
+        run: npx tsx --test src/services/optimizer-v11.test.ts src/services/optimizer-v12-attempt-provenance.test.ts src/services/optimizer-v12-target-progress.test.ts src/services/commander-target-pressure-v15.test.ts src/services/target-gate-improvement-v15.test.ts src/services/deck-builder-win-package-ceiling-v15.test.ts src/services/win-package-pagination-v15.test.ts src/services/win-package-restricted-pool-v15.test.ts src/services/general-win-package-v15.test.ts src/services/full-table-win-closure-v15.test.ts
 
       - name: Refine selected Marvel-only Bracket 5 attempt
         id: refine_control

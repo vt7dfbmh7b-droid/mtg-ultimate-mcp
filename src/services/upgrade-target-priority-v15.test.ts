@@ -600,3 +600,35 @@ test('a strategically matched incoming card can compensate a protected strategy 
   assert.equal(gate.eligible, true);
   assert.equal(gate.reason, 'commander-strategy-preserved');
 });
+
+test('aggregate archetype points cannot hide a meaningful loss in one pairing', () => {
+  const audit = auditUpgradeStrategyPreservationV15([
+    {
+      cut: {
+        card: { name: 'Outgoing Extra Combat Engine', roles: ['extra combat', 'haste', 'untap engine'], manaValue: 6 },
+        strategyAffinity: { score: 20, protectionApplied: 4, matchedStrategies: ['combat-tokens'] },
+      },
+      add: {
+        card: { name: 'Generic Token Card', roles: ['token production'], manaValue: 1 },
+        strategyAffinity: { score: 6, protectionApplied: 0, matchedStrategies: ['combat-tokens'] },
+      },
+    },
+    {
+      cut: {
+        card: { name: 'Surplus Utility', roles: [], manaValue: 2 },
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+      add: {
+        card: { name: 'Second Generic Token Card', roles: ['token production'], manaValue: 1 },
+        strategyAffinity: { score: 14, protectionApplied: 0, matchedStrategies: ['combat-tokens'] },
+      },
+    },
+  ]);
+  const gate = candidateStrategyPreservationGateV15({ strategyPreservation: audit });
+
+  assert.equal(audit.status, 'preserved');
+  assert.deepEqual(audit.meaningfulLosses, []);
+  assert.equal(audit.swapImpacts[0]?.verdict, 'meaningful-strategy-loss');
+  assert.equal(gate.eligible, false);
+  assert.equal(gate.reason, 'package-causes-a-meaningful-commander-strategy-loss');
+});

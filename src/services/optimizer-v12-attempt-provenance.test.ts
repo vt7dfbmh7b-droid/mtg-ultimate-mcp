@@ -3,6 +3,7 @@ import test from 'node:test';
 import {
   appendRefinementCandidateAttemptV15,
   candidatePlanProvenanceV15,
+  refinementSwapEvidenceV15,
   type RefinementCandidateAttemptV15,
 } from './optimizer-v12.js';
 
@@ -84,4 +85,21 @@ test('attempt trace accumulation retains every attempted swap size and its candi
   assert.equal(attempts[1]?.winningCandidate, 2);
   const provenance = attempts[1]?.candidateComparisons[0]?.planProvenance as Record<string, unknown> | undefined;
   assert.equal(provenance?.winPackageOutcome, 'verified-package-injected');
+});
+
+test('refinement evidence projection retains persistent colored-mana floors', () => {
+  const projected = refinementSwapEvidenceV15({
+    out: 'Arcane Signet',
+    in: 'Ponder',
+    structuralPairing: {
+      addressedRole: 'average-nonland-mv',
+      persistentColoredManaSourcesAfterSwap: 12,
+      persistentColoredManaSourceFloor: 8,
+      strategyPreservation: { verdict: 'preserved' },
+    },
+  });
+  const pairing = projected.structuralPairing as Record<string, unknown>;
+
+  assert.equal(pairing.persistentColoredManaSourcesAfterSwap, 12);
+  assert.equal(pairing.persistentColoredManaSourceFloor, 8);
 });
