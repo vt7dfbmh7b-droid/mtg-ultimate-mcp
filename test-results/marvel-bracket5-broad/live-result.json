@@ -188,17 +188,19 @@
         },
         "alternativeStrategies": [
           {
+            "archetype": "food-lifegain",
+            "score": 7,
+            "evidence": [
+              "repeatable life-gain engine/payoff +7"
+            ]
+          },
+          {
             "archetype": "aristocrats",
             "score": 0,
             "evidence": []
           },
           {
             "archetype": "big-mana",
-            "score": 0,
-            "evidence": []
-          },
-          {
-            "archetype": "combat-tokens",
             "score": 0,
             "evidence": []
           }
@@ -783,47 +785,49 @@
       },
       {
         "commanderNames": [
-          "Carnage, Crimson Chaos"
+          "Lucky the Pizza Dog"
         ],
-        "label": "Carnage, Crimson Chaos",
+        "label": "Lucky the Pizza Dog",
         "kind": "single",
         "colorIdentity": [
-          "B",
-          "R"
+          "G"
         ],
         "strategy": {
-          "archetype": "graveyard-reanimator",
-          "score": 21,
+          "archetype": "food-lifegain",
+          "score": 15,
           "evidence": [
-            "graveyard recursion +9",
-            "graveyard access +6",
-            "reanimation text +6"
+            "Food engine/payoff text +8",
+            "repeatable life-gain engine/payoff +7"
           ]
         },
         "alternativeStrategies": [
           {
-            "archetype": "combat-tokens",
-            "score": 3,
+            "archetype": "counters",
+            "score": 12,
             "evidence": [
-              "combat-damage trigger +3"
+              "+1/+1 counters +9",
+              "counter placement +3"
             ]
           },
           {
             "archetype": "aristocrats",
-            "score": 0,
-            "evidence": []
+            "score": 7,
+            "evidence": [
+              "sacrifice synergy +7"
+            ]
           },
           {
-            "archetype": "big-mana",
-            "score": 0,
-            "evidence": []
+            "archetype": "spells-control",
+            "score": 7,
+            "evidence": [
+              "cast trigger +7"
+            ]
           }
         ],
-        "coherenceScore": 21,
+        "coherenceScore": 15,
         "selectionSignals": [
-          "graveyard recursion +9",
-          "graveyard access +6",
-          "reanimation text +6",
+          "Food engine/payoff text +8",
+          "repeatable life-gain engine/payoff +7",
           "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
         ]
       }
@@ -912,22 +916,22 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Average nonland mana value",
-            "observed": 2.71,
+            "observed": 2.81,
             "required": "at most 2.6",
             "state": "failed",
             "pressurePoint": "speed/curve",
-            "detail": "Average nonland mana value: observed 2.71; Bracket-5 construction gate requires at most 2.6."
+            "detail": "Average nonland mana value: observed 2.81; Bracket-5 construction gate requires at most 2.6."
           },
           {
             "key": "early-plays",
             "targetBracket": 5,
             "category": "construction",
             "label": "Early plays",
-            "observed": 41,
+            "observed": 39,
             "required": "at least 35",
             "state": "passed",
             "pressurePoint": "speed/curve",
-            "detail": "Early plays: observed 41; Bracket-5 construction gate requires at least 35."
+            "detail": "Early plays: observed 39; Bracket-5 construction gate requires at least 35."
           },
           {
             "key": "fast-mana",
@@ -945,11 +949,11 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Free interaction",
-            "observed": 1,
+            "observed": 2,
             "required": "at least 1",
             "state": "passed",
             "pressurePoint": "free/cheap interaction",
-            "detail": "Free interaction: observed 1; Bracket-5 construction gate requires at least 1."
+            "detail": "Free interaction: observed 2; Bracket-5 construction gate requires at least 1."
           },
           {
             "key": "cheap-interaction",
@@ -989,11 +993,11 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Competitive combo signal",
-            "observed": "Ruthless=0, strategic=0, Spellbook=E",
+            "observed": "Ruthless=0, strategic=0, Spellbook=P",
             "required": "at least one Ruthless/strategically relevant/R-tagged signal",
             "state": "failed",
             "pressurePoint": "win-package quality/redundancy",
-            "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=E; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal."
+            "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal."
           },
           {
             "key": "cedh-intent",
@@ -1024,11 +1028,11 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Average nonland mana value",
-            "observed": 2.71,
+            "observed": 2.81,
             "required": "at most 2.6",
             "state": "failed",
             "pressurePoint": "speed/curve",
-            "detail": "Average nonland mana value: observed 2.71; Bracket-5 construction gate requires at most 2.6."
+            "detail": "Average nonland mana value: observed 2.81; Bracket-5 construction gate requires at most 2.6."
           },
           {
             "key": "verified-winning-combo",
@@ -1046,11 +1050,11 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Competitive combo signal",
-            "observed": "Ruthless=0, strategic=0, Spellbook=E",
+            "observed": "Ruthless=0, strategic=0, Spellbook=P",
             "required": "at least one Ruthless/strategically relevant/R-tagged signal",
             "state": "failed",
             "pressurePoint": "win-package quality/redundancy",
-            "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=E; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal."
+            "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal."
           },
           {
             "key": "competitive-metagame-evidence",
@@ -1072,7 +1076,7 @@
           "Improve metagame evidence: Independent current competitive-metagame evidence needs true."
         ],
         "restrictionObservations": [
-          "Constraint \"Marvel physical printings only.\" was active while the finished list missed 3 Bracket-5 construction gates: Average nonland mana value (2.71 vs at most 2.6); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=E vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
+          "Constraint \"Marvel physical printings only.\" was active while the finished list missed 3 Bracket-5 construction gates: Average nonland mana value (2.81 vs at most 2.6); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=P vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
         ],
         "guidance": "The target comparison uses only checks relevant to the requested bracket. Unavailable external evidence is reported as unverified rather than converted into a false deck weakness."
       },
@@ -1081,20 +1085,20 @@
           "key": "average-nonland-mv",
           "category": "construction",
           "label": "Average nonland mana value",
-          "observed": 2.71,
+          "observed": 2.81,
           "required": "at most 2.6",
           "passed": false,
-          "detail": "Average nonland mana value: observed 2.71; Bracket-5 construction gate requires at most 2.6.",
+          "detail": "Average nonland mana value: observed 2.81; Bracket-5 construction gate requires at most 2.6.",
           "pressurePoint": "speed/curve"
         },
         {
           "key": "early-plays",
           "category": "construction",
           "label": "Early plays",
-          "observed": 41,
+          "observed": 39,
           "required": "at least 35",
           "passed": true,
-          "detail": "Early plays: observed 41; Bracket-5 construction gate requires at least 35.",
+          "detail": "Early plays: observed 39; Bracket-5 construction gate requires at least 35.",
           "pressurePoint": "speed/curve"
         },
         {
@@ -1111,10 +1115,10 @@
           "key": "free-interaction",
           "category": "construction",
           "label": "Free interaction",
-          "observed": 1,
+          "observed": 2,
           "required": "at least 1",
           "passed": true,
-          "detail": "Free interaction: observed 1; Bracket-5 construction gate requires at least 1.",
+          "detail": "Free interaction: observed 2; Bracket-5 construction gate requires at least 1.",
           "pressurePoint": "free/cheap interaction"
         },
         {
@@ -1151,10 +1155,10 @@
           "key": "competitive-combo-signal",
           "category": "construction",
           "label": "Competitive combo signal",
-          "observed": "Ruthless=0, strategic=0, Spellbook=E",
+          "observed": "Ruthless=0, strategic=0, Spellbook=P",
           "required": "at least one Ruthless/strategically relevant/R-tagged signal",
           "passed": false,
-          "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=E; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+          "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
           "pressurePoint": "win-package quality/redundancy"
         },
         {
@@ -1182,70 +1186,73 @@
         "landCount": 31,
         "nonlandCount": 69,
         "landRatio": 0.31,
-        "averageNonlandManaValue": 2.71,
+        "averageNonlandManaValue": 2.81,
         "manaCurve": {
           "0": 0,
           "1": 12,
-          "2": 29,
-          "3": 7,
-          "4": 13,
+          "2": 27,
+          "3": 9,
+          "4": 12,
           "5": 6,
           "6": 1,
-          "7+": 1
+          "7+": 2
         },
         "coloredPips": {
-          "W": 21,
-          "U": 12,
-          "B": 11,
-          "R": 21,
-          "G": 9
+          "W": 17,
+          "U": 14,
+          "B": 9,
+          "R": 22,
+          "G": 7
         },
         "roleCounts": {
-          "token production": 21,
-          "haste": 8,
+          "token production": 19,
+          "haste": 7,
           "extra combat": 5,
           "untap engine": 5,
           "creature": 19,
-          "mana acceleration": 26,
-          "mana rock": 14,
-          "graveyard recursion": 5,
-          "protection": 13,
-          "cost reduction": 4,
+          "cost reduction": 5,
           "card draw": 19,
-          "+1/+1 counters": 9,
+          "graveyard recursion": 4,
+          "+1/+1 counters": 6,
+          "mana acceleration": 25,
           "treasure": 9,
           "sacrifice synergy": 12,
           "fast mana": 5,
-          "board wipe": 2,
+          "spot interaction": 12,
+          "board wipe": 3,
+          "mana dork": 4,
+          "protection": 9,
+          "board protection": 3,
           "countermagic": 3,
-          "mana dork": 3,
-          "board protection": 2,
-          "spot interaction": 13,
+          "mana rock": 12,
+          "card selection": 4,
           "graveyard hate": 2,
           "tutor": 8,
-          "equipment": 6,
-          "free interaction": 1,
-          "etb synergy": 3,
+          "equipment": 8,
+          "free interaction": 2,
+          "repeatable draw": 2,
           "creature tutor": 1,
-          "repeatable draw": 1,
+          "artifact/enchantment interaction": 1,
+          "etb synergy": 3,
           "land ramp": 1,
           "land tutor": 1,
-          "land": 31,
-          "card selection": 3
+          "land": 31
         },
-        "earlyPlayCount": 41,
+        "earlyPlayCount": 39,
         "fastManaCount": 5,
         "rampCount": 31,
-        "drawCount": 22,
+        "drawCount": 23,
         "tutorCount": 8,
         "interactionCount": 18,
         "cheapInteractionCount": 13,
-        "protectionCount": 13,
-        "recursionCount": 5,
-        "boardWipeCount": 2,
+        "protectionCount": 9,
+        "recursionCount": 4,
+        "boardWipeCount": 3,
         "structuralSignals": []
       },
-      "gameChangerNames": [],
+      "gameChangerNames": [
+        "Teferi's Protection"
+      ],
       "selectedPackage": null,
       "seededPackageVerifiedInFinalDeck": false,
       "exactPrintingVerification": {
@@ -1333,11 +1340,11 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Average nonland mana value",
-            "observed": 2.81,
+            "observed": 2.84,
             "required": "at most 2.6",
             "state": "failed",
             "pressurePoint": "speed/curve",
-            "detail": "Average nonland mana value: observed 2.81; Bracket-5 construction gate requires at most 2.6."
+            "detail": "Average nonland mana value: observed 2.84; Bracket-5 construction gate requires at most 2.6."
           },
           {
             "key": "early-plays",
@@ -1377,11 +1384,11 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Cheap interaction",
-            "observed": 10,
+            "observed": 9,
             "required": "at least 8",
             "state": "passed",
             "pressurePoint": "free/cheap interaction",
-            "detail": "Cheap interaction: observed 10; Bracket-5 construction gate requires at least 8."
+            "detail": "Cheap interaction: observed 9; Bracket-5 construction gate requires at least 8."
           },
           {
             "key": "tutors",
@@ -1445,11 +1452,11 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Average nonland mana value",
-            "observed": 2.81,
+            "observed": 2.84,
             "required": "at most 2.6",
             "state": "failed",
             "pressurePoint": "speed/curve",
-            "detail": "Average nonland mana value: observed 2.81; Bracket-5 construction gate requires at most 2.6."
+            "detail": "Average nonland mana value: observed 2.84; Bracket-5 construction gate requires at most 2.6."
           },
           {
             "key": "fast-mana",
@@ -1529,7 +1536,7 @@
           "Improve metagame evidence: Independent current competitive-metagame evidence needs true."
         ],
         "restrictionObservations": [
-          "Constraint \"Marvel physical printings only.\" was active while the finished list missed 6 Bracket-5 construction gates: Average nonland mana value (2.81 vs at most 2.6); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Tutors (3 vs at least 4); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=P vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
+          "Constraint \"Marvel physical printings only.\" was active while the finished list missed 6 Bracket-5 construction gates: Average nonland mana value (2.84 vs at most 2.6); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Tutors (3 vs at least 4); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=P vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
         ],
         "guidance": "The target comparison uses only checks relevant to the requested bracket. Unavailable external evidence is reported as unverified rather than converted into a false deck weakness."
       },
@@ -1538,10 +1545,10 @@
           "key": "average-nonland-mv",
           "category": "construction",
           "label": "Average nonland mana value",
-          "observed": 2.81,
+          "observed": 2.84,
           "required": "at most 2.6",
           "passed": false,
-          "detail": "Average nonland mana value: observed 2.81; Bracket-5 construction gate requires at most 2.6.",
+          "detail": "Average nonland mana value: observed 2.84; Bracket-5 construction gate requires at most 2.6.",
           "pressurePoint": "speed/curve"
         },
         {
@@ -1578,10 +1585,10 @@
           "key": "cheap-interaction",
           "category": "construction",
           "label": "Cheap interaction",
-          "observed": 10,
+          "observed": 9,
           "required": "at least 8",
           "passed": true,
-          "detail": "Cheap interaction: observed 10; Bracket-5 construction gate requires at least 8.",
+          "detail": "Cheap interaction: observed 9; Bracket-5 construction gate requires at least 8.",
           "pressurePoint": "free/cheap interaction"
         },
         {
@@ -1639,14 +1646,14 @@
         "landCount": 31,
         "nonlandCount": 69,
         "landRatio": 0.31,
-        "averageNonlandManaValue": 2.81,
+        "averageNonlandManaValue": 2.84,
         "manaCurve": {
           "0": 0,
           "1": 15,
           "2": 22,
-          "3": 12,
+          "3": 11,
           "4": 9,
-          "5": 6,
+          "5": 7,
           "6": 3,
           "7+": 2
         },
@@ -1659,32 +1666,32 @@
         },
         "roleCounts": {
           "graveyard recursion": 19,
-          "+1/+1 counters": 19,
+          "+1/+1 counters": 20,
           "creature": 22,
-          "board wipe": 3,
-          "protection": 14,
           "spot interaction": 15,
+          "protection": 9,
           "card draw": 15,
-          "mana acceleration": 10,
+          "mana acceleration": 9,
           "mana dork": 2,
           "card selection": 6,
-          "mana rock": 8,
+          "mana rock": 7,
           "treasure": 2,
-          "token production": 7,
-          "sacrifice synergy": 6,
+          "token production": 8,
+          "sacrifice synergy": 7,
           "graveyard hate": 7,
-          "board protection": 2,
+          "board protection": 3,
           "fast mana": 1,
+          "board wipe": 3,
           "land ramp": 1,
           "land tutor": 1,
-          "cost reduction": 3,
+          "cost reduction": 4,
+          "haste": 5,
           "tutor": 3,
           "equipment": 9,
-          "haste": 5,
-          "etb synergy": 5,
-          "sacrifice outlet": 1,
-          "artifact/enchantment interaction": 3,
           "repeatable draw": 2,
+          "sacrifice outlet": 1,
+          "etb synergy": 5,
+          "artifact/enchantment interaction": 2,
           "copy effect": 1,
           "land": 31
         },
@@ -1694,8 +1701,8 @@
         "drawCount": 20,
         "tutorCount": 3,
         "interactionCount": 18,
-        "cheapInteractionCount": 10,
-        "protectionCount": 14,
+        "cheapInteractionCount": 9,
+        "protectionCount": 9,
         "recursionCount": 19,
         "boardWipeCount": 3,
         "structuralSignals": []
@@ -1714,451 +1721,6 @@
           "MSC",
           "MSH",
           "SLD",
-          "SPM"
-        ]
-      }
-    },
-    {
-      "candidate": {
-        "commanderNames": [
-          "Carnage, Crimson Chaos"
-        ],
-        "label": "Carnage, Crimson Chaos",
-        "kind": "single",
-        "colorIdentity": [
-          "B",
-          "R"
-        ],
-        "strategy": {
-          "archetype": "graveyard-reanimator",
-          "score": 21,
-          "evidence": [
-            "graveyard recursion +9",
-            "graveyard access +6",
-            "reanimation text +6"
-          ]
-        },
-        "alternativeStrategies": [
-          {
-            "archetype": "combat-tokens",
-            "score": 3,
-            "evidence": [
-              "combat-damage trigger +3"
-            ]
-          },
-          {
-            "archetype": "aristocrats",
-            "score": 0,
-            "evidence": []
-          },
-          {
-            "archetype": "big-mana",
-            "score": 0,
-            "evidence": []
-          }
-        ],
-        "coherenceScore": 21,
-        "selectionSignals": [
-          "graveyard recursion +9",
-          "graveyard access +6",
-          "reanimation text +6",
-          "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
-        ]
-      },
-      "commanderRefs": [
-        {
-          "name": "Carnage, Crimson Chaos",
-          "set": "SPM",
-          "collectorNumber": "125"
-        }
-      ],
-      "achievedBracket": 3,
-      "achievedBand": "bracket-3-upgraded-range",
-      "bracket5ConstructionCandidate": false,
-      "bracket5Certified": false,
-      "verifiedWinningCombos": 0,
-      "targetComparison": {
-        "requestedBracket": 5,
-        "achievedBracket": 3,
-        "achievedBand": "bracket-3-upgraded-range",
-        "status": "under-target",
-        "targetGap": 2,
-        "assessmentConfidence": "medium",
-        "evidenceCompleteness": "complete",
-        "relevantChecks": [
-          {
-            "key": "average-nonland-mv",
-            "targetBracket": 5,
-            "category": "construction",
-            "label": "Average nonland mana value",
-            "observed": 3.12,
-            "required": "at most 2.6",
-            "state": "failed",
-            "pressurePoint": "speed/curve",
-            "detail": "Average nonland mana value: observed 3.12; Bracket-5 construction gate requires at most 2.6."
-          },
-          {
-            "key": "early-plays",
-            "targetBracket": 5,
-            "category": "construction",
-            "label": "Early plays",
-            "observed": 31,
-            "required": "at least 35",
-            "state": "failed",
-            "pressurePoint": "speed/curve",
-            "detail": "Early plays: observed 31; Bracket-5 construction gate requires at least 35."
-          },
-          {
-            "key": "fast-mana",
-            "targetBracket": 5,
-            "category": "construction",
-            "label": "Fast mana",
-            "observed": 3,
-            "required": "at least 3",
-            "state": "passed",
-            "pressurePoint": "fast-mana density",
-            "detail": "Fast mana: observed 3; Bracket-5 construction gate requires at least 3."
-          },
-          {
-            "key": "free-interaction",
-            "targetBracket": 5,
-            "category": "construction",
-            "label": "Free interaction",
-            "observed": 1,
-            "required": "at least 1",
-            "state": "passed",
-            "pressurePoint": "free/cheap interaction",
-            "detail": "Free interaction: observed 1; Bracket-5 construction gate requires at least 1."
-          },
-          {
-            "key": "cheap-interaction",
-            "targetBracket": 5,
-            "category": "construction",
-            "label": "Cheap interaction",
-            "observed": 10,
-            "required": "at least 8",
-            "state": "passed",
-            "pressurePoint": "free/cheap interaction",
-            "detail": "Cheap interaction: observed 10; Bracket-5 construction gate requires at least 8."
-          },
-          {
-            "key": "tutors",
-            "targetBracket": 5,
-            "category": "construction",
-            "label": "Tutors",
-            "observed": 2,
-            "required": "at least 4",
-            "state": "failed",
-            "pressurePoint": "tutor consistency",
-            "detail": "Tutors: observed 2; Bracket-5 construction gate requires at least 4."
-          },
-          {
-            "key": "verified-winning-combo",
-            "targetBracket": 5,
-            "category": "construction",
-            "label": "Verified win-oriented combos",
-            "observed": 0,
-            "required": "at least 1",
-            "state": "failed",
-            "pressurePoint": "win-package quality/redundancy",
-            "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1."
-          },
-          {
-            "key": "competitive-combo-signal",
-            "targetBracket": 5,
-            "category": "construction",
-            "label": "Competitive combo signal",
-            "observed": "Ruthless=0, strategic=0, Spellbook=E",
-            "required": "at least one Ruthless/strategically relevant/R-tagged signal",
-            "state": "failed",
-            "pressurePoint": "win-package quality/redundancy",
-            "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=E; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal."
-          },
-          {
-            "key": "cedh-intent",
-            "targetBracket": 5,
-            "category": "intent",
-            "label": "Explicit cEDH intent",
-            "observed": true,
-            "required": "true",
-            "state": "passed",
-            "pressurePoint": "competitive intent",
-            "detail": "Explicit cEDH intent: observed true; Bracket-5 evidence gate requires true."
-          },
-          {
-            "key": "competitive-metagame-evidence",
-            "targetBracket": 5,
-            "category": "evidence",
-            "label": "Independent current competitive-metagame evidence",
-            "observed": false,
-            "required": "true",
-            "state": "failed",
-            "pressurePoint": "metagame evidence",
-            "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true."
-          }
-        ],
-        "knownBlockers": [
-          {
-            "key": "average-nonland-mv",
-            "targetBracket": 5,
-            "category": "construction",
-            "label": "Average nonland mana value",
-            "observed": 3.12,
-            "required": "at most 2.6",
-            "state": "failed",
-            "pressurePoint": "speed/curve",
-            "detail": "Average nonland mana value: observed 3.12; Bracket-5 construction gate requires at most 2.6."
-          },
-          {
-            "key": "early-plays",
-            "targetBracket": 5,
-            "category": "construction",
-            "label": "Early plays",
-            "observed": 31,
-            "required": "at least 35",
-            "state": "failed",
-            "pressurePoint": "speed/curve",
-            "detail": "Early plays: observed 31; Bracket-5 construction gate requires at least 35."
-          },
-          {
-            "key": "tutors",
-            "targetBracket": 5,
-            "category": "construction",
-            "label": "Tutors",
-            "observed": 2,
-            "required": "at least 4",
-            "state": "failed",
-            "pressurePoint": "tutor consistency",
-            "detail": "Tutors: observed 2; Bracket-5 construction gate requires at least 4."
-          },
-          {
-            "key": "verified-winning-combo",
-            "targetBracket": 5,
-            "category": "construction",
-            "label": "Verified win-oriented combos",
-            "observed": 0,
-            "required": "at least 1",
-            "state": "failed",
-            "pressurePoint": "win-package quality/redundancy",
-            "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1."
-          },
-          {
-            "key": "competitive-combo-signal",
-            "targetBracket": 5,
-            "category": "construction",
-            "label": "Competitive combo signal",
-            "observed": "Ruthless=0, strategic=0, Spellbook=E",
-            "required": "at least one Ruthless/strategically relevant/R-tagged signal",
-            "state": "failed",
-            "pressurePoint": "win-package quality/redundancy",
-            "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=E; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal."
-          },
-          {
-            "key": "competitive-metagame-evidence",
-            "targetBracket": 5,
-            "category": "evidence",
-            "label": "Independent current competitive-metagame evidence",
-            "observed": false,
-            "required": "true",
-            "state": "failed",
-            "pressurePoint": "metagame evidence",
-            "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true."
-          }
-        ],
-        "unverifiedChecks": [],
-        "whatWouldReachTarget": [
-          "Improve speed/curve: Average nonland mana value needs at most 2.6.",
-          "Improve speed/curve: Early plays needs at least 35.",
-          "Improve tutor consistency: Tutors needs at least 4.",
-          "Improve win-package quality/redundancy: Verified win-oriented combos needs at least 1.",
-          "Improve win-package quality/redundancy: Competitive combo signal needs at least one Ruthless/strategically relevant/R-tagged signal.",
-          "Improve metagame evidence: Independent current competitive-metagame evidence needs true."
-        ],
-        "restrictionObservations": [
-          "Constraint \"Marvel physical printings only.\" was active while the finished list missed 5 Bracket-5 construction gates: Average nonland mana value (3.12 vs at most 2.6); Early plays (31 vs at least 35); Tutors (2 vs at least 4); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=E vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
-        ],
-        "guidance": "The target comparison uses only checks relevant to the requested bracket. Unavailable external evidence is reported as unverified rather than converted into a false deck weakness."
-      },
-      "bracket5ThresholdChecks": [
-        {
-          "key": "average-nonland-mv",
-          "category": "construction",
-          "label": "Average nonland mana value",
-          "observed": 3.12,
-          "required": "at most 2.6",
-          "passed": false,
-          "detail": "Average nonland mana value: observed 3.12; Bracket-5 construction gate requires at most 2.6.",
-          "pressurePoint": "speed/curve"
-        },
-        {
-          "key": "early-plays",
-          "category": "construction",
-          "label": "Early plays",
-          "observed": 31,
-          "required": "at least 35",
-          "passed": false,
-          "detail": "Early plays: observed 31; Bracket-5 construction gate requires at least 35.",
-          "pressurePoint": "speed/curve"
-        },
-        {
-          "key": "fast-mana",
-          "category": "construction",
-          "label": "Fast mana",
-          "observed": 3,
-          "required": "at least 3",
-          "passed": true,
-          "detail": "Fast mana: observed 3; Bracket-5 construction gate requires at least 3.",
-          "pressurePoint": "fast-mana density"
-        },
-        {
-          "key": "free-interaction",
-          "category": "construction",
-          "label": "Free interaction",
-          "observed": 1,
-          "required": "at least 1",
-          "passed": true,
-          "detail": "Free interaction: observed 1; Bracket-5 construction gate requires at least 1.",
-          "pressurePoint": "free/cheap interaction"
-        },
-        {
-          "key": "cheap-interaction",
-          "category": "construction",
-          "label": "Cheap interaction",
-          "observed": 10,
-          "required": "at least 8",
-          "passed": true,
-          "detail": "Cheap interaction: observed 10; Bracket-5 construction gate requires at least 8.",
-          "pressurePoint": "free/cheap interaction"
-        },
-        {
-          "key": "tutors",
-          "category": "construction",
-          "label": "Tutors",
-          "observed": 2,
-          "required": "at least 4",
-          "passed": false,
-          "detail": "Tutors: observed 2; Bracket-5 construction gate requires at least 4.",
-          "pressurePoint": "tutor consistency"
-        },
-        {
-          "key": "verified-winning-combo",
-          "category": "construction",
-          "label": "Verified win-oriented combos",
-          "observed": 0,
-          "required": "at least 1",
-          "passed": false,
-          "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1.",
-          "pressurePoint": "win-package quality/redundancy"
-        },
-        {
-          "key": "competitive-combo-signal",
-          "category": "construction",
-          "label": "Competitive combo signal",
-          "observed": "Ruthless=0, strategic=0, Spellbook=E",
-          "required": "at least one Ruthless/strategically relevant/R-tagged signal",
-          "passed": false,
-          "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=E; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
-          "pressurePoint": "win-package quality/redundancy"
-        },
-        {
-          "key": "cedh-intent",
-          "category": "evidence",
-          "label": "Explicit cEDH intent",
-          "observed": true,
-          "required": "true",
-          "passed": true,
-          "detail": "Explicit cEDH intent: observed true; Bracket-5 evidence gate requires true.",
-          "pressurePoint": "competitive intent"
-        },
-        {
-          "key": "competitive-metagame-evidence",
-          "category": "evidence",
-          "label": "Independent current competitive-metagame evidence",
-          "observed": false,
-          "required": "true",
-          "passed": false,
-          "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true.",
-          "pressurePoint": "metagame evidence"
-        }
-      ],
-      "metrics": {
-        "landCount": 31,
-        "nonlandCount": 69,
-        "landRatio": 0.31,
-        "averageNonlandManaValue": 3.12,
-        "manaCurve": {
-          "0": 0,
-          "1": 10,
-          "2": 21,
-          "3": 9,
-          "4": 19,
-          "5": 6,
-          "6": 1,
-          "7+": 3
-        },
-        "coloredPips": {
-          "W": 0,
-          "U": 0,
-          "B": 43,
-          "R": 20,
-          "G": 0
-        },
-        "roleCounts": {
-          "graveyard recursion": 37,
-          "creature": 23,
-          "mana acceleration": 12,
-          "mana rock": 6,
-          "protection": 8,
-          "treasure": 7,
-          "card draw": 11,
-          "token production": 13,
-          "sacrifice synergy": 8,
-          "mana dork": 1,
-          "card selection": 4,
-          "spot interaction": 17,
-          "+1/+1 counters": 4,
-          "graveyard hate": 9,
-          "fast mana": 3,
-          "artifact/enchantment interaction": 1,
-          "cost reduction": 2,
-          "haste": 6,
-          "equipment": 5,
-          "free interaction": 1,
-          "repeatable draw": 1,
-          "tutor": 2,
-          "board wipe": 1,
-          "etb synergy": 3,
-          "sacrifice outlet": 1,
-          "extra combat": 1,
-          "untap engine": 1,
-          "land tutor": 1,
-          "land": 31
-        },
-        "earlyPlayCount": 31,
-        "fastManaCount": 3,
-        "rampCount": 14,
-        "drawCount": 15,
-        "tutorCount": 2,
-        "interactionCount": 18,
-        "cheapInteractionCount": 10,
-        "protectionCount": 8,
-        "recursionCount": 37,
-        "boardWipeCount": 1,
-        "structuralSignals": []
-      },
-      "gameChangerNames": [],
-      "selectedPackage": null,
-      "seededPackageVerifiedInFinalDeck": false,
-      "exactPrintingVerification": {
-        "cardCount": 100,
-        "commanderLegal": true,
-        "resolvedEntries": 79,
-        "setCodes": [
-          "MAR",
-          "MSC",
-          "MSH",
-          "SLD",
-          "SPE",
           "SPM"
         ]
       }
@@ -2233,22 +1795,22 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Average nonland mana value",
-            "observed": 2.7,
+            "observed": 2.8,
             "required": "at most 2.6",
             "state": "failed",
             "pressurePoint": "speed/curve",
-            "detail": "Average nonland mana value: observed 2.7; Bracket-5 construction gate requires at most 2.6."
+            "detail": "Average nonland mana value: observed 2.8; Bracket-5 construction gate requires at most 2.6."
           },
           {
             "key": "early-plays",
             "targetBracket": 5,
             "category": "construction",
             "label": "Early plays",
-            "observed": 38,
+            "observed": 36,
             "required": "at least 35",
             "state": "passed",
             "pressurePoint": "speed/curve",
-            "detail": "Early plays: observed 38; Bracket-5 construction gate requires at least 35."
+            "detail": "Early plays: observed 36; Bracket-5 construction gate requires at least 35."
           },
           {
             "key": "fast-mana",
@@ -2277,11 +1839,11 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Cheap interaction",
-            "observed": 11,
+            "observed": 10,
             "required": "at least 8",
             "state": "passed",
             "pressurePoint": "free/cheap interaction",
-            "detail": "Cheap interaction: observed 11; Bracket-5 construction gate requires at least 8."
+            "detail": "Cheap interaction: observed 10; Bracket-5 construction gate requires at least 8."
           },
           {
             "key": "tutors",
@@ -2345,11 +1907,11 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Average nonland mana value",
-            "observed": 2.7,
+            "observed": 2.8,
             "required": "at most 2.6",
             "state": "failed",
             "pressurePoint": "speed/curve",
-            "detail": "Average nonland mana value: observed 2.7; Bracket-5 construction gate requires at most 2.6."
+            "detail": "Average nonland mana value: observed 2.8; Bracket-5 construction gate requires at most 2.6."
           },
           {
             "key": "fast-mana",
@@ -2429,7 +1991,7 @@
           "Improve metagame evidence: Independent current competitive-metagame evidence needs true."
         ],
         "restrictionObservations": [
-          "Constraint \"Marvel physical printings only.\" was active while the finished list missed 6 Bracket-5 construction gates: Average nonland mana value (2.7 vs at most 2.6); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Tutors (3 vs at least 4); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=P vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
+          "Constraint \"Marvel physical printings only.\" was active while the finished list missed 6 Bracket-5 construction gates: Average nonland mana value (2.8 vs at most 2.6); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Tutors (3 vs at least 4); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=P vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
         ],
         "guidance": "The target comparison uses only checks relevant to the requested bracket. Unavailable external evidence is reported as unverified rather than converted into a false deck weakness."
       },
@@ -2438,20 +2000,20 @@
           "key": "average-nonland-mv",
           "category": "construction",
           "label": "Average nonland mana value",
-          "observed": 2.7,
+          "observed": 2.8,
           "required": "at most 2.6",
           "passed": false,
-          "detail": "Average nonland mana value: observed 2.7; Bracket-5 construction gate requires at most 2.6.",
+          "detail": "Average nonland mana value: observed 2.8; Bracket-5 construction gate requires at most 2.6.",
           "pressurePoint": "speed/curve"
         },
         {
           "key": "early-plays",
           "category": "construction",
           "label": "Early plays",
-          "observed": 38,
+          "observed": 36,
           "required": "at least 35",
           "passed": true,
-          "detail": "Early plays: observed 38; Bracket-5 construction gate requires at least 35.",
+          "detail": "Early plays: observed 36; Bracket-5 construction gate requires at least 35.",
           "pressurePoint": "speed/curve"
         },
         {
@@ -2478,10 +2040,10 @@
           "key": "cheap-interaction",
           "category": "construction",
           "label": "Cheap interaction",
-          "observed": 11,
+          "observed": 10,
           "required": "at least 8",
           "passed": true,
-          "detail": "Cheap interaction: observed 11; Bracket-5 construction gate requires at least 8.",
+          "detail": "Cheap interaction: observed 10; Bracket-5 construction gate requires at least 8.",
           "pressurePoint": "free/cheap interaction"
         },
         {
@@ -2539,15 +2101,15 @@
         "landCount": 31,
         "nonlandCount": 69,
         "landRatio": 0.31,
-        "averageNonlandManaValue": 2.7,
+        "averageNonlandManaValue": 2.8,
         "manaCurve": {
           "0": 0,
           "1": 16,
-          "2": 22,
-          "3": 13,
-          "4": 8,
+          "2": 20,
+          "3": 14,
+          "4": 7,
           "5": 7,
-          "6": 2,
+          "6": 4,
           "7+": 1
         },
         "coloredPips": {
@@ -2558,44 +2120,44 @@
           "G": 0
         },
         "roleCounts": {
-          "card draw": 27,
+          "card draw": 28,
           "repeatable draw": 15,
           "creature": 15,
-          "board wipe": 3,
-          "protection": 15,
-          "spot interaction": 15,
-          "mana acceleration": 11,
-          "mana rock": 9,
+          "spot interaction": 14,
+          "mana acceleration": 10,
+          "mana rock": 8,
           "treasure": 3,
-          "token production": 7,
+          "token production": 6,
           "sacrifice synergy": 6,
+          "protection": 12,
           "graveyard hate": 5,
           "mana dork": 2,
           "card selection": 7,
-          "graveyard recursion": 5,
-          "+1/+1 counters": 6,
-          "board protection": 2,
+          "board protection": 4,
+          "graveyard recursion": 4,
           "fast mana": 1,
-          "equipment": 11,
+          "board wipe": 4,
+          "equipment": 12,
           "land ramp": 1,
           "land tutor": 1,
-          "cost reduction": 3,
+          "cost reduction": 4,
           "tutor": 3,
-          "artifact/enchantment interaction": 2,
           "haste": 4,
+          "artifact/enchantment interaction": 2,
           "etb synergy": 7,
+          "+1/+1 counters": 5,
           "land": 31
         },
-        "earlyPlayCount": 38,
+        "earlyPlayCount": 36,
         "fastManaCount": 1,
         "rampCount": 15,
-        "drawCount": 32,
+        "drawCount": 33,
         "tutorCount": 3,
         "interactionCount": 18,
-        "cheapInteractionCount": 11,
-        "protectionCount": 15,
-        "recursionCount": 5,
-        "boardWipeCount": 3,
+        "cheapInteractionCount": 10,
+        "protectionCount": 12,
+        "recursionCount": 4,
+        "boardWipeCount": 4,
         "structuralSignals": []
       },
       "gameChangerNames": [
@@ -2688,11 +2250,11 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Average nonland mana value",
-            "observed": 2.36,
+            "observed": 2.42,
             "required": "at most 2.6",
             "state": "passed",
             "pressurePoint": "speed/curve",
-            "detail": "Average nonland mana value: observed 2.36; Bracket-5 construction gate requires at most 2.6."
+            "detail": "Average nonland mana value: observed 2.42; Bracket-5 construction gate requires at most 2.6."
           },
           {
             "key": "early-plays",
@@ -2845,10 +2407,10 @@
           "key": "average-nonland-mv",
           "category": "construction",
           "label": "Average nonland mana value",
-          "observed": 2.36,
+          "observed": 2.42,
           "required": "at most 2.6",
           "passed": true,
-          "detail": "Average nonland mana value: observed 2.36; Bracket-5 construction gate requires at most 2.6.",
+          "detail": "Average nonland mana value: observed 2.42; Bracket-5 construction gate requires at most 2.6.",
           "pressurePoint": "speed/curve"
         },
         {
@@ -2946,66 +2508,66 @@
         "landCount": 31,
         "nonlandCount": 69,
         "landRatio": 0.31,
-        "averageNonlandManaValue": 2.36,
+        "averageNonlandManaValue": 2.42,
         "manaCurve": {
           "0": 0,
-          "1": 20,
-          "2": 25,
-          "3": 12,
-          "4": 6,
+          "1": 21,
+          "2": 24,
+          "3": 11,
+          "4": 5,
           "5": 5,
-          "6": 0,
+          "6": 2,
           "7+": 1
         },
         "coloredPips": {
-          "W": 35,
+          "W": 34,
           "U": 0,
           "B": 0,
           "R": 0,
-          "G": 21
+          "G": 22
         },
         "roleCounts": {
-          "card draw": 20,
-          "+1/+1 counters": 27,
-          "etb synergy": 10,
+          "card draw": 21,
+          "+1/+1 counters": 26,
+          "etb synergy": 11,
           "creature": 23,
-          "board wipe": 3,
-          "protection": 18,
-          "mana acceleration": 13,
+          "mana acceleration": 11,
           "fast mana": 3,
-          "spot interaction": 14,
-          "mana rock": 7,
+          "spot interaction": 13,
+          "mana rock": 5,
           "treasure": 3,
-          "token production": 10,
+          "token production": 8,
           "sacrifice synergy": 8,
+          "protection": 10,
           "graveyard hate": 4,
           "mana dork": 4,
           "card selection": 8,
+          "board protection": 5,
           "graveyard recursion": 4,
-          "board protection": 2,
+          "board wipe": 4,
+          "cost reduction": 4,
+          "repeatable draw": 3,
+          "equipment": 9,
+          "tutor": 5,
           "land ramp": 1,
           "land tutor": 1,
-          "cost reduction": 1,
-          "tutor": 5,
-          "equipment": 8,
-          "haste": 2,
-          "free interaction": 1,
+          "haste": 3,
           "creature tutor": 1,
-          "artifact/enchantment interaction": 2,
-          "repeatable draw": 3,
+          "free interaction": 1,
+          "artifact/enchantment interaction": 1,
           "copy effect": 1,
           "land": 31
         },
         "earlyPlayCount": 45,
         "fastManaCount": 3,
-        "rampCount": 15,
-        "drawCount": 26,
+        "rampCount": 16,
+        "drawCount": 27,
         "tutorCount": 5,
         "interactionCount": 18,
         "cheapInteractionCount": 10,
-        "protectionCount": 18,
+        "protectionCount": 10,
         "recursionCount": 4,
-        "boardWipeCount": 3,
+        "boardWipeCount": 4,
         "structuralSignals": []
       },
       "gameChangerNames": [],
@@ -3015,6 +2577,451 @@
         "cardCount": 100,
         "commanderLegal": true,
         "resolvedEntries": 79,
+        "setCodes": [
+          "MAR",
+          "MSC",
+          "MSH",
+          "SLD",
+          "SPM"
+        ]
+      }
+    },
+    {
+      "candidate": {
+        "commanderNames": [
+          "Lucky the Pizza Dog"
+        ],
+        "label": "Lucky the Pizza Dog",
+        "kind": "single",
+        "colorIdentity": [
+          "G"
+        ],
+        "strategy": {
+          "archetype": "food-lifegain",
+          "score": 15,
+          "evidence": [
+            "Food engine/payoff text +8",
+            "repeatable life-gain engine/payoff +7"
+          ]
+        },
+        "alternativeStrategies": [
+          {
+            "archetype": "counters",
+            "score": 12,
+            "evidence": [
+              "+1/+1 counters +9",
+              "counter placement +3"
+            ]
+          },
+          {
+            "archetype": "aristocrats",
+            "score": 7,
+            "evidence": [
+              "sacrifice synergy +7"
+            ]
+          },
+          {
+            "archetype": "spells-control",
+            "score": 7,
+            "evidence": [
+              "cast trigger +7"
+            ]
+          }
+        ],
+        "coherenceScore": 15,
+        "selectionSignals": [
+          "Food engine/payoff text +8",
+          "repeatable life-gain engine/payoff +7",
+          "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
+        ]
+      },
+      "commanderRefs": [
+        {
+          "name": "Lucky the Pizza Dog",
+          "set": "MSC",
+          "collectorNumber": "726"
+        }
+      ],
+      "achievedBracket": 3,
+      "achievedBand": "bracket-3-upgraded-range",
+      "bracket5ConstructionCandidate": false,
+      "bracket5Certified": false,
+      "verifiedWinningCombos": 0,
+      "targetComparison": {
+        "requestedBracket": 5,
+        "achievedBracket": 3,
+        "achievedBand": "bracket-3-upgraded-range",
+        "status": "under-target",
+        "targetGap": 2,
+        "assessmentConfidence": "medium",
+        "evidenceCompleteness": "complete",
+        "relevantChecks": [
+          {
+            "key": "average-nonland-mv",
+            "targetBracket": 5,
+            "category": "construction",
+            "label": "Average nonland mana value",
+            "observed": 2.7,
+            "required": "at most 2.6",
+            "state": "failed",
+            "pressurePoint": "speed/curve",
+            "detail": "Average nonland mana value: observed 2.7; Bracket-5 construction gate requires at most 2.6."
+          },
+          {
+            "key": "early-plays",
+            "targetBracket": 5,
+            "category": "construction",
+            "label": "Early plays",
+            "observed": 42,
+            "required": "at least 35",
+            "state": "passed",
+            "pressurePoint": "speed/curve",
+            "detail": "Early plays: observed 42; Bracket-5 construction gate requires at least 35."
+          },
+          {
+            "key": "fast-mana",
+            "targetBracket": 5,
+            "category": "construction",
+            "label": "Fast mana",
+            "observed": 3,
+            "required": "at least 3",
+            "state": "passed",
+            "pressurePoint": "fast-mana density",
+            "detail": "Fast mana: observed 3; Bracket-5 construction gate requires at least 3."
+          },
+          {
+            "key": "free-interaction",
+            "targetBracket": 5,
+            "category": "construction",
+            "label": "Free interaction",
+            "observed": 1,
+            "required": "at least 1",
+            "state": "passed",
+            "pressurePoint": "free/cheap interaction",
+            "detail": "Free interaction: observed 1; Bracket-5 construction gate requires at least 1."
+          },
+          {
+            "key": "cheap-interaction",
+            "targetBracket": 5,
+            "category": "construction",
+            "label": "Cheap interaction",
+            "observed": 5,
+            "required": "at least 8",
+            "state": "failed",
+            "pressurePoint": "free/cheap interaction",
+            "detail": "Cheap interaction: observed 5; Bracket-5 construction gate requires at least 8."
+          },
+          {
+            "key": "tutors",
+            "targetBracket": 5,
+            "category": "construction",
+            "label": "Tutors",
+            "observed": 3,
+            "required": "at least 4",
+            "state": "failed",
+            "pressurePoint": "tutor consistency",
+            "detail": "Tutors: observed 3; Bracket-5 construction gate requires at least 4."
+          },
+          {
+            "key": "verified-winning-combo",
+            "targetBracket": 5,
+            "category": "construction",
+            "label": "Verified win-oriented combos",
+            "observed": 0,
+            "required": "at least 1",
+            "state": "failed",
+            "pressurePoint": "win-package quality/redundancy",
+            "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1."
+          },
+          {
+            "key": "competitive-combo-signal",
+            "targetBracket": 5,
+            "category": "construction",
+            "label": "Competitive combo signal",
+            "observed": "Ruthless=0, strategic=0, Spellbook=E",
+            "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+            "state": "failed",
+            "pressurePoint": "win-package quality/redundancy",
+            "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=E; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal."
+          },
+          {
+            "key": "cedh-intent",
+            "targetBracket": 5,
+            "category": "intent",
+            "label": "Explicit cEDH intent",
+            "observed": true,
+            "required": "true",
+            "state": "passed",
+            "pressurePoint": "competitive intent",
+            "detail": "Explicit cEDH intent: observed true; Bracket-5 evidence gate requires true."
+          },
+          {
+            "key": "competitive-metagame-evidence",
+            "targetBracket": 5,
+            "category": "evidence",
+            "label": "Independent current competitive-metagame evidence",
+            "observed": false,
+            "required": "true",
+            "state": "failed",
+            "pressurePoint": "metagame evidence",
+            "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true."
+          }
+        ],
+        "knownBlockers": [
+          {
+            "key": "average-nonland-mv",
+            "targetBracket": 5,
+            "category": "construction",
+            "label": "Average nonland mana value",
+            "observed": 2.7,
+            "required": "at most 2.6",
+            "state": "failed",
+            "pressurePoint": "speed/curve",
+            "detail": "Average nonland mana value: observed 2.7; Bracket-5 construction gate requires at most 2.6."
+          },
+          {
+            "key": "cheap-interaction",
+            "targetBracket": 5,
+            "category": "construction",
+            "label": "Cheap interaction",
+            "observed": 5,
+            "required": "at least 8",
+            "state": "failed",
+            "pressurePoint": "free/cheap interaction",
+            "detail": "Cheap interaction: observed 5; Bracket-5 construction gate requires at least 8."
+          },
+          {
+            "key": "tutors",
+            "targetBracket": 5,
+            "category": "construction",
+            "label": "Tutors",
+            "observed": 3,
+            "required": "at least 4",
+            "state": "failed",
+            "pressurePoint": "tutor consistency",
+            "detail": "Tutors: observed 3; Bracket-5 construction gate requires at least 4."
+          },
+          {
+            "key": "verified-winning-combo",
+            "targetBracket": 5,
+            "category": "construction",
+            "label": "Verified win-oriented combos",
+            "observed": 0,
+            "required": "at least 1",
+            "state": "failed",
+            "pressurePoint": "win-package quality/redundancy",
+            "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1."
+          },
+          {
+            "key": "competitive-combo-signal",
+            "targetBracket": 5,
+            "category": "construction",
+            "label": "Competitive combo signal",
+            "observed": "Ruthless=0, strategic=0, Spellbook=E",
+            "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+            "state": "failed",
+            "pressurePoint": "win-package quality/redundancy",
+            "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=E; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal."
+          },
+          {
+            "key": "competitive-metagame-evidence",
+            "targetBracket": 5,
+            "category": "evidence",
+            "label": "Independent current competitive-metagame evidence",
+            "observed": false,
+            "required": "true",
+            "state": "failed",
+            "pressurePoint": "metagame evidence",
+            "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true."
+          }
+        ],
+        "unverifiedChecks": [],
+        "whatWouldReachTarget": [
+          "Improve speed/curve: Average nonland mana value needs at most 2.6.",
+          "Improve free/cheap interaction: Cheap interaction needs at least 8.",
+          "Improve tutor consistency: Tutors needs at least 4.",
+          "Improve win-package quality/redundancy: Verified win-oriented combos needs at least 1.",
+          "Improve win-package quality/redundancy: Competitive combo signal needs at least one Ruthless/strategically relevant/R-tagged signal.",
+          "Improve metagame evidence: Independent current competitive-metagame evidence needs true."
+        ],
+        "restrictionObservations": [
+          "Constraint \"Marvel physical printings only.\" was active while the finished list missed 5 Bracket-5 construction gates: Average nonland mana value (2.7 vs at most 2.6); Cheap interaction (5 vs at least 8); Tutors (3 vs at least 4); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=E vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
+        ],
+        "guidance": "The target comparison uses only checks relevant to the requested bracket. Unavailable external evidence is reported as unverified rather than converted into a false deck weakness."
+      },
+      "bracket5ThresholdChecks": [
+        {
+          "key": "average-nonland-mv",
+          "category": "construction",
+          "label": "Average nonland mana value",
+          "observed": 2.7,
+          "required": "at most 2.6",
+          "passed": false,
+          "detail": "Average nonland mana value: observed 2.7; Bracket-5 construction gate requires at most 2.6.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "early-plays",
+          "category": "construction",
+          "label": "Early plays",
+          "observed": 42,
+          "required": "at least 35",
+          "passed": true,
+          "detail": "Early plays: observed 42; Bracket-5 construction gate requires at least 35.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "fast-mana",
+          "category": "construction",
+          "label": "Fast mana",
+          "observed": 3,
+          "required": "at least 3",
+          "passed": true,
+          "detail": "Fast mana: observed 3; Bracket-5 construction gate requires at least 3.",
+          "pressurePoint": "fast-mana density"
+        },
+        {
+          "key": "free-interaction",
+          "category": "construction",
+          "label": "Free interaction",
+          "observed": 1,
+          "required": "at least 1",
+          "passed": true,
+          "detail": "Free interaction: observed 1; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "cheap-interaction",
+          "category": "construction",
+          "label": "Cheap interaction",
+          "observed": 5,
+          "required": "at least 8",
+          "passed": false,
+          "detail": "Cheap interaction: observed 5; Bracket-5 construction gate requires at least 8.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "tutors",
+          "category": "construction",
+          "label": "Tutors",
+          "observed": 3,
+          "required": "at least 4",
+          "passed": false,
+          "detail": "Tutors: observed 3; Bracket-5 construction gate requires at least 4.",
+          "pressurePoint": "tutor consistency"
+        },
+        {
+          "key": "verified-winning-combo",
+          "category": "construction",
+          "label": "Verified win-oriented combos",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "competitive-combo-signal",
+          "category": "construction",
+          "label": "Competitive combo signal",
+          "observed": "Ruthless=0, strategic=0, Spellbook=E",
+          "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+          "passed": false,
+          "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=E; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "cedh-intent",
+          "category": "evidence",
+          "label": "Explicit cEDH intent",
+          "observed": true,
+          "required": "true",
+          "passed": true,
+          "detail": "Explicit cEDH intent: observed true; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "competitive intent"
+        },
+        {
+          "key": "competitive-metagame-evidence",
+          "category": "evidence",
+          "label": "Independent current competitive-metagame evidence",
+          "observed": false,
+          "required": "true",
+          "passed": false,
+          "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "metagame evidence"
+        }
+      ],
+      "metrics": {
+        "landCount": 31,
+        "nonlandCount": 69,
+        "landRatio": 0.31,
+        "averageNonlandManaValue": 2.7,
+        "manaCurve": {
+          "0": 0,
+          "1": 12,
+          "2": 30,
+          "3": 11,
+          "4": 8,
+          "5": 4,
+          "6": 2,
+          "7+": 2
+        },
+        "coloredPips": {
+          "W": 0,
+          "U": 0,
+          "B": 0,
+          "R": 0,
+          "G": 44
+        },
+        "roleCounts": {
+          "token production": 10,
+          "sacrifice synergy": 15,
+          "+1/+1 counters": 23,
+          "creature": 26,
+          "mana acceleration": 13,
+          "fast mana": 3,
+          "card draw": 13,
+          "mana rock": 9,
+          "treasure": 4,
+          "spot interaction": 13,
+          "graveyard hate": 5,
+          "mana dork": 2,
+          "card selection": 5,
+          "graveyard recursion": 5,
+          "equipment": 7,
+          "protection": 9,
+          "board protection": 3,
+          "tutor": 3,
+          "haste": 4,
+          "land ramp": 2,
+          "land tutor": 2,
+          "repeatable draw": 2,
+          "free interaction": 1,
+          "creature tutor": 1,
+          "artifact/enchantment interaction": 3,
+          "copy effect": 1,
+          "etb synergy": 3,
+          "land": 31
+        },
+        "earlyPlayCount": 42,
+        "fastManaCount": 3,
+        "rampCount": 15,
+        "drawCount": 18,
+        "tutorCount": 3,
+        "interactionCount": 14,
+        "cheapInteractionCount": 5,
+        "protectionCount": 9,
+        "recursionCount": 5,
+        "boardWipeCount": 0,
+        "structuralSignals": []
+      },
+      "gameChangerNames": [],
+      "selectedPackage": null,
+      "seededPackageVerifiedInFinalDeck": false,
+      "exactPrintingVerification": {
+        "cardCount": 100,
+        "commanderLegal": true,
+        "resolvedEntries": 78,
         "setCodes": [
           "MAR",
           "MSC",
@@ -3108,22 +3115,22 @@
           "targetBracket": 5,
           "category": "construction",
           "label": "Average nonland mana value",
-          "observed": 2.71,
+          "observed": 2.81,
           "required": "at most 2.6",
           "state": "failed",
           "pressurePoint": "speed/curve",
-          "detail": "Average nonland mana value: observed 2.71; Bracket-5 construction gate requires at most 2.6."
+          "detail": "Average nonland mana value: observed 2.81; Bracket-5 construction gate requires at most 2.6."
         },
         {
           "key": "early-plays",
           "targetBracket": 5,
           "category": "construction",
           "label": "Early plays",
-          "observed": 41,
+          "observed": 39,
           "required": "at least 35",
           "state": "passed",
           "pressurePoint": "speed/curve",
-          "detail": "Early plays: observed 41; Bracket-5 construction gate requires at least 35."
+          "detail": "Early plays: observed 39; Bracket-5 construction gate requires at least 35."
         },
         {
           "key": "fast-mana",
@@ -3141,11 +3148,11 @@
           "targetBracket": 5,
           "category": "construction",
           "label": "Free interaction",
-          "observed": 1,
+          "observed": 2,
           "required": "at least 1",
           "state": "passed",
           "pressurePoint": "free/cheap interaction",
-          "detail": "Free interaction: observed 1; Bracket-5 construction gate requires at least 1."
+          "detail": "Free interaction: observed 2; Bracket-5 construction gate requires at least 1."
         },
         {
           "key": "cheap-interaction",
@@ -3185,11 +3192,11 @@
           "targetBracket": 5,
           "category": "construction",
           "label": "Competitive combo signal",
-          "observed": "Ruthless=0, strategic=0, Spellbook=E",
+          "observed": "Ruthless=0, strategic=0, Spellbook=P",
           "required": "at least one Ruthless/strategically relevant/R-tagged signal",
           "state": "failed",
           "pressurePoint": "win-package quality/redundancy",
-          "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=E; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal."
+          "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal."
         },
         {
           "key": "cedh-intent",
@@ -3220,11 +3227,11 @@
           "targetBracket": 5,
           "category": "construction",
           "label": "Average nonland mana value",
-          "observed": 2.71,
+          "observed": 2.81,
           "required": "at most 2.6",
           "state": "failed",
           "pressurePoint": "speed/curve",
-          "detail": "Average nonland mana value: observed 2.71; Bracket-5 construction gate requires at most 2.6."
+          "detail": "Average nonland mana value: observed 2.81; Bracket-5 construction gate requires at most 2.6."
         },
         {
           "key": "verified-winning-combo",
@@ -3242,11 +3249,11 @@
           "targetBracket": 5,
           "category": "construction",
           "label": "Competitive combo signal",
-          "observed": "Ruthless=0, strategic=0, Spellbook=E",
+          "observed": "Ruthless=0, strategic=0, Spellbook=P",
           "required": "at least one Ruthless/strategically relevant/R-tagged signal",
           "state": "failed",
           "pressurePoint": "win-package quality/redundancy",
-          "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=E; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal."
+          "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal."
         },
         {
           "key": "competitive-metagame-evidence",
@@ -3268,7 +3275,7 @@
         "Improve metagame evidence: Independent current competitive-metagame evidence needs true."
       ],
       "restrictionObservations": [
-        "Constraint \"Marvel physical printings only.\" was active while the finished list missed 3 Bracket-5 construction gates: Average nonland mana value (2.71 vs at most 2.6); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=E vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
+        "Constraint \"Marvel physical printings only.\" was active while the finished list missed 3 Bracket-5 construction gates: Average nonland mana value (2.81 vs at most 2.6); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=P vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
       ],
       "guidance": "The target comparison uses only checks relevant to the requested bracket. Unavailable external evidence is reported as unverified rather than converted into a false deck weakness."
     },
@@ -3277,20 +3284,20 @@
         "key": "average-nonland-mv",
         "category": "construction",
         "label": "Average nonland mana value",
-        "observed": 2.71,
+        "observed": 2.81,
         "required": "at most 2.6",
         "passed": false,
-        "detail": "Average nonland mana value: observed 2.71; Bracket-5 construction gate requires at most 2.6.",
+        "detail": "Average nonland mana value: observed 2.81; Bracket-5 construction gate requires at most 2.6.",
         "pressurePoint": "speed/curve"
       },
       {
         "key": "early-plays",
         "category": "construction",
         "label": "Early plays",
-        "observed": 41,
+        "observed": 39,
         "required": "at least 35",
         "passed": true,
-        "detail": "Early plays: observed 41; Bracket-5 construction gate requires at least 35.",
+        "detail": "Early plays: observed 39; Bracket-5 construction gate requires at least 35.",
         "pressurePoint": "speed/curve"
       },
       {
@@ -3307,10 +3314,10 @@
         "key": "free-interaction",
         "category": "construction",
         "label": "Free interaction",
-        "observed": 1,
+        "observed": 2,
         "required": "at least 1",
         "passed": true,
-        "detail": "Free interaction: observed 1; Bracket-5 construction gate requires at least 1.",
+        "detail": "Free interaction: observed 2; Bracket-5 construction gate requires at least 1.",
         "pressurePoint": "free/cheap interaction"
       },
       {
@@ -3347,10 +3354,10 @@
         "key": "competitive-combo-signal",
         "category": "construction",
         "label": "Competitive combo signal",
-        "observed": "Ruthless=0, strategic=0, Spellbook=E",
+        "observed": "Ruthless=0, strategic=0, Spellbook=P",
         "required": "at least one Ruthless/strategically relevant/R-tagged signal",
         "passed": false,
-        "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=E; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+        "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
         "pressurePoint": "win-package quality/redundancy"
       },
       {
