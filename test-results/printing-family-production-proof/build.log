@@ -2,3 +2,4 @@
 > mtg-ultimate-mcp@0.13.0 build
 > tsc -p tsconfig.json
 
+src/services/upgrade-target-priority-v15.test.ts(17,7): error TS2739: Type '{ rampCount: number; drawCount: number; interactionCount: number; protectionCount: number; tutorCount: number; recursionCount: number; boardWipeCount: number; earlyPlayCount: number; averageNonlandManaValue: number; roleCounts: { 'free interaction': number; }; }' is missing the following properties from type 'UpgradeCandidateMetricsV15': cheapInteractionCount, fastManaCount
