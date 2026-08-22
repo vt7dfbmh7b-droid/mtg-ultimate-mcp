@@ -1,0 +1,247 @@
+source=19e7e1792ae2642992c69b6f174f969a0558793a
+extract_status=0
+patch_status=0
+install_status=0
+build_status=0
+test_status=1
+--- log tail ---
+  ...
+# Subtest: an uncompensated fully protected commander-strategy cut is explicit and ineligible
+ok 761 - an uncompensated fully protected commander-strategy cut is explicit and ineligible
+  ---
+  duration_ms: 0.589314
+  ...
+# Subtest: candidate strategy preservation evidence fails closed when it is absent
+ok 762 - candidate strategy preservation evidence fails closed when it is absent
+  ---
+  duration_ms: 0.350393
+  ...
+# Subtest: a strategically matched incoming card can compensate a protected strategy cut
+ok 763 - a strategically matched incoming card can compensate a protected strategy cut
+  ---
+  duration_ms: 0.34127
+  ...
+# Subtest: aggregate archetype points cannot hide a meaningful loss in one pairing
+ok 764 - aggregate archetype points cannot hide a meaningful loss in one pairing
+  ---
+  duration_ms: 0.36144
+  ...
+# Subtest: bounded Spellbook collection paginates until the provider result set is exhausted
+ok 765 - bounded Spellbook collection paginates until the provider result set is exhausted
+  ---
+  duration_ms: 2.565991
+  ...
+# Subtest: bounded Spellbook collection reports a scan cap as partial evidence rather than absence
+ok 766 - bounded Spellbook collection reports a scan cap as partial evidence rather than absence
+  ---
+  duration_ms: 0.546181
+  ...
+# Subtest: later-page provider failure preserves earlier positive rows but keeps verification incomplete
+ok 767 - later-page provider failure preserves earlier positive rows but keeps verification incomplete
+  ---
+  duration_ms: 0.459814
+  ...
+# Subtest: restricted win-package prefilter rejects packages with any noncommander piece outside the eligible physical pool
+ok 768 - restricted win-package prefilter rejects packages with any noncommander piece outside the eligible physical pool
+  ---
+  duration_ms: 2.056715
+  ...
+# Subtest: commander dependencies do not need to appear in the library eligible pool
+ok 769 - commander dependencies do not need to appear in the library eligible pool
+  ---
+  duration_ms: 0.28698
+  ...
+# Subtest: restricted win-package prefilter fails closed on malformed candidates
+ok 770 - restricted win-package prefilter fails closed on malformed candidates
+  ---
+  duration_ms: 0.290756
+  ...
+# Subtest: explicit game wins and opponent-loss results pass strict closure
+ok 771 - explicit game wins and opponent-loss results pass strict closure
+  ---
+  duration_ms: 4.017959
+  ...
+# Subtest: unbounded damage or life loss supplies a lethal outlet in the same result
+ok 772 - unbounded damage or life loss supplies a lethal outlet in the same result
+  ---
+  duration_ms: 1.829301
+  ...
+# Subtest: infinite mana does not become a win merely because the resource is unbounded
+ok 773 - infinite mana does not become a win merely because the resource is unbounded
+  ---
+  duration_ms: 2.813824
+  ...
+# Subtest: resource generation plus explicit lethal closure is accepted
+ok 774 - resource generation plus explicit lethal closure is accepted
+  ---
+  duration_ms: 0.312948
+  ...
+# Subtest: generic infinite mill is not assumed to target opponents
+ok 775 - generic infinite mill is not assumed to target opponents
+  ---
+  duration_ms: 0.777901
+  ...
+# Subtest: infinite combat phases alone remain conditional rather than deterministic
+ok 776 - infinite combat phases alone remain conditional rather than deterministic
+  ---
+  duration_ms: 0.257016
+  ...
+# Subtest: two packages sharing half of the smaller seed package are a shared core, not independent redundancy
+ok 777 - two packages sharing half of the smaller seed package are a shared core, not independent redundancy
+  ---
+  duration_ms: 0.693056
+  ...
+# Subtest: disjoint library packages that share the commander are commander-coupled, not fully independent
+ok 778 - disjoint library packages that share the commander are commander-coupled, not fully independent
+  ---
+  duration_ms: 0.346358
+  ...
+# Subtest: portfolio selection prefers a genuinely independent backup over a slightly higher-scoring shared core
+ok 779 - portfolio selection prefers a genuinely independent backup over a slightly higher-scoring shared core
+  ---
+  duration_ms: 12.034609
+  ...
+# Subtest: resource-only loops receive no portfolio redundancy credit
+ok 780 - resource-only loops receive no portfolio redundancy credit
+  ---
+  duration_ms: 0.505351
+  ...
+# Subtest: portfolio ordering is deterministic on equal scores
+ok 781 - portfolio ordering is deterministic on equal scores
+  ---
+  duration_ms: 0.637434
+  ...
+# Subtest: provider absence can remain an empty route portfolio without fabricating route failure
+ok 782 - provider absence can remain an empty route portfolio without fabricating route failure
+  ---
+  duration_ms: 1.625673
+  ...
+# Subtest: a verified route with no explicit card components remains unknown rather than zero access
+ok 783 - a verified route with no explicit card components remains unknown rather than zero access
+  ---
+  duration_ms: 3.948487
+  ...
+# Subtest: one universal tutor cannot cover two simultaneously missing library pieces
+ok 784 - one universal tutor cannot cover two simultaneously missing library pieces
+  ---
+  duration_ms: 22.920314
+  ...
+# Subtest: a command-zone combo piece is guaranteed separately and is not charged as a library requirement
+ok 785 - a command-zone combo piece is guaranteed separately and is not charged as a library requirement
+  ---
+  duration_ms: 3.072433
+  ...
+# Subtest: universal plus restricted tutors use a distinct matching across different route pieces
+ok 786 - universal plus restricted tutors use a distinct matching across different route pieces
+  ---
+  duration_ms: 2.168479
+  ...
+# Subtest: two restricted tutors that both find only the same piece cannot cover a two-piece route
+ok 787 - two restricted tutors that both find only the same piece cannot cover a two-piece route
+  ---
+  duration_ms: 5.849103
+  ...
+# Subtest: graveyard and top-deck tutors are audited but excluded from conservative direct access
+ok 788 - graveyard and top-deck tutors are audited but excluded from conservative direct access
+  ---
+  duration_ms: 1.360514
+  ...
+# Subtest: unsupported tutor restrictions fail closed instead of becoming fake universal access
+ok 789 - unsupported tutor restrictions fail closed instead of becoming fake universal access
+  ---
+  duration_ms: 1.00307
+  ...
+# Subtest: artifact tutor does not fabricate coverage for a creature piece
+ok 790 - artifact tutor does not fabricate coverage for a creature piece
+  ---
+  duration_ms: 0.826702
+  ...
+# Subtest: an unresolved verified route piece stays unknown rather than becoming zero-access evidence
+ok 791 - an unresolved verified route piece stays unknown rather than becoming zero-access evidence
+  ---
+  duration_ms: 0.528946
+  ...
+# Subtest: template requirements remain explicitly outside the card-only exact probability
+ok 792 - template requirements remain explicitly outside the card-only exact probability
+  ---
+  duration_ms: 0.694578
+  ...
+# Subtest: setup audit preserves provider mana/prerequisite evidence and explicit zone mentions
+ok 793 - setup audit preserves provider mana/prerequisite evidence and explicit zone mentions
+  ---
+  duration_ms: 18.838961
+  ...
+# Subtest: missing provider setup fields stay unknown rather than becoming proof of trivial setup
+ok 794 - missing provider setup fields stay unknown rather than becoming proof of trivial setup
+  ---
+  duration_ms: 0.799151
+  ...
+# Subtest: instant or sorcery pieces expose stack interaction while delayed wins expose an extra response window
+ok 795 - instant or sorcery pieces expose stack interaction while delayed wins expose an extra response window
+  ---
+  duration_ms: 0.451522
+  ...
+# Subtest: deck support is role-level advisory and does not claim exact tutor or recovery coverage
+ok 796 - deck support is role-level advisory and does not claim exact tutor or recovery coverage
+  ---
+  duration_ms: 1.408445
+  ...
+# Subtest: unresolved combo-piece profiles are surfaced instead of silently omitted
+ok 797 - unresolved combo-piece profiles are surfaced instead of silently omitted
+  ---
+  duration_ms: 0.471662
+  ...
+# Subtest: active evidence writers execute independently instead of sharing a cancelling pending queue
+ok 798 - active evidence writers execute independently instead of sharing a cancelling pending queue
+  ---
+  duration_ms: 1.383198
+  ...
+# Subtest: every active evidence push retries from the latest branch head
+ok 799 - every active evidence push retries from the latest branch head
+  ---
+  duration_ms: 0.551599
+  ...
+# Subtest: live controls gate intelligence and persistence independently
+ok 800 - live controls gate intelligence and persistence independently
+  ---
+  duration_ms: 0.454215
+  ...
+# Subtest: focused Marvel live refinement allows bounded provider backoff to finish
+ok 801 - focused Marvel live refinement allows bounded provider backoff to finish
+  ---
+  duration_ms: 0.189438
+  ...
+# Subtest: Middle-earth precon evidence separates execution, hard truth, target quality and strategy quality
+ok 802 - Middle-earth precon evidence separates execution, hard truth, target quality and strategy quality
+  ---
+  duration_ms: 0.380598
+  ...
+# Subtest: precon generalization requires both inferred engines and the recursion floor to survive
+ok 803 - precon generalization requires both inferred engines and the recursion floor to survive
+  ---
+  duration_ms: 0.229145
+  ...
+# Subtest: strategy-inference evidence distinguishes engines from generic artifacts and graveyard hate
+ok 804 - strategy-inference evidence distinguishes engines from generic artifacts and graveyard hate
+  ---
+  duration_ms: 0.169058
+  ...
+# Subtest: Squirreled Away evidence requires generic token-engine semantics and cumulative retention
+ok 805 - Squirreled Away evidence requires generic token-engine semantics and cumulative retention
+  ---
+  duration_ms: 0.173003
+  ...
+# Subtest: Marvel controls fail closed on whole-deck quality and persistent colored-mana access
+ok 806 - Marvel controls fail closed on whole-deck quality and persistent colored-mana access
+  ---
+  duration_ms: 0.339898
+  ...
+1..806
+# tests 806
+# suites 0
+# pass 805
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 32884.085683
