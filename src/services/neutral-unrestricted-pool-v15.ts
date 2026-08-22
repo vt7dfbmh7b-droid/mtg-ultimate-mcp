@@ -112,6 +112,7 @@ function archetypeClause(archetype: NeutralArchetypeV15): string {
     case 'equipment-voltron': return '-t:land (t:equipment OR o:equip)';
     case 'counters': return '-t:land o:"+1/+1 counter"';
     case 'graveyard-reanimator': return '-t:land o:graveyard';
+    case 'artifact-engine': return '-t:land (t:artifact OR o:artifact OR o:Vehicle)';
     case 'aristocrats': return '-t:land (o:sacrifice OR o:dies)';
     case 'food-lifegain': return '-t:land (o:Food OR o:"gain life" OR o:"gained life")';
     case 'spells-control': return '-t:land (t:instant OR t:sorcery OR o:counter)';
