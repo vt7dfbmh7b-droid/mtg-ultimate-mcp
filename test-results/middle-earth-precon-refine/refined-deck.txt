@@ -87,7 +87,7 @@
 2 Swamp (LTR) 267 *N*
 4 Forest (LTR) 270 *N*
 4 Forest (LTR) 271 *N*
+1 Lightning Greaves (LTC) 281 *N*
+1 Bilbo's Ring (HOC) 41 *N*
 1 Heroic Intervention (LTC) 249 *N*
 1 Bofur, Reliable Guardian // Concerted Care (HOB) 6 *N*
-1 Orcish Medicine (LTR) 104 *N*
-1 Frontline Medic (LTC) 169 *N*
