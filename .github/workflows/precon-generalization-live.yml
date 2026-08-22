@@ -1,0 +1,223 @@
+name: Precon Generalization Live Control
+
+on:
+  push:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - "scripts/e2e-precon-generalization-v15.ts"
+      - "src/services/card-role-truth-v15.test.ts"
+      - "src/services/commander-strategy-affinity-v15.ts"
+      - "src/services/commander-strategy-affinity-v15.test.ts"
+      - "src/services/deck-builder-v07.ts"
+      - "src/services/deck.ts"
+      - "src/services/neutral-commander-selection-v15.ts"
+      - "src/services/optimizer-v12.ts"
+      - "src/services/optimizer-v12-attempt-provenance.test.ts"
+      - "src/services/scryfall.ts"
+      - "src/services/upgrade.ts"
+      - "src/services/upgrade-target-priority-v15.test.ts"
+      - ".github/workflows/precon-generalization-live.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: precon-generalization-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  refine-necron-dynasties:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check and build checked-in source
+        id: source_build
+        continue-on-error: true
+        run: npm run build
+
+      - name: Run generic strategy and pairing regressions
+        id: focused_regressions
+        if: steps.source_build.outcome == 'success'
+        continue-on-error: true
+        run: npx tsx --test src/services/card-role-truth-v15.test.ts src/services/commander-strategy-affinity-v15.test.ts src/services/upgrade-target-priority-v15.test.ts src/services/optimizer-v12-attempt-provenance.test.ts
+
+      - name: Refine exact Necron Dynasties stock precon
+        id: precon_control
+        if: steps.source_build.outcome == 'success' && steps.focused_regressions.outcome == 'success'
+        continue-on-error: true
+        run: npx tsx scripts/e2e-precon-generalization-v15.ts
+
+      - name: Require exact legality, command-zone and budget truth
+        id: hard_truth
+        if: steps.precon_control.outcome == 'success'
+        continue-on-error: true
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const result = JSON.parse(fs.readFileSync('precon-generalization-result.json', 'utf8'));
+          for (const label of ['before', 'after']) {
+            const truth = result[label]?.truth;
+            if (truth?.cardCount !== 100 || truth?.commanderLegal !== true) {
+              throw new Error(`${label} deck failed exact-100 or Commander-legality truth.`);
+            }
+          }
+          const beforeCommanders = JSON.stringify(result.before?.truth?.commanderNames ?? []);
+          const afterCommanders = JSON.stringify(result.after?.truth?.commanderNames ?? []);
+          if (beforeCommanders !== afterCommanders) throw new Error('Refinement changed the command zone.');
+          const spend = Number(result.refinement?.estimatedUpgradeSpendNzd ?? 0);
+          if (!Number.isFinite(spend) || spend > Number(result.request?.maxTotalNzd)) {
+            throw new Error(`Upgrade spend ${spend} exceeds the NZ$ whole-package cap.`);
+          }
+          const overCap = (result.refinement?.swaps ?? [])
+            .filter((swap) => Number(swap?.recommendedPrinting?.priceNzd) > Number(result.request?.maxNzdPerCard))
+            .map((swap) => swap.in);
+          if (overCap.length > 0) throw new Error(`Per-card NZ$ cap failed for: ${overCap.join(', ')}`);
+          console.log(`Hard truth passed at NZ$${spend.toFixed(2)}.`);
+          NODE
+
+      - name: Require measurable whole-deck target improvement
+        id: target_quality
+        if: steps.precon_control.outcome == 'success'
+        continue-on-error: true
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const result = JSON.parse(fs.readFileSync('precon-generalization-result.json', 'utf8'));
+          const outcome = result.outcome ?? {};
+          if (!outcome.refined) throw new Error('Generalization challenge did not accept a supported refinement.');
+          if (!outcome.measurableTargetProgress) throw new Error('No independently evaluated Bracket-4 structure gate improved.');
+          if (!outcome.noPassingGateRegression) {
+            throw new Error(`Previously passing structural gates regressed: ${(result.progress?.regressedPassing ?? []).join(', ')}`);
+          }
+          if (!outcome.noStructuralFloorRegression) {
+            throw new Error(`Structural floors regressed: ${(result.progress?.regressedStructuralFloor ?? []).join(', ')}`);
+          }
+          if (!outcome.bracketNotLowered) throw new Error('Independent bracket assessment regressed.');
+          console.log(`Target quality passed. Repaired=${(result.progress?.repaired ?? []).join(',') || 'none'}; advanced=${(result.progress?.advanced ?? []).join(',') || 'none'}`);
+          NODE
+
+      - name: Require generic commander-strategy preservation
+        id: strategy_quality
+        if: steps.precon_control.outcome == 'success'
+        continue-on-error: true
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const result = JSON.parse(fs.readFileSync('precon-generalization-result.json', 'utf8'));
+          if (Number(result.before?.truth?.substantiveStrategyCount) < 1) {
+            throw new Error('The stock commander exposed no substantive generic strategy signal, so this control cannot audit preservation fairly.');
+          }
+          const audit = result.strategyAudit ?? {};
+          if (Number(audit.acceptedRounds) < 1) throw new Error('No accepted round retained auditable strategy evidence.');
+          if (!audit.evidenceComplete) throw new Error('Accepted-round strategy evidence is incomplete.');
+          if (!audit.aggregatePreserved || !audit.perSwapPreserved || (audit.meaningfulLosses ?? []).length > 0) {
+            throw new Error('Accepted package failed generic commander-strategy preservation.');
+          }
+          console.log(`Strategy quality passed across ${audit.acceptedRounds} accepted round(s).`);
+          NODE
+
+      - name: Upload generalization evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: precon-generalization-${{ github.sha }}
+          path: |
+            precon-generalization-result.json
+            precon-generalization-raw-result.json
+            precon-generalization-stock-deck.txt
+            precon-generalization-refined-deck.txt
+            precon-generalization-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Persist checked-in-source generalization evidence
+        id: persist_result
+        if: always()
+        continue-on-error: true
+        env:
+          BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          REGRESSION_OUTCOME: ${{ steps.focused_regressions.outcome }}
+          EXECUTION_OUTCOME: ${{ steps.precon_control.outcome }}
+          HARD_TRUTH_OUTCOME: ${{ steps.hard_truth.outcome }}
+          TARGET_QUALITY_OUTCOME: ${{ steps.target_quality.outcome }}
+          STRATEGY_QUALITY_OUTCOME: ${{ steps.strategy_quality.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            mkdir -p test-results/precon-generalization
+            rm -f test-results/precon-generalization/result.json \
+                  test-results/precon-generalization/stock-deck.txt \
+                  test-results/precon-generalization/refined-deck.txt \
+                  test-results/precon-generalization/failure.txt
+            [ ! -f precon-generalization-result.json ] || cp precon-generalization-result.json test-results/precon-generalization/result.json
+            [ ! -f precon-generalization-stock-deck.txt ] || cp precon-generalization-stock-deck.txt test-results/precon-generalization/stock-deck.txt
+            [ ! -f precon-generalization-refined-deck.txt ] || cp precon-generalization-refined-deck.txt test-results/precon-generalization/refined-deck.txt
+            [ ! -f precon-generalization-failure.txt ] || cp precon-generalization-failure.txt test-results/precon-generalization/failure.txt
+            CONTROL_OUTCOME=failure
+            if [ "$BUILD_OUTCOME" = success ] \
+              && [ "$REGRESSION_OUTCOME" = success ] \
+              && [ "$EXECUTION_OUTCOME" = success ] \
+              && [ "$HARD_TRUTH_OUTCOME" = success ] \
+              && [ "$TARGET_QUALITY_OUTCOME" = success ] \
+              && [ "$STRATEGY_QUALITY_OUTCOME" = success ]; then
+              CONTROL_OUTCOME=success
+            fi
+            printf 'source_sha=%s\nworkflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nbuild_outcome=%s\nregression_outcome=%s\nexecution_outcome=%s\nhard_truth_outcome=%s\ntarget_quality_outcome=%s\nstrategy_preservation_outcome=%s\npolicy=exact-necron-stock-unrestricted-budgeted-upgrade\nprinting_family=unrestricted\nexact_card_count=true\ncommander_legality=true\nhard_budget_truth=true\nsubstantive_commander_strategy_required=true\nstructural_floors_required=true\nmeaningful_strategy_loss_rejected=true\n' \
+              "$GITHUB_SHA" "$GITHUB_SHA" "$GITHUB_SHA" "$CONTROL_OUTCOME" "$BUILD_OUTCOME" "$REGRESSION_OUTCOME" "$EXECUTION_OUTCOME" "$HARD_TRUTH_OUTCOME" "$TARGET_QUALITY_OUTCOME" "$STRATEGY_QUALITY_OUTCOME" \
+              > test-results/precon-generalization/run-metadata.txt
+            git add -- test-results/precon-generalization
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "test-results: persist precon generalization [skip ci]"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "Evidence persistence attempt ${attempt} lost a branch race; retrying against the latest head."
+          done
+          echo 'Precon generalization evidence persistence exhausted eight branch-race retries.' >&2
+          exit 1
+
+      - name: Require checked-in-source generalization intelligence
+        if: always()
+        env:
+          BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          REGRESSION_OUTCOME: ${{ steps.focused_regressions.outcome }}
+          EXECUTION_OUTCOME: ${{ steps.precon_control.outcome }}
+          HARD_TRUTH_OUTCOME: ${{ steps.hard_truth.outcome }}
+          TARGET_QUALITY_OUTCOME: ${{ steps.target_quality.outcome }}
+          STRATEGY_QUALITY_OUTCOME: ${{ steps.strategy_quality.outcome }}
+        run: |
+          test "$BUILD_OUTCOME" = success
+          test "$REGRESSION_OUTCOME" = success
+          test "$EXECUTION_OUTCOME" = success
+          test "$HARD_TRUTH_OUTCOME" = success
+          test "$TARGET_QUALITY_OUTCOME" = success
+          test "$STRATEGY_QUALITY_OUTCOME" = success
+
+      - name: Require checked-in-source evidence persistence
+        if: always()
+        env:
+          PERSIST_OUTCOME: ${{ steps.persist_result.outcome }}
+        run: test "$PERSIST_OUTCOME" = success
