@@ -89,6 +89,17 @@ test('artifact spells cast from the top of the library are substantive artifact-
   assert.ok(artifact?.evidence.some((entry) => entry.includes('artifact/Vehicle engine text')));
 });
 
+test('copying artifacts is substantive artifact-engine support rather than generic artifact presence', () => {
+  const artifact = inferNeutralStrategyV15([card({
+    name: 'Unnamed Artifact Replicator',
+    typeLine: 'Artifact',
+    oracleText: 'You may have this artifact enter as a copy of any artifact on the battlefield.',
+  })]).find((strategy) => strategy.archetype === 'artifact-engine');
+
+  assert.ok((artifact?.score ?? 0) >= 9, 'an artifact that copies another artifact must be protected as a real artifact engine');
+  assert.ok(artifact?.evidence.some((entry) => entry.includes('artifact-copy engine text')));
+});
+
 test('incidental combat damage affinity stays far below a true go-wide payoff', () => {
   const incidental = inferNeutralStrategyV15([card({
     name: 'Unnamed Combat Utility',
@@ -117,6 +128,23 @@ test('mass graveyard exchange text is recognized as graveyard-reanimator support
   assert.equal(ranked[0]?.archetype, 'graveyard-reanimator');
   assert.ok((graveyard?.score ?? 0) >= 6);
   assert.ok(graveyard?.evidence.some((entry) => entry.includes('mass graveyard return')));
+});
+
+test('staged multi-card reanimation outranks a simple discard outlet', () => {
+  const staged = inferNeutralStrategyV15([card({
+    name: 'Unnamed Staged Reanimation',
+    typeLine: 'Enchantment — Saga',
+    oracleText: 'I — Draw three cards. II — Mill three cards. III — Choose up to three target creature cards with total mana value 8 or less in your graveyard. Return each of them to the battlefield.',
+  })]).find((strategy) => strategy.archetype === 'graveyard-reanimator');
+  const discardOnly = inferNeutralStrategyV15([card({
+    name: 'Unnamed Discard Outlet',
+    typeLine: 'Instant',
+    oracleText: 'As an additional cost to cast this spell, discard a card. Destroy target creature.',
+  })]).find((strategy) => strategy.archetype === 'graveyard-reanimator');
+
+  assert.ok((staged?.score ?? 0) >= 14, 'multi-card own-graveyard return must be a strongly protected reanimation engine');
+  assert.ok((staged?.score ?? 0) - (discardOnly?.score ?? 0) >= 4, 'a simple discard outlet must not replace multi-card reanimation on strategy affinity alone');
+  assert.ok(staged?.evidence.some((entry) => entry.includes('selected graveyard cards returned to battlefield')));
 });
 
 test('token multipliers and team-wide payoffs are substantive combat-token support', () => {
