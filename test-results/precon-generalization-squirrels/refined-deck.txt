@@ -25,6 +25,7 @@
 1 Shamanic Revelation (BLC) 237 *N*
 1 Chatterfang, Squirrel General (BLC) 209 *N*
 1 Temple of Malady (BLC) 341 *N*
+1 Casualties of War (BLC) 125 *N*
 1 Windgrace's Judgment (BLC) 263 *N*
 1 Maskwood Nexus (BLC) 279 *N*
 1 Academy Manufactor (BLC) 264 *N*
@@ -42,6 +43,7 @@
 1 Maelstrom Pulse (BLC) 126 *N*
 1 Beledros Witherbloom (BLC) 247 *N*
 1 Idol of Oblivion (BLC) 277 *N*
+1 Sword of the Squeak (BLC) 40 *N*
 1 Morbid Opportunist (BLC) 183 *N*
 1 Nadier's Nightblade (BLC) 184 *N*
 1 Plumb the Forbidden (BLC) 188 *N*
@@ -85,6 +87,4 @@
 4 Swamp (BLB) 374 *N*
 5 Forest (BLB) 377 *N*
 4 Forest (BLB) 378 *N*
-1 Tyvar's Stand (PLST) ONE-190 *N*
-1 Smuggler's Surprise (POTJ) 180p *N*
-1 Collective Resistance (MH3) 147 *N*
+1 Veil of Summer (MB2) 75 *N*
