@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedFromProjectStateUpdatedAt": "2026-08-22T00:04:05Z",
-  "developmentCheckpointSha": "3cfca39c194df72727bcd1fae19e81080e543e41",
+  "generatedFromProjectStateUpdatedAt": "2026-08-22T03:45:00Z",
+  "developmentCheckpointSha": "98d4b264e08540b529a5ad23ba81f6732fe3e172",
   "records": [
     {
       "id": "PM-STATE-INTEGRITY",
@@ -13,19 +13,23 @@
       ],
       "metadataPath": "test-results/project-management/integrity.txt",
       "exists": true,
-      "sourceSha": "77a5383fa7490aa91360b8186a4bda890f632157",
-      "outcome": "pass",
+      "sourceSha": "c0088d9fc798d87860a31ae7795ebedf00a5b83b",
+      "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "77a5383fa7490aa91360b8186a4bda890f632157",
+        "source_sha": "c0088d9fc798d87860a31ae7795ebedf00a5b83b",
         "active_milestone": "INTEL-02",
         "typecheck_outcome": "success",
-        "state_validate_outcome": "success",
-        "validation_index_outcome": "success",
-        "recovery_smoke_outcome": "success",
+        "state_validate_outcome": "failure",
+        "validation_index_outcome": "failure",
+        "recovery_smoke_outcome": "failure",
         "source_build_outcome": "success"
       },
-      "unmetPassConditions": []
+      "unmetPassConditions": [
+        "state_validate_outcome=success",
+        "validation_index_outcome=success",
+        "recovery_smoke_outcome=success"
+      ]
     },
     {
       "id": "MARVEL-B5-REFINE",
