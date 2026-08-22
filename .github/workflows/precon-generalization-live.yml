@@ -11,6 +11,10 @@ on:
       - "src/services/deck-builder-v07.ts"
       - "src/services/deck.ts"
       - "src/services/neutral-commander-selection-v15.ts"
+      - "src/services/neutral-deck-builder-v15.ts"
+      - "src/services/neutral-unrestricted-pool-v15.ts"
+      - "src/services/neutral-win-routes-v15.ts"
+      - "src/services/strategy-inference-generalization-v15.test.ts"
       - "src/services/optimizer-v12.ts"
       - "src/services/optimizer-v12-attempt-provenance.test.ts"
       - "src/services/scryfall.ts"
@@ -59,7 +63,7 @@ jobs:
         id: focused_regressions
         if: steps.source_build.outcome == 'success'
         continue-on-error: true
-        run: npx tsx --test src/services/card-role-truth-v15.test.ts src/services/commander-strategy-affinity-v15.test.ts src/services/upgrade-target-priority-v15.test.ts src/services/optimizer-v12-attempt-provenance.test.ts
+        run: npx tsx --test src/services/card-role-truth-v15.test.ts src/services/commander-strategy-affinity-v15.test.ts src/services/strategy-inference-generalization-v15.test.ts src/services/upgrade-target-priority-v15.test.ts src/services/optimizer-v12-attempt-provenance.test.ts
 
       - name: Refine exact Necron Dynasties stock precon
         id: precon_control
@@ -127,13 +131,19 @@ jobs:
           if (Number(result.before?.truth?.substantiveStrategyCount) < 1) {
             throw new Error('The stock commander exposed no substantive generic strategy signal, so this control cannot audit preservation fairly.');
           }
+          const stockStrategies = new Set((result.before?.truth?.strategies ?? []).map((strategy) => strategy?.archetype));
+          for (const required of ['graveyard-reanimator', 'artifact-engine']) {
+            if (!stockStrategies.has(required)) {
+              throw new Error(`Exact Necron stock identity is missing required generic ${required} evidence.`);
+            }
+          }
           const audit = result.strategyAudit ?? {};
           if (Number(audit.acceptedRounds) < 1) throw new Error('No accepted round retained auditable strategy evidence.');
           if (!audit.evidenceComplete) throw new Error('Accepted-round strategy evidence is incomplete.');
           if (!audit.aggregatePreserved || !audit.perSwapPreserved || (audit.meaningfulLosses ?? []).length > 0) {
             throw new Error('Accepted package failed generic commander-strategy preservation.');
           }
-          console.log(`Strategy quality passed across ${audit.acceptedRounds} accepted round(s).`);
+          console.log(`Strategy quality passed across ${audit.acceptedRounds} accepted round(s), with graveyard and artifact identities present.`);
           NODE
 
       - name: Upload generalization evidence
