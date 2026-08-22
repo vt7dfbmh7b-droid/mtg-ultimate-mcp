@@ -18,8 +18,8 @@
 1 Spiteful Banditry (LTR) 149
 1 Sol Ring (LTC) 284
 1 Faithless Looting (LTC) 215
-1 Frontline Medic (LTC) 169
 1 Tempt with Discovery (LTC) 532
+1 Frontline Medic (LTC) 169
 1 Elvish Harbinger (LTC) 527
 1 Weathered Wayfarer (LTC) 183
 1 Sound the Trumpets (HOB) 55
@@ -27,20 +27,20 @@
 1 The Arkenstone // Seek the Heart (HOB) 170
 1 Éowyn, Fearless Knight (LTR) 201
 1 Birds of Paradise (LTC) 235
-1 Bilbo's Ring (LTR) 298
+1 Courageous Resolve (LTC) 506
 1 Sylvan Tutor (LTC) 531
 1 Glóin the Mighty // Easy Pickings (HOB) 99
-1 Courageous Resolve (LTC) 506
-1 Legolas's Quick Reflexes (LTC) 493
+1 Mystic Confluence (LTC) 193
+1 Lightning Greaves (LTC) 281
 1 Solve the Equation (SLD) 2570
 1 The Bath Song (LTR) 40
-1 Lightning Greaves (LTC) 281
-1 Swords to Plowshares (LTC) 178
+1 Legolas's Quick Reflexes (LTC) 493
+1 Heroic Intervention (LTC) 249
 1 War of the Last Alliance (LTR) 36
 1 Mox Amber (HOC) 96
 1 Summons of Saruman (LTC) 70
-1 Path to Exile (LTC) 175
-1 Heroic Intervention (LTC) 249
+1 Swords to Plowshares (LTC) 178
+1 Boromir, Warden of the Tower (LTR) 4
 1 Stonehewer Giant (LTC) 521
 1 Glóin, Dwarf Emissary (LTR) 132
 1 Elvish Mystic (HOC) 205
@@ -50,15 +50,16 @@
 1 Rammas Echor, Ancient Shield (LTC) 505
 1 Tireless Provisioner (LTC) 262
 1 Glamdring (LTR) 239
+1 Gandalf, White Rider (LTR) 290
 1 Flamerush Rider (LTC) 216
+1 Path to Exile (LTC) 175
 1 Arcane Signet (HOC) 95
 1 The Reaver Cleaver (HOC) 94
 1 Prosperous Innkeeper (LTC) 256
+1 Peregrin Took (LTR) 181
 1 Seize the Spoils (SLD) 2556
-1 Boromir, Warden of the Tower (LTR) 4
 1 Saruman's Trickery (LTR) 68
 1 Samwise Gamgee (LTR) 222
-1 Sword of the Animist (LTC) 355
 1 Dawn of Hope (LTC) 164
 1 Bothersome Noisemaker (HOB) 89
 1 Vanquisher's Banner (LTC) 289
@@ -67,9 +68,8 @@
 1 Dancing from Dark to Dawn (HOB) 123
 1 Shiny Impetus (LTC) 227
 1 Commander's Sphere (LTC) 276
-1 Horn of the Mark (LTR) 241
+1 Bastion Protector (LTC) 162
 1 Farseek (LTC) 244
-1 Merry, Esquire of Rohan (LTR) 215
 1 Command Tower (LTC) 301
 1 Exotic Orchard (LTC) 307
 1 Cavern of Souls (LTC) 392z
