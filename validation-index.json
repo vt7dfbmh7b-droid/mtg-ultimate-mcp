@@ -107,19 +107,19 @@
       ],
       "metadataPath": "test-results/middle-earth-precon-refine/run-metadata.txt",
       "exists": true,
-      "sourceSha": "e160f68c297fd220037c771d27bf29e0f85634e9",
-      "outcome": "pass",
+      "sourceSha": "f2153b27a7c581661553288d614743a609ba354d",
+      "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "e160f68c297fd220037c771d27bf29e0f85634e9",
-        "workflow_source_sha": "e160f68c297fd220037c771d27bf29e0f85634e9",
-        "executed_head_sha": "e160f68c297fd220037c771d27bf29e0f85634e9",
-        "control_outcome": "success",
+        "source_sha": "f2153b27a7c581661553288d614743a609ba354d",
+        "workflow_source_sha": "f2153b27a7c581661553288d614743a609ba354d",
+        "executed_head_sha": "f2153b27a7c581661553288d614743a609ba354d",
+        "control_outcome": "failure",
         "build_outcome": "success",
         "regression_outcome": "success",
         "execution_outcome": "success",
         "hard_truth_outcome": "success",
-        "target_quality_outcome": "success",
+        "target_quality_outcome": "failure",
         "strategy_preservation_outcome": "success",
         "policy": "exact-food-and-fellowship-middle-earth-precon",
         "printing_family": "Middle-earth",
@@ -132,7 +132,10 @@
         "meaningful_strategy_loss_rejected": "true",
         "negative_win_evidence_complete": "true"
       },
-      "unmetPassConditions": []
+      "unmetPassConditions": [
+        "control_outcome=success",
+        "target_quality_outcome=success"
+      ]
     },
     {
       "id": "PRECON-GENERALIZATION",
@@ -143,13 +146,13 @@
       ],
       "metadataPath": "test-results/precon-generalization/run-metadata.txt",
       "exists": true,
-      "sourceSha": "5dc764117afb03951e4ebb091781a5b1c0ee4511",
-      "outcome": "fail",
+      "sourceSha": "f2153b27a7c581661553288d614743a609ba354d",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "5dc764117afb03951e4ebb091781a5b1c0ee4511",
-        "workflow_source_sha": "5dc764117afb03951e4ebb091781a5b1c0ee4511",
-        "executed_head_sha": "5dc764117afb03951e4ebb091781a5b1c0ee4511",
+        "source_sha": "f2153b27a7c581661553288d614743a609ba354d",
+        "workflow_source_sha": "f2153b27a7c581661553288d614743a609ba354d",
+        "executed_head_sha": "f2153b27a7c581661553288d614743a609ba354d",
         "control_outcome": "success",
         "build_outcome": "success",
         "regression_outcome": "success",
@@ -163,14 +166,13 @@
         "commander_legality": "true",
         "hard_budget_truth": "true",
         "substantive_commander_strategy_required": "true",
+        "graveyard_reanimator_identity_required": "true",
+        "artifact_engine_identity_required": "true",
+        "graveyard_recursion_floor": "true",
         "structural_floors_required": "true",
         "meaningful_strategy_loss_rejected": "true"
       },
-      "unmetPassConditions": [
-        "graveyard_reanimator_identity_required=true",
-        "artifact_engine_identity_required=true",
-        "graveyard_recursion_floor=true"
-      ]
+      "unmetPassConditions": []
     },
     {
       "id": "STRATEGY-INFERENCE-GENERALIZATION",
@@ -211,13 +213,13 @@
       ],
       "metadataPath": "test-results/precon-generalization-squirrels/run-metadata.txt",
       "exists": true,
-      "sourceSha": "51621b449c43a9d54d5e38f0e0e68f8a6ade9043",
-      "outcome": "fail",
+      "sourceSha": "f2153b27a7c581661553288d614743a609ba354d",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "51621b449c43a9d54d5e38f0e0e68f8a6ade9043",
-        "workflow_source_sha": "51621b449c43a9d54d5e38f0e0e68f8a6ade9043",
-        "executed_head_sha": "51621b449c43a9d54d5e38f0e0e68f8a6ade9043",
+        "source_sha": "f2153b27a7c581661553288d614743a609ba354d",
+        "workflow_source_sha": "f2153b27a7c581661553288d614743a609ba354d",
+        "executed_head_sha": "f2153b27a7c581661553288d614743a609ba354d",
         "control_outcome": "success",
         "build_outcome": "success",
         "regression_outcome": "success",
@@ -231,13 +233,12 @@
         "commander_legality": "true",
         "hard_budget_truth": "true",
         "substantive_combat_token_strategy_required": "true",
+        "core_token_engine_semantics_required": "true",
         "cumulative_strategy_retention_required": "true",
         "structural_floors_required": "true",
         "meaningful_strategy_loss_rejected": "true"
       },
-      "unmetPassConditions": [
-        "core_token_engine_semantics_required=true"
-      ]
+      "unmetPassConditions": []
     }
   ]
 }
