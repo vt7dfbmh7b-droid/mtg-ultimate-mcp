@@ -55,11 +55,21 @@ export interface UpgradeCandidateMetricsV15 {
   recursionCount: number;
   boardWipeCount: number;
   earlyPlayCount: number;
+  cheapInteractionCount: number;
+  fastManaCount: number;
   averageNonlandManaValue: number;
   roleCounts: Record<string, number>;
   persistentColoredManaSourceCount?: number;
   commanderColorCount?: number;
 }
+
+export type UpgradeTargetGateV15 =
+  | 'average-nonland-mv'
+  | 'early-plays'
+  | 'cheap-interaction'
+  | 'fast-mana'
+  | 'free-interaction'
+  | 'tutors';
 
 export interface UpgradeCandidatePriorityV15 {
   role: 'average-nonland-mv' | 'ramp' | 'draw' | 'interaction' | 'free-interaction' | 'protection' | 'tutor' | 'early';
@@ -67,7 +77,7 @@ export interface UpgradeCandidatePriorityV15 {
   target: number;
   deficit: number;
   prioritySource: 'authoritative-target-gate' | 'aspirational-role-target';
-  targetGate: 'average-nonland-mv' | null;
+  targetGate: UpgradeTargetGateV15 | null;
 }
 
 const TARGETS: Record<number, UpgradeStructuralTargetsV15> = {
@@ -77,7 +87,23 @@ const TARGETS: Record<number, UpgradeStructuralTargetsV15> = {
   4: { ramp: 12, draw: 12, interaction: 14, freeInteraction: 0, protection: 6, tutors: 6, recursion: 3, boardWipes: 2, earlyPlays: 16 },
   5: { ramp: 14, draw: 14, interaction: 18, freeInteraction: 0, protection: 8, tutors: 10, recursion: 4, boardWipes: 2, earlyPlays: 20 },
 };
+export const BRACKET_FOUR_AVERAGE_NONLAND_MV_MAX_V15 = 3.1;
 export const BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15 = 2.6;
+
+const BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15 = {
+  earlyPlays: 25,
+  cheapInteraction: 6,
+  fastMana: 2,
+  tutors: 2,
+} as const;
+
+const BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15 = {
+  earlyPlays: 35,
+  cheapInteraction: 8,
+  fastMana: 3,
+  freeInteraction: 1,
+  tutors: 4,
+} as const;
 
 export function minimumPersistentColoredManaSourcesV15(commanderColorCount: number): number {
   const colors = Math.max(0, Math.min(5, Math.trunc(commanderColorCount)));
@@ -89,28 +115,58 @@ function clampBracket(value: number | undefined): number {
   return Math.max(1, Math.min(5, Math.trunc(value ?? 4)));
 }
 
+function authoritativePriority(
+  role: UpgradeCandidatePriorityV15['role'],
+  targetGate: UpgradeTargetGateV15,
+  current: number,
+  target: number,
+  direction: 'at-most' | 'at-least' = 'at-least',
+): UpgradeCandidatePriorityV15 | null {
+  const deficit = direction === 'at-most' ? current - target : target - current;
+  if (deficit <= 0) return null;
+  return {
+    role,
+    current,
+    target,
+    deficit: Number(deficit.toFixed(3)),
+    prioritySource: 'authoritative-target-gate',
+    targetGate,
+  };
+}
+
 /**
- * Put currently failed authoritative Bracket-5 construction gates ahead of aspirational role
- * targets. The verified-win-route lane is handled atomically by deck-builder-v07; this helper
- * supplies the measurable curve lane that the old role-only planner could not generate.
+ * Put currently failed authoritative construction gates for the requested bracket ahead of
+ * aspirational role targets. Bracket 4 uses the actual optimized-structure thresholds from the
+ * finished-deck assessor; Bracket 5 uses its construction thresholds. Verified win-route pressure
+ * remains handled atomically by deck-builder-v07 rather than being approximated as a role count.
  */
 export function upgradeCandidatePrioritiesV15(
   metrics: UpgradeCandidateMetricsV15,
   targets: UpgradeStructuralTargetsV15,
   targetBracket: number,
 ): UpgradeCandidatePriorityV15[] {
+  const bracket = clampBracket(targetBracket);
   const authoritative: UpgradeCandidatePriorityV15[] = [];
-  if (clampBracket(targetBracket) >= 5 && metrics.averageNonlandManaValue > BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15) {
-    authoritative.push({
-      role: 'average-nonland-mv',
-      current: metrics.averageNonlandManaValue,
-      target: BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15,
-      deficit: Number((metrics.averageNonlandManaValue - BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15).toFixed(3)),
-      prioritySource: 'authoritative-target-gate',
-      targetGate: 'average-nonland-mv',
-    });
+  const push = (priority: UpgradeCandidatePriorityV15 | null) => {
+    if (priority) authoritative.push(priority);
+  };
+
+  if (bracket >= 5) {
+    push(authoritativePriority('average-nonland-mv', 'average-nonland-mv', metrics.averageNonlandManaValue, BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15, 'at-most'));
+    push(authoritativePriority('early', 'early-plays', metrics.earlyPlayCount, BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.earlyPlays));
+    push(authoritativePriority('interaction', 'cheap-interaction', metrics.cheapInteractionCount, BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.cheapInteraction));
+    push(authoritativePriority('ramp', 'fast-mana', metrics.fastManaCount, BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.fastMana));
+    push(authoritativePriority('free-interaction', 'free-interaction', Number(metrics.roleCounts['free interaction'] ?? 0), BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.freeInteraction));
+    push(authoritativePriority('tutor', 'tutors', metrics.tutorCount, BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.tutors));
+  } else if (bracket >= 4) {
+    push(authoritativePriority('average-nonland-mv', 'average-nonland-mv', metrics.averageNonlandManaValue, BRACKET_FOUR_AVERAGE_NONLAND_MV_MAX_V15, 'at-most'));
+    push(authoritativePriority('early', 'early-plays', metrics.earlyPlayCount, BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15.earlyPlays));
+    push(authoritativePriority('interaction', 'cheap-interaction', metrics.cheapInteractionCount, BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15.cheapInteraction));
+    push(authoritativePriority('ramp', 'fast-mana', metrics.fastManaCount, BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15.fastMana));
+    push(authoritativePriority('tutor', 'tutors', metrics.tutorCount, BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15.tutors));
   }
 
+  const authoritativeRoles = new Set(authoritative.map((priority) => priority.role));
   const aspirational = [
     { role: 'ramp' as const, current: metrics.rampCount, target: targets.ramp },
     { role: 'draw' as const, current: metrics.drawCount, target: targets.draw },
@@ -120,6 +176,7 @@ export function upgradeCandidatePrioritiesV15(
     { role: 'tutor' as const, current: metrics.tutorCount, target: targets.tutors },
     { role: 'early' as const, current: metrics.earlyPlayCount, target: targets.earlyPlays },
   ]
+    .filter((item) => !authoritativeRoles.has(item.role))
     .map((item): UpgradeCandidatePriorityV15 => ({
       ...item,
       deficit: Math.max(0, item.target - item.current),
@@ -137,7 +194,13 @@ function identityQuery(identity: string[]): string {
   return `id<=${identity.join('').toLowerCase()}`;
 }
 
-function roleClause(role: string): string {
+function roleClause(role: string, targetGate: UpgradeTargetGateV15 | null = null): string {
+  if (targetGate === 'cheap-interaction') {
+    return 'mv<=2 (o:"counter target spell" OR o:"destroy target" OR o:"exile target" OR o:"return target")';
+  }
+  if (targetGate === 'fast-mana') {
+    return 'mv<=2 (o:"add" OR o:"Treasure")';
+  }
   const roleClauses: Record<string, string> = {
     ramp: '(o:"add" OR o:"search your library for" OR o:"costs" )',
     draw: '(o:"draw" OR o:"scry" OR o:"surveil" OR o:"look at the top")',
@@ -155,12 +218,13 @@ function roleSearchQuery(
   role: string,
   identity: string[],
   printingPolicy: ResolvedPrintingPolicyV08,
+  targetGate: UpgradeTargetGateV15 | null = null,
 ): string {
   return [
     'f:commander',
     identityQuery(identity),
     '-t:land',
-    roleClause(role),
+    roleClause(role, targetGate),
     printingPolicy.searchClause,
   ]
     .filter(Boolean)
@@ -188,12 +252,13 @@ function themedRoleSearchQuery(
   identity: string[],
   themeClause: string,
   printingPolicy: ResolvedPrintingPolicyV08,
+  targetGate: UpgradeTargetGateV15 | null = null,
 ): string {
   return [
     'f:commander',
     identityQuery(identity),
     '-t:land',
-    roleClause(role),
+    roleClause(role, targetGate),
     themeClause,
     printingPolicy.searchClause,
   ]
@@ -201,8 +266,14 @@ function themedRoleSearchQuery(
     .join(' ');
 }
 
-function cardMatchesRole(card: ScryfallCard, role: string): boolean {
+function cardMatchesRole(card: ScryfallCard, role: string, targetGate: UpgradeTargetGateV15 | null = null): boolean {
   const roles = new Set(inferCardRoles(card));
+  if (targetGate === 'cheap-interaction') {
+    return card.cmc <= 2
+      && (roles.has('spot interaction') || roles.has('countermagic') || roles.has('free interaction'));
+  }
+  if (targetGate === 'fast-mana') return roles.has('fast mana');
+  if (targetGate === 'free-interaction') return roles.has('free interaction');
   if (role === 'ramp') return roles.has('mana acceleration') || roles.has('land ramp') || roles.has('cost reduction');
   if (role === 'draw') return roles.has('card draw') || roles.has('repeatable draw') || roles.has('card selection');
   if (role === 'interaction') return roles.has('spot interaction') || roles.has('countermagic') || roles.has('board wipe') || roles.has('free interaction');
@@ -223,6 +294,7 @@ export function restrictedUpgradeCandidatesForRoleV15(
   role: string,
   existingNames: ReadonlySet<string> = new Set<string>(),
   excludedNames: ReadonlySet<string> = new Set<string>(),
+  targetGate: UpgradeTargetGateV15 | null = null,
 ): ScryfallCard[] {
   return pool.filter((card) => {
     const key = card.name.toLocaleLowerCase();
@@ -230,7 +302,7 @@ export function restrictedUpgradeCandidatesForRoleV15(
       && !existingNames.has(key)
       && !excludedNames.has(key)
       && card.legalities.commander === 'legal'
-      && cardMatchesRole(card, role);
+      && cardMatchesRole(card, role, targetGate);
   });
 }
 
@@ -238,10 +310,12 @@ function candidateScore(
   card: ScryfallCard,
   role: string,
   strategyContext: CommanderStrategyContextV15,
+  target: number | null = null,
+  targetGate: UpgradeTargetGateV15 | null = null,
 ): number {
   const roles = inferCardRoles(card);
-  let score = cardMatchesRole(card, role) ? 100 : 0;
-  if (role === 'average-nonland-mv') score += Math.max(0, BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15 - card.cmc) * 20;
+  let score = cardMatchesRole(card, role, targetGate) ? 100 : 0;
+  if (role === 'average-nonland-mv') score += Math.max(0, (target ?? BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15) - card.cmc) * 20;
   score += Math.max(0, 8 - card.cmc) * 3;
   if (roles.includes('fast mana')) score += 20;
   if (roles.includes('free interaction')) score += 20;
@@ -424,10 +498,10 @@ export async function suggestDeckUpgrades(
       };
 
   for (const deficit of candidatePriorities.slice(0, 5)) {
-    const query = restrictedPoolActive ? null : roleSearchQuery(deficit.role, allowedIdentity, printingPolicy);
+    const query = restrictedPoolActive ? null : roleSearchQuery(deficit.role, allowedIdentity, printingPolicy, deficit.targetGate);
     let genericResults: ScryfallCard[] = [];
     if (restrictedEligiblePool) {
-      genericResults = restrictedUpgradeCandidatesForRoleV15(restrictedEligiblePool, deficit.role, existing, excluded);
+      genericResults = restrictedUpgradeCandidatesForRoleV15(restrictedEligiblePool, deficit.role, existing, excluded, deficit.targetGate);
     } else if (query) {
       try {
         genericResults = await searchCards(query, 40);
@@ -439,7 +513,7 @@ export async function suggestDeckUpgrades(
     let themedQuery: string | null = null;
     let themedResults: ScryfallCard[] = [];
     if (themeDeficit > 0 && themeClause) {
-      themedQuery = themedRoleSearchQuery(deficit.role, allowedIdentity, themeClause, printingPolicy);
+      themedQuery = themedRoleSearchQuery(deficit.role, allowedIdentity, themeClause, printingPolicy, deficit.targetGate);
       try {
         themedResults = await searchCards(themedQuery, 40);
         for (const card of themedResults) themeCandidateNames.add(card.name.toLocaleLowerCase());
@@ -453,26 +527,31 @@ export async function suggestDeckUpgrades(
     // inject a card that the shared physical-printing truth boundary did not admit.
     const results = restrictedPoolActive ? genericResults : mergeCardsByName(themedResults, genericResults);
     if (results.length === 0) continue;
+    const candidatesForPriority = deficit.prioritySource === 'authoritative-target-gate'
+      && authoritativeTargetGatePriorities.length > 1
+      ? 1
+      : maxCandidates;
     const ranked = results
       .filter((card) => !card.type_line.toLowerCase().includes('land'))
       .filter((card) => !existing.has(card.name.toLocaleLowerCase()))
       .filter((card) => !excluded.has(card.name.toLocaleLowerCase()))
       .filter((card) => card.legalities.commander === 'legal')
-      .filter((card) => cardMatchesRole(card, deficit.role))
+      .filter((card) => cardMatchesRole(card, deficit.role, deficit.targetGate))
       .sort((a, b) => {
         if (themeDeficit > 0) {
           const aTheme = themeCandidateNames.has(a.name.toLocaleLowerCase()) ? 1 : 0;
           const bTheme = themeCandidateNames.has(b.name.toLocaleLowerCase()) ? 1 : 0;
           if (aTheme !== bTheme) return bTheme - aTheme;
         }
-        return candidateScore(b, deficit.role, strategyContext) - candidateScore(a, deficit.role, strategyContext)
+        return candidateScore(b, deficit.role, strategyContext, deficit.target, deficit.targetGate)
+          - candidateScore(a, deficit.role, strategyContext, deficit.target, deficit.targetGate)
           || a.name.localeCompare(b.name);
       })
-      .slice(0, Math.max(maxCandidates * 3, maxCandidates));
+      .slice(0, Math.max(candidatesForPriority * 3, candidatesForPriority));
 
     const candidates: Array<Record<string, unknown>> = [];
     for (const card of ranked) {
-      if (candidates.length >= maxCandidates) break;
+      if (candidates.length >= candidatesForPriority) break;
       const printing = await selectEligiblePrintingV08(card, printingPolicy, options.maxUsdPerCard);
       if (!printing) continue;
       const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
@@ -485,13 +564,16 @@ export async function suggestDeckUpgrades(
       const themeReason = matchesControlledTheme && themeDeficit > 0
         ? ' It also helps close the current controlled theme-density deficit.'
         : '';
-
+      const targetDirection = deficit.targetGate === 'average-nonland-mv'
+        ? `${deficit.current} must fall to ${deficit.target} or lower`
+        : `${deficit.current} must rise to ${deficit.target} or higher`;
       const targetReason = deficit.prioritySource === 'authoritative-target-gate'
-        ? `Advances the currently failed authoritative Bracket-5 ${deficit.targetGate} gate (${deficit.current} must fall to ${deficit.target} or lower)`
+        ? `Advances the currently failed authoritative Bracket-${targetBracket} ${deficit.targetGate} gate (${targetDirection})`
         : `Addresses the detected ${deficit.role} deficit`;
       candidates.push({
         card: summarizeCard(card),
-        score: Number(candidateScore(card, deficit.role, strategyContext).toFixed(1)),
+        score: Number(candidateScore(card, deficit.role, strategyContext, deficit.target, deficit.targetGate).toFixed(1)),
+        authoritativeTargetGate: deficit.prioritySource === 'authoritative-target-gate' ? deficit.targetGate : null,
         strategyAffinity: {
           score: Number(affinity.score.toFixed(1)),
           protectionApplied: Number(Math.min(4, substantiveAffinityScore).toFixed(1)),
@@ -574,7 +656,7 @@ export async function suggestDeckUpgrades(
         'Candidates are tied to a qualifying physical printing with set code, collector number, finish, promo metadata, and price. A cheaper or more common unrelated printing of the same Oracle card cannot bypass a themed printing-family restriction.',
     },
     caveats: [
-      'These role-count targets are engineering heuristics for deck consistency and are not the official Commander bracket definitions. The Bracket-5 free-interaction minimum is bridged directly from the existing V0.15 target pressure instead of being hidden inside generic interaction.',
+      'Role-count targets are engineering heuristics for deck consistency, but failed Bracket-4/5 construction gates now outrank aspirational role targets. When several authoritative gates are failing, candidate generation gives each gate one slot per pass before allowing a single generic role to consume the package.',
       'Candidate ordering keeps the existing role fit, mana efficiency, and EDHREC/community-adoption signals, then reuses V0.15 commander strategy inference as an additional deck-context signal. Popularity or strategy affinity alone is not proof of optimality.',
       'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window. Unrestricted Upgrade retains bounded role search for now.',
       'When a V0.15 controlled theme is below its minimum density, the engine uses the controlled theme query as a positive membership/ranking signal. Under a printing restriction, only cards already admitted by the exhaustive shared eligible pool can become candidates.',
