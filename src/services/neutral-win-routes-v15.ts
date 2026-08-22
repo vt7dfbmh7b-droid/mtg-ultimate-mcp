@@ -1,6 +1,6 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import type { NeutralArchetypeV15 } from './neutral-commander-selection-v15.js';
-import { inferCardRoles } from './scryfall.js';
+import { getCardOracleText, inferCardRoles } from './scryfall.js';
 
 export interface NeutralWinRouteV15 {
   kind: 'commander-engine' | 'combat' | 'drain' | 'recursion' | 'control-value' | 'big-mana' | 'verified-combo';
@@ -17,6 +17,10 @@ export interface NeutralWinRouteAssessmentV15 {
 
 function roleCount(cards: readonly ScryfallCard[], role: string): number {
   return cards.reduce((count, card) => count + (inferCardRoles(card).includes(role) ? 1 : 0), 0);
+}
+
+function foodTextCount(cards: readonly ScryfallCard[]): number {
+  return cards.reduce((count, card) => count + (/\bfoods?\b/i.test(getCardOracleText(card)) ? 1 : 0), 0);
 }
 
 function strategyPrimary(
@@ -62,6 +66,12 @@ function strategyPrimary(
         label: 'Sacrifice/death-trigger life drain',
         evidence: [`${roleCount(cards, 'sacrifice synergy')} sacrifice-synergy cards`, `${roleCount(cards, 'life drain')} life-drain cards`],
       };
+    case 'food-lifegain':
+      return {
+        kind: 'drain',
+        label: 'Food and repeatable lifegain converted into opponent pressure',
+        evidence: [`${foodTextCount(cards)} Food-text cards`, `${roleCount(cards, 'life drain')} life-drain payoffs`],
+      };
     case 'spells-control':
       return {
         kind: 'control-value',
@@ -88,7 +98,7 @@ function naturalBackup(archetype: NeutralArchetypeV15, cards: readonly ScryfallC
   const recursion = roleCount(cards, 'graveyard recursion');
   const tokens = roleCount(cards, 'token production');
   const equipment = roleCount(cards, 'equipment');
-  if (archetype !== 'aristocrats' && lifeDrain >= 2) {
+  if (archetype !== 'aristocrats' && archetype !== 'food-lifegain' && lifeDrain >= 2) {
     return { kind: 'drain', label: 'Incremental opponent life drain', evidence: [`${lifeDrain} life-drain cards`] };
   }
   if (archetype !== 'graveyard-reanimator' && recursion >= 3) {

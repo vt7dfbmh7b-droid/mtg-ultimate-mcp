@@ -560,7 +560,16 @@ function candidateLine(candidate: Record<string, unknown>): string | null {
   return set && collector ? `1 ${name} (${set}) ${collector}${finish}` : `1 ${name}`;
 }
 
-type UpgradeStructuralRoleV15 = 'ramp' | 'draw' | 'interaction' | 'free-interaction' | 'protection' | 'tutor' | 'early';
+type UpgradeStructuralRoleV15 =
+  | 'ramp'
+  | 'draw'
+  | 'interaction'
+  | 'free-interaction'
+  | 'protection'
+  | 'tutor'
+  | 'recursion'
+  | 'board-wipe'
+  | 'early';
 type UpgradeTargetGateRoleV15 = 'average-nonland-mv';
 type UpgradeAddressedRoleV15 = UpgradeStructuralRoleV15 | UpgradeTargetGateRoleV15 | 'win-package';
 
@@ -576,6 +585,8 @@ interface UpgradeStructuralCountsV15 {
   'free-interaction': number;
   protection: number;
   tutor: number;
+  recursion: number;
+  'board-wipe': number;
   early: number;
 }
 
@@ -635,7 +646,7 @@ export interface UpgradeStrategyPreservationAuditV15 {
 }
 
 const UPGRADE_STRUCTURAL_ROLES_V15: UpgradeStructuralRoleV15[] = [
-  'ramp', 'draw', 'interaction', 'free-interaction', 'protection', 'tutor', 'early',
+  'ramp', 'draw', 'interaction', 'free-interaction', 'protection', 'tutor', 'recursion', 'board-wipe', 'early',
 ];
 const UPGRADE_CANDIDATE_ROLES_V15: UpgradeAddressedRoleV15[] = [
   'average-nonland-mv', ...UPGRADE_STRUCTURAL_ROLES_V15, 'win-package',
@@ -807,6 +818,8 @@ function summaryMatchesUpgradeRoleV15(card: Record<string, unknown>, role: Upgra
   if (role === 'free-interaction') return roles.has('free interaction');
   if (role === 'protection') return roles.has('protection') || roles.has('board protection');
   if (role === 'tutor') return roles.has('tutor');
+  if (role === 'recursion') return roles.has('graveyard recursion');
+  if (role === 'board-wipe') return roles.has('board wipe');
   return !recordString(card.typeLine).toLocaleLowerCase().includes('land') && recordNumber(card.manaValue) <= 2;
 }
 
@@ -829,6 +842,16 @@ function structuralDeficitTotalV15(counts: UpgradeStructuralCountsV15, targets: 
   );
 }
 
+function preservesStructuralFloorsV15(
+  before: UpgradeStructuralCountsV15,
+  after: UpgradeStructuralCountsV15,
+  targets: UpgradeStructuralTargetsV15,
+): boolean {
+  return UPGRADE_STRUCTURAL_ROLES_V15.every((role) => (
+    after[role] >= Math.min(before[role], targets[role])
+  ));
+}
+
 function currentRoleCountV15(currentMetrics: Record<string, unknown>, role: string): number {
   const roleCounts = currentMetrics.roleCounts;
   if (!roleCounts || typeof roleCounts !== 'object' || Array.isArray(roleCounts)) return 0;
@@ -847,6 +870,8 @@ function upgradeStructuralStateV15(
       'free-interaction': currentRoleCountV15(currentMetrics, 'free interaction'),
       protection: recordNumber(currentMetrics.protectionCount),
       tutor: recordNumber(currentMetrics.tutorCount),
+      recursion: recordNumber(currentMetrics.recursionCount),
+      'board-wipe': recordNumber(currentMetrics.boardWipeCount),
       early: recordNumber(currentMetrics.earlyPlayCount),
     },
     targets: {
@@ -856,6 +881,8 @@ function upgradeStructuralStateV15(
       'free-interaction': recordNumber(structuralTargets.freeInteraction),
       protection: recordNumber(structuralTargets.protection),
       tutor: recordNumber(structuralTargets.tutors),
+      recursion: recordNumber(structuralTargets.recursion),
+      'board-wipe': recordNumber(structuralTargets.boardWipes),
       early: recordNumber(structuralTargets.earlyPlays),
     },
   };
@@ -892,9 +919,16 @@ export function pairUpgradeSwapsByStructureV15(
     const addCard = summarizedCard(selection.candidate);
     const addManaValue = recordNumber(addCard.manaValue);
     const afterAdd = applySummaryToStructuralCountsV15(counts, addCard, 1);
-    const candidateCuts = selection.role === 'average-nonland-mv'
+    const deficitBeforeSwap = structuralDeficitTotalV15(counts, state.targets);
+    const candidateCuts = (selection.role === 'average-nonland-mv'
       ? remainingCuts.filter((cut) => recordNumber(summarizedCard(cut).manaValue) > addManaValue)
-      : [...remainingCuts];
+      : [...remainingCuts])
+      .filter((cut) => {
+        const afterSwap = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);
+        if (!preservesStructuralFloorsV15(counts, afterSwap, state.targets)) return false;
+        if (selection.role === 'average-nonland-mv' || selection.role === 'win-package') return true;
+        return structuralDeficitTotalV15(afterSwap, state.targets) < deficitBeforeSwap;
+      });
     candidateCuts.sort((left, right) => {
       const leftCounts = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(left), -1);
       const rightCounts = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(right), -1);

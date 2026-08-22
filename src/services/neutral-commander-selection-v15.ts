@@ -13,6 +13,7 @@ export type NeutralArchetypeV15 =
   | 'counters'
   | 'graveyard-reanimator'
   | 'aristocrats'
+  | 'food-lifegain'
   | 'spells-control'
   | 'value-engine'
   | 'big-mana';
@@ -92,6 +93,7 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
     'counters',
     'graveyard-reanimator',
     'aristocrats',
+    'food-lifegain',
     'spells-control',
     'value-engine',
     'big-mana',
@@ -99,6 +101,12 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   const table = new Map(archetypes.map((archetype) => [archetype, { score: 0, evidence: [] as string[] }]));
   const roles = new Set(cards.flatMap((card) => inferCardRoles(card)));
   const text = cards.map(oracle).join(' // ');
+  const repeatableOrPayoffLifeGain = /whenever [^.]*\byou gain(?:ed)?\b[^.]*\blife\b/i.test(text)
+    || /\bif you gained\b[^.]*\blife\b/i.test(text)
+    || /\bamount of life you gained\b/i.test(text)
+    || /\bfor each\b[^.]*,\s*you gain\b[^.]*\blife\b/i.test(text);
+  const convertsLifeGainToPressure = repeatableOrPayoffLifeGain
+    && /\b(?:target|each|an) opponent\b[^.]*\bloses?\b[^.]*\blife\b/i.test(text);
 
   addSignal(table, 'combat-tokens', roles.has('token production'), 6, 'token production');
   addSignal(table, 'combat-tokens', roles.has('extra combat'), 8, 'extra combat');
@@ -128,6 +136,10 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   addSignal(table, 'aristocrats', roles.has('life drain'), 7, 'opponent drain');
   addSignal(table, 'aristocrats', /whenever .* dies|when .* dies/i.test(text), 6, 'death trigger');
   addSignal(table, 'aristocrats', /sacrifice (?:a|another) creature|sacrifice (?:a|another) permanent/i.test(text), 5, 'sacrifice text');
+
+  addSignal(table, 'food-lifegain', /\bfoods?\b/i.test(text), 8, 'Food engine/payoff text');
+  addSignal(table, 'food-lifegain', repeatableOrPayoffLifeGain, 7, 'repeatable life-gain engine/payoff');
+  addSignal(table, 'food-lifegain', convertsLifeGainToPressure, 6, 'life-gain conversion to opponent pressure');
 
   addSignal(table, 'spells-control', roles.has('countermagic'), 8, 'countermagic');
   addSignal(table, 'spells-control', roles.has('stax/control'), 7, 'control restriction');

@@ -1,7 +1,10 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { ScryfallCard } from '../types/scryfall.js';
-import { pairUpgradeSwapsByStructureV15 } from './deck-builder-v07.js';
+import {
+  auditUpgradeStrategyPreservationV15,
+  pairUpgradeSwapsByStructureV15,
+} from './deck-builder-v07.js';
 import { parseDecklist } from './deck.js';
 import {
   cardCommanderStrategyAffinityV15,
@@ -231,4 +234,86 @@ test('top-three commander context preserves multiple already-detected deck ident
 
   assert.ok(cardCommanderStrategyAffinityV15(combatCard, context).score > 0);
   assert.ok(cardCommanderStrategyAffinityV15(equipmentCard, context).score > 0);
+});
+
+test('Food and repeatable life-gain text form a substantive commander identity without card-name shortcuts', () => {
+  const lifeGainCommander = card(
+    'Unnamed Ring Bearer',
+    'Legendary Creature — Halfling Scout',
+    'Partner with Unnamed Provisioner\nWhenever Unnamed Ring Bearer attacks, if you gained 3 or more life this turn, draw a card.',
+  );
+  const foodCommander = card(
+    'Unnamed Provisioner',
+    'Legendary Creature — Halfling Peasant',
+    'Partner with Unnamed Ring Bearer\nAt the beginning of combat on your turn, create a Food token. Activated abilities of Foods you control cost {1} less to activate.',
+  );
+  const context = deriveCommanderStrategyContextFromCommandersV15([lifeGainCommander, foodCommander]);
+  const foodLifeGain = context.strategies.find((strategy) => strategy.archetype === 'food-lifegain');
+
+  assert.ok(foodLifeGain);
+  assert.ok(foodLifeGain.score >= 6);
+  assert.equal(context.strategies[0]?.archetype, 'food-lifegain');
+});
+
+test('Food/lifegain payoffs receive cut protection and uncompensated removal fails strategy preservation', () => {
+  const lifeGainCommander = card(
+    'Unnamed Ring Bearer',
+    'Legendary Creature — Halfling Scout',
+    'Partner with Unnamed Provisioner\nWhenever Unnamed Ring Bearer attacks, if you gained 3 or more life this turn, draw a card.',
+  );
+  const foodCommander = card(
+    'Unnamed Provisioner',
+    'Legendary Creature — Halfling Peasant',
+    'Partner with Unnamed Ring Bearer\nAt the beginning of combat on your turn, create a Food token. Activated abilities of Foods you control cost {1} less to activate.',
+  );
+  const context = deriveCommanderStrategyContextFromCommandersV15([lifeGainCommander, foodCommander]);
+  const payoff = card(
+    'Life Conversion Engine',
+    'Enchantment',
+    'Whenever you gain life, target opponent loses that much life.',
+  );
+  const repeatableEnabler = card(
+    'Life Trigger Engine',
+    'Creature — Elf Shaman',
+    'Whenever another creature enters, you gain 1 life.',
+  );
+  const unrelated = card(
+    'Generic Removal Spell',
+    'Instant',
+    'Exile target creature.',
+  );
+
+  const payoffAffinity = cardCommanderStrategyAffinityV15(payoff, context);
+  const enablerAffinity = cardCommanderStrategyAffinityV15(repeatableEnabler, context);
+  const unrelatedAffinity = cardCommanderStrategyAffinityV15(unrelated, context);
+  const payoffPressure = contextualCutPressureV15(payoff, context);
+
+  assert.ok(payoffAffinity.matches.some((match) => match.archetype === 'food-lifegain' && match.overlapScore >= 6));
+  assert.ok(enablerAffinity.matches.some((match) => match.archetype === 'food-lifegain' && match.overlapScore >= 6));
+  assert.equal(unrelatedAffinity.matches.some((match) => match.archetype === 'food-lifegain'), false);
+  assert.equal(payoffPressure.strategyProtectionApplied, 4);
+
+  const audit = auditUpgradeStrategyPreservationV15([{
+    cut: {
+      card: { name: payoff.name, roles: [], manaValue: payoff.cmc, typeLine: payoff.type_line },
+      strategyAffinity: {
+        score: payoffAffinity.score,
+        protectionApplied: payoffPressure.strategyProtectionApplied,
+        matchedStrategies: payoffAffinity.matches.map((match) => match.archetype),
+        matches: payoffAffinity.matches,
+      },
+    },
+    add: {
+      card: { name: unrelated.name, roles: ['spot interaction'], manaValue: unrelated.cmc, typeLine: unrelated.type_line },
+      strategyAffinity: {
+        score: unrelatedAffinity.score,
+        protectionApplied: 0,
+        matchedStrategies: unrelatedAffinity.matches.map((match) => match.archetype),
+        matches: unrelatedAffinity.matches,
+      },
+    },
+  }]);
+
+  assert.equal(audit.status, 'meaningful-strategy-loss');
+  assert.deepEqual(audit.meaningfulLosses.map((loss) => loss.strategy), ['food-lifegain']);
 });

@@ -113,6 +113,7 @@ function archetypeClause(archetype: NeutralArchetypeV15): string {
     case 'counters': return '-t:land o:"+1/+1 counter"';
     case 'graveyard-reanimator': return '-t:land o:graveyard';
     case 'aristocrats': return '-t:land (o:sacrifice OR o:dies)';
+    case 'food-lifegain': return '-t:land (o:Food OR o:"gain life" OR o:"gained life")';
     case 'spells-control': return '-t:land (t:instant OR t:sorcery OR o:counter)';
     case 'value-engine': return '-t:land (o:"draw a card" OR o:"you may play" OR o:"you may cast")';
     case 'big-mana': return '-t:land o:mana';

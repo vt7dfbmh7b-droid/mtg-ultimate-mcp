@@ -160,6 +160,38 @@ const counterspell = card({
   manaCost: '{U}{U}',
 });
 
+const selfProtectedManaDork = card({
+  name: 'Self-Protected Mana Dork',
+  typeLine: 'Creature — Elf Druid',
+  oracleText: 'Self-Protected Mana Dork has hexproof as long as it is untapped.\n{T}: Add one mana of any color.',
+  cmc: 2,
+  manaCost: '{1}{G}',
+});
+
+const targetedProtection = card({
+  name: 'Targeted Protection',
+  typeLine: 'Instant',
+  oracleText: 'Target permanent you control gains hexproof and indestructible until end of turn.',
+  cmc: 1,
+  manaCost: '{G}',
+});
+
+const boardProtection = card({
+  name: 'Board Protection',
+  typeLine: 'Instant',
+  oracleText: 'Permanents you control gain hexproof and indestructible until end of turn.',
+  cmc: 2,
+  manaCost: '{1}{G}',
+});
+
+const massMinusWipe = card({
+  name: 'Mass Minus Wipe',
+  typeLine: 'Sorcery',
+  oracleText: 'As an additional cost to cast this spell, pay X life. All creatures get -X/-X until end of turn.',
+  cmc: 3,
+  manaCost: '{2}{B}',
+});
+
 test('ordinary lands are mana sources, not mana acceleration, while true multi-mana lands remain acceleration', () => {
   assert.equal(inferCardRoles(forest).includes('mana acceleration'), false);
   assert.equal(inferCardRoles(forest).includes('land'), true);
@@ -194,6 +226,17 @@ test('free interaction recognizes commander-enabled, pitch, evoke, retarget, lib
   assert.equal(inferCardRoles(mentalMisstep).includes('free interaction'), true);
   assert.equal(inferCardRoles(phyrexianButNotFree).includes('free interaction'), false);
   assert.equal(inferCardRoles(counterspell).includes('free interaction'), false);
+});
+
+test('self-only hexproof is not deck protection while targeted and board-wide grants are', () => {
+  assert.equal(inferCardRoles(selfProtectedManaDork).includes('protection'), false);
+  assert.equal(inferCardRoles(targetedProtection).includes('protection'), true);
+  assert.equal(inferCardRoles(boardProtection).includes('protection'), true);
+  assert.equal(inferCardRoles(boardProtection).includes('board protection'), true);
+});
+
+test('mass negative-power removal is recognized as a board wipe', () => {
+  assert.equal(inferCardRoles(massMinusWipe).includes('board wipe'), true);
 });
 
 // This shared-query regression intentionally exercises the exact legacy clause still emitted by

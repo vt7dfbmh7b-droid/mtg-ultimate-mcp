@@ -41,6 +41,8 @@ export interface UpgradeStructuralTargetsV15 {
   freeInteraction: number;
   protection: number;
   tutors: number;
+  recursion: number;
+  boardWipes: number;
   earlyPlays: number;
 }
 
@@ -50,6 +52,8 @@ export interface UpgradeCandidateMetricsV15 {
   interactionCount: number;
   protectionCount: number;
   tutorCount: number;
+  recursionCount: number;
+  boardWipeCount: number;
   earlyPlayCount: number;
   averageNonlandManaValue: number;
   roleCounts: Record<string, number>;
@@ -65,11 +69,11 @@ export interface UpgradeCandidatePriorityV15 {
 }
 
 const TARGETS: Record<number, UpgradeStructuralTargetsV15> = {
-  1: { ramp: 6, draw: 6, interaction: 5, freeInteraction: 0, protection: 2, tutors: 0, earlyPlays: 8 },
-  2: { ramp: 8, draw: 8, interaction: 8, freeInteraction: 0, protection: 3, tutors: 1, earlyPlays: 10 },
-  3: { ramp: 10, draw: 10, interaction: 10, freeInteraction: 0, protection: 4, tutors: 3, earlyPlays: 12 },
-  4: { ramp: 12, draw: 12, interaction: 14, freeInteraction: 0, protection: 6, tutors: 6, earlyPlays: 16 },
-  5: { ramp: 14, draw: 14, interaction: 18, freeInteraction: 0, protection: 8, tutors: 10, earlyPlays: 20 },
+  1: { ramp: 6, draw: 6, interaction: 5, freeInteraction: 0, protection: 2, tutors: 0, recursion: 2, boardWipes: 1, earlyPlays: 8 },
+  2: { ramp: 8, draw: 8, interaction: 8, freeInteraction: 0, protection: 3, tutors: 1, recursion: 2, boardWipes: 2, earlyPlays: 10 },
+  3: { ramp: 10, draw: 10, interaction: 10, freeInteraction: 0, protection: 4, tutors: 3, recursion: 3, boardWipes: 2, earlyPlays: 12 },
+  4: { ramp: 12, draw: 12, interaction: 14, freeInteraction: 0, protection: 6, tutors: 6, recursion: 3, boardWipes: 2, earlyPlays: 16 },
+  5: { ramp: 14, draw: 14, interaction: 18, freeInteraction: 0, protection: 8, tutors: 10, recursion: 4, boardWipes: 2, earlyPlays: 20 },
 };
 export const BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15 = 2.6;
 
@@ -252,7 +256,15 @@ export function contextualCutPressureV15(
   let cutPressure = Math.max(0, card.cmc - 3) * 2;
   if (roles.length === 0) cutPressure += 5;
   if (card.cmc >= 6) cutPressure += 4;
-  if (roles.includes('card draw') || roles.includes('tutor') || roles.includes('spot interaction') || roles.includes('countermagic') || roles.includes('protection')) cutPressure -= 4;
+  if (
+    roles.includes('card draw')
+    || roles.includes('tutor')
+    || roles.includes('spot interaction')
+    || roles.includes('countermagic')
+    || roles.includes('protection')
+    || roles.includes('board wipe')
+    || roles.includes('graveyard recursion')
+  ) cutPressure -= 4;
 
   const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
   // Reuse the existing four-point protection scale already applied to important utility roles.

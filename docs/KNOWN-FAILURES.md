@@ -202,6 +202,16 @@ Protection: curve pairing now tracks the remaining package-wide mana-value reduc
 
 Status: prevented in deterministic tests and live-validated in both Marvel lanes at `3cfca39...`. The corrected package made exactly two swaps, repaired average nonland mana value from 2.71 to 2.59, retained Lightning Greaves and all tutors, added no failed construction gate, and stopped before the three unnecessary cuts seen at `a45c338...`.
 
+## KF-021 — Generic role gains hollow out a precon's actual strategy
+
+Observed: the first Food and Fellowship refinement produced a superficially stronger twelve-swap package while cutting Sanguine Bond, Essence Warden, Gollum, Obsessed Stalker and every board wipe. After Food/lifegain identity was added, the next run still reduced recursion from three cards to two. A later nominal pass proposed Toxic Deluge for Paradise Druid because mass negative-power removal was not recognized as a wipe and self-only hexproof was misclassified as deck protection.
+
+Risk: generic curve, interaction and protection gains can turn an addressable precon into a worse deck while the aggregate score and target gates appear green. Role-classification false positives can also manufacture structural improvement by exchanging a real safety valve for an unrelated card.
+
+Protection: Food/lifegain is now a semantic commander archetype; upgrade evidence tracks recursion and board-wipe structure; pairing preserves every pre-existing structural floor up to the target and declines a package when every cut creates another hole. Card-role truth excludes self-only hexproof or indestructible from deck protection and recognizes mass negative-power, counters, damage, bounce and sacrifice effects as board wipes. Deterministic regressions cover the archetype, structural floors, no-safe-cut refusal and both role-classification errors. The exact Food and Fellowship live control separately gates hard truth, target improvement and strategy preservation.
+
+Status: prevented in deterministic tests and passed a local high-standard exact-precon run; exact checked-in-source live revalidation remains required before recording the restricted scenario pass.
+
 ## Adding a failure
 
 Every new material failure should record:

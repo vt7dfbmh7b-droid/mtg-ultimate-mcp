@@ -60,6 +60,36 @@
         "meaningful_strategy_loss_rejected": "true"
       },
       "unmetPassConditions": []
+    },
+    {
+      "id": "MIDDLE-EARTH-PRECON-REFINE",
+      "label": "Middle-earth Food and Fellowship precon refinement",
+      "claimLevel": "scenario-intelligence",
+      "milestones": [
+        "INTEL-02"
+      ],
+      "metadataPath": "test-results/middle-earth-precon-refine/run-metadata.txt",
+      "exists": false,
+      "sourceSha": null,
+      "outcome": "unknown",
+      "matchesDevelopmentCheckpoint": null,
+      "metadata": {},
+      "unmetPassConditions": [
+        "control_outcome=success",
+        "build_outcome=success",
+        "regression_outcome=success",
+        "execution_outcome=success",
+        "hard_truth_outcome=success",
+        "target_quality_outcome=success",
+        "strategy_preservation_outcome=success",
+        "exact_card_count=true",
+        "commander_legality=true",
+        "hard_budget_truth=true",
+        "food_lifegain_identity_required=true",
+        "structural_floors_required=true",
+        "meaningful_strategy_loss_rejected=true",
+        "negative_win_evidence_complete=true"
+      ]
     }
   ]
 }

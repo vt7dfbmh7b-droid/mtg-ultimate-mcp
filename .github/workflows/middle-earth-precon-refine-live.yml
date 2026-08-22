@@ -1,0 +1,251 @@
+name: Middle-earth Precon Refinement Live Control
+
+on:
+  push:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - "scripts/e2e-middle-earth-precon-refine-v15.ts"
+      - "src/services/card-role-truth-v15.test.ts"
+      - "src/services/commander-strategy-affinity-v15.ts"
+      - "src/services/commander-strategy-affinity-v15.test.ts"
+      - "src/services/deck-builder-v07.ts"
+      - "src/services/neutral-commander-selection-v15.ts"
+      - "src/services/neutral-deck-builder-v15.ts"
+      - "src/services/neutral-themed-deck-builder-v15.ts"
+      - "src/services/neutral-unrestricted-pool-v15.ts"
+      - "src/services/neutral-win-routes-v15.ts"
+      - "src/services/scryfall.ts"
+      - "src/services/upgrade.ts"
+      - "src/services/upgrade-target-priority-v15.test.ts"
+      - "validation-registry.json"
+      - ".github/workflows/middle-earth-precon-refine-live.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: middle-earth-precon-refine-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  refine-food-and-fellowship:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check and build checked-in source
+        id: source_build
+        continue-on-error: true
+        run: npm run build
+
+      - name: Run Food/lifegain and structural-floor regressions
+        id: focused_regressions
+        if: steps.source_build.outcome == 'success'
+        continue-on-error: true
+        run: npx tsx --test src/services/card-role-truth-v15.test.ts src/services/commander-strategy-affinity-v15.test.ts src/services/upgrade-target-priority-v15.test.ts
+
+      - name: Refine exact Food and Fellowship stock precon
+        id: precon_control
+        if: steps.source_build.outcome == 'success' && steps.focused_regressions.outcome == 'success'
+        continue-on-error: true
+        run: npx tsx scripts/e2e-middle-earth-precon-refine-v15.ts
+
+      - name: Require exact legality, printing and budget truth
+        id: hard_truth
+        if: steps.precon_control.outcome == 'success'
+        continue-on-error: true
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const result = JSON.parse(fs.readFileSync('middle-earth-precon-refine-result.json', 'utf8'));
+          for (const label of ['before', 'after']) {
+            const truth = result[label]?.truth;
+            if (truth?.cardCount !== 100 || truth?.commanderLegal !== true || truth?.printingPolicySatisfied !== true) {
+              throw new Error(`${label} deck failed exact-100, Commander-legality, or Middle-earth-printing truth.`);
+            }
+          }
+          const spend = Number(result.refinement?.estimatedUpgradeSpendNzd);
+          if (!Number.isFinite(spend) || spend > Number(result.request?.maxTotalNzd)) {
+            throw new Error(`Upgrade spend ${spend} exceeds the NZ$ whole-package cap.`);
+          }
+          const overCap = (result.refinement?.swaps ?? [])
+            .filter((swap) => Number(swap?.recommendedPrinting?.priceNzd) > Number(result.request?.maxNzdPerCard))
+            .map((swap) => swap.in);
+          if (overCap.length > 0) throw new Error(`Per-card NZ$ cap failed for: ${overCap.join(', ')}`);
+          if (result.after?.targetComparison?.evidenceCompleteness !== 'complete') {
+            throw new Error('Final negative win-route/target evidence is incomplete.');
+          }
+          console.log(`Hard truth passed at NZ$${spend.toFixed(2)}.`);
+          NODE
+
+      - name: Require measurable whole-deck target improvement
+        id: target_quality
+        if: steps.precon_control.outcome == 'success'
+        continue-on-error: true
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const result = JSON.parse(fs.readFileSync('middle-earth-precon-refine-result.json', 'utf8'));
+          if (result.refinement?.status !== 'refined' || Number(result.refinement?.totalSwaps) < 1) {
+            throw new Error('Addressable stock precon did not accept a supported refinement.');
+          }
+          const progress = result.progress ?? {};
+          if ((progress.regressedPassing ?? []).length > 0) {
+            throw new Error(`Previously passing structural gates regressed: ${progress.regressedPassing.join(', ')}`);
+          }
+          if ((progress.regressedStructuralFloor ?? []).length > 0) {
+            throw new Error(`Structural floors regressed: ${progress.regressedStructuralFloor.join(', ')}`);
+          }
+          if ([...(progress.repaired ?? []), ...(progress.advanced ?? [])].length === 0) {
+            throw new Error('No independently evaluated Bracket-4 structure gate improved.');
+          }
+          if (Number(result.after?.assessedBracket) < Number(result.before?.assessedBracket)) {
+            throw new Error('Independent bracket assessment regressed.');
+          }
+          if (Number(result.after?.signals?.averageNonlandManaValue) > 3.1 || Number(result.after?.signals?.earlyPlayCount) < 25) {
+            throw new Error('The accepted package did not repair the addressable curve and early-play gates.');
+          }
+          console.log(`Target quality passed. Repaired=${(progress.repaired ?? []).join(',')}; advanced=${(progress.advanced ?? []).join(',') || 'none'}`);
+          NODE
+
+      - name: Require Food/lifegain and cut-strategy preservation
+        id: strategy_quality
+        if: steps.precon_control.outcome == 'success'
+        continue-on-error: true
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const result = JSON.parse(fs.readFileSync('middle-earth-precon-refine-result.json', 'utf8'));
+          const before = result.before?.truth ?? {};
+          const after = result.after?.truth ?? {};
+          if (Number(before.foodLifegainCommanderScore) < 6) {
+            throw new Error('Food/lifegain is not a substantive command-zone strategy signal.');
+          }
+          if (Number(after.foodLifegainAffinityTotal) < Number(before.foodLifegainAffinityTotal)) {
+            throw new Error('Whole-deck Food/lifegain affinity regressed.');
+          }
+          if (Number(after.foodLifegainSupportCount) < Number(before.foodLifegainSupportCount)) {
+            throw new Error('Food/lifegain support density regressed.');
+          }
+          const accepted = (result.refinement?.detailedRounds ?? []).filter((round) => round.accepted === true);
+          if (accepted.length < 1) throw new Error('No accepted round retained auditable strategy evidence.');
+          for (const round of accepted) {
+            const winner = (round.candidateComparisons ?? []).find((candidate) => candidate.candidate === round.winningCandidate);
+            const strategy = winner?.strategyPreservation;
+            if (!strategy?.evidenceComplete || strategy.status !== 'preserved' || (strategy.meaningfulLosses ?? []).length > 0) {
+              throw new Error(`Accepted round ${round.round} failed aggregate strategy preservation.`);
+            }
+            for (const swap of winner?.swaps ?? []) {
+              if (swap.structuralPairing?.strategyPreservation?.verdict !== 'preserved') {
+                throw new Error(`Accepted round ${round.round} contains an unpreserved IN→OUT pairing.`);
+              }
+            }
+          }
+          console.log(`Strategy quality passed with Food/lifegain affinity ${before.foodLifegainAffinityTotal}→${after.foodLifegainAffinityTotal}.`);
+          NODE
+
+      - name: Upload precon refinement evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: middle-earth-precon-refine-${{ github.sha }}
+          path: |
+            middle-earth-precon-refine-result.json
+            middle-earth-precon-refine-raw-result.json
+            middle-earth-precon-stock-deck.txt
+            middle-earth-precon-refined-deck.txt
+            middle-earth-precon-refine-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Persist checked-in-source precon evidence
+        id: persist_result
+        if: always()
+        continue-on-error: true
+        env:
+          BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          REGRESSION_OUTCOME: ${{ steps.focused_regressions.outcome }}
+          EXECUTION_OUTCOME: ${{ steps.precon_control.outcome }}
+          HARD_TRUTH_OUTCOME: ${{ steps.hard_truth.outcome }}
+          TARGET_QUALITY_OUTCOME: ${{ steps.target_quality.outcome }}
+          STRATEGY_QUALITY_OUTCOME: ${{ steps.strategy_quality.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            mkdir -p test-results/middle-earth-precon-refine
+            rm -f test-results/middle-earth-precon-refine/result.json \
+                  test-results/middle-earth-precon-refine/stock-deck.txt \
+                  test-results/middle-earth-precon-refine/refined-deck.txt \
+                  test-results/middle-earth-precon-refine/failure.txt
+            [ ! -f middle-earth-precon-refine-result.json ] || cp middle-earth-precon-refine-result.json test-results/middle-earth-precon-refine/result.json
+            [ ! -f middle-earth-precon-stock-deck.txt ] || cp middle-earth-precon-stock-deck.txt test-results/middle-earth-precon-refine/stock-deck.txt
+            [ ! -f middle-earth-precon-refined-deck.txt ] || cp middle-earth-precon-refined-deck.txt test-results/middle-earth-precon-refine/refined-deck.txt
+            [ ! -f middle-earth-precon-refine-failure.txt ] || cp middle-earth-precon-refine-failure.txt test-results/middle-earth-precon-refine/failure.txt
+            CONTROL_OUTCOME=failure
+            if [ "$BUILD_OUTCOME" = success ] \
+              && [ "$REGRESSION_OUTCOME" = success ] \
+              && [ "$EXECUTION_OUTCOME" = success ] \
+              && [ "$HARD_TRUTH_OUTCOME" = success ] \
+              && [ "$TARGET_QUALITY_OUTCOME" = success ] \
+              && [ "$STRATEGY_QUALITY_OUTCOME" = success ]; then
+              CONTROL_OUTCOME=success
+            fi
+            printf 'source_sha=%s\nworkflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nbuild_outcome=%s\nregression_outcome=%s\nexecution_outcome=%s\nhard_truth_outcome=%s\ntarget_quality_outcome=%s\nstrategy_preservation_outcome=%s\npolicy=exact-food-and-fellowship-middle-earth-precon\nprinting_family=Middle-earth\nexact_card_count=true\ncommander_legality=true\nhard_budget_truth=true\nfood_lifegain_identity_required=true\nstructural_floors_required=true\nmeaningful_strategy_loss_rejected=true\nnegative_win_evidence_complete=true\n' \
+              "$GITHUB_SHA" "$GITHUB_SHA" "$GITHUB_SHA" "$CONTROL_OUTCOME" "$BUILD_OUTCOME" "$REGRESSION_OUTCOME" "$EXECUTION_OUTCOME" "$HARD_TRUTH_OUTCOME" "$TARGET_QUALITY_OUTCOME" "$STRATEGY_QUALITY_OUTCOME" \
+              > test-results/middle-earth-precon-refine/run-metadata.txt
+            npm run validation:index
+            git add -- test-results/middle-earth-precon-refine validation-index.json docs/VALIDATION-STATE.md
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "test-results: persist Middle-earth precon refinement [skip ci]"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "Evidence persistence attempt ${attempt} lost a branch race; retrying against the latest head."
+          done
+          echo 'Middle-earth precon evidence persistence exhausted eight branch-race retries.' >&2
+          exit 1
+
+      - name: Require checked-in-source precon intelligence
+        if: always()
+        env:
+          BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          REGRESSION_OUTCOME: ${{ steps.focused_regressions.outcome }}
+          EXECUTION_OUTCOME: ${{ steps.precon_control.outcome }}
+          HARD_TRUTH_OUTCOME: ${{ steps.hard_truth.outcome }}
+          TARGET_QUALITY_OUTCOME: ${{ steps.target_quality.outcome }}
+          STRATEGY_QUALITY_OUTCOME: ${{ steps.strategy_quality.outcome }}
+        run: |
+          test "$BUILD_OUTCOME" = success
+          test "$REGRESSION_OUTCOME" = success
+          test "$EXECUTION_OUTCOME" = success
+          test "$HARD_TRUTH_OUTCOME" = success
+          test "$TARGET_QUALITY_OUTCOME" = success
+          test "$STRATEGY_QUALITY_OUTCOME" = success
+
+      - name: Require checked-in-source precon evidence persistence
+        if: always()
+        env:
+          PERSIST_OUTCOME: ${{ steps.persist_result.outcome }}
+        run: test "$PERSIST_OUTCOME" = success

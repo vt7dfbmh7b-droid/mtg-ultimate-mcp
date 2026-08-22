@@ -235,14 +235,25 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (/(destroy|exile) target/.test(text) || /return target .* to (?:its|their) owner's hand/.test(text)) roles.add('spot interaction');
   if (/destroy target artifact|destroy target enchantment|exile target artifact|exile target enchantment/.test(text)) roles.add('artifact/enchantment interaction');
   if (/exile .* graveyard|cards? in graveyards? can't|players? can't cast .* graveyards?/.test(text)) roles.add('graveyard hate');
-  if (/(destroy|exile) (?:all|each) (?:creatures|artifacts|enchantments|nonland permanents|permanents)/.test(text)) roles.add('board wipe');
+  if (
+    /(destroy|exile) (?:all|each) (?:creatures|artifacts|enchantments|nonland permanents|permanents)/.test(text)
+    || /(?:all creatures get|each creature gets) -(?:x|\d+)\/-(?:x|\d+)/.test(text)
+    || /put [^.]*-1\/-1 counters? on each creature/.test(text)
+    || /deals? [^.]* damage to each creature/.test(text)
+    || /return (?:all|each) (?:creatures|nonland permanents|permanents)[^.]*owners?' hands?/.test(text)
+    || /each player sacrifices [^.]*creatures?/.test(text)
+  ) roles.add('board wipe');
 
   if (/create .* token/.test(text)) roles.add('token production');
   if (/sacrifice (?:a|another|target|this)/.test(text)) roles.add('sacrifice synergy');
   if (/sacrifice (?:a|another) creature\s*:|sacrifice (?:a|another) permanent\s*:/.test(text)) roles.add('sacrifice outlet');
   if (/from your graveyard/.test(text) || /return .* from .* graveyard/.test(text)) roles.add('graveyard recursion');
-  if (/hexproof|indestructible|protection from|phase out/.test(text)) roles.add('protection');
-  if (/other .* you control (?:have|gain) hexproof|permanents? you control .* indestructible/.test(text)) roles.add('board protection');
+  const boardProtection = /(?:other [^.]* you control|(?:creatures?|permanents?|artifacts?|enchantments?) you control)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text)
+    || /(?:all |any number of )?(?:permanents?|creatures?) you control phase out/.test(text);
+  const targetedProtection = /(?:target|another target|equipped|enchanted|commander)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text)
+    || /(?:target|another target|any number of target)[^.]{0,100}phases? out/.test(text);
+  if (boardProtection || targetedProtection) roles.add('protection');
+  if (boardProtection) roles.add('board protection');
   if (/haste/.test(text)) roles.add('haste');
   if (/can't cast|can't activate|players can't|opponents can't|doesn't untap|enter the battlefield tapped/.test(text)) roles.add('stax/control');
   if (/extra turn/.test(text)) roles.add('extra turn');

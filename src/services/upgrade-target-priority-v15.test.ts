@@ -20,6 +20,8 @@ const marvelMetrics: UpgradeCandidateMetricsV15 = {
   interactionCount: 18,
   protectionCount: 13,
   tutorCount: 8,
+  recursionCount: 4,
+  boardWipeCount: 2,
   earlyPlayCount: 41,
   averageNonlandManaValue: 2.71,
   roleCounts: { 'free interaction': 1 },
@@ -32,6 +34,8 @@ const bracketFiveTargets: UpgradeStructuralTargetsV15 = {
   freeInteraction: 1,
   protection: 8,
   tutors: 10,
+  recursion: 4,
+  boardWipes: 2,
   earlyPlays: 20,
 };
 
@@ -145,6 +149,106 @@ test('curve repair can inspect non-positive-pressure cuts only when the real cur
   );
 });
 
+test('swap pairing preserves board-wipe and recursion minima before heuristic cut pressure', () => {
+  for (const protectedRole of ['board wipe', 'graveyard recursion'] as const) {
+    const pairings = pairUpgradeSwapsByStructureV15(
+      [{
+        role: 'protection' as const,
+        candidate: {
+          card: {
+            name: `New Protection for ${protectedRole}`,
+            roles: ['protection', 'spot interaction'],
+            manaValue: 2,
+            typeLine: 'Instant',
+          },
+          strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+        },
+      }],
+      [
+        {
+          card: { name: `Last Safe ${protectedRole}`, roles: [protectedRole], manaValue: 5, typeLine: 'Sorcery' },
+          heuristicCutPressure: 20,
+          strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+        },
+        {
+          card: { name: `Surplus Generic for ${protectedRole}`, roles: [], manaValue: 4, typeLine: 'Creature — Test' },
+          heuristicCutPressure: 1,
+          strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+        },
+      ],
+      {
+        rampCount: 12,
+        drawCount: 12,
+        interactionCount: 14,
+        protectionCount: 5,
+        tutorCount: 6,
+        recursionCount: 3,
+        boardWipeCount: 2,
+        earlyPlayCount: 16,
+        roleCounts: { 'free interaction': 0 },
+      },
+      {
+        ramp: 12,
+        draw: 12,
+        interaction: 14,
+        freeInteraction: 0,
+        protection: 6,
+        tutors: 6,
+        recursion: 3,
+        boardWipes: 2,
+        earlyPlays: 16,
+      },
+    );
+
+    assert.equal(
+      (pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name,
+      `Surplus Generic for ${protectedRole}`,
+    );
+    assert.equal(pairings[0]?.structuralDeficitAfterSwap, 0);
+  }
+});
+
+test('swap pairing declines an apparent repair when every cut would create a new structural hole', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{
+      role: 'protection' as const,
+      candidate: {
+        card: { name: 'New Protection', roles: ['protection'], manaValue: 2, typeLine: 'Instant' },
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    }],
+    [{
+      card: { name: 'Last Recursion Spell', roles: ['graveyard recursion'], manaValue: 5, typeLine: 'Sorcery' },
+      heuristicCutPressure: 20,
+      strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+    }],
+    {
+      rampCount: 12,
+      drawCount: 12,
+      interactionCount: 14,
+      protectionCount: 5,
+      tutorCount: 6,
+      recursionCount: 3,
+      boardWipeCount: 2,
+      earlyPlayCount: 16,
+      roleCounts: { 'free interaction': 0 },
+    },
+    {
+      ramp: 12,
+      draw: 12,
+      interaction: 14,
+      freeInteraction: 0,
+      protection: 6,
+      tutors: 6,
+      recursion: 3,
+      boardWipes: 2,
+      earlyPlays: 16,
+    },
+  );
+
+  assert.deepEqual(pairings, []);
+});
+
 test('near the curve threshold, pairing uses the smallest sufficient safe mana reduction', () => {
   const pairings = pairUpgradeSwapsByStructureV15(
     [{
@@ -188,7 +292,12 @@ test('curve packages stop once cumulative safe reduction crosses the real thresh
   const additions = ['First One Drop', 'Second One Drop', 'Third One Drop'].map((name) => ({
     role: 'average-nonland-mv' as const,
     candidate: {
-      card: { name, roles: ['card draw'], manaValue: 1, typeLine: 'Artifact' },
+      card: {
+        name,
+        roles: name === 'First One Drop' ? ['card draw', 'spot interaction'] : ['card draw'],
+        manaValue: 1,
+        typeLine: 'Artifact',
+      },
       strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
     },
   }));
@@ -222,6 +331,8 @@ test('curve packages stop once cumulative safe reduction crosses the real thresh
       interactionCount: 18,
       protectionCount: 8,
       tutorCount: 10,
+      recursionCount: 4,
+      boardWipeCount: 3,
       earlyPlayCount: 41,
       averageNonlandManaValue: 2.71,
       nonlandCount: 69,
@@ -333,11 +444,13 @@ test('a weak secondary commander signal does not turn every matching curve cut i
       },
     ],
     {
-      rampCount: 14,
+      rampCount: 15,
       drawCount: 14,
-      interactionCount: 18,
+      interactionCount: 19,
       protectionCount: 8,
       tutorCount: 8,
+      recursionCount: 4,
+      boardWipeCount: 3,
       earlyPlayCount: 41,
       roleCounts: { 'free interaction': 1 },
     },

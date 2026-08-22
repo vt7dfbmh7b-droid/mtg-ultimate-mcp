@@ -87,6 +87,11 @@ function archetypeAffinity(card: ScryfallCard, archetype: NeutralArchetypeV15): 
       add(roles.has('graveyard recursion'), 7); add(/graveyard|mill|surveil|discard/.test(text), 3); break;
     case 'aristocrats':
       add(roles.has('sacrifice synergy') || roles.has('sacrifice outlet'), 7); add(roles.has('life drain'), 5); add(/dies|sacrifice/.test(text), 3); break;
+    case 'food-lifegain':
+      add(/\bfoods?\b/.test(text), 8);
+      add(/whenever [^.]*\byou gain(?:ed)?\b[^.]*\blife\b|\bif you gained\b[^.]*\blife\b|\bamount of life you gained\b/.test(text), 7);
+      add(roles.has('life drain') && /\bgain(?:ed)?\b[^.]*\blife\b/.test(text), 5);
+      break;
     case 'spells-control':
       add(roles.has('countermagic'), 6); add(roles.has('copy effect'), 4); add(/instant|sorcery|whenever you cast/.test(text), 3); break;
     case 'value-engine':

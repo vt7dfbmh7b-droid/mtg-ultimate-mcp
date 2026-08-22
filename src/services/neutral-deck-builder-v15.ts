@@ -66,6 +66,7 @@ const NEUTRAL_PROFILES: Record<NeutralArchetypeV15, NeutralProfileV15> = {
   counters: { lands: 36, roles: { ramp: 9, draw: 10, interaction: 8, protection: 5, tutors: 1, recursion: 2, boardWipes: 1, early: 12 } },
   'graveyard-reanimator': { lands: 36, roles: { ramp: 9, draw: 10, interaction: 8, protection: 3, tutors: 2, recursion: 7, boardWipes: 2, early: 10 } },
   aristocrats: { lands: 36, roles: { ramp: 9, draw: 10, interaction: 8, protection: 3, tutors: 1, recursion: 5, boardWipes: 2, early: 12 } },
+  'food-lifegain': { lands: 36, roles: { ramp: 9, draw: 10, interaction: 9, protection: 4, tutors: 1, recursion: 3, boardWipes: 2, early: 12 } },
   'spells-control': { lands: 35, roles: { ramp: 9, draw: 12, interaction: 14, protection: 4, tutors: 2, recursion: 2, boardWipes: 3, early: 14 } },
   'value-engine': { lands: 36, roles: { ramp: 10, draw: 12, interaction: 9, protection: 4, tutors: 1, recursion: 3, boardWipes: 2, early: 11 } },
   'big-mana': { lands: 37, roles: { ramp: 14, draw: 10, interaction: 8, protection: 4, tutors: 1, recursion: 2, boardWipes: 2, early: 8 } },
@@ -183,6 +184,11 @@ function strategyAffinity(card: ScryfallCard, archetype: NeutralArchetypeV15): n
       add(roles.has('graveyard recursion'), 7); add(/graveyard/.test(text), 4); add(/mill|surveil|discard/.test(text), 3); break;
     case 'aristocrats':
       add(roles.has('sacrifice synergy'), 6); add(roles.has('sacrifice outlet'), 7); add(roles.has('life drain'), 6); add(/dies|sacrifice/.test(text), 4); break;
+    case 'food-lifegain':
+      add(/\bfoods?\b/.test(text), 8);
+      add(/whenever [^.]*\byou gain(?:ed)?\b[^.]*\blife\b|\bif you gained\b[^.]*\blife\b|\bamount of life you gained\b/.test(text), 7);
+      add(roles.has('life drain') && /\bgain(?:ed)?\b[^.]*\blife\b/.test(text), 5);
+      break;
     case 'spells-control':
       add(roles.has('countermagic'), 6); add(roles.has('stax/control'), 5); add(roles.has('copy effect'), 4); add(/instant|sorcery|noncreature spell|whenever you cast/.test(text), 4); break;
     case 'value-engine':
