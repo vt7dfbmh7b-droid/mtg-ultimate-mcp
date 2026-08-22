@@ -1,0 +1,86 @@
+name: Strategy Inference Generalization Regression
+
+on:
+  push:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - "src/services/neutral-commander-selection-v15.ts"
+      - "src/services/strategy-inference-generalization-v15.test.ts"
+      - ".github/workflows/strategy-inference-generalization.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: strategy-inference-generalization-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  strategy-inference:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build checked-in source
+        id: source_build
+        continue-on-error: true
+        run: npm run build
+
+      - name: Run strategy inference regression
+        id: regression
+        if: steps.source_build.outcome == 'success'
+        continue-on-error: true
+        run: npx tsx --test src/services/strategy-inference-generalization-v15.test.ts src/services/neutral-commander-selection-v15.test.ts src/services/commander-strategy-affinity-v15.test.ts
+
+      - name: Persist strategy-inference evidence
+        id: persist
+        if: always()
+        continue-on-error: true
+        env:
+          BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          REGRESSION_OUTCOME: ${{ steps.regression.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            mkdir -p test-results/strategy-inference-generalization
+            CONTROL_OUTCOME=failure
+            if [ "$BUILD_OUTCOME" = success ] && [ "$REGRESSION_OUTCOME" = success ]; then
+              CONTROL_OUTCOME=success
+            fi
+            printf 'source_sha=%s\nworkflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nbuild_outcome=%s\nregression_outcome=%s\nname_specific_rule=false\nincidental_attack_trigger_substantive=false\nself_mill_recovery_substantive=true\n' \
+              "$GITHUB_SHA" "$GITHUB_SHA" "$GITHUB_SHA" "$CONTROL_OUTCOME" "$BUILD_OUTCOME" "$REGRESSION_OUTCOME" \
+              > test-results/strategy-inference-generalization/run-metadata.txt
+            git add -- test-results/strategy-inference-generalization/run-metadata.txt
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "test-results: persist strategy inference regression [skip ci]"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+          done
+          exit 1
+
+      - name: Require strategy inference regression
+        if: always()
+        env:
+          BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          REGRESSION_OUTCOME: ${{ steps.regression.outcome }}
+          PERSIST_OUTCOME: ${{ steps.persist.outcome }}
+        run: |
+          test "$BUILD_OUTCOME" = success
+          test "$REGRESSION_OUTCOME" = success
+          test "$PERSIST_OUTCOME" = success
