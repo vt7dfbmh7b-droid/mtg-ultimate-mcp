@@ -247,9 +247,9 @@
           "persistentColoredManaSourcesAfterSwap": 9,
           "persistentColoredManaSourceFloor": 6,
           "strategyPreservation": {
-            "cutStrategyAffinityScore": 3,
+            "cutStrategyAffinityScore": 2,
             "addStrategyAffinityScore": 0,
-            "cutStrategyProtectionApplied": 3,
+            "cutStrategyProtectionApplied": 2,
             "cutMatchedStrategies": [
               "combat-tokens"
             ],
@@ -562,9 +562,9 @@
               "persistentColoredManaSourcesAfterSwap": 9,
               "persistentColoredManaSourceFloor": 6,
               "strategyPreservation": {
-                "cutStrategyAffinityScore": 3,
+                "cutStrategyAffinityScore": 2,
                 "addStrategyAffinityScore": 0,
-                "cutStrategyProtectionApplied": 3,
+                "cutStrategyProtectionApplied": 2,
                 "cutMatchedStrategies": [
                   "combat-tokens"
                 ],
@@ -724,9 +724,9 @@
               "meaningfulLosses": [
                 {
                   "strategy": "combat-tokens",
-                  "commanderStrategyScore": 9,
-                  "cutAffinityScore": 9,
-                  "addAffinityScore": 5,
+                  "commanderStrategyScore": 8,
+                  "cutAffinityScore": 8,
+                  "addAffinityScore": 4,
                   "netAffinityLoss": 4,
                   "strongestCutProtectionApplied": 4
                 }
@@ -734,8 +734,8 @@
               "strategyDeltas": [
                 {
                   "strategy": "combat-tokens",
-                  "cutAffinityScore": 9,
-                  "addAffinityScore": 5,
+                  "cutAffinityScore": 8,
+                  "addAffinityScore": 4,
                   "netAffinityDelta": -4
                 },
                 {
@@ -747,9 +747,9 @@
               ],
               "swapImpacts": [
                 {
-                  "cutStrategyAffinityScore": 3,
+                  "cutStrategyAffinityScore": 2,
                   "addStrategyAffinityScore": 2,
-                  "cutStrategyProtectionApplied": 3,
+                  "cutStrategyProtectionApplied": 2,
                   "cutMatchedStrategies": [
                     "combat-tokens"
                   ],
@@ -773,7 +773,7 @@
                 },
                 {
                   "cutStrategyAffinityScore": 6,
-                  "addStrategyAffinityScore": 17,
+                  "addStrategyAffinityScore": 16,
                   "cutStrategyProtectionApplied": 4,
                   "cutMatchedStrategies": [
                     "value-engine"
@@ -925,9 +925,9 @@
                   "persistentColoredManaSourcesAfterSwap": 9,
                   "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
-                    "cutStrategyAffinityScore": 3,
+                    "cutStrategyAffinityScore": 2,
                     "addStrategyAffinityScore": 2,
-                    "cutStrategyProtectionApplied": 3,
+                    "cutStrategyProtectionApplied": 2,
                     "cutMatchedStrategies": [
                       "combat-tokens"
                     ],
@@ -971,7 +971,7 @@
                   "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 6,
-                    "addStrategyAffinityScore": 17,
+                    "addStrategyAffinityScore": 16,
                     "cutStrategyProtectionApplied": 4,
                     "cutMatchedStrategies": [
                       "value-engine"
@@ -1076,9 +1076,9 @@
               "strategyDeltas": [
                 {
                   "strategy": "combat-tokens",
-                  "cutAffinityScore": 9,
+                  "cutAffinityScore": 8,
                   "addAffinityScore": 6,
-                  "netAffinityDelta": -3
+                  "netAffinityDelta": -2
                 },
                 {
                   "strategy": "value-engine",
@@ -1089,9 +1089,9 @@
               ],
               "swapImpacts": [
                 {
-                  "cutStrategyAffinityScore": 3,
+                  "cutStrategyAffinityScore": 2,
                   "addStrategyAffinityScore": 0,
-                  "cutStrategyProtectionApplied": 3,
+                  "cutStrategyProtectionApplied": 2,
                   "cutMatchedStrategies": [
                     "combat-tokens"
                   ],
@@ -1261,9 +1261,9 @@
                   "persistentColoredManaSourcesAfterSwap": 9,
                   "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
-                    "cutStrategyAffinityScore": 3,
+                    "cutStrategyAffinityScore": 2,
                     "addStrategyAffinityScore": 0,
-                    "cutStrategyProtectionApplied": 3,
+                    "cutStrategyProtectionApplied": 2,
                     "cutMatchedStrategies": [
                       "combat-tokens"
                     ],
@@ -1415,9 +1415,9 @@
               "strategyDeltas": [
                 {
                   "strategy": "combat-tokens",
-                  "cutAffinityScore": 9,
+                  "cutAffinityScore": 8,
                   "addAffinityScore": 12,
-                  "netAffinityDelta": 3
+                  "netAffinityDelta": 4
                 },
                 {
                   "strategy": "value-engine",
@@ -1427,6 +1427,30 @@
                 }
               ],
               "swapImpacts": [
+                {
+                  "cutStrategyAffinityScore": 2,
+                  "addStrategyAffinityScore": 6,
+                  "cutStrategyProtectionApplied": 2,
+                  "cutMatchedStrategies": [
+                    "combat-tokens"
+                  ],
+                  "addMatchedStrategies": [
+                    "combat-tokens"
+                  ],
+                  "locallyUnreplacedStrategies": [],
+                  "cutRoles": [
+                    "creature"
+                  ],
+                  "addRoles": [
+                    "board protection",
+                    "creature",
+                    "go-wide payoff",
+                    "protection"
+                  ],
+                  "unreplacedRoles": [],
+                  "meaningfulStrategyLoss": false,
+                  "verdict": "preserved"
+                },
                 {
                   "cutStrategyAffinityScore": 6,
                   "addStrategyAffinityScore": 6,
@@ -1443,36 +1467,13 @@
                     "go-wide payoff"
                   ],
                   "addRoles": [
-                    "board protection",
-                    "creature",
-                    "go-wide payoff",
-                    "protection"
-                  ],
-                  "unreplacedRoles": [],
-                  "meaningfulStrategyLoss": false,
-                  "verdict": "preserved"
-                },
-                {
-                  "cutStrategyAffinityScore": 3,
-                  "addStrategyAffinityScore": 6,
-                  "cutStrategyProtectionApplied": 3,
-                  "cutMatchedStrategies": [
-                    "combat-tokens"
-                  ],
-                  "addMatchedStrategies": [
-                    "combat-tokens"
-                  ],
-                  "locallyUnreplacedStrategies": [],
-                  "cutRoles": [
-                    "creature"
-                  ],
-                  "addRoles": [
                     "+1/+1 counters",
                     "protection",
                     "token production"
                   ],
                   "unreplacedRoles": [
-                    "creature"
+                    "creature",
+                    "go-wide payoff"
                   ],
                   "meaningfulStrategyLoss": false,
                   "verdict": "preserved"
@@ -1584,7 +1585,7 @@
             },
             "swaps": [
               {
-                "out": "Eagles of the North",
+                "out": "Landroval, Horizon Witness",
                 "in": "Bastion Protector",
                 "why": "Addresses the detected protection deficit and also supports the existing V0.15 commander strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -1597,6 +1598,50 @@
                 "structuralPairing": {
                   "addressedRole": "protection",
                   "remainingStructuralDeficitAfterSwap": 12,
+                  "authoritativeTargetGate": null,
+                  "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
+                  "strategyPreservation": {
+                    "cutStrategyAffinityScore": 2,
+                    "addStrategyAffinityScore": 6,
+                    "cutStrategyProtectionApplied": 2,
+                    "cutMatchedStrategies": [
+                      "combat-tokens"
+                    ],
+                    "addMatchedStrategies": [
+                      "combat-tokens"
+                    ],
+                    "locallyUnreplacedStrategies": [],
+                    "cutRoles": [
+                      "creature"
+                    ],
+                    "addRoles": [
+                      "board protection",
+                      "creature",
+                      "go-wide payoff",
+                      "protection"
+                    ],
+                    "unreplacedRoles": [],
+                    "meaningfulStrategyLoss": false,
+                    "verdict": "preserved"
+                  }
+                }
+              },
+              {
+                "out": "Eagles of the North",
+                "in": "Orcish Medicine",
+                "why": "Addresses the detected protection deficit and also supports the existing V0.15 commander strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                "recommendedPrinting": {
+                  "set": "LTR",
+                  "collectorNumber": "104",
+                  "finish": "nonfoil",
+                  "priceNzd": 0.37,
+                  "priceUsdReference": 0.22
+                },
+                "structuralPairing": {
+                  "addressedRole": "protection",
+                  "remainingStructuralDeficitAfterSwap": 11,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 9,
@@ -1617,56 +1662,13 @@
                       "go-wide payoff"
                     ],
                     "addRoles": [
-                      "board protection",
-                      "creature",
-                      "go-wide payoff",
-                      "protection"
-                    ],
-                    "unreplacedRoles": [],
-                    "meaningfulStrategyLoss": false,
-                    "verdict": "preserved"
-                  }
-                }
-              },
-              {
-                "out": "Landroval, Horizon Witness",
-                "in": "Orcish Medicine",
-                "why": "Addresses the detected protection deficit and also supports the existing V0.15 commander strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
-                "recommendedPrinting": {
-                  "set": "LTR",
-                  "collectorNumber": "104",
-                  "finish": "nonfoil",
-                  "priceNzd": 0.37,
-                  "priceUsdReference": 0.22
-                },
-                "structuralPairing": {
-                  "addressedRole": "protection",
-                  "remainingStructuralDeficitAfterSwap": 11,
-                  "authoritativeTargetGate": null,
-                  "nonlandManaValueReduction": null,
-                  "persistentColoredManaSourcesAfterSwap": 9,
-                  "persistentColoredManaSourceFloor": 6,
-                  "strategyPreservation": {
-                    "cutStrategyAffinityScore": 3,
-                    "addStrategyAffinityScore": 6,
-                    "cutStrategyProtectionApplied": 3,
-                    "cutMatchedStrategies": [
-                      "combat-tokens"
-                    ],
-                    "addMatchedStrategies": [
-                      "combat-tokens"
-                    ],
-                    "locallyUnreplacedStrategies": [],
-                    "cutRoles": [
-                      "creature"
-                    ],
-                    "addRoles": [
                       "+1/+1 counters",
                       "protection",
                       "token production"
                     ],
                     "unreplacedRoles": [
-                      "creature"
+                      "creature",
+                      "go-wide payoff"
                     ],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -1748,10 +1750,10 @@
               "meaningfulLosses": [
                 {
                   "strategy": "combat-tokens",
-                  "commanderStrategyScore": 9,
-                  "cutAffinityScore": 9,
+                  "commanderStrategyScore": 8,
+                  "cutAffinityScore": 8,
                   "addAffinityScore": 0,
-                  "netAffinityLoss": 9,
+                  "netAffinityLoss": 8,
                   "strongestCutProtectionApplied": 4
                 },
                 {
@@ -1766,9 +1768,9 @@
               "strategyDeltas": [
                 {
                   "strategy": "combat-tokens",
-                  "cutAffinityScore": 9,
+                  "cutAffinityScore": 8,
                   "addAffinityScore": 0,
-                  "netAffinityDelta": -9
+                  "netAffinityDelta": -8
                 },
                 {
                   "strategy": "value-engine",
@@ -1779,9 +1781,9 @@
               ],
               "swapImpacts": [
                 {
-                  "cutStrategyAffinityScore": 3,
+                  "cutStrategyAffinityScore": 2,
                   "addStrategyAffinityScore": 0,
-                  "cutStrategyProtectionApplied": 3,
+                  "cutStrategyProtectionApplied": 2,
                   "cutMatchedStrategies": [
                     "combat-tokens"
                   ],
@@ -1954,9 +1956,9 @@
                   "persistentColoredManaSourcesAfterSwap": 9,
                   "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
-                    "cutStrategyAffinityScore": 3,
+                    "cutStrategyAffinityScore": 2,
                     "addStrategyAffinityScore": 0,
-                    "cutStrategyProtectionApplied": 3,
+                    "cutStrategyProtectionApplied": 2,
                     "cutMatchedStrategies": [
                       "combat-tokens"
                     ],
@@ -2112,9 +2114,9 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
-                      "cutAffinityScore": 15,
-                      "addAffinityScore": 5,
+                      "commanderStrategyScore": 8,
+                      "cutAffinityScore": 14,
+                      "addAffinityScore": 4,
                       "netAffinityLoss": 10,
                       "strongestCutProtectionApplied": 4
                     },
@@ -2130,8 +2132,8 @@
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 15,
-                      "addAffinityScore": 5,
+                      "cutAffinityScore": 14,
+                      "addAffinityScore": 4,
                       "netAffinityDelta": -10
                     },
                     {
@@ -2149,9 +2151,9 @@
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 3,
+                      "cutStrategyAffinityScore": 2,
                       "addStrategyAffinityScore": 2,
-                      "cutStrategyProtectionApplied": 3,
+                      "cutStrategyProtectionApplied": 2,
                       "cutMatchedStrategies": [
                         "combat-tokens"
                       ],
@@ -2175,7 +2177,7 @@
                     },
                     {
                       "cutStrategyAffinityScore": 6,
-                      "addStrategyAffinityScore": 17,
+                      "addStrategyAffinityScore": 16,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
                         "value-engine"
@@ -2359,9 +2361,9 @@
                       "persistentColoredManaSourcesAfterSwap": 9,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 3,
+                        "cutStrategyAffinityScore": 2,
                         "addStrategyAffinityScore": 2,
-                        "cutStrategyProtectionApplied": 3,
+                        "cutStrategyProtectionApplied": 2,
                         "cutMatchedStrategies": [
                           "combat-tokens"
                         ],
@@ -2405,7 +2407,7 @@
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 6,
-                        "addStrategyAffinityScore": 17,
+                        "addStrategyAffinityScore": 16,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
                           "value-engine"
@@ -2571,9 +2573,9 @@
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 15,
+                      "cutAffinityScore": 14,
                       "addAffinityScore": 12,
-                      "netAffinityDelta": -3
+                      "netAffinityDelta": -2
                     },
                     {
                       "strategy": "food-lifegain",
@@ -2590,9 +2592,9 @@
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 3,
+                      "cutStrategyAffinityScore": 2,
                       "addStrategyAffinityScore": 0,
-                      "cutStrategyProtectionApplied": 3,
+                      "cutStrategyProtectionApplied": 2,
                       "cutMatchedStrategies": [
                         "combat-tokens"
                       ],
@@ -2793,9 +2795,9 @@
                       "persistentColoredManaSourcesAfterSwap": 9,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 3,
+                        "cutStrategyAffinityScore": 2,
                         "addStrategyAffinityScore": 0,
-                        "cutStrategyProtectionApplied": 3,
+                        "cutStrategyProtectionApplied": 2,
                         "cutMatchedStrategies": [
                           "combat-tokens"
                         ],
@@ -3006,9 +3008,9 @@
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 15,
+                      "cutAffinityScore": 14,
                       "addAffinityScore": 12,
-                      "netAffinityDelta": -3
+                      "netAffinityDelta": -2
                     },
                     {
                       "strategy": "food-lifegain",
@@ -3025,6 +3027,30 @@
                   ],
                   "swapImpacts": [
                     {
+                      "cutStrategyAffinityScore": 2,
+                      "addStrategyAffinityScore": 6,
+                      "cutStrategyProtectionApplied": 2,
+                      "cutMatchedStrategies": [
+                        "combat-tokens"
+                      ],
+                      "addMatchedStrategies": [
+                        "combat-tokens"
+                      ],
+                      "locallyUnreplacedStrategies": [],
+                      "cutRoles": [
+                        "creature"
+                      ],
+                      "addRoles": [
+                        "board protection",
+                        "creature",
+                        "go-wide payoff",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
+                    },
+                    {
                       "cutStrategyAffinityScore": 6,
                       "addStrategyAffinityScore": 6,
                       "cutStrategyProtectionApplied": 4,
@@ -3040,36 +3066,13 @@
                         "go-wide payoff"
                       ],
                       "addRoles": [
-                        "board protection",
-                        "creature",
-                        "go-wide payoff",
-                        "protection"
-                      ],
-                      "unreplacedRoles": [],
-                      "meaningfulStrategyLoss": false,
-                      "verdict": "preserved"
-                    },
-                    {
-                      "cutStrategyAffinityScore": 3,
-                      "addStrategyAffinityScore": 6,
-                      "cutStrategyProtectionApplied": 3,
-                      "cutMatchedStrategies": [
-                        "combat-tokens"
-                      ],
-                      "addMatchedStrategies": [
-                        "combat-tokens"
-                      ],
-                      "locallyUnreplacedStrategies": [],
-                      "cutRoles": [
-                        "creature"
-                      ],
-                      "addRoles": [
                         "+1/+1 counters",
                         "protection",
                         "token production"
                       ],
                       "unreplacedRoles": [
-                        "creature"
+                        "creature",
+                        "go-wide payoff"
                       ],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -3212,7 +3215,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Eagles of the North",
+                    "out": "Landroval, Horizon Witness",
                     "in": "Bastion Protector",
                     "why": "Addresses the detected protection deficit and also supports the existing V0.15 commander strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -3225,6 +3228,50 @@
                     "structuralPairing": {
                       "addressedRole": "protection",
                       "remainingStructuralDeficitAfterSwap": 12,
+                      "authoritativeTargetGate": null,
+                      "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
+                      "strategyPreservation": {
+                        "cutStrategyAffinityScore": 2,
+                        "addStrategyAffinityScore": 6,
+                        "cutStrategyProtectionApplied": 2,
+                        "cutMatchedStrategies": [
+                          "combat-tokens"
+                        ],
+                        "addMatchedStrategies": [
+                          "combat-tokens"
+                        ],
+                        "locallyUnreplacedStrategies": [],
+                        "cutRoles": [
+                          "creature"
+                        ],
+                        "addRoles": [
+                          "board protection",
+                          "creature",
+                          "go-wide payoff",
+                          "protection"
+                        ],
+                        "unreplacedRoles": [],
+                        "meaningfulStrategyLoss": false,
+                        "verdict": "preserved"
+                      }
+                    }
+                  },
+                  {
+                    "out": "Eagles of the North",
+                    "in": "Orcish Medicine",
+                    "why": "Addresses the detected protection deficit and also supports the existing V0.15 commander strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "recommendedPrinting": {
+                      "set": "LTR",
+                      "collectorNumber": "104",
+                      "finish": "nonfoil",
+                      "priceNzd": 0.37,
+                      "priceUsdReference": 0.22
+                    },
+                    "structuralPairing": {
+                      "addressedRole": "protection",
+                      "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 9,
@@ -3245,56 +3292,13 @@
                           "go-wide payoff"
                         ],
                         "addRoles": [
-                          "board protection",
-                          "creature",
-                          "go-wide payoff",
-                          "protection"
-                        ],
-                        "unreplacedRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      }
-                    }
-                  },
-                  {
-                    "out": "Landroval, Horizon Witness",
-                    "in": "Orcish Medicine",
-                    "why": "Addresses the detected protection deficit and also supports the existing V0.15 commander strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
-                    "recommendedPrinting": {
-                      "set": "LTR",
-                      "collectorNumber": "104",
-                      "finish": "nonfoil",
-                      "priceNzd": 0.37,
-                      "priceUsdReference": 0.22
-                    },
-                    "structuralPairing": {
-                      "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 11,
-                      "authoritativeTargetGate": null,
-                      "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 9,
-                      "persistentColoredManaSourceFloor": 6,
-                      "strategyPreservation": {
-                        "cutStrategyAffinityScore": 3,
-                        "addStrategyAffinityScore": 6,
-                        "cutStrategyProtectionApplied": 3,
-                        "cutMatchedStrategies": [
-                          "combat-tokens"
-                        ],
-                        "addMatchedStrategies": [
-                          "combat-tokens"
-                        ],
-                        "locallyUnreplacedStrategies": [],
-                        "cutRoles": [
-                          "creature"
-                        ],
-                        "addRoles": [
                           "+1/+1 counters",
                           "protection",
                           "token production"
                         ],
                         "unreplacedRoles": [
-                          "creature"
+                          "creature",
+                          "go-wide payoff"
                         ],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -3404,10 +3408,10 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 18.18,
-                "estimatedSpendUsdReference": 10.83,
+                "estimatedSpendNzd": 18.6,
+                "estimatedSpendUsdReference": 11.08,
                 "unknownPriceCount": 0,
-                "improvementScore": 14.482,
+                "improvementScore": 14.096,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -3427,40 +3431,46 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
-                      "cutAffinityScore": 9,
-                      "addAffinityScore": 3,
-                      "netAffinityLoss": 6,
+                      "commanderStrategyScore": 8,
+                      "cutAffinityScore": 14,
+                      "addAffinityScore": 0,
+                      "netAffinityLoss": 14,
                       "strongestCutProtectionApplied": 4
                     },
                     {
-                      "strategy": "value-engine",
-                      "commanderStrategyScore": 14,
-                      "cutAffinityScore": 6,
+                      "strategy": "food-lifegain",
+                      "commanderStrategyScore": 15,
+                      "cutAffinityScore": 8,
                       "addAffinityScore": 0,
-                      "netAffinityLoss": 6,
+                      "netAffinityLoss": 8,
                       "strongestCutProtectionApplied": 4
                     }
                   ],
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 9,
-                      "addAffinityScore": 3,
-                      "netAffinityDelta": -6
+                      "cutAffinityScore": 14,
+                      "addAffinityScore": 0,
+                      "netAffinityDelta": -14
+                    },
+                    {
+                      "strategy": "food-lifegain",
+                      "cutAffinityScore": 8,
+                      "addAffinityScore": 0,
+                      "netAffinityDelta": -8
                     },
                     {
                       "strategy": "value-engine",
                       "cutAffinityScore": 6,
-                      "addAffinityScore": 0,
-                      "netAffinityDelta": -6
+                      "addAffinityScore": 5,
+                      "netAffinityDelta": -1
                     }
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 3,
+                      "cutStrategyAffinityScore": 2,
                       "addStrategyAffinityScore": 0,
-                      "cutStrategyProtectionApplied": 3,
+                      "cutStrategyProtectionApplied": 2,
                       "cutMatchedStrategies": [
                         "combat-tokens"
                       ],
@@ -3533,30 +3543,38 @@
                       "verdict": "meaningful-strategy-loss"
                     },
                     {
-                      "cutStrategyAffinityScore": 0,
-                      "addStrategyAffinityScore": 3,
-                      "cutStrategyProtectionApplied": 0,
-                      "cutMatchedStrategies": [],
-                      "addMatchedStrategies": [
-                        "combat-tokens"
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 5,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
                       ],
-                      "locallyUnreplacedStrategies": [],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
                       "cutRoles": [
                         "creature",
-                        "spot interaction"
+                        "sacrifice synergy",
+                        "token production"
                       ],
                       "addRoles": [
                         "board protection",
-                        "countermagic",
-                        "creature",
+                        "card draw",
                         "protection",
-                        "sacrifice synergy"
+                        "stax/control"
                       ],
                       "unreplacedRoles": [
-                        "spot interaction"
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
                       ],
-                      "meaningfulStrategyLoss": false,
-                      "verdict": "preserved"
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
                     }
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
@@ -3659,9 +3677,9 @@
                       "persistentColoredManaSourcesAfterSwap": 9,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 3,
+                        "cutStrategyAffinityScore": 2,
                         "addStrategyAffinityScore": 0,
-                        "cutStrategyProtectionApplied": 3,
+                        "cutStrategyProtectionApplied": 2,
                         "cutMatchedStrategies": [
                           "combat-tokens"
                         ],
@@ -3776,15 +3794,15 @@
                     }
                   },
                   {
-                    "out": "Woodfall Primus",
-                    "in": "Frontline Medic",
-                    "why": "Addresses the detected protection deficit and also supports the existing V0.15 commander strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "out": "Generous Ent",
+                    "in": "Courageous Resolve",
+                    "why": "Addresses the detected protection deficit and also supports the existing V0.15 commander strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "LTC",
-                      "collectorNumber": "169",
-                      "finish": "nonfoil",
-                      "priceNzd": 0.5,
-                      "priceUsdReference": 0.3
+                      "collectorNumber": "506",
+                      "finish": "foil",
+                      "priceNzd": 0.92,
+                      "priceUsdReference": 0.55
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -3794,30 +3812,38 @@
                       "persistentColoredManaSourcesAfterSwap": 9,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 0,
-                        "addStrategyAffinityScore": 3,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
-                        "addMatchedStrategies": [
-                          "combat-tokens"
+                        "cutStrategyAffinityScore": 14,
+                        "addStrategyAffinityScore": 5,
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "combat-tokens",
+                          "food-lifegain"
                         ],
-                        "locallyUnreplacedStrategies": [],
+                        "addMatchedStrategies": [
+                          "value-engine"
+                        ],
+                        "locallyUnreplacedStrategies": [
+                          "combat-tokens",
+                          "food-lifegain"
+                        ],
                         "cutRoles": [
                           "creature",
-                          "spot interaction"
+                          "sacrifice synergy",
+                          "token production"
                         ],
                         "addRoles": [
                           "board protection",
-                          "countermagic",
-                          "creature",
+                          "card draw",
                           "protection",
-                          "sacrifice synergy"
+                          "stax/control"
                         ],
                         "unreplacedRoles": [
-                          "spot interaction"
+                          "creature",
+                          "sacrifice synergy",
+                          "token production"
                         ],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
+                        "meaningfulStrategyLoss": true,
+                        "verdict": "meaningful-strategy-loss"
                       }
                     }
                   }
@@ -3864,9 +3890,9 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
-                      "cutAffinityScore": 9,
-                      "addAffinityScore": 5,
+                      "commanderStrategyScore": 8,
+                      "cutAffinityScore": 8,
+                      "addAffinityScore": 4,
                       "netAffinityLoss": 4,
                       "strongestCutProtectionApplied": 4
                     }
@@ -3874,8 +3900,8 @@
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 9,
-                      "addAffinityScore": 5,
+                      "cutAffinityScore": 8,
+                      "addAffinityScore": 4,
                       "netAffinityDelta": -4
                     },
                     {
@@ -3887,9 +3913,9 @@
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 3,
+                      "cutStrategyAffinityScore": 2,
                       "addStrategyAffinityScore": 2,
-                      "cutStrategyProtectionApplied": 3,
+                      "cutStrategyProtectionApplied": 2,
                       "cutMatchedStrategies": [
                         "combat-tokens"
                       ],
@@ -3913,7 +3939,7 @@
                     },
                     {
                       "cutStrategyAffinityScore": 6,
-                      "addStrategyAffinityScore": 17,
+                      "addStrategyAffinityScore": 16,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
                         "value-engine"
@@ -4065,9 +4091,9 @@
                       "persistentColoredManaSourcesAfterSwap": 9,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 3,
+                        "cutStrategyAffinityScore": 2,
                         "addStrategyAffinityScore": 2,
-                        "cutStrategyProtectionApplied": 3,
+                        "cutStrategyProtectionApplied": 2,
                         "cutMatchedStrategies": [
                           "combat-tokens"
                         ],
@@ -4111,7 +4137,7 @@
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 6,
-                        "addStrategyAffinityScore": 17,
+                        "addStrategyAffinityScore": 16,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
                           "value-engine"
@@ -4216,9 +4242,9 @@
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 9,
+                      "cutAffinityScore": 8,
                       "addAffinityScore": 6,
-                      "netAffinityDelta": -3
+                      "netAffinityDelta": -2
                     },
                     {
                       "strategy": "value-engine",
@@ -4229,9 +4255,9 @@
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 3,
+                      "cutStrategyAffinityScore": 2,
                       "addStrategyAffinityScore": 0,
-                      "cutStrategyProtectionApplied": 3,
+                      "cutStrategyProtectionApplied": 2,
                       "cutMatchedStrategies": [
                         "combat-tokens"
                       ],
@@ -4401,9 +4427,9 @@
                       "persistentColoredManaSourcesAfterSwap": 9,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 3,
+                        "cutStrategyAffinityScore": 2,
                         "addStrategyAffinityScore": 0,
-                        "cutStrategyProtectionApplied": 3,
+                        "cutStrategyProtectionApplied": 2,
                         "cutMatchedStrategies": [
                           "combat-tokens"
                         ],
@@ -4555,9 +4581,9 @@
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 9,
+                      "cutAffinityScore": 8,
                       "addAffinityScore": 12,
-                      "netAffinityDelta": 3
+                      "netAffinityDelta": 4
                     },
                     {
                       "strategy": "value-engine",
@@ -4567,6 +4593,30 @@
                     }
                   ],
                   "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 2,
+                      "addStrategyAffinityScore": 6,
+                      "cutStrategyProtectionApplied": 2,
+                      "cutMatchedStrategies": [
+                        "combat-tokens"
+                      ],
+                      "addMatchedStrategies": [
+                        "combat-tokens"
+                      ],
+                      "locallyUnreplacedStrategies": [],
+                      "cutRoles": [
+                        "creature"
+                      ],
+                      "addRoles": [
+                        "board protection",
+                        "creature",
+                        "go-wide payoff",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
+                    },
                     {
                       "cutStrategyAffinityScore": 6,
                       "addStrategyAffinityScore": 6,
@@ -4583,36 +4633,13 @@
                         "go-wide payoff"
                       ],
                       "addRoles": [
-                        "board protection",
-                        "creature",
-                        "go-wide payoff",
-                        "protection"
-                      ],
-                      "unreplacedRoles": [],
-                      "meaningfulStrategyLoss": false,
-                      "verdict": "preserved"
-                    },
-                    {
-                      "cutStrategyAffinityScore": 3,
-                      "addStrategyAffinityScore": 6,
-                      "cutStrategyProtectionApplied": 3,
-                      "cutMatchedStrategies": [
-                        "combat-tokens"
-                      ],
-                      "addMatchedStrategies": [
-                        "combat-tokens"
-                      ],
-                      "locallyUnreplacedStrategies": [],
-                      "cutRoles": [
-                        "creature"
-                      ],
-                      "addRoles": [
                         "+1/+1 counters",
                         "protection",
                         "token production"
                       ],
                       "unreplacedRoles": [
-                        "creature"
+                        "creature",
+                        "go-wide payoff"
                       ],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -4724,7 +4751,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Eagles of the North",
+                    "out": "Landroval, Horizon Witness",
                     "in": "Bastion Protector",
                     "why": "Addresses the detected protection deficit and also supports the existing V0.15 commander strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -4737,6 +4764,50 @@
                     "structuralPairing": {
                       "addressedRole": "protection",
                       "remainingStructuralDeficitAfterSwap": 12,
+                      "authoritativeTargetGate": null,
+                      "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
+                      "strategyPreservation": {
+                        "cutStrategyAffinityScore": 2,
+                        "addStrategyAffinityScore": 6,
+                        "cutStrategyProtectionApplied": 2,
+                        "cutMatchedStrategies": [
+                          "combat-tokens"
+                        ],
+                        "addMatchedStrategies": [
+                          "combat-tokens"
+                        ],
+                        "locallyUnreplacedStrategies": [],
+                        "cutRoles": [
+                          "creature"
+                        ],
+                        "addRoles": [
+                          "board protection",
+                          "creature",
+                          "go-wide payoff",
+                          "protection"
+                        ],
+                        "unreplacedRoles": [],
+                        "meaningfulStrategyLoss": false,
+                        "verdict": "preserved"
+                      }
+                    }
+                  },
+                  {
+                    "out": "Eagles of the North",
+                    "in": "Orcish Medicine",
+                    "why": "Addresses the detected protection deficit and also supports the existing V0.15 commander strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "recommendedPrinting": {
+                      "set": "LTR",
+                      "collectorNumber": "104",
+                      "finish": "nonfoil",
+                      "priceNzd": 0.37,
+                      "priceUsdReference": 0.22
+                    },
+                    "structuralPairing": {
+                      "addressedRole": "protection",
+                      "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 9,
@@ -4757,56 +4828,13 @@
                           "go-wide payoff"
                         ],
                         "addRoles": [
-                          "board protection",
-                          "creature",
-                          "go-wide payoff",
-                          "protection"
-                        ],
-                        "unreplacedRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      }
-                    }
-                  },
-                  {
-                    "out": "Landroval, Horizon Witness",
-                    "in": "Orcish Medicine",
-                    "why": "Addresses the detected protection deficit and also supports the existing V0.15 commander strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
-                    "recommendedPrinting": {
-                      "set": "LTR",
-                      "collectorNumber": "104",
-                      "finish": "nonfoil",
-                      "priceNzd": 0.37,
-                      "priceUsdReference": 0.22
-                    },
-                    "structuralPairing": {
-                      "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 11,
-                      "authoritativeTargetGate": null,
-                      "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 9,
-                      "persistentColoredManaSourceFloor": 6,
-                      "strategyPreservation": {
-                        "cutStrategyAffinityScore": 3,
-                        "addStrategyAffinityScore": 6,
-                        "cutStrategyProtectionApplied": 3,
-                        "cutMatchedStrategies": [
-                          "combat-tokens"
-                        ],
-                        "addMatchedStrategies": [
-                          "combat-tokens"
-                        ],
-                        "locallyUnreplacedStrategies": [],
-                        "cutRoles": [
-                          "creature"
-                        ],
-                        "addRoles": [
                           "+1/+1 counters",
                           "protection",
                           "token production"
                         ],
                         "unreplacedRoles": [
-                          "creature"
+                          "creature",
+                          "go-wide payoff"
                         ],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -4888,10 +4916,10 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
-                      "cutAffinityScore": 9,
+                      "commanderStrategyScore": 8,
+                      "cutAffinityScore": 8,
                       "addAffinityScore": 0,
-                      "netAffinityLoss": 9,
+                      "netAffinityLoss": 8,
                       "strongestCutProtectionApplied": 4
                     },
                     {
@@ -4906,9 +4934,9 @@
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 9,
+                      "cutAffinityScore": 8,
                       "addAffinityScore": 0,
-                      "netAffinityDelta": -9
+                      "netAffinityDelta": -8
                     },
                     {
                       "strategy": "value-engine",
@@ -4919,9 +4947,9 @@
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 3,
+                      "cutStrategyAffinityScore": 2,
                       "addStrategyAffinityScore": 0,
-                      "cutStrategyProtectionApplied": 3,
+                      "cutStrategyProtectionApplied": 2,
                       "cutMatchedStrategies": [
                         "combat-tokens"
                       ],
@@ -5094,9 +5122,9 @@
                       "persistentColoredManaSourcesAfterSwap": 9,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 3,
+                        "cutStrategyAffinityScore": 2,
                         "addStrategyAffinityScore": 0,
-                        "cutStrategyProtectionApplied": 3,
+                        "cutStrategyProtectionApplied": 2,
                         "cutMatchedStrategies": [
                           "combat-tokens"
                         ],
@@ -5497,7 +5525,7 @@
               "meaningfulLosses": [
                 {
                   "strategy": "combat-tokens",
-                  "commanderStrategyScore": 9,
+                  "commanderStrategyScore": 8,
                   "cutAffinityScore": 6,
                   "addAffinityScore": 0,
                   "netAffinityLoss": 6,
@@ -5730,7 +5758,7 @@
               "meaningfulLosses": [
                 {
                   "strategy": "combat-tokens",
-                  "commanderStrategyScore": 9,
+                  "commanderStrategyScore": 8,
                   "cutAffinityScore": 6,
                   "addAffinityScore": 0,
                   "netAffinityLoss": 6,
@@ -5951,7 +5979,7 @@
               "meaningfulLosses": [
                 {
                   "strategy": "combat-tokens",
-                  "commanderStrategyScore": 9,
+                  "commanderStrategyScore": 8,
                   "cutAffinityScore": 6,
                   "addAffinityScore": 0,
                   "netAffinityLoss": 6,
@@ -6199,7 +6227,7 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
+                      "commanderStrategyScore": 8,
                       "cutAffinityScore": 12,
                       "addAffinityScore": 6,
                       "netAffinityLoss": 6,
@@ -6652,7 +6680,7 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
+                      "commanderStrategyScore": 8,
                       "cutAffinityScore": 12,
                       "addAffinityScore": 0,
                       "netAffinityLoss": 12,
@@ -7097,7 +7125,7 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
+                      "commanderStrategyScore": 8,
                       "cutAffinityScore": 12,
                       "addAffinityScore": 0,
                       "netAffinityLoss": 12,
@@ -7536,10 +7564,10 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
+                      "commanderStrategyScore": 8,
                       "cutAffinityScore": 12,
-                      "addAffinityScore": 5,
-                      "netAffinityLoss": 7,
+                      "addAffinityScore": 4,
+                      "netAffinityLoss": 8,
                       "strongestCutProtectionApplied": 4
                     },
                     {
@@ -7555,8 +7583,8 @@
                     {
                       "strategy": "combat-tokens",
                       "cutAffinityScore": 12,
-                      "addAffinityScore": 5,
-                      "netAffinityDelta": -7
+                      "addAffinityScore": 4,
+                      "netAffinityDelta": -8
                     },
                     {
                       "strategy": "food-lifegain",
@@ -7660,7 +7688,7 @@
                     },
                     {
                       "cutStrategyAffinityScore": 7,
-                      "addStrategyAffinityScore": 17,
+                      "addStrategyAffinityScore": 16,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
                         "food-lifegain"
@@ -7931,7 +7959,7 @@
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 7,
-                        "addStrategyAffinityScore": 17,
+                        "addStrategyAffinityScore": 16,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
                           "food-lifegain"
@@ -7998,7 +8026,7 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
+                      "commanderStrategyScore": 8,
                       "cutAffinityScore": 12,
                       "addAffinityScore": 6,
                       "netAffinityLoss": 6,
@@ -8383,7 +8411,7 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
+                      "commanderStrategyScore": 8,
                       "cutAffinityScore": 12,
                       "addAffinityScore": 0,
                       "netAffinityLoss": 12,
@@ -8766,7 +8794,7 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
+                      "commanderStrategyScore": 8,
                       "cutAffinityScore": 12,
                       "addAffinityScore": 0,
                       "netAffinityLoss": 12,
@@ -9141,7 +9169,7 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
+                      "commanderStrategyScore": 8,
                       "cutAffinityScore": 12,
                       "addAffinityScore": 2,
                       "netAffinityLoss": 10,
@@ -9527,7 +9555,7 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
+                      "commanderStrategyScore": 8,
                       "cutAffinityScore": 12,
                       "addAffinityScore": 6,
                       "netAffinityLoss": 6,
@@ -9852,7 +9880,7 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
+                      "commanderStrategyScore": 8,
                       "cutAffinityScore": 12,
                       "addAffinityScore": 0,
                       "netAffinityLoss": 12,
@@ -10167,7 +10195,7 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
+                      "commanderStrategyScore": 8,
                       "cutAffinityScore": 12,
                       "addAffinityScore": 0,
                       "netAffinityLoss": 12,
@@ -10484,7 +10512,7 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
+                      "commanderStrategyScore": 8,
                       "cutAffinityScore": 12,
                       "addAffinityScore": 0,
                       "netAffinityLoss": 12,
@@ -11051,7 +11079,7 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
+                      "commanderStrategyScore": 8,
                       "cutAffinityScore": 6,
                       "addAffinityScore": 0,
                       "netAffinityLoss": 6,
@@ -11284,7 +11312,7 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
+                      "commanderStrategyScore": 8,
                       "cutAffinityScore": 6,
                       "addAffinityScore": 0,
                       "netAffinityLoss": 6,
@@ -11505,7 +11533,7 @@
                   "meaningfulLosses": [
                     {
                       "strategy": "combat-tokens",
-                      "commanderStrategyScore": 9,
+                      "commanderStrategyScore": 8,
                       "cutAffinityScore": 6,
                       "addAffinityScore": 0,
                       "netAffinityLoss": 6,
