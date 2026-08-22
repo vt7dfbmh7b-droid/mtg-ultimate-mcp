@@ -1,0 +1,102 @@
+name: INTEL-02 Self-Reporting Repair Runner
+
+on:
+  push:
+    branches:
+      - agent/v15-native-deck-intelligence
+    paths:
+      - .github/workflows/intel02-repair-runner.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/v15-native-deck-intelligence
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Apply, validate, and persist result
+        shell: bash
+        run: |
+          set +e
+          mkdir -p test-results/intel02-shared-truth-repair
+          : > /tmp/intel02-repair.log
+
+          python3 - <<'PY' >> /tmp/intel02-repair.log 2>&1
+          from pathlib import Path
+          source = Path('.github/workflows/intel02-shared-truth-repair.yml').read_text().splitlines()
+          start = next(i for i, line in enumerate(source) if line.strip() == "python3 - <<'PY'") + 1
+          end = next(i for i in range(start, len(source)) if source[i].strip() == 'PY')
+          repair = [(line[10:] if line.startswith('          ') else line) for line in source[start:end]]
+          Path('/tmp/intel02-repair.py').write_text('\n'.join(repair) + '\n')
+          PY
+          extract_status=$?
+
+          if [ "$extract_status" -eq 0 ]; then
+            python3 /tmp/intel02-repair.py >> /tmp/intel02-repair.log 2>&1
+            patch_status=$?
+          else
+            patch_status=99
+          fi
+
+          install_status=99
+          build_status=99
+          test_status=99
+          if [ "$patch_status" -eq 0 ]; then
+            npm ci >> /tmp/intel02-repair.log 2>&1
+            install_status=$?
+          fi
+          if [ "$install_status" -eq 0 ]; then
+            npm run build >> /tmp/intel02-repair.log 2>&1
+            build_status=$?
+          fi
+          if [ "$build_status" -eq 0 ]; then
+            npm test >> /tmp/intel02-repair.log 2>&1
+            test_status=$?
+          fi
+
+          {
+            echo "source=$(git rev-parse HEAD)"
+            echo "extract_status=$extract_status"
+            echo "patch_status=$patch_status"
+            echo "install_status=$install_status"
+            echo "build_status=$build_status"
+            echo "test_status=$test_status"
+            echo "--- log tail ---"
+            tail -n 240 /tmp/intel02-repair.log
+          } > /tmp/status.txt
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if [ "$extract_status" -eq 0 ] && [ "$patch_status" -eq 0 ] && [ "$install_status" -eq 0 ] && [ "$build_status" -eq 0 ] && [ "$test_status" -eq 0 ]; then
+            cp /tmp/status.txt test-results/intel02-shared-truth-repair/status.txt
+            rm -f .github/workflows/intel02-shared-truth-repair.yml
+            rm -f .github/workflows/intel02-pr-repair.yml
+            rm -f .github/workflows/intel02-repair-runner.yml
+            git add src/services/scryfall.ts src/services/upgrade.ts src/services/deck-builder-v07.ts src/services/card-role-truth-v15.test.ts src/services/upgrade-target-priority-v15.test.ts test-results/intel02-shared-truth-repair/status.txt .github/workflows/intel02-shared-truth-repair.yml .github/workflows/intel02-pr-repair.yml .github/workflows/intel02-repair-runner.yml
+            git diff --cached --check || exit 1
+            git commit -m "fix(intel02): preserve authoritative upgrade truth"
+            git push origin HEAD:agent/v15-native-deck-intelligence
+            exit 0
+          fi
+
+          git reset --hard HEAD
+          mkdir -p test-results/intel02-shared-truth-repair
+          cp /tmp/status.txt test-results/intel02-shared-truth-repair/status.txt
+          rm -f .github/workflows/intel02-shared-truth-repair.yml
+          rm -f .github/workflows/intel02-pr-repair.yml
+          rm -f .github/workflows/intel02-repair-runner.yml
+          git add test-results/intel02-shared-truth-repair/status.txt .github/workflows/intel02-shared-truth-repair.yml .github/workflows/intel02-pr-repair.yml .github/workflows/intel02-repair-runner.yml
+          git commit -m "test(intel02): persist shared-truth repair failure"
+          git push origin HEAD:agent/v15-native-deck-intelligence
+          exit 1
