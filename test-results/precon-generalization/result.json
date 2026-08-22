@@ -1,5 +1,5 @@
 {
-  "schema": "precon-generalization-v15.1",
+  "schema": "precon-generalization-v15.2",
   "sourceBaseline": "MTGJSON exact stock deck",
   "precon": {
     "name": "Necron Dynasties",
@@ -11784,6 +11784,35 @@
     "perSwapPreserved": true,
     "meaningfulLosses": []
   },
+  "cumulativeStrategyRetention": {
+    "preserved": true,
+    "missingStrategies": [],
+    "materiallyErodedStrategies": [],
+    "strategies": [
+      {
+        "archetype": "graveyard-reanimator",
+        "beforeSupportCount": 26,
+        "afterSupportCount": 27,
+        "supportRetention": 1.0384615384615385,
+        "beforeAffinityTotal": 237,
+        "afterAffinityTotal": 249,
+        "affinityRetention": 1.0506329113924051,
+        "preserved": true
+      },
+      {
+        "archetype": "artifact-engine",
+        "beforeSupportCount": 54,
+        "afterSupportCount": 54,
+        "supportRetention": 1,
+        "beforeAffinityTotal": 333,
+        "afterAffinityTotal": 339,
+        "affinityRetention": 1.018018018018018,
+        "preserved": true
+      }
+    ],
+    "minimumAffinityRetention": 0.9,
+    "minimumSupportRetention": 0.8
+  },
   "outcome": {
     "refined": true,
     "measurableTargetProgress": true,
@@ -11791,6 +11820,7 @@
     "noStructuralFloorRegression": true,
     "bracketNotLowered": true,
     "strategyEvidenceComplete": true,
-    "commanderStrategyPreserved": true
+    "commanderStrategyPreserved": true,
+    "cumulativeCommanderStrategyPreserved": true
   }
 }
