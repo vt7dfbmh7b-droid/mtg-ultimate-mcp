@@ -20,6 +20,8 @@ const TARGET_BRACKET = 4;
 const MAX_NZD_PER_CARD = 35;
 const MAX_TOTAL_NZD = 200;
 const MAX_SWAPS = 12;
+const MIN_STRATEGY_AFFINITY_RETENTION = 0.90;
+const MIN_STRATEGY_SUPPORT_RETENTION = 0.80;
 const B4_TARGETS = {
   averageNonlandManaValue: 3.1,
   earlyPlayCount: 25,
@@ -34,6 +36,13 @@ const B4_TARGETS = {
   protectionCount: 6,
   persistentColoredManaSourceCount: 4,
 } as const;
+
+type StrategyTruthV15 = {
+  archetype: string;
+  commanderScore: number;
+  supportCount: number;
+  affinityTotal: number;
+};
 
 function record(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
@@ -56,12 +65,7 @@ async function verifyDeck(decklist: string): Promise<{
   commanderLegal: boolean;
   commanderNames: string[];
   substantiveStrategyCount: number;
-  strategies: Array<{
-    archetype: string;
-    commanderScore: number;
-    supportCount: number;
-    affinityTotal: number;
-  }>;
+  strategies: StrategyTruthV15[];
 }> {
   const parsed = parseDecklist(decklist);
   assert.equal(parsed.totalCards, 100, 'generalization control must retain exactly 100 cards');
@@ -99,6 +103,70 @@ async function verifyDeck(decklist: string): Promise<{
     commanderNames: [...parsed.commanders.map((entry) => entry.name)].sort((a, b) => a.localeCompare(b)),
     substantiveStrategyCount: strategies.length,
     strategies,
+  };
+}
+
+function cumulativeStrategyRetention(
+  before: readonly StrategyTruthV15[],
+  after: readonly StrategyTruthV15[],
+): {
+  preserved: boolean;
+  missingStrategies: string[];
+  materiallyErodedStrategies: string[];
+  strategies: Array<{
+    archetype: string;
+    beforeSupportCount: number;
+    afterSupportCount: number | null;
+    supportRetention: number | null;
+    beforeAffinityTotal: number;
+    afterAffinityTotal: number | null;
+    affinityRetention: number | null;
+    preserved: boolean;
+  }>;
+  minimumAffinityRetention: number;
+  minimumSupportRetention: number;
+} {
+  const afterByArchetype = new Map(after.map((strategy) => [strategy.archetype, strategy] as const));
+  const missingStrategies: string[] = [];
+  const materiallyErodedStrategies: string[] = [];
+  const strategies = before.map((prior) => {
+    const next = afterByArchetype.get(prior.archetype);
+    if (!next) {
+      missingStrategies.push(prior.archetype);
+      return {
+        archetype: prior.archetype,
+        beforeSupportCount: prior.supportCount,
+        afterSupportCount: null,
+        supportRetention: null,
+        beforeAffinityTotal: prior.affinityTotal,
+        afterAffinityTotal: null,
+        affinityRetention: null,
+        preserved: false,
+      };
+    }
+    const supportRetention = prior.supportCount > 0 ? next.supportCount / prior.supportCount : 1;
+    const affinityRetention = prior.affinityTotal > 0 ? next.affinityTotal / prior.affinityTotal : 1;
+    const preserved = supportRetention >= MIN_STRATEGY_SUPPORT_RETENTION
+      && affinityRetention >= MIN_STRATEGY_AFFINITY_RETENTION;
+    if (!preserved) materiallyErodedStrategies.push(prior.archetype);
+    return {
+      archetype: prior.archetype,
+      beforeSupportCount: prior.supportCount,
+      afterSupportCount: next.supportCount,
+      supportRetention,
+      beforeAffinityTotal: prior.affinityTotal,
+      afterAffinityTotal: next.affinityTotal,
+      affinityRetention,
+      preserved,
+    };
+  });
+  return {
+    preserved: missingStrategies.length === 0 && materiallyErodedStrategies.length === 0,
+    missingStrategies,
+    materiallyErodedStrategies,
+    strategies,
+    minimumAffinityRetention: MIN_STRATEGY_AFFINITY_RETENTION,
+    minimumSupportRetention: MIN_STRATEGY_SUPPORT_RETENTION,
   };
 }
 
@@ -318,8 +386,9 @@ async function main(): Promise<void> {
     evidenceHealth(after),
   );
   const strategy = strategyAudit(refinement);
+  const cumulativeStrategy = cumulativeStrategyRetention(stockTruth.strategies, finalTruth.strategies);
   const output = {
-    schema: 'precon-generalization-v15.1',
+    schema: 'precon-generalization-v15.2',
     sourceBaseline: 'MTGJSON exact stock deck',
     precon: {
       name: stock.entry.name,
@@ -355,6 +424,7 @@ async function main(): Promise<void> {
     },
     progress,
     strategyAudit: strategy,
+    cumulativeStrategyRetention: cumulativeStrategy,
     outcome: {
       refined: refinement.status === 'refined' && finite(refinement.totalSwaps) > 0,
       measurableTargetProgress: progress.repaired.length > 0
@@ -364,7 +434,11 @@ async function main(): Promise<void> {
       noStructuralFloorRegression: progress.regressedStructuralFloor.length === 0,
       bracketNotLowered: after.actualBracket.assessedBracket >= before.actualBracket.assessedBracket,
       strategyEvidenceComplete: strategy.evidenceComplete,
-      commanderStrategyPreserved: strategy.aggregatePreserved && strategy.perSwapPreserved && strategy.meaningfulLosses.length === 0,
+      commanderStrategyPreserved: strategy.aggregatePreserved
+        && strategy.perSwapPreserved
+        && strategy.meaningfulLosses.length === 0
+        && cumulativeStrategy.preserved,
+      cumulativeCommanderStrategyPreserved: cumulativeStrategy.preserved,
     },
   };
   await writeFile('precon-generalization-result.json', `${JSON.stringify(output, null, 2)}\n`);
@@ -380,6 +454,7 @@ async function main(): Promise<void> {
     afterSignals,
     progress,
     strategyAudit: strategy,
+    cumulativeStrategyRetention: cumulativeStrategy,
   }, null, 2));
 }
 
