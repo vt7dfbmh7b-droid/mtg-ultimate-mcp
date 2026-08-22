@@ -1,0 +1,121 @@
+name: INTEL-02 Validation Harness
+
+on:
+  pull_request:
+    branches: ["agent/v15-native-deck-intelligence"]
+    types: [opened, synchronize, reopened, edited]
+
+permissions:
+  contents: read
+
+env:
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  validate-intel02:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    steps:
+      - name: Check out PR test tree
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate project-management recovery state
+        run: |
+          npm run project:typecheck
+          npm run project:validate
+          npm run validation:validate
+          npm run project:resume > /dev/null
+
+      - name: Type-check and build
+        run: npm run build
+
+      - name: Run full unit/regression suite
+        run: npm test
+
+      - name: Require checked-in target-progress guard and focused regressions
+        run: |
+          grep -q "zeroTargetProgressWhileFailedGatesRemain" src/services/optimizer-v11.ts
+          grep -q "candidateTargetGateProgressGateV15" src/services/optimizer-v12.ts
+          npx tsx --test \
+            src/services/optimizer-v11.test.ts \
+            src/services/optimizer-v12-target-progress.test.ts \
+            src/services/commander-target-pressure-v15.test.ts \
+            src/services/target-gate-improvement-v15.test.ts \
+            src/services/deck-builder-win-package-ceiling-v15.test.ts \
+            src/services/win-package-pagination-v15.test.ts \
+            src/services/win-package-restricted-pool-v15.test.ts \
+            src/services/general-win-package-v15.test.ts \
+            src/services/full-table-win-closure-v15.test.ts
+
+      - name: Refine selected Marvel-only Bracket 5 attempt
+        id: refine_control
+        continue-on-error: true
+        run: npx tsx scripts/e2e-marvel-bracket5-refine-v15.ts
+
+      - name: Require accepted changes to advance a real failed Bracket-5 construction gate
+        id: target_quality
+        if: steps.refine_control.outcome == 'success'
+        continue-on-error: true
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const result = JSON.parse(fs.readFileSync('marvel-bracket5-refine-result.json', 'utf8'));
+          if (!result?.delta?.deckChanged) {
+            throw new Error('Refinement kept the original deck and therefore did not demonstrate INTEL-02 target improvement.');
+          }
+          const before = new Map((result.startingDeck?.bracket5ThresholdChecks ?? []).map((c) => [c.key, c]));
+          const after = new Map((result.finalDeck?.bracket5ThresholdChecks ?? []).map((c) => [c.key, c]));
+          const failedConstruction = [...before.values()].filter((c) => c.category === 'construction' && c.passed === false);
+          const repaired = failedConstruction.filter((c) => after.get(c.key)?.passed === true).map((c) => c.key);
+          const advanced = failedConstruction.filter((check) => {
+            if (after.get(check.key)?.passed === true) return false;
+            const beforeValue = Number(check.observed);
+            const afterValue = Number(after.get(check.key)?.observed);
+            if (!Number.isFinite(beforeValue) || !Number.isFinite(afterValue)) return false;
+            return check.key === 'average-nonland-mv' ? afterValue < beforeValue : afterValue > beforeValue;
+          }).map((c) => c.key);
+          const regressed = [...before.values()]
+            .filter((c) => c.category === 'construction' && c.passed === true && after.get(c.key)?.passed === false)
+            .map((c) => c.key);
+          if (regressed.length > 0) {
+            throw new Error(`Refinement regressed previously passing B5 construction gates: ${regressed.join(',')}`);
+          }
+          if (repaired.length === 0 && advanced.length === 0) {
+            throw new Error('Refinement changed the deck without repairing or measurably advancing any failed B5 construction gate.');
+          }
+          console.log(`Target quality gate passed. Repaired=${repaired.join(',') || 'none'}; advanced=${advanced.join(',') || 'none'}`);
+          NODE
+
+      - name: Upload Marvel evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: intel02-marvel-evidence-${{ github.event.pull_request.head.sha }}
+          path: |
+            marvel-bracket5-refine-result.json
+            marvel-bracket5-refined-deck.txt
+            marvel-bracket5-refine-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Require Marvel refinement control and target-quality success
+        if: always()
+        env:
+          EXECUTION_OUTCOME: ${{ steps.refine_control.outcome }}
+          TARGET_QUALITY_OUTCOME: ${{ steps.target_quality.outcome }}
+        run: |
+          test "$EXECUTION_OUTCOME" = success
+          test "$TARGET_QUALITY_OUTCOME" = success
