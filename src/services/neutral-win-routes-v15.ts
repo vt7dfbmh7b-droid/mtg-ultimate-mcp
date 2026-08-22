@@ -23,6 +23,10 @@ function foodTextCount(cards: readonly ScryfallCard[]): number {
   return cards.reduce((count, card) => count + (/\bfoods?\b/i.test(getCardOracleText(card)) ? 1 : 0), 0);
 }
 
+function artifactCount(cards: readonly ScryfallCard[]): number {
+  return cards.reduce((count, card) => count + (/\bartifact\b/i.test(card.type_line) ? 1 : 0), 0);
+}
+
 function strategyPrimary(
   archetype: NeutralArchetypeV15,
   cards: readonly ScryfallCard[],
@@ -59,6 +63,12 @@ function strategyPrimary(
         kind: 'recursion',
         label: 'Recursive graveyard threats and reanimation pressure',
         evidence: [`${roleCount(cards, 'graveyard recursion')} graveyard-recursion cards`],
+      };
+    case 'artifact-engine':
+      return {
+        kind: 'control-value',
+        label: 'Artifact engine pressure backed by recursive value',
+        evidence: [`${artifactCount(cards)} artifact cards`, `${roleCount(cards, 'graveyard recursion')} graveyard-recursion cards`],
       };
     case 'aristocrats':
       return {
