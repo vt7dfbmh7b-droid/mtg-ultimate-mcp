@@ -1,0 +1,7 @@
+
+> mtg-ultimate-mcp@0.13.0 build
+> tsc -p tsconfig.json
+
+src/services/neutral-deck-builder-v15.ts(63,7): error TS2741: Property '"artifact-engine"' is missing in type '{ 'combat-tokens': { lands: number; roles: { ramp: number; draw: number; interaction: number; protection: number; tutors: number; recursion: number; boardWipes: number; early: number; }; }; 'equipment-voltron': { lands: number; roles: { ramp: number; draw: number; interaction: number; protection: number; tutors: num...' but required in type 'Record<NeutralArchetypeV15, NeutralProfileV15>'.
+src/services/neutral-unrestricted-pool-v15.ts(109,59): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
+src/services/neutral-win-routes-v15.ts(30,4): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
