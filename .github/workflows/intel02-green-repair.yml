@@ -1,0 +1,64 @@
+name: INTEL-02 Corrected Shared Truth Repair
+
+on:
+  push:
+    branches: [agent/v15-native-deck-intelligence]
+    paths: [.github/workflows/intel02-green-repair.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/v15-native-deck-intelligence
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Apply corrected repair and validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git show 4e2b1110a8cb089892f3837e8f573ce80400b976:.github/workflows/intel02-shared-truth-repair.yml > /tmp/staged.yml
+          python3 - <<'PY'
+          from pathlib import Path
+          source = Path('/tmp/staged.yml').read_text().splitlines()
+          start = next(i for i, line in enumerate(source) if line.strip() == "python3 - <<'PY'") + 1
+          end = next(i for i in range(start, len(source)) if source[i].strip() == 'PY')
+          Path('/tmp/repair.py').write_text('\n'.join((line[10:] if line.startswith('          ') else line) for line in source[start:end]) + '\n')
+          PY
+          python3 /tmp/repair.py
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('src/services/deck-builder-v07.ts')
+          text = p.read_text()
+          old = "const selectionTargetGate = asUpgradeTargetGateV15(selection.candidate.authoritativeTargetGate);"
+          new = "const selectionTargetGate = asUpgradeTargetGateV15(selection.candidate.authoritativeTargetGate)\n      ?? (selection.role === 'average-nonland-mv' ? 'average-nonland-mv' : null);"
+          if text.count(old) != 1:
+              raise SystemExit(f'expected one provenance assignment, found {text.count(old)}')
+          p.write_text(text.replace(old, new, 1))
+          PY
+          npm ci
+          npm run build
+          npm test | tee /tmp/tests.log
+          mkdir -p test-results/intel02-shared-truth-repair
+          {
+            echo "source_before_repair=$(git rev-parse HEAD)"
+            echo "build=pass"
+            echo "tests=pass"
+            grep '^# tests ' /tmp/tests.log | tail -1
+            grep '^# pass ' /tmp/tests.log | tail -1
+            grep '^# fail ' /tmp/tests.log | tail -1
+          } > test-results/intel02-shared-truth-repair/validated-repair.txt
+          rm .github/workflows/intel02-green-repair.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/services/scryfall.ts src/services/upgrade.ts src/services/deck-builder-v07.ts src/services/card-role-truth-v15.test.ts src/services/upgrade-target-priority-v15.test.ts test-results/intel02-shared-truth-repair/validated-repair.txt .github/workflows/intel02-green-repair.yml
+          git diff --cached --check
+          git commit -m "fix(intel02): preserve authoritative upgrade gates"
+          git push origin HEAD:agent/v15-native-deck-intelligence
