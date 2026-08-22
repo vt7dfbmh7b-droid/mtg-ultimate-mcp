@@ -43,7 +43,8 @@
       "rampCount": 16,
       "drawCount": 14,
       "interactionCount": 12,
-      "protectionCount": 0
+      "protectionCount": 0,
+      "persistentColoredManaSourceCount": 9
     },
     "verifiedWinningCombos": 0,
     "targetComparison": {
@@ -588,6 +589,8 @@
               "remainingStructuralDeficitAfterSwap": 12,
               "authoritativeTargetGate": null,
               "nonlandManaValueReduction": null,
+              "persistentColoredManaSourcesAfterSwap": 9,
+              "persistentColoredManaSourceFloor": 6,
               "strategyPreservation": {
                 "cutStrategyAffinityScore": 0,
                 "addStrategyAffinityScore": 0,
@@ -635,6 +638,8 @@
               "remainingStructuralDeficitAfterSwap": 11,
               "authoritativeTargetGate": null,
               "nonlandManaValueReduction": null,
+              "persistentColoredManaSourcesAfterSwap": 9,
+              "persistentColoredManaSourceFloor": 6,
               "strategyPreservation": {
                 "cutStrategyAffinityScore": 6,
                 "addStrategyAffinityScore": 6,
@@ -685,6 +690,8 @@
               "remainingStructuralDeficitAfterSwap": 10,
               "authoritativeTargetGate": null,
               "nonlandManaValueReduction": null,
+              "persistentColoredManaSourcesAfterSwap": 9,
+              "persistentColoredManaSourceFloor": 6,
               "strategyPreservation": {
                 "cutStrategyAffinityScore": 1,
                 "addStrategyAffinityScore": 6,
@@ -735,6 +742,8 @@
               "remainingStructuralDeficitAfterSwap": 8,
               "authoritativeTargetGate": null,
               "nonlandManaValueReduction": null,
+              "persistentColoredManaSourcesAfterSwap": 9,
+              "persistentColoredManaSourceFloor": 6,
               "strategyPreservation": {
                 "cutStrategyAffinityScore": 6,
                 "addStrategyAffinityScore": 6,
@@ -4059,6 +4068,7 @@
                     "addRoles": [
                       "land ramp",
                       "land tutor",
+                      "persistent colored mana source",
                       "tutor"
                     ],
                     "unreplacedRoles": [
@@ -4403,6 +4413,7 @@
                         "addRoles": [
                           "land ramp",
                           "land tutor",
+                          "persistent colored mana source",
                           "tutor"
                         ],
                         "unreplacedRoles": [],
@@ -4650,6 +4661,7 @@
                         "addRoles": [
                           "land ramp",
                           "land tutor",
+                          "persistent colored mana source",
                           "tutor"
                         ],
                         "unreplacedRoles": [
@@ -4694,6 +4706,7 @@
                           "creature",
                           "mana acceleration",
                           "mana dork",
+                          "persistent colored mana source",
                           "tutor"
                         ],
                         "unreplacedRoles": [],
@@ -4920,6 +4933,7 @@
                           "creature",
                           "mana acceleration",
                           "mana dork",
+                          "persistent colored mana source",
                           "tutor"
                         ],
                         "unreplacedRoles": [
@@ -5929,6 +5943,7 @@
                         "addRoles": [
                           "land ramp",
                           "land tutor",
+                          "persistent colored mana source",
                           "tutor"
                         ],
                         "unreplacedRoles": [
@@ -5973,6 +5988,7 @@
                           "creature",
                           "mana acceleration",
                           "mana dork",
+                          "persistent colored mana source",
                           "tutor"
                         ],
                         "unreplacedRoles": [],
@@ -6160,6 +6176,7 @@
                           "creature",
                           "mana acceleration",
                           "mana dork",
+                          "persistent colored mana source",
                           "tutor"
                         ],
                         "unreplacedRoles": [
@@ -7294,6 +7311,7 @@
                         "addRoles": [
                           "land ramp",
                           "land tutor",
+                          "persistent colored mana source",
                           "tutor"
                         ],
                         "unreplacedRoles": [
@@ -7492,6 +7510,7 @@
                         "addRoles": [
                           "land ramp",
                           "land tutor",
+                          "persistent colored mana source",
                           "tutor"
                         ],
                         "unreplacedRoles": [
@@ -7543,6 +7562,7 @@
                           "creature",
                           "mana acceleration",
                           "mana dork",
+                          "persistent colored mana source",
                           "tutor"
                         ],
                         "unreplacedRoles": [
@@ -8336,6 +8356,7 @@
                         "addRoles": [
                           "land ramp",
                           "land tutor",
+                          "persistent colored mana source",
                           "tutor"
                         ],
                         "unreplacedRoles": [
@@ -8387,7 +8408,8 @@
       "rampCount": 16,
       "drawCount": 14,
       "interactionCount": 13,
-      "protectionCount": 4
+      "protectionCount": 4,
+      "persistentColoredManaSourceCount": 9
     },
     "verifiedWinningCombos": 0,
     "targetComparison": {

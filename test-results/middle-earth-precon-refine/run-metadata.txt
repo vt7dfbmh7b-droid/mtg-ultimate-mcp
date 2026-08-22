@@ -1,6 +1,6 @@
-source_sha=48a7c3f57c10ce855787cc247e371365e53e8ad6
-workflow_source_sha=48a7c3f57c10ce855787cc247e371365e53e8ad6
-executed_head_sha=48a7c3f57c10ce855787cc247e371365e53e8ad6
+source_sha=28e56160f05509af4b8d6c3d60fc53240a00a4bc
+workflow_source_sha=28e56160f05509af4b8d6c3d60fc53240a00a4bc
+executed_head_sha=28e56160f05509af4b8d6c3d60fc53240a00a4bc
 control_outcome=success
 build_outcome=success
 regression_outcome=success
@@ -15,5 +15,6 @@ commander_legality=true
 hard_budget_truth=true
 food_lifegain_identity_required=true
 structural_floors_required=true
+persistent_colored_mana_floor=true
 meaningful_strategy_loss_rejected=true
 negative_win_evidence_complete=true
