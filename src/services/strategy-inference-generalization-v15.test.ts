@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { ScryfallCard } from '../types/scryfall.js';
 import { inferNeutralStrategyV15 } from './neutral-commander-selection-v15.js';
+import { neutralUnrestrictedStrataV15 } from './neutral-unrestricted-pool-v15.js';
+import { deriveNeutralWinRoutesV15 } from './neutral-win-routes-v15.js';
 
 function card(input: {
   name: string;
@@ -66,4 +68,30 @@ test('mass graveyard exchange text is recognized as graveyard-reanimator support
   assert.equal(ranked[0]?.archetype, 'graveyard-reanimator');
   assert.ok((graveyard?.score ?? 0) >= 6);
   assert.ok(graveyard?.evidence.some((entry) => entry.includes('mass graveyard return')));
+});
+
+test('artifact-engine unrestricted discovery includes a dedicated artifact stratum', () => {
+  const strata = neutralUnrestrictedStrataV15(['B'], 'artifact-engine');
+  const artifactQueries = strata.filter((stratum) => stratum.family === 'archetype').map((stratum) => stratum.query);
+
+  assert.equal(artifactQueries.length, 3);
+  assert.ok(artifactQueries.every((query) => query.includes('t:artifact OR o:artifact OR o:Vehicle')));
+});
+
+test('artifact-engine win-route reporting describes artifact pressure rather than generic combat', () => {
+  const engine = card({
+    name: 'Unnamed Artifact Engine',
+    typeLine: 'Artifact Creature — Construct',
+    oracleText: 'When this creature enters, return target artifact card from your graveyard to your hand.',
+  });
+  const routes = deriveNeutralWinRoutesV15({
+    archetype: 'artifact-engine',
+    cards: [engine],
+    verifiedWinningCombos: 0,
+    efficientWinPlanSupported: false,
+  });
+
+  assert.equal(routes.primary.kind, 'control-value');
+  assert.match(routes.primary.label, /Artifact engine/i);
+  assert.ok(routes.primary.evidence.some((entry) => entry.includes('artifact cards')));
 });
