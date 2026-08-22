@@ -107,6 +107,10 @@ async function main(): Promise<void> {
     schema: 'marvel-bracket5-refinement-live-v15.2',
     startingDeck: {
       commander: before.parsed.commanders.map((entry) => entry.name),
+      hardGatesPassed: before.hardGatesPassed,
+      commanderLegal: before.commanderRules.isLegal,
+      cardCount: before.parsed.totalCards,
+      printingPolicySatisfied: before.printingPolicySatisfied,
       assessedBracket: before.actualBracket.assessedBracket,
       assessedBand: before.actualBracket.assessedBand,
       bracket5ConstructionCandidate: before.actualBracket.bracket5ConstructionCandidate,
@@ -130,6 +134,8 @@ async function main(): Promise<void> {
       themeConstraint: refinement.themeConstraint ?? null,
     },
     finalDeck: {
+      hardGatesPassed: after.hardGatesPassed,
+      commanderLegal: after.commanderRules.isLegal,
       assessedBracket: after.actualBracket.assessedBracket,
       assessedBand: after.actualBracket.assessedBand,
       bracket5ConstructionCandidate: after.actualBracket.bracket5ConstructionCandidate,

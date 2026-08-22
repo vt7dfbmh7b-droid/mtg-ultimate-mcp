@@ -12,6 +12,7 @@ on:
       - "src/services/scryfall.ts"
       - "src/services/card-role-truth-v15.test.ts"
       - "src/services/deck-builder-v07.ts"
+      - "src/services/deck.ts"
       - "src/services/general-win-package-v15.ts"
       - "src/services/general-win-package-v15.test.ts"
       - "src/services/upgrade.ts"
@@ -28,6 +29,7 @@ on:
       - "src/services/scryfall.ts"
       - "src/services/card-role-truth-v15.test.ts"
       - "src/services/deck-builder-v07.ts"
+      - "src/services/deck.ts"
       - "src/services/general-win-package-v15.ts"
       - "src/services/general-win-package-v15.test.ts"
       - "src/services/upgrade.ts"
@@ -64,6 +66,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Type-check permanent Marvel printing-family policy
+        id: source_build
         run: npm run build
       - name: Use existing four-card win-package maximum
         run: |
@@ -85,13 +88,104 @@ jobs:
           mkdir -p test-results/marvel-bracket5
           cp marvel-bracket5-selected-deck.txt test-results/marvel-bracket5/selected-deck.txt
           npx tsx scripts/e2e-marvel-bracket5-refine-v15.ts
+      - name: Require broad whole-deck target and mana quality
+        id: target_quality
+        if: steps.marvel_refine.outcome == 'success'
+        continue-on-error: true
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const result = JSON.parse(fs.readFileSync('marvel-bracket5-refine-result.json', 'utf8'));
+          if (result.refinement?.status !== 'refined' || Number(result.refinement?.totalSwaps) < 1) {
+            throw new Error('Broad Marvel refinement did not accept a supported package.');
+          }
+          if (
+            result.finalDeck?.hardGatesPassed !== true
+            || result.finalDeck?.commanderLegal !== true
+            || result.finalDeck?.cardCount !== 100
+            || result.finalDeck?.printingPolicySatisfied !== true
+          ) {
+            throw new Error('Broad Marvel refinement failed hard truth, Commander legality, exact-100, or printing-family truth.');
+          }
+          if ((result.delta?.failedBracket5ChecksAdded ?? []).length > 0) {
+            throw new Error(`Broad Marvel refinement added failed gates: ${result.delta.failedBracket5ChecksAdded.join(', ')}`);
+          }
+          if (!(result.delta?.failedBracket5ChecksRemoved ?? []).includes('average-nonland-mv')) {
+            throw new Error('Broad Marvel refinement did not repair the active curve gate.');
+          }
+          const before = result.startingDeck?.metrics ?? {};
+          const after = result.finalDeck?.metrics ?? {};
+          const averageNonlandManaValue = Number(after.averageNonlandManaValue);
+          if (!Number.isFinite(averageNonlandManaValue) || averageNonlandManaValue > 2.6) {
+            throw new Error('Broad Marvel refinement did not cross the Bracket-5 curve threshold.');
+          }
+          const positiveFloors = {
+            earlyPlayCount: 20,
+            rampCount: 14,
+            drawCount: 14,
+            interactionCount: 18,
+            protectionCount: 8,
+            tutorCount: 10,
+            recursionCount: 4,
+            boardWipeCount: 2,
+            persistentColoredManaSourceCount: 8,
+          };
+          for (const [key, target] of Object.entries(positiveFloors)) {
+            const beforeValue = Number(before[key]);
+            const afterValue = Number(after[key]);
+            if (!Number.isFinite(beforeValue) || !Number.isFinite(afterValue)) {
+              throw new Error(`${key} is missing from broad before/after evidence.`);
+            }
+            const floor = Math.min(beforeValue, target);
+            if (afterValue < floor) throw new Error(`${key} fell below its structural floor of ${floor}.`);
+          }
+          console.log(`Broad target quality passed with persistent colored mana ${before.persistentColoredManaSourceCount}→${after.persistentColoredManaSourceCount}.`);
+          NODE
+      - name: Require broad cut-strategy evidence
+        id: strategy_quality
+        if: steps.marvel_refine.outcome == 'success'
+        continue-on-error: true
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const result = JSON.parse(fs.readFileSync('marvel-bracket5-refine-result.json', 'utf8'));
+          const accepted = (result.refinement?.detailedRounds ?? []).filter((round) => round.accepted === true);
+          if (accepted.length < 1) throw new Error('Broad Marvel refinement has no accepted-round evidence.');
+          for (const round of accepted) {
+            const winner = (round.candidateComparisons ?? []).find((candidate) => candidate.candidate === round.winningCandidate);
+            const strategy = winner?.strategyPreservation;
+            if (!strategy?.evidenceComplete || strategy.status !== 'preserved' || (strategy.meaningfulLosses ?? []).length > 0) {
+              throw new Error(`Accepted broad round ${round.round} failed aggregate strategy preservation.`);
+            }
+            if (winner?.significantRegression !== false) {
+              throw new Error(`Accepted broad round ${round.round} has a significant simulation regression.`);
+            }
+            const swaps = winner?.swaps ?? [];
+            if (swaps.length < 1) throw new Error(`Accepted broad round ${round.round} has no per-swap evidence.`);
+            for (const swap of swaps) {
+              const pairing = swap.structuralPairing ?? {};
+              if (pairing.strategyPreservation?.verdict !== 'preserved') {
+                throw new Error(`Accepted broad round ${round.round} contains an unpreserved pairing.`);
+              }
+              const afterSources = Number(pairing.persistentColoredManaSourcesAfterSwap);
+              const sourceFloor = Number(pairing.persistentColoredManaSourceFloor);
+              if (!Number.isFinite(afterSources) || !Number.isFinite(sourceFloor) || afterSources < sourceFloor) {
+                throw new Error(`Accepted broad round ${round.round} violates its persistent colored-mana floor.`);
+              }
+            }
+          }
+          console.log(`Broad strategy quality passed for ${accepted.length} accepted round(s).`);
+          NODE
       - name: Persist live result on isolated branch
         id: persist_result
         if: ${{ always() && github.event_name == 'push' }}
         continue-on-error: true
         env:
+          BUILD_OUTCOME: ${{ steps.source_build.outcome }}
           CONTROL_OUTCOME: ${{ steps.marvel_control.outcome }}
           REFINE_OUTCOME: ${{ steps.marvel_refine.outcome }}
+          TARGET_QUALITY_OUTCOME: ${{ steps.target_quality.outcome }}
+          STRATEGY_QUALITY_OUTCOME: ${{ steps.strategy_quality.outcome }}
         shell: bash
         run: |
           set -euo pipefail
@@ -107,8 +201,19 @@ jobs:
             [ ! -f marvel-bracket5-refine-result.json ] || cp marvel-bracket5-refine-result.json test-results/marvel-bracket5-broad/refine-result.json
             [ ! -f marvel-bracket5-refined-deck.txt ] || cp marvel-bracket5-refined-deck.txt test-results/marvel-bracket5-broad/refined-deck.txt
             [ ! -f marvel-bracket5-live-failure.txt ] || cp marvel-bracket5-live-failure.txt test-results/marvel-bracket5-broad/failure.txt
-            printf 'source_sha=%s\ncontrol_outcome=%s\nrefine_outcome=%s\npolicy=permanent-production-presets\nmax_win_package_cards=4\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" "$REFINE_OUTCOME" > test-results/marvel-bracket5-broad/run-metadata.txt
-            git add -- test-results/marvel-bracket5-broad
+            AGGREGATE_OUTCOME=failure
+            if [ "$BUILD_OUTCOME" = success ] \
+              && [ "$CONTROL_OUTCOME" = success ] \
+              && [ "$REFINE_OUTCOME" = success ] \
+              && [ "$TARGET_QUALITY_OUTCOME" = success ] \
+              && [ "$STRATEGY_QUALITY_OUTCOME" = success ]; then
+              AGGREGATE_OUTCOME=success
+            fi
+            printf 'source_sha=%s\nworkflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nbuild_outcome=%s\nconstruction_outcome=%s\nrefine_outcome=%s\ntarget_quality_outcome=%s\nstrategy_preservation_outcome=%s\npolicy=permanent-production-presets\nmax_win_package_cards=4\nexact_card_count=true\ncommander_legality=true\nprinting_family_truth=true\npersistent_colored_mana_floor=true\nmeaningful_strategy_loss_rejected=true\n' \
+              "$GITHUB_SHA" "$GITHUB_SHA" "$GITHUB_SHA" "$AGGREGATE_OUTCOME" "$BUILD_OUTCOME" "$CONTROL_OUTCOME" "$REFINE_OUTCOME" "$TARGET_QUALITY_OUTCOME" "$STRATEGY_QUALITY_OUTCOME" \
+              > test-results/marvel-bracket5-broad/run-metadata.txt
+            npm run validation:index
+            git add -- test-results/marvel-bracket5-broad validation-index.json docs/VALIDATION-STATE.md
             if git diff --cached --quiet; then exit 0; fi
             git commit -m "test-results: persist Marvel permanent-family Bracket 5 control [skip ci]"
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
@@ -119,11 +224,17 @@ jobs:
       - name: Require Marvel controls to execute successfully
         if: always()
         env:
+          BUILD_OUTCOME: ${{ steps.source_build.outcome }}
           CONTROL_OUTCOME: ${{ steps.marvel_control.outcome }}
           REFINE_OUTCOME: ${{ steps.marvel_refine.outcome }}
+          TARGET_QUALITY_OUTCOME: ${{ steps.target_quality.outcome }}
+          STRATEGY_QUALITY_OUTCOME: ${{ steps.strategy_quality.outcome }}
         run: |
+          test "$BUILD_OUTCOME" = "success"
           test "$CONTROL_OUTCOME" = "success"
           test "$REFINE_OUTCOME" = "success"
+          test "$TARGET_QUALITY_OUTCOME" = "success"
+          test "$STRATEGY_QUALITY_OUTCOME" = "success"
       - name: Require live-result persistence
         if: ${{ always() && github.event_name == 'push' }}
         env:

@@ -29,6 +29,7 @@ const B4_TARGETS = {
   drawCount: 12,
   interactionCount: 14,
   protectionCount: 6,
+  persistentColoredManaSourceCount: 6,
 } as const;
 
 function record(value: unknown): Record<string, unknown> {
@@ -120,6 +121,7 @@ function b4Signals(evaluation: CommanderBuildEvaluationV15) {
     drawCount: evaluation.metrics.drawCount,
     interactionCount: evaluation.metrics.interactionCount,
     protectionCount: evaluation.metrics.protectionCount,
+    persistentColoredManaSourceCount: evaluation.metrics.persistentColoredManaSourceCount,
   };
 }
 
@@ -155,6 +157,7 @@ function b4Progress(
       'drawCount',
       'interactionCount',
       'protectionCount',
+      'persistentColoredManaSourceCount',
     ] as const).map((key) => ({
       key: `b4-${key}`,
       before: before[key],
@@ -181,6 +184,7 @@ function b4Progress(
     'drawCount',
     'interactionCount',
     'protectionCount',
+    'persistentColoredManaSourceCount',
   ] as const) {
     if (after[key] < Math.min(before[key], B4_TARGETS[key])) {
       regressedStructuralFloor.push(`b4-${key}`);

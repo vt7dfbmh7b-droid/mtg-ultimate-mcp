@@ -9,6 +9,7 @@ on:
       - "src/services/commander-strategy-affinity-v15.ts"
       - "src/services/commander-strategy-affinity-v15.test.ts"
       - "src/services/deck-builder-v07.ts"
+      - "src/services/deck.ts"
       - "src/services/neutral-commander-selection-v15.ts"
       - "src/services/neutral-deck-builder-v15.ts"
       - "src/services/neutral-themed-deck-builder-v15.ts"
@@ -124,6 +125,10 @@ jobs:
           if (Number(result.after?.signals?.averageNonlandManaValue) > 3.1 || Number(result.after?.signals?.earlyPlayCount) < 25) {
             throw new Error('The accepted package did not repair the addressable curve and early-play gates.');
           }
+          const finalColoredMana = Number(result.after?.signals?.persistentColoredManaSourceCount);
+          if (!Number.isFinite(finalColoredMana) || finalColoredMana < 6) {
+            throw new Error('The accepted package left an Abzan precon below its persistent colored-mana floor.');
+          }
           console.log(`Target quality passed. Repaired=${(progress.repaired ?? []).join(',')}; advanced=${(progress.advanced ?? []).join(',') || 'none'}`);
           NODE
 
@@ -214,7 +219,7 @@ jobs:
               && [ "$STRATEGY_QUALITY_OUTCOME" = success ]; then
               CONTROL_OUTCOME=success
             fi
-            printf 'source_sha=%s\nworkflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nbuild_outcome=%s\nregression_outcome=%s\nexecution_outcome=%s\nhard_truth_outcome=%s\ntarget_quality_outcome=%s\nstrategy_preservation_outcome=%s\npolicy=exact-food-and-fellowship-middle-earth-precon\nprinting_family=Middle-earth\nexact_card_count=true\ncommander_legality=true\nhard_budget_truth=true\nfood_lifegain_identity_required=true\nstructural_floors_required=true\nmeaningful_strategy_loss_rejected=true\nnegative_win_evidence_complete=true\n' \
+            printf 'source_sha=%s\nworkflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nbuild_outcome=%s\nregression_outcome=%s\nexecution_outcome=%s\nhard_truth_outcome=%s\ntarget_quality_outcome=%s\nstrategy_preservation_outcome=%s\npolicy=exact-food-and-fellowship-middle-earth-precon\nprinting_family=Middle-earth\nexact_card_count=true\ncommander_legality=true\nhard_budget_truth=true\nfood_lifegain_identity_required=true\nstructural_floors_required=true\npersistent_colored_mana_floor=true\nmeaningful_strategy_loss_rejected=true\nnegative_win_evidence_complete=true\n' \
               "$GITHUB_SHA" "$GITHUB_SHA" "$GITHUB_SHA" "$CONTROL_OUTCOME" "$BUILD_OUTCOME" "$REGRESSION_OUTCOME" "$EXECUTION_OUTCOME" "$HARD_TRUTH_OUTCOME" "$TARGET_QUALITY_OUTCOME" "$STRATEGY_QUALITY_OUTCOME" \
               > test-results/middle-earth-precon-refine/run-metadata.txt
             npm run validation:index

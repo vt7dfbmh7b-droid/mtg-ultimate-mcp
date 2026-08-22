@@ -37,6 +37,7 @@ export interface DeckMetrics {
   protectionCount: number;
   recursionCount: number;
   boardWipeCount: number;
+  persistentColoredManaSourceCount: number;
   structuralSignals: string[];
 }
 
@@ -215,6 +216,7 @@ export function buildDeckMetrics(parsed: ParsedDeck, cards: ScryfallCard[]): Dec
   let protectionCount = 0;
   let recursionCount = 0;
   let boardWipeCount = 0;
+  let persistentColoredManaSourceCount = 0;
 
   for (const entry of allEntries) {
     const card = resolveEntryCard(entry, cards);
@@ -245,6 +247,7 @@ export function buildDeckMetrics(parsed: ParsedDeck, cards: ScryfallCard[]): Dec
     if (roles.has('protection') || roles.has('board protection')) protectionCount += entry.quantity;
     if (roles.has('graveyard recursion')) recursionCount += entry.quantity;
     if (roles.has('board wipe')) boardWipeCount += entry.quantity;
+    if (roles.has('persistent colored mana source')) persistentColoredManaSourceCount += entry.quantity;
   }
 
   const averageNonlandManaValue = nonlandCount > 0 ? nonlandManaValue / nonlandCount : 0;
@@ -275,6 +278,7 @@ export function buildDeckMetrics(parsed: ParsedDeck, cards: ScryfallCard[]): Dec
     protectionCount,
     recursionCount,
     boardWipeCount,
+    persistentColoredManaSourceCount,
     structuralSignals,
   };
 }

@@ -38,7 +38,7 @@
       "metadataPath": "test-results/marvel-bracket5/refine-run-metadata.txt",
       "exists": true,
       "sourceSha": "48a7c3f57c10ce855787cc247e371365e53e8ad6",
-      "outcome": "pass",
+      "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
         "source_sha": "48a7c3f57c10ce855787cc247e371365e53e8ad6",
@@ -59,7 +59,40 @@
         "strategy_preservation_evidence": "true",
         "meaningful_strategy_loss_rejected": "true"
       },
-      "unmetPassConditions": []
+      "unmetPassConditions": [
+        "persistent_colored_mana_floor=true"
+      ]
+    },
+    {
+      "id": "MARVEL-B5-BROAD",
+      "label": "Marvel Bracket 5 broad autonomous refinement",
+      "claimLevel": "scenario-intelligence",
+      "milestones": [
+        "INTEL-02"
+      ],
+      "metadataPath": "test-results/marvel-bracket5-broad/run-metadata.txt",
+      "exists": true,
+      "sourceSha": "48a7c3f57c10ce855787cc247e371365e53e8ad6",
+      "outcome": "fail",
+      "matchesDevelopmentCheckpoint": false,
+      "metadata": {
+        "source_sha": "48a7c3f57c10ce855787cc247e371365e53e8ad6",
+        "control_outcome": "success",
+        "refine_outcome": "success",
+        "policy": "permanent-production-presets",
+        "max_win_package_cards": "4"
+      },
+      "unmetPassConditions": [
+        "build_outcome=success",
+        "construction_outcome=success",
+        "target_quality_outcome=success",
+        "strategy_preservation_outcome=success",
+        "exact_card_count=true",
+        "commander_legality=true",
+        "printing_family_truth=true",
+        "persistent_colored_mana_floor=true",
+        "meaningful_strategy_loss_rejected=true"
+      ]
     },
     {
       "id": "MIDDLE-EARTH-PRECON-REFINE",
@@ -71,7 +104,7 @@
       "metadataPath": "test-results/middle-earth-precon-refine/run-metadata.txt",
       "exists": true,
       "sourceSha": "48a7c3f57c10ce855787cc247e371365e53e8ad6",
-      "outcome": "pass",
+      "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
         "source_sha": "48a7c3f57c10ce855787cc247e371365e53e8ad6",
@@ -94,7 +127,9 @@
         "meaningful_strategy_loss_rejected": "true",
         "negative_win_evidence_complete": "true"
       },
-      "unmetPassConditions": []
+      "unmetPassConditions": [
+        "persistent_colored_mana_floor=true"
+      ]
     }
   ]
 }

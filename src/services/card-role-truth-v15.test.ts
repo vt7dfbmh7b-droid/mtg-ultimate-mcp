@@ -192,6 +192,24 @@ const massMinusWipe = card({
   manaCost: '{2}{B}',
 });
 
+const persistentRainbowRock = card({
+  name: 'Persistent Rainbow Rock',
+  typeLine: 'Artifact',
+  oracleText: '{T}: Add one mana of any color.',
+  cmc: 2,
+  manaCost: '{2}',
+  producedMana: ['W', 'U', 'B', 'R', 'G'],
+});
+
+const oneShotColorFilter = card({
+  name: 'One-Shot Color Filter',
+  typeLine: 'Instant',
+  oracleText: 'Add two mana in any combination of colors. Draw a card.',
+  cmc: 2,
+  manaCost: '{1}{G}',
+  producedMana: ['W', 'U', 'B', 'R', 'G'],
+});
+
 test('ordinary lands are mana sources, not mana acceleration, while true multi-mana lands remain acceleration', () => {
   assert.equal(inferCardRoles(forest).includes('mana acceleration'), false);
   assert.equal(inferCardRoles(forest).includes('land'), true);
@@ -237,6 +255,11 @@ test('self-only hexproof is not deck protection while targeted and board-wide gr
 
 test('mass negative-power removal is recognized as a board wipe', () => {
   assert.equal(inferCardRoles(massMinusWipe).includes('board wipe'), true);
+});
+
+test('persistent colored mana excludes one-shot color filtering', () => {
+  assert.equal(inferCardRoles(persistentRainbowRock).includes('persistent colored mana source'), true);
+  assert.equal(inferCardRoles(oneShotColorFilter).includes('persistent colored mana source'), false);
 });
 
 // This shared-query regression intentionally exercises the exact legacy clause still emitted by

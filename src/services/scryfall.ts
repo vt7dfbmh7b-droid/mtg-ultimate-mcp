@@ -219,6 +219,15 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (/search your library for .*land/.test(text) && /battlefield/.test(text)) roles.add('land ramp');
   if (/costs? .* less to cast/.test(text)) roles.add('cost reduction');
   if (/create .* treasure token/.test(text)) roles.add('treasure');
+  const producesColoredMana = (card.produced_mana ?? []).some((color) => /^[WUBRG]$/i.test(color));
+  const grantsPersistentManaAbility = /(?:enchanted|equipped) (?:land|permanent|creature)[^.]*\badd\b/.test(text);
+  if (
+    !isLand
+    && (
+      roles.has('land ramp')
+      || (producesColoredMana && (roles.has('mana rock') || roles.has('mana dork') || grantsPersistentManaAbility))
+    )
+  ) roles.add('persistent colored mana source');
 
   if (/draw (?:a|one|two|three|four|five|\d+) cards?/.test(text)) roles.add('card draw');
   if (/whenever .* draw a card|at the beginning of .* draw|whenever .* deals? combat damage .* draw/.test(text)) roles.add('repeatable draw');

@@ -20,6 +20,7 @@ import { getCardsByIdentifiers, getCardsByNames, inferCardRoles, searchCards, su
 import { simulateDeckGameplayV06 } from './simulation-v06.js';
 import {
   BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15,
+  minimumPersistentColoredManaSourcesV15,
   suggestDeckUpgrades,
   type UpgradeOptions,
 } from './upgrade.js';
@@ -598,6 +599,8 @@ interface UpgradePairingV15 {
   addressedRole: UpgradeAddressedRoleV15;
   structuralDeficitAfterSwap: number;
   strategyPreservation: UpgradeSwapStrategyPreservationV15;
+  persistentColoredManaSourcesAfterSwap: number;
+  persistentColoredManaSourceFloor: number;
   authoritativeTargetGate?: UpgradeTargetGateRoleV15;
   nonlandManaValueReduction?: number;
 }
@@ -668,6 +671,10 @@ function summarizedCard(item: Record<string, unknown>): Record<string, unknown> 
 
 function summarizedRoles(card: Record<string, unknown>): Set<string> {
   return new Set(Array.isArray(card.roles) ? card.roles.filter((role): role is string => typeof role === 'string') : []);
+}
+
+function summaryIsPersistentColoredManaSourceV15(card: Record<string, unknown>): boolean {
+  return summarizedRoles(card).has('persistent colored mana source');
 }
 
 function recordObject(value: unknown): Record<string, unknown> {
@@ -910,6 +917,10 @@ export function pairUpgradeSwapsByStructureV15(
     : Number.POSITIVE_INFINITY;
   let remainingCurveReduction = requiredCurveReduction;
   let counts = state.counts;
+  let persistentColoredManaSources = recordNumber(currentMetrics.persistentColoredManaSourceCount);
+  const persistentColoredManaSourceTarget = minimumPersistentColoredManaSourcesV15(
+    recordNumber(currentMetrics.commanderColorCount),
+  );
   const remainingCuts = [...cutPool];
   const pairs: UpgradePairingV15[] = [];
 
@@ -919,6 +930,12 @@ export function pairUpgradeSwapsByStructureV15(
     const addCard = summarizedCard(selection.candidate);
     const addManaValue = recordNumber(addCard.manaValue);
     const afterAdd = applySummaryToStructuralCountsV15(counts, addCard, 1);
+    const persistentColoredManaSourcesAfterAdd = persistentColoredManaSources
+      + (summaryIsPersistentColoredManaSourceV15(addCard) ? 1 : 0);
+    const persistentColoredManaSourceFloor = Math.min(
+      persistentColoredManaSources,
+      persistentColoredManaSourceTarget,
+    );
     const deficitBeforeSwap = structuralDeficitTotalV15(counts, state.targets);
     const candidateCuts = (selection.role === 'average-nonland-mv'
       ? remainingCuts.filter((cut) => recordNumber(summarizedCard(cut).manaValue) > addManaValue)
@@ -926,6 +943,9 @@ export function pairUpgradeSwapsByStructureV15(
       .filter((cut) => {
         const afterSwap = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);
         if (!preservesStructuralFloorsV15(counts, afterSwap, state.targets)) return false;
+        const persistentColoredManaSourcesAfterSwap = persistentColoredManaSourcesAfterAdd
+          - (summaryIsPersistentColoredManaSourceV15(summarizedCard(cut)) ? 1 : 0);
+        if (persistentColoredManaSourcesAfterSwap < persistentColoredManaSourceFloor) return false;
         if (selection.role === 'average-nonland-mv' || selection.role === 'win-package') return true;
         return structuralDeficitTotalV15(afterSwap, state.targets) < deficitBeforeSwap;
       });
@@ -962,6 +982,8 @@ export function pairUpgradeSwapsByStructureV15(
     if (cutIndex < 0) continue;
     remainingCuts.splice(cutIndex, 1);
     counts = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);
+    persistentColoredManaSources = persistentColoredManaSourcesAfterAdd
+      - (summaryIsPersistentColoredManaSourceV15(summarizedCard(cut)) ? 1 : 0);
     const nonlandManaValueReduction = recordNumber(summarizedCard(cut).manaValue) - addManaValue;
     if (selection.role === 'average-nonland-mv') {
       remainingCurveReduction = Math.max(0, remainingCurveReduction - nonlandManaValueReduction);
@@ -972,6 +994,8 @@ export function pairUpgradeSwapsByStructureV15(
       addressedRole: selection.role,
       structuralDeficitAfterSwap: structuralDeficitTotalV15(counts, state.targets),
       strategyPreservation: upgradeSwapStrategyPreservationV15(selection.candidate, cut),
+      persistentColoredManaSourcesAfterSwap: persistentColoredManaSources,
+      persistentColoredManaSourceFloor,
       ...(selection.role === 'average-nonland-mv' ? {
         authoritativeTargetGate: 'average-nonland-mv' as const,
         nonlandManaValueReduction: Number(nonlandManaValueReduction.toFixed(3)),
@@ -1294,6 +1318,8 @@ export async function buildSimulationBackedUpgradePlanV07(
         remainingStructuralDeficitAfterSwap: pair.structuralDeficitAfterSwap,
         authoritativeTargetGate: pair.authoritativeTargetGate ?? null,
         nonlandManaValueReduction: pair.nonlandManaValueReduction ?? null,
+        persistentColoredManaSourcesAfterSwap: pair.persistentColoredManaSourcesAfterSwap,
+        persistentColoredManaSourceFloor: pair.persistentColoredManaSourceFloor,
         strategyPreservation: pair.strategyPreservation,
       },
     })),

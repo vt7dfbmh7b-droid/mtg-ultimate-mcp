@@ -75,5 +75,23 @@ test('Middle-earth precon evidence separates execution, hard truth, target quali
   assert.match(workflowSource, /after\.foodLifegainSupportCount/);
   assert.match(workflowSource, /food_lifegain_identity_required=true/);
   assert.match(workflowSource, /structural_floors_required=true/);
+  assert.match(workflowSource, /persistent_colored_mana_floor=true/);
   assert.match(workflowSource, /negative_win_evidence_complete=true/);
+});
+
+test('Marvel controls fail closed on whole-deck quality and persistent colored-mana access', () => {
+  const focused = workflow('.github/workflows/marvel-bracket5-refine-live.yml');
+  const broad = workflow('.github/workflows/marvel-bracket5-live.yml');
+
+  assert.match(focused, /persistent_colored_mana_floor=true/);
+  assert.match(focused, /Number\.isFinite\(startingColoredMana\)/);
+  assert.match(focused, /Number\.isFinite\(afterSources\)/);
+
+  assert.match(broad, /name: Require broad whole-deck target and mana quality/);
+  assert.match(broad, /name: Require broad cut-strategy evidence/);
+  assert.match(broad, /target_quality_outcome=%s/);
+  assert.match(broad, /strategy_preservation_outcome=%s/);
+  assert.match(broad, /persistent_colored_mana_floor=true/);
+  assert.match(broad, /Number\.isFinite\(beforeValue\)/);
+  assert.match(broad, /Number\.isFinite\(afterSources\)/);
 });

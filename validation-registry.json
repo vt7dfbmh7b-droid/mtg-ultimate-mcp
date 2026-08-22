@@ -30,6 +30,28 @@
         "restricted_pool_prefilter": "true",
         "full_table_closure": "true",
         "strategy_preservation_evidence": "true",
+        "meaningful_strategy_loss_rejected": "true",
+        "persistent_colored_mana_floor": "true"
+      }
+    },
+    {
+      "id": "MARVEL-B5-BROAD",
+      "label": "Marvel Bracket 5 broad autonomous refinement",
+      "claimLevel": "scenario-intelligence",
+      "milestones": ["INTEL-02"],
+      "metadataPath": "test-results/marvel-bracket5-broad/run-metadata.txt",
+      "sourceKeys": ["source_sha", "workflow_source_sha", "executed_head_sha"],
+      "passWhen": {
+        "control_outcome": "success",
+        "build_outcome": "success",
+        "construction_outcome": "success",
+        "refine_outcome": "success",
+        "target_quality_outcome": "success",
+        "strategy_preservation_outcome": "success",
+        "exact_card_count": "true",
+        "commander_legality": "true",
+        "printing_family_truth": "true",
+        "persistent_colored_mana_floor": "true",
         "meaningful_strategy_loss_rejected": "true"
       }
     },
@@ -53,6 +75,7 @@
         "hard_budget_truth": "true",
         "food_lifegain_identity_required": "true",
         "structural_floors_required": "true",
+        "persistent_colored_mana_floor": "true",
         "meaningful_strategy_loss_rejected": "true",
         "negative_win_evidence_complete": "true"
       }

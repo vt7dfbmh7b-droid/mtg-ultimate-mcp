@@ -210,7 +210,17 @@ Risk: generic curve, interaction and protection gains can turn an addressable pr
 
 Protection: Food/lifegain is now a semantic commander archetype; upgrade evidence tracks recursion and board-wipe structure; pairing preserves every pre-existing structural floor up to the target and declines a package when every cut creates another hole. Card-role truth excludes self-only hexproof or indestructible from deck protection and recognizes mass negative-power, counters, damage, bounce and sacrifice effects as board wipes. Deterministic regressions cover the archetype, structural floors, no-safe-cut refusal and both role-classification errors. The exact Food and Fellowship live control separately gates hard truth, target improvement and strategy preservation.
 
-Status: prevented in deterministic tests and passed a local high-standard exact-precon run; exact checked-in-source live revalidation remains required before recording the restricted scenario pass.
+Status: prevented in deterministic tests and live-validated at `48a7c3f...`; the exact Food and Fellowship control made four supported swaps without reducing Food/lifegain affinity, recursion or wipes.
+
+## KF-022 — Generic ramp count hides loss of five-color mana access
+
+Observed: the broad Marvel control at `48a7c3f...` reported success after an eight-swap refinement removed Arcane Signet, Fellwar Stone, H.E.R.B.I.E. and four Talismans. Generic ramp remained above target at 23, but persistent colored mana sources fell from 12 to 5 in a five-color Najeela deck. The workflow gated execution and persistence, not whole-deck target quality, so this strategically unsafe result received a green badge.
+
+Risk: treasure, rituals, cost reduction and colorless acceleration can keep the aggregate ramp metric high while the deck loses reliable access to the commander's colors or five-color activation. An autonomous refiner can therefore improve curve arithmetic while making the deck materially less functional.
+
+Protection: role truth now distinguishes persistent colored mana from one-shot filtering and other generic ramp. Pairing tracks the count across the complete package and every accepted round, with color-count floors of four, six, seven and eight for two- through five-color command zones. Focused and broad live controls fail closed on missing or non-finite evidence, enforce whole-deck structural floors, require per-swap colored-mana evidence, and persist target-quality and strategy-quality outcomes separately. The exact five-color regression starts at 12 sources and proves no more than four may be cut below the floor of eight.
+
+Status: prevented in deterministic source tests; exact-source Marvel live revalidation is required before the broad lane may be counted as a scenario pass.
 
 ## Adding a failure
 

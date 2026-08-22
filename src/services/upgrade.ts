@@ -57,6 +57,8 @@ export interface UpgradeCandidateMetricsV15 {
   earlyPlayCount: number;
   averageNonlandManaValue: number;
   roleCounts: Record<string, number>;
+  persistentColoredManaSourceCount?: number;
+  commanderColorCount?: number;
 }
 
 export interface UpgradeCandidatePriorityV15 {
@@ -76,6 +78,12 @@ const TARGETS: Record<number, UpgradeStructuralTargetsV15> = {
   5: { ramp: 14, draw: 14, interaction: 18, freeInteraction: 0, protection: 8, tutors: 10, recursion: 4, boardWipes: 2, earlyPlays: 20 },
 };
 export const BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15 = 2.6;
+
+export function minimumPersistentColoredManaSourcesV15(commanderColorCount: number): number {
+  const colors = Math.max(0, Math.min(5, Math.trunc(commanderColorCount)));
+  if (colors <= 1) return 0;
+  return ({ 2: 4, 3: 6, 4: 7, 5: 8 } as Record<number, number>)[colors] ?? 0;
+}
 
 function clampBracket(value: number | undefined): number {
   return Math.max(1, Math.min(5, Math.trunc(value ?? 4)));
@@ -357,6 +365,10 @@ export async function suggestDeckUpgrades(
     freeInteraction: targetPressure.minimumFreeInteraction,
   };
   const metrics = buildDeckMetrics(parsed, cards);
+  const currentMetrics: UpgradeCandidateMetricsV15 = {
+    ...metrics,
+    commanderColorCount: allowedIdentity.length,
+  };
   const strategyContext = deriveCommanderStrategyContextV15(parsed, cards);
   const printingPolicy = await resolvePrintingPolicyV08({
     ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
@@ -364,7 +376,7 @@ export async function suggestDeckUpgrades(
     ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
     ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
   });
-  const candidatePriorities = upgradeCandidatePrioritiesV15(metrics, targets, targetBracket);
+  const candidatePriorities = upgradeCandidatePrioritiesV15(currentMetrics, targets, targetBracket);
   const authoritativeTargetGatePriorities = candidatePriorities
     .filter((priority) => priority.prioritySource === 'authoritative-target-gate');
   const deficits = candidatePriorities
@@ -521,7 +533,7 @@ export async function suggestDeckUpgrades(
   return {
     targetBracket,
     targetPressure,
-    currentMetrics: metrics,
+    currentMetrics,
     structuralTargets: targets,
     structuralDeficits: deficits,
     authoritativeTargetGatePriorities,

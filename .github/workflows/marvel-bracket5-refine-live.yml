@@ -8,6 +8,11 @@ on:
       - "src/services/commander-target-pressure-v15.ts"
       - "src/services/commander-target-pressure-v15.test.ts"
       - "src/services/deck-builder-v07.ts"
+      - "src/services/deck.ts"
+      - "src/services/scryfall.ts"
+      - "src/services/upgrade.ts"
+      - "src/services/card-role-truth-v15.test.ts"
+      - "src/services/upgrade-target-priority-v15.test.ts"
       - "src/services/deck-builder-win-package-ceiling-v15.test.ts"
       - "src/services/general-win-package-v15.ts"
       - "src/services/general-win-package-v15.test.ts"
@@ -99,6 +104,15 @@ jobs:
           if (repaired.length === 0 && advanced.length === 0) {
             throw new Error('Refinement changed the deck without repairing or measurably advancing any failed Bracket-5 construction gate.');
           }
+          const startingColoredMana = Number(result.startingDeck?.metrics?.persistentColoredManaSourceCount);
+          const finalColoredMana = Number(result.finalDeck?.metrics?.persistentColoredManaSourceCount);
+          if (!Number.isFinite(startingColoredMana) || !Number.isFinite(finalColoredMana)) {
+            throw new Error('Refinement is missing persistent colored-mana evidence.');
+          }
+          const coloredManaFloor = Math.min(startingColoredMana, 8);
+          if (finalColoredMana < coloredManaFloor) {
+            throw new Error(`Refinement fell below the five-color persistent-mana floor of ${coloredManaFloor}.`);
+          }
           for (const round of result.refinement?.detailedRounds ?? []) {
             if (!round.accepted) continue;
             const winner = (round.candidateComparisons ?? []).find((candidate) => candidate.candidate === round.winningCandidate);
@@ -106,9 +120,16 @@ jobs:
             if (!strategy?.evidenceComplete || strategy.status !== 'preserved' || (strategy.meaningfulLosses ?? []).length > 0) {
               throw new Error(`Accepted round ${round.round} lacks passing commander-strategy preservation evidence.`);
             }
-            for (const swap of winner.swaps ?? []) {
-              if (!swap.structuralPairing?.strategyPreservation) {
-                throw new Error(`Accepted round ${round.round} is missing per-swap cut-impact evidence.`);
+            const swaps = winner.swaps ?? [];
+            if (swaps.length < 1) throw new Error(`Accepted round ${round.round} has no per-swap cut-impact evidence.`);
+            for (const swap of swaps) {
+              if (swap.structuralPairing?.strategyPreservation?.verdict !== 'preserved') {
+                throw new Error(`Accepted round ${round.round} is missing passing per-swap cut-impact evidence.`);
+              }
+              const afterSources = Number(swap.structuralPairing?.persistentColoredManaSourcesAfterSwap);
+              const sourceFloor = Number(swap.structuralPairing?.persistentColoredManaSourceFloor);
+              if (!Number.isFinite(afterSources) || !Number.isFinite(sourceFloor) || afterSources < sourceFloor) {
+                throw new Error(`Accepted round ${round.round} violates its persistent colored-mana floor.`);
               }
             }
           }
@@ -151,7 +172,7 @@ jobs:
             [ ! -f marvel-bracket5-refine-failure.txt ] || cp marvel-bracket5-refine-failure.txt test-results/marvel-bracket5/refine-failure.txt
             CONTROL_OUTCOME=failure
             if [ "$EXECUTION_OUTCOME" = success ] && [ "$TARGET_QUALITY_OUTCOME" = success ]; then CONTROL_OUTCOME=success; fi
-            printf 'source_sha=%s\ncontrol_outcome=%s\nexecution_outcome=%s\ntarget_gate_quality_outcome=%s\npolicy=checked-in-very-good-candidate\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\nrestricted_pool_prefilter=true\nfull_table_closure=true\ntarget_gate_priority=true\nzero_progress_guard=true\nzero_target_progress_guard=true\nlower_bracket_behavior_preserved=true\nswap_feasible_win_package_selection=true\nprotect_existing_package_pieces=true\nstrategy_preservation_evidence=true\nmeaningful_strategy_loss_rejected=true\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" "$EXECUTION_OUTCOME" "$TARGET_QUALITY_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
+            printf 'source_sha=%s\ncontrol_outcome=%s\nexecution_outcome=%s\ntarget_gate_quality_outcome=%s\npolicy=checked-in-very-good-candidate\nmax_win_package_cards=4\nspellbook_max_rows_per_query=400\nrestricted_pool_prefilter=true\nfull_table_closure=true\ntarget_gate_priority=true\nzero_progress_guard=true\nzero_target_progress_guard=true\nlower_bracket_behavior_preserved=true\nswap_feasible_win_package_selection=true\nprotect_existing_package_pieces=true\nstrategy_preservation_evidence=true\nmeaningful_strategy_loss_rejected=true\npersistent_colored_mana_floor=true\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" "$EXECUTION_OUTCOME" "$TARGET_QUALITY_OUTCOME" > test-results/marvel-bracket5/refine-run-metadata.txt
             npm run validation:index
             git add -- test-results/marvel-bracket5 validation-index.json docs/VALIDATION-STATE.md
             if git diff --cached --quiet; then exit 0; fi

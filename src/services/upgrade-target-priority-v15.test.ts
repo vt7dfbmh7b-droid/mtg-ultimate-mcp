@@ -249,6 +249,60 @@ test('swap pairing declines an apparent repair when every cut would create a new
   assert.deepEqual(pairings, []);
 });
 
+test('five-color curve repair cannot strip persistent colored mana below its floor', () => {
+  const additions = Array.from({ length: 8 }, (_, index) => ({
+    role: 'average-nonland-mv' as const,
+    candidate: {
+      card: { name: `One Drop ${index + 1}`, roles: ['card draw'], manaValue: 1, typeLine: 'Instant' },
+      strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+    },
+  }));
+  const fixingCuts = Array.from({ length: 7 }, (_, index) => ({
+    card: {
+      name: `Five-Color Fixer ${index + 1}`,
+      roles: ['mana acceleration', 'mana rock', 'persistent colored mana source'],
+      manaValue: 2,
+      typeLine: 'Artifact',
+    },
+    heuristicCutPressure: 20 - index,
+    strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+  }));
+  const pairings = pairUpgradeSwapsByStructureV15(
+    additions,
+    [
+      ...fixingCuts,
+      {
+        card: { name: 'Surplus High-Curve Spell', roles: [], manaValue: 8, typeLine: 'Sorcery' },
+        heuristicCutPressure: 1,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    ],
+    {
+      rampCount: 31,
+      drawCount: 23,
+      interactionCount: 18,
+      protectionCount: 9,
+      tutorCount: 8,
+      recursionCount: 4,
+      boardWipeCount: 3,
+      earlyPlayCount: 39,
+      averageNonlandManaValue: 2.81,
+      nonlandCount: 69,
+      persistentColoredManaSourceCount: 12,
+      commanderColorCount: 5,
+      roleCounts: { 'free interaction': 2 },
+    },
+    { ...bracketFiveTargets },
+  );
+
+  const fixingCutCount = pairings.filter((pairing) => (
+    ((pairing.cut.card as Record<string, unknown>).roles as string[]).includes('persistent colored mana source')
+  )).length;
+  assert.equal(fixingCutCount, 4);
+  assert.ok(pairings.every((pairing) => pairing.persistentColoredManaSourcesAfterSwap >= 8));
+  assert.equal(pairings.at(-1)?.persistentColoredManaSourceFloor, 8);
+});
+
 test('near the curve threshold, pairing uses the smallest sufficient safe mana reduction', () => {
   const pairings = pairUpgradeSwapsByStructureV15(
     [{
