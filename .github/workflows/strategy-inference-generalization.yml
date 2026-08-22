@@ -4,6 +4,8 @@ on:
   push:
     branches: ["agent/v15-native-deck-intelligence"]
     paths:
+      - "src/services/card-role-truth-v15.test.ts"
+      - "src/services/scryfall.ts"
       - "src/services/neutral-commander-selection-v15.ts"
       - "src/services/neutral-deck-builder-v15.ts"
       - "src/services/neutral-themed-deck-builder-v15.ts"
@@ -42,11 +44,11 @@ jobs:
         continue-on-error: true
         run: npm run build
 
-      - name: Run strategy inference regression
+      - name: Run strategy and shared role-truth regressions
         id: regression
         if: steps.source_build.outcome == 'success'
         continue-on-error: true
-        run: npx tsx --test src/services/strategy-inference-generalization-v15.test.ts src/services/neutral-commander-selection-v15.test.ts src/services/commander-strategy-affinity-v15.test.ts
+        run: npx tsx --test src/services/card-role-truth-v15.test.ts src/services/strategy-inference-generalization-v15.test.ts src/services/neutral-commander-selection-v15.test.ts src/services/commander-strategy-affinity-v15.test.ts
 
       - name: Persist strategy-inference evidence
         id: persist
@@ -68,7 +70,7 @@ jobs:
             if [ "$BUILD_OUTCOME" = success ] && [ "$REGRESSION_OUTCOME" = success ]; then
               CONTROL_OUTCOME=success
             fi
-            printf 'source_sha=%s\nworkflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nbuild_outcome=%s\nregression_outcome=%s\nname_specific_rule=false\nincidental_attack_trigger_substantive=false\nself_mill_recovery_substantive=true\nartifact_engine_substantive=true\ngeneric_artifact_substantive=false\nown_graveyard_engine_substantive=true\ngraveyard_hate_not_support=true\nmass_graveyard_exchange_substantive=true\n' \
+            printf 'source_sha=%s\nworkflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nbuild_outcome=%s\nregression_outcome=%s\nname_specific_rule=false\nincidental_attack_trigger_substantive=false\nself_mill_recovery_substantive=true\nartifact_engine_substantive=true\ngeneric_artifact_substantive=false\nown_graveyard_engine_substantive=true\ngraveyard_hate_not_support=true\nmass_graveyard_exchange_substantive=true\ntargeted_protection_not_board=true\nconditional_group_protection_not_board=true\nboard_scaling_equipment_substantive=true\ndelayed_death_return_recursion=true\n' \
               "$GITHUB_SHA" "$GITHUB_SHA" "$GITHUB_SHA" "$CONTROL_OUTCOME" "$BUILD_OUTCOME" "$REGRESSION_OUTCOME" \
               > test-results/strategy-inference-generalization/run-metadata.txt
             git add -- test-results/strategy-inference-generalization/run-metadata.txt
