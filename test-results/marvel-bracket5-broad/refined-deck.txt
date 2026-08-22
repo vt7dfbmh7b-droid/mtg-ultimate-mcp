@@ -18,6 +18,7 @@
 1 Fantastic Bounce (MSC) 620
 1 Swords to Plowshares (MSC) 143
 1 Path to Exile (MSC) 141
+1 Blasphemous Act (MSC) 163
 1 Negative Zone Portal (MSC) 111
 1 Steelshaper's Gift (MAR) 50
 1 Vanquish the Horde (MSC) 146
@@ -41,7 +42,6 @@
 1 Commander's Plate (SLD) 1733
 1 Birds of Paradise (MSC) 170
 1 Seize the Day (MSC) 166
-1 Aurelia, the Warleader (MAR) 86
 1 Stark Industries Executive (MSH) 153
 1 Sun-Spider, Nimble Webber (SPM) 154
 1 Loki, the Deceiver (MSC) 86
@@ -49,7 +49,6 @@
 1 Teferi's Protection (MAR) 51
 1 Relentless Assault (MAR) 25
 1 Living Laser (MSC) 55
-1 Thought Vessel (MSC) 222
 1 Big Score (MSC) 802
 1 T'Challa, the Black Panther (MSC) 7
 1 Savage Beating (MAR) 26
@@ -60,6 +59,8 @@
 1 Sword of the Animist (MSC) 289
 1 Vibranium Mining Mech (MSC) 117
 1 Black Market Connections (MSC) 155
+1 Talisman of Indulgence (MSC) 220
+1 Talisman of Progress (MSC) 221
 1 Royal Talon Fighter Jet (MSC) 24
 1 Talisman of Conviction (MSC) 217
 1 Command Tower (MSC) 233
@@ -87,7 +88,6 @@
 1 Reanimate (MAR) 20 *N*
 1 Brainstorm (SLD) 7019 *N*
 1 Secure the Wastes (SLD) 1748 *N*
-1 The Ozolith (SLD) 1741 *N*
-1 Ephemerate (MAR) 44 *N*
-1 Dispatch (MSC) 130 *N*
 1 Spinneret and Spiderling (SPM) 94 *N*
+1 City Pigeon (SPM) 4 *N*
+1 General Thunderbolt Ross (MSC) 595 *N*

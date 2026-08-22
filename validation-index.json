@@ -74,26 +74,31 @@
       ],
       "metadataPath": "test-results/marvel-bracket5-broad/run-metadata.txt",
       "exists": true,
-      "sourceSha": "48a7c3f57c10ce855787cc247e371365e53e8ad6",
+      "sourceSha": "28e56160f05509af4b8d6c3d60fc53240a00a4bc",
       "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "48a7c3f57c10ce855787cc247e371365e53e8ad6",
-        "control_outcome": "success",
+        "source_sha": "28e56160f05509af4b8d6c3d60fc53240a00a4bc",
+        "workflow_source_sha": "28e56160f05509af4b8d6c3d60fc53240a00a4bc",
+        "executed_head_sha": "28e56160f05509af4b8d6c3d60fc53240a00a4bc",
+        "control_outcome": "failure",
+        "build_outcome": "success",
+        "construction_outcome": "success",
         "refine_outcome": "success",
+        "target_quality_outcome": "failure",
+        "strategy_preservation_outcome": "failure",
         "policy": "permanent-production-presets",
-        "max_win_package_cards": "4"
+        "max_win_package_cards": "4",
+        "exact_card_count": "true",
+        "commander_legality": "true",
+        "printing_family_truth": "true",
+        "persistent_colored_mana_floor": "true",
+        "meaningful_strategy_loss_rejected": "true"
       },
       "unmetPassConditions": [
-        "build_outcome=success",
-        "construction_outcome=success",
+        "control_outcome=success",
         "target_quality_outcome=success",
-        "strategy_preservation_outcome=success",
-        "exact_card_count=true",
-        "commander_legality=true",
-        "printing_family_truth=true",
-        "persistent_colored_mana_floor=true",
-        "meaningful_strategy_loss_rejected=true"
+        "strategy_preservation_outcome=success"
       ]
     },
     {

@@ -1218,6 +1218,7 @@
           "treasure": 9,
           "sacrifice synergy": 12,
           "fast mana": 5,
+          "persistent colored mana source": 13,
           "spot interaction": 12,
           "board wipe": 3,
           "mana dork": 4,
@@ -1248,6 +1249,7 @@
         "protectionCount": 9,
         "recursionCount": 4,
         "boardWipeCount": 3,
+        "persistentColoredManaSourceCount": 13,
         "structuralSignals": []
       },
       "gameChangerNames": [
@@ -1673,6 +1675,7 @@
           "card draw": 15,
           "mana acceleration": 9,
           "mana dork": 2,
+          "persistent colored mana source": 6,
           "card selection": 6,
           "mana rock": 7,
           "treasure": 2,
@@ -1705,6 +1708,7 @@
         "protectionCount": 9,
         "recursionCount": 19,
         "boardWipeCount": 3,
+        "persistentColoredManaSourceCount": 6,
         "structuralSignals": []
       },
       "gameChangerNames": [
@@ -2127,6 +2131,7 @@
           "mana acceleration": 10,
           "mana rock": 8,
           "treasure": 3,
+          "persistent colored mana source": 8,
           "token production": 6,
           "sacrifice synergy": 6,
           "protection": 12,
@@ -2158,6 +2163,7 @@
         "protectionCount": 12,
         "recursionCount": 4,
         "boardWipeCount": 4,
+        "persistentColoredManaSourceCount": 8,
         "structuralSignals": []
       },
       "gameChangerNames": [
@@ -2533,6 +2539,7 @@
           "creature": 23,
           "mana acceleration": 11,
           "fast mana": 3,
+          "persistent colored mana source": 8,
           "spot interaction": 13,
           "mana rock": 5,
           "treasure": 3,
@@ -2568,6 +2575,7 @@
         "protectionCount": 10,
         "recursionCount": 4,
         "boardWipeCount": 4,
+        "persistentColoredManaSourceCount": 8,
         "structuralSignals": []
       },
       "gameChangerNames": [],
@@ -2980,6 +2988,7 @@
           "creature": 26,
           "mana acceleration": 13,
           "fast mana": 3,
+          "persistent colored mana source": 12,
           "card draw": 13,
           "mana rock": 9,
           "treasure": 4,
@@ -3013,6 +3022,7 @@
         "protectionCount": 9,
         "recursionCount": 5,
         "boardWipeCount": 0,
+        "persistentColoredManaSourceCount": 12,
         "structuralSignals": []
       },
       "gameChangerNames": [],
