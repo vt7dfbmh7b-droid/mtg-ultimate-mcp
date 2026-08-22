@@ -1,4 +1,4 @@
-source_sha=28e56160f05509af4b8d6c3d60fc53240a00a4bc
+source_sha=77a5383fa7490aa91360b8186a4bda890f632157
 control_outcome=success
 policy=permanent-production-presets
 max_win_package_cards=4
