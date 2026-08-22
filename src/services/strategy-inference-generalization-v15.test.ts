@@ -78,6 +78,34 @@ test('own-graveyard engines are substantive while graveyard hate is not reanimat
   assert.ok((genericArtifact?.score ?? 0) < 6, 'a generic artifact alone must not masquerade as a substantive engine');
 });
 
+test('artifact spells cast from the top of the library are substantive artifact-engine support', () => {
+  const artifact = inferNeutralStrategyV15([card({
+    name: 'Unnamed Topdeck Forge',
+    typeLine: 'Artifact',
+    oracleText: 'You may look at the top card of your library any time. You may cast artifact spells and colorless spells from the top of your library.',
+  })]).find((strategy) => strategy.archetype === 'artifact-engine');
+
+  assert.ok((artifact?.score ?? 0) >= 6, 'top-of-library artifact casting must be recognized as an explicit artifact engine');
+  assert.ok(artifact?.evidence.some((entry) => entry.includes('artifact/Vehicle engine text')));
+});
+
+test('incidental combat damage affinity stays far below a true go-wide payoff', () => {
+  const incidental = inferNeutralStrategyV15([card({
+    name: 'Unnamed Combat Utility',
+    typeLine: 'Artifact — Equipment',
+    oracleText: 'Whenever equipped creature deals combat damage to a player, draw a card.',
+  })]).find((strategy) => strategy.archetype === 'combat-tokens');
+  const payoff = inferNeutralStrategyV15([card({
+    name: 'Unnamed Overrun Payoff',
+    typeLine: 'Creature — Test Beast',
+    oracleText: 'Creatures you control get +2/+2 and gain trample until end of turn.',
+  })]).find((strategy) => strategy.archetype === 'combat-tokens');
+
+  assert.equal(incidental?.score ?? 0, 2, 'combat-damage text alone is only incidental combat affinity');
+  assert.ok((payoff?.score ?? 0) >= 6, 'team-wide combat payoff must remain substantive');
+  assert.ok((payoff?.score ?? 0) - (incidental?.score ?? 0) >= 4, 'weak incidental combat text must not mask loss of a maximum-protected go-wide payoff');
+});
+
 test('mass graveyard exchange text is recognized as graveyard-reanimator support', () => {
   const ranked = inferNeutralStrategyV15([card({
     name: 'Unnamed Graveyard Exchange',
