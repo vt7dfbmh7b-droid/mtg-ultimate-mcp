@@ -208,6 +208,14 @@ const boardProtection = card({
   manaCost: '{1}{G}',
 });
 
+const conditionalGroupProtection = card({
+  name: 'Conditional Group Protection',
+  typeLine: 'Instant',
+  oracleText: 'Creatures you control with power 4 or greater gain hexproof and indestructible until end of turn.',
+  cmc: 1,
+  manaCost: '{G}',
+});
+
 const massMinusWipe = card({
   name: 'Mass Minus Wipe',
   typeLine: 'Sorcery',
@@ -254,6 +262,14 @@ const typalAnthem = card({
   oracleText: 'Other Squirrels you control get +1/+1.',
   cmc: 2,
   manaCost: '{1}{G}',
+});
+
+const boardScalingEquipment = card({
+  name: 'Generic Board-Scaling Equipment',
+  typeLine: 'Artifact — Equipment',
+  oracleText: 'Equipped creature gets +1/+1 for each creature you control with base power and toughness 1/1. Whenever a Mouse or Squirrel you control enters, you may attach this Equipment to that creature.',
+  cmc: 2,
+  manaCost: '{2}',
 });
 
 const persistentRainbowRock = card({
@@ -310,11 +326,19 @@ test('free interaction recognizes commander-enabled, pitch, evoke, retarget, lib
   assert.equal(inferCardRoles(counterspell).includes('free interaction'), false);
 });
 
-test('self-only hexproof is not deck protection while targeted and board-wide grants are', () => {
+test('self-only, targeted, conditional-group, and board-wide protection stay distinct', () => {
+  const targetedRoles = inferCardRoles(targetedProtection);
+  const boardRoles = inferCardRoles(boardProtection);
+  const conditionalRoles = inferCardRoles(conditionalGroupProtection);
+
   assert.equal(inferCardRoles(selfProtectedManaDork).includes('protection'), false);
-  assert.equal(inferCardRoles(targetedProtection).includes('protection'), true);
-  assert.equal(inferCardRoles(boardProtection).includes('protection'), true);
-  assert.equal(inferCardRoles(boardProtection).includes('board protection'), true);
+  assert.equal(targetedRoles.includes('protection'), true);
+  assert.equal(targetedRoles.includes('board protection'), false);
+  assert.equal(boardRoles.includes('protection'), true);
+  assert.equal(boardRoles.includes('board protection'), true);
+  assert.equal(conditionalRoles.includes('protection'), false);
+  assert.equal(conditionalRoles.includes('board protection'), false);
+  assert.equal(conditionalRoles.includes('conditional protection'), true);
 });
 
 test('mass negative-power removal is recognized as a board wipe', () => {
@@ -327,10 +351,11 @@ test('qualified mass destruction and graveyard exchanges retain wipe and recursi
   assert.equal(inferCardRoles(graveyardExchange).includes('graveyard recursion'), true);
 });
 
-test('token multipliers and team-wide payoffs retain combat-engine truth', () => {
+test('token multipliers, team-wide payoffs, and board-scaling Equipment retain combat-engine truth', () => {
   assert.ok(inferCardRoles(tokenMultiplier).includes('token production'));
   assert.ok(inferCardRoles(teamAnthem).includes('go-wide payoff'));
   assert.ok(inferCardRoles(typalAnthem).includes('go-wide payoff'));
+  assert.ok(inferCardRoles(boardScalingEquipment).includes('go-wide payoff'));
 });
 
 test('direct damage and conditional tap-exile cards count as spot interaction', () => {
