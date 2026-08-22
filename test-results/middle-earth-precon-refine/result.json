@@ -244,6 +244,8 @@
           "remainingStructuralDeficitAfterSwap": 12,
           "authoritativeTargetGate": null,
           "nonlandManaValueReduction": null,
+          "persistentColoredManaSourcesAfterSwap": 9,
+          "persistentColoredManaSourceFloor": 6,
           "strategyPreservation": {
             "cutStrategyAffinityScore": 0,
             "addStrategyAffinityScore": 0,
@@ -282,6 +284,8 @@
           "remainingStructuralDeficitAfterSwap": 11,
           "authoritativeTargetGate": null,
           "nonlandManaValueReduction": null,
+          "persistentColoredManaSourcesAfterSwap": 9,
+          "persistentColoredManaSourceFloor": 6,
           "strategyPreservation": {
             "cutStrategyAffinityScore": 6,
             "addStrategyAffinityScore": 6,
@@ -323,6 +327,8 @@
           "remainingStructuralDeficitAfterSwap": 10,
           "authoritativeTargetGate": null,
           "nonlandManaValueReduction": null,
+          "persistentColoredManaSourcesAfterSwap": 9,
+          "persistentColoredManaSourceFloor": 6,
           "strategyPreservation": {
             "cutStrategyAffinityScore": 1,
             "addStrategyAffinityScore": 6,
@@ -364,6 +370,8 @@
           "remainingStructuralDeficitAfterSwap": 8,
           "authoritativeTargetGate": null,
           "nonlandManaValueReduction": null,
+          "persistentColoredManaSourcesAfterSwap": 9,
+          "persistentColoredManaSourceFloor": 6,
           "strategyPreservation": {
             "cutStrategyAffinityScore": 6,
             "addStrategyAffinityScore": 6,
@@ -829,6 +837,112 @@
                   "netAffinityDelta": 13
                 }
               ],
+              "swapImpacts": [
+                {
+                  "cutStrategyAffinityScore": 0,
+                  "addStrategyAffinityScore": 20,
+                  "cutStrategyProtectionApplied": 0,
+                  "cutMatchedStrategies": [],
+                  "addMatchedStrategies": [
+                    "combat-tokens",
+                    "value-engine"
+                  ],
+                  "locallyUnreplacedStrategies": [],
+                  "cutRoles": [
+                    "creature"
+                  ],
+                  "addRoles": [
+                    "card draw",
+                    "equipment",
+                    "protection",
+                    "repeatable draw"
+                  ],
+                  "unreplacedRoles": [
+                    "creature"
+                  ],
+                  "meaningfulStrategyLoss": false,
+                  "verdict": "preserved"
+                },
+                {
+                  "cutStrategyAffinityScore": 1,
+                  "addStrategyAffinityScore": 2,
+                  "cutStrategyProtectionApplied": 1,
+                  "cutMatchedStrategies": [
+                    "value-engine"
+                  ],
+                  "addMatchedStrategies": [
+                    "combat-tokens"
+                  ],
+                  "locallyUnreplacedStrategies": [
+                    "value-engine"
+                  ],
+                  "cutRoles": [],
+                  "addRoles": [
+                    "equipment",
+                    "haste",
+                    "protection"
+                  ],
+                  "unreplacedRoles": [],
+                  "meaningfulStrategyLoss": false,
+                  "verdict": "preserved"
+                },
+                {
+                  "cutStrategyAffinityScore": 6,
+                  "addStrategyAffinityScore": 0,
+                  "cutStrategyProtectionApplied": 4,
+                  "cutMatchedStrategies": [
+                    "value-engine"
+                  ],
+                  "addMatchedStrategies": [],
+                  "locallyUnreplacedStrategies": [
+                    "value-engine"
+                  ],
+                  "cutRoles": [
+                    "creature"
+                  ],
+                  "addRoles": [
+                    "board protection",
+                    "protection"
+                  ],
+                  "unreplacedRoles": [
+                    "creature"
+                  ],
+                  "meaningfulStrategyLoss": true,
+                  "verdict": "meaningful-strategy-loss"
+                },
+                {
+                  "cutStrategyAffinityScore": 14,
+                  "addStrategyAffinityScore": 6,
+                  "cutStrategyProtectionApplied": 4,
+                  "cutMatchedStrategies": [
+                    "combat-tokens",
+                    "food-lifegain"
+                  ],
+                  "addMatchedStrategies": [
+                    "value-engine"
+                  ],
+                  "locallyUnreplacedStrategies": [
+                    "combat-tokens",
+                    "food-lifegain"
+                  ],
+                  "cutRoles": [
+                    "creature",
+                    "sacrifice synergy",
+                    "token production"
+                  ],
+                  "addRoles": [
+                    "board protection",
+                    "creature",
+                    "protection"
+                  ],
+                  "unreplacedRoles": [
+                    "sacrifice synergy",
+                    "token production"
+                  ],
+                  "meaningfulStrategyLoss": true,
+                  "verdict": "meaningful-strategy-loss"
+                }
+              ],
               "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
             },
             "planProvenance": {
@@ -926,6 +1040,8 @@
                   "remainingStructuralDeficitAfterSwap": 12,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 0,
                     "addStrategyAffinityScore": 20,
@@ -969,6 +1085,8 @@
                   "remainingStructuralDeficitAfterSwap": 11,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 1,
                     "addStrategyAffinityScore": 2,
@@ -1010,6 +1128,8 @@
                   "remainingStructuralDeficitAfterSwap": 10,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 6,
                     "addStrategyAffinityScore": 0,
@@ -1052,6 +1172,8 @@
                   "remainingStructuralDeficitAfterSwap": 9,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 14,
                     "addStrategyAffinityScore": 6,
@@ -1127,6 +1249,99 @@
                   "cutAffinityScore": 7,
                   "addAffinityScore": 6,
                   "netAffinityDelta": -1
+                }
+              ],
+              "swapImpacts": [
+                {
+                  "cutStrategyAffinityScore": 0,
+                  "addStrategyAffinityScore": 0,
+                  "cutStrategyProtectionApplied": 0,
+                  "cutMatchedStrategies": [],
+                  "addMatchedStrategies": [],
+                  "locallyUnreplacedStrategies": [],
+                  "cutRoles": [
+                    "creature"
+                  ],
+                  "addRoles": [
+                    "board protection",
+                    "protection"
+                  ],
+                  "unreplacedRoles": [
+                    "creature"
+                  ],
+                  "meaningfulStrategyLoss": false,
+                  "verdict": "preserved"
+                },
+                {
+                  "cutStrategyAffinityScore": 6,
+                  "addStrategyAffinityScore": 6,
+                  "cutStrategyProtectionApplied": 4,
+                  "cutMatchedStrategies": [
+                    "value-engine"
+                  ],
+                  "addMatchedStrategies": [
+                    "value-engine"
+                  ],
+                  "locallyUnreplacedStrategies": [],
+                  "cutRoles": [
+                    "creature"
+                  ],
+                  "addRoles": [
+                    "board protection",
+                    "creature",
+                    "protection"
+                  ],
+                  "unreplacedRoles": [],
+                  "meaningfulStrategyLoss": false,
+                  "verdict": "preserved"
+                },
+                {
+                  "cutStrategyAffinityScore": 1,
+                  "addStrategyAffinityScore": 6,
+                  "cutStrategyProtectionApplied": 1,
+                  "cutMatchedStrategies": [
+                    "value-engine"
+                  ],
+                  "addMatchedStrategies": [
+                    "combat-tokens"
+                  ],
+                  "locallyUnreplacedStrategies": [
+                    "value-engine"
+                  ],
+                  "cutRoles": [],
+                  "addRoles": [
+                    "+1/+1 counters",
+                    "protection",
+                    "token production"
+                  ],
+                  "unreplacedRoles": [],
+                  "meaningfulStrategyLoss": false,
+                  "verdict": "preserved"
+                },
+                {
+                  "cutStrategyAffinityScore": 6,
+                  "addStrategyAffinityScore": 6,
+                  "cutStrategyProtectionApplied": 4,
+                  "cutMatchedStrategies": [
+                    "combat-tokens"
+                  ],
+                  "addMatchedStrategies": [
+                    "combat-tokens"
+                  ],
+                  "locallyUnreplacedStrategies": [],
+                  "cutRoles": [
+                    "creature"
+                  ],
+                  "addRoles": [
+                    "board protection",
+                    "countermagic",
+                    "creature",
+                    "protection",
+                    "sacrifice synergy"
+                  ],
+                  "unreplacedRoles": [],
+                  "meaningfulStrategyLoss": false,
+                  "verdict": "preserved"
                 }
               ],
               "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
@@ -1226,6 +1441,8 @@
                   "remainingStructuralDeficitAfterSwap": 12,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 0,
                     "addStrategyAffinityScore": 0,
@@ -1264,6 +1481,8 @@
                   "remainingStructuralDeficitAfterSwap": 11,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 6,
                     "addStrategyAffinityScore": 6,
@@ -1305,6 +1524,8 @@
                   "remainingStructuralDeficitAfterSwap": 10,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 1,
                     "addStrategyAffinityScore": 6,
@@ -1346,6 +1567,8 @@
                   "remainingStructuralDeficitAfterSwap": 8,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 6,
                     "addStrategyAffinityScore": 6,
@@ -1439,6 +1662,111 @@
                   "netAffinityDelta": -7
                 }
               ],
+              "swapImpacts": [
+                {
+                  "cutStrategyAffinityScore": 0,
+                  "addStrategyAffinityScore": 6,
+                  "cutStrategyProtectionApplied": 0,
+                  "cutMatchedStrategies": [],
+                  "addMatchedStrategies": [
+                    "combat-tokens"
+                  ],
+                  "locallyUnreplacedStrategies": [],
+                  "cutRoles": [
+                    "creature"
+                  ],
+                  "addRoles": [
+                    "+1/+1 counters",
+                    "protection",
+                    "token production"
+                  ],
+                  "unreplacedRoles": [
+                    "creature"
+                  ],
+                  "meaningfulStrategyLoss": false,
+                  "verdict": "preserved"
+                },
+                {
+                  "cutStrategyAffinityScore": 1,
+                  "addStrategyAffinityScore": 6,
+                  "cutStrategyProtectionApplied": 1,
+                  "cutMatchedStrategies": [
+                    "value-engine"
+                  ],
+                  "addMatchedStrategies": [
+                    "combat-tokens"
+                  ],
+                  "locallyUnreplacedStrategies": [
+                    "value-engine"
+                  ],
+                  "cutRoles": [],
+                  "addRoles": [
+                    "board protection",
+                    "countermagic",
+                    "creature",
+                    "protection",
+                    "sacrifice synergy"
+                  ],
+                  "unreplacedRoles": [],
+                  "meaningfulStrategyLoss": false,
+                  "verdict": "preserved"
+                },
+                {
+                  "cutStrategyAffinityScore": 6,
+                  "addStrategyAffinityScore": 0,
+                  "cutStrategyProtectionApplied": 4,
+                  "cutMatchedStrategies": [
+                    "value-engine"
+                  ],
+                  "addMatchedStrategies": [],
+                  "locallyUnreplacedStrategies": [
+                    "value-engine"
+                  ],
+                  "cutRoles": [
+                    "creature"
+                  ],
+                  "addRoles": [
+                    "equipment",
+                    "protection"
+                  ],
+                  "unreplacedRoles": [
+                    "creature"
+                  ],
+                  "meaningfulStrategyLoss": true,
+                  "verdict": "meaningful-strategy-loss"
+                },
+                {
+                  "cutStrategyAffinityScore": 14,
+                  "addStrategyAffinityScore": 0,
+                  "cutStrategyProtectionApplied": 4,
+                  "cutMatchedStrategies": [
+                    "combat-tokens",
+                    "food-lifegain"
+                  ],
+                  "addMatchedStrategies": [],
+                  "locallyUnreplacedStrategies": [
+                    "combat-tokens",
+                    "food-lifegain"
+                  ],
+                  "cutRoles": [
+                    "creature",
+                    "sacrifice synergy",
+                    "token production"
+                  ],
+                  "addRoles": [
+                    "+1/+1 counters",
+                    "board protection",
+                    "protection"
+                  ],
+                  "unreplacedRoles": [
+                    "creature",
+                    "sacrifice synergy",
+                    "token production"
+                  ],
+                  "meaningfulStrategyLoss": true,
+                  "verdict": "meaningful-strategy-loss"
+                }
+              ],
               "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
             },
             "planProvenance": {
@@ -1536,6 +1864,8 @@
                   "remainingStructuralDeficitAfterSwap": 12,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 0,
                     "addStrategyAffinityScore": 6,
@@ -1577,6 +1907,8 @@
                   "remainingStructuralDeficitAfterSwap": 10,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 1,
                     "addStrategyAffinityScore": 6,
@@ -1620,6 +1952,8 @@
                   "remainingStructuralDeficitAfterSwap": 9,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 6,
                     "addStrategyAffinityScore": 0,
@@ -1662,6 +1996,8 @@
                   "remainingStructuralDeficitAfterSwap": 8,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 14,
                     "addStrategyAffinityScore": 0,
@@ -1769,6 +2105,102 @@
                   "netAffinityDelta": -7
                 }
               ],
+              "swapImpacts": [
+                {
+                  "cutStrategyAffinityScore": 0,
+                  "addStrategyAffinityScore": 0,
+                  "cutStrategyProtectionApplied": 0,
+                  "cutMatchedStrategies": [],
+                  "addMatchedStrategies": [],
+                  "locallyUnreplacedStrategies": [],
+                  "cutRoles": [
+                    "creature"
+                  ],
+                  "addRoles": [
+                    "equipment",
+                    "protection"
+                  ],
+                  "unreplacedRoles": [
+                    "creature"
+                  ],
+                  "meaningfulStrategyLoss": false,
+                  "verdict": "preserved"
+                },
+                {
+                  "cutStrategyAffinityScore": 1,
+                  "addStrategyAffinityScore": 0,
+                  "cutStrategyProtectionApplied": 1,
+                  "cutMatchedStrategies": [
+                    "value-engine"
+                  ],
+                  "addMatchedStrategies": [],
+                  "locallyUnreplacedStrategies": [
+                    "value-engine"
+                  ],
+                  "cutRoles": [],
+                  "addRoles": [
+                    "+1/+1 counters",
+                    "board protection",
+                    "protection"
+                  ],
+                  "unreplacedRoles": [],
+                  "meaningfulStrategyLoss": false,
+                  "verdict": "preserved"
+                },
+                {
+                  "cutStrategyAffinityScore": 6,
+                  "addStrategyAffinityScore": 0,
+                  "cutStrategyProtectionApplied": 4,
+                  "cutMatchedStrategies": [
+                    "value-engine"
+                  ],
+                  "addMatchedStrategies": [],
+                  "locallyUnreplacedStrategies": [
+                    "value-engine"
+                  ],
+                  "cutRoles": [
+                    "creature"
+                  ],
+                  "addRoles": [
+                    "board protection",
+                    "creature",
+                    "protection"
+                  ],
+                  "unreplacedRoles": [],
+                  "meaningfulStrategyLoss": true,
+                  "verdict": "meaningful-strategy-loss"
+                },
+                {
+                  "cutStrategyAffinityScore": 14,
+                  "addStrategyAffinityScore": 0,
+                  "cutStrategyProtectionApplied": 4,
+                  "cutMatchedStrategies": [
+                    "combat-tokens",
+                    "food-lifegain"
+                  ],
+                  "addMatchedStrategies": [],
+                  "locallyUnreplacedStrategies": [
+                    "combat-tokens",
+                    "food-lifegain"
+                  ],
+                  "cutRoles": [
+                    "creature",
+                    "sacrifice synergy",
+                    "token production"
+                  ],
+                  "addRoles": [
+                    "board protection",
+                    "creature",
+                    "protection"
+                  ],
+                  "unreplacedRoles": [
+                    "sacrifice synergy",
+                    "token production"
+                  ],
+                  "meaningfulStrategyLoss": true,
+                  "verdict": "meaningful-strategy-loss"
+                }
+              ],
               "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
             },
             "planProvenance": {
@@ -1866,6 +2298,8 @@
                   "remainingStructuralDeficitAfterSwap": 12,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 0,
                     "addStrategyAffinityScore": 0,
@@ -1904,6 +2338,8 @@
                   "remainingStructuralDeficitAfterSwap": 11,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 1,
                     "addStrategyAffinityScore": 0,
@@ -1943,6 +2379,8 @@
                   "remainingStructuralDeficitAfterSwap": 10,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 6,
                     "addStrategyAffinityScore": 0,
@@ -1984,6 +2422,8 @@
                   "remainingStructuralDeficitAfterSwap": 9,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 14,
                     "addStrategyAffinityScore": 0,
@@ -2086,6 +2526,112 @@
                       "netAffinityDelta": 13
                     }
                   ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 0,
+                      "addStrategyAffinityScore": 20,
+                      "cutStrategyProtectionApplied": 0,
+                      "cutMatchedStrategies": [],
+                      "addMatchedStrategies": [
+                        "combat-tokens",
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [],
+                      "cutRoles": [
+                        "creature"
+                      ],
+                      "addRoles": [
+                        "card draw",
+                        "equipment",
+                        "protection",
+                        "repeatable draw"
+                      ],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 1,
+                      "addStrategyAffinityScore": 2,
+                      "cutStrategyProtectionApplied": 1,
+                      "cutMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "addMatchedStrategies": [
+                        "combat-tokens"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "value-engine"
+                      ],
+                      "cutRoles": [],
+                      "addRoles": [
+                        "equipment",
+                        "haste",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 6,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "value-engine"
+                      ],
+                      "cutRoles": [
+                        "creature"
+                      ],
+                      "addRoles": [
+                        "board protection",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 6,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "board protection",
+                        "creature",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
                 "planProvenance": {
@@ -2183,6 +2729,8 @@
                       "remainingStructuralDeficitAfterSwap": 12,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 0,
                         "addStrategyAffinityScore": 20,
@@ -2226,6 +2774,8 @@
                       "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 1,
                         "addStrategyAffinityScore": 2,
@@ -2267,6 +2817,8 @@
                       "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 6,
                         "addStrategyAffinityScore": 0,
@@ -2309,6 +2861,8 @@
                       "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 6,
@@ -2384,6 +2938,99 @@
                       "cutAffinityScore": 7,
                       "addAffinityScore": 6,
                       "netAffinityDelta": -1
+                    }
+                  ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 0,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 0,
+                      "cutMatchedStrategies": [],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [],
+                      "cutRoles": [
+                        "creature"
+                      ],
+                      "addRoles": [
+                        "board protection",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 6,
+                      "addStrategyAffinityScore": 6,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [],
+                      "cutRoles": [
+                        "creature"
+                      ],
+                      "addRoles": [
+                        "board protection",
+                        "creature",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 1,
+                      "addStrategyAffinityScore": 6,
+                      "cutStrategyProtectionApplied": 1,
+                      "cutMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "addMatchedStrategies": [
+                        "combat-tokens"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "value-engine"
+                      ],
+                      "cutRoles": [],
+                      "addRoles": [
+                        "+1/+1 counters",
+                        "protection",
+                        "token production"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 6,
+                      "addStrategyAffinityScore": 6,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens"
+                      ],
+                      "addMatchedStrategies": [
+                        "combat-tokens"
+                      ],
+                      "locallyUnreplacedStrategies": [],
+                      "cutRoles": [
+                        "creature"
+                      ],
+                      "addRoles": [
+                        "board protection",
+                        "countermagic",
+                        "creature",
+                        "protection",
+                        "sacrifice synergy"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
                     }
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
@@ -2483,6 +3130,8 @@
                       "remainingStructuralDeficitAfterSwap": 12,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 0,
                         "addStrategyAffinityScore": 0,
@@ -2521,6 +3170,8 @@
                       "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 6,
                         "addStrategyAffinityScore": 6,
@@ -2562,6 +3213,8 @@
                       "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 1,
                         "addStrategyAffinityScore": 6,
@@ -2603,6 +3256,8 @@
                       "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 6,
                         "addStrategyAffinityScore": 6,
@@ -2696,6 +3351,111 @@
                       "netAffinityDelta": -7
                     }
                   ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 0,
+                      "addStrategyAffinityScore": 6,
+                      "cutStrategyProtectionApplied": 0,
+                      "cutMatchedStrategies": [],
+                      "addMatchedStrategies": [
+                        "combat-tokens"
+                      ],
+                      "locallyUnreplacedStrategies": [],
+                      "cutRoles": [
+                        "creature"
+                      ],
+                      "addRoles": [
+                        "+1/+1 counters",
+                        "protection",
+                        "token production"
+                      ],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 1,
+                      "addStrategyAffinityScore": 6,
+                      "cutStrategyProtectionApplied": 1,
+                      "cutMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "addMatchedStrategies": [
+                        "combat-tokens"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "value-engine"
+                      ],
+                      "cutRoles": [],
+                      "addRoles": [
+                        "board protection",
+                        "countermagic",
+                        "creature",
+                        "protection",
+                        "sacrifice synergy"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 6,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "value-engine"
+                      ],
+                      "cutRoles": [
+                        "creature"
+                      ],
+                      "addRoles": [
+                        "equipment",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "+1/+1 counters",
+                        "board protection",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
                 "planProvenance": {
@@ -2793,6 +3553,8 @@
                       "remainingStructuralDeficitAfterSwap": 12,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 0,
                         "addStrategyAffinityScore": 6,
@@ -2834,6 +3596,8 @@
                       "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 1,
                         "addStrategyAffinityScore": 6,
@@ -2877,6 +3641,8 @@
                       "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 6,
                         "addStrategyAffinityScore": 0,
@@ -2919,6 +3685,8 @@
                       "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 0,
@@ -3026,6 +3794,102 @@
                       "netAffinityDelta": -7
                     }
                   ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 0,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 0,
+                      "cutMatchedStrategies": [],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [],
+                      "cutRoles": [
+                        "creature"
+                      ],
+                      "addRoles": [
+                        "equipment",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 1,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 1,
+                      "cutMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "value-engine"
+                      ],
+                      "cutRoles": [],
+                      "addRoles": [
+                        "+1/+1 counters",
+                        "board protection",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 6,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "value-engine"
+                      ],
+                      "cutRoles": [
+                        "creature"
+                      ],
+                      "addRoles": [
+                        "board protection",
+                        "creature",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "board protection",
+                        "creature",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
                 "planProvenance": {
@@ -3123,6 +3987,8 @@
                       "remainingStructuralDeficitAfterSwap": 12,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 0,
                         "addStrategyAffinityScore": 0,
@@ -3161,6 +4027,8 @@
                       "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 1,
                         "addStrategyAffinityScore": 0,
@@ -3200,6 +4068,8 @@
                       "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 6,
                         "addStrategyAffinityScore": 0,
@@ -3241,6 +4111,8 @@
                       "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 0,
@@ -3364,6 +4236,40 @@
                   "netAffinityDelta": 1
                 }
               ],
+              "swapImpacts": [
+                {
+                  "cutStrategyAffinityScore": 14,
+                  "addStrategyAffinityScore": 1,
+                  "cutStrategyProtectionApplied": 4,
+                  "cutMatchedStrategies": [
+                    "combat-tokens",
+                    "food-lifegain"
+                  ],
+                  "addMatchedStrategies": [
+                    "value-engine"
+                  ],
+                  "locallyUnreplacedStrategies": [
+                    "combat-tokens",
+                    "food-lifegain"
+                  ],
+                  "cutRoles": [
+                    "creature",
+                    "sacrifice synergy",
+                    "token production"
+                  ],
+                  "addRoles": [
+                    "creature",
+                    "land tutor",
+                    "tutor"
+                  ],
+                  "unreplacedRoles": [
+                    "sacrifice synergy",
+                    "token production"
+                  ],
+                  "meaningfulStrategyLoss": true,
+                  "verdict": "meaningful-strategy-loss"
+                }
+              ],
               "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
             },
             "planProvenance": {
@@ -3461,6 +4367,8 @@
                   "remainingStructuralDeficitAfterSwap": 7,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 14,
                     "addStrategyAffinityScore": 1,
@@ -3553,6 +4461,37 @@
                   "cutAffinityScore": 8,
                   "addAffinityScore": 0,
                   "netAffinityDelta": -8
+                }
+              ],
+              "swapImpacts": [
+                {
+                  "cutStrategyAffinityScore": 14,
+                  "addStrategyAffinityScore": 0,
+                  "cutStrategyProtectionApplied": 4,
+                  "cutMatchedStrategies": [
+                    "combat-tokens",
+                    "food-lifegain"
+                  ],
+                  "addMatchedStrategies": [],
+                  "locallyUnreplacedStrategies": [
+                    "combat-tokens",
+                    "food-lifegain"
+                  ],
+                  "cutRoles": [
+                    "creature",
+                    "sacrifice synergy",
+                    "token production"
+                  ],
+                  "addRoles": [
+                    "sacrifice synergy",
+                    "tutor"
+                  ],
+                  "unreplacedRoles": [
+                    "creature",
+                    "token production"
+                  ],
+                  "meaningfulStrategyLoss": true,
+                  "verdict": "meaningful-strategy-loss"
                 }
               ],
               "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
@@ -3652,6 +4591,8 @@
                   "remainingStructuralDeficitAfterSwap": 7,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 14,
                     "addStrategyAffinityScore": 0,
@@ -3747,6 +4688,42 @@
                   "cutAffinityScore": 0,
                   "addAffinityScore": 14,
                   "netAffinityDelta": 14
+                }
+              ],
+              "swapImpacts": [
+                {
+                  "cutStrategyAffinityScore": 14,
+                  "addStrategyAffinityScore": 14,
+                  "cutStrategyProtectionApplied": 4,
+                  "cutMatchedStrategies": [
+                    "combat-tokens",
+                    "food-lifegain"
+                  ],
+                  "addMatchedStrategies": [
+                    "value-engine"
+                  ],
+                  "locallyUnreplacedStrategies": [
+                    "combat-tokens",
+                    "food-lifegain"
+                  ],
+                  "cutRoles": [
+                    "creature",
+                    "sacrifice synergy",
+                    "token production"
+                  ],
+                  "addRoles": [
+                    "card draw",
+                    "creature tutor",
+                    "repeatable draw",
+                    "tutor"
+                  ],
+                  "unreplacedRoles": [
+                    "creature",
+                    "sacrifice synergy",
+                    "token production"
+                  ],
+                  "meaningfulStrategyLoss": true,
+                  "verdict": "meaningful-strategy-loss"
                 }
               ],
               "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
@@ -3846,6 +4823,8 @@
                   "remainingStructuralDeficitAfterSwap": 7,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 14,
                     "addStrategyAffinityScore": 14,
@@ -3948,6 +4927,42 @@
                   "netAffinityDelta": 1
                 }
               ],
+              "swapImpacts": [
+                {
+                  "cutStrategyAffinityScore": 14,
+                  "addStrategyAffinityScore": 1,
+                  "cutStrategyProtectionApplied": 4,
+                  "cutMatchedStrategies": [
+                    "combat-tokens",
+                    "food-lifegain"
+                  ],
+                  "addMatchedStrategies": [
+                    "value-engine"
+                  ],
+                  "locallyUnreplacedStrategies": [
+                    "combat-tokens",
+                    "food-lifegain"
+                  ],
+                  "cutRoles": [
+                    "creature",
+                    "sacrifice synergy",
+                    "token production"
+                  ],
+                  "addRoles": [
+                    "land ramp",
+                    "land tutor",
+                    "persistent colored mana source",
+                    "tutor"
+                  ],
+                  "unreplacedRoles": [
+                    "creature",
+                    "sacrifice synergy",
+                    "token production"
+                  ],
+                  "meaningfulStrategyLoss": true,
+                  "verdict": "meaningful-strategy-loss"
+                }
+              ],
               "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
             },
             "planProvenance": {
@@ -4045,6 +5060,8 @@
                   "remainingStructuralDeficitAfterSwap": 7,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 10,
+                  "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 14,
                     "addStrategyAffinityScore": 1,
@@ -4158,6 +5175,119 @@
                       "netAffinityDelta": 16
                     }
                   ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 1,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "creature",
+                        "land tutor",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "land tutor",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "sacrifice synergy",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "land tutor",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 13,
+                      "addStrategyAffinityScore": 14,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [],
+                      "addRoles": [
+                        "card draw",
+                        "creature tutor",
+                        "repeatable draw",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 7,
+                      "addStrategyAffinityScore": 1,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [],
+                      "addRoles": [
+                        "land ramp",
+                        "land tutor",
+                        "persistent colored mana source",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
                 "planProvenance": {
@@ -4255,6 +5385,8 @@
                       "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 1,
@@ -4305,6 +5437,8 @@
                       "remainingStructuralDeficitAfterSwap": 6,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 0,
@@ -4354,6 +5488,8 @@
                       "remainingStructuralDeficitAfterSwap": 5,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 13,
                         "addStrategyAffinityScore": 14,
@@ -4396,6 +5532,8 @@
                       "remainingStructuralDeficitAfterSwap": 4,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 10,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 7,
                         "addStrategyAffinityScore": 1,
@@ -4486,6 +5624,121 @@
                       "cutAffinityScore": 0,
                       "addAffinityScore": 15,
                       "netAffinityDelta": 15
+                    }
+                  ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 14,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "card draw",
+                        "creature tutor",
+                        "repeatable draw",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 1,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "land tutor",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "land ramp",
+                        "land tutor",
+                        "persistent colored mana source",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 13,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [],
+                      "addRoles": [
+                        "creature",
+                        "mana acceleration",
+                        "mana dork",
+                        "persistent colored mana source",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 7,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [],
+                      "addRoles": [
+                        "creature tutor",
+                        "sacrifice synergy",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
                     }
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
@@ -4585,6 +5838,8 @@
                       "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 14,
@@ -4637,6 +5892,8 @@
                       "remainingStructuralDeficitAfterSwap": 6,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 10,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 1,
@@ -4690,6 +5947,8 @@
                       "remainingStructuralDeficitAfterSwap": 5,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 11,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 13,
                         "addStrategyAffinityScore": 0,
@@ -4731,6 +5990,8 @@
                       "remainingStructuralDeficitAfterSwap": 4,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 11,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 7,
                         "addStrategyAffinityScore": 0,
@@ -4812,6 +6073,116 @@
                       "cutAffinityScore": 36,
                       "addAffinityScore": 0,
                       "netAffinityDelta": -36
+                    }
+                  ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "creature",
+                        "mana acceleration",
+                        "mana dork",
+                        "persistent colored mana source",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "land tutor",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "creature tutor",
+                        "sacrifice synergy",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "land tutor",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 13,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [],
+                      "addRoles": [
+                        "creature",
+                        "creature tutor",
+                        "equipment",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 7,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [],
+                      "addRoles": [
+                        "+1/+1 counters",
+                        "creature",
+                        "land tutor",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
                     }
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
@@ -4911,6 +6282,8 @@
                       "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 10,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 0,
@@ -4961,6 +6334,8 @@
                       "remainingStructuralDeficitAfterSwap": 6,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 10,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 0,
@@ -5011,6 +6386,8 @@
                       "remainingStructuralDeficitAfterSwap": 5,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 10,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 13,
                         "addStrategyAffinityScore": 0,
@@ -5051,6 +6428,8 @@
                       "remainingStructuralDeficitAfterSwap": 4,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 10,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 7,
                         "addStrategyAffinityScore": 0,
@@ -5139,6 +6518,119 @@
                       "cutAffinityScore": 0,
                       "addAffinityScore": 14,
                       "netAffinityDelta": 14
+                    }
+                  ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "creature",
+                        "creature tutor",
+                        "equipment",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "land tutor",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "+1/+1 counters",
+                        "creature",
+                        "land tutor",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 13,
+                      "addStrategyAffinityScore": 20,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "combat-tokens",
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [],
+                      "addRoles": [
+                        "card draw",
+                        "equipment",
+                        "protection",
+                        "repeatable draw"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 7,
+                      "addStrategyAffinityScore": 2,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "combat-tokens"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [],
+                      "addRoles": [
+                        "equipment",
+                        "haste",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
                     }
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
@@ -5238,6 +6730,8 @@
                       "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 0,
@@ -5287,6 +6781,8 @@
                       "remainingStructuralDeficitAfterSwap": 6,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 0,
@@ -5337,6 +6833,8 @@
                       "remainingStructuralDeficitAfterSwap": 5,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 13,
                         "addStrategyAffinityScore": 20,
@@ -5380,6 +6878,8 @@
                       "remainingStructuralDeficitAfterSwap": 4,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 7,
                         "addStrategyAffinityScore": 2,
@@ -5482,6 +6982,95 @@
                       "netAffinityDelta": 15
                     }
                   ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 1,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "creature",
+                        "land tutor",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "land tutor",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "sacrifice synergy",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "land tutor",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 13,
+                      "addStrategyAffinityScore": 14,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [],
+                      "addRoles": [
+                        "card draw",
+                        "creature tutor",
+                        "repeatable draw",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
                 "planProvenance": {
@@ -5579,6 +7168,8 @@
                       "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 1,
@@ -5629,6 +7220,8 @@
                       "remainingStructuralDeficitAfterSwap": 6,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 0,
@@ -5678,6 +7271,8 @@
                       "remainingStructuralDeficitAfterSwap": 5,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 13,
                         "addStrategyAffinityScore": 14,
@@ -5768,6 +7363,100 @@
                       "cutAffinityScore": 0,
                       "addAffinityScore": 15,
                       "netAffinityDelta": 15
+                    }
+                  ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 14,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "card draw",
+                        "creature tutor",
+                        "repeatable draw",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 1,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "land tutor",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "land ramp",
+                        "land tutor",
+                        "persistent colored mana source",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 13,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [],
+                      "addRoles": [
+                        "creature",
+                        "mana acceleration",
+                        "mana dork",
+                        "persistent colored mana source",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
                     }
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
@@ -5867,6 +7556,8 @@
                       "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 14,
@@ -5919,6 +7610,8 @@
                       "remainingStructuralDeficitAfterSwap": 6,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 10,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 1,
@@ -5972,6 +7665,8 @@
                       "remainingStructuralDeficitAfterSwap": 5,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 11,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 13,
                         "addStrategyAffinityScore": 0,
@@ -6055,6 +7750,94 @@
                       "cutAffinityScore": 29,
                       "addAffinityScore": 0,
                       "netAffinityDelta": -29
+                    }
+                  ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "creature",
+                        "mana acceleration",
+                        "mana dork",
+                        "persistent colored mana source",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "land tutor",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "creature tutor",
+                        "sacrifice synergy",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "land tutor",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 13,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [],
+                      "addRoles": [
+                        "creature",
+                        "creature tutor",
+                        "equipment",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
                     }
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
@@ -6154,6 +7937,8 @@
                       "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 10,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 0,
@@ -6204,6 +7989,8 @@
                       "remainingStructuralDeficitAfterSwap": 6,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 10,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 0,
@@ -6254,6 +8041,8 @@
                       "remainingStructuralDeficitAfterSwap": 5,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 10,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 13,
                         "addStrategyAffinityScore": 0,
@@ -6342,6 +8131,96 @@
                       "cutAffinityScore": 0,
                       "addAffinityScore": 14,
                       "netAffinityDelta": 14
+                    }
+                  ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "creature",
+                        "creature tutor",
+                        "equipment",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "land tutor",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "+1/+1 counters",
+                        "creature",
+                        "land tutor",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 13,
+                      "addStrategyAffinityScore": 20,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "combat-tokens",
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [],
+                      "addRoles": [
+                        "card draw",
+                        "equipment",
+                        "protection",
+                        "repeatable draw"
+                      ],
+                      "unreplacedRoles": [],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
                     }
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
@@ -6441,6 +8320,8 @@
                       "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 0,
@@ -6490,6 +8371,8 @@
                       "remainingStructuralDeficitAfterSwap": 6,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 0,
@@ -6540,6 +8423,8 @@
                       "remainingStructuralDeficitAfterSwap": 5,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 13,
                         "addStrategyAffinityScore": 20,
@@ -6644,6 +8529,71 @@
                       "netAffinityDelta": 1
                     }
                   ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 1,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "creature",
+                        "land tutor",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "land tutor",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "sacrifice synergy",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "land tutor",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
                 "planProvenance": {
@@ -6741,6 +8691,8 @@
                       "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 1,
@@ -6791,6 +8743,8 @@
                       "remainingStructuralDeficitAfterSwap": 6,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 0,
@@ -6890,6 +8844,73 @@
                       "netAffinityDelta": 14
                     }
                   ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "sacrifice synergy",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 14,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "land tutor",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "card draw",
+                        "creature tutor",
+                        "repeatable draw",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "land tutor",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
                 "planProvenance": {
@@ -6987,6 +9008,8 @@
                       "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 0,
@@ -7034,6 +9057,8 @@
                       "remainingStructuralDeficitAfterSwap": 6,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 14,
@@ -7138,6 +9163,77 @@
                       "netAffinityDelta": 15
                     }
                   ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 14,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "card draw",
+                        "creature tutor",
+                        "repeatable draw",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 1,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "land tutor",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "land ramp",
+                        "land tutor",
+                        "persistent colored mana source",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
                 "planProvenance": {
@@ -7235,6 +9331,8 @@
                       "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 14,
@@ -7287,6 +9385,8 @@
                       "remainingStructuralDeficitAfterSwap": 6,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 10,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 1,
@@ -7390,6 +9490,76 @@
                       "netAffinityDelta": 1
                     }
                   ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 1,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "land ramp",
+                        "land tutor",
+                        "persistent colored mana source",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "land tutor",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "creature",
+                        "mana acceleration",
+                        "mana dork",
+                        "persistent colored mana source",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "land tutor",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
                 "planProvenance": {
@@ -7487,6 +9657,8 @@
                       "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 10,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 1,
@@ -7539,6 +9711,8 @@
                       "remainingStructuralDeficitAfterSwap": 6,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 11,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 0,
@@ -7652,6 +9826,40 @@
                       "netAffinityDelta": 1
                     }
                   ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 1,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "creature",
+                        "land tutor",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
                 "planProvenance": {
@@ -7749,6 +9957,8 @@
                       "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 1,
@@ -7841,6 +10051,37 @@
                       "cutAffinityScore": 8,
                       "addAffinityScore": 0,
                       "netAffinityDelta": -8
+                    }
+                  ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "sacrifice synergy",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
                     }
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
@@ -7940,6 +10181,8 @@
                       "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 0,
@@ -8035,6 +10278,42 @@
                       "cutAffinityScore": 0,
                       "addAffinityScore": 14,
                       "netAffinityDelta": 14
+                    }
+                  ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 14,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "card draw",
+                        "creature tutor",
+                        "repeatable draw",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
                     }
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
@@ -8134,6 +10413,8 @@
                       "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 14,
@@ -8236,6 +10517,42 @@
                       "netAffinityDelta": 1
                     }
                   ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 14,
+                      "addStrategyAffinityScore": 1,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "addMatchedStrategies": [
+                        "value-engine"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens",
+                        "food-lifegain"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "addRoles": [
+                        "land ramp",
+                        "land tutor",
+                        "persistent colored mana source",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "sacrifice synergy",
+                        "token production"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
                 "planProvenance": {
@@ -8333,6 +10650,8 @@
                       "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 10,
+                      "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 1,
