@@ -10,46 +10,43 @@
 1 Three Steps Ahead (MAR) 62
 1 Daily Bugle Newspaper (MSC) 749
 1 Arcane Denial (MSC) 147
+1 The Mind Stone (MSH) 21
+1 The Wasp, Winsome Avenger (MSC) 39
 1 Manamorphose (SLD) 1746
 1 Valorous Stance (MSC) 145
 1 Reprieve (MAR) 5
-1 H.E.R.B.I.E., Lovable Robot (MSC) 106
+1 Armor Wars (MSH) 203
 1 Whoosh! (MSC) 790
+1 Sword of Fire and Ice (MAR) 100
 1 The Soul Stone (SPM) 66
 1 Fantastic Bounce (MSC) 620
 1 Swords to Plowshares (MSC) 143
-1 Path to Exile (MSC) 141
-1 Blasphemous Act (MSC) 163
-1 Negative Zone Portal (MSC) 111
 1 Steelshaper's Gift (MAR) 50
-1 Vanquish the Horde (MSC) 146
-1 Swiftfoot Boots (MSC) 216
-1 Iron Man, Titan of Innovation (MAR) 91
+1 Blasphemous Act (MSC) 163
 1 Radioactive Spider (SPM) 111
-1 Venom's Hunger (SPM) 73
-1 Captain America, Liberator (MSC) 587
-1 Deadly Rollick (SLD) 1754
-1 Lightning Greaves (MSC) 202
-1 Doom's Time Platform (MSC) 103
-1 Fabricate (SLD) 7118
-1 Sword of Fire and Ice (MAR) 100
+1 Iron Man, Titan of Innovation (MAR) 91
+1 Seize the Day (MSC) 166
 1 Sol Ring (MSC) 211
+1 Captain America, Liberator (MSC) 587
+1 Swiftfoot Boots (MSC) 216
+1 Electro, Assaulting Battery (SPM) 76
+1 Fabricate (SLD) 7118
+1 Deadly Rollick (SLD) 1754
 1 Silver Surfer, Galactus's Herald (MSC) 10
-1 Heroic Intervention (MAR) 78
-1 Counterspell (MAR) 52
+1 Lightning Greaves (MSC) 202
 1 Dark Ritual (MSC) 793
 1 Defense of the Heart (MAR) 76
-1 Mindbreak Trap (MAR) 11
-1 Commander's Plate (SLD) 1733
+1 Heroic Intervention (MAR) 78
+1 Alibou, Ancient Witness (MAR) 39
 1 Birds of Paradise (MSC) 170
-1 Seize the Day (MSC) 166
 1 Aurelia, the Warleader (MAR) 86
+1 Path to Exile (MSC) 141
 1 Stark Industries Executive (MSH) 153
+1 Mole Man, Moloid Master (MSH) 177
 1 Sun-Spider, Nimble Webber (SPM) 154
 1 Loki, the Deceiver (MSC) 86
 1 Arcane Signet (MSC) 191
-1 Vandalblast (MSC) 168
-1 Teferi's Protection (MAR) 51
+1 Commander's Plate (SLD) 1733
 1 Relentless Assault (MAR) 25
 1 Fellwar Stone (MSC) 285
 1 Living Laser (MSC) 55
@@ -70,6 +67,9 @@
 1 Talisman of Progress (MSC) 221
 1 Royal Talon Fighter Jet (MSC) 24
 1 Talisman of Conviction (MSC) 217
+1 Secure the Wastes (SLD) 1748
+1 Counterspell (MAR) 52
+1 Skullclamp (MSC) 210
 1 Command Tower (MSC) 233
 1 Exotic Orchard (MSC) 241
 1 Secluded Courtyard (MSC) 265

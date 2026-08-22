@@ -71,19 +71,19 @@
       ],
       "metadataPath": "test-results/marvel-bracket5-broad/run-metadata.txt",
       "exists": true,
-      "sourceSha": "cf3eedb4c5e8646deddd4d800d51191cf05dae96",
+      "sourceSha": "77a5383fa7490aa91360b8186a4bda890f632157",
       "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "cf3eedb4c5e8646deddd4d800d51191cf05dae96",
-        "workflow_source_sha": "cf3eedb4c5e8646deddd4d800d51191cf05dae96",
-        "executed_head_sha": "cf3eedb4c5e8646deddd4d800d51191cf05dae96",
+        "source_sha": "77a5383fa7490aa91360b8186a4bda890f632157",
+        "workflow_source_sha": "77a5383fa7490aa91360b8186a4bda890f632157",
+        "executed_head_sha": "77a5383fa7490aa91360b8186a4bda890f632157",
         "control_outcome": "failure",
         "build_outcome": "success",
         "construction_outcome": "success",
         "refine_outcome": "success",
         "target_quality_outcome": "failure",
-        "strategy_preservation_outcome": "success",
+        "strategy_preservation_outcome": "failure",
         "policy": "permanent-production-presets",
         "max_win_package_cards": "4",
         "exact_card_count": "true",
@@ -94,7 +94,8 @@
       },
       "unmetPassConditions": [
         "control_outcome=success",
-        "target_quality_outcome=success"
+        "target_quality_outcome=success",
+        "strategy_preservation_outcome=success"
       ]
     },
     {
