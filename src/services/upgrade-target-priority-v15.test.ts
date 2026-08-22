@@ -23,6 +23,8 @@ const marvelMetrics: UpgradeCandidateMetricsV15 = {
   recursionCount: 4,
   boardWipeCount: 2,
   earlyPlayCount: 41,
+  cheapInteractionCount: 8,
+  fastManaCount: 3,
   averageNonlandManaValue: 2.71,
   roleCounts: { 'free interaction': 1 },
 };
@@ -90,6 +92,35 @@ test('lower-bracket candidate generation does not inherit the Bracket-5 curve la
 
   assert.equal(priorities.some((priority) => priority.prioritySource === 'authoritative-target-gate'), false);
   assert.equal(priorities.some((priority) => priority.role === 'average-nonland-mv'), false);
+});
+
+test('Bracket-4 candidate generation exposes actual failed construction gates before aspirational role targets', () => {
+  const priorities = upgradeCandidatePrioritiesV15({
+    ...marvelMetrics,
+    averageNonlandManaValue: 3.5,
+    earlyPlayCount: 18,
+    cheapInteractionCount: 2,
+    fastManaCount: 0,
+    tutorCount: 0,
+  }, {
+    ...bracketFiveTargets,
+    ramp: 12,
+    draw: 12,
+    interaction: 14,
+    freeInteraction: 0,
+    protection: 6,
+    tutors: 6,
+    recursion: 3,
+    earlyPlays: 16,
+  }, 4);
+
+  assert.deepEqual(
+    priorities.filter((priority) => priority.prioritySource === 'authoritative-target-gate').map((priority) => priority.targetGate),
+    ['average-nonland-mv', 'early-plays', 'cheap-interaction', 'fast-mana', 'tutors'],
+  );
+  assert.equal(priorities.find((priority) => priority.role === 'tutor')?.target, 2);
+  assert.equal(priorities.find((priority) => priority.role === 'tutor')?.prioritySource, 'authoritative-target-gate');
+  assert.equal(priorities.some((priority) => priority.role === 'tutor' && priority.target === 6), false);
 });
 
 test('restricted curve discovery admits only legal nonland additions at mana value two or less', () => {
