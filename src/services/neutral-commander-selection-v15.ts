@@ -12,6 +12,7 @@ export type NeutralArchetypeV15 =
   | 'equipment-voltron'
   | 'counters'
   | 'graveyard-reanimator'
+  | 'artifact-engine'
   | 'aristocrats'
   | 'food-lifegain'
   | 'spells-control'
@@ -92,6 +93,7 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
     'equipment-voltron',
     'counters',
     'graveyard-reanimator',
+    'artifact-engine',
     'aristocrats',
     'food-lifegain',
     'spells-control',
@@ -101,6 +103,7 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   const table = new Map(archetypes.map((archetype) => [archetype, { score: 0, evidence: [] as string[] }]));
   const roles = new Set(cards.flatMap((card) => inferCardRoles(card)));
   const text = cards.map(oracle).join(' // ');
+  const typeText = cards.map((card) => card.type_line.toLocaleLowerCase()).join(' // ');
   const repeatableOrPayoffLifeGain = /whenever [^.]*\byou gain(?:ed)?\b[^.]*\blife\b/i.test(text)
     || /\bif you gained\b[^.]*\blife\b/i.test(text)
     || /\bamount of life you gained\b/i.test(text)
@@ -108,6 +111,9 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   const convertsLifeGainToPressure = repeatableOrPayoffLifeGain
     && /\b(?:target|each|an) opponent\b[^.]*\bloses?\b[^.]*\blife\b/i.test(text);
   const recoversMilledCardsToHand = /\bcards? milled (?:this way )?[^.]{0,120}\binto your hand\b/i.test(text);
+  const massGraveyardReturn = /\bexiles? [^.]{0,180}\bfrom (?:your|their|a|any|all|each|the) graveyards?\b[^.]{0,240}\bputs? [^.]{0,180}\bexiled this way\b[^.]{0,100}\bonto the battlefield\b/i.test(text);
+  const artifactPermanent = /\bartifact\b/i.test(typeText);
+  const artifactEngineText = /\bartifact(?:s| creature| creatures| card| cards| permanent| permanents| spell| spells| token| tokens)?\b|\bvehicles?\b/i.test(text);
 
   addSignal(table, 'combat-tokens', roles.has('token production'), 6, 'token production');
   addSignal(table, 'combat-tokens', roles.has('extra combat'), 8, 'extra combat');
@@ -128,10 +134,14 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   addSignal(table, 'counters', /counter is put|counters? (?:are|is) put|with .* counters?/i.test(text), 3, 'counter placement');
 
   addSignal(table, 'graveyard-reanimator', roles.has('graveyard recursion'), 9, 'graveyard recursion');
-  addSignal(table, 'graveyard-reanimator', /from your graveyard|from a graveyard/i.test(text), 6, 'graveyard access');
+  addSignal(table, 'graveyard-reanimator', /\bfrom (?:your|their|a|any|all|each|the) graveyards?\b/i.test(text), 6, 'graveyard access');
   addSignal(table, 'graveyard-reanimator', /mill|surveil|discard/i.test(text), 5, 'graveyard setup');
   addSignal(table, 'graveyard-reanimator', recoversMilledCardsToHand, 7, 'milled-card recovery');
+  addSignal(table, 'graveyard-reanimator', massGraveyardReturn, 7, 'mass graveyard return');
   addSignal(table, 'graveyard-reanimator', /return .* graveyard .* battlefield|put .* graveyard .* battlefield/i.test(text), 6, 'reanimation text');
+
+  addSignal(table, 'artifact-engine', artifactPermanent, 3, 'artifact permanent');
+  addSignal(table, 'artifact-engine', artifactEngineText, 6, 'artifact/Vehicle engine text');
 
   addSignal(table, 'aristocrats', roles.has('sacrifice synergy'), 7, 'sacrifice synergy');
   addSignal(table, 'aristocrats', roles.has('sacrifice outlet'), 8, 'sacrifice outlet');
