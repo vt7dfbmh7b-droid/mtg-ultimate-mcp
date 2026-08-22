@@ -65,6 +65,7 @@ const NEUTRAL_PROFILES: Record<NeutralArchetypeV15, NeutralProfileV15> = {
   'equipment-voltron': { lands: 35, roles: { ramp: 10, draw: 10, interaction: 8, protection: 7, tutors: 2, recursion: 2, boardWipes: 1, early: 11 } },
   counters: { lands: 36, roles: { ramp: 9, draw: 10, interaction: 8, protection: 5, tutors: 1, recursion: 2, boardWipes: 1, early: 12 } },
   'graveyard-reanimator': { lands: 36, roles: { ramp: 9, draw: 10, interaction: 8, protection: 3, tutors: 2, recursion: 7, boardWipes: 2, early: 10 } },
+  'artifact-engine': { lands: 35, roles: { ramp: 10, draw: 11, interaction: 9, protection: 5, tutors: 2, recursion: 4, boardWipes: 2, early: 11 } },
   aristocrats: { lands: 36, roles: { ramp: 9, draw: 10, interaction: 8, protection: 3, tutors: 1, recursion: 5, boardWipes: 2, early: 12 } },
   'food-lifegain': { lands: 36, roles: { ramp: 9, draw: 10, interaction: 9, protection: 4, tutors: 1, recursion: 3, boardWipes: 2, early: 12 } },
   'spells-control': { lands: 35, roles: { ramp: 9, draw: 12, interaction: 14, protection: 4, tutors: 2, recursion: 2, boardWipes: 3, early: 14 } },
@@ -171,6 +172,7 @@ function incrementCounts(counts: NeutralRoleTargetsV15, card: ScryfallCard): voi
 function strategyAffinity(card: ScryfallCard, archetype: NeutralArchetypeV15): number {
   const roles = new Set(inferCardRoles(card));
   const text = getCardOracleText(card).toLocaleLowerCase();
+  const type = card.type_line.toLocaleLowerCase();
   let score = 0;
   const add = (condition: boolean, points: number): void => { if (condition) score += points; };
   switch (archetype) {
@@ -182,6 +184,8 @@ function strategyAffinity(card: ScryfallCard, archetype: NeutralArchetypeV15): n
       add(roles.has('+1/+1 counters'), 7); add(/proliferate/.test(text), 6); add(/counter is put|counters? are put|move .*counter/.test(text), 4); break;
     case 'graveyard-reanimator':
       add(roles.has('graveyard recursion'), 7); add(/graveyard/.test(text), 4); add(/mill|surveil|discard/.test(text), 3); break;
+    case 'artifact-engine':
+      add(type.includes('artifact'), 3); add(/\bartifact(?:s| creature| creatures| card| cards| permanent| permanents| spell| spells| token| tokens)?\b|\bvehicles?\b/.test(text), 6); add(roles.has('graveyard recursion'), 2); break;
     case 'aristocrats':
       add(roles.has('sacrifice synergy'), 6); add(roles.has('sacrifice outlet'), 7); add(roles.has('life drain'), 6); add(/dies|sacrifice/.test(text), 4); break;
     case 'food-lifegain':
