@@ -37,13 +37,13 @@
         ],
         "strategy": {
           "archetype": "combat-tokens",
-          "score": 29,
+          "score": 28,
           "evidence": [
             "token production +6",
             "extra combat +8",
             "combat untap potential +4",
             "haste +2",
-            "attack trigger +3",
+            "attack trigger +2",
             "attacking-token text +6"
           ]
         },
@@ -66,13 +66,13 @@
             "evidence": []
           }
         ],
-        "coherenceScore": 29,
+        "coherenceScore": 28,
         "selectionSignals": [
           "token production +6",
           "extra combat +8",
           "combat untap potential +4",
           "haste +2",
-          "attack trigger +3",
+          "attack trigger +2",
           "attacking-token text +6",
           "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
         ]
@@ -144,9 +144,9 @@
         "alternativeStrategies": [
           {
             "archetype": "combat-tokens",
-            "score": 3,
+            "score": 2,
             "evidence": [
-              "combat-damage trigger +3"
+              "combat-damage trigger +2"
             ]
           },
           {
@@ -244,10 +244,10 @@
           },
           {
             "archetype": "combat-tokens",
-            "score": 5,
+            "score": 4,
             "evidence": [
               "haste +2",
-              "attack trigger +3"
+              "attack trigger +2"
             ]
           },
           {
@@ -285,9 +285,9 @@
         "alternativeStrategies": [
           {
             "archetype": "combat-tokens",
-            "score": 9,
+            "score": 8,
             "evidence": [
-              "attack trigger +3",
+              "attack trigger +2",
               "attacking-token text +6"
             ]
           },
@@ -484,9 +484,9 @@
           },
           {
             "archetype": "combat-tokens",
-            "score": 3,
+            "score": 2,
             "evidence": [
-              "attack trigger +3"
+              "attack trigger +2"
             ]
           }
         ],
@@ -605,13 +605,13 @@
         ],
         "strategy": {
           "archetype": "combat-tokens",
-          "score": 29,
+          "score": 28,
           "evidence": [
             "token production +6",
             "extra combat +8",
             "combat untap potential +4",
             "haste +2",
-            "attack trigger +3",
+            "attack trigger +2",
             "attacking-token text +6"
           ]
         },
@@ -634,13 +634,13 @@
             "evidence": []
           }
         ],
-        "coherenceScore": 29,
+        "coherenceScore": 28,
         "selectionSignals": [
           "token production +6",
           "extra combat +8",
           "combat untap potential +4",
           "haste +2",
-          "attack trigger +3",
+          "attack trigger +2",
           "attacking-token text +6",
           "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
         ]
@@ -845,13 +845,13 @@
         ],
         "strategy": {
           "archetype": "combat-tokens",
-          "score": 29,
+          "score": 28,
           "evidence": [
             "token production +6",
             "extra combat +8",
             "combat untap potential +4",
             "haste +2",
-            "attack trigger +3",
+            "attack trigger +2",
             "attacking-token text +6"
           ]
         },
@@ -874,13 +874,13 @@
             "evidence": []
           }
         ],
-        "coherenceScore": 29,
+        "coherenceScore": 28,
         "selectionSignals": [
           "token production +6",
           "extra combat +8",
           "combat untap potential +4",
           "haste +2",
-          "attack trigger +3",
+          "attack trigger +2",
           "attacking-token text +6",
           "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
         ]
@@ -1181,22 +1181,22 @@
           "7+": 1
         },
         "coloredPips": {
-          "W": 17,
+          "W": 16,
           "U": 14,
           "B": 10,
-          "R": 22,
-          "G": 9
+          "R": 23,
+          "G": 8
         },
         "roleCounts": {
-          "token production": 20,
+          "token production": 19,
           "haste": 7,
           "extra combat": 5,
           "untap engine": 5,
-          "creature": 20,
+          "creature": 19,
           "cost reduction": 4,
           "card draw": 21,
           "graveyard recursion": 5,
-          "+1/+1 counters": 4,
+          "+1/+1 counters": 3,
           "mana acceleration": 25,
           "treasure": 8,
           "sacrifice synergy": 12,
@@ -1204,9 +1204,9 @@
           "persistent colored mana source": 14,
           "spot interaction": 14,
           "board wipe": 3,
-          "mana dork": 3,
+          "mana dork": 2,
           "protection": 9,
-          "board protection": 3,
+          "board protection": 2,
           "countermagic": 3,
           "mana rock": 13,
           "repeatable draw": 2,
@@ -1214,18 +1214,17 @@
           "tutor": 9,
           "free interaction": 1,
           "creature tutor": 1,
-          "graveyard hate": 1,
           "go-wide payoff": 3,
-          "etb synergy": 1,
+          "graveyard hate": 1,
           "land ramp": 1,
           "land tutor": 1,
-          "land": 31,
-          "card selection": 3
+          "card selection": 4,
+          "land": 31
         },
         "earlyPlayCount": 42,
         "fastManaCount": 5,
         "rampCount": 30,
-        "drawCount": 24,
+        "drawCount": 25,
         "tutorCount": 9,
         "interactionCount": 19,
         "cheapInteractionCount": 13,
@@ -1235,7 +1234,9 @@
         "persistentColoredManaSourceCount": 14,
         "structuralSignals": []
       },
-      "gameChangerNames": [],
+      "gameChangerNames": [
+        "Jeska's Will"
+      ],
       "selectedPackage": null,
       "seededPackageVerifiedInFinalDeck": false,
       "exactPrintingVerification": {
@@ -1323,22 +1324,22 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Average nonland mana value",
-            "observed": 2.78,
+            "observed": 2.77,
             "required": "at most 2.6",
             "state": "failed",
             "pressurePoint": "speed/curve",
-            "detail": "Average nonland mana value: observed 2.78; Bracket-5 construction gate requires at most 2.6."
+            "detail": "Average nonland mana value: observed 2.77; Bracket-5 construction gate requires at most 2.6."
           },
           {
             "key": "early-plays",
             "targetBracket": 5,
             "category": "construction",
             "label": "Early plays",
-            "observed": 39,
+            "observed": 40,
             "required": "at least 35",
             "state": "passed",
             "pressurePoint": "speed/curve",
-            "detail": "Early plays: observed 39; Bracket-5 construction gate requires at least 35."
+            "detail": "Early plays: observed 40; Bracket-5 construction gate requires at least 35."
           },
           {
             "key": "fast-mana",
@@ -1435,11 +1436,11 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Average nonland mana value",
-            "observed": 2.78,
+            "observed": 2.77,
             "required": "at most 2.6",
             "state": "failed",
             "pressurePoint": "speed/curve",
-            "detail": "Average nonland mana value: observed 2.78; Bracket-5 construction gate requires at most 2.6."
+            "detail": "Average nonland mana value: observed 2.77; Bracket-5 construction gate requires at most 2.6."
           },
           {
             "key": "fast-mana",
@@ -1519,7 +1520,7 @@
           "Improve metagame evidence: Independent current competitive-metagame evidence needs true."
         ],
         "restrictionObservations": [
-          "Constraint \"Marvel physical printings only.\" was active while the finished list missed 6 Bracket-5 construction gates: Average nonland mana value (2.78 vs at most 2.6); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Tutors (3 vs at least 4); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=P vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
+          "Constraint \"Marvel physical printings only.\" was active while the finished list missed 6 Bracket-5 construction gates: Average nonland mana value (2.77 vs at most 2.6); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Tutors (3 vs at least 4); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=P vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
         ],
         "guidance": "The target comparison uses only checks relevant to the requested bracket. Unavailable external evidence is reported as unverified rather than converted into a false deck weakness."
       },
@@ -1528,20 +1529,20 @@
           "key": "average-nonland-mv",
           "category": "construction",
           "label": "Average nonland mana value",
-          "observed": 2.78,
+          "observed": 2.77,
           "required": "at most 2.6",
           "passed": false,
-          "detail": "Average nonland mana value: observed 2.78; Bracket-5 construction gate requires at most 2.6.",
+          "detail": "Average nonland mana value: observed 2.77; Bracket-5 construction gate requires at most 2.6.",
           "pressurePoint": "speed/curve"
         },
         {
           "key": "early-plays",
           "category": "construction",
           "label": "Early plays",
-          "observed": 39,
+          "observed": 40,
           "required": "at least 35",
           "passed": true,
-          "detail": "Early plays: observed 39; Bracket-5 construction gate requires at least 35.",
+          "detail": "Early plays: observed 40; Bracket-5 construction gate requires at least 35.",
           "pressurePoint": "speed/curve"
         },
         {
@@ -1629,19 +1630,19 @@
         "landCount": 31,
         "nonlandCount": 69,
         "landRatio": 0.31,
-        "averageNonlandManaValue": 2.78,
+        "averageNonlandManaValue": 2.77,
         "manaCurve": {
           "0": 0,
           "1": 14,
-          "2": 25,
-          "3": 11,
+          "2": 26,
+          "3": 10,
           "4": 8,
           "5": 6,
           "6": 3,
           "7+": 2
         },
         "coloredPips": {
-          "W": 48,
+          "W": 47,
           "U": 0,
           "B": 0,
           "R": 0,
@@ -1649,10 +1650,10 @@
         },
         "roleCounts": {
           "graveyard recursion": 19,
-          "+1/+1 counters": 21,
+          "+1/+1 counters": 22,
           "creature": 23,
           "spot interaction": 16,
-          "protection": 10,
+          "protection": 9,
           "card draw": 15,
           "mana acceleration": 10,
           "mana dork": 2,
@@ -1665,7 +1666,7 @@
           "graveyard hate": 7,
           "repeatable draw": 2,
           "equipment": 9,
-          "board protection": 4,
+          "board protection": 3,
           "fast mana": 1,
           "board wipe": 3,
           "tutor": 3,
@@ -1679,14 +1680,14 @@
           "copy effect": 1,
           "land": 31
         },
-        "earlyPlayCount": 39,
+        "earlyPlayCount": 40,
         "fastManaCount": 1,
         "rampCount": 14,
         "drawCount": 21,
         "tutorCount": 3,
         "interactionCount": 18,
         "cheapInteractionCount": 9,
-        "protectionCount": 10,
+        "protectionCount": 9,
         "recursionCount": 19,
         "boardWipeCount": 3,
         "persistentColoredManaSourceCount": 7,
@@ -2533,7 +2534,7 @@
           "graveyard hate": 5,
           "mana dork": 4,
           "card selection": 8,
-          "board protection": 5,
+          "board protection": 4,
           "graveyard recursion": 4,
           "board wipe": 3,
           "tutor": 5,
@@ -2971,7 +2972,7 @@
           "card selection": 5,
           "graveyard recursion": 4,
           "tutor": 3,
-          "board protection": 3,
+          "board protection": 2,
           "land ramp": 2,
           "land tutor": 2,
           "haste": 4,
@@ -3030,13 +3031,13 @@
       ],
       "strategy": {
         "archetype": "combat-tokens",
-        "score": 29,
+        "score": 28,
         "evidence": [
           "token production +6",
           "extra combat +8",
           "combat untap potential +4",
           "haste +2",
-          "attack trigger +3",
+          "attack trigger +2",
           "attacking-token text +6"
         ]
       },
@@ -3059,13 +3060,13 @@
           "evidence": []
         }
       ],
-      "coherenceScore": 29,
+      "coherenceScore": 28,
       "selectionSignals": [
         "token production +6",
         "extra combat +8",
         "combat untap potential +4",
         "haste +2",
-        "attack trigger +3",
+        "attack trigger +2",
         "attacking-token text +6",
         "no commander-name, EDHREC, mana-value, colour-count, bracket, or cEDH bonus applied"
       ]
