@@ -240,6 +240,22 @@ const graveyardExchange = card({
   manaCost: '{3}{B}{B}',
 });
 
+const delayedEquippedReturn = card({
+  name: 'Generic Delayed Equipment Return',
+  typeLine: 'Artifact — Equipment',
+  oracleText: "Equipped creature has lifelink. Whenever equipped creature dies, return that card to the battlefield under its owner's control at the beginning of the next end step.",
+  cmc: 2,
+  manaCost: '{2}',
+});
+
+const delayedArtifactCreatureReturn = card({
+  name: 'Generic Delayed Artifact Return',
+  typeLine: 'Artifact Creature — Construct Wizard',
+  oracleText: '{1}{B}, {T}: Choose another target artifact creature you control. When that creature dies this turn, return it to the battlefield tapped under your control.',
+  cmc: 4,
+  manaCost: '{3}{B}',
+});
+
 const tokenMultiplier = card({
   name: 'Generic Token Multiplier',
   typeLine: 'Creature — Test Warrior',
@@ -349,6 +365,11 @@ test('qualified mass destruction and graveyard exchanges retain wipe and recursi
   assert.equal(inferCardRoles(qualifiedMassWipe).includes('board wipe'), true);
   assert.equal(inferCardRoles(graveyardExchange).includes('board wipe'), true);
   assert.equal(inferCardRoles(graveyardExchange).includes('graveyard recursion'), true);
+});
+
+test('delayed death returns count as graveyard recursion even when Oracle text omits the word graveyard', () => {
+  assert.equal(inferCardRoles(delayedEquippedReturn).includes('graveyard recursion'), true);
+  assert.equal(inferCardRoles(delayedArtifactCreatureReturn).includes('graveyard recursion'), true);
 });
 
 test('token multipliers, team-wide payoffs, and board-scaling Equipment retain combat-engine truth', () => {
