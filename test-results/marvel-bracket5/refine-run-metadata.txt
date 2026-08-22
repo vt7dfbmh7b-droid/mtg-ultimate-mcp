@@ -1,7 +1,7 @@
-source_sha=48a7c3f57c10ce855787cc247e371365e53e8ad6
-control_outcome=success
+source_sha=28e56160f05509af4b8d6c3d60fc53240a00a4bc
+control_outcome=failure
 execution_outcome=success
-target_gate_quality_outcome=success
+target_gate_quality_outcome=failure
 policy=checked-in-very-good-candidate
 max_win_package_cards=4
 spellbook_max_rows_per_query=400
@@ -15,3 +15,4 @@ swap_feasible_win_package_selection=true
 protect_existing_package_pieces=true
 strategy_preservation_evidence=true
 meaningful_strategy_loss_rejected=true
+persistent_colored_mana_floor=true

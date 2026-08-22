@@ -4,6 +4,10 @@
     "commander": [
       "Najeela, the Blade-Blossom"
     ],
+    "hardGatesPassed": true,
+    "commanderLegal": true,
+    "cardCount": 100,
+    "printingPolicySatisfied": true,
     "assessedBracket": 4,
     "assessedBand": "bracket-4-optimized-range",
     "bracket5ConstructionCandidate": false,
@@ -125,6 +129,7 @@
         "creature": 19,
         "mana acceleration": 26,
         "mana rock": 14,
+        "persistent colored mana source": 13,
         "graveyard recursion": 5,
         "cost reduction": 4,
         "card draw": 19,
@@ -160,6 +165,7 @@
       "protectionCount": 6,
       "recursionCount": 5,
       "boardWipeCount": 3,
+      "persistentColoredManaSourceCount": 13,
       "structuralSignals": []
     },
     "verifiedWinningCombos": 0
@@ -243,7 +249,8 @@
             ],
             "cutRoles": [
               "mana acceleration",
-              "mana rock"
+              "mana rock",
+              "persistent colored mana source"
             ],
             "addRoles": [
               "card draw",
@@ -251,7 +258,8 @@
             ],
             "unreplacedRoles": [
               "mana acceleration",
-              "mana rock"
+              "mana rock",
+              "persistent colored mana source"
             ],
             "meaningfulStrategyLoss": false,
             "verdict": "preserved"
@@ -352,6 +360,8 @@
               "remainingStructuralDeficitAfterSwap": 4,
               "authoritativeTargetGate": "average-nonland-mv",
               "nonlandManaValueReduction": 7,
+              "persistentColoredManaSourcesAfterSwap": 13,
+              "persistentColoredManaSourceFloor": 8,
               "strategyPreservation": {
                 "cutStrategyAffinityScore": 4,
                 "addStrategyAffinityScore": 0,
@@ -406,6 +416,8 @@
               "remainingStructuralDeficitAfterSwap": 4,
               "authoritativeTargetGate": "average-nonland-mv",
               "nonlandManaValueReduction": 1,
+              "persistentColoredManaSourcesAfterSwap": 12,
+              "persistentColoredManaSourceFloor": 8,
               "strategyPreservation": {
                 "cutStrategyAffinityScore": 4,
                 "addStrategyAffinityScore": 0,
@@ -419,7 +431,8 @@
                 ],
                 "cutRoles": [
                   "mana acceleration",
-                  "mana rock"
+                  "mana rock",
+                  "persistent colored mana source"
                 ],
                 "addRoles": [
                   "card draw",
@@ -427,7 +440,8 @@
                 ],
                 "unreplacedRoles": [
                   "mana acceleration",
-                  "mana rock"
+                  "mana rock",
+                  "persistent colored mana source"
                 ],
                 "meaningfulStrategyLoss": false,
                 "verdict": "preserved"
@@ -589,7 +603,8 @@
                     ],
                     "cutRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [
                       "card draw",
@@ -597,7 +612,8 @@
                     ],
                     "unreplacedRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -632,12 +648,14 @@
                     ],
                     "cutRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [],
                     "unreplacedRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -672,14 +690,16 @@
                     ],
                     "cutRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [
                       "card draw"
                     ],
                     "unreplacedRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -884,14 +904,16 @@
                     ],
                     "cutRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [
                       "card draw"
                     ],
                     "unreplacedRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -1139,7 +1161,8 @@
                     ],
                     "cutRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [
                       "card draw",
@@ -1147,7 +1170,8 @@
                     ],
                     "unreplacedRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -1316,7 +1340,8 @@
                     ],
                     "cutRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [
                       "card draw",
@@ -1324,7 +1349,8 @@
                     ],
                     "unreplacedRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -1359,12 +1385,14 @@
                     ],
                     "cutRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [],
                     "unreplacedRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -1401,7 +1429,8 @@
                     ],
                     "cutRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [
                       "card draw",
@@ -1412,7 +1441,8 @@
                     ],
                     "unreplacedRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -1449,14 +1479,16 @@
                     ],
                     "cutRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [
                       "token production"
                     ],
                     "unreplacedRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -1493,7 +1525,8 @@
                     ],
                     "cutRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [
                       "+1/+1 counters",
@@ -1502,7 +1535,8 @@
                     ],
                     "unreplacedRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -1672,14 +1706,16 @@
                     ],
                     "cutRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [
                       "token production"
                     ],
                     "unreplacedRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -1716,7 +1752,8 @@
                     ],
                     "cutRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [
                       "+1/+1 counters",
@@ -1725,7 +1762,8 @@
                     ],
                     "unreplacedRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -1760,12 +1798,14 @@
                     ],
                     "cutRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [],
                     "unreplacedRoles": [
                       "mana acceleration",
-                      "mana rock"
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -1981,7 +2021,8 @@
                         ],
                         "cutRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [
                           "card draw",
@@ -1989,7 +2030,8 @@
                         ],
                         "unreplacedRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -2024,12 +2066,14 @@
                         ],
                         "cutRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [],
                         "unreplacedRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -2064,14 +2108,16 @@
                         ],
                         "cutRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [
                           "card draw"
                         ],
                         "unreplacedRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -2276,14 +2322,16 @@
                         ],
                         "cutRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [
                           "card draw"
                         ],
                         "unreplacedRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -2531,7 +2579,8 @@
                         ],
                         "cutRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [
                           "card draw",
@@ -2539,7 +2588,8 @@
                         ],
                         "unreplacedRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -2708,7 +2758,8 @@
                         ],
                         "cutRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [
                           "card draw",
@@ -2716,7 +2767,8 @@
                         ],
                         "unreplacedRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -2751,12 +2803,14 @@
                         ],
                         "cutRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [],
                         "unreplacedRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -2793,7 +2847,8 @@
                         ],
                         "cutRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [
                           "card draw",
@@ -2804,7 +2859,8 @@
                         ],
                         "unreplacedRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -2841,14 +2897,16 @@
                         ],
                         "cutRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [
                           "token production"
                         ],
                         "unreplacedRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -2885,7 +2943,8 @@
                         ],
                         "cutRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [
                           "+1/+1 counters",
@@ -2894,7 +2953,8 @@
                         ],
                         "unreplacedRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -3064,14 +3124,16 @@
                         ],
                         "cutRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [
                           "token production"
                         ],
                         "unreplacedRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -3108,7 +3170,8 @@
                         ],
                         "cutRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [
                           "+1/+1 counters",
@@ -3117,7 +3180,8 @@
                         ],
                         "unreplacedRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -3152,12 +3216,14 @@
                         ],
                         "cutRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [],
                         "unreplacedRoles": [
                           "mana acceleration",
-                          "mana rock"
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -8417,6 +8483,8 @@
     }
   },
   "finalDeck": {
+    "hardGatesPassed": true,
+    "commanderLegal": true,
     "assessedBracket": 4,
     "assessedBand": "bracket-4-optimized-range",
     "bracket5ConstructionCandidate": false,
@@ -8538,6 +8606,7 @@
         "creature": 19,
         "mana acceleration": 25,
         "mana rock": 13,
+        "persistent colored mana source": 12,
         "graveyard recursion": 5,
         "cost reduction": 3,
         "card draw": 20,
@@ -8574,6 +8643,7 @@
       "protectionCount": 6,
       "recursionCount": 5,
       "boardWipeCount": 2,
+      "persistentColoredManaSourceCount": 12,
       "structuralSignals": []
     },
     "verifiedWinningCombos": 0,
