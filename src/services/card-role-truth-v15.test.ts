@@ -208,6 +208,30 @@ const boardProtection = card({
   manaCost: '{1}{G}',
 });
 
+const targetedMinusRemoval = card({
+  name: 'Generic Negative Removal',
+  typeLine: 'Instant',
+  oracleText: 'Target creature gets -1/-1 until end of turn for each Swamp you control.',
+  cmc: 1,
+  manaCost: '{B}',
+});
+
+const expensiveWearerProtection = card({
+  name: 'Generic Expensive Protective Equipment',
+  typeLine: 'Artifact — Equipment',
+  oracleText: 'Equipped creature gets +2/+2 and has hexproof from monocolored. Equip {4}.',
+  cmc: 1,
+  manaCost: '{1}',
+});
+
+const efficientWearerProtection = card({
+  name: 'Generic Efficient Protective Equipment',
+  typeLine: 'Artifact — Equipment',
+  oracleText: 'Equipped creature has hexproof and haste. Equip {1}.',
+  cmc: 2,
+  manaCost: '{2}',
+});
+
 const conditionalGroupProtection = card({
   name: 'Conditional Group Protection',
   typeLine: 'Instant',
@@ -379,9 +403,18 @@ test('token multipliers, team-wide payoffs, and board-scaling Equipment retain c
   assert.ok(inferCardRoles(boardScalingEquipment).includes('go-wide payoff'));
 });
 
-test('direct damage and conditional tap-exile cards count as spot interaction', () => {
+test('direct damage, conditional tap-exile, and targeted negative-power cards count as spot interaction', () => {
   assert.equal(inferCardRoles(directDamageInteraction).includes('spot interaction'), true);
   assert.equal(inferCardRoles(conditionalTapExile).includes('spot interaction'), true);
+  assert.equal(inferCardRoles(targetedMinusRemoval).includes('spot interaction'), true);
+});
+
+test('expensive wearer-only Equipment protection is conditional while efficient Equip remains normal protection', () => {
+  const expensiveRoles = inferCardRoles(expensiveWearerProtection);
+  const efficientRoles = inferCardRoles(efficientWearerProtection);
+  assert.equal(expensiveRoles.includes('protection'), false);
+  assert.equal(expensiveRoles.includes('conditional protection'), true);
+  assert.equal(efficientRoles.includes('protection'), true);
 });
 
 test('putting a target creature from any graveyard onto the battlefield counts as recursion', () => {

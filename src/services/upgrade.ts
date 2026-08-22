@@ -90,14 +90,14 @@ const TARGETS: Record<number, UpgradeStructuralTargetsV15> = {
 export const BRACKET_FOUR_AVERAGE_NONLAND_MV_MAX_V15 = 3.1;
 export const BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15 = 2.6;
 
-const BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15 = {
+export const BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15 = {
   earlyPlays: 25,
   cheapInteraction: 6,
   fastMana: 2,
   tutors: 2,
 } as const;
 
-const BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15 = {
+export const BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15 = {
   earlyPlays: 35,
   cheapInteraction: 8,
   fastMana: 3,
@@ -196,7 +196,7 @@ function identityQuery(identity: string[]): string {
 
 function roleClause(role: string, targetGate: UpgradeTargetGateV15 | null = null): string {
   if (targetGate === 'cheap-interaction') {
-    return 'mv<=2 (o:"counter target spell" OR o:"destroy target" OR o:"exile target" OR o:"return target")';
+    return 'mv<=2 (o:"counter target spell" OR o:"destroy target" OR o:"exile target" OR o:"return target" OR o:"target creature gets -")';
   }
   if (targetGate === 'fast-mana') {
     return 'mv<=2 (o:"add" OR o:"Treasure")';
@@ -204,7 +204,7 @@ function roleClause(role: string, targetGate: UpgradeTargetGateV15 | null = null
   const roleClauses: Record<string, string> = {
     ramp: '(o:"add" OR o:"search your library for" OR o:"costs" )',
     draw: '(o:"draw" OR o:"scry" OR o:"surveil" OR o:"look at the top")',
-    interaction: '(o:"counter target spell" OR o:"destroy target" OR o:"exile target" OR o:"return target")',
+    interaction: '(o:"counter target spell" OR o:"destroy target" OR o:"exile target" OR o:"return target" OR o:"target creature gets -")',
     'free-interaction': '((mv=0 OR o:"rather than pay") (o:"counter target" OR o:"destroy target" OR o:"exile target"))',
     protection: '(o:"hexproof" OR o:"indestructible" OR o:"protection from" OR o:"phase out")',
     tutor: 'o:"search your library for"',

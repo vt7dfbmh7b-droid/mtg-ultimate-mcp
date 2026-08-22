@@ -245,6 +245,7 @@ export function inferCardRoles(card: ScryfallCard): string[] {
     /(?:destroy|exile)(?: up to [^.]{0,80})? target/.test(text)
     || /return target .* to (?:its|their) owner's hand/.test(text)
     || /tap target (?:artifact|creature|permanent)/.test(text)
+    || /target [^.]{0,100}(?:creature|planeswalker)[^.]{0,60}gets? -(?:x|\d+)\/-(?:x|\d+)/.test(text)
     || /deals? [^.]{0,120} damage (?:to )?(?:any |up to one )?target/.test(text)
   ) roles.add('spot interaction');
   if (/destroy target artifact|destroy target enchantment|exile target artifact|exile target enchantment/.test(text)) roles.add('artifact/enchantment interaction');
@@ -284,8 +285,15 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   const targetedProtection = /(?:target|another target|equipped|enchanted|commander)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text)
     || /(?:target|another target|any number of target)[^.]{0,100}phases? out/.test(text);
   const conditionalGroupProtection = /(?:creatures|permanents|artifacts|enchantments) you control\s+(?:with|that|if|as long as)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text);
-  if (boardProtection || targetedProtection) roles.add('protection');
-  if (conditionalGroupProtection && !boardProtection) roles.add('conditional protection');
+  const equipmentWearerProtection = type.includes('equipment')
+    && /\bequipped creature[^.]{0,120}(?:hexproof|indestructible|protection from|shroud)/.test(text);
+  const genericEquipCost = text.match(/\bequip\s*\{(\d+)\}/);
+  const expensiveEquipmentProtection = equipmentWearerProtection
+    && genericEquipCost !== null
+    && Number.parseInt(genericEquipCost[1] ?? '0', 10) > 2
+    && !/\battach (?:this equipment|it) to\b/.test(text);
+  if ((boardProtection || targetedProtection) && !expensiveEquipmentProtection) roles.add('protection');
+  if ((conditionalGroupProtection && !boardProtection) || expensiveEquipmentProtection) roles.add('conditional protection');
   if (boardProtection) roles.add('board protection');
   if (/haste/.test(text)) roles.add('haste');
   if (/can't cast|can't activate|players can't|opponents can't|doesn't untap|enter the battlefield tapped/.test(text)) roles.add('stax/control');

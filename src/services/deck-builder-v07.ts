@@ -19,10 +19,14 @@ import {
 import { getCardsByIdentifiers, getCardsByNames, inferCardRoles, searchCards, summarizeCard } from './scryfall.js';
 import { simulateDeckGameplayV06 } from './simulation-v06.js';
 import {
+  BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15,
+  BRACKET_FOUR_AVERAGE_NONLAND_MV_MAX_V15,
+  BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15,
   BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15,
   minimumPersistentColoredManaSourcesV15,
   suggestDeckUpgrades,
   type UpgradeOptions,
+  type UpgradeTargetGateV15,
 } from './upgrade.js';
 
 export interface DeckBuildOptionsV07 {
@@ -571,7 +575,7 @@ type UpgradeStructuralRoleV15 =
   | 'recursion'
   | 'board-wipe'
   | 'early';
-type UpgradeTargetGateRoleV15 = 'average-nonland-mv';
+type UpgradeTargetGateRoleV15 = UpgradeTargetGateV15;
 type UpgradeAddressedRoleV15 = UpgradeStructuralRoleV15 | UpgradeTargetGateRoleV15 | 'win-package';
 
 interface UpgradeAddSelectionV15 {
@@ -830,6 +834,27 @@ function summaryMatchesUpgradeRoleV15(card: Record<string, unknown>, role: Upgra
   return !recordString(card.typeLine).toLocaleLowerCase().includes('land') && recordNumber(card.manaValue) <= 2;
 }
 
+type UpgradeCountTargetGateV15 = Exclude<UpgradeTargetGateV15, 'average-nonland-mv'>;
+const UPGRADE_TARGET_GATES_V15: UpgradeTargetGateV15[] = [
+  'average-nonland-mv', 'early-plays', 'cheap-interaction', 'fast-mana', 'free-interaction', 'tutors',
+];
+
+function asUpgradeTargetGateV15(value: unknown): UpgradeTargetGateV15 | null {
+  return typeof value === 'string' && UPGRADE_TARGET_GATES_V15.includes(value as UpgradeTargetGateV15)
+    ? value as UpgradeTargetGateV15
+    : null;
+}
+
+function summaryMatchesCountTargetGateV15(card: Record<string, unknown>, gate: UpgradeCountTargetGateV15): boolean {
+  const roles = summarizedRoles(card);
+  if (gate === 'early-plays') return !recordString(card.typeLine).toLocaleLowerCase().includes('land') && recordNumber(card.manaValue) <= 2;
+  if (gate === 'cheap-interaction') return recordNumber(card.manaValue) <= 2
+    && (roles.has('spot interaction') || roles.has('countermagic') || roles.has('free interaction'));
+  if (gate === 'fast-mana') return roles.has('fast mana');
+  if (gate === 'free-interaction') return roles.has('free interaction');
+  return roles.has('tutor');
+}
+
 function applySummaryToStructuralCountsV15(
   counts: UpgradeStructuralCountsV15,
   card: Record<string, unknown>,
@@ -907,16 +932,48 @@ export function pairUpgradeSwapsByStructureV15(
   cutPool: Array<Record<string, unknown>>,
   currentMetrics: Record<string, unknown>,
   structuralTargets: Record<string, unknown>,
+  targetBracket = 5,
 ): UpgradePairingV15[] {
   const state = upgradeStructuralStateV15(currentMetrics, structuralTargets);
+  const bracket = clampBracket(targetBracket);
   const currentAverageNonlandManaValue = recordNumber(currentMetrics.averageNonlandManaValue);
   const currentNonlandCount = recordNumber(currentMetrics.nonlandCount);
-  const requiredCurveReduction = currentAverageNonlandManaValue > BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15
+  const curveTarget = bracket >= 5
+    ? BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15
+    : bracket >= 4
+      ? BRACKET_FOUR_AVERAGE_NONLAND_MV_MAX_V15
+      : Number.POSITIVE_INFINITY;
+  const requiredCurveReduction = Number.isFinite(curveTarget)
+    && currentAverageNonlandManaValue > curveTarget
     && currentNonlandCount > 0
-    ? (currentAverageNonlandManaValue - BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15) * currentNonlandCount
+    ? (currentAverageNonlandManaValue - curveTarget) * currentNonlandCount
     : Number.POSITIVE_INFINITY;
   let remainingCurveReduction = requiredCurveReduction;
+  let currentNonlandManaValueTotal = currentAverageNonlandManaValue * currentNonlandCount;
   let counts = state.counts;
+  const authoritativeCountTargets: Partial<Record<UpgradeCountTargetGateV15, number>> = bracket >= 5
+    ? {
+        'early-plays': BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.earlyPlays,
+        'cheap-interaction': BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.cheapInteraction,
+        'fast-mana': BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.fastMana,
+        'free-interaction': BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.freeInteraction,
+        tutors: BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.tutors,
+      }
+    : bracket >= 4
+      ? {
+          'early-plays': BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15.earlyPlays,
+          'cheap-interaction': BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15.cheapInteraction,
+          'fast-mana': BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15.fastMana,
+          tutors: BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15.tutors,
+        }
+      : {};
+  let authoritativeCounts: Record<UpgradeCountTargetGateV15, number> = {
+    'early-plays': recordNumber(currentMetrics.earlyPlayCount),
+    'cheap-interaction': recordNumber(currentMetrics.cheapInteractionCount),
+    'fast-mana': recordNumber(currentMetrics.fastManaCount),
+    'free-interaction': currentRoleCountV15(currentMetrics, 'free interaction'),
+    tutors: recordNumber(currentMetrics.tutorCount),
+  };
   let persistentColoredManaSources = recordNumber(currentMetrics.persistentColoredManaSourceCount);
   const persistentColoredManaSourceTarget = minimumPersistentColoredManaSourcesV15(
     recordNumber(currentMetrics.commanderColorCount),
@@ -929,6 +986,8 @@ export function pairUpgradeSwapsByStructureV15(
     if (remainingCuts.length === 0) break;
     const addCard = summarizedCard(selection.candidate);
     const addManaValue = recordNumber(addCard.manaValue);
+    const selectionTargetGate = asUpgradeTargetGateV15(selection.candidate.authoritativeTargetGate)
+      ?? (selection.role === 'average-nonland-mv' ? 'average-nonland-mv' : null);
     const afterAdd = applySummaryToStructuralCountsV15(counts, addCard, 1);
     const persistentColoredManaSourcesAfterAdd = persistentColoredManaSources
       + (summaryIsPersistentColoredManaSourceV15(addCard) ? 1 : 0);
@@ -946,6 +1005,28 @@ export function pairUpgradeSwapsByStructureV15(
         const persistentColoredManaSourcesAfterSwap = persistentColoredManaSourcesAfterAdd
           - (summaryIsPersistentColoredManaSourceV15(summarizedCard(cut)) ? 1 : 0);
         if (persistentColoredManaSourcesAfterSwap < persistentColoredManaSourceFloor) return false;
+
+        const cutCard = summarizedCard(cut);
+        const afterAuthoritative = { ...authoritativeCounts };
+        for (const [gate, target] of Object.entries(authoritativeCountTargets) as Array<[UpgradeCountTargetGateV15, number]>) {
+          const beforeCount = authoritativeCounts[gate];
+          const addDelta = summaryMatchesCountTargetGateV15(addCard, gate) ? 1 : 0;
+          const cutDelta = summaryMatchesCountTargetGateV15(cutCard, gate) ? 1 : 0;
+          afterAuthoritative[gate] = beforeCount + addDelta - cutDelta;
+          if (afterAuthoritative[gate] < Math.min(beforeCount, target)) return false;
+        }
+        if (selectionTargetGate && selectionTargetGate !== 'average-nonland-mv') {
+          if (afterAuthoritative[selectionTargetGate] <= authoritativeCounts[selectionTargetGate]) return false;
+        }
+
+        if (currentNonlandCount > 0 && Number.isFinite(curveTarget)) {
+          const beforeAverage = currentNonlandManaValueTotal / currentNonlandCount;
+          const afterAverage = (currentNonlandManaValueTotal + addManaValue - recordNumber(cutCard.manaValue)) / currentNonlandCount;
+          const allowedAverage = Math.max(curveTarget, beforeAverage);
+          if (afterAverage > allowedAverage + 0.0001) return false;
+          if (selectionTargetGate === 'average-nonland-mv' && afterAverage >= beforeAverage - 0.0001) return false;
+        }
+
         if (selection.role === 'average-nonland-mv' || selection.role === 'win-package') return true;
         return structuralDeficitTotalV15(afterSwap, state.targets) < deficitBeforeSwap;
       });
@@ -981,10 +1062,16 @@ export function pairUpgradeSwapsByStructureV15(
     const cutIndex = remainingCuts.indexOf(cut);
     if (cutIndex < 0) continue;
     remainingCuts.splice(cutIndex, 1);
-    counts = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);
+    const cutCard = summarizedCard(cut);
+    counts = applySummaryToStructuralCountsV15(afterAdd, cutCard, -1);
     persistentColoredManaSources = persistentColoredManaSourcesAfterAdd
-      - (summaryIsPersistentColoredManaSourceV15(summarizedCard(cut)) ? 1 : 0);
-    const nonlandManaValueReduction = recordNumber(summarizedCard(cut).manaValue) - addManaValue;
+      - (summaryIsPersistentColoredManaSourceV15(cutCard) ? 1 : 0);
+    for (const gate of Object.keys(authoritativeCountTargets) as UpgradeCountTargetGateV15[]) {
+      authoritativeCounts[gate] += (summaryMatchesCountTargetGateV15(addCard, gate) ? 1 : 0)
+        - (summaryMatchesCountTargetGateV15(cutCard, gate) ? 1 : 0);
+    }
+    currentNonlandManaValueTotal += addManaValue - recordNumber(cutCard.manaValue);
+    const nonlandManaValueReduction = recordNumber(cutCard.manaValue) - addManaValue;
     if (selection.role === 'average-nonland-mv') {
       remainingCurveReduction = Math.max(0, remainingCurveReduction - nonlandManaValueReduction);
     }
@@ -996,8 +1083,8 @@ export function pairUpgradeSwapsByStructureV15(
       strategyPreservation: upgradeSwapStrategyPreservationV15(selection.candidate, cut),
       persistentColoredManaSourcesAfterSwap: persistentColoredManaSources,
       persistentColoredManaSourceFloor,
+      ...(selectionTargetGate ? { authoritativeTargetGate: selectionTargetGate } : {}),
       ...(selection.role === 'average-nonland-mv' ? {
-        authoritativeTargetGate: 'average-nonland-mv' as const,
         nonlandManaValueReduction: Number(nonlandManaValueReduction.toFixed(3)),
       } : {}),
     });
@@ -1250,6 +1337,7 @@ export async function buildSimulationBackedUpgradePlanV07(
     cutPool,
     (suggestions.currentMetrics ?? {}) as Record<string, unknown>,
     (suggestions.structuralTargets ?? {}) as Record<string, unknown>,
+    options.targetBracket ?? 4,
   );
   const strategyPreservation = auditUpgradeStrategyPreservationV15(pairings);
   const chosenCuts = pairings.map((pair) => pair.cut);

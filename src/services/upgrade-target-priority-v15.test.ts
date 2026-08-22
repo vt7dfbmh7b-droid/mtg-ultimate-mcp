@@ -239,6 +239,43 @@ test('swap pairing preserves board-wipe and recursion minima before heuristic cu
   }
 });
 
+test('later aspirational swaps cannot cut away a currently failed authoritative cheap-interaction gate', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{
+      role: 'protection' as const,
+      candidate: {
+        card: { name: 'New Protection', roles: ['protection'], manaValue: 2, typeLine: 'Instant' },
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    }],
+    [
+      {
+        card: { name: 'Only Cheap Removal', roles: ['spot interaction'], manaValue: 1, typeLine: 'Instant' },
+        heuristicCutPressure: 20,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+      {
+        card: { name: 'Surplus Four Drop', roles: [], manaValue: 4, typeLine: 'Creature — Test' },
+        heuristicCutPressure: 1,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    ],
+    {
+      rampCount: 12, drawCount: 12, interactionCount: 16, protectionCount: 5, tutorCount: 6,
+      recursionCount: 3, boardWipeCount: 2, earlyPlayCount: 20, cheapInteractionCount: 1,
+      fastManaCount: 2, averageNonlandManaValue: 3.0, nonlandCount: 64,
+      roleCounts: { 'free interaction': 0 },
+    },
+    {
+      ramp: 12, draw: 12, interaction: 14, freeInteraction: 0, protection: 6, tutors: 6,
+      recursion: 3, boardWipes: 2, earlyPlays: 16,
+    },
+    4,
+  );
+
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Surplus Four Drop');
+});
+
 test('swap pairing declines an apparent repair when every cut would create a new structural hole', () => {
   const pairings = pairUpgradeSwapsByStructureV15(
     [{
@@ -477,6 +514,54 @@ test('curve packages stop once cumulative safe reduction crosses the real thresh
     ['Vanquish the Horde', 'Surplus Two-Mana Rock'],
   );
   assert.equal(pairings.reduce((total, pairing) => total + (pairing.nonlandManaValueReduction ?? 0), 0), 8);
+});
+
+test('Bracket-4 curve pairing stops at 3.1 instead of chasing the Bracket-5 2.6 threshold', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{
+      role: 'average-nonland-mv' as const,
+      candidate: {
+        card: { name: 'One Drop', roles: ['card draw'], manaValue: 1, typeLine: 'Artifact' },
+        authoritativeTargetGate: 'average-nonland-mv',
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    }],
+    [
+      {
+        card: { name: 'Three Drop', roles: [], manaValue: 3, typeLine: 'Creature — Test' },
+        heuristicCutPressure: 0,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+      {
+        card: { name: 'Seven Drop', roles: [], manaValue: 7, typeLine: 'Creature — Test' },
+        heuristicCutPressure: 10,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    ],
+    {
+      rampCount: 20,
+      drawCount: 20,
+      interactionCount: 20,
+      protectionCount: 8,
+      tutorCount: 6,
+      recursionCount: 4,
+      boardWipeCount: 3,
+      earlyPlayCount: 30,
+      cheapInteractionCount: 8,
+      fastManaCount: 3,
+      averageNonlandManaValue: 3.12,
+      nonlandCount: 70,
+      roleCounts: { 'free interaction': 1 },
+    },
+    {
+      ramp: 12, draw: 12, interaction: 14, freeInteraction: 0, protection: 6, tutors: 6,
+      recursion: 3, boardWipes: 2, earlyPlays: 16,
+    },
+    4,
+  );
+
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Three Drop');
+  assert.equal(pairings[0]?.nonlandManaValueReduction, 2);
 });
 
 test('Najeela curve repair preserves Aurelia-style combat strategy before maximizing mana reduction', () => {
