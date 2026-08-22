@@ -305,7 +305,6 @@
               "creature"
             ],
             "addRoles": [
-              "board protection",
               "creature",
               "protection"
             ],
@@ -349,7 +348,6 @@
               "go-wide payoff"
             ],
             "addRoles": [
-              "board protection",
               "creature",
               "go-wide payoff",
               "protection"
@@ -629,7 +627,6 @@
                   "creature"
                 ],
                 "addRoles": [
-                  "board protection",
                   "creature",
                   "protection"
                 ],
@@ -682,7 +679,6 @@
                   "go-wide payoff"
                 ],
                 "addRoles": [
-                  "board protection",
                   "creature",
                   "go-wide payoff",
                   "protection"
@@ -1127,7 +1123,6 @@
                     "creature"
                   ],
                   "addRoles": [
-                    "board protection",
                     "creature",
                     "protection"
                   ],
@@ -1151,7 +1146,6 @@
                     "go-wide payoff"
                   ],
                   "addRoles": [
-                    "board protection",
                     "creature",
                     "go-wide payoff",
                     "protection"
@@ -1319,7 +1313,6 @@
                       "creature"
                     ],
                     "addRoles": [
-                      "board protection",
                       "creature",
                       "protection"
                     ],
@@ -1363,7 +1356,6 @@
                       "go-wide payoff"
                     ],
                     "addRoles": [
-                      "board protection",
                       "creature",
                       "go-wide payoff",
                       "protection"
@@ -1442,7 +1434,6 @@
                     "creature"
                   ],
                   "addRoles": [
-                    "board protection",
                     "creature",
                     "go-wide payoff",
                     "protection"
@@ -1617,7 +1608,6 @@
                       "creature"
                     ],
                     "addRoles": [
-                      "board protection",
                       "creature",
                       "go-wide payoff",
                       "protection"
@@ -2249,7 +2239,6 @@
                         "token production"
                       ],
                       "addRoles": [
-                        "board protection",
                         "creature",
                         "protection"
                       ],
@@ -2519,7 +2508,6 @@
                           "token production"
                         ],
                         "addRoles": [
-                          "board protection",
                           "creature",
                           "protection"
                         ],
@@ -2630,7 +2618,6 @@
                         "creature"
                       ],
                       "addRoles": [
-                        "board protection",
                         "creature",
                         "protection"
                       ],
@@ -2654,7 +2641,6 @@
                         "go-wide payoff"
                       ],
                       "addRoles": [
-                        "board protection",
                         "creature",
                         "go-wide payoff",
                         "protection"
@@ -2853,7 +2839,6 @@
                           "creature"
                         ],
                         "addRoles": [
-                          "board protection",
                           "creature",
                           "protection"
                         ],
@@ -2897,7 +2882,6 @@
                           "go-wide payoff"
                         ],
                         "addRoles": [
-                          "board protection",
                           "creature",
                           "go-wide payoff",
                           "protection"
@@ -3041,7 +3025,6 @@
                         "creature"
                       ],
                       "addRoles": [
-                        "board protection",
                         "creature",
                         "go-wide payoff",
                         "protection"
@@ -3247,7 +3230,6 @@
                           "creature"
                         ],
                         "addRoles": [
-                          "board protection",
                           "creature",
                           "go-wide payoff",
                           "protection"
@@ -3563,7 +3545,6 @@
                         "token production"
                       ],
                       "addRoles": [
-                        "board protection",
                         "card draw",
                         "protection",
                         "stax/control"
@@ -3832,7 +3813,6 @@
                           "token production"
                         ],
                         "addRoles": [
-                          "board protection",
                           "card draw",
                           "protection",
                           "stax/control"
@@ -4293,7 +4273,6 @@
                         "creature"
                       ],
                       "addRoles": [
-                        "board protection",
                         "creature",
                         "protection"
                       ],
@@ -4317,7 +4296,6 @@
                         "go-wide payoff"
                       ],
                       "addRoles": [
-                        "board protection",
                         "creature",
                         "go-wide payoff",
                         "protection"
@@ -4485,7 +4463,6 @@
                           "creature"
                         ],
                         "addRoles": [
-                          "board protection",
                           "creature",
                           "protection"
                         ],
@@ -4529,7 +4506,6 @@
                           "go-wide payoff"
                         ],
                         "addRoles": [
-                          "board protection",
                           "creature",
                           "go-wide payoff",
                           "protection"
@@ -4608,7 +4584,6 @@
                         "creature"
                       ],
                       "addRoles": [
-                        "board protection",
                         "creature",
                         "go-wide payoff",
                         "protection"
@@ -4783,7 +4758,6 @@
                           "creature"
                         ],
                         "addRoles": [
-                          "board protection",
                           "creature",
                           "go-wide payoff",
                           "protection"
