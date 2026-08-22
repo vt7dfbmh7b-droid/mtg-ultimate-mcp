@@ -88,6 +88,30 @@ const demonicTutor = card({
   manaCost: '{1}{B}',
 });
 
+const directDamageInteraction = card({
+  name: 'Direct Damage Interaction',
+  typeLine: 'Instant',
+  oracleText: 'Direct Damage Interaction deals 3 damage to any target.',
+  cmc: 1,
+  manaCost: '{R}',
+});
+
+const conditionalTapExile = card({
+  name: 'Conditional Tap Exile',
+  typeLine: 'Instant',
+  oracleText: 'Tap target creature. Metalcraft — If you control three or more artifacts, exile that creature.',
+  cmc: 1,
+  manaCost: '{W}',
+});
+
+const anyGraveyardReanimation = card({
+  name: 'Any Graveyard Reanimation',
+  typeLine: 'Sorcery',
+  oracleText: "Put target creature card from a graveyard onto the battlefield under your control. You lose life equal to that card's mana value.",
+  cmc: 1,
+  manaCost: '{B}',
+});
+
 const deadlyRollick = card({
   name: 'Deadly Rollick',
   typeLine: 'Instant',
@@ -255,6 +279,15 @@ test('self-only hexproof is not deck protection while targeted and board-wide gr
 
 test('mass negative-power removal is recognized as a board wipe', () => {
   assert.equal(inferCardRoles(massMinusWipe).includes('board wipe'), true);
+});
+
+test('direct damage and conditional tap-exile cards count as spot interaction', () => {
+  assert.equal(inferCardRoles(directDamageInteraction).includes('spot interaction'), true);
+  assert.equal(inferCardRoles(conditionalTapExile).includes('spot interaction'), true);
+});
+
+test('putting a target creature from any graveyard onto the battlefield counts as recursion', () => {
+  assert.equal(inferCardRoles(anyGraveyardReanimation).includes('graveyard recursion'), true);
 });
 
 test('persistent colored mana excludes one-shot color filtering', () => {

@@ -241,7 +241,12 @@ export function inferCardRoles(card: ScryfallCard): string[] {
 
   if (/counter target spell/.test(text)) roles.add('countermagic');
   if (hasFreeCastAlternative(card, manaCost, text, isLand) && hasDirectInteractionText(text)) roles.add('free interaction');
-  if (/(destroy|exile) target/.test(text) || /return target .* to (?:its|their) owner's hand/.test(text)) roles.add('spot interaction');
+  if (
+    /(?:destroy|exile)(?: up to [^.]{0,80})? target/.test(text)
+    || /return target .* to (?:its|their) owner's hand/.test(text)
+    || /tap target (?:artifact|creature|permanent)/.test(text)
+    || /deals? [^.]{0,120} damage (?:to )?(?:any |up to one )?target/.test(text)
+  ) roles.add('spot interaction');
   if (/destroy target artifact|destroy target enchantment|exile target artifact|exile target enchantment/.test(text)) roles.add('artifact/enchantment interaction');
   if (/exile .* graveyard|cards? in graveyards? can't|players? can't cast .* graveyards?/.test(text)) roles.add('graveyard hate');
   if (
@@ -256,7 +261,11 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (/create .* token/.test(text)) roles.add('token production');
   if (/sacrifice (?:a|another|target|this)/.test(text)) roles.add('sacrifice synergy');
   if (/sacrifice (?:a|another) creature\s*:|sacrifice (?:a|another) permanent\s*:/.test(text)) roles.add('sacrifice outlet');
-  if (/from your graveyard/.test(text) || /return .* from .* graveyard/.test(text)) roles.add('graveyard recursion');
+  if (
+    /from your graveyard/.test(text)
+    || /return .* from .* graveyard/.test(text)
+    || /put target [^.]{0,120} from (?:a|the|your) graveyard onto the battlefield/.test(text)
+  ) roles.add('graveyard recursion');
   const boardProtection = /(?:other [^.]* you control|(?:creatures?|permanents?|artifacts?|enchantments?) you control)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text)
     || /(?:all |any number of )?(?:permanents?|creatures?) you control phase out/.test(text);
   const targetedProtection = /(?:target|another target|equipped|enchanted|commander)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text)

@@ -150,7 +150,7 @@ Risk: an autonomous package can pass a numeric target gate while weakening the c
 
 Protection: additions and cuts now retain the existing V0.15 per-strategy affinity evidence. Pairing places meaningful strategy preservation and structural-deficit preservation before the size of a curve reduction. Every candidate package carries per-swap lost-role evidence plus an aggregate strategy audit, and refinement fails closed when that audit is missing or reports an uncompensated loss from a card that received the maximum existing cut-protection signal. Deterministic protection lives in `upgrade-target-priority-v15.test.ts` and includes a Najeela/Aurelia-style ordering regression, explicit rejection, missing-evidence rejection, and a compensated-replacement control.
 
-Status: prevented in deterministic source tests; fresh Marvel live revalidation remains required before claiming the observed scenario is strategically improved.
+Status: prevented in deterministic tests and live-validated at `cf3eedb...`; focused Marvel kept Aurelia and passed, while every accepted broad pairing was explicitly preserved.
 
 ## KF-016 — Weak secondary commander signal blocks every safe target repair
 
@@ -160,7 +160,7 @@ Risk: fail-closed strategy protection can become overbroad and paralyse autonomo
 
 Protection: meaningful-loss gating now requires both at least four net affinity points removed and at least six points of command-zone evidence for that strategy. Pairing still protects Aurelia's strong combat affinity, while an exact weak-secondary-signal regression proves the safer Vanquish curve cut remains eligible and carries complete preservation evidence.
 
-Status: prevented in deterministic source tests; fresh Marvel live revalidation required.
+Status: prevented in deterministic tests and live-validated at `cf3eedb...`; focused Marvel selected the safe Vanquish cut, and broad Marvel continued to make safe progress without freezing on weak `big-mana` overlap.
 
 ## KF-017 — Shared concurrency group cancels older pending controls
 
@@ -210,7 +210,7 @@ Risk: generic curve, interaction and protection gains can turn an addressable pr
 
 Protection: Food/lifegain is now a semantic commander archetype; upgrade evidence tracks recursion and board-wipe structure; pairing preserves every pre-existing structural floor up to the target and declines a package when every cut creates another hole. Card-role truth excludes self-only hexproof or indestructible from deck protection and recognizes mass negative-power, counters, damage, bounce and sacrifice effects as board wipes. Deterministic regressions cover the archetype, structural floors, no-safe-cut refusal and both role-classification errors. The exact Food and Fellowship live control separately gates hard truth, target improvement and strategy preservation.
 
-Status: prevented in deterministic tests and live-validated at `28e5616...`; the exact Food and Fellowship control made four supported swaps without reducing Food/lifegain affinity, recursion, wipes or persistent colored mana.
+Status: prevented in deterministic tests and live-validated at `cf3eedb...`; the exact Food and Fellowship control made four supported swaps without reducing Food/lifegain affinity, recursion, wipes or persistent colored mana.
 
 ## KF-022 — Generic ramp count hides loss of five-color mana access
 
@@ -220,7 +220,7 @@ Risk: treasure, rituals, cost reduction and colorless acceleration can keep the 
 
 Protection: role truth now distinguishes persistent colored mana from one-shot filtering and other generic ramp. Pairing tracks the count across the complete package and every accepted round, with color-count floors of four, six, seven and eight for two- through five-color command zones. Focused and broad live controls fail closed on missing or non-finite evidence, enforce whole-deck structural floors, require per-swap colored-mana evidence, and persist target-quality and strategy-quality outcomes separately. The exact five-color regression starts at 12 sources and proves no more than four may be cut below the floor of eight.
 
-Status: the engine floor was live-observed at `28e5616...` (focused 13→12; broad 13→8), but KF-023 and KF-024 kept the Marvel controls correctly red. Exact-source revalidation remains required before the broad lane may be counted as a scenario pass.
+Status: the engine floor was live-observed at `cf3eedb...`: focused Marvel passed at 13→12 and broad Marvel held the enforced floor at 13→8. The broad lane remains red only because it stopped at average nonland mana value 2.61; KF-025 covers the role false negatives that hid a safe final repair.
 
 ## KF-023 — Compact refinement evidence drops a newly enforced safety field
 
@@ -230,7 +230,7 @@ Risk: a safe deck can be rejected as unverifiable, and a workflow that correctly
 
 Protection: the refinement evidence projector now carries `persistentColoredManaSourcesAfterSwap` and `persistentColoredManaSourceFloor` into every candidate comparison. A direct projection regression prevents either field from being dropped again, and the exact-source workflow remains fail closed until both values are finite.
 
-Status: deterministic fix implemented locally; exact-source Marvel live revalidation pending.
+Status: prevented in deterministic tests and live-validated at `cf3eedb...`; focused Marvel persisted finite per-swap source counts and floors and passed at 13→12, while broad Marvel retained the same complete evidence through 13→8.
 
 ## KF-024 — Aggregate archetype points hide a critical per-swap strategy loss
 
@@ -239,6 +239,16 @@ Observed: the broad Marvel run at `28e5616...` accepted a second-round package c
 Risk: broad archetype points from unrelated cards can numerically compensate for removal of a deck's actual secondary engine. The optimizer may accept a package that its own per-swap evidence identifies as strategically unsafe.
 
 Protection: optimizer eligibility now requires both the aggregate audit and every per-swap impact to be preserved. Compact audit evidence retains `swapImpacts`, and a deterministic regression proves that aggregate archetype compensation cannot conceal one meaningful pairing loss. A genuinely matched replacement still passes the existing compensated-replacement control.
+
+Status: prevented in deterministic tests and live-validated at `cf3eedb...`; every accepted broad Marvel pairing reported preserved, and the previously unsafe Aurelia pairing was no longer selected.
+
+## KF-025 — Role false negatives hide a safe final curve repair
+
+Observed: after the KF-022 and KF-024 protections, broad Marvel at `cf3eedb...` stopped safely at average nonland mana value 2.61. The deck had actually gained Dispatch, but role truth did not recognize its target-tap/conditional-exile text as interaction. Lightning Bolt's direct-damage text and Reanimate's "put ... from a graveyard" text were also missed. The computed interaction count therefore stayed at 18, so the pairer could not exchange a surplus free counter for a one-mana curve card and offered only a protected combat engine as the final cut.
+
+Risk: semantic false negatives can make a safe, role-balanced repair appear structurally impossible. The optimizer then stops just short of a real target or pressures a core strategy card even though the deck has genuine role surplus.
+
+Protection: spot-interaction truth now covers direct damage to a target and target-tap conditional removal; recursion truth covers putting a target card from any graveyard onto the battlefield. Card-role regressions cover all three observed Oracle patterns, and a near-threshold five-color pairing regression proves surplus interaction is selected before a protected combat engine while the colored-mana floor remains intact.
 
 Status: deterministic fix implemented locally; exact-source broad Marvel revalidation pending.
 

@@ -342,6 +342,51 @@ test('near the curve threshold, pairing uses the smallest sufficient safe mana r
   assert.equal(pairings[0]?.nonlandManaValueReduction, 1);
 });
 
+test('near-threshold five-color repair uses surplus interaction before a protected combat engine', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{
+      role: 'average-nonland-mv' as const,
+      candidate: {
+        card: { name: 'One-Mana Selection', roles: ['card draw', 'card selection'], manaValue: 1, typeLine: 'Sorcery' },
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    }],
+    [
+      {
+        card: { name: 'Surplus Free Counter', roles: ['countermagic', 'free interaction'], manaValue: 4, typeLine: 'Instant' },
+        heuristicCutPressure: 2,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+      {
+        card: { name: 'Protected Combat Engine', roles: ['token production', 'haste'], manaValue: 5, typeLine: 'Creature — Test' },
+        heuristicCutPressure: 0,
+        strategyAffinity: { score: 20, protectionApplied: 4, matchedStrategies: ['combat-tokens'] },
+      },
+    ],
+    {
+      rampCount: 24,
+      drawCount: 25,
+      interactionCount: 19,
+      protectionCount: 9,
+      tutorCount: 8,
+      recursionCount: 5,
+      boardWipeCount: 2,
+      earlyPlayCount: 40,
+      averageNonlandManaValue: 2.61,
+      nonlandCount: 69,
+      persistentColoredManaSourceCount: 8,
+      commanderColorCount: 5,
+      roleCounts: { 'free interaction': 2 },
+    },
+    { ...bracketFiveTargets },
+  );
+
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Surplus Free Counter');
+  assert.equal(pairings[0]?.nonlandManaValueReduction, 3);
+  assert.equal(pairings[0]?.strategyPreservation.verdict, 'preserved');
+  assert.equal(pairings[0]?.persistentColoredManaSourcesAfterSwap, 8);
+});
+
 test('curve packages stop once cumulative safe reduction crosses the real threshold', () => {
   const additions = ['First One Drop', 'Second One Drop', 'Third One Drop'].map((name) => ({
     role: 'average-nonland-mv' as const,
