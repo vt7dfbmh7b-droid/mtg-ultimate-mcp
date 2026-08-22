@@ -130,7 +130,7 @@ Risk: valid evidence can remain only in workflow logs/artifacts, while the branc
 
 Protection: active INTEL-02 writers keep isolated result paths and use bounded fetch/reset/recompute/push retries against the latest branch head. Intelligence execution remains independent from persistence, and the project-state writer regenerates metadata on every retry so it cannot commit stale self-references. Legacy evidence writers still require migration or a consolidated writer before this is globally closed.
 
-Status: second active-path fix implemented after the race reproduced at `7fcd3ca...` and the first serialization design exposed KF-017 at `b6657a0...`; workflow revalidation pending. The `758c565...` refinement artifact was digest-verified and recovered on top of the winning writer, while legacy concurrent writers remain an open project-management issue.
+Status: active INTEL-02 paths live-validated together at `3cfca39...`: focused Marvel, broad Marvel, Middle-earth and project-state integrity all executed independently and persisted exact-source evidence. Legacy concurrent writers remain an open project-management issue.
 
 ## KF-014 — Failed target gate omitted from candidate generation
 
@@ -170,7 +170,7 @@ Risk: a workflow design intended to serialize evidence can silently skip entire 
 
 Protection: each active control now has its own non-cancelling concurrency group and executes independently. Persistence no longer relies on cross-workflow serialization; every active writer retries up to eight times from the latest branch head, rebuilds shared generated evidence where applicable, and fails explicitly if reconciliation is exhausted. `workflow-evidence-writer-v15.test.ts` prevents a shared group from returning and requires every active push to remain inside a bounded latest-head retry loop.
 
-Status: workflow fix implemented; live concurrent revalidation pending.
+Status: prevented on the active INTEL-02 paths and live-validated at `3cfca39...`; all four concurrent controls executed and persisted independently. Legacy writers remain covered by KF-013.
 
 ## KF-018 — Curve repair stops one step short after positive-pressure cuts are exhausted
 
@@ -180,7 +180,7 @@ Risk: a refiner can make honest progress yet stop immediately short of a real th
 
 Protection: when the authoritative Bracket-5 curve gate is active, cut discovery may inspect the bounded top 15 nonland cuts even when their heuristic pressure is non-positive. Strategy preservation remains first, and curve pairing can use marginal cuts after the main high-pressure repair. Deterministic regressions cover both fallback-pool activation and the 2.61-to-2.60-style marginal choice; KF-020 adds the required package-wide stopping rule.
 
-Status: fallback discovery prevented in deterministic source tests; the first `a45c338...` live run exposed the package-level over-repair in KF-020.
+Status: prevented in deterministic tests and live-validated at `3cfca39...`; both Marvel lanes crossed the curve threshold at 2.59 using the same two-swap package. The first `a45c338...` live attempt remains the regression evidence for KF-020.
 
 ## KF-019 — Concurrent provider backoff outlives the focused MCP timeout
 
@@ -190,7 +190,7 @@ Risk: a valid bounded control can be classified as an intelligence failure when 
 
 Protection: the focused refinement transport budget is now fifteen minutes inside the existing sixty-minute job timeout. Execution and target-quality outcomes remain separately persisted, so a real intelligence failure cannot be hidden as transport delay. A deterministic source regression prevents the ten-minute timeout from returning.
 
-Status: timeout fix implemented; exact-source live revalidation pending.
+Status: prevented in deterministic source tests and live-validated under concurrent provider load at `3cfca39...`; the focused control completed successfully inside the fifteen-minute transport budget.
 
 ## KF-020 — Curve package over-repairs and cuts core utility after crossing the target
 
@@ -200,7 +200,7 @@ Risk: a locally strategy-labelled package can satisfy a numeric gate while makin
 
 Protection: curve pairing now tracks the remaining package-wide mana-value reduction, stops adding curve swaps immediately after crossing the threshold, and chooses the largest safe reduction only while every option remains insufficient. Cut-order protection uses only archetypes with at least six points of command-zone evidence, so Najeela's substantive combat support still protects haste cards while incidental `big-mana` overlap does not shelter surplus ramp. Deterministic regressions reproduce the 7+1 cumulative repair and weak-signal utility ordering.
 
-Status: prevented in deterministic source tests; fresh live Marvel revalidation required before accepting the five-swap result.
+Status: prevented in deterministic tests and live-validated in both Marvel lanes at `3cfca39...`. The corrected package made exactly two swaps, repaired average nonland mana value from 2.71 to 2.59, retained Lightning Greaves and all tutors, added no failed construction gate, and stopped before the three unnecessary cuts seen at `a45c338...`.
 
 ## Adding a failure
 

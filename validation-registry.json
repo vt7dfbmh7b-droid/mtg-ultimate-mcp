@@ -24,7 +24,13 @@
       "metadataPath": "test-results/marvel-bracket5/refine-run-metadata.txt",
       "sourceKeys": ["source_sha", "workflow_source_sha", "executed_head_sha"],
       "passWhen": {
-        "control_outcome": "success"
+        "control_outcome": "success",
+        "execution_outcome": "success",
+        "target_gate_quality_outcome": "success",
+        "restricted_pool_prefilter": "true",
+        "full_table_closure": "true",
+        "strategy_preservation_evidence": "true",
+        "meaningful_strategy_loss_rejected": "true"
       }
     }
   ]
