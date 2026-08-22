@@ -19,10 +19,11 @@
 1 Arasta of the Endless Web (BLC) 205 *N*
 1 Deep Forest Hermit (BLC) 213 *N*
 1 Toski, Bearer of Secrets (BLC) 244 *N*
+1 Beastmaster Ascension (BLC) 118 *N*
 1 Second Harvest (BLC) 123 *N*
 1 Shamanic Revelation (BLC) 237 *N*
+1 Chatterfang, Squirrel General (BLC) 209 *N*
 1 Temple of Malady (BLC) 341 *N*
-1 Casualties of War (BLC) 125 *N*
 1 Windgrace's Judgment (BLC) 263 *N*
 1 Maskwood Nexus (BLC) 279 *N*
 1 Academy Manufactor (BLC) 264 *N*
@@ -57,6 +58,7 @@
 1 Nested Shambler (BLC) 185 *N*
 1 Deadly Dispute (BLC) 181 *N*
 1 Zulaport Cutthroat (BLC) 190 *N*
+1 Squirrel Sovereign (BLC) 240 *N*
 1 Prosperous Innkeeper (BLC) 121 *N*
 1 Haywire Mite (BLC) 274 *N*
 1 Tireless Provisioner (BLC) 243 *N*
@@ -82,9 +84,7 @@
 4 Swamp (BLB) 374 *N*
 5 Forest (BLB) 377 *N*
 4 Forest (BLB) 378 *N*
-1 Tamiyo's Safekeeping (NEO) 211 *N*
-1 Veil of Summer (MB2) 75 *N*
 1 Tyvar's Stand (PLST) ONE-190 *N*
 1 Smuggler's Surprise (POTJ) 180p *N*
-1 Crop Rotation (C20) 169 *N*
-1 Demonic Tutor (SOS) 80 *N*
+1 Collective Resistance (MH3) 147 *N*
+1 Sword of Hearth and Home (TMC) 136 *F*
