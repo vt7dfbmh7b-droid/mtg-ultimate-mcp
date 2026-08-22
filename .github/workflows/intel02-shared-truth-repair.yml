@@ -1,0 +1,174 @@
+name: INTEL-02 Shared Truth Repair
+
+on:
+  push:
+    branches:
+      - agent/v15-native-deck-intelligence
+    paths:
+      - .github/workflows/intel02-shared-truth-repair.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/v15-native-deck-intelligence
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Apply shared truth and authoritative-gate repair
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path: str, old: str, new: str) -> None:
+              p = Path(path)
+              text = p.read_text()
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{path}: expected exactly one match, found {count}')
+              p.write_text(text.replace(old, new, 1))
+
+          # 1) Shared card-role truth: targeted -X/-X is interaction; expensive wearer-only
+          # Equipment protection is conditional rather than a normal protection-slot replacement.
+          replace_once(
+              'src/services/scryfall.ts',
+              """    || /tap target (?:artifact|creature|permanent)/.test(text)\n    || /deals? [^.]{0,120} damage (?:to )?(?:any |up to one )?target/.test(text)\n  ) roles.add('spot interaction');""",
+              """    || /tap target (?:artifact|creature|permanent)/.test(text)\n    || /target [^.]{0,100}(?:creature|planeswalker)[^.]{0,60}gets? -(?:x|\\d+)\\/-(?:x|\\d+)/.test(text)\n    || /deals? [^.]{0,120} damage (?:to )?(?:any |up to one )?target/.test(text)\n  ) roles.add('spot interaction');""",
+          )
+          replace_once(
+              'src/services/scryfall.ts',
+              """  const conditionalGroupProtection = /(?:creatures|permanents|artifacts|enchantments) you control\\s+(?:with|that|if|as long as)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text);\n  if (boardProtection || targetedProtection) roles.add('protection');\n  if (conditionalGroupProtection && !boardProtection) roles.add('conditional protection');\n  if (boardProtection) roles.add('board protection');""",
+              """  const conditionalGroupProtection = /(?:creatures|permanents|artifacts|enchantments) you control\\s+(?:with|that|if|as long as)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text);\n  const equipmentWearerProtection = type.includes('equipment')\n    && /\\bequipped creature[^.]{0,120}(?:hexproof|indestructible|protection from|shroud)/.test(text);\n  const genericEquipCost = text.match(/\\bequip\\s*\\{(\\d+)\\}/);\n  const expensiveEquipmentProtection = equipmentWearerProtection\n    && genericEquipCost !== null\n    && Number.parseInt(genericEquipCost[1] ?? '0', 10) > 2\n    && !/\\battach (?:this equipment|it) to\\b/.test(text);\n  if ((boardProtection || targetedProtection) && !expensiveEquipmentProtection) roles.add('protection');\n  if ((conditionalGroupProtection && !boardProtection) || expensiveEquipmentProtection) roles.add('conditional protection');\n  if (boardProtection) roles.add('board protection');""",
+          )
+
+          # 2) Candidate search semantics must be able to discover the same targeted -X/-X
+          # interaction that the shared role truth recognizes.
+          replace_once(
+              'src/services/upgrade.ts',
+              """    return 'mv<=2 (o:\"counter target spell\" OR o:\"destroy target\" OR o:\"exile target\" OR o:\"return target\")';""",
+              """    return 'mv<=2 (o:\"counter target spell\" OR o:\"destroy target\" OR o:\"exile target\" OR o:\"return target\" OR o:\"target creature gets -\")';""",
+          )
+          replace_once(
+              'src/services/upgrade.ts',
+              """    interaction: '(o:\"counter target spell\" OR o:\"destroy target\" OR o:\"exile target\" OR o:\"return target\")',""",
+              """    interaction: '(o:\"counter target spell\" OR o:\"destroy target\" OR o:\"exile target\" OR o:\"return target\" OR o:\"target creature gets -\")',""",
+          )
+          replace_once(
+              'src/services/upgrade.ts',
+              """const BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15 = {""",
+              """export const BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15 = {""",
+          )
+          replace_once(
+              'src/services/upgrade.ts',
+              """const BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15 = {""",
+              """export const BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15 = {""",
+          )
+
+          # 3) Pairing must preserve every currently relevant authoritative construction gate,
+          # not merely aggregate role floors. This prevents later protection/tutor swaps from
+          # undoing cheap interaction, early-play, fast-mana, tutor or curve progress.
+          replace_once(
+              'src/services/deck-builder-v07.ts',
+              """import {\n  BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15,\n  minimumPersistentColoredManaSourcesV15,\n  suggestDeckUpgrades,\n  type UpgradeOptions,\n} from './upgrade.js';""",
+              """import {\n  BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15,\n  BRACKET_FOUR_AVERAGE_NONLAND_MV_MAX_V15,\n  BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15,\n  BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15,\n  minimumPersistentColoredManaSourcesV15,\n  suggestDeckUpgrades,\n  type UpgradeOptions,\n  type UpgradeTargetGateV15,\n} from './upgrade.js';""",
+          )
+          replace_once(
+              'src/services/deck-builder-v07.ts',
+              """type UpgradeTargetGateRoleV15 = 'average-nonland-mv';""",
+              """type UpgradeTargetGateRoleV15 = UpgradeTargetGateV15;""",
+          )
+          replace_once(
+              'src/services/deck-builder-v07.ts',
+              """function summaryMatchesUpgradeRoleV15(card: Record<string, unknown>, role: UpgradeStructuralRoleV15): boolean {\n  const roles = summarizedRoles(card);\n  if (role === 'ramp') return roles.has('mana acceleration') || roles.has('land ramp') || roles.has('cost reduction') || roles.has('fast mana');\n  if (role === 'draw') return roles.has('card draw') || roles.has('repeatable draw') || roles.has('card selection');\n  if (role === 'interaction') return roles.has('spot interaction') || roles.has('countermagic') || roles.has('board wipe') || roles.has('free interaction');\n  if (role === 'free-interaction') return roles.has('free interaction');\n  if (role === 'protection') return roles.has('protection') || roles.has('board protection');\n  if (role === 'tutor') return roles.has('tutor');\n  if (role === 'recursion') return roles.has('graveyard recursion');\n  if (role === 'board-wipe') return roles.has('board wipe');\n  return !recordString(card.typeLine).toLocaleLowerCase().includes('land') && recordNumber(card.manaValue) <= 2;\n}\n""",
+              """function summaryMatchesUpgradeRoleV15(card: Record<string, unknown>, role: UpgradeStructuralRoleV15): boolean {\n  const roles = summarizedRoles(card);\n  if (role === 'ramp') return roles.has('mana acceleration') || roles.has('land ramp') || roles.has('cost reduction') || roles.has('fast mana');\n  if (role === 'draw') return roles.has('card draw') || roles.has('repeatable draw') || roles.has('card selection');\n  if (role === 'interaction') return roles.has('spot interaction') || roles.has('countermagic') || roles.has('board wipe') || roles.has('free interaction');\n  if (role === 'free-interaction') return roles.has('free interaction');\n  if (role === 'protection') return roles.has('protection') || roles.has('board protection');\n  if (role === 'tutor') return roles.has('tutor');\n  if (role === 'recursion') return roles.has('graveyard recursion');\n  if (role === 'board-wipe') return roles.has('board wipe');\n  return !recordString(card.typeLine).toLocaleLowerCase().includes('land') && recordNumber(card.manaValue) <= 2;\n}\n\ntype UpgradeCountTargetGateV15 = Exclude<UpgradeTargetGateV15, 'average-nonland-mv'>;\nconst UPGRADE_TARGET_GATES_V15: UpgradeTargetGateV15[] = [\n  'average-nonland-mv', 'early-plays', 'cheap-interaction', 'fast-mana', 'free-interaction', 'tutors',\n];\n\nfunction asUpgradeTargetGateV15(value: unknown): UpgradeTargetGateV15 | null {\n  return typeof value === 'string' && UPGRADE_TARGET_GATES_V15.includes(value as UpgradeTargetGateV15)\n    ? value as UpgradeTargetGateV15\n    : null;\n}\n\nfunction summaryMatchesCountTargetGateV15(card: Record<string, unknown>, gate: UpgradeCountTargetGateV15): boolean {\n  const roles = summarizedRoles(card);\n  if (gate === 'early-plays') return !recordString(card.typeLine).toLocaleLowerCase().includes('land') && recordNumber(card.manaValue) <= 2;\n  if (gate === 'cheap-interaction') return recordNumber(card.manaValue) <= 2\n    && (roles.has('spot interaction') || roles.has('countermagic') || roles.has('free interaction'));\n  if (gate === 'fast-mana') return roles.has('fast mana');\n  if (gate === 'free-interaction') return roles.has('free interaction');\n  return roles.has('tutor');\n}\n""",
+          )
+          replace_once(
+              'src/services/deck-builder-v07.ts',
+              """export function pairUpgradeSwapsByStructureV15(\n  additions: UpgradeAddSelectionV15[],\n  cutPool: Array<Record<string, unknown>>,\n  currentMetrics: Record<string, unknown>,\n  structuralTargets: Record<string, unknown>,\n): UpgradePairingV15[] {\n  const state = upgradeStructuralStateV15(currentMetrics, structuralTargets);\n  const currentAverageNonlandManaValue = recordNumber(currentMetrics.averageNonlandManaValue);\n  const currentNonlandCount = recordNumber(currentMetrics.nonlandCount);\n  const requiredCurveReduction = currentAverageNonlandManaValue > BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15\n    && currentNonlandCount > 0\n    ? (currentAverageNonlandManaValue - BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15) * currentNonlandCount\n    : Number.POSITIVE_INFINITY;\n  let remainingCurveReduction = requiredCurveReduction;\n  let counts = state.counts;""",
+              """export function pairUpgradeSwapsByStructureV15(\n  additions: UpgradeAddSelectionV15[],\n  cutPool: Array<Record<string, unknown>>,\n  currentMetrics: Record<string, unknown>,\n  structuralTargets: Record<string, unknown>,\n  targetBracket = 5,\n): UpgradePairingV15[] {\n  const state = upgradeStructuralStateV15(currentMetrics, structuralTargets);\n  const bracket = clampBracket(targetBracket);\n  const currentAverageNonlandManaValue = recordNumber(currentMetrics.averageNonlandManaValue);\n  const currentNonlandCount = recordNumber(currentMetrics.nonlandCount);\n  const curveTarget = bracket >= 5\n    ? BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15\n    : bracket >= 4\n      ? BRACKET_FOUR_AVERAGE_NONLAND_MV_MAX_V15\n      : Number.POSITIVE_INFINITY;\n  const requiredCurveReduction = Number.isFinite(curveTarget)\n    && currentAverageNonlandManaValue > curveTarget\n    && currentNonlandCount > 0\n    ? (currentAverageNonlandManaValue - curveTarget) * currentNonlandCount\n    : Number.POSITIVE_INFINITY;\n  let remainingCurveReduction = requiredCurveReduction;\n  let currentNonlandManaValueTotal = currentAverageNonlandManaValue * currentNonlandCount;\n  let counts = state.counts;\n  const authoritativeCountTargets: Partial<Record<UpgradeCountTargetGateV15, number>> = bracket >= 5\n    ? {\n        'early-plays': BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.earlyPlays,\n        'cheap-interaction': BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.cheapInteraction,\n        'fast-mana': BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.fastMana,\n        'free-interaction': BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.freeInteraction,\n        tutors: BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.tutors,\n      }\n    : bracket >= 4\n      ? {\n          'early-plays': BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15.earlyPlays,\n          'cheap-interaction': BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15.cheapInteraction,\n          'fast-mana': BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15.fastMana,\n          tutors: BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15.tutors,\n        }\n      : {};\n  let authoritativeCounts: Record<UpgradeCountTargetGateV15, number> = {\n    'early-plays': recordNumber(currentMetrics.earlyPlayCount),\n    'cheap-interaction': recordNumber(currentMetrics.cheapInteractionCount),\n    'fast-mana': recordNumber(currentMetrics.fastManaCount),\n    'free-interaction': currentRoleCountV15(currentMetrics, 'free interaction'),\n    tutors: recordNumber(currentMetrics.tutorCount),\n  };""",
+          )
+          replace_once(
+              'src/services/deck-builder-v07.ts',
+              """    const addCard = summarizedCard(selection.candidate);\n    const addManaValue = recordNumber(addCard.manaValue);\n    const afterAdd = applySummaryToStructuralCountsV15(counts, addCard, 1);""",
+              """    const addCard = summarizedCard(selection.candidate);\n    const addManaValue = recordNumber(addCard.manaValue);\n    const selectionTargetGate = asUpgradeTargetGateV15(selection.candidate.authoritativeTargetGate);\n    const afterAdd = applySummaryToStructuralCountsV15(counts, addCard, 1);""",
+          )
+          replace_once(
+              'src/services/deck-builder-v07.ts',
+              """        if (persistentColoredManaSourcesAfterSwap < persistentColoredManaSourceFloor) return false;\n        if (selection.role === 'average-nonland-mv' || selection.role === 'win-package') return true;\n        return structuralDeficitTotalV15(afterSwap, state.targets) < deficitBeforeSwap;\n      });""",
+              """        if (persistentColoredManaSourcesAfterSwap < persistentColoredManaSourceFloor) return false;\n\n        const cutCard = summarizedCard(cut);\n        const afterAuthoritative = { ...authoritativeCounts };\n        for (const [gate, target] of Object.entries(authoritativeCountTargets) as Array<[UpgradeCountTargetGateV15, number]>) {\n          const beforeCount = authoritativeCounts[gate];\n          const addDelta = summaryMatchesCountTargetGateV15(addCard, gate) ? 1 : 0;\n          const cutDelta = summaryMatchesCountTargetGateV15(cutCard, gate) ? 1 : 0;\n          afterAuthoritative[gate] = beforeCount + addDelta - cutDelta;\n          if (afterAuthoritative[gate] < Math.min(beforeCount, target)) return false;\n        }\n        if (selectionTargetGate && selectionTargetGate !== 'average-nonland-mv') {\n          if (afterAuthoritative[selectionTargetGate] <= authoritativeCounts[selectionTargetGate]) return false;\n        }\n\n        if (currentNonlandCount > 0 && Number.isFinite(curveTarget)) {\n          const beforeAverage = currentNonlandManaValueTotal / currentNonlandCount;\n          const afterAverage = (currentNonlandManaValueTotal + addManaValue - recordNumber(cutCard.manaValue)) / currentNonlandCount;\n          const allowedAverage = Math.max(curveTarget, beforeAverage);\n          if (afterAverage > allowedAverage + 0.0001) return false;\n          if (selectionTargetGate === 'average-nonland-mv' && afterAverage >= beforeAverage - 0.0001) return false;\n        }\n\n        if (selection.role === 'average-nonland-mv' || selection.role === 'win-package') return true;\n        return structuralDeficitTotalV15(afterSwap, state.targets) < deficitBeforeSwap;\n      });""",
+          )
+          replace_once(
+              'src/services/deck-builder-v07.ts',
+              """    counts = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);\n    persistentColoredManaSources = persistentColoredManaSourcesAfterAdd\n      - (summaryIsPersistentColoredManaSourceV15(summarizedCard(cut)) ? 1 : 0);\n    const nonlandManaValueReduction = recordNumber(summarizedCard(cut).manaValue) - addManaValue;""",
+              """    const cutCard = summarizedCard(cut);\n    counts = applySummaryToStructuralCountsV15(afterAdd, cutCard, -1);\n    persistentColoredManaSources = persistentColoredManaSourcesAfterAdd\n      - (summaryIsPersistentColoredManaSourceV15(cutCard) ? 1 : 0);\n    for (const gate of Object.keys(authoritativeCountTargets) as UpgradeCountTargetGateV15[]) {\n      authoritativeCounts[gate] += (summaryMatchesCountTargetGateV15(addCard, gate) ? 1 : 0)\n        - (summaryMatchesCountTargetGateV15(cutCard, gate) ? 1 : 0);\n    }\n    currentNonlandManaValueTotal += addManaValue - recordNumber(cutCard.manaValue);\n    const nonlandManaValueReduction = recordNumber(cutCard.manaValue) - addManaValue;""",
+          )
+          replace_once(
+              'src/services/deck-builder-v07.ts',
+              """      ...(selection.role === 'average-nonland-mv' ? {\n        authoritativeTargetGate: 'average-nonland-mv' as const,\n        nonlandManaValueReduction: Number(nonlandManaValueReduction.toFixed(3)),\n      } : {}),""",
+              """      ...(selectionTargetGate ? { authoritativeTargetGate: selectionTargetGate } : {}),\n      ...(selection.role === 'average-nonland-mv' ? {\n        nonlandManaValueReduction: Number(nonlandManaValueReduction.toFixed(3)),\n      } : {}),""",
+          )
+          replace_once(
+              'src/services/deck-builder-v07.ts',
+              """    (suggestions.currentMetrics ?? {}) as Record<string, unknown>,\n    (suggestions.structuralTargets ?? {}) as Record<string, unknown>,\n  );""",
+              """    (suggestions.currentMetrics ?? {}) as Record<string, unknown>,\n    (suggestions.structuralTargets ?? {}) as Record<string, unknown>,\n    options.targetBracket ?? 4,\n  );""",
+          )
+
+          # 4) Name-agnostic regression coverage for the two role-truth mistakes.
+          replace_once(
+              'src/services/card-role-truth-v15.test.ts',
+              """const boardProtection = card({\n  name: 'Board Protection',\n  typeLine: 'Instant',\n  oracleText: 'Permanents you control gain hexproof and indestructible until end of turn.',\n  cmc: 2,\n  manaCost: '{1}{G}',\n});\n""",
+              """const boardProtection = card({\n  name: 'Board Protection',\n  typeLine: 'Instant',\n  oracleText: 'Permanents you control gain hexproof and indestructible until end of turn.',\n  cmc: 2,\n  manaCost: '{1}{G}',\n});\n\nconst targetedMinusRemoval = card({\n  name: 'Generic Negative Removal',\n  typeLine: 'Instant',\n  oracleText: 'Target creature gets -1/-1 until end of turn for each Swamp you control.',\n  cmc: 1,\n  manaCost: '{B}',\n});\n\nconst expensiveWearerProtection = card({\n  name: 'Generic Expensive Protective Equipment',\n  typeLine: 'Artifact — Equipment',\n  oracleText: 'Equipped creature gets +2/+2 and has hexproof from monocolored. Equip {4}.',\n  cmc: 1,\n  manaCost: '{1}',\n});\n\nconst efficientWearerProtection = card({\n  name: 'Generic Efficient Protective Equipment',\n  typeLine: 'Artifact — Equipment',\n  oracleText: 'Equipped creature has hexproof and haste. Equip {1}.',\n  cmc: 2,\n  manaCost: '{2}',\n});\n""",
+          )
+          replace_once(
+              'src/services/card-role-truth-v15.test.ts',
+              """test('direct damage and conditional tap-exile cards count as spot interaction', () => {\n  assert.equal(inferCardRoles(directDamageInteraction).includes('spot interaction'), true);\n  assert.equal(inferCardRoles(conditionalTapExile).includes('spot interaction'), true);\n});\n""",
+              """test('direct damage, conditional tap-exile, and targeted negative-power cards count as spot interaction', () => {\n  assert.equal(inferCardRoles(directDamageInteraction).includes('spot interaction'), true);\n  assert.equal(inferCardRoles(conditionalTapExile).includes('spot interaction'), true);\n  assert.equal(inferCardRoles(targetedMinusRemoval).includes('spot interaction'), true);\n});\n\ntest('expensive wearer-only Equipment protection is conditional while efficient Equip remains normal protection', () => {\n  const expensiveRoles = inferCardRoles(expensiveWearerProtection);\n  const efficientRoles = inferCardRoles(efficientWearerProtection);\n  assert.equal(expensiveRoles.includes('protection'), false);\n  assert.equal(expensiveRoles.includes('conditional protection'), true);\n  assert.equal(efficientRoles.includes('protection'), true);\n});\n""",
+          )
+
+          # 5) Regression that specifically proves Bracket 4 stops at 3.1 rather than chasing 2.6.
+          p = Path('src/services/upgrade-target-priority-v15.test.ts')
+          text = p.read_text()
+          marker = "test('Najeela curve repair preserves Aurelia-style combat strategy before maximizing mana reduction', () => {"
+          if text.count(marker) != 1:
+              raise SystemExit(f'upgrade-target-priority marker count={text.count(marker)}')
+          regression = """test('Bracket-4 curve pairing stops at 3.1 instead of chasing the Bracket-5 2.6 threshold', () => {\n  const pairings = pairUpgradeSwapsByStructureV15(\n    [{\n      role: 'average-nonland-mv' as const,\n      candidate: {\n        card: { name: 'One Drop', roles: ['card draw'], manaValue: 1, typeLine: 'Artifact' },\n        authoritativeTargetGate: 'average-nonland-mv',\n        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },\n      },\n    }],\n    [\n      {\n        card: { name: 'Three Drop', roles: [], manaValue: 3, typeLine: 'Creature — Test' },\n        heuristicCutPressure: 0,\n        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },\n      },\n      {\n        card: { name: 'Seven Drop', roles: [], manaValue: 7, typeLine: 'Creature — Test' },\n        heuristicCutPressure: 10,\n        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },\n      },\n    ],\n    {\n      rampCount: 20,\n      drawCount: 20,\n      interactionCount: 20,\n      protectionCount: 8,\n      tutorCount: 6,\n      recursionCount: 4,\n      boardWipeCount: 3,\n      earlyPlayCount: 30,\n      cheapInteractionCount: 8,\n      fastManaCount: 3,\n      averageNonlandManaValue: 3.12,\n      nonlandCount: 70,\n      roleCounts: { 'free interaction': 1 },\n    },\n    {\n      ramp: 12, draw: 12, interaction: 14, freeInteraction: 0, protection: 6, tutors: 6,\n      recursion: 3, boardWipes: 2, earlyPlays: 16,\n    },\n    4,\n  );\n\n  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Three Drop');\n  assert.equal(pairings[0]?.nonlandManaValueReduction, 2);\n});\n\n"""
+          p.write_text(text.replace(marker, regression + marker, 1))
+
+          # 6) Prove a non-authoritative later role cannot undo a currently failed cheap-interaction gate.
+          p = Path('src/services/upgrade-target-priority-v15.test.ts')
+          text = p.read_text()
+          marker = "test('swap pairing declines an apparent repair when every cut would create a new structural hole', () => {"
+          if text.count(marker) != 1:
+              raise SystemExit(f'cheap-interaction marker count={text.count(marker)}')
+          regression = """test('later aspirational swaps cannot cut away a currently failed authoritative cheap-interaction gate', () => {\n  const pairings = pairUpgradeSwapsByStructureV15(\n    [{\n      role: 'protection' as const,\n      candidate: {\n        card: { name: 'New Protection', roles: ['protection'], manaValue: 2, typeLine: 'Instant' },\n        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },\n      },\n    }],\n    [\n      {\n        card: { name: 'Only Cheap Removal', roles: ['spot interaction'], manaValue: 1, typeLine: 'Instant' },\n        heuristicCutPressure: 20,\n        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },\n      },\n      {\n        card: { name: 'Surplus Four Drop', roles: [], manaValue: 4, typeLine: 'Creature — Test' },\n        heuristicCutPressure: 1,\n        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },\n      },\n    ],\n    {\n      rampCount: 12, drawCount: 12, interactionCount: 16, protectionCount: 5, tutorCount: 6,\n      recursionCount: 3, boardWipeCount: 2, earlyPlayCount: 20, cheapInteractionCount: 1,\n      fastManaCount: 2, averageNonlandManaValue: 3.0, nonlandCount: 64,\n      roleCounts: { 'free interaction': 0 },\n    },\n    {\n      ramp: 12, draw: 12, interaction: 14, freeInteraction: 0, protection: 6, tutors: 6,\n      recursion: 3, boardWipes: 2, earlyPlays: 16,\n    },\n    4,\n  );\n\n  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Surplus Four Drop');\n});\n\n"""
+          p.write_text(text.replace(marker, regression + marker, 1))
+          PY
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate build and deterministic tests
+        run: |
+          npm run build
+          npm test
+
+      - name: Commit validated repair
+        shell: bash
+        run: |
+          rm .github/workflows/intel02-shared-truth-repair.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/services/scryfall.ts src/services/upgrade.ts src/services/deck-builder-v07.ts src/services/card-role-truth-v15.test.ts src/services/upgrade-target-priority-v15.test.ts .github/workflows/intel02-shared-truth-repair.yml
+          git diff --cached --check
+          git commit -m "fix(intel02): preserve authoritative upgrade truth"
+          git push origin HEAD:agent/v15-native-deck-intelligence
