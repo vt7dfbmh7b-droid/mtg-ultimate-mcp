@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T00:04:05Z",
+  "updatedAt": "2026-08-22T03:45:00Z",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
   "stable": {
@@ -12,18 +12,18 @@
   "experimental": {
     "activeBranch": "agent/v15-native-deck-intelligence",
     "activePullRequest": 29,
-    "developmentCheckpointSha": "3cfca39c194df72727bcd1fae19e81080e543e41",
-    "developmentCheckpointNote": "Exact checked-in INTEL-02 source for cumulative curve-package stopping, substantive-strategy cut protection and reconciled concurrent evidence writers. Project integrity, TypeScript/build, exact-head CI, focused regressions and 770 deterministic tests passed. Focused and broad Marvel controls independently reproduced the same legal two-swap repair: Vanquish the Horde -> Vandalblast and Arcane Signet -> Ponder moved average nonland mana value 2.71 -> 2.59, removed the failed curve gate, added no failed construction gate, retained Lightning Greaves and all tutors, preserved complete per-swap and aggregate strategy evidence, and kept exact 100 Marvel-family printings. The exact-source Middle-earth control also passed its engineering and constraint-truth checks but correctly made zero unsupported swaps; it remains Bracket 3 with zero verified wins. This is strong evidence for the one addressable Marvel scenario, not broad milestone validation. INTEL-02 remains active and INTEL-01 still lacks a positive eligible verified-route control. Later evidence or state commits do not replace this tested source SHA.",
+    "developmentCheckpointSha": "98d4b264e08540b529a5ad23ba81f6732fe3e172",
+    "developmentCheckpointNote": "Exact checked-in INTEL-02 source for the first materially different unrestricted precon generalization pass. Build and name-agnostic strategy regressions passed, including weak incidental attack handling, self-mill recovery, artifact-engine semantics, mass-graveyard-return semantics, artifact-specific unrestricted discovery and artifact-engine win-route reporting. The exact MTGJSON Necron Dynasties stock control also passed hard legality/budget truth, target-quality and strategy-preservation gates at this source. Independent before/after evaluation moved the deck from Bracket 2 to Bracket 3, average nonland mana value 3.79 -> 3.29, early plays 15 -> 18, cheap interaction 1 -> 5, tutors 0 -> 4, interaction 7 -> 13 and protection 1 -> 5 while graveyard affinity increased 237 -> 249 and artifact affinity increased 333 -> 339. The requested Bracket 4 was not achieved, so this is a whole-deck improvement/generalization pass, not target certification. Earlier Necron runs that misclassified Szarekh as combat-tokens and hollowed the artifact/graveyard engine are regression evidence, not successful intelligence evidence. Later evidence/state-only commits do not replace this tested source SHA.",
     "lastFullyValidatedExperimentalBaseline": {
       "branch": "agent/package-probabilities",
       "sha": "63bb7274004060eea507f7991a04b84921d0cd47",
-      "scope": "Latest fully validated executable experimental baseline documented by the prior authoritative handoff. Later V0.15 deck-intelligence work on PR #29 remains experimental until its own controls complete."
+      "scope": "Latest fully validated executable experimental baseline documented by the prior authoritative handoff. Later V0.15 deck-intelligence work on PR #29 remains experimental until milestone controls complete."
     }
   },
   "workMode": {
     "intelligenceDevelopmentPaused": false,
     "activeMilestone": "INTEL-02",
-    "reason": "INTEL-02 now has a high-quality restricted Marvel scenario pass with explicit cut/strategy evidence at 3cfca39..., while the exact-source Middle-earth control honestly remained constraint-limited instead of inventing an improvement. Keep the Marvel and Middle-earth restricted-theme lane active until a materially different addressable/precon-style scenario reaches the same standard; only then broaden conditions. INTEL-01's missing positive verified full-table route remains validation-pending."
+    "reason": "INTEL-02 now has restricted Marvel and Food and Fellowship whole-deck improvement evidence plus a materially different unrestricted Necron Dynasties precon pass at 98d4b264.... The Necron challenge exposed and fixed generic strategy-inference gaps instead of receiving a false green. INTEL-02 remains active because one unrestricted artifact/graveyard archetype is not broad enough to close autonomous deck-improvement validation; more varied archetypes and conditions are required. INTEL-01 still lacks a positive eligible verified full-table route control."
   },
   "milestones": [
     {
@@ -70,15 +70,26 @@
     }
   ],
   "validation": {
-    "activeBranchStatus": "restricted-scenario-pass-broader-validation-pending",
+    "activeBranchStatus": "restricted-and-first-unrestricted-generalization-passes-more-archetypes-pending",
     "latestPersistedMarvelControl": {
       "sourceSha": "3cfca39c194df72727bcd1fae19e81080e543e41",
       "outcome": "success",
-      "note": "Current exact-source focused and broad controls both passed. Two swaps—Vanquish the Horde -> Vandalblast and Arcane Signet -> Ponder—moved average nonland mana value 2.71 -> 2.59, repaired that failed construction gate, added no failed construction gate, preserved exact 100 Marvel-family printings, retained Lightning Greaves and all eight tutors, and carried complete passing strategy/cut evidence. The final deck remains Bracket 4 with zero verified winning combos, so this is one restricted scenario pass rather than broad INTEL-01/INTEL-02 validation."
+      "note": "Exact-source focused and broad restricted Marvel controls passed at this checkpoint. Two swaps—Vanquish the Horde -> Vandalblast and Arcane Signet -> Ponder—moved average nonland mana value 2.71 -> 2.59, repaired that failed construction gate, added no failed construction gate, preserved exact 100 Marvel-family printings, retained Lightning Greaves and all eight tutors, and carried complete passing strategy/cut evidence. The final deck remained Bracket 4 with zero verified winning combos, so this is restricted INTEL-02 evidence rather than INTEL-01 validation."
+    },
+    "latestPersistedFoodPreconControl": {
+      "sourceSha": "cf3eedb",
+      "outcome": "success",
+      "note": "Exact Food and Fellowship stock-precon control made four supported swaps while retaining Food/lifegain affinity, recursion, board wipes and persistent colored mana. This supplied the materially different restricted/precon-style whole-deck improvement evidence required before broadening conditions."
+    },
+    "latestPersistedUnrestrictedPreconControl": {
+      "sourceSha": "98d4b264e08540b529a5ad23ba81f6732fe3e172",
+      "outcome": "success",
+      "precon": "Necron Dynasties",
+      "note": "Exact MTGJSON stock baseline, unrestricted Commander-legal physical upgrades under NZ$35/card and NZ$200 total. The final legal exact-100 list used 12 swaps for NZ$134.61, assessed Bracket 2 -> 3, improved MV 3.79 -> 3.29, early plays 15 -> 18, cheap interaction 1 -> 5, tutors 0 -> 4, interaction 7 -> 13, protection 1 -> 5, and increased both graveyard and artifact aggregate affinity. It remained one bracket below the requested Bracket 4 and is therefore recorded as a high-quality whole-deck improvement/generalization pass, not target achievement."
     },
     "requiredBeforeResumingIntelligenceClaims": [
-      "A materially different restricted-theme or precon-style scenario reproduces whole-deck target improvement beyond the single Marvel scenario before conditions are broadened",
-      "Explicit cut-impact, structural-card importance and meaningful-strategy preservation evidence generalize beyond the current curve-repair package",
+      "Repeat unrestricted or materially different-condition whole-deck improvement on additional archetypes beyond the current Necron artifact/graveyard engine before closing INTEL-02",
+      "Keep explicit cut-impact, structural-card importance and per-strategy preservation evidence active so generic role gains cannot hollow out secondary or engine identities",
       "Verified full-table win-route discovery, injection and final evaluation agree in a scenario where an eligible route exists",
       "Negative win-package conclusions distinguish completed bounded absence from provider unavailability or selection failure",
       "Commander legality, exact 100 cards, printing-family/set restrictions and budgets remain intact across the expanded controls"
@@ -93,10 +104,10 @@
     "No merge, stable/current promotion, version bump, or release without explicit user approval."
   ],
   "nextActions": [
-    "Keep the current Marvel and Middle-earth restrictions active and create an addressable Middle-earth/precon-style INTEL-02 scenario whose starting list has a safely repairable weakness; persist exact source, before/after gates, strategy evidence, cut importance and per-attempt candidate provenance.",
-    "Require the restricted Middle-earth/precon control to improve the whole deck without weakening its commander plan, legal exact-100 list, printing policy or already-passing gates; a truthful no-supported-improvement remains engineering/constraint evidence, not an intelligence pass.",
-    "Only after the restricted-theme scenarios meet the same high standard, vary budget, card-pool and unrestricted conditions across materially different archetypes.",
-    "Run an eligible verified full-table package scenario to validate INTEL-01 discovery, feasibility, atomic injection, protection and independent final recognition end to end; Marvel and Middle-earth both currently end with zero verified winning combos.",
+    "Run the next materially different unrestricted/precon INTEL-02 challenge on an archetype that is not artifact/graveyard recursion, and require independent before/after whole-deck improvement plus generic commander-strategy preservation rather than a forced target hit.",
+    "Use the Necron false-green history as a regression boundary: incidental command-zone text must not define the deck identity, and every substantive commander strategy must survive the complete accepted package, not merely individual score gains.",
+    "After at least one more materially different unrestricted archetype succeeds, vary budget and card-pool pressure to test whether the refiner can make smaller coherent upgrades or truthfully stop when no supported improvement exists.",
+    "Run an eligible verified full-table package scenario to validate INTEL-01 discovery, feasibility, atomic injection, protection and independent final recognition end to end; current Marvel, Middle-earth, Food and Necron controls do not provide that positive win-route proof.",
     "Migrate legacy KF-013 evidence writers to isolated paths plus bounded latest-head reconciliation before treating concurrent persistence as globally closed."
   ],
   "handoffProtocol": {
