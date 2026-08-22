@@ -115,16 +115,16 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   const usesOwnGraveyard = /\bfrom your graveyard\b|\bfrom your hand or graveyard\b|\b(?:artifact )?(?:creature )?cards? in your graveyard\b|\bpermanents? in your graveyard\b/i.test(text);
   const graveyardHateOnly = roles.has('graveyard hate') && !roles.has('graveyard recursion');
   const artifactPermanent = /\bartifact\b/i.test(typeText);
-  const artifactEngineText = /\bartifacts? you control\b|\bartifact spells? you cast\b|\bartifact (?:creature )?cards?[^.]{0,100}\byour (?:graveyard|hand|library)\b|\bartifact spells?[^.]{0,80}\bfrom your\b|\bcreate\b[^.]{0,100}\bartifact\b[^.]{0,60}\btokens?\b|\bsacrifice (?:an|another|one or more) artifacts?\b|\bwhenever\b[^.]{0,100}\bartifacts?\b|\bvehicles? you control\b|\bvehicle cards?\b|\bcrew\b/i.test(text);
+  const artifactEngineText = /\bartifacts? you control\b|\bartifact spells? you cast\b|\bartifact (?:creature )?cards?[^.]{0,100}\byour (?:graveyard|hand|library)\b|\bartifact spells?[^.]{0,100}\bfrom (?:the top of )?your\b|\bcreate\b[^.]{0,100}\bartifact\b[^.]{0,60}\btokens?\b|\bsacrifice (?:an|another|one or more) artifacts?\b|\bwhenever\b[^.]{0,100}\bartifacts?\b|\bvehicles? you control\b|\bvehicle cards?\b|\bcrew\b/i.test(text);
 
   addSignal(table, 'combat-tokens', roles.has('token production'), 6, 'token production');
   addSignal(table, 'combat-tokens', roles.has('go-wide payoff'), 6, 'go-wide combat payoff');
   addSignal(table, 'combat-tokens', roles.has('extra combat'), 8, 'extra combat');
   addSignal(table, 'combat-tokens', roles.has('untap engine'), 4, 'combat untap potential');
   addSignal(table, 'combat-tokens', roles.has('haste'), 2, 'haste');
-  addSignal(table, 'combat-tokens', /whenever [^.]* attacks|whenever [^.]* attack/i.test(text), 3, 'attack trigger');
+  addSignal(table, 'combat-tokens', /whenever [^.]* attacks|whenever [^.]* attack/i.test(text), 2, 'attack trigger');
   addSignal(table, 'combat-tokens', /tapped and attacking/i.test(text), 6, 'attacking-token text');
-  addSignal(table, 'combat-tokens', /combat damage to a player/i.test(text), 3, 'combat-damage trigger');
+  addSignal(table, 'combat-tokens', /combat damage to a player/i.test(text), 2, 'combat-damage trigger');
 
   addSignal(table, 'equipment-voltron', roles.has('equipment'), 8, 'equipment role');
   addSignal(table, 'equipment-voltron', roles.has('protection'), 3, 'protection');
