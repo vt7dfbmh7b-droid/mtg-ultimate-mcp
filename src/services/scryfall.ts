@@ -266,9 +266,9 @@ export function inferCardRoles(card: ScryfallCard): string[] {
     || /\bthose tokens plus\b/.test(text)
     || /\bcreate twice that many [^.]{0,40}tokens?\b/.test(text);
   if (createsOrMultipliesTokens) roles.add('token production');
-  if (/(?<!target )\b(?:other )?(?:creatures|[a-z][a-z'-]*s) you control (?:get|gain) \+\d+\/\+\d+/.test(text)) {
-    roles.add('go-wide payoff');
-  }
+  const teamWideStatPayoff = /(?<!target )\b(?:other )?(?:creatures|[a-z][a-z'-]*s) you control (?:get|gain) \+\d+\/\+\d+/.test(text);
+  const boardScalingEquipment = /\bequipped creature (?:gets?|has) [^.]{0,100}\bfor each (?:other )?creature you control\b/.test(text);
+  if (teamWideStatPayoff || boardScalingEquipment) roles.add('go-wide payoff');
   if (/sacrifice (?:a|another|target|this)/.test(text)) roles.add('sacrifice synergy');
   if (/sacrifice (?:a|another) creature\s*:|sacrifice (?:a|another) permanent\s*:/.test(text)) roles.add('sacrifice outlet');
   if (
@@ -277,11 +277,13 @@ export function inferCardRoles(card: ScryfallCard): string[] {
     || /put target [^.]{0,120} from (?:a|the|your) graveyard onto the battlefield/.test(text)
     || massGraveyardExchange
   ) roles.add('graveyard recursion');
-  const boardProtection = /(?:other [^.]* you control|(?:creatures?|permanents?|artifacts?|enchantments?) you control)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text)
-    || /(?:all |any number of )?(?:permanents?|creatures?) you control phase out/.test(text);
+  const boardProtection = /(?:other )?(?:creatures|permanents|artifacts|enchantments) you control\s+(?:have|gain)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text)
+    || /(?:all |any number of )?(?:permanents|creatures) you control phase out/.test(text);
   const targetedProtection = /(?:target|another target|equipped|enchanted|commander)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text)
     || /(?:target|another target|any number of target)[^.]{0,100}phases? out/.test(text);
+  const conditionalGroupProtection = /(?:creatures|permanents|artifacts|enchantments) you control\s+(?:with|that|if|as long as)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text);
   if (boardProtection || targetedProtection) roles.add('protection');
+  if (conditionalGroupProtection && !boardProtection) roles.add('conditional protection');
   if (boardProtection) roles.add('board protection');
   if (/haste/.test(text)) roles.add('haste');
   if (/can't cast|can't activate|players can't|opponents can't|doesn't untap|enter the battlefield tapped/.test(text)) roles.add('stax/control');
