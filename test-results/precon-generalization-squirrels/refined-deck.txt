@@ -16,6 +16,7 @@
 1 Gourmand's Talent (BLC) 31 *N*
 1 Rootcast Apprenticeship (BLC) 32 *N*
 1 Scurry of Squirrels (BLC) 33 *N*
+1 End-Raze Forerunners (BLC) 214 *N*
 1 Arasta of the Endless Web (BLC) 205 *N*
 1 Deep Forest Hermit (BLC) 213 *N*
 1 Toski, Bearer of Secrets (BLC) 244 *N*
@@ -87,4 +88,3 @@
 1 Tyvar's Stand (PLST) ONE-190 *N*
 1 Smuggler's Surprise (POTJ) 180p *N*
 1 Collective Resistance (MH3) 147 *N*
-1 Sword of Hearth and Home (TMC) 136 *F*
