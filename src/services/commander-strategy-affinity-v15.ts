@@ -38,7 +38,10 @@ export interface CardCommanderStrategyAffinityV15 {
 }
 
 export const SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15 = 6;
-const DIRECT_COMMANDER_MECHANIC_SUPPORT_SCORE_V15 = 4;
+// Explicit command-zone fuel must outrank merely generic archetype fit. The cut-protection layer
+// is still capped at four points, but swap preservation can now distinguish direct commander fuel
+// from a cheaper card that happens to share the broad spells-control label.
+const DIRECT_COMMANDER_MECHANIC_SUPPORT_SCORE_V15 = 8;
 
 export function substantiveCommanderStrategyAffinityScoreV15(
   affinity: CardCommanderStrategyAffinityV15,
