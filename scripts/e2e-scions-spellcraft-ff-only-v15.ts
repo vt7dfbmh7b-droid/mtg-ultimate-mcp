@@ -16,7 +16,7 @@ import { findDeckCombosEvidence } from '../src/services/spellbook.js';
 import { getCardsByIdentifiers, inferCardRoles, type CardIdentifierInput } from '../src/services/scryfall.js';
 
 const PRECON_REFERENCE = 'ScionsSpellcraftFinalFantasyXiv_FIC';
-const TARGET_BRACKET = 3;
+const TARGET_BRACKET = 4;
 const COMMANDER = "Y'shtola, Night's Blessed";
 
 const EXCLUDED_CARDS = [
@@ -163,6 +163,7 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
     constraintDescriptions: [
       'Exact Scions & Spellcraft stock-precon lineage.',
       'FINAL FANTASY physical printings only.',
+      'Bracket 4 is search pressure only; it is not permission to replace the original deck identity.',
       'No newly introduced infinite combo.',
       'Do not add Walking Ballista / The Destined White Mage or similar combo shortcuts.',
       'Do not use narrow Equipment, Vehicle, land, or target-poor tutors merely to satisfy a generic tutor quota.',
@@ -281,7 +282,7 @@ async function main(): Promise<void> {
   const afterMetrics = record(after.metrics);
 
   const candidateEvidence = {
-    schema: 'scions-spellcraft-candidate-audit-v15.8',
+    schema: 'scions-spellcraft-candidate-audit-v15.9',
     sourceBaseline: 'MTGJSON exact stock deck',
     precon: {
       name: stock.entry.name,
@@ -300,6 +301,7 @@ async function main(): Promise<void> {
       boardWipePolicy: 'do-not-reduce-stock-board-wipe-count',
       fastManaPolicy: 'preserve-premium-fast-mana',
       tutorPolicy: 'allow-general-purpose-tutors; reject narrow off-plan tutor fillers',
+      searchPressurePolicy: 'use Bracket-4 construction pressure only to broaden candidate discovery; final identity gates remain authoritative',
     },
     before,
     refinement,
@@ -350,7 +352,7 @@ async function main(): Promise<void> {
 
   const output = {
     ...candidateEvidence,
-    schema: 'scions-spellcraft-ff-only-v15.8',
+    schema: 'scions-spellcraft-ff-only-v15.9',
     validation: candidateEvidence.validationPreview,
   };
   await writeFile('scions-spellcraft-ff-only-result.json', `${JSON.stringify(output, null, 2)}\n`);
