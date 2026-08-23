@@ -33,6 +33,7 @@ const PROTECTED_CORE_CARDS = [
   'Final Judgment',
   'Hraesvelgr of the First Brood',
   'Into the Story',
+  'Propaganda',
   'Sublime Epiphany',
   'Torrential Gearhulk',
 ] as const;
@@ -152,7 +153,7 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
       'Do not add the known Walking Ballista / The Destined White Mage infinite package.',
       'Do not use off-plan counters/combat filler or a tutor without a useful target merely to satisfy generic metrics.',
       "Preserve Y'shtola's original noncreature-spell control/drain win plan.",
-      'Preserve manually audited core engine, spell-efficiency, mana, drain, and wipe pieces rather than forcing generic bracket metrics.',
+      'Preserve manually audited core engine, spell-efficiency, mana, drain, wipe, and control pieces rather than forcing generic bracket metrics.',
     ],
   });
 
@@ -266,7 +267,7 @@ async function main(): Promise<void> {
   const beforeMetrics = record(before.metrics);
   const afterMetrics = record(after.metrics);
   const candidateEvidence = {
-    schema: 'scions-spellcraft-candidate-audit-v15.5',
+    schema: 'scions-spellcraft-candidate-audit-v15.6',
     sourceBaseline: 'MTGJSON exact stock deck',
     precon: {
       name: stock.entry.name,
@@ -350,7 +351,7 @@ async function main(): Promise<void> {
 
   const output = {
     ...candidateEvidence,
-    schema: 'scions-spellcraft-ff-only-v15.5',
+    schema: 'scions-spellcraft-ff-only-v15.6',
     validation: candidateEvidence.validationPreview,
   };
 
