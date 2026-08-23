@@ -54,6 +54,36 @@ function spellTriggerCommander(): ScryfallCard {
   );
 }
 
+function swapAudit(
+  cut: ScryfallCard,
+  add: ScryfallCard,
+  context: ReturnType<typeof deriveCommanderStrategyContextFromCommandersV15>,
+) {
+  const cutAffinity = cardCommanderStrategyAffinityV15(cut, context);
+  const addAffinity = cardCommanderStrategyAffinityV15(add, context);
+  const cutPressure = contextualCutPressureV15(cut, context);
+  return auditUpgradeStrategyPreservationV15([{
+    cut: {
+      card: { name: cut.name, roles: [], manaValue: cut.cmc, typeLine: cut.type_line },
+      strategyAffinity: {
+        score: cutAffinity.score,
+        protectionApplied: cutPressure.strategyProtectionApplied,
+        matchedStrategies: cutAffinity.matches.map((match) => match.archetype),
+        matches: cutAffinity.matches,
+      },
+    },
+    add: {
+      card: { name: add.name, roles: [], manaValue: add.cmc, typeLine: add.type_line },
+      strategyAffinity: {
+        score: addAffinity.score,
+        protectionApplied: 0,
+        matchedStrategies: addAffinity.matches.map((match) => match.archetype),
+        matches: addAffinity.matches,
+      },
+    },
+  }]);
+}
+
 test('explicit command-zone mana-value cast triggers give otherwise generic qualifying spells strategy affinity', () => {
   const context = deriveCommanderStrategyContextFromCommandersV15([spellTriggerCommander()]);
   const highManaSpell = card(
@@ -79,7 +109,7 @@ test('explicit command-zone mana-value cast triggers give otherwise generic qual
   assert.deepEqual(context.directSupportRules?.map((rule) => ({ kind: rule.kind, minManaValue: rule.minManaValue })), [
     { kind: 'cast-noncreature-min-mv', minManaValue: 3 },
   ]);
-  assert.ok(highAffinity.matches.some((match) => match.archetype === 'spells-control' && match.overlapScore >= 4));
+  assert.ok(highAffinity.matches.some((match) => match.archetype === 'spells-control' && match.overlapScore >= 8));
   assert.equal(cheapAffinity.matches.some((match) => match.archetype === 'spells-control'), false);
 });
 
@@ -96,7 +126,7 @@ test('noncreature X spells count as direct support because X contributes to mana
   const affinity = cardCommanderStrategyAffinityV15(xSpell, context);
   const pressure = contextualCutPressureV15(xSpell, context);
 
-  assert.ok(affinity.matches.some((match) => match.archetype === 'spells-control' && match.overlapScore >= 4));
+  assert.ok(affinity.matches.some((match) => match.archetype === 'spells-control' && match.overlapScore >= 8));
   assert.equal(pressure.strategyProtectionApplied, 4);
 });
 
@@ -116,31 +146,35 @@ test('upgrade strategy audit rejects replacing direct commander-trigger fuel wit
     1,
     '{1}',
   );
+
+  const audit = swapAudit(directFuel, unrelated, context);
+  assert.equal(audit.status, 'meaningful-strategy-loss');
+  assert.ok(audit.meaningfulLosses.some((loss) => loss.strategy === 'spells-control'));
+});
+
+test('upgrade strategy audit rejects cheap generic control as a replacement for explicit commander-trigger fuel', () => {
+  const context = deriveCommanderStrategyContextFromCommandersV15([spellTriggerCommander()]);
+  const directFuel = card(
+    'Five-Mana Story Spell',
+    'Instant',
+    'Draw two cards.',
+    5,
+    '{4}{U}',
+  );
+  const cheapGenericControl = card(
+    'Cheap Generic Counter',
+    'Instant',
+    'Counter target spell.',
+    1,
+    '{U}',
+  );
+
   const directAffinity = cardCommanderStrategyAffinityV15(directFuel, context);
-  const unrelatedAffinity = cardCommanderStrategyAffinityV15(unrelated, context);
-  const directPressure = contextualCutPressureV15(directFuel, context);
+  const cheapAffinity = cardCommanderStrategyAffinityV15(cheapGenericControl, context);
+  assert.ok(directAffinity.score > cheapAffinity.score);
+  assert.ok(cheapAffinity.matches.some((match) => match.archetype === 'spells-control'));
 
-  const audit = auditUpgradeStrategyPreservationV15([{
-    cut: {
-      card: { name: directFuel.name, roles: [], manaValue: directFuel.cmc, typeLine: directFuel.type_line },
-      strategyAffinity: {
-        score: directAffinity.score,
-        protectionApplied: directPressure.strategyProtectionApplied,
-        matchedStrategies: directAffinity.matches.map((match) => match.archetype),
-        matches: directAffinity.matches,
-      },
-    },
-    add: {
-      card: { name: unrelated.name, roles: ['mana acceleration'], manaValue: unrelated.cmc, typeLine: unrelated.type_line },
-      strategyAffinity: {
-        score: unrelatedAffinity.score,
-        protectionApplied: 0,
-        matchedStrategies: unrelatedAffinity.matches.map((match) => match.archetype),
-        matches: unrelatedAffinity.matches,
-      },
-    },
-  }]);
-
+  const audit = swapAudit(directFuel, cheapGenericControl, context);
   assert.equal(audit.status, 'meaningful-strategy-loss');
   assert.ok(audit.meaningfulLosses.some((loss) => loss.strategy === 'spells-control'));
 });
