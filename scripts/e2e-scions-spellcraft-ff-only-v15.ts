@@ -222,7 +222,44 @@ async function main(): Promise<void> {
   const finalDecklist = typeof refinement.finalDecklist === 'string' ? refinement.finalDecklist : '';
   assert.ok(finalDecklist.trim(), 'Scions refinement must return the complete final decklist');
 
+  await writeFile('scions-spellcraft-stock-deck.txt', `${stock.decklist.trim()}\n`);
+  await writeFile('scions-spellcraft-refined-deck.txt', `${finalDecklist.trim()}\n`);
+
   const after = await auditDeck(finalDecklist);
+  const beforeInfinite = new Set(Array.isArray(before.infiniteComboKeys) ? before.infiniteComboKeys.map(String) : []);
+  const afterInfinite = Array.isArray(after.infiniteComboKeys) ? after.infiniteComboKeys.map(String) : [];
+  const newInfinite = afterInfinite.filter((key) => !beforeInfinite.has(key));
+  const candidateEvidence = {
+    schema: 'scions-spellcraft-candidate-audit-v15.1',
+    sourceBaseline: 'MTGJSON exact stock deck',
+    precon: {
+      name: stock.entry.name,
+      fileName: stock.entry.fileName,
+      releaseDate: stock.entry.releaseDate,
+      commanders: (stock.deck.commander ?? []).map((card) => card.name),
+    },
+    request: {
+      targetBracket: TARGET_BRACKET,
+      printingFamily: 'Final Fantasy',
+      maxSwaps: 12,
+      infiniteComboPolicy: 'no-new-infinite-combos',
+      strategyPolicy: "preserve Y'shtola noncreature-spell control/drain win plan",
+    },
+    before,
+    refinement,
+    after,
+    validationPreview: {
+      newInfiniteCombos: newInfinite,
+      spellsControlAffinityDelta: finite(after.spellsControlAffinityTotal) - finite(before.spellsControlAffinityTotal),
+      spellsControlSupportDelta: finite(after.spellsControlSupportCount) - finite(before.spellsControlSupportCount),
+      yshtolaTriggerSpellDelta: finite(after.yshtolaTriggerSpellCount) - finite(before.yshtolaTriggerSpellCount),
+      noncreatureSpellDelta: finite(after.noncreatureSpellCount) - finite(before.noncreatureSpellCount),
+      lifeDrainRoleDelta: finite(after.lifeDrainRoleCount) - finite(before.lifeDrainRoleCount),
+      assessedBracketDelta: finite(after.assessedBracket) - finite(before.assessedBracket),
+    },
+  };
+  await writeFile('scions-spellcraft-candidate-audit.json', `${JSON.stringify(candidateEvidence, null, 2)}\n`);
+
   assert.ok(
     finite(after.assessedBracket) >= finite(before.assessedBracket),
     'Scions refinement must not lower the independently assessed bracket',
@@ -239,10 +276,6 @@ async function main(): Promise<void> {
     finite(after.yshtolaTriggerSpellCount) >= finite(before.yshtolaTriggerSpellCount),
     "Scions refinement must not reduce the number of MV3+ noncreature spells that directly trigger Y'shtola",
   );
-
-  const beforeInfinite = new Set(Array.isArray(before.infiniteComboKeys) ? before.infiniteComboKeys.map(String) : []);
-  const afterInfinite = Array.isArray(after.infiniteComboKeys) ? after.infiniteComboKeys.map(String) : [];
-  const newInfinite = afterInfinite.filter((key) => !beforeInfinite.has(key));
   assert.deepEqual(newInfinite, [], 'Scions refinement must not introduce any new Commander Spellbook infinite combo');
 
   const detailedRounds = Array.isArray(refinement.detailedRounds)
@@ -268,36 +301,12 @@ async function main(): Promise<void> {
   }
 
   const output = {
+    ...candidateEvidence,
     schema: 'scions-spellcraft-ff-only-v15.1',
-    sourceBaseline: 'MTGJSON exact stock deck',
-    precon: {
-      name: stock.entry.name,
-      fileName: stock.entry.fileName,
-      releaseDate: stock.entry.releaseDate,
-      commanders: (stock.deck.commander ?? []).map((card) => card.name),
-    },
-    request: {
-      targetBracket: TARGET_BRACKET,
-      printingFamily: 'Final Fantasy',
-      maxSwaps: 12,
-      infiniteComboPolicy: 'no-new-infinite-combos',
-      strategyPolicy: "preserve Y'shtola noncreature-spell control/drain win plan",
-    },
-    before,
-    refinement,
-    after,
-    validation: {
-      newInfiniteCombos: newInfinite,
-      spellsControlAffinityDelta: finite(after.spellsControlAffinityTotal) - finite(before.spellsControlAffinityTotal),
-      spellsControlSupportDelta: finite(after.spellsControlSupportCount) - finite(before.spellsControlSupportCount),
-      yshtolaTriggerSpellDelta: finite(after.yshtolaTriggerSpellCount) - finite(before.yshtolaTriggerSpellCount),
-      assessedBracketDelta: finite(after.assessedBracket) - finite(before.assessedBracket),
-    },
+    validation: candidateEvidence.validationPreview,
   };
 
   await writeFile('scions-spellcraft-ff-only-result.json', `${JSON.stringify(output, null, 2)}\n`);
-  await writeFile('scions-spellcraft-stock-deck.txt', `${stock.decklist.trim()}\n`);
-  await writeFile('scions-spellcraft-refined-deck.txt', `${finalDecklist.trim()}\n`);
   console.log(JSON.stringify({
     precon: stock.entry.name,
     status: refinement.status,
