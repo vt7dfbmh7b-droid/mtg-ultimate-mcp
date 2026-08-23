@@ -1,4 +1,4 @@
-source_sha=244131755098a80484856593cb99b149473bf9bc
+source_sha=dc2ff8dbab2f8491d17fc5b0e2ac9483a0a6e617
 build_outcome=success
 control_outcome=failure
 policy=scions-spellcraft-final-fantasy-no-new-infinite

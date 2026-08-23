@@ -1,14 +1,4 @@
-AssertionError: addressable Scions precon must produce a supported refinement
-+ actual - expected
-
-+ 'unsupported-theme'
-- 'refined'
-
-AssertionError [ERR_ASSERTION]: addressable Scions precon must produce a supported refinement
-+ actual - expected
-
-+ 'unsupported-theme'
-- 'refined'
-
-    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/e2e-scions-spellcraft-ff-only-v15.ts:220:10)
+AssertionError: Scions refinement must not reduce the number of MV3+ noncreature spells that directly trigger Y'shtola
+AssertionError [ERR_ASSERTION]: Scions refinement must not reduce the number of MV3+ noncreature spells that directly trigger Y'shtola
+    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/e2e-scions-spellcraft-ff-only-v15.ts:238:10)
     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
