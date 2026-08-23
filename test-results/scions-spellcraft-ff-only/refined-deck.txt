@@ -14,7 +14,6 @@
 1 Hermes, Overseer of Elpis (FIC) 36 *N*
 1 Hraesvelgr of the First Brood (FIC) 37 *N*
 1 Observed Stasis (FIC) 40 *N*
-1 Eye of Nidhogg (FIC) 44 *N*
 1 Fandaniel, Telophoroi Ascian (FIC) 46 *N*
 1 Astrologian's Planisphere (FIN) 46 *N*
 1 Reaper's Scythe (FIC) 48 *N*
@@ -30,7 +29,6 @@
 1 Archaeomancer's Map (FIC) 230 *N*
 1 Authority of the Consuls (FIC) 232 *N*
 1 Cleansing Nova (FIC) 235 *N*
-1 Final Judgment (FIC) 243 *N*
 1 Archmage Emeritus (FIC) 261 *N*
 1 Dig Through Time (FIC) 263 *N*
 1 Rite of Replication (FIC) 270 *N*
@@ -67,6 +65,7 @@
 1 Lingering Souls (FIC) 245 *N*
 1 Swords to Plowshares (FIC) 256 *N*
 1 Hypnotic Sprite // Mesmeric Glare (FIC) 264 *N*
+1 Into the Story (FIC) 266 *N*
 1 Propaganda (FIC) 268 *N*
 1 Bastion of Remembrance (FIC) 274 *N*
 1 Exsanguinate (FIC) 276 *N*
@@ -98,4 +97,5 @@
 2 Plains (FIN) 294 *N*
 1 Plains (FIN) 295 *N*
 1 Plains (FIN) 296 *N*
-1 Blitzball Stadium (FIC) 34 *N*
+1 Akroma's Will (FCA) 21 *N*
+1 Darksteel Plate (FIC) 342 *N*
