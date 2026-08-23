@@ -18,6 +18,7 @@ import { getCardsByIdentifiers, inferCardRoles, type CardIdentifierInput } from 
 const PRECON_REFERENCE = 'ScionsSpellcraftFinalFantasyXiv_FIC';
 const TARGET_BRACKET = 4;
 const COMMANDER = "Y'shtola, Night's Blessed";
+const EXCLUDED_COMBO_CARDS = ['Walking Ballista', 'The Destined White Mage'] as const;
 
 function record(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
@@ -94,7 +95,7 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
     const isCreature = card.type_line.toLocaleLowerCase().includes('creature');
     if (!isCreature) {
       noncreatureSpellCount += entry.quantity;
-      if (card.cmc >= 3) yshtolaTriggerSpellCount += entry.quantity;
+      if (card.cmc >= 3 || /\{X\}/i.test(card.mana_cost ?? '')) yshtolaTriggerSpellCount += entry.quantity;
     }
     if (inferCardRoles(card).includes('life drain')) lifeDrainRoleCount += entry.quantity;
     const match = cardCommanderStrategyAffinityV15(card, strategyContext).matches
@@ -111,6 +112,11 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
     'Commander Spellbook combo verification must be complete before claiming the no-infinite constraint passed',
   );
   const infinites = infiniteCombos(comboEvidence);
+  const excludedNames = new Set(EXCLUDED_COMBO_CARDS.map((name) => name.toLocaleLowerCase()));
+  const excludedComboCardsPresent = parsed.main
+    .filter((entry) => excludedNames.has(entry.name.toLocaleLowerCase()))
+    .map((entry) => entry.name)
+    .sort();
 
   const evaluation = await evaluateCommanderBuildV15(decklist, {
     printingFamily: 'Final Fantasy',
@@ -122,6 +128,7 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
       'Exact Scions & Spellcraft stock-precon lineage.',
       'FINAL FANTASY physical printings only.',
       'No newly introduced infinite combo.',
+      'Do not add the known Walking Ballista / The Destined White Mage infinite package.',
       "Preserve Y'shtola's original noncreature-spell control/drain win plan.",
     ],
   });
@@ -139,6 +146,7 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
     yshtolaTriggerSpellCount,
     noncreatureSpellCount,
     lifeDrainRoleCount,
+    excludedComboCardsPresent,
     infiniteCombos: infinites,
     infiniteComboKeys: infinites.map(infiniteComboKey).sort(),
     comboSourceStatus: comboEvidence.sourceStatus ?? 'unknown',
@@ -196,6 +204,7 @@ async function main(): Promise<void> {
         printingFamily: 'Final Fantasy',
         includePromos: true,
         includeSpecialReleases: true,
+        excludedCards: [...EXCLUDED_COMBO_CARDS],
         simulationIterations: 750,
         simulationTurns: 7,
         seed: 20260823,
@@ -230,7 +239,7 @@ async function main(): Promise<void> {
   const afterInfinite = Array.isArray(after.infiniteComboKeys) ? after.infiniteComboKeys.map(String) : [];
   const newInfinite = afterInfinite.filter((key) => !beforeInfinite.has(key));
   const candidateEvidence = {
-    schema: 'scions-spellcraft-candidate-audit-v15.1',
+    schema: 'scions-spellcraft-candidate-audit-v15.2',
     sourceBaseline: 'MTGJSON exact stock deck',
     precon: {
       name: stock.entry.name,
@@ -242,6 +251,7 @@ async function main(): Promise<void> {
       targetBracket: TARGET_BRACKET,
       printingFamily: 'Final Fantasy',
       maxSwaps: 12,
+      excludedComboCards: [...EXCLUDED_COMBO_CARDS],
       infiniteComboPolicy: 'no-new-infinite-combos',
       strategyPolicy: "preserve Y'shtola noncreature-spell control/drain win plan",
     },
@@ -274,8 +284,9 @@ async function main(): Promise<void> {
   );
   assert.ok(
     finite(after.yshtolaTriggerSpellCount) >= finite(before.yshtolaTriggerSpellCount),
-    "Scions refinement must not reduce the number of MV3+ noncreature spells that directly trigger Y'shtola",
+    "Scions refinement must not reduce the number of noncreature spells that can directly trigger Y'shtola",
   );
+  assert.deepEqual(after.excludedComboCardsPresent, [], 'Scions refinement must not add cards from the explicitly excluded infinite package');
   assert.deepEqual(newInfinite, [], 'Scions refinement must not introduce any new Commander Spellbook infinite combo');
 
   const detailedRounds = Array.isArray(refinement.detailedRounds)
@@ -302,7 +313,7 @@ async function main(): Promise<void> {
 
   const output = {
     ...candidateEvidence,
-    schema: 'scions-spellcraft-ff-only-v15.1',
+    schema: 'scions-spellcraft-ff-only-v15.2',
     validation: candidateEvidence.validationPreview,
   };
 
@@ -317,6 +328,7 @@ async function main(): Promise<void> {
     afterSpellsControlAffinity: after.spellsControlAffinityTotal,
     beforeYshTriggerSpells: before.yshtolaTriggerSpellCount,
     afterYshTriggerSpells: after.yshtolaTriggerSpellCount,
+    excludedComboCardsPresent: after.excludedComboCardsPresent,
     newInfiniteCombos: newInfinite,
     swaps: refinement.swaps ?? [],
   }, null, 2));
