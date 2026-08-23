@@ -1,5 +1,6 @@
 name: Scions & Spellcraft FF-Only Precon Validation
 
+# Temporary validation-only workflow. Do not merge or promote from this branch.
 on:
   push:
     branches: ["agent/scions-spellcraft-ff-only-validation"]
