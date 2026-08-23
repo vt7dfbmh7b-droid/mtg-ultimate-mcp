@@ -1,6 +1,7 @@
-source_sha=a85979c1a93f71f4402e6494e09cd238e8731866
-build_outcome=success
-control_outcome=failure
+source_sha=7586e171bd98973a7e1397077db00a2ce4a75f84
+build_outcome=failure
+mechanic_test_outcome=skipped
+control_outcome=skipped
 policy=scions-spellcraft-final-fantasy-no-new-infinite
 target_bracket=4
 strategy=ysh-tola-spells-control-drain
