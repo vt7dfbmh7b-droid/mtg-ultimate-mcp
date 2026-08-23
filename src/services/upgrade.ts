@@ -325,10 +325,6 @@ function candidateScore(
 }
 
 const CORE_UTILITY_CUT_ROLES_V15 = new Set([
-  'mana acceleration',
-  'land ramp',
-  'cost reduction',
-  'fast mana',
   'card draw',
   'repeatable draw',
   'card selection',
