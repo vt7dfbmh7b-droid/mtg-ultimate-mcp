@@ -25,6 +25,9 @@ const EXCLUDED_CARDS = [
   'Blitzball Stadium',
   'Ranger-Captain of Eos',
   'Magitek Infantry',
+  'Cloud, Midgar Mercenary',
+  'From Father to Son',
+  'World Map',
 ] as const;
 
 const PROTECTED_CORE_CARDS = [
@@ -162,7 +165,7 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
       'FINAL FANTASY physical printings only.',
       'No newly introduced infinite combo.',
       'Do not add Walking Ballista / The Destined White Mage or similar combo shortcuts.',
-      'Do not use off-plan counters/combat filler or target-poor tutors merely to satisfy role metrics.',
+      'Do not use narrow Equipment, Vehicle, land, or target-poor tutors merely to satisfy a generic tutor quota.',
       "Preserve Y'shtola's original MV3+ noncreature-spell control/drain win plan.",
       'Preserve premium fast mana and manually audited spell, drain, wipe, and control engines.',
     ],
@@ -278,7 +281,7 @@ async function main(): Promise<void> {
   const afterMetrics = record(after.metrics);
 
   const candidateEvidence = {
-    schema: 'scions-spellcraft-candidate-audit-v15.7',
+    schema: 'scions-spellcraft-candidate-audit-v15.8',
     sourceBaseline: 'MTGJSON exact stock deck',
     precon: {
       name: stock.entry.name,
@@ -296,6 +299,7 @@ async function main(): Promise<void> {
       strategyPolicy: "preserve Y'shtola noncreature-spell control/drain win plan",
       boardWipePolicy: 'do-not-reduce-stock-board-wipe-count',
       fastManaPolicy: 'preserve-premium-fast-mana',
+      tutorPolicy: 'allow-general-purpose-tutors; reject narrow off-plan tutor fillers',
     },
     before,
     refinement,
@@ -346,7 +350,7 @@ async function main(): Promise<void> {
 
   const output = {
     ...candidateEvidence,
-    schema: 'scions-spellcraft-ff-only-v15.7',
+    schema: 'scions-spellcraft-ff-only-v15.8',
     validation: candidateEvidence.validationPreview,
   };
   await writeFile('scions-spellcraft-ff-only-result.json', `${JSON.stringify(output, null, 2)}\n`);
