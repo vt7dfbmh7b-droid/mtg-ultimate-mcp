@@ -1,3 +1,0 @@
-AssertionError: Scions refinement must not reduce the number of noncreature spells that can trigger Y'shtola
-AssertionError [ERR_ASSERTION]: Scions refinement must not reduce the number of noncreature spells that can trigger Y'shtola
-    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/e2e-scions-spellcraft-ff-only-v15.ts:337:10)
