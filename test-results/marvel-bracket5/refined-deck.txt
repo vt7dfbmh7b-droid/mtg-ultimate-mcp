@@ -9,6 +9,7 @@
 1 Final Showdown (MAR) 45
 1 Three Steps Ahead (MAR) 62
 1 Daily Bugle Newspaper (MSC) 749
+1 Arcane Denial (MSC) 147
 1 Manamorphose (SLD) 1746
 1 Dora Milaje Elite (MSC) 12
 1 Reprieve (MAR) 5
@@ -42,7 +43,6 @@
 1 Stark Industries Executive (MSH) 153
 1 Counterspell (MAR) 52
 1 Sun-Spider, Nimble Webber (SPM) 154
-1 Arcane Signet (MSC) 191
 1 Swiftfoot Boots (MSC) 216
 1 Relentless Assault (MAR) 25
 1 Seize the Day (MSC) 166
@@ -89,5 +89,5 @@
 3 Mountain (MSC) 858
 3 Island (MSH) 289
 3 Plains (MSC) 866
-1 Skullclamp (MSC) 210 *N*
 1 Reanimate (MAR) 20 *N*
+1 Brainstorm (SLD) 7019 *N*
