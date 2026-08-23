@@ -1,5 +1,5 @@
 {
-  "schema": "scions-spellcraft-candidate-audit-v15.2",
+  "schema": "scions-spellcraft-ff-only-v15.2",
   "sourceBaseline": "MTGJSON exact stock deck",
   "precon": {
     "name": "Scions & Spellcraft (FINAL FANTASY XIV)",
@@ -14114,6 +14114,15 @@
     }
   },
   "validationPreview": {
+    "newInfiniteCombos": [],
+    "spellsControlAffinityDelta": 0,
+    "spellsControlSupportDelta": 0,
+    "yshtolaTriggerSpellDelta": 0,
+    "noncreatureSpellDelta": 2,
+    "lifeDrainRoleDelta": 0,
+    "assessedBracketDelta": 1
+  },
+  "validation": {
     "newInfiniteCombos": [],
     "spellsControlAffinityDelta": 0,
     "spellsControlSupportDelta": 0,

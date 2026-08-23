@@ -27,6 +27,7 @@
 1 Archaeomancer's Map (FIC) 230 *N*
 1 Authority of the Consuls (FIC) 232 *N*
 1 Cleansing Nova (FIC) 235 *N*
+1 Final Judgment (FIC) 243 *N*
 1 Archmage Emeritus (FIC) 261 *N*
 1 Rite of Replication (FIC) 270 *N*
 1 Sublime Epiphany (FIC) 271 *N*
@@ -61,7 +62,6 @@
 1 Swords to Plowshares (FIC) 256 *N*
 1 Hypnotic Sprite // Mesmeric Glare (FIC) 264 *N*
 1 Into the Story (FIC) 266 *N*
-1 Propaganda (FIC) 268 *N*
 1 Bastion of Remembrance (FIC) 274 *N*
 1 Exsanguinate (FIC) 276 *N*
 1 Snuff Out (FIC) 285 *N*
@@ -91,11 +91,11 @@
 2 Plains (FIN) 294 *N*
 1 Plains (FIN) 295 *N*
 1 Plains (FIN) 296 *N*
-1 Walking Ballista (FIC) 371 *N*
+1 Everflowing Chalice (FIC) 343 *N*
 1 Ranger-Captain of Eos (FCA) 2 *N*
-1 Skullclamp (FIC) 355 *N*
-1 Diabolic Intent (FCA) 34 *N*
+1 Brainstorm (FCA) 28 *N*
+1 World Map (FIN) 270 *N*
 1 Blitzball Stadium (FIC) 34 *N*
 1 Restoration Magic (FIN) 30 *N*
+1 Champion's Helm (FIC) 337 *N*
 1 Akroma's Will (FCA) 21 *N*
-1 Darksteel Plate (FIC) 342 *N*
