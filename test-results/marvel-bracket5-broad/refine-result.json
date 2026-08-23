@@ -1,0 +1,2558 @@
+{
+  "schema": "marvel-bracket5-refinement-live-v15.2",
+  "startingDeck": {
+    "commander": [
+      "Najeela, the Blade-Blossom"
+    ],
+    "hardGatesPassed": true,
+    "commanderLegal": true,
+    "cardCount": 100,
+    "printingPolicySatisfied": true,
+    "assessedBracket": 4,
+    "assessedBand": "bracket-4-optimized-range",
+    "bracket5ConstructionCandidate": false,
+    "failedBracket5Checks": [
+      "verified-winning-combo",
+      "competitive-metagame-evidence"
+    ],
+    "bracket5ThresholdChecks": [
+      {
+        "key": "average-nonland-mv",
+        "category": "construction",
+        "observed": 2.59,
+        "required": "at most 2.6",
+        "passed": true,
+        "pressurePoint": "speed/curve"
+      },
+      {
+        "key": "early-plays",
+        "category": "construction",
+        "observed": 42,
+        "required": "at least 35",
+        "passed": true,
+        "pressurePoint": "speed/curve"
+      },
+      {
+        "key": "fast-mana",
+        "category": "construction",
+        "observed": 5,
+        "required": "at least 3",
+        "passed": true,
+        "pressurePoint": "fast-mana density"
+      },
+      {
+        "key": "free-interaction",
+        "category": "construction",
+        "observed": 1,
+        "required": "at least 1",
+        "passed": true,
+        "pressurePoint": "free/cheap interaction"
+      },
+      {
+        "key": "cheap-interaction",
+        "category": "construction",
+        "observed": 13,
+        "required": "at least 8",
+        "passed": true,
+        "pressurePoint": "free/cheap interaction"
+      },
+      {
+        "key": "tutors",
+        "category": "construction",
+        "observed": 9,
+        "required": "at least 4",
+        "passed": true,
+        "pressurePoint": "tutor consistency"
+      },
+      {
+        "key": "verified-winning-combo",
+        "category": "construction",
+        "observed": 0,
+        "required": "at least 1",
+        "passed": false,
+        "pressurePoint": "win-package quality/redundancy"
+      },
+      {
+        "key": "competitive-combo-signal",
+        "category": "construction",
+        "observed": "Ruthless=0, strategic=1, Spellbook=S",
+        "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+        "passed": true,
+        "pressurePoint": "win-package quality/redundancy"
+      },
+      {
+        "key": "cedh-intent",
+        "category": "evidence",
+        "observed": true,
+        "required": "true",
+        "passed": true,
+        "pressurePoint": "competitive intent"
+      },
+      {
+        "key": "competitive-metagame-evidence",
+        "category": "evidence",
+        "observed": false,
+        "required": "true",
+        "passed": false,
+        "pressurePoint": "metagame evidence"
+      }
+    ],
+    "metrics": {
+      "landCount": 31,
+      "nonlandCount": 69,
+      "landRatio": 0.31,
+      "averageNonlandManaValue": 2.59,
+      "manaCurve": {
+        "0": 0,
+        "1": 13,
+        "2": 29,
+        "3": 9,
+        "4": 11,
+        "5": 5,
+        "6": 2,
+        "7+": 0
+      },
+      "coloredPips": {
+        "W": 16,
+        "U": 15,
+        "B": 10,
+        "R": 22,
+        "G": 9
+      },
+      "roleCounts": {
+        "token production": 18,
+        "haste": 7,
+        "extra combat": 5,
+        "untap engine": 5,
+        "creature": 19,
+        "cost reduction": 4,
+        "card draw": 21,
+        "graveyard recursion": 4,
+        "+1/+1 counters": 3,
+        "mana acceleration": 25,
+        "treasure": 7,
+        "sacrifice synergy": 12,
+        "fast mana": 5,
+        "persistent colored mana source": 14,
+        "spot interaction": 15,
+        "board wipe": 2,
+        "mana dork": 2,
+        "protection": 9,
+        "board protection": 2,
+        "countermagic": 3,
+        "mana rock": 13,
+        "repeatable draw": 2,
+        "equipment": 8,
+        "tutor": 9,
+        "free interaction": 1,
+        "creature tutor": 1,
+        "go-wide payoff": 3,
+        "land ramp": 1,
+        "land tutor": 1,
+        "card selection": 4,
+        "land": 31
+      },
+      "earlyPlayCount": 42,
+      "fastManaCount": 5,
+      "rampCount": 30,
+      "drawCount": 25,
+      "tutorCount": 9,
+      "interactionCount": 19,
+      "cheapInteractionCount": 13,
+      "protectionCount": 9,
+      "recursionCount": 4,
+      "boardWipeCount": 2,
+      "persistentColoredManaSourceCount": 14,
+      "structuralSignals": []
+    },
+    "verifiedWinningCombos": 0
+  },
+  "refinement": {
+    "status": "no-supported-improvement",
+    "stopReason": "no-supported-swaps-found",
+    "roundsAccepted": 0,
+    "totalSwaps": 0,
+    "candidatePackagesPerRound": 5,
+    "estimatedUpgradeSpendUsd": 0,
+    "swaps": [],
+    "rounds": [
+      {
+        "round": 1,
+        "accepted": false,
+        "acceptedSwaps": 0,
+        "candidatePackagesGenerated": 5,
+        "candidatePackagesEligible": 0,
+        "candidateAttemptSizes": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ],
+        "candidatePackagesGeneratedAcrossAttempts": 25,
+        "winningCandidate": null,
+        "estimatedSpendUsd": 0,
+        "improvementScore": 0,
+        "winRouteProtection": {
+          "status": "no-verified-route",
+          "protectedComboIds": [],
+          "protectedCardNames": [],
+          "source": "existing-v15-final-win-route-audit"
+        },
+        "themeAuditBefore": null,
+        "stopReason": "no-supported-swaps-found"
+      }
+    ],
+    "detailedRounds": [
+      {
+        "round": 1,
+        "accepted": false,
+        "attemptedSwaps": 5,
+        "acceptedSwaps": 0,
+        "candidatePackagesGenerated": 5,
+        "candidatePackagesEligible": 0,
+        "winningCandidate": null,
+        "estimatedSpendUsd": 0,
+        "improvementScore": 0,
+        "winRouteProtection": {
+          "status": "no-verified-route",
+          "protectedComboIds": [],
+          "protectedCardNames": [],
+          "source": "existing-v15-final-win-route-audit"
+        },
+        "themeAuditBefore": null,
+        "stopReason": "no-supported-swaps-found",
+        "swaps": [],
+        "candidateComparisons": [
+          {
+            "candidate": 1,
+            "eligible": false,
+            "reason": "no-supported-swaps-found",
+            "attemptedSwaps": 1,
+            "actualSwaps": 0,
+            "estimatedSpendUsd": 0,
+            "unknownPriceCount": 0,
+            "improvementScore": 0,
+            "significantRegression": false,
+            "zeroTargetProgressWhileFailedGatesRemain": true,
+            "targetGate": {
+              "applicable": true,
+              "score": 0,
+              "failedBefore": [
+                "verified-winning-combo"
+              ],
+              "failedAfter": [
+                "verified-winning-combo"
+              ],
+              "repairedGates": [],
+              "advancedFailedGates": [],
+              "regressedGates": [],
+              "ignoredUnverifiedGates": [
+                "competitive-combo-signal"
+              ]
+            },
+            "themeAudit": null,
+            "strategyPreservation": {
+              "status": "preserved",
+              "evidenceComplete": true,
+              "meaningfulLosses": [],
+              "strategyDeltas": [],
+              "swapImpacts": [],
+              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+            },
+            "planProvenance": {
+              "targetBracket": 5,
+              "winRouteVerificationStatus": "no-verified-route",
+              "winPackageDiscoveryAttempted": true,
+              "winPackageSourceStatus": "no-verified-win-package",
+              "winPackageOutcome": "completed-no-verified-package",
+              "selectedComboId": null,
+              "selectedBracketTag": null,
+              "missingSeedNames": [],
+              "atomicWinPackageInjected": false,
+              "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+              "candidateDiscovery": {
+                "mode": "exhaustive-bounded-printing-policy",
+                "exhaustiveWithinSafetyCeilings": true,
+                "eligiblePoolCards": 1176,
+                "roleSearchResultCap": null,
+                "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+              },
+              "authoritativeTargetGatePriorities": [],
+              "structuralDeficits": [
+                {
+                  "role": "tutor",
+                  "current": 9,
+                  "target": 10,
+                  "deficit": 1,
+                  "prioritySource": "aspirational-role-target",
+                  "targetGate": null
+                }
+              ],
+              "candidateGroups": []
+            },
+            "swaps": []
+          },
+          {
+            "candidate": 2,
+            "eligible": false,
+            "reason": "no-supported-swaps-found",
+            "attemptedSwaps": 1,
+            "actualSwaps": 0,
+            "estimatedSpendUsd": 0,
+            "unknownPriceCount": 0,
+            "improvementScore": 0,
+            "significantRegression": false,
+            "zeroTargetProgressWhileFailedGatesRemain": true,
+            "targetGate": {
+              "applicable": true,
+              "score": 0,
+              "failedBefore": [
+                "verified-winning-combo"
+              ],
+              "failedAfter": [
+                "verified-winning-combo"
+              ],
+              "repairedGates": [],
+              "advancedFailedGates": [],
+              "regressedGates": [],
+              "ignoredUnverifiedGates": [
+                "competitive-combo-signal"
+              ]
+            },
+            "themeAudit": null,
+            "strategyPreservation": {
+              "status": "preserved",
+              "evidenceComplete": true,
+              "meaningfulLosses": [],
+              "strategyDeltas": [],
+              "swapImpacts": [],
+              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+            },
+            "planProvenance": {
+              "targetBracket": 5,
+              "winRouteVerificationStatus": "no-verified-route",
+              "winPackageDiscoveryAttempted": true,
+              "winPackageSourceStatus": "no-verified-win-package",
+              "winPackageOutcome": "completed-no-verified-package",
+              "selectedComboId": null,
+              "selectedBracketTag": null,
+              "missingSeedNames": [],
+              "atomicWinPackageInjected": false,
+              "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+              "candidateDiscovery": {
+                "mode": "exhaustive-bounded-printing-policy",
+                "exhaustiveWithinSafetyCeilings": true,
+                "eligiblePoolCards": 1176,
+                "roleSearchResultCap": null,
+                "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+              },
+              "authoritativeTargetGatePriorities": [],
+              "structuralDeficits": [
+                {
+                  "role": "tutor",
+                  "current": 9,
+                  "target": 10,
+                  "deficit": 1,
+                  "prioritySource": "aspirational-role-target",
+                  "targetGate": null
+                }
+              ],
+              "candidateGroups": []
+            },
+            "swaps": []
+          },
+          {
+            "candidate": 3,
+            "eligible": false,
+            "reason": "no-supported-swaps-found",
+            "attemptedSwaps": 1,
+            "actualSwaps": 0,
+            "estimatedSpendUsd": 0,
+            "unknownPriceCount": 0,
+            "improvementScore": 0,
+            "significantRegression": false,
+            "zeroTargetProgressWhileFailedGatesRemain": true,
+            "targetGate": {
+              "applicable": true,
+              "score": 0,
+              "failedBefore": [
+                "verified-winning-combo"
+              ],
+              "failedAfter": [
+                "verified-winning-combo"
+              ],
+              "repairedGates": [],
+              "advancedFailedGates": [],
+              "regressedGates": [],
+              "ignoredUnverifiedGates": [
+                "competitive-combo-signal"
+              ]
+            },
+            "themeAudit": null,
+            "strategyPreservation": {
+              "status": "preserved",
+              "evidenceComplete": true,
+              "meaningfulLosses": [],
+              "strategyDeltas": [],
+              "swapImpacts": [],
+              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+            },
+            "planProvenance": {
+              "targetBracket": 5,
+              "winRouteVerificationStatus": "no-verified-route",
+              "winPackageDiscoveryAttempted": true,
+              "winPackageSourceStatus": "no-verified-win-package",
+              "winPackageOutcome": "completed-no-verified-package",
+              "selectedComboId": null,
+              "selectedBracketTag": null,
+              "missingSeedNames": [],
+              "atomicWinPackageInjected": false,
+              "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+              "candidateDiscovery": {
+                "mode": "exhaustive-bounded-printing-policy",
+                "exhaustiveWithinSafetyCeilings": true,
+                "eligiblePoolCards": 1176,
+                "roleSearchResultCap": null,
+                "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+              },
+              "authoritativeTargetGatePriorities": [],
+              "structuralDeficits": [
+                {
+                  "role": "tutor",
+                  "current": 9,
+                  "target": 10,
+                  "deficit": 1,
+                  "prioritySource": "aspirational-role-target",
+                  "targetGate": null
+                }
+              ],
+              "candidateGroups": []
+            },
+            "swaps": []
+          },
+          {
+            "candidate": 4,
+            "eligible": false,
+            "reason": "no-supported-swaps-found",
+            "attemptedSwaps": 1,
+            "actualSwaps": 0,
+            "estimatedSpendUsd": 0,
+            "unknownPriceCount": 0,
+            "improvementScore": 0,
+            "significantRegression": false,
+            "zeroTargetProgressWhileFailedGatesRemain": true,
+            "targetGate": {
+              "applicable": true,
+              "score": 0,
+              "failedBefore": [
+                "verified-winning-combo"
+              ],
+              "failedAfter": [
+                "verified-winning-combo"
+              ],
+              "repairedGates": [],
+              "advancedFailedGates": [],
+              "regressedGates": [],
+              "ignoredUnverifiedGates": [
+                "competitive-combo-signal"
+              ]
+            },
+            "themeAudit": null,
+            "strategyPreservation": {
+              "status": "preserved",
+              "evidenceComplete": true,
+              "meaningfulLosses": [],
+              "strategyDeltas": [],
+              "swapImpacts": [],
+              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+            },
+            "planProvenance": {
+              "targetBracket": 5,
+              "winRouteVerificationStatus": "no-verified-route",
+              "winPackageDiscoveryAttempted": true,
+              "winPackageSourceStatus": "no-verified-win-package",
+              "winPackageOutcome": "completed-no-verified-package",
+              "selectedComboId": null,
+              "selectedBracketTag": null,
+              "missingSeedNames": [],
+              "atomicWinPackageInjected": false,
+              "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+              "candidateDiscovery": {
+                "mode": "exhaustive-bounded-printing-policy",
+                "exhaustiveWithinSafetyCeilings": true,
+                "eligiblePoolCards": 1176,
+                "roleSearchResultCap": null,
+                "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+              },
+              "authoritativeTargetGatePriorities": [],
+              "structuralDeficits": [
+                {
+                  "role": "tutor",
+                  "current": 9,
+                  "target": 10,
+                  "deficit": 1,
+                  "prioritySource": "aspirational-role-target",
+                  "targetGate": null
+                }
+              ],
+              "candidateGroups": []
+            },
+            "swaps": []
+          },
+          {
+            "candidate": 5,
+            "eligible": false,
+            "reason": "no-supported-swaps-found",
+            "attemptedSwaps": 1,
+            "actualSwaps": 0,
+            "estimatedSpendUsd": 0,
+            "unknownPriceCount": 0,
+            "improvementScore": 0,
+            "significantRegression": false,
+            "zeroTargetProgressWhileFailedGatesRemain": true,
+            "targetGate": {
+              "applicable": true,
+              "score": 0,
+              "failedBefore": [
+                "verified-winning-combo"
+              ],
+              "failedAfter": [
+                "verified-winning-combo"
+              ],
+              "repairedGates": [],
+              "advancedFailedGates": [],
+              "regressedGates": [],
+              "ignoredUnverifiedGates": [
+                "competitive-combo-signal"
+              ]
+            },
+            "themeAudit": null,
+            "strategyPreservation": {
+              "status": "preserved",
+              "evidenceComplete": true,
+              "meaningfulLosses": [],
+              "strategyDeltas": [],
+              "swapImpacts": [],
+              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+            },
+            "planProvenance": {
+              "targetBracket": 5,
+              "winRouteVerificationStatus": "no-verified-route",
+              "winPackageDiscoveryAttempted": true,
+              "winPackageSourceStatus": "no-verified-win-package",
+              "winPackageOutcome": "completed-no-verified-package",
+              "selectedComboId": null,
+              "selectedBracketTag": null,
+              "missingSeedNames": [],
+              "atomicWinPackageInjected": false,
+              "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+              "candidateDiscovery": {
+                "mode": "exhaustive-bounded-printing-policy",
+                "exhaustiveWithinSafetyCeilings": true,
+                "eligiblePoolCards": 1176,
+                "roleSearchResultCap": null,
+                "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+              },
+              "authoritativeTargetGatePriorities": [],
+              "structuralDeficits": [
+                {
+                  "role": "tutor",
+                  "current": 9,
+                  "target": 10,
+                  "deficit": 1,
+                  "prioritySource": "aspirational-role-target",
+                  "targetGate": null
+                }
+              ],
+              "candidateGroups": []
+            },
+            "swaps": []
+          }
+        ],
+        "candidateAttempts": [
+          {
+            "attemptSize": 5,
+            "candidatePackagesGenerated": 5,
+            "candidatePackagesEligible": 0,
+            "winningCandidate": null,
+            "reasonCounts": {
+              "no-supported-swaps-found": 5
+            },
+            "candidateComparisons": [
+              {
+                "candidate": 1,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 5,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 2,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 5,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 3,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 5,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 4,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 5,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 5,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 5,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              }
+            ]
+          },
+          {
+            "attemptSize": 4,
+            "candidatePackagesGenerated": 5,
+            "candidatePackagesEligible": 0,
+            "winningCandidate": null,
+            "reasonCounts": {
+              "no-supported-swaps-found": 5
+            },
+            "candidateComparisons": [
+              {
+                "candidate": 1,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 4,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 2,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 4,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 3,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 4,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 4,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 4,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 5,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 4,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              }
+            ]
+          },
+          {
+            "attemptSize": 3,
+            "candidatePackagesGenerated": 5,
+            "candidatePackagesEligible": 0,
+            "winningCandidate": null,
+            "reasonCounts": {
+              "no-supported-swaps-found": 5
+            },
+            "candidateComparisons": [
+              {
+                "candidate": 1,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 3,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 2,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 3,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 3,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 3,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 4,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 3,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 5,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 3,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              }
+            ]
+          },
+          {
+            "attemptSize": 2,
+            "candidatePackagesGenerated": 5,
+            "candidatePackagesEligible": 0,
+            "winningCandidate": null,
+            "reasonCounts": {
+              "no-supported-swaps-found": 5
+            },
+            "candidateComparisons": [
+              {
+                "candidate": 1,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 2,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 2,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 2,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 3,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 2,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 4,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 2,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 5,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 2,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              }
+            ]
+          },
+          {
+            "attemptSize": 1,
+            "candidatePackagesGenerated": 5,
+            "candidatePackagesEligible": 0,
+            "winningCandidate": null,
+            "reasonCounts": {
+              "no-supported-swaps-found": 5
+            },
+            "candidateComparisons": [
+              {
+                "candidate": 1,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 1,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 2,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 1,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 3,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 1,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 4,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 1,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              },
+              {
+                "candidate": 5,
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
+                "attemptedSwaps": 1,
+                "actualSwaps": 0,
+                "estimatedSpendUsd": 0,
+                "unknownPriceCount": 0,
+                "improvementScore": 0,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "tutor",
+                      "current": 9,
+                      "target": 10,
+                      "deficit": 1,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": []
+                },
+                "swaps": []
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "constraints": {
+      "targetBracket": 5,
+      "maxUsdPerCard": null,
+      "maxTotalUsd": null,
+      "maxTotalSwaps": 20,
+      "swapsPerRound": 5,
+      "maxRounds": 5,
+      "candidatePackagesPerRound": 5,
+      "minimumImprovementScore": 0.1,
+      "printingFamily": "Marvel",
+      "allowedSets": [],
+      "requestedTheme": null,
+      "resolvedTheme": null,
+      "protectedCards": [],
+      "excludedCards": []
+    },
+    "winRouteProtection": {
+      "evaluatedEachRound": true,
+      "source": "existing-v15-final-win-route-audit",
+      "protectedCardNamesObservedAcrossRounds": [],
+      "verificationUnavailableRounds": []
+    },
+    "themeConstraint": {
+      "requested": null,
+      "intent": null,
+      "audit": null,
+      "satisfied": true,
+      "explanation": "No explicit theme constraint was requested."
+    }
+  },
+  "finalDeck": {
+    "hardGatesPassed": true,
+    "commanderLegal": true,
+    "assessedBracket": 4,
+    "assessedBand": "bracket-4-optimized-range",
+    "bracket5ConstructionCandidate": false,
+    "bracket5Certified": false,
+    "failedBracket5Checks": [
+      "verified-winning-combo",
+      "competitive-metagame-evidence"
+    ],
+    "bracket5ThresholdChecks": [
+      {
+        "key": "average-nonland-mv",
+        "category": "construction",
+        "observed": 2.59,
+        "required": "at most 2.6",
+        "passed": true,
+        "pressurePoint": "speed/curve"
+      },
+      {
+        "key": "early-plays",
+        "category": "construction",
+        "observed": 42,
+        "required": "at least 35",
+        "passed": true,
+        "pressurePoint": "speed/curve"
+      },
+      {
+        "key": "fast-mana",
+        "category": "construction",
+        "observed": 5,
+        "required": "at least 3",
+        "passed": true,
+        "pressurePoint": "fast-mana density"
+      },
+      {
+        "key": "free-interaction",
+        "category": "construction",
+        "observed": 1,
+        "required": "at least 1",
+        "passed": true,
+        "pressurePoint": "free/cheap interaction"
+      },
+      {
+        "key": "cheap-interaction",
+        "category": "construction",
+        "observed": 13,
+        "required": "at least 8",
+        "passed": true,
+        "pressurePoint": "free/cheap interaction"
+      },
+      {
+        "key": "tutors",
+        "category": "construction",
+        "observed": 9,
+        "required": "at least 4",
+        "passed": true,
+        "pressurePoint": "tutor consistency"
+      },
+      {
+        "key": "verified-winning-combo",
+        "category": "construction",
+        "observed": 0,
+        "required": "at least 1",
+        "passed": false,
+        "pressurePoint": "win-package quality/redundancy"
+      },
+      {
+        "key": "competitive-combo-signal",
+        "category": "construction",
+        "observed": "Ruthless=0, strategic=1, Spellbook=S",
+        "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+        "passed": true,
+        "pressurePoint": "win-package quality/redundancy"
+      },
+      {
+        "key": "cedh-intent",
+        "category": "evidence",
+        "observed": true,
+        "required": "true",
+        "passed": true,
+        "pressurePoint": "competitive intent"
+      },
+      {
+        "key": "competitive-metagame-evidence",
+        "category": "evidence",
+        "observed": false,
+        "required": "true",
+        "passed": false,
+        "pressurePoint": "metagame evidence"
+      }
+    ],
+    "metrics": {
+      "landCount": 31,
+      "nonlandCount": 69,
+      "landRatio": 0.31,
+      "averageNonlandManaValue": 2.59,
+      "manaCurve": {
+        "0": 0,
+        "1": 13,
+        "2": 29,
+        "3": 9,
+        "4": 11,
+        "5": 5,
+        "6": 2,
+        "7+": 0
+      },
+      "coloredPips": {
+        "W": 16,
+        "U": 15,
+        "B": 10,
+        "R": 22,
+        "G": 9
+      },
+      "roleCounts": {
+        "token production": 18,
+        "haste": 7,
+        "extra combat": 5,
+        "untap engine": 5,
+        "creature": 19,
+        "cost reduction": 4,
+        "card draw": 21,
+        "graveyard recursion": 4,
+        "+1/+1 counters": 3,
+        "mana acceleration": 25,
+        "treasure": 7,
+        "sacrifice synergy": 12,
+        "fast mana": 5,
+        "persistent colored mana source": 14,
+        "spot interaction": 15,
+        "board wipe": 2,
+        "mana dork": 2,
+        "protection": 9,
+        "board protection": 2,
+        "countermagic": 3,
+        "mana rock": 13,
+        "repeatable draw": 2,
+        "equipment": 8,
+        "tutor": 9,
+        "free interaction": 1,
+        "creature tutor": 1,
+        "go-wide payoff": 3,
+        "land ramp": 1,
+        "land tutor": 1,
+        "card selection": 4,
+        "land": 31
+      },
+      "earlyPlayCount": 42,
+      "fastManaCount": 5,
+      "rampCount": 30,
+      "drawCount": 25,
+      "tutorCount": 9,
+      "interactionCount": 19,
+      "cheapInteractionCount": 13,
+      "protectionCount": 9,
+      "recursionCount": 4,
+      "boardWipeCount": 2,
+      "persistentColoredManaSourceCount": 14,
+      "structuralSignals": []
+    },
+    "verifiedWinningCombos": 0,
+    "printingPolicySatisfied": true,
+    "cardCount": 100
+  },
+  "delta": {
+    "bracket": 0,
+    "failedBracket5ChecksRemoved": [],
+    "failedBracket5ChecksAdded": [],
+    "deckChanged": false
+  }
+}
