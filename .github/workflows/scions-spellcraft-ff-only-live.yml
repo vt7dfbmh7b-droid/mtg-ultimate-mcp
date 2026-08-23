@@ -63,6 +63,8 @@ jobs:
           name: scions-spellcraft-ff-only-${{ github.sha }}
           path: |
             scions-spellcraft-ff-only-result.json
+            scions-spellcraft-candidate-audit.json
+            scions-spellcraft-ff-only-raw-result.json
             scions-spellcraft-stock-deck.txt
             scions-spellcraft-refined-deck.txt
             scions-spellcraft-ff-only-failure.txt
@@ -83,10 +85,14 @@ jobs:
           git reset --hard "origin/${GITHUB_REF_NAME}"
           mkdir -p test-results/scions-spellcraft-ff-only
           rm -f test-results/scions-spellcraft-ff-only/result.json \
+                test-results/scions-spellcraft-ff-only/candidate-audit.json \
+                test-results/scions-spellcraft-ff-only/raw-result.json \
                 test-results/scions-spellcraft-ff-only/stock-deck.txt \
                 test-results/scions-spellcraft-ff-only/refined-deck.txt \
                 test-results/scions-spellcraft-ff-only/failure.txt
           [ ! -f scions-spellcraft-ff-only-result.json ] || cp scions-spellcraft-ff-only-result.json test-results/scions-spellcraft-ff-only/result.json
+          [ ! -f scions-spellcraft-candidate-audit.json ] || cp scions-spellcraft-candidate-audit.json test-results/scions-spellcraft-ff-only/candidate-audit.json
+          [ ! -f scions-spellcraft-ff-only-raw-result.json ] || cp scions-spellcraft-ff-only-raw-result.json test-results/scions-spellcraft-ff-only/raw-result.json
           [ ! -f scions-spellcraft-stock-deck.txt ] || cp scions-spellcraft-stock-deck.txt test-results/scions-spellcraft-ff-only/stock-deck.txt
           [ ! -f scions-spellcraft-refined-deck.txt ] || cp scions-spellcraft-refined-deck.txt test-results/scions-spellcraft-ff-only/refined-deck.txt
           [ ! -f scions-spellcraft-ff-only-failure.txt ] || cp scions-spellcraft-ff-only-failure.txt test-results/scions-spellcraft-ff-only/failure.txt
