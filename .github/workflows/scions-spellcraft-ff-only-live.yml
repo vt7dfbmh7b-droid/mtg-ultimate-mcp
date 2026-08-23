@@ -6,11 +6,15 @@ on:
     branches: ["agent/scions-spellcraft-ff-only-validation"]
     paths:
       - "scripts/e2e-scions-spellcraft-ff-only-v15.ts"
+      - "src/services/commander-strategy-affinity-v15.ts"
+      - "src/services/commander-direct-support-v15.test.ts"
       - ".github/workflows/scions-spellcraft-ff-only-live.yml"
   pull_request:
     branches: ["agent/v15-native-deck-intelligence"]
     paths:
       - "scripts/e2e-scions-spellcraft-ff-only-v15.ts"
+      - "src/services/commander-strategy-affinity-v15.ts"
+      - "src/services/commander-direct-support-v15.test.ts"
       - ".github/workflows/scions-spellcraft-ff-only-live.yml"
   workflow_dispatch:
 
@@ -50,9 +54,15 @@ jobs:
         continue-on-error: true
         run: npm run build
 
+      - name: Run direct commander-mechanic regression tests
+        id: mechanic_tests
+        if: steps.source_build.outcome == 'success'
+        continue-on-error: true
+        run: npx tsx --test src/services/commander-direct-support-v15.test.ts src/services/commander-strategy-affinity-v15.test.ts
+
       - name: "Run Scions & Spellcraft restricted precon refinement"
         id: scions_control
-        if: steps.source_build.outcome == 'success'
+        if: steps.source_build.outcome == 'success' && steps.mechanic_tests.outcome == 'success'
         continue-on-error: true
         run: npx tsx scripts/e2e-scions-spellcraft-ff-only-v15.ts
 
@@ -75,6 +85,7 @@ jobs:
         if: always() && github.event_name == 'push'
         env:
           BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          MECHANIC_TEST_OUTCOME: ${{ steps.mechanic_tests.outcome }}
           CONTROL_OUTCOME: ${{ steps.scions_control.outcome }}
         shell: bash
         run: |
@@ -96,8 +107,8 @@ jobs:
           [ ! -f scions-spellcraft-stock-deck.txt ] || cp scions-spellcraft-stock-deck.txt test-results/scions-spellcraft-ff-only/stock-deck.txt
           [ ! -f scions-spellcraft-refined-deck.txt ] || cp scions-spellcraft-refined-deck.txt test-results/scions-spellcraft-ff-only/refined-deck.txt
           [ ! -f scions-spellcraft-ff-only-failure.txt ] || cp scions-spellcraft-ff-only-failure.txt test-results/scions-spellcraft-ff-only/failure.txt
-          printf 'source_sha=%s\nbuild_outcome=%s\ncontrol_outcome=%s\npolicy=scions-spellcraft-final-fantasy-no-new-infinite\ntarget_bracket=4\nstrategy=ysh-tola-spells-control-drain\n' \
-            "$GITHUB_SHA" "$BUILD_OUTCOME" "$CONTROL_OUTCOME" \
+          printf 'source_sha=%s\nbuild_outcome=%s\nmechanic_test_outcome=%s\ncontrol_outcome=%s\npolicy=scions-spellcraft-final-fantasy-no-new-infinite\ntarget_bracket=4\nstrategy=ysh-tola-spells-control-drain\n' \
+            "$GITHUB_SHA" "$BUILD_OUTCOME" "$MECHANIC_TEST_OUTCOME" "$CONTROL_OUTCOME" \
             > test-results/scions-spellcraft-ff-only/run-metadata.txt
           git add -- test-results/scions-spellcraft-ff-only
           if git diff --cached --quiet; then exit 0; fi
@@ -108,7 +119,9 @@ jobs:
         if: always()
         env:
           BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          MECHANIC_TEST_OUTCOME: ${{ steps.mechanic_tests.outcome }}
           CONTROL_OUTCOME: ${{ steps.scions_control.outcome }}
         run: |
           test "$BUILD_OUTCOME" = success
+          test "$MECHANIC_TEST_OUTCOME" = success
           test "$CONTROL_OUTCOME" = success
