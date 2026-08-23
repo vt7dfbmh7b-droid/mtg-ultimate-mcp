@@ -8,6 +8,8 @@ on:
       - "scripts/e2e-scions-spellcraft-ff-only-v15.ts"
       - "src/services/commander-strategy-affinity-v15.ts"
       - "src/services/commander-direct-support-v15.test.ts"
+      - "src/services/upgrade.ts"
+      - "src/services/upgrade-cut-pressure-v15.test.ts"
       - ".github/workflows/scions-spellcraft-ff-only-live.yml"
   pull_request:
     branches: ["agent/v15-native-deck-intelligence"]
@@ -15,6 +17,8 @@ on:
       - "scripts/e2e-scions-spellcraft-ff-only-v15.ts"
       - "src/services/commander-strategy-affinity-v15.ts"
       - "src/services/commander-direct-support-v15.test.ts"
+      - "src/services/upgrade.ts"
+      - "src/services/upgrade-cut-pressure-v15.test.ts"
       - ".github/workflows/scions-spellcraft-ff-only-live.yml"
   workflow_dispatch:
 
@@ -58,7 +62,7 @@ jobs:
         id: mechanic_tests
         if: steps.source_build.outcome == 'success'
         continue-on-error: true
-        run: npx tsx --test src/services/commander-direct-support-v15.test.ts src/services/commander-strategy-affinity-v15.test.ts
+        run: npx tsx --test src/services/commander-direct-support-v15.test.ts src/services/commander-strategy-affinity-v15.test.ts src/services/upgrade-cut-pressure-v15.test.ts
 
       - name: "Run Scions & Spellcraft restricted precon refinement"
         id: scions_control
@@ -107,7 +111,7 @@ jobs:
           [ ! -f scions-spellcraft-stock-deck.txt ] || cp scions-spellcraft-stock-deck.txt test-results/scions-spellcraft-ff-only/stock-deck.txt
           [ ! -f scions-spellcraft-refined-deck.txt ] || cp scions-spellcraft-refined-deck.txt test-results/scions-spellcraft-ff-only/refined-deck.txt
           [ ! -f scions-spellcraft-ff-only-failure.txt ] || cp scions-spellcraft-ff-only-failure.txt test-results/scions-spellcraft-ff-only/failure.txt
-          printf 'source_sha=%s\nbuild_outcome=%s\nmechanic_test_outcome=%s\ncontrol_outcome=%s\npolicy=scions-spellcraft-final-fantasy-no-new-infinite\ntarget_bracket=4\nstrategy=ysh-tola-spells-control-drain\n' \
+          printf 'source_sha=%s\nbuild_outcome=%s\nmechanic_test_outcome=%s\ncontrol_outcome=%s\npolicy=scions-spellcraft-final-fantasy-no-new-infinite\ntarget_bracket=3\nstrategy=ysh-tola-spells-control-drain\n' \
             "$GITHUB_SHA" "$BUILD_OUTCOME" "$MECHANIC_TEST_OUTCOME" "$CONTROL_OUTCOME" \
             > test-results/scions-spellcraft-ff-only/run-metadata.txt
           git add -- test-results/scions-spellcraft-ff-only
