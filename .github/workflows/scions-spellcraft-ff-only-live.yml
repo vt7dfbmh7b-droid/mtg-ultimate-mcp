@@ -1,4 +1,4 @@
-name: Scions & Spellcraft FF-Only Precon Validation
+name: "Scions & Spellcraft FF-Only Precon Validation"
 
 # Temporary validation-only workflow. Do not merge or promote from this branch.
 on:
@@ -48,7 +48,7 @@ jobs:
       - name: Build checked-in source
         run: npm run build
 
-      - name: Run Scions & Spellcraft restricted precon refinement
+      - name: "Run Scions & Spellcraft restricted precon refinement"
         run: npx tsx scripts/e2e-scions-spellcraft-ff-only-v15.ts
 
       - name: Upload Scions validation evidence
