@@ -14,7 +14,6 @@
 1 Hermes, Overseer of Elpis (FIC) 36 *N*
 1 Hraesvelgr of the First Brood (FIC) 37 *N*
 1 Observed Stasis (FIC) 40 *N*
-1 Eye of Nidhogg (FIC) 44 *N*
 1 Fandaniel, Telophoroi Ascian (FIC) 46 *N*
 1 Astrologian's Planisphere (FIN) 46 *N*
 1 Reaper's Scythe (FIC) 48 *N*
@@ -74,10 +73,9 @@
 1 Syphon Mind (FIC) 288 *N*
 1 Arcane Signet (FIC) 335 *N*
 1 Relic of Legends (FIC) 354 *N*
-1 Talisman of Dominance (FIC) 364 *N*
+1 Sol Ring (FIC) 359 *N*
 1 Talisman of Hierarchy (FIC) 365 *N*
 1 Talisman of Progress (FIC) 367 *N*
-1 Thought Vessel (FIC) 368 *N*
 1 Arcane Sanctum (FIC) 373 *N*
 1 Ash Barrens (FIC) 374 *N*
 1 Command Tower (FIC) 382 *N*
@@ -98,4 +96,6 @@
 1 Plains (FIN) 295 *N*
 1 Plains (FIN) 296 *N*
 1 Restoration Magic (FIN) 30 *N*
-1 Magitek Infantry (FIN) 25 *N*
+1 Cloud, Midgar Mercenary (FIN) 10 *N*
+1 Swiftfoot Boots (FIC) 361 *N*
+1 Champion's Helm (FIC) 337 *N*
