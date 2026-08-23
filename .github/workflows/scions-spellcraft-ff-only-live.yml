@@ -19,7 +19,7 @@ permissions:
 
 concurrency:
   group: scions-spellcraft-ff-only-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 env:
   HTTP_RETRY_BASE_MS: 5000
