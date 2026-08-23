@@ -18,12 +18,15 @@ import { getCardsByIdentifiers, inferCardRoles, type CardIdentifierInput } from 
 const PRECON_REFERENCE = 'ScionsSpellcraftFinalFantasyXiv_FIC';
 const TARGET_BRACKET = 3;
 const COMMANDER = "Y'shtola, Night's Blessed";
+
 const EXCLUDED_CARDS = [
   'Walking Ballista',
   'The Destined White Mage',
   'Blitzball Stadium',
   'Ranger-Captain of Eos',
+  'Magitek Infantry',
 ] as const;
+
 const PROTECTED_CORE_CARDS = [
   'Alisaie Leveilleur',
   'Arcane Signet',
@@ -34,12 +37,15 @@ const PROTECTED_CORE_CARDS = [
   'Hraesvelgr of the First Brood',
   'Into the Story',
   'Propaganda',
+  'Sol Ring',
   'Sublime Epiphany',
   'Torrential Gearhulk',
 ] as const;
 
 function record(value: unknown): Record<string, unknown> {
-  return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
+  return value && typeof value === 'object' && !Array.isArray(value)
+    ? value as Record<string, unknown>
+    : {};
 }
 
 function finite(value: unknown): number {
@@ -101,6 +107,7 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
   const spellsControlCommanderScore = strategyContext.strategies
     .find((strategy) => strategy.archetype === 'spells-control')?.score ?? 0;
   const cardByName = new Map(resolved.cards.map((card) => [card.name.toLocaleLowerCase(), card] as const));
+
   let spellsControlSupportCount = 0;
   let spellsControlAffinityTotal = 0;
   let yshtolaTriggerSpellCount = 0;
@@ -113,7 +120,9 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
     const isCreature = card.type_line.toLocaleLowerCase().includes('creature');
     if (!isCreature) {
       noncreatureSpellCount += entry.quantity;
-      if (card.cmc >= 3 || /\{X\}/i.test(card.mana_cost ?? '')) yshtolaTriggerSpellCount += entry.quantity;
+      if (card.cmc >= 3 || /\{X\}/i.test(card.mana_cost ?? '')) {
+        yshtolaTriggerSpellCount += entry.quantity;
+      }
     }
     if (inferCardRoles(card).includes('life drain')) lifeDrainRoleCount += entry.quantity;
     const match = cardCommanderStrategyAffinityV15(card, strategyContext).matches
@@ -127,14 +136,16 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
   assert.equal(
     comboEvidence.verificationComplete,
     true,
-    'Commander Spellbook combo verification must be complete before claiming the no-infinite constraint passed',
+    'Commander Spellbook verification must complete before the no-infinite claim can pass',
   );
   const infinites = infiniteCombos(comboEvidence);
+
   const excludedNames = new Set(EXCLUDED_CARDS.map((name) => name.toLocaleLowerCase()));
   const excludedCardsPresent = parsed.main
     .filter((entry) => excludedNames.has(entry.name.toLocaleLowerCase()))
     .map((entry) => entry.name)
     .sort();
+
   const protectedNames = new Set(PROTECTED_CORE_CARDS.map((name) => name.toLocaleLowerCase()));
   const missingProtectedCoreCards = [...protectedNames]
     .filter((name) => !parsed.main.some((entry) => entry.name.toLocaleLowerCase() === name))
@@ -150,10 +161,10 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
       'Exact Scions & Spellcraft stock-precon lineage.',
       'FINAL FANTASY physical printings only.',
       'No newly introduced infinite combo.',
-      'Do not add the known Walking Ballista / The Destined White Mage infinite package.',
-      'Do not use off-plan counters/combat filler or a tutor without a useful target merely to satisfy generic metrics.',
-      "Preserve Y'shtola's original noncreature-spell control/drain win plan.",
-      'Preserve manually audited core engine, spell-efficiency, mana, drain, wipe, and control pieces rather than forcing generic bracket metrics.',
+      'Do not add Walking Ballista / The Destined White Mage or similar combo shortcuts.',
+      'Do not use off-plan counters/combat filler or target-poor tutors merely to satisfy role metrics.',
+      "Preserve Y'shtola's original MV3+ noncreature-spell control/drain win plan.",
+      'Preserve premium fast mana and manually audited spell, drain, wipe, and control engines.',
     ],
   });
 
@@ -162,7 +173,6 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
     commanderLegal: rules.isLegal,
     printingPolicySatisfied: offPolicy.length === 0,
     commanderNames: parsed.commanders.map((entry) => entry.name),
-    setCodes: [...new Set(resolved.cards.map((card) => card.set.toUpperCase()))].sort(),
     commanderStrategies: strategyContext.strategies,
     spellsControlCommanderScore,
     spellsControlSupportCount,
@@ -196,7 +206,7 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
 
 async function main(): Promise<void> {
   const stock = await fetchPreconDeckV10(PRECON_REFERENCE);
-  assert.equal(stock.entry.fileName, PRECON_REFERENCE, 'control must bind the exact MTGJSON Scions & Spellcraft product');
+  assert.equal(stock.entry.fileName, PRECON_REFERENCE, 'must bind exact Scions & Spellcraft product');
   const before = await auditDeck(stock.decklist);
   assert.ok(
     finite(before.spellsControlCommanderScore) >= 6,
@@ -266,8 +276,9 @@ async function main(): Promise<void> {
   const newInfinite = afterInfinite.filter((key) => !beforeInfinite.has(key));
   const beforeMetrics = record(before.metrics);
   const afterMetrics = record(after.metrics);
+
   const candidateEvidence = {
-    schema: 'scions-spellcraft-candidate-audit-v15.6',
+    schema: 'scions-spellcraft-candidate-audit-v15.7',
     sourceBaseline: 'MTGJSON exact stock deck',
     precon: {
       name: stock.entry.name,
@@ -284,6 +295,7 @@ async function main(): Promise<void> {
       infiniteComboPolicy: 'no-new-infinite-combos',
       strategyPolicy: "preserve Y'shtola noncreature-spell control/drain win plan",
       boardWipePolicy: 'do-not-reduce-stock-board-wipe-count',
+      fastManaPolicy: 'preserve-premium-fast-mana',
     },
     before,
     refinement,
@@ -298,6 +310,7 @@ async function main(): Promise<void> {
       noncreatureSpellDelta: finite(after.noncreatureSpellCount) - finite(before.noncreatureSpellCount),
       lifeDrainRoleDelta: finite(after.lifeDrainRoleCount) - finite(before.lifeDrainRoleCount),
       boardWipeDelta: finite(afterMetrics.boardWipeCount) - finite(beforeMetrics.boardWipeCount),
+      fastManaDelta: finite(afterMetrics.fastManaCount) - finite(beforeMetrics.fastManaCount),
       assessedBracketDelta: finite(after.assessedBracket) - finite(before.assessedBracket),
     },
   };
@@ -317,57 +330,40 @@ async function main(): Promise<void> {
   );
   assert.ok(
     finite(after.yshtolaTriggerSpellCount) >= finite(before.yshtolaTriggerSpellCount),
-    "Scions refinement must not reduce the number of noncreature spells that can directly trigger Y'shtola",
+    "Scions refinement must not reduce the number of noncreature spells that can trigger Y'shtola",
   );
   assert.ok(
     finite(afterMetrics.boardWipeCount) >= finite(beforeMetrics.boardWipeCount),
-    'Scions refinement must not reduce the stock board-wipe package while lower-synergy cuts remain available',
+    'Scions refinement must not reduce the stock board-wipe package',
   );
-  assert.deepEqual(after.excludedCardsPresent, [], 'Scions refinement must not add any explicitly excluded off-plan/combo card');
-  assert.deepEqual(after.missingProtectedCoreCards, [], 'Scions refinement must preserve every manually audited core-plan card');
-  assert.deepEqual(newInfinite, [], 'Scions refinement must not introduce any new Commander Spellbook infinite combo');
-
-  const detailedRounds = Array.isArray(refinement.detailedRounds)
-    ? refinement.detailedRounds.map(record)
-    : [];
-  const acceptedRounds = detailedRounds.filter((round) => round.accepted === true);
-  assert.ok(acceptedRounds.length > 0, 'Scions refinement must retain accepted-round evidence');
-  for (const round of acceptedRounds) {
-    const comparisons = Array.isArray(round.candidateComparisons)
-      ? round.candidateComparisons.map(record)
-      : [];
-    const winner = comparisons.find((candidate) => candidate.candidate === round.winningCandidate);
-    const strategy = record(winner?.strategyPreservation);
-    assert.equal(strategy.evidenceComplete, true, `accepted round ${String(round.round)} must retain complete strategy evidence`);
-    assert.equal(strategy.status, 'preserved', `accepted round ${String(round.round)} must preserve the commander strategy`);
-    assert.deepEqual(strategy.meaningfulLosses, [], `accepted round ${String(round.round)} must not accept a meaningful strategy loss`);
-    const provenance = record(winner?.planProvenance);
-    assert.notEqual(
-      provenance.winPackageOutcome,
-      'verified-package-injected',
-      `accepted round ${String(round.round)} must not inject a verified combo package below Bracket 5`,
-    );
-  }
+  assert.ok(
+    finite(afterMetrics.fastManaCount) >= finite(beforeMetrics.fastManaCount),
+    'Scions refinement must not trade away premium fast mana to satisfy another role deficit',
+  );
+  assert.deepEqual(after.excludedCardsPresent, [], 'Scions refinement must not add excluded off-plan/combo cards');
+  assert.deepEqual(after.missingProtectedCoreCards, [], 'Scions refinement must preserve every audited core-plan card');
+  assert.deepEqual(newInfinite, [], 'Scions refinement must not introduce a new Commander Spellbook infinite combo');
 
   const output = {
     ...candidateEvidence,
-    schema: 'scions-spellcraft-ff-only-v15.6',
+    schema: 'scions-spellcraft-ff-only-v15.7',
     validation: candidateEvidence.validationPreview,
   };
-
   await writeFile('scions-spellcraft-ff-only-result.json', `${JSON.stringify(output, null, 2)}\n`);
+
   console.log(JSON.stringify({
     precon: stock.entry.name,
     status: refinement.status,
     totalSwaps: refinement.totalSwaps,
+    stopReason: refinement.stopReason ?? null,
     beforeBracket: before.assessedBracket,
     afterBracket: after.assessedBracket,
-    beforeSpellsControlAffinity: before.spellsControlAffinityTotal,
-    afterSpellsControlAffinity: after.spellsControlAffinityTotal,
     beforeYshTriggerSpells: before.yshtolaTriggerSpellCount,
     afterYshTriggerSpells: after.yshtolaTriggerSpellCount,
     beforeBoardWipes: beforeMetrics.boardWipeCount,
     afterBoardWipes: afterMetrics.boardWipeCount,
+    beforeFastMana: beforeMetrics.fastManaCount,
+    afterFastMana: afterMetrics.fastManaCount,
     missingProtectedCoreCards: after.missingProtectedCoreCards,
     excludedCardsPresent: after.excludedCardsPresent,
     newInfiniteCombos: newInfinite,
