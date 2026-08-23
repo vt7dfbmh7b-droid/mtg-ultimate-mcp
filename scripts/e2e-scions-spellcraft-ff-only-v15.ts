@@ -16,15 +16,24 @@ import { findDeckCombosEvidence } from '../src/services/spellbook.js';
 import { getCardsByIdentifiers, inferCardRoles, type CardIdentifierInput } from '../src/services/scryfall.js';
 
 const PRECON_REFERENCE = 'ScionsSpellcraftFinalFantasyXiv_FIC';
-const TARGET_BRACKET = 4;
+const TARGET_BRACKET = 3;
 const COMMANDER = "Y'shtola, Night's Blessed";
+const EXCLUDED_CARDS = [
+  'Walking Ballista',
+  'The Destined White Mage',
+  'Blitzball Stadium',
+  'Ranger-Captain of Eos',
+] as const;
 const EXCLUDED_COMBO_CARDS = ['Walking Ballista', 'The Destined White Mage'] as const;
 const PROTECTED_CORE_CARDS = [
   'Alisaie Leveilleur',
   'Arcane Signet',
+  'Archmage Emeritus',
   'Dig Through Time',
   'Exsanguinate',
   'Hraesvelgr of the First Brood',
+  'Into the Story',
+  'Sublime Epiphany',
   'Torrential Gearhulk',
 ] as const;
 
@@ -120,8 +129,8 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
     'Commander Spellbook combo verification must be complete before claiming the no-infinite constraint passed',
   );
   const infinites = infiniteCombos(comboEvidence);
-  const excludedNames = new Set(EXCLUDED_COMBO_CARDS.map((name) => name.toLocaleLowerCase()));
-  const excludedComboCardsPresent = parsed.main
+  const excludedNames = new Set(EXCLUDED_CARDS.map((name) => name.toLocaleLowerCase()));
+  const excludedCardsPresent = parsed.main
     .filter((entry) => excludedNames.has(entry.name.toLocaleLowerCase()))
     .map((entry) => entry.name)
     .sort();
@@ -141,6 +150,7 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
       'FINAL FANTASY physical printings only.',
       'No newly introduced infinite combo.',
       'Do not add the known Walking Ballista / The Destined White Mage infinite package.',
+      'Do not use off-plan counters/combat filler or a tutor without a useful target merely to satisfy generic metrics.',
       "Preserve Y'shtola's original noncreature-spell control/drain win plan.",
       'Preserve manually audited core engine, spell-efficiency, mana, and drain pieces rather than forcing generic bracket metrics.',
     ],
@@ -159,7 +169,7 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
     yshtolaTriggerSpellCount,
     noncreatureSpellCount,
     lifeDrainRoleCount,
-    excludedComboCardsPresent,
+    excludedCardsPresent,
     missingProtectedCoreCards,
     infiniteCombos: infinites,
     infiniteComboKeys: infinites.map(infiniteComboKey).sort(),
@@ -210,7 +220,7 @@ async function main(): Promise<void> {
         reference: PRECON_REFERENCE,
         profile: 'custom',
         targetBracket: TARGET_BRACKET,
-        maxSwaps: 12,
+        maxSwaps: 10,
         maxRounds: 4,
         swapsPerRound: 4,
         candidatePackagesPerRound: 5,
@@ -218,7 +228,7 @@ async function main(): Promise<void> {
         printingFamily: 'Final Fantasy',
         includePromos: true,
         includeSpecialReleases: true,
-        excludedCards: [...EXCLUDED_COMBO_CARDS],
+        excludedCards: [...EXCLUDED_CARDS],
         protectedCards: [...PROTECTED_CORE_CARDS],
         simulationIterations: 750,
         simulationTurns: 7,
@@ -254,7 +264,7 @@ async function main(): Promise<void> {
   const afterInfinite = Array.isArray(after.infiniteComboKeys) ? after.infiniteComboKeys.map(String) : [];
   const newInfinite = afterInfinite.filter((key) => !beforeInfinite.has(key));
   const candidateEvidence = {
-    schema: 'scions-spellcraft-candidate-audit-v15.3',
+    schema: 'scions-spellcraft-candidate-audit-v15.4',
     sourceBaseline: 'MTGJSON exact stock deck',
     precon: {
       name: stock.entry.name,
@@ -265,8 +275,8 @@ async function main(): Promise<void> {
     request: {
       targetBracket: TARGET_BRACKET,
       printingFamily: 'Final Fantasy',
-      maxSwaps: 12,
-      excludedComboCards: [...EXCLUDED_COMBO_CARDS],
+      maxSwaps: 10,
+      excludedCards: [...EXCLUDED_CARDS],
       protectedCoreCards: [...PROTECTED_CORE_CARDS],
       infiniteComboPolicy: 'no-new-infinite-combos',
       strategyPolicy: "preserve Y'shtola noncreature-spell control/drain win plan",
@@ -277,6 +287,7 @@ async function main(): Promise<void> {
     validationPreview: {
       newInfiniteCombos: newInfinite,
       missingProtectedCoreCards: after.missingProtectedCoreCards,
+      excludedCardsPresent: after.excludedCardsPresent,
       spellsControlAffinityDelta: finite(after.spellsControlAffinityTotal) - finite(before.spellsControlAffinityTotal),
       spellsControlSupportDelta: finite(after.spellsControlSupportCount) - finite(before.spellsControlSupportCount),
       yshtolaTriggerSpellDelta: finite(after.yshtolaTriggerSpellCount) - finite(before.yshtolaTriggerSpellCount),
@@ -303,7 +314,7 @@ async function main(): Promise<void> {
     finite(after.yshtolaTriggerSpellCount) >= finite(before.yshtolaTriggerSpellCount),
     "Scions refinement must not reduce the number of noncreature spells that can directly trigger Y'shtola",
   );
-  assert.deepEqual(after.excludedComboCardsPresent, [], 'Scions refinement must not add cards from the explicitly excluded infinite package');
+  assert.deepEqual(after.excludedCardsPresent, [], 'Scions refinement must not add any explicitly excluded off-plan/combo card');
   assert.deepEqual(after.missingProtectedCoreCards, [], 'Scions refinement must preserve every manually audited core-plan card');
   assert.deepEqual(newInfinite, [], 'Scions refinement must not introduce any new Commander Spellbook infinite combo');
 
@@ -325,13 +336,13 @@ async function main(): Promise<void> {
     assert.notEqual(
       provenance.winPackageOutcome,
       'verified-package-injected',
-      `accepted round ${String(round.round)} must not inject a verified combo package at Bracket 4`,
+      `accepted round ${String(round.round)} must not inject a verified combo package below Bracket 5`,
     );
   }
 
   const output = {
     ...candidateEvidence,
-    schema: 'scions-spellcraft-ff-only-v15.3',
+    schema: 'scions-spellcraft-ff-only-v15.4',
     validation: candidateEvidence.validationPreview,
   };
 
@@ -347,7 +358,7 @@ async function main(): Promise<void> {
     beforeYshTriggerSpells: before.yshtolaTriggerSpellCount,
     afterYshTriggerSpells: after.yshtolaTriggerSpellCount,
     missingProtectedCoreCards: after.missingProtectedCoreCards,
-    excludedComboCardsPresent: after.excludedComboCardsPresent,
+    excludedCardsPresent: after.excludedCardsPresent,
     newInfiniteCombos: newInfinite,
     swaps: refinement.swaps ?? [],
   }, null, 2));
