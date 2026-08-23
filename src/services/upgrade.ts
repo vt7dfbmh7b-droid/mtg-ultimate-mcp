@@ -324,6 +324,26 @@ function candidateScore(
   return score;
 }
 
+const CORE_UTILITY_CUT_ROLES_V15 = new Set([
+  'mana acceleration',
+  'land ramp',
+  'cost reduction',
+  'fast mana',
+  'card draw',
+  'repeatable draw',
+  'card selection',
+  'tutor',
+  'spot interaction',
+  'countermagic',
+  'free interaction',
+  'protection',
+  'board protection',
+  'board wipe',
+  'graveyard recursion',
+  'stax/control',
+  'life drain',
+]);
+
 export function contextualCutPressureV15(
   card: ScryfallCard,
   strategyContext: CommanderStrategyContextV15,
@@ -335,28 +355,26 @@ export function contextualCutPressureV15(
   reasons: string[];
 } {
   const roles = inferCardRoles(card).filter((role) => !['creature', 'equipment', 'etb synergy'].includes(role));
+  const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
+  const substantiveAffinityScore = substantiveCommanderStrategyAffinityScoreV15(affinity);
+  const hasCoreUtilityRole = roles.some((role) => CORE_UTILITY_CUT_ROLES_V15.has(role));
+  const onlySecondaryOffPlanRoles = roles.length > 0 && !hasCoreUtilityRole && substantiveAffinityScore <= 0;
+
   let cutPressure = Math.max(0, card.cmc - 3) * 2;
   if (roles.length === 0) cutPressure += 5;
+  if (onlySecondaryOffPlanRoles) cutPressure += 2;
   if (card.cmc >= 6) cutPressure += 4;
-  if (
-    roles.includes('card draw')
-    || roles.includes('tutor')
-    || roles.includes('spot interaction')
-    || roles.includes('countermagic')
-    || roles.includes('protection')
-    || roles.includes('board wipe')
-    || roles.includes('graveyard recursion')
-  ) cutPressure -= 4;
+  if (hasCoreUtilityRole) cutPressure -= 4;
 
-  const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
   // Reuse the existing four-point protection scale already applied to important utility roles.
   // Strategy fit lowers cut pressure but never makes an on-plan card automatically untouchable.
-  const strategyProtectionApplied = Math.min(4, substantiveCommanderStrategyAffinityScoreV15(affinity));
+  const strategyProtectionApplied = Math.min(4, substantiveAffinityScore);
   cutPressure -= strategyProtectionApplied;
 
   const reasons: string[] = [];
   if (card.cmc >= 6) reasons.push('high mana value');
   if (roles.length === 0) reasons.push('few detected utility roles');
+  if (onlySecondaryOffPlanRoles) reasons.push('only secondary detected roles without substantive commander-strategy support');
   if (card.cmc >= 4 && roles.length <= 1) reasons.push('expensive relative to detected flexibility');
 
   return {
