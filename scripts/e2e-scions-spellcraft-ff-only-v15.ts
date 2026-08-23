@@ -24,13 +24,13 @@ const EXCLUDED_CARDS = [
   'Blitzball Stadium',
   'Ranger-Captain of Eos',
 ] as const;
-const EXCLUDED_COMBO_CARDS = ['Walking Ballista', 'The Destined White Mage'] as const;
 const PROTECTED_CORE_CARDS = [
   'Alisaie Leveilleur',
   'Arcane Signet',
   'Archmage Emeritus',
   'Dig Through Time',
   'Exsanguinate',
+  'Final Judgment',
   'Hraesvelgr of the First Brood',
   'Into the Story',
   'Sublime Epiphany',
@@ -152,7 +152,7 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
       'Do not add the known Walking Ballista / The Destined White Mage infinite package.',
       'Do not use off-plan counters/combat filler or a tutor without a useful target merely to satisfy generic metrics.',
       "Preserve Y'shtola's original noncreature-spell control/drain win plan.",
-      'Preserve manually audited core engine, spell-efficiency, mana, and drain pieces rather than forcing generic bracket metrics.',
+      'Preserve manually audited core engine, spell-efficiency, mana, drain, and wipe pieces rather than forcing generic bracket metrics.',
     ],
   });
 
@@ -263,8 +263,10 @@ async function main(): Promise<void> {
   const beforeInfinite = new Set(Array.isArray(before.infiniteComboKeys) ? before.infiniteComboKeys.map(String) : []);
   const afterInfinite = Array.isArray(after.infiniteComboKeys) ? after.infiniteComboKeys.map(String) : [];
   const newInfinite = afterInfinite.filter((key) => !beforeInfinite.has(key));
+  const beforeMetrics = record(before.metrics);
+  const afterMetrics = record(after.metrics);
   const candidateEvidence = {
-    schema: 'scions-spellcraft-candidate-audit-v15.4',
+    schema: 'scions-spellcraft-candidate-audit-v15.5',
     sourceBaseline: 'MTGJSON exact stock deck',
     precon: {
       name: stock.entry.name,
@@ -280,6 +282,7 @@ async function main(): Promise<void> {
       protectedCoreCards: [...PROTECTED_CORE_CARDS],
       infiniteComboPolicy: 'no-new-infinite-combos',
       strategyPolicy: "preserve Y'shtola noncreature-spell control/drain win plan",
+      boardWipePolicy: 'do-not-reduce-stock-board-wipe-count',
     },
     before,
     refinement,
@@ -293,6 +296,7 @@ async function main(): Promise<void> {
       yshtolaTriggerSpellDelta: finite(after.yshtolaTriggerSpellCount) - finite(before.yshtolaTriggerSpellCount),
       noncreatureSpellDelta: finite(after.noncreatureSpellCount) - finite(before.noncreatureSpellCount),
       lifeDrainRoleDelta: finite(after.lifeDrainRoleCount) - finite(before.lifeDrainRoleCount),
+      boardWipeDelta: finite(afterMetrics.boardWipeCount) - finite(beforeMetrics.boardWipeCount),
       assessedBracketDelta: finite(after.assessedBracket) - finite(before.assessedBracket),
     },
   };
@@ -313,6 +317,10 @@ async function main(): Promise<void> {
   assert.ok(
     finite(after.yshtolaTriggerSpellCount) >= finite(before.yshtolaTriggerSpellCount),
     "Scions refinement must not reduce the number of noncreature spells that can directly trigger Y'shtola",
+  );
+  assert.ok(
+    finite(afterMetrics.boardWipeCount) >= finite(beforeMetrics.boardWipeCount),
+    'Scions refinement must not reduce the stock board-wipe package while lower-synergy cuts remain available',
   );
   assert.deepEqual(after.excludedCardsPresent, [], 'Scions refinement must not add any explicitly excluded off-plan/combo card');
   assert.deepEqual(after.missingProtectedCoreCards, [], 'Scions refinement must preserve every manually audited core-plan card');
@@ -342,7 +350,7 @@ async function main(): Promise<void> {
 
   const output = {
     ...candidateEvidence,
-    schema: 'scions-spellcraft-ff-only-v15.4',
+    schema: 'scions-spellcraft-ff-only-v15.5',
     validation: candidateEvidence.validationPreview,
   };
 
@@ -357,6 +365,8 @@ async function main(): Promise<void> {
     afterSpellsControlAffinity: after.spellsControlAffinityTotal,
     beforeYshTriggerSpells: before.yshtolaTriggerSpellCount,
     afterYshTriggerSpells: after.yshtolaTriggerSpellCount,
+    beforeBoardWipes: beforeMetrics.boardWipeCount,
+    afterBoardWipes: afterMetrics.boardWipeCount,
     missingProtectedCoreCards: after.missingProtectedCoreCards,
     excludedCardsPresent: after.excludedCardsPresent,
     newInfiniteCombos: newInfinite,
