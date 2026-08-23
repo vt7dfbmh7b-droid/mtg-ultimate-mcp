@@ -196,7 +196,6 @@ async function main(): Promise<void> {
         printingFamily: 'Final Fantasy',
         includePromos: true,
         includeSpecialReleases: true,
-        themeQuery: "Y'shtola noncreature-spell control, table-wide life loss and drain, card advantage, and FINAL FANTASY XIV Scions & Spellcraft identity",
         simulationIterations: 750,
         simulationTurns: 7,
         seed: 20260823,
@@ -210,6 +209,7 @@ async function main(): Promise<void> {
     const text = response.content.find((item) => item.type === 'text' && typeof item.text === 'string')?.text;
     assert.ok(text, 'Scions refinement MCP call must return JSON');
     result = JSON.parse(text) as Record<string, unknown>;
+    await writeFile('scions-spellcraft-ff-only-raw-result.json', `${JSON.stringify(result, null, 2)}\n`);
   } finally {
     await client.close();
     await handler.close();
