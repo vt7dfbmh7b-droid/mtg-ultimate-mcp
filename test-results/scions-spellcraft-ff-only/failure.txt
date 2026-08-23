@@ -1,0 +1,3 @@
+AssertionError: Scions refinement must not reduce whole-deck affinity with Y'shtola's spells-control plan
+AssertionError [ERR_ASSERTION]: Scions refinement must not reduce whole-deck affinity with Y'shtola's spells-control plan
+    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/e2e-scions-spellcraft-ff-only-v15.ts:329:10)
