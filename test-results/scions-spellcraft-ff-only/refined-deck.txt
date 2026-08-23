@@ -14,6 +14,7 @@
 1 Hermes, Overseer of Elpis (FIC) 36 *N*
 1 Hraesvelgr of the First Brood (FIC) 37 *N*
 1 Observed Stasis (FIC) 40 *N*
+1 Eye of Nidhogg (FIC) 44 *N*
 1 Fandaniel, Telophoroi Ascian (FIC) 46 *N*
 1 Astrologian's Planisphere (FIN) 46 *N*
 1 Reaper's Scythe (FIC) 48 *N*
@@ -96,6 +97,5 @@
 1 Plains (FIN) 295 *N*
 1 Plains (FIN) 296 *N*
 1 Restoration Magic (FIN) 30 *N*
-1 Cloud, Midgar Mercenary (FIN) 10 *N*
 1 Swiftfoot Boots (FIC) 361 *N*
-1 Champion's Helm (FIC) 337 *N*
+1 Lightning Greaves (FIC) 349 *N*
