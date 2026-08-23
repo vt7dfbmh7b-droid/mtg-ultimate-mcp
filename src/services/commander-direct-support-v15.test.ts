@@ -178,3 +178,5 @@ test('upgrade strategy audit rejects cheap generic control as a replacement for 
   assert.equal(audit.status, 'meaningful-strategy-loss');
   assert.ok(audit.meaningfulLosses.some((loss) => loss.strategy === 'spells-control'));
 });
+
+// Intentional no-op marker: rerun the isolated Scions stress workflow after direct-fuel weighting changed.
