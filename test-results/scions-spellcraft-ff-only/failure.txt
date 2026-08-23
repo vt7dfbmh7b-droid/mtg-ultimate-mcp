@@ -1,0 +1,13 @@
+AssertionError: addressable Scions precon must produce a supported refinement
++ actual - expected
+
++ 'no-supported-improvement'
+- 'refined'
+
+AssertionError [ERR_ASSERTION]: addressable Scions precon must produce a supported refinement
++ actual - expected
+
++ 'no-supported-improvement'
+- 'refined'
+
+    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/e2e-scions-spellcraft-ff-only-v15.ts:255:10)
