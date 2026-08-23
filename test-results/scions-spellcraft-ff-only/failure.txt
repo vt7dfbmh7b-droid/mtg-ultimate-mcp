@@ -1,0 +1,14 @@
+AssertionError: addressable Scions precon must produce a supported refinement
++ actual - expected
+
++ 'unsupported-theme'
+- 'refined'
+
+AssertionError [ERR_ASSERTION]: addressable Scions precon must produce a supported refinement
++ actual - expected
+
++ 'unsupported-theme'
+- 'refined'
+
+    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/e2e-scions-spellcraft-ff-only-v15.ts:220:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
