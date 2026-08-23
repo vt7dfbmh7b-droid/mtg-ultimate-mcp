@@ -143,4 +143,4 @@ test('upgrade strategy audit rejects replacing direct commander-trigger fuel wit
 
   assert.equal(audit.status, 'meaningful-strategy-loss');
   assert.ok(audit.meaningfulLosses.some((loss) => loss.strategy === 'spells-control'));
-}
+});
