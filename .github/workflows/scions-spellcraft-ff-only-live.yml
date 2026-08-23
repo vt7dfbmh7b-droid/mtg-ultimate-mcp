@@ -6,6 +6,11 @@ on:
     paths:
       - "scripts/e2e-scions-spellcraft-ff-only-v15.ts"
       - ".github/workflows/scions-spellcraft-ff-only-live.yml"
+  pull_request:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - "scripts/e2e-scions-spellcraft-ff-only-v15.ts"
+      - ".github/workflows/scions-spellcraft-ff-only-live.yml"
   workflow_dispatch:
 
 permissions:
