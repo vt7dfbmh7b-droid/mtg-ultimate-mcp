@@ -269,9 +269,20 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (createsOrMultipliesTokens) roles.add('token production');
   const teamWideStatPayoff = /(?<!target )\b(?:other )?(?:creatures|[a-z][a-z'-]*s) you control (?:get|gain) \+\d+\/\+\d+/.test(text);
   const boardScalingEquipment = /\bequipped creature (?:gets?|has) [^.]{0,100}\bfor each (?:other )?creature you control\b/.test(text);
-  if (teamWideStatPayoff || boardScalingEquipment) roles.add('go-wide payoff');
-  if (/sacrifice (?:a|another|target|this)/.test(text)) roles.add('sacrifice synergy');
-  if (/sacrifice (?:a|another) creature\s*:|sacrifice (?:a|another) permanent\s*:/.test(text)) roles.add('sacrifice outlet');
+  const boardScalingCreature = type.includes('creature')
+    && /\bput (?:a|one|two|three|\d+) \+1\/\+1 counters? on (?:it|this creature)[^.]{0,80}\bfor each (?:other )?[^.]{1,80} you control\b/.test(text);
+  if (teamWideStatPayoff || boardScalingEquipment || boardScalingCreature) roles.add('go-wide payoff');
+  const sacrificeAction = /\bsacrifice (?:a|an|another|target|one or more|any number of|x\b)/.test(text);
+  const selfReferenceNames = [card.name, ...(card.card_faces ?? []).map((face) => face.name)]
+    .flatMap((name) => name.split('//'))
+    .map((name) => name.trim().toLocaleLowerCase())
+    .filter(Boolean);
+  const selfSacrificeAction = /\bsacrifice this (?:artifact|creature|enchantment|permanent|token|card)\b/.test(text)
+    || selfReferenceNames.some((name) => text.includes(`sacrifice ${name}:`));
+  const repeatableSacrificeCost = /\bsacrifice (?:a|an|another|target|one or more|any number of|x\b)[^.:]{0,80}:/.test(text);
+  if (sacrificeAction) roles.add('sacrifice synergy');
+  if (selfSacrificeAction) roles.add('self sacrifice');
+  if (repeatableSacrificeCost) roles.add('sacrifice outlet');
   const delayedDeathReturn = /(?:when|whenever) [^.]{0,120}\bdies?\b[^.]{0,160}\breturn (?:it|that card|that creature|them) to the battlefield\b/.test(text);
   if (
     /from your graveyard/.test(text)

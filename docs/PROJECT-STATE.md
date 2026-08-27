@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-08-22T03:57:49Z**.
+Generated from `project-state.json`. Last state update: **2026-08-27T12:48:16Z**.
 
 ## Current mode
 
@@ -10,7 +10,7 @@ Generated from `project-state.json`. Last state update: **2026-08-22T03:57:49Z**
 - Active PR: #29
 - Active milestone: **INTEL-02**
 - Intelligence development paused: **no**
-- Reason: INTEL-02 remains active. Restricted focused Marvel and Food and Fellowship have accepted scenario evidence, while broad Marvel is still red. Manual audit rejected the nominal Necron and Squirreled Away greens: generic artifact/graveyard labels concealed cuts to real graveyard engines, and aggregate combat-token retention concealed cuts to Chatterfang, Squirrel Sovereign, Beastmaster Ascension and other core payoffs. Repair and exact-source revalidation must finish before conditions broaden further. INTEL-01 still lacks a positive eligible verified full-table route control.
+- Reason: INTEL-02 remains active. Restricted focused Marvel and Food and Fellowship retain accepted scenario evidence at 77a5383..., while broad Marvel remains red. Head 68ce787... independently passes project integrity, TypeScript and 806 deterministic tests, but no exact-source GitHub Actions run is attached; the expanded working repair passes TypeScript and 810/810 deterministic tests locally. Manual audit rejected the later nominal 87ac114... Necron and Squirreled Away greens: graveyard movement directionality still let Nihil Spellbomb impersonate reanimation, while the Squirrel lane moved from cutting multipliers/anthems to cutting token-death drain, death-draw and board-scaling payoffs. The generic KF-026 through KF-030 repair must be published, exact-source revalidated and manually audited before conditions broaden. INTEL-01 still lacks a positive eligible verified full-table route control.
 
 ## Stable boundary
 
@@ -47,15 +47,15 @@ Always inspect the live active-branch head before editing. A later documentation
 
 ## Current validation status
 
-- Active branch status: **restricted-partial-pass-precon-false-greens-under-repair**
+- Active branch status: **deterministic-semantic-repair-green-live-controls-pending**
 - Last persisted Marvel control source: `77a5383fa7490aa91360b8186a4bda890f632157`
 - Last persisted Marvel control outcome: **focused-pass-broad-fail**
 - Note: At exact source 77a5383..., focused Marvel passed with Vanquish the Horde -> Reanimate and Arcane Signet -> Brainstorm, moving average nonland mana value 2.71 -> 2.59 while preserving legal exact-100 Marvel printings and substantive strategy. The independently persisted broad Marvel control at the same source failed target-quality and strategy-preservation gates. This is restricted focused-scenario evidence, not a broad Marvel pass.
 
 Required before resuming broad INTEL-01/INTEL-02 claims:
 
-- Revalidate the semantic repair on exact-source Necron and Squirreled Away controls and manually audit every accepted swap before either workflow may count as scenario intelligence
-- Make graveyard hate and generic artifacts non-substantive replacements for own-graveyard/artifact engines, and make token multipliers plus team-wide combat payoffs structurally protected rather than recoverable by aggregate ratios
+- Publish and revalidate the combined KF-026 through KF-030 semantic repair on exact-source Necron and Squirreled Away controls, then manually audit every accepted swap before either workflow may count as scenario intelligence
+- Keep graveyard movement directionality, generic-artifact weight, self-sacrifice versus outlet truth, variable token-sacrifice identity, token-death engines and board-scaling payoffs fail-closed under the shared role model
 - Obtain a broad Marvel pass at the same restricted-theme quality standard as focused Marvel and Food and Fellowship before claiming the restricted lane is uniformly green
 - Verified full-table win-route discovery, injection and final evaluation agree in a scenario where an eligible route exists
 - Negative win-package conclusions distinguish completed bounded absence from provider unavailability or selection failure
@@ -63,8 +63,8 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 
 ## Next actions
 
-1. Publish and exact-source validate the generic semantic repair: own-graveyard engines must outrank graveyard hate, explicit artifact engines must outrank generic artifacts, and token multipliers/team-wide payoffs must receive maximum cut protection.
-2. Rerun and manually audit Necron Dynasties and Squirreled Away. Reject any package that still cuts Trazyn/Resurrection Orb-style graveyard engines or Chatterfang/anthem/overrun-style token engines for generic role-count gains.
+1. Publish and exact-source validate the combined KF-026 through KF-030 semantic repair: own-graveyard engines must outrank graveyard hate; movement into a graveyard must never count as reanimation; explicit artifact engines must outrank generic artifacts; self-sacrifice must not impersonate a repeatable outlet; and token multipliers, death engines and board-scaling payoffs must receive substantive cut protection.
+2. Rerun and manually audit Necron Dynasties and Squirreled Away. Reject any package that still cuts Trazyn/Resurrection-Orb-style graveyard engines, Chatterfang/anthem/overrun-style token engines, or Poison-Tip-Archer/Moldervine-Reclamation-style token-death engines for generic role-count gains.
 3. Keep Marvel and Middle-earth restricted controls active during the repair. Broad Marvel must pass its whole-deck target and strategy gates; Food and Fellowship must retain its exact four-swap quality or improve honestly.
 4. Only after those controls meet the same high standard should budget, card-pool and new-archetype conditions broaden further.
 5. Run an eligible verified full-table package scenario to validate INTEL-01 discovery, feasibility, atomic injection, protection and independent final recognition end to end; current Marvel, Middle-earth, Food and Necron controls do not provide that positive win-route proof.

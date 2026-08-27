@@ -17,7 +17,7 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
 - Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
-- Active branch validation: **restricted-partial-pass-precon-false-greens-under-repair**
+- Active branch validation: **deterministic-semantic-repair-green-live-controls-pending**
 
 ## Stable safety boundary
 
@@ -35,8 +35,8 @@ The last persisted Marvel control is `77a5383fa7490aa91360b8186a4bda890f632157` 
 
 ## Next actions
 
-1. Publish and exact-source validate the generic semantic repair: own-graveyard engines must outrank graveyard hate, explicit artifact engines must outrank generic artifacts, and token multipliers/team-wide payoffs must receive maximum cut protection.
-2. Rerun and manually audit Necron Dynasties and Squirreled Away. Reject any package that still cuts Trazyn/Resurrection Orb-style graveyard engines or Chatterfang/anthem/overrun-style token engines for generic role-count gains.
+1. Publish and exact-source validate the combined KF-026 through KF-030 semantic repair: own-graveyard engines must outrank graveyard hate; movement into a graveyard must never count as reanimation; explicit artifact engines must outrank generic artifacts; self-sacrifice must not impersonate a repeatable outlet; and token multipliers, death engines and board-scaling payoffs must receive substantive cut protection.
+2. Rerun and manually audit Necron Dynasties and Squirreled Away. Reject any package that still cuts Trazyn/Resurrection-Orb-style graveyard engines, Chatterfang/anthem/overrun-style token engines, or Poison-Tip-Archer/Moldervine-Reclamation-style token-death engines for generic role-count gains.
 3. Keep Marvel and Middle-earth restricted controls active during the repair. Broad Marvel must pass its whole-deck target and strategy gates; Food and Fellowship must retain its exact four-swap quality or improve honestly.
 4. Only after those controls meet the same high standard should budget, card-pool and new-archetype conditions broaden further.
 5. Run an eligible verified full-table package scenario to validate INTEL-01 discovery, feasibility, atomic injection, protection and independent final recognition end to end; current Marvel, Middle-earth, Food and Necron controls do not provide that positive win-route proof.

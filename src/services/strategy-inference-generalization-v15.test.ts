@@ -62,12 +62,15 @@ test('own-graveyard engines are substantive while graveyard hate is not reanimat
     assert.ok((graveyard?.score ?? 0) >= 6, `own-graveyard engine was missed: ${oracleText}`);
   }
 
-  const hate = inferNeutralStrategyV15([card({
+  const hateStrategies = inferNeutralStrategyV15([card({
     name: 'Unnamed Graveyard Lantern',
     typeLine: 'Artifact',
-    oracleText: 'When this artifact enters, exile a card from a graveyard. {T}, Sacrifice this artifact: Exile each opponent\'s graveyard. Draw a card.',
-  })]).find((strategy) => strategy.archetype === 'graveyard-reanimator');
-  assert.equal(hate?.score ?? 0, 0, 'graveyard hate must not masquerade as reanimator support');
+    oracleText: 'When this artifact enters, exile a card from a graveyard. {T}, Sacrifice this artifact: Exile each opponent\'s graveyard. When this artifact is put into a graveyard from the battlefield, draw a card.',
+  })]);
+  const hate = hateStrategies.find((strategy) => strategy.archetype === 'graveyard-reanimator');
+  const hateAristocrats = hateStrategies.find((strategy) => strategy.archetype === 'aristocrats');
+  assert.equal(hate?.score ?? 0, 0, 'graveyard hate or movement into a graveyard must not masquerade as reanimator support');
+  assert.ok((hateAristocrats?.score ?? 0) < 6, 'self-sacrificing utility must not masquerade as a substantive aristocrats outlet');
 
   const genericArtifact = inferNeutralStrategyV15([card({
     name: 'Unnamed Utility Rock',
@@ -170,6 +173,46 @@ test('token multipliers and team-wide payoffs are substantive combat-token suppo
       .find((strategy) => strategy.archetype === 'combat-tokens');
     assert.ok((combat?.score ?? 0) >= 6, `${support.name} was not protected as substantive go-wide support`);
   }
+});
+
+test('variable token-sacrifice outlets and their death payoffs retain substantive strategy truth', () => {
+  const commanderStrategies = inferNeutralStrategyV15([card({
+    name: 'Unnamed Token Sacrifice Commander',
+    typeLine: 'Legendary Creature — Test Warrior',
+    oracleText: 'If one or more tokens would be created under your control, those tokens plus that many 1/1 green creature tokens are created instead. {B}, Sacrifice X creature tokens: Target creature gets +X/-X until end of turn.',
+  })]);
+  assert.ok((commanderStrategies.find((strategy) => strategy.archetype === 'combat-tokens')?.score ?? 0) >= 6);
+  assert.ok((commanderStrategies.find((strategy) => strategy.archetype === 'aristocrats')?.score ?? 0) >= 6);
+
+  const aristocratPayoffs = [
+    card({
+      name: 'Unnamed Death Drain Payoff',
+      typeLine: 'Creature — Test Archer',
+      oracleText: 'Whenever another creature dies, each opponent loses 1 life.',
+    }),
+    card({
+      name: 'Unnamed Death Draw Engine',
+      typeLine: 'Enchantment',
+      oracleText: 'Whenever a creature you control dies, you gain 1 life and draw a card.',
+    }),
+    card({
+      name: 'Unnamed Token Departure Payoff',
+      typeLine: 'Creature — Test Warrior',
+      oracleText: 'Whenever a token you control leaves the battlefield, each opponent loses 1 life and you gain 1 life.',
+    }),
+  ];
+  for (const payoff of aristocratPayoffs) {
+    const aristocrats = inferNeutralStrategyV15([payoff])
+      .find((strategy) => strategy.archetype === 'aristocrats');
+    assert.ok((aristocrats?.score ?? 0) >= 6, `${payoff.name} was not protected as a substantive token-sacrifice payoff`);
+  }
+
+  const boardScalingPayoff = inferNeutralStrategyV15([card({
+    name: 'Unnamed Board-Scaling Typal Payoff',
+    typeLine: 'Creature — Test Warrior',
+    oracleText: 'When this creature enters, put a +1/+1 counter on it for each other Squirrel and/or Food you control. Whenever another Squirrel or Food you control enters, put a +1/+1 counter on this creature.',
+  })]).find((strategy) => strategy.archetype === 'combat-tokens');
+  assert.ok((boardScalingPayoff?.score ?? 0) >= 6, 'board-scaling typal payoff was not protected as substantive combat-token support');
 });
 
 test('artifact-engine construction and route reporting have dedicated generic boundaries', () => {

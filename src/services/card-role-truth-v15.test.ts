@@ -312,6 +312,30 @@ const boardScalingEquipment = card({
   manaCost: '{2}',
 });
 
+const variableTypalSacrificeOutlet = card({
+  name: 'Generic Variable Typal Sacrifice Outlet',
+  typeLine: 'Legendary Creature — Test Warrior',
+  oracleText: '{B}, Sacrifice X Squirrels: Target creature gets +X/-X until end of turn.',
+  cmc: 3,
+  manaCost: '{2}{G}',
+});
+
+const selfSacrificingUtility = card({
+  name: 'Generic Self-Sacrificing Utility',
+  typeLine: 'Artifact',
+  oracleText: '{T}, Sacrifice Generic Self-Sacrificing Utility: Exile all cards from target player\'s graveyard.',
+  cmc: 0,
+  manaCost: '{0}',
+});
+
+const boardScalingTypalCreature = card({
+  name: 'Generic Board-Scaling Typal Creature',
+  typeLine: 'Creature — Test Warrior',
+  oracleText: 'When this creature enters, put a +1/+1 counter on it for each other Squirrel and/or Food you control. Whenever another Squirrel or Food you control enters, put a +1/+1 counter on this creature.',
+  cmc: 3,
+  manaCost: '{2}{G}',
+});
+
 const persistentRainbowRock = card({
   name: 'Persistent Rainbow Rock',
   typeLine: 'Artifact',
@@ -396,11 +420,25 @@ test('delayed death returns count as graveyard recursion even when Oracle text o
   assert.equal(inferCardRoles(delayedArtifactCreatureReturn).includes('graveyard recursion'), true);
 });
 
-test('token multipliers, team-wide payoffs, and board-scaling Equipment retain combat-engine truth', () => {
+test('token multipliers and team-wide or board-scaling payoffs retain combat-engine truth', () => {
   assert.ok(inferCardRoles(tokenMultiplier).includes('token production'));
   assert.ok(inferCardRoles(teamAnthem).includes('go-wide payoff'));
   assert.ok(inferCardRoles(typalAnthem).includes('go-wide payoff'));
   assert.ok(inferCardRoles(boardScalingEquipment).includes('go-wide payoff'));
+  assert.ok(inferCardRoles(boardScalingTypalCreature).includes('go-wide payoff'));
+});
+
+test('variable-quantity typal sacrifice costs remain repeatable sacrifice outlets', () => {
+  const roles = inferCardRoles(variableTypalSacrificeOutlet);
+  assert.ok(roles.includes('sacrifice synergy'));
+  assert.ok(roles.includes('sacrifice outlet'));
+});
+
+test('self-sacrificing utility is not promoted to a repeatable sacrifice outlet', () => {
+  const roles = inferCardRoles(selfSacrificingUtility);
+  assert.ok(roles.includes('self sacrifice'));
+  assert.equal(roles.includes('sacrifice synergy'), false);
+  assert.equal(roles.includes('sacrifice outlet'), false);
 });
 
 test('direct damage, conditional tap-exile, and targeted negative-power cards count as spot interaction', () => {

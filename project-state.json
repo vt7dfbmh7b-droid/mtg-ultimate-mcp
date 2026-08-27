@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T03:57:49Z",
+  "updatedAt": "2026-08-27T12:48:16Z",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
   "stable": {
@@ -23,7 +23,7 @@
   "workMode": {
     "intelligenceDevelopmentPaused": false,
     "activeMilestone": "INTEL-02",
-    "reason": "INTEL-02 remains active. Restricted focused Marvel and Food and Fellowship have accepted scenario evidence, while broad Marvel is still red. Manual audit rejected the nominal Necron and Squirreled Away greens: generic artifact/graveyard labels concealed cuts to real graveyard engines, and aggregate combat-token retention concealed cuts to Chatterfang, Squirrel Sovereign, Beastmaster Ascension and other core payoffs. Repair and exact-source revalidation must finish before conditions broaden further. INTEL-01 still lacks a positive eligible verified full-table route control."
+    "reason": "INTEL-02 remains active. Restricted focused Marvel and Food and Fellowship retain accepted scenario evidence at 77a5383..., while broad Marvel remains red. Head 68ce787... independently passes project integrity, TypeScript and 806 deterministic tests, but no exact-source GitHub Actions run is attached; the expanded working repair passes TypeScript and 810/810 deterministic tests locally. Manual audit rejected the later nominal 87ac114... Necron and Squirreled Away greens: graveyard movement directionality still let Nihil Spellbomb impersonate reanimation, while the Squirrel lane moved from cutting multipliers/anthems to cutting token-death drain, death-draw and board-scaling payoffs. The generic KF-026 through KF-030 repair must be published, exact-source revalidated and manually audited before conditions broaden. INTEL-01 still lacks a positive eligible verified full-table route control."
   },
   "milestones": [
     {
@@ -70,7 +70,7 @@
     }
   ],
   "validation": {
-    "activeBranchStatus": "restricted-partial-pass-precon-false-greens-under-repair",
+    "activeBranchStatus": "deterministic-semantic-repair-green-live-controls-pending",
     "latestPersistedMarvelControl": {
       "sourceSha": "77a5383fa7490aa91360b8186a4bda890f632157",
       "outcome": "focused-pass-broad-fail",
@@ -82,20 +82,20 @@
       "note": "Exact Food and Fellowship stock-precon control made four supported swaps while retaining Food/lifegain affinity, recursion, board wipes and persistent colored mana. This supplied the materially different restricted/precon-style whole-deck improvement evidence required before broadening conditions."
     },
     "latestPersistedUnrestrictedPreconControl": {
-      "sourceSha": "5dc764117afb03951e4ebb091781a5b1c0ee4511",
+      "sourceSha": "87ac1147acbcfb88cd4577644657573a5fc3f735",
       "outcome": "rejected-false-green",
       "precon": "Necron Dynasties",
-      "note": "Mechanical gates passed, but manual audit rejected the decision. Graveyard hate and generic artifacts were credited as engine replacements; the twelve-swap package cut Trazyn the Infinite, Resurrection Orb and other substantive pieces while adding Tormod's Crypt, Soul-Guide Lantern and generic equipment. Aggregate affinity increased only because the semantics were too broad. This source is regression evidence, not an INTEL-02 pass."
+      "note": "The later mechanical pass remained unacceptable on manual audit. It still proposed Shard of the Void Dragon -> Nihil Spellbomb, Defile -> Sword of Light and Shadow and Plasmancer -> Dragonfire Blade among eight swaps. Shared truth at this source read movement into a graveyard backwards as reanimation, treated expensive wearer-only Equipment as ordinary protection, and allowed later aspirational swaps to consume failed authoritative gate support. Head 68ce787... plus the local KF-029/KF-030 repair addresses these classes, but exact-source live revalidation is pending. The 87ac114... result is regression evidence, not an INTEL-02 pass."
     },
     "latestPersistedSquirrelPreconControl": {
-      "sourceSha": "51621b449c43a9d54d5e38f0e0e68f8a6ade9043",
+      "sourceSha": "87ac1147acbcfb88cd4577644657573a5fc3f735",
       "outcome": "rejected-false-green",
       "precon": "Squirreled Away",
-      "note": "Mechanical and cumulative-retention gates passed, but the six accepted swaps cut Chatterfang, Squirrel General; Squirrel Sovereign; Beastmaster Ascension; End-Raze Forerunners; and other core token payoffs for generic protection and tutors. A 90% aggregate affinity ratio is insufficient when individual structural engines are erased. This run is retained only as adversarial regression evidence."
+      "note": "The later mechanical pass stopped cutting the original KF-027 multiplier/anthem/overrun fixtures but remained a false green: four accepted swaps removed Poison-Tip Archer, Honored Dreyleader, Moldervine Reclamation and Nadier's Nightblade for generic tutor/protection gains. Chatterfang's variable Sacrifice X Squirrels outlet was not recognized, so token-death drain/draw and board-scaling typal payoffs received no structural protection. The generic KF-028/KF-030 repair passes focused local regressions and actual-card role smokes, but exact-source live revalidation is pending. The 87ac114... result is adversarial regression evidence only."
     },
     "requiredBeforeResumingIntelligenceClaims": [
-      "Revalidate the semantic repair on exact-source Necron and Squirreled Away controls and manually audit every accepted swap before either workflow may count as scenario intelligence",
-      "Make graveyard hate and generic artifacts non-substantive replacements for own-graveyard/artifact engines, and make token multipliers plus team-wide combat payoffs structurally protected rather than recoverable by aggregate ratios",
+      "Publish and revalidate the combined KF-026 through KF-030 semantic repair on exact-source Necron and Squirreled Away controls, then manually audit every accepted swap before either workflow may count as scenario intelligence",
+      "Keep graveyard movement directionality, generic-artifact weight, self-sacrifice versus outlet truth, variable token-sacrifice identity, token-death engines and board-scaling payoffs fail-closed under the shared role model",
       "Obtain a broad Marvel pass at the same restricted-theme quality standard as focused Marvel and Food and Fellowship before claiming the restricted lane is uniformly green",
       "Verified full-table win-route discovery, injection and final evaluation agree in a scenario where an eligible route exists",
       "Negative win-package conclusions distinguish completed bounded absence from provider unavailability or selection failure",
@@ -111,8 +111,8 @@
     "No merge, stable/current promotion, version bump, or release without explicit user approval."
   ],
   "nextActions": [
-    "Publish and exact-source validate the generic semantic repair: own-graveyard engines must outrank graveyard hate, explicit artifact engines must outrank generic artifacts, and token multipliers/team-wide payoffs must receive maximum cut protection.",
-    "Rerun and manually audit Necron Dynasties and Squirreled Away. Reject any package that still cuts Trazyn/Resurrection Orb-style graveyard engines or Chatterfang/anthem/overrun-style token engines for generic role-count gains.",
+    "Publish and exact-source validate the combined KF-026 through KF-030 semantic repair: own-graveyard engines must outrank graveyard hate; movement into a graveyard must never count as reanimation; explicit artifact engines must outrank generic artifacts; self-sacrifice must not impersonate a repeatable outlet; and token multipliers, death engines and board-scaling payoffs must receive substantive cut protection.",
+    "Rerun and manually audit Necron Dynasties and Squirreled Away. Reject any package that still cuts Trazyn/Resurrection-Orb-style graveyard engines, Chatterfang/anthem/overrun-style token engines, or Poison-Tip-Archer/Moldervine-Reclamation-style token-death engines for generic role-count gains.",
     "Keep Marvel and Middle-earth restricted controls active during the repair. Broad Marvel must pass its whole-deck target and strategy gates; Food and Fellowship must retain its exact four-swap quality or improve honestly.",
     "Only after those controls meet the same high standard should budget, card-pool and new-archetype conditions broaden further.",
     "Run an eligible verified full-table package scenario to validate INTEL-01 discovery, feasibility, atomic injection, protection and independent final recognition end to end; current Marvel, Middle-earth, Food and Necron controls do not provide that positive win-route proof.",

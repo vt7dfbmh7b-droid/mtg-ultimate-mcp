@@ -272,6 +272,36 @@ Protection: generic role truth now recognizes token replacement/multiplication t
 
 Status: deterministic repair passes locally; the nominal Squirreled Away green is retained only as adversarial regression evidence and exact-source revalidation is pending.
 
+## KF-028 — Token-sacrifice and scaling payoffs disappear after the first token repair
+
+Observed: the later nominal Squirreled Away pass at `87ac114...` no longer cut the KF-027 token multiplier, anthem and overrun fixtures, but it still cut Poison-Tip Archer, Moldervine Reclamation, Nadier's Nightblade and Honored Dreyleader for generic tutors and protection. Chatterfang's variable `Sacrifice X Squirrels` cost was not recognized as a repeatable sacrifice outlet, so the command zone exposed only `combat-tokens`; token-death drain/draw engines received no `aristocrats` protection, and a creature scaling from each other Squirrel/Food received no go-wide protection. Mechanical, cumulative and per-swap gates all stayed green.
+
+Risk: fixing one set of named-looking symptoms can merely move the optimizer to the next unprotected layer of the same deck. A token precon can retain aggregate token creation while losing its sacrifice finishers, death-trigger card advantage and board-scaling payoffs, producing generic tutor/protection good-stuff rather than a coherent upgrade.
+
+Protection: shared role truth now recognizes variable-quantity repeatable sacrifice costs such as `Sacrifice X <type>:` as sacrifice synergy and an outlet. This gives a token-multiplying commander a substantive generic `aristocrats` identity; death-drain, death-draw and token-departure payoffs inherit maximum contextual cut protection. Creature text that gains counters for each other controlled typal/token-engine permanent is also substantive go-wide support. Name-independent role, inference, affinity, preservation and workflow-evidence regressions cover the full boundary. The Squirreled Away live gate now requires both substantive combat-token and token-sacrifice command-zone identities.
+
+Status: deterministic focused regressions pass locally; the `87ac114...` Squirreled Away result is rejected false-green evidence and exact-source live revalidation remains pending.
+
+## KF-029 — Movement into a graveyard is read backwards as reanimation
+
+Observed: a live shared-truth smoke against the Oracle text for Nihil Spellbomb still assigned six `graveyard-reanimator` points. The broad fallback expression matched “is put into a graveyard from the battlefield” because it only checked that `put`, `graveyard` and `battlefield` appeared in that order; it did not require the card to move from the graveyard onto the battlefield. This manufactured enough substantive affinity for graveyard hate to help replace a real Necron recursive engine in the nominal `87ac114...` pass.
+
+Risk: a directional rules statement can be classified as its exact strategic opposite. Graveyard hate, death triggers or ordinary battlefield-to-graveyard movement may then satisfy a reanimation gate and conceal engine loss despite apparently semantic scoring.
+
+Protection: the shared reanimation expression now requires explicit movement `from <a/your/the/any> graveyard` `to/onto the battlefield`. The generic graveyard-hate fixture includes the observed battlefield-to-graveyard wording and must remain at zero reanimator affinity, while positive own-graveyard and staged-reanimation fixtures remain substantive. A live Scryfall smoke confirmed Nihil Spellbomb and Tormod's Crypt at zero reanimator points and Lively Dirge at twenty-one.
+
+Status: TypeScript, focused deterministic regressions and the live Oracle-classification smoke pass locally; exact-source strategy and Necron workflow revalidation remains pending.
+
+## KF-030 — Self-sacrificing utility impersonates a repeatable sacrifice outlet
+
+Observed: while extending variable-quantity sacrifice truth for the KF-028 repair, the prior generic `sacrifice this` role would give a self-sacrificing utility artifact seven substantive `aristocrats` points. Treating its own one-shot activation like Chatterfang's repeatable ability to sacrifice arbitrary token resources would let graveyard hate or cantrip artifacts numerically replace real death engines in a token-sacrifice deck.
+
+Risk: the repair for one missing sacrifice syntax can overgeneralize and create a new false replacement class. A card that can sacrifice only itself is useful fodder, but it is not a repeatable outlet and should not receive the same structural protection or replacement credit.
+
+Protection: self-referential costs using `this <permanent>` or the card's own Oracle name now receive a separate two-point `self sacrifice` signal. Only costs that sacrifice another, arbitrary, one-or-more, any-number-of or variable-X resource receive `sacrifice synergy`/`sacrifice outlet` truth. Generic and actual-name self-sacrifice regressions prevent promotion to substantive aristocrats support.
+
+Status: TypeScript and focused deterministic regressions pass locally; exact-source strategy and Squirreled Away revalidation remains pending.
+
 ## Adding a failure
 
 Every new material failure should record:

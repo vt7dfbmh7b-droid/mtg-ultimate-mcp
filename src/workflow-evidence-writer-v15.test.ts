@@ -98,6 +98,7 @@ test('precon generalization requires both inferred engines and the recursion flo
   assert.match(workflowSource, /afterRecursion < beforeRecursion/);
   assert.match(workflowSource, /graveyard_reanimator_identity_required=true/);
   assert.match(workflowSource, /artifact_engine_identity_required=true/);
+  assert.match(workflowSource, /graveyard_directionality_required=true/);
   assert.match(workflowSource, /graveyard_recursion_floor=true/);
 });
 
@@ -108,16 +109,24 @@ test('strategy-inference evidence distinguishes engines from generic artifacts a
   assert.match(workflowSource, /generic_artifact_substantive=false/);
   assert.match(workflowSource, /own_graveyard_engine_substantive=true/);
   assert.match(workflowSource, /graveyard_hate_not_support=true/);
+  assert.match(workflowSource, /graveyard_directionality_preserved=true/);
   assert.match(workflowSource, /mass_graveyard_exchange_substantive=true/);
+  assert.match(workflowSource, /variable_sacrifice_outlet_substantive=true/);
+  assert.match(workflowSource, /self_sacrifice_not_outlet=true/);
+  assert.match(workflowSource, /token_death_payoff_substantive=true/);
+  assert.match(workflowSource, /board_scaling_typal_payoff_substantive=true/);
 });
 
-test('Squirreled Away evidence requires generic token-engine semantics and cumulative retention', () => {
+test('Squirreled Away evidence requires token-engine, sacrifice-payoff, and cumulative semantics', () => {
   const workflowSource = workflow('.github/workflows/precon-generalization-squirrels-live.yml');
 
   assert.match(workflowSource, /substantive_combat_token_strategy_required=true/);
+  assert.match(workflowSource, /substantive_token_sacrifice_strategy_required=true/);
   assert.match(workflowSource, /core_token_engine_semantics_required=true/);
+  assert.match(workflowSource, /token_death_payoff_semantics_required=true/);
   assert.match(workflowSource, /cumulative_strategy_retention_required=true/);
   assert.match(workflowSource, /meaningful_strategy_loss_rejected=true/);
+  assert.match(workflowSource, /stockStrategies\.has\('aristocrats'\)/);
 });
 
 test('Marvel controls fail closed on whole-deck quality and persistent colored-mana access', () => {

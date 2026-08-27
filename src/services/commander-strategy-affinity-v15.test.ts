@@ -433,3 +433,75 @@ test('token multipliers and team-wide payoffs cannot be traded for generic role 
   assert.equal(audit.status, 'meaningful-strategy-loss');
   assert.deepEqual(audit.meaningfulLosses.map((loss) => loss.strategy), ['combat-tokens']);
 });
+
+test('token-death engines and board-scaling typal payoffs cannot be traded for generic protection', () => {
+  const commander = card(
+    'Unnamed Token Sacrifice Commander',
+    'Legendary Creature — Test Warrior',
+    'If one or more tokens would be created under your control, those tokens plus that many 1/1 green creature tokens are created instead. {B}, Sacrifice X creature tokens: Target creature gets +X/-X until end of turn.',
+  );
+  const context = deriveCommanderStrategyContextFromCommandersV15([commander]);
+  assert.ok(context.strategies.some((strategy) => strategy.archetype === 'combat-tokens' && strategy.score >= 6));
+  assert.ok(context.strategies.some((strategy) => strategy.archetype === 'aristocrats' && strategy.score >= 6));
+
+  const engines = [
+    card(
+      'Unnamed Death Drain Payoff',
+      'Creature — Test Archer',
+      'Whenever another creature dies, each opponent loses 1 life.',
+    ),
+    card(
+      'Unnamed Death Draw Engine',
+      'Enchantment',
+      'Whenever a creature you control dies, you gain 1 life and draw a card.',
+    ),
+    card(
+      'Unnamed Token Departure Payoff',
+      'Creature — Test Warrior',
+      'Whenever a token you control leaves the battlefield, each opponent loses 1 life and you gain 1 life.',
+    ),
+    card(
+      'Unnamed Board-Scaling Typal Payoff',
+      'Creature — Test Warrior',
+      'When this creature enters, put a +1/+1 counter on it for each other Squirrel and/or Food you control. Whenever another Squirrel or Food you control enters, put a +1/+1 counter on this creature.',
+    ),
+  ];
+  const genericProtection = card(
+    'Unnamed Generic Protection Spell',
+    'Instant',
+    'Target creature you control gains hexproof and indestructible until end of turn.',
+  );
+  const addAffinity = cardCommanderStrategyAffinityV15(genericProtection, context);
+  const pairings = engines.map((engine) => {
+    const cutAffinity = cardCommanderStrategyAffinityV15(engine, context);
+    const cutPressure = contextualCutPressureV15(engine, context);
+    assert.ok(cutAffinity.matches.some((match) => match.commanderScore >= 6 && match.overlapScore >= 6));
+    assert.equal(cutPressure.strategyProtectionApplied, 4);
+    return {
+      cut: {
+        card: { name: engine.name, roles: [], manaValue: engine.cmc, typeLine: engine.type_line },
+        strategyAffinity: {
+          score: cutAffinity.score,
+          protectionApplied: cutPressure.strategyProtectionApplied,
+          matchedStrategies: cutAffinity.matches.map((match) => match.archetype),
+          matches: cutAffinity.matches,
+        },
+      },
+      add: {
+        card: { name: genericProtection.name, roles: ['protection'], manaValue: genericProtection.cmc, typeLine: genericProtection.type_line },
+        strategyAffinity: {
+          score: addAffinity.score,
+          protectionApplied: 0,
+          matchedStrategies: addAffinity.matches.map((match) => match.archetype),
+          matches: addAffinity.matches,
+        },
+      },
+    };
+  });
+
+  const audit = auditUpgradeStrategyPreservationV15(pairings);
+  assert.equal(audit.status, 'meaningful-strategy-loss');
+  const lostStrategies = new Set(audit.meaningfulLosses.map((loss) => loss.strategy));
+  assert.ok(lostStrategies.has('aristocrats'));
+  assert.ok(lostStrategies.has('combat-tokens'));
+});

@@ -101,6 +101,7 @@
         "substantive_commander_strategy_required": "true",
         "graveyard_reanimator_identity_required": "true",
         "artifact_engine_identity_required": "true",
+        "graveyard_directionality_required": "true",
         "graveyard_recursion_floor": "true",
         "structural_floors_required": "true",
         "meaningful_strategy_loss_rejected": "true"
@@ -124,7 +125,12 @@
         "generic_artifact_substantive": "false",
         "own_graveyard_engine_substantive": "true",
         "graveyard_hate_not_support": "true",
-        "mass_graveyard_exchange_substantive": "true"
+        "graveyard_directionality_preserved": "true",
+        "mass_graveyard_exchange_substantive": "true",
+        "variable_sacrifice_outlet_substantive": "true",
+        "self_sacrifice_not_outlet": "true",
+        "token_death_payoff_substantive": "true",
+        "board_scaling_typal_payoff_substantive": "true"
       }
     },
     {
@@ -146,7 +152,9 @@
         "commander_legality": "true",
         "hard_budget_truth": "true",
         "substantive_combat_token_strategy_required": "true",
+        "substantive_token_sacrifice_strategy_required": "true",
         "core_token_engine_semantics_required": "true",
+        "token_death_payoff_semantics_required": "true",
         "cumulative_strategy_retention_required": "true",
         "structural_floors_required": "true",
         "meaningful_strategy_loss_rejected": "true"

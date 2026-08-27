@@ -147,7 +147,13 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   addSignal(table, 'graveyard-reanimator', recoversMilledCardsToHand, 7, 'milled-card recovery');
   addSignal(table, 'graveyard-reanimator', massGraveyardReturn, 7, 'mass graveyard return');
   addSignal(table, 'graveyard-reanimator', returnsSelectedGraveyardCards, 8, 'selected graveyard cards returned to battlefield');
-  addSignal(table, 'graveyard-reanimator', /return .* graveyard .* battlefield|put .* graveyard .* battlefield/i.test(text), 6, 'reanimation text');
+  addSignal(
+    table,
+    'graveyard-reanimator',
+    /\breturn [^.]{0,180}\bfrom (?:your|a|the|any) graveyard\b[^.]{0,100}\bto the battlefield\b|\bput [^.]{0,180}\bfrom (?:your|a|the|any) graveyard\b[^.]{0,100}\bonto the battlefield\b/i.test(text),
+    6,
+    'reanimation text',
+  );
 
   // A generic artifact permanent is relevant but deliberately sub-substantive by itself.
   // Explicit artifact/Vehicle rules text, including copying another artifact, is required to infer an artifact-engine identity.
@@ -156,6 +162,7 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
 
   addSignal(table, 'aristocrats', roles.has('sacrifice synergy'), 7, 'sacrifice synergy');
   addSignal(table, 'aristocrats', roles.has('sacrifice outlet'), 8, 'sacrifice outlet');
+  addSignal(table, 'aristocrats', roles.has('self sacrifice'), 2, 'self-sacrifice utility');
   addSignal(table, 'aristocrats', roles.has('life drain'), 7, 'opponent drain');
   addSignal(table, 'aristocrats', /whenever .* dies|when .* dies/i.test(text), 6, 'death trigger');
   addSignal(table, 'aristocrats', /sacrifice (?:a|another) creature|sacrifice (?:a|another) permanent/i.test(text), 5, 'sacrifice text');
