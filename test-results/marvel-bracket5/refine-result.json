@@ -135,7 +135,8 @@
         "card draw": 19,
         "+1/+1 counters": 9,
         "treasure": 9,
-        "sacrifice synergy": 12,
+        "sacrifice synergy": 4,
+        "self sacrifice": 10,
         "fast mana": 5,
         "board wipe": 3,
         "countermagic": 3,
@@ -153,7 +154,8 @@
         "land ramp": 1,
         "land tutor": 1,
         "land": 31,
-        "card selection": 3
+        "card selection": 3,
+        "sacrifice outlet": 1
       },
       "earlyPlayCount": 41,
       "fastManaCount": 5,
@@ -176,7 +178,7 @@
     "roundsAccepted": 1,
     "totalSwaps": 2,
     "candidatePackagesPerRound": 5,
-    "estimatedUpgradeSpendUsd": 26.7,
+    "estimatedUpgradeSpendUsd": 29.11,
     "swaps": [
       {
         "out": "Vanquish the Horde",
@@ -186,7 +188,7 @@
           "set": "MAR",
           "collectorNumber": "20",
           "finish": "nonfoil",
-          "priceUsd": 22.36
+          "priceUsd": 24.81
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -230,7 +232,7 @@
           "set": "SLD",
           "collectorNumber": "7019",
           "finish": "nonfoil",
-          "priceUsd": 4.34
+          "priceUsd": 4.3
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -281,7 +283,7 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 5,
         "winningCandidate": 2,
-        "estimatedSpendUsd": 26.7,
+        "estimatedSpendUsd": 29.11,
         "improvementScore": 16.239,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -327,7 +329,7 @@
         "candidatePackagesGenerated": 5,
         "candidatePackagesEligible": 5,
         "winningCandidate": 2,
-        "estimatedSpendUsd": 26.7,
+        "estimatedSpendUsd": 29.11,
         "improvementScore": 16.239,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -346,7 +348,7 @@
               "collectorNumber": "20",
               "releaseDate": "2025-09-26",
               "finish": "nonfoil",
-              "priceUsd": 22.36,
+              "priceUsd": 24.81,
               "promo": false,
               "promoTypes": [
                 "sourcematerial",
@@ -401,7 +403,7 @@
               "collectorNumber": "7019",
               "releaseDate": "2025-09-22",
               "finish": "nonfoil",
-              "priceUsd": 4.34,
+              "priceUsd": 4.3,
               "promo": false,
               "promoTypes": [
                 "sldbonus",
@@ -456,7 +458,7 @@
             "reason": "eligible",
             "attemptedSwaps": 5,
             "actualSwaps": 2,
-            "estimatedSpendUsd": 28.26,
+            "estimatedSpendUsd": 30.62,
             "unknownPriceCount": 0,
             "improvementScore": 5.233,
             "significantRegression": false,
@@ -638,7 +640,7 @@
                   "set": "MSC",
                   "collectorNumber": "210",
                   "finish": "nonfoil",
-                  "priceUsd": 5.9
+                  "priceUsd": 5.81
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -683,7 +685,7 @@
                   "set": "MAR",
                   "collectorNumber": "20",
                   "finish": "nonfoil",
-                  "priceUsd": 22.36
+                  "priceUsd": 24.81
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -729,7 +731,7 @@
             "reason": "eligible",
             "attemptedSwaps": 5,
             "actualSwaps": 2,
-            "estimatedSpendUsd": 26.7,
+            "estimatedSpendUsd": 29.11,
             "unknownPriceCount": 0,
             "improvementScore": 16.239,
             "significantRegression": false,
@@ -910,7 +912,7 @@
                   "set": "MAR",
                   "collectorNumber": "20",
                   "finish": "nonfoil",
-                  "priceUsd": 22.36
+                  "priceUsd": 24.81
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -954,7 +956,7 @@
                   "set": "SLD",
                   "collectorNumber": "7019",
                   "finish": "nonfoil",
-                  "priceUsd": 4.34
+                  "priceUsd": 4.3
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1182,7 +1184,7 @@
                   "set": "SLD",
                   "collectorNumber": "7019",
                   "finish": "nonfoil",
-                  "priceUsd": 4.34
+                  "priceUsd": 4.3
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1226,7 +1228,7 @@
                   "set": "MSC",
                   "collectorNumber": "168",
                   "finish": "nonfoil",
-                  "priceUsd": 1.04
+                  "priceUsd": 1.08
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1273,7 +1275,7 @@
             "reason": "eligible",
             "attemptedSwaps": 5,
             "actualSwaps": 2,
-            "estimatedSpendUsd": 7.11,
+            "estimatedSpendUsd": 7.82,
             "unknownPriceCount": 0,
             "improvementScore": 5.38,
             "significantRegression": false,
@@ -1456,7 +1458,7 @@
                   "set": "MSC",
                   "collectorNumber": "168",
                   "finish": "nonfoil",
-                  "priceUsd": 1.04
+                  "priceUsd": 1.08
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1501,7 +1503,7 @@
                   "set": "MAR",
                   "collectorNumber": "13",
                   "finish": "nonfoil",
-                  "priceUsd": 6.07
+                  "priceUsd": 6.74
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1548,7 +1550,7 @@
             "reason": "eligible",
             "attemptedSwaps": 5,
             "actualSwaps": 2,
-            "estimatedSpendUsd": 7.02,
+            "estimatedSpendUsd": 7.37,
             "unknownPriceCount": 0,
             "improvementScore": 7.266,
             "significantRegression": false,
@@ -1730,7 +1732,7 @@
                   "set": "MAR",
                   "collectorNumber": "13",
                   "finish": "nonfoil",
-                  "priceUsd": 6.07
+                  "priceUsd": 6.74
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1775,7 +1777,7 @@
                   "set": "MSC",
                   "collectorNumber": "806",
                   "finish": "nonfoil",
-                  "priceUsd": 0.95
+                  "priceUsd": 0.63
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1832,7 +1834,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 5,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 28.26,
+                "estimatedSpendUsd": 30.62,
                 "unknownPriceCount": 0,
                 "improvementScore": 5.233,
                 "significantRegression": false,
@@ -2014,7 +2016,7 @@
                       "set": "MSC",
                       "collectorNumber": "210",
                       "finish": "nonfoil",
-                      "priceUsd": 5.9
+                      "priceUsd": 5.81
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2059,7 +2061,7 @@
                       "set": "MAR",
                       "collectorNumber": "20",
                       "finish": "nonfoil",
-                      "priceUsd": 22.36
+                      "priceUsd": 24.81
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2105,7 +2107,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 5,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 26.7,
+                "estimatedSpendUsd": 29.11,
                 "unknownPriceCount": 0,
                 "improvementScore": 16.239,
                 "significantRegression": false,
@@ -2286,7 +2288,7 @@
                       "set": "MAR",
                       "collectorNumber": "20",
                       "finish": "nonfoil",
-                      "priceUsd": 22.36
+                      "priceUsd": 24.81
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2330,7 +2332,7 @@
                       "set": "SLD",
                       "collectorNumber": "7019",
                       "finish": "nonfoil",
-                      "priceUsd": 4.34
+                      "priceUsd": 4.3
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2558,7 +2560,7 @@
                       "set": "SLD",
                       "collectorNumber": "7019",
                       "finish": "nonfoil",
-                      "priceUsd": 4.34
+                      "priceUsd": 4.3
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2602,7 +2604,7 @@
                       "set": "MSC",
                       "collectorNumber": "168",
                       "finish": "nonfoil",
-                      "priceUsd": 1.04
+                      "priceUsd": 1.08
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2649,7 +2651,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 5,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 7.11,
+                "estimatedSpendUsd": 7.82,
                 "unknownPriceCount": 0,
                 "improvementScore": 5.38,
                 "significantRegression": false,
@@ -2832,7 +2834,7 @@
                       "set": "MSC",
                       "collectorNumber": "168",
                       "finish": "nonfoil",
-                      "priceUsd": 1.04
+                      "priceUsd": 1.08
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2877,7 +2879,7 @@
                       "set": "MAR",
                       "collectorNumber": "13",
                       "finish": "nonfoil",
-                      "priceUsd": 6.07
+                      "priceUsd": 6.74
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2924,7 +2926,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 5,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 7.02,
+                "estimatedSpendUsd": 7.37,
                 "unknownPriceCount": 0,
                 "improvementScore": 7.266,
                 "significantRegression": false,
@@ -3106,7 +3108,7 @@
                       "set": "MAR",
                       "collectorNumber": "13",
                       "finish": "nonfoil",
-                      "priceUsd": 6.07
+                      "priceUsd": 6.74
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3151,7 +3153,7 @@
                       "set": "MSC",
                       "collectorNumber": "806",
                       "finish": "nonfoil",
-                      "priceUsd": 0.95
+                      "priceUsd": 0.63
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3221,212 +3223,7 @@
             "reason": "package-causes-a-meaningful-commander-strategy-loss",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendUsd": 46.91,
-            "unknownPriceCount": 0,
-            "improvementScore": 19.239,
-            "significantRegression": false,
-            "zeroTargetProgressWhileFailedGatesRemain": true,
-            "targetGate": {
-              "applicable": true,
-              "score": 0,
-              "failedBefore": [
-                "verified-winning-combo"
-              ],
-              "failedAfter": [
-                "verified-winning-combo"
-              ],
-              "repairedGates": [],
-              "advancedFailedGates": [],
-              "regressedGates": [],
-              "ignoredUnverifiedGates": [
-                "competitive-combo-signal"
-              ]
-            },
-            "themeAudit": null,
-            "strategyPreservation": {
-              "status": "meaningful-strategy-loss",
-              "evidenceComplete": true,
-              "meaningfulLosses": [
-                {
-                  "strategy": "combat-tokens",
-                  "commanderStrategyScore": 28,
-                  "cutAffinityScore": 16,
-                  "addAffinityScore": 0,
-                  "netAffinityLoss": 16,
-                  "strongestCutProtectionApplied": 4
-                }
-              ],
-              "strategyDeltas": [
-                {
-                  "strategy": "big-mana",
-                  "cutAffinityScore": 4,
-                  "addAffinityScore": 0,
-                  "netAffinityDelta": -4
-                },
-                {
-                  "strategy": "combat-tokens",
-                  "cutAffinityScore": 16,
-                  "addAffinityScore": 0,
-                  "netAffinityDelta": -16
-                }
-              ],
-              "swapImpacts": [
-                {
-                  "cutStrategyAffinityScore": 20,
-                  "addStrategyAffinityScore": 0,
-                  "cutStrategyProtectionApplied": 4,
-                  "cutMatchedStrategies": [
-                    "big-mana",
-                    "combat-tokens"
-                  ],
-                  "addMatchedStrategies": [],
-                  "locallyUnreplacedStrategies": [
-                    "big-mana",
-                    "combat-tokens"
-                  ],
-                  "cutRoles": [
-                    "creature",
-                    "extra combat",
-                    "haste",
-                    "untap engine"
-                  ],
-                  "addRoles": [
-                    "equipment",
-                    "protection"
-                  ],
-                  "unreplacedRoles": [
-                    "creature",
-                    "extra combat",
-                    "haste",
-                    "untap engine"
-                  ],
-                  "meaningfulStrategyLoss": true,
-                  "verdict": "meaningful-strategy-loss"
-                }
-              ],
-              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
-            },
-            "planProvenance": {
-              "targetBracket": 5,
-              "winRouteVerificationStatus": "no-verified-route",
-              "winPackageDiscoveryAttempted": true,
-              "winPackageSourceStatus": "no-verified-win-package",
-              "winPackageOutcome": "completed-no-verified-package",
-              "selectedComboId": null,
-              "selectedBracketTag": null,
-              "missingSeedNames": [],
-              "atomicWinPackageInjected": false,
-              "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
-              "candidateDiscovery": {
-                "mode": "exhaustive-bounded-printing-policy",
-                "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 1176,
-                "roleSearchResultCap": null,
-                "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
-              },
-              "authoritativeTargetGatePriorities": [],
-              "structuralDeficits": [
-                {
-                  "role": "protection",
-                  "current": 6,
-                  "target": 8,
-                  "deficit": 2,
-                  "prioritySource": "aspirational-role-target",
-                  "targetGate": null
-                },
-                {
-                  "role": "tutor",
-                  "current": 8,
-                  "target": 10,
-                  "deficit": 2,
-                  "prioritySource": "aspirational-role-target",
-                  "targetGate": null
-                }
-              ],
-              "candidateGroups": [
-                {
-                  "role": "protection",
-                  "prioritySource": "aspirational-role-target",
-                  "targetGate": null,
-                  "current": 6,
-                  "target": 8,
-                  "deficit": 2,
-                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                  "candidateCount": 5
-                },
-                {
-                  "role": "tutor",
-                  "prioritySource": "aspirational-role-target",
-                  "targetGate": null,
-                  "current": 8,
-                  "target": 10,
-                  "deficit": 2,
-                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                  "candidateCount": 1
-                }
-              ]
-            },
-            "swaps": [
-              {
-                "out": "Aurelia, the Warleader",
-                "in": "Commander's Plate",
-                "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
-                "recommendedPrinting": {
-                  "set": "SLD",
-                  "collectorNumber": "1733",
-                  "finish": "nonfoil",
-                  "priceUsd": 46.91
-                },
-                "structuralPairing": {
-                  "addressedRole": "protection",
-                  "remainingStructuralDeficitAfterSwap": 3,
-                  "authoritativeTargetGate": null,
-                  "nonlandManaValueReduction": null,
-                  "persistentColoredManaSourcesAfterSwap": 12,
-                  "persistentColoredManaSourceFloor": 8,
-                  "strategyPreservation": {
-                    "cutStrategyAffinityScore": 20,
-                    "addStrategyAffinityScore": 0,
-                    "cutStrategyProtectionApplied": 4,
-                    "cutMatchedStrategies": [
-                      "big-mana",
-                      "combat-tokens"
-                    ],
-                    "addMatchedStrategies": [],
-                    "locallyUnreplacedStrategies": [
-                      "big-mana",
-                      "combat-tokens"
-                    ],
-                    "cutRoles": [
-                      "creature",
-                      "extra combat",
-                      "haste",
-                      "untap engine"
-                    ],
-                    "addRoles": [
-                      "equipment",
-                      "protection"
-                    ],
-                    "unreplacedRoles": [
-                      "creature",
-                      "extra combat",
-                      "haste",
-                      "untap engine"
-                    ],
-                    "meaningfulStrategyLoss": true,
-                    "verdict": "meaningful-strategy-loss"
-                  }
-                }
-              }
-            ]
-          },
-          {
-            "candidate": 2,
-            "eligible": false,
-            "reason": "package-causes-a-meaningful-commander-strategy-loss",
-            "attemptedSwaps": 1,
-            "actualSwaps": 1,
-            "estimatedSpendUsd": 0.36,
+            "estimatedSpendUsd": 0.33,
             "unknownPriceCount": 0,
             "improvementScore": 12.583,
             "significantRegression": false,
@@ -3581,7 +3378,7 @@
                   "set": "MSC",
                   "collectorNumber": "122",
                   "finish": "nonfoil",
-                  "priceUsd": 0.36
+                  "priceUsd": 0.33
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -3628,12 +3425,12 @@
             ]
           },
           {
-            "candidate": 3,
+            "candidate": 2,
             "eligible": false,
             "reason": "package-causes-a-meaningful-commander-strategy-loss",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendUsd": 33.69,
+            "estimatedSpendUsd": 35.29,
             "unknownPriceCount": 0,
             "improvementScore": 12.583,
             "significantRegression": false,
@@ -3787,7 +3584,7 @@
                   "set": "MAR",
                   "collectorNumber": "51",
                   "finish": "nonfoil",
-                  "priceUsd": 33.69
+                  "priceUsd": 35.29
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -3833,12 +3630,12 @@
             ]
           },
           {
-            "candidate": 4,
+            "candidate": 3,
             "eligible": false,
             "reason": "package-causes-a-meaningful-commander-strategy-loss",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendUsd": 3.55,
+            "estimatedSpendUsd": 3.87,
             "unknownPriceCount": 0,
             "improvementScore": 13.344,
             "significantRegression": false,
@@ -3994,7 +3791,7 @@
                   "set": "MAR",
                   "collectorNumber": "37",
                   "finish": "nonfoil",
-                  "priceUsd": 3.55
+                  "priceUsd": 3.87
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -4042,12 +3839,12 @@
             ]
           },
           {
-            "candidate": 5,
+            "candidate": 4,
             "eligible": false,
             "reason": "package-causes-a-meaningful-commander-strategy-loss",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendUsd": 33.43,
+            "estimatedSpendUsd": 34.3,
             "unknownPriceCount": 0,
             "improvementScore": 12.583,
             "significantRegression": false,
@@ -4201,7 +3998,7 @@
                   "set": "SLD",
                   "collectorNumber": "1728",
                   "finish": "nonfoil",
-                  "priceUsd": 33.43
+                  "priceUsd": 34.3
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -4245,6 +4042,211 @@
                 }
               }
             ]
+          },
+          {
+            "candidate": 5,
+            "eligible": false,
+            "reason": "package-causes-a-meaningful-commander-strategy-loss",
+            "attemptedSwaps": 1,
+            "actualSwaps": 1,
+            "estimatedSpendUsd": 1.72,
+            "unknownPriceCount": 0,
+            "improvementScore": 11.503,
+            "significantRegression": false,
+            "zeroTargetProgressWhileFailedGatesRemain": true,
+            "targetGate": {
+              "applicable": true,
+              "score": 0,
+              "failedBefore": [
+                "verified-winning-combo"
+              ],
+              "failedAfter": [
+                "verified-winning-combo"
+              ],
+              "repairedGates": [],
+              "advancedFailedGates": [],
+              "regressedGates": [],
+              "ignoredUnverifiedGates": [
+                "competitive-combo-signal"
+              ]
+            },
+            "themeAudit": null,
+            "strategyPreservation": {
+              "status": "meaningful-strategy-loss",
+              "evidenceComplete": true,
+              "meaningfulLosses": [
+                {
+                  "strategy": "combat-tokens",
+                  "commanderStrategyScore": 28,
+                  "cutAffinityScore": 16,
+                  "addAffinityScore": 0,
+                  "netAffinityLoss": 16,
+                  "strongestCutProtectionApplied": 4
+                }
+              ],
+              "strategyDeltas": [
+                {
+                  "strategy": "big-mana",
+                  "cutAffinityScore": 4,
+                  "addAffinityScore": 0,
+                  "netAffinityDelta": -4
+                },
+                {
+                  "strategy": "combat-tokens",
+                  "cutAffinityScore": 16,
+                  "addAffinityScore": 0,
+                  "netAffinityDelta": -16
+                }
+              ],
+              "swapImpacts": [
+                {
+                  "cutStrategyAffinityScore": 20,
+                  "addStrategyAffinityScore": 0,
+                  "cutStrategyProtectionApplied": 4,
+                  "cutMatchedStrategies": [
+                    "big-mana",
+                    "combat-tokens"
+                  ],
+                  "addMatchedStrategies": [],
+                  "locallyUnreplacedStrategies": [
+                    "big-mana",
+                    "combat-tokens"
+                  ],
+                  "cutRoles": [
+                    "creature",
+                    "extra combat",
+                    "haste",
+                    "untap engine"
+                  ],
+                  "addRoles": [
+                    "equipment",
+                    "protection"
+                  ],
+                  "unreplacedRoles": [
+                    "creature",
+                    "extra combat",
+                    "haste",
+                    "untap engine"
+                  ],
+                  "meaningfulStrategyLoss": true,
+                  "verdict": "meaningful-strategy-loss"
+                }
+              ],
+              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+            },
+            "planProvenance": {
+              "targetBracket": 5,
+              "winRouteVerificationStatus": "no-verified-route",
+              "winPackageDiscoveryAttempted": true,
+              "winPackageSourceStatus": "no-verified-win-package",
+              "winPackageOutcome": "completed-no-verified-package",
+              "selectedComboId": null,
+              "selectedBracketTag": null,
+              "missingSeedNames": [],
+              "atomicWinPackageInjected": false,
+              "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+              "candidateDiscovery": {
+                "mode": "exhaustive-bounded-printing-policy",
+                "exhaustiveWithinSafetyCeilings": true,
+                "eligiblePoolCards": 1176,
+                "roleSearchResultCap": null,
+                "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+              },
+              "authoritativeTargetGatePriorities": [],
+              "structuralDeficits": [
+                {
+                  "role": "protection",
+                  "current": 6,
+                  "target": 8,
+                  "deficit": 2,
+                  "prioritySource": "aspirational-role-target",
+                  "targetGate": null
+                },
+                {
+                  "role": "tutor",
+                  "current": 8,
+                  "target": 10,
+                  "deficit": 2,
+                  "prioritySource": "aspirational-role-target",
+                  "targetGate": null
+                }
+              ],
+              "candidateGroups": [
+                {
+                  "role": "protection",
+                  "prioritySource": "aspirational-role-target",
+                  "targetGate": null,
+                  "current": 6,
+                  "target": 8,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateCount": 5
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "aspirational-role-target",
+                  "targetGate": null,
+                  "current": 8,
+                  "target": 10,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateCount": 1
+                }
+              ]
+            },
+            "swaps": [
+              {
+                "out": "Aurelia, the Warleader",
+                "in": "Whispersilk Cloak",
+                "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
+                "recommendedPrinting": {
+                  "set": "MSC",
+                  "collectorNumber": "225",
+                  "finish": "nonfoil",
+                  "priceUsd": 1.72
+                },
+                "structuralPairing": {
+                  "addressedRole": "protection",
+                  "remainingStructuralDeficitAfterSwap": 3,
+                  "authoritativeTargetGate": null,
+                  "nonlandManaValueReduction": null,
+                  "persistentColoredManaSourcesAfterSwap": 12,
+                  "persistentColoredManaSourceFloor": 8,
+                  "strategyPreservation": {
+                    "cutStrategyAffinityScore": 20,
+                    "addStrategyAffinityScore": 0,
+                    "cutStrategyProtectionApplied": 4,
+                    "cutMatchedStrategies": [
+                      "big-mana",
+                      "combat-tokens"
+                    ],
+                    "addMatchedStrategies": [],
+                    "locallyUnreplacedStrategies": [
+                      "big-mana",
+                      "combat-tokens"
+                    ],
+                    "cutRoles": [
+                      "creature",
+                      "extra combat",
+                      "haste",
+                      "untap engine"
+                    ],
+                    "addRoles": [
+                      "equipment",
+                      "protection"
+                    ],
+                    "unreplacedRoles": [
+                      "creature",
+                      "extra combat",
+                      "haste",
+                      "untap engine"
+                    ],
+                    "meaningfulStrategyLoss": true,
+                    "verdict": "meaningful-strategy-loss"
+                  }
+                }
+              }
+            ]
           }
         ],
         "candidateAttempts": [
@@ -4263,212 +4265,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 5,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 46.91,
-                "unknownPriceCount": 0,
-                "improvementScore": 19.239,
-                "significantRegression": false,
-                "zeroTargetProgressWhileFailedGatesRemain": true,
-                "targetGate": {
-                  "applicable": true,
-                  "score": 0,
-                  "failedBefore": [
-                    "verified-winning-combo"
-                  ],
-                  "failedAfter": [
-                    "verified-winning-combo"
-                  ],
-                  "repairedGates": [],
-                  "advancedFailedGates": [],
-                  "regressedGates": [],
-                  "ignoredUnverifiedGates": [
-                    "competitive-combo-signal"
-                  ]
-                },
-                "themeAudit": null,
-                "strategyPreservation": {
-                  "status": "meaningful-strategy-loss",
-                  "evidenceComplete": true,
-                  "meaningfulLosses": [
-                    {
-                      "strategy": "combat-tokens",
-                      "commanderStrategyScore": 28,
-                      "cutAffinityScore": 16,
-                      "addAffinityScore": 0,
-                      "netAffinityLoss": 16,
-                      "strongestCutProtectionApplied": 4
-                    }
-                  ],
-                  "strategyDeltas": [
-                    {
-                      "strategy": "big-mana",
-                      "cutAffinityScore": 4,
-                      "addAffinityScore": 0,
-                      "netAffinityDelta": -4
-                    },
-                    {
-                      "strategy": "combat-tokens",
-                      "cutAffinityScore": 16,
-                      "addAffinityScore": 0,
-                      "netAffinityDelta": -16
-                    }
-                  ],
-                  "swapImpacts": [
-                    {
-                      "cutStrategyAffinityScore": 20,
-                      "addStrategyAffinityScore": 0,
-                      "cutStrategyProtectionApplied": 4,
-                      "cutMatchedStrategies": [
-                        "big-mana",
-                        "combat-tokens"
-                      ],
-                      "addMatchedStrategies": [],
-                      "locallyUnreplacedStrategies": [
-                        "big-mana",
-                        "combat-tokens"
-                      ],
-                      "cutRoles": [
-                        "creature",
-                        "extra combat",
-                        "haste",
-                        "untap engine"
-                      ],
-                      "addRoles": [
-                        "equipment",
-                        "protection"
-                      ],
-                      "unreplacedRoles": [
-                        "creature",
-                        "extra combat",
-                        "haste",
-                        "untap engine"
-                      ],
-                      "meaningfulStrategyLoss": true,
-                      "verdict": "meaningful-strategy-loss"
-                    }
-                  ],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
-                },
-                "planProvenance": {
-                  "targetBracket": 5,
-                  "winRouteVerificationStatus": "no-verified-route",
-                  "winPackageDiscoveryAttempted": true,
-                  "winPackageSourceStatus": "no-verified-win-package",
-                  "winPackageOutcome": "completed-no-verified-package",
-                  "selectedComboId": null,
-                  "selectedBracketTag": null,
-                  "missingSeedNames": [],
-                  "atomicWinPackageInjected": false,
-                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
-                  "candidateDiscovery": {
-                    "mode": "exhaustive-bounded-printing-policy",
-                    "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 1176,
-                    "roleSearchResultCap": null,
-                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
-                  },
-                  "authoritativeTargetGatePriorities": [],
-                  "structuralDeficits": [
-                    {
-                      "role": "protection",
-                      "current": 6,
-                      "target": 8,
-                      "deficit": 2,
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null
-                    },
-                    {
-                      "role": "tutor",
-                      "current": 8,
-                      "target": 10,
-                      "deficit": 2,
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null
-                    }
-                  ],
-                  "candidateGroups": [
-                    {
-                      "role": "protection",
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null,
-                      "current": 6,
-                      "target": 8,
-                      "deficit": 2,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateCount": 5
-                    },
-                    {
-                      "role": "tutor",
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null,
-                      "current": 8,
-                      "target": 10,
-                      "deficit": 2,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateCount": 1
-                    }
-                  ]
-                },
-                "swaps": [
-                  {
-                    "out": "Aurelia, the Warleader",
-                    "in": "Commander's Plate",
-                    "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
-                    "recommendedPrinting": {
-                      "set": "SLD",
-                      "collectorNumber": "1733",
-                      "finish": "nonfoil",
-                      "priceUsd": 46.91
-                    },
-                    "structuralPairing": {
-                      "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 3,
-                      "authoritativeTargetGate": null,
-                      "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 12,
-                      "persistentColoredManaSourceFloor": 8,
-                      "strategyPreservation": {
-                        "cutStrategyAffinityScore": 20,
-                        "addStrategyAffinityScore": 0,
-                        "cutStrategyProtectionApplied": 4,
-                        "cutMatchedStrategies": [
-                          "big-mana",
-                          "combat-tokens"
-                        ],
-                        "addMatchedStrategies": [],
-                        "locallyUnreplacedStrategies": [
-                          "big-mana",
-                          "combat-tokens"
-                        ],
-                        "cutRoles": [
-                          "creature",
-                          "extra combat",
-                          "haste",
-                          "untap engine"
-                        ],
-                        "addRoles": [
-                          "equipment",
-                          "protection"
-                        ],
-                        "unreplacedRoles": [
-                          "creature",
-                          "extra combat",
-                          "haste",
-                          "untap engine"
-                        ],
-                        "meaningfulStrategyLoss": true,
-                        "verdict": "meaningful-strategy-loss"
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "candidate": 2,
-                "eligible": false,
-                "reason": "package-causes-a-meaningful-commander-strategy-loss",
-                "attemptedSwaps": 5,
-                "actualSwaps": 1,
-                "estimatedSpendUsd": 0.36,
+                "estimatedSpendUsd": 0.33,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.583,
                 "significantRegression": false,
@@ -4623,7 +4420,7 @@
                       "set": "MSC",
                       "collectorNumber": "122",
                       "finish": "nonfoil",
-                      "priceUsd": 0.36
+                      "priceUsd": 0.33
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -4670,12 +4467,12 @@
                 ]
               },
               {
-                "candidate": 3,
+                "candidate": 2,
                 "eligible": false,
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 5,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 33.69,
+                "estimatedSpendUsd": 35.29,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.583,
                 "significantRegression": false,
@@ -4829,7 +4626,7 @@
                       "set": "MAR",
                       "collectorNumber": "51",
                       "finish": "nonfoil",
-                      "priceUsd": 33.69
+                      "priceUsd": 35.29
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -4875,12 +4672,12 @@
                 ]
               },
               {
-                "candidate": 4,
+                "candidate": 3,
                 "eligible": false,
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 5,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 3.55,
+                "estimatedSpendUsd": 3.87,
                 "unknownPriceCount": 0,
                 "improvementScore": 13.344,
                 "significantRegression": false,
@@ -5036,7 +4833,7 @@
                       "set": "MAR",
                       "collectorNumber": "37",
                       "finish": "nonfoil",
-                      "priceUsd": 3.55
+                      "priceUsd": 3.87
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -5084,12 +4881,12 @@
                 ]
               },
               {
-                "candidate": 5,
+                "candidate": 4,
                 "eligible": false,
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 5,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 33.43,
+                "estimatedSpendUsd": 34.3,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.583,
                 "significantRegression": false,
@@ -5243,7 +5040,7 @@
                       "set": "SLD",
                       "collectorNumber": "1728",
                       "finish": "nonfoil",
-                      "priceUsd": 33.43
+                      "priceUsd": 34.3
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -5273,6 +5070,211 @@
                         ],
                         "addRoles": [
                           "board protection",
+                          "protection"
+                        ],
+                        "unreplacedRoles": [
+                          "creature",
+                          "extra combat",
+                          "haste",
+                          "untap engine"
+                        ],
+                        "meaningfulStrategyLoss": true,
+                        "verdict": "meaningful-strategy-loss"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "candidate": 5,
+                "eligible": false,
+                "reason": "package-causes-a-meaningful-commander-strategy-loss",
+                "attemptedSwaps": 5,
+                "actualSwaps": 1,
+                "estimatedSpendUsd": 1.72,
+                "unknownPriceCount": 0,
+                "improvementScore": 11.503,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "meaningful-strategy-loss",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [
+                    {
+                      "strategy": "combat-tokens",
+                      "commanderStrategyScore": 28,
+                      "cutAffinityScore": 16,
+                      "addAffinityScore": 0,
+                      "netAffinityLoss": 16,
+                      "strongestCutProtectionApplied": 4
+                    }
+                  ],
+                  "strategyDeltas": [
+                    {
+                      "strategy": "big-mana",
+                      "cutAffinityScore": 4,
+                      "addAffinityScore": 0,
+                      "netAffinityDelta": -4
+                    },
+                    {
+                      "strategy": "combat-tokens",
+                      "cutAffinityScore": 16,
+                      "addAffinityScore": 0,
+                      "netAffinityDelta": -16
+                    }
+                  ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 20,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "big-mana",
+                        "combat-tokens"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "big-mana",
+                        "combat-tokens"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "extra combat",
+                        "haste",
+                        "untap engine"
+                      ],
+                      "addRoles": [
+                        "equipment",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "extra combat",
+                        "haste",
+                        "untap engine"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "protection",
+                      "current": 6,
+                      "target": 8,
+                      "deficit": 2,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    },
+                    {
+                      "role": "tutor",
+                      "current": 8,
+                      "target": 10,
+                      "deficit": 2,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": [
+                    {
+                      "role": "protection",
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null,
+                      "current": 6,
+                      "target": 8,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateCount": 5
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null,
+                      "current": 8,
+                      "target": 10,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateCount": 1
+                    }
+                  ]
+                },
+                "swaps": [
+                  {
+                    "out": "Aurelia, the Warleader",
+                    "in": "Whispersilk Cloak",
+                    "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "recommendedPrinting": {
+                      "set": "MSC",
+                      "collectorNumber": "225",
+                      "finish": "nonfoil",
+                      "priceUsd": 1.72
+                    },
+                    "structuralPairing": {
+                      "addressedRole": "protection",
+                      "remainingStructuralDeficitAfterSwap": 3,
+                      "authoritativeTargetGate": null,
+                      "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 12,
+                      "persistentColoredManaSourceFloor": 8,
+                      "strategyPreservation": {
+                        "cutStrategyAffinityScore": 20,
+                        "addStrategyAffinityScore": 0,
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "big-mana",
+                          "combat-tokens"
+                        ],
+                        "addMatchedStrategies": [],
+                        "locallyUnreplacedStrategies": [
+                          "big-mana",
+                          "combat-tokens"
+                        ],
+                        "cutRoles": [
+                          "creature",
+                          "extra combat",
+                          "haste",
+                          "untap engine"
+                        ],
+                        "addRoles": [
+                          "equipment",
                           "protection"
                         ],
                         "unreplacedRoles": [
@@ -5305,212 +5307,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 46.91,
-                "unknownPriceCount": 0,
-                "improvementScore": 19.239,
-                "significantRegression": false,
-                "zeroTargetProgressWhileFailedGatesRemain": true,
-                "targetGate": {
-                  "applicable": true,
-                  "score": 0,
-                  "failedBefore": [
-                    "verified-winning-combo"
-                  ],
-                  "failedAfter": [
-                    "verified-winning-combo"
-                  ],
-                  "repairedGates": [],
-                  "advancedFailedGates": [],
-                  "regressedGates": [],
-                  "ignoredUnverifiedGates": [
-                    "competitive-combo-signal"
-                  ]
-                },
-                "themeAudit": null,
-                "strategyPreservation": {
-                  "status": "meaningful-strategy-loss",
-                  "evidenceComplete": true,
-                  "meaningfulLosses": [
-                    {
-                      "strategy": "combat-tokens",
-                      "commanderStrategyScore": 28,
-                      "cutAffinityScore": 16,
-                      "addAffinityScore": 0,
-                      "netAffinityLoss": 16,
-                      "strongestCutProtectionApplied": 4
-                    }
-                  ],
-                  "strategyDeltas": [
-                    {
-                      "strategy": "big-mana",
-                      "cutAffinityScore": 4,
-                      "addAffinityScore": 0,
-                      "netAffinityDelta": -4
-                    },
-                    {
-                      "strategy": "combat-tokens",
-                      "cutAffinityScore": 16,
-                      "addAffinityScore": 0,
-                      "netAffinityDelta": -16
-                    }
-                  ],
-                  "swapImpacts": [
-                    {
-                      "cutStrategyAffinityScore": 20,
-                      "addStrategyAffinityScore": 0,
-                      "cutStrategyProtectionApplied": 4,
-                      "cutMatchedStrategies": [
-                        "big-mana",
-                        "combat-tokens"
-                      ],
-                      "addMatchedStrategies": [],
-                      "locallyUnreplacedStrategies": [
-                        "big-mana",
-                        "combat-tokens"
-                      ],
-                      "cutRoles": [
-                        "creature",
-                        "extra combat",
-                        "haste",
-                        "untap engine"
-                      ],
-                      "addRoles": [
-                        "equipment",
-                        "protection"
-                      ],
-                      "unreplacedRoles": [
-                        "creature",
-                        "extra combat",
-                        "haste",
-                        "untap engine"
-                      ],
-                      "meaningfulStrategyLoss": true,
-                      "verdict": "meaningful-strategy-loss"
-                    }
-                  ],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
-                },
-                "planProvenance": {
-                  "targetBracket": 5,
-                  "winRouteVerificationStatus": "no-verified-route",
-                  "winPackageDiscoveryAttempted": true,
-                  "winPackageSourceStatus": "no-verified-win-package",
-                  "winPackageOutcome": "completed-no-verified-package",
-                  "selectedComboId": null,
-                  "selectedBracketTag": null,
-                  "missingSeedNames": [],
-                  "atomicWinPackageInjected": false,
-                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
-                  "candidateDiscovery": {
-                    "mode": "exhaustive-bounded-printing-policy",
-                    "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 1176,
-                    "roleSearchResultCap": null,
-                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
-                  },
-                  "authoritativeTargetGatePriorities": [],
-                  "structuralDeficits": [
-                    {
-                      "role": "protection",
-                      "current": 6,
-                      "target": 8,
-                      "deficit": 2,
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null
-                    },
-                    {
-                      "role": "tutor",
-                      "current": 8,
-                      "target": 10,
-                      "deficit": 2,
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null
-                    }
-                  ],
-                  "candidateGroups": [
-                    {
-                      "role": "protection",
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null,
-                      "current": 6,
-                      "target": 8,
-                      "deficit": 2,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateCount": 5
-                    },
-                    {
-                      "role": "tutor",
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null,
-                      "current": 8,
-                      "target": 10,
-                      "deficit": 2,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateCount": 1
-                    }
-                  ]
-                },
-                "swaps": [
-                  {
-                    "out": "Aurelia, the Warleader",
-                    "in": "Commander's Plate",
-                    "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
-                    "recommendedPrinting": {
-                      "set": "SLD",
-                      "collectorNumber": "1733",
-                      "finish": "nonfoil",
-                      "priceUsd": 46.91
-                    },
-                    "structuralPairing": {
-                      "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 3,
-                      "authoritativeTargetGate": null,
-                      "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 12,
-                      "persistentColoredManaSourceFloor": 8,
-                      "strategyPreservation": {
-                        "cutStrategyAffinityScore": 20,
-                        "addStrategyAffinityScore": 0,
-                        "cutStrategyProtectionApplied": 4,
-                        "cutMatchedStrategies": [
-                          "big-mana",
-                          "combat-tokens"
-                        ],
-                        "addMatchedStrategies": [],
-                        "locallyUnreplacedStrategies": [
-                          "big-mana",
-                          "combat-tokens"
-                        ],
-                        "cutRoles": [
-                          "creature",
-                          "extra combat",
-                          "haste",
-                          "untap engine"
-                        ],
-                        "addRoles": [
-                          "equipment",
-                          "protection"
-                        ],
-                        "unreplacedRoles": [
-                          "creature",
-                          "extra combat",
-                          "haste",
-                          "untap engine"
-                        ],
-                        "meaningfulStrategyLoss": true,
-                        "verdict": "meaningful-strategy-loss"
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "candidate": 2,
-                "eligible": false,
-                "reason": "package-causes-a-meaningful-commander-strategy-loss",
-                "attemptedSwaps": 4,
-                "actualSwaps": 1,
-                "estimatedSpendUsd": 0.36,
+                "estimatedSpendUsd": 0.33,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.583,
                 "significantRegression": false,
@@ -5665,7 +5462,7 @@
                       "set": "MSC",
                       "collectorNumber": "122",
                       "finish": "nonfoil",
-                      "priceUsd": 0.36
+                      "priceUsd": 0.33
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -5712,12 +5509,12 @@
                 ]
               },
               {
-                "candidate": 3,
+                "candidate": 2,
                 "eligible": false,
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 33.69,
+                "estimatedSpendUsd": 35.29,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.583,
                 "significantRegression": false,
@@ -5871,7 +5668,7 @@
                       "set": "MAR",
                       "collectorNumber": "51",
                       "finish": "nonfoil",
-                      "priceUsd": 33.69
+                      "priceUsd": 35.29
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -5917,12 +5714,12 @@
                 ]
               },
               {
-                "candidate": 4,
+                "candidate": 3,
                 "eligible": false,
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 3.55,
+                "estimatedSpendUsd": 3.87,
                 "unknownPriceCount": 0,
                 "improvementScore": 13.344,
                 "significantRegression": false,
@@ -6078,7 +5875,7 @@
                       "set": "MAR",
                       "collectorNumber": "37",
                       "finish": "nonfoil",
-                      "priceUsd": 3.55
+                      "priceUsd": 3.87
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -6126,12 +5923,12 @@
                 ]
               },
               {
-                "candidate": 5,
+                "candidate": 4,
                 "eligible": false,
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 33.43,
+                "estimatedSpendUsd": 34.3,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.583,
                 "significantRegression": false,
@@ -6285,7 +6082,7 @@
                       "set": "SLD",
                       "collectorNumber": "1728",
                       "finish": "nonfoil",
-                      "priceUsd": 33.43
+                      "priceUsd": 34.3
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -6315,6 +6112,211 @@
                         ],
                         "addRoles": [
                           "board protection",
+                          "protection"
+                        ],
+                        "unreplacedRoles": [
+                          "creature",
+                          "extra combat",
+                          "haste",
+                          "untap engine"
+                        ],
+                        "meaningfulStrategyLoss": true,
+                        "verdict": "meaningful-strategy-loss"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "candidate": 5,
+                "eligible": false,
+                "reason": "package-causes-a-meaningful-commander-strategy-loss",
+                "attemptedSwaps": 4,
+                "actualSwaps": 1,
+                "estimatedSpendUsd": 1.72,
+                "unknownPriceCount": 0,
+                "improvementScore": 11.503,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "meaningful-strategy-loss",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [
+                    {
+                      "strategy": "combat-tokens",
+                      "commanderStrategyScore": 28,
+                      "cutAffinityScore": 16,
+                      "addAffinityScore": 0,
+                      "netAffinityLoss": 16,
+                      "strongestCutProtectionApplied": 4
+                    }
+                  ],
+                  "strategyDeltas": [
+                    {
+                      "strategy": "big-mana",
+                      "cutAffinityScore": 4,
+                      "addAffinityScore": 0,
+                      "netAffinityDelta": -4
+                    },
+                    {
+                      "strategy": "combat-tokens",
+                      "cutAffinityScore": 16,
+                      "addAffinityScore": 0,
+                      "netAffinityDelta": -16
+                    }
+                  ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 20,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "big-mana",
+                        "combat-tokens"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "big-mana",
+                        "combat-tokens"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "extra combat",
+                        "haste",
+                        "untap engine"
+                      ],
+                      "addRoles": [
+                        "equipment",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "extra combat",
+                        "haste",
+                        "untap engine"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "protection",
+                      "current": 6,
+                      "target": 8,
+                      "deficit": 2,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    },
+                    {
+                      "role": "tutor",
+                      "current": 8,
+                      "target": 10,
+                      "deficit": 2,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": [
+                    {
+                      "role": "protection",
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null,
+                      "current": 6,
+                      "target": 8,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateCount": 5
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null,
+                      "current": 8,
+                      "target": 10,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateCount": 1
+                    }
+                  ]
+                },
+                "swaps": [
+                  {
+                    "out": "Aurelia, the Warleader",
+                    "in": "Whispersilk Cloak",
+                    "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "recommendedPrinting": {
+                      "set": "MSC",
+                      "collectorNumber": "225",
+                      "finish": "nonfoil",
+                      "priceUsd": 1.72
+                    },
+                    "structuralPairing": {
+                      "addressedRole": "protection",
+                      "remainingStructuralDeficitAfterSwap": 3,
+                      "authoritativeTargetGate": null,
+                      "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 12,
+                      "persistentColoredManaSourceFloor": 8,
+                      "strategyPreservation": {
+                        "cutStrategyAffinityScore": 20,
+                        "addStrategyAffinityScore": 0,
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "big-mana",
+                          "combat-tokens"
+                        ],
+                        "addMatchedStrategies": [],
+                        "locallyUnreplacedStrategies": [
+                          "big-mana",
+                          "combat-tokens"
+                        ],
+                        "cutRoles": [
+                          "creature",
+                          "extra combat",
+                          "haste",
+                          "untap engine"
+                        ],
+                        "addRoles": [
+                          "equipment",
                           "protection"
                         ],
                         "unreplacedRoles": [
@@ -6347,212 +6349,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 46.91,
-                "unknownPriceCount": 0,
-                "improvementScore": 19.239,
-                "significantRegression": false,
-                "zeroTargetProgressWhileFailedGatesRemain": true,
-                "targetGate": {
-                  "applicable": true,
-                  "score": 0,
-                  "failedBefore": [
-                    "verified-winning-combo"
-                  ],
-                  "failedAfter": [
-                    "verified-winning-combo"
-                  ],
-                  "repairedGates": [],
-                  "advancedFailedGates": [],
-                  "regressedGates": [],
-                  "ignoredUnverifiedGates": [
-                    "competitive-combo-signal"
-                  ]
-                },
-                "themeAudit": null,
-                "strategyPreservation": {
-                  "status": "meaningful-strategy-loss",
-                  "evidenceComplete": true,
-                  "meaningfulLosses": [
-                    {
-                      "strategy": "combat-tokens",
-                      "commanderStrategyScore": 28,
-                      "cutAffinityScore": 16,
-                      "addAffinityScore": 0,
-                      "netAffinityLoss": 16,
-                      "strongestCutProtectionApplied": 4
-                    }
-                  ],
-                  "strategyDeltas": [
-                    {
-                      "strategy": "big-mana",
-                      "cutAffinityScore": 4,
-                      "addAffinityScore": 0,
-                      "netAffinityDelta": -4
-                    },
-                    {
-                      "strategy": "combat-tokens",
-                      "cutAffinityScore": 16,
-                      "addAffinityScore": 0,
-                      "netAffinityDelta": -16
-                    }
-                  ],
-                  "swapImpacts": [
-                    {
-                      "cutStrategyAffinityScore": 20,
-                      "addStrategyAffinityScore": 0,
-                      "cutStrategyProtectionApplied": 4,
-                      "cutMatchedStrategies": [
-                        "big-mana",
-                        "combat-tokens"
-                      ],
-                      "addMatchedStrategies": [],
-                      "locallyUnreplacedStrategies": [
-                        "big-mana",
-                        "combat-tokens"
-                      ],
-                      "cutRoles": [
-                        "creature",
-                        "extra combat",
-                        "haste",
-                        "untap engine"
-                      ],
-                      "addRoles": [
-                        "equipment",
-                        "protection"
-                      ],
-                      "unreplacedRoles": [
-                        "creature",
-                        "extra combat",
-                        "haste",
-                        "untap engine"
-                      ],
-                      "meaningfulStrategyLoss": true,
-                      "verdict": "meaningful-strategy-loss"
-                    }
-                  ],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
-                },
-                "planProvenance": {
-                  "targetBracket": 5,
-                  "winRouteVerificationStatus": "no-verified-route",
-                  "winPackageDiscoveryAttempted": true,
-                  "winPackageSourceStatus": "no-verified-win-package",
-                  "winPackageOutcome": "completed-no-verified-package",
-                  "selectedComboId": null,
-                  "selectedBracketTag": null,
-                  "missingSeedNames": [],
-                  "atomicWinPackageInjected": false,
-                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
-                  "candidateDiscovery": {
-                    "mode": "exhaustive-bounded-printing-policy",
-                    "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 1176,
-                    "roleSearchResultCap": null,
-                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
-                  },
-                  "authoritativeTargetGatePriorities": [],
-                  "structuralDeficits": [
-                    {
-                      "role": "protection",
-                      "current": 6,
-                      "target": 8,
-                      "deficit": 2,
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null
-                    },
-                    {
-                      "role": "tutor",
-                      "current": 8,
-                      "target": 10,
-                      "deficit": 2,
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null
-                    }
-                  ],
-                  "candidateGroups": [
-                    {
-                      "role": "protection",
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null,
-                      "current": 6,
-                      "target": 8,
-                      "deficit": 2,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateCount": 5
-                    },
-                    {
-                      "role": "tutor",
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null,
-                      "current": 8,
-                      "target": 10,
-                      "deficit": 2,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateCount": 1
-                    }
-                  ]
-                },
-                "swaps": [
-                  {
-                    "out": "Aurelia, the Warleader",
-                    "in": "Commander's Plate",
-                    "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
-                    "recommendedPrinting": {
-                      "set": "SLD",
-                      "collectorNumber": "1733",
-                      "finish": "nonfoil",
-                      "priceUsd": 46.91
-                    },
-                    "structuralPairing": {
-                      "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 3,
-                      "authoritativeTargetGate": null,
-                      "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 12,
-                      "persistentColoredManaSourceFloor": 8,
-                      "strategyPreservation": {
-                        "cutStrategyAffinityScore": 20,
-                        "addStrategyAffinityScore": 0,
-                        "cutStrategyProtectionApplied": 4,
-                        "cutMatchedStrategies": [
-                          "big-mana",
-                          "combat-tokens"
-                        ],
-                        "addMatchedStrategies": [],
-                        "locallyUnreplacedStrategies": [
-                          "big-mana",
-                          "combat-tokens"
-                        ],
-                        "cutRoles": [
-                          "creature",
-                          "extra combat",
-                          "haste",
-                          "untap engine"
-                        ],
-                        "addRoles": [
-                          "equipment",
-                          "protection"
-                        ],
-                        "unreplacedRoles": [
-                          "creature",
-                          "extra combat",
-                          "haste",
-                          "untap engine"
-                        ],
-                        "meaningfulStrategyLoss": true,
-                        "verdict": "meaningful-strategy-loss"
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "candidate": 2,
-                "eligible": false,
-                "reason": "package-causes-a-meaningful-commander-strategy-loss",
-                "attemptedSwaps": 3,
-                "actualSwaps": 1,
-                "estimatedSpendUsd": 0.36,
+                "estimatedSpendUsd": 0.33,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.583,
                 "significantRegression": false,
@@ -6707,7 +6504,7 @@
                       "set": "MSC",
                       "collectorNumber": "122",
                       "finish": "nonfoil",
-                      "priceUsd": 0.36
+                      "priceUsd": 0.33
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -6754,12 +6551,12 @@
                 ]
               },
               {
-                "candidate": 3,
+                "candidate": 2,
                 "eligible": false,
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 33.69,
+                "estimatedSpendUsd": 35.29,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.583,
                 "significantRegression": false,
@@ -6913,7 +6710,7 @@
                       "set": "MAR",
                       "collectorNumber": "51",
                       "finish": "nonfoil",
-                      "priceUsd": 33.69
+                      "priceUsd": 35.29
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -6959,12 +6756,12 @@
                 ]
               },
               {
-                "candidate": 4,
+                "candidate": 3,
                 "eligible": false,
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 3.55,
+                "estimatedSpendUsd": 3.87,
                 "unknownPriceCount": 0,
                 "improvementScore": 13.344,
                 "significantRegression": false,
@@ -7120,7 +6917,7 @@
                       "set": "MAR",
                       "collectorNumber": "37",
                       "finish": "nonfoil",
-                      "priceUsd": 3.55
+                      "priceUsd": 3.87
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -7168,12 +6965,12 @@
                 ]
               },
               {
-                "candidate": 5,
+                "candidate": 4,
                 "eligible": false,
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 33.43,
+                "estimatedSpendUsd": 34.3,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.583,
                 "significantRegression": false,
@@ -7327,7 +7124,7 @@
                       "set": "SLD",
                       "collectorNumber": "1728",
                       "finish": "nonfoil",
-                      "priceUsd": 33.43
+                      "priceUsd": 34.3
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -7357,6 +7154,211 @@
                         ],
                         "addRoles": [
                           "board protection",
+                          "protection"
+                        ],
+                        "unreplacedRoles": [
+                          "creature",
+                          "extra combat",
+                          "haste",
+                          "untap engine"
+                        ],
+                        "meaningfulStrategyLoss": true,
+                        "verdict": "meaningful-strategy-loss"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "candidate": 5,
+                "eligible": false,
+                "reason": "package-causes-a-meaningful-commander-strategy-loss",
+                "attemptedSwaps": 3,
+                "actualSwaps": 1,
+                "estimatedSpendUsd": 1.72,
+                "unknownPriceCount": 0,
+                "improvementScore": 11.503,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "meaningful-strategy-loss",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [
+                    {
+                      "strategy": "combat-tokens",
+                      "commanderStrategyScore": 28,
+                      "cutAffinityScore": 16,
+                      "addAffinityScore": 0,
+                      "netAffinityLoss": 16,
+                      "strongestCutProtectionApplied": 4
+                    }
+                  ],
+                  "strategyDeltas": [
+                    {
+                      "strategy": "big-mana",
+                      "cutAffinityScore": 4,
+                      "addAffinityScore": 0,
+                      "netAffinityDelta": -4
+                    },
+                    {
+                      "strategy": "combat-tokens",
+                      "cutAffinityScore": 16,
+                      "addAffinityScore": 0,
+                      "netAffinityDelta": -16
+                    }
+                  ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 20,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "big-mana",
+                        "combat-tokens"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "big-mana",
+                        "combat-tokens"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "extra combat",
+                        "haste",
+                        "untap engine"
+                      ],
+                      "addRoles": [
+                        "equipment",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "extra combat",
+                        "haste",
+                        "untap engine"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "protection",
+                      "current": 6,
+                      "target": 8,
+                      "deficit": 2,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    },
+                    {
+                      "role": "tutor",
+                      "current": 8,
+                      "target": 10,
+                      "deficit": 2,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": [
+                    {
+                      "role": "protection",
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null,
+                      "current": 6,
+                      "target": 8,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateCount": 5
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null,
+                      "current": 8,
+                      "target": 10,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateCount": 1
+                    }
+                  ]
+                },
+                "swaps": [
+                  {
+                    "out": "Aurelia, the Warleader",
+                    "in": "Whispersilk Cloak",
+                    "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "recommendedPrinting": {
+                      "set": "MSC",
+                      "collectorNumber": "225",
+                      "finish": "nonfoil",
+                      "priceUsd": 1.72
+                    },
+                    "structuralPairing": {
+                      "addressedRole": "protection",
+                      "remainingStructuralDeficitAfterSwap": 3,
+                      "authoritativeTargetGate": null,
+                      "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 12,
+                      "persistentColoredManaSourceFloor": 8,
+                      "strategyPreservation": {
+                        "cutStrategyAffinityScore": 20,
+                        "addStrategyAffinityScore": 0,
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "big-mana",
+                          "combat-tokens"
+                        ],
+                        "addMatchedStrategies": [],
+                        "locallyUnreplacedStrategies": [
+                          "big-mana",
+                          "combat-tokens"
+                        ],
+                        "cutRoles": [
+                          "creature",
+                          "extra combat",
+                          "haste",
+                          "untap engine"
+                        ],
+                        "addRoles": [
+                          "equipment",
                           "protection"
                         ],
                         "unreplacedRoles": [
@@ -7389,212 +7391,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 2,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 46.91,
-                "unknownPriceCount": 0,
-                "improvementScore": 19.239,
-                "significantRegression": false,
-                "zeroTargetProgressWhileFailedGatesRemain": true,
-                "targetGate": {
-                  "applicable": true,
-                  "score": 0,
-                  "failedBefore": [
-                    "verified-winning-combo"
-                  ],
-                  "failedAfter": [
-                    "verified-winning-combo"
-                  ],
-                  "repairedGates": [],
-                  "advancedFailedGates": [],
-                  "regressedGates": [],
-                  "ignoredUnverifiedGates": [
-                    "competitive-combo-signal"
-                  ]
-                },
-                "themeAudit": null,
-                "strategyPreservation": {
-                  "status": "meaningful-strategy-loss",
-                  "evidenceComplete": true,
-                  "meaningfulLosses": [
-                    {
-                      "strategy": "combat-tokens",
-                      "commanderStrategyScore": 28,
-                      "cutAffinityScore": 16,
-                      "addAffinityScore": 0,
-                      "netAffinityLoss": 16,
-                      "strongestCutProtectionApplied": 4
-                    }
-                  ],
-                  "strategyDeltas": [
-                    {
-                      "strategy": "big-mana",
-                      "cutAffinityScore": 4,
-                      "addAffinityScore": 0,
-                      "netAffinityDelta": -4
-                    },
-                    {
-                      "strategy": "combat-tokens",
-                      "cutAffinityScore": 16,
-                      "addAffinityScore": 0,
-                      "netAffinityDelta": -16
-                    }
-                  ],
-                  "swapImpacts": [
-                    {
-                      "cutStrategyAffinityScore": 20,
-                      "addStrategyAffinityScore": 0,
-                      "cutStrategyProtectionApplied": 4,
-                      "cutMatchedStrategies": [
-                        "big-mana",
-                        "combat-tokens"
-                      ],
-                      "addMatchedStrategies": [],
-                      "locallyUnreplacedStrategies": [
-                        "big-mana",
-                        "combat-tokens"
-                      ],
-                      "cutRoles": [
-                        "creature",
-                        "extra combat",
-                        "haste",
-                        "untap engine"
-                      ],
-                      "addRoles": [
-                        "equipment",
-                        "protection"
-                      ],
-                      "unreplacedRoles": [
-                        "creature",
-                        "extra combat",
-                        "haste",
-                        "untap engine"
-                      ],
-                      "meaningfulStrategyLoss": true,
-                      "verdict": "meaningful-strategy-loss"
-                    }
-                  ],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
-                },
-                "planProvenance": {
-                  "targetBracket": 5,
-                  "winRouteVerificationStatus": "no-verified-route",
-                  "winPackageDiscoveryAttempted": true,
-                  "winPackageSourceStatus": "no-verified-win-package",
-                  "winPackageOutcome": "completed-no-verified-package",
-                  "selectedComboId": null,
-                  "selectedBracketTag": null,
-                  "missingSeedNames": [],
-                  "atomicWinPackageInjected": false,
-                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
-                  "candidateDiscovery": {
-                    "mode": "exhaustive-bounded-printing-policy",
-                    "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 1176,
-                    "roleSearchResultCap": null,
-                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
-                  },
-                  "authoritativeTargetGatePriorities": [],
-                  "structuralDeficits": [
-                    {
-                      "role": "protection",
-                      "current": 6,
-                      "target": 8,
-                      "deficit": 2,
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null
-                    },
-                    {
-                      "role": "tutor",
-                      "current": 8,
-                      "target": 10,
-                      "deficit": 2,
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null
-                    }
-                  ],
-                  "candidateGroups": [
-                    {
-                      "role": "protection",
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null,
-                      "current": 6,
-                      "target": 8,
-                      "deficit": 2,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateCount": 5
-                    },
-                    {
-                      "role": "tutor",
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null,
-                      "current": 8,
-                      "target": 10,
-                      "deficit": 2,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateCount": 1
-                    }
-                  ]
-                },
-                "swaps": [
-                  {
-                    "out": "Aurelia, the Warleader",
-                    "in": "Commander's Plate",
-                    "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
-                    "recommendedPrinting": {
-                      "set": "SLD",
-                      "collectorNumber": "1733",
-                      "finish": "nonfoil",
-                      "priceUsd": 46.91
-                    },
-                    "structuralPairing": {
-                      "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 3,
-                      "authoritativeTargetGate": null,
-                      "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 12,
-                      "persistentColoredManaSourceFloor": 8,
-                      "strategyPreservation": {
-                        "cutStrategyAffinityScore": 20,
-                        "addStrategyAffinityScore": 0,
-                        "cutStrategyProtectionApplied": 4,
-                        "cutMatchedStrategies": [
-                          "big-mana",
-                          "combat-tokens"
-                        ],
-                        "addMatchedStrategies": [],
-                        "locallyUnreplacedStrategies": [
-                          "big-mana",
-                          "combat-tokens"
-                        ],
-                        "cutRoles": [
-                          "creature",
-                          "extra combat",
-                          "haste",
-                          "untap engine"
-                        ],
-                        "addRoles": [
-                          "equipment",
-                          "protection"
-                        ],
-                        "unreplacedRoles": [
-                          "creature",
-                          "extra combat",
-                          "haste",
-                          "untap engine"
-                        ],
-                        "meaningfulStrategyLoss": true,
-                        "verdict": "meaningful-strategy-loss"
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "candidate": 2,
-                "eligible": false,
-                "reason": "package-causes-a-meaningful-commander-strategy-loss",
-                "attemptedSwaps": 2,
-                "actualSwaps": 1,
-                "estimatedSpendUsd": 0.36,
+                "estimatedSpendUsd": 0.33,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.583,
                 "significantRegression": false,
@@ -7749,7 +7546,7 @@
                       "set": "MSC",
                       "collectorNumber": "122",
                       "finish": "nonfoil",
-                      "priceUsd": 0.36
+                      "priceUsd": 0.33
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -7796,12 +7593,12 @@
                 ]
               },
               {
-                "candidate": 3,
+                "candidate": 2,
                 "eligible": false,
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 2,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 33.69,
+                "estimatedSpendUsd": 35.29,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.583,
                 "significantRegression": false,
@@ -7955,7 +7752,7 @@
                       "set": "MAR",
                       "collectorNumber": "51",
                       "finish": "nonfoil",
-                      "priceUsd": 33.69
+                      "priceUsd": 35.29
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -8001,12 +7798,12 @@
                 ]
               },
               {
-                "candidate": 4,
+                "candidate": 3,
                 "eligible": false,
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 2,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 3.55,
+                "estimatedSpendUsd": 3.87,
                 "unknownPriceCount": 0,
                 "improvementScore": 13.344,
                 "significantRegression": false,
@@ -8162,7 +7959,7 @@
                       "set": "MAR",
                       "collectorNumber": "37",
                       "finish": "nonfoil",
-                      "priceUsd": 3.55
+                      "priceUsd": 3.87
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -8210,12 +8007,12 @@
                 ]
               },
               {
-                "candidate": 5,
+                "candidate": 4,
                 "eligible": false,
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 2,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 33.43,
+                "estimatedSpendUsd": 34.3,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.583,
                 "significantRegression": false,
@@ -8369,7 +8166,7 @@
                       "set": "SLD",
                       "collectorNumber": "1728",
                       "finish": "nonfoil",
-                      "priceUsd": 33.43
+                      "priceUsd": 34.3
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -8399,6 +8196,211 @@
                         ],
                         "addRoles": [
                           "board protection",
+                          "protection"
+                        ],
+                        "unreplacedRoles": [
+                          "creature",
+                          "extra combat",
+                          "haste",
+                          "untap engine"
+                        ],
+                        "meaningfulStrategyLoss": true,
+                        "verdict": "meaningful-strategy-loss"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "candidate": 5,
+                "eligible": false,
+                "reason": "package-causes-a-meaningful-commander-strategy-loss",
+                "attemptedSwaps": 2,
+                "actualSwaps": 1,
+                "estimatedSpendUsd": 1.72,
+                "unknownPriceCount": 0,
+                "improvementScore": 11.503,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "meaningful-strategy-loss",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [
+                    {
+                      "strategy": "combat-tokens",
+                      "commanderStrategyScore": 28,
+                      "cutAffinityScore": 16,
+                      "addAffinityScore": 0,
+                      "netAffinityLoss": 16,
+                      "strongestCutProtectionApplied": 4
+                    }
+                  ],
+                  "strategyDeltas": [
+                    {
+                      "strategy": "big-mana",
+                      "cutAffinityScore": 4,
+                      "addAffinityScore": 0,
+                      "netAffinityDelta": -4
+                    },
+                    {
+                      "strategy": "combat-tokens",
+                      "cutAffinityScore": 16,
+                      "addAffinityScore": 0,
+                      "netAffinityDelta": -16
+                    }
+                  ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 20,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "big-mana",
+                        "combat-tokens"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "big-mana",
+                        "combat-tokens"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "extra combat",
+                        "haste",
+                        "untap engine"
+                      ],
+                      "addRoles": [
+                        "equipment",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "extra combat",
+                        "haste",
+                        "untap engine"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "protection",
+                      "current": 6,
+                      "target": 8,
+                      "deficit": 2,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    },
+                    {
+                      "role": "tutor",
+                      "current": 8,
+                      "target": 10,
+                      "deficit": 2,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": [
+                    {
+                      "role": "protection",
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null,
+                      "current": 6,
+                      "target": 8,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateCount": 5
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null,
+                      "current": 8,
+                      "target": 10,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateCount": 1
+                    }
+                  ]
+                },
+                "swaps": [
+                  {
+                    "out": "Aurelia, the Warleader",
+                    "in": "Whispersilk Cloak",
+                    "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "recommendedPrinting": {
+                      "set": "MSC",
+                      "collectorNumber": "225",
+                      "finish": "nonfoil",
+                      "priceUsd": 1.72
+                    },
+                    "structuralPairing": {
+                      "addressedRole": "protection",
+                      "remainingStructuralDeficitAfterSwap": 3,
+                      "authoritativeTargetGate": null,
+                      "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 12,
+                      "persistentColoredManaSourceFloor": 8,
+                      "strategyPreservation": {
+                        "cutStrategyAffinityScore": 20,
+                        "addStrategyAffinityScore": 0,
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "big-mana",
+                          "combat-tokens"
+                        ],
+                        "addMatchedStrategies": [],
+                        "locallyUnreplacedStrategies": [
+                          "big-mana",
+                          "combat-tokens"
+                        ],
+                        "cutRoles": [
+                          "creature",
+                          "extra combat",
+                          "haste",
+                          "untap engine"
+                        ],
+                        "addRoles": [
+                          "equipment",
                           "protection"
                         ],
                         "unreplacedRoles": [
@@ -8431,212 +8433,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 46.91,
-                "unknownPriceCount": 0,
-                "improvementScore": 19.239,
-                "significantRegression": false,
-                "zeroTargetProgressWhileFailedGatesRemain": true,
-                "targetGate": {
-                  "applicable": true,
-                  "score": 0,
-                  "failedBefore": [
-                    "verified-winning-combo"
-                  ],
-                  "failedAfter": [
-                    "verified-winning-combo"
-                  ],
-                  "repairedGates": [],
-                  "advancedFailedGates": [],
-                  "regressedGates": [],
-                  "ignoredUnverifiedGates": [
-                    "competitive-combo-signal"
-                  ]
-                },
-                "themeAudit": null,
-                "strategyPreservation": {
-                  "status": "meaningful-strategy-loss",
-                  "evidenceComplete": true,
-                  "meaningfulLosses": [
-                    {
-                      "strategy": "combat-tokens",
-                      "commanderStrategyScore": 28,
-                      "cutAffinityScore": 16,
-                      "addAffinityScore": 0,
-                      "netAffinityLoss": 16,
-                      "strongestCutProtectionApplied": 4
-                    }
-                  ],
-                  "strategyDeltas": [
-                    {
-                      "strategy": "big-mana",
-                      "cutAffinityScore": 4,
-                      "addAffinityScore": 0,
-                      "netAffinityDelta": -4
-                    },
-                    {
-                      "strategy": "combat-tokens",
-                      "cutAffinityScore": 16,
-                      "addAffinityScore": 0,
-                      "netAffinityDelta": -16
-                    }
-                  ],
-                  "swapImpacts": [
-                    {
-                      "cutStrategyAffinityScore": 20,
-                      "addStrategyAffinityScore": 0,
-                      "cutStrategyProtectionApplied": 4,
-                      "cutMatchedStrategies": [
-                        "big-mana",
-                        "combat-tokens"
-                      ],
-                      "addMatchedStrategies": [],
-                      "locallyUnreplacedStrategies": [
-                        "big-mana",
-                        "combat-tokens"
-                      ],
-                      "cutRoles": [
-                        "creature",
-                        "extra combat",
-                        "haste",
-                        "untap engine"
-                      ],
-                      "addRoles": [
-                        "equipment",
-                        "protection"
-                      ],
-                      "unreplacedRoles": [
-                        "creature",
-                        "extra combat",
-                        "haste",
-                        "untap engine"
-                      ],
-                      "meaningfulStrategyLoss": true,
-                      "verdict": "meaningful-strategy-loss"
-                    }
-                  ],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
-                },
-                "planProvenance": {
-                  "targetBracket": 5,
-                  "winRouteVerificationStatus": "no-verified-route",
-                  "winPackageDiscoveryAttempted": true,
-                  "winPackageSourceStatus": "no-verified-win-package",
-                  "winPackageOutcome": "completed-no-verified-package",
-                  "selectedComboId": null,
-                  "selectedBracketTag": null,
-                  "missingSeedNames": [],
-                  "atomicWinPackageInjected": false,
-                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
-                  "candidateDiscovery": {
-                    "mode": "exhaustive-bounded-printing-policy",
-                    "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 1176,
-                    "roleSearchResultCap": null,
-                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
-                  },
-                  "authoritativeTargetGatePriorities": [],
-                  "structuralDeficits": [
-                    {
-                      "role": "protection",
-                      "current": 6,
-                      "target": 8,
-                      "deficit": 2,
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null
-                    },
-                    {
-                      "role": "tutor",
-                      "current": 8,
-                      "target": 10,
-                      "deficit": 2,
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null
-                    }
-                  ],
-                  "candidateGroups": [
-                    {
-                      "role": "protection",
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null,
-                      "current": 6,
-                      "target": 8,
-                      "deficit": 2,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateCount": 5
-                    },
-                    {
-                      "role": "tutor",
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null,
-                      "current": 8,
-                      "target": 10,
-                      "deficit": 2,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateCount": 1
-                    }
-                  ]
-                },
-                "swaps": [
-                  {
-                    "out": "Aurelia, the Warleader",
-                    "in": "Commander's Plate",
-                    "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
-                    "recommendedPrinting": {
-                      "set": "SLD",
-                      "collectorNumber": "1733",
-                      "finish": "nonfoil",
-                      "priceUsd": 46.91
-                    },
-                    "structuralPairing": {
-                      "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 3,
-                      "authoritativeTargetGate": null,
-                      "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 12,
-                      "persistentColoredManaSourceFloor": 8,
-                      "strategyPreservation": {
-                        "cutStrategyAffinityScore": 20,
-                        "addStrategyAffinityScore": 0,
-                        "cutStrategyProtectionApplied": 4,
-                        "cutMatchedStrategies": [
-                          "big-mana",
-                          "combat-tokens"
-                        ],
-                        "addMatchedStrategies": [],
-                        "locallyUnreplacedStrategies": [
-                          "big-mana",
-                          "combat-tokens"
-                        ],
-                        "cutRoles": [
-                          "creature",
-                          "extra combat",
-                          "haste",
-                          "untap engine"
-                        ],
-                        "addRoles": [
-                          "equipment",
-                          "protection"
-                        ],
-                        "unreplacedRoles": [
-                          "creature",
-                          "extra combat",
-                          "haste",
-                          "untap engine"
-                        ],
-                        "meaningfulStrategyLoss": true,
-                        "verdict": "meaningful-strategy-loss"
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "candidate": 2,
-                "eligible": false,
-                "reason": "package-causes-a-meaningful-commander-strategy-loss",
-                "attemptedSwaps": 1,
-                "actualSwaps": 1,
-                "estimatedSpendUsd": 0.36,
+                "estimatedSpendUsd": 0.33,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.583,
                 "significantRegression": false,
@@ -8791,7 +8588,7 @@
                       "set": "MSC",
                       "collectorNumber": "122",
                       "finish": "nonfoil",
-                      "priceUsd": 0.36
+                      "priceUsd": 0.33
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -8838,12 +8635,12 @@
                 ]
               },
               {
-                "candidate": 3,
+                "candidate": 2,
                 "eligible": false,
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 33.69,
+                "estimatedSpendUsd": 35.29,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.583,
                 "significantRegression": false,
@@ -8997,7 +8794,7 @@
                       "set": "MAR",
                       "collectorNumber": "51",
                       "finish": "nonfoil",
-                      "priceUsd": 33.69
+                      "priceUsd": 35.29
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -9043,12 +8840,12 @@
                 ]
               },
               {
-                "candidate": 4,
+                "candidate": 3,
                 "eligible": false,
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 3.55,
+                "estimatedSpendUsd": 3.87,
                 "unknownPriceCount": 0,
                 "improvementScore": 13.344,
                 "significantRegression": false,
@@ -9204,7 +9001,7 @@
                       "set": "MAR",
                       "collectorNumber": "37",
                       "finish": "nonfoil",
-                      "priceUsd": 3.55
+                      "priceUsd": 3.87
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -9252,12 +9049,12 @@
                 ]
               },
               {
-                "candidate": 5,
+                "candidate": 4,
                 "eligible": false,
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 33.43,
+                "estimatedSpendUsd": 34.3,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.583,
                 "significantRegression": false,
@@ -9411,7 +9208,7 @@
                       "set": "SLD",
                       "collectorNumber": "1728",
                       "finish": "nonfoil",
-                      "priceUsd": 33.43
+                      "priceUsd": 34.3
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -9441,6 +9238,211 @@
                         ],
                         "addRoles": [
                           "board protection",
+                          "protection"
+                        ],
+                        "unreplacedRoles": [
+                          "creature",
+                          "extra combat",
+                          "haste",
+                          "untap engine"
+                        ],
+                        "meaningfulStrategyLoss": true,
+                        "verdict": "meaningful-strategy-loss"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "candidate": 5,
+                "eligible": false,
+                "reason": "package-causes-a-meaningful-commander-strategy-loss",
+                "attemptedSwaps": 1,
+                "actualSwaps": 1,
+                "estimatedSpendUsd": 1.72,
+                "unknownPriceCount": 0,
+                "improvementScore": 11.503,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 0,
+                  "failedBefore": [
+                    "verified-winning-combo"
+                  ],
+                  "failedAfter": [
+                    "verified-winning-combo"
+                  ],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": [
+                    "competitive-combo-signal"
+                  ]
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "meaningful-strategy-loss",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [
+                    {
+                      "strategy": "combat-tokens",
+                      "commanderStrategyScore": 28,
+                      "cutAffinityScore": 16,
+                      "addAffinityScore": 0,
+                      "netAffinityLoss": 16,
+                      "strongestCutProtectionApplied": 4
+                    }
+                  ],
+                  "strategyDeltas": [
+                    {
+                      "strategy": "big-mana",
+                      "cutAffinityScore": 4,
+                      "addAffinityScore": 0,
+                      "netAffinityDelta": -4
+                    },
+                    {
+                      "strategy": "combat-tokens",
+                      "cutAffinityScore": 16,
+                      "addAffinityScore": 0,
+                      "netAffinityDelta": -16
+                    }
+                  ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 20,
+                      "addStrategyAffinityScore": 0,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "big-mana",
+                        "combat-tokens"
+                      ],
+                      "addMatchedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "big-mana",
+                        "combat-tokens"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "extra combat",
+                        "haste",
+                        "untap engine"
+                      ],
+                      "addRoles": [
+                        "equipment",
+                        "protection"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "extra combat",
+                        "haste",
+                        "untap engine"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                },
+                "planProvenance": {
+                  "targetBracket": 5,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": true,
+                  "winPackageSourceStatus": "no-verified-win-package",
+                  "winPackageOutcome": "completed-no-verified-package",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "Completed verified package discovery found no legal verified package that can be injected atomically within the current swap capacity and active printing/budget/exclusion constraints.",
+                  "candidateDiscovery": {
+                    "mode": "exhaustive-bounded-printing-policy",
+                    "exhaustiveWithinSafetyCeilings": true,
+                    "eligiblePoolCards": 1176,
+                    "roleSearchResultCap": null,
+                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
+                  },
+                  "authoritativeTargetGatePriorities": [],
+                  "structuralDeficits": [
+                    {
+                      "role": "protection",
+                      "current": 6,
+                      "target": 8,
+                      "deficit": 2,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    },
+                    {
+                      "role": "tutor",
+                      "current": 8,
+                      "target": 10,
+                      "deficit": 2,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": [
+                    {
+                      "role": "protection",
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null,
+                      "current": 6,
+                      "target": 8,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateCount": 5
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null,
+                      "current": 8,
+                      "target": 10,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateCount": 1
+                    }
+                  ]
+                },
+                "swaps": [
+                  {
+                    "out": "Aurelia, the Warleader",
+                    "in": "Whispersilk Cloak",
+                    "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "recommendedPrinting": {
+                      "set": "MSC",
+                      "collectorNumber": "225",
+                      "finish": "nonfoil",
+                      "priceUsd": 1.72
+                    },
+                    "structuralPairing": {
+                      "addressedRole": "protection",
+                      "remainingStructuralDeficitAfterSwap": 3,
+                      "authoritativeTargetGate": null,
+                      "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 12,
+                      "persistentColoredManaSourceFloor": 8,
+                      "strategyPreservation": {
+                        "cutStrategyAffinityScore": 20,
+                        "addStrategyAffinityScore": 0,
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "big-mana",
+                          "combat-tokens"
+                        ],
+                        "addMatchedStrategies": [],
+                        "locallyUnreplacedStrategies": [
+                          "big-mana",
+                          "combat-tokens"
+                        ],
+                        "cutRoles": [
+                          "creature",
+                          "extra combat",
+                          "haste",
+                          "untap engine"
+                        ],
+                        "addRoles": [
+                          "equipment",
                           "protection"
                         ],
                         "unreplacedRoles": [
@@ -9621,7 +9623,8 @@
         "card draw": 20,
         "+1/+1 counters": 9,
         "treasure": 9,
-        "sacrifice synergy": 12,
+        "sacrifice synergy": 4,
+        "self sacrifice": 10,
         "fast mana": 5,
         "board wipe": 2,
         "countermagic": 3,
@@ -9639,7 +9642,8 @@
         "land ramp": 1,
         "land tutor": 1,
         "land": 31,
-        "card selection": 3
+        "card selection": 3,
+        "sacrifice outlet": 1
       },
       "earlyPlayCount": 42,
       "fastManaCount": 5,
