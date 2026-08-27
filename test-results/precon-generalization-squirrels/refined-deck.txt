@@ -22,10 +22,8 @@
 1 Toski, Bearer of Secrets (BLC) 244 *N*
 1 Beastmaster Ascension (BLC) 118 *N*
 1 Second Harvest (BLC) 123 *N*
-1 Shamanic Revelation (BLC) 237 *N*
 1 Chatterfang, Squirrel General (BLC) 209 *N*
 1 Temple of Malady (BLC) 341 *N*
-1 Casualties of War (BLC) 125 *N*
 1 Windgrace's Judgment (BLC) 263 *N*
 1 Maskwood Nexus (BLC) 279 *N*
 1 Academy Manufactor (BLC) 264 *N*
@@ -58,16 +56,15 @@
 1 Haunted Mire (BLC) 311 *N*
 1 Nested Shambler (BLC) 185 *N*
 1 Deadly Dispute (BLC) 181 *N*
-1 Zulaport Cutthroat (BLC) 190 *N*
 1 Squirrel Sovereign (BLC) 240 *N*
 1 Prosperous Innkeeper (BLC) 121 *N*
 1 Haywire Mite (BLC) 274 *N*
 1 Tireless Provisioner (BLC) 243 *N*
 1 Squirrel Nest (BLC) 239 *N*
+1 Honored Dreyleader (BLB) 178 *N*
 1 Tear Asunder (BLC) 241 *N*
 1 Wolfwillow Haven (BLC) 246 *N*
 1 Putrefy (BLC) 257 *N*
-1 Arcane Signet (BLC) 127 *N*
 1 Golgari Signet (BLC) 272 *N*
 1 Talisman of Resilience (BLC) 288 *N*
 1 Sol Ring (BLC) 129 *N*
@@ -84,7 +81,10 @@
 4 Swamp (BLB) 374 *N*
 5 Forest (BLB) 377 *N*
 4 Forest (BLB) 378 *N*
-1 Demonic Tutor (SOS) 80 *N*
+1 Entomb (TLE) 310 *N*
 1 Swiftfoot Boots (A25) 234 *N*
-1 Heroic Intervention (MAR) 79 *N*
+1 Heroic Intervention (MAR) 80 *N*
 1 Tamiyo's Safekeeping (NEO) 211 *N*
+1 Crop Rotation (C20) 169 *N*
+1 Veil of Summer (MB2) 75 *N*
+1 Tyvar's Stand (SOC) 291 *N*
