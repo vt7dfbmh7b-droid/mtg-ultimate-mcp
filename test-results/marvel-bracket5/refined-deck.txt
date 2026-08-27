@@ -19,6 +19,7 @@
 1 Spectacular Tactics (MSC) 775
 1 The Ruinous Wrecking Crew (MSH) 224
 1 Negative Zone Portal (MSC) 111
+1 Vanquish the Horde (MSC) 146
 1 The Mind Stone (MSH) 21
 1 Swords to Plowshares (MSC) 143
 1 Steelshaper's Gift (MAR) 50
@@ -43,6 +44,7 @@
 1 Stark Industries Executive (MSH) 153
 1 Counterspell (MAR) 52
 1 Sun-Spider, Nimble Webber (SPM) 154
+1 Arcane Signet (MSC) 191
 1 Swiftfoot Boots (MSC) 216
 1 Relentless Assault (MAR) 25
 1 Seize the Day (MSC) 166
@@ -89,5 +91,3 @@
 3 Mountain (MSC) 858
 3 Island (MSH) 289
 3 Plains (MSC) 866
-1 Reanimate (MAR) 20 *N*
-1 Brainstorm (SLD) 7019 *N*
