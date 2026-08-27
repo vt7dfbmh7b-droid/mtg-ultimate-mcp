@@ -302,6 +302,46 @@ Protection: self-referential costs using `this <permanent>` or the card's own Or
 
 Status: TypeScript and focused deterministic regressions pass locally; exact-source strategy and Squirreled Away revalidation remains pending.
 
+## KF-031 — Command-zone-only inference misses a precon's supported secondary plan
+
+Observed: Hazel of the Rootbloom exposed a substantive token plan from the command zone, while the stock Squirreled Away 99 supplied the sacrifice outlets, death-drain payoffs and death-trigger draw engine. Upgrade selection therefore treated `aristocrats` as incidental and proposed cutting Poison-Tip Archer, Moldervine Reclamation, Nadier's Nightblade and Zulaport Cutthroat for generic tutors and protection. A looser repair also promoted Necron's shallow combat overlap as a core identity even though the stock deck supplied only 54 aggregate affinity points.
+
+Risk: face-commander text is not a complete precon specification. Ignoring densely supported secondary plans hollows out the 99; promoting every incidental overlap creates the opposite failure and protects noise as identity.
+
+Protection: upgrade context retains only substantive command-zone plans and may promote exactly one additional whole-deck plan. Promotion requires at least six substantive support cards, three bridge cards that also support a substantive command-zone plan and seventy-two aggregate affinity points. Weak command-zone hints are excluded from upgrade identity and rationales. Name-independent dense, shallow and weak-signal regressions cover both boundaries.
+
+Status: deterministic regressions and current-source local exact controls pass. Squirreled Away makes one conservative NZ$5.28 swap and preserves both token and aristocrats support/affinity exactly; Necron preserves both graveyard and artifact identities. Exact-source GitHub revalidation remains pending.
+
+## KF-032 — Aggregate affinity masks loss of strategy-support density
+
+Observed: the repaired Necron package held artifact-engine affinity at 267 while reducing artifact support from 52 cards to 51. The earlier four-point meaningful-loss rule saw no material aggregate regression, so the package remained mechanically eligible even though the exact Necron workflow correctly required both support and affinity to be non-decreasing.
+
+Risk: a few stronger label matches can numerically compensate for removing additional on-plan cards. An optimizer can gradually reduce engine density while claiming the same aggregate strategy strength, especially across several accepted rounds.
+
+Protection: every resolved candidate package is now audited against one strategy context anchored to the pre-package deck. Each substantive starting identity must retain or improve both support-card count and aggregate affinity; missing resolution evidence fails closed. Rejected packages remain in attempt provenance, and refinement automatically retries smaller packages rather than spending identity to fill generic role quotas.
+
+Status: deterministic density-loss regression and local exact Necron control pass. The accepted eight-swap package moved graveyard support/affinity 29→30 and 274→286 while holding artifact support at 52 and increasing affinity 267→270. Exact-source GitHub revalidation remains pending.
+
+## KF-033 — Curve arithmetic consumes premium early infrastructure
+
+Observed: a nominal Food and Fellowship pass repaired average nonland mana value by replacing Birds of Paradise with Everflowing Chalice. The curve pairer preferred the smallest sufficient numeric reduction, the role model called a zero-mana multikicker rock `fast mana`, and low-cost colored acceleration received no cut-quality protection. Moving Birds into a later generic protection swap reproduced the same underlying mistake after the curve-only symptom was blocked.
+
+Risk: an optimizer can game average mana value while removing the one- and two-mana infrastructure that makes a deck functional. False fast-mana classification then makes the swap look like a structural gain, and a green curve gate conceals a worse real opening sequence.
+
+Protection: the average-mana-value lane may cut only cards above the early-play band; supported 2→1 upgrades remain available through their actual role lanes. When several cuts cross the threshold, strategy and structural truth remain first, followed by cut quality before minimum excess reduction. Mana artifacts with paid X/kicker setup are not fast mana, and efficient fast mana plus low-cost colored acceleration receive explicit cut-pressure protection before slower ramp.
+
+Status: deterministic role, pairing and cut-pressure regressions pass. The current local exact Food and Fellowship control makes six swaps for NZ$39.92, keeps Birds and Arcane Signet, holds ramp at 16 and persistent colored sources at 9, preserves Food support/affinity at 27/232, repairs curve 3.26→3.00 and early plays 22→26, and remains honestly Bracket 3. Exact-source GitHub revalidation remains pending.
+
+## KF-034 — Board-scaling card advantage is treated as generic draw
+
+Observed: after the token, aristocrats and efficient-ramp repairs, the current-source Squirreled Away control cut Shamanic Revelation for Swiftfoot Boots. Role truth recognized `draw a card for each creature you control` only as card draw, not as a payoff whose value scales directly with the wide token board the deck is built to create.
+
+Risk: protecting token creation, anthems and death payoffs is still insufficient if board-scaling reload engines remain generic. The optimizer can remove a precon's best recovery/card-advantage spell for a staple while every broad token label and structural floor stays green.
+
+Protection: drawing one card per controlled creature, or cards equal to the number of controlled creatures, is now a semantic `go-wide payoff`. It receives substantive combat-token affinity and maximum contextual cut protection. Role, strategy-inference and uncompensated-swap regressions use name-independent board-scaling draw text.
+
+Status: deterministic regressions and the current-source local exact Squirreled Away control pass. The accepted package no longer cuts Shamanic Revelation or any marquee token/aristocrats payoff; it makes one supported swap and stops when no further package clears the stricter identity gates. Exact-source GitHub revalidation remains pending.
+
 ## Adding a failure
 
 Every new material failure should record:

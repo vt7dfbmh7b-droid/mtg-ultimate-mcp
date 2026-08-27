@@ -7,9 +7,12 @@ import {
 } from './deck-builder-v07.js';
 import { parseDecklist } from './deck.js';
 import {
+  auditUpgradeDeckStrategyRetentionV15,
   cardCommanderStrategyAffinityV15,
   deriveCommanderStrategyContextFromCommandersV15,
   deriveCommanderStrategyContextV15,
+  deriveUpgradeStrategyContextV15,
+  SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15,
 } from './commander-strategy-affinity-v15.js';
 import { contextualCutPressureV15 } from './upgrade.js';
 
@@ -119,7 +122,7 @@ test('strategy-aware cut pressure protects on-plan cards without making them unc
   assert.ok(onPlanPressure.cutPressure > 0);
 });
 
-test('weak incidental commander archetypes do not protect surplus utility over a substantive plan', () => {
+test('weak incidental commander archetypes do not grant strategy protection', () => {
   const commander = card(
     'Five-Color Battle Captain',
     'Legendary Creature — Human Warrior',
@@ -142,7 +145,45 @@ test('weak incidental commander archetypes do not protect surplus utility over a
   assert.ok((context.strategies.find((strategy) => strategy.archetype === 'combat-tokens')?.score ?? 0) >= 6);
   assert.equal(rockPressure.strategyProtectionApplied, 0);
   assert.equal(equipmentPressure.strategyProtectionApplied, 2);
-  assert.ok(rockPressure.cutPressure > equipmentPressure.cutPressure);
+});
+
+test('cut pressure protects premium low-cost acceleration before slower generic mana', () => {
+  const context = { commanderNames: [], strategies: [] };
+  const birds = {
+    ...card('Unnamed One-Mana Dork', 'Creature — Bird', '{T}: Add one mana of any color.'),
+    cmc: 1,
+  } as ScryfallCard;
+  const slowRock = {
+    ...card('Unnamed Four-Mana Rock', 'Artifact', '{T}: Add {C}.'),
+    cmc: 4,
+  } as ScryfallCard;
+
+  const birdsPressure = contextualCutPressureV15(birds, context);
+  const slowRockPressure = contextualCutPressureV15(slowRock, context);
+
+  assert.ok(birdsPressure.cutPressure < slowRockPressure.cutPressure);
+});
+
+test('upgrade context excludes weak incidental command-zone signals from deck identity', () => {
+  const commander = card(
+    'Five-Color Battle Captain',
+    'Legendary Creature — Human Warrior',
+    'Whenever a creature you control attacks, untap all attacking creatures. They gain haste until end of turn.',
+  );
+  const parsed = parseDecklist([
+    '// COMMANDER',
+    `1 ${commander.name}`,
+    '',
+    '// MAIN',
+    '99 Plains',
+  ].join('\n'));
+  const context = deriveUpgradeStrategyContextV15(parsed, [commander]);
+
+  assert.ok(context.strategies.some((strategy) => (
+    strategy.archetype === 'combat-tokens'
+    && strategy.score >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15
+  )));
+  assert.equal(context.strategies.some((strategy) => strategy.archetype === 'big-mana'), false);
 });
 
 test('upgrade pairing preserves the structural role an incoming card is repairing when a safer cut exists', () => {
@@ -234,6 +275,186 @@ test('top-three commander context preserves multiple already-detected deck ident
 
   assert.ok(cardCommanderStrategyAffinityV15(combatCard, context).score > 0);
   assert.ok(cardCommanderStrategyAffinityV15(equipmentCard, context).score > 0);
+});
+
+test('upgrade context promotes a densely evidenced secondary deck plan that bridges to the commander', () => {
+  const commander = card(
+    'Unnamed Token Copy Commander',
+    'Legendary Creature — Test Druid',
+    'At the beginning of your end step, create a token that is a copy of target token you control.',
+  );
+  const bridgeCards = [1, 2, 3].map((index) => card(
+    `Unnamed Token Sacrifice Bridge ${index}`,
+    'Creature — Test Citizen',
+    'When this creature enters, create a 1/1 green Squirrel creature token. Sacrifice another creature: Scry 1.',
+  ));
+  const payoffCards = [1, 2, 3].map((index) => card(
+    `Unnamed Token Death Payoff ${index}`,
+    'Creature — Test Advisor',
+    'Whenever another creature you control dies, each opponent loses 1 life.',
+  ));
+  const parsed = parseDecklist([
+    '// COMMANDER',
+    `1 ${commander.name}`,
+    '',
+    '// MAIN',
+    ...[...bridgeCards, ...payoffCards].map((entry) => `1 ${entry.name}`),
+    '93 Forest',
+  ].join('\n'));
+  const context = deriveUpgradeStrategyContextV15(parsed, [commander, ...bridgeCards, ...payoffCards]);
+  const archetypes = new Set(context.strategies.map((strategy) => strategy.archetype));
+
+  assert.ok(archetypes.has('combat-tokens'));
+  assert.ok(archetypes.has('aristocrats'));
+  assert.match(
+    context.strategies.find((strategy) => strategy.archetype === 'aristocrats')?.evidence[0] ?? '',
+    /whole-deck support/,
+  );
+
+  const payoffAffinity = cardCommanderStrategyAffinityV15(payoffCards[0]!, context);
+  const payoffPressure = contextualCutPressureV15(payoffCards[0]!, context);
+  assert.ok(payoffAffinity.matches.some((match) => match.archetype === 'aristocrats' && match.overlapScore >= 6));
+  assert.equal(payoffPressure.strategyProtectionApplied, 4);
+});
+
+test('upgrade context does not promote a shallow incidental secondary pattern', () => {
+  const commander = card(
+    'Unnamed Token Copy Commander',
+    'Legendary Creature — Test Druid',
+    'At the beginning of your end step, create a token that is a copy of target token you control.',
+  );
+  const shallow = [1, 2].map((index) => card(
+    `Unnamed Shallow Sacrifice Card ${index}`,
+    'Creature — Test Citizen',
+    'When this creature enters, create a 1/1 green Squirrel creature token. Sacrifice another creature: Scry 1.',
+  ));
+  const parsed = parseDecklist([
+    '// COMMANDER',
+    `1 ${commander.name}`,
+    '',
+    '// MAIN',
+    ...shallow.map((entry) => `1 ${entry.name}`),
+    '97 Forest',
+  ].join('\n'));
+  const context = deriveUpgradeStrategyContextV15(parsed, [commander, ...shallow]);
+
+  assert.equal(context.strategies.some((strategy) => strategy.archetype === 'aristocrats'), false);
+});
+
+test('whole-deck retention rejects a package that spends substantive strategy density', () => {
+  const commander = card(
+    'Unnamed Muster Commander',
+    'Legendary Creature — Test Soldier',
+    'Whenever Unnamed Muster Commander attacks, create two 1/1 white Soldier creature tokens that are tapped and attacking.',
+  );
+  const tokenEngine = card(
+    'Unnamed Reinforcement Engine',
+    'Creature — Test Soldier',
+    'Whenever Unnamed Reinforcement Engine attacks, create two 1/1 white Soldier creature tokens that are tapped and attacking.',
+  );
+  const teamPayoff = card(
+    'Unnamed Formation Payoff',
+    'Enchantment',
+    'Creatures you control get +1/+1 for each creature you control.',
+  );
+  const genericDraw = card('Unnamed Generic Draw', 'Sorcery', 'Draw two cards.');
+  const plains = card('Plains', 'Basic Land — Plains', '');
+  const beforeParsed = parseDecklist([
+    '// COMMANDER',
+    `1 ${commander.name}`,
+    '',
+    '// MAIN',
+    `1 ${tokenEngine.name}`,
+    `1 ${teamPayoff.name}`,
+    '97 Plains',
+  ].join('\n'));
+  const afterParsed = parseDecklist([
+    '// COMMANDER',
+    `1 ${commander.name}`,
+    '',
+    '// MAIN',
+    `1 ${tokenEngine.name}`,
+    `1 ${genericDraw.name}`,
+    '97 Plains',
+  ].join('\n'));
+  const audit = auditUpgradeDeckStrategyRetentionV15(
+    beforeParsed,
+    [commander, tokenEngine, teamPayoff, plains],
+    afterParsed,
+    [commander, tokenEngine, genericDraw, plains],
+  );
+
+  assert.equal(audit.evidenceComplete, true);
+  assert.equal(audit.preserved, false);
+  assert.equal(audit.status, 'strategy-density-loss');
+  assert.ok(audit.losses.some((loss) => loss.archetype === 'combat-tokens' && loss.supportDelta < 0));
+});
+
+test('upgrade pairing prefers zero strategy erosion over a sub-threshold affinity loss', () => {
+  const addition = {
+    role: 'protection' as const,
+    candidate: {
+      card: {
+        name: 'New Protection',
+        roles: ['protection'],
+        manaValue: 2,
+        typeLine: 'Instant',
+      },
+      strategyAffinity: {
+        score: 0,
+        protectionApplied: 0,
+        matchedStrategies: [],
+        matches: [],
+      },
+    },
+  };
+  const riskyCut = {
+    card: { name: 'Sub-threshold Engine', roles: [], manaValue: 4, typeLine: 'Creature — Test' },
+    heuristicCutPressure: 10,
+    strategyAffinity: {
+      score: 3,
+      protectionApplied: 3,
+      matchedStrategies: ['artifact-engine'],
+      matches: [{ archetype: 'artifact-engine', commanderScore: 6, cardScore: 3, overlapScore: 3 }],
+    },
+  };
+  const safeCut = {
+    card: { name: 'Unrelated Four Drop', roles: [], manaValue: 4, typeLine: 'Creature — Test' },
+    heuristicCutPressure: 8,
+    strategyAffinity: {
+      score: 0,
+      protectionApplied: 0,
+      matchedStrategies: [],
+      matches: [],
+    },
+  };
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [addition],
+    [riskyCut, safeCut],
+    {
+      rampCount: 8,
+      drawCount: 8,
+      interactionCount: 8,
+      protectionCount: 2,
+      tutorCount: 1,
+      recursionCount: 2,
+      boardWipeCount: 2,
+      earlyPlayCount: 10,
+    },
+    {
+      ramp: 8,
+      draw: 8,
+      interaction: 8,
+      protection: 3,
+      tutors: 1,
+      recursion: 2,
+      boardWipes: 2,
+      earlyPlays: 10,
+    },
+    4,
+  );
+
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Unrelated Four Drop');
 });
 
 test('Food and repeatable life-gain text form a substantive commander identity without card-name shortcuts', () => {
@@ -394,6 +615,11 @@ test('token multipliers and team-wide payoffs cannot be traded for generic role 
       'Unnamed Typal Anthem',
       'Creature — Test Noble',
       'Other Squirrels you control get +1/+1.',
+    ),
+    card(
+      'Unnamed Board-Scaling Draw',
+      'Sorcery',
+      'Draw a card for each creature you control.',
     ),
   ];
   const genericProtection = card(

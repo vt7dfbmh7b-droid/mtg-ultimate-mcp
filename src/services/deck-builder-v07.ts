@@ -762,6 +762,20 @@ function upgradeSwapStrategyPreservationV15(
   };
 }
 
+function upgradeSwapSubstantiveStrategyLossScoreV15(
+  add: Record<string, unknown>,
+  cut: Record<string, unknown>,
+): number {
+  const addAffinity = strategyAffinityEvidenceV15(add);
+  const cutAffinity = strategyAffinityEvidenceV15(cut);
+  let loss = 0;
+  for (const [strategy, cutScore] of cutAffinity.scoreByStrategy) {
+    if ((cutAffinity.commanderScoreByStrategy.get(strategy) ?? 0) < SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15) continue;
+    loss += Math.max(0, cutScore - (addAffinity.scoreByStrategy.get(strategy) ?? 0));
+  }
+  return loss;
+}
+
 export function auditUpgradeStrategyPreservationV15(
   pairings: ReadonlyArray<Pick<UpgradePairingV15, 'add' | 'cut'>>,
 ): UpgradeStrategyPreservationAuditV15 {
@@ -817,7 +831,7 @@ export function auditUpgradeStrategyPreservationV15(
     meaningfulLosses,
     strategyDeltas,
     swapImpacts,
-    acceptanceRule: 'Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity.',
+    acceptanceRule: 'Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity.',
   };
 }
 
@@ -997,7 +1011,11 @@ export function pairUpgradeSwapsByStructureV15(
     );
     const deficitBeforeSwap = structuralDeficitTotalV15(counts, state.targets);
     const candidateCuts = (selection.role === 'average-nonland-mv'
-      ? remainingCuts.filter((cut) => recordNumber(summarizedCard(cut).manaValue) > addManaValue)
+      // The curve lane exists to remove cards above the early-play band. Letting it trade a
+      // premium one- or two-mana spell for a marginally cheaper card games the average while
+      // consuming the low-cost infrastructure the target is meant to create. Role-specific
+      // lanes may still make a supported 2→1 upgrade (for example, fast mana for slow ramp).
+      ? remainingCuts.filter((cut) => recordNumber(summarizedCard(cut).manaValue) > Math.max(2, addManaValue))
       : [...remainingCuts])
       .filter((cut) => {
         const afterSwap = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);
@@ -1040,22 +1058,33 @@ export function pairUpgradeSwapsByStructureV15(
       if (leftStrategy.meaningfulStrategyLoss !== rightStrategy.meaningfulStrategyLoss) {
         return leftStrategy.meaningfulStrategyLoss ? 1 : -1;
       }
+      const leftStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, left);
+      const rightStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, right);
+      if (leftStrategyLoss !== rightStrategyLoss) return leftStrategyLoss - rightStrategyLoss;
+      let leftCurveReduction: number | null = null;
+      let rightCurveReduction: number | null = null;
+      let bothCurveCutsSufficient = false;
       if (selection.role === 'average-nonland-mv') {
-        const leftReduction = recordNumber(summarizedCard(left).manaValue) - addManaValue;
-        const rightReduction = recordNumber(summarizedCard(right).manaValue) - addManaValue;
-        const leftSufficient = leftReduction + 0.0001 >= remainingCurveReduction;
-        const rightSufficient = rightReduction + 0.0001 >= remainingCurveReduction;
+        leftCurveReduction = recordNumber(summarizedCard(left).manaValue) - addManaValue;
+        rightCurveReduction = recordNumber(summarizedCard(right).manaValue) - addManaValue;
+        const leftSufficient = leftCurveReduction + 0.0001 >= remainingCurveReduction;
+        const rightSufficient = rightCurveReduction + 0.0001 >= remainingCurveReduction;
         if (leftSufficient !== rightSufficient) return leftSufficient ? -1 : 1;
-        if (leftReduction !== rightReduction) {
-          return leftSufficient ? leftReduction - rightReduction : rightReduction - leftReduction;
+        bothCurveCutsSufficient = leftSufficient && rightSufficient;
+        if (!bothCurveCutsSufficient && leftCurveReduction !== rightCurveReduction) {
+          return rightCurveReduction - leftCurveReduction;
         }
       }
       if (leftDeficit !== rightDeficit) return leftDeficit - rightDeficit;
       const leftPressure = recordNumber(left.heuristicCutPressure);
       const rightPressure = recordNumber(right.heuristicCutPressure);
+      if (leftPressure !== rightPressure) return rightPressure - leftPressure;
+      if (bothCurveCutsSufficient && leftCurveReduction !== rightCurveReduction) {
+        return (leftCurveReduction ?? 0) - (rightCurveReduction ?? 0);
+      }
       const leftName = recordString(summarizedCard(left).name);
       const rightName = recordString(summarizedCard(right).name);
-      return rightPressure - leftPressure || leftName.localeCompare(rightName);
+      return leftName.localeCompare(rightName);
     });
     const cut = candidateCuts[0];
     if (!cut) continue;

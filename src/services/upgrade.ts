@@ -1,7 +1,7 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import {
   cardCommanderStrategyAffinityV15,
-  deriveCommanderStrategyContextV15,
+  deriveUpgradeStrategyContextV15,
   substantiveCommanderStrategyAffinityScoreV15,
   type CommanderStrategyContextV15,
 } from './commander-strategy-affinity-v15.js';
@@ -347,6 +347,12 @@ export function contextualCutPressureV15(
     || roles.includes('board wipe')
     || roles.includes('graveyard recursion')
   ) cutPressure -= 4;
+  // Premium low-cost acceleration is part of the consistency upgrade target, not generic surplus
+  // ramp. Prefer trimming slower rocks and expensive ramp before one-mana dorks or efficient
+  // two-mana colored sources when structural floors leave several nominally legal cuts.
+  if (roles.includes('fast mana')) cutPressure -= 6;
+  else if (roles.includes('mana acceleration') && card.cmc <= 2) cutPressure -= 3;
+  if (roles.includes('persistent colored mana source') && card.cmc <= 2) cutPressure -= 2;
 
   const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
   // Reuse the existing four-point protection scale already applied to important utility roles.
@@ -443,7 +449,7 @@ export async function suggestDeckUpgrades(
     ...metrics,
     commanderColorCount: allowedIdentity.length,
   };
-  const strategyContext = deriveCommanderStrategyContextV15(parsed, cards);
+  const strategyContext = deriveUpgradeStrategyContextV15(parsed, cards);
   const printingPolicy = await resolvePrintingPolicyV08({
     ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
     ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
@@ -559,7 +565,7 @@ export async function suggestDeckUpgrades(
       const matchedStrategies = affinity.matches.map((match) => match.archetype);
       const matchesControlledTheme = themeCandidateNames.has(card.name.toLocaleLowerCase());
       const strategyReason = matchedStrategies.length > 0
-        ? ` and also supports the existing V0.15 commander strategy signal${matchedStrategies.length === 1 ? '' : 's'}: ${matchedStrategies.join(', ')}`
+        ? ` and also supports the existing V0.15 deck strategy signal${matchedStrategies.length === 1 ? '' : 's'}: ${matchedStrategies.join(', ')}`
         : '';
       const themeReason = matchesControlledTheme && themeDeficit > 0
         ? ' It also helps close the current controlled theme-density deficit.'

@@ -1,5 +1,6 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import { derivePostBuildEvidenceV15 } from './commander-build-evaluation-v15.js';
+import { auditUpgradeDeckStrategyRetentionV15 } from './commander-strategy-affinity-v15.js';
 import { validateCommanderDeck } from './commander-rules.js';
 import { buildSimulationBackedUpgradePlanV07, type UpgradePlanOptionsV07 } from './deck-builder-v07.js';
 import { parseDecklist, resolveEntryCard, type ParsedDeck } from './deck.js';
@@ -313,6 +314,7 @@ function candidateSummary(candidate: CandidateEvaluationV12): Record<string, unk
     },
     themeAudit: compactThemeAudit(candidate.themeAudit),
     strategyPreservation: compactStrategyPreservationV15(candidate.plan),
+    deckStrategyRetention: asRecord(candidate.plan?.deckStrategyRetention),
     planProvenance: candidatePlanProvenanceV15(candidate.plan),
     swaps: candidate.plan && Array.isArray(candidate.plan.swaps)
       ? candidate.plan.swaps.map(asRecord).map(refinementSwapEvidenceV15)
@@ -704,6 +706,32 @@ async function evaluateCandidate(
   const rules = validateCommanderDeck(resolved.parsed, resolved.cards);
   if (resolved.notFound.length > 0 || !rules.isLegal) {
     return { ...base, eligible: false, reason: 'candidate-plan-failed-post-build-resolution-or-legality', nextDecklist, resolved };
+  }
+
+  const deckStrategyRetention = auditUpgradeDeckStrategyRetentionV15(
+    currentParsed,
+    currentCards,
+    resolved.parsed,
+    resolved.cards,
+  );
+  plan.deckStrategyRetention = deckStrategyRetention;
+  if (!deckStrategyRetention.evidenceComplete) {
+    return {
+      ...base,
+      eligible: false,
+      reason: 'candidate-deck-strategy-retention-evidence-incomplete',
+      nextDecklist,
+      resolved,
+    };
+  }
+  if (!deckStrategyRetention.preserved) {
+    return {
+      ...base,
+      eligible: false,
+      reason: 'package-reduces-substantive-deck-strategy-density',
+      nextDecklist,
+      resolved,
+    };
   }
 
   if (themeIntent?.enforceability === 'full' && currentThemeAudit) {

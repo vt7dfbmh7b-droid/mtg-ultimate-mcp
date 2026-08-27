@@ -329,7 +329,7 @@ test('five-color curve repair cannot strip persistent colored mana below its flo
     card: {
       name: `Five-Color Fixer ${index + 1}`,
       roles: ['mana acceleration', 'mana rock', 'persistent colored mana source'],
-      manaValue: 2,
+      manaValue: 3,
       typeLine: 'Artifact',
     },
     heuristicCutPressure: 20 - index,
@@ -371,7 +371,7 @@ test('five-color curve repair cannot strip persistent colored mana below its flo
   assert.equal(pairings.at(-1)?.persistentColoredManaSourceFloor, 8);
 });
 
-test('near the curve threshold, pairing uses the smallest sufficient safe mana reduction', () => {
+test('near the curve threshold, pairing prefers the more cuttable safe card over a premium low-cost role piece', () => {
   const pairings = pairUpgradeSwapsByStructureV15(
     [{
       role: 'average-nonland-mv' as const,
@@ -406,8 +406,8 @@ test('near the curve threshold, pairing uses the smallest sufficient safe mana r
     { ...bracketFiveTargets },
   );
 
-  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Safe Two Drop');
-  assert.equal(pairings[0]?.nonlandManaValueReduction, 1);
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Safe Five Drop');
+  assert.equal(pairings[0]?.nonlandManaValueReduction, 4);
 });
 
 test('near-threshold five-color repair uses surplus interaction before a protected combat engine', () => {
@@ -511,9 +511,9 @@ test('curve packages stop once cumulative safe reduction crosses the real thresh
   assert.equal(pairings.length, 2);
   assert.deepEqual(
     pairings.map((pairing) => (pairing.cut.card as Record<string, unknown>).name),
-    ['Vanquish the Horde', 'Surplus Two-Mana Rock'],
+    ['Vanquish the Horde', 'Unneeded Four Drop'],
   );
-  assert.equal(pairings.reduce((total, pairing) => total + (pairing.nonlandManaValueReduction ?? 0), 0), 8);
+  assert.equal(pairings.reduce((total, pairing) => total + (pairing.nonlandManaValueReduction ?? 0), 0), 10);
 });
 
 test('Bracket-4 curve pairing stops at 3.1 instead of chasing the Bracket-5 2.6 threshold', () => {
@@ -560,8 +560,8 @@ test('Bracket-4 curve pairing stops at 3.1 instead of chasing the Bracket-5 2.6 
     4,
   );
 
-  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Three Drop');
-  assert.equal(pairings[0]?.nonlandManaValueReduction, 2);
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Seven Drop');
+  assert.equal(pairings[0]?.nonlandManaValueReduction, 6);
 });
 
 test('Najeela curve repair preserves Aurelia-style combat strategy before maximizing mana reduction', () => {

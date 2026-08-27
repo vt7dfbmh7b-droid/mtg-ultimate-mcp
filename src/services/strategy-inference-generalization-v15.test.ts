@@ -167,6 +167,11 @@ test('token multipliers and team-wide payoffs are substantive combat-token suppo
       typeLine: 'Creature — Test Noble',
       oracleText: 'Other Squirrels you control get +1/+1.',
     }),
+    card({
+      name: 'Unnamed Board-Scaling Draw',
+      typeLine: 'Sorcery',
+      oracleText: 'Draw a card for each creature you control.',
+    }),
   ];
   for (const support of supportCards) {
     const combat = inferNeutralStrategyV15([support])

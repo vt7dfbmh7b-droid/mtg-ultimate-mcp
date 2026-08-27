@@ -8,7 +8,7 @@ import { evaluateCommanderBuildV15, type CommanderBuildEvaluationV15 } from '../
 import { validateCommanderDeck } from '../src/services/commander-rules.js';
 import {
   cardCommanderStrategyAffinityV15,
-  deriveCommanderStrategyContextV15,
+  deriveUpgradeStrategyContextV15,
   SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15,
 } from '../src/services/commander-strategy-affinity-v15.js';
 import { parseDecklist, type ParsedDeck } from '../src/services/deck.js';
@@ -74,7 +74,7 @@ async function verifyDeck(decklist: string): Promise<{
   const rules = validateCommanderDeck(parsed, resolved.cards);
   assert.equal(rules.isLegal, true, 'generalization control must retain Commander legality');
 
-  const context = deriveCommanderStrategyContextV15(parsed, resolved.cards);
+  const context = deriveUpgradeStrategyContextV15(parsed, resolved.cards);
   const substantive = context.strategies.filter((strategy) => strategy.score >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15);
   const cardByName = new Map(resolved.cards.map((card) => [card.name.toLocaleLowerCase(), card] as const));
   const strategies = substantive.map((strategy) => {

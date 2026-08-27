@@ -56,6 +56,15 @@ const ancientTomb = card({
   producedMana: ['C'],
 });
 
+const everflowingChalice = card({
+  name: 'Everflowing Chalice',
+  typeLine: 'Artifact',
+  oracleText: 'Multikicker {2}. Everflowing Chalice enters with a charge counter on it for each time it was kicked. {T}: Add {C} for each charge counter on Everflowing Chalice.',
+  cmc: 0,
+  manaCost: '{0}',
+  producedMana: ['C'],
+});
+
 const farseek = card({
   name: 'Farseek',
   typeLine: 'Sorcery',
@@ -304,12 +313,28 @@ const typalAnthem = card({
   manaCost: '{1}{G}',
 });
 
+const distributedTypalPump = card({
+  name: 'Generic Distributed Typal Pump',
+  typeLine: 'Creature — Test Warrior',
+  oracleText: 'Squirrels you control have "{T}: Target Squirrel gets +2/+2 and gains trample until end of turn. Activate only as a sorcery."',
+  cmc: 5,
+  manaCost: '{3}{G}{G}',
+});
+
 const boardScalingEquipment = card({
   name: 'Generic Board-Scaling Equipment',
   typeLine: 'Artifact — Equipment',
   oracleText: 'Equipped creature gets +1/+1 for each creature you control with base power and toughness 1/1. Whenever a Mouse or Squirrel you control enters, you may attach this Equipment to that creature.',
   cmc: 2,
   manaCost: '{2}',
+});
+
+const boardScalingCardAdvantage = card({
+  name: 'Generic Board-Scaling Card Advantage',
+  typeLine: 'Sorcery',
+  oracleText: 'Draw a card for each creature you control. Ferocious — You gain 4 life for each creature you control with power 4 or greater.',
+  cmc: 5,
+  manaCost: '{3}{G}{G}',
 });
 
 const variableTypalSacrificeOutlet = card({
@@ -360,6 +385,13 @@ test('ordinary lands are mana sources, not mana acceleration, while true multi-m
   assert.equal(inferCardRoles(ancientTomb).includes('mana acceleration'), true);
 });
 
+test('zero-mana rocks that require paid setup are acceleration but not fast mana', () => {
+  const roles = inferCardRoles(everflowingChalice);
+  assert.equal(roles.includes('mana acceleration'), true);
+  assert.equal(roles.includes('mana rock'), true);
+  assert.equal(roles.includes('fast mana'), false);
+});
+
 test('basic-land ramp is not promoted to strategic tutor while unrestricted land and card tutors remain tutors', () => {
   const farseekRoles = inferCardRoles(farseek);
   assert.equal(farseekRoles.includes('land ramp'), true);
@@ -374,6 +406,7 @@ test('basic-land ramp is not promoted to strategic tutor while unrestricted land
   const cropRoles = inferCardRoles(cropRotation);
   assert.equal(cropRoles.includes('land tutor'), true);
   assert.equal(cropRoles.includes('tutor'), true);
+  assert.equal(cropRoles.includes('sacrifice synergy'), false);
 
   assert.equal(inferCardRoles(demonicTutor).includes('tutor'), true);
 });
@@ -424,8 +457,10 @@ test('token multipliers and team-wide or board-scaling payoffs retain combat-eng
   assert.ok(inferCardRoles(tokenMultiplier).includes('token production'));
   assert.ok(inferCardRoles(teamAnthem).includes('go-wide payoff'));
   assert.ok(inferCardRoles(typalAnthem).includes('go-wide payoff'));
+  assert.ok(inferCardRoles(distributedTypalPump).includes('go-wide payoff'));
   assert.ok(inferCardRoles(boardScalingEquipment).includes('go-wide payoff'));
   assert.ok(inferCardRoles(boardScalingTypalCreature).includes('go-wide payoff'));
+  assert.ok(inferCardRoles(boardScalingCardAdvantage).includes('go-wide payoff'));
 });
 
 test('variable-quantity typal sacrifice costs remain repeatable sacrifice outlets', () => {

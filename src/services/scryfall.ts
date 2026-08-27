@@ -212,10 +212,11 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   const isLand = type.includes('land');
 
   const addsMana = /\badd (?:\{|one mana|two mana|three mana|four mana|five mana|mana)/.test(text);
+  const requiresPaidManaSetup = /\b(?:multi)?kicker\b/.test(text) || /\{x\}/i.test(manaCost);
   if (addsMana && (!isLand || landProducesExtraMana(text))) roles.add('mana acceleration');
   if (type.includes('artifact') && addsMana && !type.includes('creature')) roles.add('mana rock');
   if (type.includes('creature') && /\{t\}:\s*add|whenever .* add .* mana/.test(text)) roles.add('mana dork');
-  if (card.cmc <= 1 && addsMana && !isLand) roles.add('fast mana');
+  if (card.cmc <= 1 && addsMana && !isLand && !requiresPaidManaSetup) roles.add('fast mana');
   if (/search your library for .*land/.test(text) && /battlefield/.test(text)) roles.add('land ramp');
   if (/costs? .* less to cast/.test(text)) roles.add('cost reduction');
   if (/create .* treasure token/.test(text)) roles.add('treasure');
@@ -268,11 +269,16 @@ export function inferCardRoles(card: ScryfallCard): string[] {
     || /\bcreate twice that many [^.]{0,40}tokens?\b/.test(text);
   if (createsOrMultipliesTokens) roles.add('token production');
   const teamWideStatPayoff = /(?<!target )\b(?:other )?(?:creatures|[a-z][a-z'-]*s) you control (?:get|gain) \+\d+\/\+\d+/.test(text);
+  const distributedTypalPump = /\b(?:creatures|[a-z][a-z'-]*s) you control have "[^"]{0,100}\btarget (?:creature|[a-z][a-z'-]*) gets? \+\d+\/\+\d+/.test(text);
   const boardScalingEquipment = /\bequipped creature (?:gets?|has) [^.]{0,100}\bfor each (?:other )?creature you control\b/.test(text);
   const boardScalingCreature = type.includes('creature')
     && /\bput (?:a|one|two|three|\d+) \+1\/\+1 counters? on (?:it|this creature)[^.]{0,80}\bfor each (?:other )?[^.]{1,80} you control\b/.test(text);
-  if (teamWideStatPayoff || boardScalingEquipment || boardScalingCreature) roles.add('go-wide payoff');
-  const sacrificeAction = /\bsacrifice (?:a|an|another|target|one or more|any number of|x\b)/.test(text);
+  const boardScalingCardAdvantage = /\bdraw (?:a card for each|cards equal to (?:the )?number of) creatures? you control\b/.test(text);
+  if (teamWideStatPayoff || distributedTypalPump || boardScalingEquipment || boardScalingCreature || boardScalingCardAdvantage) roles.add('go-wide payoff');
+  const sacrificeTargets = [...text.matchAll(
+    /\bsacrifice (?:a|an|another|target|one or more|any number of|x\b)\s+([^.,:;\n]{1,80})/g,
+  )].map((match) => match[1]?.trim() ?? '');
+  const sacrificeAction = sacrificeTargets.some((target) => !/^(?:basic )?lands?\b/.test(target));
   const selfReferenceNames = [card.name, ...(card.card_faces ?? []).map((face) => face.name)]
     .flatMap((name) => name.split('//'))
     .map((name) => name.trim().toLocaleLowerCase())
