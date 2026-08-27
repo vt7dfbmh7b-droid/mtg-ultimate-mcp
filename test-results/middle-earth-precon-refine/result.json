@@ -223,9 +223,9 @@
     "roundsAccepted": 1,
     "totalSwaps": 4,
     "candidatePackagesPerRound": 4,
-    "estimatedUpgradeSpendNzd": 31.97,
-    "estimatedUpgradeSpendUsdReference": 19.04,
-    "maxTotalNzd": 200.01,
+    "estimatedUpgradeSpendNzd": 31.19,
+    "estimatedUpgradeSpendUsdReference": 18.58,
+    "maxTotalNzd": 200,
     "maxTotalUsdReference": 119.13,
     "swaps": [
       {
@@ -281,13 +281,13 @@
           "set": "HOB",
           "collectorNumber": "173",
           "finish": "nonfoil",
-          "priceNzd": 0.18,
-          "priceUsdReference": 0.11
+          "priceNzd": 0.24,
+          "priceUsdReference": 0.14
         },
         "structuralPairing": {
           "addressedRole": "interaction",
           "remainingStructuralDeficitAfterSwap": 12,
-          "authoritativeTargetGate": null,
+          "authoritativeTargetGate": "cheap-interaction",
           "nonlandManaValueReduction": null,
           "persistentColoredManaSourcesAfterSwap": 10,
           "persistentColoredManaSourceFloor": 6,
@@ -311,7 +311,7 @@
               "mana acceleration",
               "mana rock",
               "persistent colored mana source",
-              "sacrifice synergy",
+              "self sacrifice",
               "spot interaction"
             ],
             "unreplacedRoles": [
@@ -329,14 +329,14 @@
         "recommendedPrinting": {
           "set": "HOB",
           "collectorNumber": "170",
-          "finish": "nonfoil",
-          "priceNzd": 23.02,
-          "priceUsdReference": 13.71
+          "finish": "foil",
+          "priceNzd": 22.16,
+          "priceUsdReference": 13.2
         },
         "structuralPairing": {
           "addressedRole": "tutor",
           "remainingStructuralDeficitAfterSwap": 11,
-          "authoritativeTargetGate": null,
+          "authoritativeTargetGate": "tutors",
           "nonlandManaValueReduction": null,
           "persistentColoredManaSourcesAfterSwap": 10,
           "persistentColoredManaSourceFloor": 6,
@@ -379,8 +379,8 @@
           "set": "LTC",
           "collectorNumber": "281",
           "finish": "nonfoil",
-          "priceNzd": 8.11,
-          "priceUsdReference": 4.83
+          "priceNzd": 8.14,
+          "priceUsdReference": 4.85
         },
         "structuralPairing": {
           "addressedRole": "protection",
@@ -423,7 +423,7 @@
         }
       }
     ],
-    "finalDecklist": "// COMMANDER\n1 Frodo, Adventurous Hobbit (LTC) 2 *F*\n1 Sam, Loyal Attendant (LTC) 7 *F*\n\n// MAIN\n1 Field-Tested Frying Pan (LTC) 11 *N*\n1 The Gaffer (LTC) 12 *N*\n1 Gwaihir, Greatest of the Eagles (LTC) 15 *N*\n1 Of Herbs and Stewed Rabbit (LTC) 17 *N*\n1 Gollum, Obsessed Stalker (LTC) 26 *N*\n1 Lobelia, Defender of Bag End (LTC) 27 *N*\n1 Rapacious Guest (LTC) 28 *N*\n1 Assemble the Entmoot (LTC) 36 *N*\n1 Feasting Hobbit (LTC) 37 *N*\n1 Motivated Pony (LTC) 42 *N*\n1 Prize Pig (LTC) 43 *N*\n1 Banquet Guests (LTC) 47 *N*\n1 Bilbo, Birthday Celebrant (LTC) 48 *N*\n1 Farmer Cotton (LTC) 55 *N*\n1 Merry, Warden of Isengard (LTC) 61 *N*\n1 Pippin, Warden of Isengard (LTC) 65 *N*\n1 Treebeard, Gracious Host (LTC) 73 *N*\n1 Hithlain Rope (LTC) 76 *N*\n1 Call for Unity (LTC) 163 *N*\n1 Dawn of Hope (LTC) 164 *N*\n1 Dusk // Dawn (LTC) 166 *N*\n1 Fell the Mighty (LTC) 167 *N*\n1 Fumigate (LTC) 170 *N*\n1 Mentor of the Meek (LTC) 173 *N*\n1 Sanguine Bond (LTC) 208 *N*\n1 Toxic Deluge (LTC) 209 *N*\n1 Gilded Goose (LTC) 246 *N*\n1 Woodfall Primus (LTC) 264 *N*\n1 Anguished Unmaking (LTC) 265 *N*\n1 Chromatic Lantern (LTC) 275 *N*\n1 Trading Post (LTC) 288 *N*\n1 Well of Lost Dreams (LTC) 291 *N*\n1 Brushland (LTC) 297 *N*\n1 Canopy Vista (LTC) 298 *N*\n1 Exotic Orchard (LTC) 307 *N*\n1 Fortified Village (LTC) 311 *N*\n1 Isolated Chapel (LTC) 318 *N*\n1 Murmuring Bosk (LTC) 320 *N*\n1 Necroblossom Snarl (LTC) 321 *N*\n1 Scattered Groves (LTC) 328 *N*\n1 Shineshadow Snarl (LTC) 331 *N*\n1 Sunpetal Grove (LTC) 336 *N*\n1 Woodland Cemetery (LTC) 346 *N*\n1 Rosie Cotton of South Lane (LTR) 27 *N*\n1 Shire Shirriff (LTR) 30 *N*\n1 Mirkwood Bats (LTR) 95 *N*\n1 Generous Ent (LTR) 169 *N*\n1 Path to Exile (LTC) 175 *N*\n1 Swords to Plowshares (LTC) 178 *N*\n1 Revive the Shire (LTR) 185 *N*\n1 Butterbur, Bree Innkeeper (LTR) 197 *N*\n1 Crypt Incursion (LTC) 198 *N*\n1 Go for the Throat (LTC) 201 *N*\n1 Night's Whisper (LTC) 205 *N*\n1 Cultivate (LTC) 236 *N*\n1 Essence Warden (LTC) 242 *N*\n1 Farseek (LTC) 244 *N*\n1 Harmonize (LTC) 248 *N*\n1 Orchard Strider (LTC) 253 *N*\n1 Prosperous Innkeeper (LTC) 256 *N*\n1 Shire Terrace (LTR) 261 *N*\n1 Tireless Provisioner (LTC) 262 *N*\n1 Mortify (LTC) 269 *N*\n1 Savvy Hunter (LTC) 271 *N*\n1 Arcane Signet (LTC) 273 *N*\n1 Commander's Sphere (LTC) 276 *N*\n1 Pristine Talisman (LTC) 283 *N*\n1 Sol Ring (LTC) 284 *N*\n1 Access Tunnel (LTC) 294 *N*\n1 Ash Barrens (LTC) 295 *N*\n1 Command Tower (LTC) 301 *N*\n1 Evolving Wilds (LTC) 306 *N*\n1 Ghost Quarter (LTC) 314 *N*\n1 Graypelt Refuge (LTC) 316 *N*\n1 Path of Ancestry (LTC) 322 *N*\n1 Rogue's Passage (LTC) 326 *N*\n1 Sandsteppe Citadel (LTC) 327 *N*\n1 Scoured Barrens (LTC) 329 *N*\n2 Plains (LTR) 262 *N*\n2 Plains (LTR) 263 *N*\n2 Swamp (LTR) 266 *N*\n2 Swamp (LTR) 267 *N*\n4 Forest (LTR) 270 *N*\n4 Forest (LTR) 271 *N*\n1 Everflowing Chalice (LTC) 278 *N*\n1 Giant's Boulder (HOB) 173 *N*\n1 The Arkenstone // Seek the Heart (HOB) 170 *N*\n1 Lightning Greaves (LTC) 281 *N*",
+    "finalDecklist": "// COMMANDER\n1 Frodo, Adventurous Hobbit (LTC) 2 *F*\n1 Sam, Loyal Attendant (LTC) 7 *F*\n\n// MAIN\n1 Field-Tested Frying Pan (LTC) 11 *N*\n1 The Gaffer (LTC) 12 *N*\n1 Gwaihir, Greatest of the Eagles (LTC) 15 *N*\n1 Of Herbs and Stewed Rabbit (LTC) 17 *N*\n1 Gollum, Obsessed Stalker (LTC) 26 *N*\n1 Lobelia, Defender of Bag End (LTC) 27 *N*\n1 Rapacious Guest (LTC) 28 *N*\n1 Assemble the Entmoot (LTC) 36 *N*\n1 Feasting Hobbit (LTC) 37 *N*\n1 Motivated Pony (LTC) 42 *N*\n1 Prize Pig (LTC) 43 *N*\n1 Banquet Guests (LTC) 47 *N*\n1 Bilbo, Birthday Celebrant (LTC) 48 *N*\n1 Farmer Cotton (LTC) 55 *N*\n1 Merry, Warden of Isengard (LTC) 61 *N*\n1 Pippin, Warden of Isengard (LTC) 65 *N*\n1 Treebeard, Gracious Host (LTC) 73 *N*\n1 Hithlain Rope (LTC) 76 *N*\n1 Call for Unity (LTC) 163 *N*\n1 Dawn of Hope (LTC) 164 *N*\n1 Dusk // Dawn (LTC) 166 *N*\n1 Fell the Mighty (LTC) 167 *N*\n1 Fumigate (LTC) 170 *N*\n1 Mentor of the Meek (LTC) 173 *N*\n1 Sanguine Bond (LTC) 208 *N*\n1 Toxic Deluge (LTC) 209 *N*\n1 Gilded Goose (LTC) 246 *N*\n1 Woodfall Primus (LTC) 264 *N*\n1 Anguished Unmaking (LTC) 265 *N*\n1 Chromatic Lantern (LTC) 275 *N*\n1 Trading Post (LTC) 288 *N*\n1 Well of Lost Dreams (LTC) 291 *N*\n1 Brushland (LTC) 297 *N*\n1 Canopy Vista (LTC) 298 *N*\n1 Exotic Orchard (LTC) 307 *N*\n1 Fortified Village (LTC) 311 *N*\n1 Isolated Chapel (LTC) 318 *N*\n1 Murmuring Bosk (LTC) 320 *N*\n1 Necroblossom Snarl (LTC) 321 *N*\n1 Scattered Groves (LTC) 328 *N*\n1 Shineshadow Snarl (LTC) 331 *N*\n1 Sunpetal Grove (LTC) 336 *N*\n1 Woodland Cemetery (LTC) 346 *N*\n1 Rosie Cotton of South Lane (LTR) 27 *N*\n1 Shire Shirriff (LTR) 30 *N*\n1 Mirkwood Bats (LTR) 95 *N*\n1 Generous Ent (LTR) 169 *N*\n1 Path to Exile (LTC) 175 *N*\n1 Swords to Plowshares (LTC) 178 *N*\n1 Revive the Shire (LTR) 185 *N*\n1 Butterbur, Bree Innkeeper (LTR) 197 *N*\n1 Crypt Incursion (LTC) 198 *N*\n1 Go for the Throat (LTC) 201 *N*\n1 Night's Whisper (LTC) 205 *N*\n1 Cultivate (LTC) 236 *N*\n1 Essence Warden (LTC) 242 *N*\n1 Farseek (LTC) 244 *N*\n1 Harmonize (LTC) 248 *N*\n1 Orchard Strider (LTC) 253 *N*\n1 Prosperous Innkeeper (LTC) 256 *N*\n1 Shire Terrace (LTR) 261 *N*\n1 Tireless Provisioner (LTC) 262 *N*\n1 Mortify (LTC) 269 *N*\n1 Savvy Hunter (LTC) 271 *N*\n1 Arcane Signet (LTC) 273 *N*\n1 Commander's Sphere (LTC) 276 *N*\n1 Pristine Talisman (LTC) 283 *N*\n1 Sol Ring (LTC) 284 *N*\n1 Access Tunnel (LTC) 294 *N*\n1 Ash Barrens (LTC) 295 *N*\n1 Command Tower (LTC) 301 *N*\n1 Evolving Wilds (LTC) 306 *N*\n1 Ghost Quarter (LTC) 314 *N*\n1 Graypelt Refuge (LTC) 316 *N*\n1 Path of Ancestry (LTC) 322 *N*\n1 Rogue's Passage (LTC) 326 *N*\n1 Sandsteppe Citadel (LTC) 327 *N*\n1 Scoured Barrens (LTC) 329 *N*\n2 Plains (LTR) 262 *N*\n2 Plains (LTR) 263 *N*\n2 Swamp (LTR) 266 *N*\n2 Swamp (LTR) 267 *N*\n4 Forest (LTR) 270 *N*\n4 Forest (LTR) 271 *N*\n1 Everflowing Chalice (LTC) 278 *N*\n1 Giant's Boulder (HOB) 173 *N*\n1 The Arkenstone // Seek the Heart (HOB) 170 *F*\n1 Lightning Greaves (LTC) 281 *N*",
     "finalCommanderRules": {
       "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
       "status": "legal",
@@ -519,8 +519,8 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 4,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 31.97,
-        "estimatedSpendUsdReference": 19.04,
+        "estimatedSpendNzd": 31.19,
+        "estimatedSpendUsdReference": 18.58,
         "improvementScore": 8.632,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -559,9 +559,9 @@
     ],
     "constraints": {
       "targetBracket": 4,
-      "maxNzdPerCard": 35.01,
+      "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.85,
-      "maxTotalNzd": 200.01,
+      "maxTotalNzd": 200,
       "maxTotalUsdReference": 119.13,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
@@ -584,8 +584,8 @@
         "candidatePackagesGenerated": 4,
         "candidatePackagesEligible": 3,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 31.97,
-        "estimatedSpendUsdReference": 19.04,
+        "estimatedSpendNzd": 31.19,
+        "estimatedSpendUsdReference": 18.58,
         "improvementScore": 8.632,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -658,8 +658,8 @@
               "collectorNumber": "173",
               "releaseDate": "2026-08-14",
               "finish": "nonfoil",
-              "priceNzd": 0.18,
-              "priceUsdReference": 0.11,
+              "priceNzd": 0.24,
+              "priceUsdReference": 0.14,
               "promo": false,
               "promoTypes": [
                 "universesbeyond"
@@ -672,7 +672,7 @@
             "structuralPairing": {
               "addressedRole": "interaction",
               "remainingStructuralDeficitAfterSwap": 12,
-              "authoritativeTargetGate": null,
+              "authoritativeTargetGate": "cheap-interaction",
               "nonlandManaValueReduction": null,
               "persistentColoredManaSourcesAfterSwap": 10,
               "persistentColoredManaSourceFloor": 6,
@@ -696,7 +696,7 @@
                   "mana acceleration",
                   "mana rock",
                   "persistent colored mana source",
-                  "sacrifice synergy",
+                  "self sacrifice",
                   "spot interaction"
                 ],
                 "unreplacedRoles": [
@@ -715,9 +715,9 @@
               "setName": "The Hobbit",
               "collectorNumber": "170",
               "releaseDate": "2026-08-14",
-              "finish": "nonfoil",
-              "priceNzd": 23.02,
-              "priceUsdReference": 13.71,
+              "finish": "foil",
+              "priceNzd": 22.16,
+              "priceUsdReference": 13.2,
               "promo": false,
               "promoTypes": [
                 "universesbeyond"
@@ -730,7 +730,7 @@
             "structuralPairing": {
               "addressedRole": "tutor",
               "remainingStructuralDeficitAfterSwap": 11,
-              "authoritativeTargetGate": null,
+              "authoritativeTargetGate": "tutors",
               "nonlandManaValueReduction": null,
               "persistentColoredManaSourcesAfterSwap": 10,
               "persistentColoredManaSourceFloor": 6,
@@ -774,8 +774,8 @@
               "collectorNumber": "281",
               "releaseDate": "2023-06-23",
               "finish": "nonfoil",
-              "priceNzd": 8.11,
-              "priceUsdReference": 4.83,
+              "priceNzd": 8.14,
+              "priceUsdReference": 4.85,
               "promo": false,
               "promoTypes": [
                 "universesbeyond"
@@ -833,8 +833,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 31.97,
-            "estimatedSpendUsdReference": 19.04,
+            "estimatedSpendNzd": 31.19,
+            "estimatedSpendUsdReference": 18.58,
             "unknownPriceCount": 0,
             "improvementScore": 8.632,
             "significantRegression": false,
@@ -914,7 +914,7 @@
                     "mana acceleration",
                     "mana rock",
                     "persistent colored mana source",
-                    "sacrifice synergy",
+                    "self sacrifice",
                     "spot interaction"
                   ],
                   "unreplacedRoles": [
@@ -1000,7 +1000,7 @@
               "candidateDiscovery": {
                 "mode": "exhaustive-bounded-printing-policy",
                 "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 459,
+                "eligiblePoolCards": 462,
                 "roleSearchResultCap": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
@@ -1155,13 +1155,13 @@
                   "set": "HOB",
                   "collectorNumber": "173",
                   "finish": "nonfoil",
-                  "priceNzd": 0.18,
-                  "priceUsdReference": 0.11
+                  "priceNzd": 0.24,
+                  "priceUsdReference": 0.14
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
                   "remainingStructuralDeficitAfterSwap": 12,
-                  "authoritativeTargetGate": null,
+                  "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 10,
                   "persistentColoredManaSourceFloor": 6,
@@ -1185,7 +1185,7 @@
                       "mana acceleration",
                       "mana rock",
                       "persistent colored mana source",
-                      "sacrifice synergy",
+                      "self sacrifice",
                       "spot interaction"
                     ],
                     "unreplacedRoles": [
@@ -1203,14 +1203,14 @@
                 "recommendedPrinting": {
                   "set": "HOB",
                   "collectorNumber": "170",
-                  "finish": "nonfoil",
-                  "priceNzd": 23.02,
-                  "priceUsdReference": 13.71
+                  "finish": "foil",
+                  "priceNzd": 22.16,
+                  "priceUsdReference": 13.2
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
                   "remainingStructuralDeficitAfterSwap": 11,
-                  "authoritativeTargetGate": null,
+                  "authoritativeTargetGate": "tutors",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 10,
                   "persistentColoredManaSourceFloor": 6,
@@ -1253,8 +1253,8 @@
                   "set": "LTC",
                   "collectorNumber": "281",
                   "finish": "nonfoil",
-                  "priceNzd": 8.11,
-                  "priceUsdReference": 4.83
+                  "priceNzd": 8.14,
+                  "priceUsdReference": 4.85
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -1304,10 +1304,10 @@
             "reason": "package-causes-a-meaningful-commander-strategy-loss",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 33.86,
-            "estimatedSpendUsdReference": 20.17,
+            "estimatedSpendNzd": 32.48,
+            "estimatedSpendUsdReference": 19.35,
             "unknownPriceCount": 0,
-            "improvementScore": 1.491,
+            "improvementScore": 9.517,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -1322,15 +1322,38 @@
             },
             "themeAudit": null,
             "strategyPreservation": {
-              "status": "preserved",
+              "status": "meaningful-strategy-loss",
               "evidenceComplete": true,
-              "meaningfulLosses": [],
+              "meaningfulLosses": [
+                {
+                  "strategy": "combat-tokens",
+                  "commanderStrategyScore": 8,
+                  "cutAffinityScore": 14,
+                  "addAffinityScore": 8,
+                  "netAffinityLoss": 6,
+                  "strongestCutProtectionApplied": 4
+                },
+                {
+                  "strategy": "food-lifegain",
+                  "commanderStrategyScore": 15,
+                  "cutAffinityScore": 8,
+                  "addAffinityScore": 0,
+                  "netAffinityLoss": 8,
+                  "strongestCutProtectionApplied": 4
+                }
+              ],
               "strategyDeltas": [
                 {
                   "strategy": "combat-tokens",
-                  "cutAffinityScore": 8,
+                  "cutAffinityScore": 14,
                   "addAffinityScore": 8,
-                  "netAffinityDelta": 0
+                  "netAffinityDelta": -6
+                },
+                {
+                  "strategy": "food-lifegain",
+                  "cutAffinityScore": 8,
+                  "addAffinityScore": 0,
+                  "netAffinityDelta": -8
                 },
                 {
                   "strategy": "value-engine",
@@ -1366,40 +1389,34 @@
                   "verdict": "preserved"
                 },
                 {
-                  "cutStrategyAffinityScore": 0,
+                  "cutStrategyAffinityScore": 6,
                   "addStrategyAffinityScore": 1,
-                  "cutStrategyProtectionApplied": 0,
-                  "cutMatchedStrategies": [],
+                  "cutStrategyProtectionApplied": 4,
+                  "cutMatchedStrategies": [
+                    "value-engine"
+                  ],
                   "addMatchedStrategies": [
                     "value-engine"
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
-                    "creature",
-                    "fast mana",
-                    "mana acceleration",
-                    "mana dork",
-                    "persistent colored mana source"
+                    "creature"
                   ],
                   "addRoles": [
                     "spot interaction"
                   ],
                   "unreplacedRoles": [
-                    "creature",
-                    "fast mana",
-                    "mana acceleration",
-                    "mana dork",
-                    "persistent colored mana source"
+                    "creature"
                   ],
-                  "meaningfulStrategyLoss": false,
-                  "verdict": "preserved"
+                  "meaningfulStrategyLoss": true,
+                  "verdict": "meaningful-strategy-loss"
                 },
                 {
                   "cutStrategyAffinityScore": 6,
                   "addStrategyAffinityScore": 20,
                   "cutStrategyProtectionApplied": 4,
                   "cutMatchedStrategies": [
-                    "value-engine"
+                    "combat-tokens"
                   ],
                   "addMatchedStrategies": [
                     "combat-tokens",
@@ -1407,7 +1424,8 @@
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
-                    "creature"
+                    "creature",
+                    "go-wide payoff"
                   ],
                   "addRoles": [
                     "card draw",
@@ -1423,19 +1441,23 @@
                   "verdict": "preserved"
                 },
                 {
-                  "cutStrategyAffinityScore": 6,
+                  "cutStrategyAffinityScore": 14,
                   "addStrategyAffinityScore": 2,
                   "cutStrategyProtectionApplied": 4,
                   "cutMatchedStrategies": [
-                    "combat-tokens"
+                    "combat-tokens",
+                    "food-lifegain"
                   ],
                   "addMatchedStrategies": [
                     "combat-tokens"
                   ],
-                  "locallyUnreplacedStrategies": [],
+                  "locallyUnreplacedStrategies": [
+                    "food-lifegain"
+                  ],
                   "cutRoles": [
                     "creature",
-                    "go-wide payoff"
+                    "self sacrifice",
+                    "token production"
                   ],
                   "addRoles": [
                     "equipment",
@@ -1444,7 +1466,8 @@
                   ],
                   "unreplacedRoles": [
                     "creature",
-                    "go-wide payoff"
+                    "self sacrifice",
+                    "token production"
                   ],
                   "meaningfulStrategyLoss": true,
                   "verdict": "meaningful-strategy-loss"
@@ -1466,7 +1489,7 @@
               "candidateDiscovery": {
                 "mode": "exhaustive-bounded-printing-policy",
                 "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 459,
+                "eligiblePoolCards": 462,
                 "roleSearchResultCap": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
@@ -1576,8 +1599,8 @@
                   "set": "LTC",
                   "collectorNumber": "238",
                   "finish": "nonfoil",
-                  "priceNzd": 2.07,
-                  "priceUsdReference": 1.23
+                  "priceNzd": 1.56,
+                  "priceUsdReference": 0.93
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1614,78 +1637,72 @@
                 }
               },
               {
-                "out": "Birds of Paradise",
+                "out": "Great Oak Guardian",
                 "in": "Feed the Swarm",
                 "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 commander strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
                   "set": "LTC",
                   "collectorNumber": "200",
                   "finish": "nonfoil",
-                  "priceNzd": 0.67,
-                  "priceUsdReference": 0.4
+                  "priceNzd": 0.62,
+                  "priceUsdReference": 0.37
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
                   "remainingStructuralDeficitAfterSwap": 12,
-                  "authoritativeTargetGate": null,
+                  "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
-                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourcesAfterSwap": 10,
                   "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
-                    "cutStrategyAffinityScore": 0,
+                    "cutStrategyAffinityScore": 6,
                     "addStrategyAffinityScore": 1,
-                    "cutStrategyProtectionApplied": 0,
-                    "cutMatchedStrategies": [],
+                    "cutStrategyProtectionApplied": 4,
+                    "cutMatchedStrategies": [
+                      "value-engine"
+                    ],
                     "addMatchedStrategies": [
                       "value-engine"
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
-                      "creature",
-                      "fast mana",
-                      "mana acceleration",
-                      "mana dork",
-                      "persistent colored mana source"
+                      "creature"
                     ],
                     "addRoles": [
                       "spot interaction"
                     ],
                     "unreplacedRoles": [
-                      "creature",
-                      "fast mana",
-                      "mana acceleration",
-                      "mana dork",
-                      "persistent colored mana source"
+                      "creature"
                     ],
-                    "meaningfulStrategyLoss": false,
-                    "verdict": "preserved"
+                    "meaningfulStrategyLoss": true,
+                    "verdict": "meaningful-strategy-loss"
                   }
                 }
               },
               {
-                "out": "Great Oak Guardian",
+                "out": "Eagles of the North",
                 "in": "The Arkenstone // Seek the Heart",
                 "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 commander strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
                   "set": "HOB",
                   "collectorNumber": "170",
-                  "finish": "nonfoil",
-                  "priceNzd": 23.02,
-                  "priceUsdReference": 13.71
+                  "finish": "foil",
+                  "priceNzd": 22.16,
+                  "priceUsdReference": 13.2
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
                   "remainingStructuralDeficitAfterSwap": 11,
-                  "authoritativeTargetGate": null,
+                  "authoritativeTargetGate": "tutors",
                   "nonlandManaValueReduction": null,
-                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourcesAfterSwap": 10,
                   "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 6,
                     "addStrategyAffinityScore": 20,
                     "cutStrategyProtectionApplied": 4,
                     "cutMatchedStrategies": [
-                      "value-engine"
+                      "combat-tokens"
                     ],
                     "addMatchedStrategies": [
                       "combat-tokens",
@@ -1693,7 +1710,8 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
-                      "creature"
+                      "creature",
+                      "go-wide payoff"
                     ],
                     "addRoles": [
                       "card draw",
@@ -1711,37 +1729,41 @@
                 }
               },
               {
-                "out": "Eagles of the North",
+                "out": "Generous Ent",
                 "in": "Lightning Greaves",
                 "why": "Addresses the detected protection deficit and also supports the existing V0.15 commander strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
                   "set": "LTC",
                   "collectorNumber": "281",
                   "finish": "nonfoil",
-                  "priceNzd": 8.11,
-                  "priceUsdReference": 4.83
+                  "priceNzd": 8.14,
+                  "priceUsdReference": 4.85
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
                   "remainingStructuralDeficitAfterSwap": 10,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
-                  "persistentColoredManaSourcesAfterSwap": 9,
+                  "persistentColoredManaSourcesAfterSwap": 10,
                   "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
-                    "cutStrategyAffinityScore": 6,
+                    "cutStrategyAffinityScore": 14,
                     "addStrategyAffinityScore": 2,
                     "cutStrategyProtectionApplied": 4,
                     "cutMatchedStrategies": [
-                      "combat-tokens"
+                      "combat-tokens",
+                      "food-lifegain"
                     ],
                     "addMatchedStrategies": [
                       "combat-tokens"
                     ],
-                    "locallyUnreplacedStrategies": [],
+                    "locallyUnreplacedStrategies": [
+                      "food-lifegain"
+                    ],
                     "cutRoles": [
                       "creature",
-                      "go-wide payoff"
+                      "self sacrifice",
+                      "token production"
                     ],
                     "addRoles": [
                       "equipment",
@@ -1750,7 +1772,8 @@
                     ],
                     "unreplacedRoles": [
                       "creature",
-                      "go-wide payoff"
+                      "self sacrifice",
+                      "token production"
                     ],
                     "meaningfulStrategyLoss": true,
                     "verdict": "meaningful-strategy-loss"
@@ -1765,8 +1788,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 3,
-            "estimatedSpendNzd": 26.02,
-            "estimatedSpendUsdReference": 15.5,
+            "estimatedSpendNzd": 26.22,
+            "estimatedSpendUsdReference": 15.62,
             "unknownPriceCount": 0,
             "improvementScore": 1.005,
             "significantRegression": false,
@@ -1790,8 +1813,8 @@
                 {
                   "strategy": "combat-tokens",
                   "cutAffinityScore": 8,
-                  "addAffinityScore": 12,
-                  "netAffinityDelta": 4
+                  "addAffinityScore": 18,
+                  "netAffinityDelta": 10
                 },
                 {
                   "strategy": "food-lifegain",
@@ -1825,7 +1848,7 @@
                   ],
                   "addRoles": [
                     "land tutor",
-                    "sacrifice synergy",
+                    "self sacrifice",
                     "token production"
                   ],
                   "unreplacedRoles": [
@@ -1837,12 +1860,13 @@
                 },
                 {
                   "cutStrategyAffinityScore": 6,
-                  "addStrategyAffinityScore": 5,
+                  "addStrategyAffinityScore": 11,
                   "cutStrategyProtectionApplied": 4,
                   "cutMatchedStrategies": [
                     "value-engine"
                   ],
                   "addMatchedStrategies": [
+                    "combat-tokens",
                     "value-engine"
                   ],
                   "locallyUnreplacedStrategies": [],
@@ -1850,8 +1874,12 @@
                     "creature"
                   ],
                   "addRoles": [
-                    "card draw",
-                    "spot interaction"
+                    "mana acceleration",
+                    "self sacrifice",
+                    "spot interaction",
+                    "stax/control",
+                    "token production",
+                    "treasure"
                   ],
                   "unreplacedRoles": [
                     "creature"
@@ -1904,7 +1932,7 @@
               "candidateDiscovery": {
                 "mode": "exhaustive-bounded-printing-policy",
                 "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 459,
+                "eligiblePoolCards": 462,
                 "roleSearchResultCap": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
@@ -2014,8 +2042,8 @@
                   "set": "LTR",
                   "collectorNumber": "445",
                   "finish": "nonfoil",
-                  "priceNzd": 0.42,
-                  "priceUsdReference": 0.25
+                  "priceNzd": 0.39,
+                  "priceUsdReference": 0.23
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2042,7 +2070,7 @@
                     ],
                     "addRoles": [
                       "land tutor",
-                      "sacrifice synergy",
+                      "self sacrifice",
                       "token production"
                     ],
                     "unreplacedRoles": [
@@ -2056,30 +2084,31 @@
               },
               {
                 "out": "Great Oak Guardian",
-                "in": "Reprieve",
-                "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 commander strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                "in": "Bilbo's Gambit",
+                "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 commander strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
-                  "set": "LTR",
-                  "collectorNumber": "26",
+                  "set": "HOB",
+                  "collectorNumber": "5",
                   "finish": "nonfoil",
-                  "priceNzd": 2.59,
-                  "priceUsdReference": 1.54
+                  "priceNzd": 3.68,
+                  "priceUsdReference": 2.19
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
                   "remainingStructuralDeficitAfterSwap": 12,
-                  "authoritativeTargetGate": null,
+                  "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 9,
                   "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 6,
-                    "addStrategyAffinityScore": 5,
+                    "addStrategyAffinityScore": 11,
                     "cutStrategyProtectionApplied": 4,
                     "cutMatchedStrategies": [
                       "value-engine"
                     ],
                     "addMatchedStrategies": [
+                      "combat-tokens",
                       "value-engine"
                     ],
                     "locallyUnreplacedStrategies": [],
@@ -2087,8 +2116,12 @@
                       "creature"
                     ],
                     "addRoles": [
-                      "card draw",
-                      "spot interaction"
+                      "mana acceleration",
+                      "self sacrifice",
+                      "spot interaction",
+                      "stax/control",
+                      "token production",
+                      "treasure"
                     ],
                     "unreplacedRoles": [
                       "creature"
@@ -2105,14 +2138,14 @@
                 "recommendedPrinting": {
                   "set": "HOB",
                   "collectorNumber": "170",
-                  "finish": "nonfoil",
-                  "priceNzd": 23.02,
-                  "priceUsdReference": 13.71
+                  "finish": "foil",
+                  "priceNzd": 22.16,
+                  "priceUsdReference": 13.2
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
                   "remainingStructuralDeficitAfterSwap": 11,
-                  "authoritativeTargetGate": null,
+                  "authoritativeTargetGate": "tutors",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 9,
                   "persistentColoredManaSourceFloor": 6,
@@ -2154,8 +2187,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 3,
-            "estimatedSpendNzd": 27.7,
-            "estimatedSpendUsdReference": 16.5,
+            "estimatedSpendNzd": 25.55,
+            "estimatedSpendUsdReference": 15.22,
             "unknownPriceCount": 0,
             "improvementScore": 1.005,
             "significantRegression": false,
@@ -2179,8 +2212,8 @@
                 {
                   "strategy": "combat-tokens",
                   "cutAffinityScore": 8,
-                  "addAffinityScore": 18,
-                  "netAffinityDelta": 10
+                  "addAffinityScore": 12,
+                  "netAffinityDelta": 4
                 },
                 {
                   "strategy": "food-lifegain",
@@ -2213,7 +2246,7 @@
                     "go-wide payoff"
                   ],
                   "addRoles": [
-                    "sacrifice synergy",
+                    "self sacrifice",
                     "token production"
                   ],
                   "unreplacedRoles": [
@@ -2225,13 +2258,12 @@
                 },
                 {
                   "cutStrategyAffinityScore": 6,
-                  "addStrategyAffinityScore": 11,
+                  "addStrategyAffinityScore": 5,
                   "cutStrategyProtectionApplied": 4,
                   "cutMatchedStrategies": [
                     "value-engine"
                   ],
                   "addMatchedStrategies": [
-                    "combat-tokens",
                     "value-engine"
                   ],
                   "locallyUnreplacedStrategies": [],
@@ -2239,12 +2271,8 @@
                     "creature"
                   ],
                   "addRoles": [
-                    "mana acceleration",
-                    "sacrifice synergy",
-                    "spot interaction",
-                    "stax/control",
-                    "token production",
-                    "treasure"
+                    "card draw",
+                    "spot interaction"
                   ],
                   "unreplacedRoles": [
                     "creature"
@@ -2297,7 +2325,7 @@
               "candidateDiscovery": {
                 "mode": "exhaustive-bounded-printing-policy",
                 "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 459,
+                "eligiblePoolCards": 462,
                 "roleSearchResultCap": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
@@ -2407,8 +2435,8 @@
                   "set": "LTR",
                   "collectorNumber": "108",
                   "finish": "nonfoil",
-                  "priceNzd": 0.39,
-                  "priceUsdReference": 0.23
+                  "priceNzd": 0.35,
+                  "priceUsdReference": 0.21
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2434,7 +2462,7 @@
                       "go-wide payoff"
                     ],
                     "addRoles": [
-                      "sacrifice synergy",
+                      "self sacrifice",
                       "token production"
                     ],
                     "unreplacedRoles": [
@@ -2448,31 +2476,30 @@
               },
               {
                 "out": "Great Oak Guardian",
-                "in": "Bilbo's Gambit",
-                "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 commander strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                "in": "Reprieve",
+                "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 commander strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
-                  "set": "HOB",
-                  "collectorNumber": "5",
+                  "set": "LTR",
+                  "collectorNumber": "26",
                   "finish": "nonfoil",
-                  "priceNzd": 4.3,
-                  "priceUsdReference": 2.56
+                  "priceNzd": 3.04,
+                  "priceUsdReference": 1.81
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
                   "remainingStructuralDeficitAfterSwap": 12,
-                  "authoritativeTargetGate": null,
+                  "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 9,
                   "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 6,
-                    "addStrategyAffinityScore": 11,
+                    "addStrategyAffinityScore": 5,
                     "cutStrategyProtectionApplied": 4,
                     "cutMatchedStrategies": [
                       "value-engine"
                     ],
                     "addMatchedStrategies": [
-                      "combat-tokens",
                       "value-engine"
                     ],
                     "locallyUnreplacedStrategies": [],
@@ -2480,12 +2507,8 @@
                       "creature"
                     ],
                     "addRoles": [
-                      "mana acceleration",
-                      "sacrifice synergy",
-                      "spot interaction",
-                      "stax/control",
-                      "token production",
-                      "treasure"
+                      "card draw",
+                      "spot interaction"
                     ],
                     "unreplacedRoles": [
                       "creature"
@@ -2502,14 +2525,14 @@
                 "recommendedPrinting": {
                   "set": "HOB",
                   "collectorNumber": "170",
-                  "finish": "nonfoil",
-                  "priceNzd": 23.02,
-                  "priceUsdReference": 13.71
+                  "finish": "foil",
+                  "priceNzd": 22.16,
+                  "priceUsdReference": 13.2
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
                   "remainingStructuralDeficitAfterSwap": 11,
-                  "authoritativeTargetGate": null,
+                  "authoritativeTargetGate": "tutors",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 9,
                   "persistentColoredManaSourceFloor": 6,
@@ -2563,8 +2586,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 31.97,
-                "estimatedSpendUsdReference": 19.04,
+                "estimatedSpendNzd": 31.19,
+                "estimatedSpendUsdReference": 18.58,
                 "unknownPriceCount": 0,
                 "improvementScore": 8.632,
                 "significantRegression": false,
@@ -2644,7 +2667,7 @@
                         "mana acceleration",
                         "mana rock",
                         "persistent colored mana source",
-                        "sacrifice synergy",
+                        "self sacrifice",
                         "spot interaction"
                       ],
                       "unreplacedRoles": [
@@ -2730,7 +2753,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -2885,13 +2908,13 @@
                       "set": "HOB",
                       "collectorNumber": "173",
                       "finish": "nonfoil",
-                      "priceNzd": 0.18,
-                      "priceUsdReference": 0.11
+                      "priceNzd": 0.24,
+                      "priceUsdReference": 0.14
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
                       "remainingStructuralDeficitAfterSwap": 12,
-                      "authoritativeTargetGate": null,
+                      "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 10,
                       "persistentColoredManaSourceFloor": 6,
@@ -2915,7 +2938,7 @@
                           "mana acceleration",
                           "mana rock",
                           "persistent colored mana source",
-                          "sacrifice synergy",
+                          "self sacrifice",
                           "spot interaction"
                         ],
                         "unreplacedRoles": [
@@ -2933,14 +2956,14 @@
                     "recommendedPrinting": {
                       "set": "HOB",
                       "collectorNumber": "170",
-                      "finish": "nonfoil",
-                      "priceNzd": 23.02,
-                      "priceUsdReference": 13.71
+                      "finish": "foil",
+                      "priceNzd": 22.16,
+                      "priceUsdReference": 13.2
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
                       "remainingStructuralDeficitAfterSwap": 11,
-                      "authoritativeTargetGate": null,
+                      "authoritativeTargetGate": "tutors",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 10,
                       "persistentColoredManaSourceFloor": 6,
@@ -2983,8 +3006,8 @@
                       "set": "LTC",
                       "collectorNumber": "281",
                       "finish": "nonfoil",
-                      "priceNzd": 8.11,
-                      "priceUsdReference": 4.83
+                      "priceNzd": 8.14,
+                      "priceUsdReference": 4.85
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -3034,10 +3057,10 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 33.86,
-                "estimatedSpendUsdReference": 20.17,
+                "estimatedSpendNzd": 32.48,
+                "estimatedSpendUsdReference": 19.35,
                 "unknownPriceCount": 0,
-                "improvementScore": 1.491,
+                "improvementScore": 9.517,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -3052,15 +3075,38 @@
                 },
                 "themeAudit": null,
                 "strategyPreservation": {
-                  "status": "preserved",
+                  "status": "meaningful-strategy-loss",
                   "evidenceComplete": true,
-                  "meaningfulLosses": [],
+                  "meaningfulLosses": [
+                    {
+                      "strategy": "combat-tokens",
+                      "commanderStrategyScore": 8,
+                      "cutAffinityScore": 14,
+                      "addAffinityScore": 8,
+                      "netAffinityLoss": 6,
+                      "strongestCutProtectionApplied": 4
+                    },
+                    {
+                      "strategy": "food-lifegain",
+                      "commanderStrategyScore": 15,
+                      "cutAffinityScore": 8,
+                      "addAffinityScore": 0,
+                      "netAffinityLoss": 8,
+                      "strongestCutProtectionApplied": 4
+                    }
+                  ],
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 8,
+                      "cutAffinityScore": 14,
                       "addAffinityScore": 8,
-                      "netAffinityDelta": 0
+                      "netAffinityDelta": -6
+                    },
+                    {
+                      "strategy": "food-lifegain",
+                      "cutAffinityScore": 8,
+                      "addAffinityScore": 0,
+                      "netAffinityDelta": -8
                     },
                     {
                       "strategy": "value-engine",
@@ -3096,40 +3142,34 @@
                       "verdict": "preserved"
                     },
                     {
-                      "cutStrategyAffinityScore": 0,
+                      "cutStrategyAffinityScore": 6,
                       "addStrategyAffinityScore": 1,
-                      "cutStrategyProtectionApplied": 0,
-                      "cutMatchedStrategies": [],
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "value-engine"
+                      ],
                       "addMatchedStrategies": [
                         "value-engine"
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "creature",
-                        "fast mana",
-                        "mana acceleration",
-                        "mana dork",
-                        "persistent colored mana source"
+                        "creature"
                       ],
                       "addRoles": [
                         "spot interaction"
                       ],
                       "unreplacedRoles": [
-                        "creature",
-                        "fast mana",
-                        "mana acceleration",
-                        "mana dork",
-                        "persistent colored mana source"
+                        "creature"
                       ],
-                      "meaningfulStrategyLoss": false,
-                      "verdict": "preserved"
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
                     },
                     {
                       "cutStrategyAffinityScore": 6,
                       "addStrategyAffinityScore": 20,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
-                        "value-engine"
+                        "combat-tokens"
                       ],
                       "addMatchedStrategies": [
                         "combat-tokens",
@@ -3137,7 +3177,8 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "creature"
+                        "creature",
+                        "go-wide payoff"
                       ],
                       "addRoles": [
                         "card draw",
@@ -3153,19 +3194,23 @@
                       "verdict": "preserved"
                     },
                     {
-                      "cutStrategyAffinityScore": 6,
+                      "cutStrategyAffinityScore": 14,
                       "addStrategyAffinityScore": 2,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
-                        "combat-tokens"
+                        "combat-tokens",
+                        "food-lifegain"
                       ],
                       "addMatchedStrategies": [
                         "combat-tokens"
                       ],
-                      "locallyUnreplacedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "food-lifegain"
+                      ],
                       "cutRoles": [
                         "creature",
-                        "go-wide payoff"
+                        "self sacrifice",
+                        "token production"
                       ],
                       "addRoles": [
                         "equipment",
@@ -3174,7 +3219,8 @@
                       ],
                       "unreplacedRoles": [
                         "creature",
-                        "go-wide payoff"
+                        "self sacrifice",
+                        "token production"
                       ],
                       "meaningfulStrategyLoss": true,
                       "verdict": "meaningful-strategy-loss"
@@ -3196,7 +3242,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -3306,8 +3352,8 @@
                       "set": "LTC",
                       "collectorNumber": "238",
                       "finish": "nonfoil",
-                      "priceNzd": 2.07,
-                      "priceUsdReference": 1.23
+                      "priceNzd": 1.56,
+                      "priceUsdReference": 0.93
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3344,78 +3390,72 @@
                     }
                   },
                   {
-                    "out": "Birds of Paradise",
+                    "out": "Great Oak Guardian",
                     "in": "Feed the Swarm",
                     "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 commander strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "LTC",
                       "collectorNumber": "200",
                       "finish": "nonfoil",
-                      "priceNzd": 0.67,
-                      "priceUsdReference": 0.4
+                      "priceNzd": 0.62,
+                      "priceUsdReference": 0.37
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
                       "remainingStructuralDeficitAfterSwap": 12,
-                      "authoritativeTargetGate": null,
+                      "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourcesAfterSwap": 10,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 0,
+                        "cutStrategyAffinityScore": 6,
                         "addStrategyAffinityScore": 1,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "value-engine"
+                        ],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "creature",
-                          "fast mana",
-                          "mana acceleration",
-                          "mana dork",
-                          "persistent colored mana source"
+                          "creature"
                         ],
                         "addRoles": [
                           "spot interaction"
                         ],
                         "unreplacedRoles": [
-                          "creature",
-                          "fast mana",
-                          "mana acceleration",
-                          "mana dork",
-                          "persistent colored mana source"
+                          "creature"
                         ],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
+                        "meaningfulStrategyLoss": true,
+                        "verdict": "meaningful-strategy-loss"
                       }
                     }
                   },
                   {
-                    "out": "Great Oak Guardian",
+                    "out": "Eagles of the North",
                     "in": "The Arkenstone // Seek the Heart",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 commander strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "HOB",
                       "collectorNumber": "170",
-                      "finish": "nonfoil",
-                      "priceNzd": 23.02,
-                      "priceUsdReference": 13.71
+                      "finish": "foil",
+                      "priceNzd": 22.16,
+                      "priceUsdReference": 13.2
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
                       "remainingStructuralDeficitAfterSwap": 11,
-                      "authoritativeTargetGate": null,
+                      "authoritativeTargetGate": "tutors",
                       "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourcesAfterSwap": 10,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 6,
                         "addStrategyAffinityScore": 20,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
-                          "value-engine"
+                          "combat-tokens"
                         ],
                         "addMatchedStrategies": [
                           "combat-tokens",
@@ -3423,7 +3463,8 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "creature"
+                          "creature",
+                          "go-wide payoff"
                         ],
                         "addRoles": [
                           "card draw",
@@ -3441,37 +3482,41 @@
                     }
                   },
                   {
-                    "out": "Eagles of the North",
+                    "out": "Generous Ent",
                     "in": "Lightning Greaves",
                     "why": "Addresses the detected protection deficit and also supports the existing V0.15 commander strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "LTC",
                       "collectorNumber": "281",
                       "finish": "nonfoil",
-                      "priceNzd": 8.11,
-                      "priceUsdReference": 4.83
+                      "priceNzd": 8.14,
+                      "priceUsdReference": 4.85
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
                       "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 9,
+                      "persistentColoredManaSourcesAfterSwap": 10,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
+                        "cutStrategyAffinityScore": 14,
                         "addStrategyAffinityScore": 2,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
-                          "combat-tokens"
+                          "combat-tokens",
+                          "food-lifegain"
                         ],
                         "addMatchedStrategies": [
                           "combat-tokens"
                         ],
-                        "locallyUnreplacedStrategies": [],
+                        "locallyUnreplacedStrategies": [
+                          "food-lifegain"
+                        ],
                         "cutRoles": [
                           "creature",
-                          "go-wide payoff"
+                          "self sacrifice",
+                          "token production"
                         ],
                         "addRoles": [
                           "equipment",
@@ -3480,7 +3525,8 @@
                         ],
                         "unreplacedRoles": [
                           "creature",
-                          "go-wide payoff"
+                          "self sacrifice",
+                          "token production"
                         ],
                         "meaningfulStrategyLoss": true,
                         "verdict": "meaningful-strategy-loss"
@@ -3495,8 +3541,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 26.02,
-                "estimatedSpendUsdReference": 15.5,
+                "estimatedSpendNzd": 26.22,
+                "estimatedSpendUsdReference": 15.62,
                 "unknownPriceCount": 0,
                 "improvementScore": 1.005,
                 "significantRegression": false,
@@ -3520,8 +3566,8 @@
                     {
                       "strategy": "combat-tokens",
                       "cutAffinityScore": 8,
-                      "addAffinityScore": 12,
-                      "netAffinityDelta": 4
+                      "addAffinityScore": 18,
+                      "netAffinityDelta": 10
                     },
                     {
                       "strategy": "food-lifegain",
@@ -3555,7 +3601,7 @@
                       ],
                       "addRoles": [
                         "land tutor",
-                        "sacrifice synergy",
+                        "self sacrifice",
                         "token production"
                       ],
                       "unreplacedRoles": [
@@ -3567,12 +3613,13 @@
                     },
                     {
                       "cutStrategyAffinityScore": 6,
-                      "addStrategyAffinityScore": 5,
+                      "addStrategyAffinityScore": 11,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
                         "value-engine"
                       ],
                       "addMatchedStrategies": [
+                        "combat-tokens",
                         "value-engine"
                       ],
                       "locallyUnreplacedStrategies": [],
@@ -3580,8 +3627,12 @@
                         "creature"
                       ],
                       "addRoles": [
-                        "card draw",
-                        "spot interaction"
+                        "mana acceleration",
+                        "self sacrifice",
+                        "spot interaction",
+                        "stax/control",
+                        "token production",
+                        "treasure"
                       ],
                       "unreplacedRoles": [
                         "creature"
@@ -3634,7 +3685,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -3744,8 +3795,8 @@
                       "set": "LTR",
                       "collectorNumber": "445",
                       "finish": "nonfoil",
-                      "priceNzd": 0.42,
-                      "priceUsdReference": 0.25
+                      "priceNzd": 0.39,
+                      "priceUsdReference": 0.23
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3772,7 +3823,7 @@
                         ],
                         "addRoles": [
                           "land tutor",
-                          "sacrifice synergy",
+                          "self sacrifice",
                           "token production"
                         ],
                         "unreplacedRoles": [
@@ -3786,30 +3837,31 @@
                   },
                   {
                     "out": "Great Oak Guardian",
-                    "in": "Reprieve",
-                    "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 commander strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "in": "Bilbo's Gambit",
+                    "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 commander strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "LTR",
-                      "collectorNumber": "26",
+                      "set": "HOB",
+                      "collectorNumber": "5",
                       "finish": "nonfoil",
-                      "priceNzd": 2.59,
-                      "priceUsdReference": 1.54
+                      "priceNzd": 3.68,
+                      "priceUsdReference": 2.19
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
                       "remainingStructuralDeficitAfterSwap": 12,
-                      "authoritativeTargetGate": null,
+                      "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 9,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 6,
-                        "addStrategyAffinityScore": 5,
+                        "addStrategyAffinityScore": 11,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
                           "value-engine"
                         ],
                         "addMatchedStrategies": [
+                          "combat-tokens",
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
@@ -3817,8 +3869,12 @@
                           "creature"
                         ],
                         "addRoles": [
-                          "card draw",
-                          "spot interaction"
+                          "mana acceleration",
+                          "self sacrifice",
+                          "spot interaction",
+                          "stax/control",
+                          "token production",
+                          "treasure"
                         ],
                         "unreplacedRoles": [
                           "creature"
@@ -3835,14 +3891,14 @@
                     "recommendedPrinting": {
                       "set": "HOB",
                       "collectorNumber": "170",
-                      "finish": "nonfoil",
-                      "priceNzd": 23.02,
-                      "priceUsdReference": 13.71
+                      "finish": "foil",
+                      "priceNzd": 22.16,
+                      "priceUsdReference": 13.2
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
                       "remainingStructuralDeficitAfterSwap": 11,
-                      "authoritativeTargetGate": null,
+                      "authoritativeTargetGate": "tutors",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 9,
                       "persistentColoredManaSourceFloor": 6,
@@ -3884,8 +3940,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 27.7,
-                "estimatedSpendUsdReference": 16.5,
+                "estimatedSpendNzd": 25.55,
+                "estimatedSpendUsdReference": 15.22,
                 "unknownPriceCount": 0,
                 "improvementScore": 1.005,
                 "significantRegression": false,
@@ -3909,8 +3965,8 @@
                     {
                       "strategy": "combat-tokens",
                       "cutAffinityScore": 8,
-                      "addAffinityScore": 18,
-                      "netAffinityDelta": 10
+                      "addAffinityScore": 12,
+                      "netAffinityDelta": 4
                     },
                     {
                       "strategy": "food-lifegain",
@@ -3943,7 +3999,7 @@
                         "go-wide payoff"
                       ],
                       "addRoles": [
-                        "sacrifice synergy",
+                        "self sacrifice",
                         "token production"
                       ],
                       "unreplacedRoles": [
@@ -3955,13 +4011,12 @@
                     },
                     {
                       "cutStrategyAffinityScore": 6,
-                      "addStrategyAffinityScore": 11,
+                      "addStrategyAffinityScore": 5,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
                         "value-engine"
                       ],
                       "addMatchedStrategies": [
-                        "combat-tokens",
                         "value-engine"
                       ],
                       "locallyUnreplacedStrategies": [],
@@ -3969,12 +4024,8 @@
                         "creature"
                       ],
                       "addRoles": [
-                        "mana acceleration",
-                        "sacrifice synergy",
-                        "spot interaction",
-                        "stax/control",
-                        "token production",
-                        "treasure"
+                        "card draw",
+                        "spot interaction"
                       ],
                       "unreplacedRoles": [
                         "creature"
@@ -4027,7 +4078,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -4137,8 +4188,8 @@
                       "set": "LTR",
                       "collectorNumber": "108",
                       "finish": "nonfoil",
-                      "priceNzd": 0.39,
-                      "priceUsdReference": 0.23
+                      "priceNzd": 0.35,
+                      "priceUsdReference": 0.21
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4164,7 +4215,7 @@
                           "go-wide payoff"
                         ],
                         "addRoles": [
-                          "sacrifice synergy",
+                          "self sacrifice",
                           "token production"
                         ],
                         "unreplacedRoles": [
@@ -4178,31 +4229,30 @@
                   },
                   {
                     "out": "Great Oak Guardian",
-                    "in": "Bilbo's Gambit",
-                    "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 commander strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "in": "Reprieve",
+                    "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 commander strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "HOB",
-                      "collectorNumber": "5",
+                      "set": "LTR",
+                      "collectorNumber": "26",
                       "finish": "nonfoil",
-                      "priceNzd": 4.3,
-                      "priceUsdReference": 2.56
+                      "priceNzd": 3.04,
+                      "priceUsdReference": 1.81
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
                       "remainingStructuralDeficitAfterSwap": 12,
-                      "authoritativeTargetGate": null,
+                      "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 9,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 6,
-                        "addStrategyAffinityScore": 11,
+                        "addStrategyAffinityScore": 5,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
                           "value-engine"
                         ],
                         "addMatchedStrategies": [
-                          "combat-tokens",
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
@@ -4210,12 +4260,8 @@
                           "creature"
                         ],
                         "addRoles": [
-                          "mana acceleration",
-                          "sacrifice synergy",
-                          "spot interaction",
-                          "stax/control",
-                          "token production",
-                          "treasure"
+                          "card draw",
+                          "spot interaction"
                         ],
                         "unreplacedRoles": [
                           "creature"
@@ -4232,14 +4278,14 @@
                     "recommendedPrinting": {
                       "set": "HOB",
                       "collectorNumber": "170",
-                      "finish": "nonfoil",
-                      "priceNzd": 23.02,
-                      "priceUsdReference": 13.71
+                      "finish": "foil",
+                      "priceNzd": 22.16,
+                      "priceUsdReference": 13.2
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
                       "remainingStructuralDeficitAfterSwap": 11,
-                      "authoritativeTargetGate": null,
+                      "authoritativeTargetGate": "tutors",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 9,
                       "persistentColoredManaSourceFloor": 6,
@@ -4345,7 +4391,7 @@
               "candidateDiscovery": {
                 "mode": "exhaustive-bounded-printing-policy",
                 "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 459,
+                "eligiblePoolCards": 462,
                 "roleSearchResultCap": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
@@ -4475,7 +4521,7 @@
               "candidateDiscovery": {
                 "mode": "exhaustive-bounded-printing-policy",
                 "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 459,
+                "eligiblePoolCards": 462,
                 "roleSearchResultCap": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
@@ -4605,7 +4651,7 @@
               "candidateDiscovery": {
                 "mode": "exhaustive-bounded-printing-policy",
                 "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 459,
+                "eligiblePoolCards": 462,
                 "roleSearchResultCap": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
@@ -4735,7 +4781,7 @@
               "candidateDiscovery": {
                 "mode": "exhaustive-bounded-printing-policy",
                 "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 459,
+                "eligiblePoolCards": 462,
                 "roleSearchResultCap": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
@@ -4876,7 +4922,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -5006,7 +5052,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -5136,7 +5182,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -5266,7 +5312,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -5407,7 +5453,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -5537,7 +5583,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -5667,7 +5713,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -5797,7 +5843,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -5938,7 +5984,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -6068,7 +6114,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -6198,7 +6244,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -6328,7 +6374,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -6469,7 +6515,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -6599,7 +6645,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -6729,7 +6775,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
@@ -6859,7 +6905,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 459,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },

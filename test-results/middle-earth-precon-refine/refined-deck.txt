@@ -89,5 +89,5 @@
 4 Forest (LTR) 271 *N*
 1 Everflowing Chalice (LTC) 278 *N*
 1 Giant's Boulder (HOB) 173 *N*
-1 The Arkenstone // Seek the Heart (HOB) 170 *N*
+1 The Arkenstone // Seek the Heart (HOB) 170 *F*
 1 Lightning Greaves (LTC) 281 *N*
