@@ -131,7 +131,7 @@
         "+1/+1 counters": 3,
         "mana acceleration": 25,
         "treasure": 7,
-        "sacrifice synergy": 4,
+        "sacrifice synergy": 3,
         "self sacrifice": 9,
         "fast mana": 5,
         "persistent colored mana source": 14,
@@ -260,8 +260,9 @@
               "meaningfulLosses": [],
               "strategyDeltas": [],
               "swapImpacts": [],
-              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
             },
+            "deckStrategyRetention": {},
             "planProvenance": {
               "targetBracket": 5,
               "winRouteVerificationStatus": "no-verified-route",
@@ -329,8 +330,9 @@
               "meaningfulLosses": [],
               "strategyDeltas": [],
               "swapImpacts": [],
-              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
             },
+            "deckStrategyRetention": {},
             "planProvenance": {
               "targetBracket": 5,
               "winRouteVerificationStatus": "no-verified-route",
@@ -398,8 +400,9 @@
               "meaningfulLosses": [],
               "strategyDeltas": [],
               "swapImpacts": [],
-              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
             },
+            "deckStrategyRetention": {},
             "planProvenance": {
               "targetBracket": 5,
               "winRouteVerificationStatus": "no-verified-route",
@@ -467,8 +470,9 @@
               "meaningfulLosses": [],
               "strategyDeltas": [],
               "swapImpacts": [],
-              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
             },
+            "deckStrategyRetention": {},
             "planProvenance": {
               "targetBracket": 5,
               "winRouteVerificationStatus": "no-verified-route",
@@ -536,8 +540,9 @@
               "meaningfulLosses": [],
               "strategyDeltas": [],
               "swapImpacts": [],
-              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+              "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
             },
+            "deckStrategyRetention": {},
             "planProvenance": {
               "targetBracket": 5,
               "winRouteVerificationStatus": "no-verified-route",
@@ -616,8 +621,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -685,8 +691,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -754,8 +761,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -823,8 +831,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -892,8 +901,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -972,8 +982,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -1041,8 +1052,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -1110,8 +1122,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -1179,8 +1192,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -1248,8 +1262,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -1328,8 +1343,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -1397,8 +1413,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -1466,8 +1483,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -1535,8 +1553,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -1604,8 +1623,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -1684,8 +1704,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -1753,8 +1774,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -1822,8 +1844,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -1891,8 +1914,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -1960,8 +1984,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -2040,8 +2065,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -2109,8 +2135,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -2178,8 +2205,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -2247,8 +2275,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -2316,8 +2345,9 @@
                   "meaningfulLosses": [],
                   "strategyDeltas": [],
                   "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive command-zone strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
+                  "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -2513,7 +2543,7 @@
         "+1/+1 counters": 3,
         "mana acceleration": 25,
         "treasure": 7,
-        "sacrifice synergy": 4,
+        "sacrifice synergy": 3,
         "self sacrifice": 9,
         "fast mana": 5,
         "persistent colored mana source": 14,
