@@ -45,7 +45,6 @@
 1 Glóin, Dwarf Emissary (LTR) 132
 1 The Queen of Dale (HOB) 24
 1 Elvish Mystic (HOC) 205
-1 Everflowing Chalice (LTC) 278
 1 Delighted Halfling (LTR) 158
 1 Rammas Echor, Ancient Shield (LTC) 505
 1 Tireless Provisioner (LTC) 262
@@ -70,6 +69,7 @@
 1 Commander's Sphere (LTC) 276
 1 Bastion Protector (LTC) 162
 1 Farseek (LTC) 244
+1 Rampant Growth (LTC) 257
 1 Command Tower (LTC) 301
 1 Exotic Orchard (LTC) 307
 1 Cavern of Souls (LTC) 392z
