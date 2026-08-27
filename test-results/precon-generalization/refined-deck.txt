@@ -59,6 +59,8 @@
 1 Resurrection Orb (40K) 165 *N*
 1 Sceptre of Eternal Glory (40K) 166 *N*
 1 Tomb Fortress (40K) 168 *N*
+1 Flayed One (40K) 34 *N*
+1 Hexmark Destroyer (40K) 36 *N*
 1 Psychomancer (40K) 51 *N*
 1 Sautekh Immortal (40K) 54 *N*
 1 Skorpekh Destroyer (40K) 57 *N*
@@ -68,9 +70,7 @@
 1 Lively Dirge (OTJ) 93 *N*
 1 Soul-Guide Lantern (FDN) 680 *N*
 1 Moonsilver Key (MID) 255 *N*
-1 Bone Shards (PLST) MH2-76 *N*
-1 Swiftfoot Boots (A25) 234 *N*
-1 Sword of Light and Shadow (ACR) 100 *F*
+1 Ghost Vacuum (DSK) 326 *N*
+1 Champion's Helm (FIC) 337 *N*
 1 Sword of Hearth and Home (TMC) 136 *F*
 1 Profane Tutor (MH2) 97 *N*
-1 Demonic Counsel (PDSK) 92p *N*
