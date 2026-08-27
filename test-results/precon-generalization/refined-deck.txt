@@ -6,9 +6,9 @@
 1 Living Death (40K) 202 *N*
 1 Mutilate (40K) 203 *N*
 1 Dread Return (40K) 200 *N*
+1 Defile (40K) 199 *N*
 1 Go for the Throat (40K) 201 *N*
 1 Endless Atlas (40K) 237 *N*
-1 Gilded Lotus (40K) 239 *N*
 1 Mystic Forge (40K) 246 *N*
 1 Sculpting Steel (40K) 247 *N*
 1 Cranial Plating (40K) 236 *N*
@@ -59,8 +59,6 @@
 1 Resurrection Orb (40K) 165 *N*
 1 Sceptre of Eternal Glory (40K) 166 *N*
 1 Tomb Fortress (40K) 168 *N*
-1 Flayed One (40K) 34 *N*
-1 Hexmark Destroyer (40K) 36 *N*
 1 Psychomancer (40K) 51 *N*
 1 Sautekh Immortal (40K) 54 *N*
 1 Skorpekh Destroyer (40K) 57 *N*
@@ -68,9 +66,11 @@
 1 Night Scythe (40K) 162 *N*
 1 Tormod's Crypt (M21) 241 *N*
 1 Lively Dirge (OTJ) 93 *N*
-1 Nihil Spellbomb (PLST) SOM-187 *N*
+1 Soul-Guide Lantern (FDN) 680 *N*
 1 Moonsilver Key (MID) 255 *N*
 1 Bone Shards (PLST) MH2-76 *N*
 1 Swiftfoot Boots (A25) 234 *N*
 1 Sword of Light and Shadow (ACR) 100 *F*
-1 Dragonfire Blade (PTDM) 240p *N*
+1 Sword of Hearth and Home (TMC) 136 *F*
+1 Profane Tutor (MH2) 97 *N*
+1 Demonic Counsel (PDSK) 92p *N*
