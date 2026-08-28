@@ -33,3 +33,17 @@ jobs:
 
       - name: Run full test suite
         run: npm test
+
+      - name: Run A16 purpose-driven refinement
+        run: npx tsx scripts/e2e-counter-blitz-a16-purpose-selection.ts
+
+      - name: Upload A16 evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: counter-blitz-a16-purpose-evidence-${{ github.sha }}
+          path: |
+            counter-blitz-a16-result.json
+            counter-blitz-a16-leader.txt
+          if-no-files-found: warn
+          retention-days: 7
