@@ -127,6 +127,7 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   addSignal(table, 'combat-tokens', roles.has('extra combat'), 8, 'extra combat');
   addSignal(table, 'combat-tokens', roles.has('untap engine'), 4, 'combat untap potential');
   addSignal(table, 'combat-tokens', roles.has('haste'), 2, 'haste');
+  addSignal(table, 'combat-tokens', roles.has('combat access'), 3, 'combat access/evasion');
   addSignal(table, 'combat-tokens', /whenever [^.]* attacks|whenever [^.]* attack/i.test(text), 2, 'attack trigger');
   addSignal(table, 'combat-tokens', /tapped and attacking/i.test(text), 6, 'attacking-token text');
   addSignal(table, 'combat-tokens', /combat damage to a player/i.test(text), 2, 'combat-damage trigger');
@@ -137,6 +138,7 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   addSignal(table, 'equipment-voltron', /double strike|commander damage|power and toughness/i.test(text), 3, 'combat scaling');
 
   addSignal(table, 'counters', roles.has('+1/+1 counters'), 9, '+1/+1 counters');
+  addSignal(table, 'counters', roles.has('counter payoff'), 7, 'counter-placement payoff');
   addSignal(table, 'counters', /proliferate/i.test(text), 7, 'proliferate');
   addSignal(table, 'counters', /move (?:a|any number of) .*counter|move .* counters/i.test(text), 6, 'counter movement');
   addSignal(table, 'counters', /counter is put|counters? (?:are|is) put|with .* counters?/i.test(text), 3, 'counter placement');

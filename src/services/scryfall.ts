@@ -332,6 +332,10 @@ export function inferCardRoles(card: ScryfallCard): string[] {
     roles.add('free-cast engine');
     roles.add('combat value engine');
   }
+  const counterPlacementPayoff = /whenever (?:you put one or more counters on|one or more counters? (?:are|is) put on) (?:a|one or more|target|another) creatures?/i.test(text);
+  if (counterPlacementPayoff) roles.add('counter payoff');
+  const combatAccess = /(?:that|target|equipped|enchanted|up to one target|up to two target|up to three target)?\s*creatures?[^.]{0,100}can't be blocked|can't be blocked by creatures (?:your )?opponents control|can't be blocked this turn/i.test(text);
+  if (combatAccess) roles.add('combat access');
   if (/haste/.test(text)) roles.add('haste');
   if (/can't cast|can't activate|players can't|opponents can't|doesn't untap|enter the battlefield tapped/.test(text)) roles.add('stax/control');
   if (/extra turn/.test(text)) roles.add('extra turn');
