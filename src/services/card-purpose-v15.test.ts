@@ -90,7 +90,7 @@ test('generic but high-impact free interaction remains meaningful without comman
   assert.ok(result.purposes.includes('interaction'));
 });
 
-test('Saga-dependent counter card is put under review when the exact deck barely supports the Saga clause', () => {
+test('Saga-dependent counter card is challenged when the exact deck barely supports the Saga clause', () => {
   const garnet = card({
     name: 'Garnet, Princess of Alexandria',
     type_line: 'Legendary Creature — Human Noble',
@@ -103,7 +103,7 @@ test('Saga-dependent counter card is put under review when the exact deck barely
     oracle_text: 'Surveil 2, then draw a card. // I, II, III — Put a +1/+1 counter on target creature you control.',
   });
   const result = auditCardPurposeV15(garnet, { deck: [garnet, saga, ballista, scales], comboPieces: [ballista, scales] });
-  assert.equal(result.status, 'review');
+  assert.equal(result.status, 'challenge');
   assert.ok(result.warnings.some((warning) => warning.includes('only 1 other Saga')));
 });
 
