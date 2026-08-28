@@ -7,6 +7,7 @@ on:
     paths:
       - .github/workflows/counter-blitz-preservation-test.yml
       - scripts/e2e-counter-blitz-preservation.ts
+      - src/services/precon-structural-v15.ts
 
 permissions:
   contents: read
