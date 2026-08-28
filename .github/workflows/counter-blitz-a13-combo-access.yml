@@ -1,0 +1,42 @@
+name: Counter Blitz A13 Combo Access
+
+on:
+  push:
+    branches:
+      - test/counter-blitz-a13-combo-access-20260829
+    paths:
+      - src/services/combo-access-v15.ts
+      - scripts/e2e-a13-combo-access.ts
+      - .github/workflows/counter-blitz-a13-combo-access.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  access:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Run strict actual-card combo-access regressions
+        shell: bash
+        run: |
+          set -o pipefail
+          npx tsx scripts/e2e-a13-combo-access.ts | tee counter-blitz-a13.log
+      - name: Upload A13 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: counter-blitz-a13-${{ github.sha }}
+          path: counter-blitz-a13.log
+          if-no-files-found: ignore
+          retention-days: 14
