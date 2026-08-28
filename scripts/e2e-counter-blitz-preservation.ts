@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
+import { refineCedhEfficiencyV14 } from '../src/services/cedh-efficiency-v14.js';
 import { assessCedhReadinessV14, refineCommanderForCedhV14 } from '../src/services/cedh-workflow-v14.js';
 import { parseDecklist, type ParsedDeck } from '../src/services/deck.js';
+import { refinePreconStructureV15 } from '../src/services/precon-structural-v15.js';
 import { getCardsByIdentifiers } from '../src/services/scryfall.js';
 
 type StockEntry = { name: string; quantity?: number; commander?: boolean };
@@ -109,6 +111,7 @@ const stock: StockEntry[] = [
 // Test-defined preservation identity: the bespoke FFX section at the front of Wizards' factory list.
 // The independent 80/100 overlap gate prevents a protected core from hiding a commander rebuild.
 const identityCore = stock.slice(0, 25).map((entry) => entry.name);
+const comboCore = ['Gatta and Luzzu', 'Walking Ballista', 'Hardened Scales', 'The Earth Crystal'];
 const MIN_RETAINED_CARDS = 80;
 const ffOptions = {
   printingFamily: 'Final Fantasy',
@@ -118,6 +121,10 @@ const ffOptions = {
 
 function normalize(name: string): string {
   return name.trim().toLocaleLowerCase();
+}
+
+function record(value: unknown): Record<string, unknown> {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
 }
 
 function quantities(parsed: ParsedDeck): Map<string, number> {
@@ -169,7 +176,7 @@ async function main(): Promise<void> {
   const stockAssessment = await assessCedhReadinessV14(stockDecklist, ffOptions);
   assert.notEqual(stockAssessment.status, 'invalid-or-policy-noncompliant', 'factory baseline must be legal and FF-printing compliant');
 
-  console.log('COUNTER BLITZ PRESERVATION A/B: refining existing stock deck rather than rebuilding around Tidus...');
+  console.log('COUNTER BLITZ PRESERVATION A/B: running existing-deck refinement...');
   const refined = await refineCommanderForCedhV14(stockDecklist, {
     ...ffOptions,
     protectedCards: identityCore,
@@ -179,13 +186,45 @@ async function main(): Promise<void> {
     maxEfficiencySwaps: 10,
     maxManaBaseSwaps: 10,
   });
-  const finalDecklist = typeof refined.finalDecklist === 'string' ? refined.finalDecklist : '';
-  assert.ok(finalDecklist.trim(), 'preservation refiner must return a decklist');
+  const firstPassDecklist = typeof refined.finalDecklist === 'string' ? refined.finalDecklist : '';
+  assert.ok(firstPassDecklist.trim(), 'preservation refiner must return a decklist');
+  const firstPassParsed = parseDecklist(firstPassDecklist);
+  assert.equal(firstPassParsed.totalCards, 100, 'first preservation pass must remain exactly 100 cards');
+  const firstPassRetained = overlapCards(stockParsed, firstPassParsed);
+
+  const stages = record(refined.stages);
+  const manaStage = record(stages.manaBase);
+  const manaSwaps = Array.isArray(manaStage.swaps) ? manaStage.swaps.map(record) : [];
+  const preferredLandCuts = manaSwaps.map((swap) => String(swap.in ?? '')).filter(Boolean);
+
+  console.log('COUNTER BLITZ PRESERVATION A/B: compressing excess stock land structure while reusing already-changed land slots first...');
+  const structural = await refinePreconStructureV15(firstPassDecklist, {
+    ...ffOptions,
+    targetLandCount: 31,
+    maxLandToSpellSwaps: 6,
+    preferredLandCuts,
+  });
+  assert.equal(structural.status, 'precon-structure-refined', 'structural preservation pass must complete');
+  const structuralDecklist = typeof structural.finalDecklist === 'string' ? structural.finalDecklist : '';
+  assert.ok(structuralDecklist.trim(), 'structural pass must return a decklist');
+  const structuralParsed = parseDecklist(structuralDecklist);
+  const structuralRetained = overlapCards(stockParsed, structuralParsed);
+  assert.ok(structuralRetained >= MIN_RETAINED_CARDS, `structural compression must retain >=${MIN_RETAINED_CARDS}/100 stock cards; observed ${structuralRetained}`);
+
+  console.log('COUNTER BLITZ PRESERVATION A/B: spending remaining preservation budget on one final strict-efficiency pass...');
+  const postStructureEfficiency = await refineCedhEfficiencyV14(structuralDecklist, {
+    ...ffOptions,
+    protectedCards: [...new Set([...identityCore, ...comboCore])],
+    maxSwaps: Math.min(5, Math.max(1, structuralRetained - MIN_RETAINED_CARDS)),
+  });
+  const finalDecklist = typeof postStructureEfficiency.finalDecklist === 'string'
+    ? postStructureEfficiency.finalDecklist
+    : structuralDecklist;
   const finalParsed = parseDecklist(finalDecklist);
-  assert.equal(finalParsed.totalCards, 100, 'preservation list must remain exactly 100 cards');
+  assert.equal(finalParsed.totalCards, 100, 'final preservation list must remain exactly 100 cards');
 
   const finalAssessment = await assessCedhReadinessV14(finalDecklist, ffOptions);
-  assert.notEqual(finalAssessment.status, 'invalid-or-policy-noncompliant', 'preservation list must remain legal and FF-printing compliant');
+  assert.notEqual(finalAssessment.status, 'invalid-or-policy-noncompliant', 'final preservation list must remain legal and FF-printing compliant');
 
   const retained = overlapCards(stockParsed, finalParsed);
   const changedSlots = 100 - retained;
@@ -207,19 +246,25 @@ async function main(): Promise<void> {
     status: 'strong-competitive-construction-signals',
   };
 
-  console.log(`STOCK RETAINED: ${retained}/100`);
-  console.log(`CHANGED SLOTS: ${changedSlots}`);
+  console.log(`FIRST PASS STOCK RETAINED: ${firstPassRetained}/100`);
+  console.log(`AFTER STRUCTURAL STOCK RETAINED: ${structuralRetained}/100`);
+  console.log(`FINAL STOCK RETAINED: ${retained}/100`);
+  console.log(`FINAL CHANGED SLOTS: ${changedSlots}`);
   console.log(`IDENTITY CORE RETAINED: ${identityCore.length - missingCore.length}/${identityCore.length}`);
   console.log(`IDENTITY CORE MISSING: ${JSON.stringify(missingCore)}`);
   console.log(`STOCK ASSESSMENT STATUS: ${String(stockAssessment.status)}`);
   console.log(`STOCK WINNING COMBOS: ${String(stockAssessment.winningCombos ?? 0)}`);
   console.log(`STOCK METRICS: ${JSON.stringify(stockAssessment.metrics ?? {}, null, 2)}`);
-  console.log(`PRESERVATION REFINEMENT STATUS: ${String(refined.status)}`);
+  console.log(`FIRST PASS REFINEMENT STATUS: ${String(refined.status)}`);
+  console.log(`STRUCTURAL STATUS: ${String(structural.status)}`);
+  console.log(`STRUCTURAL STAGE: ${JSON.stringify(structural, null, 2)}`);
+  console.log(`POST-STRUCTURE EFFICIENCY STATUS: ${String(postStructureEfficiency.status)}`);
+  console.log(`POST-STRUCTURE EFFICIENCY STAGE: ${JSON.stringify(postStructureEfficiency, null, 2)}`);
   console.log(`PRESERVATION FINAL STATUS: ${String(finalAssessment.status)}`);
   console.log(`PRESERVATION FINAL WINNING COMBOS: ${String(finalAssessment.winningCombos ?? 0)}`);
   console.log(`PRESERVATION FINAL METRICS: ${JSON.stringify(finalAssessment.metrics ?? {}, null, 2)}`);
   console.log(`FULL REBUILD BENCHMARK: ${JSON.stringify(rebuildBenchmark, null, 2)}`);
-  console.log(`REFINEMENT STAGES: ${JSON.stringify(refined.stages ?? {}, null, 2)}`);
+  console.log(`ORIGINAL REFINEMENT STAGES: ${JSON.stringify(refined.stages ?? {}, null, 2)}`);
   console.log('\nPRESERVATION FINAL DECKLIST');
   console.log(finalDecklist.trim());
 }
