@@ -326,7 +326,7 @@ export function inferCardRoles(card: ScryfallCard): string[] {
     roles.add('stax/control');
     roles.add('combo protection');
   }
-  const combatFreeCastEngine = /whenever [^.]{0,140}deals? combat damage to (?:a|one or more )players?[^.]{0,180}draw a card[^.]{0,220}cast a spell from your hand[^.]{0,120}without paying its mana cost/.test(text);
+  const combatFreeCastEngine = /whenever [^.]{0,140}deals? combat damage to (?:a |one or more )players?[^.]{0,180}draw a card[^.]{0,220}cast a spell from your hand[^.]{0,120}without paying its mana cost/.test(text);
   if (combatFreeCastEngine) {
     roles.add('repeatable draw');
     roles.add('free-cast engine');
