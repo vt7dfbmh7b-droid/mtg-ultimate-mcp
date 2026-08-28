@@ -1,0 +1,56 @@
+name: A5 Strategic Role Fix
+
+on:
+  push:
+    branches:
+      - test/counter-blitz-a5-semantic-frontier-20260829
+    paths:
+      - scripts/patch-a5-strategic-roles.mjs
+      - scripts/e2e-a5-strategic-roles.ts
+      - .github/workflows/a5-strategic-role-fix.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 1
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - name: Install dependencies
+        run: npm ci
+      - name: Apply A5 semantic patch
+        run: node scripts/patch-a5-strategic-roles.mjs
+      - name: Build
+        run: npm run build
+      - name: Run A5 actual-card semantic regressions
+        run: npx tsx scripts/e2e-a5-strategic-roles.ts | tee a5-strategic-roles.log
+      - name: Commit tested semantic fix to isolated branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/services/scryfall.ts
+          if git diff --cached --quiet; then
+            echo "No source changes to commit."
+          else
+            git commit -m "fix: preserve strategic lock and mana-engine roles in A5"
+            git push origin HEAD:test/counter-blitz-a5-semantic-frontier-20260829
+          fi
+      - name: Upload A5 semantic evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: a5-strategic-roles-${{ github.sha }}
+          path: a5-strategic-roles.log
+          if-no-files-found: ignore
+          retention-days: 14
