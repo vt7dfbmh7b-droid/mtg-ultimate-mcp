@@ -1,0 +1,44 @@
+name: Counter Blitz A10 Rebuild Tradeoffs
+
+on:
+  push:
+    branches:
+      - test/counter-blitz-a10-rebuild-tradeoffs-20260829
+    paths:
+      - scripts/e2e-counter-blitz-a10-tradeoffs.ts
+      - .github/workflows/counter-blitz-a10-tradeoffs.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tradeoffs:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Run A10 tradeoff audit
+        shell: bash
+        run: |
+          set -o pipefail
+          npx tsx scripts/e2e-counter-blitz-a10-tradeoffs.ts | tee counter-blitz-a10.log
+      - name: Upload A10 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: counter-blitz-a10-${{ github.sha }}
+          path: |
+            counter-blitz-a10.log
+            counter-blitz-a10-result.json
+            counter-blitz-a10-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
