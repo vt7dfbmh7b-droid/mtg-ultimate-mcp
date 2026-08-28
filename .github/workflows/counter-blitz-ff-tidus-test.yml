@@ -26,17 +26,23 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-      - name: Retarget existing FF Bracket 5 control to Tidus
+      - name: Retarget and aggressively tune FF control for Tidus
         run: |
           python3 - <<'PY'
           from pathlib import Path
           p = Path('scripts/e2e-ff-bracket5.ts')
           s = p.read_text()
-          old = "const commander = 'Najeela, the Blade-Blossom';"
-          new = 'const commander = "Tidus, Yuna\'s Guardian";'
-          if old not in s:
-              raise SystemExit('expected Najeela commander declaration not found')
-          p.write_text(s.replace(old, new, 1))
+          replacements = [
+              ("const commander = 'Najeela, the Blade-Blossom';", 'const commander = "Tidus, Yuna\'s Guardian";'),
+              ('maxCandidatesToVerify: 8,', 'maxCandidatesToVerify: 24,'),
+              ('maxEfficiencySwaps: 3,', 'maxEfficiencySwaps: 10,'),
+              ('maxManaBaseSwaps: 5,', 'maxManaBaseSwaps: 10,'),
+          ]
+          for old, new in replacements:
+              if old not in s:
+                  raise SystemExit(f'expected tuning token not found: {old}')
+              s = s.replace(old, new, 1)
+          p.write_text(s)
           PY
       - name: Run strongest FF-only Tidus construction
         run: |
