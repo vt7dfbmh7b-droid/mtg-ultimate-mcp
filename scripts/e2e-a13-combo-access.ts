@@ -15,7 +15,11 @@ const names = [
 ];
 const resolved = await getCardsByNames(names);
 assert.deepEqual(resolved.notFound, [], `A13 fixtures must resolve: ${resolved.notFound.join(', ')}`);
-const byName = new Map(resolved.cards.map((card) => [card.name, card] as const));
+const byName = new Map<string, (typeof resolved.cards)[number]>();
+for (const value of resolved.cards) {
+  byName.set(value.name, value);
+  for (const face of value.name.split(/\s+\/\/\s+/)) byName.set(face.trim(), value);
+}
 const card = (name: string) => {
   const value = byName.get(name);
   assert.ok(value, `missing fixture ${name}`);
