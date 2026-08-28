@@ -19,9 +19,9 @@ function card(input: Partial<ScryfallCard> & Pick<ScryfallCard, 'name' | 'type_l
     collector_number: input.collector_number ?? '1',
     rarity: input.rarity ?? 'rare',
     scryfall_uri: input.scryfall_uri ?? 'https://scryfall.com/',
-    mana_cost: input.mana_cost,
-    produced_mana: input.produced_mana,
-    card_faces: input.card_faces,
+    ...(input.mana_cost !== undefined ? { mana_cost: input.mana_cost } : {}),
+    ...(input.produced_mana !== undefined ? { produced_mana: input.produced_mana } : {}),
+    ...(input.card_faces !== undefined ? { card_faces: input.card_faces } : {}),
   };
 }
 
