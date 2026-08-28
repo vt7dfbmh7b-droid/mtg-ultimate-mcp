@@ -34,6 +34,7 @@ jobs:
           s = p.read_text()
           replacements = [
               ("const commander = 'Najeela, the Blade-Blossom';", 'const commander = "Tidus, Yuna\'s Guardian";'),
+              ('requireVerifiedCombo: true,', "requireVerifiedCombo: true,\n    excludedCards: ['World Map', 'Magitek Infantry'],"),
               ('maxCandidatesToVerify: 8,', 'maxCandidatesToVerify: 24,'),
               ('maxEfficiencySwaps: 3,', 'maxEfficiencySwaps: 10,'),
               ('maxManaBaseSwaps: 5,', 'maxManaBaseSwaps: 10,'),
