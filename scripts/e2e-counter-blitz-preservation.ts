@@ -112,6 +112,7 @@ const stock: StockEntry[] = [
 // The independent 80/100 overlap gate prevents a protected core from hiding a commander rebuild.
 const identityCore = stock.slice(0, 25).map((entry) => entry.name);
 const comboCore = ['Gatta and Luzzu', 'Walking Ballista', 'Hardened Scales', 'The Earth Crystal'];
+const knownWeakFalsePositives = ['World Map', 'Magitek Infantry'];
 const MIN_RETAINED_CARDS = 80;
 const ffOptions = {
   printingFamily: 'Final Fantasy',
@@ -180,6 +181,7 @@ async function main(): Promise<void> {
   const refined = await refineCommanderForCedhV14(stockDecklist, {
     ...ffOptions,
     protectedCards: identityCore,
+    excludedCards: knownWeakFalsePositives,
     requireVerifiedCombo: true,
     maxMissingCards: 2,
     maxCandidatesToVerify: 24,
@@ -203,6 +205,7 @@ async function main(): Promise<void> {
     targetLandCount: 31,
     maxLandToSpellSwaps: 6,
     preferredLandCuts,
+    excludedCards: knownWeakFalsePositives,
   });
   assert.equal(structural.status, 'precon-structure-refined', 'structural preservation pass must complete');
   const structuralDecklist = typeof structural.finalDecklist === 'string' ? structural.finalDecklist : '';
@@ -215,6 +218,7 @@ async function main(): Promise<void> {
   const postStructureEfficiency = await refineCedhEfficiencyV14(structuralDecklist, {
     ...ffOptions,
     protectedCards: [...new Set([...identityCore, ...comboCore])],
+    excludedCards: knownWeakFalsePositives,
     maxSwaps: Math.min(5, Math.max(1, structuralRetained - MIN_RETAINED_CARDS)),
   });
   const finalDecklist = typeof postStructureEfficiency.finalDecklist === 'string'
@@ -230,8 +234,10 @@ async function main(): Promise<void> {
   const changedSlots = 100 - retained;
   const finalNames = new Set(expandedNames(finalParsed).map(normalize));
   const missingCore = identityCore.filter((name) => !finalNames.has(normalize(name)));
+  const weakFalsePositivesPresent = knownWeakFalsePositives.filter((name) => finalNames.has(normalize(name)));
   assert.ok(retained >= MIN_RETAINED_CARDS, `preservation requires >=${MIN_RETAINED_CARDS}/100 stock cards; observed ${retained}`);
   assert.deepEqual(missingCore, [], 'all Counter Blitz identity-core cards must survive refinement');
+  assert.deepEqual(weakFalsePositivesPresent, [], 'known weak false-positive upgrades must not survive the corrected preservation run');
 
   const rebuildBenchmark = {
     landCount: 31,
@@ -252,6 +258,7 @@ async function main(): Promise<void> {
   console.log(`FINAL CHANGED SLOTS: ${changedSlots}`);
   console.log(`IDENTITY CORE RETAINED: ${identityCore.length - missingCore.length}/${identityCore.length}`);
   console.log(`IDENTITY CORE MISSING: ${JSON.stringify(missingCore)}`);
+  console.log(`KNOWN WEAK FALSE POSITIVES PRESENT: ${JSON.stringify(weakFalsePositivesPresent)}`);
   console.log(`STOCK ASSESSMENT STATUS: ${String(stockAssessment.status)}`);
   console.log(`STOCK WINNING COMBOS: ${String(stockAssessment.winningCombos ?? 0)}`);
   console.log(`STOCK METRICS: ${JSON.stringify(stockAssessment.metrics ?? {}, null, 2)}`);
