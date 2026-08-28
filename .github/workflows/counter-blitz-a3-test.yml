@@ -1,0 +1,48 @@
+name: Counter Blitz A3 Optimization Gauntlet
+
+on:
+  push:
+    branches:
+      - test/counter-blitz-a3-optimization-20260829
+    paths:
+      - scripts/e2e-counter-blitz-a3.ts
+      - .github/workflows/counter-blitz-a3-test.yml
+      - src/**
+      - test-results/exploratory/counter-blitz-ff-tidus-2026-08-29.md
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  counter-blitz-a3:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Run A3 optimization gauntlet
+        run: |
+          set -o pipefail
+          npx tsx scripts/e2e-counter-blitz-a3.ts | tee counter-blitz-a3.log
+      - name: Upload A3 evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: counter-blitz-a3-${{ github.sha }}
+          path: |
+            counter-blitz-a3.log
+            counter-blitz-a3-result.json
+            counter-blitz-a3-deck.txt
+            counter-blitz-a3-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
