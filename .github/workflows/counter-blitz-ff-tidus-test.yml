@@ -33,13 +33,15 @@ jobs:
           p = Path('scripts/e2e-ff-bracket5.ts')
           s = p.read_text()
           old = "const commander = 'Najeela, the Blade-Blossom';"
-          new = "const commander = 'Tidus, Yuna\'s Guardian';"
+          new = 'const commander = "Tidus, Yuna\'s Guardian";'
           if old not in s:
               raise SystemExit('expected Najeela commander declaration not found')
           p.write_text(s.replace(old, new, 1))
           PY
       - name: Run strongest FF-only Tidus construction
-        run: npx tsx scripts/e2e-ff-bracket5.ts | tee counter-blitz-ff-tidus.log
+        run: |
+          set -o pipefail
+          npx tsx scripts/e2e-ff-bracket5.ts | tee counter-blitz-ff-tidus.log
       - name: Upload result log
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
