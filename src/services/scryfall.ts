@@ -217,6 +217,14 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (type.includes('artifact') && addsMana && !type.includes('creature')) roles.add('mana rock');
   if (type.includes('creature') && /\{t\}:\s*add|whenever .* add .* mana/.test(text)) roles.add('mana dork');
   if (card.cmc <= 1 && addsMana && !isLand && !requiresPaidManaSetup) roles.add('fast mana');
+  const nonlandManaMultiplier = /whenever you tap a nonland permanent for mana, add [^.]*mana/.test(text)
+    || /if you tap (?:a|an|another) nonland permanent for mana[^.]*add [^.]*additional mana/.test(text)
+    || /nonland permanents? you tap for mana produce [^.]*additional mana/.test(text);
+  if (nonlandManaMultiplier) {
+    roles.add('mana acceleration');
+    roles.add('mana multiplier');
+  }
+  if (card.cmc <= 1 && (roles.has('fast mana') || roles.has('mana dork'))) roles.add('early acceleration');
   if (/search your library for .*land/.test(text) && /battlefield/.test(text)) roles.add('land ramp');
   if (/costs? .* less to cast/.test(text)) roles.add('cost reduction');
   if (/create .* treasure token/.test(text)) roles.add('treasure');
@@ -312,6 +320,18 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if ((boardProtection || targetedProtection) && !expensiveEquipmentProtection) roles.add('protection');
   if ((conditionalGroupProtection && !boardProtection) || expensiveEquipmentProtection) roles.add('conditional protection');
   if (boardProtection) roles.add('board protection');
+  const proactiveSpellLock = /(?:your )?opponents? can't cast spells? (?:this turn|during your turn)/.test(text)
+    || /players? can't cast spells? (?:this turn|during your turn)/.test(text);
+  if (proactiveSpellLock) {
+    roles.add('stax/control');
+    roles.add('combo protection');
+  }
+  const combatFreeCastEngine = /whenever [^.]{0,140}deals? combat damage to (?:a|one or more )players?[^.]{0,180}draw a card[^.]{0,220}cast a spell from your hand[^.]{0,120}without paying its mana cost/.test(text);
+  if (combatFreeCastEngine) {
+    roles.add('repeatable draw');
+    roles.add('free-cast engine');
+    roles.add('combat value engine');
+  }
   if (/haste/.test(text)) roles.add('haste');
   if (/can't cast|can't activate|players can't|opponents can't|doesn't untap|enter the battlefield tapped/.test(text)) roles.add('stax/control');
   if (/extra turn/.test(text)) roles.add('extra turn');
