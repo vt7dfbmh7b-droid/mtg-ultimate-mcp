@@ -1,0 +1,46 @@
+name: Counter Blitz A7 Targeted Search
+
+on:
+  push:
+    branches:
+      - test/counter-blitz-a7-targeted-20260829
+    paths:
+      - scripts/e2e-counter-blitz-a7-targeted.ts
+      - .github/workflows/counter-blitz-a7-targeted.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  targeted:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Run A7 targeted search
+        shell: bash
+        run: |
+          set -o pipefail
+          npx tsx scripts/e2e-counter-blitz-a7-targeted.ts | tee counter-blitz-a7.log
+      - name: Upload A7 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: counter-blitz-a7-${{ github.sha }}
+          path: |
+            counter-blitz-a7.log
+            counter-blitz-a7-result.json
+            counter-blitz-a7-deck.txt
+            counter-blitz-a7-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
