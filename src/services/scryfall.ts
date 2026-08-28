@@ -320,8 +320,8 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if ((boardProtection || targetedProtection) && !expensiveEquipmentProtection) roles.add('protection');
   if ((conditionalGroupProtection && !boardProtection) || expensiveEquipmentProtection) roles.add('conditional protection');
   if (boardProtection) roles.add('board protection');
-  const proactiveSpellLock = /(?:your )?opponents? can't cast spells? (?:this turn|during your turn)/.test(text)
-    || /players? can't cast spells? (?:this turn|during your turn)/.test(text);
+  const proactiveSpellLock = /(?:your )?opponents? can't cast (?:noncreature )?spells? (?:this turn|during your turn)/.test(text)
+    || /players? can't cast (?:noncreature )?spells? (?:this turn|during your turn)/.test(text);
   if (proactiveSpellLock) {
     roles.add('stax/control');
     roles.add('combo protection');
