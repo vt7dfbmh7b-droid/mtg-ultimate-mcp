@@ -3,8 +3,8 @@
 Date: 2026-08-29 NZST
 Source baseline: `agent/v15-native-deck-intelligence` at `9487cd08aab76359db9bc44ee524fcc3221b0484`
 Test branch: `test/counter-blitz-ff-tidus-20260829`
-Aggressive test commit: `2049fef8b256b55c32f992801115d854454ddf87`
-GitHub Actions run: `33170110639`
+Corrected aggressive test commit: `087a6d20c02553489e0fae5a4ff8ba2a2d6ce880`
+GitHub Actions run: `33170464237`
 
 ## Objective
 
@@ -21,6 +21,7 @@ This is an exploratory broader-condition benchmark, not accepted INTEL-02 milest
 - `maxCandidatesToVerify: 24` (standard control: 8)
 - `maxEfficiencySwaps: 10` (standard control: 3)
 - `maxManaBaseSwaps: 10` (standard control: 5)
+- `excludedCards: ['World Map', 'Magitek Infantry']` because the existing FF strict-cEDH regression already identifies them as weak upgrade candidates.
 
 ## Result
 
@@ -35,12 +36,12 @@ This is an exploratory broader-condition benchmark, not accepted INTEL-02 milest
 - Strategically relevant combos: **1**
 - Ruthless combos: **0**
 - Land count: **31**
-- Average nonland mana value: **2.16**
+- Average nonland mana value: **2.17**
 - Early play count: **46**
 - Fast mana count: **3**
 - Cheap interaction count: **12**
 - Protection count: **6**
-- Tutor count: **6**
+- Tutor count: **4**
 - Free interaction count: **1**
 - Bracket-5 construction candidate: **true**
 - Independent current competitive-metagame evidence: **false**
@@ -50,6 +51,15 @@ This is an exploratory broader-condition benchmark, not accepted INTEL-02 milest
 - Sole failed Bracket-5 threshold: **independent current competitive-metagame evidence**
 
 The FF printing restriction did **not** cause a measured construction-gate failure: the finished list cleared all measured Bracket-5 construction gates. The conservative assessor refuses the Bracket-5 label without independent current metagame evidence.
+
+## Corrected weak-card replacements
+
+The first aggressive run left `World Map` and `Magitek Infantry` in the initial draft even though the strict FF cEDH regression identifies them as weak upgrade candidates. A corrected rerun excluded them at the drafting boundary. The builder filled those slots with:
+
+- `Skullclamp` (FIC 355)
+- `Lord Jyscal Guado` (FIC 23)
+
+This removes the known builder/refinement inconsistency while preserving legality, the verified winning combo, and every measured Bracket-5 construction gate.
 
 ## Accepted aggressive efficiency swaps
 
@@ -68,7 +78,7 @@ The cap was 10, but strict cEDH efficiency accepted only these 5 candidates.
 
 Land count remained 31 and the verified winning combo was preserved.
 
-## Final decklist
+## Final corrected decklist
 
 ```text
 // COMMANDER
@@ -95,16 +105,14 @@ Land count remained 31 and the verified winning combo was preserved.
 1 Loran of the Third Path (FCA) 24
 1 Zack Fair (FIN) 45
 1 Path to Exile (FIC) 248
-1 World Map (FIN) 270
+1 Cloud, Midgar Mercenary (FIN) 10
 1 Swiftfoot Boots (FIC) 361
 1 Cryptic Command (FCA) 29
 1 Sword of Truth and Justice (SLD) 1867
-1 Cloud, Midgar Mercenary (FIN) 10
-1 Force of Negation (RFIN) J1
 1 Ranger-Captain of Eos (FCA) 2
+1 Force of Negation (RFIN) J1
 1 Lightning Greaves (FIC) 349
 1 Tireless Tracker (FIC) 316
-1 Magitek Infantry (FIN) 25
 1 Tidus, Blitzball Star (FIN) 246
 1 Heroic Intervention (SLD) 1872
 1 An Offer You Can't Refuse (FIC) 267
@@ -137,6 +145,8 @@ Land count remained 31 and the verified winning combo was preserved.
 1 Torgal, A Fine Hound (FIN) 208
 1 Sazh's Chocobo (FIN) 200
 1 Garnet, Princess of Alexandria (FIN) 222
+1 Skullclamp (FIC) 355
+1 Lord Jyscal Guado (FIC) 23
 1 Command Tower (FIC) 382
 1 Exotic Orchard (FIC) 390
 1 Spire of Industry (FIC) 426
@@ -162,8 +172,8 @@ Land count remained 31 and the verified winning combo was preserved.
 
 ## Primary verified win package
 
-The final list contains the FF-printing package `Gatta and Luzzu` + `Hardened Scales` + `Walking Ballista`, which Commander Spellbook verifies as infinite damage / infinite +1/+1 counters when the prerequisites are met.
+The final list contains the FF-printing package `Gatta and Luzzu` + `Hardened Scales` + `Walking Ballista`, verified as a win-oriented complete combo by the current Commander Spellbook integration.
 
-## Follow-up audit note
+## Interpretation
 
-The final output still contains `World Map` and `Magitek Infantry`. The existing FF cEDH regression source explicitly names those cards as weak names that strict cEDH efficiency tuning must not *admit as upgrades*. Their persistence from the initial builder is worth a later optimizer audit before treating this exploratory list as globally optimal rather than the strongest output from the current algorithm.
+This is the strongest corrected output produced by the current Ultimate MTG algorithm under the requested FF-printings-only rule after pushing candidate verification and refinement beyond the normal regression caps and removing the two known weak drafting holdovers. It should not be described as mathematically proven global optimum, and it should not be labelled Bracket 5 without independent current competitive-metagame evidence.
