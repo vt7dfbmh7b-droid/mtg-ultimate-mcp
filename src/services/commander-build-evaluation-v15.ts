@@ -148,7 +148,8 @@ function comboDetail(
 ): VerifiedWinningComboDetailV15 | null {
   const comboId = String(combo.id ?? '').trim();
   const results = Array.isArray(combo.results) ? combo.results.map(String) : [];
-  const closure = assessFullTableWinClosureV15(results);
+  const description = typeof combo.description === 'string' ? combo.description : '';
+  const closure = assessFullTableWinClosureV15(results, description);
   if (!comboId || !closure.verifiedFullTableWin) return null;
 
   const cards = Array.isArray(combo.cards) ? combo.cards.map(record) : [];

@@ -72,6 +72,15 @@ function hasUnscopedLethalEngine(text: string): boolean {
     || /\binfinite lifeloss\b/.test(text);
 }
 
+function hasRepeatableAnyTargetDamageContext(context: string): boolean {
+  const text = normalizeText([context]);
+  if (!text) return false;
+  const anyTargetDamage = /\b(?:deal|deals|dealing)\b[^.!;]{0,120}\bdamage\b[^.!;]{0,120}\bany target\b/.test(text)
+    || /\bany target\b[^.!;]{0,120}\bdamage\b/.test(text);
+  const repeated = /\b(?:repeat|repeats|repeating|repeatable|any number of times|arbitrarily many times)\b/.test(text);
+  return anyTargetDamage && repeated;
+}
+
 function hasResourceEngine(text: string): boolean {
   return /\b(?:infinite|unbounded|arbitrarily (?:large|high|many))\b/.test(text)
     || /\bnear-infinite\b/.test(text);
@@ -84,7 +93,10 @@ function hasResourceEngine(text: string): boolean {
  * infinite damage/life-loss, or producing an arbitrary resource is not promoted to a full-table
  * deterministic win. Explicit self-win text and explicit each/all-opponent loss remain sufficient.
  */
-export function assessFullTableWinClosureV15(results: readonly string[]): FullTableWinClosureAssessmentV15 {
+export function assessFullTableWinClosureV15(
+  results: readonly string[],
+  context = '',
+): FullTableWinClosureAssessmentV15 {
   const normalizedText = normalizeText(results);
   const signals: string[] = [];
 
@@ -165,6 +177,19 @@ export function assessFullTableWinClosureV15(results: readonly string[]): FullTa
       normalizedText,
       signals,
       caveat: 'Eliminating one target opponent is not evidence that the same package deterministically closes a multiplayer Commander table.',
+    };
+  }
+
+  if (hasUnscopedLethalEngine(normalizedText) && hasRepeatableAnyTargetDamageContext(context)) {
+    signals.push('repeatable-any-target-unbounded-damage');
+    return {
+      verifiedFullTableWin: true,
+      kind: 'all-opponents-damage',
+      timing: 'immediate',
+      scope: 'all-opponents',
+      normalizedText,
+      signals,
+      caveat: 'The result reports unbounded damage and the verified combo sequence explicitly repeats a damage-to-any-target activation, so the controller can distribute lethal damage across a multiplayer table.',
     };
   }
 
