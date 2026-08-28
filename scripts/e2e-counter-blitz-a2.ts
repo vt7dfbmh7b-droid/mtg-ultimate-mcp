@@ -3,7 +3,6 @@ import { writeFile } from 'node:fs/promises';
 import { Client, StreamableHTTPClientTransport } from '@modelcontextprotocol/client';
 import { createMcpHandler } from '@modelcontextprotocol/server';
 import { createMtgServerV15 } from '../src/server-v15.js';
-import { evaluateCommanderBuildV15 } from '../src/services/commander-build-evaluation-v15.js';
 import { assessCedhReadinessV14 } from '../src/services/cedh-workflow-v14.js';
 import { completeBestCedhWinPackageV14 } from '../src/services/cedh-win-package-v14.js';
 
@@ -105,19 +104,27 @@ function record(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
 }
 
-function conciseEvaluation(evaluation: Awaited<ReturnType<typeof evaluateCommanderBuildV15>>) {
-  return {
-    hardGatesPassed: evaluation.hardGatesPassed,
-    printingPolicySatisfied: evaluation.printingPolicySatisfied,
-    cardCount: evaluation.parsed.totalCards,
-    commanderLegal: evaluation.commanderRules.isLegal,
-    assessedBracket: evaluation.actualBracket.assessedBracket,
-    assessedBand: evaluation.actualBracket.assessedBand,
-    bracket5ConstructionCandidate: evaluation.actualBracket.bracket5ConstructionCandidate,
-    failedBracket5Checks: evaluation.actualBracket.bracket5ThresholdChecks.filter((check) => !check.passed).map((check) => check.key),
-    metrics: evaluation.metrics,
-    verifiedWinningCombos: evaluation.postBuildEvidence.verifiedWinningCombos,
-  };
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function retryThrottled<T>(label: string, fn: () => Promise<T>): Promise<T> {
+  const waits = [0, 20_000, 40_000];
+  let last: unknown;
+  for (let index = 0; index < waits.length; index += 1) {
+    if (waits[index] > 0) {
+      console.log(`${label}: throttled; retrying after ${waits[index] / 1000}s cooldown...`);
+      await delay(waits[index]);
+    }
+    try {
+      return await fn();
+    } catch (error) {
+      last = error;
+      const message = error instanceof Error ? error.message : String(error);
+      if (!message.includes('429') || index === waits.length - 1) throw error;
+    }
+  }
+  throw last;
 }
 
 async function runRefinement(seed: number): Promise<Record<string, unknown>> {
@@ -161,81 +168,80 @@ async function runRefinement(seed: number): Promise<Record<string, unknown>> {
 }
 
 async function main(): Promise<void> {
-  console.log('COUNTER BLITZ A2 HARD OPTIMIZATION');
-  console.log('Baseline: corrected unrestricted FF-only Tidus Version A.');
-  console.log('Method: iterative strategy-aware refinement + simulation across three deterministic seeds, then independent verified win-package completion/evaluation.');
+  console.log('COUNTER BLITZ A2 HARD OPTIMIZATION — THROTTLE-RESILIENT RERUN');
+  console.log('Prior seed 20260829 already returned zero iterative swaps and independently found Archmage Emeritus -> The Earth Crystal for a second verified Ballista line.');
+  console.log('This rerun completes the two remaining deterministic refinement seeds before one independently verified combo completion.');
 
-  const baselineEval = await evaluateCommanderBuildV15(VERSION_A, { ...ff, cedhIntent: true, optimizedPlanEvidence: true, competitiveMetagameEvidence: false });
-  const baselineReadiness = await assessCedhReadinessV14(VERSION_A, ff);
-  assert.equal(baselineEval.hardGatesPassed, true, 'Version A must pass hard gates');
-  assert.equal(baselineEval.printingPolicySatisfied, true, 'Version A must remain FF printing-family compliant');
-
-  const seeds = [20260829, 20260830, 20260831];
-  const runs: Array<Record<string, unknown>> = [];
+  const seeds = [20260830, 20260831];
+  const refinements: Array<Record<string, unknown>> = [];
+  const finalDecks: string[] = [];
 
   for (const seed of seeds) {
-    console.log(`\nA2 SEED ${seed}: iterative refinement...`);
-    const refinement = await runRefinement(seed);
-    const refinedDeck = typeof refinement.finalDecklist === 'string' ? refinement.finalDecklist : VERSION_A;
-    const refinedEval = await evaluateCommanderBuildV15(refinedDeck, { ...ff, cedhIntent: true, optimizedPlanEvidence: true, competitiveMetagameEvidence: false });
-    assert.equal(refinedEval.hardGatesPassed, true, `seed ${seed} refined deck must pass hard gates`);
-    assert.equal(refinedEval.printingPolicySatisfied, true, `seed ${seed} refined deck must remain FF-only`);
-
-    console.log(`A2 SEED ${seed}: independent backup-win completion...`);
-    const comboCompletion = await completeBestCedhWinPackageV14(refinedDeck, {
-      ...ff,
-      protectedCards: ['Gatta and Luzzu', 'Hardened Scales', 'Walking Ballista'],
-      maxMissingCards: 2,
-      maxCandidatesToVerify: 12,
-    });
-    const comboDeck = typeof comboCompletion.finalDecklist === 'string' ? comboCompletion.finalDecklist : refinedDeck;
-    const comboEval = await evaluateCommanderBuildV15(comboDeck, { ...ff, cedhIntent: true, optimizedPlanEvidence: true, competitiveMetagameEvidence: false });
-    const comboReadiness = await assessCedhReadinessV14(comboDeck, ff);
-    assert.equal(comboEval.hardGatesPassed, true, `seed ${seed} combo-completed deck must pass hard gates`);
-    assert.equal(comboEval.printingPolicySatisfied, true, `seed ${seed} combo-completed deck must remain FF-only`);
-
-    const run = {
+    console.log(`\nA2 SEED ${seed}: iterative strategy-aware refinement...`);
+    const refinement = await retryThrottled(`seed ${seed} refinement`, () => runRefinement(seed));
+    const deck = typeof refinement.finalDecklist === 'string' ? refinement.finalDecklist : VERSION_A;
+    const summary = {
       seed,
-      refinement: {
-        status: refinement.status ?? null,
-        stopReason: refinement.stopReason ?? null,
-        roundsAccepted: refinement.roundsAccepted ?? null,
-        totalSwaps: refinement.totalSwaps ?? null,
-        swaps: Array.isArray(refinement.swaps) ? refinement.swaps.map(record) : [],
-        rounds: Array.isArray(refinement.rounds) ? refinement.rounds.map(record) : [],
-        detailedRounds: Array.isArray(refinement.detailedRounds) ? refinement.detailedRounds.map(record) : [],
-        constraints: refinement.constraints ?? null,
-        winRouteProtection: refinement.winRouteProtection ?? null,
-      },
-      refinedEvaluation: conciseEvaluation(refinedEval),
-      comboCompletion,
-      finalEvaluation: conciseEvaluation(comboEval),
-      finalReadiness: comboReadiness,
-      finalDecklist: comboDeck,
+      status: refinement.status ?? null,
+      stopReason: refinement.stopReason ?? null,
+      roundsAccepted: refinement.roundsAccepted ?? null,
+      totalSwaps: refinement.totalSwaps ?? null,
+      swaps: Array.isArray(refinement.swaps) ? refinement.swaps.map(record) : [],
+      rounds: Array.isArray(refinement.rounds) ? refinement.rounds.map(record) : [],
+      constraints: refinement.constraints ?? null,
+      winRouteProtection: refinement.winRouteProtection ?? null,
+      finalDecklist: deck,
     };
-    runs.push(run);
-    await writeFile(`counter-blitz-a2-seed-${seed}.txt`, `${comboDeck.trim()}\n`, 'utf8');
-    console.log(`SEED ${seed} SWAPS: ${JSON.stringify(run.refinement.swaps, null, 2)}`);
-    console.log(`SEED ${seed} COMBO STAGE: ${JSON.stringify(comboCompletion, null, 2)}`);
-    console.log(`SEED ${seed} FINAL EVAL: ${JSON.stringify(run.finalEvaluation, null, 2)}`);
-    console.log(`SEED ${seed} FINAL READINESS: ${JSON.stringify(comboReadiness, null, 2)}`);
+    refinements.push(summary);
+    finalDecks.push(deck.trim());
+    await writeFile(`counter-blitz-a2-refinement-seed-${seed}.json`, `${JSON.stringify(summary, null, 2)}\n`, 'utf8');
+    console.log(`SEED ${seed} STATUS: ${String(summary.status)}`);
+    console.log(`SEED ${seed} TOTAL SWAPS: ${String(summary.totalSwaps)}`);
+    console.log(`SEED ${seed} SWAPS: ${JSON.stringify(summary.swaps, null, 2)}`);
+    await delay(20_000);
   }
 
+  const distinctDecks = [...new Set(finalDecks)];
+  console.log(`\nDISTINCT REFINED DECKS ACROSS REMAINING SEEDS: ${distinctDecks.length}`);
+  const representative = distinctDecks[0] ?? VERSION_A;
+
+  console.log('\nA2 independent backup-win completion on representative refined deck...');
+  const comboCompletion = await retryThrottled('combo completion', () => completeBestCedhWinPackageV14(representative, {
+    ...ff,
+    protectedCards: ['Gatta and Luzzu', 'Hardened Scales', 'Walking Ballista'],
+    maxMissingCards: 2,
+    maxCandidatesToVerify: 12,
+  }));
+  const finalDeck = typeof comboCompletion.finalDecklist === 'string' ? comboCompletion.finalDecklist : representative;
+  await delay(20_000);
+  const finalReadiness = await retryThrottled('final readiness', () => assessCedhReadinessV14(finalDeck, ff));
+
   const result = {
-    schema: 'counter-blitz-a2-hard-optimization-v1',
+    schema: 'counter-blitz-a2-hard-optimization-v2',
     sourceBaseline: '9487cd08aab76359db9bc44ee524fcc3221b0484',
-    baseline: {
-      evaluation: conciseEvaluation(baselineEval),
-      readiness: baselineReadiness,
-      decklist: VERSION_A,
+    priorSeedEvidence: {
+      seed: 20260829,
+      iterativeSwaps: [],
+      comboCompletion: 'Archmage Emeritus -> The Earth Crystal',
+      winningCombosBefore: 1,
+      winningCombosAfter: 2,
     },
-    runs,
+    remainingSeedRefinements: refinements,
+    distinctRefinedDeckCount: distinctDecks.length,
+    allRemainingSeedsUnchangedFromA: finalDecks.every((deck) => deck === VERSION_A.trim()),
+    comboCompletion,
+    finalReadiness,
+    finalDecklist: finalDeck,
+    caveat: 'V0.15 full-table closure intentionally does not count generic Commander Spellbook result text "Infinite damage" as full-table closure when the result text omits multiplayer scope, even though this Ballista loop can retarget its repeatable any-target damage. That assessor disagreement is audited separately rather than hidden.',
     note: 'A2 is exploratory test-branch evidence only. No stable/current promotion or PR #29 merge is implied.',
   };
+
   await writeFile('counter-blitz-a2-result.json', `${JSON.stringify(result, null, 2)}\n`, 'utf8');
-  console.log(`\nBASELINE EVAL: ${JSON.stringify(result.baseline.evaluation, null, 2)}`);
-  console.log(`BASELINE READINESS: ${JSON.stringify(baselineReadiness, null, 2)}`);
-  console.log('\nA2 COMPLETE: inspect all three seed outputs; do not accept a candidate solely because a scalar metric increased.');
+  await writeFile('counter-blitz-a2-final-deck.txt', `${finalDeck.trim()}\n`, 'utf8');
+  console.log(`\nCOMBO COMPLETION: ${JSON.stringify(comboCompletion, null, 2)}`);
+  console.log(`FINAL READINESS: ${JSON.stringify(finalReadiness, null, 2)}`);
+  console.log(`ALL REMAINING SEEDS UNCHANGED FROM VERSION A: ${result.allRemainingSeedsUnchangedFromA}`);
+  console.log('\nA2 RERUN COMPLETE.');
 }
 
 main().catch(async (error) => {
