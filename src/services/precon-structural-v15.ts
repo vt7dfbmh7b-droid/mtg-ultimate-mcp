@@ -208,8 +208,9 @@ function landCutPressure(card: ScryfallCard, preferred: Set<string>): number {
 function rankedLandCuts(parsed: ParsedDeck, cards: ScryfallCard[], preferred: Set<string>, count: number): string[] {
   return parsed.main
     .map((entry) => ({ entry, card: resolveEntryCard(entry, cards) }))
-    .filter((item): item is { entry: DeckEntry; card: ScryfallCard } => Boolean(item.card) && item.entry.quantity === 1 && isLand(item.card))
-    .map(({ card }) => ({ name: card.name, pressure: landCutPressure(card, preferred) }))
+    .flatMap(({ entry, card }) => card && entry.quantity === 1 && isLand(card)
+      ? [{ name: card.name, pressure: landCutPressure(card, preferred) }]
+      : [])
     .sort((a, b) => b.pressure - a.pressure || a.name.localeCompare(b.name))
     .slice(0, count)
     .map((entry) => entry.name);
