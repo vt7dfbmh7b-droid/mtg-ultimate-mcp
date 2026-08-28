@@ -1,0 +1,54 @@
+name: A2 Any-Target Closure Fix
+
+on:
+  push:
+    branches:
+      - test/counter-blitz-ff-tidus-20260829
+    paths:
+      - .github/workflows/a2-any-target-closure-fix.yml
+      - scripts/patch-a2-any-target-closure.mjs
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out test branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 1
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - name: Install dependencies
+        run: npm ci
+      - name: Apply isolated A2 closure patch
+        run: node scripts/patch-a2-any-target-closure.mjs
+      - name: Build
+        run: npm run build
+      - name: Run local closure regression
+        run: npx tsx scripts/e2e-a2-any-target-closure-v15.ts | tee a2-any-target-closure.log
+      - name: Commit tested source fix to isolated branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/services/full-table-win-closure-v15.ts src/services/commander-build-evaluation-v15.ts
+          if git diff --cached --quiet; then
+            echo "No source changes to commit."
+          else
+            git commit -m "fix: recognize repeatable any-target table closure in A2 test"
+            git push origin HEAD:test/counter-blitz-ff-tidus-20260829
+          fi
+      - name: Upload local regression evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: a2-any-target-closure-${{ github.sha }}
+          path: a2-any-target-closure.log
+          if-no-files-found: ignore
+          retention-days: 14
