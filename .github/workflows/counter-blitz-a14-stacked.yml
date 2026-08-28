@@ -1,0 +1,45 @@
+name: Counter Blitz A14 Stacked Refinement
+
+on:
+  push:
+    branches:
+      - test/counter-blitz-a14-stacked-refinement-20260829
+    paths:
+      - scripts/e2e-counter-blitz-a14-stacked.ts
+      - .github/workflows/counter-blitz-a14-stacked.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  stacked:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Run A14 stacked audit
+        shell: bash
+        run: |
+          set -o pipefail
+          npx tsx scripts/e2e-counter-blitz-a14-stacked.ts | tee counter-blitz-a14.log
+      - name: Upload A14 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: counter-blitz-a14-${{ github.sha }}
+          path: |
+            counter-blitz-a14.log
+            counter-blitz-a14-result.json
+            counter-blitz-a14-deck.txt
+            counter-blitz-a14-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
