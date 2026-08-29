@@ -1,5 +1,6 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import { deterministicTutorAccessV15 } from './combo-access-v15.js';
+import { boundedComboSelectionAccessV15 } from './combo-selection-v15.js';
 import { getCardOracleText, inferCardRoles } from './scryfall.js';
 
 export type CardPurposeStatusV15 = 'locked' | 'supported' | 'review' | 'challenge';
@@ -19,6 +20,7 @@ export interface CardPurposeFindingV15 {
   supportEvidence: string[];
   warnings: string[];
   deterministicComboHits: string[];
+  boundedComboHits: string[];
   score: number;
 }
 
@@ -71,12 +73,19 @@ function cardNameMatches(card: ScryfallCard, name: string): boolean {
   return normalize(card.name).split(' // ').some((part) => part.trim() === normalize(name));
 }
 
+function inferPurposeRoles(card: ScryfallCard): string[] {
+  const text = getCardOracleText(card);
+  const strippedDelveReminder = text.replace(/\bdelve\s*\([^)]*exile[^)]*graveyard[^)]*\)/gi, 'Delve');
+  if (strippedDelveReminder === text) return inferCardRoles(card);
+  return inferCardRoles({ ...card, oracle_text: strippedDelveReminder });
+}
+
 function countType(deck: readonly ScryfallCard[], type: string, excludeName?: string): number {
   return deck.filter((card) => (!excludeName || !cardNameMatches(card, excludeName)) && typeContains(card, type)).length;
 }
 
 function countRole(deck: readonly ScryfallCard[], role: string, excludeName?: string): number {
-  return deck.filter((card) => (!excludeName || !cardNameMatches(card, excludeName)) && inferCardRoles(card).includes(role)).length;
+  return deck.filter((card) => (!excludeName || !cardNameMatches(card, excludeName)) && inferPurposeRoles(card).includes(role)).length;
 }
 
 function unique(values: readonly string[]): string[] { return [...new Set(values)]; }
@@ -147,7 +156,7 @@ function narrowDependencyWarnings(card: ScryfallCard, context: CardPurposeContex
  * optimal, only whether its slot has evidence-backed purpose or deserves pressure/review.
  */
 export function auditCardPurposeV15(card: ScryfallCard, context: CardPurposeContextV15): CardPurposeFindingV15 {
-  const roles = inferCardRoles(card);
+  const roles = inferPurposeRoles(card);
   const purposes: string[] = [];
   const supportEvidence: string[] = [];
   const warnings: string[] = [];
@@ -183,7 +192,7 @@ export function auditCardPurposeV15(card: ScryfallCard, context: CardPurposeCont
     }
   }
 
-  const commanderRoles = context.commander ? inferCardRoles(context.commander) : [];
+  const commanderRoles = context.commander ? inferPurposeRoles(context.commander) : [];
   const bridgeRoles = unique(roles.filter((role) => COMMANDER_BRIDGE_ROLES.has(role) && commanderRoles.includes(role)));
   if (bridgeRoles.length > 0) {
     purposes.push('commander-plan bridge');
@@ -200,6 +209,19 @@ export function auditCardPurposeV15(card: ScryfallCard, context: CardPurposeCont
     score += 3;
   } else if (roles.includes('tutor') && comboPieces.length > 0) {
     warnings.push('generic tutor label does not deterministically access any supplied win piece');
+  }
+
+  const boundedComboHits = comboPieces
+    .filter((piece) => boundedComboSelectionAccessV15(card, piece).matched)
+    .map((piece) => piece.name);
+  if (boundedComboHits.length > 0) {
+    purposes.push('bounded win-piece selection');
+    const depth = Math.max(...comboPieces
+      .map((piece) => boundedComboSelectionAccessV15(card, piece))
+      .filter((access) => access.matched)
+      .map((access) => access.depth ?? 0));
+    supportEvidence.push(`top-${depth} selection reaches: ${boundedComboHits.join(', ')}`);
+    score += 2;
   }
 
   const dependency = narrowDependencyWarnings(card, context);
@@ -233,6 +255,7 @@ export function auditCardPurposeV15(card: ScryfallCard, context: CardPurposeCont
     supportEvidence: unique(supportEvidence),
     warnings: unique(warnings),
     deterministicComboHits,
+    boundedComboHits,
     score,
   };
 }
