@@ -1,0 +1,41 @@
+name: Counter Blitz A21 Finalization Gate
+
+on:
+  push:
+    branches:
+      - test/counter-blitz-a21-finalization-gate-20260829
+  workflow_dispatch:
+
+jobs:
+  validate-a21:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Run full test suite
+        run: npm test
+      - name: Run A21 finalization stress gate
+        run: npx tsx scripts/e2e-counter-blitz-a21-finalization.ts
+      - name: Upload A21 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: counter-blitz-a21-evidence-${{ github.sha }}
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            counter-blitz-a21-finalization.json
+            counter-blitz-a21-finalization.md
+            counter-blitz-a21-final-deck.txt
+            counter-blitz-a21-full-99-audit.json
+            counter-blitz-a21-diagnostic.json
