@@ -12,9 +12,7 @@ function card(input: Partial<ScryfallCard> & Pick<ScryfallCard, 'name' | 'type_l
     lang: 'en',
     cmc: input.cmc ?? 0,
     type_line: input.type_line,
-    oracle_text: input.oracle_text,
     color_identity: input.color_identity ?? [],
-    produced_mana: input.produced_mana,
     keywords: input.keywords ?? [],
     legalities: input.legalities ?? { commander: 'legal' },
     set: input.set,
@@ -22,6 +20,8 @@ function card(input: Partial<ScryfallCard> & Pick<ScryfallCard, 'name' | 'type_l
     collector_number: input.collector_number,
     rarity: input.rarity ?? 'common',
     scryfall_uri: input.scryfall_uri ?? `https://scryfall.com/card/${input.set}/${input.collector_number}`,
+    ...(input.oracle_text !== undefined ? { oracle_text: input.oracle_text } : {}),
+    ...(input.produced_mana !== undefined ? { produced_mana: input.produced_mana } : {}),
   };
 }
 
