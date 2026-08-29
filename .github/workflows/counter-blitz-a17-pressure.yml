@@ -1,0 +1,47 @@
+name: Counter Blitz A17 Best-Slot Pressure
+
+on:
+  push:
+    branches:
+      - test/counter-blitz-a17-best-slot-pressure-20260829
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-a17:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Run full test suite
+        run: npm test
+
+      - name: Run A17 best-slot pressure
+        run: npx tsx scripts/e2e-counter-blitz-a17-best-slot-pressure.ts
+
+      - name: Upload A17 evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: counter-blitz-a17-evidence-${{ github.sha }}
+          path: |
+            counter-blitz-a17-result.json
+            counter-blitz-a17-leader.txt
+            counter-blitz-a17-diagnostic.json
+          if-no-files-found: warn
+          retention-days: 7
