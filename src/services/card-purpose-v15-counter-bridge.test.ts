@@ -25,12 +25,12 @@ function card(input: Partial<ScryfallCard> & Pick<ScryfallCard, 'name' | 'type_l
   };
 }
 
-test('explicit +1/+1 counter engine is supported when it bridges to the commander counter plan', () => {
+test('explicit +1/+1 counter engine is supported when it bridges to a generic counter-matters commander', () => {
   const commander = card({
     name: 'Counter Commander',
     type_line: 'Legendary Creature — Human Warrior',
     cmc: 3,
-    oracle_text: 'Whenever Counter Commander attacks, put a +1/+1 counter on target creature you control.',
+    oracle_text: 'At the beginning of combat on your turn, you may move a counter from target creature you control onto a second target creature you control. Whenever one or more creatures you control with counters on them deal combat damage to a player, draw a card and proliferate.',
   });
   const sphereLikeEngine = card({
     name: 'Combat Counter Engine',
@@ -47,5 +47,5 @@ test('explicit +1/+1 counter engine is supported when it bridges to the commande
   assert.equal(result.status, 'supported');
   assert.ok(result.roles.includes('+1/+1 counters'));
   assert.ok(result.purposes.includes('commander-plan bridge'));
-  assert.ok(result.supportEvidence.some((evidence) => evidence.includes('+1/+1 counters')));
+  assert.ok(result.supportEvidence.some((evidence) => evidence.includes('counter-matters commander')));
 });
