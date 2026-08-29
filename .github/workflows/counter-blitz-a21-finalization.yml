@@ -26,7 +26,7 @@ jobs:
         run: npm test
       - name: Run A21 finalization stress gate
         run: |
-          sed -i 's/stress.push({ ...scenario, scoreVsA14, scoreVsA16, meanVsA14, meanVsA16, perSeed });/stress.push({ ...scenario, scoreVsA14: scoreVs14, scoreVsA16: scoreVs16, meanVsA14, meanVsA16, perSeed });/' scripts/e2e-counter-blitz-a21-finalization.ts
+          sed -i 's/stress.push({ ...scenario, scoreVsA14, scoreVsA16, meanVsA14, meanVsA16, perSeed });/stress.push({ ...scenario, scoreVsA14: scoreVs14, scoreVsA16: scoreVs16, meanVsA14: meanVs14, meanVsA16: meanVs16, perSeed });/' scripts/e2e-counter-blitz-a21-finalization.ts
           npx tsx scripts/e2e-counter-blitz-a21-finalization.ts
       - name: Upload A21 evidence
         if: always()
