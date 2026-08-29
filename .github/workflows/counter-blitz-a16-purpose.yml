@@ -28,14 +28,14 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Run card-purpose regressions
-        run: npx tsx --test src/services/card-purpose-v15.test.ts
+      - name: Run A16 audit regressions
+        run: npx tsx --test src/services/card-purpose-v15.test.ts src/services/combo-selection-v15.test.ts src/services/deck-slots-v15.test.ts src/services/full-deck-audit-v15.test.ts
 
       - name: Run full test suite
         run: npm test
 
-      - name: Run A16 purpose-driven refinement
-        run: npx tsx scripts/e2e-counter-blitz-a16-purpose-selection.ts
+      - name: Run A16 physical 99 refinement
+        run: npx tsx scripts/e2e-counter-blitz-a16-full-99.ts
 
       - name: Upload A16 evidence
         if: always()
@@ -44,6 +44,11 @@ jobs:
           name: counter-blitz-a16-purpose-evidence-${{ github.sha }}
           path: |
             counter-blitz-a16-result.json
+            counter-blitz-a16-full-99-audit.json
+            counter-blitz-a16-full-99-audit.md
             counter-blitz-a16-leader.txt
+            counter-blitz-a16-leader-99-audit.json
+            counter-blitz-a16-leader-99-audit.md
+            counter-blitz-a16-diagnostic.json
           if-no-files-found: warn
           retention-days: 7
