@@ -51,7 +51,7 @@ function landProfile(card: ScryfallCard, commander?: ScryfallCard): LandAuditPro
   const producedMana = unique(card.produced_mana ?? []);
   const commanderIdentity = new Set(commander?.color_identity ?? []);
   const commanderColorsProduced = producedMana.filter((color) => commanderIdentity.has(color));
-  const utilityRoles = roles.filter((role) => !['mana acceleration', 'land ramp', 'persistent colored mana source'].includes(role));
+  const utilityRoles = roles.filter((role) => !['land', 'mana acceleration', 'land ramp', 'persistent colored mana source'].includes(role));
   return {
     basic: isBasicLand(card),
     entersTapped: /\benters tapped\b/.test(text),
