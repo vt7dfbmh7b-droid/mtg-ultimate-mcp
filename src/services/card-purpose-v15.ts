@@ -60,6 +60,8 @@ const COMMANDER_BRIDGE_ROLES = new Set([
   'aura',
 ]);
 
+const COUNTER_PLAN_ROLES = new Set(['counters', 'counter payoff', '+1/+1 counters']);
+
 function normalize(value: string): string { return value.trim().toLocaleLowerCase(); }
 
 function typeContains(card: ScryfallCard, token: string): boolean {
@@ -78,6 +80,14 @@ function inferPurposeRoles(card: ScryfallCard): string[] {
   const strippedDelveReminder = text.replace(/\bdelve\s*\([^)]*exile[^)]*graveyard[^)]*\)/gi, 'Delve');
   if (strippedDelveReminder === text) return inferCardRoles(card);
   return inferCardRoles({ ...card, oracle_text: strippedDelveReminder });
+}
+
+function explicitlyUsesPermanentCounters(card: ScryfallCard): boolean {
+  const text = getCardOracleText(card).replace(/\s+/g, ' ').toLocaleLowerCase();
+  return /\bproliferate\b/.test(text)
+    || /\b(?:move|put|remove|double|distribute) (?:one or more |any number of |a |an )?counters?\b/.test(text)
+    || /\b(?:creatures?|permanents?) (?:you control )?with counters? on them\b/.test(text)
+    || /\bhas (?:one or more |a |an )?counters? on it\b/.test(text);
 }
 
 function countType(deck: readonly ScryfallCard[], type: string, excludeName?: string): number {
@@ -194,9 +204,16 @@ export function auditCardPurposeV15(card: ScryfallCard, context: CardPurposeCont
 
   const commanderRoles = context.commander ? inferPurposeRoles(context.commander) : [];
   const bridgeRoles = unique(roles.filter((role) => COMMANDER_BRIDGE_ROLES.has(role) && commanderRoles.includes(role)));
-  if (bridgeRoles.length > 0) {
+  const specificCounterBridge = Boolean(context.commander)
+    && explicitlyUsesPermanentCounters(context.commander as ScryfallCard)
+    && roles.some((role) => COUNTER_PLAN_ROLES.has(role));
+  const bridgeEvidence = [...bridgeRoles];
+  if (specificCounterBridge && !bridgeEvidence.some((role) => COUNTER_PLAN_ROLES.has(role))) {
+    bridgeEvidence.push('+1/+1-counter engine → counter-matters commander');
+  }
+  if (bridgeEvidence.length > 0) {
     purposes.push('commander-plan bridge');
-    supportEvidence.push(`shares strategic role with commander: ${bridgeRoles.join(', ')}`);
+    supportEvidence.push(`shares strategic role with commander: ${bridgeEvidence.join(', ')}`);
     score += 2;
   }
 
@@ -211,15 +228,11 @@ export function auditCardPurposeV15(card: ScryfallCard, context: CardPurposeCont
     warnings.push('generic tutor label does not deterministically access any supplied win piece');
   }
 
-  const boundedComboHits = comboPieces
-    .filter((piece) => boundedComboSelectionAccessV15(card, piece).matched)
-    .map((piece) => piece.name);
+  const boundedComboAccess = comboPieces.map((piece) => boundedComboSelectionAccessV15(card, piece));
+  const boundedComboHits = boundedComboAccess.filter((access) => access.matched).map((access) => access.pieceName);
   if (boundedComboHits.length > 0) {
     purposes.push('bounded win-piece selection');
-    const depth = Math.max(...comboPieces
-      .map((piece) => boundedComboSelectionAccessV15(card, piece))
-      .filter((access) => access.matched)
-      .map((access) => access.depth ?? 0));
+    const depth = Math.max(...boundedComboAccess.filter((access) => access.matched).map((access) => access.depth ?? 0));
     supportEvidence.push(`top-${depth} selection reaches: ${boundedComboHits.join(', ')}`);
     score += 2;
   }
