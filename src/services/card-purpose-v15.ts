@@ -46,6 +46,7 @@ const ROLE_GROUPS: Array<{ label: string; roles: string[] }> = [
 const COMMANDER_BRIDGE_ROLES = new Set([
   'counters',
   'counter payoff',
+  '+1/+1 counters',
   'combat access',
   'combat value engine',
   'go-wide payoff',
