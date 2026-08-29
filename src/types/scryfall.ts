@@ -20,6 +20,7 @@ export interface ScryfallCard {
   flavor_name?: string;
   lang: string;
   released_at?: string;
+  layout?: string;
   mana_cost?: string;
   cmc: number;
   type_line: string;
