@@ -161,6 +161,26 @@ function narrowDependencyWarnings(card: ScryfallCard, context: CardPurposeContex
   return { warnings, severe, evidence };
 }
 
+function supportedTutorPackages(card: ScryfallCard, context: CardPurposeContextV15): Array<{ purpose: string; evidence: string; score: number }> {
+  const text = getCardOracleText(card).replace(/\s+/g, ' ').toLocaleLowerCase();
+  const packages: Array<{ purpose: string; evidence: string; score: number }> = [];
+  const checks: Array<{ pattern: RegExp; type: string; label: string }> = [
+    { pattern: /search your library for [^.]*\bequipment card\b/, type: 'equipment', label: 'Equipment' },
+    { pattern: /search your library for [^.]*\bvehicle card\b/, type: 'vehicle', label: 'Vehicle' },
+  ];
+  for (const check of checks) {
+    if (!check.pattern.test(text)) continue;
+    const targets = countType(context.deck, check.type, card.name);
+    if (targets < 2) continue;
+    packages.push({
+      purpose: `${check.label} package access`,
+      evidence: `${check.label} tutor has ${targets} legal library targets in this exact 99`,
+      score: Math.min(3, 1 + Math.floor(targets / 4)),
+    });
+  }
+  return packages;
+}
+
 /**
  * Audits whether a card has an identifiable job in this exact deck rather than merely being
  * generically playable. The service is deliberately conservative: it does not claim a card is
@@ -226,7 +246,14 @@ export function auditCardPurposeV15(card: ScryfallCard, context: CardPurposeCont
     supportEvidence.push(`deterministically finds: ${deterministicComboHits.join(', ')}`);
     score += 3;
   } else if (roles.includes('tutor') && comboPieces.length > 0) {
-    warnings.push('generic tutor label does not deterministically access any supplied win piece');
+    warnings.push('tutor does not deterministically access any supplied win piece; evaluate it against its intended package rather than counting it as combo access');
+  }
+
+  const packageSupport = supportedTutorPackages(card, context);
+  for (const supported of packageSupport) {
+    purposes.push(supported.purpose);
+    supportEvidence.push(supported.evidence);
+    score += supported.score;
   }
 
   const boundedComboAccess = comboPieces.map((piece) => boundedComboSelectionAccessV15(card, piece));
@@ -255,7 +282,7 @@ export function auditCardPurposeV15(card: ScryfallCard, context: CardPurposeCont
   } else if (dependency.severe > 0 && !nonNarrowPurpose) {
     status = 'challenge';
     warnings.push('identified purpose is mostly dependent on a weakly supported narrow package');
-  } else if (dependency.severe > 0 || (roles.includes('tutor') && comboPieces.length > 0 && deterministicComboHits.length === 0)) {
+  } else if (dependency.severe > 0) {
     status = 'review';
   } else {
     status = 'supported';
