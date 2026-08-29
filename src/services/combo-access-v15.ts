@@ -1,4 +1,5 @@
 import type { ScryfallCard } from '../types/scryfall.js';
+import { libraryTypeHasV15 } from './library-characteristics-v15.js';
 import { getCardOracleText } from './scryfall.js';
 
 export interface ComboTutorAccessV15 {
@@ -10,7 +11,7 @@ export interface ComboTutorAccessV15 {
 }
 
 function normalize(value: string): string { return value.trim().toLocaleLowerCase(); }
-function typeHas(card: ScryfallCard, token: string): boolean { return card.type_line.toLocaleLowerCase().includes(token); }
+function typeHas(card: ScryfallCard, token: string): boolean { return libraryTypeHasV15(card, token); }
 function nameMatches(card: ScryfallCard, name: string): boolean {
   return normalize(card.name).split(' // ').some((part) => part === normalize(name));
 }
