@@ -18,26 +18,31 @@ function nameMatches(card: ScryfallCard, name: string): boolean {
 
 function clauseMatchesPiece(clause: string, piece: ScryfallCard): { matched: boolean; reason: string } {
   const text = clause.toLocaleLowerCase();
-  const named = text.match(/card named ([^,.;]+)/i)?.[1]?.trim();
+  const named = text.match(/cards? named ([^,.;]+)/i)?.[1]?.trim();
   if (named && !nameMatches(piece, named)) return { matched: false, reason: `name-restricted to ${named}` };
 
   const typeRestrictions: Array<[RegExp, string]> = [
-    [/\bequipment card\b/, 'equipment'],
-    [/\bvehicle card\b/, 'vehicle'],
-    [/\bartifact card\b/, 'artifact'],
-    [/\benchantment card\b/, 'enchantment'],
-    [/\bcreature card\b/, 'creature'],
-    [/\binstant card\b/, 'instant'],
-    [/\bsorcery card\b/, 'sorcery'],
-    [/\bplaneswalker card\b/, 'planeswalker'],
-    [/\bbasic land card\b/, 'basic land'],
-    [/\bland card\b/, 'land'],
+    [/\bequipment cards?\b/, 'equipment'],
+    [/\bvehicle cards?\b/, 'vehicle'],
+    [/\bartifact cards?\b/, 'artifact'],
+    [/\benchantment cards?\b/, 'enchantment'],
+    [/\bcreature cards?\b/, 'creature'],
+    [/\binstant cards?\b/, 'instant'],
+    [/\bsorcery cards?\b/, 'sorcery'],
+    [/\bplaneswalker cards?\b/, 'planeswalker'],
+    [/\bbasic land cards?\b/, 'basic land'],
+    [/\bplains cards?\b/, 'plains'],
+    [/\bisland cards?\b/, 'island'],
+    [/\bswamp cards?\b/, 'swamp'],
+    [/\bmountain cards?\b/, 'mountain'],
+    [/\bforest cards?\b/, 'forest'],
+    [/\bland cards?\b/, 'land'],
   ];
   for (const [pattern, type] of typeRestrictions) {
     if (pattern.test(text) && !typeHas(piece, type)) return { matched: false, reason: `requires ${type}` };
   }
 
-  if (/\blegendary creature card\b/.test(text) && !(typeHas(piece, 'legendary') && typeHas(piece, 'creature'))) {
+  if (/\blegendary creature cards?\b/.test(text) && !(typeHas(piece, 'legendary') && typeHas(piece, 'creature'))) {
     return { matched: false, reason: 'requires legendary creature' };
   }
 
@@ -56,7 +61,7 @@ function clauseMatchesPiece(clause: string, piece: ScryfallCard): { matched: boo
  */
 export function deterministicTutorAccessV15(tutor: ScryfallCard, piece: ScryfallCard): ComboTutorAccessV15 {
   const oracle = getCardOracleText(tutor).replace(/\s+/g, ' ').trim();
-  const clauses = [...oracle.matchAll(/search your library for ([^.]+?card[^.]*?)(?:,|\. |$)/gi)]
+  const clauses = [...oracle.matchAll(/search your library for ([^.]+?cards?[^.]*?)(?:,|\. |$)/gi)]
     .map((match) => match[1]?.trim())
     .filter((value): value is string => Boolean(value));
   if (clauses.length === 0) {
