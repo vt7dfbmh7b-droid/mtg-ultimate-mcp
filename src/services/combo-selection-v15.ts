@@ -1,4 +1,5 @@
 import type { ScryfallCard } from '../types/scryfall.js';
+import { libraryTypeHasV15 } from './library-characteristics-v15.js';
 import { getCardOracleText } from './scryfall.js';
 
 export interface BoundedComboSelectionAccessV15 {
@@ -24,10 +25,7 @@ const NUMBER_WORDS: Record<string, number> = {
 };
 
 function typeHas(card: ScryfallCard, token: string): boolean {
-  return [card.type_line, ...(card.card_faces ?? []).map((face) => face.type_line ?? '')]
-    .join(' // ')
-    .toLocaleLowerCase()
-    .includes(token.toLocaleLowerCase());
+  return libraryTypeHasV15(card, token);
 }
 
 function selectionDepth(text: string): number | null {
