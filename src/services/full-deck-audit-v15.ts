@@ -40,7 +40,6 @@ export interface FullDeckAuditV15 {
   note: string;
 }
 
-function normalize(value: string): string { return value.trim().toLocaleLowerCase(); }
 function unique(values: readonly string[]): string[] { return [...new Set(values)]; }
 function isLand(card: ScryfallCard): boolean { return card.type_line.toLocaleLowerCase().includes('land'); }
 function isBasicLand(card: ScryfallCard): boolean { return card.type_line.toLocaleLowerCase().includes('basic land'); }
@@ -63,7 +62,6 @@ function landProfile(card: ScryfallCard, commander?: ScryfallCard): LandAuditPro
 }
 
 function adjustedLandFinding(
-  card: ScryfallCard,
   status: CardPurposeStatusV15,
   score: number,
   warnings: readonly string[],
@@ -96,7 +94,6 @@ function adjustedLandFinding(
 }
 
 function removalConsequence(
-  card: ScryfallCard,
   status: CardPurposeStatusV15,
   purposes: readonly string[],
   profile: LandAuditProfileV15 | null,
@@ -131,7 +128,7 @@ export function auditFullDeckV15(
   const audited = slots.map((slot) => {
     const purpose = auditCardPurposeV15(slot.card, { ...context, deck: physicalDeck });
     const profile = landProfile(slot.card, context.commander);
-    const adjusted = adjustedLandFinding(slot.card, purpose.status, purpose.score, purpose.warnings, profile, context.commander);
+    const adjusted = adjustedLandFinding(purpose.status, purpose.score, purpose.warnings, profile, context.commander);
     counts[adjusted.status] += 1;
     const roleRedundancy = purpose.roles.map((role) => ({ role, otherSlots: Math.max(0, (roleTotals.get(role) ?? 0) - 1) }));
     return {
@@ -151,7 +148,7 @@ export function auditFullDeckV15(
       deterministicComboHits: purpose.deterministicComboHits,
       land: profile,
       roleRedundancy,
-      removalConsequence: removalConsequence(slot.card, adjusted.status, purpose.purposes, profile, totalLands),
+      removalConsequence: removalConsequence(adjusted.status, purpose.purposes, profile, totalLands),
     } satisfies FullDeckSlotAuditV15;
   });
 
