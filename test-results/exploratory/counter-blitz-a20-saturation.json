@@ -1,0 +1,10 @@
+{
+  "schema": "counter-blitz-a20-saturation-v1",
+  "baseline": "A17 exploratory champion",
+  "structuralCandidates": 49140,
+  "simulatedFinalists": 30,
+  "reviewLeader": null,
+  "conclusion": "no defensible two-card package improvement",
+  "stablePromotion": false,
+  "pr29Merge": false
+}
