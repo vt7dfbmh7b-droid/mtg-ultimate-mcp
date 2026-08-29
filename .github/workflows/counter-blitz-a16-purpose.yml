@@ -29,13 +29,16 @@ jobs:
         run: npm run build
 
       - name: Run A16 audit regressions
-        run: npx tsx --test src/services/card-purpose-v15.test.ts src/services/combo-selection-v15.test.ts src/services/deck-slots-v15.test.ts src/services/full-deck-audit-v15.test.ts
+        run: npx tsx --test src/services/card-purpose-v15.test.ts src/services/card-purpose-v15-counter-bridge.test.ts src/services/card-purpose-v15-selection.test.ts src/services/combo-selection-v15.test.ts src/services/library-characteristics-v15.test.ts src/services/combo-access-quality-v15.test.ts src/services/deck-slots-v15.test.ts src/services/full-deck-audit-v15.test.ts
 
       - name: Run full test suite
         run: npm test
 
       - name: Run A16 physical 99 refinement
         run: npx tsx scripts/e2e-counter-blitz-a16-full-99.ts
+
+      - name: Run A16 effective combo access challenge
+        run: npx tsx scripts/e2e-counter-blitz-a16-access-quality.ts
 
       - name: Upload A16 evidence
         if: always()
@@ -49,6 +52,7 @@ jobs:
             counter-blitz-a16-leader.txt
             counter-blitz-a16-leader-99-audit.json
             counter-blitz-a16-leader-99-audit.md
+            counter-blitz-a16-access-quality.json
             counter-blitz-a16-diagnostic.json
           if-no-files-found: warn
           retention-days: 7
