@@ -1,6 +1,7 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import { deterministicTutorAccessV15 } from './combo-access-v15.js';
 import { boundedComboSelectionAccessV15 } from './combo-selection-v15.js';
+import { libraryTypeHasV15 } from './library-characteristics-v15.js';
 import { getCardOracleText, inferCardRoles } from './scryfall.js';
 
 export type CardPurposeStatusV15 = 'locked' | 'supported' | 'review' | 'challenge';
@@ -91,7 +92,7 @@ function explicitlyUsesPermanentCounters(card: ScryfallCard): boolean {
 }
 
 function countType(deck: readonly ScryfallCard[], type: string, excludeName?: string): number {
-  return deck.filter((card) => (!excludeName || !cardNameMatches(card, excludeName)) && typeContains(card, type)).length;
+  return deck.filter((card) => (!excludeName || !cardNameMatches(card, excludeName)) && libraryTypeHasV15(card, type)).length;
 }
 
 function countRole(deck: readonly ScryfallCard[], role: string, excludeName?: string): number {
