@@ -85,6 +85,7 @@ test('full deck audit pressures a nonbasic tapped land without deleting its mana
   assert.ok(slow);
   assert.equal(slow.status, 'review');
   assert.equal(slow.land?.entersTapped, true);
+  assert.deepEqual(slow.land?.utilityRoles, []);
   assert.ok(slow.purposes.includes('mana-base slot'));
   assert.ok(slow.warnings.some((warning) => warning.includes('enters tapped')));
 });
