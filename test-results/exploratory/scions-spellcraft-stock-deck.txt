@@ -1,95 +1,95 @@
 // COMMANDER
-1 Y'shtola, Night's Blessed
+1 Y'shtola, Night's Blessed (FIC) 7
 
 // MAIN
-1 G'raha Tia, Scion Reborn
-1 Alisaie Leveilleur
-1 Champions from Beyond
-1 Dancer's Chakrams
-1 Summon: Good King Mog XII
-1 Tataru Taru
-1 Thancred Waters
-1 Alphinaud Leveilleur
-1 Blue Mage's Cane
-1 Hermes, Overseer of Elpis
-1 Hraesvelgr of the First Brood
-1 Observed Stasis
-1 Eye of Nidhogg
-1 Fandaniel, Telophoroi Ascian
-1 Astrologian's Planisphere
-1 Reaper's Scythe
-1 Transpose
-1 Ardbert, Warrior of Darkness
-1 Emet-Selch of the Third Seat
-1 Estinien Varlineau
-1 Hildibrand Manderville
-1 Krile Baldesion
-1 Lyse Hext
-1 Papalymo Totolymo
-1 Urianger Augurelt
-1 Archaeomancer's Map
-1 Authority of the Consuls
-1 Cleansing Nova
-1 Final Judgment
-1 Archmage Emeritus
-1 Dig Through Time
-1 Rite of Replication
-1 Sublime Epiphany
-1 Torrential Gearhulk
-1 Crux of Fate
-1 Lethal Scheme
-1 Murderous Rider
-1 Baleful Strix
-1 Vindicate
-1 Void Rend
-1 Coveted Jewel
-1 Tome of Legends
-1 Choked Estuary
-1 Darkwater Catacombs
-1 Desolate Mire
-1 Drowned Catacomb
-1 Exotic Orchard
-1 Fetid Heath
-1 Glacial Fortress
-1 Isolated Chapel
-1 Port Town
-1 Prairie Stream
-1 Scavenger Grounds
-1 Shineshadow Snarl
-1 Skycloud Expanse
-1 Sunken Hollow
-1 Sunken Ruins
-1 Underground River
-1 White Auracite
-1 Sage's Nouliths
-1 Circle of Power
-1 Cut a Deal
-1 Lingering Souls
-1 Swords to Plowshares
-1 Hypnotic Sprite
-1 Into the Story
-1 Propaganda
-1 Bastion of Remembrance
-1 Exsanguinate
-1 Snuff Out
-1 Syphon Mind
-1 Arcane Signet
-1 Relic of Legends
-1 Sol Ring
-1 Talisman of Dominance
-1 Talisman of Hierarchy
-1 Talisman of Progress
-1 Thought Vessel
-1 Arcane Sanctum
-1 Ash Barrens
-1 Command Tower
-1 Contaminated Aquifer
-1 Demolition Field
-1 Evolving Wilds
-1 Idyllic Beachfront
-1 Path of Ancestry
-1 Sunlit Marsh
-1 Temple of the False God
-3 Island
-4 Swamp
-4 Plains
+1 G'raha Tia, Scion Reborn (FIC) 3
+1 Alisaie Leveilleur (FIC) 9
+1 Champions from Beyond (FIC) 11
+1 Dancer's Chakrams (FIC) 17
+1 Summon: Good King Mog XII (FIC) 26
+1 Tataru Taru (FIC) 30
+1 Thancred Waters (FIC) 31
+1 Alphinaud Leveilleur (FIC) 33
+1 Blue Mage's Cane (FIC) 35
+1 Hermes, Overseer of Elpis (FIC) 36
+1 Hraesvelgr of the First Brood (FIC) 37
+1 Observed Stasis (FIC) 40
+1 Eye of Nidhogg (FIC) 44
+1 Fandaniel, Telophoroi Ascian (FIC) 46
+1 Astrologian's Planisphere (FIN) 46
+1 Reaper's Scythe (FIC) 48
+1 Transpose (FIC) 52
+1 Ardbert, Warrior of Darkness (FIC) 77
+1 Emet-Selch of the Third Seat (FIC) 81
+1 Estinien Varlineau (FIC) 82
+1 Hildibrand Manderville (FIC) 83
+1 Krile Baldesion (FIC) 86
+1 Lyse Hext (FIC) 88
+1 Papalymo Totolymo (FIC) 90
+1 Urianger Augurelt (FIC) 96
+1 Archaeomancer's Map (FIC) 230
+1 Authority of the Consuls (FIC) 232
+1 Cleansing Nova (FIC) 235
+1 Final Judgment (FIC) 243
+1 Archmage Emeritus (FIC) 261
+1 Dig Through Time (FIC) 263
+1 Rite of Replication (FIC) 270
+1 Sublime Epiphany (FIC) 271
+1 Torrential Gearhulk (FIC) 272
+1 Crux of Fate (FIC) 275
+1 Lethal Scheme (FIC) 277
+1 Murderous Rider (FIC) 279
+1 Baleful Strix (FIC) 318
+1 Vindicate (FIC) 330
+1 Void Rend (FIC) 331
+1 Coveted Jewel (FIC) 341
+1 Tome of Legends (FIC) 369
+1 Choked Estuary (FIC) 379
+1 Darkwater Catacombs (FIC) 384
+1 Desolate Mire (FIC) 386
+1 Drowned Catacomb (FIC) 388
+1 Exotic Orchard (FIC) 390
+1 Fetid Heath (FIC) 391
+1 Glacial Fortress (FIC) 400
+1 Isolated Chapel (FIC) 405
+1 Port Town (FIC) 412
+1 Prairie Stream (FIC) 413
+1 Scavenger Grounds (FIC) 419
+1 Shineshadow Snarl (FIC) 422
+1 Skycloud Expanse (FIC) 423
+1 Sunken Hollow (FIC) 429
+1 Sunken Ruins (FIC) 430
+1 Underground River (FIC) 439
+1 White Auracite (FIN) 41
+1 Sage's Nouliths (FIN) 70
+1 Circle of Power (FIN) 92
+1 Cut a Deal (FIC) 238
+1 Lingering Souls (FIC) 245
+1 Swords to Plowshares (FIC) 256
+1 Hypnotic Sprite (FIC) 264
+1 Into the Story (FIC) 266
+1 Propaganda (FIC) 268
+1 Bastion of Remembrance (FIC) 274
+1 Exsanguinate (FIC) 276
+1 Snuff Out (FIC) 285
+1 Syphon Mind (FIC) 288
+1 Arcane Signet (FIC) 332
+1 Relic of Legends (FIC) 354
+1 Sol Ring (FIC) 356
+1 Talisman of Dominance (FIC) 364
+1 Talisman of Hierarchy (FIC) 365
+1 Talisman of Progress (FIC) 367
+1 Thought Vessel (FIC) 368
+1 Arcane Sanctum (FIC) 373
+1 Ash Barrens (FIC) 374
+1 Command Tower (FIC) 382
+1 Contaminated Aquifer (FIC) 383
+1 Demolition Field (FIC) 385
+1 Evolving Wilds (FIC) 389
+1 Idyllic Beachfront (FIC) 404
+1 Path of Ancestry (FIC) 411
+1 Sunlit Marsh (FIC) 431
+1 Temple of the False God (FIC) 438
+3 Island (FIC) 479
+4 Swamp (FIC) 480
+4 Plains (FIC) 478
