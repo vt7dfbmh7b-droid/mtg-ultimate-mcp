@@ -280,7 +280,7 @@ async function main(): Promise<void> {
     if (scoreVs16 > 0) positiveScenarioVs16 += 1;
     for (const regression of severeMeanRegression(meanVs14)) failures.push(`${scenario.pressure}/T${scenario.turns} severe regression vs A14: ${regression}`);
     for (const regression of severeMeanRegression(meanVs16)) failures.push(`${scenario.pressure}/T${scenario.turns} severe regression vs A16: ${regression}`);
-    stress.push({ ...scenario, scoreVsA14, scoreVsA16, meanVsA14, meanVsA16, perSeed });
+    stress.push({ ...scenario, scoreVsA14, scoreVsA16, meanVsA14: meanVs14, meanVsA16: meanVs16, perSeed });
   }
 
   const aggregateVs14 = Number(avg(allVs14).toFixed(3));
@@ -317,7 +317,14 @@ async function main(): Promise<void> {
       singleSlotA19: '968 structural candidates / 24 simulated finalists / no accepted swap',
       twoCardA20: '49,140 structural candidates / 30 simulated finalists / no accepted package',
     },
-    stressSummary: { aggregateVsA14, aggregateVsA16, positiveScenarioVsA14, positiveScenarioVs16, scenarios: SCENARIOS.length, seeds: SEEDS.length },
+    stressSummary: {
+      aggregateVsA14: aggregateVs14,
+      aggregateVsA16: aggregateVs16,
+      positiveScenarioVsA14,
+      positiveScenarioVs16,
+      scenarios: SCENARIOS.length,
+      seeds: SEEDS.length,
+    },
     stress,
     failures,
     note: 'Finished means this exact FF-only Tidus deck cleared the bounded finalization benchmark. It is still exploratory INTEL-02 evidence and does not promote stable/current or merge PR #29.',
@@ -345,7 +352,7 @@ async function main(): Promise<void> {
   ].join('\n');
   await writeFile('counter-blitz-a21-finalization.md', `${markdown}\n`, 'utf8');
 
-  console.log(JSON.stringify({ status: result.status, aggregateVsA14, aggregateVs16, failures }, null, 2));
+  console.log(JSON.stringify({ status: result.status, aggregateVsA14: aggregateVs14, aggregateVs16, failures }, null, 2));
   assert.equal(failures.length, 0, `A21 finalization blocked: ${failures.join('; ')}`);
 }
 
