@@ -1,0 +1,30 @@
+name: Scions & Spellcraft A4b Combo Access
+
+on:
+  push:
+    branches:
+      - test/scions-spellcraft-a4b-combo-access-20260831
+  workflow_dispatch:
+
+jobs:
+  scions-a4b-access:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Run corrected combo-access screen
+        run: npx tsx scripts/e2e-scions-spellcraft-a4b-combo-access.ts
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: scions-spellcraft-a4b-combo-access-${{ github.sha }}
+          retention-days: 90
+          path: |
+            scions-spellcraft-a4b-combo-access.json
+            scions-spellcraft-a4b-combo-access.md
