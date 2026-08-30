@@ -272,12 +272,12 @@ async function main(): Promise<void> {
     };
     const meanVs14 = meanDelta('vsA14');
     const meanVs16 = meanDelta('vsA16');
-    const scoreVs14 = Number(avg(perSeed.map((row) => row.scoreVsA14)).toFixed(3));
-    const scoreVs16 = Number(avg(perSeed.map((row) => row.scoreVsA16)).toFixed(3));
+    const scoreVsA14 = Number(avg(perSeed.map((row) => row.scoreVsA14)).toFixed(3));
+    const scoreVsA16 = Number(avg(perSeed.map((row) => row.scoreVsA16)).toFixed(3));
     allVs14.push(...perSeed.map((row) => row.scoreVsA14));
     allVs16.push(...perSeed.map((row) => row.scoreVsA16));
-    if (scoreVs14 > 0) positiveScenarioVs14 += 1;
-    if (scoreVs16 > 0) positiveScenarioVs16 += 1;
+    if (scoreVsA14 > 0) positiveScenarioVs14 += 1;
+    if (scoreVsA16 > 0) positiveScenarioVs16 += 1;
     for (const regression of severeMeanRegression(meanVs14)) failures.push(`${scenario.pressure}/T${scenario.turns} severe regression vs A14: ${regression}`);
     for (const regression of severeMeanRegression(meanVs16)) failures.push(`${scenario.pressure}/T${scenario.turns} severe regression vs A16: ${regression}`);
     stress.push({ ...scenario, scoreVsA14, scoreVsA16, meanVsA14: meanVs14, meanVsA16: meanVs16, perSeed });
@@ -321,7 +321,7 @@ async function main(): Promise<void> {
       aggregateVsA14: aggregateVs14,
       aggregateVsA16: aggregateVs16,
       positiveScenarioVsA14,
-      positiveScenarioVs16,
+      positiveScenarioVsA16,
       scenarios: SCENARIOS.length,
       seeds: SEEDS.length,
     },
