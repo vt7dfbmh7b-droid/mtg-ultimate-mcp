@@ -1,0 +1,32 @@
+name: Scions & Spellcraft A8 Package Pressure
+
+on:
+  push:
+    branches:
+      - test/scions-spellcraft-a8-package-pressure-20260831
+  workflow_dispatch:
+
+jobs:
+  scions-a8-package-pressure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Run A8 package pressure
+        run: npx tsx scripts/e2e-scions-spellcraft-a8-package-pressure.ts
+      - name: Upload A8 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scions-spellcraft-a8-package-pressure-${{ github.sha }}
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            scions-spellcraft-a8-package-pressure.json
+            scions-spellcraft-a8-package-pressure.md
