@@ -1,0 +1,36 @@
+name: Scions & Spellcraft A3 Package Pressure
+
+on:
+  push:
+    branches:
+      - test/scions-spellcraft-a3-package-pressure-20260830
+  workflow_dispatch:
+
+jobs:
+  pressure-scions-a3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Run Scions A3 package pressure
+        run: npx tsx scripts/e2e-scions-spellcraft-a3-package-pressure.ts
+      - name: Upload Scions A3 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scions-spellcraft-a3-package-pressure-${{ github.sha }}
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            scions-spellcraft-a3-package-pressure.json
+            scions-spellcraft-a3-package-pressure.md
