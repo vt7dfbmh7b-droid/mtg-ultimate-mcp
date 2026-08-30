@@ -1,0 +1,38 @@
+name: Scions & Spellcraft A1 Baseline
+
+on:
+  push:
+    branches:
+      - test/scions-spellcraft-a1-baseline-20260830
+  workflow_dispatch:
+
+jobs:
+  validate-scions-a1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Run Scions A1 whole-deck baseline audit
+        run: npx tsx scripts/e2e-scions-spellcraft-a1-baseline.ts
+      - name: Upload Scions A1 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scions-spellcraft-a1-baseline-${{ github.sha }}
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            scions-spellcraft-a1-baseline.json
+            scions-spellcraft-a1-baseline.md
+            test-results/exploratory/scions-spellcraft-stock-deck.txt
+            test-results/exploratory/scions-spellcraft-a1-deck.txt
