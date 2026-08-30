@@ -1,0 +1,37 @@
+name: Counter Blitz A23 Synergy Checkpoint
+
+on:
+  push:
+    branches:
+      - test/counter-blitz-a23-synergy-checkpoint-20260830
+  workflow_dispatch:
+
+jobs:
+  validate-a23:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Run A23 synergy checkpoint gate
+        run: npx tsx scripts/e2e-counter-blitz-a23-synergy-checkpoint.ts
+      - name: Upload A23 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: counter-blitz-a23-synergy-checkpoint-${{ github.sha }}
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            counter-blitz-a23-synergy-checkpoint.json
+            counter-blitz-a23-synergy-checkpoint.md
+            test-results/exploratory/counter-blitz-a23-synergy-checkpoint-deck.txt
