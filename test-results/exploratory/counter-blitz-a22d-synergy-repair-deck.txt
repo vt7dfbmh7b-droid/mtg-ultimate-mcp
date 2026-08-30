@@ -1,0 +1,87 @@
+// COMMANDER
+1 Tidus, Yuna's Guardian (FIC) 5
+
+// MAIN
+1 Esper Origins // Summon: Esper Maduin (FIN) 185
+1 Bugenhagen, Wise Elder (FIC) 66
+1 Mind Stone (FIC) 353
+1 Arcane Denial (RFIN) J2
+1 Kinnan, Bonder Prodigy (FCA) 55
+1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201
+1 Rikku, Resourceful Guardian (FIC) 145
+1 Dreams of Laguna (FIN) 50
+1 Sol Ring (FIC) 356
+1 Walking Ballista (FIC) 371
+1 Blitzball Stadium (FIC) 34
+1 Birds of Paradise (FIC) 483
+1 Venat, Heart of Hydaelyn // Hydaelyn, the Mothercrystal (FIN) 39
+1 Cyclonic Rift (SLD) 1869
+1 Dovin's Veto (FCA) 51
+1 Swords to Plowshares (FIC) 256
+1 Loran of the Third Path (FCA) 24
+1 Zack Fair (FIN) 45
+1 Path to Exile (FIC) 248
+1 Cloud, Midgar Mercenary (FIN) 10
+1 Swiftfoot Boots (FIC) 361
+1 Cryptic Command (FCA) 29
+1 Sword of Truth and Justice (SLD) 1867
+1 Ranger-Captain of Eos (FCA) 2
+1 Force of Negation (RFIN) J1
+1 Lightning Greaves (FIC) 349
+1 Tireless Tracker (FIC) 316
+1 Tidus, Blitzball Star (FIN) 246
+1 Heroic Intervention (SLD) 1872
+1 An Offer You Can't Refuse (FIC) 267
+1 Chasm Skulker (FIC) 262
+1 Bred for the Hunt (FIC) 321
+1 Fathom Mage (FIC) 325
+1 Warrior's Resolve (FIC) 465
+1 Gyre Sage (FIC) 306
+1 Inspiring Call (FIC) 310
+1 Generous Patron (FIC) 305
+1 Campsite Cuisine (FIC) 464
+1 Tome of Legends (FIC) 369
+1 Rhystic Study (FCA) 31
+1 Hardened Scales (FIC) 307
+1 Mask of Memory (FIC) 350
+1 Collective Effort (FIC) 237
+1 The Destined White Mage (FIC) 444
+1 Fight Rigging (FIC) 303
+1 Smuggler's Copter (FCA) 62
+1 Tromell, Seymour's Butler (FIC) 162
+1 Buster Sword (FIN) 255
+1 Staff of the Storyteller (SLD) 1863
+1 Champions from Beyond (FIC) 11
+1 Sphere Grid (FIC) 70
+1 Key to the City (FIC) 348
+1 Torgal, A Fine Hound (FIN) 208
+1 Skullclamp (FIC) 355
+1 Lord Jyscal Guado (FIC) 23
+1 Command Tower (FIC) 382
+1 Exotic Orchard (FIC) 390
+1 Spire of Industry (FIC) 426
+1 Path of Ancestry (FIC) 411
+1 Capital City (FIN) 274
+1 Starting Town (FIN) 289
+1 Overflowing Basin (FIC) 410
+1 Balamb Garden, SeeD Academy // Balamb Garden, Airborne (FIN) 272
+1 Brushland (FIC) 377
+1 Flooded Grove (FIC) 393
+1 Skycloud Expanse (FIC) 423
+1 Sungrass Prairie (FIC) 428
+7 Forest (FIC) 482
+6 Island (FIC) 479
+6 Plains (FIC) 478
+1 Gatta and Luzzu (FIC) 19
+1 Silence (SLD) 7003
+1 Counterspell (FCA) 4
+1 Conqueror's Flail (FIC) 340
+1 Syncopate (FIN) 80
+1 Nature's Claim (FCA) 47
+1 The Earth Crystal (FIN) 184
+1 Incubation Druid (FIC) 309
+1 Everflowing Chalice (FIC) 343
+1 Arcane Signet (FIC) 332
+1 Endurance (SLD) 7008
+1 Commune with Beavers (FIN) 182
+1 Summon: Fenrir (FIN) 203

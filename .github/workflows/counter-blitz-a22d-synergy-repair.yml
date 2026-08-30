@@ -1,0 +1,37 @@
+name: Counter Blitz A22d Synergy Repair
+
+on:
+  push:
+    branches:
+      - test/counter-blitz-a22-synergy-repair-20260830
+  workflow_dispatch:
+
+jobs:
+  validate-a22d:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Run A22d synergy-repair gate
+        run: npx tsx scripts/e2e-counter-blitz-a22d-synergy-repair.ts
+      - name: Upload A22d evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: counter-blitz-a22d-synergy-repair-${{ github.sha }}
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            counter-blitz-a22d-synergy-repair.json
+            counter-blitz-a22d-synergy-repair.md
+            test-results/exploratory/counter-blitz-a22d-synergy-repair-deck.txt
