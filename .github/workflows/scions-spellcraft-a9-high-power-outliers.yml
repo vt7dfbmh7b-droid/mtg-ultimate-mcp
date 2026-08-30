@@ -1,0 +1,32 @@
+name: Scions & Spellcraft A9 High-Power Outliers
+
+on:
+  push:
+    branches:
+      - test/scions-spellcraft-a9-high-power-outliers-20260831
+  workflow_dispatch:
+
+jobs:
+  scions-a9-outliers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Run A9 outlier screen
+        run: npx tsx scripts/e2e-scions-spellcraft-a9-high-power-outliers.ts
+      - name: Upload A9 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scions-spellcraft-a9-high-power-outliers-${{ github.sha }}
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            scions-spellcraft-a9-high-power-outliers.json
+            scions-spellcraft-a9-high-power-outliers.md
