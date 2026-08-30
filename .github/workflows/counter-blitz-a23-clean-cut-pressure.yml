@@ -1,0 +1,36 @@
+name: Counter Blitz A23 Clean Cut Pressure
+
+on:
+  push:
+    branches:
+      - test/counter-blitz-a23-clean-cut-pressure-20260830
+  workflow_dispatch:
+
+jobs:
+  pressure-a23-clean-cuts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Run A23 clean-cut pressure
+        run: npx tsx scripts/e2e-counter-blitz-a23-clean-cut-pressure.ts
+      - name: Upload A23 clean-cut evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: counter-blitz-a23-clean-cut-pressure-${{ github.sha }}
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            counter-blitz-a23-clean-cut-pressure.json
+            counter-blitz-a23-clean-cut-pressure.md
