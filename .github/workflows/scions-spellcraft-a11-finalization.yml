@@ -1,0 +1,33 @@
+name: Scions & Spellcraft A11 Finalization
+
+on:
+  push:
+    branches:
+      - test/scions-spellcraft-a11-finalization-20260831
+  workflow_dispatch:
+
+jobs:
+  scions-a11-finalization:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Run A11 finalization gate
+        run: npx tsx scripts/e2e-scions-spellcraft-a11-finalization.ts
+      - name: Upload A11 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scions-spellcraft-a11-finalization-${{ github.sha }}
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            scions-spellcraft-a11-finalization.json
+            scions-spellcraft-a11-finalization.md
+            test-results/exploratory/scions-spellcraft-a11-control-deck.txt
