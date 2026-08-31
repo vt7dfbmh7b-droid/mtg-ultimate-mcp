@@ -1,4 +1,8 @@
 import type { ScryfallCard } from '../types/scryfall.js';
+import {
+  discoverCedhSeedWinPackageV14,
+  type CedhSeedPackageOptionsV14,
+} from './cedh-seed-package-v14.js';
 import { buildCommanderDeckDraftV07, type DeckBuildOptionsV07 } from './deck-builder-v07.js';
 import { parseDecklist, type DeckEntry } from './deck.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from './scryfall.js';
@@ -15,6 +19,10 @@ interface ResolveResultV15 {
 export interface WholeDeckBudgetDependenciesV15 {
   buildDraft?: (commanders: ScryfallCard[], options: DeckBuildOptionsV07) => Promise<Record<string, unknown>>;
   resolveDeckCards?: (identifiers: CardIdentifierInput[]) => Promise<ResolveResultV15>;
+  discoverWinSeed?: (
+    commanders: ScryfallCard[],
+    options: CedhSeedPackageOptionsV14,
+  ) => Promise<Record<string, unknown>>;
 }
 
 interface BudgetAuditV15 {
@@ -44,6 +52,16 @@ function selectedPrice(card: ScryfallCard): number | null {
     .map((value) => value ? Number.parseFloat(value) : Number.NaN)
     .filter(Number.isFinite);
   return values.length > 0 ? Math.min(...values) : null;
+}
+
+function normalize(value: string): string {
+  return value.trim().toLocaleLowerCase();
+}
+
+function strings(value: unknown): string[] {
+  return Array.isArray(value)
+    ? value.filter((item): item is string => typeof item === 'string' && item.trim().length > 0)
+    : [];
 }
 
 function entryKey(entry: DeckEntry): string {
@@ -175,6 +193,19 @@ function strongerCompliantCandidate(left: CompliantCandidateV15, right: Complian
   return right.cap - left.cap;
 }
 
+function uniqueNames(names: readonly string[]): string[] {
+  const seen = new Set<string>();
+  const output: string[] = [];
+  for (const name of names) {
+    const trimmed = name.trim();
+    const key = normalize(trimmed);
+    if (!trimmed || seen.has(key)) continue;
+    seen.add(key);
+    output.push(trimmed);
+  }
+  return output;
+}
+
 export async function buildCommanderDeckUnderWholeBudgetV15(
   commanders: ScryfallCard[],
   options: WholeDeckBudgetBuildOptionsV15,
@@ -193,6 +224,68 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
   const optionalSlots = Math.max(1, 100 - commanders.length);
   const buildDraft = dependencies.buildDraft ?? buildCommanderDeckDraftV07;
   const resolveDeckCards = dependencies.resolveDeckCards ?? (async (ids: CardIdentifierInput[]) => getCardsByIdentifiers(ids));
+  const discoverWinSeed = dependencies.discoverWinSeed ?? discoverCedhSeedWinPackageV14;
+  const targetBracket = Math.max(1, Math.min(5, Math.trunc(options.targetBracket ?? 4)));
+
+  let autoWinSeed: Record<string, unknown> = {
+    attempted: false,
+    status: 'not-requested-for-target-bracket',
+    seedNames: [],
+  };
+  let autoWinSeedNames: string[] = [];
+
+  if (targetBracket >= 5) {
+    const seedSearchCapUsd = Math.min(candidateBudgetUsd, options.maxUsdPerCard ?? candidateBudgetUsd);
+    try {
+      const discovered = await discoverWinSeed(commanders, {
+        ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
+        ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
+        ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
+        ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
+        maxUsdPerCard: seedSearchCapUsd,
+        maxPackageCards: 3,
+        maxCandidatesToVerify: 10,
+      });
+      const discoveredSeedNames = uniqueNames(strings(discovered.seedNames));
+      const excluded = new Set((options.excludedCards ?? []).map(normalize));
+      const blockedCards = discoveredSeedNames.filter((name) => excluded.has(normalize(name)));
+      if (discovered.status === 'eligible-winning-seed-package-found' && discoveredSeedNames.length > 0 && blockedCards.length === 0) {
+        autoWinSeedNames = discoveredSeedNames;
+        autoWinSeed = {
+          ...discovered,
+          attempted: true,
+          seedNames: autoWinSeedNames,
+          seedSearchCapUsd: money(seedSearchCapUsd),
+        };
+      } else if (discovered.status === 'eligible-winning-seed-package-found' && blockedCards.length > 0) {
+        autoWinSeed = {
+          ...discovered,
+          attempted: true,
+          status: 'winning-seed-package-blocked-by-exclusions',
+          seedNames: [],
+          blockedCards,
+          seedSearchCapUsd: money(seedSearchCapUsd),
+        };
+      } else {
+        autoWinSeed = {
+          ...discovered,
+          attempted: true,
+          seedNames: [],
+          seedSearchCapUsd: money(seedSearchCapUsd),
+        };
+      }
+    } catch (error) {
+      autoWinSeed = {
+        attempted: true,
+        status: 'seed-discovery-unavailable',
+        seedNames: [],
+        seedSearchCapUsd: money(seedSearchCapUsd),
+        error: error instanceof Error ? error.message : String(error),
+      };
+    }
+  }
+
+  const effectiveMustInclude = uniqueNames([...(options.mustInclude ?? []), ...autoWinSeedNames]);
   const caps = capSchedule(candidateBudgetUsd, optionalSlots, options.maxUsdPerCard);
   const attempts: Array<Record<string, unknown>> = [];
   const compliantCandidates: CompliantCandidateV15[] = [];
@@ -201,6 +294,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
   for (const cap of caps) {
     const draftOptions: DeckBuildOptionsV07 = {
       ...options,
+      ...(effectiveMustInclude.length > 0 ? { mustInclude: effectiveMustInclude } : {}),
       candidateMaxUsdPerCard: cap,
     };
     const draft = await buildDraft(commanders, draftOptions);
@@ -262,10 +356,11 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
       selectedRemainingStructuralDeficitTotal: Number.isFinite(selected.remainingStructuralDeficitTotal)
         ? selected.remainingStructuralDeficitTotal
         : null,
+      autoWinSeed,
       draft: selected.draft,
       decklist: selected.decklist,
       constraint: `US$${money(options.maxDeckUsd)} maximum total deck budget`,
-      caveat: 'Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. The search compares every generated budget-compliant draft rather than stopping at the first cheap fit. Candidate quality is ordered by remaining structural deficits and then by the widest legal candidate search cap; raw spend is never treated as power by itself. Commander cost is fixed budget pressure, and the search remains heuristic rather than proof of the globally strongest possible list.',
+      caveat: 'Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. The search compares every generated budget-compliant draft rather than stopping at the first cheap fit. Candidate quality is ordered by remaining structural deficits and then by the widest legal candidate search cap; raw spend is never treated as power by itself. Bracket-5 whole-budget construction also attempts one generic verified Commander Spellbook win seed before drafting, while explicit exclusions and hard budget truth remain authoritative. The search remains heuristic rather than proof of the globally strongest possible list.',
     };
   }
 
@@ -277,6 +372,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
     userMaxUsdPerCard: options.maxUsdPerCard ?? null,
     budgetAudit: null,
     attempts,
+    autoWinSeed,
     cheapestAuditedCompleteAttemptUsd: cheapestAuditedTotal,
     constraint: `US$${money(options.maxDeckUsd)} maximum total deck budget`,
     guidance: cheapestAuditedTotal === null
