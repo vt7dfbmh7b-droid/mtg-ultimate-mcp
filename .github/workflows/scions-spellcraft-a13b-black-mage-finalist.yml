@@ -1,0 +1,28 @@
+name: Scions & Spellcraft A13b Black Mage Finalist
+
+on:
+  push:
+    branches:
+      - test/scions-spellcraft-a13b-black-mage-finalist-20260831
+
+jobs:
+  scions-a13b-black-mage-finalist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Run A13b Black Mage finalist
+        run: npx tsx scripts/e2e-scions-spellcraft-a13b-black-mage-finalist.ts
+      - name: Upload A13b evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: scions-spellcraft-a13b-black-mage-finalist-${{ github.sha }}
+          path: |
+            scions-spellcraft-a13b-black-mage-finalist.json
+            scions-spellcraft-a13b-black-mage-finalist.md
+          retention-days: 90
