@@ -6,6 +6,10 @@ on:
     paths:
       - "scripts/e2e-liliana-budget-500-v15.ts"
       - "src/services/bracket-ceiling-v15.ts"
+      - "src/services/cedh-efficiency-v14.ts"
+      - "src/services/cedh-manabase-v14.ts"
+      - "src/services/cedh-seed-package-v14.ts"
+      - "src/services/cedh-win-package-v14.ts"
       - "src/services/cedh-workflow-v14.ts"
       - "src/services/commander-rules.ts"
       - "src/services/commander-strategy-affinity-v15.ts"
@@ -17,6 +21,7 @@ on:
       - "src/services/neutral-deck-builder-v15.ts"
       - "src/services/neutral-unrestricted-pool-v15.ts"
       - "src/services/neutral-win-routes-v15.ts"
+      - "src/services/printing-policy-v08.ts"
       - "src/services/scryfall.ts"
       - "src/services/spellbook.ts"
       - ".github/workflows/liliana-budget-500-control.yml"
