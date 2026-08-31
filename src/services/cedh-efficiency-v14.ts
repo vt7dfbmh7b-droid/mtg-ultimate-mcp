@@ -9,6 +9,7 @@ import {
   type ResolvedPrintingPolicyV08,
 } from './printing-policy-v08.js';
 import { getCardsByIdentifiers, inferCardRoles, searchCards, type CardIdentifierInput } from './scryfall.js';
+import { isWinResultV14 } from './cedh-win-package-v14.js';
 import { findDeckCombos } from './spellbook.js';
 
 export interface CedhEfficiencyOptionsV14 {
@@ -272,6 +273,37 @@ function comboCount(value: Record<string, unknown>): number {
   return Number(record(value.counts).included ?? 0);
 }
 
+function winningComboCount(value: Record<string, unknown>): number {
+  const included = Array.isArray(value.included) ? value.included.map(record) : [];
+  return included.filter((combo) => {
+    const results = Array.isArray(combo.results) ? combo.results.map(String) : [];
+    return isWinResultV14(results);
+  }).length;
+}
+
+export function assessCedhComboPreservationV14(
+  before: Record<string, unknown>,
+  after: Record<string, unknown>,
+): {
+  acceptable: boolean;
+  beforeComboCount: number;
+  afterComboCount: number;
+  beforeWinningComboCount: number;
+  afterWinningComboCount: number;
+} {
+  const beforeComboCount = comboCount(before);
+  const afterComboCount = comboCount(after);
+  const beforeWinningComboCount = winningComboCount(before);
+  const afterWinningComboCount = winningComboCount(after);
+  return {
+    acceptable: afterWinningComboCount >= beforeWinningComboCount,
+    beforeComboCount,
+    afterComboCount,
+    beforeWinningComboCount,
+    afterWinningComboCount,
+  };
+}
+
 export async function refineCedhEfficiencyV14(
   decklist: string,
   options: CedhEfficiencyOptionsV14 = {},
@@ -319,14 +351,12 @@ export async function refineCedhEfficiencyV14(
     findDeckCombos(renderDeck(resolved.parsed), 100),
     findDeckCombos(renderDeck(nextParsed), 100),
   ]);
-  const beforeComboCount = comboCount(beforeCombos);
-  const afterComboCount = comboCount(afterCombos);
-  if (afterComboCount < beforeComboCount) {
+  const comboPreservation = assessCedhComboPreservationV14(beforeCombos, afterCombos);
+  if (!comboPreservation.acceptable) {
     return {
-      status: 'rejected-combo-regression',
+      status: 'rejected-winning-combo-regression',
       finalDecklist: renderDeck(resolved.parsed),
-      beforeComboCount,
-      afterComboCount,
+      ...comboPreservation,
     };
   }
 
@@ -342,6 +372,7 @@ export async function refineCedhEfficiencyV14(
       finalDecklist: renderDeck(resolved.parsed),
       beforeMetrics,
       afterMetrics,
+      ...comboPreservation,
     };
   }
 
@@ -361,12 +392,11 @@ export async function refineCedhEfficiencyV14(
     })),
     beforeMetrics,
     afterMetrics,
-    beforeComboCount,
-    afterComboCount,
+    ...comboPreservation,
     finalDecklist: renderDeck(nextParsed),
     finalCommanderRules: nextRules,
     printingPolicy: describePrintingPolicyV08(policy),
     candidateCount: candidates.length,
-    guidance: 'Strict cEDH efficiency mode only admits candidates with an explicit high-value competitive role. Cheap mana value alone is not enough, and later tuning may not remove an already verified complete combo.',
+    guidance: 'Strict cEDH efficiency mode only admits candidates with an explicit high-value competitive role. Cheap mana value alone is not enough. Protected cards remain untouchable, verified winning-combo count may not regress, while incidental non-winning/value combos may be removed when the replacement package is materially more efficient.',
   };
 }
