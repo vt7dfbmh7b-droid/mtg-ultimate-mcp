@@ -48,9 +48,7 @@ Current A11/A13 party types include a Cleric (The Destined White Mage), a Warrio
 
 ## Why Thancred is the cut
 
-Thancred is a useful five-mana flash protection piece for another legendary permanent, but A11 already has Swiftfoot Boots, Clever Concealment, Akroma's Will, Force of Negation, Arcane Denial, Dovin's Veto and Ranger-Captain-based combo protection. Its protection is also limited to another legendary permanent, so it does not directly protect the nonlegendary Walking Ballista or The Destined White Mage package in all relevant situations.
-
-Other tested creature cuts gave up more important Scions-engine functions such as cost reduction, recursion, card draw, token production or spellcasting payoffs.
+Thancred is a useful five-mana flash protection piece that can give another legendary permanent — including Y'shtola or The Destined White Mage — indestructible for as long as Thancred remains under your control. However, A11 already has Swiftfoot Boots, Clever Concealment, Akroma's Will, Force of Negation, Arcane Denial, Dovin's Veto and Ranger-Captain-based combo protection, and Thancred cannot protect the nonlegendary Walking Ballista. Other tested creature cuts gave up more important Scions-engine functions such as cost reduction, recursion, card draw, token production or spellcasting payoffs.
 
 ## Verdict
 
