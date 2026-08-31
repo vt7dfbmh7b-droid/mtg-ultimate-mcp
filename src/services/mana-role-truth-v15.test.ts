@@ -63,3 +63,23 @@ test('creature-tap setup mana is conditional while rituals and direct rocks rema
   assert.equal(manaRoleTruthV15(signet).reliableImmediateFastMana, false);
   assert.equal(manaRoleTruthV15(signet).reliableLowCostManaAcceleration, true);
 });
+
+test('Treasure creation or triggered mana cannot impersonate immediate fast mana through reminder text', () => {
+  const ghast = card(
+    'Shambling Ghast',
+    1,
+    'Creature — Zombie',
+    'When Shambling Ghast dies, choose one —\n• Brave the Stench — Target creature an opponent controls gets -1/-1 until end of turn.\n• Search the Body — Create a Treasure token. (It’s an artifact with “{T}, Sacrifice this artifact: Add one mana of any color.”)',
+    '{B}',
+  );
+  const triggered = card('Triggered Mana', 1, 'Creature — God', 'Whenever you cast a spell, add {R}.', '{R}');
+
+  const ghastTruth = manaRoleTruthV15(ghast);
+  assert.equal(ghastTruth.createsManaToken, true);
+  assert.equal(ghastTruth.reliableImmediateFastMana, false);
+  assert.equal(effectiveCardRolesV15(ghast).includes('fast mana'), false);
+
+  const triggeredTruth = manaRoleTruthV15(triggered);
+  assert.equal(triggeredTruth.triggeredMana, true);
+  assert.equal(triggeredTruth.reliableImmediateFastMana, false);
+});
