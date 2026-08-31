@@ -1,0 +1,70 @@
+name: Liliana US$500 Whole-Deck Challenge
+
+on:
+  push:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - "scripts/e2e-liliana-budget-500-v15.ts"
+      - "src/services/bracket-ceiling-v15.ts"
+      - "src/services/cedh-workflow-v14.ts"
+      - "src/services/commander-rules.ts"
+      - "src/services/commander-strategy-affinity-v15.ts"
+      - "src/services/deck-builder-v07.ts"
+      - "src/services/deck-whole-budget-v15.ts"
+      - "src/services/deck.ts"
+      - "src/services/neutral-commander-selection-v15.ts"
+      - "src/services/neutral-deck-builder-v15.ts"
+      - "src/services/neutral-unrestricted-pool-v15.ts"
+      - "src/services/neutral-win-routes-v15.ts"
+      - "src/services/scryfall.ts"
+      - "src/services/spellbook.ts"
+      - ".github/workflows/liliana-budget-500-control.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: liliana-budget-500-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  liliana-budget-500:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build checked-in source
+        run: npm run build
+
+      - name: Build and audit Liliana under US$500
+        run: npx tsx scripts/e2e-liliana-budget-500-v15.ts
+
+      - name: Upload Liliana challenge evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: liliana-budget-500-${{ github.sha }}
+          path: |
+            liliana-budget-500-result.json
+            liliana-budget-500-deck.txt
+          if-no-files-found: ignore
+          retention-days: 14
