@@ -55,12 +55,17 @@ interface RefinementQualityV15 {
   acceptable: boolean;
   comboWasPreserved: boolean;
   winningComboCountPreserved: boolean;
+  winningComboCoreCountPreserved: boolean;
   averageNonlandManaValueNonWorsened: boolean;
   materialQualityImprovement: boolean;
+  creatureTypeCoherenceImproved: boolean;
+  recursionSaturationImproved: boolean;
   initialStatus: string;
   finalStatus: string;
   initialWinningCombos: number;
   finalWinningCombos: number;
+  initialWinningComboCores: number;
+  finalWinningComboCores: number;
   initialAverageNonlandManaValue: number | null;
   finalAverageNonlandManaValue: number | null;
   initialFreeInteractionCount: number;
@@ -249,12 +254,16 @@ function uniqueNames(names: readonly string[]): string[] {
 function refinementQualityV15(refinement: Record<string, unknown>): RefinementQualityV15 {
   const initial = record(refinement.initialAssessment);
   const final = record(refinement.finalAssessment);
+  const stages = record(refinement.stages);
+  const efficiency = record(stages.strictEfficiency);
   const initialMetrics = record(initial.metrics);
   const finalMetrics = record(final.metrics);
   const initialStatus = String(initial.status ?? 'unknown');
   const finalStatus = String(final.status ?? 'unknown');
   const initialWinningCombos = finiteNumber(initial.winningCombos);
   const finalWinningCombos = finiteNumber(final.winningCombos);
+  const initialWinningComboCores = finiteNumber(initial.winningComboCoreCount, initialWinningCombos > 0 ? 1 : 0);
+  const finalWinningComboCores = finiteNumber(final.winningComboCoreCount, finalWinningCombos > 0 ? 1 : 0);
   const initialAverageNonlandManaValue = nullableFiniteNumber(initialMetrics.averageNonlandManaValue);
   const finalAverageNonlandManaValue = nullableFiniteNumber(finalMetrics.averageNonlandManaValue);
   const initialFreeInteractionCount = finiteNumber(initialMetrics.freeInteractionCount);
@@ -265,6 +274,9 @@ function refinementQualityV15(refinement: Record<string, unknown>): RefinementQu
   const finalTutorCount = finiteNumber(finalMetrics.tutorCount);
   const comboWasPreserved = refinement.comboWasPreserved === true;
   const winningComboCountPreserved = finalWinningCombos >= initialWinningCombos;
+  const winningComboCoreCountPreserved = finalWinningComboCores >= initialWinningComboCores;
+  const creatureTypeCoherenceImproved = efficiency.creatureTypeCoherenceImproved === true;
+  const recursionSaturationImproved = efficiency.recursionSaturationImproved === true;
   const averageNonlandManaValueNonWorsened = initialAverageNonlandManaValue === null
     || (finalAverageNonlandManaValue !== null && finalAverageNonlandManaValue <= initialAverageNonlandManaValue + 1e-9);
   const materiallyLowerCurve = initialAverageNonlandManaValue !== null
@@ -276,21 +288,28 @@ function refinementQualityV15(refinement: Record<string, unknown>): RefinementQu
     || statusImproved
     || finalFreeInteractionCount > initialFreeInteractionCount
     || finalFastManaCount > initialFastManaCount
-    || finalTutorCount > initialTutorCount;
+    || finalTutorCount > initialTutorCount
+    || creatureTypeCoherenceImproved
+    || recursionSaturationImproved;
 
   return {
     acceptable: comboWasPreserved
-      && winningComboCountPreserved
+      && winningComboCoreCountPreserved
       && averageNonlandManaValueNonWorsened
       && materialQualityImprovement,
     comboWasPreserved,
     winningComboCountPreserved,
+    winningComboCoreCountPreserved,
     averageNonlandManaValueNonWorsened,
     materialQualityImprovement,
+    creatureTypeCoherenceImproved,
+    recursionSaturationImproved,
     initialStatus,
     finalStatus,
     initialWinningCombos,
     finalWinningCombos,
+    initialWinningComboCores,
+    finalWinningComboCores,
     initialAverageNonlandManaValue,
     finalAverageNonlandManaValue,
     initialFreeInteractionCount,
@@ -533,7 +552,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
       baseDecklist: selected.decklist,
       decklist: finalDecklist,
       constraint: `US$${money(options.maxDeckUsd)} maximum total deck budget`,
-      caveat: 'Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. The search compares every generated budget-compliant draft rather than stopping at the first cheap fit. Candidate quality is ordered by remaining structural deficits and then by the widest legal candidate search cap; raw spend is never treated as power by itself. Bracket-5 whole-budget construction attempts a broader generic verified Commander Spellbook win-seed search, then routes the selected legal draft through strict efficiency and mana-base refinement. The post-refinement search inherits the selected compliant draft’s candidate price pressure (or a tighter explicit user per-card limit) so unrestricted premium staples cannot consume the whole-deck budget by accident. A refined list is accepted only when its verified win count is preserved, its average nonland mana value does not worsen, at least one material high-power construction signal improves, and a second independent exact-printing whole-deck audit still passes the original hard budget. Explicit exclusions, required cards and hard budget truth remain authoritative. The search remains heuristic rather than proof of the globally strongest possible list.',
+      caveat: 'Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. The search compares every generated budget-compliant draft rather than stopping at the first cheap fit. Candidate quality is ordered by remaining structural deficits and then by the widest legal candidate search cap; raw spend is never treated as power by itself. Bracket-5 whole-budget construction attempts a broader generic verified Commander Spellbook win-seed search, then routes the selected legal draft through strict efficiency and mana-base refinement. The post-refinement search inherits the selected compliant draft’s candidate price pressure (or a tighter explicit user per-card limit) so unrestricted premium staples cannot consume the whole-deck budget by accident. A refined list is accepted only when its independent winning-combo cores are preserved, its average nonland mana value does not worsen, at least one material high-power or supported-coherence signal improves, and a second independent exact-printing whole-deck audit still passes the original hard budget. Duplicate winning variants sharing the same lynchpin are not treated as independent redundancy. Explicit exclusions, required cards and hard budget truth remain authoritative. The search remains heuristic rather than proof of the globally strongest possible list.',
     };
   }
 
