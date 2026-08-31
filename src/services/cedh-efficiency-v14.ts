@@ -8,7 +8,14 @@ import {
   selectEligiblePrintingV08,
   type ResolvedPrintingPolicyV08,
 } from './printing-policy-v08.js';
-import { getCardsByIdentifiers, inferCardRoles, searchCards, type CardIdentifierInput } from './scryfall.js';
+import { getCardsByIdentifiers, searchCards, type CardIdentifierInput } from './scryfall.js';
+import { effectiveCardRolesV15, manaRoleTruthV15 } from './card-role-truth-v15.js';
+import {
+  cardCreatureTypeCoherenceScoreV15,
+  deriveCreatureTypePreferencesV15,
+  isPreferredCreatureTypeCardV15,
+  type CreatureTypePreferenceV15,
+} from './creature-type-coherence-v15.js';
 import { isWinResultV14 } from './cedh-win-package-v14.js';
 import { findDeckCombos } from './spellbook.js';
 
@@ -94,9 +101,14 @@ function hasGoodEdhrecRank(card: ScryfallCard, threshold: number): boolean {
   return card.edhrec_rank !== undefined && card.edhrec_rank <= threshold;
 }
 
-function strictCedhQuality(card: ScryfallCard): { eligible: boolean; score: number; reasons: string[] } {
+function strictCedhQuality(
+  card: ScryfallCard,
+  creatureTypePreference: CreatureTypePreferenceV15 | null,
+): { eligible: boolean; score: number; reasons: string[] } {
   if (isLand(card)) return { eligible: false, score: -999, reasons: [] };
-  const roles = new Set(inferCardRoles(card));
+  const roles = new Set(effectiveCardRolesV15(card));
+  const manaTruth = manaRoleTruthV15(card);
+  const typal = cardCreatureTypeCoherenceScoreV15(card, creatureTypePreference);
   const reasons: string[] = [];
   let score = 0;
 
@@ -104,9 +116,9 @@ function strictCedhQuality(card: ScryfallCard): { eligible: boolean; score: numb
     score += 95;
     reasons.push('free interaction');
   }
-  if (roles.has('fast mana')) {
+  if (roles.has('fast mana') && manaTruth.reliableImmediateFastMana) {
     score += 90;
-    reasons.push('fast mana');
+    reasons.push('reliable immediate fast mana');
   }
   if (roles.has('countermagic') && card.cmc <= 2) {
     score += 72;
@@ -132,13 +144,21 @@ function strictCedhQuality(card: ScryfallCard): { eligible: boolean; score: numb
     score += card.cmc <= 2 ? 60 : 42;
     reasons.push('efficient proven card advantage');
   }
-  if ((roles.has('mana acceleration') || roles.has('cost reduction')) && card.cmc <= 2 && hasGoodEdhrecRank(card, 3_000)) {
+  if (
+    ((roles.has('mana acceleration') && manaTruth.reliableLowCostManaAcceleration) || roles.has('cost reduction'))
+    && card.cmc <= 2
+    && hasGoodEdhrecRank(card, 3_000)
+  ) {
     score += 55;
-    reasons.push('efficient proven mana acceleration');
+    reasons.push('reliable efficient mana acceleration');
   }
   if (roles.has('card selection') && card.cmc <= 1 && hasGoodEdhrecRank(card, 2_000)) {
     score += 38;
     reasons.push('one-mana proven card selection');
+  }
+  if (typal.score > 0) {
+    score += typal.score;
+    reasons.push(...typal.reasons);
   }
 
   if (reasons.length === 0) return { eligible: false, score: -999, reasons: [] };
@@ -147,32 +167,62 @@ function strictCedhQuality(card: ScryfallCard): { eligible: boolean; score: numb
   return { eligible: true, score, reasons };
 }
 
-function cutPressure(card: ScryfallCard, protectedNames: Set<string>): number {
+function cutPressure(
+  card: ScryfallCard,
+  protectedNames: Set<string>,
+  roleCounts: Record<string, number>,
+  creatureTypePreference: CreatureTypePreferenceV15 | null,
+): number {
   if (isLand(card) || protectedNames.has(normalize(card.name))) return -999;
-  const roles = new Set(inferCardRoles(card));
+  const roles = new Set(effectiveCardRolesV15(card));
+  const manaTruth = manaRoleTruthV15(card);
+  const typal = cardCreatureTypeCoherenceScoreV15(card, creatureTypePreference);
   let pressure = Math.max(0, card.cmc - 2) * 12;
+
   if (card.cmc >= 5) pressure += 18;
   if (roles.has('board wipe')) pressure += 10;
   if (isLandSpecificTutor(card) && card.cmc >= 3) pressure += 25;
   if ((roles.has('land ramp') || roles.has('mana acceleration')) && card.cmc >= 3) pressure += 18;
-  if (roles.has('fast mana')) pressure -= 90;
+  if (roles.has('fast mana') && manaTruth.reliableImmediateFastMana) pressure -= 90;
   if (roles.has('free interaction')) pressure -= 85;
   if (roles.has('countermagic') && card.cmc <= 2) pressure -= 45;
   if (roles.has('spot interaction') && card.cmc <= 2) pressure -= 40;
   if (roles.has('tutor') && !isLandSpecificTutor(card) && card.cmc <= 2) pressure -= 55;
   if (roles.has('protection')) pressure -= card.cmc <= 2 ? 35 : 10;
   if (roles.has('repeatable draw') && card.cmc <= 3) pressure -= 32;
+  if (roles.has('sacrifice outlet')) pressure -= 34;
+  if (roles.has('life drain')) pressure -= 22;
+
+  const recursionCount = Number(roleCounts['graveyard recursion'] ?? 0);
+  if (roles.has('graveyard recursion') && recursionCount > 12) {
+    pressure += Math.min(40, (recursionCount - 12) * 4);
+    if (card.cmc <= 2) pressure -= 10;
+  }
+
+  if (isPreferredCreatureTypeCardV15(card, creatureTypePreference)) pressure -= 18;
+  if (typal.score > 0) pressure -= Math.min(36, typal.score / 4);
   return pressure;
 }
 
-function rankedCuts(parsed: ParsedDeck, cards: ScryfallCard[], protectedNames: Set<string>, count: number): string[] {
+function rankedCuts(
+  parsed: ParsedDeck,
+  cards: ScryfallCard[],
+  protectedNames: Set<string>,
+  count: number,
+  roleCounts: Record<string, number>,
+  creatureTypePreference: CreatureTypePreferenceV15 | null,
+): string[] {
   return [...new Set(parsed.main
     .map((entry) => ({ entry, card: resolveEntryCard(entry, cards) }))
     .filter((item): item is { entry: DeckEntry; card: ScryfallCard } => Boolean(item.card) && item.entry.quantity === 1)
-    .map(({ card }) => ({ name: card.name, pressure: cutPressure(card, protectedNames) }))
+    .map(({ card }) => ({ name: card.name, pressure: cutPressure(card, protectedNames, roleCounts, creatureTypePreference) }))
     .filter((entry) => entry.pressure > -500)
     .sort((a, b) => b.pressure - a.pressure || a.name.localeCompare(b.name))
     .map((entry) => entry.name))].slice(0, count);
+}
+
+function escapedTypeQuery(creatureType: string): string {
+  return creatureType.replace(/"/g, '\\"');
 }
 
 async function strictCandidates(
@@ -180,6 +230,7 @@ async function strictCandidates(
   identity: string[],
   policy: ResolvedPrintingPolicyV08,
   options: CedhEfficiencyOptionsV14,
+  creatureTypePreference: CreatureTypePreferenceV15 | null,
 ): Promise<ExactCandidateV14[]> {
   const existing = new Set([...parsed.commanders, ...parsed.main].map((entry) => normalize(entry.name)));
   const excluded = new Set((options.excludedCards ?? []).map(normalize));
@@ -190,6 +241,7 @@ async function strictCandidates(
     '(o:"can\'t cast spells" OR o:"cannot cast spells") mv<=2 -t:land',
     'o:"draw" mv<=3 -t:land',
     'o:"add" mv<=2 -t:land',
+    ...(creatureTypePreference ? [`t:"${escapedTypeQuery(creatureTypePreference.creatureType)}" mv<=3 -t:land`] : []),
   ];
   const map = new Map<string, { card: ScryfallCard; quality: ReturnType<typeof strictCedhQuality> }>();
 
@@ -199,7 +251,7 @@ async function strictCandidates(
       for (const card of await searchCards(query, 50)) {
         const key = normalize(card.name);
         if (existing.has(key) || excluded.has(key) || card.legalities.commander !== 'legal') continue;
-        const quality = strictCedhQuality(card);
+        const quality = strictCedhQuality(card, creatureTypePreference);
         if (!quality.eligible) continue;
         const previous = map.get(key);
         if (!previous || quality.score > previous.quality.score) map.set(key, { card, quality });
@@ -212,7 +264,7 @@ async function strictCandidates(
   const ranked = [...map.values()].sort((a, b) => b.quality.score - a.quality.score);
   const output: ExactCandidateV14[] = [];
   for (const item of ranked) {
-    if (output.length >= 12) break;
+    if (output.length >= 16) break;
     const printing = await selectEligiblePrintingV08(item.card, policy, options.maxUsdPerCard);
     if (!printing) continue;
     output.push({
@@ -273,12 +325,54 @@ function comboCount(value: Record<string, unknown>): number {
   return Number(record(value.counts).included ?? 0);
 }
 
-function winningComboCount(value: Record<string, unknown>): number {
+function winningCombos(value: Record<string, unknown>): Record<string, unknown>[] {
   const included = Array.isArray(value.included) ? value.included.map(record) : [];
   return included.filter((combo) => {
     const results = Array.isArray(combo.results) ? combo.results.map(String) : [];
     return isWinResultV14(results);
-  }).length;
+  });
+}
+
+function winningComboCount(value: Record<string, unknown>): number {
+  return winningCombos(value).length;
+}
+
+function winningComboCardSet(combo: Record<string, unknown>, index: number): Set<string> {
+  const cards = Array.isArray(combo.cards) ? combo.cards.map(record) : [];
+  const names = cards
+    .filter((card) => card.mustBeCommander !== true)
+    .map((card) => typeof card.name === 'string' ? normalize(card.name) : '')
+    .filter(Boolean);
+  return new Set(names.length > 0 ? names : [`__unknown-winning-combo-${index}`]);
+}
+
+export function winningComboCoreCountV14(value: Record<string, unknown>): number {
+  const combos = winningCombos(value);
+  const sets = combos.map((combo, index) => winningComboCardSet(combo, index));
+  if (sets.length === 0) return 0;
+  const visited = new Set<number>();
+  let components = 0;
+
+  for (let start = 0; start < sets.length; start += 1) {
+    if (visited.has(start)) continue;
+    components += 1;
+    const queue = [start];
+    visited.add(start);
+    while (queue.length > 0) {
+      const current = queue.shift();
+      if (current === undefined) continue;
+      const currentSet = sets[current] as Set<string>;
+      for (let other = 0; other < sets.length; other += 1) {
+        if (visited.has(other)) continue;
+        const otherSet = sets[other] as Set<string>;
+        if ([...currentSet].some((name) => otherSet.has(name))) {
+          visited.add(other);
+          queue.push(other);
+        }
+      }
+    }
+  }
+  return components;
 }
 
 export function assessCedhComboPreservationV14(
@@ -290,17 +384,24 @@ export function assessCedhComboPreservationV14(
   afterComboCount: number;
   beforeWinningComboCount: number;
   afterWinningComboCount: number;
+  beforeWinningComboCoreCount: number;
+  afterWinningComboCoreCount: number;
 } {
   const beforeComboCount = comboCount(before);
   const afterComboCount = comboCount(after);
   const beforeWinningComboCount = winningComboCount(before);
   const afterWinningComboCount = winningComboCount(after);
+  const beforeWinningComboCoreCount = winningComboCoreCountV14(before);
+  const afterWinningComboCoreCount = winningComboCoreCountV14(after);
   return {
-    acceptable: afterWinningComboCount >= beforeWinningComboCount,
+    acceptable: (beforeWinningComboCount === 0 || afterWinningComboCount > 0)
+      && afterWinningComboCoreCount >= beforeWinningComboCoreCount,
     beforeComboCount,
     afterComboCount,
     beforeWinningComboCount,
     afterWinningComboCount,
+    beforeWinningComboCoreCount,
+    afterWinningComboCoreCount,
   };
 }
 
@@ -327,24 +428,38 @@ export async function refineCedhEfficiencyV14(
   const protectedNames = new Set((options.protectedCards ?? []).map(normalize));
   for (const commander of resolved.parsed.commanders) protectedNames.add(normalize(commander.name));
   const identity = commanderIdentity(resolved.parsed, resolved.cards);
-  const candidates = await strictCandidates(resolved.parsed, identity, policy, options);
+  const beforeMetrics = buildDeckMetrics(resolved.parsed, resolved.cards);
+  const creatureTypePreference = deriveCreatureTypePreferencesV15(resolved.parsed, resolved.cards)[0] ?? null;
+  const candidates = await strictCandidates(resolved.parsed, identity, policy, options, creatureTypePreference);
   if (candidates.length === 0) {
-    return { status: 'no-strict-cedh-candidates', finalDecklist: renderDeck(resolved.parsed), printingPolicy: describePrintingPolicyV08(policy) };
+    return {
+      status: 'no-strict-cedh-candidates',
+      finalDecklist: renderDeck(resolved.parsed),
+      creatureTypePreference,
+      printingPolicy: describePrintingPolicyV08(policy),
+    };
   }
 
   const additions = candidates.slice(0, maxSwaps);
-  const cuts = rankedCuts(resolved.parsed, resolved.cards, protectedNames, additions.length);
+  const cuts = rankedCuts(
+    resolved.parsed,
+    resolved.cards,
+    protectedNames,
+    additions.length,
+    beforeMetrics.roleCounts,
+    creatureTypePreference,
+  );
   if (cuts.length !== additions.length) {
-    return { status: 'no-safe-cut-package', finalDecklist: renderDeck(resolved.parsed), candidateCount: candidates.length };
+    return { status: 'no-safe-cut-package', finalDecklist: renderDeck(resolved.parsed), candidateCount: candidates.length, creatureTypePreference };
   }
   const nextParsed = applyPackage(resolved.parsed, cuts, additions);
   const nextCards = applyResolvedCards(resolved.cards, cuts, additions);
   if (!nextParsed || !nextCards || nextParsed.totalCards !== 100) {
-    return { status: 'package-application-failed', finalDecklist: renderDeck(resolved.parsed) };
+    return { status: 'package-application-failed', finalDecklist: renderDeck(resolved.parsed), creatureTypePreference };
   }
   const nextRules = validateCommanderDeck(nextParsed, nextCards);
   if (!nextRules.isLegal || nextCards.some((card) => !printingMatchesPolicyV08(card, policy))) {
-    return { status: 'candidate-package-failed-validation', finalDecklist: renderDeck(resolved.parsed), commanderRules: nextRules };
+    return { status: 'candidate-package-failed-validation', finalDecklist: renderDeck(resolved.parsed), commanderRules: nextRules, creatureTypePreference };
   }
 
   const [beforeCombos, afterCombos] = await Promise.all([
@@ -356,22 +471,36 @@ export async function refineCedhEfficiencyV14(
     return {
       status: 'rejected-winning-combo-regression',
       finalDecklist: renderDeck(resolved.parsed),
+      creatureTypePreference,
       ...comboPreservation,
     };
   }
 
-  const beforeMetrics = buildDeckMetrics(resolved.parsed, resolved.cards);
   const afterMetrics = buildDeckMetrics(nextParsed, nextCards);
+  const afterCreatureTypePreference = deriveCreatureTypePreferencesV15(nextParsed, nextCards)
+    .find((row) => creatureTypePreference && normalize(row.creatureType) === normalize(creatureTypePreference.creatureType)) ?? null;
+  const creatureTypeCoherenceImproved = creatureTypePreference !== null
+    && afterCreatureTypePreference !== null
+    && afterCreatureTypePreference.score >= creatureTypePreference.score + 4;
+  const recursionSaturationImproved = beforeMetrics.recursionCount > 12
+    && afterMetrics.recursionCount < beforeMetrics.recursionCount
+    && afterMetrics.recursionCount >= 8;
   const materiallyBetter = afterMetrics.fastManaCount > beforeMetrics.fastManaCount
     || afterMetrics.cheapInteractionCount > beforeMetrics.cheapInteractionCount
     || afterMetrics.averageNonlandManaValue + 0.08 < beforeMetrics.averageNonlandManaValue
-    || afterMetrics.earlyPlayCount >= beforeMetrics.earlyPlayCount + 2;
+    || afterMetrics.earlyPlayCount >= beforeMetrics.earlyPlayCount + 2
+    || creatureTypeCoherenceImproved
+    || recursionSaturationImproved;
   if (!materiallyBetter) {
     return {
       status: 'rejected-no-material-efficiency-gain',
       finalDecklist: renderDeck(resolved.parsed),
       beforeMetrics,
       afterMetrics,
+      creatureTypePreference,
+      afterCreatureTypePreference,
+      creatureTypeCoherenceImproved,
+      recursionSaturationImproved,
       ...comboPreservation,
     };
   }
@@ -392,11 +521,15 @@ export async function refineCedhEfficiencyV14(
     })),
     beforeMetrics,
     afterMetrics,
+    creatureTypePreference,
+    afterCreatureTypePreference,
+    creatureTypeCoherenceImproved,
+    recursionSaturationImproved,
     ...comboPreservation,
     finalDecklist: renderDeck(nextParsed),
     finalCommanderRules: nextRules,
     printingPolicy: describePrintingPolicyV08(policy),
     candidateCount: candidates.length,
-    guidance: 'Strict cEDH efficiency mode only admits candidates with an explicit high-value competitive role. Cheap mana value alone is not enough. Protected cards remain untouchable, verified winning-combo count may not regress, while incidental non-winning/value combos may be removed when the replacement package is materially more efficient.',
+    guidance: 'Strict efficiency mode now fails closed on conditional/delayed mana masquerading as fast mana, preserves independent winning-combo cores rather than incidental combo volume, discounts oversaturated recursion, and may prefer a commander-supported creature-type engine when the type also supplies real sacrifice, recursion, draw, drain, tutor, or resource roles. Protected cards, legality, printing policy and hard budget remain authoritative.',
   };
 }
