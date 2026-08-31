@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { countWinningCombosV14, isWinResultV14 } from './cedh-win-package-v14.js';
+import { countWinningCombosV14, isWinResultV14, winningPlanIsIndependentV14 } from './cedh-win-package-v14.js';
 
 test('winning-result gate accepts deterministic game-ending outputs', () => {
   assert.equal(isWinResultV14(['Infinite damage']), true);
@@ -51,4 +51,58 @@ test('winning combo counter only counts distinct included deterministic win vari
 test('missing or malformed combo payloads do not become winning evidence', () => {
   assert.equal(countWinningCombosV14({}), 0);
   assert.equal(countWinningCombosV14({ included: [{ id: 'unknown' }, null, 'bad'] }), 0);
+});
+
+test('near win sharing an existing lynchpin is not independent', () => {
+  const existing = {
+    included: [{
+      id: 'doomsday-a',
+      results: ['Each opponent loses the game'],
+      cards: [
+        { name: 'Doomsday Excruciator', mustBeCommander: false },
+        { name: 'Shared Trauma', mustBeCommander: false },
+      ],
+    }],
+  };
+
+  assert.equal(
+    winningPlanIsIndependentV14(existing, ['Doomsday Excruciator', 'One Ring to Rule Them All']),
+    false,
+  );
+});
+
+test('near win with a separate aristocrats core is independent of an existing Doomsday core', () => {
+  const existing = {
+    included: [{
+      id: 'doomsday-a',
+      results: ['Each opponent loses the game'],
+      cards: [
+        { name: 'Doomsday Excruciator', mustBeCommander: false },
+        { name: 'Shared Trauma', mustBeCommander: false },
+      ],
+    }],
+  };
+
+  assert.equal(
+    winningPlanIsIndependentV14(existing, ['Gravecrawler', 'Pitiless Plunderer', 'Blasting Station']),
+    true,
+  );
+});
+
+test('commander overlap alone does not make two otherwise separate win cores dependent', () => {
+  const existing = {
+    included: [{
+      id: 'commander-line',
+      results: ['Infinite damage'],
+      cards: [
+        { name: 'Test Commander', mustBeCommander: true },
+        { name: 'Combo A', mustBeCommander: false },
+      ],
+    }],
+  };
+
+  assert.equal(
+    winningPlanIsIndependentV14(existing, ['Test Commander', 'Combo B'], ['Test Commander']),
+    true,
+  );
 });
