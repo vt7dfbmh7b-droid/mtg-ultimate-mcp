@@ -3,19 +3,19 @@ import test from 'node:test';
 import type { ScryfallCard } from '../types/scryfall.js';
 import { buildCommanderDeckUnderWholeBudgetV15 } from './deck-whole-budget-v15.js';
 
-function card(name: string, price: string | null): ScryfallCard {
+function card(name: string, price: string | null, collectorNumber?: string, cmc = 1): ScryfallCard {
   return {
     id: name,
     name,
     lang: 'en',
-    cmc: 1,
+    cmc,
     type_line: name === 'Commander' ? 'Legendary Creature — Human' : 'Creature — Human',
     color_identity: [],
     keywords: [],
     legalities: { commander: 'legal' },
     set: 'tst',
     set_name: 'Test',
-    collector_number: name === 'Commander' ? '1' : '2',
+    collector_number: collectorNumber ?? (name === 'Commander' ? '1' : '2'),
     rarity: 'common',
     prices: { usd: price },
     scryfall_uri: 'https://scryfall.com',
@@ -24,6 +24,7 @@ function card(name: string, price: string | null): ScryfallCard {
 
 const commander = card('Commander', '1.00');
 const decklist = `// COMMANDER\n1 Commander (TST) 1\n\n// MAIN\n99 Filler (TST) 2`;
+const refinedDecklist = `// COMMANDER\n1 Commander (TST) 1\n\n// MAIN\n99 Better (TST) 3`;
 
 function draft(priceEstimate: number, deficits = 0, marker?: string): Record<string, unknown> {
   return {
@@ -36,6 +37,42 @@ function draft(priceEstimate: number, deficits = 0, marker?: string): Record<str
   };
 }
 
+function safeNoopRefinement(): Record<string, unknown> {
+  return {
+    status: 'cedh-oriented-refinement-incomplete',
+    comboWasPreserved: false,
+    initialAssessment: {
+      status: 'not-yet-strong-competitive-construction-signals',
+      winningCombos: 1,
+      metrics: { averageNonlandManaValue: 2.8, freeInteractionCount: 1, fastManaCount: 2, tutorCount: 3 },
+    },
+    finalAssessment: {
+      status: 'not-yet-strong-competitive-construction-signals',
+      winningCombos: 0,
+      metrics: { averageNonlandManaValue: 2.7, freeInteractionCount: 1, fastManaCount: 2, tutorCount: 3 },
+    },
+    finalDecklist: decklist,
+  };
+}
+
+function improvedRefinement(finalDecklist = refinedDecklist): Record<string, unknown> {
+  return {
+    status: 'cedh-oriented-refinement-incomplete',
+    comboWasPreserved: true,
+    initialAssessment: {
+      status: 'not-yet-strong-competitive-construction-signals',
+      winningCombos: 1,
+      metrics: { averageNonlandManaValue: 2.8, freeInteractionCount: 1, fastManaCount: 2, tutorCount: 3 },
+    },
+    finalAssessment: {
+      status: 'not-yet-strong-competitive-construction-signals',
+      winningCombos: 1,
+      metrics: { averageNonlandManaValue: 2.5, freeInteractionCount: 1, fastManaCount: 2, tutorCount: 4 },
+    },
+    finalDecklist,
+  };
+}
+
 test('whole-deck wrapper accepts only an independently audited total at or below the hard cap', async () => {
   const caps: number[] = [];
   const userCaps: Array<number | undefined> = [];
@@ -44,6 +81,7 @@ test('whole-deck wrapper accepts only an independently audited total at or below
     maxDeckUsd: 100,
   }, {
     discoverWinSeed: async () => ({ status: 'no-eligible-winning-seed-package' }),
+    refineCandidate: async () => safeNoopRefinement(),
     buildDraft: async (_commanders, options) => {
       caps.push(Number(options.candidateMaxUsdPerCard));
       userCaps.push(options.maxUsdPerCard);
@@ -70,6 +108,7 @@ test('whole-deck wrapper compares every compliant search attempt instead of acce
     maxDeckUsd: 100,
   }, {
     discoverWinSeed: async () => ({ status: 'no-eligible-winning-seed-package' }),
+    refineCandidate: async () => safeNoopRefinement(),
     buildDraft: async (_commanders, options) => {
       calls += 1;
       caps.push(Number(options.candidateMaxUsdPerCard));
@@ -93,14 +132,16 @@ test('whole-deck wrapper compares every compliant search attempt instead of acce
 
 test('Bracket-5 whole-budget construction discovers one verified win seed and injects it into every search attempt', async () => {
   let discoveryCalls = 0;
+  let maxCandidatesToVerify = 0;
   const seenMustIncludes: string[][] = [];
   await buildCommanderDeckUnderWholeBudgetV15([commander], {
     targetBracket: 5,
     maxDeckUsd: 100,
     mustInclude: ['User Card'],
   }, {
-    discoverWinSeed: async () => {
+    discoverWinSeed: async (_commanders, options) => {
       discoveryCalls += 1;
+      maxCandidatesToVerify = options.maxCandidatesToVerify ?? 0;
       return {
         status: 'eligible-winning-seed-package-found',
         seedNames: ['Combo A', 'Combo B'],
@@ -115,12 +156,83 @@ test('Bracket-5 whole-budget construction discovers one verified win seed and in
   });
 
   assert.equal(discoveryCalls, 1, 'win seed discovery should be shared across the whole budget search');
+  assert.equal(maxCandidatesToVerify, 20, 'whole-budget builds should compare the broadest bounded practical seed set');
   assert.ok(seenMustIncludes.length > 1);
   assert.ok(seenMustIncludes.every((names) => names.includes('User Card') && names.includes('Combo A') && names.includes('Combo B')));
 });
 
-test('lower-bracket whole-budget construction does not force competitive win seeding', async () => {
+test('Bracket-5 whole-budget construction accepts a materially stronger refinement only after a second exact budget audit', async () => {
+  let refinementCalls = 0;
+  const result = await buildCommanderDeckUnderWholeBudgetV15([commander], {
+    targetBracket: 5,
+    maxDeckUsd: 100,
+  }, {
+    discoverWinSeed: async () => ({ status: 'no-eligible-winning-seed-package' }),
+    buildDraft: async () => draft(50, 0),
+    refineCandidate: async () => {
+      refinementCalls += 1;
+      return improvedRefinement();
+    },
+    resolveDeckCards: async () => ({
+      cards: [commander, card('Filler', '0.50'), card('Better', '0.60', '3')],
+      notFound: [],
+    }),
+  });
+
+  assert.equal(refinementCalls, 1, 'only the selected best compliant draft should receive the expensive refinement pass');
+  assert.equal(result.baseDecklist, decklist);
+  assert.equal(result.decklist, refinedDecklist);
+  assert.equal((result.budgetAudit as Record<string, unknown>).auditedTotalUsd, 60.4);
+  assert.equal((result.postBudgetRefinement as Record<string, unknown>).status, 'accepted');
+  const quality = (result.postBudgetRefinement as Record<string, unknown>).quality as Record<string, unknown>;
+  assert.equal(quality.comboWasPreserved, true);
+  assert.equal(quality.averageNonlandManaValueNonWorsened, true);
+  assert.equal(quality.materialQualityImprovement, true);
+});
+
+test('a stronger-looking Bracket-5 refinement is rejected when its exact printing total breaches the hard deck budget', async () => {
+  const result = await buildCommanderDeckUnderWholeBudgetV15([commander], {
+    targetBracket: 5,
+    maxDeckUsd: 100,
+  }, {
+    discoverWinSeed: async () => ({ status: 'no-eligible-winning-seed-package' }),
+    buildDraft: async () => draft(50, 0),
+    refineCandidate: async () => improvedRefinement(),
+    resolveDeckCards: async () => ({
+      cards: [commander, card('Filler', '0.50'), card('Better', '1.20', '3')],
+      notFound: [],
+    }),
+  });
+
+  assert.equal(result.status, 'budget-compliant');
+  assert.equal(result.decklist, decklist, 'the original compliant draft must remain authoritative after an over-budget refinement');
+  assert.equal((result.budgetAudit as Record<string, unknown>).auditedTotalUsd, 50.5);
+  const refinement = result.postBudgetRefinement as Record<string, unknown>;
+  assert.equal(refinement.status, 'rejected-hard-budget');
+  assert.equal((refinement.budgetAudit as Record<string, unknown>).withinBudget, false);
+});
+
+test('a refinement that loses the verified win route is rejected even when it lowers the curve', async () => {
+  const result = await buildCommanderDeckUnderWholeBudgetV15([commander], {
+    targetBracket: 5,
+    maxDeckUsd: 100,
+  }, {
+    discoverWinSeed: async () => ({ status: 'no-eligible-winning-seed-package' }),
+    buildDraft: async () => draft(50, 0),
+    refineCandidate: async () => safeNoopRefinement(),
+    resolveDeckCards: async () => ({
+      cards: [commander, card('Filler', '0.50')],
+      notFound: [],
+    }),
+  });
+
+  assert.equal(result.decklist, decklist);
+  assert.equal((result.postBudgetRefinement as Record<string, unknown>).status, 'rejected-no-material-safe-improvement');
+});
+
+test('lower-bracket whole-budget construction does not force competitive win seeding or cEDH refinement', async () => {
   let discoveryCalls = 0;
+  let refinementCalls = 0;
   await buildCommanderDeckUnderWholeBudgetV15([commander], {
     targetBracket: 4,
     maxDeckUsd: 100,
@@ -129,11 +241,16 @@ test('lower-bracket whole-budget construction does not force competitive win see
       discoveryCalls += 1;
       return { status: 'eligible-winning-seed-package-found', seedNames: ['Combo A', 'Combo B'] };
     },
-    buildDraft: async () => ({ status: 'incomplete-draft' }),
-    resolveDeckCards: async () => ({ cards: [], notFound: [] }),
+    refineCandidate: async () => {
+      refinementCalls += 1;
+      return improvedRefinement();
+    },
+    buildDraft: async () => draft(50, 0),
+    resolveDeckCards: async () => ({ cards: [commander, card('Filler', '0.50')], notFound: [] }),
   });
 
   assert.equal(discoveryCalls, 0);
+  assert.equal(refinementCalls, 0);
 });
 
 test('an excluded combo piece blocks automatic seed injection rather than overriding the user exclusion', async () => {

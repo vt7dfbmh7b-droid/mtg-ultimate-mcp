@@ -3,6 +3,10 @@ import {
   discoverCedhSeedWinPackageV14,
   type CedhSeedPackageOptionsV14,
 } from './cedh-seed-package-v14.js';
+import {
+  refineCommanderForCedhV14,
+  type CedhWorkflowOptionsV14,
+} from './cedh-workflow-v14.js';
 import { buildCommanderDeckDraftV07, type DeckBuildOptionsV07 } from './deck-builder-v07.js';
 import { parseDecklist, type DeckEntry } from './deck.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from './scryfall.js';
@@ -22,6 +26,10 @@ export interface WholeDeckBudgetDependenciesV15 {
   discoverWinSeed?: (
     commanders: ScryfallCard[],
     options: CedhSeedPackageOptionsV14,
+  ) => Promise<Record<string, unknown>>;
+  refineCandidate?: (
+    decklist: string,
+    options: CedhWorkflowOptionsV14,
   ) => Promise<Record<string, unknown>>;
 }
 
@@ -43,6 +51,26 @@ interface CompliantCandidateV15 {
   remainingStructuralDeficitTotal: number;
 }
 
+interface RefinementQualityV15 {
+  acceptable: boolean;
+  comboWasPreserved: boolean;
+  winningComboCountPreserved: boolean;
+  averageNonlandManaValueNonWorsened: boolean;
+  materialQualityImprovement: boolean;
+  initialStatus: string;
+  finalStatus: string;
+  initialWinningCombos: number;
+  finalWinningCombos: number;
+  initialAverageNonlandManaValue: number | null;
+  finalAverageNonlandManaValue: number | null;
+  initialFreeInteractionCount: number;
+  finalFreeInteractionCount: number;
+  initialFastManaCount: number;
+  finalFastManaCount: number;
+  initialTutorCount: number;
+  finalTutorCount: number;
+}
+
 function money(value: number): number {
   return Number(value.toFixed(2));
 }
@@ -62,6 +90,18 @@ function strings(value: unknown): string[] {
   return Array.isArray(value)
     ? value.filter((item): item is string => typeof item === 'string' && item.trim().length > 0)
     : [];
+}
+
+function record(value: unknown): Record<string, unknown> {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
+}
+
+function finiteNumber(value: unknown, fallback = 0): number {
+  return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
+}
+
+function nullableFiniteNumber(value: unknown): number | null {
+  return typeof value === 'number' && Number.isFinite(value) ? value : null;
 }
 
 function entryKey(entry: DeckEntry): string {
@@ -206,6 +246,62 @@ function uniqueNames(names: readonly string[]): string[] {
   return output;
 }
 
+function refinementQualityV15(refinement: Record<string, unknown>): RefinementQualityV15 {
+  const initial = record(refinement.initialAssessment);
+  const final = record(refinement.finalAssessment);
+  const initialMetrics = record(initial.metrics);
+  const finalMetrics = record(final.metrics);
+  const initialStatus = String(initial.status ?? 'unknown');
+  const finalStatus = String(final.status ?? 'unknown');
+  const initialWinningCombos = finiteNumber(initial.winningCombos);
+  const finalWinningCombos = finiteNumber(final.winningCombos);
+  const initialAverageNonlandManaValue = nullableFiniteNumber(initialMetrics.averageNonlandManaValue);
+  const finalAverageNonlandManaValue = nullableFiniteNumber(finalMetrics.averageNonlandManaValue);
+  const initialFreeInteractionCount = finiteNumber(initialMetrics.freeInteractionCount);
+  const finalFreeInteractionCount = finiteNumber(finalMetrics.freeInteractionCount);
+  const initialFastManaCount = finiteNumber(initialMetrics.fastManaCount);
+  const finalFastManaCount = finiteNumber(finalMetrics.fastManaCount);
+  const initialTutorCount = finiteNumber(initialMetrics.tutorCount);
+  const finalTutorCount = finiteNumber(finalMetrics.tutorCount);
+  const comboWasPreserved = refinement.comboWasPreserved === true;
+  const winningComboCountPreserved = finalWinningCombos >= initialWinningCombos;
+  const averageNonlandManaValueNonWorsened = initialAverageNonlandManaValue === null
+    || (finalAverageNonlandManaValue !== null && finalAverageNonlandManaValue <= initialAverageNonlandManaValue + 1e-9);
+  const materiallyLowerCurve = initialAverageNonlandManaValue !== null
+    && finalAverageNonlandManaValue !== null
+    && finalAverageNonlandManaValue < initialAverageNonlandManaValue - 0.009;
+  const statusImproved = initialStatus !== 'strong-competitive-construction-signals'
+    && finalStatus === 'strong-competitive-construction-signals';
+  const materialQualityImprovement = materiallyLowerCurve
+    || statusImproved
+    || finalFreeInteractionCount > initialFreeInteractionCount
+    || finalFastManaCount > initialFastManaCount
+    || finalTutorCount > initialTutorCount;
+
+  return {
+    acceptable: comboWasPreserved
+      && winningComboCountPreserved
+      && averageNonlandManaValueNonWorsened
+      && materialQualityImprovement,
+    comboWasPreserved,
+    winningComboCountPreserved,
+    averageNonlandManaValueNonWorsened,
+    materialQualityImprovement,
+    initialStatus,
+    finalStatus,
+    initialWinningCombos,
+    finalWinningCombos,
+    initialAverageNonlandManaValue,
+    finalAverageNonlandManaValue,
+    initialFreeInteractionCount,
+    finalFreeInteractionCount,
+    initialFastManaCount,
+    finalFastManaCount,
+    initialTutorCount,
+    finalTutorCount,
+  };
+}
+
 export async function buildCommanderDeckUnderWholeBudgetV15(
   commanders: ScryfallCard[],
   options: WholeDeckBudgetBuildOptionsV15,
@@ -225,6 +321,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
   const buildDraft = dependencies.buildDraft ?? buildCommanderDeckDraftV07;
   const resolveDeckCards = dependencies.resolveDeckCards ?? (async (ids: CardIdentifierInput[]) => getCardsByIdentifiers(ids));
   const discoverWinSeed = dependencies.discoverWinSeed ?? discoverCedhSeedWinPackageV14;
+  const refineCandidate = dependencies.refineCandidate ?? refineCommanderForCedhV14;
   const targetBracket = Math.max(1, Math.min(5, Math.trunc(options.targetBracket ?? 4)));
 
   let autoWinSeed: Record<string, unknown> = {
@@ -244,7 +341,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
         ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
         maxUsdPerCard: seedSearchCapUsd,
         maxPackageCards: 3,
-        maxCandidatesToVerify: 10,
+        maxCandidatesToVerify: 20,
       });
       const discoveredSeedNames = uniqueNames(strings(discovered.seedNames));
       const excluded = new Set((options.excludedCards ?? []).map(normalize));
@@ -342,6 +439,74 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
   if (compliantCandidates.length > 0) {
     compliantCandidates.sort(strongerCompliantCandidate);
     const selected = compliantCandidates[0] as CompliantCandidateV15;
+    let finalDecklist = selected.decklist;
+    let finalBudgetAudit = selected.audit;
+    let postBudgetRefinement: Record<string, unknown> = {
+      attempted: false,
+      status: 'not-requested-for-target-bracket',
+    };
+
+    if (targetBracket >= 5) {
+      try {
+        const refinement = await refineCandidate(selected.decklist, {
+          ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
+          ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
+          ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
+          ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
+          ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
+          ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
+          protectedCards: effectiveMustInclude,
+          requireVerifiedCombo: true,
+          maxEfficiencySwaps: 10,
+          maxManaBaseSwaps: 8,
+        });
+        const refinedDecklist = typeof refinement.finalDecklist === 'string' ? refinement.finalDecklist : '';
+        const quality = refinementQualityV15(refinement);
+        if (!refinedDecklist.trim()) {
+          postBudgetRefinement = {
+            attempted: true,
+            status: 'rejected-no-final-decklist',
+            quality,
+            refinement,
+          };
+        } else if (!quality.acceptable) {
+          postBudgetRefinement = {
+            attempted: true,
+            status: 'rejected-no-material-safe-improvement',
+            quality,
+            refinement,
+          };
+        } else {
+          const refinedAudit = await auditExactDeckBudgetV15(refinedDecklist, options.maxDeckUsd, resolveDeckCards);
+          if (refinedAudit.withinBudget) {
+            finalDecklist = refinedDecklist;
+            finalBudgetAudit = refinedAudit;
+            postBudgetRefinement = {
+              attempted: true,
+              status: 'accepted',
+              quality,
+              budgetAudit: refinedAudit,
+              refinement,
+            };
+          } else {
+            postBudgetRefinement = {
+              attempted: true,
+              status: 'rejected-hard-budget',
+              quality,
+              budgetAudit: refinedAudit,
+              refinement,
+            };
+          }
+        }
+      } catch (error) {
+        postBudgetRefinement = {
+          attempted: true,
+          status: 'refinement-unavailable',
+          error: error instanceof Error ? error.message : String(error),
+        };
+      }
+    }
+
     return {
       status: 'budget-compliant',
       maxDeckUsd: money(options.maxDeckUsd),
@@ -349,7 +514,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
       remainingCandidateBudgetEstimateUsd: money(candidateBudgetUsd),
       chosenCandidateSearchCapUsd: selected.cap,
       userMaxUsdPerCard: options.maxUsdPerCard ?? null,
-      budgetAudit: selected.audit,
+      budgetAudit: finalBudgetAudit,
       attempts,
       compliantCandidateCount: compliantCandidates.length,
       selectionBasis: 'fewest remaining structural deficits, then widest candidate search cap',
@@ -357,10 +522,12 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
         ? selected.remainingStructuralDeficitTotal
         : null,
       autoWinSeed,
+      postBudgetRefinement,
       draft: selected.draft,
-      decklist: selected.decklist,
+      baseDecklist: selected.decklist,
+      decklist: finalDecklist,
       constraint: `US$${money(options.maxDeckUsd)} maximum total deck budget`,
-      caveat: 'Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. The search compares every generated budget-compliant draft rather than stopping at the first cheap fit. Candidate quality is ordered by remaining structural deficits and then by the widest legal candidate search cap; raw spend is never treated as power by itself. Bracket-5 whole-budget construction also attempts one generic verified Commander Spellbook win seed before drafting, while explicit exclusions and hard budget truth remain authoritative. The search remains heuristic rather than proof of the globally strongest possible list.',
+      caveat: 'Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. The search compares every generated budget-compliant draft rather than stopping at the first cheap fit. Candidate quality is ordered by remaining structural deficits and then by the widest legal candidate search cap; raw spend is never treated as power by itself. Bracket-5 whole-budget construction attempts a broader generic verified Commander Spellbook win-seed search, then routes the selected legal draft through strict efficiency and mana-base refinement. A refined list is accepted only when its verified win count is preserved, its average nonland mana value does not worsen, at least one material high-power construction signal improves, and a second independent exact-printing whole-deck audit still passes the original hard budget. Explicit exclusions, required cards and hard budget truth remain authoritative. The search remains heuristic rather than proof of the globally strongest possible list.',
     };
   }
 
