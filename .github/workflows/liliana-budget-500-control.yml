@@ -17,6 +17,7 @@ on:
       - "src/services/creature-type-coherence-v15.ts"
       - "src/services/currency-v13.ts"
       - "src/services/deck-builder-v07.ts"
+      - "src/services/deck-role-metrics-v15.ts"
       - "src/services/deck-whole-budget-v15.ts"
       - "src/services/deck.ts"
       - "src/services/neutral-commander-selection-v15.ts"
