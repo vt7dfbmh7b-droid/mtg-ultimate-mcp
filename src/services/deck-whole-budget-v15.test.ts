@@ -25,13 +25,14 @@ function card(name: string, price: string | null): ScryfallCard {
 const commander = card('Commander', '1.00');
 const decklist = `// COMMANDER\n1 Commander (TST) 1\n\n// MAIN\n99 Filler (TST) 2`;
 
-function draft(priceEstimate: number, deficits = 0): Record<string, unknown> {
+function draft(priceEstimate: number, deficits = 0, marker?: string): Record<string, unknown> {
   return {
     status: 'complete-draft',
     decklist,
     cardCount: 100,
     selectedPrintingEstimatedUsd: priceEstimate,
     remainingRoleDeficits: { ramp: deficits, draw: deficits },
+    ...(marker ? { marker } : {}),
   };
 }
 
@@ -58,6 +59,34 @@ test('whole-deck wrapper accepts only an independently audited total at or below
   assert.equal((result.budgetAudit as Record<string, unknown>).auditedTotalUsd, 80.2);
   assert.ok(caps.length >= 2, 'an over-budget first build must trigger a tighter rebuild');
   assert.ok(userCaps.every((cap) => cap === undefined), 'internal search pressure must not become a fake user per-card cap');
+});
+
+test('whole-deck wrapper compares every compliant search attempt instead of accepting the first cheap fit', async () => {
+  let calls = 0;
+  const caps: number[] = [];
+  const result = await buildCommanderDeckUnderWholeBudgetV15([commander], {
+    targetBracket: 5,
+    maxDeckUsd: 100,
+  }, {
+    buildDraft: async (_commanders, options) => {
+      calls += 1;
+      caps.push(Number(options.candidateMaxUsdPerCard));
+      if (calls === 1) return draft(40, 4, 'first-cheap-fit');
+      if (calls === 2) return draft(50, 0, 'stronger-structure');
+      return draft(60, 1, `later-${calls}`);
+    },
+    resolveDeckCards: async () => ({
+      cards: [commander, card('Filler', '0.50')],
+      notFound: [],
+    }),
+  });
+
+  assert.equal(result.status, 'budget-compliant');
+  assert.ok(calls > 2, 'a compliant first draft must not terminate the whole search');
+  assert.equal((result.draft as Record<string, unknown>).marker, 'stronger-structure');
+  assert.equal(result.compliantCandidateCount, calls);
+  assert.equal(result.selectionBasis, 'fewest remaining structural deficits, then widest candidate search cap');
+  assert.equal(result.chosenCandidateSearchCapUsd, caps[1]);
 });
 
 test('unknown exact-printing prices never count as zero toward a hard whole-deck budget', async () => {
