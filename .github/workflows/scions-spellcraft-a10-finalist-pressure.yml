@@ -1,0 +1,32 @@
+name: Scions & Spellcraft A10 Finalist Pressure
+
+on:
+  push:
+    branches:
+      - test/scions-spellcraft-a10-finalist-pressure-20260831
+  workflow_dispatch:
+
+jobs:
+  scions-a10-finalists:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Run A10 finalist comparison
+        run: npx tsx scripts/e2e-scions-spellcraft-a10-finalist-pressure.ts
+      - name: Upload A10 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scions-spellcraft-a10-finalist-pressure-${{ github.sha }}
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            scions-spellcraft-a10-finalist-pressure.json
+            scions-spellcraft-a10-finalist-pressure.md
