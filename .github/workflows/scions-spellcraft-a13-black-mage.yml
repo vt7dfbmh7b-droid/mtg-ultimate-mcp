@@ -1,0 +1,28 @@
+name: Scions & Spellcraft A13 Black Mage
+
+on:
+  push:
+    branches:
+      - test/scions-spellcraft-a13-black-mage-20260831
+
+jobs:
+  scions-a13-black-mage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Run A13 Black Mage isolation
+        run: npx tsx scripts/e2e-scions-spellcraft-a13-black-mage.ts
+      - name: Upload A13 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: scions-spellcraft-a13-black-mage-${{ github.sha }}
+          path: |
+            scions-spellcraft-a13-black-mage.json
+            scions-spellcraft-a13-black-mage.md
+          retention-days: 90
