@@ -1,6 +1,7 @@
 import type { ScryfallCard } from '../types/scryfall.js';
+import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
 import { resolveEntryCard, type ParsedDeck } from './deck.js';
-import { getCardOracleText, inferCardRoles } from './scryfall.js';
+import { getCardOracleText } from './scryfall.js';
 
 export interface CreatureTypePreferenceV15 {
   creatureType: string;
@@ -138,14 +139,14 @@ export function cardCreatureTypeCoherenceScoreV15(
   if (!preference || card.cmc > 3 || !card.type_line.toLocaleLowerCase().includes('creature')) return { score: 0, reasons: [] };
   if (!creatureSubtypesV15(card).some((type) => normalize(type) === normalize(preference.creatureType))) return { score: 0, reasons: [] };
 
-  const roles = new Set(inferCardRoles(card));
+  const roles = new Set(effectiveCardRolesV15(card));
   const oracle = getCardOracleText(card).toLocaleLowerCase();
   const reasons: string[] = [];
   let score = Math.min(30, preference.score);
 
-  if (roles.has('sacrifice outlet')) {
+  if (roles.has('creature sacrifice outlet')) {
     score += 70;
-    reasons.push(`${preference.creatureType} sacrifice outlet reinforces the preferred creature package`);
+    reasons.push(`${preference.creatureType} creature sacrifice outlet reinforces the preferred creature package`);
   }
   if (roles.has('graveyard recursion')) {
     score += 58;
