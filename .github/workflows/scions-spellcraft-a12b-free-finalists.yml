@@ -1,0 +1,32 @@
+name: Scions & Spellcraft A12b Free Finalists
+
+on:
+  push:
+    branches:
+      - test/scions-spellcraft-a12b-free-finalists-20260831
+  workflow_dispatch:
+
+jobs:
+  scions-a12b-free-finalists:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Run A12b free interaction finalists
+        run: npx tsx scripts/e2e-scions-spellcraft-a12b-free-finalists.ts
+      - name: Upload A12b evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scions-spellcraft-a12b-free-finalists-${{ github.sha }}
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            scions-spellcraft-a12b-free-finalists.json
+            scions-spellcraft-a12b-free-finalists.md
