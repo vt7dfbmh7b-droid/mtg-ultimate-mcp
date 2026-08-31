@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { ScryfallCard } from '../types/scryfall.js';
-import { effectiveCardRolesV15, manaRoleTruthV15 } from './card-role-truth-v15.js';
+import { effectiveCardRolesV15, manaRoleTruthV15, sacrificeRoleTruthV15 } from './card-role-truth-v15.js';
 
 function card(name: string, cmc: number, typeLine: string, oracleText: string, manaCost = ''): ScryfallCard {
   return {
@@ -82,4 +82,40 @@ test('Treasure creation or triggered mana cannot impersonate immediate fast mana
   const triggeredTruth = manaRoleTruthV15(triggered);
   assert.equal(triggeredTruth.triggeredMana, true);
   assert.equal(triggeredTruth.reliableImmediateFastMana, false);
+});
+
+test('graveyard-scaled mana is conditional rather than reliable immediate fast mana', () => {
+  const songs = card('Songs of the Damned', 1, 'Instant', 'Add {B} for each creature card in your graveyard.', '{B}');
+  const truth = manaRoleTruthV15(songs);
+  assert.equal(truth.variableStateMana, true);
+  assert.equal(truth.reliableImmediateFastMana, false);
+  assert.equal(effectiveCardRolesV15(songs).includes('fast mana'), false);
+});
+
+test('named-resource sacrifice costs do not impersonate broad creature sacrifice outlets', () => {
+  const tail = card(
+    'Unshakable Tail',
+    3,
+    'Creature — Zombie Detective',
+    'When this creature enters and at the beginning of your upkeep, surveil 1. Whenever one or more creature cards are put into your graveyard from your library, investigate. {2}, Sacrifice a Clue: Return this card from your graveyard to your hand.',
+    '{2}{B}',
+  );
+  const thallid = card(
+    'Deathspore Thallid',
+    2,
+    'Creature — Zombie Fungus',
+    'Remove three spore counters from this creature: Create a 1/1 green Saproling creature token. Sacrifice a Saproling: Target creature gets -1/-1 until end of turn.',
+    '{1}{B}',
+  );
+  const seer = card('Viscera Seer', 1, 'Creature — Vampire Wizard', 'Sacrifice a creature: Scry 1.', '{B}');
+
+  assert.equal(sacrificeRoleTruthV15(tail).narrowOutlet, true);
+  assert.equal(effectiveCardRolesV15(tail).includes('sacrifice outlet'), false);
+  assert.equal(effectiveCardRolesV15(tail).includes('narrow sacrifice outlet'), true);
+  assert.equal(sacrificeRoleTruthV15(thallid).narrowOutlet, true);
+  assert.equal(effectiveCardRolesV15(thallid).includes('creature sacrifice outlet'), false);
+
+  assert.equal(sacrificeRoleTruthV15(seer).creatureOutlet, true);
+  assert.equal(effectiveCardRolesV15(seer).includes('sacrifice outlet'), true);
+  assert.equal(effectiveCardRolesV15(seer).includes('creature sacrifice outlet'), true);
 });
