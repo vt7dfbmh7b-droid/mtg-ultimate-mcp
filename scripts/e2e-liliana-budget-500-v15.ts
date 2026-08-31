@@ -30,6 +30,7 @@ function identifiers(parsed: ParsedDeck): CardIdentifierInput[] {
 }
 
 async function main(): Promise<void> {
+  const commanderLookupName = 'Liliana, Heretical Healer';
   const commanderName = 'Liliana, Heretical Healer // Liliana, Defiant Necromancer';
   const maxDeckUsd = 500;
   const targetBracket = 5;
@@ -37,9 +38,10 @@ async function main(): Promise<void> {
   console.log(`LILIANA US$${maxDeckUsd} CHALLENGE: build the strongest legal unrestricted Commander deck the current plugin can support under a hard whole-deck cap.`);
   console.log('The budget and Commander rules are hard truths. Bracket 5 is an optimization target, not an automatic claim.');
 
-  const commanderResolution = await getCardsByNames([commanderName]);
-  assert.deepEqual(commanderResolution.notFound, [], 'Liliana challenge commander must resolve');
+  const commanderResolution = await getCardsByNames([commanderLookupName]);
+  assert.deepEqual(commanderResolution.notFound, [], 'Liliana challenge commander must resolve by its front face');
   assert.equal(commanderResolution.cards.length, 1, 'Liliana challenge requires one resolved commander');
+  assert.equal(commanderResolution.cards[0]?.name, commanderName, 'front-face lookup must resolve the requested Liliana transform card');
 
   const result = await buildCommanderDeckUnderWholeBudgetV15(commanderResolution.cards, {
     targetBracket,
@@ -126,6 +128,7 @@ async function main(): Promise<void> {
   assert.equal(ceiling.bracket5CertifiedByThisAssessment, false, 'this benchmark deliberately has no independent current metagame evidence and must not self-award Bracket 5');
 
   const evidence = {
+    commanderLookupName,
     commanderName,
     maxDeckUsd,
     targetBracket,
