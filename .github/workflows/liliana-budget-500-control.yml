@@ -6,6 +6,7 @@ on:
     paths:
       - "scripts/e2e-liliana-budget-500-v15.ts"
       - "src/services/bracket-ceiling-v15.ts"
+      - "src/services/card-role-truth-v15.ts"
       - "src/services/cedh-efficiency-v14.ts"
       - "src/services/cedh-manabase-v14.ts"
       - "src/services/cedh-seed-package-v14.ts"
@@ -13,6 +14,7 @@ on:
       - "src/services/cedh-workflow-v14.ts"
       - "src/services/commander-rules.ts"
       - "src/services/commander-strategy-affinity-v15.ts"
+      - "src/services/creature-type-coherence-v15.ts"
       - "src/services/currency-v13.ts"
       - "src/services/deck-builder-v07.ts"
       - "src/services/deck-whole-budget-v15.ts"
