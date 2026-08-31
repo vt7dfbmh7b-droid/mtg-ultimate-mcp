@@ -122,11 +122,8 @@ async function main(): Promise<void> {
     competitiveMetagameEvidence: false,
   }, [`US$${maxDeckUsd} maximum total deck budget`, `fixed commander: ${commanderName}`]);
 
-  assert.equal(ceiling.hardGatesPassed, true);
-  assert.ok(number(ceiling.assessedBracket) >= 4, `US$${maxDeckUsd} Liliana challenge must reach an independently supported optimized Bracket-4 construction band; got ${String(ceiling.assessedBracket)}`);
-  assert.ok(winningCombos > 0, 'the strongest-under-budget challenge requires at least one independently verified win-oriented combo');
-  assert.equal(ceiling.bracket5CertifiedByThisAssessment, false, 'this benchmark deliberately has no independent current metagame evidence and must not self-award Bracket 5');
-
+  // Preserve and print the complete candidate before quality assertions so a failed benchmark
+  // remains auditable instead of discarding the exact list and the reasons it missed the target.
   const evidence = {
     commanderLookupName,
     commanderName,
@@ -154,14 +151,25 @@ async function main(): Promise<void> {
   console.log(`AUDITED EXACT-PRINTING TOTAL: US$${auditedTotal.toFixed(2)} / US$${maxDeckUsd.toFixed(2)}`);
   console.log(`SUBSTANTIVE COMMANDER STRATEGIES: ${JSON.stringify(strategyContext.strategies, null, 2)}`);
   console.log(`WHOLE-DECK STRATEGY SUPPORT: ${JSON.stringify(strategySupport.strategies, null, 2)}`);
+  console.log(`COMPLETE COMBOS: ${completeCombos}`);
   console.log(`WIN-ORIENTED COMBOS: ${winningCombos}`);
+  console.log(`RUTHLESS COMBOS: ${ruthlessCombos}`);
+  console.log(`STRATEGICALLY RELEVANT COMBOS: ${strategicallyRelevant}`);
+  console.log(`READINESS STATUS: ${readiness.status}`);
   console.log(`READINESS METRICS: ${JSON.stringify(metrics, null, 2)}`);
+  console.log(`GAME CHANGERS (${gameChangerNames.length}): ${gameChangerNames.join(', ') || 'none'}`);
   console.log(`HONEST ASSESSED BRACKET: ${ceiling.assessedBracket ?? 'unassessable'}`);
   console.log(`ASSESSED BAND: ${ceiling.assessedBand}`);
   console.log(`BRACKET-5 CONSTRUCTION CANDIDATE: ${ceiling.bracket5ConstructionCandidate}`);
   console.log(`FAILED BRACKET-5 THRESHOLDS: ${JSON.stringify(ceiling.bracket5ThresholdChecks.filter((check) => !check.passed), null, 2)}`);
   console.log('\nFINAL DECKLIST');
   console.log(decklist.trim());
+
+  assert.equal(ceiling.hardGatesPassed, true);
+  assert.ok(number(ceiling.assessedBracket) >= 4, `US$${maxDeckUsd} Liliana challenge must reach an independently supported optimized Bracket-4 construction band; got ${String(ceiling.assessedBracket)}`);
+  assert.ok(winningCombos > 0, 'the strongest-under-budget challenge requires at least one independently verified win-oriented combo');
+  assert.equal(ceiling.bracket5CertifiedByThisAssessment, false, 'this benchmark deliberately has no independent current metagame evidence and must not self-award Bracket 5');
+
   console.log(`\nLILIANA US$${maxDeckUsd} CHALLENGE: PASS — legal exact-100 list, within hard budget, commander strategy materially supported, verified win route present, and optimized Bracket-4-or-better construction independently supported.`);
 }
 
