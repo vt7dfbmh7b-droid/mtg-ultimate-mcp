@@ -1,4 +1,4 @@
-name: Liliana US$500 Whole-Deck Challenge
+name: Liliana NZ$500 Whole-Deck Challenge
 
 on:
   push:
@@ -9,6 +9,7 @@ on:
       - "src/services/cedh-workflow-v14.ts"
       - "src/services/commander-rules.ts"
       - "src/services/commander-strategy-affinity-v15.ts"
+      - "src/services/currency-v13.ts"
       - "src/services/deck-builder-v07.ts"
       - "src/services/deck-whole-budget-v15.ts"
       - "src/services/deck.ts"
@@ -55,7 +56,7 @@ jobs:
       - name: Build checked-in source
         run: npm run build
 
-      - name: Build and audit Liliana under US$500
+      - name: Build and audit Liliana under NZ$500
         run: npx tsx scripts/e2e-liliana-budget-500-v15.ts
 
       - name: Upload Liliana challenge evidence
