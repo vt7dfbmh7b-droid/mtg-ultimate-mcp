@@ -43,6 +43,7 @@ test('whole-deck wrapper accepts only an independently audited total at or below
     targetBracket: 5,
     maxDeckUsd: 100,
   }, {
+    discoverWinSeed: async () => ({ status: 'no-eligible-winning-seed-package' }),
     buildDraft: async (_commanders, options) => {
       caps.push(Number(options.candidateMaxUsdPerCard));
       userCaps.push(options.maxUsdPerCard);
@@ -68,6 +69,7 @@ test('whole-deck wrapper compares every compliant search attempt instead of acce
     targetBracket: 5,
     maxDeckUsd: 100,
   }, {
+    discoverWinSeed: async () => ({ status: 'no-eligible-winning-seed-package' }),
     buildDraft: async (_commanders, options) => {
       calls += 1;
       caps.push(Number(options.candidateMaxUsdPerCard));
@@ -87,6 +89,74 @@ test('whole-deck wrapper compares every compliant search attempt instead of acce
   assert.equal(result.compliantCandidateCount, calls);
   assert.equal(result.selectionBasis, 'fewest remaining structural deficits, then widest candidate search cap');
   assert.equal(result.chosenCandidateSearchCapUsd, caps[1]);
+});
+
+test('Bracket-5 whole-budget construction discovers one verified win seed and injects it into every search attempt', async () => {
+  let discoveryCalls = 0;
+  const seenMustIncludes: string[][] = [];
+  await buildCommanderDeckUnderWholeBudgetV15([commander], {
+    targetBracket: 5,
+    maxDeckUsd: 100,
+    mustInclude: ['User Card'],
+  }, {
+    discoverWinSeed: async () => {
+      discoveryCalls += 1;
+      return {
+        status: 'eligible-winning-seed-package-found',
+        seedNames: ['Combo A', 'Combo B'],
+        comboCardNames: ['Combo A', 'Combo B'],
+      };
+    },
+    buildDraft: async (_commanders, options) => {
+      seenMustIncludes.push([...(options.mustInclude ?? [])]);
+      return { status: 'incomplete-draft' };
+    },
+    resolveDeckCards: async () => ({ cards: [], notFound: [] }),
+  });
+
+  assert.equal(discoveryCalls, 1, 'win seed discovery should be shared across the whole budget search');
+  assert.ok(seenMustIncludes.length > 1);
+  assert.ok(seenMustIncludes.every((names) => names.includes('User Card') && names.includes('Combo A') && names.includes('Combo B')));
+});
+
+test('lower-bracket whole-budget construction does not force competitive win seeding', async () => {
+  let discoveryCalls = 0;
+  await buildCommanderDeckUnderWholeBudgetV15([commander], {
+    targetBracket: 4,
+    maxDeckUsd: 100,
+  }, {
+    discoverWinSeed: async () => {
+      discoveryCalls += 1;
+      return { status: 'eligible-winning-seed-package-found', seedNames: ['Combo A', 'Combo B'] };
+    },
+    buildDraft: async () => ({ status: 'incomplete-draft' }),
+    resolveDeckCards: async () => ({ cards: [], notFound: [] }),
+  });
+
+  assert.equal(discoveryCalls, 0);
+});
+
+test('an excluded combo piece blocks automatic seed injection rather than overriding the user exclusion', async () => {
+  const seenMustIncludes: string[][] = [];
+  const result = await buildCommanderDeckUnderWholeBudgetV15([commander], {
+    targetBracket: 5,
+    maxDeckUsd: 100,
+    excludedCards: ['Combo B'],
+  }, {
+    discoverWinSeed: async () => ({
+      status: 'eligible-winning-seed-package-found',
+      seedNames: ['Combo A', 'Combo B'],
+      comboCardNames: ['Combo A', 'Combo B'],
+    }),
+    buildDraft: async (_commanders, options) => {
+      seenMustIncludes.push([...(options.mustInclude ?? [])]);
+      return { status: 'incomplete-draft' };
+    },
+    resolveDeckCards: async () => ({ cards: [], notFound: [] }),
+  });
+
+  assert.ok(seenMustIncludes.every((names) => !names.includes('Combo A') && !names.includes('Combo B')));
+  assert.equal((result.autoWinSeed as Record<string, unknown>).status, 'winning-seed-package-blocked-by-exclusions');
 });
 
 test('unknown exact-printing prices never count as zero toward a hard whole-deck budget', async () => {
