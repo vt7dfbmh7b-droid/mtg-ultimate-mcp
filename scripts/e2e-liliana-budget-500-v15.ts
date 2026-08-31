@@ -8,6 +8,12 @@ import {
   SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15,
 } from '../src/services/commander-strategy-affinity-v15.js';
 import { validateCommanderDeck } from '../src/services/commander-rules.js';
+import {
+  getUsdNzdRateV13,
+  nzdToUsdV13,
+  usdToNzdV13,
+  withNzdPricingV13,
+} from '../src/services/currency-v13.js';
 import { parseDecklist, type ParsedDeck } from '../src/services/deck.js';
 import { buildCommanderDeckUnderWholeBudgetV15 } from '../src/services/deck-whole-budget-v15.js';
 import { getCardsByIdentifiers, getCardsByNames, type CardIdentifierInput } from '../src/services/scryfall.js';
@@ -32,11 +38,14 @@ function identifiers(parsed: ParsedDeck): CardIdentifierInput[] {
 async function main(): Promise<void> {
   const commanderLookupName = 'Liliana, Heretical Healer';
   const commanderName = 'Liliana, Heretical Healer // Liliana, Defiant Necromancer';
-  const maxDeckUsd = 500;
+  const maxDeckNzd = 500;
   const targetBracket = 5;
+  const rate = await getUsdNzdRateV13();
+  const maxDeckUsdReference = nzdToUsdV13(maxDeckNzd, rate.rate);
 
-  console.log(`LILIANA US$${maxDeckUsd} CHALLENGE: build the strongest legal unrestricted Commander deck the current plugin can support under a hard whole-deck cap.`);
-  console.log('The budget and Commander rules are hard truths. Bracket 5 is an optimization target, not an automatic claim.');
+  console.log(`LILIANA NZ$${maxDeckNzd} CHALLENGE: build the strongest legal unrestricted Commander deck the current plugin can support under a hard whole-deck cap.`);
+  console.log(`FX REFERENCE: 1 USD = ${rate.rate} NZD (${rate.rateDate}, ${rate.source}${rate.stale ? ', stale/fallback' : ''}).`);
+  console.log('The NZD budget and Commander rules are hard truths. USD is only the Scryfall/search reference currency. Bracket 5 is an optimization target, not an automatic claim.');
 
   const commanderResolution = await getCardsByNames([commanderLookupName]);
   assert.deepEqual(commanderResolution.notFound, [], 'Liliana challenge commander must resolve by its front face');
@@ -45,19 +54,28 @@ async function main(): Promise<void> {
 
   const result = await buildCommanderDeckUnderWholeBudgetV15(commanderResolution.cards, {
     targetBracket,
-    maxDeckUsd,
+    maxDeckUsd: maxDeckUsdReference,
     landCount: 30,
   });
+  const nzdBuild = withNzdPricingV13(result, rate, { maxDeckNzd });
 
   if (result.status !== 'budget-compliant') {
-    writeFileSync('liliana-budget-500-result.json', `${JSON.stringify({ commanderName, maxDeckUsd, targetBracket, result }, null, 2)}\n`);
-    throw new Error(`Current whole-budget search did not find a fully priced legal Liliana candidate at or below US$${maxDeckUsd}.`);
+    writeFileSync('liliana-budget-500-result.json', `${JSON.stringify({
+      commanderName,
+      maxDeckNzd,
+      maxDeckUsdReference,
+      targetBracket,
+      currencyPolicy: nzdBuild.currencyPolicy,
+      build: nzdBuild,
+    }, null, 2)}\n`);
+    throw new Error(`Current whole-budget search did not find a fully priced legal Liliana candidate at or below NZ$${maxDeckNzd}.`);
   }
 
   const audit = record(result.budgetAudit);
-  assert.equal(audit.withinBudget, true, 'Liliana challenge must independently audit within the hard cap');
-  const auditedTotal = number(audit.auditedTotalUsd, Number.POSITIVE_INFINITY);
-  assert.ok(auditedTotal <= maxDeckUsd, `audited deck total US$${auditedTotal} must not exceed US$${maxDeckUsd}`);
+  assert.equal(audit.withinBudget, true, 'Liliana challenge must independently audit within the hard converted cap');
+  const auditedTotalUsd = number(audit.auditedTotalUsd, Number.POSITIVE_INFINITY);
+  const auditedTotalNzd = usdToNzdV13(auditedTotalUsd, rate.rate);
+  assert.ok(auditedTotalNzd <= maxDeckNzd, `audited deck total NZ$${auditedTotalNzd} must not exceed NZ$${maxDeckNzd}`);
   assert.deepEqual(audit.unknownPriceEntries ?? [], [], 'hard-budget proof cannot contain unknown prices');
   assert.deepEqual(audit.unresolvedEntries ?? [], [], 'hard-budget proof cannot contain unresolved printings');
 
@@ -120,16 +138,17 @@ async function main(): Promise<void> {
     optimizedPlanEvidence: readiness.status === 'strong-competitive-construction-signals',
     cedhIntent: true,
     competitiveMetagameEvidence: false,
-  }, [`US$${maxDeckUsd} maximum total deck budget`, `fixed commander: ${commanderName}`]);
+  }, [`NZ$${maxDeckNzd} maximum total deck budget`, `fixed commander: ${commanderName}`]);
 
-  // Preserve and print the complete candidate before quality assertions so a failed benchmark
-  // remains auditable instead of discarding the exact list and the reasons it missed the target.
   const evidence = {
     commanderLookupName,
     commanderName,
-    maxDeckUsd,
+    maxDeckNzd,
+    maxDeckUsdReference,
     targetBracket,
-    auditedTotalUsd: auditedTotal,
+    auditedTotalNzd,
+    auditedTotalUsdReference: auditedTotalUsd,
+    currencyPolicy: nzdBuild.currencyPolicy,
     legality,
     strategyContext,
     strategySupport,
@@ -143,12 +162,12 @@ async function main(): Promise<void> {
     readiness,
     gameChangerNames,
     ceiling,
-    build: result,
+    build: nzdBuild,
   };
   writeFileSync('liliana-budget-500-result.json', `${JSON.stringify(evidence, null, 2)}\n`);
   writeFileSync('liliana-budget-500-deck.txt', `${decklist.trim()}\n`);
 
-  console.log(`AUDITED EXACT-PRINTING TOTAL: US$${auditedTotal.toFixed(2)} / US$${maxDeckUsd.toFixed(2)}`);
+  console.log(`AUDITED EXACT-PRINTING TOTAL: NZ$${auditedTotalNzd.toFixed(2)} / NZ$${maxDeckNzd.toFixed(2)} (US$${auditedTotalUsd.toFixed(2)} Scryfall reference)`);
   console.log(`SUBSTANTIVE COMMANDER STRATEGIES: ${JSON.stringify(strategyContext.strategies, null, 2)}`);
   console.log(`WHOLE-DECK STRATEGY SUPPORT: ${JSON.stringify(strategySupport.strategies, null, 2)}`);
   console.log(`COMPLETE COMBOS: ${completeCombos}`);
@@ -166,15 +185,15 @@ async function main(): Promise<void> {
   console.log(decklist.trim());
 
   assert.equal(ceiling.hardGatesPassed, true);
-  assert.ok(number(ceiling.assessedBracket) >= 4, `US$${maxDeckUsd} Liliana challenge must reach an independently supported optimized Bracket-4 construction band; got ${String(ceiling.assessedBracket)}`);
+  assert.ok(number(ceiling.assessedBracket) >= 4, `NZ$${maxDeckNzd} Liliana challenge must reach an independently supported optimized Bracket-4 construction band; got ${String(ceiling.assessedBracket)}`);
   assert.ok(winningCombos > 0, 'the strongest-under-budget challenge requires at least one independently verified win-oriented combo');
   assert.equal(ceiling.bracket5CertifiedByThisAssessment, false, 'this benchmark deliberately has no independent current metagame evidence and must not self-award Bracket 5');
 
-  console.log(`\nLILIANA US$${maxDeckUsd} CHALLENGE: PASS — legal exact-100 list, within hard budget, commander strategy materially supported, verified win route present, and optimized Bracket-4-or-better construction independently supported.`);
+  console.log(`\nLILIANA NZ$${maxDeckNzd} CHALLENGE: PASS — legal exact-100 list, within hard NZD budget, commander strategy materially supported, verified win route present, and optimized Bracket-4-or-better construction independently supported.`);
 }
 
 main().catch((error) => {
-  console.error('LILIANA US$500 CHALLENGE: FAIL');
+  console.error('LILIANA NZ$500 CHALLENGE: FAIL');
   console.error(error instanceof Error ? `${error.name}: ${error.message}` : String(error));
   process.exitCode = 1;
 });
