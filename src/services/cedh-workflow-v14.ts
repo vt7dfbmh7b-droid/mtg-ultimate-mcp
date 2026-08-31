@@ -9,6 +9,7 @@ import { refineCedhEfficiencyV14, type CedhEfficiencyOptionsV14 } from './cedh-e
 import { optimizeCedhManaBaseV14, type CedhManaBaseOptionsV14 } from './cedh-manabase-v14.js';
 import { validateCommanderDeck } from './commander-rules.js';
 import { buildDeckMetrics, parseDecklist, type ParsedDeck } from './deck.js';
+import { effectiveDeckRoleCountsV15 } from './deck-role-metrics-v15.js';
 import {
   describePrintingPolicyV08,
   printingMatchesPolicyV08,
@@ -109,6 +110,11 @@ export async function assessCedhReadinessV14(
     findDeckCombos(decklist, 100),
   ]);
   const metrics = buildDeckMetrics(parsed, cards);
+  const effectiveRoleCounts = effectiveDeckRoleCountsV15(parsed, cards);
+  const effectiveFastManaCount = Number(effectiveRoleCounts['fast mana'] ?? 0);
+  const effectiveFreeInteractionCount = Number(effectiveRoleCounts['free interaction'] ?? 0);
+  const conditionalManaCount = Number(effectiveRoleCounts['conditional mana acceleration'] ?? 0);
+  const delayedManaCount = Number(effectiveRoleCounts['delayed mana acceleration'] ?? 0);
   const includedCombos = comboCount(combos);
   const winningCombos = countWinningCombosV14(combos);
   const ruthlessCombos = ruthlessComboCount(combos);
@@ -123,8 +129,8 @@ export async function assessCedhReadinessV14(
     spellbookRuthlessDeckTag: bracketTag === 'R',
     lowAverageNonlandManaValue: metrics.averageNonlandManaValue <= 2.6,
     substantialEarlyGameDensity: metrics.earlyPlayCount >= 35,
-    freeInteractionPresent: Number(metrics.roleCounts['free interaction'] ?? 0) > 0,
-    fastManaPresent: metrics.fastManaCount > 0,
+    freeInteractionPresent: effectiveFreeInteractionCount > 0,
+    fastManaPresent: effectiveFastManaCount > 0,
   };
 
   const strongCompetitiveConstructionSignals = constructionSignals.verifiedWinningCombo
@@ -143,18 +149,29 @@ export async function assessCedhReadinessV14(
       landCount: metrics.landCount,
       averageNonlandManaValue: metrics.averageNonlandManaValue,
       earlyPlayCount: metrics.earlyPlayCount,
-      fastManaCount: metrics.fastManaCount,
+      fastManaCount: effectiveFastManaCount,
+      rawInferredFastManaCount: metrics.fastManaCount,
+      conditionalManaCount,
+      delayedManaCount,
       cheapInteractionCount: metrics.cheapInteractionCount,
       protectionCount: metrics.protectionCount,
       tutorCount: metrics.tutorCount,
-      freeInteractionCount: Number(metrics.roleCounts['free interaction'] ?? 0),
+      freeInteractionCount: effectiveFreeInteractionCount,
     },
     constructionSignals,
     validation: {
       commanderRules: validation.commanderRules,
       printingPolicy: validation.printingPolicy,
     },
-    caveat: 'This is a construction-readiness assessment, not a declaration that the deck is officially Bracket 5. A combo only satisfies the win-package gate when Commander Spellbook reports a win-oriented result; lifegain-only, value-only, and standalone infinite-mana engines do not qualify. Bracket 5/cEDH also depends on competitive intent, metagame knowledge, pilot decisions, and tournament-minded play.',
+    roleTruth: {
+      source: 'effective-card-role-truth-v15',
+      rawInferredFastManaCount: metrics.fastManaCount,
+      effectiveFastManaCount,
+      conditionalManaCount,
+      delayedManaCount,
+      rule: 'Conditional or delayed mana cannot satisfy competitive fast-mana evidence merely because Oracle text contains a mana ability.',
+    },
+    caveat: 'This is a construction-readiness assessment, not a declaration that the deck is officially Bracket 5. A combo only satisfies the win-package gate when Commander Spellbook reports a win-oriented result; lifegain-only, value-only, and standalone infinite-mana engines do not qualify. Fast-mana evidence is fail-closed against delayed and prerequisite-dependent mana. Bracket 5/cEDH also depends on competitive intent, metagame knowledge, pilot decisions, and tournament-minded play.',
   };
 }
 
@@ -235,7 +252,7 @@ export async function refineCommanderForCedhV14(
     finalAssessment,
     comboWasPreserved,
     finalDecklist: currentDecklist,
-    guidance: 'The cEDH path is win-package-first: verify a real winning package, protect it, improve only with strict high-value roles, optimize lands separately, then independently reassess. It does not translate targetBracket=5 into an automatic Bracket 5 claim.',
+    guidance: 'The cEDH path is win-package-first: verify a real winning package, protect it, improve only with strict high-value roles, optimize lands separately, then independently reassess. Competitive role evidence uses fail-closed role truth for conditional/delayed mana. It does not translate targetBracket=5 into an automatic Bracket 5 claim.',
   };
 }
 
