@@ -125,7 +125,66 @@ function filterLandRequiresMana(card: ScryfallCard): boolean {
   return /\{1\},\s*\{t\}:\s*add/.test(value) || /\{t\},\s*pay \{1\}:\s*add/.test(value);
 }
 
-function scoreLand(card: ScryfallCard, identity: string[]): { score: number; reasons: string[] } {
+function fixingBonus(identitySize: number): number {
+  if (identitySize >= 4) return 35;
+  if (identitySize === 3) return 28;
+  if (identitySize === 2) return 18;
+  return 0;
+}
+
+function hasLifeOrDamageTax(value: string): boolean {
+  return /pay 1 life/.test(value)
+    || /deals 1 damage to you/.test(value)
+    || /deals 1 damage to its controller/.test(value);
+}
+
+function manaRestrictionPenalty(value: string): number {
+  let penalty = 0;
+  if (/spend this mana only/.test(value)) penalty += 16;
+  if (/activate only if/.test(value)) penalty += 14;
+  if (/an opponent controls could produce/.test(value)) penalty += 14;
+  return penalty;
+}
+
+function utilityBonus(value: string): { bonus: number; reasons: string[] } {
+  const reasons: string[] = [];
+  let bonus = 0;
+  if (/\bchannel\b/.test(value)) {
+    bonus += 28;
+    reasons.push('channel utility without consuming a land drop in play');
+  }
+  if (/sacrifice a creature/.test(value)) {
+    bonus += 22;
+    reasons.push('repeatable sacrifice utility');
+  }
+  if (/draw a card/.test(value)) {
+    bonus += 16;
+    reasons.push('card-advantage utility');
+  }
+  if (/return target .* from your graveyard/.test(value)) {
+    bonus += 16;
+    reasons.push('graveyard recursion utility');
+  }
+  if (/create .* token/.test(value)) {
+    bonus += 10;
+    reasons.push('token-production utility');
+  }
+  if (/destroy target|exile target/.test(value)) {
+    bonus += 12;
+    reasons.push('interactive utility');
+  }
+  if (/\{t\}: add \{c\}\{c\}/.test(value)) {
+    bonus += 28;
+    reasons.push('two-mana land acceleration');
+  }
+  if (/add .* for each|add .* equal to/.test(value)) {
+    bonus += 20;
+    reasons.push('scaling mana utility');
+  }
+  return { bonus, reasons };
+}
+
+export function scoreCedhLandV14(card: ScryfallCard, identity: string[]): { score: number; reasons: string[] } {
   const colors = colorCoverage(card, identity);
   const value = oracle(card);
   const reasons: string[] = [];
@@ -137,18 +196,39 @@ function scoreLand(card: ScryfallCard, identity: string[]): { score: number; rea
   } else if (colors >= 2) {
     reasons.push(`${colors}-color coverage`);
   }
+
   if (/add one mana of any color|add one mana of any type/.test(value)) {
-    score += 35;
-    reasons.push('any-color fixing');
+    const bonus = fixingBonus(identity.length);
+    score += bonus;
+    if (bonus > 0) reasons.push('identity-scaled any-color fixing');
+    else reasons.push('any-color text gives no extra fixing value in a zero/one-color deck');
   }
-  if (/pay 1 life/.test(value)) {
-    score += 8;
-    reasons.push('efficient pain-style fixing');
+
+  if (hasLifeOrDamageTax(value)) {
+    if (identity.length <= 1) {
+      score -= 16;
+      reasons.push('unnecessary life/damage tax in a mono-color or colorless deck');
+    } else {
+      score += 2;
+      reasons.push('small life tax accepted for multicolor fixing');
+    }
   }
+
+  const restrictionPenalty = manaRestrictionPenalty(value);
+  if (restrictionPenalty > 0) {
+    score -= restrictionPenalty;
+    reasons.push('mana production is conditional or spending-restricted');
+  }
+
   if (/search your library/.test(value)) {
     score += 18;
     reasons.push('fetch/search utility');
   }
+
+  const utility = utilityBonus(value);
+  score += utility.bonus;
+  reasons.push(...utility.reasons);
+
   if (unconditionallyTapped(card)) {
     score -= 70;
     reasons.push('unconditionally enters tapped');
@@ -185,7 +265,7 @@ function existingNonbasicLands(
   for (const entry of parsed.main) {
     const card = resolveEntryCard(entry, cards);
     if (!card || !isLand(card) || isBasic(card) || entry.quantity !== 1 || protectedNames.has(normalize(card.name))) continue;
-    const quality = scoreLand(card, identity);
+    const quality = scoreCedhLandV14(card, identity);
     rows.push({ entry, card, score: quality.score, reasons: quality.reasons });
   }
   return rows.sort((a, b) => a.score - b.score || a.card.name.localeCompare(b.card.name));
@@ -215,7 +295,7 @@ async function betterLandCandidates(
 
   const ranked = results
     .filter((card) => isLand(card) && !isBasic(card) && legalIdentity(card, identity) && !existing.has(normalize(card.name)))
-    .map((card) => ({ card, quality: scoreLand(card, identity) }))
+    .map((card) => ({ card, quality: scoreCedhLandV14(card, identity) }))
     .sort((a, b) => b.quality.score - a.quality.score || a.card.name.localeCompare(b.card.name));
 
   const output: ExactLandCandidateV14[] = [];
@@ -223,7 +303,7 @@ async function betterLandCandidates(
     if (output.length >= 20) break;
     const printing = await selectEligiblePrintingV08(item.card, policy, options.maxUsdPerCard);
     if (!printing) continue;
-    const exact = scoreLand(printing.card, identity);
+    const exact = scoreCedhLandV14(printing.card, identity);
     output.push({
       card: printing.card,
       finish: printing.finish,
@@ -391,6 +471,6 @@ export async function optimizeCedhManaBaseV14(
     finalDecklist: afterDecklist,
     finalCommanderRules: nextRules,
     printingPolicy: describePrintingPolicyV08(policy),
-    guidance: 'This lane is strictly nonbasic-land-for-nonbasic-land. It rewards color coverage and usable untapped access, penalizes filter lands that need an existing source, strongly penalizes fetches whose target enters tapped, preserves total land count, and cannot remove a previously verified combo.',
+    guidance: 'This lane is strictly nonbasic-land-for-nonbasic-land. It scales fixing value to commander color count, does not reward redundant any-color fixing in mono-color, penalizes conditional/restricted production and unnecessary life costs, rewards real utility and acceleration, preserves total land count, and cannot remove a previously verified combo.',
   };
 }
