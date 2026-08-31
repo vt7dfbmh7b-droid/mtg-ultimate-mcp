@@ -9,8 +9,18 @@ export interface ManaRoleTruthV15 {
   paidActivationBeforeMana: boolean;
   createsManaToken: boolean;
   triggeredMana: boolean;
+  variableStateMana: boolean;
   reliableImmediateFastMana: boolean;
   reliableLowCostManaAcceleration: boolean;
+  reasons: string[];
+}
+
+export interface SacrificeRoleTruthV15 {
+  repeatableTargets: string[];
+  genericOutlet: boolean;
+  creatureOutlet: boolean;
+  artifactOutlet: boolean;
+  narrowOutlet: boolean;
   reasons: string[];
 }
 
@@ -47,6 +57,40 @@ function hasTriggeredMana(textValue: string): boolean {
   return /\b(?:when|whenever|at the beginning of|at the start of) [^.\n]{0,180}\badd\b/.test(textValue);
 }
 
+function hasVariableStateMana(textValue: string): boolean {
+  return /\badd [^.\n]{0,140}\bfor each\b/.test(textValue)
+    || /\badd [^.\n]{0,140}\bequal to (?:the )?(?:number|amount)\b/.test(textValue)
+    || /\badd [^.\n]{0,140}\bwhere x is\b/.test(textValue);
+}
+
+function repeatableSacrificeTargets(textValue: string): string[] {
+  return [...textValue.matchAll(
+    /\bsacrifice (?:a|an|another|target|one or more|any number of|x\b)\s+([^.,:;\n]{1,80})\s*:/g,
+  )]
+    .map((match) => match[1]?.trim() ?? '')
+    .filter(Boolean);
+}
+
+export function sacrificeRoleTruthV15(card: ScryfallCard): SacrificeRoleTruthV15 {
+  const targets = repeatableSacrificeTargets(text(card));
+  const genericOutlet = targets.some((target) => /^(?:(?:nonland|nontoken|other)\s+)*(?:creature|permanent|artifact|enchantment|token)s?\b/.test(target));
+  const creatureOutlet = targets.some((target) => /^(?:(?:nonland|nontoken|other)\s+)*(?:creature|permanent)s?\b/.test(target));
+  const artifactOutlet = targets.some((target) => /^(?:(?:nonland|nontoken|other)\s+)*(?:artifact|permanent)s?\b/.test(target));
+  const narrowOutlet = targets.length > 0 && !genericOutlet;
+  const reasons: string[] = [];
+  if (creatureOutlet) reasons.push('can repeatedly sacrifice generic creatures/permanents');
+  else if (artifactOutlet) reasons.push('can repeatedly sacrifice generic artifacts/permanents');
+  else if (narrowOutlet) reasons.push(`sacrifice cost is restricted to named/narrow objects: ${targets.join(', ')}`);
+  return {
+    repeatableTargets: targets,
+    genericOutlet,
+    creatureOutlet,
+    artifactOutlet,
+    narrowOutlet,
+    reasons,
+  };
+}
+
 export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
   const oracle = text(card);
   const manaCost = getCardManaCost(card);
@@ -58,6 +102,7 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
   const paidActivation = paidActivationBeforeMana(oracle);
   const manaToken = createsManaToken(oracle);
   const triggered = hasTriggeredMana(oracle);
+  const variableStateMana = hasVariableStateMana(oracle);
   const variableSpellCost = /\{x\}/i.test(manaCost) || /\b(?:multi)?kicker\b/.test(oracle);
   const reasons: string[] = [];
 
@@ -67,6 +112,7 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
   if (paidActivation) reasons.push('mana ability requires paid mana before it produces mana');
   if (manaToken) reasons.push('mana comes indirectly from creating a Treasure/Gold/Powerstone rather than immediate card-native production');
   if (triggered) reasons.push('mana production is gated behind a triggered event');
+  if (variableStateMana) reasons.push('mana output scales from another zone/board/game-state quantity and may produce little or no acceleration');
   if (variableSpellCost) reasons.push('mana production depends on an X/kicker-style paid setup');
 
   const reliableLowCostManaAcceleration = mana
@@ -78,6 +124,7 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
     && !paidActivation
     && !manaToken
     && !triggered
+    && !variableStateMana
     && !variableSpellCost;
   const reliableImmediateFastMana = reliableLowCostManaAcceleration && card.cmc <= 1;
 
@@ -89,6 +136,7 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
     paidActivationBeforeMana: paidActivation,
     createsManaToken: manaToken,
     triggeredMana: triggered,
+    variableStateMana,
     reliableImmediateFastMana,
     reliableLowCostManaAcceleration,
     reasons,
@@ -97,16 +145,27 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
 
 /**
  * Fail-closed role truth for consumers that use generic Scryfall role inference as evidence.
- * Conditional, indirect, triggered, or delayed mana may still be useful in a supported deck, but
- * it cannot impersonate reliable fast mana merely because its Oracle text/reminder text contains
- * a mana ability or creates a mana-producing token.
+ * Conditional, indirect, triggered, variable, or delayed mana may still be useful in a supported
+ * deck, but it cannot impersonate reliable fast mana merely because its text contains a mana
+ * ability or creates a mana-producing token. Likewise, a card that sacrifices only a named narrow
+ * object (for example a Clue or Saproling) cannot impersonate a generic sacrifice outlet.
  */
 export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   const roles = new Set(inferCardRoles(card));
   const manaTruth = manaRoleTruthV15(card);
+  const sacrificeTruth = sacrificeRoleTruthV15(card);
   if (roles.has('fast mana') && !manaTruth.reliableImmediateFastMana) {
     roles.delete('fast mana');
     roles.add(manaTruth.delayed ? 'delayed mana acceleration' : 'conditional mana acceleration');
+  }
+  if (roles.has('sacrifice outlet')) {
+    if (!sacrificeTruth.genericOutlet) {
+      roles.delete('sacrifice outlet');
+      if (sacrificeTruth.narrowOutlet) roles.add('narrow sacrifice outlet');
+    } else {
+      if (sacrificeTruth.creatureOutlet) roles.add('creature sacrifice outlet');
+      if (sacrificeTruth.artifactOutlet) roles.add('artifact sacrifice outlet');
+    }
   }
   return [...roles];
 }
