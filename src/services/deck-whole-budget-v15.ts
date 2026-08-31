@@ -27,6 +27,14 @@ interface BudgetAuditV15 {
   unresolvedEntries: string[];
 }
 
+interface CompliantCandidateV15 {
+  cap: number;
+  draft: Record<string, unknown>;
+  decklist: string;
+  audit: BudgetAuditV15;
+  remainingStructuralDeficitTotal: number;
+}
+
 function money(value: number): number {
   return Number(value.toFixed(2));
 }
@@ -151,6 +159,22 @@ function capSchedule(candidateBudgetUsd: number, optionalSlots: number, userPerC
   return [...new Set(derived)];
 }
 
+function remainingStructuralDeficitTotal(draft: Record<string, unknown>): number {
+  const deficits = draft.remainingRoleDeficits;
+  if (!deficits || typeof deficits !== 'object' || Array.isArray(deficits)) return Number.POSITIVE_INFINITY;
+  const values = Object.values(deficits)
+    .filter((value): value is number => typeof value === 'number' && Number.isFinite(value))
+    .map((value) => Math.max(0, value));
+  return values.length > 0 ? values.reduce((sum, value) => sum + value, 0) : Number.POSITIVE_INFINITY;
+}
+
+function strongerCompliantCandidate(left: CompliantCandidateV15, right: CompliantCandidateV15): number {
+  if (left.remainingStructuralDeficitTotal !== right.remainingStructuralDeficitTotal) {
+    return left.remainingStructuralDeficitTotal - right.remainingStructuralDeficitTotal;
+  }
+  return right.cap - left.cap;
+}
+
 export async function buildCommanderDeckUnderWholeBudgetV15(
   commanders: ScryfallCard[],
   options: WholeDeckBudgetBuildOptionsV15,
@@ -171,6 +195,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
   const resolveDeckCards = dependencies.resolveDeckCards ?? (async (ids: CardIdentifierInput[]) => getCardsByIdentifiers(ids));
   const caps = capSchedule(candidateBudgetUsd, optionalSlots, options.maxUsdPerCard);
   const attempts: Array<Record<string, unknown>> = [];
+  const compliantCandidates: CompliantCandidateV15[] = [];
   let cheapestAuditedTotal: number | null = null;
 
   for (const cap of caps) {
@@ -192,6 +217,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
       continue;
     }
 
+    const remainingDeficitTotal = remainingStructuralDeficitTotal(draft);
     const audit = await auditExactDeckBudgetV15(decklist, options.maxDeckUsd, resolveDeckCards);
     if (audit.auditedTotalUsd !== null) {
       cheapestAuditedTotal = cheapestAuditedTotal === null ? audit.auditedTotalUsd : Math.min(cheapestAuditedTotal, audit.auditedTotalUsd);
@@ -203,26 +229,44 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
       auditStatus: audit.status,
       auditedTotalUsd: audit.auditedTotalUsd,
       overageUsd: audit.overageUsd,
+      remainingStructuralDeficitTotal: Number.isFinite(remainingDeficitTotal) ? remainingDeficitTotal : null,
       unknownPriceEntries: audit.unknownPriceEntries,
       unresolvedEntries: audit.unresolvedEntries,
     });
 
     if (audit.withinBudget) {
-      return {
-        status: 'budget-compliant',
-        maxDeckUsd: money(options.maxDeckUsd),
-        estimatedFixedCommanderCostUsd: commanderEstimateUsd,
-        remainingCandidateBudgetEstimateUsd: money(candidateBudgetUsd),
-        chosenCandidateSearchCapUsd: cap,
-        userMaxUsdPerCard: options.maxUsdPerCard ?? null,
-        budgetAudit: audit,
-        attempts,
+      compliantCandidates.push({
+        cap,
         draft,
         decklist,
-        constraint: `US$${money(options.maxDeckUsd)} maximum total deck budget`,
-        caveat: 'Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. Commander cost is treated as fixed budget pressure for the search heuristic; internally generated candidate caps never become a fake commander price rule. The search remains heuristic and is not proof of the globally strongest possible list under the same budget.',
-      };
+        audit,
+        remainingStructuralDeficitTotal: remainingDeficitTotal,
+      });
     }
+  }
+
+  if (compliantCandidates.length > 0) {
+    compliantCandidates.sort(strongerCompliantCandidate);
+    const selected = compliantCandidates[0] as CompliantCandidateV15;
+    return {
+      status: 'budget-compliant',
+      maxDeckUsd: money(options.maxDeckUsd),
+      estimatedFixedCommanderCostUsd: commanderEstimateUsd,
+      remainingCandidateBudgetEstimateUsd: money(candidateBudgetUsd),
+      chosenCandidateSearchCapUsd: selected.cap,
+      userMaxUsdPerCard: options.maxUsdPerCard ?? null,
+      budgetAudit: selected.audit,
+      attempts,
+      compliantCandidateCount: compliantCandidates.length,
+      selectionBasis: 'fewest remaining structural deficits, then widest candidate search cap',
+      selectedRemainingStructuralDeficitTotal: Number.isFinite(selected.remainingStructuralDeficitTotal)
+        ? selected.remainingStructuralDeficitTotal
+        : null,
+      draft: selected.draft,
+      decklist: selected.decklist,
+      constraint: `US$${money(options.maxDeckUsd)} maximum total deck budget`,
+      caveat: 'Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. The search compares every generated budget-compliant draft rather than stopping at the first cheap fit. Candidate quality is ordered by remaining structural deficits and then by the widest legal candidate search cap; raw spend is never treated as power by itself. Commander cost is fixed budget pressure, and the search remains heuristic rather than proof of the globally strongest possible list.',
+    };
   }
 
   return {
