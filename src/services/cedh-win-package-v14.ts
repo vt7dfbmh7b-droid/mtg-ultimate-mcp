@@ -1,4 +1,5 @@
 import type { ScryfallCard } from '../types/scryfall.js';
+import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
 import { validateCommanderDeck } from './commander-rules.js';
 import { parseDecklist, resolveEntryCard, type DeckEntry, type ParsedDeck } from './deck.js';
 import {
@@ -10,7 +11,6 @@ import {
 import {
   getCardsByIdentifiers,
   getCardsByNames,
-  inferCardRoles,
   type CardIdentifierInput,
 } from './scryfall.js';
 import { estimateCommanderBracket, findDeckCombos } from './spellbook.js';
@@ -41,6 +41,7 @@ interface WinPlanV14 {
   results: string[];
   description: string;
   commanderCentric: boolean;
+  independentFromExistingWins: boolean;
   score: number;
 }
 
@@ -148,10 +149,45 @@ function bracketScore(tag: string | null): number {
   return 0;
 }
 
+function winningComboCardSets(
+  comboData: Record<string, unknown>,
+  commanderNames: Set<string>,
+): Array<Set<string>> {
+  const included = Array.isArray(comboData.included) ? comboData.included.map(record) : [];
+  const sets: Array<Set<string>> = [];
+  for (const variant of included) {
+    const results = Array.isArray(variant.results) ? variant.results.map(String) : [];
+    if (!isWinResultV14(results)) continue;
+    const cards = Array.isArray(variant.cards) ? variant.cards.map(record) : [];
+    const names = new Set(cards
+      .filter((card) => card.mustBeCommander !== true)
+      .map((card) => typeof card.name === 'string' ? normalize(card.name) : '')
+      .filter((name) => Boolean(name) && !commanderNames.has(name)));
+    if (names.size > 0) sets.push(names);
+  }
+  return sets;
+}
+
+export function winningPlanIsIndependentV14(
+  comboData: Record<string, unknown>,
+  planCardNames: string[],
+  commanderCardNames: string[] = [],
+): boolean {
+  const commanders = new Set(commanderCardNames.map(normalize));
+  const existingWinningSets = winningComboCardSets(comboData, commanders);
+  if (existingWinningSets.length === 0) return false;
+  const planSet = new Set(planCardNames.map(normalize).filter((name) => !commanders.has(name)));
+  if (planSet.size === 0) return false;
+  return existingWinningSets.every((existing) => ![...planSet].some((name) => existing.has(name)));
+}
+
 function planWinningNearCombos(parsed: ParsedDeck, comboData: Record<string, unknown>, maxMissingCards: number): WinPlanV14[] {
   const near = Array.isArray(comboData.almostIncluded) ? comboData.almostIncluded.map(record) : [];
   const counts = deckCounts(parsed);
   const commanders = new Set(parsed.commanders.map((entry) => normalize(entry.name)));
+  const commanderNames = [...commanders];
+  const existingWinningSets = winningComboCardSets(comboData, commanders);
+  const hasExistingWinningCore = existingWinningSets.length > 0;
   const seen = new Set<string>();
   const plans: WinPlanV14[] = [];
 
@@ -181,10 +217,15 @@ function planWinningNearCombos(parsed: ParsedDeck, comboData: Record<string, unk
 
     const tag = typeof variant.bracketTag === 'string' ? variant.bracketTag : null;
     const commanderCentric = cardNames.some((name) => commanders.has(normalize(name)));
+    const independentFromExistingWins = winningPlanIsIndependentV14(comboData, cardNames, commanderNames);
+    const independenceAdjustment = hasExistingWinningCore
+      ? (independentFromExistingWins ? 420 : -120)
+      : 0;
     const score = (missingNames.length === 1 ? 90 : 55)
       + bracketScore(tag)
       + winResultScore(results)
-      + (commanderCentric ? 90 : 0);
+      + (commanderCentric ? 90 : 0)
+      + independenceAdjustment;
     plans.push({
       id,
       bracketTag: tag,
@@ -193,6 +234,7 @@ function planWinningNearCombos(parsed: ParsedDeck, comboData: Record<string, unk
       results,
       description: typeof variant.description === 'string' ? variant.description : '',
       commanderCentric,
+      independentFromExistingWins,
       score,
     });
   }
@@ -202,7 +244,7 @@ function planWinningNearCombos(parsed: ParsedDeck, comboData: Record<string, unk
 
 function slowCardPressure(card: ScryfallCard, protectedNames: Set<string>): number {
   if (card.type_line.toLocaleLowerCase().includes('land') || protectedNames.has(normalize(card.name))) return -999;
-  const roles = new Set(inferCardRoles(card));
+  const roles = new Set(effectiveCardRolesV15(card));
   let pressure = Math.max(0, card.cmc - 2) * 15;
   if (card.cmc >= 5) pressure += 24;
   if (roles.has('board wipe')) pressure += 12;
@@ -214,6 +256,7 @@ function slowCardPressure(card: ScryfallCard, protectedNames: Set<string>): numb
   if (roles.has('spot interaction') && card.cmc <= 2) pressure -= 45;
   if (roles.has('protection') && card.cmc <= 2) pressure -= 35;
   if (roles.has('repeatable draw') && card.cmc <= 3) pressure -= 38;
+  if (roles.has('creature sacrifice outlet')) pressure -= 35;
   return pressure;
 }
 
@@ -344,6 +387,7 @@ export async function completeBestCedhWinPackageV14(
         comboId: plan.id,
         results: plan.results,
         missingNames: plan.missingNames,
+        independentFromExistingWins: plan.independentFromExistingWins,
         status: 'missing-card-has-no-eligible-printing-or-is-illegal',
         unavailable,
       });
@@ -370,6 +414,7 @@ export async function completeBestCedhWinPackageV14(
       comboId: plan.id,
       results: plan.results,
       missingNames: plan.missingNames,
+      independentFromExistingWins: plan.independentFromExistingWins,
       status: verifiedPlan ? 'verified-winning-combo-gain' : 'winning-combo-not-verified-after-rebuild',
       beforeWinningCombos: beforeWinningIds.size,
       afterWinningCombos: afterWinningIds.size,
@@ -385,6 +430,7 @@ export async function completeBestCedhWinPackageV14(
         comboId: plan.id,
         bracketTag: plan.bracketTag,
         commanderCentric: plan.commanderCentric,
+        independentFromExistingWins: plan.independentFromExistingWins,
         comboCardNames: plan.cardNames,
         results: plan.results,
         description: plan.description,
@@ -404,7 +450,7 @@ export async function completeBestCedhWinPackageV14(
       bracketEvidence: bracket,
       printingPolicy: describePrintingPolicyV08(policy),
       audit,
-      guidance: 'This cEDH gate only accepts a package when the rebuilt deck gains the exact planned Commander Spellbook combo and its reported result is deterministically win-oriented. Lifegain-only, value-only, standalone infinite-mana, draw-your-library, and bounded life-loss or mill outputs do not satisfy this gate.',
+      guidance: 'This cEDH gate verifies a deterministic Commander Spellbook win package after rebuilding. When the starting deck already has a winning core, independent packages that do not share a critical non-commander card with existing wins are prioritized over duplicate variants. If no independent eligible route can be completed, a redundant winning variant remains an allowed fallback. Lifegain-only, value-only, standalone infinite-mana, draw-your-library, and bounded life-loss or mill outputs do not satisfy this gate.',
     };
   }
 
