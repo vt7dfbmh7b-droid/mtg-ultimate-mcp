@@ -447,13 +447,14 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
     };
 
     if (targetBracket >= 5) {
+      const refinementSearchCapUsd = Math.min(selected.cap, options.maxUsdPerCard ?? selected.cap);
       try {
         const refinement = await refineCandidate(selected.decklist, {
           ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
           ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
           ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
           ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
-          ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
+          maxUsdPerCard: refinementSearchCapUsd,
           ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
           protectedCards: effectiveMustInclude,
           requireVerifiedCombo: true,
@@ -466,6 +467,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
           postBudgetRefinement = {
             attempted: true,
             status: 'rejected-no-final-decklist',
+            refinementSearchCapUsd: money(refinementSearchCapUsd),
             quality,
             refinement,
           };
@@ -473,6 +475,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
           postBudgetRefinement = {
             attempted: true,
             status: 'rejected-no-material-safe-improvement',
+            refinementSearchCapUsd: money(refinementSearchCapUsd),
             quality,
             refinement,
           };
@@ -484,6 +487,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
             postBudgetRefinement = {
               attempted: true,
               status: 'accepted',
+              refinementSearchCapUsd: money(refinementSearchCapUsd),
               quality,
               budgetAudit: refinedAudit,
               refinement,
@@ -492,6 +496,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
             postBudgetRefinement = {
               attempted: true,
               status: 'rejected-hard-budget',
+              refinementSearchCapUsd: money(refinementSearchCapUsd),
               quality,
               budgetAudit: refinedAudit,
               refinement,
@@ -502,6 +507,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
         postBudgetRefinement = {
           attempted: true,
           status: 'refinement-unavailable',
+          refinementSearchCapUsd: money(refinementSearchCapUsd),
           error: error instanceof Error ? error.message : String(error),
         };
       }
@@ -527,7 +533,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
       baseDecklist: selected.decklist,
       decklist: finalDecklist,
       constraint: `US$${money(options.maxDeckUsd)} maximum total deck budget`,
-      caveat: 'Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. The search compares every generated budget-compliant draft rather than stopping at the first cheap fit. Candidate quality is ordered by remaining structural deficits and then by the widest legal candidate search cap; raw spend is never treated as power by itself. Bracket-5 whole-budget construction attempts a broader generic verified Commander Spellbook win-seed search, then routes the selected legal draft through strict efficiency and mana-base refinement. A refined list is accepted only when its verified win count is preserved, its average nonland mana value does not worsen, at least one material high-power construction signal improves, and a second independent exact-printing whole-deck audit still passes the original hard budget. Explicit exclusions, required cards and hard budget truth remain authoritative. The search remains heuristic rather than proof of the globally strongest possible list.',
+      caveat: 'Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. The search compares every generated budget-compliant draft rather than stopping at the first cheap fit. Candidate quality is ordered by remaining structural deficits and then by the widest legal candidate search cap; raw spend is never treated as power by itself. Bracket-5 whole-budget construction attempts a broader generic verified Commander Spellbook win-seed search, then routes the selected legal draft through strict efficiency and mana-base refinement. The post-refinement search inherits the selected compliant draft’s candidate price pressure (or a tighter explicit user per-card limit) so unrestricted premium staples cannot consume the whole-deck budget by accident. A refined list is accepted only when its verified win count is preserved, its average nonland mana value does not worsen, at least one material high-power construction signal improves, and a second independent exact-printing whole-deck audit still passes the original hard budget. Explicit exclusions, required cards and hard budget truth remain authoritative. The search remains heuristic rather than proof of the globally strongest possible list.',
     };
   }
 
