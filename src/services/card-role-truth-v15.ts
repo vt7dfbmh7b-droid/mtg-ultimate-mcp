@@ -7,6 +7,8 @@ export interface ManaRoleTruthV15 {
   externalBoardPrerequisite: boolean;
   grantsManaAbilityToAnotherPermanent: boolean;
   paidActivationBeforeMana: boolean;
+  createsManaToken: boolean;
+  triggeredMana: boolean;
   reliableImmediateFastMana: boolean;
   reliableLowCostManaAcceleration: boolean;
   reasons: string[];
@@ -37,6 +39,14 @@ function paidActivationBeforeMana(textValue: string): boolean {
     || /\{t\}[^:]{0,40}pay \{(?:[1-9]\d*|x)\}[^:]{0,20}:\s*add\b/.test(textValue);
 }
 
+function createsManaToken(textValue: string): boolean {
+  return /\bcreate [^.\n]{0,140}\b(?:treasure|gold|powerstone) tokens?\b/.test(textValue);
+}
+
+function hasTriggeredMana(textValue: string): boolean {
+  return /\b(?:when|whenever|at the beginning of|at the start of) [^.\n]{0,180}\badd\b/.test(textValue);
+}
+
 export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
   const oracle = text(card);
   const manaCost = getCardManaCost(card);
@@ -46,6 +56,8 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
   const externalBoardPrerequisite = hasExternalBoardPrerequisite(oracle);
   const grantsManaAbility = grantsManaAbilityToAnotherPermanent(oracle);
   const paidActivation = paidActivationBeforeMana(oracle);
+  const manaToken = createsManaToken(oracle);
+  const triggered = hasTriggeredMana(oracle);
   const variableSpellCost = /\{x\}/i.test(manaCost) || /\b(?:multi)?kicker\b/.test(oracle);
   const reasons: string[] = [];
 
@@ -53,6 +65,8 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
   if (externalBoardPrerequisite) reasons.push('mana ability requires another board-state prerequisite');
   if (grantsManaAbility) reasons.push('card grants mana production to another permanent instead of producing mana immediately itself');
   if (paidActivation) reasons.push('mana ability requires paid mana before it produces mana');
+  if (manaToken) reasons.push('mana comes indirectly from creating a Treasure/Gold/Powerstone rather than immediate card-native production');
+  if (triggered) reasons.push('mana production is gated behind a triggered event');
   if (variableSpellCost) reasons.push('mana production depends on an X/kicker-style paid setup');
 
   const reliableLowCostManaAcceleration = mana
@@ -62,6 +76,8 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
     && !externalBoardPrerequisite
     && !grantsManaAbility
     && !paidActivation
+    && !manaToken
+    && !triggered
     && !variableSpellCost;
   const reliableImmediateFastMana = reliableLowCostManaAcceleration && card.cmc <= 1;
 
@@ -71,6 +87,8 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
     externalBoardPrerequisite,
     grantsManaAbilityToAnotherPermanent: grantsManaAbility,
     paidActivationBeforeMana: paidActivation,
+    createsManaToken: manaToken,
+    triggeredMana: triggered,
     reliableImmediateFastMana,
     reliableLowCostManaAcceleration,
     reasons,
@@ -79,8 +97,9 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
 
 /**
  * Fail-closed role truth for consumers that use generic Scryfall role inference as evidence.
- * Conditional or delayed mana may still be useful in a supported deck, but it cannot impersonate
- * reliable fast mana merely because its Oracle text contains "add" and its mana value is low.
+ * Conditional, indirect, triggered, or delayed mana may still be useful in a supported deck, but
+ * it cannot impersonate reliable fast mana merely because its Oracle text/reminder text contains
+ * a mana ability or creates a mana-producing token.
  */
 export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   const roles = new Set(inferCardRoles(card));
