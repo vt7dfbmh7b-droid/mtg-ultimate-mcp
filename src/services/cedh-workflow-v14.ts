@@ -5,7 +5,11 @@ import {
   countWinningCombosV14,
   type CedhWinPackageOptionsV14,
 } from './cedh-win-package-v14.js';
-import { refineCedhEfficiencyV14, type CedhEfficiencyOptionsV14 } from './cedh-efficiency-v14.js';
+import {
+  refineCedhEfficiencyV14,
+  winningComboCoreCountV14,
+  type CedhEfficiencyOptionsV14,
+} from './cedh-efficiency-v14.js';
 import { optimizeCedhManaBaseV14, type CedhManaBaseOptionsV14 } from './cedh-manabase-v14.js';
 import { validateCommanderDeck } from './commander-rules.js';
 import { buildDeckMetrics, parseDecklist, type ParsedDeck } from './deck.js';
@@ -117,6 +121,7 @@ export async function assessCedhReadinessV14(
   const delayedManaCount = Number(effectiveRoleCounts['delayed mana acceleration'] ?? 0);
   const includedCombos = comboCount(combos);
   const winningCombos = countWinningCombosV14(combos);
+  const winningComboCoreCount = winningComboCoreCountV14(combos);
   const ruthlessCombos = ruthlessComboCount(combos);
   const strategicallyRelevantCombos = strategicComboCount(bracket);
   const bracketTag = typeof bracket.bracketTag === 'string' ? bracket.bracketTag : null;
@@ -124,6 +129,7 @@ export async function assessCedhReadinessV14(
   const constructionSignals = {
     verifiedCompleteCombo: includedCombos > 0,
     verifiedWinningCombo: winningCombos > 0,
+    independentWinningComboCore: winningComboCoreCount > 0,
     ruthlessCombo: ruthlessCombos > 0,
     strategicallyRelevantCombo: strategicallyRelevantCombos > 0,
     spellbookRuthlessDeckTag: bracketTag === 'R',
@@ -134,6 +140,7 @@ export async function assessCedhReadinessV14(
   };
 
   const strongCompetitiveConstructionSignals = constructionSignals.verifiedWinningCombo
+    && constructionSignals.independentWinningComboCore
     && (constructionSignals.ruthlessCombo || constructionSignals.strategicallyRelevantCombo || constructionSignals.spellbookRuthlessDeckTag)
     && constructionSignals.lowAverageNonlandManaValue
     && constructionSignals.freeInteractionPresent;
@@ -143,6 +150,7 @@ export async function assessCedhReadinessV14(
     bracketTag,
     includedCombos,
     winningCombos,
+    winningComboCoreCount,
     ruthlessCombos,
     strategicallyRelevantCombos,
     metrics: {
@@ -171,7 +179,12 @@ export async function assessCedhReadinessV14(
       delayedManaCount,
       rule: 'Conditional or delayed mana cannot satisfy competitive fast-mana evidence merely because Oracle text contains a mana ability.',
     },
-    caveat: 'This is a construction-readiness assessment, not a declaration that the deck is officially Bracket 5. A combo only satisfies the win-package gate when Commander Spellbook reports a win-oriented result; lifegain-only, value-only, and standalone infinite-mana engines do not qualify. Fast-mana evidence is fail-closed against delayed and prerequisite-dependent mana. Bracket 5/cEDH also depends on competitive intent, metagame knowledge, pilot decisions, and tournament-minded play.',
+    comboTruth: {
+      winningComboCount: winningCombos,
+      independentWinningComboCoreCount: winningComboCoreCount,
+      rule: 'Winning variants connected by a shared non-commander combo piece are one independent win core for redundancy/preservation evidence.',
+    },
+    caveat: 'This is a construction-readiness assessment, not a declaration that the deck is officially Bracket 5. A combo only satisfies the win-package gate when Commander Spellbook reports a win-oriented result; lifegain-only, value-only, and standalone infinite-mana engines do not qualify. Multiple winning variants that share a critical combo card do not become independent redundancy. Fast-mana evidence is fail-closed against delayed and prerequisite-dependent mana. Bracket 5/cEDH also depends on competitive intent, metagame knowledge, pilot decisions, and tournament-minded play.',
   };
 }
 
@@ -234,10 +247,11 @@ export async function refineCommanderForCedhV14(
   if (typeof manaBase.finalDecklist === 'string') currentDecklist = manaBase.finalDecklist;
 
   const finalAssessment = await assessCedhReadinessV14(currentDecklist, options);
-  const baselineWinningCombos = initialAlreadyHasWinningCombo
-    ? Number(initialAssessment.winningCombos ?? 0)
-    : Number(winPackage.afterWinningCombos ?? 1);
-  const comboWasPreserved = Number(finalAssessment.winningCombos ?? 0) >= baselineWinningCombos;
+  const baselineWinningComboCores = initialAlreadyHasWinningCombo
+    ? Math.max(1, Number(initialAssessment.winningComboCoreCount ?? 1))
+    : 1;
+  const finalWinningComboCores = Number(finalAssessment.winningComboCoreCount ?? 0);
+  const comboWasPreserved = finalWinningComboCores >= baselineWinningComboCores;
 
   return {
     status: finalAssessment.status === 'strong-competitive-construction-signals' && comboWasPreserved
@@ -251,8 +265,10 @@ export async function refineCommanderForCedhV14(
     },
     finalAssessment,
     comboWasPreserved,
+    baselineWinningComboCores,
+    finalWinningComboCores,
     finalDecklist: currentDecklist,
-    guidance: 'The cEDH path is win-package-first: verify a real winning package, protect it, improve only with strict high-value roles, optimize lands separately, then independently reassess. Competitive role evidence uses fail-closed role truth for conditional/delayed mana. It does not translate targetBracket=5 into an automatic Bracket 5 claim.',
+    guidance: 'The cEDH path is win-package-first: verify a real winning package, protect it, improve only with strict high-value roles, optimize lands separately, then independently reassess. Winning redundancy/preservation is measured by independent combo cores rather than duplicate variants sharing the same lynchpin. Competitive role evidence uses fail-closed role truth for conditional/delayed mana. It does not translate targetBracket=5 into an automatic Bracket 5 claim.',
   };
 }
 
