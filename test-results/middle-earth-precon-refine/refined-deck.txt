@@ -17,7 +17,6 @@
 1 Banquet Guests (LTC) 47 *N*
 1 Bilbo, Birthday Celebrant (LTC) 48 *N*
 1 Farmer Cotton (LTC) 55 *N*
-1 Merry, Warden of Isengard (LTC) 61 *N*
 1 Pippin, Warden of Isengard (LTC) 65 *N*
 1 Treebeard, Gracious Host (LTC) 73 *N*
 1 Hithlain Rope (LTC) 76 *N*
@@ -49,6 +48,7 @@
 1 Eagles of the North (LTR) 7 *N*
 1 Rosie Cotton of South Lane (LTR) 27 *N*
 1 Shire Shirriff (LTR) 30 *N*
+1 Mirkwood Bats (LTR) 95 *N*
 1 Generous Ent (LTR) 169 *N*
 1 Path to Exile (LTC) 175 *N*
 1 Swords to Plowshares (LTC) 178 *N*
@@ -88,6 +88,6 @@
 1 Everflowing Chalice (LTC) 278 *N*
 1 Bilbo's Gambit (HOB) 5 *N*
 1 The Arkenstone // Seek the Heart (HOB) 170 *N*
-1 Lake-town Lookout (HOB) 18 *N*
+1 Reanimate (LTC) 206 *N*
+1 Bofur, Reliable Guardian // Concerted Care (HOB) 6 *N*
 1 Orcish Medicine (LTR) 104 *N*
-1 Whispersilk Cloak (LTC) 292 *N*
