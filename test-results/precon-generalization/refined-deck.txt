@@ -9,7 +9,6 @@
 1 Defile (40K) 199 *N*
 1 Go for the Throat (40K) 201 *N*
 1 Endless Atlas (40K) 237 *N*
-1 Gilded Lotus (40K) 239 *N*
 1 Mystic Forge (40K) 246 *N*
 1 Sculpting Steel (40K) 247 *N*
 1 Cranial Plating (40K) 236 *N*
@@ -58,6 +57,7 @@
 1 Ghost Ark (40K) 156 *N*
 1 Necron Monolith (40K) 161 *N*
 1 Resurrection Orb (40K) 165 *N*
+1 Sceptre of Eternal Glory (40K) 166 *N*
 1 Tomb Fortress (40K) 168 *N*
 1 Flayed One (40K) 34 *N*
 1 Hexmark Destroyer (40K) 36 *N*
@@ -66,11 +66,11 @@
 1 Skorpekh Destroyer (40K) 57 *N*
 1 Triarch Praetorian (40K) 66 *N*
 1 Night Scythe (40K) 162 *N*
-1 Everflowing Chalice (C14) 239 *N*
-1 Feed the Swarm (TLE) 257 *N*
+1 Deadly Dispute (MSC) 794 *N*
+1 Bitter Triumph (TDC) 173 *N*
+1 Dark Ritual (SUM) 99 *N*
 1 Lively Dirge (OTJ) 93 *N*
-1 Tragic Slip (C14) 167 *N*
-1 Skullclamp (MSC) 210 *N*
 1 Basilisk Collar (MM3) 216 *F*
 1 Swiftfoot Boots (A25) 234 *N*
-1 Deadly Dispute (MSC) 794 *N*
+1 Everflowing Chalice (C14) 239 *N*
+1 Skullclamp (MSC) 210 *N*
