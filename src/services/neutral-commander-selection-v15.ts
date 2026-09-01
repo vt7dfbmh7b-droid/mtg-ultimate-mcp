@@ -1,11 +1,12 @@
 import type { ScryfallCard } from '../types/scryfall.js';
+import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
 import {
   printingMatchesPolicyV08,
   resolvePrintingPolicyV08,
   type PrintingPolicyInputV08,
 } from './printing-policy-v08.js';
 import { boundedScryfallSearchV15 } from './scryfall-paged-search-v15.js';
-import { getCardOracleText, getCardsByIdentifiers, inferCardRoles } from './scryfall.js';
+import { getCardOracleText, getCardsByIdentifiers } from './scryfall.js';
 
 export type NeutralArchetypeV15 =
   | 'combat-tokens'
@@ -101,7 +102,7 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
     'big-mana',
   ];
   const table = new Map(archetypes.map((archetype) => [archetype, { score: 0, evidence: [] as string[] }]));
-  const roles = new Set(cards.flatMap((card) => inferCardRoles(card)));
+  const roles = new Set(cards.flatMap((card) => effectiveCardRolesV15(card)));
   const text = cards.map(oracle).join(' // ');
   const typeText = cards.map((card) => card.type_line.toLocaleLowerCase()).join(' // ');
   const repeatableOrPayoffLifeGain = /whenever [^.]*\byou gain(?:ed)?\b[^.]*\blife\b/i.test(text)

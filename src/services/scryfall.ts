@@ -334,6 +334,9 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (/extra combat/.test(text) || /additional combat/.test(text)) roles.add('extra combat');
   if (/you win the game|loses the game/.test(text)) roles.add('alternate win condition');
   if (/whenever .* loses? life|deals? damage to each opponent|each opponent loses/.test(text)) roles.add('life drain');
+  if (/\bwhenever\b[^.]{0,220}\b(?:each opponent|target (?:opponent|player)|an opponent)\b[^.]{0,120}\bloses?\b[^.]{0,40}\blife\b/.test(text)) {
+    roles.add('repeatable life drain');
+  }
   if (/\+1\/\+1 counter/.test(text)) roles.add('+1/+1 counters');
   if (/equipment|equip /.test(text) || type.includes('equipment')) roles.add('equipment');
   if (/copy target .* spell|copy .* triggered ability|copy .* activated ability/.test(text)) roles.add('copy effect');

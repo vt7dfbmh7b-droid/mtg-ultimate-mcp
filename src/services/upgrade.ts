@@ -6,6 +6,7 @@ import {
   type CommanderStrategyContextV15,
 } from './commander-strategy-affinity-v15.js';
 import { commanderTargetPressureV15 } from './commander-target-pressure-v15.js';
+import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
 import { buildDeckMetrics, type ParsedDeck } from './deck.js';
 import { discoverEligiblePoolV15 } from './neutral-deck-builder-v15.js';
 import {
@@ -14,7 +15,7 @@ import {
   selectEligiblePrintingV08,
   type ResolvedPrintingPolicyV08,
 } from './printing-policy-v08.js';
-import { inferCardRoles, searchCards, summarizeCard } from './scryfall.js';
+import { searchCards, summarizeCard } from './scryfall.js';
 
 export interface UpgradeOptions {
   targetBracket?: number;
@@ -267,10 +268,9 @@ function themedRoleSearchQuery(
 }
 
 function cardMatchesRole(card: ScryfallCard, role: string, targetGate: UpgradeTargetGateV15 | null = null): boolean {
-  const roles = new Set(inferCardRoles(card));
+  const roles = new Set(effectiveCardRolesV15(card));
   if (targetGate === 'cheap-interaction') {
-    return card.cmc <= 2
-      && (roles.has('spot interaction') || roles.has('countermagic') || roles.has('free interaction'));
+    return roles.has('cheap interaction');
   }
   if (targetGate === 'fast-mana') return roles.has('fast mana');
   if (targetGate === 'free-interaction') return roles.has('free interaction');
@@ -313,7 +313,7 @@ function candidateScore(
   target: number | null = null,
   targetGate: UpgradeTargetGateV15 | null = null,
 ): number {
-  const roles = inferCardRoles(card);
+  const roles = effectiveCardRolesV15(card);
   let score = cardMatchesRole(card, role, targetGate) ? 100 : 0;
   if (role === 'average-nonland-mv') score += Math.max(0, (target ?? BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15) - card.cmc) * 20;
   score += Math.max(0, 8 - card.cmc) * 3;
@@ -334,7 +334,7 @@ export function contextualCutPressureV15(
   matchedStrategies: string[];
   reasons: string[];
 } {
-  const roles = inferCardRoles(card).filter((role) => !['creature', 'equipment', 'etb synergy'].includes(role));
+  const roles = effectiveCardRolesV15(card).filter((role) => !['creature', 'equipment', 'etb synergy'].includes(role));
   let cutPressure = Math.max(0, card.cmc - 3) * 2;
   if (roles.length === 0) cutPressure += 5;
   if (card.cmc >= 6) cutPressure += 4;
@@ -391,7 +391,7 @@ function cutCandidates(
       const themeProtectionApplied = protectThemeMatches && themeMatch ? 4 : 0;
       const cutPressure = Number((context.cutPressure - themeProtectionApplied).toFixed(1));
       return {
-        card: summarizeCard(card),
+        card: { ...summarizeCard(card), roles: effectiveCardRolesV15(card) },
         heuristicCutPressure: cutPressure,
         strategyAffinity: {
           score: context.strategyAffinityScore,
@@ -417,8 +417,7 @@ export function selectUpgradeCutCandidatesV15(
 ): Array<Record<string, unknown>> {
   return candidates
     .filter((item) => Number(item.heuristicCutPressure) > 0 || allowNonPositivePressure)
-    .sort((a, b) => Number(b.heuristicCutPressure) - Number(a.heuristicCutPressure))
-    .slice(0, 15);
+    .sort((a, b) => Number(b.heuristicCutPressure) - Number(a.heuristicCutPressure));
 }
 
 function mergeCardsByName(...groups: ScryfallCard[][]): ScryfallCard[] {
@@ -577,7 +576,7 @@ export async function suggestDeckUpgrades(
         ? `Advances the currently failed authoritative Bracket-${targetBracket} ${deficit.targetGate} gate (${targetDirection})`
         : `Addresses the detected ${deficit.role} deficit`;
       candidates.push({
-        card: summarizeCard(card),
+        card: { ...summarizeCard(card), roles: effectiveCardRolesV15(card) },
         score: Number(candidateScore(card, deficit.role, strategyContext, deficit.target, deficit.targetGate).toFixed(1)),
         authoritativeTargetGate: deficit.prioritySource === 'authoritative-target-gate' ? deficit.targetGate : null,
         strategyAffinity: {

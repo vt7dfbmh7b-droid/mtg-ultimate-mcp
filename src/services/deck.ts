@@ -1,5 +1,6 @@
 import type { ScryfallCard } from '../types/scryfall.js';
-import { getCardManaCost, inferCardRoles, summarizeCard } from './scryfall.js';
+import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
+import { getCardManaCost, summarizeCard } from './scryfall.js';
 
 export type DeckFinish = 'foil' | 'etched' | 'nonfoil';
 
@@ -222,7 +223,7 @@ export function buildDeckMetrics(parsed: ParsedDeck, cards: ScryfallCard[]): Dec
     const card = resolveEntryCard(entry, cards);
     if (!card) continue;
     const type = card.type_line.toLowerCase();
-    const roles = new Set(inferCardRoles(card));
+    const roles = new Set(effectiveCardRolesV15(card));
     const isLand = type.includes('land');
 
     if (isLand) {
@@ -242,7 +243,7 @@ export function buildDeckMetrics(parsed: ParsedDeck, cards: ScryfallCard[]): Dec
     if (roles.has('tutor')) tutorCount += entry.quantity;
     if (roles.has('spot interaction') || roles.has('countermagic') || roles.has('board wipe') || roles.has('free interaction')) {
       interactionCount += entry.quantity;
-      if (card.cmc <= 2 || roles.has('free interaction')) cheapInteractionCount += entry.quantity;
+      if (roles.has('cheap interaction')) cheapInteractionCount += entry.quantity;
     }
     if (roles.has('protection') || roles.has('board protection')) protectionCount += entry.quantity;
     if (roles.has('graveyard recursion')) recursionCount += entry.quantity;

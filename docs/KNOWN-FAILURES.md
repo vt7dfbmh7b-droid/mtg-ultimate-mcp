@@ -342,6 +342,36 @@ Protection: drawing one card per controlled creature, or cards equal to the numb
 
 Status: deterministic regressions and the current-source local exact Squirreled Away control pass. The accepted package no longer cuts Shamanic Revelation or any marquee token/aristocrats payoff; it makes one supported swap and stops when no further package clears the stricter identity gates. Exact-source GitHub revalidation remains pending.
 
+## KF-035 — Printed mana value hides the operational cost of mana and interaction
+
+Observed: the exact-source Food and Fellowship run at `3e2729a...` accepted Great Oak Guardian → Giant's Boulder and credited the incoming one-mana artifact as fast mana, mana acceleration, a persistent colored source and cheap interaction. Its mana ability requires one mana to produce one mana, while its removal ability requires seven mana. The same raw-role path also let zero-mana graveyard hate satisfy Necron's generic free/cheap-interaction gate.
+
+Risk: checking only a card's printed mana value and the words `add`, `destroy` or `exile target` manufactures structural improvement. Color filtering can impersonate acceleration, late activated removal can impersonate an early response, and graveyard-only hate can replace battlefield/stack interaction.
+
+Protection: production deck metrics, candidate filtering, scoring and upgrade summaries now consume the existing fail-closed V0.15 role boundary. Mana truth compares fixed activated output with the mana paid into the ability, preserves genuinely net-positive paid rocks, and removes filtering-only acceleration/fast-mana/source credit. Interaction truth separates graveyard-only effects, activated-only effects and the minimum activation cost; the cheap-interaction gate requires operationally cheap generic interaction rather than merely a low printed mana value. Name-independent regressions cover a one-for-one color filter with seven-mana removal, a net-positive paid rock, zero-mana graveyard hate and ordinary one-mana removal.
+
+Status: prevented in TypeScript and 895/895 deterministic tests locally; exact-source Food, Necron and full control-family revalidation is pending.
+
+## KF-036 — Same-archetype affinity treats payoff, engine and enabler roles as interchangeable
+
+Observed: the exact-source Squirreled Away run at `3e2729a...` accepted End-Raze Forerunners → Not Dead After All and Poison-Tip Archer → Diabolic Intent. Broad combat-token/aristocrats affinity stayed flat or rose, but a go-wide finisher/haste payoff became narrow protection and a repeatable death-drain payoff became a tutor/sacrifice enabler. Per-swap evidence listed the unreplaced roles but still called both pairings preserved.
+
+Risk: a single archetype score can become a fungible currency. Adding more setup, protection or search then numerically compensates for removing the payoff or bridge that gives the setup a purpose, producing coherent-looking generic good-stuff instead of a stronger version of the deck's plan.
+
+Protection: role truth now distinguishes repeatable death-drain payoffs from one-shot life-loss riders. For every maximum-protected substantive strategy card, swap preservation separately checks exact engine/payoff components associated with that archetype; incoming same-archetype affinity cannot replace a missing go-wide payoff, haste engine, repeatable death payoff, sacrifice outlet, recursion engine or other mapped functional component. Name-independent regressions cover combat payoff → token enabler and repeatable death payoff → sacrifice tutor.
+
+Status: prevented in TypeScript and 895/895 deterministic tests locally; exact-source Squirreled Away and full control-family revalidation is pending.
+
+## KF-037 — A fixed 15-card cut shortlist hides safe surplus cards
+
+Observed: both exact-source Marvel controls at `3e2729a...` repeatedly paired every candidate addition with one unsafe or insufficient cut. Broad Marvel tried Helm of the Host for all five additions and correctly rejected each package for strategy loss; focused Marvel could find only one three-point curve reduction when the failed curve gate needed a larger cumulative repair. Safe higher-mana surplus cards existed in the legal 99 but fell outside the fixed top-15 cut-pressure slice.
+
+Risk: robust downstream structure and strategy checks cannot select a safe card they never receive. A narrow heuristic shortlist can force repeated pressure on a protected engine, stop short of a reachable target, or misreport that no supported improvement exists.
+
+Protection: cut discovery now exposes the complete finite resolved nonland cut pool to the existing structural, colored-mana, curve, strategy-component and deterministic tie-break filters. The Commander deck itself bounds the pool, so no unbounded provider search is introduced. A regression fills the old 15 slots with maximum-protected high-pressure engines and proves the pairer still reaches the lower-pressure safe surplus cut beyond them.
+
+Status: prevented in TypeScript and 895/895 deterministic tests locally; focused/broad Marvel and full exact-source control-family revalidation is pending.
+
 ## Adding a failure
 
 Every new material failure should record:

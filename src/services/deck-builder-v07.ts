@@ -6,6 +6,7 @@ import {
   SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15,
 } from './commander-strategy-affinity-v15.js';
 import { commanderTargetPressureV15, selectInjectableTargetAwareWinPackageV15 } from './commander-target-pressure-v15.js';
+import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
 import { buildDeckMetrics, parseDecklist, type DeckEntry, type ParsedDeck } from './deck.js';
 import { discoverGeneralWinPackagesV15 } from './general-win-package-v15.js';
 import { discoverEligiblePoolV15 } from './neutral-deck-builder-v15.js';
@@ -16,7 +17,7 @@ import {
   selectEligiblePrintingV08,
   type ResolvedPrintingPolicyV08,
 } from './printing-policy-v08.js';
-import { getCardsByIdentifiers, getCardsByNames, inferCardRoles, searchCards, summarizeCard } from './scryfall.js';
+import { getCardsByIdentifiers, getCardsByNames, searchCards, summarizeCard } from './scryfall.js';
 import { simulateDeckGameplayV06 } from './simulation-v06.js';
 import {
   BRACKET_FOUR_AUTHORITATIVE_TARGETS_V15,
@@ -107,7 +108,7 @@ function legalIdentity(card: ScryfallCard, colors: string[]): boolean {
 }
 
 function roleSet(card: ScryfallCard): Set<string> {
-  return new Set(inferCardRoles(card));
+  return new Set(effectiveCardRolesV15(card));
 }
 
 function roleContribution(card: ScryfallCard): Partial<Record<keyof RoleTargetsV07, number>> {
@@ -141,7 +142,7 @@ function roleQuery(role: keyof RoleTargetsV07): string {
 }
 
 function staticCandidateScore(card: ScryfallCard): number {
-  const roles = inferCardRoles(card);
+  const roles = effectiveCardRolesV15(card);
   let score = Math.max(0, 10 - card.cmc) * 1.5;
   if (roles.includes('fast mana')) score += 8;
   if (roles.includes('free interaction')) score += 8;
@@ -627,6 +628,7 @@ export interface UpgradeSwapStrategyPreservationV15 {
   cutRoles: string[];
   addRoles: string[];
   unreplacedRoles: string[];
+  unreplacedStrategyComponentRoles: string[];
   meaningfulStrategyLoss: boolean;
   verdict: 'preserved' | 'meaningful-strategy-loss';
 }
@@ -659,6 +661,18 @@ const UPGRADE_CANDIDATE_ROLES_V15: UpgradeAddressedRoleV15[] = [
   'average-nonland-mv', ...UPGRADE_STRUCTURAL_ROLES_V15, 'win-package',
 ];
 const MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15 = 4;
+const STRATEGY_COMPONENT_ROLES_V15: Record<string, ReadonlySet<string>> = {
+  'combat-tokens': new Set(['go-wide payoff', 'extra combat', 'untap engine', 'haste']),
+  'equipment-voltron': new Set(['equipment', 'protection', 'board protection']),
+  counters: new Set(['+1/+1 counters', 'proliferate']),
+  'graveyard-reanimator': new Set(['graveyard recursion']),
+  'artifact-engine': new Set(['artifact sacrifice outlet', 'sacrifice outlet', 'graveyard recursion']),
+  aristocrats: new Set(['repeatable life drain', 'sacrifice outlet', 'creature sacrifice outlet']),
+  'food-lifegain': new Set(['repeatable life drain']),
+  'spells-control': new Set(['countermagic', 'stax/control', 'copy effect']),
+  'value-engine': new Set(['repeatable draw']),
+  'big-mana': new Set(['mana acceleration', 'cost reduction', 'untap engine']),
+};
 
 function recordNumber(value: unknown): number {
   return typeof value === 'number' && Number.isFinite(value) ? value : 0;
@@ -739,7 +753,7 @@ function upgradeSwapStrategyPreservationV15(
   const addRoles = [...summarizedRoles(summarizedCard(add))].sort((left, right) => left.localeCompare(right));
   const addRoleSet = new Set(addRoles);
   const locallyUnreplacedStrategies = cutAffinity.matchedStrategies.filter((strategy) => !addStrategies.has(strategy));
-  const meaningfulStrategyLoss = cutAffinity.protectionApplied >= 4
+  const affinityStrategyLoss = cutAffinity.protectionApplied >= 4
     && cutAffinity.matchedStrategies.some((strategy) => {
       const commanderScore = cutAffinity.commanderScoreByStrategy.get(strategy) ?? 0;
       const cutScore = cutAffinity.scoreByStrategy.get(strategy) ?? 0;
@@ -747,6 +761,17 @@ function upgradeSwapStrategyPreservationV15(
       return commanderScore >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15
         && cutScore - addScore >= MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15;
     });
+  const substantiveCutStrategies = cutAffinity.matchedStrategies.filter((strategy) => (
+    (cutAffinity.commanderScoreByStrategy.get(strategy) ?? 0) >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15
+  ));
+  const strategyComponentRoles = new Set(substantiveCutStrategies.flatMap((strategy) => (
+    [...(STRATEGY_COMPONENT_ROLES_V15[strategy] ?? [])]
+  )));
+  const unreplacedStrategyComponentRoles = cutRoles.filter((role) => (
+    strategyComponentRoles.has(role) && !addRoleSet.has(role)
+  ));
+  const meaningfulStrategyLoss = affinityStrategyLoss
+    || cutAffinity.protectionApplied >= 4 && unreplacedStrategyComponentRoles.length > 0;
   return {
     cutStrategyAffinityScore: Number(cutAffinity.score.toFixed(3)),
     addStrategyAffinityScore: Number(addAffinity.score.toFixed(3)),
@@ -757,6 +782,7 @@ function upgradeSwapStrategyPreservationV15(
     cutRoles,
     addRoles,
     unreplacedRoles: cutRoles.filter((role) => !addRoleSet.has(role)),
+    unreplacedStrategyComponentRoles,
     meaningfulStrategyLoss,
     verdict: meaningfulStrategyLoss ? 'meaningful-strategy-loss' : 'preserved',
   };
@@ -831,7 +857,7 @@ export function auditUpgradeStrategyPreservationV15(
     meaningfulLosses,
     strategyDeltas,
     swapImpacts,
-    acceptanceRule: 'Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity.',
+    acceptanceRule: 'Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card.',
   };
 }
 
@@ -862,8 +888,7 @@ function asUpgradeTargetGateV15(value: unknown): UpgradeTargetGateV15 | null {
 function summaryMatchesCountTargetGateV15(card: Record<string, unknown>, gate: UpgradeCountTargetGateV15): boolean {
   const roles = summarizedRoles(card);
   if (gate === 'early-plays') return !recordString(card.typeLine).toLocaleLowerCase().includes('land') && recordNumber(card.manaValue) <= 2;
-  if (gate === 'cheap-interaction') return recordNumber(card.manaValue) <= 2
-    && (roles.has('spot interaction') || roles.has('countermagic') || roles.has('free interaction'));
+  if (gate === 'cheap-interaction') return roles.has('cheap interaction');
   if (gate === 'fast-mana') return roles.has('fast mana');
   if (gate === 'free-interaction') return roles.has('free interaction');
   return roles.has('tutor');
@@ -1286,7 +1311,7 @@ async function buildWinPackagePriorityV15(
     selections.push({
       role: 'win-package',
       candidate: {
-        card: summarizeCard(card),
+        card: { ...summarizeCard(card), roles: effectiveCardRolesV15(card) },
         score: selected.score,
         recommendedPrinting: {
           set: printing.set,

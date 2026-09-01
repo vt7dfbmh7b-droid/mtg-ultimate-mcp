@@ -14,10 +14,22 @@ export interface ManaRoleTruthV15 {
   summoningSicknessDelay: boolean;
   spendingRestriction: boolean;
   fixedManaOutput: number | null;
+  positiveActivationManaProfit: boolean;
+  manaFilteringOnly: boolean;
   positiveImmediateManaProfit: boolean;
   manaNeutralOneShot: boolean;
   reliableImmediateFastMana: boolean;
   reliableLowCostManaAcceleration: boolean;
+  reasons: string[];
+}
+
+export interface InteractionRoleTruthV15 {
+  genericDirectInteraction: boolean;
+  graveyardOnlyInteraction: boolean;
+  activatedOnlyInteraction: boolean;
+  minimumActivationManaCost: number | null;
+  reliableFreeInteraction: boolean;
+  cheapInteraction: boolean;
   reasons: string[];
 }
 
@@ -109,6 +121,77 @@ function fixedManaOutput(textValue: string): number | null {
   return outputs.length > 0 ? Math.max(...outputs) : null;
 }
 
+function manaCostValue(cost: string): number | null {
+  let total = 0;
+  for (const match of cost.matchAll(/\{([^}]+)\}/g)) {
+    const symbol = match[1]?.trim().toLocaleUpperCase() ?? '';
+    if (!symbol || ['T', 'Q', 'E'].includes(symbol)) continue;
+    if (symbol === 'X') return null;
+    if (/^\d+$/.test(symbol)) {
+      total += Number.parseInt(symbol, 10);
+      continue;
+    }
+    if (/^[WUBRGCS]$/.test(symbol)) {
+      total += 1;
+      continue;
+    }
+    if (/^[WUBRGCSP]\/[WUBRGCSP]$/.test(symbol)) {
+      total += symbol.includes('P') ? 0 : 1;
+      continue;
+    }
+    if (/^2\/[WUBRGCSP]$/.test(symbol)) {
+      total += symbol.endsWith('/P') ? 0 : 1;
+      continue;
+    }
+    return null;
+  }
+  return total;
+}
+
+function activatedManaEconomy(textValue: string): {
+  positiveProfit: boolean;
+  filteringOnly: boolean;
+} {
+  const resolved: Array<{ input: number; output: number }> = [];
+  for (const match of textValue.matchAll(/(?:^|\n)([^:\n]{0,220}):\s*([^\n]{0,300}\badd\b[^\n]*)/g)) {
+    const input = manaCostValue(match[1] ?? '');
+    const output = fixedManaOutput(match[2] ?? '');
+    if (input === null || output === null) continue;
+    resolved.push({ input, output });
+  }
+  return {
+    positiveProfit: resolved.some((ability) => ability.output > ability.input),
+    filteringOnly: resolved.length > 0 && resolved.every((ability) => ability.output <= ability.input),
+  };
+}
+
+function hasGenericDirectInteraction(textValue: string): boolean {
+  const withoutGraveyardExile = textValue
+    .replace(/\bexile (?:up to [^.]{0,80})?target [^.]{0,120}\b(?:from|in) (?:a|the|target player's|that player's|your) graveyard\b[^.]*/g, '')
+    .replace(/\bexile target player's graveyard\b[^.]*/g, '');
+  return /\bcounter target (?:spell|activated ability|triggered ability)\b/.test(withoutGraveyardExile)
+    || /\b(?:destroy|exile)(?: up to [^.]{0,80})? target\b/.test(withoutGraveyardExile)
+    || /\breturn target [^.]{0,120} to (?:its|their) owner's hand\b/.test(withoutGraveyardExile)
+    || /\btap target (?:artifact|creature|permanent)\b/.test(withoutGraveyardExile)
+    || /\btarget [^.]{0,100}(?:creature|planeswalker)[^.]{0,60}gets? -(?:x|\d+)\/-(?:x|\d+)\b/.test(withoutGraveyardExile)
+    || /\bdeals? [^.]{0,120} damage (?:to )?(?:any |up to one )?target\b/.test(withoutGraveyardExile);
+}
+
+function activatedInteractionCosts(textValue: string): number[] {
+  const costs: number[] = [];
+  for (const match of textValue.matchAll(/(?:^|\n)([^:\n]{0,220}):\s*([^\n]{0,400})/g)) {
+    if (!hasGenericDirectInteraction(match[2] ?? '')) continue;
+    const cost = manaCostValue(match[1] ?? '');
+    if (cost !== null) costs.push(cost);
+  }
+  return costs;
+}
+
+function interactionOutsideActivatedAbilities(textValue: string): boolean {
+  const withoutActivatedAbilities = textValue.replace(/(?:^|\n)[^:\n]{0,220}:\s*[^\n]{0,400}/g, '\n');
+  return hasGenericDirectInteraction(withoutActivatedAbilities);
+}
+
 function selfSacrificeManaConversion(card: ScryfallCard, textValue: string): boolean {
   const names = [card.name, ...(card.card_faces ?? []).map((face) => face.name)]
     .flatMap((name) => name.split('//'))
@@ -173,6 +256,7 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
   const summoningSicknessDelay = isCreature && tapActivationBeforeMana && !hasHaste;
   const spendingRestriction = hasSpendingRestriction(oracle);
   const fixedOutput = fixedManaOutput(oracle);
+  const activationEconomy = activatedManaEconomy(oracle);
   const selfSacrificeConversion = selfSacrificeManaConversion(card, oracle);
   const positiveImmediateManaProfit = fixedOutput !== null && fixedOutput > card.cmc;
   const manaNeutralOneShot = selfSacrificeConversion
@@ -191,6 +275,7 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
   if (summoningSicknessDelay) reasons.push('tap-based creature mana is not immediately available without haste');
   if (spendingRestriction) reasons.push('mana output has an explicit spending restriction');
   if (manaNeutralOneShot) reasons.push('one-shot self-sacrifice mana output does not exceed the mana spent to cast the card');
+  if (activationEconomy.filteringOnly) reasons.push('activated mana output does not exceed the mana paid into the ability');
   if (variableSpellCost) reasons.push('mana production depends on an X/kicker-style paid setup');
 
   const reliableLowCostManaAcceleration = mana
@@ -224,10 +309,49 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
     summoningSicknessDelay,
     spendingRestriction,
     fixedManaOutput: fixedOutput,
+    positiveActivationManaProfit: activationEconomy.positiveProfit,
+    manaFilteringOnly: activationEconomy.filteringOnly,
     positiveImmediateManaProfit,
     manaNeutralOneShot,
     reliableImmediateFastMana,
     reliableLowCostManaAcceleration,
+    reasons,
+  };
+}
+
+export function interactionRoleTruthV15(card: ScryfallCard): InteractionRoleTruthV15 {
+  const oracle = text(card);
+  const inferred = new Set(inferCardRoles(card));
+  const genericDirectInteraction = hasGenericDirectInteraction(oracle);
+  const graveyardOnlyInteraction = inferred.has('graveyard hate')
+    && (inferred.has('spot interaction') || inferred.has('free interaction'))
+    && !genericDirectInteraction;
+  const activationCosts = activatedInteractionCosts(oracle);
+  const hasInteractionOutsideActivation = interactionOutsideActivatedAbilities(oracle);
+  const activatedOnlyInteraction = genericDirectInteraction
+    && activationCosts.length > 0
+    && !hasInteractionOutsideActivation;
+  const minimumActivationManaCost = activationCosts.length > 0 ? Math.min(...activationCosts) : null;
+  const reliableFreeInteraction = inferred.has('free interaction')
+    && genericDirectInteraction
+    && !graveyardOnlyInteraction
+    && !activatedOnlyInteraction;
+  const cheapInteraction = genericDirectInteraction
+    && card.cmc <= 2
+    && (reliableFreeInteraction || !activatedOnlyInteraction || (minimumActivationManaCost ?? Number.POSITIVE_INFINITY) <= 2);
+  const reasons: string[] = [];
+  if (graveyardOnlyInteraction) reasons.push('interaction is restricted to graveyard cards or graveyards rather than generic battlefield/stack targets');
+  if (activatedOnlyInteraction && minimumActivationManaCost !== null) {
+    reasons.push(`generic interaction requires an activated mana cost of ${minimumActivationManaCost}`);
+  }
+  if (inferred.has('free interaction') && !reliableFreeInteraction) reasons.push('zero mana value or a free cast does not make an activated or graveyard-only effect free generic interaction');
+  return {
+    genericDirectInteraction,
+    graveyardOnlyInteraction,
+    activatedOnlyInteraction,
+    minimumActivationManaCost,
+    reliableFreeInteraction,
+    cheapInteraction,
     reasons,
   };
 }
@@ -245,19 +369,52 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   const roles = new Set(inferCardRoles(card));
   const oracle = text(card);
   const manaTruth = manaRoleTruthV15(card);
+  const interactionTruth = interactionRoleTruthV15(card);
   const sacrificeTruth = sacrificeRoleTruthV15(card);
   if (roles.has('fast mana') && !manaTruth.reliableImmediateFastMana) {
     roles.delete('fast mana');
     roles.add(manaTruth.delayed || manaTruth.summoningSicknessDelay ? 'delayed mana acceleration' : 'conditional mana acceleration');
   }
   if (roles.has('mana acceleration') && !manaTruth.reliableLowCostManaAcceleration) {
-    if (manaTruth.manaNeutralOneShot) {
+    if (manaTruth.manaFilteringOnly) {
+      roles.delete('mana acceleration');
+      roles.delete('mana rock');
+      roles.delete('mana dork');
+      roles.delete('persistent colored mana source');
+      roles.add('mana filtering');
+    } else if (manaTruth.manaNeutralOneShot) {
       roles.delete('mana acceleration');
       roles.add('mana storage');
     } else if (manaTruth.spendingRestriction || manaTruth.externalBoardPrerequisite || manaTruth.createsManaToken) {
       roles.delete('mana acceleration');
       roles.add('conditional mana acceleration');
     }
+  }
+  if (roles.has('persistent colored mana source') && (
+    manaTruth.manaFilteringOnly
+    || manaTruth.delayed
+    || manaTruth.externalBoardPrerequisite
+    || manaTruth.grantsManaAbilityToAnotherPermanent
+    || manaTruth.createsManaToken
+    || manaTruth.triggeredMana
+    || manaTruth.variableStateMana
+    || manaTruth.spendingRestriction
+    || manaTruth.manaNeutralOneShot
+  )) {
+    roles.delete('persistent colored mana source');
+  }
+  if (interactionTruth.graveyardOnlyInteraction) {
+    roles.delete('spot interaction');
+    roles.delete('free interaction');
+    roles.add('graveyard interaction');
+  } else if (roles.has('free interaction') && !interactionTruth.reliableFreeInteraction) {
+    roles.delete('free interaction');
+  }
+  if (
+    interactionTruth.cheapInteraction
+    || card.cmc <= 2 && (roles.has('countermagic') || roles.has('board wipe'))
+  ) {
+    roles.add('cheap interaction');
   }
   if (roles.has('graveyard recursion') && !hasActionableGraveyardRecursion(oracle)) {
     roles.delete('graveyard recursion');

@@ -250,7 +250,7 @@ test('later aspirational swaps cannot cut away a currently failed authoritative 
     }],
     [
       {
-        card: { name: 'Only Cheap Removal', roles: ['spot interaction'], manaValue: 1, typeLine: 'Instant' },
+        card: { name: 'Only Cheap Removal', roles: ['spot interaction', 'cheap interaction'], manaValue: 1, typeLine: 'Instant' },
         heuristicCutPressure: 20,
         strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
       },
@@ -792,4 +792,109 @@ test('aggregate archetype points cannot hide a meaningful loss in one pairing', 
   assert.equal(audit.swapImpacts[0]?.verdict, 'meaningful-strategy-loss');
   assert.equal(gate.eligible, false);
   assert.equal(gate.reason, 'package-causes-a-meaningful-commander-strategy-loss');
+});
+
+test('same-archetype affinity cannot replace a missing combat payoff component with a generic enabler', () => {
+  const audit = auditUpgradeStrategyPreservationV15([{
+    cut: {
+      card: { name: 'Outgoing Team Finisher', roles: ['go-wide payoff', 'haste'], manaValue: 7 },
+      strategyAffinity: {
+        score: 6,
+        protectionApplied: 4,
+        matchedStrategies: ['combat-tokens'],
+        matches: [{ archetype: 'combat-tokens', commanderScore: 18, cardScore: 6, overlapScore: 6 }],
+      },
+    },
+    add: {
+      card: { name: 'Incoming Token Enabler', roles: ['token production'], manaValue: 1 },
+      strategyAffinity: {
+        score: 6,
+        protectionApplied: 4,
+        matchedStrategies: ['combat-tokens'],
+        matches: [{ archetype: 'combat-tokens', commanderScore: 18, cardScore: 6, overlapScore: 6 }],
+      },
+    },
+  }]);
+  const gate = candidateStrategyPreservationGateV15({ strategyPreservation: audit });
+
+  assert.deepEqual(audit.swapImpacts[0]?.unreplacedStrategyComponentRoles, ['go-wide payoff', 'haste']);
+  assert.equal(audit.swapImpacts[0]?.meaningfulStrategyLoss, true);
+  assert.equal(gate.eligible, false);
+});
+
+test('same-archetype affinity cannot replace a repeatable aristocrats payoff with a tutor enabler', () => {
+  const audit = auditUpgradeStrategyPreservationV15([{
+    cut: {
+      card: { name: 'Outgoing Death Payoff', roles: ['repeatable life drain'], manaValue: 4 },
+      strategyAffinity: {
+        score: 7,
+        protectionApplied: 4,
+        matchedStrategies: ['aristocrats'],
+        matches: [{ archetype: 'aristocrats', commanderScore: 16, cardScore: 7, overlapScore: 7 }],
+      },
+    },
+    add: {
+      card: { name: 'Incoming Sacrifice Tutor', roles: ['sacrifice synergy', 'tutor'], manaValue: 2 },
+      strategyAffinity: {
+        score: 7,
+        protectionApplied: 4,
+        matchedStrategies: ['aristocrats'],
+        matches: [{ archetype: 'aristocrats', commanderScore: 16, cardScore: 7, overlapScore: 7 }],
+      },
+    },
+  }]);
+  const gate = candidateStrategyPreservationGateV15({ strategyPreservation: audit });
+
+  assert.deepEqual(audit.swapImpacts[0]?.unreplacedStrategyComponentRoles, ['repeatable life drain']);
+  assert.equal(gate.eligible, false);
+});
+
+test('curve repair inspects a safe surplus cut even when protected high-pressure cards fill the old shortlist', () => {
+  const protectedCuts = Array.from({ length: 15 }, (_, index) => ({
+    card: {
+      name: `Protected Engine ${String(index + 1).padStart(2, '0')}`,
+      roles: ['extra combat', 'haste'],
+      manaValue: 6,
+      typeLine: 'Creature — Test',
+    },
+    heuristicCutPressure: 20 - index,
+    strategyAffinity: {
+      score: 8,
+      protectionApplied: 4,
+      matchedStrategies: ['combat-tokens'],
+      matches: [{ archetype: 'combat-tokens', commanderScore: 18, cardScore: 8, overlapScore: 8 }],
+    },
+  }));
+  const safeCut = {
+    card: { name: 'Safe Surplus Five Drop', roles: [], manaValue: 5, typeLine: 'Creature — Test' },
+    heuristicCutPressure: 1,
+    strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+  };
+  const cutPool = selectUpgradeCutCandidatesV15([...protectedCuts, safeCut], true);
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{
+      role: 'average-nonland-mv' as const,
+      candidate: {
+        card: { name: 'Efficient One Drop', roles: [], manaValue: 1, typeLine: 'Artifact' },
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    }],
+    cutPool,
+    {
+      rampCount: 14,
+      drawCount: 14,
+      interactionCount: 18,
+      protectionCount: 8,
+      tutorCount: 8,
+      recursionCount: 4,
+      boardWipeCount: 2,
+      earlyPlayCount: 41,
+      roleCounts: { 'free interaction': 1 },
+    },
+    { ...bracketFiveTargets },
+  );
+
+  assert.equal(cutPool.length, 16);
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Safe Surplus Five Drop');
+  assert.equal(pairings[0]?.strategyPreservation.verdict, 'preserved');
 });
