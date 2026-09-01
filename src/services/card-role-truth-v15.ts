@@ -58,6 +58,7 @@ function paidActivationBeforeMana(textValue: string): boolean {
 
 function createsManaToken(textValue: string): boolean {
   return /\bcreate [^.\n]{0,140}\b(?:treasure|gold|powerstone) tokens?\b/.test(textValue)
+    || /\bcreate [^.\n]{0,180}\bcreature tokens?\b[^.\n]{0,80}\.\s*(?:it|they|those tokens?) (?:has|have) ["“]?sacrifice (?:this|these|those) (?:creature|token|tokens?)[^"”\n]{0,80}\badd\b/.test(textValue)
     || /\bcreate [^.\n]{0,180}\bcreature tokens?\b[^.\n]{0,180}\b(?:it|they|those tokens?) (?:has|have) ["“]?sacrifice (?:this|these|those) (?:creature|token|tokens?)[^"”\n]{0,80}\badd\b/.test(textValue)
     || /\bcreate [^.\n]{0,180}\bcreature tokens?\b[^.\n]{0,180}\bsacrifice (?:this|these|those) (?:creature|token|tokens?)[^"”\n]{0,80}\badd\b/.test(textValue);
 }
