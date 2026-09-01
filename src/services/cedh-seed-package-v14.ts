@@ -97,9 +97,12 @@ export function buildCedhSeedQueriesV14(maxPackageCards = 3, identity?: string):
   const maxCards = Math.max(2, Math.min(4, Math.trunc(maxPackageCards)));
   const identityToken = normalizeIdentityQuery(identity);
   const identityClause = identityToken ? ` identity<=${identityToken}` : '';
+  const resultFamilies = ['infinite', 'game', 'library'];
   const queries: string[] = [];
   for (let size = 2; size <= maxCards; size += 1) {
-    queries.push(`card=${size} is:winning legal:commander template=0 prerequisites<=1${identityClause}`);
+    for (const resultFamily of resultFamilies) {
+      queries.push(`card=${size} legal:commander template=0 prerequisites<=1${identityClause} result:${resultFamily}`);
+    }
   }
   return queries;
 }
@@ -420,7 +423,7 @@ export async function discoverCedhSeedWinPackageV14(
       queryAudit,
       audit,
       source: 'Commander Spellbook + Scryfall exact-printing verification',
-      guidance: 'The package is only a construction seed. Candidate selection evaluates deterministic wins across Spellbook bracket tags, reserves verification space for each supported package size, permits at most one lightweight prerequisite, and prefers lower-mana cards with useful roles outside the combo. The finished 100-card deck must still independently resolve, pass Commander legality and printing policy, and reproduce a winning combo through find-my-combos before it can satisfy the competitive win-package gate.',
+      guidance: 'The package is only a construction seed. Discovery uses deterministic result evidence rather than Commander Spellbook manual winning tags, then independently applies the local deterministic-win result gate. Candidate selection evaluates bracket tags only as supporting evidence, reserves verification space for each supported package size, permits at most one lightweight prerequisite, and prefers lower-mana cards with useful roles outside the combo. The finished 100-card deck must still independently resolve, pass Commander legality and printing policy, and reproduce a winning combo through find-my-combos before it can satisfy the competitive win-package gate.',
     };
   }
 
