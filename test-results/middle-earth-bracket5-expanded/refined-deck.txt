@@ -55,12 +55,12 @@
 1 Arcane Signet (HOC) 95
 1 The Reaver Cleaver (HOC) 94
 1 Prosperous Innkeeper (LTC) 256
-1 Peregrin Took (LTR) 181
 1 Seize the Spoils (SLD) 2556
+1 Peregrin Took (LTR) 181
 1 Saruman's Trickery (LTR) 68
 1 Samwise Gamgee (LTR) 222
-1 Dawn of Hope (LTC) 164
 1 Bothersome Noisemaker (HOB) 89
+1 Dawn of Hope (LTC) 164
 1 Dancing from Dark to Dawn (HOB) 123
 1 Vanquisher's Banner (LTC) 289
 1 Opt (LTC) 194
@@ -69,7 +69,7 @@
 1 Commander's Sphere (LTC) 276
 1 Bastion Protector (LTC) 162
 1 Farseek (LTC) 244
-1 Rampant Growth (LTC) 257
+1 Gleaming Splendor (HOB) 15
 1 Command Tower (LTC) 301
 1 Exotic Orchard (LTC) 307
 1 Cavern of Souls (LTC) 392z
