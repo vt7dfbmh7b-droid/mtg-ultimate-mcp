@@ -499,7 +499,7 @@ export async function suggestDeckUpgrades(
         exhaustiveWithinSafetyCeilings: false,
         eligiblePoolCards: null,
         roleSearchResultCap: 40,
-        note: 'Unrestricted Upgrade still uses bounded role-specific discovery; final candidates remain independently filtered by role and Commander legality.',
+        note: 'Unrestricted Upgrade uses bounded role-specific discovery and now checks the full discovered bounded result set for an eligible physical printing before declaring a role/gate empty; final candidates remain independently filtered by role and Commander legality.',
       };
 
   for (const deficit of candidatePriorities.slice(0, 5)) {
@@ -551,11 +551,18 @@ export async function suggestDeckUpgrades(
         return candidateScore(b, deficit.role, strategyContext, deficit.target, deficit.targetGate)
           - candidateScore(a, deficit.role, strategyContext, deficit.target, deficit.targetGate)
           || a.name.localeCompare(b.name);
-      })
-      .slice(0, Math.max(candidatesForPriority * 3, candidatesForPriority));
+      });
+    // Unrestricted role discovery is already capped at forty results. Inspect all of that bounded,
+    // ranked evidence for a qualifying physical printing before calling the gate empty. The older
+    // three-card pre-printing shortlist could exhaust on price/printing failures even when a valid
+    // lower-ranked candidate was already present in the same bounded Scryfall result set. Restricted
+    // discovery remains exhaustive and keeps the smaller pre-printing shortlist for request economy.
+    const rankedForPrinting = restrictedPoolActive
+      ? ranked.slice(0, Math.max(candidatesForPriority * 3, candidatesForPriority))
+      : ranked;
 
     const candidates: Array<Record<string, unknown>> = [];
-    for (const card of ranked) {
+    for (const card of rankedForPrinting) {
       if (candidates.length >= candidatesForPriority) break;
       const printing = await selectEligiblePrintingV08(card, printingPolicy, options.maxUsdPerCard);
       if (!printing) continue;
@@ -663,7 +670,7 @@ export async function suggestDeckUpgrades(
     caveats: [
       'Role-count targets are engineering heuristics for deck consistency, but failed Bracket-4/5 construction gates now outrank aspirational role targets. When several authoritative gates are failing, candidate generation gives each gate one slot per pass before allowing a single generic role to consume the package.',
       'Candidate ordering keeps the existing role fit, mana efficiency, and EDHREC/community-adoption signals, then reuses V0.15 commander strategy inference as an additional deck-context signal. Popularity or strategy affinity alone is not proof of optimality.',
-      'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window. Unrestricted Upgrade retains bounded role search for now.',
+      'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window. Unrestricted Upgrade retains bounded role search, but now scans the full discovered bounded role result set for an eligible physical printing instead of pre-truncating that evidence to three candidates for a one-slot gate.',
       'When a V0.15 controlled theme is below its minimum density, the engine uses the controlled theme query as a positive membership/ranking signal. Under a printing restriction, only cards already admitted by the exhaustive shared eligible pool can become candidates.',
       'Cut ordering uses the same V0.15 commander strategy context as additions. When the deck is at or below its controlled theme minimum, matching cards also receive a capped four-point cut-protection signal; final theme preservation is still enforced independently by refinement rather than by this heuristic alone.',
       'Automatic upgrade packages pair the nonland cut pool with nonland additions so a utility land cannot silently replace a spell; dedicated mana-base work should be handled explicitly.',
