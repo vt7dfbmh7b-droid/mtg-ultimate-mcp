@@ -51,7 +51,6 @@
 1 Plaguecrafter (BLC) 187 *N*
 1 Cache Grab (BLB) 167 *N*
 1 Chatterstorm (BLC) 210 *N*
-1 Poison-Tip Archer (BLC) 256 *N*
 1 Moldervine Reclamation (BLC) 255 *N*
 1 Ravenous Squirrel (BLC) 258 *N*
 1 Skyfisher Spider (BLC) 261 *N*
@@ -88,3 +87,4 @@
 4 Swamp (BLB) 374 *N*
 5 Forest (BLB) 377 *N*
 4 Forest (BLB) 378 *N*
+1 Blood Artist (AVR) 86 *N*
