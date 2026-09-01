@@ -5,6 +5,7 @@ import {
   type NeutralArchetypeV15,
   type NeutralStrategyScoreV15,
 } from './neutral-commander-selection-v15.js';
+import { getCardOracleText } from './scryfall.js';
 
 export interface CommanderStrategyContextV15 {
   commanderNames: string[];
@@ -59,6 +60,7 @@ export const SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15 = 6;
 const DECK_SUPPORTED_STRATEGY_MIN_SUPPORT_V15 = 6;
 const DECK_SUPPORTED_STRATEGY_MIN_BRIDGE_SUPPORT_V15 = 3;
 const DECK_SUPPORTED_STRATEGY_MIN_AFFINITY_V15 = 72;
+const MULTIPLAYER_SCOPE_QUALITY_BONUS_V15 = 2;
 
 export function substantiveCommanderStrategyAffinityScoreV15(
   affinity: CardCommanderStrategyAffinityV15,
@@ -70,6 +72,24 @@ export function substantiveCommanderStrategyAffinityScoreV15(
 
 function normalizeName(value: string): string {
   return value.trim().toLocaleLowerCase();
+}
+
+function repeatableTablewideOpponentPressureV15(card: ScryfallCard): boolean {
+  const oracle = getCardOracleText(card).toLocaleLowerCase();
+  const trigger = '\\b(?:when|whenever|at the beginning of|at the start of)\\b[^.\\n]{0,260}';
+  const activation = ':\\s*[^.\\n]{0,220}';
+  const tablewideLoss = '\\beach opponent\\b[^.\\n]{0,120}\\bloses? (?:\\d+|one|two|three|four|five|that much) life\\b';
+  const tablewideDamage = '\\bdeals? [^.\\n]{0,120} damage to each opponent\\b';
+  return new RegExp(`${trigger}(?:${tablewideLoss}|${tablewideDamage})`).test(oracle)
+    || new RegExp(`${activation}(?:${tablewideLoss}|${tablewideDamage})`).test(oracle);
+}
+
+function multiplayerStrategyQualityBonusV15(
+  card: ScryfallCard,
+  archetype: NeutralArchetypeV15,
+): number {
+  if (archetype !== 'aristocrats' && archetype !== 'food-lifegain') return 0;
+  return repeatableTablewideOpponentPressureV15(card) ? MULTIPLAYER_SCOPE_QUALITY_BONUS_V15 : 0;
 }
 
 /**
@@ -241,6 +261,11 @@ export function cardCommanderStrategyAffinityV15(
  * Measure whole-deck support against one anchored upgrade context. Keeping the same context on
  * both sides prevents a cut package from making a strategy disappear from the model and then
  * treating that missing identity as evidence that nothing was lost.
+ *
+ * For drain-centric Commander strategies, aggregate affinity also preserves a small, explicit
+ * multiplayer-scope premium for repeatable effects that pressure every opponent at once. A
+ * single-target drain effect can still replace one when the rest of the package compensates for
+ * that lost table-wide reach; it is no longer treated as automatically equivalent by the audit.
  */
 export function measureUpgradeDeckStrategySupportV15(
   parsed: ParsedDeck,
@@ -264,7 +289,9 @@ export function measureUpgradeDeckStrategySupportV15(
         .find((candidate) => candidate.archetype === strategy.archetype);
       if (!match || match.overlapScore <= 0) continue;
       supportCount += entry.quantity;
-      affinityTotal += match.overlapScore * entry.quantity;
+      affinityTotal += (
+        match.overlapScore + multiplayerStrategyQualityBonusV15(card, strategy.archetype)
+      ) * entry.quantity;
     }
     return {
       archetype: strategy.archetype,
@@ -284,7 +311,8 @@ export function measureUpgradeDeckStrategySupportV15(
  * Fail closed when an autonomous upgrade package reduces either the support-card density or the
  * aggregate affinity of any substantive starting strategy. A stronger package can freely replace
  * individual cards, but it must compensate within the same accepted package rather than spending
- * deck identity to satisfy generic role counts.
+ * deck identity to satisfy generic role counts. Aggregate affinity includes multiplayer-scope
+ * quality for repeatable table-wide drain in drain-centric strategies.
  */
 export function auditUpgradeDeckStrategyRetentionV15(
   beforeParsed: ParsedDeck,
@@ -334,6 +362,6 @@ export function auditUpgradeDeckStrategyRetentionV15(
     unresolvedAfter: after.unresolved,
     strategies,
     losses,
-    acceptanceRule: 'Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package.',
+    acceptanceRule: 'Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package.',
   };
 }
