@@ -342,9 +342,6 @@ export async function buildCommanderDeckDraftV07(
   const candidateMap = new Map<string, ScryfallCard>();
   const themeCandidateNames = new Set<string>();
 
-  // The existing V0.15 neutral builder already exhausts bounded printing-family/set pools before
-  // strategy scoring. Reuse that same pool here so a constrained targeted build does not hide
-  // on-plan cards behind the first 35-50 EDHREC-ordered role-search results.
   const restrictedPool = hasPrintingRestriction(printingPolicy)
     ? await discoverEligiblePoolV15(colors, printingPolicy, candidatePriceCapV07(options))
     : null;
@@ -610,6 +607,11 @@ interface UpgradePairingV15 {
   nonlandManaValueReduction?: number;
 }
 
+interface UpgradePairingOptionsV15 {
+  rejectMeaningfulStrategyLoss?: boolean;
+  maxPairs?: number;
+}
+
 interface UpgradeStrategyAffinityEvidenceV15 {
   score: number;
   protectionApplied: number;
@@ -734,8 +736,6 @@ function strategyAffinityEvidenceV15(item: Record<string, unknown>): UpgradeStra
     const fallback = score / matchedStrategies.length;
     for (const strategy of matchedStrategies) {
       scoreByStrategy.set(strategy, fallback);
-      // Backward-compatible evidence without explicit V0.15 matches treats its affinity
-      // score as command-zone support. Production callers always provide explicit matches.
       commanderScoreByStrategy.set(strategy, fallback);
     }
   }
@@ -959,19 +959,13 @@ function upgradeStructuralStateV15(
   };
 }
 
-/**
- * Pair the already-ranked additions with cuts by authoritative target movement first, then
- * marginal structural preservation.
- * Candidate generation, cut pressure, commander-strategy protection, budgets, printings and
- * simulation remain unchanged; this only stops independent IN/OUT rankings from accidentally
- * undoing the role deficit that an incoming card is meant to repair.
- */
 export function pairUpgradeSwapsByStructureV15(
   additions: UpgradeAddSelectionV15[],
   cutPool: Array<Record<string, unknown>>,
   currentMetrics: Record<string, unknown>,
   structuralTargets: Record<string, unknown>,
   targetBracket = 5,
+  options: UpgradePairingOptionsV15 = {},
 ): UpgradePairingV15[] {
   const state = upgradeStructuralStateV15(currentMetrics, structuralTargets);
   const bracket = clampBracket(targetBracket);
@@ -1017,10 +1011,14 @@ export function pairUpgradeSwapsByStructureV15(
   const persistentColoredManaSourceTarget = minimumPersistentColoredManaSourcesV15(
     recordNumber(currentMetrics.commanderColorCount),
   );
+  const maxPairs = options.maxPairs === undefined
+    ? Number.POSITIVE_INFINITY
+    : Math.max(0, Math.trunc(options.maxPairs));
   const remainingCuts = [...cutPool];
   const pairs: UpgradePairingV15[] = [];
 
   for (const selection of additions) {
+    if (pairs.length >= maxPairs) break;
     if (selection.role === 'average-nonland-mv' && remainingCurveReduction <= 0.0001) continue;
     if (remainingCuts.length === 0) break;
     const addCard = summarizedCard(selection.candidate);
@@ -1036,10 +1034,6 @@ export function pairUpgradeSwapsByStructureV15(
     );
     const deficitBeforeSwap = structuralDeficitTotalV15(counts, state.targets);
     const candidateCuts = (selection.role === 'average-nonland-mv'
-      // The curve lane exists to remove cards above the early-play band. Letting it trade a
-      // premium one- or two-mana spell for a marginally cheaper card games the average while
-      // consuming the low-cost infrastructure the target is meant to create. Role-specific
-      // lanes may still make a supported 2→1 upgrade (for example, fast mana for slow ramp).
       ? remainingCuts.filter((cut) => recordNumber(summarizedCard(cut).manaValue) > Math.max(2, addManaValue))
       : [...remainingCuts])
       .filter((cut) => {
@@ -1113,6 +1107,10 @@ export function pairUpgradeSwapsByStructureV15(
     });
     const cut = candidateCuts[0];
     if (!cut) continue;
+    const strategyPreservation = upgradeSwapStrategyPreservationV15(selection.candidate, cut);
+    if (options.rejectMeaningfulStrategyLoss
+      && selection.role !== 'win-package'
+      && strategyPreservation.meaningfulStrategyLoss) continue;
     const cutIndex = remainingCuts.indexOf(cut);
     if (cutIndex < 0) continue;
     remainingCuts.splice(cutIndex, 1);
@@ -1134,7 +1132,7 @@ export function pairUpgradeSwapsByStructureV15(
       cut,
       addressedRole: selection.role,
       structuralDeficitAfterSwap: structuralDeficitTotalV15(counts, state.targets),
-      strategyPreservation: upgradeSwapStrategyPreservationV15(selection.candidate, cut),
+      strategyPreservation,
       persistentColoredManaSourcesAfterSwap: persistentColoredManaSources,
       persistentColoredManaSourceFloor,
       ...(selectionTargetGate ? { authoritativeTargetGate: selectionTargetGate } : {}),
@@ -1374,24 +1372,32 @@ export async function buildSimulationBackedUpgradePlanV07(
       chosenAdds.push(selection);
     }
   }
-  for (const group of groups) {
-    const role = recordString(group.role) as UpgradeAddressedRoleV15;
-    if (!UPGRADE_CANDIDATE_ROLES_V15.includes(role) || role === 'win-package') continue;
-    for (const candidate of (group.candidates ?? []) as Array<Record<string, unknown>>) {
-      if (chosenAdds.length >= swapCapacity) break;
+
+  const candidateLanes = groups
+    .map((group) => ({
+      role: recordString(group.role) as UpgradeAddressedRoleV15,
+      candidates: Array.isArray(group.candidates) ? group.candidates as Array<Record<string, unknown>> : [],
+    }))
+    .filter((lane) => UPGRADE_CANDIDATE_ROLES_V15.includes(lane.role) && lane.role !== 'win-package');
+  const candidateDepth = candidateLanes.reduce((depth, lane) => Math.max(depth, lane.candidates.length), 0);
+  for (let depth = 0; depth < candidateDepth; depth += 1) {
+    for (const lane of candidateLanes) {
+      const candidate = lane.candidates[depth];
+      if (!candidate) continue;
       const name = candidateName(candidate);
       if (!name || addNames.has(name.toLocaleLowerCase())) continue;
       addNames.add(name.toLocaleLowerCase());
-      chosenAdds.push({ candidate, role });
+      chosenAdds.push({ candidate, role: lane.role });
     }
-    if (chosenAdds.length >= swapCapacity) break;
   }
+
   const pairings = pairUpgradeSwapsByStructureV15(
     chosenAdds,
     cutPool,
     (suggestions.currentMetrics ?? {}) as Record<string, unknown>,
     (suggestions.structuralTargets ?? {}) as Record<string, unknown>,
     options.targetBracket ?? 4,
+    { rejectMeaningfulStrategyLoss: true, maxPairs: swapCapacity },
   );
   const strategyPreservation = auditUpgradeStrategyPreservationV15(pairings);
   const chosenCuts = pairings.map((pair) => pair.cut);
@@ -1484,7 +1490,8 @@ export async function buildSimulationBackedUpgradePlanV07(
     sourceUpgradeAnalysis: suggestions,
     caveats: [
       'V0.7 does not automatically claim the suggested swaps are final. It deliberately returns the whole candidate deck and before/after evidence so an AI or player can reject a swap that harms theme or a preferred win route.',
-      'IN/OUT pairing rejects meaningful commander-strategy losses before comparing structural deficits, target-gate movement and cut pressure. Every package carries explicit cut-role and strategy-affinity evidence; Bracket-5 verified packages are selected only when their missing seeds fit the current swap package, and any already-present pieces of that selected route are temporarily protected from cuts during atomic injection.',
+      'IN/OUT pairing can inspect ranked backup additions across each structural lane. Autonomous non-win-package planning skips a candidate when its best structurally legal cut would cause a meaningful commander-strategy loss, then tries the next bounded backup without consuming the cut or swap slot. Final package-level strategy preservation remains independently audited.',
+      'Bracket-5 verified packages remain atomic: the planner does not silently drop a verified package seed merely to satisfy the backup-addition shortcut.',
       'Same-seed simulation improves comparability but does not remove multiplayer variance, pilot decisions, hidden information, or meta effects.',
     ],
   };
