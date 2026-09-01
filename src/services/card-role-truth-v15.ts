@@ -57,7 +57,9 @@ function paidActivationBeforeMana(textValue: string): boolean {
 }
 
 function createsManaToken(textValue: string): boolean {
-  return /\bcreate [^.\n]{0,140}\b(?:treasure|gold|powerstone) tokens?\b/.test(textValue);
+  return /\bcreate [^.\n]{0,140}\b(?:treasure|gold|powerstone) tokens?\b/.test(textValue)
+    || /\bcreate [^.\n]{0,180}\bcreature tokens?\b[^.\n]{0,180}\b(?:it|they|those tokens?) (?:has|have) ["“]?sacrifice (?:this|these|those) (?:creature|token|tokens?)[^"”\n]{0,80}\badd\b/.test(textValue)
+    || /\bcreate [^.\n]{0,180}\bcreature tokens?\b[^.\n]{0,180}\bsacrifice (?:this|these|those) (?:creature|token|tokens?)[^"”\n]{0,80}\badd\b/.test(textValue);
 }
 
 function hasTriggeredMana(textValue: string): boolean {
@@ -174,7 +176,7 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
   if (externalBoardPrerequisite) reasons.push('mana ability requires another board-state prerequisite');
   if (grantsManaAbility) reasons.push('card grants mana production to another permanent instead of producing mana immediately itself');
   if (paidActivation) reasons.push('mana ability requires paid mana before it produces mana');
-  if (manaToken) reasons.push('mana comes indirectly from creating a Treasure/Gold/Powerstone rather than immediate card-native production');
+  if (manaToken) reasons.push('mana comes indirectly from creating a mana-producing token rather than immediate card-native production');
   if (triggered) reasons.push('mana production is gated behind a triggered event');
   if (variableStateMana) reasons.push('mana output scales from another zone/board/game-state quantity and may produce little or no acceleration');
   if (summoningSicknessDelay) reasons.push('tap-based creature mana is not immediately available without haste');
@@ -241,7 +243,7 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
     if (manaTruth.manaNeutralOneShot) {
       roles.delete('mana acceleration');
       roles.add('mana storage');
-    } else if (manaTruth.spendingRestriction || manaTruth.externalBoardPrerequisite) {
+    } else if (manaTruth.spendingRestriction || manaTruth.externalBoardPrerequisite || manaTruth.createsManaToken) {
       roles.delete('mana acceleration');
       roles.add('conditional mana acceleration');
     }
