@@ -126,10 +126,10 @@
         "haste": 7,
         "extra combat": 5,
         "untap engine": 5,
-        "creature": 20,
+        "creature": 19,
         "cost reduction": 5,
         "card draw": 20,
-        "graveyard recursion": 4,
+        "graveyard recursion": 5,
         "+1/+1 counters": 2,
         "countermagic": 3,
         "cheap interaction": 12,
@@ -143,6 +143,7 @@
         "persistent colored mana source": 13,
         "mana dork": 3,
         "card selection": 5,
+        "board-scaling card draw": 1,
         "board wipe": 2,
         "fast mana": 2,
         "tutor": 9,
@@ -152,7 +153,7 @@
         "creature tutor": 1,
         "board protection": 2,
         "free interaction": 1,
-        "go-wide payoff": 3,
+        "go-wide payoff": 2,
         "delayed mana acceleration": 2,
         "mana filtering": 1,
         "land ramp": 1,
@@ -169,7 +170,7 @@
       "interactionCount": 20,
       "cheapInteractionCount": 12,
       "protectionCount": 9,
-      "recursionCount": 4,
+      "recursionCount": 5,
       "boardWipeCount": 2,
       "persistentColoredManaSourceCount": 13,
       "structuralSignals": []
@@ -182,58 +183,12 @@
     "roundsAccepted": 3,
     "totalSwaps": 3,
     "candidatePackagesPerRound": 5,
-    "estimatedUpgradeSpendUsd": 11.9,
+    "estimatedUpgradeSpendUsd": 7.96,
     "swaps": [
-      {
-        "out": "Armor Wars",
-        "in": "Brainstorm",
-        "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.7 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
-        "recommendedPrinting": {
-          "set": "SLD",
-          "collectorNumber": "7019",
-          "finish": "nonfoil",
-          "priceUsd": 4.4
-        },
-        "structuralPairing": {
-          "addressedRole": "average-nonland-mv",
-          "remainingStructuralDeficitAfterSwap": 1,
-          "authoritativeTargetGate": "average-nonland-mv",
-          "nonlandManaValueReduction": 3,
-          "persistentColoredManaSourcesAfterSwap": 13,
-          "persistentColoredManaSourceFloor": 8,
-          "strategyPreservation": {
-            "cutStrategyAffinityScore": 5,
-            "addStrategyAffinityScore": 5,
-            "cutStrategyProtectionApplied": 4,
-            "cutMatchedStrategies": [
-              "value-engine"
-            ],
-            "addMatchedStrategies": [
-              "value-engine"
-            ],
-            "locallyUnreplacedStrategies": [],
-            "cutRoles": [
-              "card draw",
-              "cost reduction",
-              "spot interaction"
-            ],
-            "addRoles": [
-              "card draw"
-            ],
-            "unreplacedRoles": [
-              "cost reduction",
-              "spot interaction"
-            ],
-            "unreplacedStrategyComponentRoles": [],
-            "meaningfulStrategyLoss": false,
-            "verdict": "preserved"
-          }
-        }
-      },
       {
         "out": "Fantastic Bounce",
         "in": "Ponder",
-        "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.65 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+        "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.7 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
         "recommendedPrinting": {
           "set": "MAR",
           "collectorNumber": "13",
@@ -280,12 +235,12 @@
       {
         "out": "Chromatic Lantern",
         "in": "Vandalblast",
-        "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.61 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+        "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.65 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
         "recommendedPrinting": {
           "set": "MSC",
           "collectorNumber": "168",
           "finish": "nonfoil",
-          "priceUsd": 1.23
+          "priceUsd": 1.21
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -323,6 +278,56 @@
             "verdict": "preserved"
           }
         }
+      },
+      {
+        "out": "Electro, Assaulting Battery",
+        "in": "Currency Converter",
+        "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.62 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+        "recommendedPrinting": {
+          "set": "MSC",
+          "collectorNumber": "197",
+          "finish": "nonfoil",
+          "priceUsd": 0.48
+        },
+        "structuralPairing": {
+          "addressedRole": "average-nonland-mv",
+          "remainingStructuralDeficitAfterSwap": 1,
+          "authoritativeTargetGate": "average-nonland-mv",
+          "nonlandManaValueReduction": 2,
+          "persistentColoredManaSourcesAfterSwap": 12,
+          "persistentColoredManaSourceFloor": 8,
+          "strategyPreservation": {
+            "cutStrategyAffinityScore": 0,
+            "addStrategyAffinityScore": 12,
+            "cutStrategyProtectionApplied": 0,
+            "cutMatchedStrategies": [],
+            "addMatchedStrategies": [
+              "combat-tokens",
+              "value-engine"
+            ],
+            "locallyUnreplacedStrategies": [],
+            "cutRoles": [
+              "creature",
+              "mana acceleration",
+              "spot interaction"
+            ],
+            "addRoles": [
+              "card draw",
+              "graveyard hate",
+              "graveyard utility",
+              "token production",
+              "treasure"
+            ],
+            "unreplacedRoles": [
+              "creature",
+              "mana acceleration",
+              "spot interaction"
+            ],
+            "unreplacedStrategyComponentRoles": [],
+            "meaningfulStrategyLoss": false,
+            "verdict": "preserved"
+          }
+        }
       }
     ],
     "rounds": [
@@ -336,9 +341,9 @@
           5
         ],
         "candidatePackagesGeneratedAcrossAttempts": 5,
-        "winningCandidate": 2,
-        "estimatedSpendUsd": 4.4,
-        "improvementScore": 7.13,
+        "winningCandidate": 3,
+        "estimatedSpendUsd": 6.27,
+        "improvementScore": 3.67,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -357,9 +362,9 @@
           5
         ],
         "candidatePackagesGeneratedAcrossAttempts": 5,
-        "winningCandidate": 2,
-        "estimatedSpendUsd": 6.27,
-        "improvementScore": 14.908,
+        "winningCandidate": 1,
+        "estimatedSpendUsd": 1.21,
+        "improvementScore": 5.856,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -373,14 +378,14 @@
         "accepted": true,
         "acceptedSwaps": 1,
         "candidatePackagesGenerated": 5,
-        "candidatePackagesEligible": 4,
+        "candidatePackagesEligible": 5,
         "candidateAttemptSizes": [
           5
         ],
         "candidatePackagesGeneratedAcrossAttempts": 5,
-        "winningCandidate": 1,
-        "estimatedSpendUsd": 1.23,
-        "improvementScore": 26.456,
+        "winningCandidate": 2,
+        "estimatedSpendUsd": 0.48,
+        "improvementScore": 21.537,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -424,9 +429,9 @@
         "acceptedSwaps": 1,
         "candidatePackagesGenerated": 5,
         "candidatePackagesEligible": 1,
-        "winningCandidate": 2,
-        "estimatedSpendUsd": 4.4,
-        "improvementScore": 7.13,
+        "winningCandidate": 3,
+        "estimatedSpendUsd": 6.27,
+        "improvementScore": 3.67,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -436,23 +441,24 @@
         "themeAuditBefore": null,
         "swaps": [
           {
-            "out": "Armor Wars",
-            "in": "Brainstorm",
+            "out": "Fantastic Bounce",
+            "in": "Ponder",
             "recommendedPrinting": {
-              "set": "SLD",
-              "setName": "Secret Lair Drop",
-              "collectorNumber": "7019",
-              "releaseDate": "2025-09-22",
+              "set": "MAR",
+              "setName": "Marvel Universe",
+              "collectorNumber": "13",
+              "releaseDate": "2025-09-26",
               "finish": "nonfoil",
-              "priceUsd": 4.4,
+              "priceUsd": 6.27,
               "promo": false,
               "promoTypes": [
-                "sldbonus",
-                "universesbeyond"
+                "sourcematerial",
+                "universesbeyond",
+                "boosterfun"
               ],
               "flavorName": null,
-              "familyMatch": "special-printing",
-              "scryfallUrl": "https://scryfall.com/card/sld/7019/brainstorm?utm_source=api"
+              "familyMatch": "family-set",
+              "scryfallUrl": "https://scryfall.com/card/mar/13/ponder?utm_source=api"
             },
             "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.7 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
             "structuralPairing": {
@@ -464,7 +470,7 @@
               "persistentColoredManaSourceFloor": 8,
               "strategyPreservation": {
                 "cutStrategyAffinityScore": 5,
-                "addStrategyAffinityScore": 5,
+                "addStrategyAffinityScore": 6,
                 "cutStrategyProtectionApplied": 4,
                 "cutMatchedStrategies": [
                   "value-engine"
@@ -479,7 +485,8 @@
                   "spot interaction"
                 ],
                 "addRoles": [
-                  "card draw"
+                  "card draw",
+                  "card selection"
                 ],
                 "unreplacedRoles": [
                   "cost reduction",
@@ -499,9 +506,9 @@
             "reason": "improvement-below-threshold",
             "attemptedSwaps": 5,
             "actualSwaps": 1,
-            "estimatedSpendUsd": 1.23,
+            "estimatedSpendUsd": 1.21,
             "unknownPriceCount": 0,
-            "improvementScore": -17.473,
+            "improvementScore": -0.971,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -634,14 +641,14 @@
             },
             "swaps": [
               {
-                "out": "Armor Wars",
+                "out": "Fantastic Bounce",
                 "in": "Vandalblast",
                 "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.7 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
                   "set": "MSC",
                   "collectorNumber": "168",
                   "finish": "nonfoil",
-                  "priceUsd": 1.23
+                  "priceUsd": 1.21
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -685,13 +692,13 @@
           },
           {
             "candidate": 2,
-            "eligible": true,
-            "reason": "eligible",
+            "eligible": false,
+            "reason": "improvement-below-threshold",
             "attemptedSwaps": 5,
             "actualSwaps": 1,
             "estimatedSpendUsd": 4.4,
             "unknownPriceCount": 0,
-            "improvementScore": 7.13,
+            "improvementScore": -17.112,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -760,39 +767,7 @@
               ],
               "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
             },
-            "deckStrategyRetention": {
-              "status": "preserved",
-              "evidenceComplete": true,
-              "preserved": true,
-              "unresolvedBefore": [],
-              "unresolvedAfter": [],
-              "strategies": [
-                {
-                  "archetype": "combat-tokens",
-                  "commanderScore": 28,
-                  "beforeSupportCount": 28,
-                  "afterSupportCount": 28,
-                  "supportDelta": 0,
-                  "beforeAffinityTotal": 208,
-                  "afterAffinityTotal": 208,
-                  "affinityDelta": 0,
-                  "preserved": true
-                },
-                {
-                  "archetype": "value-engine",
-                  "commanderScore": 6,
-                  "beforeSupportCount": 47,
-                  "afterSupportCount": 47,
-                  "supportDelta": 0,
-                  "beforeAffinityTotal": 169,
-                  "afterAffinityTotal": 169,
-                  "affinityDelta": 0,
-                  "preserved": true
-                }
-              ],
-              "losses": [],
-              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
-            },
+            "deckStrategyRetention": {},
             "planProvenance": {
               "targetBracket": 5,
               "winRouteVerificationStatus": "no-verified-route",
@@ -854,7 +829,7 @@
             },
             "swaps": [
               {
-                "out": "Armor Wars",
+                "out": "Fantastic Bounce",
                 "in": "Brainstorm",
                 "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.7 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -903,13 +878,13 @@
           },
           {
             "candidate": 3,
-            "eligible": false,
-            "reason": "improvement-below-threshold",
+            "eligible": true,
+            "reason": "eligible",
             "attemptedSwaps": 5,
             "actualSwaps": 1,
             "estimatedSpendUsd": 6.27,
             "unknownPriceCount": 0,
-            "improvementScore": -7.791,
+            "improvementScore": 3.67,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -979,7 +954,39 @@
               ],
               "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
             },
-            "deckStrategyRetention": {},
+            "deckStrategyRetention": {
+              "status": "preserved",
+              "evidenceComplete": true,
+              "preserved": true,
+              "unresolvedBefore": [],
+              "unresolvedAfter": [],
+              "strategies": [
+                {
+                  "archetype": "combat-tokens",
+                  "commanderScore": 28,
+                  "beforeSupportCount": 27,
+                  "afterSupportCount": 27,
+                  "supportDelta": 0,
+                  "beforeAffinityTotal": 202,
+                  "afterAffinityTotal": 202,
+                  "affinityDelta": 0,
+                  "preserved": true
+                },
+                {
+                  "archetype": "value-engine",
+                  "commanderScore": 6,
+                  "beforeSupportCount": 47,
+                  "afterSupportCount": 47,
+                  "supportDelta": 0,
+                  "beforeAffinityTotal": 170,
+                  "afterAffinityTotal": 171,
+                  "affinityDelta": 1,
+                  "preserved": true
+                }
+              ],
+              "losses": [],
+              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+            },
             "planProvenance": {
               "targetBracket": 5,
               "winRouteVerificationStatus": "no-verified-route",
@@ -1041,7 +1048,7 @@
             },
             "swaps": [
               {
-                "out": "Armor Wars",
+                "out": "Fantastic Bounce",
                 "in": "Ponder",
                 "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.7 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -1097,7 +1104,7 @@
             "actualSwaps": 1,
             "estimatedSpendUsd": 0.48,
             "unknownPriceCount": 0,
-            "improvementScore": -8.811,
+            "improvementScore": -11.878,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -1130,23 +1137,24 @@
               "strategyDeltas": [
                 {
                   "strategy": "combat-tokens",
-                  "cutAffinityScore": 0,
+                  "cutAffinityScore": 6,
                   "addAffinityScore": 6,
-                  "netAffinityDelta": 6
+                  "netAffinityDelta": 0
                 },
                 {
                   "strategy": "value-engine",
-                  "cutAffinityScore": 5,
+                  "cutAffinityScore": 6,
                   "addAffinityScore": 6,
-                  "netAffinityDelta": 1
+                  "netAffinityDelta": 0
                 }
               ],
               "swapImpacts": [
                 {
-                  "cutStrategyAffinityScore": 5,
+                  "cutStrategyAffinityScore": 12,
                   "addStrategyAffinityScore": 12,
                   "cutStrategyProtectionApplied": 4,
                   "cutMatchedStrategies": [
+                    "combat-tokens",
                     "value-engine"
                   ],
                   "addMatchedStrategies": [
@@ -1156,8 +1164,10 @@
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
                     "card draw",
-                    "cost reduction",
-                    "spot interaction"
+                    "conditional mana acceleration",
+                    "self sacrifice",
+                    "token production",
+                    "treasure"
                   ],
                   "addRoles": [
                     "card draw",
@@ -1167,8 +1177,8 @@
                     "treasure"
                   ],
                   "unreplacedRoles": [
-                    "cost reduction",
-                    "spot interaction"
+                    "conditional mana acceleration",
+                    "self sacrifice"
                   ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
@@ -1239,7 +1249,7 @@
             },
             "swaps": [
               {
-                "out": "Armor Wars",
+                "out": "Big Score",
                 "in": "Currency Converter",
                 "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.7 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -1256,10 +1266,11 @@
                   "persistentColoredManaSourcesAfterSwap": 13,
                   "persistentColoredManaSourceFloor": 8,
                   "strategyPreservation": {
-                    "cutStrategyAffinityScore": 5,
+                    "cutStrategyAffinityScore": 12,
                     "addStrategyAffinityScore": 12,
                     "cutStrategyProtectionApplied": 4,
                     "cutMatchedStrategies": [
+                      "combat-tokens",
                       "value-engine"
                     ],
                     "addMatchedStrategies": [
@@ -1269,8 +1280,10 @@
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
                       "card draw",
-                      "cost reduction",
-                      "spot interaction"
+                      "conditional mana acceleration",
+                      "self sacrifice",
+                      "token production",
+                      "treasure"
                     ],
                     "addRoles": [
                       "card draw",
@@ -1280,8 +1293,8 @@
                       "treasure"
                     ],
                     "unreplacedRoles": [
-                      "cost reduction",
-                      "spot interaction"
+                      "conditional mana acceleration",
+                      "self sacrifice"
                     ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
@@ -1299,7 +1312,7 @@
             "actualSwaps": 1,
             "estimatedSpendUsd": 4.68,
             "unknownPriceCount": 0,
-            "improvementScore": -17.473,
+            "improvementScore": -0.971,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -1431,7 +1444,7 @@
             },
             "swaps": [
               {
-                "out": "Armor Wars",
+                "out": "Fantastic Bounce",
                 "in": "Ephemerate",
                 "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.7 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -1485,7 +1498,7 @@
             "attemptSize": 5,
             "candidatePackagesGenerated": 5,
             "candidatePackagesEligible": 1,
-            "winningCandidate": 2,
+            "winningCandidate": 3,
             "reasonCounts": {
               "eligible": 1,
               "improvement-below-threshold": 4
@@ -1497,9 +1510,9 @@
                 "reason": "improvement-below-threshold",
                 "attemptedSwaps": 5,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 1.23,
+                "estimatedSpendUsd": 1.21,
                 "unknownPriceCount": 0,
-                "improvementScore": -17.473,
+                "improvementScore": -0.971,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -1632,14 +1645,14 @@
                 },
                 "swaps": [
                   {
-                    "out": "Armor Wars",
+                    "out": "Fantastic Bounce",
                     "in": "Vandalblast",
                     "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.7 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "MSC",
                       "collectorNumber": "168",
                       "finish": "nonfoil",
-                      "priceUsd": 1.23
+                      "priceUsd": 1.21
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -1683,13 +1696,13 @@
               },
               {
                 "candidate": 2,
-                "eligible": true,
-                "reason": "eligible",
+                "eligible": false,
+                "reason": "improvement-below-threshold",
                 "attemptedSwaps": 5,
                 "actualSwaps": 1,
                 "estimatedSpendUsd": 4.4,
                 "unknownPriceCount": 0,
-                "improvementScore": 7.13,
+                "improvementScore": -17.112,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -1758,39 +1771,7 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {
-                  "status": "preserved",
-                  "evidenceComplete": true,
-                  "preserved": true,
-                  "unresolvedBefore": [],
-                  "unresolvedAfter": [],
-                  "strategies": [
-                    {
-                      "archetype": "combat-tokens",
-                      "commanderScore": 28,
-                      "beforeSupportCount": 28,
-                      "afterSupportCount": 28,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 208,
-                      "afterAffinityTotal": 208,
-                      "affinityDelta": 0,
-                      "preserved": true
-                    },
-                    {
-                      "archetype": "value-engine",
-                      "commanderScore": 6,
-                      "beforeSupportCount": 47,
-                      "afterSupportCount": 47,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 169,
-                      "afterAffinityTotal": 169,
-                      "affinityDelta": 0,
-                      "preserved": true
-                    }
-                  ],
-                  "losses": [],
-                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
-                },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -1852,7 +1833,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Armor Wars",
+                    "out": "Fantastic Bounce",
                     "in": "Brainstorm",
                     "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.7 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -1901,13 +1882,13 @@
               },
               {
                 "candidate": 3,
-                "eligible": false,
-                "reason": "improvement-below-threshold",
+                "eligible": true,
+                "reason": "eligible",
                 "attemptedSwaps": 5,
                 "actualSwaps": 1,
                 "estimatedSpendUsd": 6.27,
                 "unknownPriceCount": 0,
-                "improvementScore": -7.791,
+                "improvementScore": 3.67,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -1977,7 +1958,39 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "preserved": true,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "combat-tokens",
+                      "commanderScore": 28,
+                      "beforeSupportCount": 27,
+                      "afterSupportCount": 27,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 202,
+                      "afterAffinityTotal": 202,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "value-engine",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 47,
+                      "afterSupportCount": 47,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 170,
+                      "afterAffinityTotal": 171,
+                      "affinityDelta": 1,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -2039,7 +2052,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Armor Wars",
+                    "out": "Fantastic Bounce",
                     "in": "Ponder",
                     "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.7 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -2095,7 +2108,7 @@
                 "actualSwaps": 1,
                 "estimatedSpendUsd": 0.48,
                 "unknownPriceCount": 0,
-                "improvementScore": -8.811,
+                "improvementScore": -11.878,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -2128,23 +2141,24 @@
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 0,
+                      "cutAffinityScore": 6,
                       "addAffinityScore": 6,
-                      "netAffinityDelta": 6
+                      "netAffinityDelta": 0
                     },
                     {
                       "strategy": "value-engine",
-                      "cutAffinityScore": 5,
+                      "cutAffinityScore": 6,
                       "addAffinityScore": 6,
-                      "netAffinityDelta": 1
+                      "netAffinityDelta": 0
                     }
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 5,
+                      "cutStrategyAffinityScore": 12,
                       "addStrategyAffinityScore": 12,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
+                        "combat-tokens",
                         "value-engine"
                       ],
                       "addMatchedStrategies": [
@@ -2154,8 +2168,10 @@
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
                         "card draw",
-                        "cost reduction",
-                        "spot interaction"
+                        "conditional mana acceleration",
+                        "self sacrifice",
+                        "token production",
+                        "treasure"
                       ],
                       "addRoles": [
                         "card draw",
@@ -2165,8 +2181,8 @@
                         "treasure"
                       ],
                       "unreplacedRoles": [
-                        "cost reduction",
-                        "spot interaction"
+                        "conditional mana acceleration",
+                        "self sacrifice"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -2237,7 +2253,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Armor Wars",
+                    "out": "Big Score",
                     "in": "Currency Converter",
                     "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.7 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -2254,10 +2270,11 @@
                       "persistentColoredManaSourcesAfterSwap": 13,
                       "persistentColoredManaSourceFloor": 8,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 5,
+                        "cutStrategyAffinityScore": 12,
                         "addStrategyAffinityScore": 12,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
+                          "combat-tokens",
                           "value-engine"
                         ],
                         "addMatchedStrategies": [
@@ -2267,8 +2284,10 @@
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
                           "card draw",
-                          "cost reduction",
-                          "spot interaction"
+                          "conditional mana acceleration",
+                          "self sacrifice",
+                          "token production",
+                          "treasure"
                         ],
                         "addRoles": [
                           "card draw",
@@ -2278,8 +2297,8 @@
                           "treasure"
                         ],
                         "unreplacedRoles": [
-                          "cost reduction",
-                          "spot interaction"
+                          "conditional mana acceleration",
+                          "self sacrifice"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -2297,7 +2316,7 @@
                 "actualSwaps": 1,
                 "estimatedSpendUsd": 4.68,
                 "unknownPriceCount": 0,
-                "improvementScore": -17.473,
+                "improvementScore": -0.971,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -2429,7 +2448,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Armor Wars",
+                    "out": "Fantastic Bounce",
                     "in": "Ephemerate",
                     "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.7 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -2488,9 +2507,9 @@
         "acceptedSwaps": 1,
         "candidatePackagesGenerated": 5,
         "candidatePackagesEligible": 4,
-        "winningCandidate": 2,
-        "estimatedSpendUsd": 6.27,
-        "improvementScore": 14.908,
+        "winningCandidate": 1,
+        "estimatedSpendUsd": 1.21,
+        "improvementScore": 5.856,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -2500,56 +2519,55 @@
         "themeAuditBefore": null,
         "swaps": [
           {
-            "out": "Fantastic Bounce",
-            "in": "Ponder",
+            "out": "Chromatic Lantern",
+            "in": "Vandalblast",
             "recommendedPrinting": {
-              "set": "MAR",
-              "setName": "Marvel Universe",
-              "collectorNumber": "13",
-              "releaseDate": "2025-09-26",
+              "set": "MSC",
+              "setName": "Marvel Super Heroes Commander",
+              "collectorNumber": "168",
+              "releaseDate": "2026-06-26",
               "finish": "nonfoil",
-              "priceUsd": 6.27,
+              "priceUsd": 1.21,
               "promo": false,
               "promoTypes": [
-                "sourcematerial",
-                "universesbeyond",
-                "boosterfun"
+                "surgefoil",
+                "universesbeyond"
               ],
               "flavorName": null,
               "familyMatch": "family-set",
-              "scryfallUrl": "https://scryfall.com/card/mar/13/ponder?utm_source=api"
+              "scryfallUrl": "https://scryfall.com/card/msc/168/vandalblast?utm_source=api"
             },
             "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.65 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
             "structuralPairing": {
               "addressedRole": "average-nonland-mv",
               "remainingStructuralDeficitAfterSwap": 1,
               "authoritativeTargetGate": "average-nonland-mv",
-              "nonlandManaValueReduction": 3,
-              "persistentColoredManaSourcesAfterSwap": 13,
+              "nonlandManaValueReduction": 2,
+              "persistentColoredManaSourcesAfterSwap": 12,
               "persistentColoredManaSourceFloor": 8,
               "strategyPreservation": {
-                "cutStrategyAffinityScore": 5,
+                "cutStrategyAffinityScore": 0,
                 "addStrategyAffinityScore": 6,
-                "cutStrategyProtectionApplied": 4,
-                "cutMatchedStrategies": [
-                  "value-engine"
-                ],
+                "cutStrategyProtectionApplied": 0,
+                "cutMatchedStrategies": [],
                 "addMatchedStrategies": [
                   "value-engine"
                 ],
                 "locallyUnreplacedStrategies": [],
                 "cutRoles": [
-                  "card draw",
-                  "cost reduction",
-                  "spot interaction"
+                  "mana acceleration",
+                  "mana rock",
+                  "persistent colored mana source"
                 ],
                 "addRoles": [
-                  "card draw",
-                  "card selection"
+                  "artifact/enchantment interaction",
+                  "cheap interaction",
+                  "spot interaction"
                 ],
                 "unreplacedRoles": [
-                  "cost reduction",
-                  "spot interaction"
+                  "mana acceleration",
+                  "mana rock",
+                  "persistent colored mana source"
                 ],
                 "unreplacedStrategyComponentRoles": [],
                 "meaningfulStrategyLoss": false,
@@ -2565,14 +2583,14 @@
             "reason": "eligible",
             "attemptedSwaps": 5,
             "actualSwaps": 1,
-            "estimatedSpendUsd": 1.23,
+            "estimatedSpendUsd": 1.21,
             "unknownPriceCount": 0,
-            "improvementScore": 8.928,
+            "improvementScore": 5.856,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
               "applicable": true,
-              "score": 0.8,
+              "score": 0.6,
               "failedBefore": [
                 "average-nonland-mv",
                 "fast-mana",
@@ -2600,27 +2618,25 @@
               "strategyDeltas": [
                 {
                   "strategy": "value-engine",
-                  "cutAffinityScore": 5,
+                  "cutAffinityScore": 0,
                   "addAffinityScore": 6,
-                  "netAffinityDelta": 1
+                  "netAffinityDelta": 6
                 }
               ],
               "swapImpacts": [
                 {
-                  "cutStrategyAffinityScore": 5,
+                  "cutStrategyAffinityScore": 0,
                   "addStrategyAffinityScore": 6,
-                  "cutStrategyProtectionApplied": 4,
-                  "cutMatchedStrategies": [
-                    "value-engine"
-                  ],
+                  "cutStrategyProtectionApplied": 0,
+                  "cutMatchedStrategies": [],
                   "addMatchedStrategies": [
                     "value-engine"
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
-                    "card draw",
-                    "cost reduction",
-                    "spot interaction"
+                    "mana acceleration",
+                    "mana rock",
+                    "persistent colored mana source"
                   ],
                   "addRoles": [
                     "artifact/enchantment interaction",
@@ -2628,8 +2644,9 @@
                     "spot interaction"
                   ],
                   "unreplacedRoles": [
-                    "card draw",
-                    "cost reduction"
+                    "mana acceleration",
+                    "mana rock",
+                    "persistent colored mana source"
                   ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
@@ -2648,11 +2665,11 @@
                 {
                   "archetype": "combat-tokens",
                   "commanderScore": 28,
-                  "beforeSupportCount": 28,
-                  "afterSupportCount": 28,
+                  "beforeSupportCount": 27,
+                  "afterSupportCount": 27,
                   "supportDelta": 0,
-                  "beforeAffinityTotal": 208,
-                  "afterAffinityTotal": 208,
+                  "beforeAffinityTotal": 202,
+                  "afterAffinityTotal": 202,
                   "affinityDelta": 0,
                   "preserved": true
                 },
@@ -2660,11 +2677,11 @@
                   "archetype": "value-engine",
                   "commanderScore": 6,
                   "beforeSupportCount": 47,
-                  "afterSupportCount": 47,
-                  "supportDelta": 0,
-                  "beforeAffinityTotal": 169,
-                  "afterAffinityTotal": 170,
-                  "affinityDelta": 1,
+                  "afterSupportCount": 48,
+                  "supportDelta": 1,
+                  "beforeAffinityTotal": 171,
+                  "afterAffinityTotal": 177,
+                  "affinityDelta": 6,
                   "preserved": true
                 }
               ],
@@ -2732,37 +2749,35 @@
             },
             "swaps": [
               {
-                "out": "Fantastic Bounce",
+                "out": "Chromatic Lantern",
                 "in": "Vandalblast",
                 "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.65 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
                   "set": "MSC",
                   "collectorNumber": "168",
                   "finish": "nonfoil",
-                  "priceUsd": 1.23
+                  "priceUsd": 1.21
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
                   "remainingStructuralDeficitAfterSwap": 1,
                   "authoritativeTargetGate": "average-nonland-mv",
-                  "nonlandManaValueReduction": 3,
-                  "persistentColoredManaSourcesAfterSwap": 13,
+                  "nonlandManaValueReduction": 2,
+                  "persistentColoredManaSourcesAfterSwap": 12,
                   "persistentColoredManaSourceFloor": 8,
                   "strategyPreservation": {
-                    "cutStrategyAffinityScore": 5,
+                    "cutStrategyAffinityScore": 0,
                     "addStrategyAffinityScore": 6,
-                    "cutStrategyProtectionApplied": 4,
-                    "cutMatchedStrategies": [
-                      "value-engine"
-                    ],
+                    "cutStrategyProtectionApplied": 0,
+                    "cutMatchedStrategies": [],
                     "addMatchedStrategies": [
                       "value-engine"
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
-                      "card draw",
-                      "cost reduction",
-                      "spot interaction"
+                      "mana acceleration",
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [
                       "artifact/enchantment interaction",
@@ -2770,8 +2785,9 @@
                       "spot interaction"
                     ],
                     "unreplacedRoles": [
-                      "card draw",
-                      "cost reduction"
+                      "mana acceleration",
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
@@ -2787,14 +2803,14 @@
             "reason": "eligible",
             "attemptedSwaps": 5,
             "actualSwaps": 1,
-            "estimatedSpendUsd": 6.27,
+            "estimatedSpendUsd": 4.4,
             "unknownPriceCount": 0,
-            "improvementScore": 14.908,
+            "improvementScore": 3.031,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
               "applicable": true,
-              "score": 0.8,
+              "score": 0.6,
               "failedBefore": [
                 "average-nonland-mv",
                 "fast-mana",
@@ -2822,35 +2838,33 @@
               "strategyDeltas": [
                 {
                   "strategy": "value-engine",
-                  "cutAffinityScore": 5,
-                  "addAffinityScore": 6,
-                  "netAffinityDelta": 1
+                  "cutAffinityScore": 0,
+                  "addAffinityScore": 5,
+                  "netAffinityDelta": 5
                 }
               ],
               "swapImpacts": [
                 {
-                  "cutStrategyAffinityScore": 5,
-                  "addStrategyAffinityScore": 6,
-                  "cutStrategyProtectionApplied": 4,
-                  "cutMatchedStrategies": [
-                    "value-engine"
-                  ],
+                  "cutStrategyAffinityScore": 0,
+                  "addStrategyAffinityScore": 5,
+                  "cutStrategyProtectionApplied": 0,
+                  "cutMatchedStrategies": [],
                   "addMatchedStrategies": [
                     "value-engine"
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
-                    "card draw",
-                    "cost reduction",
-                    "spot interaction"
+                    "mana acceleration",
+                    "mana rock",
+                    "persistent colored mana source"
                   ],
                   "addRoles": [
-                    "card draw",
-                    "card selection"
+                    "card draw"
                   ],
                   "unreplacedRoles": [
-                    "cost reduction",
-                    "spot interaction"
+                    "mana acceleration",
+                    "mana rock",
+                    "persistent colored mana source"
                   ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
@@ -2869,11 +2883,11 @@
                 {
                   "archetype": "combat-tokens",
                   "commanderScore": 28,
-                  "beforeSupportCount": 28,
-                  "afterSupportCount": 28,
+                  "beforeSupportCount": 27,
+                  "afterSupportCount": 27,
                   "supportDelta": 0,
-                  "beforeAffinityTotal": 208,
-                  "afterAffinityTotal": 208,
+                  "beforeAffinityTotal": 202,
+                  "afterAffinityTotal": 202,
                   "affinityDelta": 0,
                   "preserved": true
                 },
@@ -2881,11 +2895,11 @@
                   "archetype": "value-engine",
                   "commanderScore": 6,
                   "beforeSupportCount": 47,
-                  "afterSupportCount": 47,
-                  "supportDelta": 0,
-                  "beforeAffinityTotal": 169,
-                  "afterAffinityTotal": 170,
-                  "affinityDelta": 1,
+                  "afterSupportCount": 48,
+                  "supportDelta": 1,
+                  "beforeAffinityTotal": 171,
+                  "afterAffinityTotal": 176,
+                  "affinityDelta": 5,
                   "preserved": true
                 }
               ],
@@ -2953,45 +2967,43 @@
             },
             "swaps": [
               {
-                "out": "Fantastic Bounce",
-                "in": "Ponder",
+                "out": "Chromatic Lantern",
+                "in": "Brainstorm",
                 "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.65 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
-                  "set": "MAR",
-                  "collectorNumber": "13",
+                  "set": "SLD",
+                  "collectorNumber": "7019",
                   "finish": "nonfoil",
-                  "priceUsd": 6.27
+                  "priceUsd": 4.4
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
                   "remainingStructuralDeficitAfterSwap": 1,
                   "authoritativeTargetGate": "average-nonland-mv",
-                  "nonlandManaValueReduction": 3,
-                  "persistentColoredManaSourcesAfterSwap": 13,
+                  "nonlandManaValueReduction": 2,
+                  "persistentColoredManaSourcesAfterSwap": 12,
                   "persistentColoredManaSourceFloor": 8,
                   "strategyPreservation": {
-                    "cutStrategyAffinityScore": 5,
-                    "addStrategyAffinityScore": 6,
-                    "cutStrategyProtectionApplied": 4,
-                    "cutMatchedStrategies": [
-                      "value-engine"
-                    ],
+                    "cutStrategyAffinityScore": 0,
+                    "addStrategyAffinityScore": 5,
+                    "cutStrategyProtectionApplied": 0,
+                    "cutMatchedStrategies": [],
                     "addMatchedStrategies": [
                       "value-engine"
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
-                      "card draw",
-                      "cost reduction",
-                      "spot interaction"
+                      "mana acceleration",
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [
-                      "card draw",
-                      "card selection"
+                      "card draw"
                     ],
                     "unreplacedRoles": [
-                      "cost reduction",
-                      "spot interaction"
+                      "mana acceleration",
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
@@ -3003,13 +3015,13 @@
           },
           {
             "candidate": 3,
-            "eligible": true,
-            "reason": "eligible",
+            "eligible": false,
+            "reason": "improvement-below-threshold",
             "attemptedSwaps": 5,
             "actualSwaps": 1,
             "estimatedSpendUsd": 0.48,
             "unknownPriceCount": 0,
-            "improvementScore": 0.189,
+            "improvementScore": -3.937,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -3092,39 +3104,7 @@
               ],
               "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
             },
-            "deckStrategyRetention": {
-              "status": "preserved",
-              "evidenceComplete": true,
-              "preserved": true,
-              "unresolvedBefore": [],
-              "unresolvedAfter": [],
-              "strategies": [
-                {
-                  "archetype": "combat-tokens",
-                  "commanderScore": 28,
-                  "beforeSupportCount": 28,
-                  "afterSupportCount": 28,
-                  "supportDelta": 0,
-                  "beforeAffinityTotal": 208,
-                  "afterAffinityTotal": 208,
-                  "affinityDelta": 0,
-                  "preserved": true
-                },
-                {
-                  "archetype": "value-engine",
-                  "commanderScore": 6,
-                  "beforeSupportCount": 47,
-                  "afterSupportCount": 47,
-                  "supportDelta": 0,
-                  "beforeAffinityTotal": 169,
-                  "afterAffinityTotal": 169,
-                  "affinityDelta": 0,
-                  "preserved": true
-                }
-              ],
-              "losses": [],
-              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
-            },
+            "deckStrategyRetention": {},
             "planProvenance": {
               "targetBracket": 5,
               "winRouteVerificationStatus": "no-verified-route",
@@ -3249,12 +3229,12 @@
             "actualSwaps": 1,
             "estimatedSpendUsd": 4.68,
             "unknownPriceCount": 0,
-            "improvementScore": 8.928,
+            "improvementScore": 5.856,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
               "applicable": true,
-              "score": 0.8,
+              "score": 0.6,
               "failedBefore": [
                 "average-nonland-mv",
                 "fast-mana",
@@ -3282,35 +3262,34 @@
               "strategyDeltas": [
                 {
                   "strategy": "value-engine",
-                  "cutAffinityScore": 5,
+                  "cutAffinityScore": 0,
                   "addAffinityScore": 6,
-                  "netAffinityDelta": 1
+                  "netAffinityDelta": 6
                 }
               ],
               "swapImpacts": [
                 {
-                  "cutStrategyAffinityScore": 5,
+                  "cutStrategyAffinityScore": 0,
                   "addStrategyAffinityScore": 6,
-                  "cutStrategyProtectionApplied": 4,
-                  "cutMatchedStrategies": [
-                    "value-engine"
-                  ],
+                  "cutStrategyProtectionApplied": 0,
+                  "cutMatchedStrategies": [],
                   "addMatchedStrategies": [
                     "value-engine"
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
-                    "card draw",
-                    "cost reduction",
-                    "spot interaction"
+                    "mana acceleration",
+                    "mana rock",
+                    "persistent colored mana source"
                   ],
                   "addRoles": [
                     "cheap interaction",
                     "spot interaction"
                   ],
                   "unreplacedRoles": [
-                    "card draw",
-                    "cost reduction"
+                    "mana acceleration",
+                    "mana rock",
+                    "persistent colored mana source"
                   ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
@@ -3329,11 +3308,11 @@
                 {
                   "archetype": "combat-tokens",
                   "commanderScore": 28,
-                  "beforeSupportCount": 28,
-                  "afterSupportCount": 28,
+                  "beforeSupportCount": 27,
+                  "afterSupportCount": 27,
                   "supportDelta": 0,
-                  "beforeAffinityTotal": 208,
-                  "afterAffinityTotal": 208,
+                  "beforeAffinityTotal": 202,
+                  "afterAffinityTotal": 202,
                   "affinityDelta": 0,
                   "preserved": true
                 },
@@ -3341,11 +3320,11 @@
                   "archetype": "value-engine",
                   "commanderScore": 6,
                   "beforeSupportCount": 47,
-                  "afterSupportCount": 47,
-                  "supportDelta": 0,
-                  "beforeAffinityTotal": 169,
-                  "afterAffinityTotal": 170,
-                  "affinityDelta": 1,
+                  "afterSupportCount": 48,
+                  "supportDelta": 1,
+                  "beforeAffinityTotal": 171,
+                  "afterAffinityTotal": 177,
+                  "affinityDelta": 6,
                   "preserved": true
                 }
               ],
@@ -3413,7 +3392,7 @@
             },
             "swaps": [
               {
-                "out": "Fantastic Bounce",
+                "out": "Chromatic Lantern",
                 "in": "Ephemerate",
                 "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.65 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -3426,32 +3405,31 @@
                   "addressedRole": "average-nonland-mv",
                   "remainingStructuralDeficitAfterSwap": 1,
                   "authoritativeTargetGate": "average-nonland-mv",
-                  "nonlandManaValueReduction": 3,
-                  "persistentColoredManaSourcesAfterSwap": 13,
+                  "nonlandManaValueReduction": 2,
+                  "persistentColoredManaSourcesAfterSwap": 12,
                   "persistentColoredManaSourceFloor": 8,
                   "strategyPreservation": {
-                    "cutStrategyAffinityScore": 5,
+                    "cutStrategyAffinityScore": 0,
                     "addStrategyAffinityScore": 6,
-                    "cutStrategyProtectionApplied": 4,
-                    "cutMatchedStrategies": [
-                      "value-engine"
-                    ],
+                    "cutStrategyProtectionApplied": 0,
+                    "cutMatchedStrategies": [],
                     "addMatchedStrategies": [
                       "value-engine"
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
-                      "card draw",
-                      "cost reduction",
-                      "spot interaction"
+                      "mana acceleration",
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [
                       "cheap interaction",
                       "spot interaction"
                     ],
                     "unreplacedRoles": [
-                      "card draw",
-                      "cost reduction"
+                      "mana acceleration",
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
@@ -3463,18 +3441,18 @@
           },
           {
             "candidate": 5,
-            "eligible": false,
-            "reason": "improvement-below-threshold",
+            "eligible": true,
+            "reason": "eligible",
             "attemptedSwaps": 5,
             "actualSwaps": 1,
             "estimatedSpendUsd": 28.01,
             "unknownPriceCount": 0,
-            "improvementScore": -1.971,
+            "improvementScore": 4.156,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
               "applicable": true,
-              "score": 0.8,
+              "score": 0.6,
               "failedBefore": [
                 "average-nonland-mv",
                 "fast-mana",
@@ -3502,36 +3480,34 @@
               "strategyDeltas": [
                 {
                   "strategy": "value-engine",
-                  "cutAffinityScore": 5,
+                  "cutAffinityScore": 0,
                   "addAffinityScore": 6,
-                  "netAffinityDelta": 1
+                  "netAffinityDelta": 6
                 }
               ],
               "swapImpacts": [
                 {
-                  "cutStrategyAffinityScore": 5,
+                  "cutStrategyAffinityScore": 0,
                   "addStrategyAffinityScore": 6,
-                  "cutStrategyProtectionApplied": 4,
-                  "cutMatchedStrategies": [
-                    "value-engine"
-                  ],
+                  "cutStrategyProtectionApplied": 0,
+                  "cutMatchedStrategies": [],
                   "addMatchedStrategies": [
                     "value-engine"
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
-                    "card draw",
-                    "cost reduction",
-                    "spot interaction"
+                    "mana acceleration",
+                    "mana rock",
+                    "persistent colored mana source"
                   ],
                   "addRoles": [
                     "equipment",
                     "etb synergy"
                   ],
                   "unreplacedRoles": [
-                    "card draw",
-                    "cost reduction",
-                    "spot interaction"
+                    "mana acceleration",
+                    "mana rock",
+                    "persistent colored mana source"
                   ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
@@ -3540,7 +3516,39 @@
               ],
               "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
             },
-            "deckStrategyRetention": {},
+            "deckStrategyRetention": {
+              "status": "preserved",
+              "evidenceComplete": true,
+              "preserved": true,
+              "unresolvedBefore": [],
+              "unresolvedAfter": [],
+              "strategies": [
+                {
+                  "archetype": "combat-tokens",
+                  "commanderScore": 28,
+                  "beforeSupportCount": 27,
+                  "afterSupportCount": 27,
+                  "supportDelta": 0,
+                  "beforeAffinityTotal": 202,
+                  "afterAffinityTotal": 202,
+                  "affinityDelta": 0,
+                  "preserved": true
+                },
+                {
+                  "archetype": "value-engine",
+                  "commanderScore": 6,
+                  "beforeSupportCount": 47,
+                  "afterSupportCount": 48,
+                  "supportDelta": 1,
+                  "beforeAffinityTotal": 171,
+                  "afterAffinityTotal": 177,
+                  "affinityDelta": 6,
+                  "preserved": true
+                }
+              ],
+              "losses": [],
+              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+            },
             "planProvenance": {
               "targetBracket": 5,
               "winRouteVerificationStatus": "no-verified-route",
@@ -3602,7 +3610,7 @@
             },
             "swaps": [
               {
-                "out": "Fantastic Bounce",
+                "out": "Chromatic Lantern",
                 "in": "Sigarda's Aid",
                 "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.65 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -3615,33 +3623,31 @@
                   "addressedRole": "average-nonland-mv",
                   "remainingStructuralDeficitAfterSwap": 1,
                   "authoritativeTargetGate": "average-nonland-mv",
-                  "nonlandManaValueReduction": 3,
-                  "persistentColoredManaSourcesAfterSwap": 13,
+                  "nonlandManaValueReduction": 2,
+                  "persistentColoredManaSourcesAfterSwap": 12,
                   "persistentColoredManaSourceFloor": 8,
                   "strategyPreservation": {
-                    "cutStrategyAffinityScore": 5,
+                    "cutStrategyAffinityScore": 0,
                     "addStrategyAffinityScore": 6,
-                    "cutStrategyProtectionApplied": 4,
-                    "cutMatchedStrategies": [
-                      "value-engine"
-                    ],
+                    "cutStrategyProtectionApplied": 0,
+                    "cutMatchedStrategies": [],
                     "addMatchedStrategies": [
                       "value-engine"
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
-                      "card draw",
-                      "cost reduction",
-                      "spot interaction"
+                      "mana acceleration",
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "addRoles": [
                       "equipment",
                       "etb synergy"
                     ],
                     "unreplacedRoles": [
-                      "card draw",
-                      "cost reduction",
-                      "spot interaction"
+                      "mana acceleration",
+                      "mana rock",
+                      "persistent colored mana source"
                     ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
@@ -3657,7 +3663,7 @@
             "attemptSize": 5,
             "candidatePackagesGenerated": 5,
             "candidatePackagesEligible": 4,
-            "winningCandidate": 2,
+            "winningCandidate": 1,
             "reasonCounts": {
               "eligible": 4,
               "improvement-below-threshold": 1
@@ -3669,14 +3675,14 @@
                 "reason": "eligible",
                 "attemptedSwaps": 5,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 1.23,
+                "estimatedSpendUsd": 1.21,
                 "unknownPriceCount": 0,
-                "improvementScore": 8.928,
+                "improvementScore": 5.856,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 0.8,
+                  "score": 0.6,
                   "failedBefore": [
                     "average-nonland-mv",
                     "fast-mana",
@@ -3704,27 +3710,25 @@
                   "strategyDeltas": [
                     {
                       "strategy": "value-engine",
-                      "cutAffinityScore": 5,
+                      "cutAffinityScore": 0,
                       "addAffinityScore": 6,
-                      "netAffinityDelta": 1
+                      "netAffinityDelta": 6
                     }
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 5,
+                      "cutStrategyAffinityScore": 0,
                       "addStrategyAffinityScore": 6,
-                      "cutStrategyProtectionApplied": 4,
-                      "cutMatchedStrategies": [
-                        "value-engine"
-                      ],
+                      "cutStrategyProtectionApplied": 0,
+                      "cutMatchedStrategies": [],
                       "addMatchedStrategies": [
                         "value-engine"
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "card draw",
-                        "cost reduction",
-                        "spot interaction"
+                        "mana acceleration",
+                        "mana rock",
+                        "persistent colored mana source"
                       ],
                       "addRoles": [
                         "artifact/enchantment interaction",
@@ -3732,8 +3736,9 @@
                         "spot interaction"
                       ],
                       "unreplacedRoles": [
-                        "card draw",
-                        "cost reduction"
+                        "mana acceleration",
+                        "mana rock",
+                        "persistent colored mana source"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -3752,11 +3757,11 @@
                     {
                       "archetype": "combat-tokens",
                       "commanderScore": 28,
-                      "beforeSupportCount": 28,
-                      "afterSupportCount": 28,
+                      "beforeSupportCount": 27,
+                      "afterSupportCount": 27,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 208,
-                      "afterAffinityTotal": 208,
+                      "beforeAffinityTotal": 202,
+                      "afterAffinityTotal": 202,
                       "affinityDelta": 0,
                       "preserved": true
                     },
@@ -3764,11 +3769,11 @@
                       "archetype": "value-engine",
                       "commanderScore": 6,
                       "beforeSupportCount": 47,
-                      "afterSupportCount": 47,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 169,
-                      "afterAffinityTotal": 170,
-                      "affinityDelta": 1,
+                      "afterSupportCount": 48,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 171,
+                      "afterAffinityTotal": 177,
+                      "affinityDelta": 6,
                       "preserved": true
                     }
                   ],
@@ -3836,37 +3841,35 @@
                 },
                 "swaps": [
                   {
-                    "out": "Fantastic Bounce",
+                    "out": "Chromatic Lantern",
                     "in": "Vandalblast",
                     "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.65 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "MSC",
                       "collectorNumber": "168",
                       "finish": "nonfoil",
-                      "priceUsd": 1.23
+                      "priceUsd": 1.21
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
                       "remainingStructuralDeficitAfterSwap": 1,
                       "authoritativeTargetGate": "average-nonland-mv",
-                      "nonlandManaValueReduction": 3,
-                      "persistentColoredManaSourcesAfterSwap": 13,
+                      "nonlandManaValueReduction": 2,
+                      "persistentColoredManaSourcesAfterSwap": 12,
                       "persistentColoredManaSourceFloor": 8,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 5,
+                        "cutStrategyAffinityScore": 0,
                         "addStrategyAffinityScore": 6,
-                        "cutStrategyProtectionApplied": 4,
-                        "cutMatchedStrategies": [
-                          "value-engine"
-                        ],
+                        "cutStrategyProtectionApplied": 0,
+                        "cutMatchedStrategies": [],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "card draw",
-                          "cost reduction",
-                          "spot interaction"
+                          "mana acceleration",
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [
                           "artifact/enchantment interaction",
@@ -3874,8 +3877,9 @@
                           "spot interaction"
                         ],
                         "unreplacedRoles": [
-                          "card draw",
-                          "cost reduction"
+                          "mana acceleration",
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -3891,14 +3895,14 @@
                 "reason": "eligible",
                 "attemptedSwaps": 5,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 6.27,
+                "estimatedSpendUsd": 4.4,
                 "unknownPriceCount": 0,
-                "improvementScore": 14.908,
+                "improvementScore": 3.031,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 0.8,
+                  "score": 0.6,
                   "failedBefore": [
                     "average-nonland-mv",
                     "fast-mana",
@@ -3926,35 +3930,33 @@
                   "strategyDeltas": [
                     {
                       "strategy": "value-engine",
-                      "cutAffinityScore": 5,
-                      "addAffinityScore": 6,
-                      "netAffinityDelta": 1
+                      "cutAffinityScore": 0,
+                      "addAffinityScore": 5,
+                      "netAffinityDelta": 5
                     }
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 5,
-                      "addStrategyAffinityScore": 6,
-                      "cutStrategyProtectionApplied": 4,
-                      "cutMatchedStrategies": [
-                        "value-engine"
-                      ],
+                      "cutStrategyAffinityScore": 0,
+                      "addStrategyAffinityScore": 5,
+                      "cutStrategyProtectionApplied": 0,
+                      "cutMatchedStrategies": [],
                       "addMatchedStrategies": [
                         "value-engine"
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "card draw",
-                        "cost reduction",
-                        "spot interaction"
+                        "mana acceleration",
+                        "mana rock",
+                        "persistent colored mana source"
                       ],
                       "addRoles": [
-                        "card draw",
-                        "card selection"
+                        "card draw"
                       ],
                       "unreplacedRoles": [
-                        "cost reduction",
-                        "spot interaction"
+                        "mana acceleration",
+                        "mana rock",
+                        "persistent colored mana source"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -3973,11 +3975,11 @@
                     {
                       "archetype": "combat-tokens",
                       "commanderScore": 28,
-                      "beforeSupportCount": 28,
-                      "afterSupportCount": 28,
+                      "beforeSupportCount": 27,
+                      "afterSupportCount": 27,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 208,
-                      "afterAffinityTotal": 208,
+                      "beforeAffinityTotal": 202,
+                      "afterAffinityTotal": 202,
                       "affinityDelta": 0,
                       "preserved": true
                     },
@@ -3985,11 +3987,11 @@
                       "archetype": "value-engine",
                       "commanderScore": 6,
                       "beforeSupportCount": 47,
-                      "afterSupportCount": 47,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 169,
-                      "afterAffinityTotal": 170,
-                      "affinityDelta": 1,
+                      "afterSupportCount": 48,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 171,
+                      "afterAffinityTotal": 176,
+                      "affinityDelta": 5,
                       "preserved": true
                     }
                   ],
@@ -4057,45 +4059,43 @@
                 },
                 "swaps": [
                   {
-                    "out": "Fantastic Bounce",
-                    "in": "Ponder",
+                    "out": "Chromatic Lantern",
+                    "in": "Brainstorm",
                     "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.65 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "MAR",
-                      "collectorNumber": "13",
+                      "set": "SLD",
+                      "collectorNumber": "7019",
                       "finish": "nonfoil",
-                      "priceUsd": 6.27
+                      "priceUsd": 4.4
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
                       "remainingStructuralDeficitAfterSwap": 1,
                       "authoritativeTargetGate": "average-nonland-mv",
-                      "nonlandManaValueReduction": 3,
-                      "persistentColoredManaSourcesAfterSwap": 13,
+                      "nonlandManaValueReduction": 2,
+                      "persistentColoredManaSourcesAfterSwap": 12,
                       "persistentColoredManaSourceFloor": 8,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 5,
-                        "addStrategyAffinityScore": 6,
-                        "cutStrategyProtectionApplied": 4,
-                        "cutMatchedStrategies": [
-                          "value-engine"
-                        ],
+                        "cutStrategyAffinityScore": 0,
+                        "addStrategyAffinityScore": 5,
+                        "cutStrategyProtectionApplied": 0,
+                        "cutMatchedStrategies": [],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "card draw",
-                          "cost reduction",
-                          "spot interaction"
+                          "mana acceleration",
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [
-                          "card draw",
-                          "card selection"
+                          "card draw"
                         ],
                         "unreplacedRoles": [
-                          "cost reduction",
-                          "spot interaction"
+                          "mana acceleration",
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -4107,13 +4107,13 @@
               },
               {
                 "candidate": 3,
-                "eligible": true,
-                "reason": "eligible",
+                "eligible": false,
+                "reason": "improvement-below-threshold",
                 "attemptedSwaps": 5,
                 "actualSwaps": 1,
                 "estimatedSpendUsd": 0.48,
                 "unknownPriceCount": 0,
-                "improvementScore": 0.189,
+                "improvementScore": -3.937,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -4196,39 +4196,7 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {
-                  "status": "preserved",
-                  "evidenceComplete": true,
-                  "preserved": true,
-                  "unresolvedBefore": [],
-                  "unresolvedAfter": [],
-                  "strategies": [
-                    {
-                      "archetype": "combat-tokens",
-                      "commanderScore": 28,
-                      "beforeSupportCount": 28,
-                      "afterSupportCount": 28,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 208,
-                      "afterAffinityTotal": 208,
-                      "affinityDelta": 0,
-                      "preserved": true
-                    },
-                    {
-                      "archetype": "value-engine",
-                      "commanderScore": 6,
-                      "beforeSupportCount": 47,
-                      "afterSupportCount": 47,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 169,
-                      "afterAffinityTotal": 169,
-                      "affinityDelta": 0,
-                      "preserved": true
-                    }
-                  ],
-                  "losses": [],
-                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
-                },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -4353,12 +4321,12 @@
                 "actualSwaps": 1,
                 "estimatedSpendUsd": 4.68,
                 "unknownPriceCount": 0,
-                "improvementScore": 8.928,
+                "improvementScore": 5.856,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 0.8,
+                  "score": 0.6,
                   "failedBefore": [
                     "average-nonland-mv",
                     "fast-mana",
@@ -4386,35 +4354,34 @@
                   "strategyDeltas": [
                     {
                       "strategy": "value-engine",
-                      "cutAffinityScore": 5,
+                      "cutAffinityScore": 0,
                       "addAffinityScore": 6,
-                      "netAffinityDelta": 1
+                      "netAffinityDelta": 6
                     }
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 5,
+                      "cutStrategyAffinityScore": 0,
                       "addStrategyAffinityScore": 6,
-                      "cutStrategyProtectionApplied": 4,
-                      "cutMatchedStrategies": [
-                        "value-engine"
-                      ],
+                      "cutStrategyProtectionApplied": 0,
+                      "cutMatchedStrategies": [],
                       "addMatchedStrategies": [
                         "value-engine"
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "card draw",
-                        "cost reduction",
-                        "spot interaction"
+                        "mana acceleration",
+                        "mana rock",
+                        "persistent colored mana source"
                       ],
                       "addRoles": [
                         "cheap interaction",
                         "spot interaction"
                       ],
                       "unreplacedRoles": [
-                        "card draw",
-                        "cost reduction"
+                        "mana acceleration",
+                        "mana rock",
+                        "persistent colored mana source"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -4433,11 +4400,11 @@
                     {
                       "archetype": "combat-tokens",
                       "commanderScore": 28,
-                      "beforeSupportCount": 28,
-                      "afterSupportCount": 28,
+                      "beforeSupportCount": 27,
+                      "afterSupportCount": 27,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 208,
-                      "afterAffinityTotal": 208,
+                      "beforeAffinityTotal": 202,
+                      "afterAffinityTotal": 202,
                       "affinityDelta": 0,
                       "preserved": true
                     },
@@ -4445,11 +4412,11 @@
                       "archetype": "value-engine",
                       "commanderScore": 6,
                       "beforeSupportCount": 47,
-                      "afterSupportCount": 47,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 169,
-                      "afterAffinityTotal": 170,
-                      "affinityDelta": 1,
+                      "afterSupportCount": 48,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 171,
+                      "afterAffinityTotal": 177,
+                      "affinityDelta": 6,
                       "preserved": true
                     }
                   ],
@@ -4517,7 +4484,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Fantastic Bounce",
+                    "out": "Chromatic Lantern",
                     "in": "Ephemerate",
                     "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.65 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -4530,32 +4497,31 @@
                       "addressedRole": "average-nonland-mv",
                       "remainingStructuralDeficitAfterSwap": 1,
                       "authoritativeTargetGate": "average-nonland-mv",
-                      "nonlandManaValueReduction": 3,
-                      "persistentColoredManaSourcesAfterSwap": 13,
+                      "nonlandManaValueReduction": 2,
+                      "persistentColoredManaSourcesAfterSwap": 12,
                       "persistentColoredManaSourceFloor": 8,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 5,
+                        "cutStrategyAffinityScore": 0,
                         "addStrategyAffinityScore": 6,
-                        "cutStrategyProtectionApplied": 4,
-                        "cutMatchedStrategies": [
-                          "value-engine"
-                        ],
+                        "cutStrategyProtectionApplied": 0,
+                        "cutMatchedStrategies": [],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "card draw",
-                          "cost reduction",
-                          "spot interaction"
+                          "mana acceleration",
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [
                           "cheap interaction",
                           "spot interaction"
                         ],
                         "unreplacedRoles": [
-                          "card draw",
-                          "cost reduction"
+                          "mana acceleration",
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -4567,18 +4533,18 @@
               },
               {
                 "candidate": 5,
-                "eligible": false,
-                "reason": "improvement-below-threshold",
+                "eligible": true,
+                "reason": "eligible",
                 "attemptedSwaps": 5,
                 "actualSwaps": 1,
                 "estimatedSpendUsd": 28.01,
                 "unknownPriceCount": 0,
-                "improvementScore": -1.971,
+                "improvementScore": 4.156,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 0.8,
+                  "score": 0.6,
                   "failedBefore": [
                     "average-nonland-mv",
                     "fast-mana",
@@ -4606,36 +4572,34 @@
                   "strategyDeltas": [
                     {
                       "strategy": "value-engine",
-                      "cutAffinityScore": 5,
+                      "cutAffinityScore": 0,
                       "addAffinityScore": 6,
-                      "netAffinityDelta": 1
+                      "netAffinityDelta": 6
                     }
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 5,
+                      "cutStrategyAffinityScore": 0,
                       "addStrategyAffinityScore": 6,
-                      "cutStrategyProtectionApplied": 4,
-                      "cutMatchedStrategies": [
-                        "value-engine"
-                      ],
+                      "cutStrategyProtectionApplied": 0,
+                      "cutMatchedStrategies": [],
                       "addMatchedStrategies": [
                         "value-engine"
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "card draw",
-                        "cost reduction",
-                        "spot interaction"
+                        "mana acceleration",
+                        "mana rock",
+                        "persistent colored mana source"
                       ],
                       "addRoles": [
                         "equipment",
                         "etb synergy"
                       ],
                       "unreplacedRoles": [
-                        "card draw",
-                        "cost reduction",
-                        "spot interaction"
+                        "mana acceleration",
+                        "mana rock",
+                        "persistent colored mana source"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -4644,7 +4608,39 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "preserved": true,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "combat-tokens",
+                      "commanderScore": 28,
+                      "beforeSupportCount": 27,
+                      "afterSupportCount": 27,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 202,
+                      "afterAffinityTotal": 202,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "value-engine",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 47,
+                      "afterSupportCount": 48,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 171,
+                      "afterAffinityTotal": 177,
+                      "affinityDelta": 6,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -4706,7 +4702,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Fantastic Bounce",
+                    "out": "Chromatic Lantern",
                     "in": "Sigarda's Aid",
                     "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.65 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -4719,33 +4715,31 @@
                       "addressedRole": "average-nonland-mv",
                       "remainingStructuralDeficitAfterSwap": 1,
                       "authoritativeTargetGate": "average-nonland-mv",
-                      "nonlandManaValueReduction": 3,
-                      "persistentColoredManaSourcesAfterSwap": 13,
+                      "nonlandManaValueReduction": 2,
+                      "persistentColoredManaSourcesAfterSwap": 12,
                       "persistentColoredManaSourceFloor": 8,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 5,
+                        "cutStrategyAffinityScore": 0,
                         "addStrategyAffinityScore": 6,
-                        "cutStrategyProtectionApplied": 4,
-                        "cutMatchedStrategies": [
-                          "value-engine"
-                        ],
+                        "cutStrategyProtectionApplied": 0,
+                        "cutMatchedStrategies": [],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "card draw",
-                          "cost reduction",
-                          "spot interaction"
+                          "mana acceleration",
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "addRoles": [
                           "equipment",
                           "etb synergy"
                         ],
                         "unreplacedRoles": [
-                          "card draw",
-                          "cost reduction",
-                          "spot interaction"
+                          "mana acceleration",
+                          "mana rock",
+                          "persistent colored mana source"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -4765,10 +4759,10 @@
         "attemptedSwaps": 5,
         "acceptedSwaps": 1,
         "candidatePackagesGenerated": 5,
-        "candidatePackagesEligible": 4,
-        "winningCandidate": 1,
-        "estimatedSpendUsd": 1.23,
-        "improvementScore": 26.456,
+        "candidatePackagesEligible": 5,
+        "winningCandidate": 2,
+        "estimatedSpendUsd": 0.48,
+        "improvementScore": 21.537,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -4778,15 +4772,15 @@
         "themeAuditBefore": null,
         "swaps": [
           {
-            "out": "Chromatic Lantern",
-            "in": "Vandalblast",
+            "out": "Electro, Assaulting Battery",
+            "in": "Currency Converter",
             "recommendedPrinting": {
               "set": "MSC",
               "setName": "Marvel Super Heroes Commander",
-              "collectorNumber": "168",
+              "collectorNumber": "197",
               "releaseDate": "2026-06-26",
               "finish": "nonfoil",
-              "priceUsd": 1.23,
+              "priceUsd": 0.48,
               "promo": false,
               "promoTypes": [
                 "surgefoil",
@@ -4794,9 +4788,9 @@
               ],
               "flavorName": null,
               "familyMatch": "family-set",
-              "scryfallUrl": "https://scryfall.com/card/msc/168/vandalblast?utm_source=api"
+              "scryfallUrl": "https://scryfall.com/card/msc/197/currency-converter?utm_source=api"
             },
-            "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.61 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+            "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.62 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
             "structuralPairing": {
               "addressedRole": "average-nonland-mv",
               "remainingStructuralDeficitAfterSwap": 1,
@@ -4806,27 +4800,30 @@
               "persistentColoredManaSourceFloor": 8,
               "strategyPreservation": {
                 "cutStrategyAffinityScore": 0,
-                "addStrategyAffinityScore": 6,
+                "addStrategyAffinityScore": 12,
                 "cutStrategyProtectionApplied": 0,
                 "cutMatchedStrategies": [],
                 "addMatchedStrategies": [
+                  "combat-tokens",
                   "value-engine"
                 ],
                 "locallyUnreplacedStrategies": [],
                 "cutRoles": [
+                  "creature",
                   "mana acceleration",
-                  "mana rock",
-                  "persistent colored mana source"
-                ],
-                "addRoles": [
-                  "artifact/enchantment interaction",
-                  "cheap interaction",
                   "spot interaction"
                 ],
+                "addRoles": [
+                  "card draw",
+                  "graveyard hate",
+                  "graveyard utility",
+                  "token production",
+                  "treasure"
+                ],
                 "unreplacedRoles": [
+                  "creature",
                   "mana acceleration",
-                  "mana rock",
-                  "persistent colored mana source"
+                  "spot interaction"
                 ],
                 "unreplacedStrategyComponentRoles": [],
                 "meaningfulStrategyLoss": false,
@@ -4842,9 +4839,9 @@
             "reason": "eligible",
             "attemptedSwaps": 5,
             "actualSwaps": 1,
-            "estimatedSpendUsd": 1.23,
+            "estimatedSpendUsd": 4.4,
             "unknownPriceCount": 0,
-            "improvementScore": 26.456,
+            "improvementScore": 16.91,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -4877,14 +4874,14 @@
                 {
                   "strategy": "value-engine",
                   "cutAffinityScore": 0,
-                  "addAffinityScore": 6,
-                  "netAffinityDelta": 6
+                  "addAffinityScore": 5,
+                  "netAffinityDelta": 5
                 }
               ],
               "swapImpacts": [
                 {
                   "cutStrategyAffinityScore": 0,
-                  "addStrategyAffinityScore": 6,
+                  "addStrategyAffinityScore": 5,
                   "cutStrategyProtectionApplied": 0,
                   "cutMatchedStrategies": [],
                   "addMatchedStrategies": [
@@ -4892,19 +4889,17 @@
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
+                    "creature",
                     "mana acceleration",
-                    "mana rock",
-                    "persistent colored mana source"
-                  ],
-                  "addRoles": [
-                    "artifact/enchantment interaction",
-                    "cheap interaction",
                     "spot interaction"
                   ],
+                  "addRoles": [
+                    "card draw"
+                  ],
                   "unreplacedRoles": [
+                    "creature",
                     "mana acceleration",
-                    "mana rock",
-                    "persistent colored mana source"
+                    "spot interaction"
                   ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
@@ -4923,23 +4918,23 @@
                 {
                   "archetype": "combat-tokens",
                   "commanderScore": 28,
-                  "beforeSupportCount": 28,
-                  "afterSupportCount": 28,
+                  "beforeSupportCount": 27,
+                  "afterSupportCount": 27,
                   "supportDelta": 0,
-                  "beforeAffinityTotal": 208,
-                  "afterAffinityTotal": 208,
+                  "beforeAffinityTotal": 202,
+                  "afterAffinityTotal": 202,
                   "affinityDelta": 0,
                   "preserved": true
                 },
                 {
                   "archetype": "value-engine",
                   "commanderScore": 6,
-                  "beforeSupportCount": 47,
-                  "afterSupportCount": 48,
+                  "beforeSupportCount": 48,
+                  "afterSupportCount": 49,
                   "supportDelta": 1,
-                  "beforeAffinityTotal": 170,
-                  "afterAffinityTotal": 176,
-                  "affinityDelta": 6,
+                  "beforeAffinityTotal": 177,
+                  "afterAffinityTotal": 182,
+                  "affinityDelta": 5,
                   "preserved": true
                 }
               ],
@@ -4967,9 +4962,9 @@
               "authoritativeTargetGatePriorities": [
                 {
                   "role": "average-nonland-mv",
-                  "current": 2.61,
+                  "current": 2.62,
                   "target": 2.6,
-                  "deficit": 0.01,
+                  "deficit": 0.02,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv"
                 },
@@ -4997,9 +4992,9 @@
                   "role": "average-nonland-mv",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv",
-                  "current": 2.61,
+                  "current": 2.62,
                   "target": 2.6,
-                  "deficit": 0.01,
+                  "deficit": 0.02,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateCount": 1
                 }
@@ -5007,14 +5002,14 @@
             },
             "swaps": [
               {
-                "out": "Chromatic Lantern",
-                "in": "Vandalblast",
-                "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.61 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                "out": "Electro, Assaulting Battery",
+                "in": "Brainstorm",
+                "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.62 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
-                  "set": "MSC",
-                  "collectorNumber": "168",
+                  "set": "SLD",
+                  "collectorNumber": "7019",
                   "finish": "nonfoil",
-                  "priceUsd": 1.23
+                  "priceUsd": 4.4
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -5025,7 +5020,7 @@
                   "persistentColoredManaSourceFloor": 8,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 0,
-                    "addStrategyAffinityScore": 6,
+                    "addStrategyAffinityScore": 5,
                     "cutStrategyProtectionApplied": 0,
                     "cutMatchedStrategies": [],
                     "addMatchedStrategies": [
@@ -5033,19 +5028,17 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
+                      "creature",
                       "mana acceleration",
-                      "mana rock",
-                      "persistent colored mana source"
-                    ],
-                    "addRoles": [
-                      "artifact/enchantment interaction",
-                      "cheap interaction",
                       "spot interaction"
                     ],
+                    "addRoles": [
+                      "card draw"
+                    ],
                     "unreplacedRoles": [
+                      "creature",
                       "mana acceleration",
-                      "mana rock",
-                      "persistent colored mana source"
+                      "spot interaction"
                     ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
@@ -5063,7 +5056,7 @@
             "actualSwaps": 1,
             "estimatedSpendUsd": 0.48,
             "unknownPriceCount": 0,
-            "improvementScore": 12.246,
+            "improvementScore": 21.537,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -5118,9 +5111,9 @@
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
+                    "creature",
                     "mana acceleration",
-                    "mana rock",
-                    "persistent colored mana source"
+                    "spot interaction"
                   ],
                   "addRoles": [
                     "card draw",
@@ -5130,9 +5123,9 @@
                     "treasure"
                   ],
                   "unreplacedRoles": [
+                    "creature",
                     "mana acceleration",
-                    "mana rock",
-                    "persistent colored mana source"
+                    "spot interaction"
                   ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
@@ -5151,22 +5144,22 @@
                 {
                   "archetype": "combat-tokens",
                   "commanderScore": 28,
-                  "beforeSupportCount": 28,
-                  "afterSupportCount": 29,
+                  "beforeSupportCount": 27,
+                  "afterSupportCount": 28,
                   "supportDelta": 1,
-                  "beforeAffinityTotal": 208,
-                  "afterAffinityTotal": 214,
+                  "beforeAffinityTotal": 202,
+                  "afterAffinityTotal": 208,
                   "affinityDelta": 6,
                   "preserved": true
                 },
                 {
                   "archetype": "value-engine",
                   "commanderScore": 6,
-                  "beforeSupportCount": 47,
-                  "afterSupportCount": 48,
+                  "beforeSupportCount": 48,
+                  "afterSupportCount": 49,
                   "supportDelta": 1,
-                  "beforeAffinityTotal": 170,
-                  "afterAffinityTotal": 176,
+                  "beforeAffinityTotal": 177,
+                  "afterAffinityTotal": 183,
                   "affinityDelta": 6,
                   "preserved": true
                 }
@@ -5195,9 +5188,9 @@
               "authoritativeTargetGatePriorities": [
                 {
                   "role": "average-nonland-mv",
-                  "current": 2.61,
+                  "current": 2.62,
                   "target": 2.6,
-                  "deficit": 0.01,
+                  "deficit": 0.02,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv"
                 },
@@ -5225,9 +5218,9 @@
                   "role": "average-nonland-mv",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv",
-                  "current": 2.61,
+                  "current": 2.62,
                   "target": 2.6,
-                  "deficit": 0.01,
+                  "deficit": 0.02,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateCount": 1
                 }
@@ -5235,9 +5228,9 @@
             },
             "swaps": [
               {
-                "out": "Chromatic Lantern",
+                "out": "Electro, Assaulting Battery",
                 "in": "Currency Converter",
-                "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.61 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.62 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
                   "set": "MSC",
                   "collectorNumber": "197",
@@ -5262,9 +5255,9 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
+                      "creature",
                       "mana acceleration",
-                      "mana rock",
-                      "persistent colored mana source"
+                      "spot interaction"
                     ],
                     "addRoles": [
                       "card draw",
@@ -5274,9 +5267,9 @@
                       "treasure"
                     ],
                     "unreplacedRoles": [
+                      "creature",
                       "mana acceleration",
-                      "mana rock",
-                      "persistent colored mana source"
+                      "spot interaction"
                     ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
@@ -5294,7 +5287,7 @@
             "actualSwaps": 1,
             "estimatedSpendUsd": 4.68,
             "unknownPriceCount": 0,
-            "improvementScore": 26.456,
+            "improvementScore": 12.411,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -5342,18 +5335,17 @@
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
+                    "creature",
                     "mana acceleration",
-                    "mana rock",
-                    "persistent colored mana source"
+                    "spot interaction"
                   ],
                   "addRoles": [
                     "cheap interaction",
                     "spot interaction"
                   ],
                   "unreplacedRoles": [
-                    "mana acceleration",
-                    "mana rock",
-                    "persistent colored mana source"
+                    "creature",
+                    "mana acceleration"
                   ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
@@ -5372,22 +5364,22 @@
                 {
                   "archetype": "combat-tokens",
                   "commanderScore": 28,
-                  "beforeSupportCount": 28,
-                  "afterSupportCount": 28,
+                  "beforeSupportCount": 27,
+                  "afterSupportCount": 27,
                   "supportDelta": 0,
-                  "beforeAffinityTotal": 208,
-                  "afterAffinityTotal": 208,
+                  "beforeAffinityTotal": 202,
+                  "afterAffinityTotal": 202,
                   "affinityDelta": 0,
                   "preserved": true
                 },
                 {
                   "archetype": "value-engine",
                   "commanderScore": 6,
-                  "beforeSupportCount": 47,
-                  "afterSupportCount": 48,
+                  "beforeSupportCount": 48,
+                  "afterSupportCount": 49,
                   "supportDelta": 1,
-                  "beforeAffinityTotal": 170,
-                  "afterAffinityTotal": 176,
+                  "beforeAffinityTotal": 177,
+                  "afterAffinityTotal": 183,
                   "affinityDelta": 6,
                   "preserved": true
                 }
@@ -5416,9 +5408,9 @@
               "authoritativeTargetGatePriorities": [
                 {
                   "role": "average-nonland-mv",
-                  "current": 2.61,
+                  "current": 2.62,
                   "target": 2.6,
-                  "deficit": 0.01,
+                  "deficit": 0.02,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv"
                 },
@@ -5446,9 +5438,9 @@
                   "role": "average-nonland-mv",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv",
-                  "current": 2.61,
+                  "current": 2.62,
                   "target": 2.6,
-                  "deficit": 0.01,
+                  "deficit": 0.02,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateCount": 1
                 }
@@ -5456,9 +5448,9 @@
             },
             "swaps": [
               {
-                "out": "Chromatic Lantern",
+                "out": "Electro, Assaulting Battery",
                 "in": "Ephemerate",
-                "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.61 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.62 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
                   "set": "MAR",
                   "collectorNumber": "44",
@@ -5482,18 +5474,17 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
+                      "creature",
                       "mana acceleration",
-                      "mana rock",
-                      "persistent colored mana source"
+                      "spot interaction"
                     ],
                     "addRoles": [
                       "cheap interaction",
                       "spot interaction"
                     ],
                     "unreplacedRoles": [
-                      "mana acceleration",
-                      "mana rock",
-                      "persistent colored mana source"
+                      "creature",
+                      "mana acceleration"
                     ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
@@ -5511,7 +5502,7 @@
             "actualSwaps": 1,
             "estimatedSpendUsd": 28.01,
             "unknownPriceCount": 0,
-            "improvementScore": 24.621,
+            "improvementScore": 15.579,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -5559,18 +5550,18 @@
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
+                    "creature",
                     "mana acceleration",
-                    "mana rock",
-                    "persistent colored mana source"
+                    "spot interaction"
                   ],
                   "addRoles": [
                     "equipment",
                     "etb synergy"
                   ],
                   "unreplacedRoles": [
+                    "creature",
                     "mana acceleration",
-                    "mana rock",
-                    "persistent colored mana source"
+                    "spot interaction"
                   ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
@@ -5589,22 +5580,22 @@
                 {
                   "archetype": "combat-tokens",
                   "commanderScore": 28,
-                  "beforeSupportCount": 28,
-                  "afterSupportCount": 28,
+                  "beforeSupportCount": 27,
+                  "afterSupportCount": 27,
                   "supportDelta": 0,
-                  "beforeAffinityTotal": 208,
-                  "afterAffinityTotal": 208,
+                  "beforeAffinityTotal": 202,
+                  "afterAffinityTotal": 202,
                   "affinityDelta": 0,
                   "preserved": true
                 },
                 {
                   "archetype": "value-engine",
                   "commanderScore": 6,
-                  "beforeSupportCount": 47,
-                  "afterSupportCount": 48,
+                  "beforeSupportCount": 48,
+                  "afterSupportCount": 49,
                   "supportDelta": 1,
-                  "beforeAffinityTotal": 170,
-                  "afterAffinityTotal": 176,
+                  "beforeAffinityTotal": 177,
+                  "afterAffinityTotal": 183,
                   "affinityDelta": 6,
                   "preserved": true
                 }
@@ -5633,9 +5624,9 @@
               "authoritativeTargetGatePriorities": [
                 {
                   "role": "average-nonland-mv",
-                  "current": 2.61,
+                  "current": 2.62,
                   "target": 2.6,
-                  "deficit": 0.01,
+                  "deficit": 0.02,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv"
                 },
@@ -5663,9 +5654,9 @@
                   "role": "average-nonland-mv",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv",
-                  "current": 2.61,
+                  "current": 2.62,
                   "target": 2.6,
-                  "deficit": 0.01,
+                  "deficit": 0.02,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateCount": 1
                 }
@@ -5673,9 +5664,9 @@
             },
             "swaps": [
               {
-                "out": "Chromatic Lantern",
+                "out": "Electro, Assaulting Battery",
                 "in": "Sigarda's Aid",
-                "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.61 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.62 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
                   "set": "SLD",
                   "collectorNumber": "1727",
@@ -5699,18 +5690,18 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
+                      "creature",
                       "mana acceleration",
-                      "mana rock",
-                      "persistent colored mana source"
+                      "spot interaction"
                     ],
                     "addRoles": [
                       "equipment",
                       "etb synergy"
                     ],
                     "unreplacedRoles": [
+                      "creature",
                       "mana acceleration",
-                      "mana rock",
-                      "persistent colored mana source"
+                      "spot interaction"
                     ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
@@ -5722,13 +5713,13 @@
           },
           {
             "candidate": 5,
-            "eligible": false,
-            "reason": "improvement-below-threshold",
+            "eligible": true,
+            "reason": "eligible",
             "attemptedSwaps": 5,
             "actualSwaps": 1,
             "estimatedSpendUsd": 0.14,
             "unknownPriceCount": 0,
-            "improvementScore": -0.016,
+            "improvementScore": 17.288,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -5783,9 +5774,9 @@
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
+                    "creature",
                     "mana acceleration",
-                    "mana rock",
-                    "persistent colored mana source"
+                    "spot interaction"
                   ],
                   "addRoles": [
                     "card draw",
@@ -5793,9 +5784,9 @@
                     "token production"
                   ],
                   "unreplacedRoles": [
+                    "creature",
                     "mana acceleration",
-                    "mana rock",
-                    "persistent colored mana source"
+                    "spot interaction"
                   ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
@@ -5804,7 +5795,39 @@
               ],
               "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
             },
-            "deckStrategyRetention": {},
+            "deckStrategyRetention": {
+              "status": "preserved",
+              "evidenceComplete": true,
+              "preserved": true,
+              "unresolvedBefore": [],
+              "unresolvedAfter": [],
+              "strategies": [
+                {
+                  "archetype": "combat-tokens",
+                  "commanderScore": 28,
+                  "beforeSupportCount": 27,
+                  "afterSupportCount": 28,
+                  "supportDelta": 1,
+                  "beforeAffinityTotal": 202,
+                  "afterAffinityTotal": 208,
+                  "affinityDelta": 6,
+                  "preserved": true
+                },
+                {
+                  "archetype": "value-engine",
+                  "commanderScore": 6,
+                  "beforeSupportCount": 48,
+                  "afterSupportCount": 49,
+                  "supportDelta": 1,
+                  "beforeAffinityTotal": 177,
+                  "afterAffinityTotal": 182,
+                  "affinityDelta": 5,
+                  "preserved": true
+                }
+              ],
+              "losses": [],
+              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+            },
             "planProvenance": {
               "targetBracket": 5,
               "winRouteVerificationStatus": "no-verified-route",
@@ -5826,9 +5849,9 @@
               "authoritativeTargetGatePriorities": [
                 {
                   "role": "average-nonland-mv",
-                  "current": 2.61,
+                  "current": 2.62,
                   "target": 2.6,
-                  "deficit": 0.01,
+                  "deficit": 0.02,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv"
                 },
@@ -5856,9 +5879,9 @@
                   "role": "average-nonland-mv",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv",
-                  "current": 2.61,
+                  "current": 2.62,
                   "target": 2.6,
-                  "deficit": 0.01,
+                  "deficit": 0.02,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateCount": 1
                 }
@@ -5866,9 +5889,9 @@
             },
             "swaps": [
               {
-                "out": "Chromatic Lantern",
+                "out": "Electro, Assaulting Battery",
                 "in": "Panther Pounce",
-                "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.61 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.62 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
                   "set": "MSH",
                   "collectorNumber": "29",
@@ -5893,9 +5916,9 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
+                      "creature",
                       "mana acceleration",
-                      "mana rock",
-                      "persistent colored mana source"
+                      "spot interaction"
                     ],
                     "addRoles": [
                       "card draw",
@@ -5903,9 +5926,9 @@
                       "token production"
                     ],
                     "unreplacedRoles": [
+                      "creature",
                       "mana acceleration",
-                      "mana rock",
-                      "persistent colored mana source"
+                      "spot interaction"
                     ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
@@ -5920,11 +5943,10 @@
           {
             "attemptSize": 5,
             "candidatePackagesGenerated": 5,
-            "candidatePackagesEligible": 4,
-            "winningCandidate": 1,
+            "candidatePackagesEligible": 5,
+            "winningCandidate": 2,
             "reasonCounts": {
-              "eligible": 4,
-              "improvement-below-threshold": 1
+              "eligible": 5
             },
             "candidateComparisons": [
               {
@@ -5933,9 +5955,9 @@
                 "reason": "eligible",
                 "attemptedSwaps": 5,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 1.23,
+                "estimatedSpendUsd": 4.4,
                 "unknownPriceCount": 0,
-                "improvementScore": 26.456,
+                "improvementScore": 16.91,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -5968,14 +5990,14 @@
                     {
                       "strategy": "value-engine",
                       "cutAffinityScore": 0,
-                      "addAffinityScore": 6,
-                      "netAffinityDelta": 6
+                      "addAffinityScore": 5,
+                      "netAffinityDelta": 5
                     }
                   ],
                   "swapImpacts": [
                     {
                       "cutStrategyAffinityScore": 0,
-                      "addStrategyAffinityScore": 6,
+                      "addStrategyAffinityScore": 5,
                       "cutStrategyProtectionApplied": 0,
                       "cutMatchedStrategies": [],
                       "addMatchedStrategies": [
@@ -5983,19 +6005,17 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "creature",
                         "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
-                      ],
-                      "addRoles": [
-                        "artifact/enchantment interaction",
-                        "cheap interaction",
                         "spot interaction"
                       ],
+                      "addRoles": [
+                        "card draw"
+                      ],
                       "unreplacedRoles": [
+                        "creature",
                         "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
+                        "spot interaction"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -6014,23 +6034,23 @@
                     {
                       "archetype": "combat-tokens",
                       "commanderScore": 28,
-                      "beforeSupportCount": 28,
-                      "afterSupportCount": 28,
+                      "beforeSupportCount": 27,
+                      "afterSupportCount": 27,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 208,
-                      "afterAffinityTotal": 208,
+                      "beforeAffinityTotal": 202,
+                      "afterAffinityTotal": 202,
                       "affinityDelta": 0,
                       "preserved": true
                     },
                     {
                       "archetype": "value-engine",
                       "commanderScore": 6,
-                      "beforeSupportCount": 47,
-                      "afterSupportCount": 48,
+                      "beforeSupportCount": 48,
+                      "afterSupportCount": 49,
                       "supportDelta": 1,
-                      "beforeAffinityTotal": 170,
-                      "afterAffinityTotal": 176,
-                      "affinityDelta": 6,
+                      "beforeAffinityTotal": 177,
+                      "afterAffinityTotal": 182,
+                      "affinityDelta": 5,
                       "preserved": true
                     }
                   ],
@@ -6058,9 +6078,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 2.61,
+                      "current": 2.62,
                       "target": 2.6,
-                      "deficit": 0.01,
+                      "deficit": 0.02,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -6088,9 +6108,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 2.61,
+                      "current": 2.62,
                       "target": 2.6,
-                      "deficit": 0.01,
+                      "deficit": 0.02,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateCount": 1
                     }
@@ -6098,14 +6118,14 @@
                 },
                 "swaps": [
                   {
-                    "out": "Chromatic Lantern",
-                    "in": "Vandalblast",
-                    "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.61 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "out": "Electro, Assaulting Battery",
+                    "in": "Brainstorm",
+                    "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.62 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "MSC",
-                      "collectorNumber": "168",
+                      "set": "SLD",
+                      "collectorNumber": "7019",
                       "finish": "nonfoil",
-                      "priceUsd": 1.23
+                      "priceUsd": 4.4
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -6116,7 +6136,7 @@
                       "persistentColoredManaSourceFloor": 8,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 0,
-                        "addStrategyAffinityScore": 6,
+                        "addStrategyAffinityScore": 5,
                         "cutStrategyProtectionApplied": 0,
                         "cutMatchedStrategies": [],
                         "addMatchedStrategies": [
@@ -6124,19 +6144,17 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "creature",
                           "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
-                        ],
-                        "addRoles": [
-                          "artifact/enchantment interaction",
-                          "cheap interaction",
                           "spot interaction"
                         ],
+                        "addRoles": [
+                          "card draw"
+                        ],
                         "unreplacedRoles": [
+                          "creature",
                           "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
+                          "spot interaction"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -6154,7 +6172,7 @@
                 "actualSwaps": 1,
                 "estimatedSpendUsd": 0.48,
                 "unknownPriceCount": 0,
-                "improvementScore": 12.246,
+                "improvementScore": 21.537,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -6209,9 +6227,9 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "creature",
                         "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
+                        "spot interaction"
                       ],
                       "addRoles": [
                         "card draw",
@@ -6221,9 +6239,9 @@
                         "treasure"
                       ],
                       "unreplacedRoles": [
+                        "creature",
                         "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
+                        "spot interaction"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -6242,22 +6260,22 @@
                     {
                       "archetype": "combat-tokens",
                       "commanderScore": 28,
-                      "beforeSupportCount": 28,
-                      "afterSupportCount": 29,
+                      "beforeSupportCount": 27,
+                      "afterSupportCount": 28,
                       "supportDelta": 1,
-                      "beforeAffinityTotal": 208,
-                      "afterAffinityTotal": 214,
+                      "beforeAffinityTotal": 202,
+                      "afterAffinityTotal": 208,
                       "affinityDelta": 6,
                       "preserved": true
                     },
                     {
                       "archetype": "value-engine",
                       "commanderScore": 6,
-                      "beforeSupportCount": 47,
-                      "afterSupportCount": 48,
+                      "beforeSupportCount": 48,
+                      "afterSupportCount": 49,
                       "supportDelta": 1,
-                      "beforeAffinityTotal": 170,
-                      "afterAffinityTotal": 176,
+                      "beforeAffinityTotal": 177,
+                      "afterAffinityTotal": 183,
                       "affinityDelta": 6,
                       "preserved": true
                     }
@@ -6286,9 +6304,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 2.61,
+                      "current": 2.62,
                       "target": 2.6,
-                      "deficit": 0.01,
+                      "deficit": 0.02,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -6316,9 +6334,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 2.61,
+                      "current": 2.62,
                       "target": 2.6,
-                      "deficit": 0.01,
+                      "deficit": 0.02,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateCount": 1
                     }
@@ -6326,9 +6344,9 @@
                 },
                 "swaps": [
                   {
-                    "out": "Chromatic Lantern",
+                    "out": "Electro, Assaulting Battery",
                     "in": "Currency Converter",
-                    "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.61 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.62 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "MSC",
                       "collectorNumber": "197",
@@ -6353,9 +6371,9 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "creature",
                           "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
+                          "spot interaction"
                         ],
                         "addRoles": [
                           "card draw",
@@ -6365,9 +6383,9 @@
                           "treasure"
                         ],
                         "unreplacedRoles": [
+                          "creature",
                           "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
+                          "spot interaction"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -6385,7 +6403,7 @@
                 "actualSwaps": 1,
                 "estimatedSpendUsd": 4.68,
                 "unknownPriceCount": 0,
-                "improvementScore": 26.456,
+                "improvementScore": 12.411,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -6433,18 +6451,17 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "creature",
                         "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
+                        "spot interaction"
                       ],
                       "addRoles": [
                         "cheap interaction",
                         "spot interaction"
                       ],
                       "unreplacedRoles": [
-                        "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
+                        "creature",
+                        "mana acceleration"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -6463,22 +6480,22 @@
                     {
                       "archetype": "combat-tokens",
                       "commanderScore": 28,
-                      "beforeSupportCount": 28,
-                      "afterSupportCount": 28,
+                      "beforeSupportCount": 27,
+                      "afterSupportCount": 27,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 208,
-                      "afterAffinityTotal": 208,
+                      "beforeAffinityTotal": 202,
+                      "afterAffinityTotal": 202,
                       "affinityDelta": 0,
                       "preserved": true
                     },
                     {
                       "archetype": "value-engine",
                       "commanderScore": 6,
-                      "beforeSupportCount": 47,
-                      "afterSupportCount": 48,
+                      "beforeSupportCount": 48,
+                      "afterSupportCount": 49,
                       "supportDelta": 1,
-                      "beforeAffinityTotal": 170,
-                      "afterAffinityTotal": 176,
+                      "beforeAffinityTotal": 177,
+                      "afterAffinityTotal": 183,
                       "affinityDelta": 6,
                       "preserved": true
                     }
@@ -6507,9 +6524,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 2.61,
+                      "current": 2.62,
                       "target": 2.6,
-                      "deficit": 0.01,
+                      "deficit": 0.02,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -6537,9 +6554,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 2.61,
+                      "current": 2.62,
                       "target": 2.6,
-                      "deficit": 0.01,
+                      "deficit": 0.02,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateCount": 1
                     }
@@ -6547,9 +6564,9 @@
                 },
                 "swaps": [
                   {
-                    "out": "Chromatic Lantern",
+                    "out": "Electro, Assaulting Battery",
                     "in": "Ephemerate",
-                    "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.61 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.62 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "MAR",
                       "collectorNumber": "44",
@@ -6573,18 +6590,17 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "creature",
                           "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
+                          "spot interaction"
                         ],
                         "addRoles": [
                           "cheap interaction",
                           "spot interaction"
                         ],
                         "unreplacedRoles": [
-                          "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
+                          "creature",
+                          "mana acceleration"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -6602,7 +6618,7 @@
                 "actualSwaps": 1,
                 "estimatedSpendUsd": 28.01,
                 "unknownPriceCount": 0,
-                "improvementScore": 24.621,
+                "improvementScore": 15.579,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -6650,18 +6666,18 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "creature",
                         "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
+                        "spot interaction"
                       ],
                       "addRoles": [
                         "equipment",
                         "etb synergy"
                       ],
                       "unreplacedRoles": [
+                        "creature",
                         "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
+                        "spot interaction"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -6680,22 +6696,22 @@
                     {
                       "archetype": "combat-tokens",
                       "commanderScore": 28,
-                      "beforeSupportCount": 28,
-                      "afterSupportCount": 28,
+                      "beforeSupportCount": 27,
+                      "afterSupportCount": 27,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 208,
-                      "afterAffinityTotal": 208,
+                      "beforeAffinityTotal": 202,
+                      "afterAffinityTotal": 202,
                       "affinityDelta": 0,
                       "preserved": true
                     },
                     {
                       "archetype": "value-engine",
                       "commanderScore": 6,
-                      "beforeSupportCount": 47,
-                      "afterSupportCount": 48,
+                      "beforeSupportCount": 48,
+                      "afterSupportCount": 49,
                       "supportDelta": 1,
-                      "beforeAffinityTotal": 170,
-                      "afterAffinityTotal": 176,
+                      "beforeAffinityTotal": 177,
+                      "afterAffinityTotal": 183,
                       "affinityDelta": 6,
                       "preserved": true
                     }
@@ -6724,9 +6740,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 2.61,
+                      "current": 2.62,
                       "target": 2.6,
-                      "deficit": 0.01,
+                      "deficit": 0.02,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -6754,9 +6770,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 2.61,
+                      "current": 2.62,
                       "target": 2.6,
-                      "deficit": 0.01,
+                      "deficit": 0.02,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateCount": 1
                     }
@@ -6764,9 +6780,9 @@
                 },
                 "swaps": [
                   {
-                    "out": "Chromatic Lantern",
+                    "out": "Electro, Assaulting Battery",
                     "in": "Sigarda's Aid",
-                    "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.61 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.62 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "SLD",
                       "collectorNumber": "1727",
@@ -6790,18 +6806,18 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "creature",
                           "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
+                          "spot interaction"
                         ],
                         "addRoles": [
                           "equipment",
                           "etb synergy"
                         ],
                         "unreplacedRoles": [
+                          "creature",
                           "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
+                          "spot interaction"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -6813,13 +6829,13 @@
               },
               {
                 "candidate": 5,
-                "eligible": false,
-                "reason": "improvement-below-threshold",
+                "eligible": true,
+                "reason": "eligible",
                 "attemptedSwaps": 5,
                 "actualSwaps": 1,
                 "estimatedSpendUsd": 0.14,
                 "unknownPriceCount": 0,
-                "improvementScore": -0.016,
+                "improvementScore": 17.288,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -6874,9 +6890,9 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "creature",
                         "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
+                        "spot interaction"
                       ],
                       "addRoles": [
                         "card draw",
@@ -6884,9 +6900,9 @@
                         "token production"
                       ],
                       "unreplacedRoles": [
+                        "creature",
                         "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
+                        "spot interaction"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -6895,7 +6911,39 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "preserved": true,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "combat-tokens",
+                      "commanderScore": 28,
+                      "beforeSupportCount": 27,
+                      "afterSupportCount": 28,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 202,
+                      "afterAffinityTotal": 208,
+                      "affinityDelta": 6,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "value-engine",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 48,
+                      "afterSupportCount": 49,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 177,
+                      "afterAffinityTotal": 182,
+                      "affinityDelta": 5,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 5,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -6917,9 +6965,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 2.61,
+                      "current": 2.62,
                       "target": 2.6,
-                      "deficit": 0.01,
+                      "deficit": 0.02,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -6947,9 +6995,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 2.61,
+                      "current": 2.62,
                       "target": 2.6,
-                      "deficit": 0.01,
+                      "deficit": 0.02,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateCount": 1
                     }
@@ -6957,9 +7005,9 @@
                 },
                 "swaps": [
                   {
-                    "out": "Chromatic Lantern",
+                    "out": "Electro, Assaulting Battery",
                     "in": "Panther Pounce",
-                    "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.61 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.62 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "MSH",
                       "collectorNumber": "29",
@@ -6984,9 +7032,9 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "creature",
                           "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
+                          "spot interaction"
                         ],
                         "addRoles": [
                           "card draw",
@@ -6994,9 +7042,9 @@
                           "token production"
                         ],
                         "unreplacedRoles": [
+                          "creature",
                           "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
+                          "spot interaction"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -9566,7 +9614,7 @@
       {
         "key": "average-nonland-mv",
         "category": "construction",
-        "observed": 2.58,
+        "observed": 2.59,
         "required": "at most 2.6",
         "passed": true,
         "pressurePoint": "speed/curve"
@@ -9648,13 +9696,13 @@
       "landCount": 31,
       "nonlandCount": 69,
       "landRatio": 0.31,
-      "averageNonlandManaValue": 2.58,
+      "averageNonlandManaValue": 2.59,
       "manaCurve": {
         "0": 0,
         "1": 16,
         "2": 28,
-        "3": 8,
-        "4": 9,
+        "3": 7,
+        "4": 10,
         "5": 5,
         "6": 2,
         "7+": 1
@@ -9663,22 +9711,22 @@
         "W": 16,
         "U": 15,
         "B": 9,
-        "R": 23,
+        "R": 22,
         "G": 8
       },
       "roleCounts": {
-        "token production": 17,
+        "token production": 18,
         "haste": 7,
         "extra combat": 5,
         "untap engine": 5,
-        "creature": 20,
-        "cost reduction": 3,
-        "card draw": 20,
-        "graveyard recursion": 4,
+        "creature": 18,
+        "cost reduction": 4,
+        "card draw": 21,
+        "graveyard recursion": 5,
         "+1/+1 counters": 2,
         "countermagic": 3,
         "cheap interaction": 13,
-        "mana acceleration": 18,
+        "mana acceleration": 17,
         "conditional mana acceleration": 6,
         "repeatable draw": 2,
         "spot interaction": 14,
@@ -9688,16 +9736,17 @@
         "persistent colored mana source": 12,
         "mana dork": 3,
         "card selection": 6,
+        "board-scaling card draw": 1,
         "board wipe": 2,
         "fast mana": 2,
         "tutor": 9,
         "self sacrifice": 8,
-        "treasure": 6,
+        "treasure": 7,
         "sacrifice synergy": 3,
         "creature tutor": 1,
         "board protection": 2,
         "free interaction": 1,
-        "go-wide payoff": 3,
+        "go-wide payoff": 2,
         "delayed mana acceleration": 2,
         "mana filtering": 1,
         "land ramp": 1,
@@ -9705,17 +9754,19 @@
         "land": 31,
         "sacrifice outlet": 1,
         "artifact sacrifice outlet": 1,
-        "artifact/enchantment interaction": 1
+        "artifact/enchantment interaction": 1,
+        "graveyard hate": 1,
+        "graveyard utility": 1
       },
       "earlyPlayCount": 44,
       "fastManaCount": 2,
       "rampCount": 22,
-      "drawCount": 25,
+      "drawCount": 26,
       "tutorCount": 9,
       "interactionCount": 19,
       "cheapInteractionCount": 13,
       "protectionCount": 9,
-      "recursionCount": 4,
+      "recursionCount": 5,
       "boardWipeCount": 2,
       "persistentColoredManaSourceCount": 12,
       "structuralSignals": []

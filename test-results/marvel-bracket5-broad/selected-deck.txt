@@ -41,9 +41,8 @@
 1 Deadly Dispute (MSC) 794
 1 Swords to Plowshares (MSC) 143
 1 Silver Surfer, Galactus's Herald (MSC) 10
-1 Bastion Protector (MSC) 122
+1 Gift of Immortality (MSC) 134
 1 Aurelia, the Warleader (MAR) 86
-1 Reanimate (MAR) 20
 1 Relentless Assault (MAR) 25
 1 Birds of Paradise (MSC) 170
 1 Fellwar Stone (MSC) 285
@@ -67,6 +66,7 @@
 1 Chromatic Lantern (MSC) 195
 1 Sun-Spider, Nimble Webber (SPM) 154
 1 Helm of the Host (MSC) 200
+1 Reanimate (MAR) 20
 1 Stark Industries Executive (MSH) 153
 1 Farseek (MSC) 173
 1 Jeska's Will (SLD) 1744

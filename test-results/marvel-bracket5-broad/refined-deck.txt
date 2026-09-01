@@ -14,6 +14,7 @@
 1 H.E.R.B.I.E., Lovable Robot (MSC) 106
 1 The Wasp, Winsome Avenger (MSC) 39
 1 Depower (MSH) 50
+1 Armor Wars (MSH) 203
 1 Whoosh! (MSC) 790
 1 Martial Coup (MSC) 138
 1 The Soul Stone (SPM) 66
@@ -29,7 +30,6 @@
 1 Fabricate (SLD) 7118
 1 Dark Ritual (MSC) 793
 1 Captain America, Liberator (MSC) 587
-1 Electro, Assaulting Battery (SPM) 76
 1 Defense of the Heart (MAR) 76
 1 Heroic Intervention (MAR) 78
 1 Deadly Rollick (SLD) 1754
@@ -39,9 +39,8 @@
 1 Deadly Dispute (MSC) 794
 1 Swords to Plowshares (MSC) 143
 1 Silver Surfer, Galactus's Herald (MSC) 10
-1 Bastion Protector (MSC) 122
+1 Gift of Immortality (MSC) 134
 1 Aurelia, the Warleader (MAR) 86
-1 Reanimate (MAR) 20
 1 Relentless Assault (MAR) 25
 1 Birds of Paradise (MSC) 170
 1 Fellwar Stone (MSC) 285
@@ -64,6 +63,7 @@
 1 Living Laser (MSC) 55
 1 Sun-Spider, Nimble Webber (SPM) 154
 1 Helm of the Host (MSC) 200
+1 Reanimate (MAR) 20
 1 Stark Industries Executive (MSH) 153
 1 Farseek (MSC) 173
 1 Jeska's Will (SLD) 1744
@@ -88,6 +88,6 @@
 3 Mountain (MSC) 858
 3 Island (MSH) 289
 3 Plains (MSC) 866
-1 Brainstorm (SLD) 7019 *N*
 1 Ponder (MAR) 13 *N*
 1 Vandalblast (MSC) 168 *N*
+1 Currency Converter (MSC) 197 *N*
