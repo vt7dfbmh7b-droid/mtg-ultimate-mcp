@@ -1,10 +1,11 @@
 import type { ScryfallCard } from '../types/scryfall.js';
+import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
 import {
   describePrintingPolicyV08,
   resolvePrintingPolicyV08,
   selectEligiblePrintingV08,
 } from './printing-policy-v08.js';
-import { getCardsByNames, inferCardRoles } from './scryfall.js';
+import { getCardsByNames } from './scryfall.js';
 import { searchSpellbookVariants } from './spellbook.js';
 import { isWinResultV14 } from './cedh-win-package-v14.js';
 
@@ -85,13 +86,21 @@ function normalizeIdentityQuery(identity?: string): string | null {
   return normalized || null;
 }
 
+function bracketEvidenceBonus(tag: string | null): number {
+  if (tag === 'R') return 120;
+  if (tag === 'S') return 60;
+  if (tag === 'P') return 30;
+  return 0;
+}
+
 export function buildCedhSeedQueriesV14(maxPackageCards = 3, identity?: string): string[] {
   const maxCards = Math.max(2, Math.min(4, Math.trunc(maxPackageCards)));
   const identityToken = normalizeIdentityQuery(identity);
   const identityClause = identityToken ? ` identity<=${identityToken}` : '';
-  const queries = [`bracket:ruthless card<=2 is:winning legal:commander${identityClause}`];
-  if (maxCards >= 3) queries.push(`bracket:ruthless card<=3 is:winning legal:commander${identityClause}`);
-  if (maxCards >= 4) queries.push(`bracket:ruthless card<=4 is:winning legal:commander${identityClause}`);
+  const queries: string[] = [];
+  for (let size = 2; size <= maxCards; size += 1) {
+    queries.push(`card=${size} is:winning legal:commander template=0 prerequisites<=1${identityClause}`);
+  }
   return queries;
 }
 
@@ -102,7 +111,7 @@ function parseCandidate(value: unknown, commanderNames: Set<string>, maxPackageC
   const results = Array.isArray(variant.results) ? variant.results.map(String) : [];
   const requirements = Array.isArray(variant.requirements) ? variant.requirements : [];
   const uses = Array.isArray(variant.cards) ? variant.cards.map(record) : [];
-  if (!id || bracketTag !== 'R' || requirements.length > 0 || !isWinResultV14(results)) return null;
+  if (!id || requirements.length > 1 || !isWinResultV14(results)) return null;
 
   const cards: SeedCardUseV14[] = [];
   for (const use of uses) {
@@ -119,7 +128,12 @@ function parseCandidate(value: unknown, commanderNames: Set<string>, maxPackageC
   const popularity = typeof variant.popularity === 'number' && Number.isFinite(variant.popularity) ? variant.popularity : 0;
   const commanderOverlap = cards.filter((card) => commanderNames.has(normalize(card.name))).length;
   const compactness = (maxPackageCards + 1 - uniqueNames.length) * 160;
-  const score = 1000 + compactness + commanderOverlap * 220 + Math.min(180, Math.log10(popularity + 1) * 50);
+  const score = 1000
+    + compactness
+    + commanderOverlap * 220
+    + bracketEvidenceBonus(bracketTag)
+    + Math.min(180, Math.log10(popularity + 1) * 50)
+    - requirements.length * 45;
 
   return { id, bracketTag, cards, results, requirements, popularity, score };
 }
@@ -148,6 +162,42 @@ export function rankCedhSeedCandidatesV14(
     .map((candidate) => ({ ...candidate }));
 }
 
+export function selectCedhSeedVerificationCandidatesV14(
+  ranked: Array<Record<string, unknown>>,
+  maxCandidatesToVerify: number,
+  maxPackageCards = 3,
+): Array<Record<string, unknown>> {
+  const limit = Math.max(1, Math.trunc(maxCandidatesToVerify));
+  const maxCards = Math.max(2, Math.min(4, Math.trunc(maxPackageCards)));
+  const bySize = new Map<number, Array<Record<string, unknown>>>();
+  for (const candidate of ranked) {
+    const cards = Array.isArray(candidate.cards) ? candidate.cards.map(record) : [];
+    const uniqueSize = new Set(cards.map((card) => normalize(String(card.name ?? ''))).filter(Boolean)).size;
+    if (uniqueSize < 2 || uniqueSize > maxCards) continue;
+    const group = bySize.get(uniqueSize) ?? [];
+    group.push(candidate);
+    bySize.set(uniqueSize, group);
+  }
+
+  const sizes = [...bySize.keys()].sort((a, b) => a - b);
+  if (sizes.length === 0) return ranked.slice(0, limit).map(record);
+  const reservePerSize = Math.max(1, Math.floor(limit / sizes.length));
+  const selected: Array<Record<string, unknown>> = [];
+  const selectedIds = new Set<string>();
+  const add = (candidate: Record<string, unknown>): void => {
+    const id = String(candidate.id ?? '');
+    if (!id || selectedIds.has(id) || selected.length >= limit) return;
+    selectedIds.add(id);
+    selected.push(candidate);
+  };
+
+  for (const size of sizes) {
+    for (const candidate of (bySize.get(size) ?? []).slice(0, reservePerSize)) add(candidate);
+  }
+  for (const candidate of ranked) add(candidate);
+  return selected;
+}
+
 export function scoreCedhSeedPracticalityV14(
   cards: CedhSeedCardProfileV14[],
   commanderNames: string[],
@@ -164,6 +214,14 @@ export function scoreCedhSeedPracticalityV14(
     'protection',
     'repeatable draw',
     'card draw',
+    'card selection',
+    'sacrifice outlet',
+    'creature sacrifice outlet',
+    'sacrifice synergy',
+    'self sacrifice',
+    'graveyard recursion',
+    'token production',
+    'treasure',
   ]);
   let totalManaValue = 0;
   let maxManaValue = 0;
@@ -226,7 +284,7 @@ export async function discoverCedhSeedWinPackageV14(
 ): Promise<Record<string, unknown>> {
   if (commanders.length < 1 || commanders.length > 2) throw new Error('Provide one or two resolved commanders.');
   const maxPackageCards = Math.max(2, Math.min(4, Math.trunc(options.maxPackageCards ?? 3)));
-  const maxCandidatesToVerify = Math.max(1, Math.min(20, Math.trunc(options.maxCandidatesToVerify ?? 10)));
+  const maxCandidatesToVerify = Math.max(1, Math.min(30, Math.trunc(options.maxCandidatesToVerify ?? 12)));
   const policy = await resolvePrintingPolicyV08({
     ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
     ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
@@ -248,7 +306,7 @@ export async function discoverCedhSeedWinPackageV14(
   }
 
   const ranked = rankCedhSeedCandidatesV14(rawVariants, commanderNames, maxPackageCards);
-  const candidates = ranked.slice(0, maxCandidatesToVerify).map(record);
+  const candidates = selectCedhSeedVerificationCandidatesV14(ranked, maxCandidatesToVerify, maxPackageCards).map(record);
   const allNames = [...new Set(candidates.flatMap((candidate) =>
     Array.isArray(candidate.cards)
       ? candidate.cards.map(record).map((card) => String(card.name ?? '')).filter(Boolean)
@@ -285,7 +343,7 @@ export async function discoverCedhSeedWinPackageV14(
         cmc: oracle.cmc,
         typeLine: oracle.type_line,
         ...(oracle.oracle_text ? { oracleText: oracle.oracle_text } : {}),
-        roles: inferCardRoles(oracle),
+        roles: effectiveCardRolesV15(oracle),
       });
       if (normalizedCommanders.has(normalizedName)) continue;
       if (oracle.legalities.commander !== 'legal' || oracle.color_identity.some((color) => !identity.includes(color))) {
@@ -332,6 +390,8 @@ export async function discoverCedhSeedWinPackageV14(
       finalScore: Math.round(finalScore * 100) / 100,
       totalManaValue: practicality.totalManaValue,
       deadPieceRisk: practicality.deadPieceRisk,
+      bracketTag: candidate.bracketTag ?? null,
+      prerequisiteCount: Array.isArray(candidate.requirements) ? candidate.requirements.length : 0,
     });
   }
 
@@ -360,7 +420,7 @@ export async function discoverCedhSeedWinPackageV14(
       queryAudit,
       audit,
       source: 'Commander Spellbook + Scryfall exact-printing verification',
-      guidance: 'The package is only a construction seed. Candidate selection now prefers compact, lower-mana, commander-centric lines with useful cards outside the combo instead of popularity alone. The finished 100-card deck must still independently resolve, pass Commander legality and printing policy, and reproduce the winning combo through find-my-combos before it can satisfy the cEDH win-package gate.',
+      guidance: 'The package is only a construction seed. Candidate selection evaluates deterministic wins across Spellbook bracket tags, reserves verification space for each supported package size, permits at most one lightweight prerequisite, and prefers lower-mana cards with useful roles outside the combo. The finished 100-card deck must still independently resolve, pass Commander legality and printing policy, and reproduce a winning combo through find-my-combos before it can satisfy the competitive win-package gate.',
     };
   }
 
