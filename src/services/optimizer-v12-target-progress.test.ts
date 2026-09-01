@@ -53,10 +53,60 @@ test('V0.12 iterative candidate gate accepts measurable progress toward a failed
   assert.equal(gate.eligible, true);
 });
 
-test('V0.12 iterative candidate gate leaves lower-bracket scoring unchanged', () => {
+test('V0.12 iterative candidate gate rejects cosmetic movement while Bracket-4 optimized gates still fail', () => {
+  const failing = metrics({
+    averageNonlandManaValue: 3.32,
+    earlyPlayCount: 21,
+    cheapInteractionCount: 2,
+    fastManaCount: 1,
+    tutorCount: 0,
+  });
   const score = refinementImprovementScoreV11(plan({
+    beforeMetrics: failing,
+    afterMetrics: { ...failing, drawCount: 23 },
     v15TargetPressure: {
       targetPressure: { targetBracket: 4 },
+      winRouteVerificationStatus: 'no-verified-route',
+      atomicWinPackageInjected: false,
+      selectedBracketTag: null,
+    },
+  }));
+  const gate = candidateTargetGateProgressGateV15(score);
+
+  assert.equal(score.targetGate.applicable, true);
+  assert.equal(score.zeroTargetProgressWhileFailedGatesRemain, true);
+  assert.equal(gate.eligible, false);
+});
+
+test('V0.12 iterative candidate gate accepts measurable Bracket-4 curve progress', () => {
+  const failing = metrics({
+    averageNonlandManaValue: 3.32,
+    earlyPlayCount: 21,
+    cheapInteractionCount: 2,
+    fastManaCount: 1,
+    tutorCount: 0,
+  });
+  const score = refinementImprovementScoreV11(plan({
+    beforeMetrics: failing,
+    afterMetrics: { ...failing, averageNonlandManaValue: 3.29 },
+    v15TargetPressure: {
+      targetPressure: { targetBracket: 4 },
+      winRouteVerificationStatus: 'no-verified-route',
+      atomicWinPackageInjected: false,
+      selectedBracketTag: null,
+    },
+  }));
+  const gate = candidateTargetGateProgressGateV15(score);
+
+  assert.deepEqual(score.targetGate.advancedFailedGates, ['average-nonland-mv']);
+  assert.equal(score.zeroTargetProgressWhileFailedGatesRemain, false);
+  assert.equal(gate.eligible, true);
+});
+
+test('V0.12 iterative candidate gate leaves Bracket-3 scoring unchanged', () => {
+  const score = refinementImprovementScoreV11(plan({
+    v15TargetPressure: {
+      targetPressure: { targetBracket: 3 },
       winRouteVerificationStatus: 'no-verified-route',
       atomicWinPackageInjected: false,
       selectedBracketTag: null,
