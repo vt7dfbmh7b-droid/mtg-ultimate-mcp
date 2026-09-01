@@ -37,14 +37,14 @@
       ],
       "metadataPath": "test-results/marvel-bracket5/refine-run-metadata.txt",
       "exists": true,
-      "sourceSha": "c2ddbb749837d5ea054adfe36c5430b366bc6d96",
-      "outcome": "fail",
+      "sourceSha": "a243f91ee4bee39c1f258e99744741ae51524ed0",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "c2ddbb749837d5ea054adfe36c5430b366bc6d96",
-        "control_outcome": "failure",
-        "execution_outcome": "skipped",
-        "target_gate_quality_outcome": "skipped",
+        "source_sha": "a243f91ee4bee39c1f258e99744741ae51524ed0",
+        "control_outcome": "success",
+        "execution_outcome": "success",
+        "target_gate_quality_outcome": "success",
         "policy": "checked-in-very-good-candidate",
         "max_win_package_cards": "4",
         "spellbook_max_rows_per_query": "400",
@@ -60,11 +60,7 @@
         "meaningful_strategy_loss_rejected": "true",
         "persistent_colored_mana_floor": "true"
       },
-      "unmetPassConditions": [
-        "control_outcome=success",
-        "execution_outcome=success",
-        "target_gate_quality_outcome=success"
-      ]
+      "unmetPassConditions": []
     },
     {
       "id": "MARVEL-B5-BROAD",
@@ -220,13 +216,13 @@
       ],
       "metadataPath": "test-results/precon-generalization-squirrels/run-metadata.txt",
       "exists": true,
-      "sourceSha": "e94010f4e5ecf967ea20fd2a5d2eb7670f95f691",
+      "sourceSha": "cbcad94fd0df6b52318ec31782182a6475d71ea9",
       "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "e94010f4e5ecf967ea20fd2a5d2eb7670f95f691",
-        "workflow_source_sha": "e94010f4e5ecf967ea20fd2a5d2eb7670f95f691",
-        "executed_head_sha": "e94010f4e5ecf967ea20fd2a5d2eb7670f95f691",
+        "source_sha": "cbcad94fd0df6b52318ec31782182a6475d71ea9",
+        "workflow_source_sha": "cbcad94fd0df6b52318ec31782182a6475d71ea9",
+        "executed_head_sha": "cbcad94fd0df6b52318ec31782182a6475d71ea9",
         "control_outcome": "success",
         "build_outcome": "success",
         "regression_outcome": "success",
