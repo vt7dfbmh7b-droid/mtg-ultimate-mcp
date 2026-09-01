@@ -124,6 +124,7 @@
       },
       "roleCounts": {
         "token production": 21,
+        "repeatable token engine": 12,
         "haste": 8,
         "extra combat": 5,
         "untap engine": 5,
@@ -132,6 +133,7 @@
         "mana rock": 13,
         "persistent colored mana source": 11,
         "graveyard recursion": 4,
+        "high-capacity graveyard recursion": 2,
         "cost reduction": 4,
         "card draw": 19,
         "+1/+1 counters": 9,
@@ -1482,7 +1484,8 @@
                     "spot interaction"
                   ],
                   "addRoles": [
-                    "graveyard recursion"
+                    "graveyard recursion",
+                    "high-capacity graveyard recursion"
                   ],
                   "unreplacedRoles": [
                     "cost reduction",
@@ -1640,7 +1643,8 @@
                       "spot interaction"
                     ],
                     "addRoles": [
-                      "graveyard recursion"
+                      "graveyard recursion",
+                      "high-capacity graveyard recursion"
                     ],
                     "unreplacedRoles": [
                       "cost reduction",
@@ -2768,12 +2772,12 @@
                 "actualSwaps": 3,
                 "estimatedSpendUsd": 74.27,
                 "unknownPriceCount": 0,
-                "improvementScore": -15.91,
+                "improvementScore": -2.825,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 1.8,
+                  "score": 1.4,
                   "failedBefore": [
                     "average-nonland-mv",
                     "fast-mana",
@@ -2887,8 +2891,7 @@
                       ],
                       "cutRoles": [
                         "card draw",
-                        "conditional mana acceleration",
-                        "self sacrifice",
+                        "repeatable token engine",
                         "token production",
                         "treasure"
                       ],
@@ -2898,12 +2901,13 @@
                       ],
                       "unreplacedRoles": [
                         "card draw",
-                        "conditional mana acceleration",
-                        "self sacrifice",
+                        "repeatable token engine",
                         "token production",
                         "treasure"
                       ],
-                      "unreplacedStrategyComponentRoles": [],
+                      "unreplacedStrategyComponentRoles": [
+                        "repeatable token engine"
+                      ],
                       "meaningfulStrategyLoss": true,
                       "verdict": "meaningful-strategy-loss"
                     }
@@ -3044,7 +3048,7 @@
                     }
                   },
                   {
-                    "out": "Big Score",
+                    "out": "Unexpected Windfall",
                     "in": "Teferi's Protection",
                     "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -3096,7 +3100,7 @@
                     }
                   },
                   {
-                    "out": "Unexpected Windfall",
+                    "out": "Black Market Connections",
                     "in": "Flawless Maneuver",
                     "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -3125,8 +3129,7 @@
                         ],
                         "cutRoles": [
                           "card draw",
-                          "conditional mana acceleration",
-                          "self sacrifice",
+                          "repeatable token engine",
                           "token production",
                           "treasure"
                         ],
@@ -3136,12 +3139,13 @@
                         ],
                         "unreplacedRoles": [
                           "card draw",
-                          "conditional mana acceleration",
-                          "self sacrifice",
+                          "repeatable token engine",
                           "token production",
                           "treasure"
                         ],
-                        "unreplacedStrategyComponentRoles": [],
+                        "unreplacedStrategyComponentRoles": [
+                          "repeatable token engine"
+                        ],
                         "meaningfulStrategyLoss": true,
                         "verdict": "meaningful-strategy-loss"
                       }
@@ -3157,12 +3161,12 @@
                 "actualSwaps": 3,
                 "estimatedSpendUsd": 60.96,
                 "unknownPriceCount": 0,
-                "improvementScore": -19.09,
+                "improvementScore": -12.753,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 1.8,
+                  "score": 1.4,
                   "failedBefore": [
                     "average-nonland-mv",
                     "fast-mana",
@@ -3190,18 +3194,18 @@
                     {
                       "strategy": "combat-tokens",
                       "commanderStrategyScore": 28,
-                      "cutAffinityScore": 12,
+                      "cutAffinityScore": 16,
                       "addAffinityScore": 0,
-                      "netAffinityLoss": 12,
+                      "netAffinityLoss": 16,
                       "strongestCutProtectionApplied": 4
                     }
                   ],
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 12,
+                      "cutAffinityScore": 16,
                       "addAffinityScore": 0,
-                      "netAffinityDelta": -12
+                      "netAffinityDelta": -16
                     }
                   ],
                   "swapImpacts": [
@@ -3217,7 +3221,8 @@
                         "spot interaction"
                       ],
                       "addRoles": [
-                        "graveyard recursion"
+                        "graveyard recursion",
+                        "high-capacity graveyard recursion"
                       ],
                       "unreplacedRoles": [
                         "cost reduction",
@@ -3228,7 +3233,7 @@
                       "verdict": "preserved"
                     },
                     {
-                      "cutStrategyAffinityScore": 6,
+                      "cutStrategyAffinityScore": 8,
                       "addStrategyAffinityScore": 0,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
@@ -3239,29 +3244,31 @@
                         "combat-tokens"
                       ],
                       "cutRoles": [
-                        "card draw",
                         "conditional mana acceleration",
-                        "self sacrifice",
-                        "token production",
-                        "treasure"
+                        "etb synergy",
+                        "mana rock",
+                        "repeatable token engine",
+                        "token production"
                       ],
                       "addRoles": [
                         "board protection",
                         "protection"
                       ],
                       "unreplacedRoles": [
-                        "card draw",
                         "conditional mana acceleration",
-                        "self sacrifice",
-                        "token production",
-                        "treasure"
+                        "etb synergy",
+                        "mana rock",
+                        "repeatable token engine",
+                        "token production"
                       ],
-                      "unreplacedStrategyComponentRoles": [],
+                      "unreplacedStrategyComponentRoles": [
+                        "repeatable token engine"
+                      ],
                       "meaningfulStrategyLoss": true,
                       "verdict": "meaningful-strategy-loss"
                     },
                     {
-                      "cutStrategyAffinityScore": 6,
+                      "cutStrategyAffinityScore": 8,
                       "addStrategyAffinityScore": 0,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
@@ -3272,8 +3279,9 @@
                         "combat-tokens"
                       ],
                       "cutRoles": [
-                        "card draw",
                         "conditional mana acceleration",
+                        "creature",
+                        "sacrifice synergy",
                         "self sacrifice",
                         "token production",
                         "treasure"
@@ -3283,8 +3291,9 @@
                         "protection"
                       ],
                       "unreplacedRoles": [
-                        "card draw",
                         "conditional mana acceleration",
+                        "creature",
+                        "sacrifice synergy",
                         "self sacrifice",
                         "token production",
                         "treasure"
@@ -3414,7 +3423,8 @@
                           "spot interaction"
                         ],
                         "addRoles": [
-                          "graveyard recursion"
+                          "graveyard recursion",
+                          "high-capacity graveyard recursion"
                         ],
                         "unreplacedRoles": [
                           "cost reduction",
@@ -3427,7 +3437,7 @@
                     }
                   },
                   {
-                    "out": "Big Score",
+                    "out": "Vibranium Mining Mech",
                     "in": "Flawless Maneuver",
                     "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -3444,7 +3454,7 @@
                       "persistentColoredManaSourcesAfterSwap": 11,
                       "persistentColoredManaSourceFloor": 8,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
+                        "cutStrategyAffinityScore": 8,
                         "addStrategyAffinityScore": 0,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
@@ -3455,31 +3465,33 @@
                           "combat-tokens"
                         ],
                         "cutRoles": [
-                          "card draw",
                           "conditional mana acceleration",
-                          "self sacrifice",
-                          "token production",
-                          "treasure"
+                          "etb synergy",
+                          "mana rock",
+                          "repeatable token engine",
+                          "token production"
                         ],
                         "addRoles": [
                           "board protection",
                           "protection"
                         ],
                         "unreplacedRoles": [
-                          "card draw",
                           "conditional mana acceleration",
-                          "self sacrifice",
-                          "token production",
-                          "treasure"
+                          "etb synergy",
+                          "mana rock",
+                          "repeatable token engine",
+                          "token production"
                         ],
-                        "unreplacedStrategyComponentRoles": [],
+                        "unreplacedStrategyComponentRoles": [
+                          "repeatable token engine"
+                        ],
                         "meaningfulStrategyLoss": true,
                         "verdict": "meaningful-strategy-loss"
                       }
                     }
                   },
                   {
-                    "out": "Unexpected Windfall",
+                    "out": "Contract Hero",
                     "in": "Whispersilk Cloak",
                     "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -3496,7 +3508,7 @@
                       "persistentColoredManaSourcesAfterSwap": 11,
                       "persistentColoredManaSourceFloor": 8,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
+                        "cutStrategyAffinityScore": 8,
                         "addStrategyAffinityScore": 0,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
@@ -3507,8 +3519,9 @@
                           "combat-tokens"
                         ],
                         "cutRoles": [
-                          "card draw",
                           "conditional mana acceleration",
+                          "creature",
+                          "sacrifice synergy",
                           "self sacrifice",
                           "token production",
                           "treasure"
@@ -3518,8 +3531,9 @@
                           "protection"
                         ],
                         "unreplacedRoles": [
-                          "card draw",
                           "conditional mana acceleration",
+                          "creature",
+                          "sacrifice synergy",
                           "self sacrifice",
                           "token production",
                           "treasure"
@@ -3540,7 +3554,7 @@
                 "actualSwaps": 3,
                 "estimatedSpendUsd": 27.94,
                 "unknownPriceCount": 0,
-                "improvementScore": -8.618,
+                "improvementScore": 16.358,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -3571,20 +3585,26 @@
                   "evidenceComplete": true,
                   "meaningfulLosses": [
                     {
-                      "strategy": "combat-tokens",
-                      "commanderStrategyScore": 28,
+                      "strategy": "counters",
+                      "commanderStrategyScore": 6,
                       "cutAffinityScore": 6,
-                      "addAffinityScore": 2,
-                      "netAffinityLoss": 4,
+                      "addAffinityScore": 0,
+                      "netAffinityLoss": 6,
                       "strongestCutProtectionApplied": 4
                     }
                   ],
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 6,
+                      "cutAffinityScore": 4,
                       "addAffinityScore": 2,
-                      "netAffinityDelta": -4
+                      "netAffinityDelta": -2
+                    },
+                    {
+                      "strategy": "counters",
+                      "cutAffinityScore": 6,
+                      "addAffinityScore": 0,
+                      "netAffinityDelta": -6
                     }
                   ],
                   "swapImpacts": [
@@ -3611,35 +3631,37 @@
                       "verdict": "preserved"
                     },
                     {
-                      "cutStrategyAffinityScore": 6,
+                      "cutStrategyAffinityScore": 10,
                       "addStrategyAffinityScore": 0,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
-                        "combat-tokens"
+                        "combat-tokens",
+                        "counters"
                       ],
                       "addMatchedStrategies": [],
                       "locallyUnreplacedStrategies": [
-                        "combat-tokens"
+                        "combat-tokens",
+                        "counters"
                       ],
                       "cutRoles": [
-                        "card draw",
-                        "conditional mana acceleration",
-                        "self sacrifice",
-                        "token production",
-                        "treasure"
+                        "graveyard hate",
+                        "graveyard interaction",
+                        "graveyard utility",
+                        "haste"
                       ],
                       "addRoles": [
                         "equipment",
                         "protection"
                       ],
                       "unreplacedRoles": [
-                        "card draw",
-                        "conditional mana acceleration",
-                        "self sacrifice",
-                        "token production",
-                        "treasure"
+                        "graveyard hate",
+                        "graveyard interaction",
+                        "graveyard utility",
+                        "haste"
                       ],
-                      "unreplacedStrategyComponentRoles": [],
+                      "unreplacedStrategyComponentRoles": [
+                        "haste"
+                      ],
                       "meaningfulStrategyLoss": true,
                       "verdict": "meaningful-strategy-loss"
                     },
@@ -3805,7 +3827,7 @@
                     }
                   },
                   {
-                    "out": "Big Score",
+                    "out": "Doom's Time Platform",
                     "in": "Whispersilk Cloak",
                     "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -3822,35 +3844,37 @@
                       "persistentColoredManaSourcesAfterSwap": 11,
                       "persistentColoredManaSourceFloor": 8,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
+                        "cutStrategyAffinityScore": 10,
                         "addStrategyAffinityScore": 0,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
-                          "combat-tokens"
+                          "combat-tokens",
+                          "counters"
                         ],
                         "addMatchedStrategies": [],
                         "locallyUnreplacedStrategies": [
-                          "combat-tokens"
+                          "combat-tokens",
+                          "counters"
                         ],
                         "cutRoles": [
-                          "card draw",
-                          "conditional mana acceleration",
-                          "self sacrifice",
-                          "token production",
-                          "treasure"
+                          "graveyard hate",
+                          "graveyard interaction",
+                          "graveyard utility",
+                          "haste"
                         ],
                         "addRoles": [
                           "equipment",
                           "protection"
                         ],
                         "unreplacedRoles": [
-                          "card draw",
-                          "conditional mana acceleration",
-                          "self sacrifice",
-                          "token production",
-                          "treasure"
+                          "graveyard hate",
+                          "graveyard interaction",
+                          "graveyard utility",
+                          "haste"
                         ],
-                        "unreplacedStrategyComponentRoles": [],
+                        "unreplacedStrategyComponentRoles": [
+                          "haste"
+                        ],
                         "meaningfulStrategyLoss": true,
                         "verdict": "meaningful-strategy-loss"
                       }
@@ -4664,12 +4688,12 @@
                 "actualSwaps": 3,
                 "estimatedSpendUsd": 74.27,
                 "unknownPriceCount": 0,
-                "improvementScore": -15.91,
+                "improvementScore": -2.825,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 1.8,
+                  "score": 1.4,
                   "failedBefore": [
                     "average-nonland-mv",
                     "fast-mana",
@@ -4783,8 +4807,7 @@
                       ],
                       "cutRoles": [
                         "card draw",
-                        "conditional mana acceleration",
-                        "self sacrifice",
+                        "repeatable token engine",
                         "token production",
                         "treasure"
                       ],
@@ -4794,12 +4817,13 @@
                       ],
                       "unreplacedRoles": [
                         "card draw",
-                        "conditional mana acceleration",
-                        "self sacrifice",
+                        "repeatable token engine",
                         "token production",
                         "treasure"
                       ],
-                      "unreplacedStrategyComponentRoles": [],
+                      "unreplacedStrategyComponentRoles": [
+                        "repeatable token engine"
+                      ],
                       "meaningfulStrategyLoss": true,
                       "verdict": "meaningful-strategy-loss"
                     }
@@ -4940,7 +4964,7 @@
                     }
                   },
                   {
-                    "out": "Big Score",
+                    "out": "Unexpected Windfall",
                     "in": "Teferi's Protection",
                     "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -4992,7 +5016,7 @@
                     }
                   },
                   {
-                    "out": "Unexpected Windfall",
+                    "out": "Black Market Connections",
                     "in": "Flawless Maneuver",
                     "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -5021,8 +5045,7 @@
                         ],
                         "cutRoles": [
                           "card draw",
-                          "conditional mana acceleration",
-                          "self sacrifice",
+                          "repeatable token engine",
                           "token production",
                           "treasure"
                         ],
@@ -5032,12 +5055,13 @@
                         ],
                         "unreplacedRoles": [
                           "card draw",
-                          "conditional mana acceleration",
-                          "self sacrifice",
+                          "repeatable token engine",
                           "token production",
                           "treasure"
                         ],
-                        "unreplacedStrategyComponentRoles": [],
+                        "unreplacedStrategyComponentRoles": [
+                          "repeatable token engine"
+                        ],
                         "meaningfulStrategyLoss": true,
                         "verdict": "meaningful-strategy-loss"
                       }
@@ -5053,12 +5077,12 @@
                 "actualSwaps": 3,
                 "estimatedSpendUsd": 60.96,
                 "unknownPriceCount": 0,
-                "improvementScore": -19.09,
+                "improvementScore": -12.753,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 1.8,
+                  "score": 1.4,
                   "failedBefore": [
                     "average-nonland-mv",
                     "fast-mana",
@@ -5086,18 +5110,18 @@
                     {
                       "strategy": "combat-tokens",
                       "commanderStrategyScore": 28,
-                      "cutAffinityScore": 12,
+                      "cutAffinityScore": 16,
                       "addAffinityScore": 0,
-                      "netAffinityLoss": 12,
+                      "netAffinityLoss": 16,
                       "strongestCutProtectionApplied": 4
                     }
                   ],
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 12,
+                      "cutAffinityScore": 16,
                       "addAffinityScore": 0,
-                      "netAffinityDelta": -12
+                      "netAffinityDelta": -16
                     }
                   ],
                   "swapImpacts": [
@@ -5113,7 +5137,8 @@
                         "spot interaction"
                       ],
                       "addRoles": [
-                        "graveyard recursion"
+                        "graveyard recursion",
+                        "high-capacity graveyard recursion"
                       ],
                       "unreplacedRoles": [
                         "cost reduction",
@@ -5124,7 +5149,7 @@
                       "verdict": "preserved"
                     },
                     {
-                      "cutStrategyAffinityScore": 6,
+                      "cutStrategyAffinityScore": 8,
                       "addStrategyAffinityScore": 0,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
@@ -5135,29 +5160,31 @@
                         "combat-tokens"
                       ],
                       "cutRoles": [
-                        "card draw",
                         "conditional mana acceleration",
-                        "self sacrifice",
-                        "token production",
-                        "treasure"
+                        "etb synergy",
+                        "mana rock",
+                        "repeatable token engine",
+                        "token production"
                       ],
                       "addRoles": [
                         "board protection",
                         "protection"
                       ],
                       "unreplacedRoles": [
-                        "card draw",
                         "conditional mana acceleration",
-                        "self sacrifice",
-                        "token production",
-                        "treasure"
+                        "etb synergy",
+                        "mana rock",
+                        "repeatable token engine",
+                        "token production"
                       ],
-                      "unreplacedStrategyComponentRoles": [],
+                      "unreplacedStrategyComponentRoles": [
+                        "repeatable token engine"
+                      ],
                       "meaningfulStrategyLoss": true,
                       "verdict": "meaningful-strategy-loss"
                     },
                     {
-                      "cutStrategyAffinityScore": 6,
+                      "cutStrategyAffinityScore": 8,
                       "addStrategyAffinityScore": 0,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
@@ -5168,8 +5195,9 @@
                         "combat-tokens"
                       ],
                       "cutRoles": [
-                        "card draw",
                         "conditional mana acceleration",
+                        "creature",
+                        "sacrifice synergy",
                         "self sacrifice",
                         "token production",
                         "treasure"
@@ -5179,8 +5207,9 @@
                         "protection"
                       ],
                       "unreplacedRoles": [
-                        "card draw",
                         "conditional mana acceleration",
+                        "creature",
+                        "sacrifice synergy",
                         "self sacrifice",
                         "token production",
                         "treasure"
@@ -5310,7 +5339,8 @@
                           "spot interaction"
                         ],
                         "addRoles": [
-                          "graveyard recursion"
+                          "graveyard recursion",
+                          "high-capacity graveyard recursion"
                         ],
                         "unreplacedRoles": [
                           "cost reduction",
@@ -5323,7 +5353,7 @@
                     }
                   },
                   {
-                    "out": "Big Score",
+                    "out": "Vibranium Mining Mech",
                     "in": "Flawless Maneuver",
                     "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -5340,7 +5370,7 @@
                       "persistentColoredManaSourcesAfterSwap": 11,
                       "persistentColoredManaSourceFloor": 8,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
+                        "cutStrategyAffinityScore": 8,
                         "addStrategyAffinityScore": 0,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
@@ -5351,31 +5381,33 @@
                           "combat-tokens"
                         ],
                         "cutRoles": [
-                          "card draw",
                           "conditional mana acceleration",
-                          "self sacrifice",
-                          "token production",
-                          "treasure"
+                          "etb synergy",
+                          "mana rock",
+                          "repeatable token engine",
+                          "token production"
                         ],
                         "addRoles": [
                           "board protection",
                           "protection"
                         ],
                         "unreplacedRoles": [
-                          "card draw",
                           "conditional mana acceleration",
-                          "self sacrifice",
-                          "token production",
-                          "treasure"
+                          "etb synergy",
+                          "mana rock",
+                          "repeatable token engine",
+                          "token production"
                         ],
-                        "unreplacedStrategyComponentRoles": [],
+                        "unreplacedStrategyComponentRoles": [
+                          "repeatable token engine"
+                        ],
                         "meaningfulStrategyLoss": true,
                         "verdict": "meaningful-strategy-loss"
                       }
                     }
                   },
                   {
-                    "out": "Unexpected Windfall",
+                    "out": "Contract Hero",
                     "in": "Whispersilk Cloak",
                     "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -5392,7 +5424,7 @@
                       "persistentColoredManaSourcesAfterSwap": 11,
                       "persistentColoredManaSourceFloor": 8,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
+                        "cutStrategyAffinityScore": 8,
                         "addStrategyAffinityScore": 0,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
@@ -5403,8 +5435,9 @@
                           "combat-tokens"
                         ],
                         "cutRoles": [
-                          "card draw",
                           "conditional mana acceleration",
+                          "creature",
+                          "sacrifice synergy",
                           "self sacrifice",
                           "token production",
                           "treasure"
@@ -5414,8 +5447,9 @@
                           "protection"
                         ],
                         "unreplacedRoles": [
-                          "card draw",
                           "conditional mana acceleration",
+                          "creature",
+                          "sacrifice synergy",
                           "self sacrifice",
                           "token production",
                           "treasure"
@@ -5436,7 +5470,7 @@
                 "actualSwaps": 3,
                 "estimatedSpendUsd": 27.94,
                 "unknownPriceCount": 0,
-                "improvementScore": -8.618,
+                "improvementScore": 16.358,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -5467,20 +5501,26 @@
                   "evidenceComplete": true,
                   "meaningfulLosses": [
                     {
-                      "strategy": "combat-tokens",
-                      "commanderStrategyScore": 28,
+                      "strategy": "counters",
+                      "commanderStrategyScore": 6,
                       "cutAffinityScore": 6,
-                      "addAffinityScore": 2,
-                      "netAffinityLoss": 4,
+                      "addAffinityScore": 0,
+                      "netAffinityLoss": 6,
                       "strongestCutProtectionApplied": 4
                     }
                   ],
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 6,
+                      "cutAffinityScore": 4,
                       "addAffinityScore": 2,
-                      "netAffinityDelta": -4
+                      "netAffinityDelta": -2
+                    },
+                    {
+                      "strategy": "counters",
+                      "cutAffinityScore": 6,
+                      "addAffinityScore": 0,
+                      "netAffinityDelta": -6
                     }
                   ],
                   "swapImpacts": [
@@ -5507,35 +5547,37 @@
                       "verdict": "preserved"
                     },
                     {
-                      "cutStrategyAffinityScore": 6,
+                      "cutStrategyAffinityScore": 10,
                       "addStrategyAffinityScore": 0,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
-                        "combat-tokens"
+                        "combat-tokens",
+                        "counters"
                       ],
                       "addMatchedStrategies": [],
                       "locallyUnreplacedStrategies": [
-                        "combat-tokens"
+                        "combat-tokens",
+                        "counters"
                       ],
                       "cutRoles": [
-                        "card draw",
-                        "conditional mana acceleration",
-                        "self sacrifice",
-                        "token production",
-                        "treasure"
+                        "graveyard hate",
+                        "graveyard interaction",
+                        "graveyard utility",
+                        "haste"
                       ],
                       "addRoles": [
                         "equipment",
                         "protection"
                       ],
                       "unreplacedRoles": [
-                        "card draw",
-                        "conditional mana acceleration",
-                        "self sacrifice",
-                        "token production",
-                        "treasure"
+                        "graveyard hate",
+                        "graveyard interaction",
+                        "graveyard utility",
+                        "haste"
                       ],
-                      "unreplacedStrategyComponentRoles": [],
+                      "unreplacedStrategyComponentRoles": [
+                        "haste"
+                      ],
                       "meaningfulStrategyLoss": true,
                       "verdict": "meaningful-strategy-loss"
                     },
@@ -5701,7 +5743,7 @@
                     }
                   },
                   {
-                    "out": "Big Score",
+                    "out": "Doom's Time Platform",
                     "in": "Whispersilk Cloak",
                     "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -5718,35 +5760,37 @@
                       "persistentColoredManaSourcesAfterSwap": 11,
                       "persistentColoredManaSourceFloor": 8,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
+                        "cutStrategyAffinityScore": 10,
                         "addStrategyAffinityScore": 0,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
-                          "combat-tokens"
+                          "combat-tokens",
+                          "counters"
                         ],
                         "addMatchedStrategies": [],
                         "locallyUnreplacedStrategies": [
-                          "combat-tokens"
+                          "combat-tokens",
+                          "counters"
                         ],
                         "cutRoles": [
-                          "card draw",
-                          "conditional mana acceleration",
-                          "self sacrifice",
-                          "token production",
-                          "treasure"
+                          "graveyard hate",
+                          "graveyard interaction",
+                          "graveyard utility",
+                          "haste"
                         ],
                         "addRoles": [
                           "equipment",
                           "protection"
                         ],
                         "unreplacedRoles": [
-                          "card draw",
-                          "conditional mana acceleration",
-                          "self sacrifice",
-                          "token production",
-                          "treasure"
+                          "graveyard hate",
+                          "graveyard interaction",
+                          "graveyard utility",
+                          "haste"
                         ],
-                        "unreplacedStrategyComponentRoles": [],
+                        "unreplacedStrategyComponentRoles": [
+                          "haste"
+                        ],
                         "meaningfulStrategyLoss": true,
                         "verdict": "meaningful-strategy-loss"
                       }
@@ -6560,12 +6604,12 @@
                 "actualSwaps": 3,
                 "estimatedSpendUsd": 74.27,
                 "unknownPriceCount": 0,
-                "improvementScore": -15.91,
+                "improvementScore": -2.825,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 1.8,
+                  "score": 1.4,
                   "failedBefore": [
                     "average-nonland-mv",
                     "fast-mana",
@@ -6679,8 +6723,7 @@
                       ],
                       "cutRoles": [
                         "card draw",
-                        "conditional mana acceleration",
-                        "self sacrifice",
+                        "repeatable token engine",
                         "token production",
                         "treasure"
                       ],
@@ -6690,12 +6733,13 @@
                       ],
                       "unreplacedRoles": [
                         "card draw",
-                        "conditional mana acceleration",
-                        "self sacrifice",
+                        "repeatable token engine",
                         "token production",
                         "treasure"
                       ],
-                      "unreplacedStrategyComponentRoles": [],
+                      "unreplacedStrategyComponentRoles": [
+                        "repeatable token engine"
+                      ],
                       "meaningfulStrategyLoss": true,
                       "verdict": "meaningful-strategy-loss"
                     }
@@ -6836,7 +6880,7 @@
                     }
                   },
                   {
-                    "out": "Big Score",
+                    "out": "Unexpected Windfall",
                     "in": "Teferi's Protection",
                     "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -6888,7 +6932,7 @@
                     }
                   },
                   {
-                    "out": "Unexpected Windfall",
+                    "out": "Black Market Connections",
                     "in": "Flawless Maneuver",
                     "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -6917,8 +6961,7 @@
                         ],
                         "cutRoles": [
                           "card draw",
-                          "conditional mana acceleration",
-                          "self sacrifice",
+                          "repeatable token engine",
                           "token production",
                           "treasure"
                         ],
@@ -6928,12 +6971,13 @@
                         ],
                         "unreplacedRoles": [
                           "card draw",
-                          "conditional mana acceleration",
-                          "self sacrifice",
+                          "repeatable token engine",
                           "token production",
                           "treasure"
                         ],
-                        "unreplacedStrategyComponentRoles": [],
+                        "unreplacedStrategyComponentRoles": [
+                          "repeatable token engine"
+                        ],
                         "meaningfulStrategyLoss": true,
                         "verdict": "meaningful-strategy-loss"
                       }
@@ -6949,12 +6993,12 @@
                 "actualSwaps": 3,
                 "estimatedSpendUsd": 60.96,
                 "unknownPriceCount": 0,
-                "improvementScore": -19.09,
+                "improvementScore": -12.753,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 1.8,
+                  "score": 1.4,
                   "failedBefore": [
                     "average-nonland-mv",
                     "fast-mana",
@@ -6982,18 +7026,18 @@
                     {
                       "strategy": "combat-tokens",
                       "commanderStrategyScore": 28,
-                      "cutAffinityScore": 12,
+                      "cutAffinityScore": 16,
                       "addAffinityScore": 0,
-                      "netAffinityLoss": 12,
+                      "netAffinityLoss": 16,
                       "strongestCutProtectionApplied": 4
                     }
                   ],
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 12,
+                      "cutAffinityScore": 16,
                       "addAffinityScore": 0,
-                      "netAffinityDelta": -12
+                      "netAffinityDelta": -16
                     }
                   ],
                   "swapImpacts": [
@@ -7009,7 +7053,8 @@
                         "spot interaction"
                       ],
                       "addRoles": [
-                        "graveyard recursion"
+                        "graveyard recursion",
+                        "high-capacity graveyard recursion"
                       ],
                       "unreplacedRoles": [
                         "cost reduction",
@@ -7020,7 +7065,7 @@
                       "verdict": "preserved"
                     },
                     {
-                      "cutStrategyAffinityScore": 6,
+                      "cutStrategyAffinityScore": 8,
                       "addStrategyAffinityScore": 0,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
@@ -7031,29 +7076,31 @@
                         "combat-tokens"
                       ],
                       "cutRoles": [
-                        "card draw",
                         "conditional mana acceleration",
-                        "self sacrifice",
-                        "token production",
-                        "treasure"
+                        "etb synergy",
+                        "mana rock",
+                        "repeatable token engine",
+                        "token production"
                       ],
                       "addRoles": [
                         "board protection",
                         "protection"
                       ],
                       "unreplacedRoles": [
-                        "card draw",
                         "conditional mana acceleration",
-                        "self sacrifice",
-                        "token production",
-                        "treasure"
+                        "etb synergy",
+                        "mana rock",
+                        "repeatable token engine",
+                        "token production"
                       ],
-                      "unreplacedStrategyComponentRoles": [],
+                      "unreplacedStrategyComponentRoles": [
+                        "repeatable token engine"
+                      ],
                       "meaningfulStrategyLoss": true,
                       "verdict": "meaningful-strategy-loss"
                     },
                     {
-                      "cutStrategyAffinityScore": 6,
+                      "cutStrategyAffinityScore": 8,
                       "addStrategyAffinityScore": 0,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
@@ -7064,8 +7111,9 @@
                         "combat-tokens"
                       ],
                       "cutRoles": [
-                        "card draw",
                         "conditional mana acceleration",
+                        "creature",
+                        "sacrifice synergy",
                         "self sacrifice",
                         "token production",
                         "treasure"
@@ -7075,8 +7123,9 @@
                         "protection"
                       ],
                       "unreplacedRoles": [
-                        "card draw",
                         "conditional mana acceleration",
+                        "creature",
+                        "sacrifice synergy",
                         "self sacrifice",
                         "token production",
                         "treasure"
@@ -7206,7 +7255,8 @@
                           "spot interaction"
                         ],
                         "addRoles": [
-                          "graveyard recursion"
+                          "graveyard recursion",
+                          "high-capacity graveyard recursion"
                         ],
                         "unreplacedRoles": [
                           "cost reduction",
@@ -7219,7 +7269,7 @@
                     }
                   },
                   {
-                    "out": "Big Score",
+                    "out": "Vibranium Mining Mech",
                     "in": "Flawless Maneuver",
                     "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -7236,7 +7286,7 @@
                       "persistentColoredManaSourcesAfterSwap": 11,
                       "persistentColoredManaSourceFloor": 8,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
+                        "cutStrategyAffinityScore": 8,
                         "addStrategyAffinityScore": 0,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
@@ -7247,31 +7297,33 @@
                           "combat-tokens"
                         ],
                         "cutRoles": [
-                          "card draw",
                           "conditional mana acceleration",
-                          "self sacrifice",
-                          "token production",
-                          "treasure"
+                          "etb synergy",
+                          "mana rock",
+                          "repeatable token engine",
+                          "token production"
                         ],
                         "addRoles": [
                           "board protection",
                           "protection"
                         ],
                         "unreplacedRoles": [
-                          "card draw",
                           "conditional mana acceleration",
-                          "self sacrifice",
-                          "token production",
-                          "treasure"
+                          "etb synergy",
+                          "mana rock",
+                          "repeatable token engine",
+                          "token production"
                         ],
-                        "unreplacedStrategyComponentRoles": [],
+                        "unreplacedStrategyComponentRoles": [
+                          "repeatable token engine"
+                        ],
                         "meaningfulStrategyLoss": true,
                         "verdict": "meaningful-strategy-loss"
                       }
                     }
                   },
                   {
-                    "out": "Unexpected Windfall",
+                    "out": "Contract Hero",
                     "in": "Whispersilk Cloak",
                     "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -7288,7 +7340,7 @@
                       "persistentColoredManaSourcesAfterSwap": 11,
                       "persistentColoredManaSourceFloor": 8,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
+                        "cutStrategyAffinityScore": 8,
                         "addStrategyAffinityScore": 0,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
@@ -7299,8 +7351,9 @@
                           "combat-tokens"
                         ],
                         "cutRoles": [
-                          "card draw",
                           "conditional mana acceleration",
+                          "creature",
+                          "sacrifice synergy",
                           "self sacrifice",
                           "token production",
                           "treasure"
@@ -7310,8 +7363,9 @@
                           "protection"
                         ],
                         "unreplacedRoles": [
-                          "card draw",
                           "conditional mana acceleration",
+                          "creature",
+                          "sacrifice synergy",
                           "self sacrifice",
                           "token production",
                           "treasure"
@@ -7332,7 +7386,7 @@
                 "actualSwaps": 3,
                 "estimatedSpendUsd": 27.94,
                 "unknownPriceCount": 0,
-                "improvementScore": -8.618,
+                "improvementScore": 16.358,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -7363,20 +7417,26 @@
                   "evidenceComplete": true,
                   "meaningfulLosses": [
                     {
-                      "strategy": "combat-tokens",
-                      "commanderStrategyScore": 28,
+                      "strategy": "counters",
+                      "commanderStrategyScore": 6,
                       "cutAffinityScore": 6,
-                      "addAffinityScore": 2,
-                      "netAffinityLoss": 4,
+                      "addAffinityScore": 0,
+                      "netAffinityLoss": 6,
                       "strongestCutProtectionApplied": 4
                     }
                   ],
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 6,
+                      "cutAffinityScore": 4,
                       "addAffinityScore": 2,
-                      "netAffinityDelta": -4
+                      "netAffinityDelta": -2
+                    },
+                    {
+                      "strategy": "counters",
+                      "cutAffinityScore": 6,
+                      "addAffinityScore": 0,
+                      "netAffinityDelta": -6
                     }
                   ],
                   "swapImpacts": [
@@ -7403,35 +7463,37 @@
                       "verdict": "preserved"
                     },
                     {
-                      "cutStrategyAffinityScore": 6,
+                      "cutStrategyAffinityScore": 10,
                       "addStrategyAffinityScore": 0,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
-                        "combat-tokens"
+                        "combat-tokens",
+                        "counters"
                       ],
                       "addMatchedStrategies": [],
                       "locallyUnreplacedStrategies": [
-                        "combat-tokens"
+                        "combat-tokens",
+                        "counters"
                       ],
                       "cutRoles": [
-                        "card draw",
-                        "conditional mana acceleration",
-                        "self sacrifice",
-                        "token production",
-                        "treasure"
+                        "graveyard hate",
+                        "graveyard interaction",
+                        "graveyard utility",
+                        "haste"
                       ],
                       "addRoles": [
                         "equipment",
                         "protection"
                       ],
                       "unreplacedRoles": [
-                        "card draw",
-                        "conditional mana acceleration",
-                        "self sacrifice",
-                        "token production",
-                        "treasure"
+                        "graveyard hate",
+                        "graveyard interaction",
+                        "graveyard utility",
+                        "haste"
                       ],
-                      "unreplacedStrategyComponentRoles": [],
+                      "unreplacedStrategyComponentRoles": [
+                        "haste"
+                      ],
                       "meaningfulStrategyLoss": true,
                       "verdict": "meaningful-strategy-loss"
                     },
@@ -7597,7 +7659,7 @@
                     }
                   },
                   {
-                    "out": "Big Score",
+                    "out": "Doom's Time Platform",
                     "in": "Whispersilk Cloak",
                     "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -7614,35 +7676,37 @@
                       "persistentColoredManaSourcesAfterSwap": 11,
                       "persistentColoredManaSourceFloor": 8,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
+                        "cutStrategyAffinityScore": 10,
                         "addStrategyAffinityScore": 0,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
-                          "combat-tokens"
+                          "combat-tokens",
+                          "counters"
                         ],
                         "addMatchedStrategies": [],
                         "locallyUnreplacedStrategies": [
-                          "combat-tokens"
+                          "combat-tokens",
+                          "counters"
                         ],
                         "cutRoles": [
-                          "card draw",
-                          "conditional mana acceleration",
-                          "self sacrifice",
-                          "token production",
-                          "treasure"
+                          "graveyard hate",
+                          "graveyard interaction",
+                          "graveyard utility",
+                          "haste"
                         ],
                         "addRoles": [
                           "equipment",
                           "protection"
                         ],
                         "unreplacedRoles": [
-                          "card draw",
-                          "conditional mana acceleration",
-                          "self sacrifice",
-                          "token production",
-                          "treasure"
+                          "graveyard hate",
+                          "graveyard interaction",
+                          "graveyard utility",
+                          "haste"
                         ],
-                        "unreplacedStrategyComponentRoles": [],
+                        "unreplacedStrategyComponentRoles": [
+                          "haste"
+                        ],
                         "meaningfulStrategyLoss": true,
                         "verdict": "meaningful-strategy-loss"
                       }
@@ -8621,7 +8685,8 @@
                         "spot interaction"
                       ],
                       "addRoles": [
-                        "graveyard recursion"
+                        "graveyard recursion",
+                        "high-capacity graveyard recursion"
                       ],
                       "unreplacedRoles": [
                         "cost reduction",
@@ -8779,7 +8844,8 @@
                           "spot interaction"
                         ],
                         "addRoles": [
-                          "graveyard recursion"
+                          "graveyard recursion",
+                          "high-capacity graveyard recursion"
                         ],
                         "unreplacedRoles": [
                           "cost reduction",
@@ -9289,8 +9355,8 @@
             "actualSwaps": 3,
             "estimatedSpendUsd": 7.03,
             "unknownPriceCount": 0,
-            "improvementScore": 22.53,
-            "significantRegression": false,
+            "improvementScore": -1.518,
+            "significantRegression": true,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
               "applicable": true,
@@ -9321,18 +9387,18 @@
                 {
                   "strategy": "combat-tokens",
                   "commanderStrategyScore": 28,
-                  "cutAffinityScore": 24,
+                  "cutAffinityScore": 22,
                   "addAffinityScore": 14,
-                  "netAffinityLoss": 10,
+                  "netAffinityLoss": 8,
                   "strongestCutProtectionApplied": 4
                 }
               ],
               "strategyDeltas": [
                 {
                   "strategy": "combat-tokens",
-                  "cutAffinityScore": 24,
+                  "cutAffinityScore": 22,
                   "addAffinityScore": 14,
-                  "netAffinityDelta": -10
+                  "netAffinityDelta": -8
                 },
                 {
                   "strategy": "counters",
@@ -9343,7 +9409,7 @@
               ],
               "swapImpacts": [
                 {
-                  "cutStrategyAffinityScore": 8,
+                  "cutStrategyAffinityScore": 6,
                   "addStrategyAffinityScore": 14,
                   "cutStrategyProtectionApplied": 4,
                   "cutMatchedStrategies": [
@@ -9355,10 +9421,11 @@
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
+                    "card draw",
                     "conditional mana acceleration",
-                    "etb synergy",
-                    "mana rock",
-                    "token production"
+                    "self sacrifice",
+                    "token production",
+                    "treasure"
                   ],
                   "addRoles": [
                     "+1/+1 counters",
@@ -9366,10 +9433,11 @@
                     "extra combat"
                   ],
                   "unreplacedRoles": [
+                    "card draw",
                     "conditional mana acceleration",
-                    "etb synergy",
-                    "mana rock",
-                    "token production"
+                    "self sacrifice",
+                    "token production",
+                    "treasure"
                   ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
@@ -9530,7 +9598,7 @@
             },
             "swaps": [
               {
-                "out": "Vibranium Mining Mech",
+                "out": "Big Score",
                 "in": "Bruce Banner // The Incredible Hulk",
                 "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.64 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, counters. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -9547,7 +9615,7 @@
                   "persistentColoredManaSourcesAfterSwap": 11,
                   "persistentColoredManaSourceFloor": 8,
                   "strategyPreservation": {
-                    "cutStrategyAffinityScore": 8,
+                    "cutStrategyAffinityScore": 6,
                     "addStrategyAffinityScore": 14,
                     "cutStrategyProtectionApplied": 4,
                     "cutMatchedStrategies": [
@@ -9559,10 +9627,11 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
+                      "card draw",
                       "conditional mana acceleration",
-                      "etb synergy",
-                      "mana rock",
-                      "token production"
+                      "self sacrifice",
+                      "token production",
+                      "treasure"
                     ],
                     "addRoles": [
                       "+1/+1 counters",
@@ -9570,10 +9639,11 @@
                       "extra combat"
                     ],
                     "unreplacedRoles": [
+                      "card draw",
                       "conditional mana acceleration",
-                      "etb synergy",
-                      "mana rock",
-                      "token production"
+                      "self sacrifice",
+                      "token production",
+                      "treasure"
                     ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
@@ -10299,8 +10369,8 @@
             "actualSwaps": 2,
             "estimatedSpendUsd": 25.5,
             "unknownPriceCount": 0,
-            "improvementScore": -10.605,
-            "significantRegression": false,
+            "improvementScore": 7.2,
+            "significantRegression": true,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
               "applicable": true,
@@ -10371,7 +10441,8 @@
                     "treasure"
                   ],
                   "addRoles": [
-                    "graveyard recursion"
+                    "graveyard recursion",
+                    "high-capacity graveyard recursion"
                   ],
                   "unreplacedRoles": [
                     "card draw",
@@ -10494,7 +10565,7 @@
             },
             "swaps": [
               {
-                "out": "Big Score",
+                "out": "Unexpected Windfall",
                 "in": "Reanimate",
                 "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.64 must fall to 2.6 or lower). The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -10529,7 +10600,8 @@
                       "treasure"
                     ],
                     "addRoles": [
-                      "graveyard recursion"
+                      "graveyard recursion",
+                      "high-capacity graveyard recursion"
                     ],
                     "unreplacedRoles": [
                       "card draw",
@@ -10916,8 +10988,8 @@
                 "actualSwaps": 3,
                 "estimatedSpendUsd": 7.03,
                 "unknownPriceCount": 0,
-                "improvementScore": 22.53,
-                "significantRegression": false,
+                "improvementScore": -1.518,
+                "significantRegression": true,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
@@ -10948,18 +11020,18 @@
                     {
                       "strategy": "combat-tokens",
                       "commanderStrategyScore": 28,
-                      "cutAffinityScore": 24,
+                      "cutAffinityScore": 22,
                       "addAffinityScore": 14,
-                      "netAffinityLoss": 10,
+                      "netAffinityLoss": 8,
                       "strongestCutProtectionApplied": 4
                     }
                   ],
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 24,
+                      "cutAffinityScore": 22,
                       "addAffinityScore": 14,
-                      "netAffinityDelta": -10
+                      "netAffinityDelta": -8
                     },
                     {
                       "strategy": "counters",
@@ -10970,7 +11042,7 @@
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 8,
+                      "cutStrategyAffinityScore": 6,
                       "addStrategyAffinityScore": 14,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
@@ -10982,10 +11054,11 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "conditional mana acceleration",
-                        "etb synergy",
-                        "mana rock",
-                        "token production"
+                        "self sacrifice",
+                        "token production",
+                        "treasure"
                       ],
                       "addRoles": [
                         "+1/+1 counters",
@@ -10993,10 +11066,11 @@
                         "extra combat"
                       ],
                       "unreplacedRoles": [
+                        "card draw",
                         "conditional mana acceleration",
-                        "etb synergy",
-                        "mana rock",
-                        "token production"
+                        "self sacrifice",
+                        "token production",
+                        "treasure"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -11157,7 +11231,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Vibranium Mining Mech",
+                    "out": "Big Score",
                     "in": "Bruce Banner // The Incredible Hulk",
                     "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.64 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, counters. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -11174,7 +11248,7 @@
                       "persistentColoredManaSourcesAfterSwap": 11,
                       "persistentColoredManaSourceFloor": 8,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 8,
+                        "cutStrategyAffinityScore": 6,
                         "addStrategyAffinityScore": 14,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
@@ -11186,10 +11260,11 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "conditional mana acceleration",
-                          "etb synergy",
-                          "mana rock",
-                          "token production"
+                          "self sacrifice",
+                          "token production",
+                          "treasure"
                         ],
                         "addRoles": [
                           "+1/+1 counters",
@@ -11197,10 +11272,11 @@
                           "extra combat"
                         ],
                         "unreplacedRoles": [
+                          "card draw",
                           "conditional mana acceleration",
-                          "etb synergy",
-                          "mana rock",
-                          "token production"
+                          "self sacrifice",
+                          "token production",
+                          "treasure"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -11926,8 +12002,8 @@
                 "actualSwaps": 2,
                 "estimatedSpendUsd": 25.5,
                 "unknownPriceCount": 0,
-                "improvementScore": -10.605,
-                "significantRegression": false,
+                "improvementScore": 7.2,
+                "significantRegression": true,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
@@ -11998,7 +12074,8 @@
                         "treasure"
                       ],
                       "addRoles": [
-                        "graveyard recursion"
+                        "graveyard recursion",
+                        "high-capacity graveyard recursion"
                       ],
                       "unreplacedRoles": [
                         "card draw",
@@ -12121,7 +12198,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Big Score",
+                    "out": "Unexpected Windfall",
                     "in": "Reanimate",
                     "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.64 must fall to 2.6 or lower). The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -12156,7 +12233,8 @@
                           "treasure"
                         ],
                         "addRoles": [
-                          "graveyard recursion"
+                          "graveyard recursion",
+                          "high-capacity graveyard recursion"
                         ],
                         "unreplacedRoles": [
                           "card draw",
@@ -15899,6 +15977,7 @@
       },
       "roleCounts": {
         "token production": 21,
+        "repeatable token engine": 12,
         "haste": 8,
         "extra combat": 5,
         "untap engine": 5,
@@ -15907,6 +15986,7 @@
         "mana rock": 11,
         "persistent colored mana source": 10,
         "graveyard recursion": 4,
+        "high-capacity graveyard recursion": 2,
         "cost reduction": 2,
         "card draw": 19,
         "+1/+1 counters": 11,
