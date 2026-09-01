@@ -47,7 +47,6 @@
 1 Technomancer (40K) 61 *N*
 1 Their Name Is Death (40K) 62 *N*
 1 Their Number Is Legion (40K) 63 *N*
-1 Tomb Blade (40K) 64 *N*
 1 Trazyn the Infinite (40K) 65 *N*
 1 The War in Heaven (40K) 69 *N*
 1 Canoptek Scarab Swarm (40K) 150 *N*
@@ -69,8 +68,9 @@
 1 Skorpekh Destroyer (40K) 57 *N*
 1 Triarch Praetorian (40K) 66 *N*
 1 Night Scythe (40K) 162 *N*
-1 Skullclamp (MSC) 210 *N*
-1 Tragic Slip (C14) 167 *N*
-1 Culling the Weak (EXO) 55 *N*
+1 Deadly Dispute (MSC) 794 *N*
+1 Bitter Triumph (TDC) 173 *N*
+1 Dark Ritual (SUM) 99 *N*
 1 Lively Dirge (OTJ) 93 *N*
-1 Everflowing Chalice (C14) 239 *N*
+1 Basilisk Collar (MM3) 216 *F*
+1 Swiftfoot Boots (A25) 234 *N*
