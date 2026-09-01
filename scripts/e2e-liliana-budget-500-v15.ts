@@ -40,15 +40,47 @@ async function main(): Promise<void> {
   const commanderName = 'Liliana, Heretical Healer // Liliana, Defiant Necromancer';
   const maxDeckNzd = 500;
   const targetBracket = 5;
-  const excludedCards = ['Doomsday Excruciator', 'Shared Trauma'];
-  const mustInclude = ['Warren Soultrader', 'Gravecrawler', 'Blood Artist'];
+  const excludedCards = [
+    'Doomsday Excruciator',
+    'Shared Trauma',
+    'Cryptbreaker',
+    'Undead Augur',
+    'Dreadmalkin',
+    'Hungry Ghoul',
+    'Sepulcher Ghoul',
+    'Headless Rider',
+    'Plague Belcher',
+    'Plague of Vermin',
+    "Commander's Sphere",
+    'Staff of Compleation',
+    'Diabolic Tutor',
+    'Sword of Forge and Frontier',
+    "Champion's Helm",
+    'Darksteel Plate',
+    'Myr Retriever',
+    'Scrap Trawler',
+  ];
+  const mustInclude = [
+    'Warren Soultrader',
+    'Gravecrawler',
+    'Blood Artist',
+    'Entomb',
+    'Diabolic Intent',
+    'Yawgmoth, Thran Physician',
+    'Animate Dead',
+    'Cabal Ritual',
+    'Jet Medallion',
+    'Accursed Marauder',
+  ];
   const rate = await getUsdNzdRateV13();
   const maxDeckUsdReference = nzdToUsdV13(maxDeckNzd, rate.rate);
 
-  console.log(`LILIANA NZ$${maxDeckNzd} CHALLENGE: build the strongest legal Commander deck the current plugin can support under a hard whole-deck cap.`);
+  console.log(`LILIANA NZ$${maxDeckNzd} ZERO-TRIBAL AUDIT CANDIDATE: build the strongest legal Commander deck the current plugin can support under a hard whole-deck cap.`);
   console.log(`FX REFERENCE: 1 USD = ${rate.rate} NZD (${rate.rateDate}, ${rate.source}${rate.stale ? ', stale/fallback' : ''}).`);
   console.log('The NZD budget and Commander rules are hard truths. USD is only the Scryfall/search reference currency. Bracket 5 is an optimization target, not an automatic claim.');
-  console.log(`USER-APPROVED WIN DIRECTION: exclude ${excludedCards.join(' + ')} and require the Zombie/aristocrats core ${mustInclude.join(' + ')}.`);
+  console.log('CREATURE-TYPE POLICY: no Zombie, Skeleton, or other creature-type theme is an optimization objective; cards must earn slots through actual engine, interaction, mana, tutor, recursion, or win value.');
+  console.log(`AUDIT EXCLUSIONS: ${excludedCards.join(', ')}.`);
+  console.log(`HIGH-CONFIDENCE ENGINE TEST CARDS: ${mustInclude.join(', ')}.`);
 
   const commanderResolution = await getCardsByNames([commanderLookupName]);
   assert.deepEqual(commanderResolution.notFound, [], 'Liliana challenge commander must resolve by its front face');
@@ -93,8 +125,8 @@ async function main(): Promise<void> {
   assert.equal(parsed.commanders.length, 1, 'Liliana challenge keeps one commander');
   assert.equal(parsed.commanders[0]?.name, commanderName, 'construction must not replace the requested commander');
   const finalNames = new Set([...parsed.commanders, ...parsed.main].map((entry) => entry.name.toLocaleLowerCase()));
-  for (const name of mustInclude) assert.equal(finalNames.has(name.toLocaleLowerCase()), true, `approved win-core card must remain present: ${name}`);
-  for (const name of excludedCards) assert.equal(finalNames.has(name.toLocaleLowerCase()), false, `rejected Doomsday package card must remain absent: ${name}`);
+  for (const name of mustInclude) assert.equal(finalNames.has(name.toLocaleLowerCase()), true, `high-confidence engine test card must remain present: ${name}`);
+  for (const name of excludedCards) assert.equal(finalNames.has(name.toLocaleLowerCase()), false, `audit-excluded weak/tribal package card must remain absent: ${name}`);
 
   const resolved = await getCardsByIdentifiers(identifiers(parsed));
   assert.deepEqual(resolved.notFound, [], 'every exact Liliana challenge card/printing must resolve');
@@ -151,8 +183,9 @@ async function main(): Promise<void> {
   }, [
     `NZ$${maxDeckNzd} maximum total deck budget`,
     `fixed commander: ${commanderName}`,
-    `excluded win package: ${excludedCards.join(' + ')}`,
-    `required Zombie/aristocrats core: ${mustInclude.join(' + ')}`,
+    'no creature-type theme objective',
+    `audit exclusions: ${excludedCards.join(', ')}`,
+    `required high-confidence engine cards: ${mustInclude.join(', ')}`,
   ]);
 
   const evidence = {
@@ -161,6 +194,7 @@ async function main(): Promise<void> {
     maxDeckNzd,
     maxDeckUsdReference,
     targetBracket,
+    creatureTypePolicy: 'none',
     excludedCards,
     mustInclude,
     auditedTotalNzd,
@@ -206,11 +240,11 @@ async function main(): Promise<void> {
   assert.ok(winningCombos > 0, 'the strongest-under-budget challenge requires at least one independently verified win-oriented combo');
   assert.equal(ceiling.bracket5CertifiedByThisAssessment, false, 'this benchmark deliberately has no independent current metagame evidence and must not self-award Bracket 5');
 
-  console.log(`\nLILIANA NZ$${maxDeckNzd} CHALLENGE: PASS — legal exact-100 list, within hard NZD budget, commander strategy materially supported, verified win route present, and optimized Bracket-4-or-better construction independently supported.`);
+  console.log(`\nLILIANA NZ$${maxDeckNzd} ZERO-TRIBAL AUDIT CANDIDATE: PASS — legal exact-100 list, within hard NZD budget, commander strategy materially supported, verified win route present, and optimized Bracket-4-or-better construction independently supported.`);
 }
 
 main().catch((error) => {
-  console.error('LILIANA NZ$500 CHALLENGE: FAIL');
+  console.error('LILIANA NZ$500 ZERO-TRIBAL AUDIT CANDIDATE: FAIL');
   console.error(error instanceof Error ? `${error.name}: ${error.message}` : String(error));
   process.exitCode = 1;
 });
