@@ -8,12 +8,7 @@ import {
   SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15,
 } from '../src/services/commander-strategy-affinity-v15.js';
 import { validateCommanderDeck } from '../src/services/commander-rules.js';
-import {
-  getUsdNzdRateV13,
-  nzdToUsdV13,
-  usdToNzdV13,
-  withNzdPricingV13,
-} from '../src/services/currency-v13.js';
+import { getUsdNzdRateV13, nzdToUsdV13, usdToNzdV13, withNzdPricingV13 } from '../src/services/currency-v13.js';
 import { parseDecklist, type ParsedDeck } from '../src/services/deck.js';
 import { buildCommanderDeckUnderWholeBudgetV15 } from '../src/services/deck-whole-budget-v15.js';
 import { getCardsByIdentifiers, getCardsByNames, type CardIdentifierInput } from '../src/services/scryfall.js';
@@ -41,51 +36,26 @@ async function main(): Promise<void> {
   const maxDeckNzd = 500;
   const targetBracket = 5;
   const excludedCards = [
-    'Doomsday Excruciator',
-    'Shared Trauma',
-    'Cryptbreaker',
-    'Undead Augur',
-    'Dreadmalkin',
-    'Hungry Ghoul',
-    'Sepulcher Ghoul',
-    'Headless Rider',
-    'Plague Belcher',
-    'Plague of Vermin',
-    "Commander's Sphere",
-    'Staff of Compleation',
-    'Diabolic Tutor',
-    'Sword of Forge and Frontier',
-    "Champion's Helm",
-    'Darksteel Plate',
-    'Myr Retriever',
-    'Scrap Trawler',
+    'Doomsday Excruciator', 'Shared Trauma', 'Cryptbreaker', 'Undead Augur', 'Dreadmalkin',
+    'Hungry Ghoul', 'Sepulcher Ghoul', 'Headless Rider', 'Plague Belcher', 'Plague of Vermin',
+    "Commander's Sphere", 'Staff of Compleation', 'Diabolic Tutor', 'Sword of Forge and Frontier',
+    "Champion's Helm", 'Darksteel Plate', 'Myr Retriever', 'Scrap Trawler',
   ];
   const mustInclude = [
-    'Warren Soultrader',
-    'Gravecrawler',
-    'Blood Artist',
-    'Entomb',
-    'Diabolic Intent',
-    'Yawgmoth, Thran Physician',
-    'Animate Dead',
-    'Cabal Ritual',
-    'Jet Medallion',
-    'Accursed Marauder',
+    'Warren Soultrader', 'Gravecrawler', 'Blood Artist', 'Entomb', 'Diabolic Intent',
+    'Yawgmoth, Thran Physician', 'Animate Dead', 'Cabal Ritual', 'Jet Medallion', 'Accursed Marauder',
   ];
+
   const rate = await getUsdNzdRateV13();
   const maxDeckUsdReference = nzdToUsdV13(maxDeckNzd, rate.rate);
-
-  console.log(`LILIANA NZ$${maxDeckNzd} ZERO-TRIBAL AUDIT CANDIDATE: build the strongest legal Commander deck the current plugin can support under a hard whole-deck cap.`);
-  console.log(`FX REFERENCE: 1 USD = ${rate.rate} NZD (${rate.rateDate}, ${rate.source}${rate.stale ? ', stale/fallback' : ''}).`);
-  console.log('The NZD budget and Commander rules are hard truths. USD is only the Scryfall/search reference currency. Bracket 5 is an optimization target, not an automatic claim.');
-  console.log('CREATURE-TYPE POLICY: no Zombie, Skeleton, or other creature-type theme is an optimization objective; cards must earn slots through actual engine, interaction, mana, tutor, recursion, or win value.');
-  console.log(`AUDIT EXCLUSIONS: ${excludedCards.join(', ')}.`);
-  console.log(`HIGH-CONFIDENCE ENGINE TEST CARDS: ${mustInclude.join(', ')}.`);
+  console.log(`LILIANA NZ$${maxDeckNzd} ZERO-TRIBAL AUDIT CANDIDATE`);
+  console.log(`FX REFERENCE: 1 USD = ${rate.rate} NZD (${rate.rateDate}, ${rate.source}).`);
+  console.log('CREATURE-TYPE POLICY: disabled. Creature type cannot contribute candidate quality, cut protection, or material-improvement credit.');
 
   const commanderResolution = await getCardsByNames([commanderLookupName]);
-  assert.deepEqual(commanderResolution.notFound, [], 'Liliana challenge commander must resolve by its front face');
-  assert.equal(commanderResolution.cards.length, 1, 'Liliana challenge requires one resolved commander');
-  assert.equal(commanderResolution.cards[0]?.name, commanderName, 'front-face lookup must resolve the requested Liliana transform card');
+  assert.deepEqual(commanderResolution.notFound, []);
+  assert.equal(commanderResolution.cards.length, 1);
+  assert.equal(commanderResolution.cards[0]?.name, commanderName);
 
   const result = await buildCommanderDeckUnderWholeBudgetV15(commanderResolution.cards, {
     targetBracket,
@@ -93,61 +63,69 @@ async function main(): Promise<void> {
     landCount: 30,
     excludedCards,
     mustInclude,
+    creatureTypeOptimization: false,
   });
   const nzdBuild = withNzdPricingV13(result, rate, { maxDeckNzd });
+  const decklist = String(result.decklist ?? '').trim();
 
-  if (result.status !== 'budget-compliant') {
+  const writeFailureEvidence = (): void => {
     writeFileSync('liliana-budget-500-result.json', `${JSON.stringify({
       commanderName,
       maxDeckNzd,
       maxDeckUsdReference,
       targetBracket,
+      creatureTypePolicy: 'none',
       excludedCards,
       mustInclude,
       currencyPolicy: nzdBuild.currencyPolicy,
       build: nzdBuild,
     }, null, 2)}\n`);
-    throw new Error(`Current whole-budget search did not find a fully priced legal Liliana candidate at or below NZ$${maxDeckNzd}.`);
+    if (decklist) writeFileSync('liliana-budget-500-deck.txt', `${decklist}\n`);
+  };
+
+  if (result.status !== 'budget-compliant' || !decklist) {
+    writeFailureEvidence();
+    throw new Error(`Current whole-budget search did not produce a complete budget-compliant Liliana candidate at or below NZ$${maxDeckNzd}.`);
   }
 
+  assert.equal(result.creatureTypeOptimization, false, 'zero-tribal benchmark must disable creature-type refinement');
   const audit = record(result.budgetAudit);
-  assert.equal(audit.withinBudget, true, 'Liliana challenge must independently audit within the hard converted cap');
+  assert.equal(audit.withinBudget, true);
+  assert.deepEqual(audit.unknownPriceEntries ?? [], []);
+  assert.deepEqual(audit.unresolvedEntries ?? [], []);
   const auditedTotalUsd = number(audit.auditedTotalUsd, Number.POSITIVE_INFINITY);
   const auditedTotalNzd = usdToNzdV13(auditedTotalUsd, rate.rate);
-  assert.ok(auditedTotalNzd <= maxDeckNzd, `audited deck total NZ$${auditedTotalNzd} must not exceed NZ$${maxDeckNzd}`);
-  assert.deepEqual(audit.unknownPriceEntries ?? [], [], 'hard-budget proof cannot contain unknown prices');
-  assert.deepEqual(audit.unresolvedEntries ?? [], [], 'hard-budget proof cannot contain unresolved printings');
+  assert.ok(auditedTotalNzd <= maxDeckNzd);
 
-  const decklist = String(result.decklist ?? '');
-  assert.ok(decklist.trim(), 'budget-compliant result must include a complete decklist');
   const parsed = parseDecklist(decklist);
-  assert.equal(parsed.totalCards, 100, 'Liliana challenge deck must contain exactly 100 cards');
-  assert.equal(parsed.commanders.length, 1, 'Liliana challenge keeps one commander');
-  assert.equal(parsed.commanders[0]?.name, commanderName, 'construction must not replace the requested commander');
+  assert.equal(parsed.totalCards, 100);
+  assert.equal(parsed.commanders.length, 1);
+  assert.equal(parsed.commanders[0]?.name, commanderName);
   const finalNames = new Set([...parsed.commanders, ...parsed.main].map((entry) => entry.name.toLocaleLowerCase()));
-  for (const name of mustInclude) assert.equal(finalNames.has(name.toLocaleLowerCase()), true, `high-confidence engine test card must remain present: ${name}`);
-  for (const name of excludedCards) assert.equal(finalNames.has(name.toLocaleLowerCase()), false, `audit-excluded weak/tribal package card must remain absent: ${name}`);
+  for (const name of mustInclude) {
+    assert.equal(finalNames.has(name.toLocaleLowerCase()), true, `required high-confidence engine card missing: ${name}`);
+  }
+  for (const name of excludedCards) {
+    assert.equal(finalNames.has(name.toLocaleLowerCase()), false, `explicitly excluded card reintroduced: ${name}`);
+  }
 
   const resolved = await getCardsByIdentifiers(identifiers(parsed));
-  assert.deepEqual(resolved.notFound, [], 'every exact Liliana challenge card/printing must resolve');
+  assert.deepEqual(resolved.notFound, []);
   const legality = validateCommanderDeck(parsed, resolved.cards);
-  assert.equal(legality.isLegal, true, 'budget or power targets never override Commander legality');
+  assert.equal(legality.isLegal, true);
 
   const strategyContext = deriveCommanderStrategyContextV15(parsed, resolved.cards);
-  const substantiveStrategies = strategyContext.strategies.filter((strategy) => strategy.score >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15);
-  assert.ok(substantiveStrategies.length > 0, 'the plugin must infer at least one substantive strategy from Liliana');
+  assert.ok(strategyContext.strategies.some((strategy) => strategy.score >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15));
   const strategySupport = measureUpgradeDeckStrategySupportV15(parsed, resolved.cards, strategyContext);
-  assert.equal(strategySupport.evidenceComplete, true, 'strategy support audit must resolve every card');
-  const supportedSubstantive = strategySupport.strategies.filter((strategy) => strategy.supportCount >= 6 && strategy.affinityTotal >= 72);
-  assert.ok(supportedSubstantive.length > 0, 'the finished 99 must materially support at least one substantive Liliana strategy');
+  assert.equal(strategySupport.evidenceComplete, true);
+  assert.ok(strategySupport.strategies.some((strategy) => strategy.supportCount >= 6 && strategy.affinityTotal >= 72));
 
   const [spellbookBracket, combos, readiness] = await Promise.all([
     estimateCommanderBracket(decklist),
     findDeckCombos(decklist, 100),
-    assessCedhReadinessV14(decklist, {}),
+    assessCedhReadinessV14(decklist, { creatureTypeOptimization: false }),
   ]);
   assert.notEqual(readiness.status, 'invalid-or-policy-noncompliant');
-
   const metrics = record(readiness.metrics);
   const comboCounts = record(combos.counts);
   const completeCombos = number(comboCounts.included);
@@ -183,8 +161,8 @@ async function main(): Promise<void> {
   }, [
     `NZ$${maxDeckNzd} maximum total deck budget`,
     `fixed commander: ${commanderName}`,
-    'no creature-type theme objective',
-    `audit exclusions: ${excludedCards.join(', ')}`,
+    'creature-type optimization disabled',
+    `explicit exclusions: ${excludedCards.join(', ')}`,
     `required high-confidence engine cards: ${mustInclude.join(', ')}`,
   ]);
 
@@ -204,43 +182,28 @@ async function main(): Promise<void> {
     strategyContext,
     strategySupport,
     spellbookBracket,
-    comboSummary: {
-      completeCombos,
-      winningCombos,
-      ruthlessCombos,
-      strategicallyRelevant,
-    },
+    comboSummary: { completeCombos, winningCombos, ruthlessCombos, strategicallyRelevant },
     readiness,
     gameChangerNames,
     ceiling,
     build: nzdBuild,
   };
   writeFileSync('liliana-budget-500-result.json', `${JSON.stringify(evidence, null, 2)}\n`);
-  writeFileSync('liliana-budget-500-deck.txt', `${decklist.trim()}\n`);
+  writeFileSync('liliana-budget-500-deck.txt', `${decklist}\n`);
 
-  console.log(`AUDITED EXACT-PRINTING TOTAL: NZ$${auditedTotalNzd.toFixed(2)} / NZ$${maxDeckNzd.toFixed(2)} (US$${auditedTotalUsd.toFixed(2)} Scryfall reference)`);
-  console.log(`SUBSTANTIVE COMMANDER STRATEGIES: ${JSON.stringify(strategyContext.strategies, null, 2)}`);
-  console.log(`WHOLE-DECK STRATEGY SUPPORT: ${JSON.stringify(strategySupport.strategies, null, 2)}`);
-  console.log(`COMPLETE COMBOS: ${completeCombos}`);
-  console.log(`WIN-ORIENTED COMBOS: ${winningCombos}`);
-  console.log(`RUTHLESS COMBOS: ${ruthlessCombos}`);
-  console.log(`STRATEGICALLY RELEVANT COMBOS: ${strategicallyRelevant}`);
-  console.log(`READINESS STATUS: ${readiness.status}`);
-  console.log(`READINESS METRICS: ${JSON.stringify(metrics, null, 2)}`);
-  console.log(`GAME CHANGERS (${gameChangerNames.length}): ${gameChangerNames.join(', ') || 'none'}`);
-  console.log(`HONEST ASSESSED BRACKET: ${ceiling.assessedBracket ?? 'unassessable'}`);
-  console.log(`ASSESSED BAND: ${ceiling.assessedBand}`);
-  console.log(`BRACKET-5 CONSTRUCTION CANDIDATE: ${ceiling.bracket5ConstructionCandidate}`);
-  console.log(`FAILED BRACKET-5 THRESHOLDS: ${JSON.stringify(ceiling.bracket5ThresholdChecks.filter((check) => !check.passed), null, 2)}`);
+  console.log(`AUDITED EXACT-PRINTING TOTAL: NZ$${auditedTotalNzd.toFixed(2)} / NZ$${maxDeckNzd.toFixed(2)}`);
+  console.log(`COMPLETE COMBOS: ${completeCombos}; WIN-ORIENTED: ${winningCombos}; RUTHLESS: ${ruthlessCombos}`);
+  console.log(`READINESS: ${String(readiness.status)}`);
+  console.log(`METRICS: ${JSON.stringify(metrics)}`);
+  console.log(`HONEST ASSESSED BRACKET: ${String(ceiling.assessedBracket ?? 'unassessable')} (${String(ceiling.assessedBand)})`);
   console.log('\nFINAL DECKLIST');
-  console.log(decklist.trim());
+  console.log(decklist);
 
   assert.equal(ceiling.hardGatesPassed, true);
-  assert.ok(number(ceiling.assessedBracket) >= 4, `NZ$${maxDeckNzd} Liliana challenge must reach an independently supported optimized Bracket-4 construction band; got ${String(ceiling.assessedBracket)}`);
-  assert.ok(winningCombos > 0, 'the strongest-under-budget challenge requires at least one independently verified win-oriented combo');
-  assert.equal(ceiling.bracket5CertifiedByThisAssessment, false, 'this benchmark deliberately has no independent current metagame evidence and must not self-award Bracket 5');
-
-  console.log(`\nLILIANA NZ$${maxDeckNzd} ZERO-TRIBAL AUDIT CANDIDATE: PASS — legal exact-100 list, within hard NZD budget, commander strategy materially supported, verified win route present, and optimized Bracket-4-or-better construction independently supported.`);
+  assert.ok(number(ceiling.assessedBracket) >= 4);
+  assert.ok(winningCombos > 0);
+  assert.equal(ceiling.bracket5CertifiedByThisAssessment, false);
+  console.log(`\nLILIANA NZ$${maxDeckNzd} ZERO-TRIBAL AUDIT CANDIDATE: PASS`);
 }
 
 main().catch((error) => {
