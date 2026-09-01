@@ -361,16 +361,11 @@ export function contextualCutPressureV15(
     || roles.includes('board wipe')
     || roles.includes('graveyard recursion')
   ) cutPressure -= 4;
-  // Premium low-cost acceleration is part of the consistency upgrade target, not generic surplus
-  // ramp. Prefer trimming slower rocks and expensive ramp before one-mana dorks or efficient
-  // two-mana colored sources when structural floors leave several nominally legal cuts.
   if (roles.includes('fast mana')) cutPressure -= 6;
   else if (roles.includes('mana acceleration') && card.cmc <= 2) cutPressure -= 3;
   if (roles.includes('persistent colored mana source') && card.cmc <= 2) cutPressure -= 2;
 
   const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
-  // Reuse the existing four-point protection scale already applied to important utility roles.
-  // Strategy fit lowers cut pressure but never makes an on-plan card automatically untouchable.
   const strategyProtectionApplied = Math.min(4, substantiveCommanderStrategyAffinityScoreV15(affinity));
   cutPressure -= strategyProtectionApplied;
 
@@ -541,14 +536,11 @@ export async function suggestDeckUpgrades(
       }
     }
 
-    // Under a printing-family/set restriction the exhaustive eligible pool is the candidate universe.
-    // The supplemental theme search only marks which pool cards support the controlled theme; it cannot
-    // inject a card that the shared physical-printing truth boundary did not admit.
     const results = restrictedPoolActive ? genericResults : mergeCardsByName(themedResults, genericResults);
     if (results.length === 0) continue;
     const candidatesForPriority = deficit.prioritySource === 'authoritative-target-gate'
       && authoritativeTargetGatePriorities.length > 1
-      ? 1
+      ? Math.min(3, maxCandidates)
       : maxCandidates;
     const ranked = results
       .filter((card) => !card.type_line.toLowerCase().includes('land'))
@@ -570,11 +562,6 @@ export async function suggestDeckUpgrades(
           - candidateScore(a, deficit.role, strategyContext, deficit.target, deficit.targetGate)
           || a.name.localeCompare(b.name);
       });
-    // Unrestricted role discovery is already capped at forty results. Inspect all of that bounded,
-    // ranked evidence for a qualifying physical printing before calling the gate empty. The older
-    // three-card pre-printing shortlist could exhaust on price/printing failures even when a valid
-    // lower-ranked candidate was already present in the same bounded Scryfall result set. Restricted
-    // discovery remains exhaustive and keeps the smaller pre-printing shortlist for request economy.
     const rankedForPrinting = restrictedPoolActive
       ? ranked.slice(0, Math.max(candidatesForPriority * 3, candidatesForPriority))
       : ranked;
@@ -686,9 +673,9 @@ export async function suggestDeckUpgrades(
         'Candidates are tied to a qualifying physical printing with set code, collector number, finish, promo metadata, and price. A cheaper or more common unrelated printing of the same Oracle card cannot bypass a themed printing-family restriction.',
     },
     caveats: [
-      'Role-count targets are engineering heuristics for deck consistency, but failed Bracket-4/5 construction gates now outrank aspirational role targets. When several authoritative gates are failing, candidate generation gives each gate one slot per pass before allowing a single generic role to consume the package.',
-      'Within an already-required structural role or target gate, candidate ordering now treats the existing V0.15 substantive-strategy threshold as a first-class tier before generic mana-efficiency and EDHREC/community-adoption scoring. This keeps structural repair on-plan when supported candidates exist without allowing strategy affinity to bypass the gate itself.',
-      'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window. Unrestricted Upgrade retains bounded role search, but now scans the full discovered bounded role result set for an eligible physical printing instead of pre-truncating that evidence to three candidates for a one-slot gate.',
+      'Role-count targets are engineering heuristics for deck consistency, but failed Bracket-4/5 construction gates now outrank aspirational role targets. When several authoritative gates are failing, candidate generation retains a small ranked backup set for each gate so downstream pairing can preserve gate diversity while trying strategy-safe alternatives.',
+      'Within an already-required structural role or target gate, candidate ordering treats the existing V0.15 substantive-strategy threshold as a first-class tier before generic mana-efficiency and EDHREC/community-adoption scoring. This keeps structural repair on-plan when supported candidates exist without allowing strategy affinity to bypass the gate itself.',
+      'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window. Unrestricted Upgrade retains bounded role search, but scans the full discovered bounded role result set for an eligible physical printing.',
       'When a V0.15 controlled theme is below its minimum density, the engine uses the controlled theme query as a positive membership/ranking signal. Under a printing restriction, only cards already admitted by the exhaustive shared eligible pool can become candidates.',
       'Cut ordering uses the same V0.15 commander strategy context as additions. When the deck is at or below its controlled theme minimum, matching cards also receive a capped four-point cut-protection signal; final theme preservation is still enforced independently by refinement rather than by this heuristic alone.',
       'Automatic upgrade packages pair the nonland cut pool with nonland additions so a utility land cannot silently replace a spell; dedicated mana-base work should be handled explicitly.',
