@@ -17,6 +17,8 @@ export interface CedhSeedPackageOptionsV14 {
   maxUsdPerCard?: number;
   maxPackageCards?: number;
   maxCandidatesToVerify?: number;
+  preferredCards?: string[];
+  excludedCards?: string[];
 }
 
 interface SeedCardUseV14 {
@@ -61,6 +63,8 @@ interface VerifiedSeedCandidateV14 {
   seedNames: string[];
   exactPrintings: Array<Record<string, unknown>>;
   practicality: CedhSeedPracticalityV14;
+  preferredOverlap: number;
+  constraintAdjustment: number;
   finalScore: number;
 }
 
@@ -281,6 +285,23 @@ export function scoreCedhSeedPracticalityV14(
   };
 }
 
+export function seedConstraintAdjustmentV14(
+  comboCardNames: string[],
+  preferredCards: string[] = [],
+  excludedCards: string[] = [],
+): { eligible: boolean; preferredOverlap: number; scoreAdjustment: number; blockedCards: string[] } {
+  const preferred = new Set(preferredCards.map(normalize));
+  const excluded = new Set(excludedCards.map(normalize));
+  const blockedCards = comboCardNames.filter((name) => excluded.has(normalize(name)));
+  const preferredOverlap = comboCardNames.filter((name) => preferred.has(normalize(name))).length;
+  return {
+    eligible: blockedCards.length === 0,
+    preferredOverlap,
+    scoreAdjustment: preferredOverlap * 180,
+    blockedCards,
+  };
+}
+
 export async function discoverCedhSeedWinPackageV14(
   commanders: ScryfallCard[],
   options: CedhSeedPackageOptionsV14 = {},
@@ -309,7 +330,13 @@ export async function discoverCedhSeedWinPackageV14(
   }
 
   const ranked = rankCedhSeedCandidatesV14(rawVariants, commanderNames, maxPackageCards);
-  const candidates = selectCedhSeedVerificationCandidatesV14(ranked, maxCandidatesToVerify, maxPackageCards).map(record);
+  const unblockedRanked = ranked.filter((candidate) => {
+    const names = Array.isArray(candidate.cards)
+      ? candidate.cards.map(record).map((card) => String(card.name ?? '')).filter(Boolean)
+      : [];
+    return seedConstraintAdjustmentV14(names, options.preferredCards, options.excludedCards).eligible;
+  });
+  const candidates = selectCedhSeedVerificationCandidatesV14(unblockedRanked, maxCandidatesToVerify, maxPackageCards).map(record);
   const allNames = [...new Set(candidates.flatMap((candidate) =>
     Array.isArray(candidate.cards)
       ? candidate.cards.map(record).map((card) => String(card.name ?? '')).filter(Boolean)
@@ -381,15 +408,31 @@ export async function discoverCedhSeedWinPackageV14(
       continue;
     }
 
+    const constraint = seedConstraintAdjustmentV14(comboCardNames, options.preferredCards, options.excludedCards);
+    if (!constraint.eligible) {
+      audit.push({ comboId: candidate.id, status: 'blocked-by-user-exclusion', blockedCards: constraint.blockedCards });
+      continue;
+    }
     const practicality = scoreCedhSeedPracticalityV14(practicalityCards, commanderNames);
     const structuralScore = typeof candidate.score === 'number' && Number.isFinite(candidate.score) ? candidate.score : 0;
-    const finalScore = structuralScore + practicality.scoreAdjustment;
-    verifiedCandidates.push({ candidate, comboCardNames, seedNames, exactPrintings, practicality, finalScore });
+    const finalScore = structuralScore + practicality.scoreAdjustment + constraint.scoreAdjustment;
+    verifiedCandidates.push({
+      candidate,
+      comboCardNames,
+      seedNames,
+      exactPrintings,
+      practicality,
+      preferredOverlap: constraint.preferredOverlap,
+      constraintAdjustment: constraint.scoreAdjustment,
+      finalScore,
+    });
     audit.push({
       comboId: candidate.id,
       status: 'eligible-package-scored',
       structuralScore,
       practicalAdjustment: practicality.scoreAdjustment,
+      preferredOverlap: constraint.preferredOverlap,
+      constraintAdjustment: constraint.scoreAdjustment,
       finalScore: Math.round(finalScore * 100) / 100,
       totalManaValue: practicality.totalManaValue,
       deadPieceRisk: practicality.deadPieceRisk,
@@ -400,6 +443,7 @@ export async function discoverCedhSeedWinPackageV14(
 
   verifiedCandidates.sort((a, b) =>
     b.finalScore - a.finalScore
+    || b.preferredOverlap - a.preferredOverlap
     || a.practicality.totalManaValue - b.practicality.totalManaValue
     || Number(b.candidate.popularity ?? 0) - Number(a.candidate.popularity ?? 0));
 
@@ -418,12 +462,14 @@ export async function discoverCedhSeedWinPackageV14(
       seedNames: winning.seedNames,
       exactPrintings: winning.exactPrintings,
       selectionScore: Math.round(winning.finalScore * 100) / 100,
+      preferredOverlap: winning.preferredOverlap,
+      constraintAdjustment: winning.constraintAdjustment,
       practicality: winning.practicality,
       printingPolicy: describePrintingPolicyV08(policy),
       queryAudit,
       audit,
       source: 'Commander Spellbook + Scryfall exact-printing verification',
-      guidance: 'The package is only a construction seed. Discovery uses deterministic result evidence rather than Commander Spellbook manual winning tags, then independently applies the local deterministic-win result gate. Candidate selection evaluates compactness and bracket tags as supporting evidence rather than overriding practical card utility, reserves verification space for each supported package size, permits at most one lightweight prerequisite, and prefers lower-mana cards with useful roles outside the combo. The finished 100-card deck must still independently resolve, pass Commander legality and printing policy, and reproduce a winning combo through find-my-combos before it can satisfy the competitive win-package gate.',
+      guidance: 'The package is only a construction seed. Discovery uses deterministic result evidence rather than Commander Spellbook manual winning tags, then independently applies the local deterministic-win result gate. User exclusions are hard filters, while overlap with user-required/preferred cards is rewarded because it reduces added slots and preserves the requested plan. Candidate selection treats compactness and bracket tags as supporting evidence rather than overriding practical card utility, reserves verification space for each supported package size, permits at most one lightweight prerequisite, and prefers lower-mana cards with useful roles outside the combo. The finished 100-card deck must still independently resolve, pass Commander legality and printing policy, and reproduce a winning combo through find-my-combos before it can satisfy the competitive win-package gate.',
     };
   }
 
