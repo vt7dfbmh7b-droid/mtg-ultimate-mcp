@@ -48,10 +48,10 @@
       "fastManaCount": 1,
       "tutorCount": 0,
       "recursionCount": 17,
-      "boardWipeCount": 4,
+      "boardWipeCount": 3,
       "rampCount": 12,
       "drawCount": 13,
-      "interactionCount": 10,
+      "interactionCount": 9,
       "protectionCount": 1,
       "persistentColoredManaSourceCount": 6
     },
@@ -251,8 +251,8 @@
     "candidatePackagesPerRound": 4,
     "estimatedUpgradeSpendNzd": 11.16,
     "estimatedUpgradeSpendUsdReference": 6.61,
-    "maxTotalNzd": 199.99,
-    "maxTotalUsdReference": 118.48,
+    "maxTotalNzd": 200,
+    "maxTotalUsdReference": 118.43,
     "swaps": [
       {
         "out": "Shard of the Nightbringer",
@@ -267,7 +267,7 @@
         },
         "structuralPairing": {
           "addressedRole": "interaction",
-          "remainingStructuralDeficitAfterSwap": 14,
+          "remainingStructuralDeficitAfterSwap": 15,
           "authoritativeTargetGate": "cheap-interaction",
           "nonlandManaValueReduction": null,
           "persistentColoredManaSourcesAfterSwap": 6,
@@ -311,7 +311,7 @@
         },
         "structuralPairing": {
           "addressedRole": "tutor",
-          "remainingStructuralDeficitAfterSwap": 13,
+          "remainingStructuralDeficitAfterSwap": 14,
           "authoritativeTargetGate": "tutors",
           "nonlandManaValueReduction": null,
           "persistentColoredManaSourcesAfterSwap": 6,
@@ -353,7 +353,7 @@
         },
         "structuralPairing": {
           "addressedRole": "interaction",
-          "remainingStructuralDeficitAfterSwap": 12,
+          "remainingStructuralDeficitAfterSwap": 13,
           "authoritativeTargetGate": "cheap-interaction",
           "nonlandManaValueReduction": null,
           "persistentColoredManaSourcesAfterSwap": 6,
@@ -403,7 +403,7 @@
         },
         "structuralPairing": {
           "addressedRole": "tutor",
-          "remainingStructuralDeficitAfterSwap": 11,
+          "remainingStructuralDeficitAfterSwap": 12,
           "authoritativeTargetGate": "tutors",
           "nonlandManaValueReduction": null,
           "persistentColoredManaSourcesAfterSwap": 6,
@@ -450,7 +450,7 @@
         },
         "structuralPairing": {
           "addressedRole": "interaction",
-          "remainingStructuralDeficitAfterSwap": 10,
+          "remainingStructuralDeficitAfterSwap": 11,
           "authoritativeTargetGate": "cheap-interaction",
           "nonlandManaValueReduction": null,
           "persistentColoredManaSourcesAfterSwap": 6,
@@ -488,7 +488,7 @@
         },
         "structuralPairing": {
           "addressedRole": "protection",
-          "remainingStructuralDeficitAfterSwap": 9,
+          "remainingStructuralDeficitAfterSwap": 10,
           "authoritativeTargetGate": null,
           "nonlandManaValueReduction": null,
           "persistentColoredManaSourcesAfterSwap": 6,
@@ -603,7 +603,7 @@
         "winningCandidate": 1,
         "estimatedSpendNzd": 5.4,
         "estimatedSpendUsdReference": 3.2,
-        "improvementScore": 21.008,
+        "improvementScore": 16.628,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -625,7 +625,7 @@
         "winningCandidate": 3,
         "estimatedSpendNzd": 1.72,
         "estimatedSpendUsdReference": 1.02,
-        "improvementScore": 14.437,
+        "improvementScore": 3.044,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -639,7 +639,7 @@
         "accepted": true,
         "acceptedSwaps": 2,
         "candidatePackagesGenerated": 4,
-        "candidatePackagesEligible": 2,
+        "candidatePackagesEligible": 1,
         "candidateAttemptSizes": [
           4,
           3,
@@ -647,9 +647,9 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 12,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 4.03,
+        "estimatedSpendNzd": 4.04,
         "estimatedSpendUsdReference": 2.39,
-        "improvementScore": 6.958,
+        "improvementScore": 11.413,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -688,9 +688,9 @@
     "constraints": {
       "targetBracket": 4,
       "maxNzdPerCard": 34.99,
-      "maxUsdPerCardReference": 20.73,
-      "maxTotalNzd": 199.99,
-      "maxTotalUsdReference": 118.48,
+      "maxUsdPerCardReference": 20.72,
+      "maxTotalNzd": 200,
+      "maxTotalUsdReference": 118.43,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -714,7 +714,7 @@
         "winningCandidate": 1,
         "estimatedSpendNzd": 5.4,
         "estimatedSpendUsdReference": 3.2,
-        "improvementScore": 21.008,
+        "improvementScore": 16.628,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -743,7 +743,7 @@
             "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (2 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: artifact-engine. The recommended physical printing satisfies the active printing-family/set policy.",
             "structuralPairing": {
               "addressedRole": "interaction",
-              "remainingStructuralDeficitAfterSwap": 14,
+              "remainingStructuralDeficitAfterSwap": 15,
               "authoritativeTargetGate": "cheap-interaction",
               "nonlandManaValueReduction": null,
               "persistentColoredManaSourcesAfterSwap": 6,
@@ -794,7 +794,7 @@
             "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
             "structuralPairing": {
               "addressedRole": "tutor",
-              "remainingStructuralDeficitAfterSwap": 13,
+              "remainingStructuralDeficitAfterSwap": 14,
               "authoritativeTargetGate": "tutors",
               "nonlandManaValueReduction": null,
               "persistentColoredManaSourcesAfterSwap": 6,
@@ -834,7 +834,7 @@
             "estimatedSpendNzd": 5.4,
             "estimatedSpendUsdReference": 3.2,
             "unknownPriceCount": 0,
-            "improvementScore": 21.008,
+            "improvementScore": 16.628,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -1086,7 +1086,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
-                  "remainingStructuralDeficitAfterSwap": 14,
+                  "remainingStructuralDeficitAfterSwap": 15,
                   "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -1130,7 +1130,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
-                  "remainingStructuralDeficitAfterSwap": 13,
+                  "remainingStructuralDeficitAfterSwap": 14,
                   "authoritativeTargetGate": "tutors",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -1170,7 +1170,7 @@
             "estimatedSpendNzd": 5.03,
             "estimatedSpendUsdReference": 2.98,
             "unknownPriceCount": 0,
-            "improvementScore": 1.924,
+            "improvementScore": 4.114,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -1426,7 +1426,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
-                  "remainingStructuralDeficitAfterSwap": 14,
+                  "remainingStructuralDeficitAfterSwap": 15,
                   "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -1468,7 +1468,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
-                  "remainingStructuralDeficitAfterSwap": 13,
+                  "remainingStructuralDeficitAfterSwap": 14,
                   "authoritativeTargetGate": "tutors",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -1505,10 +1505,10 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 4,
             "actualSwaps": 2,
-            "estimatedSpendNzd": 5.23,
+            "estimatedSpendNzd": 5.24,
             "estimatedSpendUsdReference": 3.1,
             "unknownPriceCount": 0,
-            "improvementScore": 1.922,
+            "improvementScore": 4.112,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -1763,7 +1763,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
-                  "remainingStructuralDeficitAfterSwap": 14,
+                  "remainingStructuralDeficitAfterSwap": 15,
                   "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -1804,7 +1804,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
-                  "remainingStructuralDeficitAfterSwap": 13,
+                  "remainingStructuralDeficitAfterSwap": 14,
                   "authoritativeTargetGate": "tutors",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -1844,7 +1844,7 @@
             "estimatedSpendNzd": 5,
             "estimatedSpendUsdReference": 2.96,
             "unknownPriceCount": 0,
-            "improvementScore": 1.954,
+            "improvementScore": 4.144,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -2096,7 +2096,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
-                  "remainingStructuralDeficitAfterSwap": 14,
+                  "remainingStructuralDeficitAfterSwap": 15,
                   "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -2140,7 +2140,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
-                  "remainingStructuralDeficitAfterSwap": 13,
+                  "remainingStructuralDeficitAfterSwap": 14,
                   "authoritativeTargetGate": "tutors",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -2192,7 +2192,7 @@
                 "estimatedSpendNzd": 5.4,
                 "estimatedSpendUsdReference": 3.2,
                 "unknownPriceCount": 0,
-                "improvementScore": 21.008,
+                "improvementScore": 16.628,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -2444,7 +2444,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 14,
+                      "remainingStructuralDeficitAfterSwap": 15,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -2488,7 +2488,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
-                      "remainingStructuralDeficitAfterSwap": 13,
+                      "remainingStructuralDeficitAfterSwap": 14,
                       "authoritativeTargetGate": "tutors",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -2528,7 +2528,7 @@
                 "estimatedSpendNzd": 5.03,
                 "estimatedSpendUsdReference": 2.98,
                 "unknownPriceCount": 0,
-                "improvementScore": 1.924,
+                "improvementScore": 4.114,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -2784,7 +2784,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 14,
+                      "remainingStructuralDeficitAfterSwap": 15,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -2826,7 +2826,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
-                      "remainingStructuralDeficitAfterSwap": 13,
+                      "remainingStructuralDeficitAfterSwap": 14,
                       "authoritativeTargetGate": "tutors",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -2863,10 +2863,10 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 5.23,
+                "estimatedSpendNzd": 5.24,
                 "estimatedSpendUsdReference": 3.1,
                 "unknownPriceCount": 0,
-                "improvementScore": 1.922,
+                "improvementScore": 4.112,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -3121,7 +3121,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 14,
+                      "remainingStructuralDeficitAfterSwap": 15,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -3162,7 +3162,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
-                      "remainingStructuralDeficitAfterSwap": 13,
+                      "remainingStructuralDeficitAfterSwap": 14,
                       "authoritativeTargetGate": "tutors",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -3202,7 +3202,7 @@
                 "estimatedSpendNzd": 5,
                 "estimatedSpendUsdReference": 2.96,
                 "unknownPriceCount": 0,
-                "improvementScore": 1.954,
+                "improvementScore": 4.144,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -3454,7 +3454,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 14,
+                      "remainingStructuralDeficitAfterSwap": 15,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -3498,7 +3498,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
-                      "remainingStructuralDeficitAfterSwap": 13,
+                      "remainingStructuralDeficitAfterSwap": 14,
                       "authoritativeTargetGate": "tutors",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -3543,7 +3543,7 @@
         "winningCandidate": 3,
         "estimatedSpendNzd": 1.72,
         "estimatedSpendUsdReference": 1.02,
-        "improvementScore": 14.437,
+        "improvementScore": 3.044,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -3574,7 +3574,7 @@
             "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (3 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: artifact-engine. The recommended physical printing satisfies the active printing-family/set policy.",
             "structuralPairing": {
               "addressedRole": "interaction",
-              "remainingStructuralDeficitAfterSwap": 12,
+              "remainingStructuralDeficitAfterSwap": 13,
               "authoritativeTargetGate": "cheap-interaction",
               "nonlandManaValueReduction": null,
               "persistentColoredManaSourcesAfterSwap": 6,
@@ -3631,7 +3631,7 @@
             "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: artifact-engine. The recommended physical printing satisfies the active printing-family/set policy.",
             "structuralPairing": {
               "addressedRole": "tutor",
-              "remainingStructuralDeficitAfterSwap": 11,
+              "remainingStructuralDeficitAfterSwap": 12,
               "authoritativeTargetGate": "tutors",
               "nonlandManaValueReduction": null,
               "persistentColoredManaSourcesAfterSwap": 6,
@@ -3676,7 +3676,7 @@
             "estimatedSpendNzd": 1.76,
             "estimatedSpendUsdReference": 1.04,
             "unknownPriceCount": 0,
-            "improvementScore": 9.746,
+            "improvementScore": 0.247,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -3927,7 +3927,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
-                  "remainingStructuralDeficitAfterSwap": 12,
+                  "remainingStructuralDeficitAfterSwap": 13,
                   "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -3965,7 +3965,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
-                  "remainingStructuralDeficitAfterSwap": 11,
+                  "remainingStructuralDeficitAfterSwap": 12,
                   "authoritativeTargetGate": "tutors",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -4010,7 +4010,7 @@
             "estimatedSpendNzd": 1.96,
             "estimatedSpendUsdReference": 1.16,
             "unknownPriceCount": 0,
-            "improvementScore": 14.403,
+            "improvementScore": 3.01,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -4278,7 +4278,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
-                  "remainingStructuralDeficitAfterSwap": 12,
+                  "remainingStructuralDeficitAfterSwap": 13,
                   "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -4327,7 +4327,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
-                  "remainingStructuralDeficitAfterSwap": 11,
+                  "remainingStructuralDeficitAfterSwap": 12,
                   "authoritativeTargetGate": "tutors",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -4372,7 +4372,7 @@
             "estimatedSpendNzd": 1.72,
             "estimatedSpendUsdReference": 1.02,
             "unknownPriceCount": 0,
-            "improvementScore": 14.437,
+            "improvementScore": 3.044,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -4629,7 +4629,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
-                  "remainingStructuralDeficitAfterSwap": 12,
+                  "remainingStructuralDeficitAfterSwap": 13,
                   "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -4679,7 +4679,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
-                  "remainingStructuralDeficitAfterSwap": 11,
+                  "remainingStructuralDeficitAfterSwap": 12,
                   "authoritativeTargetGate": "tutors",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -4724,7 +4724,7 @@
             "estimatedSpendNzd": 1.76,
             "estimatedSpendUsdReference": 1.04,
             "unknownPriceCount": 0,
-            "improvementScore": 14.403,
+            "improvementScore": 3.01,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -4984,7 +4984,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
-                  "remainingStructuralDeficitAfterSwap": 12,
+                  "remainingStructuralDeficitAfterSwap": 13,
                   "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -5031,7 +5031,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
-                  "remainingStructuralDeficitAfterSwap": 11,
+                  "remainingStructuralDeficitAfterSwap": 12,
                   "authoritativeTargetGate": "tutors",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -5088,7 +5088,7 @@
                 "estimatedSpendNzd": 1.76,
                 "estimatedSpendUsdReference": 1.04,
                 "unknownPriceCount": 0,
-                "improvementScore": 9.746,
+                "improvementScore": 0.247,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -5339,7 +5339,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 12,
+                      "remainingStructuralDeficitAfterSwap": 13,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -5377,7 +5377,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
-                      "remainingStructuralDeficitAfterSwap": 11,
+                      "remainingStructuralDeficitAfterSwap": 12,
                       "authoritativeTargetGate": "tutors",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -5422,7 +5422,7 @@
                 "estimatedSpendNzd": 1.96,
                 "estimatedSpendUsdReference": 1.16,
                 "unknownPriceCount": 0,
-                "improvementScore": 14.403,
+                "improvementScore": 3.01,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -5690,7 +5690,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 12,
+                      "remainingStructuralDeficitAfterSwap": 13,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -5739,7 +5739,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
-                      "remainingStructuralDeficitAfterSwap": 11,
+                      "remainingStructuralDeficitAfterSwap": 12,
                       "authoritativeTargetGate": "tutors",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -5784,7 +5784,7 @@
                 "estimatedSpendNzd": 1.72,
                 "estimatedSpendUsdReference": 1.02,
                 "unknownPriceCount": 0,
-                "improvementScore": 14.437,
+                "improvementScore": 3.044,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -6041,7 +6041,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 12,
+                      "remainingStructuralDeficitAfterSwap": 13,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -6091,7 +6091,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
-                      "remainingStructuralDeficitAfterSwap": 11,
+                      "remainingStructuralDeficitAfterSwap": 12,
                       "authoritativeTargetGate": "tutors",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -6136,7 +6136,7 @@
                 "estimatedSpendNzd": 1.76,
                 "estimatedSpendUsdReference": 1.04,
                 "unknownPriceCount": 0,
-                "improvementScore": 14.403,
+                "improvementScore": 3.01,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -6396,7 +6396,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 12,
+                      "remainingStructuralDeficitAfterSwap": 13,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -6443,7 +6443,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
-                      "remainingStructuralDeficitAfterSwap": 11,
+                      "remainingStructuralDeficitAfterSwap": 12,
                       "authoritativeTargetGate": "tutors",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -6489,11 +6489,11 @@
         "attemptedSwaps": 2,
         "acceptedSwaps": 2,
         "candidatePackagesGenerated": 4,
-        "candidatePackagesEligible": 2,
+        "candidatePackagesEligible": 1,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 4.03,
+        "estimatedSpendNzd": 4.04,
         "estimatedSpendUsdReference": 2.39,
-        "improvementScore": 6.958,
+        "improvementScore": 11.413,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -6522,7 +6522,7 @@
             "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (4 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
             "structuralPairing": {
               "addressedRole": "interaction",
-              "remainingStructuralDeficitAfterSwap": 10,
+              "remainingStructuralDeficitAfterSwap": 11,
               "authoritativeTargetGate": "cheap-interaction",
               "nonlandManaValueReduction": null,
               "persistentColoredManaSourcesAfterSwap": 6,
@@ -6567,7 +6567,7 @@
             "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: artifact-engine. The recommended physical printing satisfies the active printing-family/set policy.",
             "structuralPairing": {
               "addressedRole": "protection",
-              "remainingStructuralDeficitAfterSwap": 9,
+              "remainingStructuralDeficitAfterSwap": 10,
               "authoritativeTargetGate": null,
               "nonlandManaValueReduction": null,
               "persistentColoredManaSourcesAfterSwap": 6,
@@ -6607,10 +6607,10 @@
             "reason": "eligible",
             "attemptedSwaps": 2,
             "actualSwaps": 2,
-            "estimatedSpendNzd": 4.03,
+            "estimatedSpendNzd": 4.04,
             "estimatedSpendUsdReference": 2.39,
             "unknownPriceCount": 0,
-            "improvementScore": 6.958,
+            "improvementScore": 11.413,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -6859,7 +6859,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
-                  "remainingStructuralDeficitAfterSwap": 10,
+                  "remainingStructuralDeficitAfterSwap": 11,
                   "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -6897,7 +6897,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
-                  "remainingStructuralDeficitAfterSwap": 9,
+                  "remainingStructuralDeficitAfterSwap": 10,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -6934,13 +6934,13 @@
           {
             "candidate": 2,
             "eligible": false,
-            "reason": "package-reduces-substantive-deck-strategy-density",
+            "reason": "improvement-below-threshold",
             "attemptedSwaps": 2,
             "actualSwaps": 2,
             "estimatedSpendNzd": 4.24,
             "estimatedSpendUsdReference": 2.51,
             "unknownPriceCount": 0,
-            "improvementScore": 4.279,
+            "improvementScore": -0.435,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -7026,45 +7026,7 @@
               ],
               "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
             },
-            "deckStrategyRetention": {
-              "status": "strategy-density-loss",
-              "evidenceComplete": true,
-              "preserved": false,
-              "unresolvedBefore": [],
-              "unresolvedAfter": [],
-              "strategies": [
-                {
-                  "archetype": "graveyard-reanimator",
-                  "commanderScore": 12,
-                  "beforeSupportCount": 30,
-                  "afterSupportCount": 31,
-                  "supportDelta": 1,
-                  "beforeAffinityTotal": 286,
-                  "afterAffinityTotal": 291,
-                  "affinityDelta": 5,
-                  "preserved": true
-                },
-                {
-                  "archetype": "artifact-engine",
-                  "commanderScore": 9,
-                  "beforeSupportCount": 52,
-                  "afterSupportCount": 51,
-                  "supportDelta": -1,
-                  "beforeAffinityTotal": 270,
-                  "afterAffinityTotal": 267,
-                  "affinityDelta": -3,
-                  "preserved": false
-                }
-              ],
-              "losses": [
-                {
-                  "archetype": "artifact-engine",
-                  "supportDelta": -1,
-                  "affinityDelta": -3
-                }
-              ],
-              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
-            },
+            "deckStrategyRetention": {},
             "planProvenance": {
               "targetBracket": 4,
               "winRouteVerificationStatus": "no-verified-route",
@@ -7202,7 +7164,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
-                  "remainingStructuralDeficitAfterSwap": 10,
+                  "remainingStructuralDeficitAfterSwap": 11,
                   "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -7247,7 +7209,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
-                  "remainingStructuralDeficitAfterSwap": 9,
+                  "remainingStructuralDeficitAfterSwap": 10,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -7284,13 +7246,13 @@
           {
             "candidate": 3,
             "eligible": false,
-            "reason": "package-reduces-substantive-deck-strategy-density",
+            "reason": "improvement-below-threshold",
             "attemptedSwaps": 2,
             "actualSwaps": 2,
-            "estimatedSpendNzd": 4.03,
+            "estimatedSpendNzd": 4.04,
             "estimatedSpendUsdReference": 2.39,
             "unknownPriceCount": 0,
-            "improvementScore": 4.279,
+            "improvementScore": -0.435,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -7368,45 +7330,7 @@
               ],
               "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
             },
-            "deckStrategyRetention": {
-              "status": "strategy-density-loss",
-              "evidenceComplete": true,
-              "preserved": false,
-              "unresolvedBefore": [],
-              "unresolvedAfter": [],
-              "strategies": [
-                {
-                  "archetype": "graveyard-reanimator",
-                  "commanderScore": 12,
-                  "beforeSupportCount": 30,
-                  "afterSupportCount": 30,
-                  "supportDelta": 0,
-                  "beforeAffinityTotal": 286,
-                  "afterAffinityTotal": 286,
-                  "affinityDelta": 0,
-                  "preserved": true
-                },
-                {
-                  "archetype": "artifact-engine",
-                  "commanderScore": 9,
-                  "beforeSupportCount": 52,
-                  "afterSupportCount": 51,
-                  "supportDelta": -1,
-                  "beforeAffinityTotal": 270,
-                  "afterAffinityTotal": 267,
-                  "affinityDelta": -3,
-                  "preserved": false
-                }
-              ],
-              "losses": [
-                {
-                  "archetype": "artifact-engine",
-                  "supportDelta": -1,
-                  "affinityDelta": -3
-                }
-              ],
-              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
-            },
+            "deckStrategyRetention": {},
             "planProvenance": {
               "targetBracket": 4,
               "winRouteVerificationStatus": "no-verified-route",
@@ -7544,7 +7468,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
-                  "remainingStructuralDeficitAfterSwap": 10,
+                  "remainingStructuralDeficitAfterSwap": 11,
                   "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -7587,7 +7511,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
-                  "remainingStructuralDeficitAfterSwap": 9,
+                  "remainingStructuralDeficitAfterSwap": 10,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -7623,14 +7547,14 @@
           },
           {
             "candidate": 4,
-            "eligible": true,
-            "reason": "eligible",
+            "eligible": false,
+            "reason": "improvement-below-threshold",
             "attemptedSwaps": 2,
             "actualSwaps": 2,
             "estimatedSpendNzd": 10.77,
             "estimatedSpendUsdReference": 6.38,
             "unknownPriceCount": 0,
-            "improvementScore": 4.283,
+            "improvementScore": -0.431,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -7710,39 +7634,7 @@
               ],
               "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
             },
-            "deckStrategyRetention": {
-              "status": "preserved",
-              "evidenceComplete": true,
-              "preserved": true,
-              "unresolvedBefore": [],
-              "unresolvedAfter": [],
-              "strategies": [
-                {
-                  "archetype": "graveyard-reanimator",
-                  "commanderScore": 12,
-                  "beforeSupportCount": 30,
-                  "afterSupportCount": 30,
-                  "supportDelta": 0,
-                  "beforeAffinityTotal": 286,
-                  "afterAffinityTotal": 286,
-                  "affinityDelta": 0,
-                  "preserved": true
-                },
-                {
-                  "archetype": "artifact-engine",
-                  "commanderScore": 9,
-                  "beforeSupportCount": 52,
-                  "afterSupportCount": 52,
-                  "supportDelta": 0,
-                  "beforeAffinityTotal": 270,
-                  "afterAffinityTotal": 270,
-                  "affinityDelta": 0,
-                  "preserved": true
-                }
-              ],
-              "losses": [],
-              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
-            },
+            "deckStrategyRetention": {},
             "planProvenance": {
               "targetBracket": 4,
               "winRouteVerificationStatus": "no-verified-route",
@@ -7880,7 +7772,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
-                  "remainingStructuralDeficitAfterSwap": 10,
+                  "remainingStructuralDeficitAfterSwap": 11,
                   "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -7925,7 +7817,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
-                  "remainingStructuralDeficitAfterSwap": 9,
+                  "remainingStructuralDeficitAfterSwap": 10,
                   "authoritativeTargetGate": null,
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -7976,10 +7868,10 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 8.07,
-                "estimatedSpendUsdReference": 4.78,
+                "estimatedSpendNzd": 8.04,
+                "estimatedSpendUsdReference": 4.76,
                 "unknownPriceCount": 0,
-                "improvementScore": 18.934,
+                "improvementScore": 21.619,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -8287,7 +8179,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 10,
+                      "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -8325,7 +8217,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 9,
+                      "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -8370,7 +8262,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -8413,12 +8305,12 @@
                       "set": "FDN",
                       "collectorNumber": "528",
                       "finish": "nonfoil",
-                      "priceNzd": 0.52,
-                      "priceUsdReference": 0.31
+                      "priceNzd": 0.49,
+                      "priceUsdReference": 0.29
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 7,
+                      "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -8458,10 +8350,10 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 5.81,
-                "estimatedSpendUsdReference": 3.44,
+                "estimatedSpendNzd": 5.78,
+                "estimatedSpendUsdReference": 3.42,
                 "unknownPriceCount": 0,
-                "improvementScore": 20.734,
+                "improvementScore": 23.764,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -8770,7 +8662,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 10,
+                      "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -8815,7 +8707,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 9,
+                      "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -8850,12 +8742,12 @@
                       "set": "FDN",
                       "collectorNumber": "528",
                       "finish": "nonfoil",
-                      "priceNzd": 0.52,
-                      "priceUsdReference": 0.31
+                      "priceNzd": 0.49,
+                      "priceUsdReference": 0.29
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -8902,7 +8794,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 7,
+                      "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -8942,10 +8834,10 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 2.31,
-                "estimatedSpendUsdReference": 1.37,
+                "estimatedSpendNzd": 2.28,
+                "estimatedSpendUsdReference": 1.35,
                 "unknownPriceCount": 0,
-                "improvementScore": 20.734,
+                "improvementScore": 23.764,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -9250,7 +9142,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 10,
+                      "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -9288,12 +9180,12 @@
                       "set": "FDN",
                       "collectorNumber": "528",
                       "finish": "nonfoil",
-                      "priceNzd": 0.52,
-                      "priceUsdReference": 0.31
+                      "priceNzd": 0.49,
+                      "priceUsdReference": 0.29
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 9,
+                      "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -9332,7 +9224,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -9379,7 +9271,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 7,
+                      "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -9421,7 +9313,7 @@
                 "estimatedSpendNzd": 8.73,
                 "estimatedSpendUsdReference": 5.17,
                 "unknownPriceCount": 0,
-                "improvementScore": 19.339,
+                "improvementScore": 22.564,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -9731,7 +9623,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 10,
+                      "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -9776,7 +9668,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 9,
+                      "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -9815,7 +9707,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -9861,7 +9753,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 7,
+                      "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -9918,7 +9810,7 @@
                 "estimatedSpendNzd": 7.55,
                 "estimatedSpendUsdReference": 4.47,
                 "unknownPriceCount": 0,
-                "improvementScore": 10.268,
+                "improvementScore": 18.158,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -10201,7 +10093,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 10,
+                      "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -10239,7 +10131,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 9,
+                      "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -10284,7 +10176,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -10327,10 +10219,10 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 4.54,
-                "estimatedSpendUsdReference": 2.69,
+                "estimatedSpendNzd": 4.51,
+                "estimatedSpendUsdReference": 2.67,
                 "unknownPriceCount": 0,
-                "improvementScore": 16.658,
+                "improvementScore": 12.428,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -10614,7 +10506,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 10,
+                      "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -10659,7 +10551,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 9,
+                      "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -10694,12 +10586,12 @@
                       "set": "FDN",
                       "collectorNumber": "528",
                       "finish": "nonfoil",
-                      "priceNzd": 0.52,
-                      "priceUsdReference": 0.31
+                      "priceNzd": 0.49,
+                      "priceUsdReference": 0.29
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -10741,10 +10633,10 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 2.09,
-                "estimatedSpendUsdReference": 1.24,
+                "estimatedSpendNzd": 2.06,
+                "estimatedSpendUsdReference": 1.22,
                 "unknownPriceCount": 0,
-                "improvementScore": 16.658,
+                "improvementScore": 12.428,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -11025,7 +10917,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 10,
+                      "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -11063,12 +10955,12 @@
                       "set": "FDN",
                       "collectorNumber": "528",
                       "finish": "nonfoil",
-                      "priceNzd": 0.52,
-                      "priceUsdReference": 0.31
+                      "priceNzd": 0.49,
+                      "priceUsdReference": 0.29
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 9,
+                      "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -11107,7 +10999,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -11149,10 +11041,10 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 8.52,
+                "estimatedSpendNzd": 8.53,
                 "estimatedSpendUsdReference": 5.05,
                 "unknownPriceCount": 0,
-                "improvementScore": 16.662,
+                "improvementScore": 12.432,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -11434,7 +11326,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 10,
+                      "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -11479,7 +11371,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 9,
+                      "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -11518,7 +11410,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -11558,11 +11450,11 @@
           {
             "attemptSize": 2,
             "candidatePackagesGenerated": 4,
-            "candidatePackagesEligible": 2,
+            "candidatePackagesEligible": 1,
             "winningCandidate": 1,
             "reasonCounts": {
-              "eligible": 2,
-              "package-reduces-substantive-deck-strategy-density": 2
+              "eligible": 1,
+              "improvement-below-threshold": 3
             },
             "candidateComparisons": [
               {
@@ -11571,10 +11463,10 @@
                 "reason": "eligible",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 4.03,
+                "estimatedSpendNzd": 4.04,
                 "estimatedSpendUsdReference": 2.39,
                 "unknownPriceCount": 0,
-                "improvementScore": 6.958,
+                "improvementScore": 11.413,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -11823,7 +11715,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 10,
+                      "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -11861,7 +11753,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 9,
+                      "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -11898,13 +11790,13 @@
               {
                 "candidate": 2,
                 "eligible": false,
-                "reason": "package-reduces-substantive-deck-strategy-density",
+                "reason": "improvement-below-threshold",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 4.24,
                 "estimatedSpendUsdReference": 2.51,
                 "unknownPriceCount": 0,
-                "improvementScore": 4.279,
+                "improvementScore": -0.435,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -11990,45 +11882,7 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
-                "deckStrategyRetention": {
-                  "status": "strategy-density-loss",
-                  "evidenceComplete": true,
-                  "preserved": false,
-                  "unresolvedBefore": [],
-                  "unresolvedAfter": [],
-                  "strategies": [
-                    {
-                      "archetype": "graveyard-reanimator",
-                      "commanderScore": 12,
-                      "beforeSupportCount": 30,
-                      "afterSupportCount": 31,
-                      "supportDelta": 1,
-                      "beforeAffinityTotal": 286,
-                      "afterAffinityTotal": 291,
-                      "affinityDelta": 5,
-                      "preserved": true
-                    },
-                    {
-                      "archetype": "artifact-engine",
-                      "commanderScore": 9,
-                      "beforeSupportCount": 52,
-                      "afterSupportCount": 51,
-                      "supportDelta": -1,
-                      "beforeAffinityTotal": 270,
-                      "afterAffinityTotal": 267,
-                      "affinityDelta": -3,
-                      "preserved": false
-                    }
-                  ],
-                  "losses": [
-                    {
-                      "archetype": "artifact-engine",
-                      "supportDelta": -1,
-                      "affinityDelta": -3
-                    }
-                  ],
-                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
-                },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -12166,7 +12020,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 10,
+                      "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -12211,7 +12065,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 9,
+                      "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -12248,13 +12102,13 @@
               {
                 "candidate": 3,
                 "eligible": false,
-                "reason": "package-reduces-substantive-deck-strategy-density",
+                "reason": "improvement-below-threshold",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 4.03,
+                "estimatedSpendNzd": 4.04,
                 "estimatedSpendUsdReference": 2.39,
                 "unknownPriceCount": 0,
-                "improvementScore": 4.279,
+                "improvementScore": -0.435,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -12332,45 +12186,7 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
-                "deckStrategyRetention": {
-                  "status": "strategy-density-loss",
-                  "evidenceComplete": true,
-                  "preserved": false,
-                  "unresolvedBefore": [],
-                  "unresolvedAfter": [],
-                  "strategies": [
-                    {
-                      "archetype": "graveyard-reanimator",
-                      "commanderScore": 12,
-                      "beforeSupportCount": 30,
-                      "afterSupportCount": 30,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 286,
-                      "afterAffinityTotal": 286,
-                      "affinityDelta": 0,
-                      "preserved": true
-                    },
-                    {
-                      "archetype": "artifact-engine",
-                      "commanderScore": 9,
-                      "beforeSupportCount": 52,
-                      "afterSupportCount": 51,
-                      "supportDelta": -1,
-                      "beforeAffinityTotal": 270,
-                      "afterAffinityTotal": 267,
-                      "affinityDelta": -3,
-                      "preserved": false
-                    }
-                  ],
-                  "losses": [
-                    {
-                      "archetype": "artifact-engine",
-                      "supportDelta": -1,
-                      "affinityDelta": -3
-                    }
-                  ],
-                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
-                },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -12508,7 +12324,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 10,
+                      "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -12551,7 +12367,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 9,
+                      "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -12587,14 +12403,14 @@
               },
               {
                 "candidate": 4,
-                "eligible": true,
-                "reason": "eligible",
+                "eligible": false,
+                "reason": "improvement-below-threshold",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 10.77,
                 "estimatedSpendUsdReference": 6.38,
                 "unknownPriceCount": 0,
-                "improvementScore": 4.283,
+                "improvementScore": -0.431,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -12674,39 +12490,7 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
-                "deckStrategyRetention": {
-                  "status": "preserved",
-                  "evidenceComplete": true,
-                  "preserved": true,
-                  "unresolvedBefore": [],
-                  "unresolvedAfter": [],
-                  "strategies": [
-                    {
-                      "archetype": "graveyard-reanimator",
-                      "commanderScore": 12,
-                      "beforeSupportCount": 30,
-                      "afterSupportCount": 30,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 286,
-                      "afterAffinityTotal": 286,
-                      "affinityDelta": 0,
-                      "preserved": true
-                    },
-                    {
-                      "archetype": "artifact-engine",
-                      "commanderScore": 9,
-                      "beforeSupportCount": 52,
-                      "afterSupportCount": 52,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 270,
-                      "afterAffinityTotal": 270,
-                      "affinityDelta": 0,
-                      "preserved": true
-                    }
-                  ],
-                  "losses": [],
-                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
-                },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -12844,7 +12628,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 10,
+                      "remainingStructuralDeficitAfterSwap": 11,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -12889,7 +12673,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 9,
+                      "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -12957,7 +12741,7 @@
             "estimatedSpendNzd": 0.51,
             "estimatedSpendUsdReference": 0.3,
             "unknownPriceCount": 0,
-            "improvementScore": -12.774,
+            "improvementScore": -17.63,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -13156,7 +12940,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
-                  "remainingStructuralDeficitAfterSwap": 8,
+                  "remainingStructuralDeficitAfterSwap": 9,
                   "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -13199,7 +12983,7 @@
             "estimatedSpendNzd": 0.3,
             "estimatedSpendUsdReference": 0.18,
             "unknownPriceCount": 0,
-            "improvementScore": -12.774,
+            "improvementScore": -17.63,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -13390,7 +13174,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
-                  "remainingStructuralDeficitAfterSwap": 8,
+                  "remainingStructuralDeficitAfterSwap": 9,
                   "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -13431,7 +13215,7 @@
             "estimatedSpendNzd": 7.04,
             "estimatedSpendUsdReference": 4.17,
             "unknownPriceCount": 0,
-            "improvementScore": -12.77,
+            "improvementScore": -17.626,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -13624,7 +13408,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
-                  "remainingStructuralDeficitAfterSwap": 8,
+                  "remainingStructuralDeficitAfterSwap": 9,
                   "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -13667,7 +13451,7 @@
             "estimatedSpendNzd": 0.29,
             "estimatedSpendUsdReference": 0.17,
             "unknownPriceCount": 0,
-            "improvementScore": -12.77,
+            "improvementScore": -17.626,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -13858,7 +13642,7 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
-                  "remainingStructuralDeficitAfterSwap": 8,
+                  "remainingStructuralDeficitAfterSwap": 9,
                   "authoritativeTargetGate": "cheap-interaction",
                   "nonlandManaValueReduction": null,
                   "persistentColoredManaSourcesAfterSwap": 6,
@@ -13907,10 +13691,10 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 5.81,
-                "estimatedSpendUsdReference": 3.44,
+                "estimatedSpendNzd": 5.78,
+                "estimatedSpendUsdReference": 3.42,
                 "unknownPriceCount": 0,
-                "improvementScore": 12.295,
+                "improvementScore": 14.804,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -14203,7 +13987,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -14248,7 +14032,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 7,
+                      "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -14289,12 +14073,12 @@
                       "set": "FDN",
                       "collectorNumber": "528",
                       "finish": "nonfoil",
-                      "priceNzd": 0.52,
-                      "priceUsdReference": 0.31
+                      "priceNzd": 0.49,
+                      "priceUsdReference": 0.29
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 6,
+                      "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -14345,7 +14129,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 5,
+                      "remainingStructuralDeficitAfterSwap": 6,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -14388,10 +14172,10 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 2.31,
-                "estimatedSpendUsdReference": 1.37,
+                "estimatedSpendNzd": 2.28,
+                "estimatedSpendUsdReference": 1.35,
                 "unknownPriceCount": 0,
-                "improvementScore": 12.295,
+                "improvementScore": 14.804,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -14680,7 +14464,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -14718,12 +14502,12 @@
                       "set": "FDN",
                       "collectorNumber": "528",
                       "finish": "nonfoil",
-                      "priceNzd": 0.52,
-                      "priceUsdReference": 0.31
+                      "priceNzd": 0.49,
+                      "priceUsdReference": 0.29
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 7,
+                      "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -14768,7 +14552,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 6,
+                      "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -14819,7 +14603,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 5,
+                      "remainingStructuralDeficitAfterSwap": 6,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -14864,7 +14648,7 @@
                 "estimatedSpendNzd": 8.73,
                 "estimatedSpendUsdReference": 5.17,
                 "unknownPriceCount": 0,
-                "improvementScore": 15.522,
+                "improvementScore": 9.953,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -15160,7 +14944,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -15205,7 +14989,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 7,
+                      "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -15250,7 +15034,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 6,
+                      "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -15300,7 +15084,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 5,
+                      "remainingStructuralDeficitAfterSwap": 6,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 5,
@@ -15348,10 +15132,10 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 13.62,
+                "estimatedSpendNzd": 13.63,
                 "estimatedSpendUsdReference": 8.07,
                 "unknownPriceCount": 0,
-                "improvementScore": 15.316,
+                "improvementScore": 2.986,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -15633,7 +15417,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -15676,7 +15460,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 7,
+                      "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -15720,7 +15504,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 6,
+                      "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 5,
@@ -15768,12 +15552,12 @@
                       "set": "M3C",
                       "collectorNumber": "33",
                       "finish": "nonfoil",
-                      "priceNzd": 12.91,
+                      "priceNzd": 12.92,
                       "priceUsdReference": 7.65
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 5,
+                      "remainingStructuralDeficitAfterSwap": 6,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 5,
@@ -15809,8 +15593,8 @@
             "candidatePackagesEligible": 0,
             "winningCandidate": null,
             "reasonCounts": {
-              "package-causes-a-meaningful-commander-strategy-loss": 3,
-              "package-causes-a-significant-simulated-regression": 1
+              "improvement-below-threshold": 1,
+              "package-causes-a-meaningful-commander-strategy-loss": 3
             },
             "candidateComparisons": [
               {
@@ -15819,10 +15603,10 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 4.54,
-                "estimatedSpendUsdReference": 2.69,
+                "estimatedSpendNzd": 4.51,
+                "estimatedSpendUsdReference": 2.67,
                 "unknownPriceCount": 0,
-                "improvementScore": 11.258,
+                "improvementScore": 11.903,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -16087,7 +15871,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -16132,7 +15916,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 7,
+                      "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -16173,12 +15957,12 @@
                       "set": "FDN",
                       "collectorNumber": "528",
                       "finish": "nonfoil",
-                      "priceNzd": 0.52,
-                      "priceUsdReference": 0.31
+                      "priceNzd": 0.49,
+                      "priceUsdReference": 0.29
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 6,
+                      "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -16224,10 +16008,10 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 2.09,
-                "estimatedSpendUsdReference": 1.24,
+                "estimatedSpendNzd": 2.06,
+                "estimatedSpendUsdReference": 1.22,
                 "unknownPriceCount": 0,
-                "improvementScore": 11.258,
+                "improvementScore": 11.903,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -16497,7 +16281,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -16535,12 +16319,12 @@
                       "set": "FDN",
                       "collectorNumber": "528",
                       "finish": "nonfoil",
-                      "priceNzd": 0.52,
-                      "priceUsdReference": 0.31
+                      "priceNzd": 0.49,
+                      "priceUsdReference": 0.29
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 7,
+                      "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -16585,7 +16369,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 6,
+                      "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -16631,10 +16415,10 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 8.52,
+                "estimatedSpendNzd": 8.53,
                 "estimatedSpendUsdReference": 5.05,
                 "unknownPriceCount": 0,
-                "improvementScore": 11.262,
+                "improvementScore": 11.907,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -16897,7 +16681,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -16942,7 +16726,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 7,
+                      "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -16987,7 +16771,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 6,
+                      "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -17029,14 +16813,14 @@
               {
                 "candidate": 4,
                 "eligible": false,
-                "reason": "package-causes-a-significant-simulated-regression",
+                "reason": "improvement-below-threshold",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
                 "estimatedSpendNzd": 0.71,
                 "estimatedSpendUsdReference": 0.42,
                 "unknownPriceCount": 0,
-                "improvementScore": -1.622,
-                "significantRegression": true,
+                "improvementScore": -7.247,
+                "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": false,
@@ -17289,7 +17073,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -17332,7 +17116,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 7,
+                      "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -17376,7 +17160,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 6,
+                      "remainingStructuralDeficitAfterSwap": 7,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 5,
@@ -17426,19 +17210,19 @@
             "candidatePackagesEligible": 0,
             "winningCandidate": null,
             "reasonCounts": {
-              "package-reduces-substantive-deck-strategy-density": 4
+              "improvement-below-threshold": 4
             },
             "candidateComparisons": [
               {
                 "candidate": 1,
                 "eligible": false,
-                "reason": "package-reduces-substantive-deck-strategy-density",
+                "reason": "improvement-below-threshold",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 4.02,
                 "estimatedSpendUsdReference": 2.38,
                 "unknownPriceCount": 0,
-                "improvementScore": 2.352,
+                "improvementScore": -10.18,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -17525,45 +17309,7 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
-                "deckStrategyRetention": {
-                  "status": "strategy-density-loss",
-                  "evidenceComplete": true,
-                  "preserved": false,
-                  "unresolvedBefore": [],
-                  "unresolvedAfter": [],
-                  "strategies": [
-                    {
-                      "archetype": "graveyard-reanimator",
-                      "commanderScore": 12,
-                      "beforeSupportCount": 31,
-                      "afterSupportCount": 32,
-                      "supportDelta": 1,
-                      "beforeAffinityTotal": 291,
-                      "afterAffinityTotal": 293,
-                      "affinityDelta": 2,
-                      "preserved": true
-                    },
-                    {
-                      "archetype": "artifact-engine",
-                      "commanderScore": 9,
-                      "beforeSupportCount": 52,
-                      "afterSupportCount": 51,
-                      "supportDelta": -1,
-                      "beforeAffinityTotal": 270,
-                      "afterAffinityTotal": 267,
-                      "affinityDelta": -3,
-                      "preserved": false
-                    }
-                  ],
-                  "losses": [
-                    {
-                      "archetype": "artifact-engine",
-                      "supportDelta": -1,
-                      "affinityDelta": -3
-                    }
-                  ],
-                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
-                },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -17701,7 +17447,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -17746,7 +17492,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 7,
+                      "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -17784,13 +17530,13 @@
               {
                 "candidate": 2,
                 "eligible": false,
-                "reason": "package-reduces-substantive-deck-strategy-density",
+                "reason": "improvement-below-threshold",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 3.81,
+                "estimatedSpendNzd": 3.82,
                 "estimatedSpendUsdReference": 2.26,
                 "unknownPriceCount": 0,
-                "improvementScore": 2.352,
+                "improvementScore": -10.18,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -17875,50 +17621,7 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
-                "deckStrategyRetention": {
-                  "status": "strategy-density-loss",
-                  "evidenceComplete": true,
-                  "preserved": false,
-                  "unresolvedBefore": [],
-                  "unresolvedAfter": [],
-                  "strategies": [
-                    {
-                      "archetype": "graveyard-reanimator",
-                      "commanderScore": 12,
-                      "beforeSupportCount": 31,
-                      "afterSupportCount": 31,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 291,
-                      "afterAffinityTotal": 288,
-                      "affinityDelta": -3,
-                      "preserved": false
-                    },
-                    {
-                      "archetype": "artifact-engine",
-                      "commanderScore": 9,
-                      "beforeSupportCount": 52,
-                      "afterSupportCount": 51,
-                      "supportDelta": -1,
-                      "beforeAffinityTotal": 270,
-                      "afterAffinityTotal": 267,
-                      "affinityDelta": -3,
-                      "preserved": false
-                    }
-                  ],
-                  "losses": [
-                    {
-                      "archetype": "graveyard-reanimator",
-                      "supportDelta": 0,
-                      "affinityDelta": -3
-                    },
-                    {
-                      "archetype": "artifact-engine",
-                      "supportDelta": -1,
-                      "affinityDelta": -3
-                    }
-                  ],
-                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
-                },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -18056,7 +17759,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -18099,7 +17802,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 7,
+                      "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -18137,13 +17840,13 @@
               {
                 "candidate": 3,
                 "eligible": false,
-                "reason": "package-reduces-substantive-deck-strategy-density",
+                "reason": "improvement-below-threshold",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 10.55,
                 "estimatedSpendUsdReference": 6.25,
                 "unknownPriceCount": 0,
-                "improvementScore": 2.356,
+                "improvementScore": -10.176,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -18230,45 +17933,7 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
-                "deckStrategyRetention": {
-                  "status": "strategy-density-loss",
-                  "evidenceComplete": true,
-                  "preserved": false,
-                  "unresolvedBefore": [],
-                  "unresolvedAfter": [],
-                  "strategies": [
-                    {
-                      "archetype": "graveyard-reanimator",
-                      "commanderScore": 12,
-                      "beforeSupportCount": 31,
-                      "afterSupportCount": 31,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 291,
-                      "afterAffinityTotal": 288,
-                      "affinityDelta": -3,
-                      "preserved": false
-                    },
-                    {
-                      "archetype": "artifact-engine",
-                      "commanderScore": 9,
-                      "beforeSupportCount": 52,
-                      "afterSupportCount": 52,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 270,
-                      "afterAffinityTotal": 270,
-                      "affinityDelta": 0,
-                      "preserved": true
-                    }
-                  ],
-                  "losses": [
-                    {
-                      "archetype": "graveyard-reanimator",
-                      "supportDelta": 0,
-                      "affinityDelta": -3
-                    }
-                  ],
-                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
-                },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -18406,7 +18071,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -18451,7 +18116,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 7,
+                      "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -18489,13 +18154,13 @@
               {
                 "candidate": 4,
                 "eligible": false,
-                "reason": "package-reduces-substantive-deck-strategy-density",
+                "reason": "improvement-below-threshold",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 3.8,
                 "estimatedSpendUsdReference": 2.25,
                 "unknownPriceCount": 0,
-                "improvementScore": 2.356,
+                "improvementScore": -10.176,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -18580,50 +18245,7 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when it removes at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) on a card that received the maximum four-point cut-protection signal, unless incoming cards replace that strategy affinity."
                 },
-                "deckStrategyRetention": {
-                  "status": "strategy-density-loss",
-                  "evidenceComplete": true,
-                  "preserved": false,
-                  "unresolvedBefore": [],
-                  "unresolvedAfter": [],
-                  "strategies": [
-                    {
-                      "archetype": "graveyard-reanimator",
-                      "commanderScore": 12,
-                      "beforeSupportCount": 31,
-                      "afterSupportCount": 31,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 291,
-                      "afterAffinityTotal": 288,
-                      "affinityDelta": -3,
-                      "preserved": false
-                    },
-                    {
-                      "archetype": "artifact-engine",
-                      "commanderScore": 9,
-                      "beforeSupportCount": 52,
-                      "afterSupportCount": 51,
-                      "supportDelta": -1,
-                      "beforeAffinityTotal": 270,
-                      "afterAffinityTotal": 267,
-                      "affinityDelta": -3,
-                      "preserved": false
-                    }
-                  ],
-                  "losses": [
-                    {
-                      "archetype": "graveyard-reanimator",
-                      "supportDelta": 0,
-                      "affinityDelta": -3
-                    },
-                    {
-                      "archetype": "artifact-engine",
-                      "supportDelta": -1,
-                      "affinityDelta": -3
-                    }
-                  ],
-                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
-                },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -18761,7 +18383,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -18804,7 +18426,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 7,
+                      "remainingStructuralDeficitAfterSwap": 8,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -18859,7 +18481,7 @@
                 "estimatedSpendNzd": 0.51,
                 "estimatedSpendUsdReference": 0.3,
                 "unknownPriceCount": 0,
-                "improvementScore": -12.774,
+                "improvementScore": -17.63,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -19058,7 +18680,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -19101,7 +18723,7 @@
                 "estimatedSpendNzd": 0.3,
                 "estimatedSpendUsdReference": 0.18,
                 "unknownPriceCount": 0,
-                "improvementScore": -12.774,
+                "improvementScore": -17.63,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -19292,7 +18914,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -19333,7 +18955,7 @@
                 "estimatedSpendNzd": 7.04,
                 "estimatedSpendUsdReference": 4.17,
                 "unknownPriceCount": 0,
-                "improvementScore": -12.77,
+                "improvementScore": -17.626,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -19526,7 +19148,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -19569,7 +19191,7 @@
                 "estimatedSpendNzd": 0.29,
                 "estimatedSpendUsdReference": 0.17,
                 "unknownPriceCount": 0,
-                "improvementScore": -12.77,
+                "improvementScore": -17.626,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -19760,7 +19382,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
-                      "remainingStructuralDeficitAfterSwap": 8,
+                      "remainingStructuralDeficitAfterSwap": 9,
                       "authoritativeTargetGate": "cheap-interaction",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 6,
@@ -19834,10 +19456,10 @@
       "fastManaCount": 1,
       "tutorCount": 2,
       "recursionCount": 18,
-      "boardWipeCount": 4,
+      "boardWipeCount": 3,
       "rampCount": 12,
       "drawCount": 14,
-      "interactionCount": 13,
+      "interactionCount": 12,
       "protectionCount": 2,
       "persistentColoredManaSourceCount": 6
     },
