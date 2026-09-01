@@ -17,6 +17,7 @@
 1 Banquet Guests (LTC) 47 *N*
 1 Bilbo, Birthday Celebrant (LTC) 48 *N*
 1 Farmer Cotton (LTC) 55 *N*
+1 Merry, Warden of Isengard (LTC) 61 *N*
 1 Pippin, Warden of Isengard (LTC) 65 *N*
 1 Treebeard, Gracious Host (LTC) 73 *N*
 1 Hithlain Rope (LTC) 76 *N*
@@ -52,6 +53,7 @@
 1 Swords to Plowshares (LTC) 178 *N*
 1 Revive the Shire (LTR) 185 *N*
 1 Butterbur, Bree Innkeeper (LTR) 197 *N*
+1 Crypt Incursion (LTC) 198 *N*
 1 Go for the Throat (LTC) 201 *N*
 1 Night's Whisper (LTC) 205 *N*
 1 Cultivate (LTC) 236 *N*
@@ -84,10 +86,8 @@
 2 Swamp (LTR) 267 *N*
 4 Forest (LTR) 270 *N*
 4 Forest (LTR) 271 *N*
-1 Belladonna Took (HOB) 4 *N*
+1 Gorbag of Minas Morgul (LTR) 86 *N*
+1 Lembas (LTR) 243 *N*
+1 Gollum, Scheming Guide (PLTC) 3 *F*
 1 Bilbo's Gambit (HOB) 5 *N*
 1 The Arkenstone // Seek the Heart (HOB) 170 *N*
-1 The Sackville-Bagginses (HOB) 83 *N*
-1 Orcish Medicine (LTR) 104 *N*
-1 King of the Oathbreakers (LTR) 211 *N*
-1 Lightning Greaves (LTC) 281 *N*
