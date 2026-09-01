@@ -215,6 +215,10 @@ function hasDeathReplacementProtection(text: string): boolean {
   return temporaryDeathShield || enchantedDeathShield || /\bregenerate target creature\b/.test(text);
 }
 
+function hasMassSacrificeRemoval(text: string): boolean {
+  return /each player sacrifices (?:(?:all|half|two|three|four|five|six|seven|eight|nine|ten|x)\b[^.]{0,120}creatures?|(?:a|the) number of creatures?[^.]{0,80}(?:equal to|for each)|(?:a|one) creature for each\b)/.test(text);
+}
+
 export function inferCardRoles(card: ScryfallCard): string[] {
   const text = getCardOracleText(card).toLowerCase();
   const type = card.type_line.toLowerCase();
@@ -269,7 +273,7 @@ export function inferCardRoles(card: ScryfallCard): string[] {
     || /put [^.]*-1\/-1 counters? on each creature/.test(text)
     || /deals? [^.]* damage to each creature/.test(text)
     || /return (?:all|each) (?:creatures|nonland permanents|permanents)[^.]*owners?' hands?/.test(text)
-    || /each player sacrifices [^.]*creatures?/.test(text)
+    || hasMassSacrificeRemoval(text)
     || massGraveyardExchange
   ) roles.add('board wipe');
 
