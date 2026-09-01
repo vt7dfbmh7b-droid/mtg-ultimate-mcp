@@ -2,9 +2,9 @@
 1 Szarekh, the Silent King (40K) 170 *F*
 
 // MAIN
+1 Beacon of Unrest (40K) 194 *N*
 1 Living Death (40K) 202 *N*
 1 Mutilate (40K) 203 *N*
-1 Dread Return (40K) 200 *N*
 1 Defile (40K) 199 *N*
 1 Go for the Throat (40K) 201 *N*
 1 Caged Sun (40K) 231 *N*
