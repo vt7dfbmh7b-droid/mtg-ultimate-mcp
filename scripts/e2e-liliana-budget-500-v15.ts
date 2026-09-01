@@ -40,12 +40,15 @@ async function main(): Promise<void> {
   const commanderName = 'Liliana, Heretical Healer // Liliana, Defiant Necromancer';
   const maxDeckNzd = 500;
   const targetBracket = 5;
+  const excludedCards = ['Doomsday Excruciator', 'Shared Trauma'];
+  const mustInclude = ['Warren Soultrader', 'Gravecrawler', 'Blood Artist'];
   const rate = await getUsdNzdRateV13();
   const maxDeckUsdReference = nzdToUsdV13(maxDeckNzd, rate.rate);
 
-  console.log(`LILIANA NZ$${maxDeckNzd} CHALLENGE: build the strongest legal unrestricted Commander deck the current plugin can support under a hard whole-deck cap.`);
+  console.log(`LILIANA NZ$${maxDeckNzd} CHALLENGE: build the strongest legal Commander deck the current plugin can support under a hard whole-deck cap.`);
   console.log(`FX REFERENCE: 1 USD = ${rate.rate} NZD (${rate.rateDate}, ${rate.source}${rate.stale ? ', stale/fallback' : ''}).`);
   console.log('The NZD budget and Commander rules are hard truths. USD is only the Scryfall/search reference currency. Bracket 5 is an optimization target, not an automatic claim.');
+  console.log(`USER-APPROVED WIN DIRECTION: exclude ${excludedCards.join(' + ')} and require the Zombie/aristocrats core ${mustInclude.join(' + ')}.`);
 
   const commanderResolution = await getCardsByNames([commanderLookupName]);
   assert.deepEqual(commanderResolution.notFound, [], 'Liliana challenge commander must resolve by its front face');
@@ -56,6 +59,8 @@ async function main(): Promise<void> {
     targetBracket,
     maxDeckUsd: maxDeckUsdReference,
     landCount: 30,
+    excludedCards,
+    mustInclude,
   });
   const nzdBuild = withNzdPricingV13(result, rate, { maxDeckNzd });
 
@@ -65,6 +70,8 @@ async function main(): Promise<void> {
       maxDeckNzd,
       maxDeckUsdReference,
       targetBracket,
+      excludedCards,
+      mustInclude,
       currencyPolicy: nzdBuild.currencyPolicy,
       build: nzdBuild,
     }, null, 2)}\n`);
@@ -85,6 +92,9 @@ async function main(): Promise<void> {
   assert.equal(parsed.totalCards, 100, 'Liliana challenge deck must contain exactly 100 cards');
   assert.equal(parsed.commanders.length, 1, 'Liliana challenge keeps one commander');
   assert.equal(parsed.commanders[0]?.name, commanderName, 'construction must not replace the requested commander');
+  const finalNames = new Set([...parsed.commanders, ...parsed.main].map((entry) => entry.name.toLocaleLowerCase()));
+  for (const name of mustInclude) assert.equal(finalNames.has(name.toLocaleLowerCase()), true, `approved win-core card must remain present: ${name}`);
+  for (const name of excludedCards) assert.equal(finalNames.has(name.toLocaleLowerCase()), false, `rejected Doomsday package card must remain absent: ${name}`);
 
   const resolved = await getCardsByIdentifiers(identifiers(parsed));
   assert.deepEqual(resolved.notFound, [], 'every exact Liliana challenge card/printing must resolve');
@@ -138,7 +148,12 @@ async function main(): Promise<void> {
     optimizedPlanEvidence: readiness.status === 'strong-competitive-construction-signals',
     cedhIntent: true,
     competitiveMetagameEvidence: false,
-  }, [`NZ$${maxDeckNzd} maximum total deck budget`, `fixed commander: ${commanderName}`]);
+  }, [
+    `NZ$${maxDeckNzd} maximum total deck budget`,
+    `fixed commander: ${commanderName}`,
+    `excluded win package: ${excludedCards.join(' + ')}`,
+    `required Zombie/aristocrats core: ${mustInclude.join(' + ')}`,
+  ]);
 
   const evidence = {
     commanderLookupName,
@@ -146,6 +161,8 @@ async function main(): Promise<void> {
     maxDeckNzd,
     maxDeckUsdReference,
     targetBracket,
+    excludedCards,
+    mustInclude,
     auditedTotalNzd,
     auditedTotalUsdReference: auditedTotalUsd,
     currencyPolicy: nzdBuild.currencyPolicy,
