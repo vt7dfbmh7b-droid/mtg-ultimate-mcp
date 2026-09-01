@@ -1262,7 +1262,8 @@
                       "cutRoles": [
                         "card draw",
                         "death-trigger draw engine",
-                        "repeatable draw"
+                        "repeatable draw",
+                        "repeatable life gain engine"
                       ],
                       "addRoles": [
                         "sacrifice synergy",
@@ -1271,7 +1272,8 @@
                       "unreplacedRoles": [
                         "card draw",
                         "death-trigger draw engine",
-                        "repeatable draw"
+                        "repeatable draw",
+                        "repeatable life gain engine"
                       ],
                       "unreplacedStrategyComponentRoles": [
                         "death-trigger draw engine"
@@ -1543,7 +1545,8 @@
                         "cutRoles": [
                           "card draw",
                           "death-trigger draw engine",
-                          "repeatable draw"
+                          "repeatable draw",
+                          "repeatable life gain engine"
                         ],
                         "addRoles": [
                           "sacrifice synergy",
@@ -1552,7 +1555,8 @@
                         "unreplacedRoles": [
                           "card draw",
                           "death-trigger draw engine",
-                          "repeatable draw"
+                          "repeatable draw",
+                          "repeatable life gain engine"
                         ],
                         "unreplacedStrategyComponentRoles": [
                           "death-trigger draw engine"
@@ -1573,7 +1577,7 @@
                 "estimatedSpendNzd": 27.92,
                 "estimatedSpendUsdReference": 16.51,
                 "unknownPriceCount": 0,
-                "improvementScore": 2.486,
+                "improvementScore": 2.03,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -1614,7 +1618,8 @@
                       "cutRoles": [
                         "creature",
                         "life drain",
-                        "repeatable life drain"
+                        "repeatable life drain",
+                        "repeatable life gain engine"
                       ],
                       "addRoles": [
                         "sacrifice synergy",
@@ -1623,7 +1628,8 @@
                       "unreplacedRoles": [
                         "creature",
                         "life drain",
-                        "repeatable life drain"
+                        "repeatable life drain",
+                        "repeatable life gain engine"
                       ],
                       "unreplacedStrategyComponentRoles": [
                         "repeatable life drain"
@@ -1760,7 +1766,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Poison-Tip Archer",
+                    "out": "Zulaport Cutthroat",
                     "in": "Diabolic Intent",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -1791,7 +1797,8 @@
                         "cutRoles": [
                           "creature",
                           "life drain",
-                          "repeatable life drain"
+                          "repeatable life drain",
+                          "repeatable life gain engine"
                         ],
                         "addRoles": [
                           "sacrifice synergy",
@@ -1800,7 +1807,8 @@
                         "unreplacedRoles": [
                           "creature",
                           "life drain",
-                          "repeatable life drain"
+                          "repeatable life drain",
+                          "repeatable life gain engine"
                         ],
                         "unreplacedStrategyComponentRoles": [
                           "repeatable life drain"
@@ -1821,7 +1829,7 @@
                 "estimatedSpendNzd": 1.62,
                 "estimatedSpendUsdReference": 0.96,
                 "unknownPriceCount": 0,
-                "improvementScore": 2.61,
+                "improvementScore": 0.751,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -1869,9 +1877,10 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "creature",
-                        "life drain",
-                        "repeatable life drain"
+                        "death-trigger draw engine",
+                        "repeatable draw"
                       ],
                       "addRoles": [
                         "land tutor",
@@ -1879,12 +1888,13 @@
                         "tutor"
                       ],
                       "unreplacedRoles": [
+                        "card draw",
                         "creature",
-                        "life drain",
-                        "repeatable life drain"
+                        "death-trigger draw engine",
+                        "repeatable draw"
                       ],
                       "unreplacedStrategyComponentRoles": [
-                        "repeatable life drain"
+                        "death-trigger draw engine"
                       ],
                       "meaningfulStrategyLoss": true,
                       "verdict": "meaningful-strategy-loss"
@@ -2018,7 +2028,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Poison-Tip Archer",
+                    "out": "Morbid Opportunist",
                     "in": "Expedition Map",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -2047,9 +2057,10 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "creature",
-                          "life drain",
-                          "repeatable life drain"
+                          "death-trigger draw engine",
+                          "repeatable draw"
                         ],
                         "addRoles": [
                           "land tutor",
@@ -2057,12 +2068,13 @@
                           "tutor"
                         ],
                         "unreplacedRoles": [
+                          "card draw",
                           "creature",
-                          "life drain",
-                          "repeatable life drain"
+                          "death-trigger draw engine",
+                          "repeatable draw"
                         ],
                         "unreplacedStrategyComponentRoles": [
-                          "repeatable life drain"
+                          "death-trigger draw engine"
                         ],
                         "meaningfulStrategyLoss": true,
                         "verdict": "meaningful-strategy-loss"
@@ -2080,7 +2092,7 @@
                 "estimatedSpendNzd": 5.39,
                 "estimatedSpendUsdReference": 3.19,
                 "unknownPriceCount": 0,
-                "improvementScore": 4.297,
+                "improvementScore": 4.482,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -2130,7 +2142,7 @@
                       "cutRoles": [
                         "creature",
                         "go-wide payoff",
-                        "haste"
+                        "token production"
                       ],
                       "addRoles": [
                         "land replacement",
@@ -2140,11 +2152,10 @@
                       "unreplacedRoles": [
                         "creature",
                         "go-wide payoff",
-                        "haste"
+                        "token production"
                       ],
                       "unreplacedStrategyComponentRoles": [
-                        "go-wide payoff",
-                        "haste"
+                        "go-wide payoff"
                       ],
                       "meaningfulStrategyLoss": true,
                       "verdict": "meaningful-strategy-loss"
@@ -2278,7 +2289,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "End-Raze Forerunners",
+                    "out": "Deep Forest Hermit",
                     "in": "Crop Rotation",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher). The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -2309,7 +2320,7 @@
                         "cutRoles": [
                           "creature",
                           "go-wide payoff",
-                          "haste"
+                          "token production"
                         ],
                         "addRoles": [
                           "land replacement",
@@ -2319,11 +2330,10 @@
                         "unreplacedRoles": [
                           "creature",
                           "go-wide payoff",
-                          "haste"
+                          "token production"
                         ],
                         "unreplacedStrategyComponentRoles": [
-                          "go-wide payoff",
-                          "haste"
+                          "go-wide payoff"
                         ],
                         "meaningfulStrategyLoss": true,
                         "verdict": "meaningful-strategy-loss"
@@ -2701,7 +2711,7 @@
                 "estimatedSpendNzd": 39.61,
                 "estimatedSpendUsdReference": 23.42,
                 "unknownPriceCount": 0,
-                "improvementScore": 2.483,
+                "improvementScore": 2.602,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -2740,9 +2750,10 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "creature",
-                        "life drain",
-                        "repeatable life drain"
+                        "card draw",
+                        "death-trigger draw engine",
+                        "repeatable draw",
+                        "repeatable life gain engine"
                       ],
                       "addRoles": [
                         "fast mana",
@@ -2750,12 +2761,13 @@
                         "sacrifice synergy"
                       ],
                       "unreplacedRoles": [
-                        "creature",
-                        "life drain",
-                        "repeatable life drain"
+                        "card draw",
+                        "death-trigger draw engine",
+                        "repeatable draw",
+                        "repeatable life gain engine"
                       ],
                       "unreplacedStrategyComponentRoles": [
-                        "repeatable life drain"
+                        "death-trigger draw engine"
                       ],
                       "meaningfulStrategyLoss": true,
                       "verdict": "meaningful-strategy-loss"
@@ -2772,7 +2784,314 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "creature",
+                        "life drain",
+                        "repeatable life drain",
+                        "repeatable life gain engine"
+                      ],
+                      "addRoles": [
+                        "sacrifice synergy",
+                        "tutor"
+                      ],
+                      "unreplacedRoles": [
+                        "creature",
+                        "life drain",
+                        "repeatable life drain",
+                        "repeatable life gain engine"
+                      ],
+                      "unreplacedStrategyComponentRoles": [
+                        "repeatable life drain"
+                      ],
+                      "meaningfulStrategyLoss": true,
+                      "verdict": "meaningful-strategy-loss"
+                    }
+                  ],
+                  "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
+                },
+                "deckStrategyRetention": {},
+                "planProvenance": {
+                  "targetBracket": 4,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": false,
+                  "winPackageSourceStatus": "not-required-below-bracket-5",
+                  "winPackageOutcome": "not-attempted",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "The requested target does not require a verified winning package.",
+                  "candidateDiscovery": {
+                    "mode": "bounded-role-search",
+                    "exhaustiveWithinSafetyCeilings": false,
+                    "eligiblePoolCards": null,
+                    "roleSearchResultCap": 40,
+                    "note": "Unrestricted Upgrade still uses bounded role-specific discovery; final candidates remain independently filtered by role and Commander legality."
+                  },
+                  "authoritativeTargetGatePriorities": [
+                    {
+                      "role": "average-nonland-mv",
+                      "current": 3.32,
+                      "target": 3.1,
+                      "deficit": 0.22,
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "average-nonland-mv"
+                    },
+                    {
+                      "role": "early",
+                      "current": 21,
+                      "target": 25,
+                      "deficit": 4,
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "early-plays"
+                    },
+                    {
+                      "role": "interaction",
+                      "current": 2,
+                      "target": 6,
+                      "deficit": 4,
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "cheap-interaction"
+                    },
+                    {
+                      "role": "ramp",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana"
+                    },
+                    {
+                      "role": "tutor",
+                      "current": 0,
+                      "target": 2,
+                      "deficit": 2,
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors"
+                    }
+                  ],
+                  "structuralDeficits": [
+                    {
+                      "role": "protection",
+                      "current": 0,
+                      "target": 6,
+                      "deficit": 6,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": [
+                    {
+                      "role": "average-nonland-mv",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "average-nonland-mv",
+                      "current": 3.32,
+                      "target": 3.1,
+                      "deficit": 0.22,
+                      "candidateDiscoveryMode": "bounded-role-search",
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "early",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "early-plays",
+                      "current": 21,
+                      "target": 25,
+                      "deficit": 4,
+                      "candidateDiscoveryMode": "bounded-role-search",
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "interaction",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "cheap-interaction",
+                      "current": 2,
+                      "target": 6,
+                      "deficit": 4,
+                      "candidateDiscoveryMode": "bounded-role-search",
+                      "candidateCount": 1
+                    },
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "bounded-role-search",
+                      "candidateCount": 1
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 0,
+                      "target": 2,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "bounded-role-search",
+                      "candidateCount": 1
+                    }
+                  ]
+                },
+                "swaps": [
+                  {
+                    "out": "Moldervine Reclamation",
+                    "in": "Culling the Weak",
+                    "why": "Advances the currently failed authoritative Bracket-4 fast-mana gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "recommendedPrinting": {
+                      "set": "EXO",
+                      "collectorNumber": "55",
+                      "finish": "nonfoil",
+                      "priceNzd": 11.69,
+                      "priceUsdReference": 6.91
+                    },
+                    "structuralPairing": {
+                      "addressedRole": "ramp",
+                      "remainingStructuralDeficitAfterSwap": 16,
+                      "authoritativeTargetGate": "fast-mana",
+                      "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 3,
+                      "persistentColoredManaSourceFloor": 3,
+                      "strategyPreservation": {
+                        "cutStrategyAffinityScore": 6,
+                        "addStrategyAffinityScore": 6,
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "aristocrats"
+                        ],
+                        "addMatchedStrategies": [
+                          "aristocrats"
+                        ],
+                        "locallyUnreplacedStrategies": [],
+                        "cutRoles": [
+                          "card draw",
+                          "death-trigger draw engine",
+                          "repeatable draw",
+                          "repeatable life gain engine"
+                        ],
+                        "addRoles": [
+                          "fast mana",
+                          "mana acceleration",
+                          "sacrifice synergy"
+                        ],
+                        "unreplacedRoles": [
+                          "card draw",
+                          "death-trigger draw engine",
+                          "repeatable draw",
+                          "repeatable life gain engine"
+                        ],
+                        "unreplacedStrategyComponentRoles": [
+                          "death-trigger draw engine"
+                        ],
+                        "meaningfulStrategyLoss": true,
+                        "verdict": "meaningful-strategy-loss"
+                      }
+                    }
+                  },
+                  {
+                    "out": "Zulaport Cutthroat",
+                    "in": "Diabolic Intent",
+                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "recommendedPrinting": {
+                      "set": "FCA",
+                      "collectorNumber": "34",
+                      "finish": "nonfoil",
+                      "priceNzd": 27.92,
+                      "priceUsdReference": 16.51
+                    },
+                    "structuralPairing": {
+                      "addressedRole": "tutor",
+                      "remainingStructuralDeficitAfterSwap": 15,
+                      "authoritativeTargetGate": "tutors",
+                      "nonlandManaValueReduction": null,
+                      "persistentColoredManaSourcesAfterSwap": 3,
+                      "persistentColoredManaSourceFloor": 3,
+                      "strategyPreservation": {
+                        "cutStrategyAffinityScore": 6,
+                        "addStrategyAffinityScore": 6,
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "aristocrats"
+                        ],
+                        "addMatchedStrategies": [
+                          "aristocrats"
+                        ],
+                        "locallyUnreplacedStrategies": [],
+                        "cutRoles": [
+                          "creature",
+                          "life drain",
+                          "repeatable life drain",
+                          "repeatable life gain engine"
+                        ],
+                        "addRoles": [
+                          "sacrifice synergy",
+                          "tutor"
+                        ],
+                        "unreplacedRoles": [
+                          "creature",
+                          "life drain",
+                          "repeatable life drain",
+                          "repeatable life gain engine"
+                        ],
+                        "unreplacedStrategyComponentRoles": [
+                          "repeatable life drain"
+                        ],
+                        "meaningfulStrategyLoss": true,
+                        "verdict": "meaningful-strategy-loss"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "candidate": 3,
+                "eligible": false,
+                "reason": "package-causes-a-meaningful-commander-strategy-loss",
+                "attemptedSwaps": 3,
+                "actualSwaps": 1,
+                "estimatedSpendNzd": 27.92,
+                "estimatedSpendUsdReference": 16.51,
+                "unknownPriceCount": 0,
+                "improvementScore": 2.472,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": false,
+                "targetGate": {
+                  "applicable": false,
+                  "score": 0,
+                  "failedBefore": [],
+                  "failedAfter": [],
+                  "repairedGates": [],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": []
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [
+                    {
+                      "strategy": "aristocrats",
+                      "cutAffinityScore": 6,
+                      "addAffinityScore": 6,
+                      "netAffinityDelta": 0
+                    }
+                  ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 6,
+                      "addStrategyAffinityScore": 6,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "aristocrats"
+                      ],
+                      "addMatchedStrategies": [
+                        "aristocrats"
+                      ],
+                      "locallyUnreplacedStrategies": [],
+                      "cutRoles": [
                         "card draw",
+                        "creature",
                         "death-trigger draw engine",
                         "repeatable draw"
                       ],
@@ -2782,6 +3101,7 @@
                       ],
                       "unreplacedRoles": [
                         "card draw",
+                        "creature",
                         "death-trigger draw engine",
                         "repeatable draw"
                       ],
@@ -2904,7 +3224,7 @@
                       "target": 2,
                       "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-search",
-                      "candidateCount": 1
+                      "candidateCount": 0
                     },
                     {
                       "role": "tutor",
@@ -2920,59 +3240,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Poison-Tip Archer",
-                    "in": "Culling the Weak",
-                    "why": "Advances the currently failed authoritative Bracket-4 fast-mana gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
-                    "recommendedPrinting": {
-                      "set": "EXO",
-                      "collectorNumber": "55",
-                      "finish": "nonfoil",
-                      "priceNzd": 11.69,
-                      "priceUsdReference": 6.91
-                    },
-                    "structuralPairing": {
-                      "addressedRole": "ramp",
-                      "remainingStructuralDeficitAfterSwap": 16,
-                      "authoritativeTargetGate": "fast-mana",
-                      "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 3,
-                      "persistentColoredManaSourceFloor": 3,
-                      "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
-                        "addStrategyAffinityScore": 6,
-                        "cutStrategyProtectionApplied": 4,
-                        "cutMatchedStrategies": [
-                          "aristocrats"
-                        ],
-                        "addMatchedStrategies": [
-                          "aristocrats"
-                        ],
-                        "locallyUnreplacedStrategies": [],
-                        "cutRoles": [
-                          "creature",
-                          "life drain",
-                          "repeatable life drain"
-                        ],
-                        "addRoles": [
-                          "fast mana",
-                          "mana acceleration",
-                          "sacrifice synergy"
-                        ],
-                        "unreplacedRoles": [
-                          "creature",
-                          "life drain",
-                          "repeatable life drain"
-                        ],
-                        "unreplacedStrategyComponentRoles": [
-                          "repeatable life drain"
-                        ],
-                        "meaningfulStrategyLoss": true,
-                        "verdict": "meaningful-strategy-loss"
-                      }
-                    }
-                  },
-                  {
-                    "out": "Moldervine Reclamation",
+                    "out": "Morbid Opportunist",
                     "in": "Diabolic Intent",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -2984,7 +3252,7 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
-                      "remainingStructuralDeficitAfterSwap": 15,
+                      "remainingStructuralDeficitAfterSwap": 16,
                       "authoritativeTargetGate": "tutors",
                       "nonlandManaValueReduction": null,
                       "persistentColoredManaSourcesAfterSwap": 3,
@@ -3002,6 +3270,7 @@
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
                           "card draw",
+                          "creature",
                           "death-trigger draw engine",
                           "repeatable draw"
                         ],
@@ -3011,259 +3280,12 @@
                         ],
                         "unreplacedRoles": [
                           "card draw",
+                          "creature",
                           "death-trigger draw engine",
                           "repeatable draw"
                         ],
                         "unreplacedStrategyComponentRoles": [
                           "death-trigger draw engine"
-                        ],
-                        "meaningfulStrategyLoss": true,
-                        "verdict": "meaningful-strategy-loss"
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "candidate": 3,
-                "eligible": false,
-                "reason": "package-causes-a-meaningful-commander-strategy-loss",
-                "attemptedSwaps": 3,
-                "actualSwaps": 1,
-                "estimatedSpendNzd": 27.92,
-                "estimatedSpendUsdReference": 16.51,
-                "unknownPriceCount": 0,
-                "improvementScore": 2.486,
-                "significantRegression": false,
-                "zeroTargetProgressWhileFailedGatesRemain": false,
-                "targetGate": {
-                  "applicable": false,
-                  "score": 0,
-                  "failedBefore": [],
-                  "failedAfter": [],
-                  "repairedGates": [],
-                  "advancedFailedGates": [],
-                  "regressedGates": [],
-                  "ignoredUnverifiedGates": []
-                },
-                "themeAudit": null,
-                "strategyPreservation": {
-                  "status": "preserved",
-                  "evidenceComplete": true,
-                  "meaningfulLosses": [],
-                  "strategyDeltas": [
-                    {
-                      "strategy": "aristocrats",
-                      "cutAffinityScore": 6,
-                      "addAffinityScore": 6,
-                      "netAffinityDelta": 0
-                    }
-                  ],
-                  "swapImpacts": [
-                    {
-                      "cutStrategyAffinityScore": 6,
-                      "addStrategyAffinityScore": 6,
-                      "cutStrategyProtectionApplied": 4,
-                      "cutMatchedStrategies": [
-                        "aristocrats"
-                      ],
-                      "addMatchedStrategies": [
-                        "aristocrats"
-                      ],
-                      "locallyUnreplacedStrategies": [],
-                      "cutRoles": [
-                        "creature",
-                        "life drain",
-                        "repeatable life drain"
-                      ],
-                      "addRoles": [
-                        "sacrifice synergy",
-                        "tutor"
-                      ],
-                      "unreplacedRoles": [
-                        "creature",
-                        "life drain",
-                        "repeatable life drain"
-                      ],
-                      "unreplacedStrategyComponentRoles": [
-                        "repeatable life drain"
-                      ],
-                      "meaningfulStrategyLoss": true,
-                      "verdict": "meaningful-strategy-loss"
-                    }
-                  ],
-                  "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
-                },
-                "deckStrategyRetention": {},
-                "planProvenance": {
-                  "targetBracket": 4,
-                  "winRouteVerificationStatus": "no-verified-route",
-                  "winPackageDiscoveryAttempted": false,
-                  "winPackageSourceStatus": "not-required-below-bracket-5",
-                  "winPackageOutcome": "not-attempted",
-                  "selectedComboId": null,
-                  "selectedBracketTag": null,
-                  "missingSeedNames": [],
-                  "atomicWinPackageInjected": false,
-                  "winPackageReason": "The requested target does not require a verified winning package.",
-                  "candidateDiscovery": {
-                    "mode": "bounded-role-search",
-                    "exhaustiveWithinSafetyCeilings": false,
-                    "eligiblePoolCards": null,
-                    "roleSearchResultCap": 40,
-                    "note": "Unrestricted Upgrade still uses bounded role-specific discovery; final candidates remain independently filtered by role and Commander legality."
-                  },
-                  "authoritativeTargetGatePriorities": [
-                    {
-                      "role": "average-nonland-mv",
-                      "current": 3.32,
-                      "target": 3.1,
-                      "deficit": 0.22,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "average-nonland-mv"
-                    },
-                    {
-                      "role": "early",
-                      "current": 21,
-                      "target": 25,
-                      "deficit": 4,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "early-plays"
-                    },
-                    {
-                      "role": "interaction",
-                      "current": 2,
-                      "target": 6,
-                      "deficit": 4,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "cheap-interaction"
-                    },
-                    {
-                      "role": "ramp",
-                      "current": 1,
-                      "target": 2,
-                      "deficit": 1,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "fast-mana"
-                    },
-                    {
-                      "role": "tutor",
-                      "current": 0,
-                      "target": 2,
-                      "deficit": 2,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "tutors"
-                    }
-                  ],
-                  "structuralDeficits": [
-                    {
-                      "role": "protection",
-                      "current": 0,
-                      "target": 6,
-                      "deficit": 6,
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null
-                    }
-                  ],
-                  "candidateGroups": [
-                    {
-                      "role": "average-nonland-mv",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "average-nonland-mv",
-                      "current": 3.32,
-                      "target": 3.1,
-                      "deficit": 0.22,
-                      "candidateDiscoveryMode": "bounded-role-search",
-                      "candidateCount": 0
-                    },
-                    {
-                      "role": "early",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "early-plays",
-                      "current": 21,
-                      "target": 25,
-                      "deficit": 4,
-                      "candidateDiscoveryMode": "bounded-role-search",
-                      "candidateCount": 0
-                    },
-                    {
-                      "role": "interaction",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "cheap-interaction",
-                      "current": 2,
-                      "target": 6,
-                      "deficit": 4,
-                      "candidateDiscoveryMode": "bounded-role-search",
-                      "candidateCount": 1
-                    },
-                    {
-                      "role": "ramp",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "fast-mana",
-                      "current": 1,
-                      "target": 2,
-                      "deficit": 1,
-                      "candidateDiscoveryMode": "bounded-role-search",
-                      "candidateCount": 0
-                    },
-                    {
-                      "role": "tutor",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "tutors",
-                      "current": 0,
-                      "target": 2,
-                      "deficit": 2,
-                      "candidateDiscoveryMode": "bounded-role-search",
-                      "candidateCount": 1
-                    }
-                  ]
-                },
-                "swaps": [
-                  {
-                    "out": "Poison-Tip Archer",
-                    "in": "Diabolic Intent",
-                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
-                    "recommendedPrinting": {
-                      "set": "FCA",
-                      "collectorNumber": "34",
-                      "finish": "nonfoil",
-                      "priceNzd": 27.92,
-                      "priceUsdReference": 16.51
-                    },
-                    "structuralPairing": {
-                      "addressedRole": "tutor",
-                      "remainingStructuralDeficitAfterSwap": 16,
-                      "authoritativeTargetGate": "tutors",
-                      "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 3,
-                      "persistentColoredManaSourceFloor": 3,
-                      "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
-                        "addStrategyAffinityScore": 6,
-                        "cutStrategyProtectionApplied": 4,
-                        "cutMatchedStrategies": [
-                          "aristocrats"
-                        ],
-                        "addMatchedStrategies": [
-                          "aristocrats"
-                        ],
-                        "locallyUnreplacedStrategies": [],
-                        "cutRoles": [
-                          "creature",
-                          "life drain",
-                          "repeatable life drain"
-                        ],
-                        "addRoles": [
-                          "sacrifice synergy",
-                          "tutor"
-                        ],
-                        "unreplacedRoles": [
-                          "creature",
-                          "life drain",
-                          "repeatable life drain"
-                        ],
-                        "unreplacedStrategyComponentRoles": [
-                          "repeatable life drain"
                         ],
                         "meaningfulStrategyLoss": true,
                         "verdict": "meaningful-strategy-loss"
@@ -3281,7 +3303,7 @@
                 "estimatedSpendNzd": 1.62,
                 "estimatedSpendUsdReference": 0.96,
                 "unknownPriceCount": 0,
-                "improvementScore": 2.61,
+                "improvementScore": -0.548,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -3329,9 +3351,9 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "creature",
-                        "life drain",
-                        "repeatable life drain"
+                        "card draw",
+                        "mass sacrifice conversion",
+                        "sacrifice synergy"
                       ],
                       "addRoles": [
                         "land tutor",
@@ -3339,12 +3361,12 @@
                         "tutor"
                       ],
                       "unreplacedRoles": [
-                        "creature",
-                        "life drain",
-                        "repeatable life drain"
+                        "card draw",
+                        "mass sacrifice conversion",
+                        "sacrifice synergy"
                       ],
                       "unreplacedStrategyComponentRoles": [
-                        "repeatable life drain"
+                        "mass sacrifice conversion"
                       ],
                       "meaningfulStrategyLoss": true,
                       "verdict": "meaningful-strategy-loss"
@@ -3478,7 +3500,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Poison-Tip Archer",
+                    "out": "Plumb the Forbidden",
                     "in": "Expedition Map",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -3507,9 +3529,9 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "creature",
-                          "life drain",
-                          "repeatable life drain"
+                          "card draw",
+                          "mass sacrifice conversion",
+                          "sacrifice synergy"
                         ],
                         "addRoles": [
                           "land tutor",
@@ -3517,12 +3539,12 @@
                           "tutor"
                         ],
                         "unreplacedRoles": [
-                          "creature",
-                          "life drain",
-                          "repeatable life drain"
+                          "card draw",
+                          "mass sacrifice conversion",
+                          "sacrifice synergy"
                         ],
                         "unreplacedStrategyComponentRoles": [
-                          "repeatable life drain"
+                          "mass sacrifice conversion"
                         ],
                         "meaningfulStrategyLoss": true,
                         "verdict": "meaningful-strategy-loss"
@@ -4060,7 +4082,7 @@
                 "estimatedSpendNzd": 27.92,
                 "estimatedSpendUsdReference": 16.51,
                 "unknownPriceCount": 0,
-                "improvementScore": 2.486,
+                "improvementScore": 1.74,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -4099,21 +4121,23 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "creature",
-                        "life drain",
-                        "repeatable life drain"
+                        "card draw",
+                        "death-trigger draw engine",
+                        "repeatable draw",
+                        "repeatable life gain engine"
                       ],
                       "addRoles": [
                         "sacrifice synergy",
                         "tutor"
                       ],
                       "unreplacedRoles": [
-                        "creature",
-                        "life drain",
-                        "repeatable life drain"
+                        "card draw",
+                        "death-trigger draw engine",
+                        "repeatable draw",
+                        "repeatable life gain engine"
                       ],
                       "unreplacedStrategyComponentRoles": [
-                        "repeatable life drain"
+                        "death-trigger draw engine"
                       ],
                       "meaningfulStrategyLoss": true,
                       "verdict": "meaningful-strategy-loss"
@@ -4247,7 +4271,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Poison-Tip Archer",
+                    "out": "Moldervine Reclamation",
                     "in": "Diabolic Intent",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -4276,21 +4300,23 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "creature",
-                          "life drain",
-                          "repeatable life drain"
+                          "card draw",
+                          "death-trigger draw engine",
+                          "repeatable draw",
+                          "repeatable life gain engine"
                         ],
                         "addRoles": [
                           "sacrifice synergy",
                           "tutor"
                         ],
                         "unreplacedRoles": [
-                          "creature",
-                          "life drain",
-                          "repeatable life drain"
+                          "card draw",
+                          "death-trigger draw engine",
+                          "repeatable draw",
+                          "repeatable life gain engine"
                         ],
                         "unreplacedStrategyComponentRoles": [
-                          "repeatable life drain"
+                          "death-trigger draw engine"
                         ],
                         "meaningfulStrategyLoss": true,
                         "verdict": "meaningful-strategy-loss"
@@ -4308,7 +4334,7 @@
                 "estimatedSpendNzd": 1.62,
                 "estimatedSpendUsdReference": 0.96,
                 "unknownPriceCount": 0,
-                "improvementScore": 2.61,
+                "improvementScore": 1.942,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -4358,7 +4384,8 @@
                       "cutRoles": [
                         "creature",
                         "life drain",
-                        "repeatable life drain"
+                        "repeatable life drain",
+                        "repeatable life gain engine"
                       ],
                       "addRoles": [
                         "land tutor",
@@ -4368,7 +4395,8 @@
                       "unreplacedRoles": [
                         "creature",
                         "life drain",
-                        "repeatable life drain"
+                        "repeatable life drain",
+                        "repeatable life gain engine"
                       ],
                       "unreplacedStrategyComponentRoles": [
                         "repeatable life drain"
@@ -4505,7 +4533,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Poison-Tip Archer",
+                    "out": "Zulaport Cutthroat",
                     "in": "Expedition Map",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -4536,7 +4564,8 @@
                         "cutRoles": [
                           "creature",
                           "life drain",
-                          "repeatable life drain"
+                          "repeatable life drain",
+                          "repeatable life gain engine"
                         ],
                         "addRoles": [
                           "land tutor",
@@ -4546,7 +4575,8 @@
                         "unreplacedRoles": [
                           "creature",
                           "life drain",
-                          "repeatable life drain"
+                          "repeatable life drain",
+                          "repeatable life gain engine"
                         ],
                         "unreplacedStrategyComponentRoles": [
                           "repeatable life drain"
