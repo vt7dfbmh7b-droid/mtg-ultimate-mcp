@@ -9,6 +9,7 @@
 1 Defile (40K) 199 *N*
 1 Go for the Throat (40K) 201 *N*
 1 Endless Atlas (40K) 237 *N*
+1 Gilded Lotus (40K) 239 *N*
 1 Mystic Forge (40K) 246 *N*
 1 Sculpting Steel (40K) 247 *N*
 1 Cranial Plating (40K) 236 *N*
@@ -32,6 +33,7 @@
 10 Swamp (40K) 313 *N*
 1 Imotekh the Stormlord (40K) 169 *F*
 1 Anrakyr the Traveller (40K) 28 *N*
+1 Biotransference (40K) 30 *N*
 1 Chronomancer (40K) 32 *N*
 1 Cryptek (40K) 33 *N*
 1 Illuminor Szeras (40K) 37 *N*
@@ -39,7 +41,6 @@
 1 Lychguard (40K) 39 *N*
 1 Necron Deathmark (40K) 42 *N*
 1 Necron Overlord (40K) 43 *N*
-1 Out of the Tombs (40K) 46 *N*
 1 Royal Warden (40K) 52 *N*
 1 Shard of the Void Dragon (40K) 56 *N*
 1 Skorpekh Lord (40K) 58 *N*
@@ -66,11 +67,10 @@
 1 Triarch Praetorian (40K) 66 *N*
 1 Night Scythe (40K) 162 *N*
 1 Everflowing Chalice (C14) 239 *N*
-1 Dark Ritual (SUM) 99 *N*
+1 Feed the Swarm (TLE) 257 *N*
+1 Lively Dirge (OTJ) 93 *N*
+1 Tragic Slip (C14) 167 *N*
 1 Skullclamp (MSC) 210 *N*
+1 Basilisk Collar (MM3) 216 *F*
 1 Swiftfoot Boots (A25) 234 *N*
-1 Fellwar Stone (MSC) 285 *N*
-1 Idol of Oblivion (SCD) 268 *N*
-1 Ornithopter of Paradise (PLST) MH2-232 *N*
-1 Bone Shards (PLST) MH2-76 *N*
 1 Deadly Dispute (MSC) 794 *N*
