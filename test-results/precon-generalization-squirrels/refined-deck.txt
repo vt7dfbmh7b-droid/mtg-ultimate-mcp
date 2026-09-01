@@ -7,7 +7,6 @@
 1 Chittering Witch (BLC) 180 *N*
 1 Insatiable Frugivore (BLC) 18 *N*
 1 Moonstone Eulogist (BLC) 19 *N*
-1 Swarmyard Massacre (BLC) 20 *N*
 1 Hazel's Brewmaster (BLC) 17 *N*
 1 Woe Strider (BLC) 189 *N*
 1 Saw in Half (BLC) 113 *N*
@@ -16,6 +15,7 @@
 1 Gourmand's Talent (BLC) 31 *N*
 1 Rootcast Apprenticeship (BLC) 32 *N*
 1 Scurry of Squirrels (BLC) 33 *N*
+1 End-Raze Forerunners (BLC) 214 *N*
 1 Arasta of the Endless Web (BLC) 205 *N*
 1 Deep Forest Hermit (BLC) 213 *N*
 1 Toski, Bearer of Secrets (BLC) 244 *N*
@@ -43,13 +43,12 @@
 1 Beledros Witherbloom (BLC) 247 *N*
 1 Idol of Oblivion (BLC) 277 *N*
 1 Sword of the Squeak (BLC) 40 *N*
-1 Morbid Opportunist (BLC) 183 *N*
 1 Nadier's Nightblade (BLC) 184 *N*
 1 Plumb the Forbidden (BLC) 188 *N*
 1 Bastion of Remembrance (BLC) 179 *N*
 1 Cache Grab (BLB) 167 *N*
 1 Chatterstorm (BLC) 210 *N*
-1 Moldervine Reclamation (BLC) 255 *N*
+1 Poison-Tip Archer (BLC) 256 *N*
 1 Ravenous Squirrel (BLC) 258 *N*
 1 Skyfisher Spider (BLC) 261 *N*
 1 Binding the Old Gods (BLC) 248 *N*
@@ -85,6 +84,7 @@
 4 Swamp (BLB) 374 *N*
 5 Forest (BLB) 377 *N*
 4 Forest (BLB) 378 *N*
-1 Crop Rotation (C20) 169 *N*
-1 Not Dead After All (WOE) 101 *N*
+1 Dark Ritual (SUM) 99 *N*
+1 Warping Wail (OGW) 12 *N*
+1 Culling the Weak (EXO) 55 *N*
 1 Diabolic Intent (BRO) 89 *N*
