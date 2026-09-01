@@ -37,11 +37,11 @@
       ],
       "metadataPath": "test-results/marvel-bracket5/refine-run-metadata.txt",
       "exists": true,
-      "sourceSha": "2928398f9928207be2398a3a8afebeb6f238b03b",
+      "sourceSha": "c2ddbb749837d5ea054adfe36c5430b366bc6d96",
       "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "2928398f9928207be2398a3a8afebeb6f238b03b",
+        "source_sha": "c2ddbb749837d5ea054adfe36c5430b366bc6d96",
         "control_outcome": "failure",
         "execution_outcome": "skipped",
         "target_gate_quality_outcome": "skipped",
@@ -224,20 +224,20 @@
       ],
       "metadataPath": "test-results/precon-generalization-squirrels/run-metadata.txt",
       "exists": true,
-      "sourceSha": "97964ec19e215df48ed11865f946bd62e1b0d7d5",
-      "outcome": "fail",
+      "sourceSha": "e94010f4e5ecf967ea20fd2a5d2eb7670f95f691",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "97964ec19e215df48ed11865f946bd62e1b0d7d5",
-        "workflow_source_sha": "97964ec19e215df48ed11865f946bd62e1b0d7d5",
-        "executed_head_sha": "97964ec19e215df48ed11865f946bd62e1b0d7d5",
-        "control_outcome": "failure",
+        "source_sha": "e94010f4e5ecf967ea20fd2a5d2eb7670f95f691",
+        "workflow_source_sha": "e94010f4e5ecf967ea20fd2a5d2eb7670f95f691",
+        "executed_head_sha": "e94010f4e5ecf967ea20fd2a5d2eb7670f95f691",
+        "control_outcome": "success",
         "build_outcome": "success",
         "regression_outcome": "success",
         "execution_outcome": "success",
         "hard_truth_outcome": "success",
-        "target_quality_outcome": "failure",
-        "strategy_preservation_outcome": "failure",
+        "target_quality_outcome": "success",
+        "strategy_preservation_outcome": "success",
         "policy": "exact-squirreled-away-stock-unrestricted-budgeted-upgrade",
         "printing_family": "unrestricted",
         "exact_card_count": "true",
@@ -251,11 +251,7 @@
         "structural_floors_required": "true",
         "meaningful_strategy_loss_rejected": "true"
       },
-      "unmetPassConditions": [
-        "control_outcome=success",
-        "target_quality_outcome=success",
-        "strategy_preservation_outcome=success"
-      ]
+      "unmetPassConditions": []
     }
   ]
 }
