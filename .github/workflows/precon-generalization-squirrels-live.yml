@@ -15,6 +15,7 @@ on:
       - "src/services/optimizer-v12-attempt-provenance.test.ts"
       - "src/services/scryfall.ts"
       - "src/services/upgrade.ts"
+      - "src/services/upgrade-backup-pairing-v15.test.ts"
       - "src/services/upgrade-target-priority-v15.test.ts"
       - ".github/workflows/precon-generalization-squirrels-live.yml"
   workflow_dispatch:
@@ -60,7 +61,7 @@ jobs:
         id: focused_regressions
         if: steps.source_build.outcome == 'success'
         continue-on-error: true
-        run: npx tsx --test src/services/card-role-truth-v15.test.ts src/services/commander-strategy-affinity-v15.test.ts src/services/strategy-inference-generalization-v15.test.ts src/services/upgrade-target-priority-v15.test.ts src/services/optimizer-v12-attempt-provenance.test.ts
+        run: npx tsx --test src/services/card-role-truth-v15.test.ts src/services/commander-strategy-affinity-v15.test.ts src/services/strategy-inference-generalization-v15.test.ts src/services/upgrade-target-priority-v15.test.ts src/services/upgrade-backup-pairing-v15.test.ts src/services/optimizer-v12-attempt-provenance.test.ts
 
       - name: Refine exact Squirreled Away stock precon
         id: precon_control
