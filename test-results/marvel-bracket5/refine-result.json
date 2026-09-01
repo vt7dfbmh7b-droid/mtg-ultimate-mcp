@@ -151,6 +151,7 @@
         "graveyard hate": 2,
         "tutor": 8,
         "equipment": 6,
+        "artifact graveyard recursion": 1,
         "free interaction": 1,
         "fast mana": 2,
         "etb synergy": 3,
@@ -1199,7 +1200,9 @@
                   ],
                   "addRoles": [
                     "card draw",
-                    "equipment"
+                    "death-trigger draw engine",
+                    "equipment",
+                    "repeatable draw"
                   ],
                   "unreplacedRoles": [
                     "cost reduction",
@@ -1358,7 +1361,9 @@
                     ],
                     "addRoles": [
                       "card draw",
-                      "equipment"
+                      "death-trigger draw engine",
+                      "equipment",
+                      "repeatable draw"
                     ],
                     "unreplacedRoles": [
                       "cost reduction",
@@ -2824,7 +2829,9 @@
                       ],
                       "addRoles": [
                         "card draw",
-                        "equipment"
+                        "death-trigger draw engine",
+                        "equipment",
+                        "repeatable draw"
                       ],
                       "unreplacedRoles": [
                         "cost reduction",
@@ -3022,7 +3029,9 @@
                         ],
                         "addRoles": [
                           "card draw",
-                          "equipment"
+                          "death-trigger draw engine",
+                          "equipment",
+                          "repeatable draw"
                         ],
                         "unreplacedRoles": [
                           "cost reduction",
@@ -4716,7 +4725,9 @@
                       ],
                       "addRoles": [
                         "card draw",
-                        "equipment"
+                        "death-trigger draw engine",
+                        "equipment",
+                        "repeatable draw"
                       ],
                       "unreplacedRoles": [
                         "cost reduction",
@@ -4914,7 +4925,9 @@
                         ],
                         "addRoles": [
                           "card draw",
-                          "equipment"
+                          "death-trigger draw engine",
+                          "equipment",
+                          "repeatable draw"
                         ],
                         "unreplacedRoles": [
                           "cost reduction",
@@ -6608,7 +6621,9 @@
                       ],
                       "addRoles": [
                         "card draw",
-                        "equipment"
+                        "death-trigger draw engine",
+                        "equipment",
+                        "repeatable draw"
                       ],
                       "unreplacedRoles": [
                         "cost reduction",
@@ -6806,7 +6821,9 @@
                         ],
                         "addRoles": [
                           "card draw",
-                          "equipment"
+                          "death-trigger draw engine",
+                          "equipment",
+                          "repeatable draw"
                         ],
                         "unreplacedRoles": [
                           "cost reduction",
@@ -8322,7 +8339,9 @@
                       ],
                       "addRoles": [
                         "card draw",
-                        "equipment"
+                        "death-trigger draw engine",
+                        "equipment",
+                        "repeatable draw"
                       ],
                       "unreplacedRoles": [
                         "cost reduction",
@@ -8481,7 +8500,9 @@
                         ],
                         "addRoles": [
                           "card draw",
-                          "equipment"
+                          "death-trigger draw engine",
+                          "equipment",
+                          "repeatable draw"
                         ],
                         "unreplacedRoles": [
                           "cost reduction",
@@ -10046,7 +10067,9 @@
                   ],
                   "addRoles": [
                     "card draw",
-                    "equipment"
+                    "death-trigger draw engine",
+                    "equipment",
+                    "repeatable draw"
                   ],
                   "unreplacedRoles": [
                     "conditional mana acceleration",
@@ -10204,7 +10227,9 @@
                     ],
                     "addRoles": [
                       "card draw",
-                      "equipment"
+                      "death-trigger draw engine",
+                      "equipment",
+                      "repeatable draw"
                     ],
                     "unreplacedRoles": [
                       "conditional mana acceleration",
@@ -11669,7 +11694,9 @@
                       ],
                       "addRoles": [
                         "card draw",
-                        "equipment"
+                        "death-trigger draw engine",
+                        "equipment",
+                        "repeatable draw"
                       ],
                       "unreplacedRoles": [
                         "conditional mana acceleration",
@@ -11827,7 +11854,9 @@
                         ],
                         "addRoles": [
                           "card draw",
-                          "equipment"
+                          "death-trigger draw engine",
+                          "equipment",
+                          "repeatable draw"
                         ],
                         "unreplacedRoles": [
                           "conditional mana acceleration",
@@ -15897,6 +15926,7 @@
         "graveyard hate": 2,
         "tutor": 8,
         "equipment": 7,
+        "artifact graveyard recursion": 1,
         "free interaction": 1,
         "fast mana": 2,
         "etb synergy": 3,
