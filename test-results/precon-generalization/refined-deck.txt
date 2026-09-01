@@ -2,12 +2,10 @@
 1 Szarekh, the Silent King (40K) 170 *F*
 
 // MAIN
-1 Beacon of Unrest (40K) 194 *N*
 1 Living Death (40K) 202 *N*
 1 Mutilate (40K) 203 *N*
 1 Dread Return (40K) 200 *N*
 1 Defile (40K) 199 *N*
-1 Darkness (40K) 197 *N*
 1 Go for the Throat (40K) 201 *N*
 1 Caged Sun (40K) 231 *N*
 1 Endless Atlas (40K) 237 *N*
@@ -53,6 +51,7 @@
 1 Tomb Blade (40K) 64 *N*
 1 Trazyn the Infinite (40K) 65 *N*
 1 Triarch Stalker (40K) 67 *N*
+1 The War in Heaven (40K) 69 *N*
 1 Canoptek Scarab Swarm (40K) 150 *N*
 1 Canoptek Spyder (40K) 151 *N*
 1 Canoptek Tomb Sentinel (40K) 152 *N*
@@ -73,4 +72,5 @@
 1 Triarch Praetorian (40K) 66 *N*
 1 Night Scythe (40K) 162 *N*
 1 Tragic Slip (C14) 167 *N*
+1 Bone Shards (PLST) MH2-76 *N*
 1 Lively Dirge (OTJ) 93 *N*
