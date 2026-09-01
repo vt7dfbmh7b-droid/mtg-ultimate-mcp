@@ -266,9 +266,11 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   ) roles.add('persistent colored mana source');
 
   if (/draw (?:a|one|two|three|four|five|\d+) cards?/.test(text)) roles.add('card draw');
-  if (/whenever .* draw a card|at the beginning of .* draw|whenever .* deals? combat damage .* draw/.test(text)) roles.add('repeatable draw');
-  const deathTriggeredDraw = /\bwhenever (?:one or more )?[^.]{0,100}\bcreatures?\b[^.]{0,80}\bdies?\b[^.]{0,120}\bdraw a card\b/.test(text);
+  if (/whenever .* draw (?:a|one|two|three|four|five|\d+) cards?|at the beginning of .* draw|whenever .* deals? combat damage .* draw/.test(text)) roles.add('repeatable draw');
+  const deathTriggeredDraw = /\bwhenever (?:one or more )?[^.]{0,100}\bcreatures?\b[^.]{0,80}\bdies?\b[^.]{0,120}\bdraw (?:a|one|two|three|four|five|\d+) cards?\b/.test(text);
   if (deathTriggeredDraw) roles.add('death-trigger draw engine');
+  const teamCombatDamageDraw = /\bwhenever (?:one or more )?(?:a )?creatures? you control deal(?:s)? combat damage to (?:a player|an opponent)[^.]{0,120}\bdraw (?:a|one|two|three|four|five|\d+) cards?\b/.test(text);
+  if (teamCombatDamageDraw) roles.add('team combat-damage draw engine');
   if (/scry|surveil|look at the top .* cards|exile the top .* you may play/.test(text)) roles.add('card selection');
   if (/discard your hand.*draw|each player discards .* hand.*draw/.test(text)) roles.add('wheel');
 
@@ -295,6 +297,7 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (/exile .* graveyard|cards? in graveyards? can't|players? can't cast .* graveyards?/.test(text)) roles.add('graveyard hate');
   const massGraveyardExchange = /each player exiles all creature cards from [^.]{0,80}graveyard[^.]{0,120}then sacrifices all creatures[^.]{0,80}then puts all cards [^.]{0,80}exiled this way onto the battlefield/.test(text);
   const recursionCapacity = graveyardReturnCapacity(text);
+  const artifactGraveyardRecursion = /\b(?:return|put) target [^.]{0,100}\bartifact\b[^.]{0,140}\bfrom (?:a|the|your|any) graveyard\b[^.]{0,120}\b(?:to|onto) (?:the battlefield|your hand)\b/.test(text);
   const scalingSelectiveWipe = /\beach creature (?:that|with)[^.]{0,120}\bgets? -\d+\/-\d+ until end of turn for each creature you control (?:that(?:'s| is)|with)\b/.test(text);
   if (
     /(destroy|exile) (?:all|each) (?:[a-z-]+ ){0,3}(?:creatures|artifacts|enchantments|nonland permanents|permanents)/.test(text)
@@ -314,6 +317,12 @@ export function inferCardRoles(card: ScryfallCard): string[] {
     || /\bthose tokens plus\b/.test(text)
     || /\bcreate twice that many [^.]{0,40}tokens?\b/.test(text);
   if (createsOrMultipliesTokens) roles.add('token production');
+  const deathTriggeredTokenEngine = /\bwhenever (?:one or more )?[^.]{0,100}\bcreatures?\b[^.]{0,80}\bdies?\b[^.]{0,140}\bcreate [^.]{0,100}\btokens?\b/.test(text);
+  if (deathTriggeredTokenEngine) roles.add('death-trigger token engine');
+  const tokenEventLifeDrain = /\bwhenever [^.]{0,140}(?:(?:create|sacrifice)[^.]{0,60}\btokens?\b|\btokens? you control leave(?:s)? the battlefield\b)[^.]{0,140}\b(?:each opponent|target opponent)[^.]{0,80}\bloses? (?:1|one|\d+) life\b/.test(text);
+  if (tokenEventLifeDrain) roles.add('token-event life drain');
+  const massSacrificeConversion = /\bsacrifice (?:one or more|any number of|x) creatures?\b[\s\S]{0,300}\b(?:copy this spell|draw|create|deals? damage|loses? life|gain life)\b/.test(text);
+  if (massSacrificeConversion) roles.add('mass sacrifice conversion');
   const teamWideStatPayoff = /(?<!target )(?<!commander )\b(?:other )?(?:creatures|[a-z][a-z'-]*s) you control (?:get|gain) \+\d+\/\+\d+/.test(text);
   const distributedTypalPump = /\b(?:creatures|[a-z][a-z'-]*s) you control have "[^"]{0,100}\btarget (?:creature|[a-z][a-z'-]*) gets? \+\d+\/\+\d+/.test(text);
   const boardScalingEquipment = /\bequipped creature (?:gets?|has) [^.]{0,100}\bfor each (?:other )?creature you control\b/.test(text);
@@ -348,6 +357,7 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   ) roles.add('graveyard recursion');
   if (recursionCapacity.multiCard || massGraveyardExchange) roles.add('multi-card graveyard recursion');
   if (recursionCapacity.highCapacity || massGraveyardExchange) roles.add('high-capacity graveyard recursion');
+  if (artifactGraveyardRecursion) roles.add('artifact graveyard recursion');
   const boardProtection = /(?:other )?(?:creatures|permanents|artifacts|enchantments) you control\s+(?:have|gain)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text)
     || /(?:all |any number of )?(?:permanents|creatures) you control phase out/.test(text);
   const targetedProtection = /(?:target|another target|equipped|enchanted|commander)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text)

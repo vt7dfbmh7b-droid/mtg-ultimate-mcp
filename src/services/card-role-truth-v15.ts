@@ -372,6 +372,13 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   const manaTruth = manaRoleTruthV15(card);
   const interactionTruth = interactionRoleTruthV15(card);
   const sacrificeTruth = sacrificeRoleTruthV15(card);
+  const landReplacementOnly = roles.has('land ramp')
+    && /\bas an additional cost to cast this spell, sacrifice a land\b/.test(oracle);
+  if (landReplacementOnly) {
+    roles.delete('land ramp');
+    roles.delete('persistent colored mana source');
+    roles.add('land replacement');
+  }
   if (roles.has('fast mana') && !manaTruth.reliableImmediateFastMana) {
     roles.delete('fast mana');
     roles.add(manaTruth.delayed || manaTruth.summoningSicknessDelay ? 'delayed mana acceleration' : 'conditional mana acceleration');

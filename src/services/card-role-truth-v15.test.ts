@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { ScryfallCard } from '../types/scryfall.js';
 import { buildDeckMetrics, parseDecklist } from './deck.js';
+import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
 import { inferCardRoles, normalizeScryfallSearchQueryV15 } from './scryfall.js';
 
 function card(input: {
@@ -407,6 +408,10 @@ test('basic-land ramp is not promoted to strategic tutor while unrestricted land
   assert.equal(cropRoles.includes('land tutor'), true);
   assert.equal(cropRoles.includes('tutor'), true);
   assert.equal(cropRoles.includes('sacrifice synergy'), false);
+  const effectiveCropRoles = effectiveCardRolesV15(cropRotation);
+  assert.equal(effectiveCropRoles.includes('land ramp'), false);
+  assert.equal(effectiveCropRoles.includes('persistent colored mana source'), false);
+  assert.equal(effectiveCropRoles.includes('land replacement'), true);
 
   assert.equal(inferCardRoles(demonicTutor).includes('tutor'), true);
 });
@@ -498,6 +503,46 @@ test('death-trigger draw, scaling board draw, and typal board control retain dis
   assert.equal(inferCardRoles(artifactDraw).includes('board-scaling card draw'), true);
   assert.equal(inferCardRoles(typalControl).includes('board wipe'), true);
   assert.equal(inferCardRoles(typalControl).includes('typal board control payoff'), true);
+});
+
+test('token-sacrifice and artifact-recursion bridges retain their exact operational roles', () => {
+  const multiDeathDraw = card({
+    name: 'Generic Equipped Death Draw',
+    typeLine: 'Artifact — Equipment',
+    oracleText: 'Equipped creature gets +1/-1. Whenever equipped creature dies, draw two cards. Equip {1}.',
+  });
+  const massSacrifice = card({
+    name: 'Generic Mass Sacrifice Conversion',
+    typeLine: 'Instant',
+    oracleText: 'As an additional cost to cast this spell, you may sacrifice one or more creatures. When you do, copy this spell for each creature sacrificed this way. You draw a card and you lose 1 life.',
+  });
+  const deathTokens = card({
+    name: 'Generic Death Token Engine',
+    typeLine: 'Creature — Test Rogue',
+    oracleText: 'Whenever a nontoken creature dies, create a 1/1 black Rat creature token.',
+  });
+  const teamCombatDraw = card({
+    name: 'Generic Team Combat Draw',
+    typeLine: 'Legendary Creature — Test Squirrel',
+    oracleText: 'Whenever a creature you control deals combat damage to a player, draw a card.',
+  });
+  const artifactReturn = card({
+    name: 'Generic Artifact Return',
+    typeLine: 'Sorcery',
+    oracleText: 'Put target artifact or creature card from a graveyard onto the battlefield under your control.',
+  });
+  const tokenDrain = card({
+    name: 'Generic Token Event Drain',
+    typeLine: 'Creature — Test Bat',
+    oracleText: 'Whenever you create or sacrifice a token, each opponent loses 1 life.',
+  });
+
+  assert.equal(inferCardRoles(multiDeathDraw).includes('death-trigger draw engine'), true);
+  assert.equal(inferCardRoles(massSacrifice).includes('mass sacrifice conversion'), true);
+  assert.equal(inferCardRoles(deathTokens).includes('death-trigger token engine'), true);
+  assert.equal(inferCardRoles(teamCombatDraw).includes('team combat-damage draw engine'), true);
+  assert.equal(inferCardRoles(artifactReturn).includes('artifact graveyard recursion'), true);
+  assert.equal(inferCardRoles(tokenDrain).includes('token-event life drain'), true);
 });
 
 test('multiplayer edicts retain interaction and sacrifice-bridge truth', () => {

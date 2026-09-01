@@ -126,6 +126,9 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   addSignal(table, 'combat-tokens', roles.has('token production'), 6, 'token production');
   addSignal(table, 'combat-tokens', roles.has('go-wide payoff'), 6, 'go-wide combat payoff');
   addSignal(table, 'combat-tokens', roles.has('typal board control payoff'), 6, 'asymmetric typal board control');
+  addSignal(table, 'combat-tokens', roles.has('death-trigger token engine'), 6, 'death-trigger token engine');
+  addSignal(table, 'combat-tokens', roles.has('token-event life drain'), 7, 'token-event life-drain payoff');
+  addSignal(table, 'combat-tokens', roles.has('team combat-damage draw engine'), 6, 'team combat-damage draw');
   addSignal(table, 'combat-tokens', roles.has('extra combat'), 8, 'extra combat');
   addSignal(table, 'combat-tokens', roles.has('untap engine'), 4, 'combat untap potential');
   addSignal(table, 'combat-tokens', roles.has('haste'), 2, 'haste');
@@ -161,17 +164,22 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   // Explicit artifact/Vehicle rules text, including copying another artifact, is required to infer an artifact-engine identity.
   addSignal(table, 'artifact-engine', artifactPermanent, 3, 'artifact permanent');
   addSignal(table, 'artifact-engine', artifactEngineText, 6, artifactCopyEngine ? 'artifact-copy engine text' : 'artifact/Vehicle engine text');
+  addSignal(table, 'artifact-engine', roles.has('artifact graveyard recursion'), 8, 'artifact recursion');
 
   addSignal(table, 'aristocrats', roles.has('sacrifice synergy'), 7, 'sacrifice synergy');
   addSignal(table, 'aristocrats', roles.has('sacrifice outlet'), 8, 'sacrifice outlet');
   addSignal(table, 'aristocrats', roles.has('self sacrifice'), 2, 'self-sacrifice utility');
   addSignal(table, 'aristocrats', roles.has('life drain'), 7, 'opponent drain');
   addSignal(table, 'aristocrats', roles.has('death-trigger draw engine'), 7, 'death-trigger card engine');
+  addSignal(table, 'aristocrats', roles.has('death-trigger token engine'), 7, 'death-trigger token engine');
+  addSignal(table, 'aristocrats', roles.has('token-event life drain'), 7, 'token-event life-drain payoff');
+  addSignal(table, 'aristocrats', roles.has('mass sacrifice conversion'), 7, 'mass sacrifice conversion');
   addSignal(table, 'aristocrats', roles.has('forced sacrifice interaction'), 6, 'forced sacrifice bridge');
   addSignal(table, 'aristocrats', /whenever .* dies|when .* dies/i.test(text), 6, 'death trigger');
   addSignal(table, 'aristocrats', /sacrifice (?:a|another) creature|sacrifice (?:a|another) permanent/i.test(text), 5, 'sacrifice text');
 
   addSignal(table, 'food-lifegain', /\bfoods?\b/i.test(text), 8, 'Food engine/payoff text');
+  addSignal(table, 'food-lifegain', roles.has('token-event life drain'), 7, 'Food/token life-drain payoff');
   addSignal(table, 'food-lifegain', repeatableOrPayoffLifeGain, 7, 'repeatable life-gain engine/payoff');
   addSignal(table, 'food-lifegain', convertsLifeGainToPressure, 6, 'life-gain conversion to opponent pressure');
 

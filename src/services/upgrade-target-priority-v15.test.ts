@@ -908,6 +908,41 @@ test('same-archetype affinity cannot spend death-draw, typal-control, or scaling
       addName: 'Incoming Generic Cantrip',
       addRoles: ['card draw', 'card selection'],
     },
+    {
+      strategy: 'aristocrats',
+      role: 'mass sacrifice conversion',
+      cutName: 'Outgoing Mass Sacrifice Conversion',
+      addName: 'Incoming Single-Sacrifice Tutor',
+      addRoles: ['sacrifice synergy', 'tutor'],
+    },
+    {
+      strategy: 'combat-tokens',
+      role: 'death-trigger token engine',
+      cutName: 'Outgoing Death Token Engine',
+      addName: 'Incoming One-Shot Recursion',
+      addRoles: ['graveyard recursion', 'protection', 'token production'],
+    },
+    {
+      strategy: 'combat-tokens',
+      role: 'team combat-damage draw engine',
+      cutName: 'Outgoing Team Combat Draw',
+      addName: 'Incoming Equipment Protection',
+      addRoles: ['equipment', 'haste', 'protection'],
+    },
+    {
+      strategy: 'artifact-engine',
+      role: 'artifact graveyard recursion',
+      cutName: 'Outgoing Artifact Recursion',
+      addName: 'Incoming Creature-Only Recursion Tutor',
+      addRoles: ['graveyard recursion', 'multi-card graveyard recursion', 'tutor'],
+    },
+    {
+      strategy: 'combat-tokens',
+      role: 'token-event life drain',
+      cutName: 'Outgoing Token Event Drain',
+      addName: 'Incoming Generic Token Draw',
+      addRoles: ['card draw', 'creature', 'token production'],
+    },
   ] as const;
 
   for (const item of cases) {
