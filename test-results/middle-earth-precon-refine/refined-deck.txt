@@ -35,6 +35,7 @@
 1 Anguished Unmaking (LTC) 265 *N*
 1 Chromatic Lantern (LTC) 275 *N*
 1 Trading Post (LTC) 288 *N*
+1 Well of Lost Dreams (LTC) 291 *N*
 1 Brushland (LTC) 297 *N*
 1 Canopy Vista (LTC) 298 *N*
 1 Exotic Orchard (LTC) 307 *N*
@@ -90,4 +91,3 @@
 1 Bilbo's Gambit (HOB) 5 *N*
 1 The Arkenstone // Seek the Heart (HOB) 170 *N*
 1 Samwise Gamgee (LTR) 327 *N*
-1 Nimble Hobbit (LTR) 23 *N*

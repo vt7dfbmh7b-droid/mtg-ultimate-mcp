@@ -103,13 +103,13 @@
       ],
       "metadataPath": "test-results/middle-earth-precon-refine/run-metadata.txt",
       "exists": true,
-      "sourceSha": "b79dcae4278d1b5197bc0bbadea8d2ec6dabb2d3",
+      "sourceSha": "ba3340050a614c48d38855229e69a3021112275c",
       "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "b79dcae4278d1b5197bc0bbadea8d2ec6dabb2d3",
-        "workflow_source_sha": "b79dcae4278d1b5197bc0bbadea8d2ec6dabb2d3",
-        "executed_head_sha": "b79dcae4278d1b5197bc0bbadea8d2ec6dabb2d3",
+        "source_sha": "ba3340050a614c48d38855229e69a3021112275c",
+        "workflow_source_sha": "ba3340050a614c48d38855229e69a3021112275c",
+        "executed_head_sha": "ba3340050a614c48d38855229e69a3021112275c",
         "control_outcome": "success",
         "build_outcome": "success",
         "regression_outcome": "success",
@@ -139,13 +139,13 @@
       ],
       "metadataPath": "test-results/precon-generalization/run-metadata.txt",
       "exists": true,
-      "sourceSha": "b79dcae4278d1b5197bc0bbadea8d2ec6dabb2d3",
+      "sourceSha": "ba3340050a614c48d38855229e69a3021112275c",
       "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "b79dcae4278d1b5197bc0bbadea8d2ec6dabb2d3",
-        "workflow_source_sha": "b79dcae4278d1b5197bc0bbadea8d2ec6dabb2d3",
-        "executed_head_sha": "b79dcae4278d1b5197bc0bbadea8d2ec6dabb2d3",
+        "source_sha": "ba3340050a614c48d38855229e69a3021112275c",
+        "workflow_source_sha": "ba3340050a614c48d38855229e69a3021112275c",
+        "executed_head_sha": "ba3340050a614c48d38855229e69a3021112275c",
         "control_outcome": "success",
         "build_outcome": "success",
         "regression_outcome": "success",
@@ -216,20 +216,20 @@
       ],
       "metadataPath": "test-results/precon-generalization-squirrels/run-metadata.txt",
       "exists": true,
-      "sourceSha": "cbcad94fd0df6b52318ec31782182a6475d71ea9",
-      "outcome": "pass",
+      "sourceSha": "ba3340050a614c48d38855229e69a3021112275c",
+      "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "cbcad94fd0df6b52318ec31782182a6475d71ea9",
-        "workflow_source_sha": "cbcad94fd0df6b52318ec31782182a6475d71ea9",
-        "executed_head_sha": "cbcad94fd0df6b52318ec31782182a6475d71ea9",
-        "control_outcome": "success",
+        "source_sha": "ba3340050a614c48d38855229e69a3021112275c",
+        "workflow_source_sha": "ba3340050a614c48d38855229e69a3021112275c",
+        "executed_head_sha": "ba3340050a614c48d38855229e69a3021112275c",
+        "control_outcome": "failure",
         "build_outcome": "success",
         "regression_outcome": "success",
         "execution_outcome": "success",
         "hard_truth_outcome": "success",
-        "target_quality_outcome": "success",
-        "strategy_preservation_outcome": "success",
+        "target_quality_outcome": "failure",
+        "strategy_preservation_outcome": "failure",
         "policy": "exact-squirreled-away-stock-unrestricted-budgeted-upgrade",
         "printing_family": "unrestricted",
         "exact_card_count": "true",
@@ -243,7 +243,11 @@
         "structural_floors_required": "true",
         "meaningful_strategy_loss_rejected": "true"
       },
-      "unmetPassConditions": []
+      "unmetPassConditions": [
+        "control_outcome=success",
+        "target_quality_outcome=success",
+        "strategy_preservation_outcome=success"
+      ]
     }
   ]
 }
