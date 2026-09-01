@@ -5,12 +5,12 @@
       "family": "Marvel",
       "familyPreset": "marvel",
       "allowedSetCodes": [
-        "MSH",
         "MSC",
+        "MSH",
         "LMAR",
         "PSPM",
-        "SPE",
         "SPM",
+        "SPE",
         "MAR"
       ],
       "includePromos": true,
@@ -118,8 +118,8 @@
       "family": "Middle-earth",
       "familyPreset": "middle-earth",
       "allowedSetCodes": [
-        "HOB",
         "HOC",
+        "HOB",
         "PLTC",
         "PLTR",
         "LTC",
