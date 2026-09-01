@@ -24,6 +24,7 @@ import { estimateCommanderBracket, findDeckCombos } from './spellbook.js';
 
 export interface CedhWorkflowOptionsV14 extends CedhWinPackageOptionsV14, CedhEfficiencyOptionsV14, CedhManaBaseOptionsV14 {
   maxEfficiencySwaps?: number;
+  maxEfficiencyPasses?: number;
   maxManaBaseSwaps?: number;
   requireVerifiedCombo?: boolean;
 }
@@ -182,9 +183,9 @@ export async function assessCedhReadinessV14(
     comboTruth: {
       winningComboCount: winningCombos,
       independentWinningComboCoreCount: winningComboCoreCount,
-      rule: 'Winning variants connected by a shared non-commander combo piece are one independent win core for redundancy/preservation evidence.',
+      rule: 'Independent win redundancy is the maximum supported set of pairwise-disjoint non-commander winning packages; overlapping variants sharing a required piece do not multiply redundancy.',
     },
-    caveat: 'This is a construction-readiness assessment, not a declaration that the deck is officially Bracket 5. A combo only satisfies the win-package gate when Commander Spellbook reports a win-oriented result; lifegain-only, value-only, and standalone infinite-mana engines do not qualify. Multiple winning variants that share a critical combo card do not become independent redundancy. Fast-mana evidence is fail-closed against delayed and prerequisite-dependent mana. Bracket 5/cEDH also depends on competitive intent, metagame knowledge, pilot decisions, and tournament-minded play.',
+    caveat: 'This is a construction-readiness assessment, not a declaration that the deck is officially Bracket 5. A combo only satisfies the win-package gate when Commander Spellbook reports a win-oriented result; lifegain-only, value-only, and standalone infinite-mana engines do not qualify. Multiple winning variants that require the same non-commander card do not become independent redundancy, while genuinely pairwise-disjoint winning packages remain separate even if other bridge variants connect them. Fast-mana evidence is fail-closed against delayed and prerequisite-dependent mana. Bracket 5/cEDH also depends on competitive intent, metagame knowledge, pilot decisions, and tournament-minded play.',
   };
 }
 
@@ -223,18 +224,47 @@ export async function refineCommanderForCedhV14(
   const completedPlan = record(winPackage.completedPlan);
   const protectedComboCards = strings(completedPlan.comboCardNames);
   const protectedCards = [...new Set([...(options.protectedCards ?? []), ...protectedComboCards])];
+  const requestedEfficiencySwaps = Math.max(1, Math.min(10, Math.trunc(options.maxEfficiencySwaps ?? 3)));
+  const efficiencyPassLimit = Math.max(
+    1,
+    Math.min(2, Math.trunc(options.maxEfficiencyPasses ?? (requestedEfficiencySwaps >= 8 ? 2 : 1))),
+  );
+  const efficiencyPasses: Record<string, unknown>[] = [];
+  let acceptedEfficiency: Record<string, unknown> | null = null;
 
-  const efficiency = await refineCedhEfficiencyV14(currentDecklist, {
-    ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
-    ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
-    ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
-    ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
-    ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
-    ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
-    protectedCards,
-    maxSwaps: options.maxEfficiencySwaps ?? 3,
-  });
-  if (typeof efficiency.finalDecklist === 'string') currentDecklist = efficiency.finalDecklist;
+  for (let pass = 0; pass < efficiencyPassLimit; pass += 1) {
+    const passSwapLimit = pass === 0 ? requestedEfficiencySwaps : Math.min(5, requestedEfficiencySwaps);
+    const beforePassDecklist = currentDecklist;
+    const efficiency = await refineCedhEfficiencyV14(currentDecklist, {
+      ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
+      ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
+      ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
+      ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
+      ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
+      ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
+      protectedCards,
+      maxSwaps: passSwapLimit,
+    });
+    const annotatedEfficiency = {
+      ...efficiency,
+      pass: pass + 1,
+      requestedPassSwapLimit: passSwapLimit,
+    };
+    efficiencyPasses.push(annotatedEfficiency);
+
+    const finalDecklist = typeof efficiency.finalDecklist === 'string' ? efficiency.finalDecklist : '';
+    if (efficiency.status !== 'cedh-efficiency-refined' || !finalDecklist.trim() || finalDecklist === beforePassDecklist) break;
+    currentDecklist = finalDecklist;
+    acceptedEfficiency = annotatedEfficiency;
+
+    const selectedCandidateCount = Number(efficiency.selectedCandidateCount ?? (Array.isArray(efficiency.swaps) ? efficiency.swaps.length : 0));
+    if (selectedCandidateCount < passSwapLimit) break;
+  }
+
+  const efficiency = acceptedEfficiency ?? efficiencyPasses.at(-1) ?? {
+    status: 'no-efficiency-pass-attempted',
+    finalDecklist: currentDecklist,
+  };
 
   const manaBase = await optimizeCedhManaBaseV14(currentDecklist, {
     ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
@@ -261,6 +291,7 @@ export async function refineCommanderForCedhV14(
     stages: {
       winPackageCompletion: winPackage,
       strictEfficiency: efficiency,
+      strictEfficiencyPasses: efficiencyPasses,
       manaBase,
     },
     finalAssessment,
@@ -268,7 +299,7 @@ export async function refineCommanderForCedhV14(
     baselineWinningComboCores,
     finalWinningComboCores,
     finalDecklist: currentDecklist,
-    guidance: 'The cEDH path is win-package-first: verify a real winning package, protect it, improve only with strict high-value roles, optimize lands separately, then independently reassess. Winning redundancy/preservation is measured by independent combo cores rather than duplicate variants sharing the same lynchpin. Competitive role evidence uses fail-closed role truth for conditional/delayed mana. It does not translate targetBracket=5 into an automatic Bracket 5 claim.',
+    guidance: 'The cEDH path is win-package-first: verify a real winning package, protect it, then apply up to two marginal-value efficiency passes when a high-swap optimization request still has worthwhile candidates. Each pass recalculates role saturation and creature-type coherence, so later passes attack surviving filler instead of blindly stacking the role that won pass one. Lands are optimized separately and the finished list is independently reassessed. Winning redundancy/preservation is measured by pairwise-disjoint winning packages rather than duplicate or transitively connected variants. Competitive role evidence uses fail-closed role truth for conditional/delayed mana. It does not translate targetBracket=5 into an automatic Bracket 5 claim.',
   };
 }
 
