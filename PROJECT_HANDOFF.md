@@ -17,7 +17,7 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
 - Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
-- Active branch validation: **deterministic-semantic-repair-green-live-controls-pending**
+- Active branch validation: **accepted-checkpoint-77a-newer-evidence-stale-current-executable-revalidation-required**
 
 ## Stable safety boundary
 
@@ -31,16 +31,17 @@ Latest fully validated executable experimental baseline documented by the prior 
 
 ## Important pending validation
 
-The last persisted Marvel control is `77a5383fa7490aa91360b8186a4bda890f632157` with outcome **focused-pass-broad-fail**. At exact source 77a5383..., focused Marvel passed with Vanquish the Horde -> Reanimate and Arcane Signet -> Brainstorm, moving average nonland mana value 2.71 -> 2.59 while preserving legal exact-100 Marvel printings and substantive strategy. The independently persisted broad Marvel control at the same source failed target-quality and strategy-preservation gates. This is restricted focused-scenario evidence, not a broad Marvel pass.
+The last persisted Marvel control is `b9ab88d3d56caa7d6744cc78e002dc17dfa8bac4` with outcome **focused-fail-broad-fail**. The latest registered Marvel batch is exact-source b9ab88d... and both lanes are red. Focused Marvel executed but failed its target-gate quality outcome. Broad Marvel executed but failed target quality and strategy preservation. Later fixes landed after this batch, so these failures are valuable regression evidence but are not a current-head verdict.
 
 ## Next actions
 
-1. Publish and exact-source validate the combined KF-026 through KF-030 semantic repair: own-graveyard engines must outrank graveyard hate; movement into a graveyard must never count as reanimation; explicit artifact engines must outrank generic artifacts; self-sacrifice must not impersonate a repeatable outlet; and token multipliers, death engines and board-scaling payoffs must receive substantive cut protection.
-2. Rerun and manually audit Necron Dynasties and Squirreled Away. Reject any package that still cuts Trazyn/Resurrection-Orb-style graveyard engines, Chatterfang/anthem/overrun-style token engines, or Poison-Tip-Archer/Moldervine-Reclamation-style token-death engines for generic role-count gains.
-3. Keep Marvel and Middle-earth restricted controls active during the repair. Broad Marvel must pass its whole-deck target and strategy gates; Food and Fellowship must retain its exact four-swap quality or improve honestly.
-4. Only after those controls meet the same high standard should budget, card-pool and new-archetype conditions broaden further.
-5. Run an eligible verified full-table package scenario to validate INTEL-01 discovery, feasibility, atomic injection, protection and independent final recognition end to end; current Marvel, Middle-earth, Food and Necron controls do not provide that positive win-route proof.
-6. Migrate legacy KF-013 evidence writers to isolated paths plus bounded latest-head reconciliation before treating concurrent persistence as globally closed.
+1. Exact-source validate the current executable candidate across the complete registered INTEL-02 control family and normal deterministic/project-integrity checks; do not accept a new checkpoint from partial or mixed-source evidence.
+2. Manually audit every accepted swap from Necron Dynasties, Squirreled Away, Food and Fellowship, focused Marvel and broad Marvel. Reject any package that weakens a primary/secondary engine, meaningful wipe/interaction infrastructure, premium early mana, recursion, token-death/card-advantage engines or persistent colored mana merely to satisfy generic role counts.
+3. If any control or manual audit fails, fix the generic semantic/selection rule rather than adding name-specific exceptions, then rerun the whole affected family from one exact executable source.
+4. When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.
+5. Then run an eligible verified full-table win-package scenario to close the main INTEL-01 proof gap.
+6. Only after the consolidated checkpoint and positive INTEL-01 proof should BENCH-01 broaden to materially different cases such as FF-only Counter Blitz and the NZ$500 Liliana, Heretical Healer challenge.
+7. Keep PR #29 as experimental/evidence history. Do not merge or promote it automatically; when V0.15 is genuinely accepted, prepare a clean promotion candidate rather than treating the current 1,000+ commit evidence branch as release-ready.
 
 ## Permanent recovery references
 

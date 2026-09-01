@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-27T12:48:16Z",
+  "updatedAt": "2026-09-01T11:40:00Z",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
   "stable": {
@@ -13,7 +13,7 @@
     "activeBranch": "agent/v15-native-deck-intelligence",
     "activePullRequest": 29,
     "developmentCheckpointSha": "77a5383fa7490aa91360b8186a4bda890f632157",
-    "developmentCheckpointNote": "Last accepted exact-source INTEL-02 checkpoint before the unrestricted precon false-greens. TypeScript and 785 deterministic tests passed; project integrity, focused Marvel, Food and Fellowship, and expanded Middle-earth controls passed. Focused Marvel made a legal two-swap curve repair, Food and Fellowship made four supported swaps while preserving identity and structural floors, and expanded Middle-earth honestly refused unsupported change. The broad Marvel control at this same source failed its target-quality and strategy-preservation gates, so restricted-theme validation is not yet uniformly green. Later Necron and Squirreled Away workflow exits are retained as regression evidence but are not accepted intelligence passes because manual swap audit found semantic engine loss.",
+    "developmentCheckpointNote": "Accepted INTEL-02 checkpoint remains 77a5383... because it is the last source explicitly accepted after exact-source testing and manual review. Focused Marvel and Food and Fellowship supplied useful restricted/precon evidence there, while broad Marvel remained red. Newer persisted controls at b9ab88d... are historical evidence only: Necron Dynasties, Squirreled Away, Middle-earth and generic strategy inference mechanically passed, but both Marvel lanes failed and later semantic/structural fixes changed executable behavior. Executable source was last changed at 7ed13fa... before this documentation-only state refresh; no exact-source CI/control batch is attached to that source, so neither b9ab88d... nor 7ed13fa... is promoted to accepted checkpoint status.",
     "lastFullyValidatedExperimentalBaseline": {
       "branch": "agent/package-probabilities",
       "sha": "63bb7274004060eea507f7991a04b84921d0cd47",
@@ -23,7 +23,7 @@
   "workMode": {
     "intelligenceDevelopmentPaused": false,
     "activeMilestone": "INTEL-02",
-    "reason": "INTEL-02 remains active. Restricted focused Marvel and Food and Fellowship retain accepted scenario evidence at 77a5383..., while broad Marvel remains red. Head 68ce787... independently passes project integrity, TypeScript and 806 deterministic tests, but no exact-source GitHub Actions run is attached; the expanded working repair passes TypeScript and 810/810 deterministic tests locally. Manual audit rejected the later nominal 87ac114... Necron and Squirreled Away greens: graveyard movement directionality still let Nihil Spellbomb impersonate reanimation, while the Squirrel lane moved from cutting multipliers/anthems to cutting token-death drain, death-draw and board-scaling payoffs. The generic KF-026 through KF-030 repair must be published, exact-source revalidated and manually audited before conditions broaden. INTEL-01 still lacks a positive eligible verified full-table route control."
+    "reason": "INTEL-02 remains active, but the immediate task is consolidation and exact-source proof rather than adding new intelligence features. The latest registered scenario batch at b9ab88d... is mixed: Middle-earth, Necron, Squirreled Away and generic strategy inference passed their registered gates, while focused and broad Marvel failed. Subsequent fixes through executable source 7ed13fa... address graveyard directionality/actionable recursion and board-wipe preservation, while KF-031 through KF-034 record further local/deterministic repairs for secondary-plan inference, strategy-support density, premium early infrastructure and go-wide card advantage. Those newer repairs require one common exact-source revalidation and manual swap audit before any new INTEL-02 checkpoint is accepted."
   },
   "milestones": [
     {
@@ -70,36 +70,36 @@
     }
   ],
   "validation": {
-    "activeBranchStatus": "deterministic-semantic-repair-green-live-controls-pending",
+    "activeBranchStatus": "accepted-checkpoint-77a-newer-evidence-stale-current-executable-revalidation-required",
     "latestPersistedMarvelControl": {
-      "sourceSha": "77a5383fa7490aa91360b8186a4bda890f632157",
-      "outcome": "focused-pass-broad-fail",
-      "note": "At exact source 77a5383..., focused Marvel passed with Vanquish the Horde -> Reanimate and Arcane Signet -> Brainstorm, moving average nonland mana value 2.71 -> 2.59 while preserving legal exact-100 Marvel printings and substantive strategy. The independently persisted broad Marvel control at the same source failed target-quality and strategy-preservation gates. This is restricted focused-scenario evidence, not a broad Marvel pass."
+      "sourceSha": "b9ab88d3d56caa7d6744cc78e002dc17dfa8bac4",
+      "outcome": "focused-fail-broad-fail",
+      "note": "The latest registered Marvel batch is exact-source b9ab88d... and both lanes are red. Focused Marvel executed but failed its target-gate quality outcome. Broad Marvel executed but failed target quality and strategy preservation. Later fixes landed after this batch, so these failures are valuable regression evidence but are not a current-head verdict."
     },
     "latestPersistedFoodPreconControl": {
-      "sourceSha": "77a5383fa7490aa91360b8186a4bda890f632157",
-      "outcome": "success",
-      "note": "Exact Food and Fellowship stock-precon control made four supported swaps while retaining Food/lifegain affinity, recursion, board wipes and persistent colored mana. This supplied the materially different restricted/precon-style whole-deck improvement evidence required before broadening conditions."
+      "sourceSha": "b9ab88d3d56caa7d6744cc78e002dc17dfa8bac4",
+      "outcome": "historical-pass-current-head-pending",
+      "note": "Middle-earth Food and Fellowship passed its registered exact-source hard-truth, target-quality and strategy-preservation gates at b9ab88d.... Later KF-033 work changed early-infrastructure/curve semantics, so this pass is historical evidence rather than proof of the current executable candidate."
     },
     "latestPersistedUnrestrictedPreconControl": {
-      "sourceSha": "87ac1147acbcfb88cd4577644657573a5fc3f735",
-      "outcome": "rejected-false-green",
+      "sourceSha": "b9ab88d3d56caa7d6744cc78e002dc17dfa8bac4",
+      "outcome": "historical-pass-current-head-pending",
       "precon": "Necron Dynasties",
-      "note": "The later mechanical pass remained unacceptable on manual audit. It still proposed Shard of the Void Dragon -> Nihil Spellbomb, Defile -> Sword of Light and Shadow and Plasmancer -> Dragonfire Blade among eight swaps. Shared truth at this source read movement into a graveyard backwards as reanimation, treated expensive wearer-only Equipment as ordinary protection, and allowed later aspirational swaps to consume failed authoritative gate support. Head 68ce787... plus the local KF-029/KF-030 repair addresses these classes, but exact-source live revalidation is pending. The 87ac114... result is regression evidence, not an INTEL-02 pass."
+      "note": "Necron Dynasties passed its registered exact-source gates at b9ab88d..., including commander legality, budget, graveyard directionality, recursion floor and artifact/graveyard identities. Later actionable-recursion and graveyard-movement fixes changed executable behavior, so the result must be rerun and manually audited before it can support a new checkpoint."
     },
     "latestPersistedSquirrelPreconControl": {
-      "sourceSha": "87ac1147acbcfb88cd4577644657573a5fc3f735",
-      "outcome": "rejected-false-green",
+      "sourceSha": "b9ab88d3d56caa7d6744cc78e002dc17dfa8bac4",
+      "outcome": "historical-pass-current-head-pending",
       "precon": "Squirreled Away",
-      "note": "The later mechanical pass stopped cutting the original KF-027 multiplier/anthem/overrun fixtures but remained a false green: four accepted swaps removed Poison-Tip Archer, Honored Dreyleader, Moldervine Reclamation and Nadier's Nightblade for generic tutor/protection gains. Chatterfang's variable Sacrifice X Squirrels outlet was not recognized, so token-death drain/draw and board-scaling typal payoffs received no structural protection. The generic KF-028/KF-030 repair passes focused local regressions and actual-card role smokes, but exact-source live revalidation is pending. The 87ac114... result is adversarial regression evidence only."
+      "note": "Squirreled Away passed its registered exact-source gates at b9ab88d.... KF-031 through KF-034 subsequently tightened secondary-plan promotion, strategy-support density, premium early infrastructure and board-scaling card-advantage protection. Current executable behavior therefore requires fresh exact-source workflow evidence plus manual swap audit."
     },
     "requiredBeforeResumingIntelligenceClaims": [
-      "Publish and revalidate the combined KF-026 through KF-030 semantic repair on exact-source Necron and Squirreled Away controls, then manually audit every accepted swap before either workflow may count as scenario intelligence",
-      "Keep graveyard movement directionality, generic-artifact weight, self-sacrifice versus outlet truth, variable token-sacrifice identity, token-death engines and board-scaling payoffs fail-closed under the shared role model",
-      "Obtain a broad Marvel pass at the same restricted-theme quality standard as focused Marvel and Food and Fellowship before claiming the restricted lane is uniformly green",
-      "Verified full-table win-route discovery, injection and final evaluation agree in a scenario where an eligible route exists",
-      "Negative win-package conclusions distinguish completed bounded absence from provider unavailability or selection failure",
-      "Commander legality, exact 100 cards, printing-family/set restrictions and budgets remain intact across the expanded controls"
+      "Run one exact-source validation batch on the current executable candidate (7ed13fa... plus documentation-only descendants) covering project integrity, deterministic tests, generic strategy inference, Necron Dynasties, Squirreled Away, Food and Fellowship, focused Marvel, broad Marvel and Middle-earth printing-family controls",
+      "Manually audit every accepted IN→OUT package from that same source; mechanical green is not sufficient, especially for Necron, Squirreled Away, Food and Fellowship and both Marvel lanes",
+      "Require focused Marvel and broad Marvel to pass target-quality and strategy-preservation gates on the same exact executable source before calling the restricted lane uniformly green",
+      "Keep graveyard directionality/actionable recursion, explicit artifact engines, self-sacrifice versus repeatable outlets, secondary-plan inference, strategy-support density, premium early infrastructure, board wipes, token-death engines and board-scaling payoffs fail-closed",
+      "Run a positive eligible verified full-table package scenario so INTEL-01 discovery, feasibility, atomic injection, protection and independent final recognition are proven end to end",
+      "Commander legality, exact 100 cards, singleton/color identity, printing-family/set restrictions and hard budgets must remain intact in every expanded control"
     ]
   },
   "truthBoundary": [
@@ -111,12 +111,13 @@
     "No merge, stable/current promotion, version bump, or release without explicit user approval."
   ],
   "nextActions": [
-    "Publish and exact-source validate the combined KF-026 through KF-030 semantic repair: own-graveyard engines must outrank graveyard hate; movement into a graveyard must never count as reanimation; explicit artifact engines must outrank generic artifacts; self-sacrifice must not impersonate a repeatable outlet; and token multipliers, death engines and board-scaling payoffs must receive substantive cut protection.",
-    "Rerun and manually audit Necron Dynasties and Squirreled Away. Reject any package that still cuts Trazyn/Resurrection-Orb-style graveyard engines, Chatterfang/anthem/overrun-style token engines, or Poison-Tip-Archer/Moldervine-Reclamation-style token-death engines for generic role-count gains.",
-    "Keep Marvel and Middle-earth restricted controls active during the repair. Broad Marvel must pass its whole-deck target and strategy gates; Food and Fellowship must retain its exact four-swap quality or improve honestly.",
-    "Only after those controls meet the same high standard should budget, card-pool and new-archetype conditions broaden further.",
-    "Run an eligible verified full-table package scenario to validate INTEL-01 discovery, feasibility, atomic injection, protection and independent final recognition end to end; current Marvel, Middle-earth, Food and Necron controls do not provide that positive win-route proof.",
-    "Migrate legacy KF-013 evidence writers to isolated paths plus bounded latest-head reconciliation before treating concurrent persistence as globally closed."
+    "Exact-source validate the current executable candidate across the complete registered INTEL-02 control family and normal deterministic/project-integrity checks; do not accept a new checkpoint from partial or mixed-source evidence.",
+    "Manually audit every accepted swap from Necron Dynasties, Squirreled Away, Food and Fellowship, focused Marvel and broad Marvel. Reject any package that weakens a primary/secondary engine, meaningful wipe/interaction infrastructure, premium early mana, recursion, token-death/card-advantage engines or persistent colored mana merely to satisfy generic role counts.",
+    "If any control or manual audit fails, fix the generic semantic/selection rule rather than adding name-specific exceptions, then rerun the whole affected family from one exact executable source.",
+    "When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.",
+    "Then run an eligible verified full-table win-package scenario to close the main INTEL-01 proof gap.",
+    "Only after the consolidated checkpoint and positive INTEL-01 proof should BENCH-01 broaden to materially different cases such as FF-only Counter Blitz and the NZ$500 Liliana, Heretical Healer challenge.",
+    "Keep PR #29 as experimental/evidence history. Do not merge or promote it automatically; when V0.15 is genuinely accepted, prepare a clean promotion candidate rather than treating the current 1,000+ commit evidence branch as release-ready."
   ],
   "handoffProtocol": {
     "readFirst": [
@@ -131,7 +132,7 @@
       "docs/VALIDATION-MATRIX.md",
       "docs/KNOWN-FAILURES.md"
     ],
-    "then": "Inspect the live active-branch head and PR state. Use the validation index to decide which persisted controls are current or stale, then continue only from the active milestone and nextActions.",
+    "then": "Inspect the live active-branch head and PR state. Treat 77a5383... as the accepted INTEL-02 checkpoint, b9ab88d... as the latest registered historical scenario batch, and executable source 7ed13fa... (plus documentation-only descendants) as unvalidated until one exact-source control family and manual audit are complete. Continue only from the active milestone and nextActions.",
     "compatibilityEntryPoint": "PROJECT_HANDOFF.md"
   }
 }
