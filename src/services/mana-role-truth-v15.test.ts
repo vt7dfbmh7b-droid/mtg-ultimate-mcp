@@ -92,6 +92,29 @@ test('graveyard-scaled mana is conditional rather than reliable immediate fast m
   assert.equal(effectiveCardRolesV15(songs).includes('fast mana'), false);
 });
 
+test('mana-neutral self-sacrifice cards are storage, not acceleration or fast mana', () => {
+  const bloodPet = card('Blood Pet', 1, 'Creature — Thrull', 'Sacrifice Blood Pet: Add {B}.', '{B}');
+  const wildCantor = card('Wild Cantor', 1, 'Creature — Human Druid', 'Sacrifice Wild Cantor: Add one mana of any color.', '{R/G}');
+  const lotusPetal = card('Lotus Petal', 0, 'Artifact', '{T}, Sacrifice Lotus Petal: Add one mana of any color.', '{0}');
+  const llanowar = card('Llanowar Elves', 1, 'Creature — Elf Druid', '{T}: Add {G}.', '{G}');
+
+  for (const oneShot of [bloodPet, wildCantor]) {
+    const truth = manaRoleTruthV15(oneShot);
+    assert.equal(truth.fixedManaOutput, 1);
+    assert.equal(truth.positiveImmediateManaProfit, false);
+    assert.equal(truth.manaNeutralOneShot, true);
+    assert.equal(truth.reliableImmediateFastMana, false);
+    assert.equal(truth.reliableLowCostManaAcceleration, false);
+    assert.equal(effectiveCardRolesV15(oneShot).includes('fast mana'), false);
+    assert.equal(effectiveCardRolesV15(oneShot).includes('mana storage'), true);
+  }
+
+  assert.equal(manaRoleTruthV15(lotusPetal).positiveImmediateManaProfit, true);
+  assert.equal(manaRoleTruthV15(lotusPetal).reliableImmediateFastMana, true);
+  assert.equal(manaRoleTruthV15(llanowar).reliableImmediateFastMana, false);
+  assert.equal(manaRoleTruthV15(llanowar).reliableLowCostManaAcceleration, true);
+});
+
 test('named-resource sacrifice costs do not impersonate broad creature sacrifice outlets', () => {
   const tail = card(
     'Unshakable Tail',
