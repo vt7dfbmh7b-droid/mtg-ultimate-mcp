@@ -9,8 +9,8 @@
         "MSC",
         "LMAR",
         "PSPM",
-        "SPM",
         "SPE",
+        "SPM",
         "MAR"
       ],
       "includePromos": true,
@@ -118,8 +118,8 @@
       "family": "Middle-earth",
       "familyPreset": "middle-earth",
       "allowedSetCodes": [
-        "HOC",
         "HOB",
+        "HOC",
         "PLTC",
         "PLTR",
         "LTC",
