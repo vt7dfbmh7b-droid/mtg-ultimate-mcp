@@ -87,9 +87,9 @@ function normalizeIdentityQuery(identity?: string): string | null {
 }
 
 function bracketEvidenceBonus(tag: string | null): number {
-  if (tag === 'R') return 120;
-  if (tag === 'S') return 60;
-  if (tag === 'P') return 30;
+  if (tag === 'R') return 80;
+  if (tag === 'S') return 40;
+  if (tag === 'P') return 20;
   return 0;
 }
 
@@ -130,7 +130,7 @@ function parseCandidate(value: unknown, commanderNames: Set<string>, maxPackageC
   if (uniqueNames.length < 1 || uniqueNames.length > maxPackageCards) return null;
   const popularity = typeof variant.popularity === 'number' && Number.isFinite(variant.popularity) ? variant.popularity : 0;
   const commanderOverlap = cards.filter((card) => commanderNames.has(normalize(card.name))).length;
-  const compactness = (maxPackageCards + 1 - uniqueNames.length) * 160;
+  const compactness = (maxPackageCards + 1 - uniqueNames.length) * 120;
   const score = 1000
     + compactness
     + commanderOverlap * 220
@@ -258,7 +258,7 @@ export function scoreCedhSeedPracticalityV14(
   scoreAdjustment -= totalManaValue * 35;
   scoreAdjustment -= highCostCount * 70;
   scoreAdjustment += lowCostCount * 45;
-  scoreAdjustment += reusableRoleCount * 35;
+  scoreAdjustment += reusableRoleCount * 50;
   scoreAdjustment -= deadPieceRisk * 105;
   scoreAdjustment += commanderOverlap * 180;
 
@@ -423,7 +423,7 @@ export async function discoverCedhSeedWinPackageV14(
       queryAudit,
       audit,
       source: 'Commander Spellbook + Scryfall exact-printing verification',
-      guidance: 'The package is only a construction seed. Discovery uses deterministic result evidence rather than Commander Spellbook manual winning tags, then independently applies the local deterministic-win result gate. Candidate selection evaluates bracket tags only as supporting evidence, reserves verification space for each supported package size, permits at most one lightweight prerequisite, and prefers lower-mana cards with useful roles outside the combo. The finished 100-card deck must still independently resolve, pass Commander legality and printing policy, and reproduce a winning combo through find-my-combos before it can satisfy the competitive win-package gate.',
+      guidance: 'The package is only a construction seed. Discovery uses deterministic result evidence rather than Commander Spellbook manual winning tags, then independently applies the local deterministic-win result gate. Candidate selection evaluates compactness and bracket tags as supporting evidence rather than overriding practical card utility, reserves verification space for each supported package size, permits at most one lightweight prerequisite, and prefers lower-mana cards with useful roles outside the combo. The finished 100-card deck must still independently resolve, pass Commander legality and printing policy, and reproduce a winning combo through find-my-combos before it can satisfy the competitive win-package gate.',
     };
   }
 
