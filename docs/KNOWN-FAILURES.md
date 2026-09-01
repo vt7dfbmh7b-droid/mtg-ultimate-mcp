@@ -380,7 +380,7 @@ Risk: an optimizer can preserve aggregate graveyard affinity while silently redu
 
 Protection: recursion truth now recognizes staged selection-and-return wording and records multi-card and high-capacity recursion separately. Three-or-more/any-number returns and multi-card returns with a substantial total-mana-value allowance receive the high-capacity component; narrow multi-card returns do not. Graveyard-reanimator preservation requires an incoming high-capacity component before cutting one, regardless of flat or positive broad affinity.
 
-Status: name-independent regressions and the full 903/903 deterministic suite pass locally; exact-source Necron/family revalidation pending.
+Status: name-independent regressions and the full 905/905 deterministic suite pass locally; exact-source Necron/family revalidation pending.
 
 ## KF-039 — Distinct Commander engines collapse into generic draw, interaction, or affinity
 
@@ -390,7 +390,7 @@ Risk: a deck can retain or improve coarse role counts and archetype affinity whi
 
 Protection: role truth now distinguishes death-trigger draw engines, board-scaling card draw, asymmetric typal board-control payoffs, and multiplayer forced-sacrifice bridges. Those components are preserved separately inside their relevant aristocrats, value-engine, and combat-token strategies. Commander-only buffs are excluded from go-wide payoff truth. Name-independent regressions prove that flat same-archetype affinity cannot erase any of these components.
 
-Status: focused regressions and the full 903/903 deterministic suite pass locally; exact-source Squirreled Away, Food, Marvel and family revalidation pending.
+Status: focused regressions and the full 905/905 deterministic suite pass locally; exact-source Squirreled Away, Food, Marvel and family revalidation pending.
 
 ## KF-040 — Replacement mana and token/graveyard bridges remain fungible
 
@@ -400,7 +400,37 @@ Risk: a land-for-land search can impersonate acceleration; broad token, recursio
 
 Protection: land searches that sacrifice a land as an additional cost are classified as land replacement, not ramp or a persistent colored source. Role truth now distinguishes multi-creature sacrifice conversion, death-trigger token engines, team combat-damage draw, multi-card death-trigger draw, token-event life drain and artifact graveyard recursion. Each is an exact protected component of the applicable combat-token, aristocrats, Food/lifegain or artifact strategy, independent of aggregate affinity.
 
-Status: focused name-independent regressions and the full 903/903 deterministic suite pass locally; exact-source Necron, Squirreled Away, Food and family revalidation pending.
+Status: focused name-independent regressions and the full 905/905 deterministic suite pass locally; exact-source Necron, Squirreled Away, Food and family revalidation pending.
+
+## KF-041 — Uncapped single-target reanimation loses recursion-capacity truth
+
+Observed: the exact-source Necron control at `f3c6f73...` no longer cut artifact recursion, but still accepted Dread Return → Lively Dirge. The removed spell can return a creature of any mana value and can be cast again through flashback; the replacement's return mode is capped at total mana value 4. Both received generic recursion truth, while only explicit multi-card wording could receive the existing high-capacity role.
+
+Risk: a low-mana tutor/return spell can look like a curve upgrade while materially narrowing the deck's viable reanimation targets. Aggregate recursion count and reanimator affinity remain flat even though the deck loses access to its large threats.
+
+Protection: an uncapped target-card return to the battlefield now retains high-capacity recursion truth, while returns with an explicit mana-value ceiling remain bounded. The existing exact strategy-component gate therefore rejects the capacity loss without referring to either card by name.
+
+Status: name-independent regression and the full 905/905 deterministic suite pass locally; exact-source Necron/family revalidation pending.
+
+## KF-042 — Package diversity changes additions but repeatedly pressures the same rejected engines
+
+Observed: the exact-source Squirreled Away control at `f3c6f73...` correctly rejected packages that cut End-Raze Forerunners, Poison-Tip Archer and Moldervine Reclamation, but later candidate comparisons repeatedly returned to those same strategically invalid cuts while varying incoming cards. At the one-swap fallback, the only supported proposal still consumed the go-wide finisher, so the control stopped red without testing safer outgoing cards.
+
+Risk: addition-only diversity can make a bounded search appear broad while it tunnels on the same few high-pressure cuts. Exact strategy preservation prevents damage, but the optimizer may fail to find a legitimate improvement that exists elsewhere in the finite deck.
+
+Protection: after a package fails specifically for meaningful commander-strategy loss, subsequent candidate comparisons at that swap size protect only the outgoing cards whose pairing evidence caused the rejection. Incoming-card diversity continues independently, and both sets reset at the next bounded attempt size. A deterministic regression proves that safe cuts are not blocked and duplicate rejected names are handled case-insensitively.
+
+Status: name-independent regression and the full 905/905 deterministic suite pass locally; exact-source Squirreled Away/family revalidation pending.
+
+## KF-043 — Repeatable token and life-gain engines collapse into one-shot effects
+
+Observed: the exact-source Food and Fellowship control at `f3c6f73...` was mechanically green but accepted Pristine Talisman → Reanimate and Merry, Warden of Isengard → Orcish Medicine. The replacements are playable cards, but they spend a repeatable mana/life-gain trigger and a repeatable artifact-entry lifelink-token engine from the deck's actual Food/lifegain and combat-token plan for off-plan recursion and one-shot protection/token production.
+
+Risk: broad token production, protection, recursion and curve metrics can improve while a precon loses the repeatable bridges that turn its commander text and Food artifacts into a coherent engine. Whole-deck affinity can remain flat because one-shot and repeatable effects share the same coarse role.
+
+Protection: activated/triggered repeatable life gain and activated/triggered repeatable token creation now have distinct semantic roles. They are exact components of substantive Food/lifegain and combat-token strategies respectively; one-shot life gain or token creation cannot replace them. Name-independent regressions cover both positive and negative wording forms.
+
+Status: name-independent regressions and the full 905/905 deterministic suite pass locally; exact-source Food/family revalidation pending.
 
 ## Adding a failure
 

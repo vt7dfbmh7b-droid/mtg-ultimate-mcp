@@ -180,6 +180,7 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
 
   addSignal(table, 'food-lifegain', /\bfoods?\b/i.test(text), 8, 'Food engine/payoff text');
   addSignal(table, 'food-lifegain', roles.has('token-event life drain'), 7, 'Food/token life-drain payoff');
+  addSignal(table, 'food-lifegain', roles.has('repeatable life gain engine'), 7, 'repeatable life-gain engine');
   addSignal(table, 'food-lifegain', repeatableOrPayoffLifeGain, 7, 'repeatable life-gain engine/payoff');
   addSignal(table, 'food-lifegain', convertsLifeGainToPressure, 6, 'life-gain conversion to opponent pressure');
 

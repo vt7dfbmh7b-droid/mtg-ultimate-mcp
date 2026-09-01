@@ -536,6 +536,21 @@ test('token-sacrifice and artifact-recursion bridges retain their exact operatio
     typeLine: 'Creature — Test Bat',
     oracleText: 'Whenever you create or sacrifice a token, each opponent loses 1 life.',
   });
+  const artifactEntryTokens = card({
+    name: 'Generic Artifact Entry Token Engine',
+    typeLine: 'Creature — Test Advisor',
+    oracleText: 'Whenever one or more artifacts you control enter, create a 1/1 white Soldier creature token with lifelink. This ability triggers only once each turn.',
+  });
+  const activatedLifeGain = card({
+    name: 'Generic Mana Lifegain Engine',
+    typeLine: 'Artifact',
+    oracleText: '{T}: Add {C}. You gain 1 life.',
+  });
+  const oneShotTokensAndLife = card({
+    name: 'Generic One-Shot Token and Life',
+    typeLine: 'Sorcery',
+    oracleText: 'Create a 1/1 white Soldier creature token. You gain 1 life.',
+  });
 
   assert.equal(inferCardRoles(multiDeathDraw).includes('death-trigger draw engine'), true);
   assert.equal(inferCardRoles(massSacrifice).includes('mass sacrifice conversion'), true);
@@ -543,6 +558,10 @@ test('token-sacrifice and artifact-recursion bridges retain their exact operatio
   assert.equal(inferCardRoles(teamCombatDraw).includes('team combat-damage draw engine'), true);
   assert.equal(inferCardRoles(artifactReturn).includes('artifact graveyard recursion'), true);
   assert.equal(inferCardRoles(tokenDrain).includes('token-event life drain'), true);
+  assert.equal(inferCardRoles(artifactEntryTokens).includes('repeatable token engine'), true);
+  assert.equal(inferCardRoles(activatedLifeGain).includes('repeatable life gain engine'), true);
+  assert.equal(inferCardRoles(oneShotTokensAndLife).includes('repeatable token engine'), false);
+  assert.equal(inferCardRoles(oneShotTokensAndLife).includes('repeatable life gain engine'), false);
 });
 
 test('multiplayer edicts retain interaction and sacrifice-bridge truth', () => {

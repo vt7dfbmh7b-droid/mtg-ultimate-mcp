@@ -342,6 +342,20 @@ function diversifyNextPackage(blocked: Set<string>, plan: Record<string, unknown
   for (const name of incoming.slice(0, count)) blocked.add(name.toLocaleLowerCase());
 }
 
+export function rejectedStrategyCutNamesV15(plan: Record<string, unknown>): string[] {
+  const swaps = Array.isArray(plan.swaps) ? plan.swaps.map(asRecord) : [];
+  return uniqueNames(swaps.flatMap((swap) => {
+    const structuralPairing = asRecord(swap.structuralPairing);
+    const preservation = asRecord(structuralPairing.strategyPreservation);
+    return preservation.meaningfulStrategyLoss === true && typeof swap.out === 'string' ? [swap.out] : [];
+  }));
+}
+
+function diversifyRejectedStrategyCuts(blocked: Set<string>, candidate: CandidateEvaluationV12): void {
+  if (candidate.reason !== 'package-causes-a-meaningful-commander-strategy-loss' || !candidate.plan) return;
+  for (const name of rejectedStrategyCutNamesV15(candidate.plan)) blocked.add(name.toLocaleLowerCase());
+}
+
 function uniqueNames(values: readonly string[]): string[] {
   return [...new Map(values
     .map((value) => value.trim())
@@ -847,6 +861,7 @@ export async function refineCommanderDeckIterativelyV12(
 
     while (attemptSize >= 1 && !winner) {
       const diversityBlocked = new Set<string>();
+      const strategyCutBlocked = new Set<string>();
       const candidates: CandidateEvaluationV12[] = [];
       for (let candidate = 1; candidate <= candidatePackagesPerRound; candidate += 1) {
         const evaluated = await evaluateCandidate(
@@ -858,7 +873,7 @@ export async function refineCommanderDeckIterativelyV12(
           attemptSize,
           totalSpend,
           maxTotalUsd,
-          roundProtectedNames,
+          new Set([...roundProtectedNames, ...strategyCutBlocked]),
           excludedNames,
           diversityBlocked,
           round,
@@ -867,6 +882,7 @@ export async function refineCommanderDeckIterativelyV12(
         );
         candidates.push(evaluated);
         if (evaluated.plan) diversifyNextPackage(diversityBlocked, evaluated.plan);
+        diversifyRejectedStrategyCuts(strategyCutBlocked, evaluated);
       }
       winner = chooseWinner(candidates);
       evaluatedAtWinningSize = candidates;

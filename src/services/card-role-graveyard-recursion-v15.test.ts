@@ -70,3 +70,13 @@ test('narrow multi-card reanimation does not impersonate a high-capacity engine'
   assert.equal(roles.has('multi-card graveyard recursion'), true);
   assert.equal(roles.has('high-capacity graveyard recursion'), false);
 });
+
+test('an uncapped single-target reanimation spell retains high-capacity truth', () => {
+  const broadSingleReturn = card(
+    'Generic Uncapped Return',
+    'Return target creature card from your graveyard to the battlefield.',
+  );
+  const roles = new Set(effectiveCardRolesV15(broadSingleReturn));
+  assert.equal(roles.has('graveyard recursion'), true);
+  assert.equal(roles.has('high-capacity graveyard recursion'), true);
+});

@@ -3,6 +3,7 @@ import test from 'node:test';
 import {
   appendRefinementCandidateAttemptV15,
   candidatePlanProvenanceV15,
+  rejectedStrategyCutNamesV15,
   refinementSwapEvidenceV15,
   type RefinementCandidateAttemptV15,
 } from './optimizer-v12.js';
@@ -102,4 +103,28 @@ test('refinement evidence projection retains persistent colored-mana floors', ()
 
   assert.equal(pairing.persistentColoredManaSourcesAfterSwap, 12);
   assert.equal(pairing.persistentColoredManaSourceFloor, 8);
+});
+
+test('strategy-rejected package diversity protects only the cuts that caused meaningful loss', () => {
+  const names = rejectedStrategyCutNamesV15({
+    swaps: [
+      {
+        out: 'Protected Engine',
+        in: 'Generic Upgrade',
+        structuralPairing: { strategyPreservation: { meaningfulStrategyLoss: true } },
+      },
+      {
+        out: 'Safe Surplus',
+        in: 'Second Upgrade',
+        structuralPairing: { strategyPreservation: { meaningfulStrategyLoss: false } },
+      },
+      {
+        out: 'protected engine',
+        in: 'Third Upgrade',
+        structuralPairing: { strategyPreservation: { meaningfulStrategyLoss: true } },
+      },
+    ],
+  });
+
+  assert.deepEqual(names.map((name) => name.toLocaleLowerCase()), ['protected engine']);
 });

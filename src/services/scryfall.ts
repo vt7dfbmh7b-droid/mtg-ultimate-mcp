@@ -232,10 +232,14 @@ function graveyardReturnCapacity(text: string): {
   const totalManaValue = [...text.matchAll(/\btotal mana value (\d+) or less\b/g)]
     .map((match) => Number.parseInt(match[1] ?? '0', 10))
     .filter(Number.isFinite);
+  const unboundedSingleReturn = /\b(?:return|put) target [^.]{0,220}\bfrom (?:a|the|your|any) graveyard\b[^.]{0,120}\b(?:to|onto) the battlefield\b/.test(text)
+    && !/\bmana value (?:\d+|x) or less\b/.test(text);
   return {
     stagedReturn,
     multiCard,
-    highCapacity: highCardCount || totalManaValue.some((value) => value >= 6) && (multiCard || stagedReturn),
+    highCapacity: unboundedSingleReturn
+      || highCardCount
+      || totalManaValue.some((value) => value >= 6) && (multiCard || stagedReturn),
   };
 }
 
@@ -317,6 +321,9 @@ export function inferCardRoles(card: ScryfallCard): string[] {
     || /\bthose tokens plus\b/.test(text)
     || /\bcreate twice that many [^.]{0,40}tokens?\b/.test(text);
   if (createsOrMultipliesTokens) roles.add('token production');
+  const repeatableTokenEngine = /\b(?:whenever|at the beginning of)\b[^.]{0,220}\bcreate [^.]{0,120}\btokens?\b/.test(text)
+    || /:\s*[^.]{0,180}\bcreate [^.]{0,120}\btokens?\b/.test(text);
+  if (repeatableTokenEngine) roles.add('repeatable token engine');
   const deathTriggeredTokenEngine = /\bwhenever (?:one or more )?[^.]{0,100}\bcreatures?\b[^.]{0,80}\bdies?\b[^.]{0,140}\bcreate [^.]{0,100}\btokens?\b/.test(text);
   if (deathTriggeredTokenEngine) roles.add('death-trigger token engine');
   const tokenEventLifeDrain = /\bwhenever [^.]{0,140}(?:(?:create|sacrifice)[^.]{0,60}\btokens?\b|\btokens? you control leave(?:s)? the battlefield\b)[^.]{0,140}\b(?:each opponent|target opponent)[^.]{0,80}\bloses? (?:1|one|\d+) life\b/.test(text);
@@ -380,6 +387,10 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (/extra combat/.test(text) || /additional combat/.test(text)) roles.add('extra combat');
   if (/you win the game|loses the game/.test(text)) roles.add('alternate win condition');
   if (/whenever .* loses? life|deals? damage to each opponent|each opponent loses/.test(text)) roles.add('life drain');
+  const repeatableLifeGain = /\b(?:whenever|at the beginning of)\b[^.]{0,220}\byou gain (?:\d+|one|two|three|four|five|that much) life\b/.test(text)
+    || /:\s*[^.]{0,180}\byou gain (?:\d+|one|two|three|four|five|that much) life\b/.test(text)
+    || /\{t\}[^:]{0,100}:\s*[^.]{0,180}\.\s*you gain (?:\d+|one|two|three|four|five|that much) life\b/.test(text);
+  if (repeatableLifeGain) roles.add('repeatable life gain engine');
   if (/\bwhenever\b[^.]{0,220}\b(?:each opponent|target (?:opponent|player)|an opponent)\b[^.]{0,120}\bloses?\b[^.]{0,40}\blife\b/.test(text)) {
     roles.add('repeatable life drain');
   }

@@ -943,6 +943,20 @@ test('same-archetype affinity cannot spend death-draw, typal-control, or scaling
       addName: 'Incoming Generic Token Draw',
       addRoles: ['card draw', 'creature', 'token production'],
     },
+    {
+      strategy: 'combat-tokens',
+      role: 'repeatable token engine',
+      cutName: 'Outgoing Repeatable Token Engine',
+      addName: 'Incoming One-Shot Token Protection',
+      addRoles: ['protection', 'token production'],
+    },
+    {
+      strategy: 'food-lifegain',
+      role: 'repeatable life gain engine',
+      cutName: 'Outgoing Repeatable Lifegain Engine',
+      addName: 'Incoming One-Shot Lifegain',
+      addRoles: ['life gain'],
+    },
   ] as const;
 
   for (const item of cases) {
