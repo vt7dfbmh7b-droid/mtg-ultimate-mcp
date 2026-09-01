@@ -35,6 +35,14 @@ const CONSTRUCTION_WEIGHTS: Record<string, number> = {
   'competitive-combo-signal': 14,
 };
 
+const BRACKET_FOUR_CONSTRUCTION_KEYS = new Set([
+  'average-nonland-mv',
+  'early-plays',
+  'fast-mana',
+  'cheap-interaction',
+  'tutors',
+]);
+
 function record(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
 }
@@ -47,7 +55,7 @@ function roleCount(metrics: Record<string, unknown>, role: string): number {
   return finite(record(metrics.roleCounts)[role]);
 }
 
-function constructionState(
+function bracketFiveConstructionState(
   metricsValue: unknown,
   route: TargetGateRouteStateV15,
 ): Map<string, boolean> {
@@ -79,6 +87,32 @@ function constructionState(
       .filter((check) => check.category === 'construction')
       .map((check) => [check.key, check.passed] as const),
   );
+}
+
+function bracketFourConstructionState(metricsValue: unknown): Map<string, boolean> {
+  const metrics = record(metricsValue);
+  return new Map<string, boolean>([
+    ['average-nonland-mv', finite(metrics.averageNonlandManaValue) <= 3.1],
+    ['early-plays', finite(metrics.earlyPlayCount) >= 25],
+    ['fast-mana', finite(metrics.fastManaCount) >= 2],
+    ['cheap-interaction', finite(metrics.cheapInteractionCount) >= 6],
+    ['tutors', finite(metrics.tutorCount) >= 2],
+  ]);
+}
+
+function constructionState(
+  targetBracket: number,
+  metricsValue: unknown,
+  route: TargetGateRouteStateV15,
+): Map<string, boolean> {
+  return targetBracket >= 5
+    ? bracketFiveConstructionState(metricsValue, route)
+    : bracketFourConstructionState(metricsValue);
+}
+
+function activeConstructionWeights(targetBracket: number): Array<[string, number]> {
+  return Object.entries(CONSTRUCTION_WEIGHTS)
+    .filter(([key]) => targetBracket >= 5 || BRACKET_FOUR_CONSTRUCTION_KEYS.has(key));
 }
 
 function failedGateProgress(beforeValue: unknown, afterValue: unknown, key: string): number {
@@ -113,10 +147,12 @@ function emptyResult(targetBracket: number, rationale: string): TargetGateImprov
 }
 
 /**
- * Compare a proposed autonomous refinement against the same Bracket-5 construction gates used by
- * final V0.15 assessment. Threshold repairs dominate. Smaller progress credit is only available
- * when a gate is currently failing, so an aspirational role target cannot reward adding tutor #9
- * when the real Bracket-5 tutor gate already passed at four.
+ * Compare a proposed autonomous refinement against the authoritative construction gates for the
+ * requested optimized bracket. Bracket 4 uses the same curve/early-play/interaction/fast-mana/tutor
+ * thresholds that drive V0.15 upgrade candidate generation; Bracket 5 keeps the full cEDH-oriented
+ * construction and verified-route gates from final assessment. Threshold repairs dominate. Smaller
+ * progress credit is only available while a gate is failing, so generic role growth cannot displace
+ * work on the requested bracket's actual construction pressure points.
  */
 export function assessTargetGateImprovementV15(input: {
   targetBracket?: number | null;
@@ -126,15 +162,17 @@ export function assessTargetGateImprovementV15(input: {
   afterRoute: TargetGateRouteStateV15;
 }): TargetGateImprovementV15 {
   const targetBracket = Math.max(1, Math.min(5, Math.trunc(input.targetBracket ?? 4)));
-  if (targetBracket < 5) {
-    return emptyResult(targetBracket, 'Target-gate prioritisation is inactive below Bracket 5; ordinary strategy and simulation scoring remains authoritative.');
+  if (targetBracket < 4) {
+    return emptyResult(targetBracket, 'Target-gate prioritisation is active only for optimized Bracket-4 and Bracket-5 refinement; lower brackets continue to use ordinary strategy and simulation scoring.');
   }
 
-  const before = constructionState(input.beforeMetrics, input.beforeRoute);
-  const after = constructionState(input.afterMetrics, input.afterRoute);
+  const before = constructionState(targetBracket, input.beforeMetrics, input.beforeRoute);
+  const after = constructionState(targetBracket, input.afterMetrics, input.afterRoute);
   const ignored = new Set<string>();
-  if (input.beforeRoute.winRoute === 'unavailable' || input.afterRoute.winRoute === 'unavailable') ignored.add('verified-winning-combo');
-  if (input.beforeRoute.competitiveComboSignal === null || input.afterRoute.competitiveComboSignal === null) ignored.add('competitive-combo-signal');
+  if (targetBracket >= 5) {
+    if (input.beforeRoute.winRoute === 'unavailable' || input.afterRoute.winRoute === 'unavailable') ignored.add('verified-winning-combo');
+    if (input.beforeRoute.competitiveComboSignal === null || input.afterRoute.competitiveComboSignal === null) ignored.add('competitive-combo-signal');
+  }
 
   const repairedGates: string[] = [];
   const advancedFailedGates: string[] = [];
@@ -146,7 +184,7 @@ export function assessTargetGateImprovementV15(input: {
   let thresholdScore = 0;
   let progressScore = 0;
 
-  for (const [key, weight] of Object.entries(CONSTRUCTION_WEIGHTS)) {
+  for (const [key, weight] of activeConstructionWeights(targetBracket)) {
     if (ignored.has(key)) continue;
     const wasPassing = before.get(key) === true;
     const isPassing = after.get(key) === true;
@@ -193,12 +231,12 @@ export function assessTargetGateImprovementV15(input: {
     passingAfter,
     ignoredUnverifiedGates,
     rationale: regressedGates.length > 0
-      ? `The candidate regresses ${regressedGates.length} Bracket-5 construction gate(s) that were already passing.`
+      ? `The candidate regresses ${regressedGates.length} Bracket-${targetBracket} construction gate(s) that were already passing.`
       : repairedGates.length > 0
-        ? `The candidate repairs ${repairedGates.length} currently failed Bracket-5 construction gate(s).`
+        ? `The candidate repairs ${repairedGates.length} currently failed Bracket-${targetBracket} construction gate(s).`
         : advancedFailedGates.length > 0
-          ? `The candidate makes measurable progress toward ${advancedFailedGates.length} currently failed Bracket-5 construction gate(s).`
-          : 'The candidate does not repair or advance an authoritative failed Bracket-5 construction gate; generic simulation/strategy scoring is only a tie-breaker.',
+          ? `The candidate makes measurable progress toward ${advancedFailedGates.length} currently failed Bracket-${targetBracket} construction gate(s).`
+          : `The candidate does not repair or advance an authoritative failed Bracket-${targetBracket} construction gate; generic simulation/strategy scoring is only a tie-breaker.`,
   };
 }
 
@@ -206,7 +244,8 @@ export function assessTargetGateImprovementV15(input: {
  * Translate the existing V0.15 upgrade-plan provenance into target-gate evidence without another
  * network lookup. A package only becomes a verified post-swap route when the planner says it was
  * injected atomically from verified package discovery. Existing verified routes remain verified
- * because the refinement caller protects their route cards from cuts.
+ * because the refinement caller protects their route cards from cuts. Route evidence only affects
+ * Bracket-5 target-gate scoring; Bracket 4 scores its structural optimized-play gates directly.
  */
 export function assessPlanTargetGateImprovementV15(input: {
   targetBracket?: number | null;
