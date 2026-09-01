@@ -34,10 +34,13 @@ function card(name: string, oracleText: string, cmc = 2): ScryfallCard {
   } as ScryfallCard;
 }
 
+// This synthetic commander deliberately anchors aristocrats at exactly the shared substantive
+// threshold through a death trigger alone. That makes the test isolate the table-wide pressure
+// premium instead of also measuring unrelated differences in raw archetype strength.
 const commander = {
   ...card(
-    'Unnamed Sacrifice Commander',
-    'Whenever another creature you control dies, each opponent loses 1 life. Sacrifice another creature: Scry 1.',
+    'Unnamed Death-Trigger Commander',
+    'Whenever another creature you control dies, scry 1.',
     3,
   ),
   type_line: 'Legendary Creature — Test Advisor',
