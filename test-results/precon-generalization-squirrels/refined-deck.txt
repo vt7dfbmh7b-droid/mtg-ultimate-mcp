@@ -24,6 +24,7 @@
 1 Shamanic Revelation (BLC) 237 *N*
 1 Chatterfang, Squirrel General (BLC) 209 *N*
 1 Temple of Malady (BLC) 341 *N*
+1 Casualties of War (BLC) 125 *N*
 1 Windgrace's Judgment (BLC) 263 *N*
 1 Maskwood Nexus (BLC) 279 *N*
 1 Academy Manufactor (BLC) 264 *N*
@@ -46,10 +47,8 @@
 1 Nadier's Nightblade (BLC) 184 *N*
 1 Plumb the Forbidden (BLC) 188 *N*
 1 Bastion of Remembrance (BLC) 179 *N*
-1 Plaguecrafter (BLC) 187 *N*
 1 Cache Grab (BLB) 167 *N*
 1 Chatterstorm (BLC) 210 *N*
-1 Poison-Tip Archer (BLC) 256 *N*
 1 Moldervine Reclamation (BLC) 255 *N*
 1 Ravenous Squirrel (BLC) 258 *N*
 1 Skyfisher Spider (BLC) 261 *N*
@@ -88,3 +87,4 @@
 4 Forest (BLB) 378 *N*
 1 Crop Rotation (C20) 169 *N*
 1 Not Dead After All (WOE) 101 *N*
+1 Diabolic Intent (BRO) 89 *N*
