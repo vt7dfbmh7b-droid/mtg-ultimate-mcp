@@ -21,6 +21,7 @@
 1 Pippin, Warden of Isengard (LTC) 65 *N*
 1 Treebeard, Gracious Host (LTC) 73 *N*
 1 Hithlain Rope (LTC) 76 *N*
+1 Call for Unity (LTC) 163 *N*
 1 Dawn of Hope (LTC) 164 *N*
 1 Dusk // Dawn (LTC) 166 *N*
 1 Fell the Mighty (LTC) 167 *N*
@@ -48,12 +49,10 @@
 1 Rosie Cotton of South Lane (LTR) 27 *N*
 1 Shire Shirriff (LTR) 30 *N*
 1 Mirkwood Bats (LTR) 95 *N*
-1 Generous Ent (LTR) 169 *N*
 1 Path to Exile (LTC) 175 *N*
 1 Swords to Plowshares (LTC) 178 *N*
 1 Revive the Shire (LTR) 185 *N*
 1 Butterbur, Bree Innkeeper (LTR) 197 *N*
-1 Crypt Incursion (LTC) 198 *N*
 1 Go for the Throat (LTC) 201 *N*
 1 Night's Whisper (LTC) 205 *N*
 1 Cultivate (LTC) 236 *N*
@@ -86,8 +85,9 @@
 4 Forest (LTR) 270 *N*
 4 Forest (LTR) 271 *N*
 1 Everflowing Chalice (LTC) 278 *N*
-1 Giant's Boulder (HOB) 173 *N*
+1 Bilbo's Gambit (HOB) 5 *N*
 1 The Arkenstone // Seek the Heart (HOB) 170 *N*
-1 Reanimate (LTC) 206 *N*
+1 Shelob's Ambush (LTR) 108 *N*
+1 Heroic Intervention (LTC) 249 *N*
+1 Bofur, Reliable Guardian // Concerted Care (HOB) 6 *N*
 1 Bastion Protector (LTC) 162 *N*
-1 Orcish Medicine (LTR) 104 *N*
