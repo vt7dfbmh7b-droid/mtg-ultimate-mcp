@@ -110,7 +110,7 @@ function hasGoodEdhrecRank(card: ScryfallCard, threshold: number): boolean {
 function isGraveyardSetupTutorV14(card: ScryfallCard): boolean {
   const oracle = text(card);
   return /search your library for [^.]{0,120}\bcreature cards?\b/.test(oracle)
-    && /put [^.]{0,120}\b(?:that|those|them|the chosen|these) cards?\b[^.]{0,100}\binto your graveyard\b/.test(oracle);
+    && /put [^.]{0,120}\b(?:that card|those cards|them|the chosen cards|these cards)\b[^.]{0,100}\binto your graveyard\b/.test(oracle);
 }
 
 function isReusableTutorEngineV14(card: ScryfallCard): boolean {
