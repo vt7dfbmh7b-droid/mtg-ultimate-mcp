@@ -8,7 +8,6 @@
 1 Dread Return (40K) 200 *N*
 1 Defile (40K) 199 *N*
 1 Go for the Throat (40K) 201 *N*
-1 Caged Sun (40K) 231 *N*
 1 Endless Atlas (40K) 237 *N*
 1 Gilded Lotus (40K) 239 *N*
 1 Mystic Forge (40K) 246 *N*
@@ -50,7 +49,6 @@
 1 Their Number Is Legion (40K) 63 *N*
 1 Tomb Blade (40K) 64 *N*
 1 Trazyn the Infinite (40K) 65 *N*
-1 Triarch Stalker (40K) 67 *N*
 1 The War in Heaven (40K) 69 *N*
 1 Canoptek Scarab Swarm (40K) 150 *N*
 1 Canoptek Spyder (40K) 151 *N*
@@ -71,6 +69,8 @@
 1 Skorpekh Destroyer (40K) 57 *N*
 1 Triarch Praetorian (40K) 66 *N*
 1 Night Scythe (40K) 162 *N*
+1 Skullclamp (MSC) 210 *N*
 1 Tragic Slip (C14) 167 *N*
-1 Bone Shards (PLST) MH2-76 *N*
+1 Culling the Weak (EXO) 55 *N*
 1 Lively Dirge (OTJ) 93 *N*
+1 Everflowing Chalice (C14) 239 *N*
