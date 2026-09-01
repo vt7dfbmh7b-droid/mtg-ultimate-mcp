@@ -235,7 +235,7 @@
             "reason": "improvement-below-threshold",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendUsd": 5.81,
+            "estimatedSpendUsd": 6.01,
             "unknownPriceCount": 0,
             "improvementScore": -18.048,
             "significantRegression": false,
@@ -382,7 +382,7 @@
                   "set": "MSC",
                   "collectorNumber": "210",
                   "finish": "nonfoil",
-                  "priceUsd": 5.81
+                  "priceUsd": 6.01
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -424,7 +424,7 @@
             "reason": "improvement-below-threshold",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendUsd": 24.81,
+            "estimatedSpendUsd": 24.36,
             "unknownPriceCount": 0,
             "improvementScore": -18.748,
             "significantRegression": false,
@@ -571,7 +571,7 @@
                   "set": "MAR",
                   "collectorNumber": "20",
                   "finish": "nonfoil",
-                  "priceUsd": 24.81
+                  "priceUsd": 24.36
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -613,7 +613,7 @@
             "reason": "improvement-below-threshold",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendUsd": 4.3,
+            "estimatedSpendUsd": 4.4,
             "unknownPriceCount": 0,
             "improvementScore": -15.448,
             "significantRegression": false,
@@ -759,7 +759,7 @@
                   "set": "SLD",
                   "collectorNumber": "7019",
                   "finish": "nonfoil",
-                  "priceUsd": 4.3
+                  "priceUsd": 4.4
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -800,7 +800,7 @@
             "reason": "improvement-below-threshold",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendUsd": 1.07,
+            "estimatedSpendUsd": 1.23,
             "unknownPriceCount": 0,
             "improvementScore": -22.734,
             "significantRegression": false,
@@ -947,7 +947,7 @@
                   "set": "MSC",
                   "collectorNumber": "168",
                   "finish": "nonfoil",
-                  "priceUsd": 1.07
+                  "priceUsd": 1.23
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -989,7 +989,7 @@
             "reason": "improvement-below-threshold",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendUsd": 6.74,
+            "estimatedSpendUsd": 6.27,
             "unknownPriceCount": 0,
             "improvementScore": -16.655,
             "significantRegression": false,
@@ -1136,7 +1136,7 @@
                   "set": "MAR",
                   "collectorNumber": "13",
                   "finish": "nonfoil",
-                  "priceUsd": 6.74
+                  "priceUsd": 6.27
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1189,7 +1189,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 5,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 30.62,
+                "estimatedSpendUsd": 30.37,
                 "unknownPriceCount": 0,
                 "improvementScore": -5.639,
                 "significantRegression": false,
@@ -1376,7 +1376,7 @@
                       "set": "MSC",
                       "collectorNumber": "210",
                       "finish": "nonfoil",
-                      "priceUsd": 5.81
+                      "priceUsd": 6.01
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -1418,7 +1418,7 @@
                       "set": "MAR",
                       "collectorNumber": "20",
                       "finish": "nonfoil",
-                      "priceUsd": 24.81
+                      "priceUsd": 24.36
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -1462,7 +1462,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 5,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 29.11,
+                "estimatedSpendUsd": 28.76,
                 "unknownPriceCount": 0,
                 "improvementScore": -7.155,
                 "significantRegression": false,
@@ -1649,7 +1649,7 @@
                       "set": "MAR",
                       "collectorNumber": "20",
                       "finish": "nonfoil",
-                      "priceUsd": 24.81
+                      "priceUsd": 24.36
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -1691,7 +1691,7 @@
                       "set": "SLD",
                       "collectorNumber": "7019",
                       "finish": "nonfoil",
-                      "priceUsd": 4.3
+                      "priceUsd": 4.4
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -1735,7 +1735,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 5,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 5.37,
+                "estimatedSpendUsd": 5.63,
                 "unknownPriceCount": 0,
                 "improvementScore": 7.851,
                 "significantRegression": false,
@@ -1922,7 +1922,7 @@
                       "set": "SLD",
                       "collectorNumber": "7019",
                       "finish": "nonfoil",
-                      "priceUsd": 4.3
+                      "priceUsd": 4.4
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -1963,7 +1963,7 @@
                       "set": "MSC",
                       "collectorNumber": "168",
                       "finish": "nonfoil",
-                      "priceUsd": 1.07
+                      "priceUsd": 1.23
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2008,7 +2008,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 5,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 7.81,
+                "estimatedSpendUsd": 7.5,
                 "unknownPriceCount": 0,
                 "improvementScore": 8.555,
                 "significantRegression": false,
@@ -2196,7 +2196,7 @@
                       "set": "MSC",
                       "collectorNumber": "168",
                       "finish": "nonfoil",
-                      "priceUsd": 1.07
+                      "priceUsd": 1.23
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2238,7 +2238,7 @@
                       "set": "MAR",
                       "collectorNumber": "13",
                       "finish": "nonfoil",
-                      "priceUsd": 6.74
+                      "priceUsd": 6.27
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2283,7 +2283,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 5,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 7.37,
+                "estimatedSpendUsd": 6.88,
                 "unknownPriceCount": 0,
                 "improvementScore": 2.338,
                 "significantRegression": false,
@@ -2470,7 +2470,7 @@
                       "set": "MAR",
                       "collectorNumber": "13",
                       "finish": "nonfoil",
-                      "priceUsd": 6.74
+                      "priceUsd": 6.27
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2512,7 +2512,7 @@
                       "set": "MSC",
                       "collectorNumber": "806",
                       "finish": "nonfoil",
-                      "priceUsd": 0.63
+                      "priceUsd": 0.61
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2567,7 +2567,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 30.62,
+                "estimatedSpendUsd": 30.37,
                 "unknownPriceCount": 0,
                 "improvementScore": -5.639,
                 "significantRegression": false,
@@ -2754,7 +2754,7 @@
                       "set": "MSC",
                       "collectorNumber": "210",
                       "finish": "nonfoil",
-                      "priceUsd": 5.81
+                      "priceUsd": 6.01
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2796,7 +2796,7 @@
                       "set": "MAR",
                       "collectorNumber": "20",
                       "finish": "nonfoil",
-                      "priceUsd": 24.81
+                      "priceUsd": 24.36
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2840,7 +2840,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 29.11,
+                "estimatedSpendUsd": 28.76,
                 "unknownPriceCount": 0,
                 "improvementScore": -7.155,
                 "significantRegression": false,
@@ -3027,7 +3027,7 @@
                       "set": "MAR",
                       "collectorNumber": "20",
                       "finish": "nonfoil",
-                      "priceUsd": 24.81
+                      "priceUsd": 24.36
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3069,7 +3069,7 @@
                       "set": "SLD",
                       "collectorNumber": "7019",
                       "finish": "nonfoil",
-                      "priceUsd": 4.3
+                      "priceUsd": 4.4
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3113,7 +3113,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 5.37,
+                "estimatedSpendUsd": 5.63,
                 "unknownPriceCount": 0,
                 "improvementScore": 7.851,
                 "significantRegression": false,
@@ -3300,7 +3300,7 @@
                       "set": "SLD",
                       "collectorNumber": "7019",
                       "finish": "nonfoil",
-                      "priceUsd": 4.3
+                      "priceUsd": 4.4
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3341,7 +3341,7 @@
                       "set": "MSC",
                       "collectorNumber": "168",
                       "finish": "nonfoil",
-                      "priceUsd": 1.07
+                      "priceUsd": 1.23
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3386,7 +3386,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 7.81,
+                "estimatedSpendUsd": 7.5,
                 "unknownPriceCount": 0,
                 "improvementScore": 8.555,
                 "significantRegression": false,
@@ -3574,7 +3574,7 @@
                       "set": "MSC",
                       "collectorNumber": "168",
                       "finish": "nonfoil",
-                      "priceUsd": 1.07
+                      "priceUsd": 1.23
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3616,7 +3616,7 @@
                       "set": "MAR",
                       "collectorNumber": "13",
                       "finish": "nonfoil",
-                      "priceUsd": 6.74
+                      "priceUsd": 6.27
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3661,7 +3661,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 7.37,
+                "estimatedSpendUsd": 6.88,
                 "unknownPriceCount": 0,
                 "improvementScore": 2.338,
                 "significantRegression": false,
@@ -3848,7 +3848,7 @@
                       "set": "MAR",
                       "collectorNumber": "13",
                       "finish": "nonfoil",
-                      "priceUsd": 6.74
+                      "priceUsd": 6.27
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3890,7 +3890,7 @@
                       "set": "MSC",
                       "collectorNumber": "806",
                       "finish": "nonfoil",
-                      "priceUsd": 0.63
+                      "priceUsd": 0.61
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3945,7 +3945,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 30.62,
+                "estimatedSpendUsd": 30.37,
                 "unknownPriceCount": 0,
                 "improvementScore": -5.639,
                 "significantRegression": false,
@@ -4132,7 +4132,7 @@
                       "set": "MSC",
                       "collectorNumber": "210",
                       "finish": "nonfoil",
-                      "priceUsd": 5.81
+                      "priceUsd": 6.01
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4174,7 +4174,7 @@
                       "set": "MAR",
                       "collectorNumber": "20",
                       "finish": "nonfoil",
-                      "priceUsd": 24.81
+                      "priceUsd": 24.36
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4218,7 +4218,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 29.11,
+                "estimatedSpendUsd": 28.76,
                 "unknownPriceCount": 0,
                 "improvementScore": -7.155,
                 "significantRegression": false,
@@ -4405,7 +4405,7 @@
                       "set": "MAR",
                       "collectorNumber": "20",
                       "finish": "nonfoil",
-                      "priceUsd": 24.81
+                      "priceUsd": 24.36
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4447,7 +4447,7 @@
                       "set": "SLD",
                       "collectorNumber": "7019",
                       "finish": "nonfoil",
-                      "priceUsd": 4.3
+                      "priceUsd": 4.4
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4491,7 +4491,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 5.37,
+                "estimatedSpendUsd": 5.63,
                 "unknownPriceCount": 0,
                 "improvementScore": 7.851,
                 "significantRegression": false,
@@ -4678,7 +4678,7 @@
                       "set": "SLD",
                       "collectorNumber": "7019",
                       "finish": "nonfoil",
-                      "priceUsd": 4.3
+                      "priceUsd": 4.4
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4719,7 +4719,7 @@
                       "set": "MSC",
                       "collectorNumber": "168",
                       "finish": "nonfoil",
-                      "priceUsd": 1.07
+                      "priceUsd": 1.23
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4764,7 +4764,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 7.81,
+                "estimatedSpendUsd": 7.5,
                 "unknownPriceCount": 0,
                 "improvementScore": 8.555,
                 "significantRegression": false,
@@ -4952,7 +4952,7 @@
                       "set": "MSC",
                       "collectorNumber": "168",
                       "finish": "nonfoil",
-                      "priceUsd": 1.07
+                      "priceUsd": 1.23
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4994,7 +4994,7 @@
                       "set": "MAR",
                       "collectorNumber": "13",
                       "finish": "nonfoil",
-                      "priceUsd": 6.74
+                      "priceUsd": 6.27
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5039,7 +5039,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 7.37,
+                "estimatedSpendUsd": 6.88,
                 "unknownPriceCount": 0,
                 "improvementScore": 2.338,
                 "significantRegression": false,
@@ -5226,7 +5226,7 @@
                       "set": "MAR",
                       "collectorNumber": "13",
                       "finish": "nonfoil",
-                      "priceUsd": 6.74
+                      "priceUsd": 6.27
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5268,7 +5268,7 @@
                       "set": "MSC",
                       "collectorNumber": "806",
                       "finish": "nonfoil",
-                      "priceUsd": 0.63
+                      "priceUsd": 0.61
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5323,7 +5323,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 30.62,
+                "estimatedSpendUsd": 30.37,
                 "unknownPriceCount": 0,
                 "improvementScore": -5.639,
                 "significantRegression": false,
@@ -5510,7 +5510,7 @@
                       "set": "MSC",
                       "collectorNumber": "210",
                       "finish": "nonfoil",
-                      "priceUsd": 5.81
+                      "priceUsd": 6.01
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5552,7 +5552,7 @@
                       "set": "MAR",
                       "collectorNumber": "20",
                       "finish": "nonfoil",
-                      "priceUsd": 24.81
+                      "priceUsd": 24.36
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5596,7 +5596,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 29.11,
+                "estimatedSpendUsd": 28.76,
                 "unknownPriceCount": 0,
                 "improvementScore": -7.155,
                 "significantRegression": false,
@@ -5783,7 +5783,7 @@
                       "set": "MAR",
                       "collectorNumber": "20",
                       "finish": "nonfoil",
-                      "priceUsd": 24.81
+                      "priceUsd": 24.36
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5825,7 +5825,7 @@
                       "set": "SLD",
                       "collectorNumber": "7019",
                       "finish": "nonfoil",
-                      "priceUsd": 4.3
+                      "priceUsd": 4.4
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5869,7 +5869,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 5.37,
+                "estimatedSpendUsd": 5.63,
                 "unknownPriceCount": 0,
                 "improvementScore": 7.851,
                 "significantRegression": false,
@@ -6056,7 +6056,7 @@
                       "set": "SLD",
                       "collectorNumber": "7019",
                       "finish": "nonfoil",
-                      "priceUsd": 4.3
+                      "priceUsd": 4.4
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -6097,7 +6097,7 @@
                       "set": "MSC",
                       "collectorNumber": "168",
                       "finish": "nonfoil",
-                      "priceUsd": 1.07
+                      "priceUsd": 1.23
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -6142,7 +6142,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 7.81,
+                "estimatedSpendUsd": 7.5,
                 "unknownPriceCount": 0,
                 "improvementScore": 8.555,
                 "significantRegression": false,
@@ -6330,7 +6330,7 @@
                       "set": "MSC",
                       "collectorNumber": "168",
                       "finish": "nonfoil",
-                      "priceUsd": 1.07
+                      "priceUsd": 1.23
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -6372,7 +6372,7 @@
                       "set": "MAR",
                       "collectorNumber": "13",
                       "finish": "nonfoil",
-                      "priceUsd": 6.74
+                      "priceUsd": 6.27
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -6417,7 +6417,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendUsd": 7.37,
+                "estimatedSpendUsd": 6.88,
                 "unknownPriceCount": 0,
                 "improvementScore": 2.338,
                 "significantRegression": false,
@@ -6604,7 +6604,7 @@
                       "set": "MAR",
                       "collectorNumber": "13",
                       "finish": "nonfoil",
-                      "priceUsd": 6.74
+                      "priceUsd": 6.27
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -6646,7 +6646,7 @@
                       "set": "MSC",
                       "collectorNumber": "806",
                       "finish": "nonfoil",
-                      "priceUsd": 0.63
+                      "priceUsd": 0.61
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -6701,7 +6701,7 @@
                 "reason": "improvement-below-threshold",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 5.81,
+                "estimatedSpendUsd": 6.01,
                 "unknownPriceCount": 0,
                 "improvementScore": -18.048,
                 "significantRegression": false,
@@ -6848,7 +6848,7 @@
                       "set": "MSC",
                       "collectorNumber": "210",
                       "finish": "nonfoil",
-                      "priceUsd": 5.81
+                      "priceUsd": 6.01
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -6890,7 +6890,7 @@
                 "reason": "improvement-below-threshold",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 24.81,
+                "estimatedSpendUsd": 24.36,
                 "unknownPriceCount": 0,
                 "improvementScore": -18.748,
                 "significantRegression": false,
@@ -7037,7 +7037,7 @@
                       "set": "MAR",
                       "collectorNumber": "20",
                       "finish": "nonfoil",
-                      "priceUsd": 24.81
+                      "priceUsd": 24.36
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -7079,7 +7079,7 @@
                 "reason": "improvement-below-threshold",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 4.3,
+                "estimatedSpendUsd": 4.4,
                 "unknownPriceCount": 0,
                 "improvementScore": -15.448,
                 "significantRegression": false,
@@ -7225,7 +7225,7 @@
                       "set": "SLD",
                       "collectorNumber": "7019",
                       "finish": "nonfoil",
-                      "priceUsd": 4.3
+                      "priceUsd": 4.4
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -7266,7 +7266,7 @@
                 "reason": "improvement-below-threshold",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 1.07,
+                "estimatedSpendUsd": 1.23,
                 "unknownPriceCount": 0,
                 "improvementScore": -22.734,
                 "significantRegression": false,
@@ -7413,7 +7413,7 @@
                       "set": "MSC",
                       "collectorNumber": "168",
                       "finish": "nonfoil",
-                      "priceUsd": 1.07
+                      "priceUsd": 1.23
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -7455,7 +7455,7 @@
                 "reason": "improvement-below-threshold",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendUsd": 6.74,
+                "estimatedSpendUsd": 6.27,
                 "unknownPriceCount": 0,
                 "improvementScore": -16.655,
                 "significantRegression": false,
@@ -7602,7 +7602,7 @@
                       "set": "MAR",
                       "collectorNumber": "13",
                       "finish": "nonfoil",
-                      "priceUsd": 6.74
+                      "priceUsd": 6.27
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
