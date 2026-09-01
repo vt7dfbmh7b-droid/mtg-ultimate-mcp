@@ -5,31 +5,31 @@
 1 Norman Osborn // Green Goblin (SPM) 39
 1 Deadly Dispute (MSC) 794
 1 Abundant Growth (SLD) 870
-1 The Ruinous Wrecking Crew (MSH) 224
 1 Dora Milaje Elite (MSC) 12
 1 Three Steps Ahead (MAR) 62
 1 Daily Bugle Newspaper (MSC) 749
 1 Arcane Denial (MSC) 147
-1 The Mind Stone (MSH) 21
 1 Manamorphose (SLD) 1746
+1 The Mind Stone (MSH) 21
 1 Valorous Stance (MSC) 145
 1 Reprieve (MAR) 5
 1 The Wasp, Winsome Avenger (MSC) 39
-1 Depower (MSH) 50
 1 Whoosh! (MSC) 790
-1 Armor Wars (MSH) 203
+1 Depower (MSH) 50
+1 Hawkeye, Master Marksman (MSH) 130
 1 Martial Coup (MSC) 138
+1 Armor Wars (MSH) 203
 1 Sword of Fire and Ice (MAR) 100
 1 The Soul Stone (SPM) 66
 1 Steelshaper's Gift (MAR) 50
+1 Blasphemous Act (MSC) 163
 1 Radioactive Spider (SPM) 111
-1 Fantastic Bounce (MSC) 620
 1 Seize the Day (MSC) 166
 1 Sol Ring (MSC) 211
 1 Iron Man, Titan of Innovation (MAR) 91
 1 Fabricate (SLD) 7118
 1 Swiftfoot Boots (MSC) 216
-1 Electro, Assaulting Battery (SPM) 76
+1 Fantastic Bounce (MSC) 620
 1 Captain America, Liberator (MSC) 587
 1 Deadly Rollick (SLD) 1754
 1 Lightning Greaves (MSC) 202

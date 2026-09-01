@@ -908,11 +908,11 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Average nonland mana value",
-            "observed": 2.59,
+            "observed": 2.68,
             "required": "at most 2.6",
-            "state": "passed",
+            "state": "failed",
             "pressurePoint": "speed/curve",
-            "detail": "Average nonland mana value: observed 2.59; Bracket-5 construction gate requires at most 2.6."
+            "detail": "Average nonland mana value: observed 2.68; Bracket-5 construction gate requires at most 2.6."
           },
           {
             "key": "early-plays",
@@ -1016,6 +1016,17 @@
         ],
         "knownBlockers": [
           {
+            "key": "average-nonland-mv",
+            "targetBracket": 5,
+            "category": "construction",
+            "label": "Average nonland mana value",
+            "observed": 2.68,
+            "required": "at most 2.6",
+            "state": "failed",
+            "pressurePoint": "speed/curve",
+            "detail": "Average nonland mana value: observed 2.68; Bracket-5 construction gate requires at most 2.6."
+          },
+          {
             "key": "verified-winning-combo",
             "targetBracket": 5,
             "category": "construction",
@@ -1040,11 +1051,12 @@
         ],
         "unverifiedChecks": [],
         "whatWouldReachTarget": [
+          "Improve speed/curve: Average nonland mana value needs at most 2.6.",
           "Improve win-package quality/redundancy: Verified win-oriented combos needs at least 1.",
           "Improve metagame evidence: Independent current competitive-metagame evidence needs true."
         ],
         "restrictionObservations": [
-          "Constraint \"Marvel physical printings only.\" was active while the finished list missed 1 Bracket-5 construction gate: Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
+          "Constraint \"Marvel physical printings only.\" was active while the finished list missed 2 Bracket-5 construction gates: Average nonland mana value (2.68 vs at most 2.6); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
         ],
         "guidance": "The target comparison uses only checks relevant to the requested bracket. Unavailable external evidence is reported as unverified rather than converted into a false deck weakness."
       },
@@ -1053,10 +1065,10 @@
           "key": "average-nonland-mv",
           "category": "construction",
           "label": "Average nonland mana value",
-          "observed": 2.59,
+          "observed": 2.68,
           "required": "at most 2.6",
-          "passed": true,
-          "detail": "Average nonland mana value: observed 2.59; Bracket-5 construction gate requires at most 2.6.",
+          "passed": false,
+          "detail": "Average nonland mana value: observed 2.68; Bracket-5 construction gate requires at most 2.6.",
           "pressurePoint": "speed/curve"
         },
         {
@@ -1154,22 +1166,22 @@
         "landCount": 31,
         "nonlandCount": 69,
         "landRatio": 0.31,
-        "averageNonlandManaValue": 2.59,
+        "averageNonlandManaValue": 2.68,
         "manaCurve": {
           "0": 0,
           "1": 13,
           "2": 29,
-          "3": 9,
+          "3": 8,
           "4": 11,
           "5": 5,
           "6": 2,
-          "7+": 0
+          "7+": 1
         },
         "coloredPips": {
           "W": 16,
           "U": 15,
-          "B": 10,
-          "R": 22,
+          "B": 9,
+          "R": 21,
           "G": 9
         },
         "roleCounts": {
@@ -1177,24 +1189,24 @@
           "haste": 7,
           "extra combat": 5,
           "untap engine": 5,
-          "creature": 19,
-          "cost reduction": 4,
+          "creature": 18,
+          "cost reduction": 5,
           "card draw": 21,
           "graveyard recursion": 4,
-          "+1/+1 counters": 3,
-          "mana acceleration": 25,
+          "+1/+1 counters": 2,
+          "mana acceleration": 24,
           "treasure": 7,
           "sacrifice synergy": 3,
           "self sacrifice": 9,
           "fast mana": 5,
           "persistent colored mana source": 14,
-          "spot interaction": 15,
-          "board wipe": 2,
           "mana dork": 2,
           "protection": 9,
           "board protection": 2,
           "countermagic": 3,
           "mana rock": 13,
+          "spot interaction": 14,
+          "board wipe": 2,
           "repeatable draw": 2,
           "equipment": 8,
           "tutor": 9,
@@ -3074,11 +3086,11 @@
           "targetBracket": 5,
           "category": "construction",
           "label": "Average nonland mana value",
-          "observed": 2.59,
+          "observed": 2.68,
           "required": "at most 2.6",
-          "state": "passed",
+          "state": "failed",
           "pressurePoint": "speed/curve",
-          "detail": "Average nonland mana value: observed 2.59; Bracket-5 construction gate requires at most 2.6."
+          "detail": "Average nonland mana value: observed 2.68; Bracket-5 construction gate requires at most 2.6."
         },
         {
           "key": "early-plays",
@@ -3182,6 +3194,17 @@
       ],
       "knownBlockers": [
         {
+          "key": "average-nonland-mv",
+          "targetBracket": 5,
+          "category": "construction",
+          "label": "Average nonland mana value",
+          "observed": 2.68,
+          "required": "at most 2.6",
+          "state": "failed",
+          "pressurePoint": "speed/curve",
+          "detail": "Average nonland mana value: observed 2.68; Bracket-5 construction gate requires at most 2.6."
+        },
+        {
           "key": "verified-winning-combo",
           "targetBracket": 5,
           "category": "construction",
@@ -3206,11 +3229,12 @@
       ],
       "unverifiedChecks": [],
       "whatWouldReachTarget": [
+        "Improve speed/curve: Average nonland mana value needs at most 2.6.",
         "Improve win-package quality/redundancy: Verified win-oriented combos needs at least 1.",
         "Improve metagame evidence: Independent current competitive-metagame evidence needs true."
       ],
       "restrictionObservations": [
-        "Constraint \"Marvel physical printings only.\" was active while the finished list missed 1 Bracket-5 construction gate: Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
+        "Constraint \"Marvel physical printings only.\" was active while the finished list missed 2 Bracket-5 construction gates: Average nonland mana value (2.68 vs at most 2.6); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
       ],
       "guidance": "The target comparison uses only checks relevant to the requested bracket. Unavailable external evidence is reported as unverified rather than converted into a false deck weakness."
     },
@@ -3219,10 +3243,10 @@
         "key": "average-nonland-mv",
         "category": "construction",
         "label": "Average nonland mana value",
-        "observed": 2.59,
+        "observed": 2.68,
         "required": "at most 2.6",
-        "passed": true,
-        "detail": "Average nonland mana value: observed 2.59; Bracket-5 construction gate requires at most 2.6.",
+        "passed": false,
+        "detail": "Average nonland mana value: observed 2.68; Bracket-5 construction gate requires at most 2.6.",
         "pressurePoint": "speed/curve"
       },
       {
