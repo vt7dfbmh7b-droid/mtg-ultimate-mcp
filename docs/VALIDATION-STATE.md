@@ -8,10 +8,10 @@ Development checkpoint: `77a5383fa7490aa91360b8186a4bda890f632157`
 | PM-STATE-INTEGRITY | engineering+truth | pass | `0a872b11239b3b402ded5424d59e004756ca5acc` | no | `test-results/project-management/integrity.txt` |
 | MARVEL-B5-REFINE | scenario-intelligence | pass | `717bbddd6563f8eacab7bee5a4ec77cff66cd2e9` | no | `test-results/marvel-bracket5/refine-run-metadata.txt` |
 | MARVEL-B5-BROAD | scenario-intelligence | fail | `7b84395191f27f29a438722c3b88af476ade5e9a` | no | `test-results/marvel-bracket5-broad/run-metadata.txt` |
-| MIDDLE-EARTH-PRECON-REFINE | scenario-intelligence | pass | `e16ed84c1313c041076acc4fd25facf06233ffad` | no | `test-results/middle-earth-precon-refine/run-metadata.txt` |
+| MIDDLE-EARTH-PRECON-REFINE | scenario-intelligence | pass | `b79dcae4278d1b5197bc0bbadea8d2ec6dabb2d3` | no | `test-results/middle-earth-precon-refine/run-metadata.txt` |
 | PRECON-GENERALIZATION | scenario-intelligence | pass | `b79dcae4278d1b5197bc0bbadea8d2ec6dabb2d3` | no | `test-results/precon-generalization/run-metadata.txt` |
 | STRATEGY-INFERENCE-GENERALIZATION | engineering+truth | pass | `0a872b11239b3b402ded5424d59e004756ca5acc` | no | `test-results/strategy-inference-generalization/run-metadata.txt` |
-| SQUIRRELED-AWAY-GENERALIZATION | scenario-intelligence | fail | `b79dcae4278d1b5197bc0bbadea8d2ec6dabb2d3` | no | `test-results/precon-generalization-squirrels/run-metadata.txt` |
+| SQUIRRELED-AWAY-GENERALIZATION | scenario-intelligence | fail | `97964ec19e215df48ed11865f946bd62e1b0d7d5` | no | `test-results/precon-generalization-squirrels/run-metadata.txt` |
 
 ## Interpretation
 

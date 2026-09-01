@@ -33,6 +33,7 @@
 1 Gilded Goose (LTC) 246 *N*
 1 Woodfall Primus (LTC) 264 *N*
 1 Anguished Unmaking (LTC) 265 *N*
+1 Chromatic Lantern (LTC) 275 *N*
 1 Trading Post (LTC) 288 *N*
 1 Brushland (LTC) 297 *N*
 1 Canopy Vista (LTC) 298 *N*
@@ -48,7 +49,6 @@
 1 Rosie Cotton of South Lane (LTR) 27 *N*
 1 Shire Shirriff (LTR) 30 *N*
 1 Mirkwood Bats (LTR) 95 *N*
-1 Generous Ent (LTR) 169 *N*
 1 Path to Exile (LTC) 175 *N*
 1 Swords to Plowshares (LTC) 178 *N*
 1 Revive the Shire (LTR) 185 *N*
@@ -86,8 +86,8 @@
 2 Swamp (LTR) 267 *N*
 4 Forest (LTR) 270 *N*
 4 Forest (LTR) 271 *N*
-1 Gorbag of Minas Morgul (LTR) 86 *N*
-1 Lembas (LTR) 243 *N*
-1 Gollum, Scheming Guide (PLTC) 3 *F*
+1 Belladonna Took (HOB) 4 *N*
 1 Bilbo's Gambit (HOB) 5 *N*
 1 The Arkenstone // Seek the Heart (HOB) 170 *N*
+1 Samwise Gamgee (LTR) 327 *N*
+1 Nimble Hobbit (LTR) 23 *N*
