@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { ScryfallCard } from '../types/scryfall.js';
+import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
 import { cutPressureV14, isHighLeverageTutorEngineV14, strictCedhQualityV14 } from './cedh-efficiency-v14.js';
 
 function card(input: {
@@ -92,6 +93,11 @@ test('high-leverage tutor engines receive lower cut pressure than a generic slow
 });
 
 test('narrow typal sacrifice costs are penalized as engine candidates', () => {
+  const roles = new Set(effectiveCardRolesV15(narrowOutlet));
+  assert.equal(roles.has('narrow sacrifice outlet'), true);
+  assert.equal(roles.has('sacrifice outlet'), false);
+  assert.equal(roles.has('creature sacrifice outlet'), false);
+
   const quality = strictCedhQualityV14(narrowOutlet, {
     creatureType: 'Zombie',
     score: 20,
@@ -101,6 +107,6 @@ test('narrow typal sacrifice costs are penalized as engine candidates', () => {
     supportReferenceCount: 2,
     evidence: [],
   });
-  assert.ok(quality.reasons.some((reason) => reason.includes('narrow sacrifice cost')));
+  assert.equal(quality.eligible, false);
   assert.equal(quality.reasons.includes('cheap sacrifice-engine support'), false);
 });
