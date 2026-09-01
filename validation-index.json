@@ -114,20 +114,20 @@
       ],
       "metadataPath": "test-results/middle-earth-precon-refine/run-metadata.txt",
       "exists": true,
-      "sourceSha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
-      "outcome": "fail",
+      "sourceSha": "3e2729aaca747f2b714972473c2eac9ac679e938",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
-        "workflow_source_sha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
-        "executed_head_sha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
-        "control_outcome": "failure",
-        "build_outcome": "failure",
-        "regression_outcome": "skipped",
-        "execution_outcome": "skipped",
-        "hard_truth_outcome": "skipped",
-        "target_quality_outcome": "skipped",
-        "strategy_preservation_outcome": "skipped",
+        "source_sha": "3e2729aaca747f2b714972473c2eac9ac679e938",
+        "workflow_source_sha": "3e2729aaca747f2b714972473c2eac9ac679e938",
+        "executed_head_sha": "3e2729aaca747f2b714972473c2eac9ac679e938",
+        "control_outcome": "success",
+        "build_outcome": "success",
+        "regression_outcome": "success",
+        "execution_outcome": "success",
+        "hard_truth_outcome": "success",
+        "target_quality_outcome": "success",
+        "strategy_preservation_outcome": "success",
         "policy": "exact-food-and-fellowship-middle-earth-precon",
         "printing_family": "Middle-earth",
         "exact_card_count": "true",
@@ -139,15 +139,7 @@
         "meaningful_strategy_loss_rejected": "true",
         "negative_win_evidence_complete": "true"
       },
-      "unmetPassConditions": [
-        "control_outcome=success",
-        "build_outcome=success",
-        "regression_outcome=success",
-        "execution_outcome=success",
-        "hard_truth_outcome=success",
-        "target_quality_outcome=success",
-        "strategy_preservation_outcome=success"
-      ]
+      "unmetPassConditions": []
     },
     {
       "id": "PRECON-GENERALIZATION",
@@ -158,20 +150,20 @@
       ],
       "metadataPath": "test-results/precon-generalization/run-metadata.txt",
       "exists": true,
-      "sourceSha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
-      "outcome": "fail",
+      "sourceSha": "3e2729aaca747f2b714972473c2eac9ac679e938",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
-        "workflow_source_sha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
-        "executed_head_sha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
-        "control_outcome": "failure",
-        "build_outcome": "failure",
-        "regression_outcome": "skipped",
-        "execution_outcome": "skipped",
-        "hard_truth_outcome": "skipped",
-        "target_quality_outcome": "skipped",
-        "strategy_preservation_outcome": "skipped",
+        "source_sha": "3e2729aaca747f2b714972473c2eac9ac679e938",
+        "workflow_source_sha": "3e2729aaca747f2b714972473c2eac9ac679e938",
+        "executed_head_sha": "3e2729aaca747f2b714972473c2eac9ac679e938",
+        "control_outcome": "success",
+        "build_outcome": "success",
+        "regression_outcome": "success",
+        "execution_outcome": "success",
+        "hard_truth_outcome": "success",
+        "target_quality_outcome": "success",
+        "strategy_preservation_outcome": "success",
         "policy": "exact-necron-stock-unrestricted-budgeted-upgrade",
         "printing_family": "unrestricted",
         "exact_card_count": "true",
@@ -185,15 +177,7 @@
         "structural_floors_required": "true",
         "meaningful_strategy_loss_rejected": "true"
       },
-      "unmetPassConditions": [
-        "control_outcome=success",
-        "build_outcome=success",
-        "regression_outcome=success",
-        "execution_outcome=success",
-        "hard_truth_outcome=success",
-        "target_quality_outcome=success",
-        "strategy_preservation_outcome=success"
-      ]
+      "unmetPassConditions": []
     },
     {
       "id": "STRATEGY-INFERENCE-GENERALIZATION",
@@ -204,16 +188,16 @@
       ],
       "metadataPath": "test-results/strategy-inference-generalization/run-metadata.txt",
       "exists": true,
-      "sourceSha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
-      "outcome": "fail",
+      "sourceSha": "3e2729aaca747f2b714972473c2eac9ac679e938",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
-        "workflow_source_sha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
-        "executed_head_sha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
-        "control_outcome": "failure",
-        "build_outcome": "failure",
-        "regression_outcome": "skipped",
+        "source_sha": "3e2729aaca747f2b714972473c2eac9ac679e938",
+        "workflow_source_sha": "3e2729aaca747f2b714972473c2eac9ac679e938",
+        "executed_head_sha": "3e2729aaca747f2b714972473c2eac9ac679e938",
+        "control_outcome": "success",
+        "build_outcome": "success",
+        "regression_outcome": "success",
         "name_specific_rule": "false",
         "incidental_attack_trigger_substantive": "false",
         "self_mill_recovery_substantive": "true",
@@ -232,11 +216,7 @@
         "board_scaling_typal_payoff_substantive": "true",
         "delayed_death_return_recursion": "true"
       },
-      "unmetPassConditions": [
-        "control_outcome=success",
-        "build_outcome=success",
-        "regression_outcome=success"
-      ]
+      "unmetPassConditions": []
     },
     {
       "id": "SQUIRRELED-AWAY-GENERALIZATION",
@@ -247,20 +227,20 @@
       ],
       "metadataPath": "test-results/precon-generalization-squirrels/run-metadata.txt",
       "exists": true,
-      "sourceSha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
-      "outcome": "fail",
+      "sourceSha": "3e2729aaca747f2b714972473c2eac9ac679e938",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
-        "workflow_source_sha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
-        "executed_head_sha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
-        "control_outcome": "failure",
-        "build_outcome": "failure",
-        "regression_outcome": "skipped",
-        "execution_outcome": "skipped",
-        "hard_truth_outcome": "skipped",
-        "target_quality_outcome": "skipped",
-        "strategy_preservation_outcome": "skipped",
+        "source_sha": "3e2729aaca747f2b714972473c2eac9ac679e938",
+        "workflow_source_sha": "3e2729aaca747f2b714972473c2eac9ac679e938",
+        "executed_head_sha": "3e2729aaca747f2b714972473c2eac9ac679e938",
+        "control_outcome": "success",
+        "build_outcome": "success",
+        "regression_outcome": "success",
+        "execution_outcome": "success",
+        "hard_truth_outcome": "success",
+        "target_quality_outcome": "success",
+        "strategy_preservation_outcome": "success",
         "policy": "exact-squirreled-away-stock-unrestricted-budgeted-upgrade",
         "printing_family": "unrestricted",
         "exact_card_count": "true",
@@ -274,15 +254,7 @@
         "structural_floors_required": "true",
         "meaningful_strategy_loss_rejected": "true"
       },
-      "unmetPassConditions": [
-        "control_outcome=success",
-        "build_outcome=success",
-        "regression_outcome=success",
-        "execution_outcome=success",
-        "hard_truth_outcome=success",
-        "target_quality_outcome=success",
-        "strategy_preservation_outcome=success"
-      ]
+      "unmetPassConditions": []
     }
   ]
 }
