@@ -89,6 +89,10 @@ function isLand(card: ScryfallCard): boolean {
   return card.type_line.toLocaleLowerCase().includes('land');
 }
 
+function isCreature(card: ScryfallCard): boolean {
+  return card.type_line.toLocaleLowerCase().includes('creature');
+}
+
 function text(card: ScryfallCard): string {
   return (card.oracle_text ?? '').toLocaleLowerCase();
 }
@@ -101,7 +105,7 @@ function hasGoodEdhrecRank(card: ScryfallCard, threshold: number): boolean {
   return card.edhrec_rank !== undefined && card.edhrec_rank <= threshold;
 }
 
-function strictCedhQuality(
+export function strictCedhQualityV14(
   card: ScryfallCard,
   creatureTypePreference: CreatureTypePreferenceV15 | null,
 ): { eligible: boolean; score: number; reasons: string[] } {
@@ -152,6 +156,22 @@ function strictCedhQuality(
     score += 55;
     reasons.push('reliable efficient mana acceleration');
   }
+  if (roles.has('creature sacrifice outlet') && card.cmc <= 2) {
+    score += card.cmc <= 1 ? 78 : 62;
+    reasons.push('cheap repeatable creature sacrifice outlet');
+  }
+  if (roles.has('life drain') && card.cmc <= 3) {
+    score += card.cmc <= 2 ? 58 : 40;
+    reasons.push('efficient death/life-loss payoff');
+  }
+  if (roles.has('graveyard recursion') && card.cmc <= 2 && hasGoodEdhrecRank(card, 6_000)) {
+    score += 42;
+    reasons.push('cheap proven graveyard recursion');
+  }
+  if (roles.has('sacrifice synergy') && card.cmc <= 2) {
+    score += 34;
+    reasons.push('cheap sacrifice-engine support');
+  }
   if (roles.has('card selection') && card.cmc <= 1 && hasGoodEdhrecRank(card, 2_000)) {
     score += 38;
     reasons.push('one-mana proven card selection');
@@ -167,7 +187,16 @@ function strictCedhQuality(
   return { eligible: true, score, reasons };
 }
 
-function cutPressure(
+function hasSubstantiveOffTypeUtility(roles: Set<string>, card: ScryfallCard): boolean {
+  if (roles.has('creature sacrifice outlet') || roles.has('life drain') || roles.has('tutor')) return true;
+  if (roles.has('free interaction') || roles.has('countermagic') || roles.has('spot interaction')) return true;
+  if (roles.has('repeatable draw') || roles.has('card draw')) return true;
+  if (roles.has('fast mana') || roles.has('mana acceleration')) return true;
+  if (roles.has('protection') && card.cmc <= 2) return true;
+  return roles.has('graveyard recursion') && card.cmc <= 1;
+}
+
+export function cutPressureV14(
   card: ScryfallCard,
   protectedNames: Set<string>,
   roleCounts: Record<string, number>,
@@ -182,7 +211,9 @@ function cutPressure(
   if (card.cmc >= 5) pressure += 18;
   if (roles.has('board wipe')) pressure += 10;
   if (isLandSpecificTutor(card) && card.cmc >= 3) pressure += 25;
+  if (roles.has('tutor') && !isLandSpecificTutor(card) && card.cmc >= 3) pressure += 30;
   if ((roles.has('land ramp') || roles.has('mana acceleration')) && card.cmc >= 3) pressure += 18;
+  if (roles.has('mana rock') && card.cmc >= 3) pressure += 28;
   if (roles.has('fast mana') && manaTruth.reliableImmediateFastMana) pressure -= 90;
   if (roles.has('free interaction')) pressure -= 85;
   if (roles.has('countermagic') && card.cmc <= 2) pressure -= 45;
@@ -193,10 +224,27 @@ function cutPressure(
   if (roles.has('sacrifice outlet')) pressure -= 34;
   if (roles.has('life drain')) pressure -= 22;
 
+  const protectionCount = Number(roleCounts.protection ?? 0);
+  if (roles.has('protection') && protectionCount > 4) {
+    pressure += Math.min(28, (protectionCount - 4) * 7);
+    if (card.cmc >= 3) pressure += 12;
+  }
+
   const recursionCount = Number(roleCounts['graveyard recursion'] ?? 0);
   if (roles.has('graveyard recursion') && recursionCount > 12) {
-    pressure += Math.min(40, (recursionCount - 12) * 4);
+    pressure += Math.min(48, (recursionCount - 12) * 4);
     if (card.cmc <= 2) pressure -= 10;
+    if (card.cmc >= 3) pressure += 14;
+  }
+
+  const strongTypalPreference = creatureTypePreference !== null && creatureTypePreference.score >= 12;
+  if (
+    strongTypalPreference
+    && isCreature(card)
+    && !isPreferredCreatureTypeCardV15(card, creatureTypePreference)
+    && !hasSubstantiveOffTypeUtility(roles, card)
+  ) {
+    pressure += 18;
   }
 
   if (isPreferredCreatureTypeCardV15(card, creatureTypePreference)) pressure -= 18;
@@ -215,7 +263,7 @@ function rankedCuts(
   return [...new Set(parsed.main
     .map((entry) => ({ entry, card: resolveEntryCard(entry, cards) }))
     .filter((item): item is { entry: DeckEntry; card: ScryfallCard } => Boolean(item.card) && item.entry.quantity === 1)
-    .map(({ card }) => ({ name: card.name, pressure: cutPressure(card, protectedNames, roleCounts, creatureTypePreference) }))
+    .map(({ card }) => ({ name: card.name, pressure: cutPressureV14(card, protectedNames, roleCounts, creatureTypePreference) }))
     .filter((entry) => entry.pressure > -500)
     .sort((a, b) => b.pressure - a.pressure || a.name.localeCompare(b.name))
     .map((entry) => entry.name))].slice(0, count);
@@ -241,9 +289,13 @@ async function strictCandidates(
     '(o:"can\'t cast spells" OR o:"cannot cast spells") mv<=2 -t:land',
     'o:"draw" mv<=3 -t:land',
     'o:"add" mv<=2 -t:land',
+    'o:"sacrifice a creature" mv<=2 -t:land',
+    'o:"sacrifice another creature" mv<=2 -t:land',
+    'o:"dies" mv<=3 -t:land',
+    'o:"from your graveyard" mv<=2 -t:land',
     ...(creatureTypePreference ? [`t:"${escapedTypeQuery(creatureTypePreference.creatureType)}" mv<=3 -t:land`] : []),
   ];
-  const map = new Map<string, { card: ScryfallCard; quality: ReturnType<typeof strictCedhQuality> }>();
+  const map = new Map<string, { card: ScryfallCard; quality: ReturnType<typeof strictCedhQualityV14> }>();
 
   for (const clause of clauses) {
     const query = ['f:commander', identityQuery(identity), clause, policy.searchClause].filter(Boolean).join(' ');
@@ -251,7 +303,7 @@ async function strictCandidates(
       for (const card of await searchCards(query, 50)) {
         const key = normalize(card.name);
         if (existing.has(key) || excluded.has(key) || card.legalities.commander !== 'legal') continue;
-        const quality = strictCedhQuality(card, creatureTypePreference);
+        const quality = strictCedhQualityV14(card, creatureTypePreference);
         if (!quality.eligible) continue;
         const previous = map.get(key);
         if (!previous || quality.score > previous.quality.score) map.set(key, { card, quality });
@@ -264,7 +316,7 @@ async function strictCandidates(
   const ranked = [...map.values()].sort((a, b) => b.quality.score - a.quality.score);
   const output: ExactCandidateV14[] = [];
   for (const item of ranked) {
-    if (output.length >= 16) break;
+    if (output.length >= 24) break;
     const printing = await selectEligiblePrintingV08(item.card, policy, options.maxUsdPerCard);
     if (!printing) continue;
     output.push({
@@ -409,7 +461,7 @@ export async function refineCedhEfficiencyV14(
   decklist: string,
   options: CedhEfficiencyOptionsV14 = {},
 ): Promise<Record<string, unknown>> {
-  const maxSwaps = Math.max(1, Math.min(5, Math.trunc(options.maxSwaps ?? 3)));
+  const maxSwaps = Math.max(1, Math.min(10, Math.trunc(options.maxSwaps ?? 3)));
   const policy = await resolvePrintingPolicyV08({
     ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
     ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
@@ -530,6 +582,6 @@ export async function refineCedhEfficiencyV14(
     finalCommanderRules: nextRules,
     printingPolicy: describePrintingPolicyV08(policy),
     candidateCount: candidates.length,
-    guidance: 'Strict efficiency mode now fails closed on conditional/delayed mana masquerading as fast mana, preserves independent winning-combo cores rather than incidental combo volume, discounts oversaturated recursion, and may prefer a commander-supported creature-type engine when the type also supplies real sacrifice, recursion, draw, drain, tutor, or resource roles. Protected cards, legality, printing policy and hard budget remain authoritative.',
+    guidance: 'Strict efficiency mode now fails closed on conditional/delayed/restricted mana masquerading as fast mana, preserves independent winning-combo cores rather than incidental combo volume, discounts oversaturated recursion and protection, increases pressure on slow tutors and three-mana rocks, and prefers commander-supported creature-type engines plus cheap sacrifice/drain pieces when they provide real standalone utility. Protected cards, legality, printing policy and hard budget remain authoritative.',
   };
 }
