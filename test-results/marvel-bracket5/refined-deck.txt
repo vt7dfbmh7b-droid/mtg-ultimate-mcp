@@ -42,13 +42,13 @@
 1 Stark Industries Executive (MSH) 153
 1 Counterspell (MAR) 52
 1 Sun-Spider, Nimble Webber (SPM) 154
-1 Arcane Signet (MSC) 191
 1 Swiftfoot Boots (MSC) 216
 1 Relentless Assault (MAR) 25
 1 Seize the Day (MSC) 166
 1 Vibranium Mining Mech (MSC) 117
 1 Fellwar Stone (MSC) 285
 1 Living Laser (MSC) 55
+1 Big Score (MSC) 802
 1 Savage Beating (MAR) 26
 1 Lightning Greaves (MSC) 202
 1 Unexpected Windfall (MAR) 29
@@ -87,7 +87,7 @@
 3 Mountain (MSC) 858
 3 Island (MSH) 289
 3 Plains (MSC) 866
-1 The Ozolith (SLD) 1741 *N*
-1 Strength of Will (SPM) 118 *N*
-1 Bastion Protector (MSC) 122 *N*
+1 Brainstorm (SLD) 7019 *N*
+1 Silkguard (MAR) 37 *N*
 1 Vandalblast (MSC) 168 *N*
+1 Strength of Will (SPM) 118 *N*
