@@ -350,7 +350,7 @@ Risk: checking only a card's printed mana value and the words `add`, `destroy` o
 
 Protection: production deck metrics, candidate filtering, scoring and upgrade summaries now consume the existing fail-closed V0.15 role boundary. Mana truth compares fixed activated output with the mana paid into the ability, preserves genuinely net-positive paid rocks, and removes filtering-only acceleration/fast-mana/source credit. Interaction truth separates graveyard-only effects, activated-only effects and the minimum activation cost; the cheap-interaction gate requires operationally cheap generic interaction rather than merely a low printed mana value. Name-independent regressions cover a one-for-one color filter with seven-mana removal, a net-positive paid rock, zero-mana graveyard hate and ordinary one-mana removal.
 
-Status: prevented in TypeScript and 895/895 deterministic tests locally; exact-source Food, Necron and full control-family revalidation is pending.
+Status: prevented in TypeScript and 902/902 deterministic tests locally; exact-source Food, Necron and full control-family revalidation is pending.
 
 ## KF-036 — Same-archetype affinity treats payoff, engine and enabler roles as interchangeable
 
@@ -360,7 +360,7 @@ Risk: a single archetype score can become a fungible currency. Adding more setup
 
 Protection: role truth now distinguishes repeatable death-drain payoffs from one-shot life-loss riders. For every maximum-protected substantive strategy card, swap preservation separately checks exact engine/payoff components associated with that archetype; incoming same-archetype affinity cannot replace a missing go-wide payoff, haste engine, repeatable death payoff, sacrifice outlet, recursion engine or other mapped functional component. Name-independent regressions cover combat payoff → token enabler and repeatable death payoff → sacrifice tutor.
 
-Status: prevented in TypeScript and 895/895 deterministic tests locally; exact-source Squirreled Away and full control-family revalidation is pending.
+Status: prevented in TypeScript and 902/902 deterministic tests locally; exact-source Squirreled Away and full control-family revalidation is pending.
 
 ## KF-037 — A fixed 15-card cut shortlist hides safe surplus cards
 
@@ -370,7 +370,27 @@ Risk: robust downstream structure and strategy checks cannot select a safe card 
 
 Protection: cut discovery now exposes the complete finite resolved nonland cut pool to the existing structural, colored-mana, curve, strategy-component and deterministic tie-break filters. The Commander deck itself bounds the pool, so no unbounded provider search is introduced. A regression fills the old 15 slots with maximum-protected high-pressure engines and proves the pairer still reaches the lower-pressure safe surplus cut beyond them.
 
-Status: prevented in TypeScript and 895/895 deterministic tests locally; focused/broad Marvel and full exact-source control-family revalidation is pending.
+Status: prevented in TypeScript and 902/902 deterministic tests locally; focused/broad Marvel and full exact-source control-family revalidation is pending.
+
+## KF-038 — Staged high-capacity recursion collapses into generic reanimator affinity
+
+Observed: the exact-source Necron run at `b17f7cf...` accepted The War in Heaven → Lively Dirge. Both cards received broad graveyard-reanimator affinity, but the role parser missed the Saga's staged Oracle construction (`choose ... in your graveyard. Return each ...`) and therefore exposed only card draw on the cut. The replacement is useful, but it is a narrower tutor/return package than the removed draw, mill and three-creature reanimation engine.
+
+Risk: an optimizer can preserve aggregate graveyard affinity while silently reducing the capacity of a deck's central recursion engine. Sentence boundaries and equal archetype scores can hide the loss even when the incoming card is independently playable.
+
+Protection: recursion truth now recognizes staged selection-and-return wording and records multi-card and high-capacity recursion separately. Three-or-more/any-number returns and multi-card returns with a substantial total-mana-value allowance receive the high-capacity component; narrow multi-card returns do not. Graveyard-reanimator preservation requires an incoming high-capacity component before cutting one, regardless of flat or positive broad affinity.
+
+Status: name-independent regressions and the full 902/902 deterministic suite pass locally; exact-source Necron/family revalidation pending.
+
+## KF-039 — Distinct Commander engines collapse into generic draw, interaction, or affinity
+
+Observed: exact-source controls at `b17f7cf...` remained mechanically green while accepting Moldervine Reclamation → Culling the Weak and Morbid Opportunist → Diabolic Intent in Squirreled Away, Swarmyard Massacre → Warping Wail in the same deck, Armor Wars → Brainstorm in broad Marvel, and Eagles of the North → Bastion Protector in Food and Fellowship. The role layer saw generic repeatable draw, token production, card draw, or a broad team buff, but missed death-trigger draw capacity, asymmetric typal board control, board-scaling draw, and the fact that a commander-only buff is not a go-wide payoff.
+
+Risk: a deck can retain or improve coarse role counts and archetype affinity while losing exactly the bridge, scaling engine, selective wipe, or whole-team finisher that makes its plan coherent. One-shot mana, a tutor, a cantrip, or commander protection can then look fungible with strategy-specific engines.
+
+Protection: role truth now distinguishes death-trigger draw engines, board-scaling card draw, asymmetric typal board-control payoffs, and multiplayer forced-sacrifice bridges. Those components are preserved separately inside their relevant aristocrats, value-engine, and combat-token strategies. Commander-only buffs are excluded from go-wide payoff truth. Name-independent regressions prove that flat same-archetype affinity cannot erase any of these components.
+
+Status: focused regressions and the full 902/902 deterministic suite pass locally; exact-source Squirreled Away, Food, Marvel and family revalidation pending.
 
 ## Adding a failure
 

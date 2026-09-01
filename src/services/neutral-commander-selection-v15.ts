@@ -125,6 +125,7 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
 
   addSignal(table, 'combat-tokens', roles.has('token production'), 6, 'token production');
   addSignal(table, 'combat-tokens', roles.has('go-wide payoff'), 6, 'go-wide combat payoff');
+  addSignal(table, 'combat-tokens', roles.has('typal board control payoff'), 6, 'asymmetric typal board control');
   addSignal(table, 'combat-tokens', roles.has('extra combat'), 8, 'extra combat');
   addSignal(table, 'combat-tokens', roles.has('untap engine'), 4, 'combat untap potential');
   addSignal(table, 'combat-tokens', roles.has('haste'), 2, 'haste');
@@ -165,6 +166,8 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   addSignal(table, 'aristocrats', roles.has('sacrifice outlet'), 8, 'sacrifice outlet');
   addSignal(table, 'aristocrats', roles.has('self sacrifice'), 2, 'self-sacrifice utility');
   addSignal(table, 'aristocrats', roles.has('life drain'), 7, 'opponent drain');
+  addSignal(table, 'aristocrats', roles.has('death-trigger draw engine'), 7, 'death-trigger card engine');
+  addSignal(table, 'aristocrats', roles.has('forced sacrifice interaction'), 6, 'forced sacrifice bridge');
   addSignal(table, 'aristocrats', /whenever .* dies|when .* dies/i.test(text), 6, 'death trigger');
   addSignal(table, 'aristocrats', /sacrifice (?:a|another) creature|sacrifice (?:a|another) permanent/i.test(text), 5, 'sacrifice text');
 
@@ -179,6 +182,7 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   addSignal(table, 'spells-control', /instant or sorcery|instant and sorcery|noncreature spell/i.test(text), 5, 'spell-type payoff');
 
   addSignal(table, 'value-engine', roles.has('repeatable draw'), 9, 'repeatable draw');
+  addSignal(table, 'value-engine', roles.has('board-scaling card draw'), 8, 'board-scaling card draw');
   addSignal(table, 'value-engine', roles.has('card draw'), 5, 'card draw');
   addSignal(table, 'value-engine', roles.has('card selection'), 4, 'card selection');
   addSignal(table, 'value-engine', roles.has('treasure'), 5, 'Treasure production');

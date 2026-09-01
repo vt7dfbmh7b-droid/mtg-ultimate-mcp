@@ -849,6 +849,95 @@ test('same-archetype affinity cannot replace a repeatable aristocrats payoff wit
   assert.equal(gate.eligible, false);
 });
 
+test('same reanimator affinity cannot replace a high-capacity recursion engine with a narrow return spell', () => {
+  const audit = auditUpgradeStrategyPreservationV15([{
+    cut: {
+      card: {
+        name: 'Outgoing Broad Recursion Engine',
+        roles: ['graveyard recursion', 'multi-card graveyard recursion', 'high-capacity graveyard recursion'],
+        manaValue: 6,
+      },
+      strategyAffinity: {
+        score: 9,
+        protectionApplied: 4,
+        matchedStrategies: ['graveyard-reanimator'],
+        matches: [{ archetype: 'graveyard-reanimator', commanderScore: 18, cardScore: 9, overlapScore: 9 }],
+      },
+    },
+    add: {
+      card: {
+        name: 'Incoming Narrow Recursion Tutor',
+        roles: ['graveyard recursion', 'multi-card graveyard recursion', 'tutor'],
+        manaValue: 3,
+      },
+      strategyAffinity: {
+        score: 9,
+        protectionApplied: 4,
+        matchedStrategies: ['graveyard-reanimator'],
+        matches: [{ archetype: 'graveyard-reanimator', commanderScore: 18, cardScore: 9, overlapScore: 9 }],
+      },
+    },
+  }]);
+  const gate = candidateStrategyPreservationGateV15({ strategyPreservation: audit });
+
+  assert.deepEqual(audit.swapImpacts[0]?.unreplacedStrategyComponentRoles, ['high-capacity graveyard recursion']);
+  assert.equal(audit.swapImpacts[0]?.meaningfulStrategyLoss, true);
+  assert.equal(gate.eligible, false);
+});
+
+test('same-archetype affinity cannot spend death-draw, typal-control, or scaling-draw engines on generic role gains', () => {
+  const cases = [
+    {
+      strategy: 'aristocrats',
+      role: 'death-trigger draw engine',
+      cutName: 'Outgoing Death Draw Engine',
+      addName: 'Incoming One-Shot Mana',
+      addRoles: ['fast mana', 'mana acceleration', 'sacrifice synergy'],
+    },
+    {
+      strategy: 'combat-tokens',
+      role: 'typal board control payoff',
+      cutName: 'Outgoing Typal Board Control',
+      addName: 'Incoming Narrow Interaction',
+      addRoles: ['cheap interaction', 'spot interaction'],
+    },
+    {
+      strategy: 'value-engine',
+      role: 'board-scaling card draw',
+      cutName: 'Outgoing Scaling Draw Engine',
+      addName: 'Incoming Generic Cantrip',
+      addRoles: ['card draw', 'card selection'],
+    },
+  ] as const;
+
+  for (const item of cases) {
+    const audit = auditUpgradeStrategyPreservationV15([{
+      cut: {
+        card: { name: item.cutName, roles: [item.role], manaValue: 5 },
+        strategyAffinity: {
+          score: 8,
+          protectionApplied: 4,
+          matchedStrategies: [item.strategy],
+          matches: [{ archetype: item.strategy, commanderScore: 16, cardScore: 8, overlapScore: 8 }],
+        },
+      },
+      add: {
+        card: { name: item.addName, roles: [...item.addRoles], manaValue: 2 },
+        strategyAffinity: {
+          score: 8,
+          protectionApplied: 4,
+          matchedStrategies: [item.strategy],
+          matches: [{ archetype: item.strategy, commanderScore: 16, cardScore: 8, overlapScore: 8 }],
+        },
+      },
+    }]);
+    const gate = candidateStrategyPreservationGateV15({ strategyPreservation: audit });
+
+    assert.deepEqual(audit.swapImpacts[0]?.unreplacedStrategyComponentRoles, [item.role]);
+    assert.equal(gate.eligible, false);
+  }
+});
+
 test('curve repair inspects a safe surplus cut even when protected high-pressure cards fill the old shortlist', () => {
   const protectedCuts = Array.from({ length: 15 }, (_, index) => ({
     card: {

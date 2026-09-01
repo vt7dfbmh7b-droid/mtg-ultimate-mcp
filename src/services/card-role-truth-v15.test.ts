@@ -465,6 +465,54 @@ test('token multipliers and team-wide or board-scaling payoffs retain combat-eng
   assert.ok(inferCardRoles(boardScalingCardAdvantage).includes('go-wide payoff'));
 });
 
+test('commander-only buffs do not impersonate a go-wide team payoff', () => {
+  const commanderOnlyBuff = card({
+    name: 'Generic Commander Guard',
+    typeLine: 'Creature — Test Soldier',
+    oracleText: 'Commander creatures you control get +2/+2 and have indestructible.',
+    cmc: 3,
+    manaCost: '{2}{W}',
+  });
+
+  assert.equal(inferCardRoles(commanderOnlyBuff).includes('go-wide payoff'), false);
+});
+
+test('death-trigger draw, scaling board draw, and typal board control retain distinct engine truth', () => {
+  const deathDraw = card({
+    name: 'Generic Death Draw Engine',
+    typeLine: 'Enchantment',
+    oracleText: 'Whenever a creature you control dies, you gain 1 life and draw a card.',
+  });
+  const artifactDraw = card({
+    name: 'Generic Artifact Chronicle',
+    typeLine: 'Enchantment — Saga',
+    oracleText: 'I — You may draw a card for each artifact you control. If you do, each opponent draws a card.',
+  });
+  const typalControl = card({
+    name: 'Generic Typal Massacre',
+    typeLine: 'Sorcery',
+    oracleText: "Create two 1/1 green Squirrel creature tokens. Then each creature that isn't an Insect, Rat, Spider, or Squirrel gets -1/-1 until end of turn for each creature you control that's an Insect, Rat, Spider, or Squirrel.",
+  });
+
+  assert.equal(inferCardRoles(deathDraw).includes('death-trigger draw engine'), true);
+  assert.equal(inferCardRoles(artifactDraw).includes('board-scaling card draw'), true);
+  assert.equal(inferCardRoles(typalControl).includes('board wipe'), true);
+  assert.equal(inferCardRoles(typalControl).includes('typal board control payoff'), true);
+});
+
+test('multiplayer edicts retain interaction and sacrifice-bridge truth', () => {
+  const forcedSacrifice = card({
+    name: 'Generic Forced Sacrifice',
+    typeLine: 'Creature — Test Shaman',
+    oracleText: 'When this creature enters, each player sacrifices a creature or planeswalker. Each player who cannot discards a card.',
+  });
+  const roles = inferCardRoles(forcedSacrifice);
+
+  assert.equal(roles.includes('spot interaction'), true);
+  assert.equal(roles.includes('forced sacrifice interaction'), true);
+  assert.equal(roles.includes('board wipe'), false);
+});
+
 test('variable-quantity typal sacrifice costs remain repeatable sacrifice outlets', () => {
   const roles = inferCardRoles(variableTypalSacrificeOutlet);
   assert.ok(roles.includes('sacrifice synergy'));

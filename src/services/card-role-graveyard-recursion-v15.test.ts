@@ -48,3 +48,25 @@ test('returning a recursive creature from the graveyard to the battlefield remai
   );
   assert.equal(new Set(effectiveCardRolesV15(skeletonLike)).has('graveyard recursion'), true);
 });
+
+test('staged multi-card reanimation retains capacity instead of becoming generic card draw', () => {
+  const broadReturn = card(
+    'Generic Broad Staged Return',
+    'You draw three cards and you lose 3 life. Mill three cards. Choose up to three target creature cards with total mana value 8 or less in your graveyard. Return each of them to the battlefield with a counter on it.',
+  );
+  const roles = new Set(effectiveCardRolesV15(broadReturn));
+  assert.equal(roles.has('graveyard recursion'), true);
+  assert.equal(roles.has('multi-card graveyard recursion'), true);
+  assert.equal(roles.has('high-capacity graveyard recursion'), true);
+});
+
+test('narrow multi-card reanimation does not impersonate a high-capacity engine', () => {
+  const narrowReturn = card(
+    'Generic Narrow Return',
+    'Return up to two creature cards with total mana value 4 or less from your graveyard to the battlefield.',
+  );
+  const roles = new Set(effectiveCardRolesV15(narrowReturn));
+  assert.equal(roles.has('graveyard recursion'), true);
+  assert.equal(roles.has('multi-card graveyard recursion'), true);
+  assert.equal(roles.has('high-capacity graveyard recursion'), false);
+});
