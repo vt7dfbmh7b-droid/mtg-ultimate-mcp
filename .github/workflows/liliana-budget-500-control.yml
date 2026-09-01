@@ -5,6 +5,7 @@ on:
     branches: ["agent/v15-native-deck-intelligence"]
     paths:
       - "scripts/e2e-liliana-budget-500-v15.ts"
+      - "scripts/capture-liliana-zero-tribal-candidate-v15.ts"
       - "src/services/bracket-ceiling-v15.ts"
       - "src/services/card-role-truth-v15.ts"
       - "src/services/cedh-efficiency-v14.ts"
@@ -63,6 +64,9 @@ jobs:
 
       - name: Build checked-in source
         run: npm run build
+
+      - name: Capture raw Liliana candidate before assertions
+        run: npx tsx scripts/capture-liliana-zero-tribal-candidate-v15.ts
 
       - name: Build and audit Liliana under NZ$500
         run: npx tsx scripts/e2e-liliana-budget-500-v15.ts
