@@ -249,10 +249,12 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
       roles.add('conditional mana acceleration');
     }
   }
-  if (roles.has('sacrifice outlet')) {
+  if (sacrificeTruth.narrowOutlet) {
+    roles.delete('sacrifice outlet');
+    roles.add('narrow sacrifice outlet');
+  } else if (roles.has('sacrifice outlet')) {
     if (!sacrificeTruth.genericOutlet) {
       roles.delete('sacrifice outlet');
-      if (sacrificeTruth.narrowOutlet) roles.add('narrow sacrifice outlet');
     } else {
       if (sacrificeTruth.creatureOutlet) roles.add('creature sacrifice outlet');
       if (sacrificeTruth.artifactOutlet) roles.add('artifact sacrifice outlet');
