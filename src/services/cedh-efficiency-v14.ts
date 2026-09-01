@@ -8,7 +8,7 @@ import {
   selectEligiblePrintingV08,
   type ResolvedPrintingPolicyV08,
 } from './printing-policy-v08.js';
-import { getCardsByIdentifiers, searchCards, type CardIdentifierInput } from './scryfall.js';
+import { getCardOracleText, getCardsByIdentifiers, searchCards, type CardIdentifierInput } from './scryfall.js';
 import { effectiveCardRolesV15, manaRoleTruthV15 } from './card-role-truth-v15.js';
 import {
   cardCreatureTypeCoherenceScoreV15,
@@ -96,7 +96,7 @@ function isCreature(card: ScryfallCard): boolean {
 }
 
 function text(card: ScryfallCard): string {
-  return (card.oracle_text ?? '').toLocaleLowerCase();
+  return getCardOracleText(card).toLocaleLowerCase();
 }
 
 function isLandSpecificTutor(card: ScryfallCard): boolean {
@@ -107,6 +107,42 @@ function hasGoodEdhrecRank(card: ScryfallCard, threshold: number): boolean {
   return card.edhrec_rank !== undefined && card.edhrec_rank <= threshold;
 }
 
+function isGraveyardSetupTutorV14(card: ScryfallCard): boolean {
+  const oracle = text(card);
+  return /search your library for [^.]{0,120}\bcreature cards?\b/.test(oracle)
+    && /put [^.]{0,120}\b(?:that|those|them|the chosen|these) cards?\b[^.]{0,100}\binto your graveyard\b/.test(oracle);
+}
+
+function isReusableTutorEngineV14(card: ScryfallCard): boolean {
+  const oracle = text(card);
+  return /\bprepared\b/.test(oracle)
+    && /\bsearch your library for a card\b/.test(oracle);
+}
+
+export function isHighLeverageTutorEngineV14(card: ScryfallCard): boolean {
+  return isGraveyardSetupTutorV14(card) || isReusableTutorEngineV14(card);
+}
+
+function sacrificeBasedInteractionV14(card: ScryfallCard): boolean {
+  const oracle = text(card);
+  return /\b(?:each opponent|each player) sacrifices? [^.]{0,100}\bcreatures?\b/.test(oracle)
+    || /\btarget (?:opponent|player) sacrifices? [^.]{0,100}\bcreatures?\b/.test(oracle);
+}
+
+function integratedEngineRoleCountV14(roles: Set<string>): number {
+  const categories = [
+    roles.has('creature sacrifice outlet'),
+    roles.has('repeatable draw') || roles.has('card draw'),
+    roles.has('life drain'),
+    roles.has('spot interaction'),
+    roles.has('graveyard recursion'),
+    roles.has('tutor'),
+    roles.has('treasure'),
+    roles.has('sacrifice synergy') && !roles.has('narrow sacrifice outlet'),
+  ];
+  return categories.filter(Boolean).length;
+}
+
 export function strictCedhQualityV14(
   card: ScryfallCard,
   creatureTypePreference: CreatureTypePreferenceV15 | null,
@@ -115,6 +151,8 @@ export function strictCedhQualityV14(
   const roles = new Set(effectiveCardRolesV15(card));
   const manaTruth = manaRoleTruthV15(card);
   const typal = cardCreatureTypeCoherenceScoreV15(card, creatureTypePreference);
+  const highLeverageTutor = isHighLeverageTutorEngineV14(card);
+  const integratedRoleCount = integratedEngineRoleCountV14(roles);
   const reasons: string[] = [];
   let score = 0;
 
@@ -134,6 +172,10 @@ export function strictCedhQualityV14(
     score += 65;
     reasons.push('cheap spot interaction');
   }
+  if (sacrificeBasedInteractionV14(card) && card.cmc <= 3) {
+    score += card.cmc <= 2 ? 66 : 52;
+    reasons.push('efficient sacrifice-based creature interaction');
+  }
   if (roles.has('protection') && card.cmc <= 2) {
     score += 58;
     reasons.push('cheap protection');
@@ -142,19 +184,22 @@ export function strictCedhQualityV14(
     score += 82;
     reasons.push('cheap broad tutor');
   }
+  if (highLeverageTutor && card.cmc <= 4) {
+    score += 90;
+    reasons.push(isGraveyardSetupTutorV14(card) ? 'high-leverage graveyard setup tutor' : 'reusable high-leverage tutor engine');
+  }
   if (/can(?:not|'t) cast spells|can't cast spells|your opponents can't cast/.test(text(card)) && card.cmc <= 2) {
     score += 78;
     reasons.push('cheap stack/turn lock protection');
   }
-  if ((roles.has('repeatable draw') || roles.has('card draw')) && card.cmc <= 3 && hasGoodEdhrecRank(card, 4_000)) {
-    score += card.cmc <= 2 ? 60 : 42;
+  if ((roles.has('repeatable draw') || roles.has('card draw')) && card.cmc <= 4 && hasGoodEdhrecRank(card, 4_000)) {
+    score += card.cmc <= 2 ? 60 : card.cmc === 3 ? 42 : 34;
     reasons.push('efficient proven card advantage');
   }
-  if (
-    ((roles.has('mana acceleration') && manaTruth.reliableLowCostManaAcceleration) || roles.has('cost reduction'))
-    && card.cmc <= 2
-    && hasGoodEdhrecRank(card, 3_000)
-  ) {
+  if (roles.has('cost reduction') && card.cmc <= 2 && hasGoodEdhrecRank(card, 4_000)) {
+    score += 78;
+    reasons.push('efficient cost reduction');
+  } else if (roles.has('mana acceleration') && manaTruth.reliableLowCostManaAcceleration && card.cmc <= 2 && hasGoodEdhrecRank(card, 3_000)) {
     score += 55;
     reasons.push('reliable efficient mana acceleration');
   }
@@ -170,9 +215,13 @@ export function strictCedhQualityV14(
     score += 42;
     reasons.push('cheap proven graveyard recursion');
   }
-  if (roles.has('sacrifice synergy') && card.cmc <= 2) {
+  if (roles.has('sacrifice synergy') && !roles.has('narrow sacrifice outlet') && card.cmc <= 2) {
     score += 34;
     reasons.push('cheap sacrifice-engine support');
+  }
+  if (integratedRoleCount >= 2 && card.cmc <= 4) {
+    score += card.cmc <= 3 ? 76 : 70;
+    reasons.push(`integrated multi-role engine (${integratedRoleCount} relevant roles)`);
   }
   if (roles.has('card selection') && card.cmc <= 1 && hasGoodEdhrecRank(card, 2_000)) {
     score += 38;
@@ -182,8 +231,12 @@ export function strictCedhQualityV14(
     score += typal.score;
     reasons.push(...typal.reasons);
   }
+  if (roles.has('narrow sacrifice outlet')) {
+    score -= 65;
+    reasons.push('narrow sacrifice cost cannot stand in for a general sacrifice engine');
+  }
 
-  if (reasons.length === 0) return { eligible: false, score: -999, reasons: [] };
+  if (reasons.length === 0 || score <= 0) return { eligible: false, score: -999, reasons: [] };
   score += Math.max(0, 22 - card.cmc * 6);
   if (card.edhrec_rank !== undefined) score += Math.max(0, 20 - Math.log10(card.edhrec_rank + 1) * 4);
   return { eligible: true, score, reasons };
@@ -193,7 +246,7 @@ function hasSubstantiveOffTypeUtility(roles: Set<string>, card: ScryfallCard): b
   if (roles.has('creature sacrifice outlet') || roles.has('life drain') || roles.has('tutor')) return true;
   if (roles.has('free interaction') || roles.has('countermagic') || roles.has('spot interaction')) return true;
   if (roles.has('repeatable draw') || roles.has('card draw')) return true;
-  if (roles.has('fast mana') || roles.has('mana acceleration')) return true;
+  if (roles.has('fast mana') || roles.has('mana acceleration') || roles.has('cost reduction')) return true;
   if (roles.has('sacrifice synergy') || roles.has('treasure')) return true;
   if (roles.has('protection') && card.cmc <= 2) return true;
   return roles.has('graveyard recursion') && card.cmc <= 1;
@@ -209,12 +262,13 @@ export function cutPressureV14(
   const roles = new Set(effectiveCardRolesV15(card));
   const manaTruth = manaRoleTruthV15(card);
   const typal = cardCreatureTypeCoherenceScoreV15(card, creatureTypePreference);
+  const highLeverageTutor = isHighLeverageTutorEngineV14(card);
   let pressure = Math.max(0, card.cmc - 2) * 12;
 
   if (card.cmc >= 5) pressure += 18;
   if (roles.has('board wipe')) pressure += 10;
   if (isLandSpecificTutor(card) && card.cmc >= 3) pressure += 25;
-  if (roles.has('tutor') && !isLandSpecificTutor(card) && card.cmc >= 3) pressure += 30;
+  if (roles.has('tutor') && !isLandSpecificTutor(card) && card.cmc >= 3 && !highLeverageTutor) pressure += 30;
   if ((roles.has('land ramp') || roles.has('mana acceleration')) && card.cmc >= 3) pressure += 18;
   if (roles.has('mana rock') && card.cmc >= 3) pressure += 28;
   if (roles.has('fast mana') && manaTruth.reliableImmediateFastMana) pressure -= 90;
@@ -222,10 +276,15 @@ export function cutPressureV14(
   if (roles.has('countermagic') && card.cmc <= 2) pressure -= 45;
   if (roles.has('spot interaction') && card.cmc <= 2) pressure -= 40;
   if (roles.has('tutor') && !isLandSpecificTutor(card) && card.cmc <= 2) pressure -= 55;
+  if (highLeverageTutor) pressure -= 85;
   if (roles.has('protection')) pressure -= card.cmc <= 2 ? 35 : 10;
   if (roles.has('repeatable draw') && card.cmc <= 3) pressure -= 32;
   if (roles.has('sacrifice outlet')) pressure -= 34;
   if (roles.has('life drain')) pressure -= 22;
+  if (roles.has('cost reduction') && card.cmc <= 2) pressure -= 42;
+
+  const tutorCount = Number(roleCounts.tutor ?? 0);
+  if (roles.has('tutor') && !isLandSpecificTutor(card) && tutorCount <= 5) pressure -= 18;
 
   const protectionCount = Number(roleCounts.protection ?? 0);
   if (roles.has('protection') && protectionCount > 4) {
@@ -234,7 +293,7 @@ export function cutPressureV14(
   }
 
   const recursionCount = Number(roleCounts['graveyard recursion'] ?? 0);
-  if (roles.has('graveyard recursion') && recursionCount > 12) {
+  if (roles.has('graveyard recursion') && recursionCount > 12 && !highLeverageTutor) {
     pressure += Math.min(48, (recursionCount - 12) * 4);
     if (card.cmc <= 2) pressure -= 10;
     if (card.cmc >= 3) pressure += 14;
@@ -377,14 +436,18 @@ async function strictCandidates(
   const clauses = [
     'mv<=2 -t:land',
     'o:"counter target" mv<=2 -t:land',
-    'o:"search your library for" mv<=2 -t:land',
+    'o:"search your library for" mv<=3 -t:land',
     '(o:"can\'t cast spells" OR o:"cannot cast spells") mv<=2 -t:land',
-    'o:"draw" mv<=3 -t:land',
+    'o:"draw" mv<=4 -t:land',
     'o:"add" mv<=2 -t:land',
-    'o:"sacrifice a creature" mv<=2 -t:land',
-    'o:"sacrifice another creature" mv<=2 -t:land',
-    'o:"dies" mv<=3 -t:land',
+    'o:"costs" o:"less to cast" mv<=2 -t:land',
+    'o:"sacrifice a creature" mv<=3 -t:land',
+    'o:"sacrifice another creature" mv<=4 -t:land',
+    'o:"you may sacrifice" o:"draw a card" mv<=4 -t:land',
+    'o:"dies" o:"draw" mv<=4 -t:land',
     'o:"from your graveyard" mv<=2 -t:land',
+    'o:"each opponent" o:"sacrifices" t:creature mv<=3',
+    'o:"each player" o:"sacrifices" t:creature mv<=3',
     ...(creatureTypePreference ? [`t:"${escapedTypeQuery(creatureTypePreference.creatureType)}" mv<=3 -t:land`] : []),
   ];
   const map = new Map<string, { card: ScryfallCard; quality: ReturnType<typeof strictCedhQualityV14> }>();
@@ -408,7 +471,7 @@ async function strictCandidates(
   const ranked = [...map.values()].sort((a, b) => b.quality.score - a.quality.score);
   const output: ExactCandidateV14[] = [];
   for (const item of ranked) {
-    if (output.length >= 32) break;
+    if (output.length >= 48) break;
     const printing = await selectEligiblePrintingV08(item.card, policy, options.maxUsdPerCard);
     if (!printing) continue;
     output.push({
@@ -714,6 +777,6 @@ export async function refineCedhEfficiencyV14(
     printingPolicy: describePrintingPolicyV08(policy),
     candidateCount: candidates.length,
     selectedCandidateCount: additions.length,
-    guidance: 'Strict efficiency mode uses fail-closed role truth, preserves pairwise-disjoint winning routes, applies diminishing marginal value to already-saturated roles, discounts oversaturated recursion/protection, increases pressure on slow tutors and three-mana rocks, and prefers commander-supported creature engines plus cheap sacrifice/drain pieces only while they still add meaningful marginal utility. Protected cards, legality, printing policy and hard budget remain authoritative.',
+    guidance: 'Strict efficiency mode uses fail-closed role truth, preserves pairwise-disjoint winning routes, protects high-leverage reusable/graveyard-setup tutors, rewards integrated multi-role engines and efficient sacrifice-based interaction, applies diminishing marginal value to saturated roles, and penalizes narrow sacrifice costs that cannot support the deck broadly. Protected cards, legality, printing policy and hard budget remain authoritative.',
   };
 }
