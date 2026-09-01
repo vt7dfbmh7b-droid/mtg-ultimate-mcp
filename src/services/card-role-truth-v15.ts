@@ -10,6 +10,9 @@ export interface ManaRoleTruthV15 {
   createsManaToken: boolean;
   triggeredMana: boolean;
   variableStateMana: boolean;
+  fixedManaOutput: number | null;
+  positiveImmediateManaProfit: boolean;
+  manaNeutralOneShot: boolean;
   reliableImmediateFastMana: boolean;
   reliableLowCostManaAcceleration: boolean;
   reasons: string[];
@@ -63,6 +66,40 @@ function hasVariableStateMana(textValue: string): boolean {
     || /\badd [^.\n]{0,140}\bwhere x is\b/.test(textValue);
 }
 
+function fixedManaOutput(textValue: string): number | null {
+  const outputs: number[] = [];
+  for (const match of textValue.matchAll(/\badd\s+((?:\{[wubrgc]\}){1,12})/gi)) {
+    const symbols = match[1]?.match(/\{[wubrgc]\}/gi) ?? [];
+    if (symbols.length > 0) outputs.push(symbols.length);
+  }
+  const wordValues: Record<string, number> = {
+    one: 1,
+    two: 2,
+    three: 3,
+    four: 4,
+    five: 5,
+    six: 6,
+    seven: 7,
+    eight: 8,
+    nine: 9,
+    ten: 10,
+  };
+  for (const match of textValue.matchAll(/\badd\s+(one|two|three|four|five|six|seven|eight|nine|ten)\s+mana\b/gi)) {
+    const value = match[1] ? wordValues[match[1].toLocaleLowerCase()] : undefined;
+    if (value !== undefined) outputs.push(value);
+  }
+  return outputs.length > 0 ? Math.max(...outputs) : null;
+}
+
+function selfSacrificeManaConversion(card: ScryfallCard, textValue: string): boolean {
+  const names = [card.name, ...(card.card_faces ?? []).map((face) => face.name)]
+    .flatMap((name) => name.split('//'))
+    .map((name) => name.trim().toLocaleLowerCase())
+    .filter(Boolean);
+  if (/\bsacrifice this (?:artifact|creature|permanent|card)\s*:\s*add\b/.test(textValue)) return true;
+  return names.some((name) => textValue.includes(`sacrifice ${name}: add`));
+}
+
 function repeatableSacrificeTargets(textValue: string): string[] {
   return [...textValue.matchAll(
     /\bsacrifice (?:a|an|another|target|one or more|any number of|x\b)\s+([^.,:;\n]{1,80})\s*:/g,
@@ -103,6 +140,12 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
   const manaToken = createsManaToken(oracle);
   const triggered = hasTriggeredMana(oracle);
   const variableStateMana = hasVariableStateMana(oracle);
+  const fixedOutput = fixedManaOutput(oracle);
+  const selfSacrificeConversion = selfSacrificeManaConversion(card, oracle);
+  const positiveImmediateManaProfit = fixedOutput !== null && fixedOutput > card.cmc;
+  const manaNeutralOneShot = selfSacrificeConversion
+    && fixedOutput !== null
+    && fixedOutput <= card.cmc;
   const variableSpellCost = /\{x\}/i.test(manaCost) || /\b(?:multi)?kicker\b/.test(oracle);
   const reasons: string[] = [];
 
@@ -113,6 +156,7 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
   if (manaToken) reasons.push('mana comes indirectly from creating a Treasure/Gold/Powerstone rather than immediate card-native production');
   if (triggered) reasons.push('mana production is gated behind a triggered event');
   if (variableStateMana) reasons.push('mana output scales from another zone/board/game-state quantity and may produce little or no acceleration');
+  if (manaNeutralOneShot) reasons.push('one-shot self-sacrifice mana output does not exceed the mana spent to cast the card');
   if (variableSpellCost) reasons.push('mana production depends on an X/kicker-style paid setup');
 
   const reliableLowCostManaAcceleration = mana
@@ -125,8 +169,11 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
     && !manaToken
     && !triggered
     && !variableStateMana
+    && !manaNeutralOneShot
     && !variableSpellCost;
-  const reliableImmediateFastMana = reliableLowCostManaAcceleration && card.cmc <= 1;
+  const reliableImmediateFastMana = reliableLowCostManaAcceleration
+    && card.cmc <= 1
+    && positiveImmediateManaProfit;
 
   return {
     addsMana: mana,
@@ -137,6 +184,9 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
     createsManaToken: manaToken,
     triggeredMana: triggered,
     variableStateMana,
+    fixedManaOutput: fixedOutput,
+    positiveImmediateManaProfit,
+    manaNeutralOneShot,
     reliableImmediateFastMana,
     reliableLowCostManaAcceleration,
     reasons,
@@ -145,10 +195,10 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
 
 /**
  * Fail-closed role truth for consumers that use generic Scryfall role inference as evidence.
- * Conditional, indirect, triggered, variable, or delayed mana may still be useful in a supported
- * deck, but it cannot impersonate reliable fast mana merely because its text contains a mana
- * ability or creates a mana-producing token. Likewise, a card that sacrifices only a named narrow
- * object (for example a Clue or Saproling) cannot impersonate a generic sacrifice outlet.
+ * Conditional, indirect, triggered, variable, mana-neutral one-shot, or delayed mana may still be
+ * useful in a supported deck, but it cannot impersonate reliable fast mana merely because its text
+ * contains a mana ability or creates a mana-producing token. Likewise, a card that sacrifices only
+ * a named narrow object (for example a Clue or Saproling) cannot impersonate a generic sacrifice outlet.
  */
 export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   const roles = new Set(inferCardRoles(card));
@@ -157,6 +207,10 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   if (roles.has('fast mana') && !manaTruth.reliableImmediateFastMana) {
     roles.delete('fast mana');
     roles.add(manaTruth.delayed ? 'delayed mana acceleration' : 'conditional mana acceleration');
+  }
+  if (roles.has('mana acceleration') && !manaTruth.reliableLowCostManaAcceleration && manaTruth.manaNeutralOneShot) {
+    roles.delete('mana acceleration');
+    roles.add('mana storage');
   }
   if (roles.has('sacrifice outlet')) {
     if (!sacrificeTruth.genericOutlet) {
