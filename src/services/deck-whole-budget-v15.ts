@@ -13,6 +13,7 @@ import { getCardsByIdentifiers, type CardIdentifierInput } from './scryfall.js';
 
 export interface WholeDeckBudgetBuildOptionsV15 extends DeckBuildOptionsV07 {
   maxDeckUsd: number;
+  creatureTypeOptimization?: boolean;
 }
 
 interface ResolveResultV15 {
@@ -51,12 +52,19 @@ interface CompliantCandidateV15 {
   remainingStructuralDeficitTotal: number;
 }
 
+interface NameConstraintAuditV15 {
+  valid: boolean;
+  missingRequired: string[];
+  excludedPresent: string[];
+}
+
 interface RefinementQualityV15 {
   acceptable: boolean;
   comboWasPreserved: boolean;
   winningComboCountPreserved: boolean;
   winningComboCoreCountPreserved: boolean;
   averageNonlandManaValueNonWorsened: boolean;
+  protectionFloorPreserved: boolean;
   materialQualityImprovement: boolean;
   creatureTypeCoherenceImproved: boolean;
   recursionSaturationImproved: boolean;
@@ -68,6 +76,8 @@ interface RefinementQualityV15 {
   finalWinningComboCores: number;
   initialAverageNonlandManaValue: number | null;
   finalAverageNonlandManaValue: number | null;
+  initialProtectionCount: number;
+  finalProtectionCount: number;
   initialFreeInteractionCount: number;
   finalFreeInteractionCount: number;
   initialFastManaCount: number;
@@ -128,6 +138,21 @@ function identifiers(entries: readonly DeckEntry[]): CardIdentifierInput[] {
     ...(entry.set ? { set: entry.set } : {}),
     ...(entry.collectorNumber ? { collectorNumber: entry.collectorNumber } : {}),
   }));
+}
+
+function auditNameConstraintsV15(
+  decklist: string,
+  requiredCards: readonly string[],
+  excludedCards: readonly string[],
+): NameConstraintAuditV15 {
+  const names = new Set(allEntries(decklist).map((entry) => normalize(entry.name)));
+  const missingRequired = requiredCards.filter((name) => !names.has(normalize(name)));
+  const excludedPresent = excludedCards.filter((name) => names.has(normalize(name)));
+  return {
+    valid: missingRequired.length === 0 && excludedPresent.length === 0,
+    missingRequired,
+    excludedPresent,
+  };
 }
 
 async function auditExactDeckBudgetV15(
@@ -266,6 +291,9 @@ function refinementQualityV15(refinement: Record<string, unknown>): RefinementQu
   const finalWinningComboCores = finiteNumber(final.winningComboCoreCount, finalWinningCombos > 0 ? 1 : 0);
   const initialAverageNonlandManaValue = nullableFiniteNumber(initialMetrics.averageNonlandManaValue);
   const finalAverageNonlandManaValue = nullableFiniteNumber(finalMetrics.averageNonlandManaValue);
+  const initialProtectionCount = finiteNumber(initialMetrics.protectionCount);
+  const finalProtectionCount = finiteNumber(finalMetrics.protectionCount);
+  const protectionFloorPreserved = finalProtectionCount >= Math.min(initialProtectionCount, 4);
   const initialFreeInteractionCount = finiteNumber(initialMetrics.freeInteractionCount);
   const finalFreeInteractionCount = finiteNumber(finalMetrics.freeInteractionCount);
   const initialFastManaCount = finiteNumber(initialMetrics.fastManaCount);
@@ -296,11 +324,13 @@ function refinementQualityV15(refinement: Record<string, unknown>): RefinementQu
     acceptable: comboWasPreserved
       && winningComboCoreCountPreserved
       && averageNonlandManaValueNonWorsened
+      && protectionFloorPreserved
       && materialQualityImprovement,
     comboWasPreserved,
     winningComboCountPreserved,
     winningComboCoreCountPreserved,
     averageNonlandManaValueNonWorsened,
+    protectionFloorPreserved,
     materialQualityImprovement,
     creatureTypeCoherenceImproved,
     recursionSaturationImproved,
@@ -312,6 +342,8 @@ function refinementQualityV15(refinement: Record<string, unknown>): RefinementQu
     finalWinningComboCores,
     initialAverageNonlandManaValue,
     finalAverageNonlandManaValue,
+    initialProtectionCount,
+    finalProtectionCount,
     initialFreeInteractionCount,
     finalFreeInteractionCount,
     initialFastManaCount,
@@ -427,6 +459,19 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
       continue;
     }
 
+    const nameConstraints = auditNameConstraintsV15(decklist, effectiveMustInclude, options.excludedCards ?? []);
+    if (!nameConstraints.valid) {
+      attempts.push({
+        candidateMaxUsdPerCard: cap,
+        userMaxUsdPerCard: options.maxUsdPerCard ?? null,
+        buildStatus: draftStatus,
+        auditStatus: 'hard-card-constraint-failure',
+        auditedTotalUsd: null,
+        nameConstraints,
+      });
+      continue;
+    }
+
     const remainingDeficitTotal = remainingStructuralDeficitTotal(draft);
     const audit = await auditExactDeckBudgetV15(decklist, options.maxDeckUsd, resolveDeckCards);
     if (audit.auditedTotalUsd !== null) {
@@ -442,6 +487,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
       remainingStructuralDeficitTotal: Number.isFinite(remainingDeficitTotal) ? remainingDeficitTotal : null,
       unknownPriceEntries: audit.unknownPriceEntries,
       unresolvedEntries: audit.unresolvedEntries,
+      nameConstraints,
     });
 
     if (audit.withinBudget) {
@@ -475,6 +521,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
           ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
           maxUsdPerCard: refinementSearchCapUsd,
           ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
+          ...(options.creatureTypeOptimization !== undefined ? { creatureTypeOptimization: options.creatureTypeOptimization } : {}),
           protectedCards: effectiveMustInclude,
           requireVerifiedCombo: true,
           maxEfficiencySwaps: 10,
@@ -482,12 +529,25 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
         });
         const refinedDecklist = typeof refinement.finalDecklist === 'string' ? refinement.finalDecklist : '';
         const quality = refinementQualityV15(refinement);
+        const nameConstraints = refinedDecklist.trim()
+          ? auditNameConstraintsV15(refinedDecklist, effectiveMustInclude, options.excludedCards ?? [])
+          : { valid: false, missingRequired: effectiveMustInclude, excludedPresent: [] };
         if (!refinedDecklist.trim()) {
           postBudgetRefinement = {
             attempted: true,
             status: 'rejected-no-final-decklist',
             refinementSearchCapUsd: money(refinementSearchCapUsd),
             quality,
+            nameConstraints,
+            refinement,
+          };
+        } else if (!nameConstraints.valid) {
+          postBudgetRefinement = {
+            attempted: true,
+            status: 'rejected-hard-card-constraints',
+            refinementSearchCapUsd: money(refinementSearchCapUsd),
+            quality,
+            nameConstraints,
             refinement,
           };
         } else if (!quality.acceptable) {
@@ -496,6 +556,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
             status: 'rejected-no-material-safe-improvement',
             refinementSearchCapUsd: money(refinementSearchCapUsd),
             quality,
+            nameConstraints,
             refinement,
           };
         } else {
@@ -508,6 +569,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
               status: 'accepted',
               refinementSearchCapUsd: money(refinementSearchCapUsd),
               quality,
+              nameConstraints,
               budgetAudit: refinedAudit,
               refinement,
             };
@@ -517,6 +579,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
               status: 'rejected-hard-budget',
               refinementSearchCapUsd: money(refinementSearchCapUsd),
               quality,
+              nameConstraints,
               budgetAudit: refinedAudit,
               refinement,
             };
@@ -539,6 +602,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
       remainingCandidateBudgetEstimateUsd: money(candidateBudgetUsd),
       chosenCandidateSearchCapUsd: selected.cap,
       userMaxUsdPerCard: options.maxUsdPerCard ?? null,
+      creatureTypeOptimization: options.creatureTypeOptimization ?? true,
       budgetAudit: finalBudgetAudit,
       attempts,
       compliantCandidateCount: compliantCandidates.length,
@@ -552,7 +616,7 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
       baseDecklist: selected.decklist,
       decklist: finalDecklist,
       constraint: `US$${money(options.maxDeckUsd)} maximum total deck budget`,
-      caveat: 'Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. The search compares every generated budget-compliant draft rather than stopping at the first cheap fit. Candidate quality is ordered by remaining structural deficits and then by the widest legal candidate search cap; raw spend is never treated as power by itself. Bracket-5 whole-budget construction attempts a broader generic verified Commander Spellbook win-seed search, then routes the selected legal draft through strict efficiency and mana-base refinement. The post-refinement search inherits the selected compliant draft’s candidate price pressure (or a tighter explicit user per-card limit) so unrestricted premium staples cannot consume the whole-deck budget by accident. A refined list is accepted only when its independent winning-combo cores are preserved, its average nonland mana value does not worsen, at least one material high-power or supported-coherence signal improves, and a second independent exact-printing whole-deck audit still passes the original hard budget. Duplicate winning variants sharing the same lynchpin are not treated as independent redundancy. Explicit exclusions, required cards and hard budget truth remain authoritative. The search remains heuristic rather than proof of the globally strongest possible list.',
+      caveat: 'Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. Explicit exclusions and required cards are rechecked after draft selection and again after every accepted refinement; later win-package or efficiency stages cannot silently override them. The search compares every generated budget-compliant draft rather than stopping at the first cheap fit. Candidate quality is ordered by remaining structural deficits and then by the widest legal candidate search cap; raw spend is never treated as power by itself. Bracket-5 whole-budget construction attempts a broader generic verified Commander Spellbook win-seed search, then routes the selected legal draft through strict efficiency and mana-base refinement. A refined list is accepted only when its independent winning-combo cores are preserved, its average nonland mana value does not worsen, its protection floor is preserved, at least one material high-power signal improves, and a second independent exact-printing whole-deck audit still passes the original hard budget. Creature-type optimization can be explicitly disabled when the requested construction objective has no tribal component. The search remains heuristic rather than proof of the globally strongest possible list.',
     };
   }
 

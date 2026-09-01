@@ -28,6 +28,7 @@ export interface CedhEfficiencyOptionsV14 {
   maxSwaps?: number;
   protectedCards?: string[];
   excludedCards?: string[];
+  creatureTypeOptimization?: boolean;
 }
 
 interface ExactCandidateV14 {
@@ -103,6 +104,12 @@ function isLandSpecificTutor(card: ScryfallCard): boolean {
   return /search your library for (?:up to )?(?:a|an|one|two)?\s*(?:basic )?land(?: card)?/.test(text(card));
 }
 
+export function isBroadTutorV14(card: ScryfallCard): boolean {
+  const oracle = text(card);
+  return /\bsearch your library for a card\b/.test(oracle)
+    && !isLandSpecificTutor(card);
+}
+
 function hasGoodEdhrecRank(card: ScryfallCard, threshold: number): boolean {
   return card.edhrec_rank !== undefined && card.edhrec_rank <= threshold;
 }
@@ -129,14 +136,14 @@ function sacrificeBasedInteractionV14(card: ScryfallCard): boolean {
     || /\btarget (?:opponent|player) sacrifices? [^.]{0,100}\bcreatures?\b/.test(oracle);
 }
 
-function integratedEngineRoleCountV14(roles: Set<string>): number {
+function integratedEngineRoleCountV14(roles: Set<string>, card: ScryfallCard): number {
   const categories = [
     roles.has('creature sacrifice outlet'),
     roles.has('repeatable draw') || roles.has('card draw'),
     roles.has('life drain'),
     roles.has('spot interaction'),
     roles.has('graveyard recursion'),
-    roles.has('tutor'),
+    roles.has('tutor') && (isBroadTutorV14(card) || isHighLeverageTutorEngineV14(card)),
     roles.has('treasure'),
     roles.has('sacrifice synergy') && !roles.has('narrow sacrifice outlet'),
   ];
@@ -152,7 +159,8 @@ export function strictCedhQualityV14(
   const manaTruth = manaRoleTruthV15(card);
   const typal = cardCreatureTypeCoherenceScoreV15(card, creatureTypePreference);
   const highLeverageTutor = isHighLeverageTutorEngineV14(card);
-  const integratedRoleCount = integratedEngineRoleCountV14(roles);
+  const broadTutor = isBroadTutorV14(card);
+  const integratedRoleCount = integratedEngineRoleCountV14(roles, card);
   const reasons: string[] = [];
   let score = 0;
 
@@ -180,9 +188,13 @@ export function strictCedhQualityV14(
     score += 58;
     reasons.push('cheap protection');
   }
-  if (roles.has('tutor') && !isLandSpecificTutor(card) && card.cmc <= 2) {
+  if (broadTutor && card.cmc <= 2) {
     score += 82;
     reasons.push('cheap broad tutor');
+  }
+  if (roles.has('tutor') && !broadTutor && !highLeverageTutor) {
+    score -= 25;
+    reasons.push('restricted tutor does not receive broad-tutor credit');
   }
   if (highLeverageTutor && card.cmc <= 4) {
     score += 90;
@@ -263,33 +275,40 @@ export function cutPressureV14(
   const manaTruth = manaRoleTruthV15(card);
   const typal = cardCreatureTypeCoherenceScoreV15(card, creatureTypePreference);
   const highLeverageTutor = isHighLeverageTutorEngineV14(card);
+  const broadTutor = isBroadTutorV14(card);
   let pressure = Math.max(0, card.cmc - 2) * 12;
 
   if (card.cmc >= 5) pressure += 18;
-  if (roles.has('board wipe')) pressure += 10;
   if (isLandSpecificTutor(card) && card.cmc >= 3) pressure += 25;
-  if (roles.has('tutor') && !isLandSpecificTutor(card) && card.cmc >= 3 && !highLeverageTutor) pressure += 30;
+  if (roles.has('tutor') && !broadTutor && !highLeverageTutor) pressure += card.cmc >= 3 ? 30 : 12;
   if ((roles.has('land ramp') || roles.has('mana acceleration')) && card.cmc >= 3) pressure += 18;
   if (roles.has('mana rock') && card.cmc >= 3) pressure += 28;
   if (roles.has('fast mana') && manaTruth.reliableImmediateFastMana) pressure -= 90;
   if (roles.has('free interaction')) pressure -= 85;
   if (roles.has('countermagic') && card.cmc <= 2) pressure -= 45;
   if (roles.has('spot interaction') && card.cmc <= 2) pressure -= 40;
-  if (roles.has('tutor') && !isLandSpecificTutor(card) && card.cmc <= 2) pressure -= 55;
+  if (broadTutor && card.cmc <= 2) pressure -= 55;
   if (highLeverageTutor) pressure -= 85;
   if (roles.has('protection')) pressure -= card.cmc <= 2 ? 35 : 10;
   if (roles.has('repeatable draw') && card.cmc <= 3) pressure -= 32;
-  if (roles.has('sacrifice outlet')) pressure -= 34;
+  if (roles.has('sacrifice outlet') || roles.has('creature sacrifice outlet')) pressure -= 34;
   if (roles.has('life drain')) pressure -= 22;
   if (roles.has('cost reduction') && card.cmc <= 2) pressure -= 42;
 
   const tutorCount = Number(roleCounts.tutor ?? 0);
-  if (roles.has('tutor') && !isLandSpecificTutor(card) && tutorCount <= 5) pressure -= 18;
+  if ((broadTutor || highLeverageTutor) && tutorCount <= 5) pressure -= 18;
 
   const protectionCount = Number(roleCounts.protection ?? 0);
-  if (roles.has('protection') && protectionCount > 4) {
+  if (roles.has('protection') && protectionCount <= 4) {
+    pressure -= 70;
+  } else if (roles.has('protection') && protectionCount > 4) {
     pressure += Math.min(28, (protectionCount - 4) * 7);
     if (card.cmc >= 3) pressure += 12;
+  }
+
+  const boardWipeCount = Number(roleCounts['board wipe'] ?? 0);
+  if (roles.has('board wipe')) {
+    pressure += boardWipeCount <= 2 ? -65 : 10;
   }
 
   const recursionCount = Number(roleCounts['graveyard recursion'] ?? 0);
@@ -357,7 +376,7 @@ function saturationRoles(card: ScryfallCard): Set<string> {
   if (roles.has('spot interaction')) output.add('spot interaction');
   if (roles.has('card draw') || roles.has('repeatable draw')) output.add('card draw');
   if (roles.has('life drain')) output.add('life drain');
-  if (roles.has('tutor') && !isLandSpecificTutor(card)) output.add('tutor');
+  if ((isBroadTutorV14(card) || isHighLeverageTutorEngineV14(card)) && roles.has('tutor')) output.add('tutor');
   return output;
 }
 
@@ -641,6 +660,28 @@ export function assessCedhComboPreservationV14(
   };
 }
 
+export function criticalRoleFloorsPreservedV14(
+  beforeMetrics: Pick<ReturnType<typeof buildDeckMetrics>, 'protectionCount' | 'roleCounts'>,
+  afterMetrics: Pick<ReturnType<typeof buildDeckMetrics>, 'protectionCount' | 'roleCounts'>,
+): { preserved: boolean; reasons: string[] } {
+  const reasons: string[] = [];
+  const beforeProtection = Number(beforeMetrics.protectionCount ?? 0);
+  const afterProtection = Number(afterMetrics.protectionCount ?? 0);
+  const protectionFloor = Math.min(beforeProtection, 4);
+  if (afterProtection < protectionFloor) {
+    reasons.push(`protection fell below preserved floor ${protectionFloor}: ${beforeProtection} -> ${afterProtection}`);
+  }
+
+  const beforeBoardWipes = Number(beforeMetrics.roleCounts['board wipe'] ?? 0);
+  const afterBoardWipes = Number(afterMetrics.roleCounts['board wipe'] ?? 0);
+  const boardWipeFloor = beforeBoardWipes > 0 ? 1 : 0;
+  if (afterBoardWipes < boardWipeFloor) {
+    reasons.push(`board wipes fell below preserved floor ${boardWipeFloor}: ${beforeBoardWipes} -> ${afterBoardWipes}`);
+  }
+
+  return { preserved: reasons.length === 0, reasons };
+}
+
 export async function refineCedhEfficiencyV14(
   decklist: string,
   options: CedhEfficiencyOptionsV14 = {},
@@ -665,13 +706,16 @@ export async function refineCedhEfficiencyV14(
   for (const commander of resolved.parsed.commanders) protectedNames.add(normalize(commander.name));
   const identity = commanderIdentity(resolved.parsed, resolved.cards);
   const beforeMetrics = buildDeckMetrics(resolved.parsed, resolved.cards);
-  const creatureTypePreference = deriveCreatureTypePreferencesV15(resolved.parsed, resolved.cards)[0] ?? null;
+  const creatureTypePreference = options.creatureTypeOptimization === false
+    ? null
+    : deriveCreatureTypePreferencesV15(resolved.parsed, resolved.cards)[0] ?? null;
   const candidates = await strictCandidates(resolved.parsed, identity, policy, options, creatureTypePreference);
   if (candidates.length === 0) {
     return {
       status: 'no-strict-cedh-candidates',
       finalDecklist: renderDeck(resolved.parsed),
       creatureTypePreference,
+      creatureTypeOptimizationApplied: options.creatureTypeOptimization !== false,
       printingPolicy: describePrintingPolicyV08(policy),
     };
   }
@@ -683,6 +727,7 @@ export async function refineCedhEfficiencyV14(
       finalDecklist: renderDeck(resolved.parsed),
       candidateCount: candidates.length,
       creatureTypePreference,
+      creatureTypeOptimizationApplied: options.creatureTypeOptimization !== false,
     };
   }
   const cuts = rankedCuts(
@@ -706,6 +751,20 @@ export async function refineCedhEfficiencyV14(
     return { status: 'candidate-package-failed-validation', finalDecklist: renderDeck(resolved.parsed), commanderRules: nextRules, creatureTypePreference };
   }
 
+  const afterMetrics = buildDeckMetrics(nextParsed, nextCards);
+  const criticalRoleFloors = criticalRoleFloorsPreservedV14(beforeMetrics, afterMetrics);
+  if (!criticalRoleFloors.preserved) {
+    return {
+      status: 'rejected-critical-role-regression',
+      finalDecklist: renderDeck(resolved.parsed),
+      beforeMetrics,
+      afterMetrics,
+      criticalRoleFloors,
+      creatureTypePreference,
+      creatureTypeOptimizationApplied: options.creatureTypeOptimization !== false,
+    };
+  }
+
   const [beforeCombos, afterCombos] = await Promise.all([
     findDeckCombos(renderDeck(resolved.parsed), 100),
     findDeckCombos(renderDeck(nextParsed), 100),
@@ -716,14 +775,17 @@ export async function refineCedhEfficiencyV14(
       status: 'rejected-winning-combo-regression',
       finalDecklist: renderDeck(resolved.parsed),
       creatureTypePreference,
+      criticalRoleFloors,
       ...comboPreservation,
     };
   }
 
-  const afterMetrics = buildDeckMetrics(nextParsed, nextCards);
-  const afterCreatureTypePreference = deriveCreatureTypePreferencesV15(nextParsed, nextCards)
-    .find((row) => creatureTypePreference && normalize(row.creatureType) === normalize(creatureTypePreference.creatureType)) ?? null;
-  const creatureTypeCoherenceImproved = creatureTypePreference !== null
+  const afterCreatureTypePreference = creatureTypePreference === null
+    ? null
+    : deriveCreatureTypePreferencesV15(nextParsed, nextCards)
+      .find((row) => normalize(row.creatureType) === normalize(creatureTypePreference.creatureType)) ?? null;
+  const creatureTypeCoherenceImproved = options.creatureTypeOptimization !== false
+    && creatureTypePreference !== null
     && afterCreatureTypePreference !== null
     && afterCreatureTypePreference.score >= creatureTypePreference.score + 4;
   const recursionSaturationImproved = beforeMetrics.recursionCount > 12
@@ -744,7 +806,9 @@ export async function refineCedhEfficiencyV14(
       creatureTypePreference,
       afterCreatureTypePreference,
       creatureTypeCoherenceImproved,
+      creatureTypeOptimizationApplied: options.creatureTypeOptimization !== false,
       recursionSaturationImproved,
+      criticalRoleFloors,
       ...comboPreservation,
     };
   }
@@ -770,13 +834,15 @@ export async function refineCedhEfficiencyV14(
     creatureTypePreference,
     afterCreatureTypePreference,
     creatureTypeCoherenceImproved,
+    creatureTypeOptimizationApplied: options.creatureTypeOptimization !== false,
     recursionSaturationImproved,
+    criticalRoleFloors,
     ...comboPreservation,
     finalDecklist: renderDeck(nextParsed),
     finalCommanderRules: nextRules,
     printingPolicy: describePrintingPolicyV08(policy),
     candidateCount: candidates.length,
     selectedCandidateCount: additions.length,
-    guidance: 'Strict efficiency mode uses fail-closed role truth, preserves pairwise-disjoint winning routes, protects high-leverage reusable/graveyard-setup tutors, rewards integrated multi-role engines and efficient sacrifice-based interaction, applies diminishing marginal value to saturated roles, and penalizes narrow sacrifice costs that cannot support the deck broadly. Protected cards, legality, printing policy and hard budget remain authoritative.',
+    guidance: 'Strict efficiency mode uses fail-closed role truth, preserves pairwise-disjoint winning routes and critical protection/wipe floors, protects high-leverage reusable/graveyard-setup tutors, distinguishes unrestricted broad tutors from constrained search engines, rewards integrated multi-role engines and efficient sacrifice-based interaction, and applies diminishing marginal value to saturated roles. Creature-type coherence can be explicitly disabled when tribal construction is not part of the requested objective. Protected cards, explicit exclusions, legality, printing policy and hard budget remain authoritative.',
   };
 }

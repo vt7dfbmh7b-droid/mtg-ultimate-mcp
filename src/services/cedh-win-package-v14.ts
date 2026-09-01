@@ -22,6 +22,7 @@ export interface CedhWinPackageOptionsV14 {
   includeSpecialReleases?: boolean;
   maxUsdPerCard?: number;
   protectedCards?: string[];
+  excludedCards?: string[];
   maxMissingCards?: number;
   maxCandidatesToVerify?: number;
 }
@@ -51,6 +52,15 @@ function record(value: unknown): Record<string, unknown> {
 
 function normalize(value: string): string {
   return value.trim().toLocaleLowerCase();
+}
+
+export function winPlanBlockedByExclusionsV14(
+  cardNames: readonly string[],
+  missingNames: readonly string[],
+  excludedCards: readonly string[],
+): boolean {
+  const excluded = new Set(excludedCards.map(normalize));
+  return [...cardNames, ...missingNames].some((name) => excluded.has(normalize(name)));
 }
 
 function finishMarker(finish: DeckEntry['finish'] | ExactAdditionV14['finish']): string {
@@ -331,6 +341,7 @@ export async function completeBestCedhWinPackageV14(
 ): Promise<Record<string, unknown>> {
   const maxMissingCards = Math.max(1, Math.min(3, Math.trunc(options.maxMissingCards ?? 2)));
   const maxCandidatesToVerify = Math.max(1, Math.min(12, Math.trunc(options.maxCandidatesToVerify ?? 8)));
+  const excludedNames = new Set((options.excludedCards ?? []).map(normalize));
   const policy = await resolvePrintingPolicyV08({
     ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
     ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
@@ -352,12 +363,21 @@ export async function completeBestCedhWinPackageV14(
     .flatMap((card) => card.color_identity))].sort();
   const beforeCombos = await findDeckCombos(renderDeck(resolved.parsed), 100);
   const beforeWinningIds = includedWinningComboIds(beforeCombos);
-  const plans = planWinningNearCombos(resolved.parsed, beforeCombos, maxMissingCards);
+  const rawPlans = planWinningNearCombos(resolved.parsed, beforeCombos, maxMissingCards);
+  const blockedPlans = rawPlans.filter((plan) => winPlanBlockedByExclusionsV14(plan.cardNames, plan.missingNames, options.excludedCards ?? []));
+  const plans = rawPlans.filter((plan) => !winPlanBlockedByExclusionsV14(plan.cardNames, plan.missingNames, options.excludedCards ?? []));
+  const audit: Array<Record<string, unknown>> = blockedPlans.map((plan) => ({
+    comboId: plan.id,
+    results: plan.results,
+    missingNames: plan.missingNames,
+    independentFromExistingWins: plan.independentFromExistingWins,
+    status: 'blocked-by-explicit-exclusion',
+    blockedCards: [...new Set([...plan.cardNames, ...plan.missingNames].filter((name) => excludedNames.has(normalize(name))))],
+  }));
 
   const lookupNames = [...new Set(plans.slice(0, 24).flatMap((plan) => plan.missingNames))];
   const oracleLookup = lookupNames.length > 0 ? await getCardsByNames(lookupNames) : { cards: [], notFound: [] };
   const oracleByName = new Map(oracleLookup.cards.map((card) => [normalize(card.name), card]));
-  const audit: Array<Record<string, unknown>> = [];
   let verified = 0;
 
   for (const plan of plans) {
@@ -365,6 +385,10 @@ export async function completeBestCedhWinPackageV14(
     const additions: ExactAdditionV14[] = [];
     const unavailable: string[] = [];
     for (const name of plan.missingNames) {
+      if (excludedNames.has(normalize(name))) {
+        unavailable.push(name);
+        continue;
+      }
       const oracleCard = oracleByName.get(normalize(name));
       if (!oracleCard || oracleCard.legalities.commander !== 'legal' || oracleCard.color_identity.some((color) => !identity.includes(color))) {
         unavailable.push(name);
@@ -403,6 +427,7 @@ export async function completeBestCedhWinPackageV14(
     const nextParsed = applyPackage(resolved.parsed, cuts, additions);
     const nextCards = applyResolvedCards(resolved.cards, cuts, additions);
     if (!nextParsed || !nextCards || nextParsed.totalCards !== 100) continue;
+    if ([...nextParsed.commanders, ...nextParsed.main].some((entry) => excludedNames.has(normalize(entry.name)))) continue;
     const nextRules = validateCommanderDeck(nextParsed, nextCards);
     if (!nextRules.isLegal || nextCards.some((card) => !printingMatchesPolicyV08(card, policy))) continue;
 
@@ -450,7 +475,7 @@ export async function completeBestCedhWinPackageV14(
       bracketEvidence: bracket,
       printingPolicy: describePrintingPolicyV08(policy),
       audit,
-      guidance: 'This cEDH gate verifies a deterministic Commander Spellbook win package after rebuilding. When the starting deck already has a winning core, independent packages that do not share a critical non-commander card with existing wins are prioritized over duplicate variants. If no independent eligible route can be completed, a redundant winning variant remains an allowed fallback. Lifegain-only, value-only, standalone infinite-mana, draw-your-library, and bounded life-loss or mill outputs do not satisfy this gate.',
+      guidance: 'This cEDH gate verifies a deterministic Commander Spellbook win package after rebuilding. Explicit exclusions are hard constraints and cannot be reintroduced by win-package completion. When the starting deck already has a winning core, independent packages that do not share a critical non-commander card with existing wins are prioritized over duplicate variants. If no independent eligible route can be completed, a redundant winning variant remains an allowed fallback. Lifegain-only, value-only, standalone infinite-mana, draw-your-library, and bounded life-loss or mill outputs do not satisfy this gate.',
     };
   }
 
@@ -458,9 +483,10 @@ export async function completeBestCedhWinPackageV14(
     status: 'no-verifiable-eligible-winning-combo',
     beforeWinningCombos: beforeWinningIds.size,
     winningNearComboCount: plans.length,
+    blockedWinningNearComboCount: blockedPlans.length,
     printingPolicy: describePrintingPolicyV08(policy),
     audit,
     finalDecklist: renderDeck(resolved.parsed),
-    guidance: 'No checked deterministic winning near-combo could be completed with legal policy-compliant printings and independently verified after rebuilding the deck.',
+    guidance: 'No checked deterministic winning near-combo could be completed with legal policy-compliant printings while respecting explicit exclusions and independently verifying the rebuilt deck.',
   };
 }

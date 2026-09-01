@@ -205,6 +205,7 @@ export async function refineCommanderForCedhV14(
     ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
     ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
     ...(options.protectedCards ? { protectedCards: options.protectedCards } : {}),
+    ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
     maxMissingCards: options.maxMissingCards ?? 2,
     maxCandidatesToVerify: options.maxCandidatesToVerify ?? 8,
   });
@@ -242,6 +243,7 @@ export async function refineCommanderForCedhV14(
       ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
       ...(options.maxUsdPerCard !== undefined ? { maxUsdPerCard: options.maxUsdPerCard } : {}),
       ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
+      ...(options.creatureTypeOptimization !== undefined ? { creatureTypeOptimization: options.creatureTypeOptimization } : {}),
       protectedCards,
       maxSwaps: passSwapLimit,
     });
@@ -299,7 +301,9 @@ export async function refineCommanderForCedhV14(
     baselineWinningComboCores,
     finalWinningComboCores,
     finalDecklist: currentDecklist,
-    guidance: 'The cEDH path is win-package-first: verify a real winning package, protect it, then apply up to two marginal-value efficiency passes when a high-swap optimization request still has worthwhile candidates. Each pass recalculates role saturation and creature-type coherence, so later passes attack surviving filler instead of blindly stacking the role that won pass one. Lands are optimized separately and the finished list is independently reassessed. Winning redundancy/preservation is measured by pairwise-disjoint winning packages rather than duplicate or transitively connected variants. Competitive role evidence uses fail-closed role truth for conditional/delayed mana. It does not translate targetBracket=5 into an automatic Bracket 5 claim.',
+    guidance: options.creatureTypeOptimization === false
+      ? 'The cEDH path is win-package-first and explicit exclusions remain authoritative through win completion and efficiency refinement. Creature-type coherence is disabled for this run, so strict efficiency cannot claim improvement from tribal density. Up to two marginal-value efficiency passes recalculate role saturation while preserving critical role floors and independent winning cores, then lands are optimized separately and the finished list is reassessed.'
+      : 'The cEDH path is win-package-first: verify a real winning package, protect it, then apply up to two marginal-value efficiency passes when a high-swap optimization request still has worthwhile candidates. Each pass recalculates role saturation and creature-type coherence, so later passes attack surviving filler instead of blindly stacking the role that won pass one. Lands are optimized separately and the finished list is independently reassessed. Winning redundancy/preservation is measured by pairwise-disjoint winning packages rather than duplicate or transitively connected variants. Competitive role evidence uses fail-closed role truth for conditional/delayed mana. It does not translate targetBracket=5 into an automatic Bracket 5 claim.',
   };
 }
 

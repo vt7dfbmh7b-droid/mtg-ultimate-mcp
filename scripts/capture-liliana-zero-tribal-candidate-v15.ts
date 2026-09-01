@@ -54,6 +54,7 @@ async function main(): Promise<void> {
     landCount: 30,
     excludedCards,
     mustInclude,
+    creatureTypeOptimization: false,
   });
   const nzdBuild = withNzdPricingV13(result, rate, { maxDeckNzd });
   const decklist = String(result.decklist ?? '').trim();
@@ -64,6 +65,7 @@ async function main(): Promise<void> {
     maxDeckNzd,
     maxDeckUsdReference,
     targetBracket,
+    creatureTypePolicy: 'none',
     excludedCards,
     mustInclude,
     currencyPolicy: nzdBuild.currencyPolicy,
