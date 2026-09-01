@@ -10,6 +10,9 @@ export interface ManaRoleTruthV15 {
   createsManaToken: boolean;
   triggeredMana: boolean;
   variableStateMana: boolean;
+  tapActivationBeforeMana: boolean;
+  summoningSicknessDelay: boolean;
+  spendingRestriction: boolean;
   fixedManaOutput: number | null;
   positiveImmediateManaProfit: boolean;
   manaNeutralOneShot: boolean;
@@ -40,6 +43,7 @@ function hasExternalBoardPrerequisite(textValue: string): boolean {
     || /\bonly if you control\b/.test(textValue)
     || /\bamong colors of [^.]{0,120} you control\b/.test(textValue)
     || /\btap an untapped [^.]{0,100} you control\b/.test(textValue)
+    || /\bsacrifice (?:another|a|an) [^:,.\n]{1,80}\s*:\s*add\b/.test(textValue)
     || /\bas long as you control [^.]{0,100},?\s*\{t\}:?\s*add\b/.test(textValue);
 }
 
@@ -64,6 +68,17 @@ function hasVariableStateMana(textValue: string): boolean {
   return /\badd [^.\n]{0,140}\bfor each\b/.test(textValue)
     || /\badd [^.\n]{0,140}\bequal to (?:the )?(?:number|amount)\b/.test(textValue)
     || /\badd [^.\n]{0,140}\bwhere x is\b/.test(textValue);
+}
+
+function hasTapManaActivation(textValue: string): boolean {
+  return /\{t\}[^:]{0,100}:\s*add\b/.test(textValue)
+    || /\{t\}\s*,[^:]{0,100}:\s*add\b/.test(textValue);
+}
+
+function hasSpendingRestriction(textValue: string): boolean {
+  return /\bspend this mana only (?:to|on|for)\b/.test(textValue)
+    || /\bthis mana can't be spent to\b/.test(textValue)
+    || /\bspend this mana only as though\b/.test(textValue);
 }
 
 function fixedManaOutput(textValue: string): number | null {
@@ -131,7 +146,9 @@ export function sacrificeRoleTruthV15(card: ScryfallCard): SacrificeRoleTruthV15
 export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
   const oracle = text(card);
   const manaCost = getCardManaCost(card);
-  const isLand = card.type_line.toLocaleLowerCase().includes('land');
+  const typeLine = card.type_line.toLocaleLowerCase();
+  const isLand = typeLine.includes('land');
+  const isCreature = typeLine.includes('creature');
   const mana = addsMana(oracle);
   const delayed = /\bsuspend\b/.test(oracle);
   const externalBoardPrerequisite = hasExternalBoardPrerequisite(oracle);
@@ -140,6 +157,10 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
   const manaToken = createsManaToken(oracle);
   const triggered = hasTriggeredMana(oracle);
   const variableStateMana = hasVariableStateMana(oracle);
+  const tapActivationBeforeMana = hasTapManaActivation(oracle);
+  const hasHaste = /\bhaste\b/.test(oracle) || (card.keywords ?? []).some((keyword) => keyword.toLocaleLowerCase() === 'haste');
+  const summoningSicknessDelay = isCreature && tapActivationBeforeMana && !hasHaste;
+  const spendingRestriction = hasSpendingRestriction(oracle);
   const fixedOutput = fixedManaOutput(oracle);
   const selfSacrificeConversion = selfSacrificeManaConversion(card, oracle);
   const positiveImmediateManaProfit = fixedOutput !== null && fixedOutput > card.cmc;
@@ -156,6 +177,8 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
   if (manaToken) reasons.push('mana comes indirectly from creating a Treasure/Gold/Powerstone rather than immediate card-native production');
   if (triggered) reasons.push('mana production is gated behind a triggered event');
   if (variableStateMana) reasons.push('mana output scales from another zone/board/game-state quantity and may produce little or no acceleration');
+  if (summoningSicknessDelay) reasons.push('tap-based creature mana is not immediately available without haste');
+  if (spendingRestriction) reasons.push('mana output has an explicit spending restriction');
   if (manaNeutralOneShot) reasons.push('one-shot self-sacrifice mana output does not exceed the mana spent to cast the card');
   if (variableSpellCost) reasons.push('mana production depends on an X/kicker-style paid setup');
 
@@ -169,10 +192,12 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
     && !manaToken
     && !triggered
     && !variableStateMana
+    && !spendingRestriction
     && !manaNeutralOneShot
     && !variableSpellCost;
   const reliableImmediateFastMana = reliableLowCostManaAcceleration
     && card.cmc <= 1
+    && !summoningSicknessDelay
     && positiveImmediateManaProfit;
 
   return {
@@ -184,6 +209,9 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
     createsManaToken: manaToken,
     triggeredMana: triggered,
     variableStateMana,
+    tapActivationBeforeMana,
+    summoningSicknessDelay,
+    spendingRestriction,
     fixedManaOutput: fixedOutput,
     positiveImmediateManaProfit,
     manaNeutralOneShot,
@@ -195,10 +223,11 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
 
 /**
  * Fail-closed role truth for consumers that use generic Scryfall role inference as evidence.
- * Conditional, indirect, triggered, variable, mana-neutral one-shot, or delayed mana may still be
- * useful in a supported deck, but it cannot impersonate reliable fast mana merely because its text
- * contains a mana ability or creates a mana-producing token. Likewise, a card that sacrifices only
- * a named narrow object (for example a Clue or Saproling) cannot impersonate a generic sacrifice outlet.
+ * Conditional, indirect, triggered, variable, mana-neutral one-shot, restricted, summoning-sick,
+ * or delayed mana may still be useful in a supported deck, but it cannot impersonate reliable fast
+ * mana merely because its text contains a mana ability or creates a mana-producing token. Likewise,
+ * a card that sacrifices only a named narrow object (for example a Clue or Saproling) cannot
+ * impersonate a generic sacrifice outlet.
  */
 export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   const roles = new Set(inferCardRoles(card));
@@ -206,11 +235,16 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   const sacrificeTruth = sacrificeRoleTruthV15(card);
   if (roles.has('fast mana') && !manaTruth.reliableImmediateFastMana) {
     roles.delete('fast mana');
-    roles.add(manaTruth.delayed ? 'delayed mana acceleration' : 'conditional mana acceleration');
+    roles.add(manaTruth.delayed || manaTruth.summoningSicknessDelay ? 'delayed mana acceleration' : 'conditional mana acceleration');
   }
-  if (roles.has('mana acceleration') && !manaTruth.reliableLowCostManaAcceleration && manaTruth.manaNeutralOneShot) {
-    roles.delete('mana acceleration');
-    roles.add('mana storage');
+  if (roles.has('mana acceleration') && !manaTruth.reliableLowCostManaAcceleration) {
+    if (manaTruth.manaNeutralOneShot) {
+      roles.delete('mana acceleration');
+      roles.add('mana storage');
+    } else if (manaTruth.spendingRestriction || manaTruth.externalBoardPrerequisite) {
+      roles.delete('mana acceleration');
+      roles.add('conditional mana acceleration');
+    }
   }
   if (roles.has('sacrifice outlet')) {
     if (!sacrificeTruth.genericOutlet) {
