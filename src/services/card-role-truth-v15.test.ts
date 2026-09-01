@@ -518,3 +518,8 @@ test('deck metrics no longer let basic lands or Farseek-style ramp satisfy ramp 
   const parsed = parseDecklist('31 Forest\n1 Farseek\n1 Demonic Tutor');
   const metrics = buildDeckMetrics(parsed, [forest, farseek, demonicTutor]);
   assert.equal(metrics.landCount, 31);
+  assert.equal(metrics.rampCount, 1);
+  assert.equal(metrics.tutorCount, 1);
+  assert.equal(metrics.roleCounts['mana acceleration'] ?? 0, 0);
+  assert.equal(metrics.roleCounts['land ramp'] ?? 0, 1);
+});
