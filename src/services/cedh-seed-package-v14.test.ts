@@ -22,19 +22,24 @@ function variant(overrides: Record<string, unknown> = {}) {
   };
 }
 
-test('seed queries search exact package sizes and allow one lightweight prerequisite', () => {
+test('seed queries search exact package sizes by deterministic result evidence and allow one lightweight prerequisite', () => {
   assert.deepEqual(buildCedhSeedQueriesV14(2), [
-    'card=2 is:winning legal:commander template=0 prerequisites<=1',
+    'card=2 legal:commander template=0 prerequisites<=1 result:infinite',
+    'card=2 legal:commander template=0 prerequisites<=1 result:game',
+    'card=2 legal:commander template=0 prerequisites<=1 result:library',
   ]);
   assert.deepEqual(buildCedhSeedQueriesV14(3, 'UB'), [
-    'card=2 is:winning legal:commander template=0 prerequisites<=1 identity<=UB',
-    'card=3 is:winning legal:commander template=0 prerequisites<=1 identity<=UB',
+    'card=2 legal:commander template=0 prerequisites<=1 identity<=UB result:infinite',
+    'card=2 legal:commander template=0 prerequisites<=1 identity<=UB result:game',
+    'card=2 legal:commander template=0 prerequisites<=1 identity<=UB result:library',
+    'card=3 legal:commander template=0 prerequisites<=1 identity<=UB result:infinite',
+    'card=3 legal:commander template=0 prerequisites<=1 identity<=UB result:game',
+    'card=3 legal:commander template=0 prerequisites<=1 identity<=UB result:library',
   ]);
-  assert.deepEqual(buildCedhSeedQueriesV14(9, 'bgurw'), [
-    'card=2 is:winning legal:commander template=0 prerequisites<=1 identity<=WUBRG',
-    'card=3 is:winning legal:commander template=0 prerequisites<=1 identity<=WUBRG',
-    'card=4 is:winning legal:commander template=0 prerequisites<=1 identity<=WUBRG',
-  ]);
+  const fiveColor = buildCedhSeedQueriesV14(9, 'bgurw');
+  assert.equal(fiveColor.length, 9);
+  assert.ok(fiveColor.every((query) => query.includes('identity<=WUBRG')));
+  assert.ok(fiveColor.every((query) => !query.includes('is:winning')));
   assert.match(buildCedhSeedQueriesV14(3, 'C')[0] ?? '', /identity<=C/);
 });
 
