@@ -37,14 +37,14 @@
       ],
       "metadataPath": "test-results/marvel-bracket5/refine-run-metadata.txt",
       "exists": true,
-      "sourceSha": "b9ab88d3d56caa7d6744cc78e002dc17dfa8bac4",
+      "sourceSha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
       "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "b9ab88d3d56caa7d6744cc78e002dc17dfa8bac4",
+        "source_sha": "813d40b0e63bd7694a935f59d3f304aa439ff3ec",
         "control_outcome": "failure",
-        "execution_outcome": "success",
-        "target_gate_quality_outcome": "failure",
+        "execution_outcome": "skipped",
+        "target_gate_quality_outcome": "skipped",
         "policy": "checked-in-very-good-candidate",
         "max_win_package_cards": "4",
         "spellbook_max_rows_per_query": "400",
@@ -62,6 +62,7 @@
       },
       "unmetPassConditions": [
         "control_outcome=success",
+        "execution_outcome=success",
         "target_gate_quality_outcome=success"
       ]
     },
