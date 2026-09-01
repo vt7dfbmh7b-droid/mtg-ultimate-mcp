@@ -3,6 +3,7 @@ import {
   cardCommanderStrategyAffinityV15,
   deriveUpgradeStrategyContextV15,
   substantiveCommanderStrategyAffinityScoreV15,
+  SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15,
   type CommanderStrategyContextV15,
 } from './commander-strategy-affinity-v15.js';
 import { commanderTargetPressureV15 } from './commander-target-pressure-v15.js';
@@ -324,6 +325,19 @@ function candidateScore(
   return score;
 }
 
+function candidateStrategyPriorityV15(
+  card: ScryfallCard,
+  strategyContext: CommanderStrategyContextV15,
+): { substantive: boolean; score: number } {
+  const score = substantiveCommanderStrategyAffinityScoreV15(
+    cardCommanderStrategyAffinityV15(card, strategyContext),
+  );
+  return {
+    substantive: score >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15,
+    score,
+  };
+}
+
 export function contextualCutPressureV15(
   card: ScryfallCard,
   strategyContext: CommanderStrategyContextV15,
@@ -548,6 +562,10 @@ export async function suggestDeckUpgrades(
           const bTheme = themeCandidateNames.has(b.name.toLocaleLowerCase()) ? 1 : 0;
           if (aTheme !== bTheme) return bTheme - aTheme;
         }
+        const aStrategy = candidateStrategyPriorityV15(a, strategyContext);
+        const bStrategy = candidateStrategyPriorityV15(b, strategyContext);
+        if (aStrategy.substantive !== bStrategy.substantive) return bStrategy.substantive ? 1 : -1;
+        if (aStrategy.substantive && aStrategy.score !== bStrategy.score) return bStrategy.score - aStrategy.score;
         return candidateScore(b, deficit.role, strategyContext, deficit.target, deficit.targetGate)
           - candidateScore(a, deficit.role, strategyContext, deficit.target, deficit.targetGate)
           || a.name.localeCompare(b.name);
@@ -669,7 +687,7 @@ export async function suggestDeckUpgrades(
     },
     caveats: [
       'Role-count targets are engineering heuristics for deck consistency, but failed Bracket-4/5 construction gates now outrank aspirational role targets. When several authoritative gates are failing, candidate generation gives each gate one slot per pass before allowing a single generic role to consume the package.',
-      'Candidate ordering keeps the existing role fit, mana efficiency, and EDHREC/community-adoption signals, then reuses V0.15 commander strategy inference as an additional deck-context signal. Popularity or strategy affinity alone is not proof of optimality.',
+      'Within an already-required structural role or target gate, candidate ordering now treats the existing V0.15 substantive-strategy threshold as a first-class tier before generic mana-efficiency and EDHREC/community-adoption scoring. This keeps structural repair on-plan when supported candidates exist without allowing strategy affinity to bypass the gate itself.',
       'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window. Unrestricted Upgrade retains bounded role search, but now scans the full discovered bounded role result set for an eligible physical printing instead of pre-truncating that evidence to three candidates for a one-slot gate.',
       'When a V0.15 controlled theme is below its minimum density, the engine uses the controlled theme query as a positive membership/ranking signal. Under a printing restriction, only cards already admitted by the exhaustive shared eligible pool can become candidates.',
       'Cut ordering uses the same V0.15 commander strategy context as additions. When the deck is at or below its controlled theme minimum, matching cards also receive a capped four-point cut-protection signal; final theme preservation is still enforced independently by refinement rather than by this heuristic alone.',
