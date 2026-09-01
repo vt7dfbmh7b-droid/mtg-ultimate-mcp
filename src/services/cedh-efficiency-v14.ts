@@ -36,6 +36,8 @@ interface ExactCandidateV14 {
   priceUsd: number | null;
   qualityScore: number;
   reasons: string[];
+  marginalScore?: number;
+  marginalPenalties?: string[];
 }
 
 function record(value: unknown): Record<string, unknown> {
@@ -192,6 +194,7 @@ function hasSubstantiveOffTypeUtility(roles: Set<string>, card: ScryfallCard): b
   if (roles.has('free interaction') || roles.has('countermagic') || roles.has('spot interaction')) return true;
   if (roles.has('repeatable draw') || roles.has('card draw')) return true;
   if (roles.has('fast mana') || roles.has('mana acceleration')) return true;
+  if (roles.has('sacrifice synergy') || roles.has('treasure')) return true;
   if (roles.has('protection') && card.cmc <= 2) return true;
   return roles.has('graveyard recursion') && card.cmc <= 1;
 }
@@ -269,6 +272,95 @@ function rankedCuts(
     .map((entry) => entry.name))].slice(0, count);
 }
 
+interface RoleSaturationRuleV14 {
+  role: string;
+  threshold: number;
+  firstPenalty: number;
+  excessPenalty: number;
+}
+
+const ROLE_SATURATION_RULES_V14: RoleSaturationRuleV14[] = [
+  { role: 'sacrifice outlet', threshold: 8, firstPenalty: 125, excessPenalty: 25 },
+  { role: 'graveyard recursion', threshold: 16, firstPenalty: 55, excessPenalty: 10 },
+  { role: 'protection', threshold: 6, firstPenalty: 65, excessPenalty: 15 },
+  { role: 'spot interaction', threshold: 14, firstPenalty: 30, excessPenalty: 10 },
+  { role: 'card draw', threshold: 17, firstPenalty: 30, excessPenalty: 8 },
+  { role: 'life drain', threshold: 5, firstPenalty: 35, excessPenalty: 10 },
+  { role: 'tutor', threshold: 8, firstPenalty: 65, excessPenalty: 15 },
+];
+
+function saturationRoles(card: ScryfallCard): Set<string> {
+  const roles = new Set(effectiveCardRolesV15(card));
+  const output = new Set<string>();
+  if (roles.has('sacrifice outlet') || roles.has('creature sacrifice outlet')) output.add('sacrifice outlet');
+  if (roles.has('graveyard recursion')) output.add('graveyard recursion');
+  if (roles.has('protection')) output.add('protection');
+  if (roles.has('spot interaction')) output.add('spot interaction');
+  if (roles.has('card draw') || roles.has('repeatable draw')) output.add('card draw');
+  if (roles.has('life drain')) output.add('life drain');
+  if (roles.has('tutor') && !isLandSpecificTutor(card)) output.add('tutor');
+  return output;
+}
+
+export function cedhMarginalCandidateScoreV14(
+  card: ScryfallCard,
+  baseQualityScore: number,
+  projectedRoleCounts: Record<string, number>,
+): { score: number; penalties: string[] } {
+  let penalty = 0;
+  const penalties: string[] = [];
+  for (const rule of ROLE_SATURATION_RULES_V14) {
+    if (!saturationRoles(card).has(rule.role)) continue;
+    const count = Number(projectedRoleCounts[rule.role] ?? 0);
+    if (count < rule.threshold) continue;
+    const amount = rule.firstPenalty + Math.max(0, count - rule.threshold) * rule.excessPenalty;
+    penalty += amount;
+    penalties.push(`${rule.role} already covered at ${count}; marginal score -${amount}`);
+  }
+  return { score: baseQualityScore - penalty, penalties };
+}
+
+function incrementProjectedRoles(card: ScryfallCard, projectedRoleCounts: Record<string, number>): void {
+  for (const role of saturationRoles(card)) {
+    projectedRoleCounts[role] = Number(projectedRoleCounts[role] ?? 0) + 1;
+  }
+}
+
+export function selectBalancedCedhAdditionsV14(
+  candidates: ExactCandidateV14[],
+  maxSwaps: number,
+  initialRoleCounts: Record<string, number>,
+): ExactCandidateV14[] {
+  const remaining = [...candidates];
+  const selected: ExactCandidateV14[] = [];
+  const projectedRoleCounts = { ...initialRoleCounts };
+  const minimumMarginalScore = 95;
+
+  while (selected.length < maxSwaps && remaining.length > 0) {
+    let bestIndex = -1;
+    let bestScore = Number.NEGATIVE_INFINITY;
+    let bestPenalties: string[] = [];
+    for (let index = 0; index < remaining.length; index += 1) {
+      const candidate = remaining[index] as ExactCandidateV14;
+      const marginal = cedhMarginalCandidateScoreV14(candidate.card, candidate.qualityScore, projectedRoleCounts);
+      if (marginal.score > bestScore) {
+        bestIndex = index;
+        bestScore = marginal.score;
+        bestPenalties = marginal.penalties;
+      }
+    }
+    if (bestIndex < 0 || bestScore < minimumMarginalScore) break;
+    const [chosen] = remaining.splice(bestIndex, 1);
+    if (!chosen) break;
+    chosen.marginalScore = bestScore;
+    chosen.marginalPenalties = bestPenalties;
+    selected.push(chosen);
+    incrementProjectedRoles(chosen.card, projectedRoleCounts);
+  }
+
+  return selected;
+}
+
 function escapedTypeQuery(creatureType: string): string {
   return creatureType.replace(/"/g, '\\"');
 }
@@ -316,7 +408,7 @@ async function strictCandidates(
   const ranked = [...map.values()].sort((a, b) => b.quality.score - a.quality.score);
   const output: ExactCandidateV14[] = [];
   for (const item of ranked) {
-    if (output.length >= 24) break;
+    if (output.length >= 32) break;
     const printing = await selectEligiblePrintingV08(item.card, policy, options.maxUsdPerCard);
     if (!printing) continue;
     output.push({
@@ -398,33 +490,62 @@ function winningComboCardSet(combo: Record<string, unknown>, index: number): Set
   return new Set(names.length > 0 ? names : [`__unknown-winning-combo-${index}`]);
 }
 
-export function winningComboCoreCountV14(value: Record<string, unknown>): number {
-  const combos = winningCombos(value);
-  const sets = combos.map((combo, index) => winningComboCardSet(combo, index));
-  if (sets.length === 0) return 0;
-  const visited = new Set<number>();
-  let components = 0;
+function setKey(set: Set<string>): string {
+  return [...set].sort().join('|');
+}
 
-  for (let start = 0; start < sets.length; start += 1) {
-    if (visited.has(start)) continue;
-    components += 1;
-    const queue = [start];
-    visited.add(start);
-    while (queue.length > 0) {
-      const current = queue.shift();
-      if (current === undefined) continue;
-      const currentSet = sets[current] as Set<string>;
-      for (let other = 0; other < sets.length; other += 1) {
-        if (visited.has(other)) continue;
-        const otherSet = sets[other] as Set<string>;
-        if ([...currentSet].some((name) => otherSet.has(name))) {
-          visited.add(other);
-          queue.push(other);
-        }
-      }
-    }
+function minimalUniqueWinningSetsV14(value: Record<string, unknown>): Set<string>[] {
+  const raw = winningCombos(value).map((combo, index) => winningComboCardSet(combo, index));
+  const unique = [...new Map(raw.map((set) => [setKey(set), set])).values()];
+  return unique.filter((candidate, index) => !unique.some((other, otherIndex) => {
+    if (index === otherIndex || other.size >= candidate.size) return false;
+    return [...other].every((name) => candidate.has(name));
+  }));
+}
+
+function setsOverlap(left: Set<string>, right: Set<string>): boolean {
+  return [...left].some((name) => right.has(name));
+}
+
+function greedyDisjointCountV14(sets: Set<string>[]): number {
+  const conflictCount = (target: Set<string>) => sets.filter((other) => other !== target && setsOverlap(target, other)).length;
+  const ordered = [...sets].sort((a, b) => a.size - b.size || conflictCount(a) - conflictCount(b) || setKey(a).localeCompare(setKey(b)));
+  const used = new Set<string>();
+  let count = 0;
+  for (const set of ordered) {
+    if ([...set].some((name) => used.has(name))) continue;
+    for (const name of set) used.add(name);
+    count += 1;
   }
-  return components;
+  return count;
+}
+
+export function winningComboCoreCountV14(value: Record<string, unknown>): number {
+  const sets = minimalUniqueWinningSetsV14(value);
+  if (sets.length === 0) return 0;
+  if (sets.length > 20) return greedyDisjointCountV14(sets);
+
+  const ordered = [...sets].sort((a, b) => a.size - b.size || setKey(a).localeCompare(setKey(b)));
+  let best = 0;
+  const used = new Set<string>();
+
+  const visit = (index: number, count: number): void => {
+    if (count + (ordered.length - index) <= best) return;
+    if (index >= ordered.length) {
+      best = Math.max(best, count);
+      return;
+    }
+    const current = ordered[index] as Set<string>;
+    if (![...current].some((name) => used.has(name))) {
+      for (const name of current) used.add(name);
+      visit(index + 1, count + 1);
+      for (const name of current) used.delete(name);
+    }
+    visit(index + 1, count);
+  };
+
+  visit(0, 0);
+  return best;
 }
 
 export function assessCedhComboPreservationV14(
@@ -492,7 +613,15 @@ export async function refineCedhEfficiencyV14(
     };
   }
 
-  const additions = candidates.slice(0, maxSwaps);
+  const additions = selectBalancedCedhAdditionsV14(candidates, maxSwaps, beforeMetrics.roleCounts);
+  if (additions.length === 0) {
+    return {
+      status: 'no-marginally-valuable-strict-candidates',
+      finalDecklist: renderDeck(resolved.parsed),
+      candidateCount: candidates.length,
+      creatureTypePreference,
+    };
+  }
   const cuts = rankedCuts(
     resolved.parsed,
     resolved.cards,
@@ -564,6 +693,8 @@ export async function refineCedhEfficiencyV14(
       in: addition.card.name,
       reasons: addition.reasons,
       qualityScore: Number(addition.qualityScore.toFixed(2)),
+      marginalScore: addition.marginalScore !== undefined ? Number(addition.marginalScore.toFixed(2)) : null,
+      marginalPenalties: addition.marginalPenalties ?? [],
       printing: {
         set: addition.card.set.toUpperCase(),
         collectorNumber: addition.card.collector_number,
@@ -582,6 +713,7 @@ export async function refineCedhEfficiencyV14(
     finalCommanderRules: nextRules,
     printingPolicy: describePrintingPolicyV08(policy),
     candidateCount: candidates.length,
-    guidance: 'Strict efficiency mode now fails closed on conditional/delayed/restricted mana masquerading as fast mana, preserves independent winning-combo cores rather than incidental combo volume, discounts oversaturated recursion and protection, increases pressure on slow tutors and three-mana rocks, and prefers commander-supported creature-type engines plus cheap sacrifice/drain pieces when they provide real standalone utility. Protected cards, legality, printing policy and hard budget remain authoritative.',
+    selectedCandidateCount: additions.length,
+    guidance: 'Strict efficiency mode uses fail-closed role truth, preserves pairwise-disjoint winning routes, applies diminishing marginal value to already-saturated roles, discounts oversaturated recursion/protection, increases pressure on slow tutors and three-mana rocks, and prefers commander-supported creature engines plus cheap sacrifice/drain pieces only while they still add meaningful marginal utility. Protected cards, legality, printing policy and hard budget remain authoritative.',
   };
 }
