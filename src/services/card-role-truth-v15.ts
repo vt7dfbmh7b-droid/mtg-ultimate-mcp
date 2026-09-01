@@ -126,6 +126,14 @@ function repeatableSacrificeTargets(textValue: string): string[] {
     .filter(Boolean);
 }
 
+function hasActionableGraveyardRecursion(textValue: string): boolean {
+  return /\breturn [^.\n]{0,180}\bfrom (?:a|the|your) graveyard\b/.test(textValue)
+    || /\bput [^.\n]{0,180}\bfrom (?:a|the|your) graveyard onto the battlefield\b/.test(textValue)
+    || /\b(?:cast|play) [^.\n]{0,180}\bfrom (?:a|the|your) graveyard\b/.test(textValue)
+    || /\byou may (?:cast|play) [^.\n]{0,180}\bfrom (?:a|the|your) graveyard\b/.test(textValue)
+    || /\b(?:when|whenever) [^.\n]{0,120}\bdies?\b[^.\n]{0,180}\breturn (?:it|that card|that creature|them) to the battlefield\b/.test(textValue);
+}
+
 export function sacrificeRoleTruthV15(card: ScryfallCard): SacrificeRoleTruthV15 {
   const targets = repeatableSacrificeTargets(text(card));
   const genericOutlet = targets.some((target) => /^(?:(?:nonland|nontoken|other)\s+)*(?:creature|permanent|artifact|enchantment|token)s?\b/.test(target));
@@ -230,10 +238,12 @@ export function manaRoleTruthV15(card: ScryfallCard): ManaRoleTruthV15 {
  * or delayed mana may still be useful in a supported deck, but it cannot impersonate reliable fast
  * mana merely because its text contains a mana ability or creates a mana-producing token. Likewise,
  * a card that sacrifices only a named narrow object (for example a Clue or Saproling) cannot
- * impersonate a generic sacrifice outlet.
+ * impersonate a generic sacrifice outlet, and merely moving cards into/out of a graveyard is not
+ * recursion unless the card can actually recover, replay, or reanimate them.
  */
 export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   const roles = new Set(inferCardRoles(card));
+  const oracle = text(card);
   const manaTruth = manaRoleTruthV15(card);
   const sacrificeTruth = sacrificeRoleTruthV15(card);
   if (roles.has('fast mana') && !manaTruth.reliableImmediateFastMana) {
@@ -248,6 +258,10 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
       roles.delete('mana acceleration');
       roles.add('conditional mana acceleration');
     }
+  }
+  if (roles.has('graveyard recursion') && !hasActionableGraveyardRecursion(oracle)) {
+    roles.delete('graveyard recursion');
+    roles.add('graveyard utility');
   }
   if (sacrificeTruth.narrowOutlet) {
     roles.delete('sacrifice outlet');
