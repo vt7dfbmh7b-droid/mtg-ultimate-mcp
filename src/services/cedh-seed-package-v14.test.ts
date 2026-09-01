@@ -166,3 +166,36 @@ test('practical seed scoring rewards sacrifice and recursion utility over expens
   assert.ok(clunky.deadPieceRisk > efficient.deadPieceRisk);
   assert.ok(clunky.totalManaValue > efficient.totalManaValue);
 });
+
+test('reusable three-card engine can outrank a compact bracket-tagged spectacle line', () => {
+  const ranked = rankCedhSeedCandidatesV14([
+    variant({ id: 'spectacle-two', bracketTag: 'R', popularity: 10 }),
+    variant({
+      id: 'engine-three',
+      bracketTag: 'E',
+      popularity: 10,
+      cards: [
+        { name: 'Sacrifice Engine', quantity: 1, mustBeCommander: false },
+        { name: 'Recursive Body', quantity: 1, mustBeCommander: false },
+        { name: 'Drain Payoff', quantity: 1, mustBeCommander: false },
+      ],
+    }),
+  ], [], 3);
+  const spectacle = ranked.find((candidate) => candidate.id === 'spectacle-two');
+  const engine = ranked.find((candidate) => candidate.id === 'engine-three');
+  assert.ok(spectacle && engine);
+
+  const spectaclePracticality = scoreCedhSeedPracticalityV14([
+    { name: 'Spectacle A', cmc: 4, typeLine: 'Enchantment', roles: [] },
+    { name: 'Spectacle B', cmc: 2, typeLine: 'Creature', roles: [] },
+  ], []);
+  const enginePracticality = scoreCedhSeedPracticalityV14([
+    { name: 'Sacrifice Engine', cmc: 3, typeLine: 'Creature — Zombie', roles: ['sacrifice outlet', 'treasure'] },
+    { name: 'Recursive Body', cmc: 1, typeLine: 'Creature — Zombie', roles: ['graveyard recursion'] },
+    { name: 'Drain Payoff', cmc: 2, typeLine: 'Creature', roles: ['sacrifice synergy'] },
+  ], []);
+
+  const spectacleFinal = Number(spectacle.score) + spectaclePracticality.scoreAdjustment;
+  const engineFinal = Number(engine.score) + enginePracticality.scoreAdjustment;
+  assert.ok(engineFinal > spectacleFinal, `${engineFinal} should beat ${spectacleFinal}`);
+});
