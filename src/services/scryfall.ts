@@ -72,10 +72,15 @@ const identifierCache = new Map<string, ScryfallCard>();
 
 const LEGACY_FREE_INTERACTION_SEARCH_CLAUSE_V15 = '((mv=0 OR o:"rather than pay") (o:"counter target" OR o:"destroy target" OR o:"exile target"))';
 export const FREE_INTERACTION_SEARCH_CLAUSE_V15 = '((mv=0 OR o:"rather than pay" OR o:"without paying" OR kw:evoke OR is:phyrexian) (o:counter OR o:destroy OR o:exile OR o:"return target" OR o:"choose new targets" OR o:"puts it on the top" OR o:"puts it on the bottom"))';
+const LEGACY_PROTECTION_SEARCH_CLAUSE_V15 = '(o:"hexproof" OR o:"indestructible" OR o:"protection from" OR o:"phase out")';
+export const PROTECTION_SEARCH_CLAUSE_V15 = '(o:"hexproof" OR o:"indestructible" OR o:"protection from" OR o:"phase out" OR o:"when this creature dies" OR o:"when enchanted creature dies" OR o:"dies this turn" OR o:"regenerate target")';
 
 /** Keep older Build/Upgrade role queries aligned with the shared card-role truth boundary. */
 export function normalizeScryfallSearchQueryV15(query: string): string {
-  return query.trim().replace(LEGACY_FREE_INTERACTION_SEARCH_CLAUSE_V15, FREE_INTERACTION_SEARCH_CLAUSE_V15);
+  return query
+    .trim()
+    .replace(LEGACY_FREE_INTERACTION_SEARCH_CLAUSE_V15, FREE_INTERACTION_SEARCH_CLAUSE_V15)
+    .replace(LEGACY_PROTECTION_SEARCH_CLAUSE_V15, PROTECTION_SEARCH_CLAUSE_V15);
 }
 
 function sleep(ms: number): Promise<void> {
@@ -204,6 +209,12 @@ function hasDirectInteractionText(text: string): boolean {
     || /target player [^.]{0,120}graveyard[^.]{0,120}bottom/.test(text);
 }
 
+function hasDeathReplacementProtection(text: string): boolean {
+  const temporaryDeathShield = /until end of turn[\s\S]{0,320}(?:when (?:this|that) creature dies|dies this turn)[\s\S]{0,240}return (?:it|that card|that creature) to the battlefield/.test(text);
+  const enchantedDeathShield = /enchanted (?:creature|permanent)[\s\S]{0,220}(?:dies|is put into exile)[\s\S]{0,240}return (?:it|that card) to the battlefield/.test(text);
+  return temporaryDeathShield || enchantedDeathShield || /\bregenerate target creature\b/.test(text);
+}
+
 export function inferCardRoles(card: ScryfallCard): string[] {
   const text = getCardOracleText(card).toLowerCase();
   const type = card.type_line.toLowerCase();
@@ -300,7 +311,8 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   const boardProtection = /(?:other )?(?:creatures|permanents|artifacts|enchantments) you control\s+(?:have|gain)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text)
     || /(?:all |any number of )?(?:permanents|creatures) you control phase out/.test(text);
   const targetedProtection = /(?:target|another target|equipped|enchanted|commander)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text)
-    || /(?:target|another target|any number of target)[^.]{0,100}phases? out/.test(text);
+    || /(?:target|another target|any number of target)[^.]{0,100}phases? out/.test(text)
+    || hasDeathReplacementProtection(text);
   const conditionalGroupProtection = /(?:creatures|permanents|artifacts|enchantments) you control\s+(?:with|that|if|as long as)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text);
   const equipmentWearerProtection = type.includes('equipment')
     && /\bequipped creature[^.]{0,120}(?:hexproof|indestructible|protection from|shroud)/.test(text);

@@ -33,18 +33,18 @@ function rejectedRefinement(): Record<string, unknown> {
     initialAssessment: {
       status: 'not-yet-strong-competitive-construction-signals',
       winningCombos: 1,
-      metrics: { averageNonlandManaValue: 2.8, freeInteractionCount: 1, fastManaCount: 2, tutorCount: 3 },
+      metrics: { averageNonlandManaValue: 2.8, protectionCount: 2, cheapInteractionCount: 10, freeInteractionCount: 1, fastManaCount: 2, tutorCount: 3 },
     },
     finalAssessment: {
       status: 'not-yet-strong-competitive-construction-signals',
       winningCombos: 0,
-      metrics: { averageNonlandManaValue: 2.7, freeInteractionCount: 1, fastManaCount: 2, tutorCount: 3 },
+      metrics: { averageNonlandManaValue: 2.7, protectionCount: 2, cheapInteractionCount: 10, freeInteractionCount: 1, fastManaCount: 2, tutorCount: 3 },
     },
     finalDecklist: decklist,
   };
 }
 
-test('Bracket-5 post-refinement inherits the selected compliant candidate price cap', async () => {
+test('Bracket-5 regular post-refinement inherits the selected compliant candidate price cap', async () => {
   let refinementCap: number | undefined;
   const result = await buildCommanderDeckUnderWholeBudgetV15([commander], {
     targetBracket: 5,
@@ -69,9 +69,13 @@ test('Bracket-5 post-refinement inherits the selected compliant candidate price 
     (result.postBudgetRefinement as Record<string, unknown>).refinementSearchCapUsd,
     result.chosenCandidateSearchCapUsd,
   );
+  assert.equal(
+    (result.premiumHeadroomRefinement as Record<string, unknown>).status,
+    'not-run-injected-refiner-without-premium-refiner',
+  );
 });
 
-test('explicit user per-card limits remain authoritative during post-refinement', async () => {
+test('explicit user per-card limits remain authoritative during regular post-refinement', async () => {
   let refinementCap: number | undefined;
   const result = await buildCommanderDeckUnderWholeBudgetV15([commander], {
     targetBracket: 5,

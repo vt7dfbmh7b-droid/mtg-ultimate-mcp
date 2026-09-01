@@ -44,12 +44,12 @@ function safeNoopRefinement(): Record<string, unknown> {
     initialAssessment: {
       status: 'not-yet-strong-competitive-construction-signals',
       winningCombos: 1,
-      metrics: { averageNonlandManaValue: 2.8, freeInteractionCount: 1, fastManaCount: 2, tutorCount: 3 },
+      metrics: { averageNonlandManaValue: 2.8, protectionCount: 2, cheapInteractionCount: 10, freeInteractionCount: 1, fastManaCount: 2, tutorCount: 3 },
     },
     finalAssessment: {
       status: 'not-yet-strong-competitive-construction-signals',
       winningCombos: 0,
-      metrics: { averageNonlandManaValue: 2.7, freeInteractionCount: 1, fastManaCount: 2, tutorCount: 3 },
+      metrics: { averageNonlandManaValue: 2.7, protectionCount: 2, cheapInteractionCount: 10, freeInteractionCount: 1, fastManaCount: 2, tutorCount: 3 },
     },
     finalDecklist: decklist,
   };
@@ -62,12 +62,12 @@ function improvedRefinement(finalDecklist = refinedDecklist): Record<string, unk
     initialAssessment: {
       status: 'not-yet-strong-competitive-construction-signals',
       winningCombos: 1,
-      metrics: { averageNonlandManaValue: 2.8, freeInteractionCount: 1, fastManaCount: 2, tutorCount: 3 },
+      metrics: { averageNonlandManaValue: 2.8, protectionCount: 2, cheapInteractionCount: 10, freeInteractionCount: 1, fastManaCount: 2, tutorCount: 3 },
     },
     finalAssessment: {
       status: 'not-yet-strong-competitive-construction-signals',
       winningCombos: 1,
-      metrics: { averageNonlandManaValue: 2.5, freeInteractionCount: 1, fastManaCount: 2, tutorCount: 4 },
+      metrics: { averageNonlandManaValue: 2.5, protectionCount: 2, cheapInteractionCount: 10, freeInteractionCount: 1, fastManaCount: 2, tutorCount: 4 },
     },
     finalDecklist,
   };
@@ -161,7 +161,7 @@ test('Bracket-5 whole-budget construction discovers one verified win seed and in
   assert.ok(seenMustIncludes.every((names) => names.includes('User Card') && names.includes('Combo A') && names.includes('Combo B')));
 });
 
-test('Bracket-5 whole-budget construction accepts a materially stronger refinement only after a second exact budget audit', async () => {
+test('Bracket-5 whole-budget construction accepts a materially stronger regular refinement only after a second exact budget audit', async () => {
   let refinementCalls = 0;
   const result = await buildCommanderDeckUnderWholeBudgetV15([commander], {
     targetBracket: 5,
@@ -179,7 +179,7 @@ test('Bracket-5 whole-budget construction accepts a materially stronger refineme
     }),
   });
 
-  assert.equal(refinementCalls, 1, 'only the selected best compliant draft should receive the expensive refinement pass');
+  assert.equal(refinementCalls, 1, 'only the selected best compliant draft should receive the regular expensive refinement pass');
   assert.equal(result.baseDecklist, decklist);
   assert.equal(result.decklist, refinedDecklist);
   assert.equal((result.budgetAudit as Record<string, unknown>).auditedTotalUsd, 60.4);
@@ -190,7 +190,7 @@ test('Bracket-5 whole-budget construction accepts a materially stronger refineme
   assert.equal(quality.materialQualityImprovement, true);
 });
 
-test('a stronger-looking Bracket-5 refinement is rejected when its exact printing total breaches the hard deck budget', async () => {
+test('a stronger-looking Bracket-5 regular refinement is rejected when its exact printing total breaches the hard deck budget', async () => {
   const result = await buildCommanderDeckUnderWholeBudgetV15([commander], {
     targetBracket: 5,
     maxDeckUsd: 100,

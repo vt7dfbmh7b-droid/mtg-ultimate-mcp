@@ -21,6 +21,11 @@ interface ResolveResultV15 {
   notFound: unknown[];
 }
 
+type RefinementDependencyV15 = (
+  decklist: string,
+  options: CedhWorkflowOptionsV14,
+) => Promise<Record<string, unknown>>;
+
 export interface WholeDeckBudgetDependenciesV15 {
   buildDraft?: (commanders: ScryfallCard[], options: DeckBuildOptionsV07) => Promise<Record<string, unknown>>;
   resolveDeckCards?: (identifiers: CardIdentifierInput[]) => Promise<ResolveResultV15>;
@@ -28,10 +33,13 @@ export interface WholeDeckBudgetDependenciesV15 {
     commanders: ScryfallCard[],
     options: CedhSeedPackageOptionsV14,
   ) => Promise<Record<string, unknown>>;
-  refineCandidate?: (
-    decklist: string,
-    options: CedhWorkflowOptionsV14,
-  ) => Promise<Record<string, unknown>>;
+  refineCandidate?: RefinementDependencyV15;
+  /**
+   * Optional dedicated premium-headroom refiner for deterministic tests or alternate runtimes.
+   * When refineCandidate is injected without this dependency, the premium pass is skipped so
+   * older isolated tests do not unexpectedly fall through to live network-backed refinement.
+   */
+  refinePremiumCandidate?: RefinementDependencyV15;
 }
 
 interface BudgetAuditV15 {
@@ -78,6 +86,8 @@ interface RefinementQualityV15 {
   finalAverageNonlandManaValue: number | null;
   initialProtectionCount: number;
   finalProtectionCount: number;
+  initialCheapInteractionCount: number;
+  finalCheapInteractionCount: number;
   initialFreeInteractionCount: number;
   finalFreeInteractionCount: number;
   initialFastManaCount: number;
@@ -294,6 +304,8 @@ function refinementQualityV15(refinement: Record<string, unknown>): RefinementQu
   const initialProtectionCount = finiteNumber(initialMetrics.protectionCount);
   const finalProtectionCount = finiteNumber(finalMetrics.protectionCount);
   const protectionFloorPreserved = finalProtectionCount >= Math.min(initialProtectionCount, 4);
+  const initialCheapInteractionCount = finiteNumber(initialMetrics.cheapInteractionCount);
+  const finalCheapInteractionCount = finiteNumber(finalMetrics.cheapInteractionCount);
   const initialFreeInteractionCount = finiteNumber(initialMetrics.freeInteractionCount);
   const finalFreeInteractionCount = finiteNumber(finalMetrics.freeInteractionCount);
   const initialFastManaCount = finiteNumber(initialMetrics.fastManaCount);
@@ -314,6 +326,8 @@ function refinementQualityV15(refinement: Record<string, unknown>): RefinementQu
     && finalStatus === 'strong-competitive-construction-signals';
   const materialQualityImprovement = materiallyLowerCurve
     || statusImproved
+    || finalProtectionCount > initialProtectionCount
+    || finalCheapInteractionCount > initialCheapInteractionCount
     || finalFreeInteractionCount > initialFreeInteractionCount
     || finalFastManaCount > initialFastManaCount
     || finalTutorCount > initialTutorCount
@@ -344,6 +358,8 @@ function refinementQualityV15(refinement: Record<string, unknown>): RefinementQu
     finalAverageNonlandManaValue,
     initialProtectionCount,
     finalProtectionCount,
+    initialCheapInteractionCount,
+    finalCheapInteractionCount,
     initialFreeInteractionCount,
     finalFreeInteractionCount,
     initialFastManaCount,
@@ -373,6 +389,8 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
   const resolveDeckCards = dependencies.resolveDeckCards ?? (async (ids: CardIdentifierInput[]) => getCardsByIdentifiers(ids));
   const discoverWinSeed = dependencies.discoverWinSeed ?? discoverCedhSeedWinPackageV14;
   const refineCandidate = dependencies.refineCandidate ?? refineCommanderForCedhV14;
+  const refinePremiumCandidate = dependencies.refinePremiumCandidate
+    ?? (dependencies.refineCandidate ? null : refineCommanderForCedhV14);
   const targetBracket = Math.max(1, Math.min(5, Math.trunc(options.targetBracket ?? 4)));
 
   let autoWinSeed: Record<string, unknown> = {
@@ -595,6 +613,151 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
       }
     }
 
+    let premiumHeadroomRefinement: Record<string, unknown> = {
+      attempted: false,
+      status: targetBracket >= 5
+        ? (refinePremiumCandidate ? 'not-needed-no-material-headroom' : 'not-run-injected-refiner-without-premium-refiner')
+        : 'not-requested-for-target-bracket',
+    };
+
+    if (targetBracket >= 5 && refinePremiumCandidate && finalBudgetAudit.auditedTotalUsd !== null) {
+      const startingAuditedTotalUsd = finalBudgetAudit.auditedTotalUsd;
+      const remainingHeadroomUsd = money(Math.max(0, options.maxDeckUsd - startingAuditedTotalUsd));
+      const premiumMaxUsdPerCard = money(Math.min(
+        options.maxUsdPerCard ?? options.maxDeckUsd,
+        selected.cap + remainingHeadroomUsd,
+      ));
+
+      if (remainingHeadroomUsd < 0.5) {
+        premiumHeadroomRefinement = {
+          attempted: false,
+          status: 'not-needed-no-material-headroom',
+          startingAuditedTotalUsd,
+          remainingHeadroomUsd,
+        };
+      } else if (premiumMaxUsdPerCard <= selected.cap + 0.009) {
+        premiumHeadroomRefinement = {
+          attempted: false,
+          status: 'not-needed-user-per-card-cap-blocks-headroom',
+          startingAuditedTotalUsd,
+          remainingHeadroomUsd,
+          premiumMaxUsdPerCard,
+        };
+      } else {
+        const premiumAttempts: Array<Record<string, unknown>> = [];
+        const premiumBaseDecklist = finalDecklist;
+        let accepted = false;
+
+        for (const maxEfficiencySwaps of [2, 1]) {
+          try {
+            const refinement = await refinePremiumCandidate(finalDecklist, {
+              ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
+              ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
+              ...(options.includePromos !== undefined ? { includePromos: options.includePromos } : {}),
+              ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
+              maxUsdPerCard: premiumMaxUsdPerCard,
+              ...(options.excludedCards ? { excludedCards: options.excludedCards } : {}),
+              ...(options.creatureTypeOptimization !== undefined ? { creatureTypeOptimization: options.creatureTypeOptimization } : {}),
+              protectedCards: effectiveMustInclude,
+              requireVerifiedCombo: true,
+              maxEfficiencySwaps,
+              maxEfficiencyPasses: 1,
+              maxManaBaseSwaps: 1,
+            });
+            const candidateDecklist = typeof refinement.finalDecklist === 'string' ? refinement.finalDecklist : '';
+            const quality = refinementQualityV15(refinement);
+            const nameConstraints = candidateDecklist.trim()
+              ? auditNameConstraintsV15(candidateDecklist, effectiveMustInclude, options.excludedCards ?? [])
+              : { valid: false, missingRequired: effectiveMustInclude, excludedPresent: [] };
+
+            if (!candidateDecklist.trim()) {
+              premiumAttempts.push({
+                maxEfficiencySwaps,
+                status: 'rejected-no-final-decklist',
+                quality,
+                nameConstraints,
+              });
+              continue;
+            }
+            if (candidateDecklist === finalDecklist) {
+              premiumAttempts.push({
+                maxEfficiencySwaps,
+                status: 'rejected-no-deck-change',
+                quality,
+                nameConstraints,
+              });
+              break;
+            }
+            if (!nameConstraints.valid) {
+              premiumAttempts.push({
+                maxEfficiencySwaps,
+                status: 'rejected-hard-card-constraints',
+                quality,
+                nameConstraints,
+              });
+              continue;
+            }
+            if (!quality.acceptable) {
+              premiumAttempts.push({
+                maxEfficiencySwaps,
+                status: 'rejected-no-material-safe-improvement',
+                quality,
+                nameConstraints,
+              });
+              continue;
+            }
+
+            const candidateAudit = await auditExactDeckBudgetV15(candidateDecklist, options.maxDeckUsd, resolveDeckCards);
+            premiumAttempts.push({
+              maxEfficiencySwaps,
+              status: candidateAudit.withinBudget ? 'accepted' : 'rejected-hard-budget',
+              quality,
+              nameConstraints,
+              budgetAudit: candidateAudit,
+            });
+            if (!candidateAudit.withinBudget) continue;
+
+            finalDecklist = candidateDecklist;
+            finalBudgetAudit = candidateAudit;
+            accepted = true;
+            premiumHeadroomRefinement = {
+              attempted: true,
+              status: 'accepted',
+              startingAuditedTotalUsd,
+              remainingHeadroomUsd,
+              premiumMaxUsdPerCard,
+              acceptedMaxEfficiencySwaps: maxEfficiencySwaps,
+              budgetAudit: candidateAudit,
+              quality,
+              nameConstraints,
+              refinement,
+              attempts: premiumAttempts,
+            };
+            break;
+          } catch (error) {
+            premiumAttempts.push({
+              maxEfficiencySwaps,
+              status: 'refinement-unavailable',
+              error: error instanceof Error ? error.message : String(error),
+            });
+          }
+        }
+
+        if (!accepted) {
+          const last = premiumAttempts.at(-1);
+          premiumHeadroomRefinement = {
+            attempted: premiumAttempts.length > 0,
+            status: String(last?.status ?? 'rejected-no-material-safe-improvement'),
+            startingAuditedTotalUsd,
+            remainingHeadroomUsd,
+            premiumMaxUsdPerCard,
+            baseDeckUnchanged: finalDecklist === premiumBaseDecklist,
+            attempts: premiumAttempts,
+          };
+        }
+      }
+    }
+
     return {
       status: 'budget-compliant',
       maxDeckUsd: money(options.maxDeckUsd),
@@ -612,11 +775,12 @@ export async function buildCommanderDeckUnderWholeBudgetV15(
         : null,
       autoWinSeed,
       postBudgetRefinement,
+      premiumHeadroomRefinement,
       draft: selected.draft,
       baseDecklist: selected.decklist,
       decklist: finalDecklist,
       constraint: `US$${money(options.maxDeckUsd)} maximum total deck budget`,
-      caveat: 'Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. Explicit exclusions and required cards are rechecked after draft selection and again after every accepted refinement; later win-package or efficiency stages cannot silently override them. The search compares every generated budget-compliant draft rather than stopping at the first cheap fit. Candidate quality is ordered by remaining structural deficits and then by the widest legal candidate search cap; raw spend is never treated as power by itself. Bracket-5 whole-budget construction attempts a broader generic verified Commander Spellbook win-seed search, then routes the selected legal draft through strict efficiency and mana-base refinement. A refined list is accepted only when its independent winning-combo cores are preserved, its average nonland mana value does not worsen, its protection floor is preserved, at least one material high-power signal improves, and a second independent exact-printing whole-deck audit still passes the original hard budget. Creature-type optimization can be explicitly disabled when the requested construction objective has no tribal component. The search remains heuristic rather than proof of the globally strongest possible list.',
+      caveat: 'Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. Explicit exclusions and required cards are rechecked after draft selection and again after every accepted refinement; later win-package or efficiency stages cannot silently override them. The search compares every generated budget-compliant draft rather than stopping at the first cheap fit. Candidate quality is ordered by remaining structural deficits and then by the widest legal candidate search cap; raw spend is never treated as power by itself. Bracket-5 whole-budget construction first uses the selected draft’s conservative candidate cap for broad efficiency work. If exact audited headroom remains, a separate premium pass may widen only the per-card search ceiling by the actual unused whole-deck budget and tries at most two efficiency swaps, falling back to one. Premium candidates still need a material strategic/role improvement, preserved winning cores, non-worsened average nonland mana value, preserved protection floor, hard required/excluded-card compliance, and another exact whole-deck budget audit. Creature-type optimization can be explicitly disabled when the requested construction objective has no tribal component. The search remains heuristic rather than proof of the globally strongest possible list.',
     };
   }
 
