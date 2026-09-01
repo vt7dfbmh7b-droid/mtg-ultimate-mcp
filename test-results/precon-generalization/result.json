@@ -245,7 +245,7 @@
   },
   "refinement": {
     "status": "refined",
-    "stopReason": "all-competing-packages-below-improvement-threshold",
+    "stopReason": "package-reduces-substantive-deck-strategy-density",
     "roundsAccepted": 2,
     "totalSwaps": 3,
     "candidatePackagesPerRound": 4,
@@ -336,7 +336,7 @@
         }
       },
       {
-        "out": "Dread Return",
+        "out": "Out of the Tombs",
         "in": "Lively Dirge",
         "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
         "recommendedPrinting": {
@@ -365,6 +365,7 @@
             ],
             "locallyUnreplacedStrategies": [],
             "cutRoles": [
+              "card draw",
               "graveyard recursion"
             ],
             "addRoles": [
@@ -372,7 +373,9 @@
               "multi-card graveyard recursion",
               "tutor"
             ],
-            "unreplacedRoles": [],
+            "unreplacedRoles": [
+              "card draw"
+            ],
             "unreplacedStrategyComponentRoles": [],
             "meaningfulStrategyLoss": false,
             "verdict": "preserved"
@@ -380,7 +383,7 @@
         }
       }
     ],
-    "finalDecklist": "// COMMANDER\n1 Szarekh, the Silent King (40K) 170 *F*\n\n// MAIN\n1 Beacon of Unrest (40K) 194 *N*\n1 Living Death (40K) 202 *N*\n1 Mutilate (40K) 203 *N*\n1 Defile (40K) 199 *N*\n1 Go for the Throat (40K) 201 *N*\n1 Caged Sun (40K) 231 *N*\n1 Endless Atlas (40K) 237 *N*\n1 Gilded Lotus (40K) 239 *N*\n1 Mystic Forge (40K) 246 *N*\n1 Sculpting Steel (40K) 247 *N*\n1 Cranial Plating (40K) 236 *N*\n1 Hedron Archive (40K) 240 *N*\n1 Mask of Memory (40K) 243 *N*\n1 Sol Ring (40K) 252 *N*\n1 Arcane Signet (40K) 228 *N*\n1 Commander's Sphere (40K) 234 *N*\n1 Mind Stone (40K) 245 *N*\n1 Thought Vessel (40K) 259 *N*\n1 Unstable Obelisk (40K) 260 *N*\n1 Wayfarer's Bauble (40K) 262 *N*\n1 Barren Moor (40K) 266 *N*\n1 Myriad Landscape (40K) 285 *N*\n1 Reliquary Tower (40K) 291 *N*\n1 Desert of the Glorified (40K) 275 *N*\n1 Polluted Mire (40K) 288 *N*\n1 Vault of Whispers (40K) 305 *N*\n10 Swamp (40K) 310 *N*\n10 Swamp (40K) 312 *N*\n10 Swamp (40K) 313 *N*\n1 Imotekh the Stormlord (40K) 169 *F*\n1 Anrakyr the Traveller (40K) 28 *N*\n1 Biotransference (40K) 30 *N*\n1 Chronomancer (40K) 32 *N*\n1 Cryptek (40K) 33 *N*\n1 Illuminor Szeras (40K) 37 *N*\n1 Lokhust Heavy Destroyer (40K) 38 *N*\n1 Lychguard (40K) 39 *N*\n1 Necron Deathmark (40K) 42 *N*\n1 Necron Overlord (40K) 43 *N*\n1 Out of the Tombs (40K) 46 *N*\n1 Royal Warden (40K) 52 *N*\n1 Shard of the Void Dragon (40K) 56 *N*\n1 Skorpekh Lord (40K) 58 *N*\n1 Technomancer (40K) 61 *N*\n1 Their Name Is Death (40K) 62 *N*\n1 Their Number Is Legion (40K) 63 *N*\n1 Tomb Blade (40K) 64 *N*\n1 Trazyn the Infinite (40K) 65 *N*\n1 Triarch Stalker (40K) 67 *N*\n1 The War in Heaven (40K) 69 *N*\n1 Canoptek Scarab Swarm (40K) 150 *N*\n1 Canoptek Spyder (40K) 151 *N*\n1 Canoptek Tomb Sentinel (40K) 152 *N*\n1 Canoptek Wraith (40K) 153 *N*\n1 Convergence of Dominion (40K) 154 *N*\n1 Cryptothrall (40K) 155 *N*\n1 Ghost Ark (40K) 156 *N*\n1 Necron Monolith (40K) 161 *N*\n1 Resurrection Orb (40K) 165 *N*\n1 Sceptre of Eternal Glory (40K) 166 *N*\n1 Tomb Fortress (40K) 168 *N*\n1 Flayed One (40K) 34 *N*\n1 Hexmark Destroyer (40K) 36 *N*\n1 Plasmancer (40K) 48 *N*\n1 Psychomancer (40K) 51 *N*\n1 Sautekh Immortal (40K) 54 *N*\n1 Skorpekh Destroyer (40K) 57 *N*\n1 Triarch Praetorian (40K) 66 *N*\n1 Night Scythe (40K) 162 *N*\n1 Tragic Slip (C14) 167 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Lively Dirge (OTJ) 93 *N*",
+    "finalDecklist": "// COMMANDER\n1 Szarekh, the Silent King (40K) 170 *F*\n\n// MAIN\n1 Beacon of Unrest (40K) 194 *N*\n1 Living Death (40K) 202 *N*\n1 Mutilate (40K) 203 *N*\n1 Dread Return (40K) 200 *N*\n1 Defile (40K) 199 *N*\n1 Go for the Throat (40K) 201 *N*\n1 Caged Sun (40K) 231 *N*\n1 Endless Atlas (40K) 237 *N*\n1 Gilded Lotus (40K) 239 *N*\n1 Mystic Forge (40K) 246 *N*\n1 Sculpting Steel (40K) 247 *N*\n1 Cranial Plating (40K) 236 *N*\n1 Hedron Archive (40K) 240 *N*\n1 Mask of Memory (40K) 243 *N*\n1 Sol Ring (40K) 252 *N*\n1 Arcane Signet (40K) 228 *N*\n1 Commander's Sphere (40K) 234 *N*\n1 Mind Stone (40K) 245 *N*\n1 Thought Vessel (40K) 259 *N*\n1 Unstable Obelisk (40K) 260 *N*\n1 Wayfarer's Bauble (40K) 262 *N*\n1 Barren Moor (40K) 266 *N*\n1 Myriad Landscape (40K) 285 *N*\n1 Reliquary Tower (40K) 291 *N*\n1 Desert of the Glorified (40K) 275 *N*\n1 Polluted Mire (40K) 288 *N*\n1 Vault of Whispers (40K) 305 *N*\n10 Swamp (40K) 310 *N*\n10 Swamp (40K) 312 *N*\n10 Swamp (40K) 313 *N*\n1 Imotekh the Stormlord (40K) 169 *F*\n1 Anrakyr the Traveller (40K) 28 *N*\n1 Biotransference (40K) 30 *N*\n1 Chronomancer (40K) 32 *N*\n1 Cryptek (40K) 33 *N*\n1 Illuminor Szeras (40K) 37 *N*\n1 Lokhust Heavy Destroyer (40K) 38 *N*\n1 Lychguard (40K) 39 *N*\n1 Necron Deathmark (40K) 42 *N*\n1 Necron Overlord (40K) 43 *N*\n1 Royal Warden (40K) 52 *N*\n1 Shard of the Void Dragon (40K) 56 *N*\n1 Skorpekh Lord (40K) 58 *N*\n1 Technomancer (40K) 61 *N*\n1 Their Name Is Death (40K) 62 *N*\n1 Their Number Is Legion (40K) 63 *N*\n1 Tomb Blade (40K) 64 *N*\n1 Trazyn the Infinite (40K) 65 *N*\n1 Triarch Stalker (40K) 67 *N*\n1 The War in Heaven (40K) 69 *N*\n1 Canoptek Scarab Swarm (40K) 150 *N*\n1 Canoptek Spyder (40K) 151 *N*\n1 Canoptek Tomb Sentinel (40K) 152 *N*\n1 Canoptek Wraith (40K) 153 *N*\n1 Convergence of Dominion (40K) 154 *N*\n1 Cryptothrall (40K) 155 *N*\n1 Ghost Ark (40K) 156 *N*\n1 Necron Monolith (40K) 161 *N*\n1 Resurrection Orb (40K) 165 *N*\n1 Sceptre of Eternal Glory (40K) 166 *N*\n1 Tomb Fortress (40K) 168 *N*\n1 Flayed One (40K) 34 *N*\n1 Hexmark Destroyer (40K) 36 *N*\n1 Plasmancer (40K) 48 *N*\n1 Psychomancer (40K) 51 *N*\n1 Sautekh Immortal (40K) 54 *N*\n1 Skorpekh Destroyer (40K) 57 *N*\n1 Triarch Praetorian (40K) 66 *N*\n1 Night Scythe (40K) 162 *N*\n1 Tragic Slip (C14) 167 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Lively Dirge (OTJ) 93 *N*",
     "finalCommanderRules": {
       "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
       "status": "legal",
@@ -487,7 +490,7 @@
         "winningCandidate": 1,
         "estimatedSpendNzd": 5.8,
         "estimatedSpendUsdReference": 3.43,
-        "improvementScore": 1.596,
+        "improvementScore": 4.627,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -520,7 +523,7 @@
           "source": "existing-v15-final-win-route-audit"
         },
         "themeAuditBefore": null,
-        "stopReason": "all-competing-packages-below-improvement-threshold"
+        "stopReason": "package-reduces-substantive-deck-strategy-density"
       }
     ],
     "constraints": {
@@ -1667,7 +1670,7 @@
                 "estimatedSpendNzd": 5.8,
                 "estimatedSpendUsdReference": 3.43,
                 "unknownPriceCount": 0,
-                "improvementScore": -2.121,
+                "improvementScore": -1.336,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -1730,6 +1733,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "graveyard recursion"
                       ],
                       "addRoles": [
@@ -1737,7 +1741,9 @@
                         "multi-card graveyard recursion",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "card draw"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -1915,7 +1921,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Out of the Tombs",
                     "in": "Lively Dirge",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -1944,6 +1950,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "graveyard recursion"
                         ],
                         "addRoles": [
@@ -1951,7 +1958,9 @@
                           "multi-card graveyard recursion",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "card draw"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -1969,7 +1978,7 @@
                 "estimatedSpendNzd": 6,
                 "estimatedSpendUsdReference": 3.55,
                 "unknownPriceCount": 0,
-                "improvementScore": -2.125,
+                "improvementScore": -1.338,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -2031,6 +2040,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "graveyard recursion"
                       ],
                       "addRoles": [
@@ -2038,7 +2048,9 @@
                         "multi-card graveyard recursion",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "card draw"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -2215,7 +2227,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Out of the Tombs",
                     "in": "Lively Dirge",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -2244,6 +2256,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "graveyard recursion"
                         ],
                         "addRoles": [
@@ -2251,7 +2264,9 @@
                           "multi-card graveyard recursion",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "card draw"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -2269,7 +2284,7 @@
                 "estimatedSpendNzd": 5.8,
                 "estimatedSpendUsdReference": 3.43,
                 "unknownPriceCount": 0,
-                "improvementScore": -2.125,
+                "improvementScore": -1.338,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -2329,6 +2344,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "graveyard recursion"
                       ],
                       "addRoles": [
@@ -2336,7 +2352,9 @@
                         "multi-card graveyard recursion",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "card draw"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -2511,7 +2529,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Out of the Tombs",
                     "in": "Lively Dirge",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -2540,6 +2558,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "graveyard recursion"
                         ],
                         "addRoles": [
@@ -2547,7 +2566,9 @@
                           "multi-card graveyard recursion",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "card draw"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -2565,7 +2586,7 @@
                 "estimatedSpendNzd": 5.78,
                 "estimatedSpendUsdReference": 3.42,
                 "unknownPriceCount": 0,
-                "improvementScore": -2.121,
+                "improvementScore": -1.336,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -2625,6 +2646,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "graveyard recursion"
                       ],
                       "addRoles": [
@@ -2632,7 +2654,9 @@
                         "multi-card graveyard recursion",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "card draw"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -2807,7 +2831,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Out of the Tombs",
                     "in": "Lively Dirge",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -2836,6 +2860,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "graveyard recursion"
                         ],
                         "addRoles": [
@@ -2843,7 +2868,9 @@
                           "multi-card graveyard recursion",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "card draw"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -2872,7 +2899,7 @@
                 "estimatedSpendNzd": 5.8,
                 "estimatedSpendUsdReference": 3.43,
                 "unknownPriceCount": 0,
-                "improvementScore": -2.121,
+                "improvementScore": -1.336,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -2935,6 +2962,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "graveyard recursion"
                       ],
                       "addRoles": [
@@ -2942,7 +2970,9 @@
                         "multi-card graveyard recursion",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "card draw"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -3120,7 +3150,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Out of the Tombs",
                     "in": "Lively Dirge",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -3149,6 +3179,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "graveyard recursion"
                         ],
                         "addRoles": [
@@ -3156,7 +3187,9 @@
                           "multi-card graveyard recursion",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "card draw"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -3174,7 +3207,7 @@
                 "estimatedSpendNzd": 6,
                 "estimatedSpendUsdReference": 3.55,
                 "unknownPriceCount": 0,
-                "improvementScore": -2.125,
+                "improvementScore": -1.338,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -3236,6 +3269,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "graveyard recursion"
                       ],
                       "addRoles": [
@@ -3243,7 +3277,9 @@
                         "multi-card graveyard recursion",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "card draw"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -3420,7 +3456,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Out of the Tombs",
                     "in": "Lively Dirge",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -3449,6 +3485,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "graveyard recursion"
                         ],
                         "addRoles": [
@@ -3456,7 +3493,9 @@
                           "multi-card graveyard recursion",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "card draw"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -3474,7 +3513,7 @@
                 "estimatedSpendNzd": 5.8,
                 "estimatedSpendUsdReference": 3.43,
                 "unknownPriceCount": 0,
-                "improvementScore": -2.125,
+                "improvementScore": -1.338,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -3534,6 +3573,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "graveyard recursion"
                       ],
                       "addRoles": [
@@ -3541,7 +3581,9 @@
                         "multi-card graveyard recursion",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "card draw"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -3716,7 +3758,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Out of the Tombs",
                     "in": "Lively Dirge",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -3745,6 +3787,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "graveyard recursion"
                         ],
                         "addRoles": [
@@ -3752,7 +3795,9 @@
                           "multi-card graveyard recursion",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "card draw"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -3770,7 +3815,7 @@
                 "estimatedSpendNzd": 5.78,
                 "estimatedSpendUsdReference": 3.42,
                 "unknownPriceCount": 0,
-                "improvementScore": -2.121,
+                "improvementScore": -1.336,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -3830,6 +3875,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "graveyard recursion"
                       ],
                       "addRoles": [
@@ -3837,7 +3883,9 @@
                         "multi-card graveyard recursion",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "card draw"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -4012,7 +4060,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Out of the Tombs",
                     "in": "Lively Dirge",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -4041,6 +4089,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "graveyard recursion"
                         ],
                         "addRoles": [
@@ -4048,7 +4097,9 @@
                           "multi-card graveyard recursion",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "card draw"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -4077,7 +4128,7 @@
                 "estimatedSpendNzd": 5.8,
                 "estimatedSpendUsdReference": 3.43,
                 "unknownPriceCount": 0,
-                "improvementScore": -2.121,
+                "improvementScore": -1.336,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -4140,6 +4191,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "graveyard recursion"
                       ],
                       "addRoles": [
@@ -4147,7 +4199,9 @@
                         "multi-card graveyard recursion",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "card draw"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -4325,7 +4379,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Out of the Tombs",
                     "in": "Lively Dirge",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -4354,6 +4408,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "graveyard recursion"
                         ],
                         "addRoles": [
@@ -4361,7 +4416,9 @@
                           "multi-card graveyard recursion",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "card draw"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -4379,7 +4436,7 @@
                 "estimatedSpendNzd": 6,
                 "estimatedSpendUsdReference": 3.55,
                 "unknownPriceCount": 0,
-                "improvementScore": -2.125,
+                "improvementScore": -1.338,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -4441,6 +4498,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "graveyard recursion"
                       ],
                       "addRoles": [
@@ -4448,7 +4506,9 @@
                         "multi-card graveyard recursion",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "card draw"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -4625,7 +4685,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Out of the Tombs",
                     "in": "Lively Dirge",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -4654,6 +4714,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "graveyard recursion"
                         ],
                         "addRoles": [
@@ -4661,7 +4722,9 @@
                           "multi-card graveyard recursion",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "card draw"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -4679,7 +4742,7 @@
                 "estimatedSpendNzd": 5.8,
                 "estimatedSpendUsdReference": 3.43,
                 "unknownPriceCount": 0,
-                "improvementScore": -2.125,
+                "improvementScore": -1.338,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -4739,6 +4802,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "graveyard recursion"
                       ],
                       "addRoles": [
@@ -4746,7 +4810,9 @@
                         "multi-card graveyard recursion",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "card draw"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -4921,7 +4987,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Out of the Tombs",
                     "in": "Lively Dirge",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -4950,6 +5016,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "graveyard recursion"
                         ],
                         "addRoles": [
@@ -4957,7 +5024,9 @@
                           "multi-card graveyard recursion",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "card draw"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -4975,7 +5044,7 @@
                 "estimatedSpendNzd": 5.78,
                 "estimatedSpendUsdReference": 3.42,
                 "unknownPriceCount": 0,
-                "improvementScore": -2.121,
+                "improvementScore": -1.336,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -5035,6 +5104,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "graveyard recursion"
                       ],
                       "addRoles": [
@@ -5042,7 +5112,9 @@
                         "multi-card graveyard recursion",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "card draw"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -5217,7 +5289,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Out of the Tombs",
                     "in": "Lively Dirge",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -5246,6 +5318,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "graveyard recursion"
                         ],
                         "addRoles": [
@@ -5253,7 +5326,9 @@
                           "multi-card graveyard recursion",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "card draw"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -6323,7 +6398,7 @@
         "winningCandidate": 1,
         "estimatedSpendNzd": 5.8,
         "estimatedSpendUsdReference": 3.43,
-        "improvementScore": 1.596,
+        "improvementScore": 4.627,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -6380,7 +6455,7 @@
             }
           },
           {
-            "out": "Dread Return",
+            "out": "Out of the Tombs",
             "in": "Lively Dirge",
             "recommendedPrinting": {
               "set": "OTJ",
@@ -6416,6 +6491,7 @@
                 ],
                 "locallyUnreplacedStrategies": [],
                 "cutRoles": [
+                  "card draw",
                   "graveyard recursion"
                 ],
                 "addRoles": [
@@ -6423,7 +6499,9 @@
                   "multi-card graveyard recursion",
                   "tutor"
                 ],
-                "unreplacedRoles": [],
+                "unreplacedRoles": [
+                  "card draw"
+                ],
                 "unreplacedStrategyComponentRoles": [],
                 "meaningfulStrategyLoss": false,
                 "verdict": "preserved"
@@ -6441,7 +6519,7 @@
             "estimatedSpendNzd": 5.8,
             "estimatedSpendUsdReference": 3.43,
             "unknownPriceCount": 0,
-            "improvementScore": 1.596,
+            "improvementScore": 4.627,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -6500,6 +6578,7 @@
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
+                    "card draw",
                     "graveyard recursion"
                   ],
                   "addRoles": [
@@ -6507,7 +6586,9 @@
                     "multi-card graveyard recursion",
                     "tutor"
                   ],
-                  "unreplacedRoles": [],
+                  "unreplacedRoles": [
+                    "card draw"
+                  ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
                   "verdict": "preserved"
@@ -6713,7 +6794,7 @@
                 }
               },
               {
-                "out": "Dread Return",
+                "out": "Out of the Tombs",
                 "in": "Lively Dirge",
                 "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -6742,6 +6823,7 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
+                      "card draw",
                       "graveyard recursion"
                     ],
                     "addRoles": [
@@ -6749,7 +6831,9 @@
                       "multi-card graveyard recursion",
                       "tutor"
                     ],
-                    "unreplacedRoles": [],
+                    "unreplacedRoles": [
+                      "card draw"
+                    ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -6767,7 +6851,7 @@
             "estimatedSpendNzd": 6,
             "estimatedSpendUsdReference": 3.55,
             "unknownPriceCount": 0,
-            "improvementScore": 3.623,
+            "improvementScore": 2.666,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -6835,6 +6919,7 @@
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
+                    "card draw",
                     "graveyard recursion"
                   ],
                   "addRoles": [
@@ -6842,7 +6927,9 @@
                     "multi-card graveyard recursion",
                     "tutor"
                   ],
-                  "unreplacedRoles": [],
+                  "unreplacedRoles": [
+                    "card draw"
+                  ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
                   "verdict": "preserved"
@@ -7057,7 +7144,7 @@
                 }
               },
               {
-                "out": "Dread Return",
+                "out": "Out of the Tombs",
                 "in": "Lively Dirge",
                 "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -7086,6 +7173,7 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
+                      "card draw",
                       "graveyard recursion"
                     ],
                     "addRoles": [
@@ -7093,7 +7181,9 @@
                       "multi-card graveyard recursion",
                       "tutor"
                     ],
-                    "unreplacedRoles": [],
+                    "unreplacedRoles": [
+                      "card draw"
+                    ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -7111,7 +7201,7 @@
             "estimatedSpendNzd": 5.8,
             "estimatedSpendUsdReference": 3.43,
             "unknownPriceCount": 0,
-            "improvementScore": 3.623,
+            "improvementScore": 2.666,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -7177,6 +7267,7 @@
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
+                    "card draw",
                     "graveyard recursion"
                   ],
                   "addRoles": [
@@ -7184,7 +7275,9 @@
                     "multi-card graveyard recursion",
                     "tutor"
                   ],
-                  "unreplacedRoles": [],
+                  "unreplacedRoles": [
+                    "card draw"
+                  ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
                   "verdict": "preserved"
@@ -7397,7 +7490,7 @@
                 }
               },
               {
-                "out": "Dread Return",
+                "out": "Out of the Tombs",
                 "in": "Lively Dirge",
                 "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -7426,6 +7519,7 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
+                      "card draw",
                       "graveyard recursion"
                     ],
                     "addRoles": [
@@ -7433,7 +7527,9 @@
                       "multi-card graveyard recursion",
                       "tutor"
                     ],
-                    "unreplacedRoles": [],
+                    "unreplacedRoles": [
+                      "card draw"
+                    ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -7451,7 +7547,7 @@
             "estimatedSpendNzd": 6,
             "estimatedSpendUsdReference": 3.55,
             "unknownPriceCount": 0,
-            "improvementScore": 3.623,
+            "improvementScore": 2.666,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -7517,6 +7613,7 @@
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
+                    "card draw",
                     "graveyard recursion"
                   ],
                   "addRoles": [
@@ -7524,7 +7621,9 @@
                     "multi-card graveyard recursion",
                     "tutor"
                   ],
-                  "unreplacedRoles": [],
+                  "unreplacedRoles": [
+                    "card draw"
+                  ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
                   "verdict": "preserved"
@@ -7737,7 +7836,7 @@
                 }
               },
               {
-                "out": "Dread Return",
+                "out": "Out of the Tombs",
                 "in": "Lively Dirge",
                 "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -7766,6 +7865,7 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
+                      "card draw",
                       "graveyard recursion"
                     ],
                     "addRoles": [
@@ -7773,7 +7873,9 @@
                       "multi-card graveyard recursion",
                       "tutor"
                     ],
-                    "unreplacedRoles": [],
+                    "unreplacedRoles": [
+                      "card draw"
+                    ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -7803,7 +7905,7 @@
                 "estimatedSpendNzd": 5.8,
                 "estimatedSpendUsdReference": 3.43,
                 "unknownPriceCount": 0,
-                "improvementScore": 1.596,
+                "improvementScore": 4.627,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -7862,6 +7964,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "graveyard recursion"
                       ],
                       "addRoles": [
@@ -7869,7 +7972,9 @@
                         "multi-card graveyard recursion",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "card draw"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -8075,7 +8180,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Out of the Tombs",
                     "in": "Lively Dirge",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -8104,6 +8209,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "graveyard recursion"
                         ],
                         "addRoles": [
@@ -8111,7 +8217,9 @@
                           "multi-card graveyard recursion",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "card draw"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -8129,7 +8237,7 @@
                 "estimatedSpendNzd": 6,
                 "estimatedSpendUsdReference": 3.55,
                 "unknownPriceCount": 0,
-                "improvementScore": 3.623,
+                "improvementScore": 2.666,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -8197,6 +8305,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "graveyard recursion"
                       ],
                       "addRoles": [
@@ -8204,7 +8313,9 @@
                         "multi-card graveyard recursion",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "card draw"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -8419,7 +8530,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Out of the Tombs",
                     "in": "Lively Dirge",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -8448,6 +8559,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "graveyard recursion"
                         ],
                         "addRoles": [
@@ -8455,7 +8567,9 @@
                           "multi-card graveyard recursion",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "card draw"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -8473,7 +8587,7 @@
                 "estimatedSpendNzd": 5.8,
                 "estimatedSpendUsdReference": 3.43,
                 "unknownPriceCount": 0,
-                "improvementScore": 3.623,
+                "improvementScore": 2.666,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -8539,6 +8653,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "graveyard recursion"
                       ],
                       "addRoles": [
@@ -8546,7 +8661,9 @@
                         "multi-card graveyard recursion",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "card draw"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -8759,7 +8876,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Out of the Tombs",
                     "in": "Lively Dirge",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -8788,6 +8905,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "graveyard recursion"
                         ],
                         "addRoles": [
@@ -8795,7 +8913,9 @@
                           "multi-card graveyard recursion",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "card draw"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -8813,7 +8933,7 @@
                 "estimatedSpendNzd": 6,
                 "estimatedSpendUsdReference": 3.55,
                 "unknownPriceCount": 0,
-                "improvementScore": 3.623,
+                "improvementScore": 2.666,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -8879,6 +8999,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "card draw",
                         "graveyard recursion"
                       ],
                       "addRoles": [
@@ -8886,7 +9007,9 @@
                         "multi-card graveyard recursion",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "card draw"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -9099,7 +9222,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Out of the Tombs",
                     "in": "Lively Dirge",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -9128,6 +9251,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "card draw",
                           "graveyard recursion"
                         ],
                         "addRoles": [
@@ -9135,7 +9259,9 @@
                           "multi-card graveyard recursion",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "card draw"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -9166,19 +9292,19 @@
           "source": "existing-v15-final-win-route-audit"
         },
         "themeAuditBefore": null,
-        "stopReason": "all-competing-packages-below-improvement-threshold",
+        "stopReason": "package-reduces-substantive-deck-strategy-density",
         "swaps": [],
         "candidateComparisons": [
           {
             "candidate": 1,
             "eligible": false,
-            "reason": "improvement-below-threshold",
+            "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
             "estimatedSpendNzd": 0.24,
             "estimatedSpendUsdReference": 0.14,
             "unknownPriceCount": 0,
-            "improvementScore": -2.646,
+            "improvementScore": 1.441,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -9238,7 +9364,56 @@
               ],
               "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
             },
-            "deckStrategyRetention": {},
+            "deckStrategyRetention": {
+              "status": "strategy-density-loss",
+              "evidenceComplete": true,
+              "preserved": false,
+              "unresolvedBefore": [],
+              "unresolvedAfter": [],
+              "strategies": [
+                {
+                  "archetype": "graveyard-reanimator",
+                  "commanderScore": 12,
+                  "beforeSupportCount": 30,
+                  "afterSupportCount": 30,
+                  "supportDelta": 0,
+                  "beforeAffinityTotal": 274,
+                  "afterAffinityTotal": 274,
+                  "affinityDelta": 0,
+                  "preserved": true
+                },
+                {
+                  "archetype": "artifact-engine",
+                  "commanderScore": 9,
+                  "beforeSupportCount": 53,
+                  "afterSupportCount": 52,
+                  "supportDelta": -1,
+                  "beforeAffinityTotal": 275,
+                  "afterAffinityTotal": 272,
+                  "affinityDelta": -3,
+                  "preserved": false
+                },
+                {
+                  "archetype": "aristocrats",
+                  "commanderScore": 6,
+                  "beforeSupportCount": 14,
+                  "afterSupportCount": 15,
+                  "supportDelta": 1,
+                  "beforeAffinityTotal": 60,
+                  "afterAffinityTotal": 66,
+                  "affinityDelta": 6,
+                  "preserved": true
+                }
+              ],
+              "losses": [
+                {
+                  "archetype": "artifact-engine",
+                  "supportDelta": -1,
+                  "affinityDelta": -3
+                }
+              ],
+              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+            },
             "planProvenance": {
               "targetBracket": 4,
               "winRouteVerificationStatus": "no-verified-route",
@@ -9260,9 +9435,9 @@
               "authoritativeTargetGatePriorities": [
                 {
                   "role": "average-nonland-mv",
-                  "current": 3.65,
+                  "current": 3.67,
                   "target": 3.1,
-                  "deficit": 0.55,
+                  "deficit": 0.57,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv"
                 },
@@ -9314,9 +9489,9 @@
                   "role": "average-nonland-mv",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv",
-                  "current": 3.65,
+                  "current": 3.67,
                   "target": 3.1,
-                  "deficit": 0.55,
+                  "deficit": 0.57,
                   "candidateDiscoveryMode": "bounded-role-search",
                   "candidateCount": 0
                 },
@@ -9412,13 +9587,13 @@
           {
             "candidate": 2,
             "eligible": false,
-            "reason": "improvement-below-threshold",
+            "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
             "estimatedSpendNzd": 0.51,
             "estimatedSpendUsdReference": 0.3,
             "unknownPriceCount": 0,
-            "improvementScore": -2.65,
+            "improvementScore": 1.439,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -9477,7 +9652,56 @@
               ],
               "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
             },
-            "deckStrategyRetention": {},
+            "deckStrategyRetention": {
+              "status": "strategy-density-loss",
+              "evidenceComplete": true,
+              "preserved": false,
+              "unresolvedBefore": [],
+              "unresolvedAfter": [],
+              "strategies": [
+                {
+                  "archetype": "graveyard-reanimator",
+                  "commanderScore": 12,
+                  "beforeSupportCount": 30,
+                  "afterSupportCount": 31,
+                  "supportDelta": 1,
+                  "beforeAffinityTotal": 274,
+                  "afterAffinityTotal": 279,
+                  "affinityDelta": 5,
+                  "preserved": true
+                },
+                {
+                  "archetype": "artifact-engine",
+                  "commanderScore": 9,
+                  "beforeSupportCount": 53,
+                  "afterSupportCount": 52,
+                  "supportDelta": -1,
+                  "beforeAffinityTotal": 275,
+                  "afterAffinityTotal": 272,
+                  "affinityDelta": -3,
+                  "preserved": false
+                },
+                {
+                  "archetype": "aristocrats",
+                  "commanderScore": 6,
+                  "beforeSupportCount": 14,
+                  "afterSupportCount": 14,
+                  "supportDelta": 0,
+                  "beforeAffinityTotal": 60,
+                  "afterAffinityTotal": 60,
+                  "affinityDelta": 0,
+                  "preserved": true
+                }
+              ],
+              "losses": [
+                {
+                  "archetype": "artifact-engine",
+                  "supportDelta": -1,
+                  "affinityDelta": -3
+                }
+              ],
+              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+            },
             "planProvenance": {
               "targetBracket": 4,
               "winRouteVerificationStatus": "no-verified-route",
@@ -9499,9 +9723,9 @@
               "authoritativeTargetGatePriorities": [
                 {
                   "role": "average-nonland-mv",
-                  "current": 3.65,
+                  "current": 3.67,
                   "target": 3.1,
-                  "deficit": 0.55,
+                  "deficit": 0.57,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv"
                 },
@@ -9553,9 +9777,9 @@
                   "role": "average-nonland-mv",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv",
-                  "current": 3.65,
+                  "current": 3.67,
                   "target": 3.1,
-                  "deficit": 0.55,
+                  "deficit": 0.57,
                   "candidateDiscoveryMode": "bounded-role-search",
                   "candidateCount": 0
                 },
@@ -9650,13 +9874,13 @@
           {
             "candidate": 3,
             "eligible": false,
-            "reason": "improvement-below-threshold",
+            "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
             "estimatedSpendNzd": 0.3,
             "estimatedSpendUsdReference": 0.18,
             "unknownPriceCount": 0,
-            "improvementScore": -2.65,
+            "improvementScore": 1.439,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -9707,7 +9931,56 @@
               ],
               "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
             },
-            "deckStrategyRetention": {},
+            "deckStrategyRetention": {
+              "status": "strategy-density-loss",
+              "evidenceComplete": true,
+              "preserved": false,
+              "unresolvedBefore": [],
+              "unresolvedAfter": [],
+              "strategies": [
+                {
+                  "archetype": "graveyard-reanimator",
+                  "commanderScore": 12,
+                  "beforeSupportCount": 30,
+                  "afterSupportCount": 30,
+                  "supportDelta": 0,
+                  "beforeAffinityTotal": 274,
+                  "afterAffinityTotal": 274,
+                  "affinityDelta": 0,
+                  "preserved": true
+                },
+                {
+                  "archetype": "artifact-engine",
+                  "commanderScore": 9,
+                  "beforeSupportCount": 53,
+                  "afterSupportCount": 52,
+                  "supportDelta": -1,
+                  "beforeAffinityTotal": 275,
+                  "afterAffinityTotal": 272,
+                  "affinityDelta": -3,
+                  "preserved": false
+                },
+                {
+                  "archetype": "aristocrats",
+                  "commanderScore": 6,
+                  "beforeSupportCount": 14,
+                  "afterSupportCount": 14,
+                  "supportDelta": 0,
+                  "beforeAffinityTotal": 60,
+                  "afterAffinityTotal": 60,
+                  "affinityDelta": 0,
+                  "preserved": true
+                }
+              ],
+              "losses": [
+                {
+                  "archetype": "artifact-engine",
+                  "supportDelta": -1,
+                  "affinityDelta": -3
+                }
+              ],
+              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+            },
             "planProvenance": {
               "targetBracket": 4,
               "winRouteVerificationStatus": "no-verified-route",
@@ -9729,9 +10002,9 @@
               "authoritativeTargetGatePriorities": [
                 {
                   "role": "average-nonland-mv",
-                  "current": 3.65,
+                  "current": 3.67,
                   "target": 3.1,
-                  "deficit": 0.55,
+                  "deficit": 0.57,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv"
                 },
@@ -9783,9 +10056,9 @@
                   "role": "average-nonland-mv",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv",
-                  "current": 3.65,
+                  "current": 3.67,
                   "target": 3.1,
-                  "deficit": 0.55,
+                  "deficit": 0.57,
                   "candidateDiscoveryMode": "bounded-role-search",
                   "candidateCount": 0
                 },
@@ -9878,13 +10151,13 @@
           {
             "candidate": 4,
             "eligible": false,
-            "reason": "improvement-below-threshold",
+            "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
             "estimatedSpendNzd": 0.51,
             "estimatedSpendUsdReference": 0.3,
             "unknownPriceCount": 0,
-            "improvementScore": -2.65,
+            "improvementScore": 1.439,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -9935,7 +10208,56 @@
               ],
               "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
             },
-            "deckStrategyRetention": {},
+            "deckStrategyRetention": {
+              "status": "strategy-density-loss",
+              "evidenceComplete": true,
+              "preserved": false,
+              "unresolvedBefore": [],
+              "unresolvedAfter": [],
+              "strategies": [
+                {
+                  "archetype": "graveyard-reanimator",
+                  "commanderScore": 12,
+                  "beforeSupportCount": 30,
+                  "afterSupportCount": 30,
+                  "supportDelta": 0,
+                  "beforeAffinityTotal": 274,
+                  "afterAffinityTotal": 274,
+                  "affinityDelta": 0,
+                  "preserved": true
+                },
+                {
+                  "archetype": "artifact-engine",
+                  "commanderScore": 9,
+                  "beforeSupportCount": 53,
+                  "afterSupportCount": 52,
+                  "supportDelta": -1,
+                  "beforeAffinityTotal": 275,
+                  "afterAffinityTotal": 272,
+                  "affinityDelta": -3,
+                  "preserved": false
+                },
+                {
+                  "archetype": "aristocrats",
+                  "commanderScore": 6,
+                  "beforeSupportCount": 14,
+                  "afterSupportCount": 14,
+                  "supportDelta": 0,
+                  "beforeAffinityTotal": 60,
+                  "afterAffinityTotal": 60,
+                  "affinityDelta": 0,
+                  "preserved": true
+                }
+              ],
+              "losses": [
+                {
+                  "archetype": "artifact-engine",
+                  "supportDelta": -1,
+                  "affinityDelta": -3
+                }
+              ],
+              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+            },
             "planProvenance": {
               "targetBracket": 4,
               "winRouteVerificationStatus": "no-verified-route",
@@ -9957,9 +10279,9 @@
               "authoritativeTargetGatePriorities": [
                 {
                   "role": "average-nonland-mv",
-                  "current": 3.65,
+                  "current": 3.67,
                   "target": 3.1,
-                  "deficit": 0.55,
+                  "deficit": 0.57,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv"
                 },
@@ -10011,9 +10333,9 @@
                   "role": "average-nonland-mv",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "average-nonland-mv",
-                  "current": 3.65,
+                  "current": 3.67,
                   "target": 3.1,
-                  "deficit": 0.55,
+                  "deficit": 0.57,
                   "candidateDiscoveryMode": "bounded-role-search",
                   "candidateCount": 0
                 },
@@ -10111,19 +10433,19 @@
             "candidatePackagesEligible": 0,
             "winningCandidate": null,
             "reasonCounts": {
-              "improvement-below-threshold": 4
+              "package-reduces-substantive-deck-strategy-density": 4
             },
             "candidateComparisons": [
               {
                 "candidate": 1,
                 "eligible": false,
-                "reason": "improvement-below-threshold",
+                "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 1.69,
                 "estimatedSpendUsdReference": 1,
                 "unknownPriceCount": 0,
-                "improvementScore": -0.944,
+                "improvementScore": 3.071,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -10210,7 +10532,56 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "strategy-density-loss",
+                  "evidenceComplete": true,
+                  "preserved": false,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "graveyard-reanimator",
+                      "commanderScore": 12,
+                      "beforeSupportCount": 30,
+                      "afterSupportCount": 30,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 274,
+                      "afterAffinityTotal": 274,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "artifact-engine",
+                      "commanderScore": 9,
+                      "beforeSupportCount": 53,
+                      "afterSupportCount": 52,
+                      "supportDelta": -1,
+                      "beforeAffinityTotal": 275,
+                      "afterAffinityTotal": 278,
+                      "affinityDelta": 3,
+                      "preserved": false
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 14,
+                      "afterSupportCount": 16,
+                      "supportDelta": 2,
+                      "beforeAffinityTotal": 60,
+                      "afterAffinityTotal": 68,
+                      "affinityDelta": 8,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [
+                    {
+                      "archetype": "artifact-engine",
+                      "supportDelta": -1,
+                      "affinityDelta": 3
+                    }
+                  ],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -10232,9 +10603,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -10286,9 +10657,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "candidateDiscoveryMode": "bounded-role-search",
                       "candidateCount": 0
                     },
@@ -10431,13 +10802,13 @@
               {
                 "candidate": 2,
                 "eligible": false,
-                "reason": "improvement-below-threshold",
+                "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 1.96,
                 "estimatedSpendUsdReference": 1.16,
                 "unknownPriceCount": 0,
-                "improvementScore": -0.948,
+                "improvementScore": 3.067,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -10529,7 +10900,56 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "strategy-density-loss",
+                  "evidenceComplete": true,
+                  "preserved": false,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "graveyard-reanimator",
+                      "commanderScore": 12,
+                      "beforeSupportCount": 30,
+                      "afterSupportCount": 31,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 274,
+                      "afterAffinityTotal": 279,
+                      "affinityDelta": 5,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "artifact-engine",
+                      "commanderScore": 9,
+                      "beforeSupportCount": 53,
+                      "afterSupportCount": 52,
+                      "supportDelta": -1,
+                      "beforeAffinityTotal": 275,
+                      "afterAffinityTotal": 278,
+                      "affinityDelta": 3,
+                      "preserved": false
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 14,
+                      "afterSupportCount": 15,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 60,
+                      "afterAffinityTotal": 62,
+                      "affinityDelta": 2,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [
+                    {
+                      "archetype": "artifact-engine",
+                      "supportDelta": -1,
+                      "affinityDelta": 3
+                    }
+                  ],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -10551,9 +10971,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -10605,9 +11025,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "candidateDiscoveryMode": "bounded-role-search",
                       "candidateCount": 0
                     },
@@ -10749,13 +11169,13 @@
               {
                 "candidate": 3,
                 "eligible": false,
-                "reason": "improvement-below-threshold",
+                "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 1.76,
                 "estimatedSpendUsdReference": 1.04,
                 "unknownPriceCount": 0,
-                "improvementScore": -0.948,
+                "improvementScore": 3.067,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -10839,7 +11259,56 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "strategy-density-loss",
+                  "evidenceComplete": true,
+                  "preserved": false,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "graveyard-reanimator",
+                      "commanderScore": 12,
+                      "beforeSupportCount": 30,
+                      "afterSupportCount": 30,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 274,
+                      "afterAffinityTotal": 274,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "artifact-engine",
+                      "commanderScore": 9,
+                      "beforeSupportCount": 53,
+                      "afterSupportCount": 52,
+                      "supportDelta": -1,
+                      "beforeAffinityTotal": 275,
+                      "afterAffinityTotal": 278,
+                      "affinityDelta": 3,
+                      "preserved": false
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 14,
+                      "afterSupportCount": 15,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 60,
+                      "afterAffinityTotal": 62,
+                      "affinityDelta": 2,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [
+                    {
+                      "archetype": "artifact-engine",
+                      "supportDelta": -1,
+                      "affinityDelta": 3
+                    }
+                  ],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -10861,9 +11330,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -10915,9 +11384,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "candidateDiscoveryMode": "bounded-role-search",
                       "candidateCount": 0
                     },
@@ -11057,13 +11526,13 @@
               {
                 "candidate": 4,
                 "eligible": false,
-                "reason": "improvement-below-threshold",
+                "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 1.96,
                 "estimatedSpendUsdReference": 1.16,
                 "unknownPriceCount": 0,
-                "improvementScore": -0.948,
+                "improvementScore": 3.067,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -11147,7 +11616,56 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "strategy-density-loss",
+                  "evidenceComplete": true,
+                  "preserved": false,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "graveyard-reanimator",
+                      "commanderScore": 12,
+                      "beforeSupportCount": 30,
+                      "afterSupportCount": 30,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 274,
+                      "afterAffinityTotal": 274,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "artifact-engine",
+                      "commanderScore": 9,
+                      "beforeSupportCount": 53,
+                      "afterSupportCount": 52,
+                      "supportDelta": -1,
+                      "beforeAffinityTotal": 275,
+                      "afterAffinityTotal": 278,
+                      "affinityDelta": 3,
+                      "preserved": false
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 14,
+                      "afterSupportCount": 15,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 60,
+                      "afterAffinityTotal": 62,
+                      "affinityDelta": 2,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [
+                    {
+                      "archetype": "artifact-engine",
+                      "supportDelta": -1,
+                      "affinityDelta": 3
+                    }
+                  ],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -11169,9 +11687,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -11223,9 +11741,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "candidateDiscoveryMode": "bounded-role-search",
                       "candidateCount": 0
                     },
@@ -11370,19 +11888,19 @@
             "candidatePackagesEligible": 0,
             "winningCandidate": null,
             "reasonCounts": {
-              "improvement-below-threshold": 4
+              "package-reduces-substantive-deck-strategy-density": 4
             },
             "candidateComparisons": [
               {
                 "candidate": 1,
                 "eligible": false,
-                "reason": "improvement-below-threshold",
+                "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 1.69,
                 "estimatedSpendUsdReference": 1,
                 "unknownPriceCount": 0,
-                "improvementScore": -0.944,
+                "improvementScore": 3.071,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -11469,7 +11987,56 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "strategy-density-loss",
+                  "evidenceComplete": true,
+                  "preserved": false,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "graveyard-reanimator",
+                      "commanderScore": 12,
+                      "beforeSupportCount": 30,
+                      "afterSupportCount": 30,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 274,
+                      "afterAffinityTotal": 274,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "artifact-engine",
+                      "commanderScore": 9,
+                      "beforeSupportCount": 53,
+                      "afterSupportCount": 52,
+                      "supportDelta": -1,
+                      "beforeAffinityTotal": 275,
+                      "afterAffinityTotal": 278,
+                      "affinityDelta": 3,
+                      "preserved": false
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 14,
+                      "afterSupportCount": 16,
+                      "supportDelta": 2,
+                      "beforeAffinityTotal": 60,
+                      "afterAffinityTotal": 68,
+                      "affinityDelta": 8,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [
+                    {
+                      "archetype": "artifact-engine",
+                      "supportDelta": -1,
+                      "affinityDelta": 3
+                    }
+                  ],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -11491,9 +12058,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -11545,9 +12112,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "candidateDiscoveryMode": "bounded-role-search",
                       "candidateCount": 0
                     },
@@ -11690,13 +12257,13 @@
               {
                 "candidate": 2,
                 "eligible": false,
-                "reason": "improvement-below-threshold",
+                "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 1.96,
                 "estimatedSpendUsdReference": 1.16,
                 "unknownPriceCount": 0,
-                "improvementScore": -0.948,
+                "improvementScore": 3.067,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -11788,7 +12355,56 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "strategy-density-loss",
+                  "evidenceComplete": true,
+                  "preserved": false,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "graveyard-reanimator",
+                      "commanderScore": 12,
+                      "beforeSupportCount": 30,
+                      "afterSupportCount": 31,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 274,
+                      "afterAffinityTotal": 279,
+                      "affinityDelta": 5,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "artifact-engine",
+                      "commanderScore": 9,
+                      "beforeSupportCount": 53,
+                      "afterSupportCount": 52,
+                      "supportDelta": -1,
+                      "beforeAffinityTotal": 275,
+                      "afterAffinityTotal": 278,
+                      "affinityDelta": 3,
+                      "preserved": false
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 14,
+                      "afterSupportCount": 15,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 60,
+                      "afterAffinityTotal": 62,
+                      "affinityDelta": 2,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [
+                    {
+                      "archetype": "artifact-engine",
+                      "supportDelta": -1,
+                      "affinityDelta": 3
+                    }
+                  ],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -11810,9 +12426,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -11864,9 +12480,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "candidateDiscoveryMode": "bounded-role-search",
                       "candidateCount": 0
                     },
@@ -12008,13 +12624,13 @@
               {
                 "candidate": 3,
                 "eligible": false,
-                "reason": "improvement-below-threshold",
+                "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 1.76,
                 "estimatedSpendUsdReference": 1.04,
                 "unknownPriceCount": 0,
-                "improvementScore": -0.948,
+                "improvementScore": 3.067,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -12098,7 +12714,56 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "strategy-density-loss",
+                  "evidenceComplete": true,
+                  "preserved": false,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "graveyard-reanimator",
+                      "commanderScore": 12,
+                      "beforeSupportCount": 30,
+                      "afterSupportCount": 30,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 274,
+                      "afterAffinityTotal": 274,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "artifact-engine",
+                      "commanderScore": 9,
+                      "beforeSupportCount": 53,
+                      "afterSupportCount": 52,
+                      "supportDelta": -1,
+                      "beforeAffinityTotal": 275,
+                      "afterAffinityTotal": 278,
+                      "affinityDelta": 3,
+                      "preserved": false
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 14,
+                      "afterSupportCount": 15,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 60,
+                      "afterAffinityTotal": 62,
+                      "affinityDelta": 2,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [
+                    {
+                      "archetype": "artifact-engine",
+                      "supportDelta": -1,
+                      "affinityDelta": 3
+                    }
+                  ],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -12120,9 +12785,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -12174,9 +12839,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "candidateDiscoveryMode": "bounded-role-search",
                       "candidateCount": 0
                     },
@@ -12316,13 +12981,13 @@
               {
                 "candidate": 4,
                 "eligible": false,
-                "reason": "improvement-below-threshold",
+                "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 1.96,
                 "estimatedSpendUsdReference": 1.16,
                 "unknownPriceCount": 0,
-                "improvementScore": -0.948,
+                "improvementScore": 3.067,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -12406,7 +13071,56 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "strategy-density-loss",
+                  "evidenceComplete": true,
+                  "preserved": false,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "graveyard-reanimator",
+                      "commanderScore": 12,
+                      "beforeSupportCount": 30,
+                      "afterSupportCount": 30,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 274,
+                      "afterAffinityTotal": 274,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "artifact-engine",
+                      "commanderScore": 9,
+                      "beforeSupportCount": 53,
+                      "afterSupportCount": 52,
+                      "supportDelta": -1,
+                      "beforeAffinityTotal": 275,
+                      "afterAffinityTotal": 278,
+                      "affinityDelta": 3,
+                      "preserved": false
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 14,
+                      "afterSupportCount": 15,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 60,
+                      "afterAffinityTotal": 62,
+                      "affinityDelta": 2,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [
+                    {
+                      "archetype": "artifact-engine",
+                      "supportDelta": -1,
+                      "affinityDelta": 3
+                    }
+                  ],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -12428,9 +13142,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -12482,9 +13196,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "candidateDiscoveryMode": "bounded-role-search",
                       "candidateCount": 0
                     },
@@ -12629,19 +13343,19 @@
             "candidatePackagesEligible": 0,
             "winningCandidate": null,
             "reasonCounts": {
-              "improvement-below-threshold": 4
+              "package-reduces-substantive-deck-strategy-density": 4
             },
             "candidateComparisons": [
               {
                 "candidate": 1,
                 "eligible": false,
-                "reason": "improvement-below-threshold",
+                "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 1.69,
                 "estimatedSpendUsdReference": 1,
                 "unknownPriceCount": 0,
-                "improvementScore": -0.944,
+                "improvementScore": 3.071,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -12728,7 +13442,56 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "strategy-density-loss",
+                  "evidenceComplete": true,
+                  "preserved": false,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "graveyard-reanimator",
+                      "commanderScore": 12,
+                      "beforeSupportCount": 30,
+                      "afterSupportCount": 30,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 274,
+                      "afterAffinityTotal": 274,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "artifact-engine",
+                      "commanderScore": 9,
+                      "beforeSupportCount": 53,
+                      "afterSupportCount": 52,
+                      "supportDelta": -1,
+                      "beforeAffinityTotal": 275,
+                      "afterAffinityTotal": 278,
+                      "affinityDelta": 3,
+                      "preserved": false
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 14,
+                      "afterSupportCount": 16,
+                      "supportDelta": 2,
+                      "beforeAffinityTotal": 60,
+                      "afterAffinityTotal": 68,
+                      "affinityDelta": 8,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [
+                    {
+                      "archetype": "artifact-engine",
+                      "supportDelta": -1,
+                      "affinityDelta": 3
+                    }
+                  ],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -12750,9 +13513,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -12804,9 +13567,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "candidateDiscoveryMode": "bounded-role-search",
                       "candidateCount": 0
                     },
@@ -12949,13 +13712,13 @@
               {
                 "candidate": 2,
                 "eligible": false,
-                "reason": "improvement-below-threshold",
+                "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 1.96,
                 "estimatedSpendUsdReference": 1.16,
                 "unknownPriceCount": 0,
-                "improvementScore": -0.948,
+                "improvementScore": 3.067,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -13047,7 +13810,56 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "strategy-density-loss",
+                  "evidenceComplete": true,
+                  "preserved": false,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "graveyard-reanimator",
+                      "commanderScore": 12,
+                      "beforeSupportCount": 30,
+                      "afterSupportCount": 31,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 274,
+                      "afterAffinityTotal": 279,
+                      "affinityDelta": 5,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "artifact-engine",
+                      "commanderScore": 9,
+                      "beforeSupportCount": 53,
+                      "afterSupportCount": 52,
+                      "supportDelta": -1,
+                      "beforeAffinityTotal": 275,
+                      "afterAffinityTotal": 278,
+                      "affinityDelta": 3,
+                      "preserved": false
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 14,
+                      "afterSupportCount": 15,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 60,
+                      "afterAffinityTotal": 62,
+                      "affinityDelta": 2,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [
+                    {
+                      "archetype": "artifact-engine",
+                      "supportDelta": -1,
+                      "affinityDelta": 3
+                    }
+                  ],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -13069,9 +13881,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -13123,9 +13935,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "candidateDiscoveryMode": "bounded-role-search",
                       "candidateCount": 0
                     },
@@ -13267,13 +14079,13 @@
               {
                 "candidate": 3,
                 "eligible": false,
-                "reason": "improvement-below-threshold",
+                "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 1.76,
                 "estimatedSpendUsdReference": 1.04,
                 "unknownPriceCount": 0,
-                "improvementScore": -0.948,
+                "improvementScore": 3.067,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -13357,7 +14169,56 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "strategy-density-loss",
+                  "evidenceComplete": true,
+                  "preserved": false,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "graveyard-reanimator",
+                      "commanderScore": 12,
+                      "beforeSupportCount": 30,
+                      "afterSupportCount": 30,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 274,
+                      "afterAffinityTotal": 274,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "artifact-engine",
+                      "commanderScore": 9,
+                      "beforeSupportCount": 53,
+                      "afterSupportCount": 52,
+                      "supportDelta": -1,
+                      "beforeAffinityTotal": 275,
+                      "afterAffinityTotal": 278,
+                      "affinityDelta": 3,
+                      "preserved": false
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 14,
+                      "afterSupportCount": 15,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 60,
+                      "afterAffinityTotal": 62,
+                      "affinityDelta": 2,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [
+                    {
+                      "archetype": "artifact-engine",
+                      "supportDelta": -1,
+                      "affinityDelta": 3
+                    }
+                  ],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -13379,9 +14240,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -13433,9 +14294,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "candidateDiscoveryMode": "bounded-role-search",
                       "candidateCount": 0
                     },
@@ -13575,13 +14436,13 @@
               {
                 "candidate": 4,
                 "eligible": false,
-                "reason": "improvement-below-threshold",
+                "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
                 "estimatedSpendNzd": 1.96,
                 "estimatedSpendUsdReference": 1.16,
                 "unknownPriceCount": 0,
-                "improvementScore": -0.948,
+                "improvementScore": 3.067,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -13665,7 +14526,56 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "strategy-density-loss",
+                  "evidenceComplete": true,
+                  "preserved": false,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "graveyard-reanimator",
+                      "commanderScore": 12,
+                      "beforeSupportCount": 30,
+                      "afterSupportCount": 30,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 274,
+                      "afterAffinityTotal": 274,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "artifact-engine",
+                      "commanderScore": 9,
+                      "beforeSupportCount": 53,
+                      "afterSupportCount": 52,
+                      "supportDelta": -1,
+                      "beforeAffinityTotal": 275,
+                      "afterAffinityTotal": 278,
+                      "affinityDelta": 3,
+                      "preserved": false
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 14,
+                      "afterSupportCount": 15,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 60,
+                      "afterAffinityTotal": 62,
+                      "affinityDelta": 2,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [
+                    {
+                      "archetype": "artifact-engine",
+                      "supportDelta": -1,
+                      "affinityDelta": 3
+                    }
+                  ],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -13687,9 +14597,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -13741,9 +14651,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "candidateDiscoveryMode": "bounded-role-search",
                       "candidateCount": 0
                     },
@@ -13888,19 +14798,19 @@
             "candidatePackagesEligible": 0,
             "winningCandidate": null,
             "reasonCounts": {
-              "improvement-below-threshold": 4
+              "package-reduces-substantive-deck-strategy-density": 4
             },
             "candidateComparisons": [
               {
                 "candidate": 1,
                 "eligible": false,
-                "reason": "improvement-below-threshold",
+                "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
                 "estimatedSpendNzd": 0.24,
                 "estimatedSpendUsdReference": 0.14,
                 "unknownPriceCount": 0,
-                "improvementScore": -2.646,
+                "improvementScore": 1.441,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -13960,7 +14870,56 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "strategy-density-loss",
+                  "evidenceComplete": true,
+                  "preserved": false,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "graveyard-reanimator",
+                      "commanderScore": 12,
+                      "beforeSupportCount": 30,
+                      "afterSupportCount": 30,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 274,
+                      "afterAffinityTotal": 274,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "artifact-engine",
+                      "commanderScore": 9,
+                      "beforeSupportCount": 53,
+                      "afterSupportCount": 52,
+                      "supportDelta": -1,
+                      "beforeAffinityTotal": 275,
+                      "afterAffinityTotal": 272,
+                      "affinityDelta": -3,
+                      "preserved": false
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 14,
+                      "afterSupportCount": 15,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 60,
+                      "afterAffinityTotal": 66,
+                      "affinityDelta": 6,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [
+                    {
+                      "archetype": "artifact-engine",
+                      "supportDelta": -1,
+                      "affinityDelta": -3
+                    }
+                  ],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -13982,9 +14941,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -14036,9 +14995,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "candidateDiscoveryMode": "bounded-role-search",
                       "candidateCount": 0
                     },
@@ -14134,13 +15093,13 @@
               {
                 "candidate": 2,
                 "eligible": false,
-                "reason": "improvement-below-threshold",
+                "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
                 "estimatedSpendNzd": 0.51,
                 "estimatedSpendUsdReference": 0.3,
                 "unknownPriceCount": 0,
-                "improvementScore": -2.65,
+                "improvementScore": 1.439,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -14199,7 +15158,56 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "strategy-density-loss",
+                  "evidenceComplete": true,
+                  "preserved": false,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "graveyard-reanimator",
+                      "commanderScore": 12,
+                      "beforeSupportCount": 30,
+                      "afterSupportCount": 31,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 274,
+                      "afterAffinityTotal": 279,
+                      "affinityDelta": 5,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "artifact-engine",
+                      "commanderScore": 9,
+                      "beforeSupportCount": 53,
+                      "afterSupportCount": 52,
+                      "supportDelta": -1,
+                      "beforeAffinityTotal": 275,
+                      "afterAffinityTotal": 272,
+                      "affinityDelta": -3,
+                      "preserved": false
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 14,
+                      "afterSupportCount": 14,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 60,
+                      "afterAffinityTotal": 60,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [
+                    {
+                      "archetype": "artifact-engine",
+                      "supportDelta": -1,
+                      "affinityDelta": -3
+                    }
+                  ],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -14221,9 +15229,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -14275,9 +15283,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "candidateDiscoveryMode": "bounded-role-search",
                       "candidateCount": 0
                     },
@@ -14372,13 +15380,13 @@
               {
                 "candidate": 3,
                 "eligible": false,
-                "reason": "improvement-below-threshold",
+                "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
                 "estimatedSpendNzd": 0.3,
                 "estimatedSpendUsdReference": 0.18,
                 "unknownPriceCount": 0,
-                "improvementScore": -2.65,
+                "improvementScore": 1.439,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -14429,7 +15437,56 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "strategy-density-loss",
+                  "evidenceComplete": true,
+                  "preserved": false,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "graveyard-reanimator",
+                      "commanderScore": 12,
+                      "beforeSupportCount": 30,
+                      "afterSupportCount": 30,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 274,
+                      "afterAffinityTotal": 274,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "artifact-engine",
+                      "commanderScore": 9,
+                      "beforeSupportCount": 53,
+                      "afterSupportCount": 52,
+                      "supportDelta": -1,
+                      "beforeAffinityTotal": 275,
+                      "afterAffinityTotal": 272,
+                      "affinityDelta": -3,
+                      "preserved": false
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 14,
+                      "afterSupportCount": 14,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 60,
+                      "afterAffinityTotal": 60,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [
+                    {
+                      "archetype": "artifact-engine",
+                      "supportDelta": -1,
+                      "affinityDelta": -3
+                    }
+                  ],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -14451,9 +15508,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -14505,9 +15562,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "candidateDiscoveryMode": "bounded-role-search",
                       "candidateCount": 0
                     },
@@ -14600,13 +15657,13 @@
               {
                 "candidate": 4,
                 "eligible": false,
-                "reason": "improvement-below-threshold",
+                "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
                 "estimatedSpendNzd": 0.51,
                 "estimatedSpendUsdReference": 0.3,
                 "unknownPriceCount": 0,
-                "improvementScore": -2.65,
+                "improvementScore": 1.439,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -14657,7 +15714,56 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {},
+                "deckStrategyRetention": {
+                  "status": "strategy-density-loss",
+                  "evidenceComplete": true,
+                  "preserved": false,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "graveyard-reanimator",
+                      "commanderScore": 12,
+                      "beforeSupportCount": 30,
+                      "afterSupportCount": 30,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 274,
+                      "afterAffinityTotal": 274,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "artifact-engine",
+                      "commanderScore": 9,
+                      "beforeSupportCount": 53,
+                      "afterSupportCount": 52,
+                      "supportDelta": -1,
+                      "beforeAffinityTotal": 275,
+                      "afterAffinityTotal": 272,
+                      "affinityDelta": -3,
+                      "preserved": false
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 14,
+                      "afterSupportCount": 14,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 60,
+                      "afterAffinityTotal": 60,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [
+                    {
+                      "archetype": "artifact-engine",
+                      "supportDelta": -1,
+                      "affinityDelta": -3
+                    }
+                  ],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                },
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -14679,9 +15785,9 @@
                   "authoritativeTargetGatePriorities": [
                     {
                       "role": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv"
                     },
@@ -14733,9 +15839,9 @@
                       "role": "average-nonland-mv",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "average-nonland-mv",
-                      "current": 3.65,
+                      "current": 3.67,
                       "target": 3.1,
-                      "deficit": 0.55,
+                      "deficit": 0.57,
                       "candidateDiscoveryMode": "bounded-role-search",
                       "candidateCount": 0
                     },
@@ -14867,7 +15973,7 @@
     "assessedBracket": 2,
     "assessedBand": "bracket-2-core-range",
     "signals": {
-      "averageNonlandManaValue": 3.65,
+      "averageNonlandManaValue": 3.67,
       "earlyPlayCount": 17,
       "cheapInteractionCount": 4,
       "fastManaCount": 1,
@@ -14875,7 +15981,7 @@
       "recursionCount": 17,
       "boardWipeCount": 3,
       "rampCount": 11,
-      "drawCount": 13,
+      "drawCount": 12,
       "interactionCount": 12,
       "protectionCount": 1,
       "persistentColoredManaSourceCount": 5
@@ -14906,11 +16012,11 @@
           "targetBracket": 4,
           "category": "construction",
           "label": "Average nonland mana value",
-          "observed": 3.65,
+          "observed": 3.67,
           "required": "at most 3.1",
           "state": "failed",
           "pressurePoint": "speed/curve",
-          "detail": "Average nonland mana value: observed 3.65; Bracket 4 requires at most 3.1."
+          "detail": "Average nonland mana value: observed 3.67; Bracket 4 requires at most 3.1."
         },
         {
           "key": "b4-early-plays",
@@ -14985,11 +16091,11 @@
           "targetBracket": 4,
           "category": "construction",
           "label": "Average nonland mana value",
-          "observed": 3.65,
+          "observed": 3.67,
           "required": "at most 3.1",
           "state": "failed",
           "pressurePoint": "speed/curve",
-          "detail": "Average nonland mana value: observed 3.65; Bracket 4 requires at most 3.1."
+          "detail": "Average nonland mana value: observed 3.67; Bracket 4 requires at most 3.1."
         },
         {
           "key": "b4-early-plays",
@@ -15058,7 +16164,7 @@
         "Improve efficient win plan: Optimized win evidence needs an efficient commander/non-combo win plan, verified winning combo, Ruthless winning combo, or R-tagged Spellbook signal."
       ],
       "restrictionObservations": [
-        "Constraint \"Exact Necron Dynasties stock baseline; unrestricted Commander-legal physical upgrades under NZ$35/card and NZ$200 total.\" was active while the finished list missed 8 Bracket-5 construction gates: Average nonland mana value (3.65 vs at most 2.6); Early plays (17 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (4 vs at least 8); Tutors (1 vs at least 4); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=E vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
+        "Constraint \"Exact Necron Dynasties stock baseline; unrestricted Commander-legal physical upgrades under NZ$35/card and NZ$200 total.\" was active while the finished list missed 8 Bracket-5 construction gates: Average nonland mana value (3.67 vs at most 2.6); Early plays (17 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (4 vs at least 8); Tutors (1 vs at least 4); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=E vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
       ],
       "guidance": "The target comparison uses only checks relevant to the requested bracket. Unavailable external evidence is reported as unverified rather than converted into a false deck weakness."
     },
