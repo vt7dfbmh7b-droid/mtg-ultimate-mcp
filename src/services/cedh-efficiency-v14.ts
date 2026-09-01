@@ -674,7 +674,7 @@ export function criticalRoleFloorsPreservedV14(
 
   const beforeBoardWipes = Number(beforeMetrics.roleCounts['board wipe'] ?? 0);
   const afterBoardWipes = Number(afterMetrics.roleCounts['board wipe'] ?? 0);
-  const boardWipeFloor = beforeBoardWipes > 0 ? 1 : 0;
+  const boardWipeFloor = Math.min(beforeBoardWipes, 2);
   if (afterBoardWipes < boardWipeFloor) {
     reasons.push(`board wipes fell below preserved floor ${boardWipeFloor}: ${beforeBoardWipes} -> ${afterBoardWipes}`);
   }
