@@ -74,9 +74,15 @@ test('restricted search engines do not receive broad tutor truth', () => {
 
 test('critical role floors reject protection collapse and wipe removal', () => {
   const healthy = { protectionCount: 5, roleCounts: { 'board wipe': 2 } } as any;
-  assert.equal(criticalRoleFloorsPreservedV14(healthy, {
+  const reducedWipes = criticalRoleFloorsPreservedV14(healthy, {
     protectionCount: 4,
     roleCounts: { 'board wipe': 1 },
+  } as any);
+  assert.equal(reducedWipes.preserved, false);
+  assert.match(reducedWipes.reasons.join('\n'), /board wipes fell below preserved floor 2: 2 -> 1/i);
+  assert.equal(criticalRoleFloorsPreservedV14(healthy, {
+    protectionCount: 4,
+    roleCounts: { 'board wipe': 2 },
   } as any).preserved, true);
   assert.equal(criticalRoleFloorsPreservedV14(healthy, {
     protectionCount: 2,
