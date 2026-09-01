@@ -115,9 +115,52 @@ test('plan bridge only promotes a route when verified package provenance says it
   assert.equal(result.score, 24);
 });
 
-test('target-gate priority is inactive below Bracket 5', () => {
+test('Bracket-4 target-gate scoring credits measurable progress toward a failed optimized curve gate', () => {
   const result = assessTargetGateImprovementV15({
     targetBracket: 4,
+    beforeMetrics: metrics({
+      averageNonlandManaValue: 3.32,
+      earlyPlayCount: 21,
+      cheapInteractionCount: 2,
+      fastManaCount: 1,
+      tutorCount: 0,
+    }),
+    afterMetrics: metrics({
+      averageNonlandManaValue: 3.29,
+      earlyPlayCount: 21,
+      cheapInteractionCount: 2,
+      fastManaCount: 1,
+      tutorCount: 0,
+    }),
+    beforeRoute: { winRoute: 'absent', competitiveComboSignal: false },
+    afterRoute: { winRoute: 'absent', competitiveComboSignal: false },
+  });
+
+  assert.equal(result.applicable, true);
+  assert.deepEqual(result.advancedFailedGates, ['average-nonland-mv']);
+  assert.equal(result.progressScore, 0.6);
+  assert.equal(result.score, 0.6);
+  assert.deepEqual(result.failedBefore, ['average-nonland-mv', 'cheap-interaction', 'early-plays', 'fast-mana', 'tutors']);
+});
+
+test('Bracket-4 scoring uses Bracket-4 thresholds and ignores route-only Bracket-5 gates', () => {
+  const result = assessTargetGateImprovementV15({
+    targetBracket: 4,
+    beforeMetrics: metrics({ averageNonlandManaValue: 3.05, earlyPlayCount: 25, cheapInteractionCount: 6, fastManaCount: 1, tutorCount: 2 }),
+    afterMetrics: metrics({ averageNonlandManaValue: 3.05, earlyPlayCount: 25, cheapInteractionCount: 6, fastManaCount: 2, tutorCount: 2 }),
+    beforeRoute: { winRoute: 'absent', competitiveComboSignal: false },
+    afterRoute: { winRoute: 'verified', competitiveComboSignal: true },
+  });
+
+  assert.deepEqual(result.repairedGates, ['fast-mana']);
+  assert.equal(result.score, 8);
+  assert.equal(result.failedBefore.includes('verified-winning-combo'), false);
+  assert.equal(result.failedBefore.includes('free-interaction'), false);
+});
+
+test('target-gate priority remains inactive below Bracket 4', () => {
+  const result = assessTargetGateImprovementV15({
+    targetBracket: 3,
     beforeMetrics: metrics(),
     afterMetrics: metrics({ fastManaCount: 0, tutorCount: 0 }),
     beforeRoute: { winRoute: 'absent', competitiveComboSignal: false },
