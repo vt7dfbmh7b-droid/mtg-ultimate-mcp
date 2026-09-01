@@ -135,12 +135,34 @@ test('shared refinement score exposes positive cosmetic movement as zero target 
   assert.deepEqual(result.targetGate.advancedFailedGates, []);
 });
 
-test('shared refinement score does not activate the hard target-progress guard below Bracket 5', () => {
+test('shared refinement score credits measurable Bracket-4 progress toward the optimized curve target', () => {
+  const before = bracket5Metrics({
+    averageNonlandManaValue: 3.32,
+    earlyPlayCount: 21,
+    cheapInteractionCount: 2,
+    fastManaCount: 1,
+    tutorCount: 0,
+  });
+  const result = refinementImprovementScoreV11({
+    simulation: { delta: { averageSpellsCast: -0.05 } },
+    beforeMetrics: before,
+    afterMetrics: { ...before, averageNonlandManaValue: 3.29 },
+    v15TargetPressure: bracket5Pressure({ targetPressure: { targetBracket: 4 } }),
+  });
+
+  assert.equal(result.targetGate.applicable, true);
+  assert.deepEqual(result.targetGate.advancedFailedGates, ['average-nonland-mv']);
+  assert.equal(result.components.targetGatePriority, 0.6);
+  assert.equal(result.zeroTargetProgressWhileFailedGatesRemain, false);
+  assert.ok(result.score > 0.1, 'requested-target progress should be able to outweigh a small simulation tie-breaker loss');
+});
+
+test('shared refinement score leaves the target-progress guard inactive below Bracket 4', () => {
   const result = refinementImprovementScoreV11({
     simulation: { delta: { functionalKeepRate: 3 } },
     beforeMetrics: bracket5Metrics(),
     afterMetrics: bracket5Metrics({ tutorCount: 9 }),
-    v15TargetPressure: bracket5Pressure({ targetPressure: { targetBracket: 4 } }),
+    v15TargetPressure: bracket5Pressure({ targetPressure: { targetBracket: 3 } }),
   });
 
   assert.equal(result.targetGate.applicable, false);
