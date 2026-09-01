@@ -40,7 +40,14 @@ test('seed queries search exact package sizes and allow one lightweight prerequi
 
 test('seed ranking accepts deterministic wins across bracket tags but rejects non-winning and heavy-setup packages', () => {
   const ranked = rankCedhSeedCandidatesV14([
-    variant({ id: 'exhibition', bracketTag: 'E' }),
+    variant({
+      id: 'exhibition',
+      bracketTag: 'E',
+      cards: [
+        { name: 'Card C', quantity: 1, mustBeCommander: false },
+        { name: 'Card D', quantity: 1, mustBeCommander: false },
+      ],
+    }),
     variant({ id: 'life', results: ['Infinite life'] }),
     variant({ id: 'heavy-setup', requirements: [{ name: 'Setup A' }, { name: 'Setup B' }] }),
     variant({ id: 'ruthless' }),
