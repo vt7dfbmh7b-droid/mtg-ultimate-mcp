@@ -4,6 +4,7 @@ import {
   buildCedhSeedQueriesV14,
   rankCedhSeedCandidatesV14,
   scoreCedhSeedPracticalityV14,
+  selectCedhSeedVerificationCandidatesV14,
 } from './cedh-seed-package-v14.js';
 
 function variant(overrides: Record<string, unknown> = {}) {
@@ -21,32 +22,32 @@ function variant(overrides: Record<string, unknown> = {}) {
   };
 }
 
-test('seed queries stay compact and can scope to commander identity', () => {
+test('seed queries search exact package sizes and allow one lightweight prerequisite', () => {
   assert.deepEqual(buildCedhSeedQueriesV14(2), [
-    'bracket:ruthless card<=2 is:winning legal:commander',
+    'card=2 is:winning legal:commander template=0 prerequisites<=1',
   ]);
   assert.deepEqual(buildCedhSeedQueriesV14(3, 'UB'), [
-    'bracket:ruthless card<=2 is:winning legal:commander identity<=UB',
-    'bracket:ruthless card<=3 is:winning legal:commander identity<=UB',
+    'card=2 is:winning legal:commander template=0 prerequisites<=1 identity<=UB',
+    'card=3 is:winning legal:commander template=0 prerequisites<=1 identity<=UB',
   ]);
   assert.deepEqual(buildCedhSeedQueriesV14(9, 'bgurw'), [
-    'bracket:ruthless card<=2 is:winning legal:commander identity<=WUBRG',
-    'bracket:ruthless card<=3 is:winning legal:commander identity<=WUBRG',
-    'bracket:ruthless card<=4 is:winning legal:commander identity<=WUBRG',
+    'card=2 is:winning legal:commander template=0 prerequisites<=1 identity<=WUBRG',
+    'card=3 is:winning legal:commander template=0 prerequisites<=1 identity<=WUBRG',
+    'card=4 is:winning legal:commander template=0 prerequisites<=1 identity<=WUBRG',
   ]);
   assert.match(buildCedhSeedQueriesV14(3, 'C')[0] ?? '', /identity<=C/);
 });
 
-test('seed ranking rejects non-Ruthless, non-winning and template-dependent packages', () => {
+test('seed ranking accepts deterministic wins across bracket tags but rejects non-winning and heavy-setup packages', () => {
   const ranked = rankCedhSeedCandidatesV14([
-    variant({ id: 'strategic', bracketTag: 'S' }),
+    variant({ id: 'exhibition', bracketTag: 'E' }),
     variant({ id: 'life', results: ['Infinite life'] }),
-    variant({ id: 'template', requirements: [{ name: 'Any haste outlet' }] }),
-    variant({ id: 'winner' }),
+    variant({ id: 'heavy-setup', requirements: [{ name: 'Setup A' }, { name: 'Setup B' }] }),
+    variant({ id: 'ruthless' }),
   ], [], 3);
 
-  assert.equal(ranked.length, 1);
-  assert.equal(ranked[0]?.id, 'winner');
+  assert.deepEqual(new Set(ranked.map((candidate) => candidate.id)), new Set(['exhibition', 'ruthless']));
+  assert.equal(ranked[0]?.id, 'ruthless', 'Ruthless remains useful evidence but is not a hard eligibility gate');
 });
 
 test('must-be-commander requirements are only accepted for the supplied commander', () => {
@@ -109,25 +110,47 @@ test('packages requiring duplicate nonbasic combo pieces are rejected', () => {
   assert.equal(ranked.length, 0);
 });
 
-test('practical seed scoring prefers cheap commander-centric utility over expensive dead-card spectacle', () => {
+test('verification shortlist reserves room for larger practical packages instead of letting two-card popularity crowd them out', () => {
+  const ranked: Array<Record<string, unknown>> = [];
+  for (let index = 0; index < 20; index += 1) {
+    ranked.push({
+      id: `two-${index}`,
+      cards: [{ name: `A${index}` }, { name: `B${index}` }],
+      score: 2000 - index,
+    });
+  }
+  for (let index = 0; index < 8; index += 1) {
+    ranked.push({
+      id: `three-${index}`,
+      cards: [{ name: `C${index}` }, { name: `D${index}` }, { name: `E${index}` }],
+      score: 1000 - index,
+    });
+  }
+
+  const selected = selectCedhSeedVerificationCandidatesV14(ranked, 10, 3);
+  assert.equal(selected.length, 10);
+  assert.ok(selected.filter((candidate) => String(candidate.id).startsWith('three-')).length >= 5);
+});
+
+test('practical seed scoring rewards sacrifice and recursion utility over expensive dead-card spectacle', () => {
   const efficient = scoreCedhSeedPracticalityV14([
-    { name: 'Commander X', cmc: 2, typeLine: 'Legendary Creature', roles: ['repeatable draw'] },
-    { name: 'Mana Engine', cmc: 3, typeLine: 'Artifact', roles: ['mana acceleration'] },
-    { name: 'Win Outlet', cmc: 0, typeLine: 'Artifact Creature', roles: [] },
+    { name: 'Cheap Sacrifice Engine', cmc: 3, typeLine: 'Creature — Zombie', roles: ['sacrifice outlet', 'treasure'] },
+    { name: 'Recursive Zombie', cmc: 1, typeLine: 'Creature — Zombie', roles: ['graveyard recursion'] },
+    { name: 'Drain Payoff', cmc: 2, typeLine: 'Creature', roles: ['sacrifice synergy'] },
   ], ['Commander X']);
   const clunky = scoreCedhSeedPracticalityV14([
     {
       name: 'All-In Exiler',
-      cmc: 5,
-      typeLine: 'Artifact Creature',
-      oracleText: 'When this enters, exile your library.',
+      cmc: 6,
+      typeLine: 'Creature — Demon',
+      oracleText: 'When you cast this spell, exile your library.',
       roles: [],
     },
-    { name: 'Expensive Win Walker', cmc: 4, typeLine: 'Legendary Planeswalker', roles: [] },
+    { name: 'Expensive Win Spell', cmc: 6, typeLine: 'Sorcery', roles: [] },
   ], ['Commander X']);
 
   assert.ok(efficient.scoreAdjustment > clunky.scoreAdjustment);
-  assert.ok(efficient.commanderOverlap > clunky.commanderOverlap);
+  assert.ok(efficient.reusableRoleCount > clunky.reusableRoleCount);
   assert.ok(clunky.deadPieceRisk > efficient.deadPieceRisk);
   assert.ok(clunky.totalManaValue > efficient.totalManaValue);
 });
