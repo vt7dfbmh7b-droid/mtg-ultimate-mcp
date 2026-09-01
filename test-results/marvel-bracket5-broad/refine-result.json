@@ -135,7 +135,7 @@
         "cheap interaction": 12,
         "mana acceleration": 19,
         "conditional mana acceleration": 6,
-        "repeatable draw": 2,
+        "repeatable draw": 3,
         "spot interaction": 15,
         "protection": 9,
         "equipment": 8,
@@ -155,6 +155,7 @@
         "free interaction": 1,
         "go-wide payoff": 2,
         "delayed mana acceleration": 2,
+        "death-trigger draw engine": 1,
         "mana filtering": 1,
         "land ramp": 1,
         "land tutor": 1,
@@ -978,8 +979,8 @@
                   "beforeSupportCount": 47,
                   "afterSupportCount": 47,
                   "supportDelta": 0,
-                  "beforeAffinityTotal": 170,
-                  "afterAffinityTotal": 171,
+                  "beforeAffinityTotal": 171,
+                  "afterAffinityTotal": 172,
                   "affinityDelta": 1,
                   "preserved": true
                 }
@@ -1982,8 +1983,8 @@
                       "beforeSupportCount": 47,
                       "afterSupportCount": 47,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 170,
-                      "afterAffinityTotal": 171,
+                      "beforeAffinityTotal": 171,
+                      "afterAffinityTotal": 172,
                       "affinityDelta": 1,
                       "preserved": true
                     }
@@ -2679,8 +2680,8 @@
                   "beforeSupportCount": 47,
                   "afterSupportCount": 48,
                   "supportDelta": 1,
-                  "beforeAffinityTotal": 171,
-                  "afterAffinityTotal": 177,
+                  "beforeAffinityTotal": 172,
+                  "afterAffinityTotal": 178,
                   "affinityDelta": 6,
                   "preserved": true
                 }
@@ -2897,8 +2898,8 @@
                   "beforeSupportCount": 47,
                   "afterSupportCount": 48,
                   "supportDelta": 1,
-                  "beforeAffinityTotal": 171,
-                  "afterAffinityTotal": 176,
+                  "beforeAffinityTotal": 172,
+                  "afterAffinityTotal": 177,
                   "affinityDelta": 5,
                   "preserved": true
                 }
@@ -3322,8 +3323,8 @@
                   "beforeSupportCount": 47,
                   "afterSupportCount": 48,
                   "supportDelta": 1,
-                  "beforeAffinityTotal": 171,
-                  "afterAffinityTotal": 177,
+                  "beforeAffinityTotal": 172,
+                  "afterAffinityTotal": 178,
                   "affinityDelta": 6,
                   "preserved": true
                 }
@@ -3540,8 +3541,8 @@
                   "beforeSupportCount": 47,
                   "afterSupportCount": 48,
                   "supportDelta": 1,
-                  "beforeAffinityTotal": 171,
-                  "afterAffinityTotal": 177,
+                  "beforeAffinityTotal": 172,
+                  "afterAffinityTotal": 178,
                   "affinityDelta": 6,
                   "preserved": true
                 }
@@ -3771,8 +3772,8 @@
                       "beforeSupportCount": 47,
                       "afterSupportCount": 48,
                       "supportDelta": 1,
-                      "beforeAffinityTotal": 171,
-                      "afterAffinityTotal": 177,
+                      "beforeAffinityTotal": 172,
+                      "afterAffinityTotal": 178,
                       "affinityDelta": 6,
                       "preserved": true
                     }
@@ -3989,8 +3990,8 @@
                       "beforeSupportCount": 47,
                       "afterSupportCount": 48,
                       "supportDelta": 1,
-                      "beforeAffinityTotal": 171,
-                      "afterAffinityTotal": 176,
+                      "beforeAffinityTotal": 172,
+                      "afterAffinityTotal": 177,
                       "affinityDelta": 5,
                       "preserved": true
                     }
@@ -4414,8 +4415,8 @@
                       "beforeSupportCount": 47,
                       "afterSupportCount": 48,
                       "supportDelta": 1,
-                      "beforeAffinityTotal": 171,
-                      "afterAffinityTotal": 177,
+                      "beforeAffinityTotal": 172,
+                      "afterAffinityTotal": 178,
                       "affinityDelta": 6,
                       "preserved": true
                     }
@@ -4632,8 +4633,8 @@
                       "beforeSupportCount": 47,
                       "afterSupportCount": 48,
                       "supportDelta": 1,
-                      "beforeAffinityTotal": 171,
-                      "afterAffinityTotal": 177,
+                      "beforeAffinityTotal": 172,
+                      "afterAffinityTotal": 178,
                       "affinityDelta": 6,
                       "preserved": true
                     }
@@ -4932,8 +4933,8 @@
                   "beforeSupportCount": 48,
                   "afterSupportCount": 49,
                   "supportDelta": 1,
-                  "beforeAffinityTotal": 177,
-                  "afterAffinityTotal": 182,
+                  "beforeAffinityTotal": 178,
+                  "afterAffinityTotal": 183,
                   "affinityDelta": 5,
                   "preserved": true
                 }
@@ -5158,8 +5159,8 @@
                   "beforeSupportCount": 48,
                   "afterSupportCount": 49,
                   "supportDelta": 1,
-                  "beforeAffinityTotal": 177,
-                  "afterAffinityTotal": 183,
+                  "beforeAffinityTotal": 178,
+                  "afterAffinityTotal": 184,
                   "affinityDelta": 6,
                   "preserved": true
                 }
@@ -5378,8 +5379,8 @@
                   "beforeSupportCount": 48,
                   "afterSupportCount": 49,
                   "supportDelta": 1,
-                  "beforeAffinityTotal": 177,
-                  "afterAffinityTotal": 183,
+                  "beforeAffinityTotal": 178,
+                  "afterAffinityTotal": 184,
                   "affinityDelta": 6,
                   "preserved": true
                 }
@@ -5594,8 +5595,8 @@
                   "beforeSupportCount": 48,
                   "afterSupportCount": 49,
                   "supportDelta": 1,
-                  "beforeAffinityTotal": 177,
-                  "afterAffinityTotal": 183,
+                  "beforeAffinityTotal": 178,
+                  "afterAffinityTotal": 184,
                   "affinityDelta": 6,
                   "preserved": true
                 }
@@ -5819,8 +5820,8 @@
                   "beforeSupportCount": 48,
                   "afterSupportCount": 49,
                   "supportDelta": 1,
-                  "beforeAffinityTotal": 177,
-                  "afterAffinityTotal": 182,
+                  "beforeAffinityTotal": 178,
+                  "afterAffinityTotal": 183,
                   "affinityDelta": 5,
                   "preserved": true
                 }
@@ -6048,8 +6049,8 @@
                       "beforeSupportCount": 48,
                       "afterSupportCount": 49,
                       "supportDelta": 1,
-                      "beforeAffinityTotal": 177,
-                      "afterAffinityTotal": 182,
+                      "beforeAffinityTotal": 178,
+                      "afterAffinityTotal": 183,
                       "affinityDelta": 5,
                       "preserved": true
                     }
@@ -6274,8 +6275,8 @@
                       "beforeSupportCount": 48,
                       "afterSupportCount": 49,
                       "supportDelta": 1,
-                      "beforeAffinityTotal": 177,
-                      "afterAffinityTotal": 183,
+                      "beforeAffinityTotal": 178,
+                      "afterAffinityTotal": 184,
                       "affinityDelta": 6,
                       "preserved": true
                     }
@@ -6494,8 +6495,8 @@
                       "beforeSupportCount": 48,
                       "afterSupportCount": 49,
                       "supportDelta": 1,
-                      "beforeAffinityTotal": 177,
-                      "afterAffinityTotal": 183,
+                      "beforeAffinityTotal": 178,
+                      "afterAffinityTotal": 184,
                       "affinityDelta": 6,
                       "preserved": true
                     }
@@ -6710,8 +6711,8 @@
                       "beforeSupportCount": 48,
                       "afterSupportCount": 49,
                       "supportDelta": 1,
-                      "beforeAffinityTotal": 177,
-                      "afterAffinityTotal": 183,
+                      "beforeAffinityTotal": 178,
+                      "afterAffinityTotal": 184,
                       "affinityDelta": 6,
                       "preserved": true
                     }
@@ -6935,8 +6936,8 @@
                       "beforeSupportCount": 48,
                       "afterSupportCount": 49,
                       "supportDelta": 1,
-                      "beforeAffinityTotal": 177,
-                      "afterAffinityTotal": 182,
+                      "beforeAffinityTotal": 178,
+                      "afterAffinityTotal": 183,
                       "affinityDelta": 5,
                       "preserved": true
                     }
@@ -9728,7 +9729,7 @@
         "cheap interaction": 13,
         "mana acceleration": 17,
         "conditional mana acceleration": 6,
-        "repeatable draw": 2,
+        "repeatable draw": 3,
         "spot interaction": 14,
         "protection": 9,
         "equipment": 8,
@@ -9748,6 +9749,7 @@
         "free interaction": 1,
         "go-wide payoff": 2,
         "delayed mana acceleration": 2,
+        "death-trigger draw engine": 1,
         "mana filtering": 1,
         "land ramp": 1,
         "land tutor": 1,
