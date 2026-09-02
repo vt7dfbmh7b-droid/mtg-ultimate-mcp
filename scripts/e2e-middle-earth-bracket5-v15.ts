@@ -314,7 +314,6 @@ async function main(): Promise<void> {
     successes: successes.map((item) => {
       const evaluation = record(item.result.evaluation);
       const actual = record(evaluation.actualBracket);
-      const post = record(evaluation.postBuildEvidence);
       return {
         candidate: item.candidate,
         commanderRefs: item.commanderRefs,

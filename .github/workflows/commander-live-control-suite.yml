@@ -241,18 +241,7 @@ jobs:
           package-manager-cache: false
       - name: Install dependencies
         run: npm ci
-      - name: Reuse audited official Marvel and Middle-earth special printings
-        run: cp test-results/middle-earth-bracket5-expanded/special-printing-audit.json themed-special-printing-audit.json
-      - name: Apply the existing exact-special printing mechanism in this checkout
-        run: python3 scripts/apply-themed-special-presets-from-audit.py
-      - name: Use existing four-card win-package maximum
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p=Path('scripts/e2e-marvel-bracket5-v15.ts')
-          p.write_text(p.read_text().replace('maxWinPackageCards: 3,','maxWinPackageCards: 4,'))
-          PY
-      - name: Type-check broadened policy
+      - name: Type-check checked-in policy
         run: npm run build
       - name: Marvel full-family Bracket 5 build
         id: marvel_build

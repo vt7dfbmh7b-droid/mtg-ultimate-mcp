@@ -28,6 +28,9 @@ jobs:
       - name: Type-check project-management tooling
         run: npm run project:typecheck
 
+      - name: Type-check automation and E2E scripts
+        run: npm run scripts:typecheck
+
       - name: Validate project-management state
         run: npm run project:validate
 

@@ -18,10 +18,11 @@
     "project:validate": "tsx scripts/validate-project-state.ts",
     "project:update": "tsx scripts/update-project-state.ts",
     "project:typecheck": "tsc -p tsconfig.project-state.json",
+    "scripts:typecheck": "tsc -p tsconfig.scripts.json",
     "project:resume": "tsx scripts/project-resume.ts",
     "validation:index": "tsx scripts/build-validation-index.ts",
     "validation:validate": "tsx scripts/validate-validation-index.ts",
-    "check": "npm run project:typecheck && npm run project:validate && npm run validation:validate && npm run project:resume > /dev/null && npm run build && npm test"
+    "check": "npm run project:typecheck && npm run scripts:typecheck && npm run project:validate && npm run validation:validate && npm run project:resume > /dev/null && npm run build && npm test"
   },
   "dependencies": {
     "@modelcontextprotocol/node": "2.0.0",

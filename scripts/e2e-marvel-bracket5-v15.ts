@@ -208,7 +208,7 @@ async function main(): Promise<void> {
             includePromos: true,
             includeSpecialReleases: true,
             winPackageMode: 'prefer',
-            maxWinPackageCards: 3,
+            maxWinPackageCards: 4,
             cedhIntent: true,
             optimizedPlanEvidence: true,
             competitiveMetagameEvidence: false,

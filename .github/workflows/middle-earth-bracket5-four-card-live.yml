@@ -42,18 +42,6 @@ jobs:
       - name: Type-check and build
         run: npm run build
 
-      - name: Raise live-control package ceiling to existing four-card maximum
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          path = Path('scripts/e2e-middle-earth-bracket5-expanded-v15.ts')
-          text = path.read_text()
-          old = 'maxWinPackageCards: 3,'
-          if text.count(old) != 1:
-              raise SystemExit(f'expected one package-limit marker, found {text.count(old)}')
-          path.write_text(text.replace(old, 'maxWinPackageCards: 4,', 1))
-          PY
-
       - name: Run four-card Middle-earth control
         id: live_control
         continue-on-error: true

@@ -4,7 +4,11 @@ import { Client, StreamableHTTPClientTransport } from '@modelcontextprotocol/cli
 import { createMcpHandler } from '@modelcontextprotocol/server';
 import { createMtgServerV15 } from '../src/server-v15.js';
 import { compareRequestedBracketV15 } from '../src/services/bracket-target-comparison-v15.js';
-import { evaluateCommanderBuildV15, type CommanderBuildEvaluationV15 } from '../src/services/commander-build-evaluation-v15.js';
+import {
+  evaluateCommanderBuildV15,
+  type CommanderBuildEvaluationOptionsV15,
+  type CommanderBuildEvaluationV15,
+} from '../src/services/commander-build-evaluation-v15.js';
 import { validateCommanderDeck } from '../src/services/commander-rules.js';
 import {
   cardCommanderStrategyAffinityV15,
@@ -36,6 +40,12 @@ const B4_TARGETS = {
   protectionCount: 6,
   persistentColoredManaSourceCount: 4,
 } as const;
+
+function requireAssessedBracket(evaluation: CommanderBuildEvaluationV15): number {
+  const bracket = evaluation.actualBracket.assessedBracket;
+  if (bracket === null) throw new Error('Independent bracket assessment must complete for this live control.');
+  return bracket;
+}
 
 type StrategyTruthV15 = {
   archetype: string;
@@ -309,14 +319,15 @@ async function main(): Promise<void> {
   const stock = await fetchPreconDeckV10(PRECON_REFERENCE);
   assert.equal(stock.entry.fileName, PRECON_REFERENCE, 'control must bind the requested exact MTGJSON stock product');
   const stockTruth = await verifyDeck(stock.decklist);
-  const evaluationOptions = {
+  const evaluationOptions: CommanderBuildEvaluationOptionsV15 = {
     optimizedPlanEvidence: false,
     competitiveMetagameEvidence: false,
     constraintDescriptions: [
       `Exact ${stock.entry.name} stock baseline; unrestricted Commander-legal physical upgrades under NZ$${MAX_NZD_PER_CARD}/card and NZ$${MAX_TOTAL_NZD} total.`,
     ],
-  } as const;
+  };
   const before = await evaluateCommanderBuildV15(stock.decklist, evaluationOptions);
+  const beforeBracket = requireAssessedBracket(before);
 
   const handler = createMcpHandler(createMtgServerV15);
   const client = new Client(
@@ -369,6 +380,7 @@ async function main(): Promise<void> {
   const finalTruth = await verifyDeck(finalDecklist);
   assert.deepEqual(finalTruth.commanderNames, stockTruth.commanderNames, 'generalization control must preserve the exact command zone');
   const after = await evaluateCommanderBuildV15(finalDecklist, evaluationOptions);
+  const afterBracket = requireAssessedBracket(after);
 
   const beforeSignals = b4Signals(before);
   const afterSignals = b4Signals(after);
@@ -429,10 +441,10 @@ async function main(): Promise<void> {
       refined: refinement.status === 'refined' && finite(refinement.totalSwaps) > 0,
       measurableTargetProgress: progress.repaired.length > 0
         || progress.advanced.length > 0
-        || after.actualBracket.assessedBracket > before.actualBracket.assessedBracket,
+        || afterBracket > beforeBracket,
       noPassingGateRegression: progress.regressedPassing.length === 0,
       noStructuralFloorRegression: progress.regressedStructuralFloor.length === 0,
-      bracketNotLowered: after.actualBracket.assessedBracket >= before.actualBracket.assessedBracket,
+      bracketNotLowered: afterBracket >= beforeBracket,
       strategyEvidenceComplete: strategy.evidenceComplete,
       commanderStrategyPreserved: strategy.aggregatePreserved
         && strategy.perSwapPreserved
@@ -448,8 +460,8 @@ async function main(): Promise<void> {
     precon: stock.entry.name,
     status: refinement.status ?? 'unknown',
     totalSwaps: refinement.totalSwaps ?? 0,
-    beforeBracket: before.actualBracket.assessedBracket,
-    afterBracket: after.actualBracket.assessedBracket,
+    beforeBracket,
+    afterBracket,
     beforeSignals,
     afterSignals,
     progress,

@@ -4,7 +4,11 @@ import { Client, StreamableHTTPClientTransport } from '@modelcontextprotocol/cli
 import { createMcpHandler } from '@modelcontextprotocol/server';
 import { createMtgServerV15 } from '../src/server-v15.js';
 import { compareRequestedBracketV15 } from '../src/services/bracket-target-comparison-v15.js';
-import { evaluateCommanderBuildV15, type CommanderBuildEvaluationV15 } from '../src/services/commander-build-evaluation-v15.js';
+import {
+  evaluateCommanderBuildV15,
+  type CommanderBuildEvaluationOptionsV15,
+  type CommanderBuildEvaluationV15,
+} from '../src/services/commander-build-evaluation-v15.js';
 import { validateCommanderDeck } from '../src/services/commander-rules.js';
 import {
   cardCommanderStrategyAffinityV15,
@@ -38,6 +42,12 @@ function record(value: unknown): Record<string, unknown> {
 
 function finite(value: unknown): number {
   return typeof value === 'number' && Number.isFinite(value) ? value : 0;
+}
+
+function requireAssessedBracket(evaluation: CommanderBuildEvaluationV15): number {
+  const bracket = evaluation.actualBracket.assessedBracket;
+  if (bracket === null) throw new Error('Independent bracket assessment must complete for this live control.');
+  return bracket;
 }
 
 function identifiers(parsed: ParsedDeck): CardIdentifierInput[] {
@@ -197,15 +207,16 @@ async function main(): Promise<void> {
   const stock = await fetchPreconDeckV10(PRECON_REFERENCE);
   assert.equal(stock.entry.fileName, PRECON_REFERENCE, 'control must bind the exact MTGJSON stock product');
   const stockTruth = await verifyMiddleEarthDeck(stock.decklist);
-  const evaluationOptions = {
+  const evaluationOptions: CommanderBuildEvaluationOptionsV15 = {
     printingFamily: 'Middle-earth',
     includePromos: true,
     includeSpecialReleases: true,
     optimizedPlanEvidence: false,
     competitiveMetagameEvidence: false,
     constraintDescriptions: ['Exact Food and Fellowship stock baseline; Middle-earth physical printings only.'],
-  } as const;
+  };
   const before = await evaluateCommanderBuildV15(stock.decklist, evaluationOptions);
+  const beforeBracket = requireAssessedBracket(before);
 
   const handler = createMcpHandler(createMtgServerV15);
   const client = new Client(
@@ -270,6 +281,7 @@ async function main(): Promise<void> {
     'precon refinement must not reduce Food/lifegain support density',
   );
   const after = await evaluateCommanderBuildV15(finalDecklist, evaluationOptions);
+  const afterBracket = requireAssessedBracket(after);
 
   const detailedRounds = Array.isArray(refinement.detailedRounds)
     ? refinement.detailedRounds.map(record)
@@ -307,11 +319,11 @@ async function main(): Promise<void> {
     'precon refinement must not worsen a structural signal below the lesser of its starting and target counts',
   );
   assert.ok(
-    progress.repaired.length > 0 || progress.advanced.length > 0 || after.actualBracket.assessedBracket > before.actualBracket.assessedBracket,
+    progress.repaired.length > 0 || progress.advanced.length > 0 || afterBracket > beforeBracket,
     'precon refinement must repair or measurably advance Bracket-4 structure, not only improve a private heuristic',
   );
   assert.ok(
-    after.actualBracket.assessedBracket >= before.actualBracket.assessedBracket,
+    afterBracket >= beforeBracket,
     'precon refinement must not lower the independently assessed bracket',
   );
 
@@ -345,7 +357,7 @@ async function main(): Promise<void> {
     },
     before: {
       truth: stockTruth,
-      assessedBracket: before.actualBracket.assessedBracket,
+      assessedBracket: beforeBracket,
       assessedBand: before.actualBracket.assessedBand,
       signals: beforeSignals,
       verifiedWinningCombos: before.postBuildEvidence.verifiedWinningCombos,
@@ -354,7 +366,7 @@ async function main(): Promise<void> {
     refinement,
     after: {
       truth: finalTruth,
-      assessedBracket: after.actualBracket.assessedBracket,
+      assessedBracket: afterBracket,
       assessedBand: after.actualBracket.assessedBand,
       signals: afterSignals,
       verifiedWinningCombos: after.postBuildEvidence.verifiedWinningCombos,
@@ -369,8 +381,8 @@ async function main(): Promise<void> {
     precon: stock.entry.name,
     status: refinement.status,
     totalSwaps: refinement.totalSwaps,
-    beforeBracket: before.actualBracket.assessedBracket,
-    afterBracket: after.actualBracket.assessedBracket,
+    beforeBracket,
+    afterBracket,
     beforeSignals,
     afterSignals,
     progress,

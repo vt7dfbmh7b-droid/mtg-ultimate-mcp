@@ -74,14 +74,6 @@ jobs:
       - name: Type-check permanent Marvel printing-family policy
         id: source_build
         run: npm run build
-      - name: Use existing four-card win-package maximum
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p=Path('scripts/e2e-marvel-bracket5-v15.ts')
-          t=p.read_text().replace('maxWinPackageCards: 3,','maxWinPackageCards: 4,')
-          p.write_text(t)
-          PY
       - name: Run Marvel permanent-family Bracket 5 target control
         id: marvel_control
         continue-on-error: true

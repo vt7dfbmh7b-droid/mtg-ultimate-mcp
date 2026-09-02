@@ -73,7 +73,8 @@ jobs:
             printf 'source_sha=%s\nworkflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nbuild_outcome=%s\nregression_outcome=%s\nname_specific_rule=false\nincidental_attack_trigger_substantive=false\nself_mill_recovery_substantive=true\nartifact_engine_substantive=true\ngeneric_artifact_substantive=false\nown_graveyard_engine_substantive=true\ngraveyard_hate_not_support=true\ngraveyard_directionality_preserved=true\nmass_graveyard_exchange_substantive=true\ntargeted_protection_not_board=true\nconditional_group_protection_not_board=true\nboard_scaling_equipment_substantive=true\nvariable_sacrifice_outlet_substantive=true\nself_sacrifice_not_outlet=true\ntoken_death_payoff_substantive=true\nboard_scaling_typal_payoff_substantive=true\ndelayed_death_return_recursion=true\n' \
               "$GITHUB_SHA" "$GITHUB_SHA" "$GITHUB_SHA" "$CONTROL_OUTCOME" "$BUILD_OUTCOME" "$REGRESSION_OUTCOME" \
               > test-results/strategy-inference-generalization/run-metadata.txt
-            git add -- test-results/strategy-inference-generalization/run-metadata.txt
+            npm run validation:index
+            git add -- test-results/strategy-inference-generalization/run-metadata.txt validation-index.json docs/VALIDATION-STATE.md
             if git diff --cached --quiet; then exit 0; fi
             git commit -m "test-results: persist strategy inference regression [skip ci]"
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi

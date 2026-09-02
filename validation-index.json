@@ -26,6 +26,7 @@
         "source_build_outcome": "success"
       },
       "unmetPassConditions": [
+        "scripts_typecheck_outcome=success",
         "validation_index_outcome=success"
       ]
     },

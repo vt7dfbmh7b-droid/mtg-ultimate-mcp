@@ -214,7 +214,8 @@ jobs:
             printf 'source_sha=%s\nworkflow_source_sha=%s\nexecuted_head_sha=%s\ncontrol_outcome=%s\nbuild_outcome=%s\nregression_outcome=%s\nexecution_outcome=%s\nhard_truth_outcome=%s\ntarget_quality_outcome=%s\nstrategy_preservation_outcome=%s\npolicy=exact-necron-stock-unrestricted-budgeted-upgrade\nprinting_family=unrestricted\nexact_card_count=true\ncommander_legality=true\nhard_budget_truth=true\nsubstantive_commander_strategy_required=true\ngraveyard_reanimator_identity_required=true\nartifact_engine_identity_required=true\ngraveyard_directionality_required=true\ngraveyard_recursion_floor=true\nstructural_floors_required=true\nmeaningful_strategy_loss_rejected=true\n' \
               "$GITHUB_SHA" "$GITHUB_SHA" "$GITHUB_SHA" "$CONTROL_OUTCOME" "$BUILD_OUTCOME" "$REGRESSION_OUTCOME" "$EXECUTION_OUTCOME" "$HARD_TRUTH_OUTCOME" "$TARGET_QUALITY_OUTCOME" "$STRATEGY_QUALITY_OUTCOME" \
               > test-results/precon-generalization/run-metadata.txt
-            git add -- test-results/precon-generalization
+            npm run validation:index
+            git add -- test-results/precon-generalization validation-index.json docs/VALIDATION-STATE.md
             if git diff --cached --quiet; then exit 0; fi
             git commit -m "test-results: persist precon generalization [skip ci]"
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
