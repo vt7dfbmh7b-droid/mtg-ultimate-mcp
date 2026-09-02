@@ -2307,22 +2307,22 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Average nonland mana value",
-            "observed": 2.62,
+            "observed": 2.61,
             "required": "at most 2.6",
             "state": "failed",
             "pressurePoint": "speed/curve",
-            "detail": "Average nonland mana value: observed 2.62; Bracket-5 construction gate requires at most 2.6."
+            "detail": "Average nonland mana value: observed 2.61; Bracket-5 construction gate requires at most 2.6."
           },
           {
             "key": "early-plays",
             "targetBracket": 5,
             "category": "construction",
             "label": "Early plays",
-            "observed": 36,
+            "observed": 37,
             "required": "at least 35",
             "state": "passed",
             "pressurePoint": "speed/curve",
-            "detail": "Early plays: observed 36; Bracket-5 construction gate requires at least 35."
+            "detail": "Early plays: observed 37; Bracket-5 construction gate requires at least 35."
           },
           {
             "key": "fast-mana",
@@ -2419,11 +2419,11 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Average nonland mana value",
-            "observed": 2.62,
+            "observed": 2.61,
             "required": "at most 2.6",
             "state": "failed",
             "pressurePoint": "speed/curve",
-            "detail": "Average nonland mana value: observed 2.62; Bracket-5 construction gate requires at most 2.6."
+            "detail": "Average nonland mana value: observed 2.61; Bracket-5 construction gate requires at most 2.6."
           },
           {
             "key": "fast-mana",
@@ -2491,7 +2491,7 @@
           "Improve metagame evidence: Independent current competitive-metagame evidence needs true."
         ],
         "restrictionObservations": [
-          "Constraint \"Marvel physical printings only.\" was active while the finished list missed 5 Bracket-5 construction gates: Average nonland mana value (2.62 vs at most 2.6); Fast mana (2 vs at least 3); Cheap interaction (7 vs at least 8); Tutors (2 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
+          "Constraint \"Marvel physical printings only.\" was active while the finished list missed 5 Bracket-5 construction gates: Average nonland mana value (2.61 vs at most 2.6); Fast mana (2 vs at least 3); Cheap interaction (7 vs at least 8); Tutors (2 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
         ],
         "guidance": "The target comparison uses only checks relevant to the requested bracket. Unavailable external evidence is reported as unverified rather than converted into a false deck weakness."
       },
@@ -2500,20 +2500,20 @@
           "key": "average-nonland-mv",
           "category": "construction",
           "label": "Average nonland mana value",
-          "observed": 2.62,
+          "observed": 2.61,
           "required": "at most 2.6",
           "passed": false,
-          "detail": "Average nonland mana value: observed 2.62; Bracket-5 construction gate requires at most 2.6.",
+          "detail": "Average nonland mana value: observed 2.61; Bracket-5 construction gate requires at most 2.6.",
           "pressurePoint": "speed/curve"
         },
         {
           "key": "early-plays",
           "category": "construction",
           "label": "Early plays",
-          "observed": 36,
+          "observed": 37,
           "required": "at least 35",
           "passed": true,
-          "detail": "Early plays: observed 36; Bracket-5 construction gate requires at least 35.",
+          "detail": "Early plays: observed 37; Bracket-5 construction gate requires at least 35.",
           "pressurePoint": "speed/curve"
         },
         {
@@ -2601,12 +2601,12 @@
         "landCount": 31,
         "nonlandCount": 69,
         "landRatio": 0.31,
-        "averageNonlandManaValue": 2.62,
+        "averageNonlandManaValue": 2.61,
         "manaCurve": {
           "0": 0,
           "1": 9,
-          "2": 27,
-          "3": 21,
+          "2": 28,
+          "3": 20,
           "4": 7,
           "5": 3,
           "6": 2,
@@ -2615,14 +2615,14 @@
         "coloredPips": {
           "W": 0,
           "U": 0,
-          "B": 46,
+          "B": 47,
           "R": 0,
           "G": 0
         },
         "roleCounts": {
           "sacrifice synergy": 7,
           "sacrifice outlet": 3,
-          "+1/+1 counters": 20,
+          "+1/+1 counters": 19,
           "creature": 28,
           "creature sacrifice outlet": 2,
           "card draw": 19,
@@ -2643,7 +2643,7 @@
           "fast mana": 2,
           "death-trigger draw engine": 2,
           "treasure": 2,
-          "token production": 5,
+          "token production": 4,
           "conditional mana acceleration": 3,
           "land ramp": 2,
           "land tutor": 2,
@@ -2652,22 +2652,22 @@
           "cost reduction": 4,
           "board wipe": 2,
           "free interaction": 1,
-          "repeatable token engine": 2,
+          "repeatable token engine": 1,
           "artifact graveyard recursion": 1,
-          "repeatable life gain engine": 3,
+          "repeatable life gain engine": 4,
           "artifact sacrifice outlet": 2,
           "tutor": 2,
           "go-wide payoff": 1,
           "forced sacrifice interaction": 1,
-          "life drain": 4,
+          "life drain": 5,
           "narrow sacrifice outlet": 1,
           "copy effect": 1,
-          "repeatable life drain": 2,
+          "repeatable life drain": 3,
           "graveyard interaction": 1,
           "conditional protection": 1,
           "land": 31
         },
-        "earlyPlayCount": 36,
+        "earlyPlayCount": 37,
         "fastManaCount": 2,
         "rampCount": 14,
         "drawCount": 23,

@@ -795,7 +795,7 @@
                 }
               ],
               "losses": [],
-              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
             },
             "planProvenance": {
               "targetBracket": 5,
@@ -813,6 +813,7 @@
                 "exhaustiveWithinSafetyCeilings": true,
                 "eligiblePoolCards": 1176,
                 "roleSearchResultCap": null,
+                "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
               "authoritativeTargetGatePriorities": [
@@ -1190,6 +1191,7 @@
                 "exhaustiveWithinSafetyCeilings": true,
                 "eligiblePoolCards": 1176,
                 "roleSearchResultCap": null,
+                "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
               "authoritativeTargetGatePriorities": [
@@ -1558,6 +1560,7 @@
                 "exhaustiveWithinSafetyCeilings": true,
                 "eligiblePoolCards": 1176,
                 "roleSearchResultCap": null,
+                "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
               "authoritativeTargetGatePriorities": [
@@ -1924,6 +1927,7 @@
                 "exhaustiveWithinSafetyCeilings": true,
                 "eligiblePoolCards": 1176,
                 "roleSearchResultCap": null,
+                "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
               "authoritativeTargetGatePriorities": [
@@ -2294,6 +2298,7 @@
                 "exhaustiveWithinSafetyCeilings": true,
                 "eligiblePoolCards": 1176,
                 "roleSearchResultCap": null,
+                "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
               "authoritativeTargetGatePriorities": [
@@ -2694,7 +2699,7 @@
                     }
                   ],
                   "losses": [],
-                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity within each accepted autonomous package."
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
                 },
                 "planProvenance": {
                   "targetBracket": 5,
@@ -2712,6 +2717,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -3089,6 +3095,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -3457,6 +3464,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -3823,6 +3831,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -4193,6 +4202,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -4472,6 +4482,7 @@
                 "exhaustiveWithinSafetyCeilings": true,
                 "eligiblePoolCards": 1176,
                 "roleSearchResultCap": null,
+                "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
               "authoritativeTargetGatePriorities": [
@@ -4553,6 +4564,7 @@
                 "exhaustiveWithinSafetyCeilings": true,
                 "eligiblePoolCards": 1176,
                 "roleSearchResultCap": null,
+                "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
               "authoritativeTargetGatePriorities": [
@@ -4634,6 +4646,7 @@
                 "exhaustiveWithinSafetyCeilings": true,
                 "eligiblePoolCards": 1176,
                 "roleSearchResultCap": null,
+                "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
               "authoritativeTargetGatePriorities": [
@@ -4715,6 +4728,7 @@
                 "exhaustiveWithinSafetyCeilings": true,
                 "eligiblePoolCards": 1176,
                 "roleSearchResultCap": null,
+                "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
               "authoritativeTargetGatePriorities": [
@@ -4796,6 +4810,7 @@
                 "exhaustiveWithinSafetyCeilings": true,
                 "eligiblePoolCards": 1176,
                 "roleSearchResultCap": null,
+                "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
               },
               "authoritativeTargetGatePriorities": [
@@ -4888,6 +4903,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -4969,6 +4985,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -5050,6 +5067,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -5131,6 +5149,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -5212,6 +5231,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -5304,6 +5324,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -5385,6 +5406,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -5466,6 +5488,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -5547,6 +5570,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -5628,6 +5652,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -5720,6 +5745,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -5801,6 +5827,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -5882,6 +5909,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -5963,6 +5991,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -6044,6 +6073,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -6136,6 +6166,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -6217,6 +6248,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -6298,6 +6330,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -6379,6 +6412,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -6460,6 +6494,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -6552,6 +6587,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -6633,6 +6669,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -6714,6 +6751,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -6795,6 +6833,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
@@ -6876,6 +6915,7 @@
                     "exhaustiveWithinSafetyCeilings": true,
                     "eligiblePoolCards": 1176,
                     "roleSearchResultCap": null,
+                    "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
                   },
                   "authoritativeTargetGatePriorities": [
