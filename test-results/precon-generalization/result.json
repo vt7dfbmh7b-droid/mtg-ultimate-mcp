@@ -252,7 +252,7 @@
     "estimatedUpgradeSpendNzd": 12.94,
     "estimatedUpgradeSpendUsdReference": 7.65,
     "maxTotalNzd": 200,
-    "maxTotalUsdReference": 118.22,
+    "maxTotalUsdReference": 118.21,
     "swaps": [
       {
         "out": "Shard of the Nightbringer",
@@ -620,10 +620,10 @@
     ],
     "constraints": {
       "targetBracket": 4,
-      "maxNzdPerCard": 35,
+      "maxNzdPerCard": 35.01,
       "maxUsdPerCardReference": 20.69,
       "maxTotalNzd": 200,
-      "maxTotalUsdReference": 118.22,
+      "maxTotalUsdReference": 118.21,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -5142,7 +5142,7 @@
             "reason": "eligible",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 30.33,
+            "estimatedSpendNzd": 30.34,
             "estimatedSpendUsdReference": 17.93,
             "unknownPriceCount": 0,
             "improvementScore": 3.172,
@@ -5401,7 +5401,7 @@
                   "set": "BRR",
                   "collectorNumber": "3",
                   "finish": "nonfoil",
-                  "priceNzd": 30.33,
+                  "priceNzd": 30.34,
                   "priceUsdReference": 17.93
                 },
                 "structuralPairing": {
@@ -6064,10 +6064,10 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 8.07,
-                "estimatedSpendUsdReference": 4.77,
+                "estimatedSpendNzd": 38.14,
+                "estimatedSpendUsdReference": 22.54,
                 "unknownPriceCount": 0,
-                "improvementScore": 31.614,
+                "improvementScore": 20.272,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -6110,8 +6110,8 @@
                     {
                       "strategy": "artifact-engine",
                       "cutAffinityScore": 12,
-                      "addAffinityScore": 15,
-                      "netAffinityDelta": 3
+                      "addAffinityScore": 12,
+                      "netAffinityDelta": 0
                     },
                     {
                       "strategy": "graveyard-reanimator",
@@ -6184,7 +6184,7 @@
                     },
                     {
                       "cutStrategyAffinityScore": 3,
-                      "addStrategyAffinityScore": 15,
+                      "addStrategyAffinityScore": 12,
                       "cutStrategyProtectionApplied": 3,
                       "cutMatchedStrategies": [
                         "artifact-engine"
@@ -6198,14 +6198,12 @@
                         "creature"
                       ],
                       "addRoles": [
-                        "+1/+1 counters",
-                        "artifact sacrifice outlet",
-                        "creature",
-                        "sacrifice outlet",
                         "sacrifice synergy",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -6269,8 +6267,8 @@
                       "afterSupportCount": 52,
                       "supportDelta": -2,
                       "beforeAffinityTotal": 287,
-                      "afterAffinityTotal": 290,
-                      "affinityDelta": 3,
+                      "afterAffinityTotal": 287,
+                      "affinityDelta": 0,
                       "preserved": false
                     },
                     {
@@ -6289,7 +6287,7 @@
                     {
                       "archetype": "artifact-engine",
                       "supportDelta": -2,
-                      "affinityDelta": 3
+                      "affinityDelta": 0
                     }
                   ],
                   "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
@@ -6514,14 +6512,14 @@
                   },
                   {
                     "out": "Plasmancer",
-                    "in": "Scrapyard Recombiner",
+                    "in": "Beseech the Mirror",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signals: artifact-engine, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "MH1",
-                      "collectorNumber": "227",
-                      "finish": "nonfoil",
-                      "priceNzd": 1.42,
-                      "priceUsdReference": 0.84
+                      "set": "PWOE",
+                      "collectorNumber": "82p",
+                      "finish": "foil",
+                      "priceNzd": 31.49,
+                      "priceUsdReference": 18.61
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -6532,7 +6530,7 @@
                       "persistentColoredManaSourceFloor": 0,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 3,
-                        "addStrategyAffinityScore": 15,
+                        "addStrategyAffinityScore": 12,
                         "cutStrategyProtectionApplied": 3,
                         "cutMatchedStrategies": [
                           "artifact-engine"
@@ -6546,14 +6544,12 @@
                           "creature"
                         ],
                         "addRoles": [
-                          "+1/+1 counters",
-                          "artifact sacrifice outlet",
-                          "creature",
-                          "sacrifice outlet",
                           "sacrifice synergy",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "creature"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -6619,10 +6615,10 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 35.51,
-                "estimatedSpendUsdReference": 20.99,
+                "estimatedSpendNzd": 65.58,
+                "estimatedSpendUsdReference": 38.76,
                 "unknownPriceCount": 0,
-                "improvementScore": 24.909,
+                "improvementScore": 24.487,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -6665,8 +6661,8 @@
                     {
                       "strategy": "artifact-engine",
                       "cutAffinityScore": 12,
-                      "addAffinityScore": 12,
-                      "netAffinityDelta": 0
+                      "addAffinityScore": 9,
+                      "netAffinityDelta": -3
                     },
                     {
                       "strategy": "graveyard-reanimator",
@@ -6738,7 +6734,7 @@
                     },
                     {
                       "cutStrategyAffinityScore": 3,
-                      "addStrategyAffinityScore": 15,
+                      "addStrategyAffinityScore": 12,
                       "cutStrategyProtectionApplied": 3,
                       "cutMatchedStrategies": [
                         "artifact-engine"
@@ -6752,14 +6748,12 @@
                         "creature"
                       ],
                       "addRoles": [
-                        "+1/+1 counters",
-                        "artifact sacrifice outlet",
-                        "creature",
-                        "sacrifice outlet",
                         "sacrifice synergy",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -6823,8 +6817,8 @@
                       "afterSupportCount": 52,
                       "supportDelta": -2,
                       "beforeAffinityTotal": 287,
-                      "afterAffinityTotal": 287,
-                      "affinityDelta": 0,
+                      "afterAffinityTotal": 284,
+                      "affinityDelta": -3,
                       "preserved": false
                     },
                     {
@@ -6843,7 +6837,7 @@
                     {
                       "archetype": "artifact-engine",
                       "supportDelta": -2,
-                      "affinityDelta": 0
+                      "affinityDelta": -3
                     }
                   ],
                   "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
@@ -6973,7 +6967,7 @@
                       "set": "BRR",
                       "collectorNumber": "3",
                       "finish": "nonfoil",
-                      "priceNzd": 30.33,
+                      "priceNzd": 30.34,
                       "priceUsdReference": 17.93
                     },
                     "structuralPairing": {
@@ -7067,14 +7061,14 @@
                   },
                   {
                     "out": "Plasmancer",
-                    "in": "Scrapyard Recombiner",
+                    "in": "Beseech the Mirror",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signals: artifact-engine, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "MH1",
-                      "collectorNumber": "227",
-                      "finish": "nonfoil",
-                      "priceNzd": 1.42,
-                      "priceUsdReference": 0.84
+                      "set": "PWOE",
+                      "collectorNumber": "82p",
+                      "finish": "foil",
+                      "priceNzd": 31.49,
+                      "priceUsdReference": 18.61
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -7085,7 +7079,7 @@
                       "persistentColoredManaSourceFloor": 0,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 3,
-                        "addStrategyAffinityScore": 15,
+                        "addStrategyAffinityScore": 12,
                         "cutStrategyProtectionApplied": 3,
                         "cutMatchedStrategies": [
                           "artifact-engine"
@@ -7099,14 +7093,12 @@
                           "creature"
                         ],
                         "addRoles": [
-                          "+1/+1 counters",
-                          "artifact sacrifice outlet",
-                          "creature",
-                          "sacrifice outlet",
                           "sacrifice synergy",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "creature"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -7172,10 +7164,10 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 23.21,
-                "estimatedSpendUsdReference": 13.72,
+                "estimatedSpendNzd": 53.28,
+                "estimatedSpendUsdReference": 31.49,
                 "unknownPriceCount": 0,
-                "improvementScore": 24.909,
+                "improvementScore": 24.487,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -7218,8 +7210,8 @@
                     {
                       "strategy": "artifact-engine",
                       "cutAffinityScore": 12,
-                      "addAffinityScore": 12,
-                      "netAffinityDelta": 0
+                      "addAffinityScore": 9,
+                      "netAffinityDelta": -3
                     },
                     {
                       "strategy": "graveyard-reanimator",
@@ -7290,7 +7282,7 @@
                     },
                     {
                       "cutStrategyAffinityScore": 3,
-                      "addStrategyAffinityScore": 15,
+                      "addStrategyAffinityScore": 12,
                       "cutStrategyProtectionApplied": 3,
                       "cutMatchedStrategies": [
                         "artifact-engine"
@@ -7304,14 +7296,12 @@
                         "creature"
                       ],
                       "addRoles": [
-                        "+1/+1 counters",
-                        "artifact sacrifice outlet",
-                        "creature",
-                        "sacrifice outlet",
                         "sacrifice synergy",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -7375,8 +7365,8 @@
                       "afterSupportCount": 52,
                       "supportDelta": -2,
                       "beforeAffinityTotal": 287,
-                      "afterAffinityTotal": 287,
-                      "affinityDelta": 0,
+                      "afterAffinityTotal": 284,
+                      "affinityDelta": -3,
                       "preserved": false
                     },
                     {
@@ -7395,7 +7385,7 @@
                     {
                       "archetype": "artifact-engine",
                       "supportDelta": -2,
-                      "affinityDelta": 0
+                      "affinityDelta": -3
                     }
                   ],
                   "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
@@ -7618,14 +7608,14 @@
                   },
                   {
                     "out": "Plasmancer",
-                    "in": "Scrapyard Recombiner",
+                    "in": "Beseech the Mirror",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signals: artifact-engine, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "MH1",
-                      "collectorNumber": "227",
-                      "finish": "nonfoil",
-                      "priceNzd": 1.42,
-                      "priceUsdReference": 0.84
+                      "set": "PWOE",
+                      "collectorNumber": "82p",
+                      "finish": "foil",
+                      "priceNzd": 31.49,
+                      "priceUsdReference": 18.61
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -7636,7 +7626,7 @@
                       "persistentColoredManaSourceFloor": 0,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 3,
-                        "addStrategyAffinityScore": 15,
+                        "addStrategyAffinityScore": 12,
                         "cutStrategyProtectionApplied": 3,
                         "cutMatchedStrategies": [
                           "artifact-engine"
@@ -7650,14 +7640,12 @@
                           "creature"
                         ],
                         "addRoles": [
-                          "+1/+1 counters",
-                          "artifact sacrifice outlet",
-                          "creature",
-                          "sacrifice outlet",
                           "sacrifice synergy",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "creature"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -7723,10 +7711,10 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 8.93,
-                "estimatedSpendUsdReference": 5.28,
+                "estimatedSpendNzd": 39,
+                "estimatedSpendUsdReference": 23.05,
                 "unknownPriceCount": 0,
-                "improvementScore": 31.859,
+                "improvementScore": 24.147,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -7769,8 +7757,8 @@
                     {
                       "strategy": "artifact-engine",
                       "cutAffinityScore": 9,
-                      "addAffinityScore": 9,
-                      "netAffinityDelta": 0
+                      "addAffinityScore": 6,
+                      "netAffinityDelta": -3
                     },
                     {
                       "strategy": "graveyard-reanimator",
@@ -7838,7 +7826,7 @@
                     },
                     {
                       "cutStrategyAffinityScore": 3,
-                      "addStrategyAffinityScore": 15,
+                      "addStrategyAffinityScore": 12,
                       "cutStrategyProtectionApplied": 3,
                       "cutMatchedStrategies": [
                         "artifact-engine"
@@ -7852,14 +7840,12 @@
                         "creature"
                       ],
                       "addRoles": [
-                        "+1/+1 counters",
-                        "artifact sacrifice outlet",
-                        "creature",
-                        "sacrifice outlet",
                         "sacrifice synergy",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -7924,8 +7910,8 @@
                       "afterSupportCount": 52,
                       "supportDelta": -2,
                       "beforeAffinityTotal": 287,
-                      "afterAffinityTotal": 287,
-                      "affinityDelta": 0,
+                      "afterAffinityTotal": 284,
+                      "affinityDelta": -3,
                       "preserved": false
                     },
                     {
@@ -7949,7 +7935,7 @@
                     {
                       "archetype": "artifact-engine",
                       "supportDelta": -2,
-                      "affinityDelta": 0
+                      "affinityDelta": -3
                     }
                   ],
                   "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
@@ -8169,14 +8155,14 @@
                   },
                   {
                     "out": "Triarch Stalker",
-                    "in": "Scrapyard Recombiner",
+                    "in": "Beseech the Mirror",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signals: artifact-engine, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "MH1",
-                      "collectorNumber": "227",
-                      "finish": "nonfoil",
-                      "priceNzd": 1.42,
-                      "priceUsdReference": 0.84
+                      "set": "PWOE",
+                      "collectorNumber": "82p",
+                      "finish": "foil",
+                      "priceNzd": 31.49,
+                      "priceUsdReference": 18.61
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -8187,7 +8173,7 @@
                       "persistentColoredManaSourceFloor": 0,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 3,
-                        "addStrategyAffinityScore": 15,
+                        "addStrategyAffinityScore": 12,
                         "cutStrategyProtectionApplied": 3,
                         "cutMatchedStrategies": [
                           "artifact-engine"
@@ -8201,14 +8187,12 @@
                           "creature"
                         ],
                         "addRoles": [
-                          "+1/+1 counters",
-                          "artifact sacrifice outlet",
-                          "creature",
-                          "sacrifice outlet",
                           "sacrifice synergy",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "creature"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -8285,15 +8269,15 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 4.55,
-                "estimatedSpendUsdReference": 2.69,
+                "estimatedSpendNzd": 34.62,
+                "estimatedSpendUsdReference": 20.46,
                 "unknownPriceCount": 0,
-                "improvementScore": 11.368,
+                "improvementScore": 10.964,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 9.3,
+                  "score": 8.9,
                   "failedBefore": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -8331,8 +8315,8 @@
                     {
                       "strategy": "artifact-engine",
                       "cutAffinityScore": 9,
-                      "addAffinityScore": 15,
-                      "netAffinityDelta": 6
+                      "addAffinityScore": 12,
+                      "netAffinityDelta": 3
                     },
                     {
                       "strategy": "graveyard-reanimator",
@@ -8405,7 +8389,7 @@
                     },
                     {
                       "cutStrategyAffinityScore": 3,
-                      "addStrategyAffinityScore": 15,
+                      "addStrategyAffinityScore": 12,
                       "cutStrategyProtectionApplied": 3,
                       "cutMatchedStrategies": [
                         "artifact-engine"
@@ -8419,14 +8403,12 @@
                         "creature"
                       ],
                       "addRoles": [
-                        "+1/+1 counters",
-                        "artifact sacrifice outlet",
-                        "creature",
-                        "sacrifice outlet",
                         "sacrifice synergy",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -8459,8 +8441,8 @@
                       "afterSupportCount": 53,
                       "supportDelta": -1,
                       "beforeAffinityTotal": 287,
-                      "afterAffinityTotal": 293,
-                      "affinityDelta": 6,
+                      "afterAffinityTotal": 290,
+                      "affinityDelta": 3,
                       "preserved": false
                     },
                     {
@@ -8479,7 +8461,7 @@
                     {
                       "archetype": "artifact-engine",
                       "supportDelta": -1,
-                      "affinityDelta": 6
+                      "affinityDelta": 3
                     }
                   ],
                   "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
@@ -8704,14 +8686,14 @@
                   },
                   {
                     "out": "Plasmancer",
-                    "in": "Scrapyard Recombiner",
+                    "in": "Beseech the Mirror",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signals: artifact-engine, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "MH1",
-                      "collectorNumber": "227",
-                      "finish": "nonfoil",
-                      "priceNzd": 1.42,
-                      "priceUsdReference": 0.84
+                      "set": "PWOE",
+                      "collectorNumber": "82p",
+                      "finish": "foil",
+                      "priceNzd": 31.49,
+                      "priceUsdReference": 18.61
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -8722,7 +8704,7 @@
                       "persistentColoredManaSourceFloor": 0,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 3,
-                        "addStrategyAffinityScore": 15,
+                        "addStrategyAffinityScore": 12,
                         "cutStrategyProtectionApplied": 3,
                         "cutMatchedStrategies": [
                           "artifact-engine"
@@ -8736,14 +8718,12 @@
                           "creature"
                         ],
                         "addRoles": [
-                          "+1/+1 counters",
-                          "artifact sacrifice outlet",
-                          "creature",
-                          "sacrifice outlet",
                           "sacrifice synergy",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "creature"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -8758,15 +8738,15 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 31.99,
-                "estimatedSpendUsdReference": 18.91,
+                "estimatedSpendNzd": 62.06,
+                "estimatedSpendUsdReference": 36.68,
                 "unknownPriceCount": 0,
-                "improvementScore": 10.014,
+                "improvementScore": 11.639,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 9.3,
+                  "score": 8.9,
                   "failedBefore": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -8804,8 +8784,8 @@
                     {
                       "strategy": "artifact-engine",
                       "cutAffinityScore": 9,
-                      "addAffinityScore": 12,
-                      "netAffinityDelta": 3
+                      "addAffinityScore": 9,
+                      "netAffinityDelta": 0
                     },
                     {
                       "strategy": "graveyard-reanimator",
@@ -8877,7 +8857,7 @@
                     },
                     {
                       "cutStrategyAffinityScore": 3,
-                      "addStrategyAffinityScore": 15,
+                      "addStrategyAffinityScore": 12,
                       "cutStrategyProtectionApplied": 3,
                       "cutMatchedStrategies": [
                         "artifact-engine"
@@ -8891,14 +8871,12 @@
                         "creature"
                       ],
                       "addRoles": [
-                        "+1/+1 counters",
-                        "artifact sacrifice outlet",
-                        "creature",
-                        "sacrifice outlet",
                         "sacrifice synergy",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -8931,8 +8909,8 @@
                       "afterSupportCount": 53,
                       "supportDelta": -1,
                       "beforeAffinityTotal": 287,
-                      "afterAffinityTotal": 290,
-                      "affinityDelta": 3,
+                      "afterAffinityTotal": 287,
+                      "affinityDelta": 0,
                       "preserved": false
                     },
                     {
@@ -8951,7 +8929,7 @@
                     {
                       "archetype": "artifact-engine",
                       "supportDelta": -1,
-                      "affinityDelta": 3
+                      "affinityDelta": 0
                     }
                   ],
                   "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
@@ -9081,7 +9059,7 @@
                       "set": "BRR",
                       "collectorNumber": "3",
                       "finish": "nonfoil",
-                      "priceNzd": 30.33,
+                      "priceNzd": 30.34,
                       "priceUsdReference": 17.93
                     },
                     "structuralPairing": {
@@ -9175,14 +9153,14 @@
                   },
                   {
                     "out": "Plasmancer",
-                    "in": "Scrapyard Recombiner",
+                    "in": "Beseech the Mirror",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signals: artifact-engine, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "MH1",
-                      "collectorNumber": "227",
-                      "finish": "nonfoil",
-                      "priceNzd": 1.42,
-                      "priceUsdReference": 0.84
+                      "set": "PWOE",
+                      "collectorNumber": "82p",
+                      "finish": "foil",
+                      "priceNzd": 31.49,
+                      "priceUsdReference": 18.61
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -9193,7 +9171,7 @@
                       "persistentColoredManaSourceFloor": 0,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 3,
-                        "addStrategyAffinityScore": 15,
+                        "addStrategyAffinityScore": 12,
                         "cutStrategyProtectionApplied": 3,
                         "cutMatchedStrategies": [
                           "artifact-engine"
@@ -9207,14 +9185,12 @@
                           "creature"
                         ],
                         "addRoles": [
-                          "+1/+1 counters",
-                          "artifact sacrifice outlet",
-                          "creature",
-                          "sacrifice outlet",
                           "sacrifice synergy",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "creature"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -9229,15 +9205,15 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 19.69,
-                "estimatedSpendUsdReference": 11.64,
+                "estimatedSpendNzd": 49.76,
+                "estimatedSpendUsdReference": 29.41,
                 "unknownPriceCount": 0,
-                "improvementScore": 10.014,
+                "improvementScore": 11.639,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 9.3,
+                  "score": 8.9,
                   "failedBefore": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -9275,8 +9251,8 @@
                     {
                       "strategy": "artifact-engine",
                       "cutAffinityScore": 9,
-                      "addAffinityScore": 12,
-                      "netAffinityDelta": 3
+                      "addAffinityScore": 9,
+                      "netAffinityDelta": 0
                     },
                     {
                       "strategy": "graveyard-reanimator",
@@ -9347,7 +9323,7 @@
                     },
                     {
                       "cutStrategyAffinityScore": 3,
-                      "addStrategyAffinityScore": 15,
+                      "addStrategyAffinityScore": 12,
                       "cutStrategyProtectionApplied": 3,
                       "cutMatchedStrategies": [
                         "artifact-engine"
@@ -9361,14 +9337,12 @@
                         "creature"
                       ],
                       "addRoles": [
-                        "+1/+1 counters",
-                        "artifact sacrifice outlet",
-                        "creature",
-                        "sacrifice outlet",
                         "sacrifice synergy",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -9401,8 +9375,8 @@
                       "afterSupportCount": 53,
                       "supportDelta": -1,
                       "beforeAffinityTotal": 287,
-                      "afterAffinityTotal": 290,
-                      "affinityDelta": 3,
+                      "afterAffinityTotal": 287,
+                      "affinityDelta": 0,
                       "preserved": false
                     },
                     {
@@ -9421,7 +9395,7 @@
                     {
                       "archetype": "artifact-engine",
                       "supportDelta": -1,
-                      "affinityDelta": 3
+                      "affinityDelta": 0
                     }
                   ],
                   "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
@@ -9644,14 +9618,14 @@
                   },
                   {
                     "out": "Plasmancer",
-                    "in": "Scrapyard Recombiner",
+                    "in": "Beseech the Mirror",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signals: artifact-engine, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "MH1",
-                      "collectorNumber": "227",
-                      "finish": "nonfoil",
-                      "priceNzd": 1.42,
-                      "priceUsdReference": 0.84
+                      "set": "PWOE",
+                      "collectorNumber": "82p",
+                      "finish": "foil",
+                      "priceNzd": 31.49,
+                      "priceUsdReference": 18.61
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -9662,7 +9636,7 @@
                       "persistentColoredManaSourceFloor": 0,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 3,
-                        "addStrategyAffinityScore": 15,
+                        "addStrategyAffinityScore": 12,
                         "cutStrategyProtectionApplied": 3,
                         "cutMatchedStrategies": [
                           "artifact-engine"
@@ -9676,14 +9650,12 @@
                           "creature"
                         ],
                         "addRoles": [
-                          "+1/+1 counters",
-                          "artifact sacrifice outlet",
-                          "creature",
-                          "sacrifice outlet",
                           "sacrifice synergy",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "creature"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -9698,15 +9670,15 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 5.41,
-                "estimatedSpendUsdReference": 3.2,
+                "estimatedSpendNzd": 35.48,
+                "estimatedSpendUsdReference": 20.97,
                 "unknownPriceCount": 0,
-                "improvementScore": 12.184,
+                "improvementScore": 11.442,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 8.4,
+                  "score": 8.2,
                   "failedBefore": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -9744,8 +9716,8 @@
                     {
                       "strategy": "artifact-engine",
                       "cutAffinityScore": 6,
-                      "addAffinityScore": 9,
-                      "netAffinityDelta": 3
+                      "addAffinityScore": 6,
+                      "netAffinityDelta": 0
                     },
                     {
                       "strategy": "graveyard-reanimator",
@@ -9813,7 +9785,7 @@
                     },
                     {
                       "cutStrategyAffinityScore": 3,
-                      "addStrategyAffinityScore": 15,
+                      "addStrategyAffinityScore": 12,
                       "cutStrategyProtectionApplied": 3,
                       "cutMatchedStrategies": [
                         "artifact-engine"
@@ -9827,14 +9799,12 @@
                         "creature"
                       ],
                       "addRoles": [
-                        "+1/+1 counters",
-                        "artifact sacrifice outlet",
-                        "creature",
-                        "sacrifice outlet",
                         "sacrifice synergy",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -9869,8 +9839,8 @@
                       "afterSupportCount": 53,
                       "supportDelta": -1,
                       "beforeAffinityTotal": 287,
-                      "afterAffinityTotal": 290,
-                      "affinityDelta": 3,
+                      "afterAffinityTotal": 287,
+                      "affinityDelta": 0,
                       "preserved": false
                     },
                     {
@@ -9894,7 +9864,7 @@
                     {
                       "archetype": "artifact-engine",
                       "supportDelta": -1,
-                      "affinityDelta": 3
+                      "affinityDelta": 0
                     }
                   ],
                   "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
@@ -10114,14 +10084,14 @@
                   },
                   {
                     "out": "Triarch Stalker",
-                    "in": "Scrapyard Recombiner",
+                    "in": "Beseech the Mirror",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signals: artifact-engine, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "MH1",
-                      "collectorNumber": "227",
-                      "finish": "nonfoil",
-                      "priceNzd": 1.42,
-                      "priceUsdReference": 0.84
+                      "set": "PWOE",
+                      "collectorNumber": "82p",
+                      "finish": "foil",
+                      "priceNzd": 31.49,
+                      "priceUsdReference": 18.61
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -10132,7 +10102,7 @@
                       "persistentColoredManaSourceFloor": 0,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 3,
-                        "addStrategyAffinityScore": 15,
+                        "addStrategyAffinityScore": 12,
                         "cutStrategyProtectionApplied": 3,
                         "cutMatchedStrategies": [
                           "artifact-engine"
@@ -10146,14 +10116,12 @@
                           "creature"
                         ],
                         "addRoles": [
-                          "+1/+1 counters",
-                          "artifact sacrifice outlet",
-                          "creature",
-                          "sacrifice outlet",
                           "sacrifice synergy",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "creature"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -10871,7 +10839,7 @@
                       "set": "BRR",
                       "collectorNumber": "3",
                       "finish": "nonfoil",
-                      "priceNzd": 30.33,
+                      "priceNzd": 30.34,
                       "priceUsdReference": 17.93
                     },
                     "structuralPairing": {
@@ -12078,7 +12046,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 30.33,
+                "estimatedSpendNzd": 30.34,
                 "estimatedSpendUsdReference": 17.93,
                 "unknownPriceCount": 0,
                 "improvementScore": 3.172,
@@ -12337,7 +12305,7 @@
                       "set": "BRR",
                       "collectorNumber": "3",
                       "finish": "nonfoil",
-                      "priceNzd": 30.33,
+                      "priceNzd": 30.34,
                       "priceUsdReference": 17.93
                     },
                     "structuralPairing": {
@@ -15191,7 +15159,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 19.79,
+                "estimatedSpendNzd": 19.8,
                 "estimatedSpendUsdReference": 11.7,
                 "unknownPriceCount": 0,
                 "improvementScore": 19.433,
