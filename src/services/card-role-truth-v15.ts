@@ -442,7 +442,8 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   const sacrificeTruth = sacrificeRoleTruthV15(card);
   const tutorTruth = tutorRoleTruthV15(card);
   const tokenMultiplierText = /(?:tokens? plus that many|twice as many tokens?|copy of each token|copy each token)/.test(oracle)
-    || /\bfor each token(?:s)? you control\b[^.\n]{0,160}\bcreate (?:a|one|an additional) token\b[^.\n]{0,120}\bcopy\b/.test(oracle);
+    || /\bfor each token(?:s)? you control\b[^.\n]{0,160}\bcreate (?:a|one|an additional) token\b[^.\n]{0,120}\bcopy\b/.test(oracle)
+    || /\bif you (?:would|were to) create\b[^.\n]{0,180}\btoken\b[^.\n]{0,160}\binstead create one of each\b/.test(oracle);
   if (tokenMultiplierText) {
     roles.add('token multiplier');
   }
