@@ -441,7 +441,9 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   const interactionTruth = interactionRoleTruthV15(card);
   const sacrificeTruth = sacrificeRoleTruthV15(card);
   const tutorTruth = tutorRoleTruthV15(card);
-  if (/(?:tokens? plus that many|twice as many tokens?|copy of each token|copy each token)/.test(oracle)) {
+  const tokenMultiplierText = /(?:tokens? plus that many|twice as many tokens?|copy of each token|copy each token)/.test(oracle)
+    || /\bfor each token(?:s)? you control\b[^.\n]{0,160}\bcreate (?:a|one|an additional) token\b[^.\n]{0,120}\bcopy\b/.test(oracle);
+  if (tokenMultiplierText) {
     roles.add('token multiplier');
   }
   const landReplacementOnly = roles.has('land ramp')
