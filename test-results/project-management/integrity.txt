@@ -1,7 +1,7 @@
-source_sha=b54ce1309f183ec5113282ddeb71b8ac25a02060
+source_sha=91342e0613b10833f39ef0b204b4272e4a31c2e8
 active_milestone=INTEL-02
 typecheck_outcome=success
-state_validate_outcome=success
+state_validate_outcome=failure
 validation_index_outcome=success
 recovery_smoke_outcome=success
 source_build_outcome=success
