@@ -31,6 +31,8 @@ jobs:
           node-version-file: .node-version
           package-manager-cache: false
       - run: npm ci
+      - name: Run full unit suite against checked-in policy
+        run: npm test
       - name: Resolve exact official promo / Secret Lair printings
         run: npx tsx scripts/audit-marvel-middle-earth-special-printings-v15.ts
       - name: Apply test-only curated family presets
@@ -51,8 +53,6 @@ jobs:
           PY
       - name: Type-check and build patched policy
         run: npm run build
-      - name: Run full unit suite under patched policy
-        run: npm test
       - name: Run Marvel full-family Bracket 5 build
         id: marvel_build
         continue-on-error: true
