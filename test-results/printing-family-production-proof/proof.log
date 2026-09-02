@@ -9,8 +9,8 @@
         "MSH",
         "LMAR",
         "PSPM",
-        "SPM",
         "SPE",
+        "SPM",
         "MAR"
       ],
       "includePromos": true,
