@@ -80,7 +80,7 @@ Risk: metadata suggests validation activity but the live control never executed.
 
 Protection: permanent controls should validate checked-in source only. One-shot integration workflows must be isolated from read-only live controls.
 
-Status: original one-shot source-editing workflow removed; permanent focused control now validates checked-in source. See KF-013 for the remaining concurrent evidence-writer race.
+Status: prevented. The 2026-09-02 system audit removed the remaining one-shot source-editing workflow, obsolete source-patch helper and superseded combined-family workflow. Repository-integrity regression coverage now rejects workflow-time TypeScript mutation.
 
 ## KF-009 — Skipped/stale result mistaken for current validation
 
@@ -128,9 +128,9 @@ Observed: changing the Marvel refinement script triggered both the focused refin
 
 Risk: valid evidence can remain only in workflow logs/artifacts, while the branch records whichever writer won rather than every completed control.
 
-Protection: active INTEL-02 writers keep isolated result paths and use bounded fetch/reset/recompute/push retries against the latest branch head. Intelligence execution remains independent from persistence, and the project-state writer regenerates metadata on every retry so it cannot commit stale self-references. Legacy evidence writers still require migration or a consolidated writer before this is globally closed.
+Protection: active INTEL-02 writers keep isolated result paths and use bounded fetch/reset/recompute/push retries against the latest branch head. Intelligence execution remains independent from persistence, and every registered evidence writer regenerates and stages the validation index and its human-readable view after resetting to the latest branch head.
 
-Status: active INTEL-02 paths live-validated together at `3cfca39...`: focused Marvel, broad Marvel, Middle-earth and project-state integrity all executed independently and persisted exact-source evidence. Legacy concurrent writers remain an open project-management issue.
+Status: prevented for every validation-registry writer. Active INTEL-02 paths were live-validated together at `3cfca39...`; the 2026-09-02 audit added deterministic registry-to-writer coverage so new registered writers cannot omit derived-state reconciliation.
 
 ## KF-014 — Failed target gate omitted from candidate generation
 
@@ -441,6 +441,36 @@ Risk: semantically equivalent token-doubling text can be traded for generic prot
 Protection: effective role truth now recognizes generic token-copy and token-conversion replacement patterns as `token multiplier`. The existing strategy-component gate then rejects an uncompensated cut, and unnamed role/affinity/preservation regressions cover both patterns.
 
 Status: fixed in TypeScript; focused 65/65 and full 921/921 deterministic suites pass locally. The corrected exact-source Squirreled Away rerun completes with four swaps, no meaningful per-swap losses, preserved cumulative combat-token/aristocrats support and affinity, and no `Second Harvest` or `Academy Manufactor` cut. Full exact-source control-family revalidation remains pending.
+
+## KF-045 — Registered evidence update leaves the validation index stale
+
+Observed: registered Necron, Squirreled Away and generic strategy-inference writers committed new metadata without rebuilding `validation-index.json` and `docs/VALIDATION-STATE.md`. CI run `33606486408` then rejected the stale derived state, and project-state integrity run `33606486359` accurately persisted that failure.
+
+Risk: the recovery view can disagree with the evidence files it is meant to summarize, and a documentation-only branch head can appear structurally unhealthy even when runtime tests pass.
+
+Protection: every validation-registry writer now rebuilds and stages both generated validation views inside its latest-head retry loop. `repository-integrity.test.ts` derives the writer set from the registry and fails when any writer omits either artifact.
+
+Status: prevented in source; the project-state integrity workflow must publish one new exact-source success record after this cleanup.
+
+## KF-046 — Live control tests a patched checkout but records the commit SHA
+
+Observed: three workflows changed production or E2E TypeScript after checkout, including injecting themed presets and raising package limits. The resulting metadata still named `GITHUB_SHA`, even though that SHA did not contain the executed source. One obsolete four-card workflow had already drifted far enough that its expected three-card marker no longer existed.
+
+Risk: a green control cannot be reproduced from the cited commit, and runtime patch scripts can silently duplicate or diverge from the checked-in architecture.
+
+Protection: permanent package limits and printing presets now live in checked-in TypeScript. The obsolete source-mutating workflows and patch helper were removed, while historical result files were retained. A repository-integrity regression rejects future workflow-time mutation of `src/` or `scripts/` TypeScript.
+
+Status: prevented for the audited workflow set; fresh live controls are required to replace historical evidence produced before this guarantee.
+
+## KF-047 — Automation and E2E scripts bypass strict compilation
+
+Observed: the primary build compiled only `src/**/*.ts`, while most of `scripts/**/*.ts` ran only when a live workflow happened to execute them. A full strict compile exposed a dead local, readonly-to-mutable contract mismatches and unsafe nullable bracket comparisons in three live controls.
+
+Risk: dormant or expensive live paths can rot while normal CI stays green, turning type-contract drift into late workflow failures.
+
+Protection: `tsconfig.scripts.json` now compiles every TypeScript automation script under the runtime's strict rules. `npm run check`, normal CI and project-state integrity all require that compilation; the affected scripts now fail closed when independent bracket assessment is unavailable.
+
+Status: prevented; all 46 remaining TypeScript scripts compile at cleanup source `d70cfe8...`.
 
 ## Adding a failure
 

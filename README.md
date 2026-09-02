@@ -122,6 +122,7 @@ Project-state / recovery checks:
 
 ```bash
 npm run project:typecheck
+npm run scripts:typecheck
 npm run project:validate
 npm run validation:validate
 npm run project:resume
