@@ -235,10 +235,10 @@
     "roundsAccepted": 1,
     "totalSwaps": 4,
     "candidatePackagesPerRound": 4,
-    "estimatedUpgradeSpendNzd": 4.4,
-    "estimatedUpgradeSpendUsdReference": 2.6,
+    "estimatedUpgradeSpendNzd": 4.38,
+    "estimatedUpgradeSpendUsdReference": 2.57,
     "maxTotalNzd": 200,
-    "maxTotalUsdReference": 118.08,
+    "maxTotalUsdReference": 117.37,
     "swaps": [
       {
         "out": "Great Oak Guardian",
@@ -248,8 +248,8 @@
           "set": "HOB",
           "collectorNumber": "83",
           "finish": "nonfoil",
-          "priceNzd": 1.44,
-          "priceUsdReference": 0.85
+          "priceNzd": 1.24,
+          "priceUsdReference": 0.73
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -298,8 +298,8 @@
           "set": "LTR",
           "collectorNumber": "20",
           "finish": "nonfoil",
-          "priceNzd": 0.22,
-          "priceUsdReference": 0.13
+          "priceNzd": 0.27,
+          "priceUsdReference": 0.16
         },
         "structuralPairing": {
           "addressedRole": "interaction",
@@ -339,8 +339,8 @@
           "set": "LTC",
           "collectorNumber": "183",
           "finish": "nonfoil",
-          "priceNzd": 2.46,
-          "priceUsdReference": 1.45
+          "priceNzd": 2.57,
+          "priceUsdReference": 1.51
         },
         "structuralPairing": {
           "addressedRole": "tutor",
@@ -527,8 +527,8 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 4,
         "winningCandidate": 3,
-        "estimatedSpendNzd": 4.4,
-        "estimatedSpendUsdReference": 2.6,
+        "estimatedSpendNzd": 4.38,
+        "estimatedSpendUsdReference": 2.57,
         "improvementScore": 24.535,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -567,10 +567,10 @@
     ],
     "constraints": {
       "targetBracket": 4,
-      "maxNzdPerCard": 34.99,
-      "maxUsdPerCardReference": 20.66,
+      "maxNzdPerCard": 35,
+      "maxUsdPerCardReference": 20.54,
       "maxTotalNzd": 200,
-      "maxTotalUsdReference": 118.08,
+      "maxTotalUsdReference": 117.37,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -592,8 +592,8 @@
         "candidatePackagesGenerated": 4,
         "candidatePackagesEligible": 4,
         "winningCandidate": 3,
-        "estimatedSpendNzd": 4.4,
-        "estimatedSpendUsdReference": 2.6,
+        "estimatedSpendNzd": 4.38,
+        "estimatedSpendUsdReference": 2.57,
         "improvementScore": 24.535,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -612,8 +612,8 @@
               "collectorNumber": "83",
               "releaseDate": "2026-08-14",
               "finish": "nonfoil",
-              "priceNzd": 1.44,
-              "priceUsdReference": 0.85,
+              "priceNzd": 1.24,
+              "priceUsdReference": 0.73,
               "promo": false,
               "promoTypes": [
                 "universesbeyond"
@@ -671,8 +671,8 @@
               "collectorNumber": "20",
               "releaseDate": "2023-06-23",
               "finish": "nonfoil",
-              "priceNzd": 0.22,
-              "priceUsdReference": 0.13,
+              "priceNzd": 0.27,
+              "priceUsdReference": 0.16,
               "promo": false,
               "promoTypes": [
                 "universesbeyond"
@@ -721,8 +721,8 @@
               "collectorNumber": "183",
               "releaseDate": "2023-06-23",
               "finish": "nonfoil",
-              "priceNzd": 2.46,
-              "priceUsdReference": 1.45,
+              "priceNzd": 2.57,
+              "priceUsdReference": 1.51,
               "promo": false,
               "promoTypes": [
                 "universesbeyond"
@@ -837,8 +837,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 15.41,
-            "estimatedSpendUsdReference": 9.1,
+            "estimatedSpendNzd": 15.8,
+            "estimatedSpendUsdReference": 9.27,
             "unknownPriceCount": 0,
             "improvementScore": 19.95,
             "significantRegression": false,
@@ -1076,7 +1076,7 @@
               "candidateDiscovery": {
                 "mode": "exhaustive-bounded-printing-policy",
                 "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 463,
+                "eligiblePoolCards": 462,
                 "roleSearchResultCap": null,
                 "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -1142,6 +1142,8 @@
                   "target": 3.1,
                   "deficit": 0.16,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 157,
                   "candidateCount": 3
                 },
                 {
@@ -1152,6 +1154,8 @@
                   "target": 25,
                   "deficit": 3,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 157,
                   "candidateCount": 3
                 },
                 {
@@ -1162,7 +1166,21 @@
                   "target": 6,
                   "deficit": 1,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 21,
                   "candidateCount": 3
+                },
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 1,
+                  "target": 2,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 1,
+                  "candidateCount": 0
                 },
                 {
                   "role": "tutor",
@@ -1172,6 +1190,8 @@
                   "target": 2,
                   "deficit": 2,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 4,
                   "candidateCount": 3
                 }
               ]
@@ -1184,9 +1204,9 @@
                 "recommendedPrinting": {
                   "set": "HOB",
                   "collectorNumber": "4",
-                  "finish": "nonfoil",
-                  "priceNzd": 7.27,
-                  "priceUsdReference": 4.29
+                  "finish": "foil",
+                  "priceNzd": 7.33,
+                  "priceUsdReference": 4.3
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1233,8 +1253,8 @@
                   "set": "HOB",
                   "collectorNumber": "5",
                   "finish": "nonfoil",
-                  "priceNzd": 3.78,
-                  "priceUsdReference": 2.23
+                  "priceNzd": 3.97,
+                  "priceUsdReference": 2.33
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
@@ -1284,8 +1304,8 @@
                   "set": "LTC",
                   "collectorNumber": "183",
                   "finish": "nonfoil",
-                  "priceNzd": 2.46,
-                  "priceUsdReference": 1.45
+                  "priceNzd": 2.57,
+                  "priceUsdReference": 1.51
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
@@ -1332,7 +1352,7 @@
                   "set": "LTR",
                   "collectorNumber": "327",
                   "finish": "nonfoil",
-                  "priceNzd": 1.91,
+                  "priceNzd": 1.93,
                   "priceUsdReference": 1.13
                 },
                 "structuralPairing": {
@@ -1386,8 +1406,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 6,
-            "estimatedSpendUsdReference": 3.54,
+            "estimatedSpendNzd": 5.95,
+            "estimatedSpendUsdReference": 3.49,
             "unknownPriceCount": 0,
             "improvementScore": 20.339,
             "significantRegression": false,
@@ -1622,7 +1642,7 @@
               "candidateDiscovery": {
                 "mode": "exhaustive-bounded-printing-policy",
                 "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 463,
+                "eligiblePoolCards": 462,
                 "roleSearchResultCap": null,
                 "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -1688,6 +1708,8 @@
                   "target": 3.1,
                   "deficit": 0.16,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 157,
                   "candidateCount": 3
                 },
                 {
@@ -1698,6 +1720,8 @@
                   "target": 25,
                   "deficit": 3,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 157,
                   "candidateCount": 3
                 },
                 {
@@ -1708,7 +1732,21 @@
                   "target": 6,
                   "deficit": 1,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 21,
                   "candidateCount": 3
+                },
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 1,
+                  "target": 2,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 1,
+                  "candidateCount": 0
                 },
                 {
                   "role": "tutor",
@@ -1718,6 +1756,8 @@
                   "target": 2,
                   "deficit": 2,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 4,
                   "candidateCount": 3
                 }
               ]
@@ -1731,7 +1771,7 @@
                   "set": "LTR",
                   "collectorNumber": "327",
                   "finish": "nonfoil",
-                  "priceNzd": 1.91,
+                  "priceNzd": 1.93,
                   "priceUsdReference": 1.13
                 },
                 "structuralPairing": {
@@ -1785,8 +1825,8 @@
                   "set": "LTR",
                   "collectorNumber": "23",
                   "finish": "nonfoil",
-                  "priceNzd": 0.19,
-                  "priceUsdReference": 0.11
+                  "priceNzd": 0.2,
+                  "priceUsdReference": 0.12
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
@@ -1831,8 +1871,8 @@
                   "set": "LTC",
                   "collectorNumber": "183",
                   "finish": "nonfoil",
-                  "priceNzd": 2.46,
-                  "priceUsdReference": 1.45
+                  "priceNzd": 2.57,
+                  "priceUsdReference": 1.51
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
@@ -1879,8 +1919,8 @@
                   "set": "HOB",
                   "collectorNumber": "83",
                   "finish": "nonfoil",
-                  "priceNzd": 1.44,
-                  "priceUsdReference": 0.85
+                  "priceNzd": 1.24,
+                  "priceUsdReference": 0.73
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1929,8 +1969,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 4.4,
-            "estimatedSpendUsdReference": 2.6,
+            "estimatedSpendNzd": 4.38,
+            "estimatedSpendUsdReference": 2.57,
             "unknownPriceCount": 0,
             "improvementScore": 24.535,
             "significantRegression": false,
@@ -2157,7 +2197,7 @@
               "candidateDiscovery": {
                 "mode": "exhaustive-bounded-printing-policy",
                 "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 463,
+                "eligiblePoolCards": 462,
                 "roleSearchResultCap": null,
                 "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -2223,6 +2263,8 @@
                   "target": 3.1,
                   "deficit": 0.16,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 157,
                   "candidateCount": 3
                 },
                 {
@@ -2233,6 +2275,8 @@
                   "target": 25,
                   "deficit": 3,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 157,
                   "candidateCount": 3
                 },
                 {
@@ -2243,7 +2287,21 @@
                   "target": 6,
                   "deficit": 1,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 21,
                   "candidateCount": 3
+                },
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 1,
+                  "target": 2,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 1,
+                  "candidateCount": 0
                 },
                 {
                   "role": "tutor",
@@ -2253,6 +2311,8 @@
                   "target": 2,
                   "deficit": 2,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 4,
                   "candidateCount": 3
                 }
               ]
@@ -2266,8 +2326,8 @@
                   "set": "HOB",
                   "collectorNumber": "83",
                   "finish": "nonfoil",
-                  "priceNzd": 1.44,
-                  "priceUsdReference": 0.85
+                  "priceNzd": 1.24,
+                  "priceUsdReference": 0.73
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2316,8 +2376,8 @@
                   "set": "LTR",
                   "collectorNumber": "20",
                   "finish": "nonfoil",
-                  "priceNzd": 0.22,
-                  "priceUsdReference": 0.13
+                  "priceNzd": 0.27,
+                  "priceUsdReference": 0.16
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
@@ -2357,8 +2417,8 @@
                   "set": "LTC",
                   "collectorNumber": "183",
                   "finish": "nonfoil",
-                  "priceNzd": 2.46,
-                  "priceUsdReference": 1.45
+                  "priceNzd": 2.57,
+                  "priceUsdReference": 1.51
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
@@ -2456,8 +2516,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 3.64,
-            "estimatedSpendUsdReference": 2.15,
+            "estimatedSpendNzd": 3.78,
+            "estimatedSpendUsdReference": 2.22,
             "unknownPriceCount": 0,
             "improvementScore": 18.639,
             "significantRegression": false,
@@ -2694,7 +2754,7 @@
               "candidateDiscovery": {
                 "mode": "exhaustive-bounded-printing-policy",
                 "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 463,
+                "eligiblePoolCards": 462,
                 "roleSearchResultCap": null,
                 "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -2760,6 +2820,8 @@
                   "target": 3.1,
                   "deficit": 0.16,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 157,
                   "candidateCount": 3
                 },
                 {
@@ -2770,6 +2832,8 @@
                   "target": 25,
                   "deficit": 3,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 157,
                   "candidateCount": 3
                 },
                 {
@@ -2780,7 +2844,21 @@
                   "target": 6,
                   "deficit": 1,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 21,
                   "candidateCount": 3
+                },
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 1,
+                  "target": 2,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 1,
+                  "candidateCount": 0
                 },
                 {
                   "role": "tutor",
@@ -2790,6 +2868,8 @@
                   "target": 2,
                   "deficit": 2,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 4,
                   "candidateCount": 3
                 }
               ]
@@ -2854,8 +2934,8 @@
                   "set": "LTC",
                   "collectorNumber": "200",
                   "finish": "nonfoil",
-                  "priceNzd": 0.51,
-                  "priceUsdReference": 0.3
+                  "priceNzd": 0.53,
+                  "priceUsdReference": 0.31
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
@@ -2901,8 +2981,8 @@
                   "set": "LTC",
                   "collectorNumber": "183",
                   "finish": "nonfoil",
-                  "priceNzd": 2.46,
-                  "priceUsdReference": 1.45
+                  "priceNzd": 2.57,
+                  "priceUsdReference": 1.51
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
@@ -3014,8 +3094,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 15.41,
-                "estimatedSpendUsdReference": 9.1,
+                "estimatedSpendNzd": 15.8,
+                "estimatedSpendUsdReference": 9.27,
                 "unknownPriceCount": 0,
                 "improvementScore": 19.95,
                 "significantRegression": false,
@@ -3253,7 +3333,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -3319,6 +3399,8 @@
                       "target": 3.1,
                       "deficit": 0.16,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 157,
                       "candidateCount": 3
                     },
                     {
@@ -3329,6 +3411,8 @@
                       "target": 25,
                       "deficit": 3,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 157,
                       "candidateCount": 3
                     },
                     {
@@ -3339,7 +3423,21 @@
                       "target": 6,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 21,
                       "candidateCount": 3
+                    },
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
                     },
                     {
                       "role": "tutor",
@@ -3349,6 +3447,8 @@
                       "target": 2,
                       "deficit": 2,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 4,
                       "candidateCount": 3
                     }
                   ]
@@ -3361,9 +3461,9 @@
                     "recommendedPrinting": {
                       "set": "HOB",
                       "collectorNumber": "4",
-                      "finish": "nonfoil",
-                      "priceNzd": 7.27,
-                      "priceUsdReference": 4.29
+                      "finish": "foil",
+                      "priceNzd": 7.33,
+                      "priceUsdReference": 4.3
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3410,8 +3510,8 @@
                       "set": "HOB",
                       "collectorNumber": "5",
                       "finish": "nonfoil",
-                      "priceNzd": 3.78,
-                      "priceUsdReference": 2.23
+                      "priceNzd": 3.97,
+                      "priceUsdReference": 2.33
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -3461,8 +3561,8 @@
                       "set": "LTC",
                       "collectorNumber": "183",
                       "finish": "nonfoil",
-                      "priceNzd": 2.46,
-                      "priceUsdReference": 1.45
+                      "priceNzd": 2.57,
+                      "priceUsdReference": 1.51
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -3509,7 +3609,7 @@
                       "set": "LTR",
                       "collectorNumber": "327",
                       "finish": "nonfoil",
-                      "priceNzd": 1.91,
+                      "priceNzd": 1.93,
                       "priceUsdReference": 1.13
                     },
                     "structuralPairing": {
@@ -3563,8 +3663,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 6,
-                "estimatedSpendUsdReference": 3.54,
+                "estimatedSpendNzd": 5.95,
+                "estimatedSpendUsdReference": 3.49,
                 "unknownPriceCount": 0,
                 "improvementScore": 20.339,
                 "significantRegression": false,
@@ -3799,7 +3899,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -3865,6 +3965,8 @@
                       "target": 3.1,
                       "deficit": 0.16,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 157,
                       "candidateCount": 3
                     },
                     {
@@ -3875,6 +3977,8 @@
                       "target": 25,
                       "deficit": 3,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 157,
                       "candidateCount": 3
                     },
                     {
@@ -3885,7 +3989,21 @@
                       "target": 6,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 21,
                       "candidateCount": 3
+                    },
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
                     },
                     {
                       "role": "tutor",
@@ -3895,6 +4013,8 @@
                       "target": 2,
                       "deficit": 2,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 4,
                       "candidateCount": 3
                     }
                   ]
@@ -3908,7 +4028,7 @@
                       "set": "LTR",
                       "collectorNumber": "327",
                       "finish": "nonfoil",
-                      "priceNzd": 1.91,
+                      "priceNzd": 1.93,
                       "priceUsdReference": 1.13
                     },
                     "structuralPairing": {
@@ -3962,8 +4082,8 @@
                       "set": "LTR",
                       "collectorNumber": "23",
                       "finish": "nonfoil",
-                      "priceNzd": 0.19,
-                      "priceUsdReference": 0.11
+                      "priceNzd": 0.2,
+                      "priceUsdReference": 0.12
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -4008,8 +4128,8 @@
                       "set": "LTC",
                       "collectorNumber": "183",
                       "finish": "nonfoil",
-                      "priceNzd": 2.46,
-                      "priceUsdReference": 1.45
+                      "priceNzd": 2.57,
+                      "priceUsdReference": 1.51
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -4056,8 +4176,8 @@
                       "set": "HOB",
                       "collectorNumber": "83",
                       "finish": "nonfoil",
-                      "priceNzd": 1.44,
-                      "priceUsdReference": 0.85
+                      "priceNzd": 1.24,
+                      "priceUsdReference": 0.73
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4106,8 +4226,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 4.4,
-                "estimatedSpendUsdReference": 2.6,
+                "estimatedSpendNzd": 4.38,
+                "estimatedSpendUsdReference": 2.57,
                 "unknownPriceCount": 0,
                 "improvementScore": 24.535,
                 "significantRegression": false,
@@ -4334,7 +4454,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -4400,6 +4520,8 @@
                       "target": 3.1,
                       "deficit": 0.16,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 157,
                       "candidateCount": 3
                     },
                     {
@@ -4410,6 +4532,8 @@
                       "target": 25,
                       "deficit": 3,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 157,
                       "candidateCount": 3
                     },
                     {
@@ -4420,7 +4544,21 @@
                       "target": 6,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 21,
                       "candidateCount": 3
+                    },
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
                     },
                     {
                       "role": "tutor",
@@ -4430,6 +4568,8 @@
                       "target": 2,
                       "deficit": 2,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 4,
                       "candidateCount": 3
                     }
                   ]
@@ -4443,8 +4583,8 @@
                       "set": "HOB",
                       "collectorNumber": "83",
                       "finish": "nonfoil",
-                      "priceNzd": 1.44,
-                      "priceUsdReference": 0.85
+                      "priceNzd": 1.24,
+                      "priceUsdReference": 0.73
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4493,8 +4633,8 @@
                       "set": "LTR",
                       "collectorNumber": "20",
                       "finish": "nonfoil",
-                      "priceNzd": 0.22,
-                      "priceUsdReference": 0.13
+                      "priceNzd": 0.27,
+                      "priceUsdReference": 0.16
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -4534,8 +4674,8 @@
                       "set": "LTC",
                       "collectorNumber": "183",
                       "finish": "nonfoil",
-                      "priceNzd": 2.46,
-                      "priceUsdReference": 1.45
+                      "priceNzd": 2.57,
+                      "priceUsdReference": 1.51
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -4633,8 +4773,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 3.64,
-                "estimatedSpendUsdReference": 2.15,
+                "estimatedSpendNzd": 3.78,
+                "estimatedSpendUsdReference": 2.22,
                 "unknownPriceCount": 0,
                 "improvementScore": 18.639,
                 "significantRegression": false,
@@ -4871,7 +5011,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -4937,6 +5077,8 @@
                       "target": 3.1,
                       "deficit": 0.16,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 157,
                       "candidateCount": 3
                     },
                     {
@@ -4947,6 +5089,8 @@
                       "target": 25,
                       "deficit": 3,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 157,
                       "candidateCount": 3
                     },
                     {
@@ -4957,7 +5101,21 @@
                       "target": 6,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 21,
                       "candidateCount": 3
+                    },
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
                     },
                     {
                       "role": "tutor",
@@ -4967,6 +5125,8 @@
                       "target": 2,
                       "deficit": 2,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 4,
                       "candidateCount": 3
                     }
                   ]
@@ -5031,8 +5191,8 @@
                       "set": "LTC",
                       "collectorNumber": "200",
                       "finish": "nonfoil",
-                      "priceNzd": 0.51,
-                      "priceUsdReference": 0.3
+                      "priceNzd": 0.53,
+                      "priceUsdReference": 0.31
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -5078,8 +5238,8 @@
                       "set": "LTC",
                       "collectorNumber": "183",
                       "finish": "nonfoil",
-                      "priceNzd": 2.46,
-                      "priceUsdReference": 1.45
+                      "priceNzd": 2.57,
+                      "priceUsdReference": 1.51
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -5205,8 +5365,8 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 32.25,
-            "estimatedSpendUsdReference": 19.04,
+            "estimatedSpendNzd": 30.62,
+            "estimatedSpendUsdReference": 17.97,
             "unknownPriceCount": 0,
             "improvementScore": 4.315,
             "significantRegression": false,
@@ -5334,7 +5494,7 @@
               "candidateDiscovery": {
                 "mode": "exhaustive-bounded-printing-policy",
                 "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 463,
+                "eligiblePoolCards": 462,
                 "roleSearchResultCap": null,
                 "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -5377,6 +5537,18 @@
               ],
               "candidateGroups": [
                 {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 1,
+                  "target": 2,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 1,
+                  "candidateCount": 0
+                },
+                {
                   "role": "tutor",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors",
@@ -5384,6 +5556,8 @@
                   "target": 2,
                   "deficit": 1,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 4,
                   "candidateCount": 3
                 },
                 {
@@ -5394,6 +5568,8 @@
                   "target": 6,
                   "deficit": 6,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 17,
                   "candidateCount": 5
                 },
                 {
@@ -5404,6 +5580,8 @@
                   "target": 14,
                   "deficit": 1,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 62,
                   "candidateCount": 5
                 }
               ]
@@ -5417,8 +5595,8 @@
                   "set": "SLD",
                   "collectorNumber": "2563",
                   "finish": "nonfoil",
-                  "priceNzd": 32.25,
-                  "priceUsdReference": 19.04
+                  "priceNzd": 30.62,
+                  "priceUsdReference": 17.97
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
@@ -5462,8 +5640,8 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 10.21,
-            "estimatedSpendUsdReference": 6.03,
+            "estimatedSpendNzd": 10.34,
+            "estimatedSpendUsdReference": 6.07,
             "unknownPriceCount": 0,
             "improvementScore": 4.394,
             "significantRegression": false,
@@ -5601,7 +5779,7 @@
               "candidateDiscovery": {
                 "mode": "exhaustive-bounded-printing-policy",
                 "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 463,
+                "eligiblePoolCards": 462,
                 "roleSearchResultCap": null,
                 "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -5644,6 +5822,18 @@
               ],
               "candidateGroups": [
                 {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 1,
+                  "target": 2,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 1,
+                  "candidateCount": 0
+                },
+                {
                   "role": "tutor",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors",
@@ -5651,6 +5841,8 @@
                   "target": 2,
                   "deficit": 1,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 4,
                   "candidateCount": 2
                 },
                 {
@@ -5661,6 +5853,8 @@
                   "target": 6,
                   "deficit": 6,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 17,
                   "candidateCount": 5
                 },
                 {
@@ -5671,6 +5865,8 @@
                   "target": 14,
                   "deficit": 1,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 62,
                   "candidateCount": 5
                 }
               ]
@@ -5684,8 +5880,8 @@
                   "set": "LTC",
                   "collectorNumber": "532",
                   "finish": "nonfoil",
-                  "priceNzd": 10.21,
-                  "priceUsdReference": 6.03
+                  "priceNzd": 10.34,
+                  "priceUsdReference": 6.07
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
@@ -5862,7 +6058,7 @@
               "candidateDiscovery": {
                 "mode": "exhaustive-bounded-printing-policy",
                 "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 463,
+                "eligiblePoolCards": 462,
                 "roleSearchResultCap": null,
                 "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -5905,6 +6101,18 @@
               ],
               "candidateGroups": [
                 {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 1,
+                  "target": 2,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 1,
+                  "candidateCount": 0
+                },
+                {
                   "role": "tutor",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors",
@@ -5912,6 +6120,8 @@
                   "target": 2,
                   "deficit": 1,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 4,
                   "candidateCount": 1
                 },
                 {
@@ -5922,6 +6132,8 @@
                   "target": 6,
                   "deficit": 6,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 17,
                   "candidateCount": 5
                 },
                 {
@@ -5932,6 +6144,8 @@
                   "target": 14,
                   "deficit": 1,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 62,
                   "candidateCount": 5
                 }
               ]
@@ -5990,7 +6204,7 @@
             "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 0.42,
+            "estimatedSpendNzd": 0.43,
             "estimatedSpendUsdReference": 0.25,
             "unknownPriceCount": 0,
             "improvementScore": -2.059,
@@ -6075,7 +6289,7 @@
               "candidateDiscovery": {
                 "mode": "exhaustive-bounded-printing-policy",
                 "exhaustiveWithinSafetyCeilings": true,
-                "eligiblePoolCards": 463,
+                "eligiblePoolCards": 462,
                 "roleSearchResultCap": null,
                 "strategySupplementalResultCapPerArchetype": null,
                 "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -6118,6 +6332,30 @@
               ],
               "candidateGroups": [
                 {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 1,
+                  "target": 2,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 1,
+                  "candidateCount": 0
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 1,
+                  "target": 2,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 4,
+                  "candidateCount": 0
+                },
+                {
                   "role": "protection",
                   "prioritySource": "aspirational-role-target",
                   "targetGate": null,
@@ -6125,6 +6363,8 @@
                   "target": 6,
                   "deficit": 6,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 17,
                   "candidateCount": 5
                 },
                 {
@@ -6135,6 +6375,8 @@
                   "target": 14,
                   "deficit": 1,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 62,
                   "candidateCount": 5
                 }
               ]
@@ -6148,7 +6390,7 @@
                   "set": "HOB",
                   "collectorNumber": "6",
                   "finish": "nonfoil",
-                  "priceNzd": 0.42,
+                  "priceNzd": 0.43,
                   "priceUsdReference": 0.25
                 },
                 "structuralPairing": {
@@ -6205,8 +6447,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 38.47,
-                "estimatedSpendUsdReference": 22.71,
+                "estimatedSpendNzd": 37.03,
+                "estimatedSpendUsdReference": 21.73,
                 "unknownPriceCount": 0,
                 "improvementScore": 1.556,
                 "significantRegression": false,
@@ -6374,7 +6616,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -6417,6 +6659,18 @@
                   ],
                   "candidateGroups": [
                     {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
+                    },
+                    {
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
@@ -6424,6 +6678,8 @@
                       "target": 2,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 4,
                       "candidateCount": 3
                     },
                     {
@@ -6434,6 +6690,8 @@
                       "target": 6,
                       "deficit": 6,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 17,
                       "candidateCount": 5
                     },
                     {
@@ -6444,6 +6702,8 @@
                       "target": 14,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 62,
                       "candidateCount": 5
                     }
                   ]
@@ -6457,8 +6717,8 @@
                       "set": "SLD",
                       "collectorNumber": "2563",
                       "finish": "nonfoil",
-                      "priceNzd": 32.25,
-                      "priceUsdReference": 19.04
+                      "priceNzd": 30.62,
+                      "priceUsdReference": 17.97
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -6500,10 +6760,10 @@
                     "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "LTR",
-                      "collectorNumber": "2",
-                      "finish": "nonfoil",
-                      "priceNzd": 6.22,
-                      "priceUsdReference": 3.67
+                      "collectorNumber": "757",
+                      "finish": "foil",
+                      "priceNzd": 6.41,
+                      "priceUsdReference": 3.76
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -6556,8 +6816,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 16.43,
-                "estimatedSpendUsdReference": 9.7,
+                "estimatedSpendNzd": 16.75,
+                "estimatedSpendUsdReference": 9.83,
                 "unknownPriceCount": 0,
                 "improvementScore": 5.486,
                 "significantRegression": false,
@@ -6735,7 +6995,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -6778,6 +7038,18 @@
                   ],
                   "candidateGroups": [
                     {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
+                    },
+                    {
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
@@ -6785,6 +7057,8 @@
                       "target": 2,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 4,
                       "candidateCount": 2
                     },
                     {
@@ -6795,6 +7069,8 @@
                       "target": 6,
                       "deficit": 6,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 17,
                       "candidateCount": 5
                     },
                     {
@@ -6805,6 +7081,8 @@
                       "target": 14,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 62,
                       "candidateCount": 5
                     }
                   ]
@@ -6818,8 +7096,8 @@
                       "set": "LTC",
                       "collectorNumber": "532",
                       "finish": "nonfoil",
-                      "priceNzd": 10.21,
-                      "priceUsdReference": 6.03
+                      "priceNzd": 10.34,
+                      "priceUsdReference": 6.07
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -6865,10 +7143,10 @@
                     "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "LTR",
-                      "collectorNumber": "2",
-                      "finish": "nonfoil",
-                      "priceNzd": 6.22,
-                      "priceUsdReference": 3.67
+                      "collectorNumber": "757",
+                      "finish": "foil",
+                      "priceNzd": 6.41,
+                      "priceUsdReference": 3.76
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -6921,8 +7199,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 6.62,
-                "estimatedSpendUsdReference": 3.91,
+                "estimatedSpendNzd": 6.82,
+                "estimatedSpendUsdReference": 4,
                 "unknownPriceCount": 0,
                 "improvementScore": 0.849,
                 "significantRegression": false,
@@ -7090,7 +7368,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -7133,6 +7411,18 @@
                   ],
                   "candidateGroups": [
                     {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
+                    },
+                    {
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
@@ -7140,6 +7430,8 @@
                       "target": 2,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 4,
                       "candidateCount": 1
                     },
                     {
@@ -7150,6 +7442,8 @@
                       "target": 6,
                       "deficit": 6,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 17,
                       "candidateCount": 5
                     },
                     {
@@ -7160,6 +7454,8 @@
                       "target": 14,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 62,
                       "candidateCount": 5
                     }
                   ]
@@ -7216,10 +7512,10 @@
                     "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "LTR",
-                      "collectorNumber": "2",
-                      "finish": "nonfoil",
-                      "priceNzd": 6.22,
-                      "priceUsdReference": 3.67
+                      "collectorNumber": "757",
+                      "finish": "foil",
+                      "priceNzd": 6.41,
+                      "priceUsdReference": 3.76
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -7272,8 +7568,8 @@
                 "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 6.64,
-                "estimatedSpendUsdReference": 3.92,
+                "estimatedSpendNzd": 6.83,
+                "estimatedSpendUsdReference": 4.01,
                 "unknownPriceCount": 0,
                 "improvementScore": -0.271,
                 "significantRegression": false,
@@ -7397,7 +7693,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -7440,6 +7736,30 @@
                   ],
                   "candidateGroups": [
                     {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 4,
+                      "candidateCount": 0
+                    },
+                    {
                       "role": "protection",
                       "prioritySource": "aspirational-role-target",
                       "targetGate": null,
@@ -7447,6 +7767,8 @@
                       "target": 6,
                       "deficit": 6,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 17,
                       "candidateCount": 5
                     },
                     {
@@ -7457,6 +7779,8 @@
                       "target": 14,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 62,
                       "candidateCount": 5
                     }
                   ]
@@ -7470,7 +7794,7 @@
                       "set": "HOB",
                       "collectorNumber": "6",
                       "finish": "nonfoil",
-                      "priceNzd": 0.42,
+                      "priceNzd": 0.43,
                       "priceUsdReference": 0.25
                     },
                     "structuralPairing": {
@@ -7513,10 +7837,10 @@
                     "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "LTR",
-                      "collectorNumber": "2",
-                      "finish": "nonfoil",
-                      "priceNzd": 6.22,
-                      "priceUsdReference": 3.67
+                      "collectorNumber": "757",
+                      "finish": "foil",
+                      "priceNzd": 6.41,
+                      "priceUsdReference": 3.76
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -7581,8 +7905,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 38.47,
-                "estimatedSpendUsdReference": 22.71,
+                "estimatedSpendNzd": 37.03,
+                "estimatedSpendUsdReference": 21.73,
                 "unknownPriceCount": 0,
                 "improvementScore": 1.556,
                 "significantRegression": false,
@@ -7750,7 +8074,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -7793,6 +8117,18 @@
                   ],
                   "candidateGroups": [
                     {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
+                    },
+                    {
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
@@ -7800,6 +8136,8 @@
                       "target": 2,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 4,
                       "candidateCount": 3
                     },
                     {
@@ -7810,6 +8148,8 @@
                       "target": 6,
                       "deficit": 6,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 17,
                       "candidateCount": 5
                     },
                     {
@@ -7820,6 +8160,8 @@
                       "target": 14,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 62,
                       "candidateCount": 5
                     }
                   ]
@@ -7833,8 +8175,8 @@
                       "set": "SLD",
                       "collectorNumber": "2563",
                       "finish": "nonfoil",
-                      "priceNzd": 32.25,
-                      "priceUsdReference": 19.04
+                      "priceNzd": 30.62,
+                      "priceUsdReference": 17.97
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -7876,10 +8218,10 @@
                     "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "LTR",
-                      "collectorNumber": "2",
-                      "finish": "nonfoil",
-                      "priceNzd": 6.22,
-                      "priceUsdReference": 3.67
+                      "collectorNumber": "757",
+                      "finish": "foil",
+                      "priceNzd": 6.41,
+                      "priceUsdReference": 3.76
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -7932,8 +8274,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 16.43,
-                "estimatedSpendUsdReference": 9.7,
+                "estimatedSpendNzd": 16.75,
+                "estimatedSpendUsdReference": 9.83,
                 "unknownPriceCount": 0,
                 "improvementScore": 5.486,
                 "significantRegression": false,
@@ -8111,7 +8453,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -8154,6 +8496,18 @@
                   ],
                   "candidateGroups": [
                     {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
+                    },
+                    {
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
@@ -8161,6 +8515,8 @@
                       "target": 2,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 4,
                       "candidateCount": 2
                     },
                     {
@@ -8171,6 +8527,8 @@
                       "target": 6,
                       "deficit": 6,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 17,
                       "candidateCount": 5
                     },
                     {
@@ -8181,6 +8539,8 @@
                       "target": 14,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 62,
                       "candidateCount": 5
                     }
                   ]
@@ -8194,8 +8554,8 @@
                       "set": "LTC",
                       "collectorNumber": "532",
                       "finish": "nonfoil",
-                      "priceNzd": 10.21,
-                      "priceUsdReference": 6.03
+                      "priceNzd": 10.34,
+                      "priceUsdReference": 6.07
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -8241,10 +8601,10 @@
                     "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "LTR",
-                      "collectorNumber": "2",
-                      "finish": "nonfoil",
-                      "priceNzd": 6.22,
-                      "priceUsdReference": 3.67
+                      "collectorNumber": "757",
+                      "finish": "foil",
+                      "priceNzd": 6.41,
+                      "priceUsdReference": 3.76
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -8297,8 +8657,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 6.62,
-                "estimatedSpendUsdReference": 3.91,
+                "estimatedSpendNzd": 6.82,
+                "estimatedSpendUsdReference": 4,
                 "unknownPriceCount": 0,
                 "improvementScore": 0.849,
                 "significantRegression": false,
@@ -8466,7 +8826,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -8509,6 +8869,18 @@
                   ],
                   "candidateGroups": [
                     {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
+                    },
+                    {
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
@@ -8516,6 +8888,8 @@
                       "target": 2,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 4,
                       "candidateCount": 1
                     },
                     {
@@ -8526,6 +8900,8 @@
                       "target": 6,
                       "deficit": 6,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 17,
                       "candidateCount": 5
                     },
                     {
@@ -8536,6 +8912,8 @@
                       "target": 14,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 62,
                       "candidateCount": 5
                     }
                   ]
@@ -8592,10 +8970,10 @@
                     "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "LTR",
-                      "collectorNumber": "2",
-                      "finish": "nonfoil",
-                      "priceNzd": 6.22,
-                      "priceUsdReference": 3.67
+                      "collectorNumber": "757",
+                      "finish": "foil",
+                      "priceNzd": 6.41,
+                      "priceUsdReference": 3.76
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -8648,8 +9026,8 @@
                 "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                 "attemptedSwaps": 3,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 6.64,
-                "estimatedSpendUsdReference": 3.92,
+                "estimatedSpendNzd": 6.83,
+                "estimatedSpendUsdReference": 4.01,
                 "unknownPriceCount": 0,
                 "improvementScore": -0.271,
                 "significantRegression": false,
@@ -8773,7 +9151,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -8816,6 +9194,30 @@
                   ],
                   "candidateGroups": [
                     {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 4,
+                      "candidateCount": 0
+                    },
+                    {
                       "role": "protection",
                       "prioritySource": "aspirational-role-target",
                       "targetGate": null,
@@ -8823,6 +9225,8 @@
                       "target": 6,
                       "deficit": 6,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 17,
                       "candidateCount": 5
                     },
                     {
@@ -8833,6 +9237,8 @@
                       "target": 14,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 62,
                       "candidateCount": 5
                     }
                   ]
@@ -8846,7 +9252,7 @@
                       "set": "HOB",
                       "collectorNumber": "6",
                       "finish": "nonfoil",
-                      "priceNzd": 0.42,
+                      "priceNzd": 0.43,
                       "priceUsdReference": 0.25
                     },
                     "structuralPairing": {
@@ -8889,10 +9295,10 @@
                     "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "LTR",
-                      "collectorNumber": "2",
-                      "finish": "nonfoil",
-                      "priceNzd": 6.22,
-                      "priceUsdReference": 3.67
+                      "collectorNumber": "757",
+                      "finish": "foil",
+                      "priceNzd": 6.41,
+                      "priceUsdReference": 3.76
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -8957,8 +9363,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 38.47,
-                "estimatedSpendUsdReference": 22.71,
+                "estimatedSpendNzd": 37.03,
+                "estimatedSpendUsdReference": 21.73,
                 "unknownPriceCount": 0,
                 "improvementScore": 1.556,
                 "significantRegression": false,
@@ -9126,7 +9532,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -9169,6 +9575,18 @@
                   ],
                   "candidateGroups": [
                     {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
+                    },
+                    {
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
@@ -9176,6 +9594,8 @@
                       "target": 2,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 4,
                       "candidateCount": 3
                     },
                     {
@@ -9186,6 +9606,8 @@
                       "target": 6,
                       "deficit": 6,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 17,
                       "candidateCount": 5
                     },
                     {
@@ -9196,6 +9618,8 @@
                       "target": 14,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 62,
                       "candidateCount": 5
                     }
                   ]
@@ -9209,8 +9633,8 @@
                       "set": "SLD",
                       "collectorNumber": "2563",
                       "finish": "nonfoil",
-                      "priceNzd": 32.25,
-                      "priceUsdReference": 19.04
+                      "priceNzd": 30.62,
+                      "priceUsdReference": 17.97
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -9252,10 +9676,10 @@
                     "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "LTR",
-                      "collectorNumber": "2",
-                      "finish": "nonfoil",
-                      "priceNzd": 6.22,
-                      "priceUsdReference": 3.67
+                      "collectorNumber": "757",
+                      "finish": "foil",
+                      "priceNzd": 6.41,
+                      "priceUsdReference": 3.76
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -9308,8 +9732,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 16.43,
-                "estimatedSpendUsdReference": 9.7,
+                "estimatedSpendNzd": 16.75,
+                "estimatedSpendUsdReference": 9.83,
                 "unknownPriceCount": 0,
                 "improvementScore": 5.486,
                 "significantRegression": false,
@@ -9487,7 +9911,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -9530,6 +9954,18 @@
                   ],
                   "candidateGroups": [
                     {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
+                    },
+                    {
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
@@ -9537,6 +9973,8 @@
                       "target": 2,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 4,
                       "candidateCount": 2
                     },
                     {
@@ -9547,6 +9985,8 @@
                       "target": 6,
                       "deficit": 6,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 17,
                       "candidateCount": 5
                     },
                     {
@@ -9557,6 +9997,8 @@
                       "target": 14,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 62,
                       "candidateCount": 5
                     }
                   ]
@@ -9570,8 +10012,8 @@
                       "set": "LTC",
                       "collectorNumber": "532",
                       "finish": "nonfoil",
-                      "priceNzd": 10.21,
-                      "priceUsdReference": 6.03
+                      "priceNzd": 10.34,
+                      "priceUsdReference": 6.07
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -9617,10 +10059,10 @@
                     "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "LTR",
-                      "collectorNumber": "2",
-                      "finish": "nonfoil",
-                      "priceNzd": 6.22,
-                      "priceUsdReference": 3.67
+                      "collectorNumber": "757",
+                      "finish": "foil",
+                      "priceNzd": 6.41,
+                      "priceUsdReference": 3.76
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -9673,8 +10115,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 6.62,
-                "estimatedSpendUsdReference": 3.91,
+                "estimatedSpendNzd": 6.82,
+                "estimatedSpendUsdReference": 4,
                 "unknownPriceCount": 0,
                 "improvementScore": 0.849,
                 "significantRegression": false,
@@ -9842,7 +10284,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -9885,6 +10327,18 @@
                   ],
                   "candidateGroups": [
                     {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
+                    },
+                    {
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
@@ -9892,6 +10346,8 @@
                       "target": 2,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 4,
                       "candidateCount": 1
                     },
                     {
@@ -9902,6 +10358,8 @@
                       "target": 6,
                       "deficit": 6,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 17,
                       "candidateCount": 5
                     },
                     {
@@ -9912,6 +10370,8 @@
                       "target": 14,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 62,
                       "candidateCount": 5
                     }
                   ]
@@ -9968,10 +10428,10 @@
                     "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "LTR",
-                      "collectorNumber": "2",
-                      "finish": "nonfoil",
-                      "priceNzd": 6.22,
-                      "priceUsdReference": 3.67
+                      "collectorNumber": "757",
+                      "finish": "foil",
+                      "priceNzd": 6.41,
+                      "priceUsdReference": 3.76
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -10024,8 +10484,8 @@
                 "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 6.64,
-                "estimatedSpendUsdReference": 3.92,
+                "estimatedSpendNzd": 6.83,
+                "estimatedSpendUsdReference": 4.01,
                 "unknownPriceCount": 0,
                 "improvementScore": -0.271,
                 "significantRegression": false,
@@ -10149,7 +10609,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -10192,6 +10652,30 @@
                   ],
                   "candidateGroups": [
                     {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 4,
+                      "candidateCount": 0
+                    },
+                    {
                       "role": "protection",
                       "prioritySource": "aspirational-role-target",
                       "targetGate": null,
@@ -10199,6 +10683,8 @@
                       "target": 6,
                       "deficit": 6,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 17,
                       "candidateCount": 5
                     },
                     {
@@ -10209,6 +10695,8 @@
                       "target": 14,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 62,
                       "candidateCount": 5
                     }
                   ]
@@ -10222,7 +10710,7 @@
                       "set": "HOB",
                       "collectorNumber": "6",
                       "finish": "nonfoil",
-                      "priceNzd": 0.42,
+                      "priceNzd": 0.43,
                       "priceUsdReference": 0.25
                     },
                     "structuralPairing": {
@@ -10265,10 +10753,10 @@
                     "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
                       "set": "LTR",
-                      "collectorNumber": "2",
-                      "finish": "nonfoil",
-                      "priceNzd": 6.22,
-                      "priceUsdReference": 3.67
+                      "collectorNumber": "757",
+                      "finish": "foil",
+                      "priceNzd": 6.41,
+                      "priceUsdReference": 3.76
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -10333,8 +10821,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 32.25,
-                "estimatedSpendUsdReference": 19.04,
+                "estimatedSpendNzd": 30.62,
+                "estimatedSpendUsdReference": 17.97,
                 "unknownPriceCount": 0,
                 "improvementScore": 4.315,
                 "significantRegression": false,
@@ -10462,7 +10950,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -10505,6 +10993,18 @@
                   ],
                   "candidateGroups": [
                     {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
+                    },
+                    {
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
@@ -10512,6 +11012,8 @@
                       "target": 2,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 4,
                       "candidateCount": 3
                     },
                     {
@@ -10522,6 +11024,8 @@
                       "target": 6,
                       "deficit": 6,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 17,
                       "candidateCount": 5
                     },
                     {
@@ -10532,6 +11036,8 @@
                       "target": 14,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 62,
                       "candidateCount": 5
                     }
                   ]
@@ -10545,8 +11051,8 @@
                       "set": "SLD",
                       "collectorNumber": "2563",
                       "finish": "nonfoil",
-                      "priceNzd": 32.25,
-                      "priceUsdReference": 19.04
+                      "priceNzd": 30.62,
+                      "priceUsdReference": 17.97
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -10590,8 +11096,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 10.21,
-                "estimatedSpendUsdReference": 6.03,
+                "estimatedSpendNzd": 10.34,
+                "estimatedSpendUsdReference": 6.07,
                 "unknownPriceCount": 0,
                 "improvementScore": 4.394,
                 "significantRegression": false,
@@ -10729,7 +11235,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -10772,6 +11278,18 @@
                   ],
                   "candidateGroups": [
                     {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
+                    },
+                    {
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
@@ -10779,6 +11297,8 @@
                       "target": 2,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 4,
                       "candidateCount": 2
                     },
                     {
@@ -10789,6 +11309,8 @@
                       "target": 6,
                       "deficit": 6,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 17,
                       "candidateCount": 5
                     },
                     {
@@ -10799,6 +11321,8 @@
                       "target": 14,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 62,
                       "candidateCount": 5
                     }
                   ]
@@ -10812,8 +11336,8 @@
                       "set": "LTC",
                       "collectorNumber": "532",
                       "finish": "nonfoil",
-                      "priceNzd": 10.21,
-                      "priceUsdReference": 6.03
+                      "priceNzd": 10.34,
+                      "priceUsdReference": 6.07
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -10990,7 +11514,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -11033,6 +11557,18 @@
                   ],
                   "candidateGroups": [
                     {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
+                    },
+                    {
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
@@ -11040,6 +11576,8 @@
                       "target": 2,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 4,
                       "candidateCount": 1
                     },
                     {
@@ -11050,6 +11588,8 @@
                       "target": 6,
                       "deficit": 6,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 17,
                       "candidateCount": 5
                     },
                     {
@@ -11060,6 +11600,8 @@
                       "target": 14,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 62,
                       "candidateCount": 5
                     }
                   ]
@@ -11118,7 +11660,7 @@
                 "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 0.42,
+                "estimatedSpendNzd": 0.43,
                 "estimatedSpendUsdReference": 0.25,
                 "unknownPriceCount": 0,
                 "improvementScore": -2.059,
@@ -11203,7 +11745,7 @@
                   "candidateDiscovery": {
                     "mode": "exhaustive-bounded-printing-policy",
                     "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 463,
+                    "eligiblePoolCards": 462,
                     "roleSearchResultCap": null,
                     "strategySupplementalResultCapPerArchetype": null,
                     "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
@@ -11246,6 +11788,30 @@
                   ],
                   "candidateGroups": [
                     {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 1,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 4,
+                      "candidateCount": 0
+                    },
+                    {
                       "role": "protection",
                       "prioritySource": "aspirational-role-target",
                       "targetGate": null,
@@ -11253,6 +11819,8 @@
                       "target": 6,
                       "deficit": 6,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 17,
                       "candidateCount": 5
                     },
                     {
@@ -11263,6 +11831,8 @@
                       "target": 14,
                       "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 62,
                       "candidateCount": 5
                     }
                   ]
@@ -11276,7 +11846,7 @@
                       "set": "HOB",
                       "collectorNumber": "6",
                       "finish": "nonfoil",
-                      "priceNzd": 0.42,
+                      "priceNzd": 0.43,
                       "priceUsdReference": 0.25
                     },
                     "structuralPairing": {
