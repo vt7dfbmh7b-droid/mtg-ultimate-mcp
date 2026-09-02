@@ -5,7 +5,7 @@ Development checkpoint: `77a5383fa7490aa91360b8186a4bda890f632157`
 
 | Control | Claim level | Outcome | Tested source | Matches checkpoint | Metadata |
 |---|---|---|---|---|---|
-| PM-STATE-INTEGRITY | engineering+truth | pass | `0a872b11239b3b402ded5424d59e004756ca5acc` | no | `test-results/project-management/integrity.txt` |
+| PM-STATE-INTEGRITY | engineering+truth | pass | `3457df92e9832d6df13cad2652cd503ce1129bf5` | no | `test-results/project-management/integrity.txt` |
 | MARVEL-B5-REFINE | scenario-intelligence | pass | `262e26a3937fcd5425c7ec5fcdc7e66e12c938ee` | no | `test-results/marvel-bracket5/refine-run-metadata.txt` |
 | MARVEL-B5-BROAD | scenario-intelligence | pass | `262e26a3937fcd5425c7ec5fcdc7e66e12c938ee` | no | `test-results/marvel-bracket5-broad/run-metadata.txt` |
 | MIDDLE-EARTH-PRECON-REFINE | scenario-intelligence | pass | `262e26a3937fcd5425c7ec5fcdc7e66e12c938ee` | no | `test-results/middle-earth-precon-refine/run-metadata.txt` |
