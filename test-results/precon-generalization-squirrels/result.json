@@ -247,12 +247,12 @@
     "status": "refined",
     "stopReason": "no-supported-swaps-found",
     "roundsAccepted": 2,
-    "totalSwaps": 4,
+    "totalSwaps": 6,
     "candidatePackagesPerRound": 4,
-    "estimatedUpgradeSpendNzd": 4.96,
-    "estimatedUpgradeSpendUsdReference": 2.93,
-    "maxTotalNzd": 200,
-    "maxTotalUsdReference": 118.12,
+    "estimatedUpgradeSpendNzd": 9.81,
+    "estimatedUpgradeSpendUsdReference": 5.79,
+    "maxTotalNzd": 199.99,
+    "maxTotalUsdReference": 118.08,
     "swaps": [
       {
         "out": "Insatiable Frugivore",
@@ -405,7 +405,7 @@
         }
       },
       {
-        "out": "Second Harvest",
+        "out": "Academy Manufactor",
         "in": "Fake Your Own Death",
         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
         "recommendedPrinting": {
@@ -419,7 +419,7 @@
           "addressedRole": "average-nonland-mv",
           "remainingStructuralDeficitAfterSwap": 13,
           "authoritativeTargetGate": "average-nonland-mv",
-          "nonlandManaValueReduction": 2,
+          "nonlandManaValueReduction": 1,
           "persistentColoredManaSourcesAfterSwap": 3,
           "persistentColoredManaSourceFloor": 3,
           "strategyPreservation": {
@@ -435,7 +435,9 @@
             ],
             "locallyUnreplacedStrategies": [],
             "cutRoles": [
-              "token production"
+              "creature",
+              "token production",
+              "treasure"
             ],
             "addRoles": [
               "conditional mana acceleration",
@@ -445,7 +447,120 @@
               "token production",
               "treasure"
             ],
+            "unreplacedRoles": [
+              "creature"
+            ],
+            "unreplacedStrategyComponentRoles": [],
+            "meaningfulStrategyLoss": false,
+            "verdict": "preserved"
+          }
+        }
+      },
+      {
+        "out": "Arasta of the Endless Web",
+        "in": "Twitching Doll",
+        "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
+        "recommendedPrinting": {
+          "set": "PDSK",
+          "collectorNumber": "201p",
+          "finish": "nonfoil",
+          "priceNzd": 4.06,
+          "priceUsdReference": 2.4
+        },
+        "structuralPairing": {
+          "addressedRole": "average-nonland-mv",
+          "remainingStructuralDeficitAfterSwap": 12,
+          "authoritativeTargetGate": "average-nonland-mv",
+          "nonlandManaValueReduction": 2,
+          "persistentColoredManaSourcesAfterSwap": 4,
+          "persistentColoredManaSourceFloor": 3,
+          "strategyPreservation": {
+            "cutStrategyAffinityScore": 6,
+            "addStrategyAffinityScore": 8,
+            "cutStrategyProtectionApplied": 4,
+            "cutMatchedStrategies": [
+              "combat-tokens"
+            ],
+            "addMatchedStrategies": [
+              "aristocrats",
+              "combat-tokens"
+            ],
+            "locallyUnreplacedStrategies": [],
+            "cutRoles": [
+              "creature",
+              "repeatable token engine",
+              "token production"
+            ],
+            "addRoles": [
+              "creature",
+              "mana acceleration",
+              "mana dork",
+              "persistent colored mana source",
+              "repeatable token engine",
+              "self sacrifice",
+              "token production"
+            ],
             "unreplacedRoles": [],
+            "unreplacedStrategyComponentRoles": [],
+            "meaningfulStrategyLoss": false,
+            "verdict": "preserved"
+          }
+        }
+      },
+      {
+        "out": "Ravenous Squirrel",
+        "in": "Wight of the Reliquary",
+        "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
+        "recommendedPrinting": {
+          "set": "SOC",
+          "collectorNumber": "338",
+          "finish": "nonfoil",
+          "priceNzd": 0.78,
+          "priceUsdReference": 0.46
+        },
+        "structuralPairing": {
+          "addressedRole": "tutor",
+          "remainingStructuralDeficitAfterSwap": 10,
+          "authoritativeTargetGate": "tutors",
+          "nonlandManaValueReduction": null,
+          "persistentColoredManaSourcesAfterSwap": 5,
+          "persistentColoredManaSourceFloor": 4,
+          "strategyPreservation": {
+            "cutStrategyAffinityScore": 6,
+            "addStrategyAffinityScore": 6,
+            "cutStrategyProtectionApplied": 4,
+            "cutMatchedStrategies": [
+              "aristocrats"
+            ],
+            "addMatchedStrategies": [
+              "aristocrats"
+            ],
+            "locallyUnreplacedStrategies": [],
+            "cutRoles": [
+              "+1/+1 counters",
+              "artifact sacrifice outlet",
+              "card draw",
+              "creature",
+              "repeatable life gain engine",
+              "sacrifice outlet",
+              "sacrifice synergy"
+            ],
+            "addRoles": [
+              "creature",
+              "creature sacrifice outlet",
+              "land ramp",
+              "land tutor",
+              "persistent colored mana source",
+              "sacrifice outlet",
+              "sacrifice synergy",
+              "tutor"
+            ],
+            "unreplacedRoles": [
+              "+1/+1 counters",
+              "artifact sacrifice outlet",
+              "card draw",
+              "repeatable life gain engine"
+            ],
             "unreplacedStrategyComponentRoles": [],
             "meaningfulStrategyLoss": false,
             "verdict": "preserved"
@@ -453,7 +568,7 @@
         }
       }
     ],
-    "finalDecklist": "// COMMANDER\n1 Hazel of the Rootbloom (BLC) 2 *F*\n\n// MAIN\n1 The Odd Acorn Gang (BLC) 7 *F*\n1 Garruk, Cursed Huntsman (BLC) 99 *F*\n1 Chittering Witch (BLC) 180 *N*\n1 Moonstone Eulogist (BLC) 19 *N*\n1 Swarmyard Massacre (BLC) 20 *N*\n1 Hazel's Brewmaster (BLC) 17 *N*\n1 Woe Strider (BLC) 189 *N*\n1 Saw in Half (BLC) 113 *N*\n1 Ogre Slumlord (BLC) 186 *N*\n1 Decree of Pain (BLC) 182 *N*\n1 Gourmand's Talent (BLC) 31 *N*\n1 Scurry of Squirrels (BLC) 33 *N*\n1 End-Raze Forerunners (BLC) 214 *N*\n1 Arasta of the Endless Web (BLC) 205 *N*\n1 Deep Forest Hermit (BLC) 213 *N*\n1 Toski, Bearer of Secrets (BLC) 244 *N*\n1 Beastmaster Ascension (BLC) 118 *N*\n1 Shamanic Revelation (BLC) 237 *N*\n1 Chatterfang, Squirrel General (BLC) 209 *N*\n1 Temple of Malady (BLC) 341 *N*\n1 Windgrace's Judgment (BLC) 263 *N*\n1 Maskwood Nexus (BLC) 279 *N*\n1 Academy Manufactor (BLC) 264 *N*\n1 Woodland Cemetery (BLC) 354 *N*\n1 Necroblossom Snarl (BLC) 319 *N*\n1 Oran-Rief, the Vastwood (BLC) 320 *N*\n1 Swarmyard (BLC) 133 *N*\n1 Exotic Orchard (BLC) 131 *N*\n1 Llanowar Wastes (BLC) 315 *N*\n1 Grim Backwoods (BLC) 309 *N*\n1 Viridescent Bog (BLC) 352 *N*\n1 Twilight Mire (BLC) 351 *N*\n1 Gilded Goose (BLC) 221 *N*\n1 Chitterspitter (BLC) 211 *N*\n1 Maelstrom Pulse (BLC) 126 *N*\n1 Beledros Witherbloom (BLC) 247 *N*\n1 Idol of Oblivion (BLC) 277 *N*\n1 Sword of the Squeak (BLC) 40 *N*\n1 Morbid Opportunist (BLC) 183 *N*\n1 Nadier's Nightblade (BLC) 184 *N*\n1 Plumb the Forbidden (BLC) 188 *N*\n1 Bastion of Remembrance (BLC) 179 *N*\n1 Plaguecrafter (BLC) 187 *N*\n1 Cache Grab (BLB) 167 *N*\n1 Chatterstorm (BLC) 210 *N*\n1 Poison-Tip Archer (BLC) 256 *N*\n1 Moldervine Reclamation (BLC) 255 *N*\n1 Ravenous Squirrel (BLC) 258 *N*\n1 Skyfisher Spider (BLC) 261 *N*\n1 Binding the Old Gods (BLC) 248 *N*\n1 Golgari Rot Farm (BLC) 308 *N*\n1 Jungle Hollow (BLC) 313 *N*\n1 Haunted Mire (BLC) 311 *N*\n1 Nested Shambler (BLC) 185 *N*\n1 Deadly Dispute (BLC) 181 *N*\n1 Zulaport Cutthroat (BLC) 190 *N*\n1 Squirrel Sovereign (BLC) 240 *N*\n1 Prosperous Innkeeper (BLC) 121 *N*\n1 Haywire Mite (BLC) 274 *N*\n1 Tireless Provisioner (BLC) 243 *N*\n1 Squirrel Nest (BLC) 239 *N*\n1 Honored Dreyleader (BLB) 178 *N*\n1 Tear Asunder (BLC) 241 *N*\n1 Wolfwillow Haven (BLC) 246 *N*\n1 Putrefy (BLC) 257 *N*\n1 Arcane Signet (BLC) 127 *N*\n1 Golgari Signet (BLC) 272 *N*\n1 Talisman of Resilience (BLC) 288 *N*\n1 Sol Ring (BLC) 129 *N*\n1 Skullclamp (BLC) 283 *N*\n1 Terramorphic Expanse (BLC) 345 *N*\n1 Path of Ancestry (BLC) 322 *N*\n1 Evolving Wilds (BLC) 302 *N*\n1 Command Tower (BLC) 130 *N*\n1 Tranquil Thicket (BLC) 350 *N*\n1 Bojuka Bog (BLC) 294 *N*\n1 Tainted Wood (BLC) 337 *N*\n1 Barren Moor (BLC) 292 *N*\n4 Swamp (BLB) 373 *N*\n4 Swamp (BLB) 374 *N*\n5 Forest (BLB) 377 *N*\n4 Forest (BLB) 378 *N*\n1 Not Dead After All (WOE) 101 *N*\n1 Hangarback Walker (EOC) 139 *N*\n1 Pest Infestation (EOC) 103 *N*\n1 Fake Your Own Death (OTJ) 87 *N*",
+    "finalDecklist": "// COMMANDER\n1 Hazel of the Rootbloom (BLC) 2 *F*\n\n// MAIN\n1 The Odd Acorn Gang (BLC) 7 *F*\n1 Garruk, Cursed Huntsman (BLC) 99 *F*\n1 Chittering Witch (BLC) 180 *N*\n1 Moonstone Eulogist (BLC) 19 *N*\n1 Swarmyard Massacre (BLC) 20 *N*\n1 Hazel's Brewmaster (BLC) 17 *N*\n1 Woe Strider (BLC) 189 *N*\n1 Saw in Half (BLC) 113 *N*\n1 Ogre Slumlord (BLC) 186 *N*\n1 Decree of Pain (BLC) 182 *N*\n1 Gourmand's Talent (BLC) 31 *N*\n1 Scurry of Squirrels (BLC) 33 *N*\n1 End-Raze Forerunners (BLC) 214 *N*\n1 Deep Forest Hermit (BLC) 213 *N*\n1 Toski, Bearer of Secrets (BLC) 244 *N*\n1 Beastmaster Ascension (BLC) 118 *N*\n1 Second Harvest (BLC) 123 *N*\n1 Shamanic Revelation (BLC) 237 *N*\n1 Chatterfang, Squirrel General (BLC) 209 *N*\n1 Temple of Malady (BLC) 341 *N*\n1 Windgrace's Judgment (BLC) 263 *N*\n1 Maskwood Nexus (BLC) 279 *N*\n1 Woodland Cemetery (BLC) 354 *N*\n1 Necroblossom Snarl (BLC) 319 *N*\n1 Oran-Rief, the Vastwood (BLC) 320 *N*\n1 Swarmyard (BLC) 133 *N*\n1 Exotic Orchard (BLC) 131 *N*\n1 Llanowar Wastes (BLC) 315 *N*\n1 Grim Backwoods (BLC) 309 *N*\n1 Viridescent Bog (BLC) 352 *N*\n1 Twilight Mire (BLC) 351 *N*\n1 Gilded Goose (BLC) 221 *N*\n1 Chitterspitter (BLC) 211 *N*\n1 Maelstrom Pulse (BLC) 126 *N*\n1 Beledros Witherbloom (BLC) 247 *N*\n1 Idol of Oblivion (BLC) 277 *N*\n1 Sword of the Squeak (BLC) 40 *N*\n1 Morbid Opportunist (BLC) 183 *N*\n1 Nadier's Nightblade (BLC) 184 *N*\n1 Plumb the Forbidden (BLC) 188 *N*\n1 Bastion of Remembrance (BLC) 179 *N*\n1 Plaguecrafter (BLC) 187 *N*\n1 Cache Grab (BLB) 167 *N*\n1 Chatterstorm (BLC) 210 *N*\n1 Poison-Tip Archer (BLC) 256 *N*\n1 Moldervine Reclamation (BLC) 255 *N*\n1 Skyfisher Spider (BLC) 261 *N*\n1 Binding the Old Gods (BLC) 248 *N*\n1 Golgari Rot Farm (BLC) 308 *N*\n1 Jungle Hollow (BLC) 313 *N*\n1 Haunted Mire (BLC) 311 *N*\n1 Nested Shambler (BLC) 185 *N*\n1 Deadly Dispute (BLC) 181 *N*\n1 Zulaport Cutthroat (BLC) 190 *N*\n1 Squirrel Sovereign (BLC) 240 *N*\n1 Prosperous Innkeeper (BLC) 121 *N*\n1 Haywire Mite (BLC) 274 *N*\n1 Tireless Provisioner (BLC) 243 *N*\n1 Squirrel Nest (BLC) 239 *N*\n1 Honored Dreyleader (BLB) 178 *N*\n1 Tear Asunder (BLC) 241 *N*\n1 Wolfwillow Haven (BLC) 246 *N*\n1 Putrefy (BLC) 257 *N*\n1 Arcane Signet (BLC) 127 *N*\n1 Golgari Signet (BLC) 272 *N*\n1 Talisman of Resilience (BLC) 288 *N*\n1 Sol Ring (BLC) 129 *N*\n1 Skullclamp (BLC) 283 *N*\n1 Terramorphic Expanse (BLC) 345 *N*\n1 Path of Ancestry (BLC) 322 *N*\n1 Evolving Wilds (BLC) 302 *N*\n1 Command Tower (BLC) 130 *N*\n1 Tranquil Thicket (BLC) 350 *N*\n1 Bojuka Bog (BLC) 294 *N*\n1 Tainted Wood (BLC) 337 *N*\n1 Barren Moor (BLC) 292 *N*\n4 Swamp (BLB) 373 *N*\n4 Swamp (BLB) 374 *N*\n5 Forest (BLB) 377 *N*\n4 Forest (BLB) 378 *N*\n1 Not Dead After All (WOE) 101 *N*\n1 Hangarback Walker (EOC) 139 *N*\n1 Pest Infestation (EOC) 103 *N*\n1 Fake Your Own Death (OTJ) 87 *N*\n1 Twitching Doll (PDSK) 201p *N*\n1 Wight of the Reliquary (SOC) 338 *N*",
     "finalCommanderRules": {
       "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
       "status": "legal",
@@ -549,17 +664,17 @@
       {
         "round": 2,
         "accepted": true,
-        "acceptedSwaps": 1,
+        "acceptedSwaps": 3,
         "candidatePackagesGenerated": 4,
-        "candidatePackagesEligible": 3,
+        "candidatePackagesEligible": 2,
         "candidateAttemptSizes": [
           4
         ],
         "candidatePackagesGeneratedAcrossAttempts": 4,
         "winningCandidate": 2,
-        "estimatedSpendNzd": 0.2,
-        "estimatedSpendUsdReference": 0.12,
-        "improvementScore": 17.88,
+        "estimatedSpendNzd": 5.05,
+        "estimatedSpendUsdReference": 2.98,
+        "improvementScore": 21.601,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -597,10 +712,10 @@
     ],
     "constraints": {
       "targetBracket": 4,
-      "maxNzdPerCard": 35,
-      "maxUsdPerCardReference": 20.67,
-      "maxTotalNzd": 200,
-      "maxTotalUsdReference": 118.12,
+      "maxNzdPerCard": 34.99,
+      "maxUsdPerCardReference": 20.66,
+      "maxTotalNzd": 199.99,
+      "maxTotalUsdReference": 118.08,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -4097,13 +4212,13 @@
         "round": 2,
         "accepted": true,
         "attemptedSwaps": 4,
-        "acceptedSwaps": 1,
+        "acceptedSwaps": 3,
         "candidatePackagesGenerated": 4,
-        "candidatePackagesEligible": 3,
+        "candidatePackagesEligible": 2,
         "winningCandidate": 2,
-        "estimatedSpendNzd": 0.2,
-        "estimatedSpendUsdReference": 0.12,
-        "improvementScore": 17.88,
+        "estimatedSpendNzd": 5.05,
+        "estimatedSpendUsdReference": 2.98,
+        "improvementScore": 21.601,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -4113,7 +4228,7 @@
         "themeAuditBefore": null,
         "swaps": [
           {
-            "out": "Second Harvest",
+            "out": "Academy Manufactor",
             "in": "Fake Your Own Death",
             "recommendedPrinting": {
               "set": "OTJ",
@@ -4134,7 +4249,7 @@
               "addressedRole": "average-nonland-mv",
               "remainingStructuralDeficitAfterSwap": 13,
               "authoritativeTargetGate": "average-nonland-mv",
-              "nonlandManaValueReduction": 2,
+              "nonlandManaValueReduction": 1,
               "persistentColoredManaSourcesAfterSwap": 3,
               "persistentColoredManaSourceFloor": 3,
               "strategyPreservation": {
@@ -4150,7 +4265,9 @@
                 ],
                 "locallyUnreplacedStrategies": [],
                 "cutRoles": [
-                  "token production"
+                  "creature",
+                  "token production",
+                  "treasure"
                 ],
                 "addRoles": [
                   "conditional mana acceleration",
@@ -4160,7 +4277,137 @@
                   "token production",
                   "treasure"
                 ],
+                "unreplacedRoles": [
+                  "creature"
+                ],
+                "unreplacedStrategyComponentRoles": [],
+                "meaningfulStrategyLoss": false,
+                "verdict": "preserved"
+              }
+            }
+          },
+          {
+            "out": "Arasta of the Endless Web",
+            "in": "Twitching Doll",
+            "recommendedPrinting": {
+              "set": "PDSK",
+              "setName": "Duskmourn: House of Horror Promos",
+              "collectorNumber": "201p",
+              "releaseDate": "2024-09-27",
+              "finish": "nonfoil",
+              "priceNzd": 4.06,
+              "priceUsdReference": 2.4,
+              "promo": true,
+              "promoTypes": [
+                "promopack",
+                "stamped"
+              ],
+              "flavorName": null,
+              "familyMatch": "unrestricted",
+              "scryfallUrl": "https://scryfall.com/card/pdsk/201p/twitching-doll?utm_source=api"
+            },
+            "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
+            "structuralPairing": {
+              "addressedRole": "average-nonland-mv",
+              "remainingStructuralDeficitAfterSwap": 12,
+              "authoritativeTargetGate": "average-nonland-mv",
+              "nonlandManaValueReduction": 2,
+              "persistentColoredManaSourcesAfterSwap": 4,
+              "persistentColoredManaSourceFloor": 3,
+              "strategyPreservation": {
+                "cutStrategyAffinityScore": 6,
+                "addStrategyAffinityScore": 8,
+                "cutStrategyProtectionApplied": 4,
+                "cutMatchedStrategies": [
+                  "combat-tokens"
+                ],
+                "addMatchedStrategies": [
+                  "aristocrats",
+                  "combat-tokens"
+                ],
+                "locallyUnreplacedStrategies": [],
+                "cutRoles": [
+                  "creature",
+                  "repeatable token engine",
+                  "token production"
+                ],
+                "addRoles": [
+                  "creature",
+                  "mana acceleration",
+                  "mana dork",
+                  "persistent colored mana source",
+                  "repeatable token engine",
+                  "self sacrifice",
+                  "token production"
+                ],
                 "unreplacedRoles": [],
+                "unreplacedStrategyComponentRoles": [],
+                "meaningfulStrategyLoss": false,
+                "verdict": "preserved"
+              }
+            }
+          },
+          {
+            "out": "Ravenous Squirrel",
+            "in": "Wight of the Reliquary",
+            "recommendedPrinting": {
+              "set": "SOC",
+              "setName": "Secrets of Strixhaven Commander",
+              "collectorNumber": "338",
+              "releaseDate": "2026-04-24",
+              "finish": "nonfoil",
+              "priceNzd": 0.78,
+              "priceUsdReference": 0.46,
+              "promo": false,
+              "promoTypes": [],
+              "flavorName": null,
+              "familyMatch": "unrestricted",
+              "scryfallUrl": "https://scryfall.com/card/soc/338/wight-of-the-reliquary?utm_source=api"
+            },
+            "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
+            "structuralPairing": {
+              "addressedRole": "tutor",
+              "remainingStructuralDeficitAfterSwap": 10,
+              "authoritativeTargetGate": "tutors",
+              "nonlandManaValueReduction": null,
+              "persistentColoredManaSourcesAfterSwap": 5,
+              "persistentColoredManaSourceFloor": 4,
+              "strategyPreservation": {
+                "cutStrategyAffinityScore": 6,
+                "addStrategyAffinityScore": 6,
+                "cutStrategyProtectionApplied": 4,
+                "cutMatchedStrategies": [
+                  "aristocrats"
+                ],
+                "addMatchedStrategies": [
+                  "aristocrats"
+                ],
+                "locallyUnreplacedStrategies": [],
+                "cutRoles": [
+                  "+1/+1 counters",
+                  "artifact sacrifice outlet",
+                  "card draw",
+                  "creature",
+                  "repeatable life gain engine",
+                  "sacrifice outlet",
+                  "sacrifice synergy"
+                ],
+                "addRoles": [
+                  "creature",
+                  "creature sacrifice outlet",
+                  "land ramp",
+                  "land tutor",
+                  "persistent colored mana source",
+                  "sacrifice outlet",
+                  "sacrifice synergy",
+                  "tutor"
+                ],
+                "unreplacedRoles": [
+                  "+1/+1 counters",
+                  "artifact sacrifice outlet",
+                  "card draw",
+                  "repeatable life gain engine"
+                ],
                 "unreplacedStrategyComponentRoles": [],
                 "meaningfulStrategyLoss": false,
                 "verdict": "preserved"
@@ -4174,11 +4421,307 @@
             "eligible": true,
             "reason": "eligible",
             "attemptedSwaps": 4,
-            "actualSwaps": 2,
-            "estimatedSpendNzd": 6.03,
-            "estimatedSpendUsdReference": 3.56,
+            "actualSwaps": 1,
+            "estimatedSpendNzd": 5.25,
+            "estimatedSpendUsdReference": 3.1,
             "unknownPriceCount": 0,
-            "improvementScore": 13.867,
+            "improvementScore": 18.456,
+            "significantRegression": false,
+            "zeroTargetProgressWhileFailedGatesRemain": false,
+            "targetGate": {
+              "applicable": true,
+              "score": 14,
+              "failedBefore": [
+                "average-nonland-mv",
+                "cheap-interaction",
+                "early-plays",
+                "fast-mana",
+                "tutors"
+              ],
+              "failedAfter": [
+                "cheap-interaction",
+                "fast-mana",
+                "tutors"
+              ],
+              "repairedGates": [
+                "average-nonland-mv",
+                "early-plays"
+              ],
+              "advancedFailedGates": [],
+              "regressedGates": [],
+              "ignoredUnverifiedGates": []
+            },
+            "themeAudit": null,
+            "strategyPreservation": {
+              "status": "preserved",
+              "evidenceComplete": true,
+              "meaningfulLosses": [],
+              "strategyDeltas": [
+                {
+                  "strategy": "aristocrats",
+                  "cutAffinityScore": 0,
+                  "addAffinityScore": 6,
+                  "netAffinityDelta": 6
+                },
+                {
+                  "strategy": "combat-tokens",
+                  "cutAffinityScore": 6,
+                  "addAffinityScore": 6,
+                  "netAffinityDelta": 0
+                }
+              ],
+              "swapImpacts": [
+                {
+                  "cutStrategyAffinityScore": 6,
+                  "addStrategyAffinityScore": 12,
+                  "cutStrategyProtectionApplied": 4,
+                  "cutMatchedStrategies": [
+                    "combat-tokens"
+                  ],
+                  "addMatchedStrategies": [
+                    "aristocrats",
+                    "combat-tokens"
+                  ],
+                  "locallyUnreplacedStrategies": [],
+                  "cutRoles": [
+                    "creature",
+                    "token production",
+                    "treasure"
+                  ],
+                  "addRoles": [
+                    "+1/+1 counters",
+                    "creature",
+                    "haste",
+                    "token production",
+                    "treasure"
+                  ],
+                  "unreplacedRoles": [],
+                  "unreplacedStrategyComponentRoles": [],
+                  "meaningfulStrategyLoss": false,
+                  "verdict": "preserved"
+                }
+              ],
+              "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
+            },
+            "deckStrategyRetention": {
+              "status": "preserved",
+              "evidenceComplete": true,
+              "preserved": true,
+              "unresolvedBefore": [],
+              "unresolvedAfter": [],
+              "strategies": [
+                {
+                  "archetype": "combat-tokens",
+                  "commanderScore": 6,
+                  "beforeSupportCount": 40,
+                  "afterSupportCount": 40,
+                  "supportDelta": 0,
+                  "beforeAffinityTotal": 240,
+                  "afterAffinityTotal": 240,
+                  "affinityDelta": 0,
+                  "preserved": true
+                },
+                {
+                  "archetype": "aristocrats",
+                  "commanderScore": 6,
+                  "beforeSupportCount": 32,
+                  "afterSupportCount": 33,
+                  "supportDelta": 1,
+                  "beforeAffinityTotal": 182,
+                  "afterAffinityTotal": 188,
+                  "affinityDelta": 6,
+                  "preserved": true
+                }
+              ],
+              "losses": [],
+              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
+            },
+            "planProvenance": {
+              "targetBracket": 4,
+              "winRouteVerificationStatus": "no-verified-route",
+              "winPackageDiscoveryAttempted": false,
+              "winPackageSourceStatus": "not-required-below-bracket-5",
+              "winPackageOutcome": "not-attempted",
+              "selectedComboId": null,
+              "selectedBracketTag": null,
+              "missingSeedNames": [],
+              "atomicWinPackageInjected": false,
+              "winPackageReason": "The requested target does not require a verified winning package.",
+              "candidateDiscovery": {
+                "mode": "bounded-role-plus-strategy-search",
+                "exhaustiveWithinSafetyCeilings": false,
+                "eligiblePoolCards": null,
+                "roleSearchResultCap": 40,
+                "strategySupplementalResultCapPerArchetype": 20,
+                "note": "Unrestricted Upgrade keeps the bounded role-specific popularity search, then supplements it with a bounded search for each already-substantive inferred strategy before final role, legality, strategy, printing, and price ranking. This prevents the initial EDHREC slice from discarding all less-popular on-plan alternatives while keeping every search and final candidate count bounded."
+              },
+              "authoritativeTargetGatePriorities": [
+                {
+                  "role": "average-nonland-mv",
+                  "current": 3.13,
+                  "target": 3.1,
+                  "deficit": 0.03,
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "average-nonland-mv"
+                },
+                {
+                  "role": "early",
+                  "current": 24,
+                  "target": 25,
+                  "deficit": 1,
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "early-plays"
+                },
+                {
+                  "role": "interaction",
+                  "current": 3,
+                  "target": 6,
+                  "deficit": 3,
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "cheap-interaction"
+                },
+                {
+                  "role": "ramp",
+                  "current": 1,
+                  "target": 2,
+                  "deficit": 1,
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana"
+                },
+                {
+                  "role": "tutor",
+                  "current": 0,
+                  "target": 2,
+                  "deficit": 2,
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors"
+                }
+              ],
+              "structuralDeficits": [
+                {
+                  "role": "protection",
+                  "current": 1,
+                  "target": 6,
+                  "deficit": 5,
+                  "prioritySource": "aspirational-role-target",
+                  "targetGate": null
+                }
+              ],
+              "candidateGroups": [
+                {
+                  "role": "average-nonland-mv",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "average-nonland-mv",
+                  "current": 3.13,
+                  "target": 3.1,
+                  "deficit": 0.03,
+                  "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
+                  "candidateCount": 3
+                },
+                {
+                  "role": "early",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "early-plays",
+                  "current": 24,
+                  "target": 25,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
+                  "candidateCount": 3
+                },
+                {
+                  "role": "interaction",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "cheap-interaction",
+                  "current": 3,
+                  "target": 6,
+                  "deficit": 3,
+                  "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
+                  "candidateCount": 3
+                },
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 1,
+                  "target": 2,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
+                  "candidateCount": 2
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 0,
+                  "target": 2,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
+                  "candidateCount": 3
+                }
+              ]
+            },
+            "swaps": [
+              {
+                "out": "Academy Manufactor",
+                "in": "Goldvein Hydra",
+                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
+                "recommendedPrinting": {
+                  "set": "SOC",
+                  "collectorNumber": "270",
+                  "finish": "nonfoil",
+                  "priceNzd": 5.25,
+                  "priceUsdReference": 3.1
+                },
+                "structuralPairing": {
+                  "addressedRole": "average-nonland-mv",
+                  "remainingStructuralDeficitAfterSwap": 15,
+                  "authoritativeTargetGate": "average-nonland-mv",
+                  "nonlandManaValueReduction": 2,
+                  "persistentColoredManaSourcesAfterSwap": 3,
+                  "persistentColoredManaSourceFloor": 3,
+                  "strategyPreservation": {
+                    "cutStrategyAffinityScore": 6,
+                    "addStrategyAffinityScore": 12,
+                    "cutStrategyProtectionApplied": 4,
+                    "cutMatchedStrategies": [
+                      "combat-tokens"
+                    ],
+                    "addMatchedStrategies": [
+                      "aristocrats",
+                      "combat-tokens"
+                    ],
+                    "locallyUnreplacedStrategies": [],
+                    "cutRoles": [
+                      "creature",
+                      "token production",
+                      "treasure"
+                    ],
+                    "addRoles": [
+                      "+1/+1 counters",
+                      "creature",
+                      "haste",
+                      "token production",
+                      "treasure"
+                    ],
+                    "unreplacedRoles": [],
+                    "unreplacedStrategyComponentRoles": [],
+                    "meaningfulStrategyLoss": false,
+                    "verdict": "preserved"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "candidate": 2,
+            "eligible": true,
+            "reason": "eligible",
+            "attemptedSwaps": 4,
+            "actualSwaps": 3,
+            "estimatedSpendNzd": 5.05,
+            "estimatedSpendUsdReference": 2.98,
+            "unknownPriceCount": 0,
+            "improvementScore": 21.601,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -4215,13 +4758,13 @@
                 {
                   "strategy": "aristocrats",
                   "cutAffinityScore": 6,
-                  "addAffinityScore": 12,
-                  "netAffinityDelta": 6
+                  "addAffinityScore": 14,
+                  "netAffinityDelta": 8
                 },
                 {
                   "strategy": "combat-tokens",
-                  "cutAffinityScore": 6,
-                  "addAffinityScore": 6,
+                  "cutAffinityScore": 12,
+                  "addAffinityScore": 12,
                   "netAffinityDelta": 0
                 }
               ],
@@ -4239,14 +4782,50 @@
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
+                    "creature",
+                    "token production",
+                    "treasure"
+                  ],
+                  "addRoles": [
+                    "conditional mana acceleration",
+                    "graveyard recursion",
+                    "protection",
+                    "self sacrifice",
+                    "token production",
+                    "treasure"
+                  ],
+                  "unreplacedRoles": [
+                    "creature"
+                  ],
+                  "unreplacedStrategyComponentRoles": [],
+                  "meaningfulStrategyLoss": false,
+                  "verdict": "preserved"
+                },
+                {
+                  "cutStrategyAffinityScore": 6,
+                  "addStrategyAffinityScore": 8,
+                  "cutStrategyProtectionApplied": 4,
+                  "cutMatchedStrategies": [
+                    "combat-tokens"
+                  ],
+                  "addMatchedStrategies": [
+                    "aristocrats",
+                    "combat-tokens"
+                  ],
+                  "locallyUnreplacedStrategies": [],
+                  "cutRoles": [
+                    "creature",
+                    "repeatable token engine",
                     "token production"
                   ],
                   "addRoles": [
-                    "+1/+1 counters",
                     "creature",
-                    "haste",
-                    "token production",
-                    "treasure"
+                    "mana acceleration",
+                    "mana dork",
+                    "persistent colored mana source",
+                    "repeatable token engine",
+                    "self sacrifice",
+                    "token production"
                   ],
                   "unreplacedRoles": [],
                   "unreplacedStrategyComponentRoles": [],
@@ -4318,11 +4897,11 @@
                   "archetype": "aristocrats",
                   "commanderScore": 6,
                   "beforeSupportCount": 32,
-                  "afterSupportCount": 33,
-                  "supportDelta": 1,
+                  "afterSupportCount": 34,
+                  "supportDelta": 2,
                   "beforeAffinityTotal": 182,
-                  "afterAffinityTotal": 188,
-                  "affinityDelta": 6,
+                  "afterAffinityTotal": 190,
+                  "affinityDelta": 8,
                   "preserved": true
                 }
               ],
@@ -4455,21 +5034,21 @@
             },
             "swaps": [
               {
-                "out": "Second Harvest",
-                "in": "Goldvein Hydra",
+                "out": "Academy Manufactor",
+                "in": "Fake Your Own Death",
                 "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
-                  "set": "SOC",
-                  "collectorNumber": "270",
+                  "set": "OTJ",
+                  "collectorNumber": "87",
                   "finish": "nonfoil",
-                  "priceNzd": 5.25,
-                  "priceUsdReference": 3.1
+                  "priceNzd": 0.2,
+                  "priceUsdReference": 0.12
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
-                  "remainingStructuralDeficitAfterSwap": 15,
+                  "remainingStructuralDeficitAfterSwap": 13,
                   "authoritativeTargetGate": "average-nonland-mv",
-                  "nonlandManaValueReduction": 3,
+                  "nonlandManaValueReduction": 1,
                   "persistentColoredManaSourcesAfterSwap": 3,
                   "persistentColoredManaSourceFloor": 3,
                   "strategyPreservation": {
@@ -4485,14 +5064,70 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
+                      "creature",
+                      "token production",
+                      "treasure"
+                    ],
+                    "addRoles": [
+                      "conditional mana acceleration",
+                      "graveyard recursion",
+                      "protection",
+                      "self sacrifice",
+                      "token production",
+                      "treasure"
+                    ],
+                    "unreplacedRoles": [
+                      "creature"
+                    ],
+                    "unreplacedStrategyComponentRoles": [],
+                    "meaningfulStrategyLoss": false,
+                    "verdict": "preserved"
+                  }
+                }
+              },
+              {
+                "out": "Arasta of the Endless Web",
+                "in": "Twitching Doll",
+                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
+                "recommendedPrinting": {
+                  "set": "PDSK",
+                  "collectorNumber": "201p",
+                  "finish": "nonfoil",
+                  "priceNzd": 4.06,
+                  "priceUsdReference": 2.4
+                },
+                "structuralPairing": {
+                  "addressedRole": "average-nonland-mv",
+                  "remainingStructuralDeficitAfterSwap": 12,
+                  "authoritativeTargetGate": "average-nonland-mv",
+                  "nonlandManaValueReduction": 2,
+                  "persistentColoredManaSourcesAfterSwap": 4,
+                  "persistentColoredManaSourceFloor": 3,
+                  "strategyPreservation": {
+                    "cutStrategyAffinityScore": 6,
+                    "addStrategyAffinityScore": 8,
+                    "cutStrategyProtectionApplied": 4,
+                    "cutMatchedStrategies": [
+                      "combat-tokens"
+                    ],
+                    "addMatchedStrategies": [
+                      "aristocrats",
+                      "combat-tokens"
+                    ],
+                    "locallyUnreplacedStrategies": [],
+                    "cutRoles": [
+                      "creature",
+                      "repeatable token engine",
                       "token production"
                     ],
                     "addRoles": [
-                      "+1/+1 counters",
                       "creature",
-                      "haste",
-                      "token production",
-                      "treasure"
+                      "mana acceleration",
+                      "mana dork",
+                      "persistent colored mana source",
+                      "repeatable token engine",
+                      "self sacrifice",
+                      "token production"
                     ],
                     "unreplacedRoles": [],
                     "unreplacedStrategyComponentRoles": [],
@@ -4514,11 +5149,11 @@
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
-                  "remainingStructuralDeficitAfterSwap": 13,
+                  "remainingStructuralDeficitAfterSwap": 10,
                   "authoritativeTargetGate": "tutors",
                   "nonlandManaValueReduction": null,
-                  "persistentColoredManaSourcesAfterSwap": 4,
-                  "persistentColoredManaSourceFloor": 3,
+                  "persistentColoredManaSourcesAfterSwap": 5,
+                  "persistentColoredManaSourceFloor": 4,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 6,
                     "addStrategyAffinityScore": 6,
@@ -4564,314 +5199,20 @@
             ]
           },
           {
-            "candidate": 2,
-            "eligible": true,
-            "reason": "eligible",
-            "attemptedSwaps": 4,
-            "actualSwaps": 1,
-            "estimatedSpendNzd": 0.2,
-            "estimatedSpendUsdReference": 0.12,
-            "unknownPriceCount": 0,
-            "improvementScore": 17.88,
-            "significantRegression": false,
-            "zeroTargetProgressWhileFailedGatesRemain": false,
-            "targetGate": {
-              "applicable": true,
-              "score": 14,
-              "failedBefore": [
-                "average-nonland-mv",
-                "cheap-interaction",
-                "early-plays",
-                "fast-mana",
-                "tutors"
-              ],
-              "failedAfter": [
-                "cheap-interaction",
-                "fast-mana",
-                "tutors"
-              ],
-              "repairedGates": [
-                "average-nonland-mv",
-                "early-plays"
-              ],
-              "advancedFailedGates": [],
-              "regressedGates": [],
-              "ignoredUnverifiedGates": []
-            },
-            "themeAudit": null,
-            "strategyPreservation": {
-              "status": "preserved",
-              "evidenceComplete": true,
-              "meaningfulLosses": [],
-              "strategyDeltas": [
-                {
-                  "strategy": "aristocrats",
-                  "cutAffinityScore": 0,
-                  "addAffinityScore": 6,
-                  "netAffinityDelta": 6
-                },
-                {
-                  "strategy": "combat-tokens",
-                  "cutAffinityScore": 6,
-                  "addAffinityScore": 6,
-                  "netAffinityDelta": 0
-                }
-              ],
-              "swapImpacts": [
-                {
-                  "cutStrategyAffinityScore": 6,
-                  "addStrategyAffinityScore": 12,
-                  "cutStrategyProtectionApplied": 4,
-                  "cutMatchedStrategies": [
-                    "combat-tokens"
-                  ],
-                  "addMatchedStrategies": [
-                    "aristocrats",
-                    "combat-tokens"
-                  ],
-                  "locallyUnreplacedStrategies": [],
-                  "cutRoles": [
-                    "token production"
-                  ],
-                  "addRoles": [
-                    "conditional mana acceleration",
-                    "graveyard recursion",
-                    "protection",
-                    "self sacrifice",
-                    "token production",
-                    "treasure"
-                  ],
-                  "unreplacedRoles": [],
-                  "unreplacedStrategyComponentRoles": [],
-                  "meaningfulStrategyLoss": false,
-                  "verdict": "preserved"
-                }
-              ],
-              "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
-            },
-            "deckStrategyRetention": {
-              "status": "preserved",
-              "evidenceComplete": true,
-              "preserved": true,
-              "unresolvedBefore": [],
-              "unresolvedAfter": [],
-              "strategies": [
-                {
-                  "archetype": "combat-tokens",
-                  "commanderScore": 6,
-                  "beforeSupportCount": 40,
-                  "afterSupportCount": 40,
-                  "supportDelta": 0,
-                  "beforeAffinityTotal": 240,
-                  "afterAffinityTotal": 240,
-                  "affinityDelta": 0,
-                  "preserved": true
-                },
-                {
-                  "archetype": "aristocrats",
-                  "commanderScore": 6,
-                  "beforeSupportCount": 32,
-                  "afterSupportCount": 33,
-                  "supportDelta": 1,
-                  "beforeAffinityTotal": 182,
-                  "afterAffinityTotal": 188,
-                  "affinityDelta": 6,
-                  "preserved": true
-                }
-              ],
-              "losses": [],
-              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
-            },
-            "planProvenance": {
-              "targetBracket": 4,
-              "winRouteVerificationStatus": "no-verified-route",
-              "winPackageDiscoveryAttempted": false,
-              "winPackageSourceStatus": "not-required-below-bracket-5",
-              "winPackageOutcome": "not-attempted",
-              "selectedComboId": null,
-              "selectedBracketTag": null,
-              "missingSeedNames": [],
-              "atomicWinPackageInjected": false,
-              "winPackageReason": "The requested target does not require a verified winning package.",
-              "candidateDiscovery": {
-                "mode": "bounded-role-plus-strategy-search",
-                "exhaustiveWithinSafetyCeilings": false,
-                "eligiblePoolCards": null,
-                "roleSearchResultCap": 40,
-                "strategySupplementalResultCapPerArchetype": 20,
-                "note": "Unrestricted Upgrade keeps the bounded role-specific popularity search, then supplements it with a bounded search for each already-substantive inferred strategy before final role, legality, strategy, printing, and price ranking. This prevents the initial EDHREC slice from discarding all less-popular on-plan alternatives while keeping every search and final candidate count bounded."
-              },
-              "authoritativeTargetGatePriorities": [
-                {
-                  "role": "average-nonland-mv",
-                  "current": 3.13,
-                  "target": 3.1,
-                  "deficit": 0.03,
-                  "prioritySource": "authoritative-target-gate",
-                  "targetGate": "average-nonland-mv"
-                },
-                {
-                  "role": "early",
-                  "current": 24,
-                  "target": 25,
-                  "deficit": 1,
-                  "prioritySource": "authoritative-target-gate",
-                  "targetGate": "early-plays"
-                },
-                {
-                  "role": "interaction",
-                  "current": 3,
-                  "target": 6,
-                  "deficit": 3,
-                  "prioritySource": "authoritative-target-gate",
-                  "targetGate": "cheap-interaction"
-                },
-                {
-                  "role": "ramp",
-                  "current": 1,
-                  "target": 2,
-                  "deficit": 1,
-                  "prioritySource": "authoritative-target-gate",
-                  "targetGate": "fast-mana"
-                },
-                {
-                  "role": "tutor",
-                  "current": 0,
-                  "target": 2,
-                  "deficit": 2,
-                  "prioritySource": "authoritative-target-gate",
-                  "targetGate": "tutors"
-                }
-              ],
-              "structuralDeficits": [
-                {
-                  "role": "protection",
-                  "current": 1,
-                  "target": 6,
-                  "deficit": 5,
-                  "prioritySource": "aspirational-role-target",
-                  "targetGate": null
-                }
-              ],
-              "candidateGroups": [
-                {
-                  "role": "average-nonland-mv",
-                  "prioritySource": "authoritative-target-gate",
-                  "targetGate": "average-nonland-mv",
-                  "current": 3.13,
-                  "target": 3.1,
-                  "deficit": 0.03,
-                  "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
-                  "candidateCount": 3
-                },
-                {
-                  "role": "early",
-                  "prioritySource": "authoritative-target-gate",
-                  "targetGate": "early-plays",
-                  "current": 24,
-                  "target": 25,
-                  "deficit": 1,
-                  "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
-                  "candidateCount": 3
-                },
-                {
-                  "role": "interaction",
-                  "prioritySource": "authoritative-target-gate",
-                  "targetGate": "cheap-interaction",
-                  "current": 3,
-                  "target": 6,
-                  "deficit": 3,
-                  "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
-                  "candidateCount": 3
-                },
-                {
-                  "role": "ramp",
-                  "prioritySource": "authoritative-target-gate",
-                  "targetGate": "fast-mana",
-                  "current": 1,
-                  "target": 2,
-                  "deficit": 1,
-                  "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
-                  "candidateCount": 2
-                },
-                {
-                  "role": "tutor",
-                  "prioritySource": "authoritative-target-gate",
-                  "targetGate": "tutors",
-                  "current": 0,
-                  "target": 2,
-                  "deficit": 2,
-                  "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
-                  "candidateCount": 3
-                }
-              ]
-            },
-            "swaps": [
-              {
-                "out": "Second Harvest",
-                "in": "Fake Your Own Death",
-                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
-                "recommendedPrinting": {
-                  "set": "OTJ",
-                  "collectorNumber": "87",
-                  "finish": "nonfoil",
-                  "priceNzd": 0.2,
-                  "priceUsdReference": 0.12
-                },
-                "structuralPairing": {
-                  "addressedRole": "average-nonland-mv",
-                  "remainingStructuralDeficitAfterSwap": 13,
-                  "authoritativeTargetGate": "average-nonland-mv",
-                  "nonlandManaValueReduction": 2,
-                  "persistentColoredManaSourcesAfterSwap": 3,
-                  "persistentColoredManaSourceFloor": 3,
-                  "strategyPreservation": {
-                    "cutStrategyAffinityScore": 6,
-                    "addStrategyAffinityScore": 12,
-                    "cutStrategyProtectionApplied": 4,
-                    "cutMatchedStrategies": [
-                      "combat-tokens"
-                    ],
-                    "addMatchedStrategies": [
-                      "aristocrats",
-                      "combat-tokens"
-                    ],
-                    "locallyUnreplacedStrategies": [],
-                    "cutRoles": [
-                      "token production"
-                    ],
-                    "addRoles": [
-                      "conditional mana acceleration",
-                      "graveyard recursion",
-                      "protection",
-                      "self sacrifice",
-                      "token production",
-                      "treasure"
-                    ],
-                    "unreplacedRoles": [],
-                    "unreplacedStrategyComponentRoles": [],
-                    "meaningfulStrategyLoss": false,
-                    "verdict": "preserved"
-                  }
-                }
-              }
-            ]
-          },
-          {
             "candidate": 3,
-            "eligible": true,
-            "reason": "eligible",
+            "eligible": false,
+            "reason": "no-supported-swaps-found",
             "attemptedSwaps": 4,
-            "actualSwaps": 1,
-            "estimatedSpendNzd": 4.06,
-            "estimatedSpendUsdReference": 2.4,
+            "actualSwaps": 0,
+            "estimatedSpendNzd": 0,
+            "estimatedSpendUsdReference": 0,
             "unknownPriceCount": 0,
-            "improvementScore": 13.922,
+            "improvementScore": 0,
             "significantRegression": false,
-            "zeroTargetProgressWhileFailedGatesRemain": false,
+            "zeroTargetProgressWhileFailedGatesRemain": true,
             "targetGate": {
               "applicable": true,
-              "score": 14,
+              "score": 0,
               "failedBefore": [
                 "average-nonland-mv",
                 "cheap-interaction",
@@ -4880,14 +5221,13 @@
                 "tutors"
               ],
               "failedAfter": [
+                "average-nonland-mv",
                 "cheap-interaction",
+                "early-plays",
                 "fast-mana",
                 "tutors"
               ],
-              "repairedGates": [
-                "average-nonland-mv",
-                "early-plays"
-              ],
+              "repairedGates": [],
               "advancedFailedGates": [],
               "regressedGates": [],
               "ignoredUnverifiedGates": []
@@ -4897,88 +5237,11 @@
               "status": "preserved",
               "evidenceComplete": true,
               "meaningfulLosses": [],
-              "strategyDeltas": [
-                {
-                  "strategy": "aristocrats",
-                  "cutAffinityScore": 0,
-                  "addAffinityScore": 2,
-                  "netAffinityDelta": 2
-                },
-                {
-                  "strategy": "combat-tokens",
-                  "cutAffinityScore": 6,
-                  "addAffinityScore": 6,
-                  "netAffinityDelta": 0
-                }
-              ],
-              "swapImpacts": [
-                {
-                  "cutStrategyAffinityScore": 6,
-                  "addStrategyAffinityScore": 8,
-                  "cutStrategyProtectionApplied": 4,
-                  "cutMatchedStrategies": [
-                    "combat-tokens"
-                  ],
-                  "addMatchedStrategies": [
-                    "aristocrats",
-                    "combat-tokens"
-                  ],
-                  "locallyUnreplacedStrategies": [],
-                  "cutRoles": [
-                    "creature",
-                    "repeatable token engine",
-                    "token production"
-                  ],
-                  "addRoles": [
-                    "creature",
-                    "mana acceleration",
-                    "mana dork",
-                    "persistent colored mana source",
-                    "repeatable token engine",
-                    "self sacrifice",
-                    "token production"
-                  ],
-                  "unreplacedRoles": [],
-                  "unreplacedStrategyComponentRoles": [],
-                  "meaningfulStrategyLoss": false,
-                  "verdict": "preserved"
-                }
-              ],
+              "strategyDeltas": [],
+              "swapImpacts": [],
               "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
             },
-            "deckStrategyRetention": {
-              "status": "preserved",
-              "evidenceComplete": true,
-              "preserved": true,
-              "unresolvedBefore": [],
-              "unresolvedAfter": [],
-              "strategies": [
-                {
-                  "archetype": "combat-tokens",
-                  "commanderScore": 6,
-                  "beforeSupportCount": 40,
-                  "afterSupportCount": 40,
-                  "supportDelta": 0,
-                  "beforeAffinityTotal": 240,
-                  "afterAffinityTotal": 240,
-                  "affinityDelta": 0,
-                  "preserved": true
-                },
-                {
-                  "archetype": "aristocrats",
-                  "commanderScore": 6,
-                  "beforeSupportCount": 32,
-                  "afterSupportCount": 33,
-                  "supportDelta": 1,
-                  "beforeAffinityTotal": 182,
-                  "afterAffinityTotal": 184,
-                  "affinityDelta": 2,
-                  "preserved": true
-                }
-              ],
-              "losses": [],
-              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
-            },
+            "deckStrategyRetention": {},
             "planProvenance": {
               "targetBracket": 4,
               "winRouteVerificationStatus": "no-verified-route",
@@ -5103,59 +5366,7 @@
                 }
               ]
             },
-            "swaps": [
-              {
-                "out": "Arasta of the Endless Web",
-                "in": "Twitching Doll",
-                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
-                "recommendedPrinting": {
-                  "set": "PDSK",
-                  "collectorNumber": "201p",
-                  "finish": "nonfoil",
-                  "priceNzd": 4.06,
-                  "priceUsdReference": 2.4
-                },
-                "structuralPairing": {
-                  "addressedRole": "average-nonland-mv",
-                  "remainingStructuralDeficitAfterSwap": 14,
-                  "authoritativeTargetGate": "average-nonland-mv",
-                  "nonlandManaValueReduction": 2,
-                  "persistentColoredManaSourcesAfterSwap": 4,
-                  "persistentColoredManaSourceFloor": 3,
-                  "strategyPreservation": {
-                    "cutStrategyAffinityScore": 6,
-                    "addStrategyAffinityScore": 8,
-                    "cutStrategyProtectionApplied": 4,
-                    "cutMatchedStrategies": [
-                      "combat-tokens"
-                    ],
-                    "addMatchedStrategies": [
-                      "aristocrats",
-                      "combat-tokens"
-                    ],
-                    "locallyUnreplacedStrategies": [],
-                    "cutRoles": [
-                      "creature",
-                      "repeatable token engine",
-                      "token production"
-                    ],
-                    "addRoles": [
-                      "creature",
-                      "mana acceleration",
-                      "mana dork",
-                      "persistent colored mana source",
-                      "repeatable token engine",
-                      "self sacrifice",
-                      "token production"
-                    ],
-                    "unreplacedRoles": [],
-                    "unreplacedStrategyComponentRoles": [],
-                    "meaningfulStrategyLoss": false,
-                    "verdict": "preserved"
-                  }
-                }
-              }
-            ]
+            "swaps": []
           },
           {
             "candidate": 4,
@@ -5332,11 +5543,11 @@
           {
             "attemptSize": 4,
             "candidatePackagesGenerated": 4,
-            "candidatePackagesEligible": 3,
+            "candidatePackagesEligible": 2,
             "winningCandidate": 2,
             "reasonCounts": {
-              "eligible": 3,
-              "no-supported-swaps-found": 1
+              "eligible": 2,
+              "no-supported-swaps-found": 2
             },
             "candidateComparisons": [
               {
@@ -5344,11 +5555,307 @@
                 "eligible": true,
                 "reason": "eligible",
                 "attemptedSwaps": 4,
-                "actualSwaps": 2,
-                "estimatedSpendNzd": 6.03,
-                "estimatedSpendUsdReference": 3.56,
+                "actualSwaps": 1,
+                "estimatedSpendNzd": 5.25,
+                "estimatedSpendUsdReference": 3.1,
                 "unknownPriceCount": 0,
-                "improvementScore": 13.867,
+                "improvementScore": 18.456,
+                "significantRegression": false,
+                "zeroTargetProgressWhileFailedGatesRemain": false,
+                "targetGate": {
+                  "applicable": true,
+                  "score": 14,
+                  "failedBefore": [
+                    "average-nonland-mv",
+                    "cheap-interaction",
+                    "early-plays",
+                    "fast-mana",
+                    "tutors"
+                  ],
+                  "failedAfter": [
+                    "cheap-interaction",
+                    "fast-mana",
+                    "tutors"
+                  ],
+                  "repairedGates": [
+                    "average-nonland-mv",
+                    "early-plays"
+                  ],
+                  "advancedFailedGates": [],
+                  "regressedGates": [],
+                  "ignoredUnverifiedGates": []
+                },
+                "themeAudit": null,
+                "strategyPreservation": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "meaningfulLosses": [],
+                  "strategyDeltas": [
+                    {
+                      "strategy": "aristocrats",
+                      "cutAffinityScore": 0,
+                      "addAffinityScore": 6,
+                      "netAffinityDelta": 6
+                    },
+                    {
+                      "strategy": "combat-tokens",
+                      "cutAffinityScore": 6,
+                      "addAffinityScore": 6,
+                      "netAffinityDelta": 0
+                    }
+                  ],
+                  "swapImpacts": [
+                    {
+                      "cutStrategyAffinityScore": 6,
+                      "addStrategyAffinityScore": 12,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens"
+                      ],
+                      "addMatchedStrategies": [
+                        "aristocrats",
+                        "combat-tokens"
+                      ],
+                      "locallyUnreplacedStrategies": [],
+                      "cutRoles": [
+                        "creature",
+                        "token production",
+                        "treasure"
+                      ],
+                      "addRoles": [
+                        "+1/+1 counters",
+                        "creature",
+                        "haste",
+                        "token production",
+                        "treasure"
+                      ],
+                      "unreplacedRoles": [],
+                      "unreplacedStrategyComponentRoles": [],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
+                    }
+                  ],
+                  "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
+                },
+                "deckStrategyRetention": {
+                  "status": "preserved",
+                  "evidenceComplete": true,
+                  "preserved": true,
+                  "unresolvedBefore": [],
+                  "unresolvedAfter": [],
+                  "strategies": [
+                    {
+                      "archetype": "combat-tokens",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 40,
+                      "afterSupportCount": 40,
+                      "supportDelta": 0,
+                      "beforeAffinityTotal": 240,
+                      "afterAffinityTotal": 240,
+                      "affinityDelta": 0,
+                      "preserved": true
+                    },
+                    {
+                      "archetype": "aristocrats",
+                      "commanderScore": 6,
+                      "beforeSupportCount": 32,
+                      "afterSupportCount": 33,
+                      "supportDelta": 1,
+                      "beforeAffinityTotal": 182,
+                      "afterAffinityTotal": 188,
+                      "affinityDelta": 6,
+                      "preserved": true
+                    }
+                  ],
+                  "losses": [],
+                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
+                },
+                "planProvenance": {
+                  "targetBracket": 4,
+                  "winRouteVerificationStatus": "no-verified-route",
+                  "winPackageDiscoveryAttempted": false,
+                  "winPackageSourceStatus": "not-required-below-bracket-5",
+                  "winPackageOutcome": "not-attempted",
+                  "selectedComboId": null,
+                  "selectedBracketTag": null,
+                  "missingSeedNames": [],
+                  "atomicWinPackageInjected": false,
+                  "winPackageReason": "The requested target does not require a verified winning package.",
+                  "candidateDiscovery": {
+                    "mode": "bounded-role-plus-strategy-search",
+                    "exhaustiveWithinSafetyCeilings": false,
+                    "eligiblePoolCards": null,
+                    "roleSearchResultCap": 40,
+                    "strategySupplementalResultCapPerArchetype": 20,
+                    "note": "Unrestricted Upgrade keeps the bounded role-specific popularity search, then supplements it with a bounded search for each already-substantive inferred strategy before final role, legality, strategy, printing, and price ranking. This prevents the initial EDHREC slice from discarding all less-popular on-plan alternatives while keeping every search and final candidate count bounded."
+                  },
+                  "authoritativeTargetGatePriorities": [
+                    {
+                      "role": "average-nonland-mv",
+                      "current": 3.13,
+                      "target": 3.1,
+                      "deficit": 0.03,
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "average-nonland-mv"
+                    },
+                    {
+                      "role": "early",
+                      "current": 24,
+                      "target": 25,
+                      "deficit": 1,
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "early-plays"
+                    },
+                    {
+                      "role": "interaction",
+                      "current": 3,
+                      "target": 6,
+                      "deficit": 3,
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "cheap-interaction"
+                    },
+                    {
+                      "role": "ramp",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana"
+                    },
+                    {
+                      "role": "tutor",
+                      "current": 0,
+                      "target": 2,
+                      "deficit": 2,
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors"
+                    }
+                  ],
+                  "structuralDeficits": [
+                    {
+                      "role": "protection",
+                      "current": 1,
+                      "target": 6,
+                      "deficit": 5,
+                      "prioritySource": "aspirational-role-target",
+                      "targetGate": null
+                    }
+                  ],
+                  "candidateGroups": [
+                    {
+                      "role": "average-nonland-mv",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "average-nonland-mv",
+                      "current": 3.13,
+                      "target": 3.1,
+                      "deficit": 0.03,
+                      "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
+                      "candidateCount": 3
+                    },
+                    {
+                      "role": "early",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "early-plays",
+                      "current": 24,
+                      "target": 25,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
+                      "candidateCount": 3
+                    },
+                    {
+                      "role": "interaction",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "cheap-interaction",
+                      "current": 3,
+                      "target": 6,
+                      "deficit": 3,
+                      "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
+                      "candidateCount": 3
+                    },
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 1,
+                      "target": 2,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
+                      "candidateCount": 2
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 0,
+                      "target": 2,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
+                      "candidateCount": 3
+                    }
+                  ]
+                },
+                "swaps": [
+                  {
+                    "out": "Academy Manufactor",
+                    "in": "Goldvein Hydra",
+                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "recommendedPrinting": {
+                      "set": "SOC",
+                      "collectorNumber": "270",
+                      "finish": "nonfoil",
+                      "priceNzd": 5.25,
+                      "priceUsdReference": 3.1
+                    },
+                    "structuralPairing": {
+                      "addressedRole": "average-nonland-mv",
+                      "remainingStructuralDeficitAfterSwap": 15,
+                      "authoritativeTargetGate": "average-nonland-mv",
+                      "nonlandManaValueReduction": 2,
+                      "persistentColoredManaSourcesAfterSwap": 3,
+                      "persistentColoredManaSourceFloor": 3,
+                      "strategyPreservation": {
+                        "cutStrategyAffinityScore": 6,
+                        "addStrategyAffinityScore": 12,
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "combat-tokens"
+                        ],
+                        "addMatchedStrategies": [
+                          "aristocrats",
+                          "combat-tokens"
+                        ],
+                        "locallyUnreplacedStrategies": [],
+                        "cutRoles": [
+                          "creature",
+                          "token production",
+                          "treasure"
+                        ],
+                        "addRoles": [
+                          "+1/+1 counters",
+                          "creature",
+                          "haste",
+                          "token production",
+                          "treasure"
+                        ],
+                        "unreplacedRoles": [],
+                        "unreplacedStrategyComponentRoles": [],
+                        "meaningfulStrategyLoss": false,
+                        "verdict": "preserved"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "candidate": 2,
+                "eligible": true,
+                "reason": "eligible",
+                "attemptedSwaps": 4,
+                "actualSwaps": 3,
+                "estimatedSpendNzd": 5.05,
+                "estimatedSpendUsdReference": 2.98,
+                "unknownPriceCount": 0,
+                "improvementScore": 21.601,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -5385,13 +5892,13 @@
                     {
                       "strategy": "aristocrats",
                       "cutAffinityScore": 6,
-                      "addAffinityScore": 12,
-                      "netAffinityDelta": 6
+                      "addAffinityScore": 14,
+                      "netAffinityDelta": 8
                     },
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 6,
-                      "addAffinityScore": 6,
+                      "cutAffinityScore": 12,
+                      "addAffinityScore": 12,
                       "netAffinityDelta": 0
                     }
                   ],
@@ -5409,14 +5916,50 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "creature",
+                        "token production",
+                        "treasure"
+                      ],
+                      "addRoles": [
+                        "conditional mana acceleration",
+                        "graveyard recursion",
+                        "protection",
+                        "self sacrifice",
+                        "token production",
+                        "treasure"
+                      ],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
+                      "unreplacedStrategyComponentRoles": [],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 6,
+                      "addStrategyAffinityScore": 8,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "combat-tokens"
+                      ],
+                      "addMatchedStrategies": [
+                        "aristocrats",
+                        "combat-tokens"
+                      ],
+                      "locallyUnreplacedStrategies": [],
+                      "cutRoles": [
+                        "creature",
+                        "repeatable token engine",
                         "token production"
                       ],
                       "addRoles": [
-                        "+1/+1 counters",
                         "creature",
-                        "haste",
-                        "token production",
-                        "treasure"
+                        "mana acceleration",
+                        "mana dork",
+                        "persistent colored mana source",
+                        "repeatable token engine",
+                        "self sacrifice",
+                        "token production"
                       ],
                       "unreplacedRoles": [],
                       "unreplacedStrategyComponentRoles": [],
@@ -5488,11 +6031,11 @@
                       "archetype": "aristocrats",
                       "commanderScore": 6,
                       "beforeSupportCount": 32,
-                      "afterSupportCount": 33,
-                      "supportDelta": 1,
+                      "afterSupportCount": 34,
+                      "supportDelta": 2,
                       "beforeAffinityTotal": 182,
-                      "afterAffinityTotal": 188,
-                      "affinityDelta": 6,
+                      "afterAffinityTotal": 190,
+                      "affinityDelta": 8,
                       "preserved": true
                     }
                   ],
@@ -5625,21 +6168,21 @@
                 },
                 "swaps": [
                   {
-                    "out": "Second Harvest",
-                    "in": "Goldvein Hydra",
+                    "out": "Academy Manufactor",
+                    "in": "Fake Your Own Death",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "SOC",
-                      "collectorNumber": "270",
+                      "set": "OTJ",
+                      "collectorNumber": "87",
                       "finish": "nonfoil",
-                      "priceNzd": 5.25,
-                      "priceUsdReference": 3.1
+                      "priceNzd": 0.2,
+                      "priceUsdReference": 0.12
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
-                      "remainingStructuralDeficitAfterSwap": 15,
+                      "remainingStructuralDeficitAfterSwap": 13,
                       "authoritativeTargetGate": "average-nonland-mv",
-                      "nonlandManaValueReduction": 3,
+                      "nonlandManaValueReduction": 1,
                       "persistentColoredManaSourcesAfterSwap": 3,
                       "persistentColoredManaSourceFloor": 3,
                       "strategyPreservation": {
@@ -5655,14 +6198,70 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "creature",
+                          "token production",
+                          "treasure"
+                        ],
+                        "addRoles": [
+                          "conditional mana acceleration",
+                          "graveyard recursion",
+                          "protection",
+                          "self sacrifice",
+                          "token production",
+                          "treasure"
+                        ],
+                        "unreplacedRoles": [
+                          "creature"
+                        ],
+                        "unreplacedStrategyComponentRoles": [],
+                        "meaningfulStrategyLoss": false,
+                        "verdict": "preserved"
+                      }
+                    }
+                  },
+                  {
+                    "out": "Arasta of the Endless Web",
+                    "in": "Twitching Doll",
+                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "recommendedPrinting": {
+                      "set": "PDSK",
+                      "collectorNumber": "201p",
+                      "finish": "nonfoil",
+                      "priceNzd": 4.06,
+                      "priceUsdReference": 2.4
+                    },
+                    "structuralPairing": {
+                      "addressedRole": "average-nonland-mv",
+                      "remainingStructuralDeficitAfterSwap": 12,
+                      "authoritativeTargetGate": "average-nonland-mv",
+                      "nonlandManaValueReduction": 2,
+                      "persistentColoredManaSourcesAfterSwap": 4,
+                      "persistentColoredManaSourceFloor": 3,
+                      "strategyPreservation": {
+                        "cutStrategyAffinityScore": 6,
+                        "addStrategyAffinityScore": 8,
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "combat-tokens"
+                        ],
+                        "addMatchedStrategies": [
+                          "aristocrats",
+                          "combat-tokens"
+                        ],
+                        "locallyUnreplacedStrategies": [],
+                        "cutRoles": [
+                          "creature",
+                          "repeatable token engine",
                           "token production"
                         ],
                         "addRoles": [
-                          "+1/+1 counters",
                           "creature",
-                          "haste",
-                          "token production",
-                          "treasure"
+                          "mana acceleration",
+                          "mana dork",
+                          "persistent colored mana source",
+                          "repeatable token engine",
+                          "self sacrifice",
+                          "token production"
                         ],
                         "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
@@ -5684,11 +6283,11 @@
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
-                      "remainingStructuralDeficitAfterSwap": 13,
+                      "remainingStructuralDeficitAfterSwap": 10,
                       "authoritativeTargetGate": "tutors",
                       "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 4,
-                      "persistentColoredManaSourceFloor": 3,
+                      "persistentColoredManaSourcesAfterSwap": 5,
+                      "persistentColoredManaSourceFloor": 4,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 6,
                         "addStrategyAffinityScore": 6,
@@ -5734,314 +6333,20 @@
                 ]
               },
               {
-                "candidate": 2,
-                "eligible": true,
-                "reason": "eligible",
-                "attemptedSwaps": 4,
-                "actualSwaps": 1,
-                "estimatedSpendNzd": 0.2,
-                "estimatedSpendUsdReference": 0.12,
-                "unknownPriceCount": 0,
-                "improvementScore": 17.88,
-                "significantRegression": false,
-                "zeroTargetProgressWhileFailedGatesRemain": false,
-                "targetGate": {
-                  "applicable": true,
-                  "score": 14,
-                  "failedBefore": [
-                    "average-nonland-mv",
-                    "cheap-interaction",
-                    "early-plays",
-                    "fast-mana",
-                    "tutors"
-                  ],
-                  "failedAfter": [
-                    "cheap-interaction",
-                    "fast-mana",
-                    "tutors"
-                  ],
-                  "repairedGates": [
-                    "average-nonland-mv",
-                    "early-plays"
-                  ],
-                  "advancedFailedGates": [],
-                  "regressedGates": [],
-                  "ignoredUnverifiedGates": []
-                },
-                "themeAudit": null,
-                "strategyPreservation": {
-                  "status": "preserved",
-                  "evidenceComplete": true,
-                  "meaningfulLosses": [],
-                  "strategyDeltas": [
-                    {
-                      "strategy": "aristocrats",
-                      "cutAffinityScore": 0,
-                      "addAffinityScore": 6,
-                      "netAffinityDelta": 6
-                    },
-                    {
-                      "strategy": "combat-tokens",
-                      "cutAffinityScore": 6,
-                      "addAffinityScore": 6,
-                      "netAffinityDelta": 0
-                    }
-                  ],
-                  "swapImpacts": [
-                    {
-                      "cutStrategyAffinityScore": 6,
-                      "addStrategyAffinityScore": 12,
-                      "cutStrategyProtectionApplied": 4,
-                      "cutMatchedStrategies": [
-                        "combat-tokens"
-                      ],
-                      "addMatchedStrategies": [
-                        "aristocrats",
-                        "combat-tokens"
-                      ],
-                      "locallyUnreplacedStrategies": [],
-                      "cutRoles": [
-                        "token production"
-                      ],
-                      "addRoles": [
-                        "conditional mana acceleration",
-                        "graveyard recursion",
-                        "protection",
-                        "self sacrifice",
-                        "token production",
-                        "treasure"
-                      ],
-                      "unreplacedRoles": [],
-                      "unreplacedStrategyComponentRoles": [],
-                      "meaningfulStrategyLoss": false,
-                      "verdict": "preserved"
-                    }
-                  ],
-                  "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
-                },
-                "deckStrategyRetention": {
-                  "status": "preserved",
-                  "evidenceComplete": true,
-                  "preserved": true,
-                  "unresolvedBefore": [],
-                  "unresolvedAfter": [],
-                  "strategies": [
-                    {
-                      "archetype": "combat-tokens",
-                      "commanderScore": 6,
-                      "beforeSupportCount": 40,
-                      "afterSupportCount": 40,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 240,
-                      "afterAffinityTotal": 240,
-                      "affinityDelta": 0,
-                      "preserved": true
-                    },
-                    {
-                      "archetype": "aristocrats",
-                      "commanderScore": 6,
-                      "beforeSupportCount": 32,
-                      "afterSupportCount": 33,
-                      "supportDelta": 1,
-                      "beforeAffinityTotal": 182,
-                      "afterAffinityTotal": 188,
-                      "affinityDelta": 6,
-                      "preserved": true
-                    }
-                  ],
-                  "losses": [],
-                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
-                },
-                "planProvenance": {
-                  "targetBracket": 4,
-                  "winRouteVerificationStatus": "no-verified-route",
-                  "winPackageDiscoveryAttempted": false,
-                  "winPackageSourceStatus": "not-required-below-bracket-5",
-                  "winPackageOutcome": "not-attempted",
-                  "selectedComboId": null,
-                  "selectedBracketTag": null,
-                  "missingSeedNames": [],
-                  "atomicWinPackageInjected": false,
-                  "winPackageReason": "The requested target does not require a verified winning package.",
-                  "candidateDiscovery": {
-                    "mode": "bounded-role-plus-strategy-search",
-                    "exhaustiveWithinSafetyCeilings": false,
-                    "eligiblePoolCards": null,
-                    "roleSearchResultCap": 40,
-                    "strategySupplementalResultCapPerArchetype": 20,
-                    "note": "Unrestricted Upgrade keeps the bounded role-specific popularity search, then supplements it with a bounded search for each already-substantive inferred strategy before final role, legality, strategy, printing, and price ranking. This prevents the initial EDHREC slice from discarding all less-popular on-plan alternatives while keeping every search and final candidate count bounded."
-                  },
-                  "authoritativeTargetGatePriorities": [
-                    {
-                      "role": "average-nonland-mv",
-                      "current": 3.13,
-                      "target": 3.1,
-                      "deficit": 0.03,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "average-nonland-mv"
-                    },
-                    {
-                      "role": "early",
-                      "current": 24,
-                      "target": 25,
-                      "deficit": 1,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "early-plays"
-                    },
-                    {
-                      "role": "interaction",
-                      "current": 3,
-                      "target": 6,
-                      "deficit": 3,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "cheap-interaction"
-                    },
-                    {
-                      "role": "ramp",
-                      "current": 1,
-                      "target": 2,
-                      "deficit": 1,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "fast-mana"
-                    },
-                    {
-                      "role": "tutor",
-                      "current": 0,
-                      "target": 2,
-                      "deficit": 2,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "tutors"
-                    }
-                  ],
-                  "structuralDeficits": [
-                    {
-                      "role": "protection",
-                      "current": 1,
-                      "target": 6,
-                      "deficit": 5,
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null
-                    }
-                  ],
-                  "candidateGroups": [
-                    {
-                      "role": "average-nonland-mv",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "average-nonland-mv",
-                      "current": 3.13,
-                      "target": 3.1,
-                      "deficit": 0.03,
-                      "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
-                      "candidateCount": 3
-                    },
-                    {
-                      "role": "early",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "early-plays",
-                      "current": 24,
-                      "target": 25,
-                      "deficit": 1,
-                      "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
-                      "candidateCount": 3
-                    },
-                    {
-                      "role": "interaction",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "cheap-interaction",
-                      "current": 3,
-                      "target": 6,
-                      "deficit": 3,
-                      "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
-                      "candidateCount": 3
-                    },
-                    {
-                      "role": "ramp",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "fast-mana",
-                      "current": 1,
-                      "target": 2,
-                      "deficit": 1,
-                      "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
-                      "candidateCount": 2
-                    },
-                    {
-                      "role": "tutor",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "tutors",
-                      "current": 0,
-                      "target": 2,
-                      "deficit": 2,
-                      "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
-                      "candidateCount": 3
-                    }
-                  ]
-                },
-                "swaps": [
-                  {
-                    "out": "Second Harvest",
-                    "in": "Fake Your Own Death",
-                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
-                    "recommendedPrinting": {
-                      "set": "OTJ",
-                      "collectorNumber": "87",
-                      "finish": "nonfoil",
-                      "priceNzd": 0.2,
-                      "priceUsdReference": 0.12
-                    },
-                    "structuralPairing": {
-                      "addressedRole": "average-nonland-mv",
-                      "remainingStructuralDeficitAfterSwap": 13,
-                      "authoritativeTargetGate": "average-nonland-mv",
-                      "nonlandManaValueReduction": 2,
-                      "persistentColoredManaSourcesAfterSwap": 3,
-                      "persistentColoredManaSourceFloor": 3,
-                      "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
-                        "addStrategyAffinityScore": 12,
-                        "cutStrategyProtectionApplied": 4,
-                        "cutMatchedStrategies": [
-                          "combat-tokens"
-                        ],
-                        "addMatchedStrategies": [
-                          "aristocrats",
-                          "combat-tokens"
-                        ],
-                        "locallyUnreplacedStrategies": [],
-                        "cutRoles": [
-                          "token production"
-                        ],
-                        "addRoles": [
-                          "conditional mana acceleration",
-                          "graveyard recursion",
-                          "protection",
-                          "self sacrifice",
-                          "token production",
-                          "treasure"
-                        ],
-                        "unreplacedRoles": [],
-                        "unreplacedStrategyComponentRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      }
-                    }
-                  }
-                ]
-              },
-              {
                 "candidate": 3,
-                "eligible": true,
-                "reason": "eligible",
+                "eligible": false,
+                "reason": "no-supported-swaps-found",
                 "attemptedSwaps": 4,
-                "actualSwaps": 1,
-                "estimatedSpendNzd": 4.06,
-                "estimatedSpendUsdReference": 2.4,
+                "actualSwaps": 0,
+                "estimatedSpendNzd": 0,
+                "estimatedSpendUsdReference": 0,
                 "unknownPriceCount": 0,
-                "improvementScore": 13.922,
+                "improvementScore": 0,
                 "significantRegression": false,
-                "zeroTargetProgressWhileFailedGatesRemain": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
                 "targetGate": {
                   "applicable": true,
-                  "score": 14,
+                  "score": 0,
                   "failedBefore": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -6050,14 +6355,13 @@
                     "tutors"
                   ],
                   "failedAfter": [
+                    "average-nonland-mv",
                     "cheap-interaction",
+                    "early-plays",
                     "fast-mana",
                     "tutors"
                   ],
-                  "repairedGates": [
-                    "average-nonland-mv",
-                    "early-plays"
-                  ],
+                  "repairedGates": [],
                   "advancedFailedGates": [],
                   "regressedGates": [],
                   "ignoredUnverifiedGates": []
@@ -6067,88 +6371,11 @@
                   "status": "preserved",
                   "evidenceComplete": true,
                   "meaningfulLosses": [],
-                  "strategyDeltas": [
-                    {
-                      "strategy": "aristocrats",
-                      "cutAffinityScore": 0,
-                      "addAffinityScore": 2,
-                      "netAffinityDelta": 2
-                    },
-                    {
-                      "strategy": "combat-tokens",
-                      "cutAffinityScore": 6,
-                      "addAffinityScore": 6,
-                      "netAffinityDelta": 0
-                    }
-                  ],
-                  "swapImpacts": [
-                    {
-                      "cutStrategyAffinityScore": 6,
-                      "addStrategyAffinityScore": 8,
-                      "cutStrategyProtectionApplied": 4,
-                      "cutMatchedStrategies": [
-                        "combat-tokens"
-                      ],
-                      "addMatchedStrategies": [
-                        "aristocrats",
-                        "combat-tokens"
-                      ],
-                      "locallyUnreplacedStrategies": [],
-                      "cutRoles": [
-                        "creature",
-                        "repeatable token engine",
-                        "token production"
-                      ],
-                      "addRoles": [
-                        "creature",
-                        "mana acceleration",
-                        "mana dork",
-                        "persistent colored mana source",
-                        "repeatable token engine",
-                        "self sacrifice",
-                        "token production"
-                      ],
-                      "unreplacedRoles": [],
-                      "unreplacedStrategyComponentRoles": [],
-                      "meaningfulStrategyLoss": false,
-                      "verdict": "preserved"
-                    }
-                  ],
+                  "strategyDeltas": [],
+                  "swapImpacts": [],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "deckStrategyRetention": {
-                  "status": "preserved",
-                  "evidenceComplete": true,
-                  "preserved": true,
-                  "unresolvedBefore": [],
-                  "unresolvedAfter": [],
-                  "strategies": [
-                    {
-                      "archetype": "combat-tokens",
-                      "commanderScore": 6,
-                      "beforeSupportCount": 40,
-                      "afterSupportCount": 40,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 240,
-                      "afterAffinityTotal": 240,
-                      "affinityDelta": 0,
-                      "preserved": true
-                    },
-                    {
-                      "archetype": "aristocrats",
-                      "commanderScore": 6,
-                      "beforeSupportCount": 32,
-                      "afterSupportCount": 33,
-                      "supportDelta": 1,
-                      "beforeAffinityTotal": 182,
-                      "afterAffinityTotal": 184,
-                      "affinityDelta": 2,
-                      "preserved": true
-                    }
-                  ],
-                  "losses": [],
-                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
-                },
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -6273,59 +6500,7 @@
                     }
                   ]
                 },
-                "swaps": [
-                  {
-                    "out": "Arasta of the Endless Web",
-                    "in": "Twitching Doll",
-                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
-                    "recommendedPrinting": {
-                      "set": "PDSK",
-                      "collectorNumber": "201p",
-                      "finish": "nonfoil",
-                      "priceNzd": 4.06,
-                      "priceUsdReference": 2.4
-                    },
-                    "structuralPairing": {
-                      "addressedRole": "average-nonland-mv",
-                      "remainingStructuralDeficitAfterSwap": 14,
-                      "authoritativeTargetGate": "average-nonland-mv",
-                      "nonlandManaValueReduction": 2,
-                      "persistentColoredManaSourcesAfterSwap": 4,
-                      "persistentColoredManaSourceFloor": 3,
-                      "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
-                        "addStrategyAffinityScore": 8,
-                        "cutStrategyProtectionApplied": 4,
-                        "cutMatchedStrategies": [
-                          "combat-tokens"
-                        ],
-                        "addMatchedStrategies": [
-                          "aristocrats",
-                          "combat-tokens"
-                        ],
-                        "locallyUnreplacedStrategies": [],
-                        "cutRoles": [
-                          "creature",
-                          "repeatable token engine",
-                          "token production"
-                        ],
-                        "addRoles": [
-                          "creature",
-                          "mana acceleration",
-                          "mana dork",
-                          "persistent colored mana source",
-                          "repeatable token engine",
-                          "self sacrifice",
-                          "token production"
-                        ],
-                        "unreplacedRoles": [],
-                        "unreplacedStrategyComponentRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      }
-                    }
-                  }
-                ]
+                "swaps": []
               },
               {
                 "candidate": 4,
@@ -6600,9 +6775,9 @@
                 },
                 {
                   "role": "tutor",
-                  "current": 0,
+                  "current": 1,
                   "target": 2,
-                  "deficit": 2,
+                  "deficit": 1,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors"
                 }
@@ -6642,9 +6817,9 @@
                   "role": "tutor",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors",
-                  "current": 0,
+                  "current": 1,
                   "target": 2,
-                  "deficit": 2,
+                  "deficit": 1,
                   "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                   "candidateCount": 3
                 },
@@ -6740,9 +6915,9 @@
                 },
                 {
                   "role": "tutor",
-                  "current": 0,
+                  "current": 1,
                   "target": 2,
-                  "deficit": 2,
+                  "deficit": 1,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors"
                 }
@@ -6782,9 +6957,9 @@
                   "role": "tutor",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors",
-                  "current": 0,
+                  "current": 1,
                   "target": 2,
-                  "deficit": 2,
+                  "deficit": 1,
                   "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                   "candidateCount": 3
                 },
@@ -6880,9 +7055,9 @@
                 },
                 {
                   "role": "tutor",
-                  "current": 0,
+                  "current": 1,
                   "target": 2,
-                  "deficit": 2,
+                  "deficit": 1,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors"
                 }
@@ -6922,9 +7097,9 @@
                   "role": "tutor",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors",
-                  "current": 0,
+                  "current": 1,
                   "target": 2,
-                  "deficit": 2,
+                  "deficit": 1,
                   "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                   "candidateCount": 3
                 },
@@ -7020,9 +7195,9 @@
                 },
                 {
                   "role": "tutor",
-                  "current": 0,
+                  "current": 1,
                   "target": 2,
-                  "deficit": 2,
+                  "deficit": 1,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors"
                 }
@@ -7062,9 +7237,9 @@
                   "role": "tutor",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors",
-                  "current": 0,
+                  "current": 1,
                   "target": 2,
-                  "deficit": 2,
+                  "deficit": 1,
                   "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                   "candidateCount": 3
                 },
@@ -7171,9 +7346,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -7213,9 +7388,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateCount": 3
                     },
@@ -7311,9 +7486,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -7353,9 +7528,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateCount": 3
                     },
@@ -7451,9 +7626,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -7493,9 +7668,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateCount": 3
                     },
@@ -7591,9 +7766,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -7633,9 +7808,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateCount": 3
                     },
@@ -7742,9 +7917,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -7784,9 +7959,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateCount": 3
                     },
@@ -7882,9 +8057,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -7924,9 +8099,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateCount": 3
                     },
@@ -8022,9 +8197,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -8064,9 +8239,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateCount": 3
                     },
@@ -8162,9 +8337,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -8204,9 +8379,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateCount": 3
                     },
@@ -8313,9 +8488,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -8355,9 +8530,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateCount": 3
                     },
@@ -8453,9 +8628,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -8495,9 +8670,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateCount": 3
                     },
@@ -8593,9 +8768,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -8635,9 +8810,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateCount": 3
                     },
@@ -8733,9 +8908,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -8775,9 +8950,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateCount": 3
                     },
@@ -8884,9 +9059,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -8926,9 +9101,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateCount": 3
                     },
@@ -9024,9 +9199,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -9066,9 +9241,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateCount": 3
                     },
@@ -9164,9 +9339,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -9206,9 +9381,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateCount": 3
                     },
@@ -9304,9 +9479,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -9346,9 +9521,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateCount": 3
                     },
@@ -9394,8 +9569,8 @@
         {
           "archetype": "aristocrats",
           "commanderScore": 6,
-          "supportCount": 33,
-          "affinityTotal": 178
+          "supportCount": 34,
+          "affinityTotal": 180
         }
       ]
     },
@@ -9403,17 +9578,17 @@
     "assessedBand": "bracket-2-core-range",
     "signals": {
       "averageNonlandManaValue": 3.1,
-      "earlyPlayCount": 25,
+      "earlyPlayCount": 26,
       "cheapInteractionCount": 3,
       "fastManaCount": 1,
-      "tutorCount": 0,
+      "tutorCount": 1,
       "recursionCount": 3,
       "boardWipeCount": 2,
-      "rampCount": 9,
-      "drawCount": 19,
+      "rampCount": 11,
+      "drawCount": 18,
       "interactionCount": 14,
       "protectionCount": 2,
-      "persistentColoredManaSourceCount": 3
+      "persistentColoredManaSourceCount": 5
     },
     "verifiedWinningCombos": 0,
     "targetComparison": {
@@ -9452,11 +9627,11 @@
           "targetBracket": 4,
           "category": "construction",
           "label": "Early plays",
-          "observed": 25,
+          "observed": 26,
           "required": "at least 25",
           "state": "passed",
           "pressurePoint": "speed/curve",
-          "detail": "Early plays: observed 25; Bracket 4 requires at least 25."
+          "detail": "Early plays: observed 26; Bracket 4 requires at least 25."
         },
         {
           "key": "b4-cheap-interaction",
@@ -9485,11 +9660,11 @@
           "targetBracket": 4,
           "category": "construction",
           "label": "Tutors",
-          "observed": 0,
+          "observed": 1,
           "required": "at least 2",
           "state": "failed",
           "pressurePoint": "tutor consistency",
-          "detail": "Tutors: observed 0; Bracket 4 requires at least 2."
+          "detail": "Tutors: observed 1; Bracket 4 requires at least 2."
         },
         {
           "key": "b4-win-evidence",
@@ -9542,11 +9717,11 @@
           "targetBracket": 4,
           "category": "construction",
           "label": "Tutors",
-          "observed": 0,
+          "observed": 1,
           "required": "at least 2",
           "state": "failed",
           "pressurePoint": "tutor consistency",
-          "detail": "Tutors: observed 0; Bracket 4 requires at least 2."
+          "detail": "Tutors: observed 1; Bracket 4 requires at least 2."
         },
         {
           "key": "b4-win-evidence",
@@ -9569,7 +9744,7 @@
         "Improve efficient win plan: Optimized win evidence needs an efficient commander/non-combo win plan, verified winning combo, Ruthless winning combo, or R-tagged Spellbook signal."
       ],
       "restrictionObservations": [
-        "Constraint \"Exact Squirreled Away stock baseline; unrestricted Commander-legal physical upgrades under NZ$35/card and NZ$200 total.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (3.1 vs at most 2.6); Early plays (25 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (3 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
+        "Constraint \"Exact Squirreled Away stock baseline; unrestricted Commander-legal physical upgrades under NZ$35/card and NZ$200 total.\" was active while the finished list missed 8 Bracket-5 construction gates: Average nonland mana value (3.1 vs at most 2.6); Early plays (26 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (3 vs at least 8); Tutors (1 vs at least 4); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=E vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
       ],
       "guidance": "The target comparison uses only checks relevant to the requested bracket. Unavailable external evidence is reported as unverified rather than converted into a false deck weakness."
     },
@@ -9582,12 +9757,15 @@
   "progress": {
     "advanced": [
       "b4-cheapInteractionCount",
+      "b4-tutorCount",
+      "b4-rampCount",
       "b4-protectionCount"
     ],
     "repaired": [
       "b4-average-mv",
       "b4-earlyPlayCount",
-      "b4-recursionCount"
+      "b4-recursionCount",
+      "b4-persistentColoredManaSourceCount"
     ],
     "regressedPassing": [],
     "regressedStructuralFloor": []
@@ -9617,11 +9795,11 @@
       {
         "archetype": "aristocrats",
         "beforeSupportCount": 30,
-        "afterSupportCount": 33,
-        "supportRetention": 1.1,
+        "afterSupportCount": 34,
+        "supportRetention": 1.1333333333333333,
         "beforeAffinityTotal": 160,
-        "afterAffinityTotal": 178,
-        "affinityRetention": 1.1125,
+        "afterAffinityTotal": 180,
+        "affinityRetention": 1.125,
         "preserved": true
       }
     ],
