@@ -5,13 +5,13 @@ Development checkpoint: `77a5383fa7490aa91360b8186a4bda890f632157`
 
 | Control | Claim level | Outcome | Tested source | Matches checkpoint | Metadata |
 |---|---|---|---|---|---|
-| PM-STATE-INTEGRITY | engineering+truth | fail | `b6885f97fa5618e1020cb4d043544eb227f50413` | no | `test-results/project-management/integrity.txt` |
+| PM-STATE-INTEGRITY | engineering+truth | fail | `efa03e5c51f0fedc91815ebdc776fafd70660d4f` | no | `test-results/project-management/integrity.txt` |
 | MARVEL-B5-REFINE | scenario-intelligence | pass | `971d8a37235fe423f492042551a8ff4471c83a1f` | no | `test-results/marvel-bracket5/refine-run-metadata.txt` |
 | MARVEL-B5-BROAD | scenario-intelligence | fail | `971d8a37235fe423f492042551a8ff4471c83a1f` | no | `test-results/marvel-bracket5-broad/run-metadata.txt` |
 | MIDDLE-EARTH-PRECON-REFINE | scenario-intelligence | pass | `3601f4f3a9f43872a0a232454ae31ac0f0090cef` | no | `test-results/middle-earth-precon-refine/run-metadata.txt` |
-| PRECON-GENERALIZATION | scenario-intelligence | pass | `3601f4f3a9f43872a0a232454ae31ac0f0090cef` | no | `test-results/precon-generalization/run-metadata.txt` |
-| STRATEGY-INFERENCE-GENERALIZATION | engineering+truth | pass | `971d8a37235fe423f492042551a8ff4471c83a1f` | no | `test-results/strategy-inference-generalization/run-metadata.txt` |
-| SQUIRRELED-AWAY-GENERALIZATION | scenario-intelligence | pass | `3601f4f3a9f43872a0a232454ae31ac0f0090cef` | no | `test-results/precon-generalization-squirrels/run-metadata.txt` |
+| PRECON-GENERALIZATION | scenario-intelligence | pass | `ec4f4d16171cab583041ade467afaa1e1b83fd54` | no | `test-results/precon-generalization/run-metadata.txt` |
+| STRATEGY-INFERENCE-GENERALIZATION | engineering+truth | pass | `ec4f4d16171cab583041ade467afaa1e1b83fd54` | no | `test-results/strategy-inference-generalization/run-metadata.txt` |
+| SQUIRRELED-AWAY-GENERALIZATION | scenario-intelligence | pass | `ec4f4d16171cab583041ade467afaa1e1b83fd54` | no | `test-results/precon-generalization-squirrels/run-metadata.txt` |
 
 ## Interpretation
 
