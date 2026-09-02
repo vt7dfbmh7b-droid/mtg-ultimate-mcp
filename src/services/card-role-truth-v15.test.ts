@@ -298,6 +298,14 @@ const tokenMultiplier = card({
   manaCost: '{2}{G}',
 });
 
+const tokenCopyMultiplier = card({
+  name: 'Generic Token-Copy Multiplier',
+  typeLine: 'Instant',
+  oracleText: "For each token you control, create a token that's a copy of that permanent.",
+  cmc: 4,
+  manaCost: '{3}{G}',
+});
+
 const teamAnthem = card({
   name: 'Generic Team Anthem',
   typeLine: 'Enchantment',
@@ -463,6 +471,8 @@ test('delayed death returns count as graveyard recursion even when Oracle text o
 test('token multipliers and team-wide or board-scaling payoffs retain combat-engine truth', () => {
   assert.ok(inferCardRoles(tokenMultiplier).includes('token production'));
   assert.ok(effectiveCardRolesV15(tokenMultiplier).includes('token multiplier'));
+  assert.ok(inferCardRoles(tokenCopyMultiplier).includes('token production'));
+  assert.ok(effectiveCardRolesV15(tokenCopyMultiplier).includes('token multiplier'));
   assert.ok(inferCardRoles(teamAnthem).includes('go-wide payoff'));
   assert.ok(inferCardRoles(typalAnthem).includes('go-wide payoff'));
   assert.ok(inferCardRoles(distributedTypalPump).includes('go-wide payoff'));
