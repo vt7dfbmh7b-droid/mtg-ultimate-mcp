@@ -697,6 +697,13 @@ function summaryIsPersistentColoredManaSourceV15(card: Record<string, unknown>):
   return summarizedRoles(card).has('persistent colored mana source');
 }
 
+function summaryIsPremiumEarlyInfrastructureV15(card: Record<string, unknown>): boolean {
+  const manaValue = recordNumber(card.manaValue);
+  if (manaValue > 2) return false;
+  const roles = summarizedRoles(card);
+  return roles.has('fast mana') || roles.has('mana rock') || roles.has('mana dork');
+}
+
 function recordObject(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
 }
@@ -1037,13 +1044,18 @@ export function pairUpgradeSwapsByStructureV15(
       ? remainingCuts.filter((cut) => recordNumber(summarizedCard(cut).manaValue) > Math.max(2, addManaValue))
       : [...remainingCuts])
       .filter((cut) => {
+        const cutCard = summarizedCard(cut);
+        // Do not spend a premium one- or two-mana acceleration piece on an unrelated
+        // upgrade. A persistent low-cost mana source is foundational early infrastructure;
+        // only another premium early infrastructure card may replace it.
+        if (summaryIsPremiumEarlyInfrastructureV15(cutCard)
+          && !summaryIsPremiumEarlyInfrastructureV15(addCard)) return false;
         const afterSwap = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);
         if (!preservesStructuralFloorsV15(counts, afterSwap, state.targets)) return false;
         const persistentColoredManaSourcesAfterSwap = persistentColoredManaSourcesAfterAdd
           - (summaryIsPersistentColoredManaSourceV15(summarizedCard(cut)) ? 1 : 0);
         if (persistentColoredManaSourcesAfterSwap < persistentColoredManaSourceFloor) return false;
 
-        const cutCard = summarizedCard(cut);
         const afterAuthoritative = { ...authoritativeCounts };
         for (const [gate, target] of Object.entries(authoritativeCountTargets) as Array<[UpgradeCountTargetGateV15, number]>) {
           const beforeCount = authoritativeCounts[gate];

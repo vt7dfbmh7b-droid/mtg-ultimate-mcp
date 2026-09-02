@@ -410,6 +410,44 @@ test('near the curve threshold, pairing prefers the more cuttable safe card over
   assert.equal(pairings[0]?.nonlandManaValueReduction, 4);
 });
 
+test('non-mana upgrades cannot spend premium low-cost acceleration as a fallback cut', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{
+      role: 'tutor' as const,
+      candidate: {
+        card: { name: 'One-Mana Tutor', roles: ['tutor'], manaValue: 1, typeLine: 'Sorcery' },
+        authoritativeTargetGate: 'tutors',
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    }],
+    [{
+      card: { name: 'Premium Signet', roles: ['mana acceleration', 'mana rock'], manaValue: 2, typeLine: 'Artifact' },
+      heuristicCutPressure: 20,
+      strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+    }],
+    {
+      rampCount: 20,
+      drawCount: 20,
+      interactionCount: 20,
+      protectionCount: 8,
+      tutorCount: 2,
+      recursionCount: 4,
+      boardWipeCount: 2,
+      earlyPlayCount: 40,
+      averageNonlandManaValue: 2.5,
+      nonlandCount: 69,
+      persistentColoredManaSourceCount: 10,
+      commanderColorCount: 5,
+      roleCounts: { 'free interaction': 1 },
+    },
+    { ...bracketFiveTargets },
+    5,
+    { rejectMeaningfulStrategyLoss: true },
+  );
+
+  assert.deepEqual(pairings, []);
+});
+
 test('near-threshold five-color repair uses surplus interaction before a protected combat engine', () => {
   const pairings = pairUpgradeSwapsByStructureV15(
     [{
