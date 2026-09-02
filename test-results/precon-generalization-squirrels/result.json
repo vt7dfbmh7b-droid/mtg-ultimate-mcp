@@ -252,7 +252,7 @@
     "estimatedUpgradeSpendNzd": 0,
     "estimatedUpgradeSpendUsdReference": 0,
     "maxTotalNzd": 200,
-    "maxTotalUsdReference": 118.23,
+    "maxTotalUsdReference": 118.22,
     "swaps": [],
     "finalDecklist": "// COMMANDER\n1 Hazel of the Rootbloom (BLC) 2 *F*\n\n// MAIN\n1 The Odd Acorn Gang (BLC) 7 *F*\n1 Garruk, Cursed Huntsman (BLC) 99 *F*\n1 Chittering Witch (BLC) 180 *N*\n1 Insatiable Frugivore (BLC) 18 *N*\n1 Moonstone Eulogist (BLC) 19 *N*\n1 Swarmyard Massacre (BLC) 20 *N*\n1 Hazel's Brewmaster (BLC) 17 *N*\n1 Woe Strider (BLC) 189 *N*\n1 Saw in Half (BLC) 113 *N*\n1 Ogre Slumlord (BLC) 186 *N*\n1 Decree of Pain (BLC) 182 *N*\n1 Gourmand's Talent (BLC) 31 *N*\n1 Rootcast Apprenticeship (BLC) 32 *N*\n1 Scurry of Squirrels (BLC) 33 *N*\n1 End-Raze Forerunners (BLC) 214 *N*\n1 Arasta of the Endless Web (BLC) 205 *N*\n1 Deep Forest Hermit (BLC) 213 *N*\n1 Toski, Bearer of Secrets (BLC) 244 *N*\n1 Beastmaster Ascension (BLC) 118 *N*\n1 Second Harvest (BLC) 123 *N*\n1 Shamanic Revelation (BLC) 237 *N*\n1 Chatterfang, Squirrel General (BLC) 209 *N*\n1 Temple of Malady (BLC) 341 *N*\n1 Casualties of War (BLC) 125 *N*\n1 Windgrace's Judgment (BLC) 263 *N*\n1 Maskwood Nexus (BLC) 279 *N*\n1 Academy Manufactor (BLC) 264 *N*\n1 Woodland Cemetery (BLC) 354 *N*\n1 Necroblossom Snarl (BLC) 319 *N*\n1 Oran-Rief, the Vastwood (BLC) 320 *N*\n1 Swarmyard (BLC) 133 *N*\n1 Exotic Orchard (BLC) 131 *N*\n1 Llanowar Wastes (BLC) 315 *N*\n1 Grim Backwoods (BLC) 309 *N*\n1 Viridescent Bog (BLC) 352 *N*\n1 Twilight Mire (BLC) 351 *N*\n1 Gilded Goose (BLC) 221 *N*\n1 Chitterspitter (BLC) 211 *N*\n1 Maelstrom Pulse (BLC) 126 *N*\n1 Beledros Witherbloom (BLC) 247 *N*\n1 Idol of Oblivion (BLC) 277 *N*\n1 Sword of the Squeak (BLC) 40 *N*\n1 Morbid Opportunist (BLC) 183 *N*\n1 Nadier's Nightblade (BLC) 184 *N*\n1 Plumb the Forbidden (BLC) 188 *N*\n1 Bastion of Remembrance (BLC) 179 *N*\n1 Plaguecrafter (BLC) 187 *N*\n1 Cache Grab (BLB) 167 *N*\n1 Chatterstorm (BLC) 210 *N*\n1 Poison-Tip Archer (BLC) 256 *N*\n1 Moldervine Reclamation (BLC) 255 *N*\n1 Ravenous Squirrel (BLC) 258 *N*\n1 Skyfisher Spider (BLC) 261 *N*\n1 Binding the Old Gods (BLC) 248 *N*\n1 Golgari Rot Farm (BLC) 308 *N*\n1 Jungle Hollow (BLC) 313 *N*\n1 Haunted Mire (BLC) 311 *N*\n1 Nested Shambler (BLC) 185 *N*\n1 Deadly Dispute (BLC) 181 *N*\n1 Zulaport Cutthroat (BLC) 190 *N*\n1 Squirrel Sovereign (BLC) 240 *N*\n1 Prosperous Innkeeper (BLC) 121 *N*\n1 Haywire Mite (BLC) 274 *N*\n1 Tireless Provisioner (BLC) 243 *N*\n1 Squirrel Nest (BLC) 239 *N*\n1 Honored Dreyleader (BLB) 178 *N*\n1 Tear Asunder (BLC) 241 *N*\n1 Wolfwillow Haven (BLC) 246 *N*\n1 Putrefy (BLC) 257 *N*\n1 Arcane Signet (BLC) 127 *N*\n1 Golgari Signet (BLC) 272 *N*\n1 Talisman of Resilience (BLC) 288 *N*\n1 Sol Ring (BLC) 129 *N*\n1 Skullclamp (BLC) 283 *N*\n1 Terramorphic Expanse (BLC) 345 *N*\n1 Path of Ancestry (BLC) 322 *N*\n1 Evolving Wilds (BLC) 302 *N*\n1 Command Tower (BLC) 130 *N*\n1 Tranquil Thicket (BLC) 350 *N*\n1 Bojuka Bog (BLC) 294 *N*\n1 Tainted Wood (BLC) 337 *N*\n1 Barren Moor (BLC) 292 *N*\n4 Swamp (BLB) 373 *N*\n4 Swamp (BLB) 374 *N*\n5 Forest (BLB) 377 *N*\n4 Forest (BLB) 378 *N*",
     "finalCommanderRules": {
@@ -357,7 +357,7 @@
       "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.69,
       "maxTotalNzd": 200,
-      "maxTotalUsdReference": 118.23,
+      "maxTotalUsdReference": 118.22,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -444,7 +444,7 @@
               ],
               "swapImpacts": [
                 {
-                  "cutStrategyAffinityScore": 6,
+                  "cutStrategyAffinityScore": 8,
                   "addStrategyAffinityScore": 6,
                   "cutStrategyProtectionApplied": 4,
                   "cutMatchedStrategies": [
@@ -656,7 +656,7 @@
                   "persistentColoredManaSourcesAfterSwap": 3,
                   "persistentColoredManaSourceFloor": 3,
                   "strategyPreservation": {
-                    "cutStrategyAffinityScore": 6,
+                    "cutStrategyAffinityScore": 8,
                     "addStrategyAffinityScore": 6,
                     "cutStrategyProtectionApplied": 4,
                     "cutMatchedStrategies": [
@@ -1258,7 +1258,7 @@
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 6,
+                      "cutStrategyAffinityScore": 8,
                       "addStrategyAffinityScore": 6,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
@@ -1470,7 +1470,7 @@
                       "persistentColoredManaSourcesAfterSwap": 3,
                       "persistentColoredManaSourceFloor": 3,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
+                        "cutStrategyAffinityScore": 8,
                         "addStrategyAffinityScore": 6,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
@@ -2072,7 +2072,7 @@
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 6,
+                      "cutStrategyAffinityScore": 8,
                       "addStrategyAffinityScore": 6,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
@@ -2284,7 +2284,7 @@
                       "persistentColoredManaSourcesAfterSwap": 3,
                       "persistentColoredManaSourceFloor": 3,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
+                        "cutStrategyAffinityScore": 8,
                         "addStrategyAffinityScore": 6,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
@@ -2886,7 +2886,7 @@
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 6,
+                      "cutStrategyAffinityScore": 8,
                       "addStrategyAffinityScore": 6,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
@@ -3098,7 +3098,7 @@
                       "persistentColoredManaSourcesAfterSwap": 3,
                       "persistentColoredManaSourceFloor": 3,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
+                        "cutStrategyAffinityScore": 8,
                         "addStrategyAffinityScore": 6,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
@@ -3700,7 +3700,7 @@
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 6,
+                      "cutStrategyAffinityScore": 8,
                       "addStrategyAffinityScore": 6,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
@@ -3912,7 +3912,7 @@
                       "persistentColoredManaSourcesAfterSwap": 3,
                       "persistentColoredManaSourceFloor": 3,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 6,
+                        "cutStrategyAffinityScore": 8,
                         "addStrategyAffinityScore": 6,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
