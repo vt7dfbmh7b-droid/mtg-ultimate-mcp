@@ -56,8 +56,8 @@
 1 Peregrin Took (LTR) 181
 1 Saruman's Trickery (LTR) 68
 1 Bothersome Noisemaker (HOB) 89
-1 Dawn of Hope (LTC) 164
 1 Dancing from Dark to Dawn (HOB) 123
+1 Dawn of Hope (LTC) 164
 1 Vanquisher's Banner (LTC) 289
 1 Opt (LTC) 194
 1 Preordain (LTC) 196
