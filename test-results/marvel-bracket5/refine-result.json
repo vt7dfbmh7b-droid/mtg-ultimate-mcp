@@ -192,7 +192,7 @@
     "roundsAccepted": 1,
     "totalSwaps": 5,
     "candidatePackagesPerRound": 5,
-    "estimatedUpgradeSpendUsd": 25.91,
+    "estimatedUpgradeSpendUsd": 25.75,
     "swaps": [
       {
         "out": "Venom's Hunger",
@@ -202,7 +202,7 @@
           "set": "MSH",
           "collectorNumber": "148",
           "finish": "nonfoil",
-          "priceUsd": 0.3
+          "priceUsd": 0.32
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -248,7 +248,7 @@
           "set": "MSC",
           "collectorNumber": "225",
           "finish": "nonfoil",
-          "priceUsd": 1.84
+          "priceUsd": 1.82
         },
         "structuralPairing": {
           "addressedRole": "protection",
@@ -291,7 +291,7 @@
           "set": "MSC",
           "collectorNumber": "223",
           "finish": "nonfoil",
-          "priceUsd": 0.29
+          "priceUsd": 0.32
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -338,7 +338,7 @@
           "set": "MAR",
           "collectorNumber": "100",
           "finish": "nonfoil",
-          "priceUsd": 21.7
+          "priceUsd": 21.57
         },
         "structuralPairing": {
           "addressedRole": "protection",
@@ -385,7 +385,7 @@
           "set": "SPM",
           "collectorNumber": "92",
           "finish": "nonfoil",
-          "priceUsd": 1.78
+          "priceUsd": 1.72
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -442,7 +442,7 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 5,
         "winningCandidate": 5,
-        "estimatedSpendUsd": 25.91,
+        "estimatedSpendUsd": 25.75,
         "improvementScore": 11.863,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -488,7 +488,7 @@
         "candidatePackagesGenerated": 5,
         "candidatePackagesEligible": 4,
         "winningCandidate": 5,
-        "estimatedSpendUsd": 25.91,
+        "estimatedSpendUsd": 25.75,
         "improvementScore": 11.863,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -507,7 +507,7 @@
               "collectorNumber": "148",
               "releaseDate": "2026-06-26",
               "finish": "nonfoil",
-              "priceUsd": 0.3,
+              "priceUsd": 0.32,
               "promo": false,
               "promoTypes": [
                 "universesbeyond"
@@ -562,7 +562,7 @@
               "collectorNumber": "225",
               "releaseDate": "2026-06-26",
               "finish": "nonfoil",
-              "priceUsd": 1.84,
+              "priceUsd": 1.82,
               "promo": false,
               "promoTypes": [
                 "surgefoil",
@@ -615,7 +615,7 @@
               "collectorNumber": "223",
               "releaseDate": "2026-06-26",
               "finish": "nonfoil",
-              "priceUsd": 0.29,
+              "priceUsd": 0.32,
               "promo": false,
               "promoTypes": [
                 "surgefoil",
@@ -672,7 +672,7 @@
               "collectorNumber": "100",
               "releaseDate": "2026-06-26",
               "finish": "nonfoil",
-              "priceUsd": 21.7,
+              "priceUsd": 21.57,
               "promo": false,
               "promoTypes": [
                 "sourcematerial",
@@ -729,7 +729,7 @@
               "collectorNumber": "92",
               "releaseDate": "2025-09-26",
               "finish": "nonfoil",
-              "priceUsd": 1.78,
+              "priceUsd": 1.72,
               "promo": false,
               "promoTypes": [
                 "universesbeyond"
@@ -789,7 +789,7 @@
             "reason": "eligible",
             "attemptedSwaps": 5,
             "actualSwaps": 5,
-            "estimatedSpendUsd": 11.99,
+            "estimatedSpendUsd": 11.87,
             "unknownPriceCount": 0,
             "improvementScore": 7.62,
             "significantRegression": false,
@@ -1084,7 +1084,33 @@
                   "target": 2.6,
                   "deficit": 0.11,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 355,
                   "candidateCount": 3
+                },
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 2,
+                  "target": 3,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 2,
+                  "target": 4,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
                 },
                 {
                   "role": "protection",
@@ -1094,6 +1120,8 @@
                   "target": 8,
                   "deficit": 2,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 23,
                   "candidateCount": 5
                 }
               ]
@@ -1107,7 +1135,7 @@
                   "set": "MSH",
                   "collectorNumber": "49",
                   "finish": "nonfoil",
-                  "priceUsd": 5.6
+                  "priceUsd": 5.64
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1154,7 +1182,7 @@
                   "set": "MAR",
                   "collectorNumber": "37",
                   "finish": "nonfoil",
-                  "priceUsd": 4.01
+                  "priceUsd": 3.94
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -1201,7 +1229,7 @@
                   "set": "SPM",
                   "collectorNumber": "114",
                   "finish": "nonfoil",
-                  "priceUsd": 0.91
+                  "priceUsd": 0.9
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1248,7 +1276,7 @@
                   "set": "SPM",
                   "collectorNumber": "118",
                   "finish": "nonfoil",
-                  "priceUsd": 1.21
+                  "priceUsd": 1.13
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -1349,7 +1377,7 @@
             "reason": "improvement-below-threshold",
             "attemptedSwaps": 5,
             "actualSwaps": 5,
-            "estimatedSpendUsd": 37.45,
+            "estimatedSpendUsd": 37.69,
             "unknownPriceCount": 0,
             "improvementScore": -11.215,
             "significantRegression": false,
@@ -1610,7 +1638,33 @@
                   "target": 2.6,
                   "deficit": 0.11,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 355,
                   "candidateCount": 3
+                },
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 2,
+                  "target": 3,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 2,
+                  "target": 4,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
                 },
                 {
                   "role": "protection",
@@ -1620,6 +1674,8 @@
                   "target": 8,
                   "deficit": 2,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 23,
                   "candidateCount": 5
                 }
               ]
@@ -1682,7 +1738,7 @@
                   "set": "SPM",
                   "collectorNumber": "118",
                   "finish": "nonfoil",
-                  "priceUsd": 1.21
+                  "priceUsd": 1.13
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -1728,7 +1784,7 @@
                   "set": "MSC",
                   "collectorNumber": "726",
                   "finish": "nonfoil",
-                  "priceUsd": 0.66
+                  "priceUsd": 0.68
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1829,7 +1885,7 @@
                   "set": "SLD",
                   "collectorNumber": "1728",
                   "finish": "nonfoil",
-                  "priceUsd": 34.83
+                  "priceUsd": 35.13
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -1873,7 +1929,7 @@
             "reason": "eligible",
             "attemptedSwaps": 5,
             "actualSwaps": 5,
-            "estimatedSpendUsd": 36.3,
+            "estimatedSpendUsd": 35.23,
             "unknownPriceCount": 0,
             "improvementScore": 7.643,
             "significantRegression": false,
@@ -2162,7 +2218,33 @@
                   "target": 2.6,
                   "deficit": 0.11,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 355,
                   "candidateCount": 3
+                },
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 2,
+                  "target": 3,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 2,
+                  "target": 4,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
                 },
                 {
                   "role": "protection",
@@ -2172,6 +2254,8 @@
                   "target": 8,
                   "deficit": 2,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 23,
                   "candidateCount": 5
                 }
               ]
@@ -2232,7 +2316,7 @@
                   "set": "MAR",
                   "collectorNumber": "51",
                   "finish": "nonfoil",
-                  "priceUsd": 33.52
+                  "priceUsd": 32.44
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -2276,7 +2360,7 @@
                   "set": "MSH",
                   "collectorNumber": "204",
                   "finish": "nonfoil",
-                  "priceUsd": 0.34
+                  "priceUsd": 0.38
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2325,7 +2409,7 @@
                   "set": "MSH",
                   "collectorNumber": "196",
                   "finish": "nonfoil",
-                  "priceUsd": 0.11
+                  "priceUsd": 0.1
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2379,7 +2463,7 @@
                   "set": "MSC",
                   "collectorNumber": "225",
                   "finish": "nonfoil",
-                  "priceUsd": 1.84
+                  "priceUsd": 1.82
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -2421,7 +2505,7 @@
             "reason": "eligible",
             "attemptedSwaps": 5,
             "actualSwaps": 5,
-            "estimatedSpendUsd": 57.28,
+            "estimatedSpendUsd": 57.46,
             "unknownPriceCount": 0,
             "improvementScore": 3.446,
             "significantRegression": false,
@@ -2713,7 +2797,33 @@
                   "target": 2.6,
                   "deficit": 0.11,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 355,
                   "candidateCount": 3
+                },
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 2,
+                  "target": 3,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 2,
+                  "target": 4,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
                 },
                 {
                   "role": "protection",
@@ -2723,6 +2833,8 @@
                   "target": 8,
                   "deficit": 2,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 23,
                   "candidateCount": 5
                 }
               ]
@@ -2736,7 +2848,7 @@
                   "set": "MSH",
                   "collectorNumber": "196",
                   "finish": "nonfoil",
-                  "priceUsd": 0.11
+                  "priceUsd": 0.1
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2784,7 +2896,7 @@
                   "set": "SLD",
                   "collectorNumber": "1728",
                   "finish": "nonfoil",
-                  "priceUsd": 34.83
+                  "priceUsd": 35.13
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -2874,7 +2986,7 @@
                   "set": "MSH",
                   "collectorNumber": "148",
                   "finish": "nonfoil",
-                  "priceUsd": 0.3
+                  "priceUsd": 0.32
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2926,7 +3038,7 @@
                   "set": "MAR",
                   "collectorNumber": "100",
                   "finish": "nonfoil",
-                  "priceUsd": 21.7
+                  "priceUsd": 21.57
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -2975,7 +3087,7 @@
             "reason": "eligible",
             "attemptedSwaps": 5,
             "actualSwaps": 5,
-            "estimatedSpendUsd": 25.91,
+            "estimatedSpendUsd": 25.75,
             "unknownPriceCount": 0,
             "improvementScore": 11.863,
             "significantRegression": false,
@@ -3263,7 +3375,33 @@
                   "target": 2.6,
                   "deficit": 0.11,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 355,
                   "candidateCount": 3
+                },
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 2,
+                  "target": 3,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 2,
+                  "target": 4,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
                 },
                 {
                   "role": "protection",
@@ -3273,6 +3411,8 @@
                   "target": 8,
                   "deficit": 2,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "candidates-found",
+                  "roleMatchesBeforeExistingExclusions": 23,
                   "candidateCount": 5
                 }
               ]
@@ -3286,7 +3426,7 @@
                   "set": "MSH",
                   "collectorNumber": "148",
                   "finish": "nonfoil",
-                  "priceUsd": 0.3
+                  "priceUsd": 0.32
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -3332,7 +3472,7 @@
                   "set": "MSC",
                   "collectorNumber": "225",
                   "finish": "nonfoil",
-                  "priceUsd": 1.84
+                  "priceUsd": 1.82
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -3375,7 +3515,7 @@
                   "set": "MSC",
                   "collectorNumber": "223",
                   "finish": "nonfoil",
-                  "priceUsd": 0.29
+                  "priceUsd": 0.32
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -3422,7 +3562,7 @@
                   "set": "MAR",
                   "collectorNumber": "100",
                   "finish": "nonfoil",
-                  "priceUsd": 21.7
+                  "priceUsd": 21.57
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -3469,7 +3609,7 @@
                   "set": "SPM",
                   "collectorNumber": "92",
                   "finish": "nonfoil",
-                  "priceUsd": 1.78
+                  "priceUsd": 1.72
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -3533,7 +3673,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 5,
                 "actualSwaps": 5,
-                "estimatedSpendUsd": 11.99,
+                "estimatedSpendUsd": 11.87,
                 "unknownPriceCount": 0,
                 "improvementScore": 7.62,
                 "significantRegression": false,
@@ -3828,7 +3968,33 @@
                       "target": 2.6,
                       "deficit": 0.11,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 355,
                       "candidateCount": 3
+                    },
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
                     },
                     {
                       "role": "protection",
@@ -3838,6 +4004,8 @@
                       "target": 8,
                       "deficit": 2,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 23,
                       "candidateCount": 5
                     }
                   ]
@@ -3851,7 +4019,7 @@
                       "set": "MSH",
                       "collectorNumber": "49",
                       "finish": "nonfoil",
-                      "priceUsd": 5.6
+                      "priceUsd": 5.64
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3898,7 +4066,7 @@
                       "set": "MAR",
                       "collectorNumber": "37",
                       "finish": "nonfoil",
-                      "priceUsd": 4.01
+                      "priceUsd": 3.94
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -3945,7 +4113,7 @@
                       "set": "SPM",
                       "collectorNumber": "114",
                       "finish": "nonfoil",
-                      "priceUsd": 0.91
+                      "priceUsd": 0.9
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3992,7 +4160,7 @@
                       "set": "SPM",
                       "collectorNumber": "118",
                       "finish": "nonfoil",
-                      "priceUsd": 1.21
+                      "priceUsd": 1.13
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -4093,7 +4261,7 @@
                 "reason": "improvement-below-threshold",
                 "attemptedSwaps": 5,
                 "actualSwaps": 5,
-                "estimatedSpendUsd": 37.45,
+                "estimatedSpendUsd": 37.69,
                 "unknownPriceCount": 0,
                 "improvementScore": -11.215,
                 "significantRegression": false,
@@ -4354,7 +4522,33 @@
                       "target": 2.6,
                       "deficit": 0.11,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 355,
                       "candidateCount": 3
+                    },
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
                     },
                     {
                       "role": "protection",
@@ -4364,6 +4558,8 @@
                       "target": 8,
                       "deficit": 2,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 23,
                       "candidateCount": 5
                     }
                   ]
@@ -4426,7 +4622,7 @@
                       "set": "SPM",
                       "collectorNumber": "118",
                       "finish": "nonfoil",
-                      "priceUsd": 1.21
+                      "priceUsd": 1.13
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -4472,7 +4668,7 @@
                       "set": "MSC",
                       "collectorNumber": "726",
                       "finish": "nonfoil",
-                      "priceUsd": 0.66
+                      "priceUsd": 0.68
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4573,7 +4769,7 @@
                       "set": "SLD",
                       "collectorNumber": "1728",
                       "finish": "nonfoil",
-                      "priceUsd": 34.83
+                      "priceUsd": 35.13
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -4617,7 +4813,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 5,
                 "actualSwaps": 5,
-                "estimatedSpendUsd": 36.3,
+                "estimatedSpendUsd": 35.23,
                 "unknownPriceCount": 0,
                 "improvementScore": 7.643,
                 "significantRegression": false,
@@ -4906,7 +5102,33 @@
                       "target": 2.6,
                       "deficit": 0.11,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 355,
                       "candidateCount": 3
+                    },
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
                     },
                     {
                       "role": "protection",
@@ -4916,6 +5138,8 @@
                       "target": 8,
                       "deficit": 2,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 23,
                       "candidateCount": 5
                     }
                   ]
@@ -4976,7 +5200,7 @@
                       "set": "MAR",
                       "collectorNumber": "51",
                       "finish": "nonfoil",
-                      "priceUsd": 33.52
+                      "priceUsd": 32.44
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -5020,7 +5244,7 @@
                       "set": "MSH",
                       "collectorNumber": "204",
                       "finish": "nonfoil",
-                      "priceUsd": 0.34
+                      "priceUsd": 0.38
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5069,7 +5293,7 @@
                       "set": "MSH",
                       "collectorNumber": "196",
                       "finish": "nonfoil",
-                      "priceUsd": 0.11
+                      "priceUsd": 0.1
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5123,7 +5347,7 @@
                       "set": "MSC",
                       "collectorNumber": "225",
                       "finish": "nonfoil",
-                      "priceUsd": 1.84
+                      "priceUsd": 1.82
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -5165,7 +5389,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 5,
                 "actualSwaps": 5,
-                "estimatedSpendUsd": 57.28,
+                "estimatedSpendUsd": 57.46,
                 "unknownPriceCount": 0,
                 "improvementScore": 3.446,
                 "significantRegression": false,
@@ -5457,7 +5681,33 @@
                       "target": 2.6,
                       "deficit": 0.11,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 355,
                       "candidateCount": 3
+                    },
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
                     },
                     {
                       "role": "protection",
@@ -5467,6 +5717,8 @@
                       "target": 8,
                       "deficit": 2,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 23,
                       "candidateCount": 5
                     }
                   ]
@@ -5480,7 +5732,7 @@
                       "set": "MSH",
                       "collectorNumber": "196",
                       "finish": "nonfoil",
-                      "priceUsd": 0.11
+                      "priceUsd": 0.1
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5528,7 +5780,7 @@
                       "set": "SLD",
                       "collectorNumber": "1728",
                       "finish": "nonfoil",
-                      "priceUsd": 34.83
+                      "priceUsd": 35.13
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -5618,7 +5870,7 @@
                       "set": "MSH",
                       "collectorNumber": "148",
                       "finish": "nonfoil",
-                      "priceUsd": 0.3
+                      "priceUsd": 0.32
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5670,7 +5922,7 @@
                       "set": "MAR",
                       "collectorNumber": "100",
                       "finish": "nonfoil",
-                      "priceUsd": 21.7
+                      "priceUsd": 21.57
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -5719,7 +5971,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 5,
                 "actualSwaps": 5,
-                "estimatedSpendUsd": 25.91,
+                "estimatedSpendUsd": 25.75,
                 "unknownPriceCount": 0,
                 "improvementScore": 11.863,
                 "significantRegression": false,
@@ -6007,7 +6259,33 @@
                       "target": 2.6,
                       "deficit": 0.11,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 355,
                       "candidateCount": 3
+                    },
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
                     },
                     {
                       "role": "protection",
@@ -6017,6 +6295,8 @@
                       "target": 8,
                       "deficit": 2,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "candidates-found",
+                      "roleMatchesBeforeExistingExclusions": 23,
                       "candidateCount": 5
                     }
                   ]
@@ -6030,7 +6310,7 @@
                       "set": "MSH",
                       "collectorNumber": "148",
                       "finish": "nonfoil",
-                      "priceUsd": 0.3
+                      "priceUsd": 0.32
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -6076,7 +6356,7 @@
                       "set": "MSC",
                       "collectorNumber": "225",
                       "finish": "nonfoil",
-                      "priceUsd": 1.84
+                      "priceUsd": 1.82
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -6119,7 +6399,7 @@
                       "set": "MSC",
                       "collectorNumber": "223",
                       "finish": "nonfoil",
-                      "priceUsd": 0.29
+                      "priceUsd": 0.32
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -6166,7 +6446,7 @@
                       "set": "MAR",
                       "collectorNumber": "100",
                       "finish": "nonfoil",
-                      "priceUsd": 21.7
+                      "priceUsd": 21.57
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -6213,7 +6493,7 @@
                       "set": "SPM",
                       "collectorNumber": "92",
                       "finish": "nonfoil",
-                      "priceUsd": 1.78
+                      "priceUsd": 1.72
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -6362,7 +6642,32 @@
                 }
               ],
               "structuralDeficits": [],
-              "candidateGroups": []
+              "candidateGroups": [
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 2,
+                  "target": 3,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 2,
+                  "target": 4,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                }
+              ]
             },
             "swaps": []
           },
@@ -6445,7 +6750,32 @@
                 }
               ],
               "structuralDeficits": [],
-              "candidateGroups": []
+              "candidateGroups": [
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 2,
+                  "target": 3,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 2,
+                  "target": 4,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                }
+              ]
             },
             "swaps": []
           },
@@ -6528,7 +6858,32 @@
                 }
               ],
               "structuralDeficits": [],
-              "candidateGroups": []
+              "candidateGroups": [
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 2,
+                  "target": 3,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 2,
+                  "target": 4,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                }
+              ]
             },
             "swaps": []
           },
@@ -6611,7 +6966,32 @@
                 }
               ],
               "structuralDeficits": [],
-              "candidateGroups": []
+              "candidateGroups": [
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 2,
+                  "target": 3,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 2,
+                  "target": 4,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                }
+              ]
             },
             "swaps": []
           },
@@ -6694,7 +7074,32 @@
                 }
               ],
               "structuralDeficits": [],
-              "candidateGroups": []
+              "candidateGroups": [
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 2,
+                  "target": 3,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 2,
+                  "target": 4,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                }
+              ]
             },
             "swaps": []
           }
@@ -6788,7 +7193,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -6871,7 +7301,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -6954,7 +7409,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -7037,7 +7517,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -7120,7 +7625,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               }
@@ -7214,7 +7744,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -7297,7 +7852,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -7380,7 +7960,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -7463,7 +8068,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -7546,7 +8176,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               }
@@ -7640,7 +8295,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -7723,7 +8403,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -7806,7 +8511,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -7889,7 +8619,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -7972,7 +8727,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               }
@@ -8066,7 +8846,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -8149,7 +8954,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -8232,7 +9062,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -8315,7 +9170,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -8398,7 +9278,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               }
@@ -8492,7 +9397,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -8575,7 +9505,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -8658,7 +9613,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -8741,7 +9721,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -8824,7 +9829,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               }
