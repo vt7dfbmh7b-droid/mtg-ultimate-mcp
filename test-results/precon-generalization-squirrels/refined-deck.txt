@@ -23,6 +23,7 @@
 1 Temple of Malady (BLC) 341 *N*
 1 Windgrace's Judgment (BLC) 263 *N*
 1 Maskwood Nexus (BLC) 279 *N*
+1 Academy Manufactor (BLC) 264 *N*
 1 Woodland Cemetery (BLC) 354 *N*
 1 Necroblossom Snarl (BLC) 319 *N*
 1 Oran-Rief, the Vastwood (BLC) 320 *N*
@@ -65,7 +66,6 @@
 1 Tear Asunder (BLC) 241 *N*
 1 Wolfwillow Haven (BLC) 246 *N*
 1 Putrefy (BLC) 257 *N*
-1 Arcane Signet (BLC) 127 *N*
 1 Golgari Signet (BLC) 272 *N*
 1 Talisman of Resilience (BLC) 288 *N*
 1 Sol Ring (BLC) 129 *N*
@@ -84,7 +84,7 @@
 4 Forest (BLB) 378 *N*
 1 Not Dead After All (WOE) 101 *N*
 1 Hangarback Walker (EOC) 139 *N*
-1 Treasure Chest (AFR) 397 *F*
+1 From Beyond (BFZ) 167 *N*
 1 Pest Infestation (EOC) 103 *N*
 1 Fake Your Own Death (OTJ) 87 *N*
-1 From Beyond (BFZ) 167 *N*
+1 Wight of the Reliquary (SOC) 338 *N*
