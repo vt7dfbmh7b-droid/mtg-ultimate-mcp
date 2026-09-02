@@ -268,6 +268,51 @@ function themedRoleSearchQuery(
     .join(' ');
 }
 
+const UPGRADE_STRATEGY_SEARCH_CLAUSES_V15: Record<string, string> = {
+  'combat-tokens': '(o:"create" OR o:"token")',
+  'equipment-voltron': '(t:equipment OR o:"equip" OR o:"attach")',
+  counters: '(o:"+1/+1 counter" OR o:"proliferate")',
+  'graveyard-reanimator': '(o:"graveyard" OR o:"mill" OR o:"surveil")',
+  'artifact-engine': '(t:artifact OR o:"artifact")',
+  aristocrats: '(o:"each opponent" OR o:"sacrifice" OR o:"dies")',
+  'food-lifegain': '(o:"Food" OR o:"gain life" OR o:"each opponent")',
+  'spells-control': '(o:"counter target spell" OR o:"instant or sorcery" OR o:"noncreature spell")',
+  'value-engine': '(o:"draw" OR o:"you may cast" OR o:"you may play" OR o:"exile the top")',
+  'big-mana': '(o:"add" OR o:"costs" OR o:"untap")',
+};
+
+export function upgradeStrategySearchClausesV15(
+  strategyContext: CommanderStrategyContextV15,
+): Array<{ archetype: string; clause: string }> {
+  return strategyContext.strategies
+    .filter((strategy) => strategy.score >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15)
+    .map((strategy) => ({
+      archetype: strategy.archetype,
+      clause: UPGRADE_STRATEGY_SEARCH_CLAUSES_V15[strategy.archetype] ?? '',
+    }))
+    .filter((entry) => entry.clause.length > 0)
+    .slice(0, 3);
+}
+
+function strategyRoleSearchQuery(
+  role: string,
+  identity: string[],
+  strategyClause: string,
+  printingPolicy: ResolvedPrintingPolicyV08,
+  targetGate: UpgradeTargetGateV15 | null = null,
+): string {
+  return [
+    'f:commander',
+    identityQuery(identity),
+    '-t:land',
+    roleClause(role, targetGate),
+    strategyClause,
+    printingPolicy.searchClause,
+  ]
+    .filter(Boolean)
+    .join(' ');
+}
+
 function cardMatchesRole(card: ScryfallCard, role: string, targetGate: UpgradeTargetGateV15 | null = null): boolean {
   const roles = new Set(effectiveCardRolesV15(card));
   if (targetGate === 'cheap-interaction') {
@@ -458,6 +503,7 @@ export async function suggestDeckUpgrades(
     commanderColorCount: allowedIdentity.length,
   };
   const strategyContext = deriveUpgradeStrategyContextV15(parsed, cards);
+  const substantiveStrategySearchClauses = upgradeStrategySearchClausesV15(strategyContext);
   const printingPolicy = await resolvePrintingPolicyV08({
     ...(options.allowedSets ? { allowedSets: options.allowedSets } : {}),
     ...(options.printingFamily ? { printingFamily: options.printingFamily } : {}),
@@ -501,14 +547,16 @@ export async function suggestDeckUpgrades(
         exhaustiveWithinSafetyCeilings: true,
         eligiblePoolCards: restrictedEligiblePool?.length ?? 0,
         roleSearchResultCap: null,
+        strategySupplementalResultCapPerArchetype: null,
         note: 'Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card.',
       }
     : {
-        mode: 'bounded-role-search',
+        mode: 'bounded-role-plus-strategy-search',
         exhaustiveWithinSafetyCeilings: false,
         eligiblePoolCards: null,
         roleSearchResultCap: 40,
-        note: 'Unrestricted Upgrade uses bounded role-specific discovery and now checks the full discovered bounded result set for an eligible physical printing before declaring a role/gate empty; final candidates remain independently filtered by role and Commander legality.',
+        strategySupplementalResultCapPerArchetype: 20,
+        note: 'Unrestricted Upgrade keeps the bounded role-specific popularity search, then supplements it with a bounded search for each already-substantive inferred strategy before final role, legality, strategy, printing, and price ranking. This prevents the initial EDHREC slice from discarding all less-popular on-plan alternatives while keeping every search and final candidate count bounded.',
       };
 
   for (const deficit of candidatePriorities.slice(0, 5)) {
@@ -520,7 +568,27 @@ export async function suggestDeckUpgrades(
       try {
         genericResults = await searchCards(query, 40);
       } catch {
-        // A supplemental controlled-theme query can still provide candidates below.
+        // Supplemental controlled-theme and substantive-strategy queries can still provide candidates below.
+      }
+    }
+
+    const supplementalStrategyRoleQueries: Array<{ archetype: string; query: string }> = [];
+    let strategyResults: ScryfallCard[] = [];
+    if (!restrictedPoolActive) {
+      for (const strategy of substantiveStrategySearchClauses) {
+        const strategyQuery = strategyRoleSearchQuery(
+          deficit.role,
+          allowedIdentity,
+          strategy.clause,
+          printingPolicy,
+          deficit.targetGate,
+        );
+        supplementalStrategyRoleQueries.push({ archetype: strategy.archetype, query: strategyQuery });
+        try {
+          strategyResults = mergeCardsByName(strategyResults, await searchCards(strategyQuery, 20));
+        } catch {
+          // This is an additive recall path. Failure never proves the strategy has no candidates.
+        }
       }
     }
 
@@ -536,7 +604,9 @@ export async function suggestDeckUpgrades(
       }
     }
 
-    const results = restrictedPoolActive ? genericResults : mergeCardsByName(themedResults, genericResults);
+    const results = restrictedPoolActive
+      ? genericResults
+      : mergeCardsByName(themedResults, strategyResults, genericResults);
     if (results.length === 0) continue;
     const candidatesForPriority = deficit.prioritySource === 'authoritative-target-gate'
       && authoritativeTargetGatePriorities.length > 1
@@ -624,6 +694,7 @@ export async function suggestDeckUpgrades(
       ...deficit,
       candidateDiscoveryMode: candidateDiscovery.mode,
       searchQuery: query,
+      supplementalStrategyRoleQueries,
       supplementalThemeRoleQuery: themedQuery,
       candidates,
     });
@@ -674,8 +745,9 @@ export async function suggestDeckUpgrades(
     },
     caveats: [
       'Role-count targets are engineering heuristics for deck consistency, but failed Bracket-4/5 construction gates now outrank aspirational role targets. When several authoritative gates are failing, candidate generation retains a small ranked backup set for each gate so downstream pairing can preserve gate diversity while trying strategy-safe alternatives.',
-      'Within an already-required structural role or target gate, candidate ordering treats the existing V0.15 substantive-strategy threshold as a first-class tier before generic mana-efficiency and EDHREC/community-adoption scoring. This keeps structural repair on-plan when supported candidates exist without allowing strategy affinity to bypass the gate itself.',
-      'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window. Unrestricted Upgrade retains bounded role search, but scans the full discovered bounded role result set for an eligible physical printing.',
+      'Within an already-required structural role or target gate, candidate ordering treats the existing V0.15 substantive-strategy threshold as a first-class tier before generic mana-efficiency and EDHREC/community-adoption scoring. Multiplayer-scope quality can break ties inside that substantive tier, but cannot manufacture substantive support below the raw strategy threshold.',
+      'Unrestricted Upgrade supplements the bounded popularity-ordered role search with bounded per-archetype searches for strategies the starting deck has already proven substantive. The merged pool is still independently filtered by the requested structural gate, legality, printing policy, exclusions, price, and final candidate cap, so strategy search improves recall without bypassing construction constraints.',
+      'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window.',
       'When a V0.15 controlled theme is below its minimum density, the engine uses the controlled theme query as a positive membership/ranking signal. Under a printing restriction, only cards already admitted by the exhaustive shared eligible pool can become candidates.',
       'Cut ordering uses the same V0.15 commander strategy context as additions. When the deck is at or below its controlled theme minimum, matching cards also receive a capped four-point cut-protection signal; final theme preservation is still enforced independently by refinement rather than by this heuristic alone.',
       'Automatic upgrade packages pair the nonland cut pool with nonland additions so a utility land cannot silently replace a spell; dedicated mana-base work should be handled explicitly.',
