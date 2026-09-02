@@ -69,7 +69,7 @@
 1 Currency Converter (MSC) 197
 1 Common Crook (MSC) 792
 1 T'Challa, the Black Panther (MSC) 7
-1 Three Visits (MSC) 181
+1 Silk, Web Weaver (SPM) 145
 1 Command Tower (MSC) 233
 1 Exotic Orchard (MSC) 241
 1 Secluded Courtyard (MSC) 265

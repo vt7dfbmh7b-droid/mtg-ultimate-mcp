@@ -923,22 +923,22 @@
             "targetBracket": 5,
             "category": "construction",
             "label": "Average nonland mana value",
-            "observed": 2.51,
+            "observed": 2.54,
             "required": "at most 2.6",
             "state": "passed",
             "pressurePoint": "speed/curve",
-            "detail": "Average nonland mana value: observed 2.51; Bracket-5 construction gate requires at most 2.6."
+            "detail": "Average nonland mana value: observed 2.54; Bracket-5 construction gate requires at most 2.6."
           },
           {
             "key": "early-plays",
             "targetBracket": 5,
             "category": "construction",
             "label": "Early plays",
-            "observed": 44,
+            "observed": 43,
             "required": "at least 35",
             "state": "passed",
             "pressurePoint": "speed/curve",
-            "detail": "Early plays: observed 44; Bracket-5 construction gate requires at least 35."
+            "detail": "Early plays: observed 43; Bracket-5 construction gate requires at least 35."
           },
           {
             "key": "fast-mana",
@@ -1092,20 +1092,20 @@
           "key": "average-nonland-mv",
           "category": "construction",
           "label": "Average nonland mana value",
-          "observed": 2.51,
+          "observed": 2.54,
           "required": "at most 2.6",
           "passed": true,
-          "detail": "Average nonland mana value: observed 2.51; Bracket-5 construction gate requires at most 2.6.",
+          "detail": "Average nonland mana value: observed 2.54; Bracket-5 construction gate requires at most 2.6.",
           "pressurePoint": "speed/curve"
         },
         {
           "key": "early-plays",
           "category": "construction",
           "label": "Early plays",
-          "observed": 44,
+          "observed": 43,
           "required": "at least 35",
           "passed": true,
-          "detail": "Early plays: observed 44; Bracket-5 construction gate requires at least 35.",
+          "detail": "Early plays: observed 43; Bracket-5 construction gate requires at least 35.",
           "pressurePoint": "speed/curve"
         },
         {
@@ -1193,31 +1193,31 @@
         "landCount": 31,
         "nonlandCount": 69,
         "landRatio": 0.31,
-        "averageNonlandManaValue": 2.51,
+        "averageNonlandManaValue": 2.54,
         "manaCurve": {
           "0": 0,
           "1": 13,
-          "2": 31,
+          "2": 30,
           "3": 11,
-          "4": 10,
+          "4": 11,
           "5": 2,
           "6": 1,
           "7+": 1
         },
         "coloredPips": {
-          "W": 13,
+          "W": 14,
           "U": 14,
           "B": 9,
           "R": 22,
           "G": 10
         },
         "roleCounts": {
-          "token production": 18,
-          "repeatable token engine": 8,
+          "token production": 19,
+          "repeatable token engine": 9,
           "haste": 6,
           "extra combat": 5,
           "untap engine": 5,
-          "creature": 15,
+          "creature": 16,
           "cost reduction": 6,
           "card draw": 22,
           "graveyard recursion": 5,
@@ -1246,7 +1246,7 @@
           "treasure": 7,
           "sacrifice synergy": 2,
           "delayed mana acceleration": 2,
-          "go-wide payoff": 1,
+          "go-wide payoff": 2,
           "repeatable life gain engine": 1,
           "death-trigger draw engine": 1,
           "mana filtering": 1,
@@ -1259,7 +1259,7 @@
           "sacrifice outlet": 1,
           "artifact sacrifice outlet": 1
         },
-        "earlyPlayCount": 44,
+        "earlyPlayCount": 43,
         "fastManaCount": 2,
         "rampCount": 26,
         "drawCount": 27,
@@ -3237,22 +3237,22 @@
           "targetBracket": 5,
           "category": "construction",
           "label": "Average nonland mana value",
-          "observed": 2.51,
+          "observed": 2.54,
           "required": "at most 2.6",
           "state": "passed",
           "pressurePoint": "speed/curve",
-          "detail": "Average nonland mana value: observed 2.51; Bracket-5 construction gate requires at most 2.6."
+          "detail": "Average nonland mana value: observed 2.54; Bracket-5 construction gate requires at most 2.6."
         },
         {
           "key": "early-plays",
           "targetBracket": 5,
           "category": "construction",
           "label": "Early plays",
-          "observed": 44,
+          "observed": 43,
           "required": "at least 35",
           "state": "passed",
           "pressurePoint": "speed/curve",
-          "detail": "Early plays: observed 44; Bracket-5 construction gate requires at least 35."
+          "detail": "Early plays: observed 43; Bracket-5 construction gate requires at least 35."
         },
         {
           "key": "fast-mana",
@@ -3406,20 +3406,20 @@
         "key": "average-nonland-mv",
         "category": "construction",
         "label": "Average nonland mana value",
-        "observed": 2.51,
+        "observed": 2.54,
         "required": "at most 2.6",
         "passed": true,
-        "detail": "Average nonland mana value: observed 2.51; Bracket-5 construction gate requires at most 2.6.",
+        "detail": "Average nonland mana value: observed 2.54; Bracket-5 construction gate requires at most 2.6.",
         "pressurePoint": "speed/curve"
       },
       {
         "key": "early-plays",
         "category": "construction",
         "label": "Early plays",
-        "observed": 44,
+        "observed": 43,
         "required": "at least 35",
         "passed": true,
-        "detail": "Early plays: observed 44; Bracket-5 construction gate requires at least 35.",
+        "detail": "Early plays: observed 43; Bracket-5 construction gate requires at least 35.",
         "pressurePoint": "speed/curve"
       },
       {

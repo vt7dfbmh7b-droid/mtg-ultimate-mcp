@@ -21,7 +21,7 @@
       {
         "key": "average-nonland-mv",
         "category": "construction",
-        "observed": 2.51,
+        "observed": 2.54,
         "required": "at most 2.6",
         "passed": true,
         "pressurePoint": "speed/curve"
@@ -29,7 +29,7 @@
       {
         "key": "early-plays",
         "category": "construction",
-        "observed": 44,
+        "observed": 43,
         "required": "at least 35",
         "passed": true,
         "pressurePoint": "speed/curve"
@@ -103,31 +103,31 @@
       "landCount": 31,
       "nonlandCount": 69,
       "landRatio": 0.31,
-      "averageNonlandManaValue": 2.51,
+      "averageNonlandManaValue": 2.54,
       "manaCurve": {
         "0": 0,
         "1": 13,
-        "2": 31,
+        "2": 30,
         "3": 11,
-        "4": 10,
+        "4": 11,
         "5": 2,
         "6": 1,
         "7+": 1
       },
       "coloredPips": {
-        "W": 13,
+        "W": 14,
         "U": 14,
         "B": 9,
         "R": 22,
         "G": 10
       },
       "roleCounts": {
-        "token production": 18,
-        "repeatable token engine": 8,
+        "token production": 19,
+        "repeatable token engine": 9,
         "haste": 6,
         "extra combat": 5,
         "untap engine": 5,
-        "creature": 15,
+        "creature": 16,
         "cost reduction": 6,
         "card draw": 22,
         "graveyard recursion": 5,
@@ -156,7 +156,7 @@
         "treasure": 7,
         "sacrifice synergy": 2,
         "delayed mana acceleration": 2,
-        "go-wide payoff": 1,
+        "go-wide payoff": 2,
         "repeatable life gain engine": 1,
         "death-trigger draw engine": 1,
         "mana filtering": 1,
@@ -169,7 +169,7 @@
         "sacrifice outlet": 1,
         "artifact sacrifice outlet": 1
       },
-      "earlyPlayCount": 44,
+      "earlyPlayCount": 43,
       "fastManaCount": 2,
       "rampCount": 26,
       "drawCount": 27,
@@ -320,7 +320,32 @@
                 }
               ],
               "structuralDeficits": [],
-              "candidateGroups": []
+              "candidateGroups": [
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 2,
+                  "target": 3,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 2,
+                  "target": 4,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                }
+              ]
             },
             "swaps": []
           },
@@ -403,7 +428,32 @@
                 }
               ],
               "structuralDeficits": [],
-              "candidateGroups": []
+              "candidateGroups": [
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 2,
+                  "target": 3,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 2,
+                  "target": 4,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                }
+              ]
             },
             "swaps": []
           },
@@ -486,7 +536,32 @@
                 }
               ],
               "structuralDeficits": [],
-              "candidateGroups": []
+              "candidateGroups": [
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 2,
+                  "target": 3,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 2,
+                  "target": 4,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                }
+              ]
             },
             "swaps": []
           },
@@ -569,7 +644,32 @@
                 }
               ],
               "structuralDeficits": [],
-              "candidateGroups": []
+              "candidateGroups": [
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 2,
+                  "target": 3,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 2,
+                  "target": 4,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                }
+              ]
             },
             "swaps": []
           },
@@ -652,7 +752,32 @@
                 }
               ],
               "structuralDeficits": [],
-              "candidateGroups": []
+              "candidateGroups": [
+                {
+                  "role": "ramp",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "fast-mana",
+                  "current": 2,
+                  "target": 3,
+                  "deficit": 1,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                },
+                {
+                  "role": "tutor",
+                  "prioritySource": "authoritative-target-gate",
+                  "targetGate": "tutors",
+                  "current": 2,
+                  "target": 4,
+                  "deficit": 2,
+                  "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                  "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                  "roleMatchesBeforeExistingExclusions": 2,
+                  "candidateCount": 0
+                }
+              ]
             },
             "swaps": []
           }
@@ -746,7 +871,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -829,7 +979,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -912,7 +1087,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -995,7 +1195,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -1078,7 +1303,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               }
@@ -1172,7 +1422,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -1255,7 +1530,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -1338,7 +1638,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -1421,7 +1746,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -1504,7 +1854,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               }
@@ -1598,7 +1973,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -1681,7 +2081,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -1764,7 +2189,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -1847,7 +2297,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -1930,7 +2405,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               }
@@ -2024,7 +2524,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -2107,7 +2632,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -2190,7 +2740,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -2273,7 +2848,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -2356,7 +2956,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               }
@@ -2450,7 +3075,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -2533,7 +3183,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -2616,7 +3291,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -2699,7 +3399,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               },
@@ -2782,7 +3507,32 @@
                     }
                   ],
                   "structuralDeficits": [],
-                  "candidateGroups": []
+                  "candidateGroups": [
+                    {
+                      "role": "ramp",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "fast-mana",
+                      "current": 2,
+                      "target": 3,
+                      "deficit": 1,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    },
+                    {
+                      "role": "tutor",
+                      "prioritySource": "authoritative-target-gate",
+                      "targetGate": "tutors",
+                      "current": 2,
+                      "target": 4,
+                      "deficit": 2,
+                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
+                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
+                      "roleMatchesBeforeExistingExclusions": 2,
+                      "candidateCount": 0
+                    }
+                  ]
                 },
                 "swaps": []
               }
@@ -2838,7 +3588,7 @@
       {
         "key": "average-nonland-mv",
         "category": "construction",
-        "observed": 2.51,
+        "observed": 2.54,
         "required": "at most 2.6",
         "passed": true,
         "pressurePoint": "speed/curve"
@@ -2846,7 +3596,7 @@
       {
         "key": "early-plays",
         "category": "construction",
-        "observed": 44,
+        "observed": 43,
         "required": "at least 35",
         "passed": true,
         "pressurePoint": "speed/curve"
@@ -2920,31 +3670,31 @@
       "landCount": 31,
       "nonlandCount": 69,
       "landRatio": 0.31,
-      "averageNonlandManaValue": 2.51,
+      "averageNonlandManaValue": 2.54,
       "manaCurve": {
         "0": 0,
         "1": 13,
-        "2": 31,
+        "2": 30,
         "3": 11,
-        "4": 10,
+        "4": 11,
         "5": 2,
         "6": 1,
         "7+": 1
       },
       "coloredPips": {
-        "W": 13,
+        "W": 14,
         "U": 14,
         "B": 9,
         "R": 22,
         "G": 10
       },
       "roleCounts": {
-        "token production": 18,
-        "repeatable token engine": 8,
+        "token production": 19,
+        "repeatable token engine": 9,
         "haste": 6,
         "extra combat": 5,
         "untap engine": 5,
-        "creature": 15,
+        "creature": 16,
         "cost reduction": 6,
         "card draw": 22,
         "graveyard recursion": 5,
@@ -2973,7 +3723,7 @@
         "treasure": 7,
         "sacrifice synergy": 2,
         "delayed mana acceleration": 2,
-        "go-wide payoff": 1,
+        "go-wide payoff": 2,
         "repeatable life gain engine": 1,
         "death-trigger draw engine": 1,
         "mana filtering": 1,
@@ -2986,7 +3736,7 @@
         "sacrifice outlet": 1,
         "artifact sacrifice outlet": 1
       },
-      "earlyPlayCount": 44,
+      "earlyPlayCount": 43,
       "fastManaCount": 2,
       "rampCount": 26,
       "drawCount": 27,
