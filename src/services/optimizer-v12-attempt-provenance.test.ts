@@ -55,6 +55,21 @@ test('candidate provenance distinguishes completed absence, unavailable evidence
   assert.equal((absent.candidateGroups as Array<Record<string, unknown>>)[0]?.candidateCount, 1);
 });
 
+test('candidate provenance retains constrained-pool absence diagnostics', () => {
+  const input = plan('no-verified-win-package');
+  const source = input.sourceUpgradeAnalysis as Record<string, unknown>;
+  const groupsInput = source.candidateAddsByDeficit as Array<Record<string, unknown>>;
+  groupsInput[0] = {
+    ...groupsInput[0],
+    candidateAvailability: 'all-role-cards-already-present-or-excluded',
+    roleMatchesBeforeExistingExclusions: 2,
+  };
+  const result = candidatePlanProvenanceV15(input);
+  const groups = result.candidateGroups as Array<Record<string, unknown>>;
+  assert.equal(groups[0]?.candidateAvailability, 'all-role-cards-already-present-or-excluded');
+  assert.equal(groups[0]?.roleMatchesBeforeExistingExclusions, 2);
+});
+
 test('attempt trace accumulation retains every attempted swap size and its candidate comparisons', () => {
   let attempts: RefinementCandidateAttemptV15[] = [];
   attempts = appendRefinementCandidateAttemptV15(attempts, {

@@ -607,7 +607,12 @@ export async function suggestDeckUpgrades(
     const results = restrictedPoolActive
       ? genericResults
       : mergeCardsByName(themedResults, strategyResults, genericResults);
-    if (results.length === 0) continue;
+    const roleMatchesBeforeExistingExclusions = restrictedEligiblePool
+      ? restrictedEligiblePool
+        .filter((card) => !card.type_line.toLowerCase().includes('land'))
+        .filter((card) => card.legalities.commander === 'legal')
+        .filter((card) => cardMatchesRole(card, deficit.role, deficit.targetGate)).length
+      : null;
     const candidatesForPriority = deficit.prioritySource === 'authoritative-target-gate'
       && authoritativeTargetGatePriorities.length > 1
       ? Math.min(3, maxCandidates)
@@ -630,8 +635,15 @@ export async function suggestDeckUpgrades(
         if (aStrategy.substantive && aStrategy.score !== bStrategy.score) return bStrategy.score - aStrategy.score;
         return candidateScore(b, deficit.role, strategyContext, deficit.target, deficit.targetGate)
           - candidateScore(a, deficit.role, strategyContext, deficit.target, deficit.targetGate)
-          || a.name.localeCompare(b.name);
+        || a.name.localeCompare(b.name);
       });
+    const candidateAvailability = ranked.length > 0
+      ? 'candidates-found'
+      : restrictedPoolActive
+        ? roleMatchesBeforeExistingExclusions === 0
+          ? 'no-eligible-role-cards-in-policy-pool'
+          : 'all-role-cards-already-present-or-excluded'
+        : 'no-candidates-after-search-filtering';
     const rankedForPrinting = restrictedPoolActive
       ? ranked.slice(0, Math.max(candidatesForPriority * 3, candidatesForPriority))
       : ranked;
@@ -693,6 +705,8 @@ export async function suggestDeckUpgrades(
     candidateGroups.push({
       ...deficit,
       candidateDiscoveryMode: candidateDiscovery.mode,
+      candidateAvailability,
+      roleMatchesBeforeExistingExclusions,
       searchQuery: query,
       supplementalStrategyRoleQueries,
       supplementalThemeRoleQuery: themedQuery,

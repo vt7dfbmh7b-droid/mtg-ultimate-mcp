@@ -250,6 +250,8 @@ export function candidatePlanProvenanceV15(plan: Record<string, unknown> | null)
         target: group.target ?? null,
         deficit: group.deficit ?? null,
         candidateDiscoveryMode: group.candidateDiscoveryMode ?? null,
+        candidateAvailability: group.candidateAvailability ?? null,
+        roleMatchesBeforeExistingExclusions: group.roleMatchesBeforeExistingExclusions ?? null,
         candidateCount: Array.isArray(group.candidates) ? group.candidates.length : 0,
       }))
     : [];
