@@ -71,19 +71,19 @@
       ],
       "metadataPath": "test-results/marvel-bracket5-broad/run-metadata.txt",
       "exists": true,
-      "sourceSha": "262e26a3937fcd5425c7ec5fcdc7e66e12c938ee",
-      "outcome": "pass",
+      "sourceSha": "5f83e657b1d2a7689528041079b67be6328733bc",
+      "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "262e26a3937fcd5425c7ec5fcdc7e66e12c938ee",
-        "workflow_source_sha": "262e26a3937fcd5425c7ec5fcdc7e66e12c938ee",
-        "executed_head_sha": "262e26a3937fcd5425c7ec5fcdc7e66e12c938ee",
-        "control_outcome": "success",
+        "source_sha": "5f83e657b1d2a7689528041079b67be6328733bc",
+        "workflow_source_sha": "5f83e657b1d2a7689528041079b67be6328733bc",
+        "executed_head_sha": "5f83e657b1d2a7689528041079b67be6328733bc",
+        "control_outcome": "failure",
         "build_outcome": "success",
         "construction_outcome": "success",
         "refine_outcome": "success",
-        "target_quality_outcome": "success",
-        "strategy_preservation_outcome": "success",
+        "target_quality_outcome": "failure",
+        "strategy_preservation_outcome": "failure",
         "policy": "permanent-production-presets",
         "max_win_package_cards": "4",
         "exact_card_count": "true",
@@ -92,7 +92,11 @@
         "persistent_colored_mana_floor": "true",
         "meaningful_strategy_loss_rejected": "true"
       },
-      "unmetPassConditions": []
+      "unmetPassConditions": [
+        "control_outcome=success",
+        "target_quality_outcome=success",
+        "strategy_preservation_outcome=success"
+      ]
     },
     {
       "id": "MIDDLE-EARTH-PRECON-REFINE",

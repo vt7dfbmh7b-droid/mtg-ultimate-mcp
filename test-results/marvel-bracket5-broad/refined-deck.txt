@@ -20,33 +20,30 @@
 1 The Soul Stone (SPM) 66
 1 Sol Ring (MSC) 211
 1 Hawkeye, Master Marksman (MSH) 130
-1 Steelshaper's Gift (MAR) 50
-1 Radioactive Spider (SPM) 111
-1 Blasphemous Act (MSC) 163
-1 Swiftfoot Boots (MSC) 216
-1 Iron Man, Titan of Innovation (MAR) 91
-1 Lightning Greaves (MSC) 202
-1 Seize the Day (MSC) 166
-1 Fabricate (SLD) 7118
 1 Dark Ritual (MSC) 793
-1 Captain America, Liberator (MSC) 587
-1 Electro, Assaulting Battery (SPM) 76
+1 Fantastic Bounce (MSC) 620
+1 Swiftfoot Boots (MSC) 216
+1 Swords to Plowshares (MSC) 143
+1 Blasphemous Act (MSC) 163
+1 Fabricate (SLD) 7118
+1 Lightning Greaves (MSC) 202
 1 Defense of the Heart (MAR) 76
+1 Seize the Day (MSC) 166
 1 Heroic Intervention (MAR) 78
+1 Electro, Assaulting Battery (SPM) 76
 1 Deadly Rollick (SLD) 1754
-1 The Masters of Evil (MSH) 105
 1 Dora Milaje Elite (MSC) 12
 1 Arcane Signet (MSC) 191
 1 Deadly Dispute (MSC) 794
-1 Swords to Plowshares (MSC) 143
-1 Silver Surfer, Galactus's Herald (MSC) 10
 1 Gift of Immortality (MSC) 134
 1 Aurelia, the Warleader (MAR) 86
 1 Relentless Assault (MAR) 25
 1 Birds of Paradise (MSC) 170
 1 Fellwar Stone (MSC) 285
 1 Thought Vessel (MSC) 222
+1 Big Score (MSC) 802
 1 Savage Beating (MAR) 26
+1 Unexpected Windfall (MAR) 29
 1 Spider-Ham, Peter Porker (SPM) 114
 1 Loki, the Deceiver (MSC) 86
 1 Path to Exile (MSC) 141
@@ -61,12 +58,18 @@
 1 Skullclamp (MSC) 210
 1 Living Laser (MSC) 55
 1 Chromatic Lantern (MSC) 195
-1 Sun-Spider, Nimble Webber (SPM) 154
 1 Helm of the Host (MSC) 200
 1 Reanimate (MAR) 20
 1 Stark Industries Executive (MSH) 153
 1 Farseek (MSC) 173
 1 Jeska's Will (SLD) 1744
+1 Nature's Lore (MSC) 177
+1 Brainstorm (SLD) 7013
+1 Herald's Horn (MSC) 287
+1 Currency Converter (MSC) 197
+1 Common Crook (MSC) 792
+1 T'Challa, the Black Panther (MSC) 7
+1 Three Visits (MSC) 181
 1 Command Tower (MSC) 233
 1 Exotic Orchard (MSC) 241
 1 Secluded Courtyard (MSC) 265
@@ -88,6 +91,3 @@
 3 Mountain (MSC) 858
 3 Island (MSH) 289
 3 Plains (MSC) 866
-1 Shuri, the Black Panther (MSC) 95 *N*
-1 Currency Converter (MSC) 197 *N*
-1 Peter Parker // Amazing Spider-Man (SPM) 10 *N*
