@@ -306,6 +306,14 @@ const tokenCopyMultiplier = card({
   manaCost: '{3}{G}',
 });
 
+const tokenConversionMultiplier = card({
+  name: 'Generic Token-Conversion Multiplier',
+  typeLine: 'Artifact',
+  oracleText: 'If you would create a Clue, Food, or Treasure token, instead create one of each.',
+  cmc: 3,
+  manaCost: '{3}',
+});
+
 const teamAnthem = card({
   name: 'Generic Team Anthem',
   typeLine: 'Enchantment',
@@ -473,6 +481,8 @@ test('token multipliers and team-wide or board-scaling payoffs retain combat-eng
   assert.ok(effectiveCardRolesV15(tokenMultiplier).includes('token multiplier'));
   assert.ok(inferCardRoles(tokenCopyMultiplier).includes('token production'));
   assert.ok(effectiveCardRolesV15(tokenCopyMultiplier).includes('token multiplier'));
+  assert.ok(inferCardRoles(tokenConversionMultiplier).includes('token production'));
+  assert.ok(effectiveCardRolesV15(tokenConversionMultiplier).includes('token multiplier'));
   assert.ok(inferCardRoles(teamAnthem).includes('go-wide payoff'));
   assert.ok(inferCardRoles(typalAnthem).includes('go-wide payoff'));
   assert.ok(inferCardRoles(distributedTypalPump).includes('go-wide payoff'));
