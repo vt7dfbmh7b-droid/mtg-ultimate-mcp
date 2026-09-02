@@ -68,6 +68,8 @@ Exit evidence must include fresh constrained and unrestricted controls, not Marv
 
 Goal: improve the deck that exists, not an abstract score.
 
+Current seven-day execution plan: `docs/NEXT-WEEK-AUTONOMOUS-WORK-PLAN.md`. It is subordinate to `project-state.json` and the live GitHub state, but should be used as the default autonomous work queue while INTEL-02 remains active.
+
 Required capabilities:
 - diagnose actual failed target gates;
 - distinguish hard target requirements from aspirational role counts;
