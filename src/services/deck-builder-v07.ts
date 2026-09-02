@@ -664,7 +664,7 @@ const UPGRADE_CANDIDATE_ROLES_V15: UpgradeAddressedRoleV15[] = [
 ];
 const MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15 = 4;
 const STRATEGY_COMPONENT_ROLES_V15: Record<string, ReadonlySet<string>> = {
-  'combat-tokens': new Set(['go-wide payoff', 'typal board control payoff', 'repeatable token engine', 'death-trigger token engine', 'token-event life drain', 'team combat-damage draw engine', 'extra combat', 'untap engine', 'haste']),
+  'combat-tokens': new Set(['go-wide payoff', 'typal board control payoff', 'repeatable token engine', 'death-trigger token engine', 'token multiplier', 'token-event life drain', 'team combat-damage draw engine', 'extra combat', 'untap engine', 'haste']),
   'equipment-voltron': new Set(['equipment', 'protection', 'board protection']),
   counters: new Set(['+1/+1 counters', 'proliferate']),
   'graveyard-reanimator': new Set(['graveyard recursion', 'high-capacity graveyard recursion']),
@@ -702,6 +702,11 @@ function summaryIsPremiumEarlyInfrastructureV15(card: Record<string, unknown>): 
   if (manaValue > 2) return false;
   const roles = summarizedRoles(card);
   return roles.has('fast mana') || roles.has('mana rock') || roles.has('mana dork');
+}
+
+function summaryIsBroadColorFixingManaSourceV15(card: Record<string, unknown>): boolean {
+  const roles = summarizedRoles(card);
+  return roles.has('persistent colored mana source') && roles.has('mana rock');
 }
 
 function recordObject(value: unknown): Record<string, unknown> {
@@ -1050,6 +1055,12 @@ export function pairUpgradeSwapsByStructureV15(
         // only another premium early infrastructure card may replace it.
         if (summaryIsPremiumEarlyInfrastructureV15(cutCard)
           && !summaryIsPremiumEarlyInfrastructureV15(addCard)) return false;
+        // In four- and five-colour decks, a broad persistent fixing rock is not
+        // interchangeable with a conditional land tutor. Preserve the fixing
+        // source unless the incoming card supplies the same persistent role.
+        if (recordNumber(currentMetrics.commanderColorCount) >= 4
+          && summaryIsBroadColorFixingManaSourceV15(cutCard)
+          && !summaryIsBroadColorFixingManaSourceV15(addCard)) return false;
         const afterSwap = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);
         if (!preservesStructuralFloorsV15(counts, afterSwap, state.targets)) return false;
         const persistentColoredManaSourcesAfterSwap = persistentColoredManaSourcesAfterAdd

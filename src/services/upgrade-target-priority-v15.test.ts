@@ -366,7 +366,8 @@ test('five-color curve repair cannot strip persistent colored mana below its flo
   const fixingCutCount = pairings.filter((pairing) => (
     ((pairing.cut.card as Record<string, unknown>).roles as string[]).includes('persistent colored mana source')
   )).length;
-  assert.equal(fixingCutCount, 4);
+  assert.equal(fixingCutCount, 0);
+  assert.equal(pairings.length, 1);
   assert.ok(pairings.every((pairing) => pairing.persistentColoredManaSourcesAfterSwap >= 8));
   assert.equal(pairings.at(-1)?.persistentColoredManaSourceFloor, 8);
 });
@@ -445,6 +446,19 @@ test('non-mana upgrades cannot spend premium low-cost acceleration as a fallback
     { rejectMeaningfulStrategyLoss: true },
   );
 
+  assert.deepEqual(pairings, []);
+});
+
+test('four-color upgrades preserve broad fixing rocks against conditional land tutors', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{ role: 'tutor' as const, candidate: {
+      card: { name: 'Conditional Land Tutor', roles: ['tutor', 'land tutor', 'creature'], manaValue: 1, typeLine: 'Creature' },
+      authoritativeTargetGate: 'tutors', strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+    }}],
+    [{ card: { name: 'Broad Fixing Rock', roles: ['mana acceleration', 'mana rock', 'persistent colored mana source'], manaValue: 3, typeLine: 'Artifact' }, heuristicCutPressure: 20, strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] }}],
+    { rampCount: 20, drawCount: 20, interactionCount: 20, protectionCount: 8, tutorCount: 2, recursionCount: 4, boardWipeCount: 2, earlyPlayCount: 40, averageNonlandManaValue: 2.5, nonlandCount: 69, persistentColoredManaSourceCount: 10, commanderColorCount: 4, roleCounts: { 'free interaction': 1 } },
+    { ...bracketFiveTargets }, 5, { rejectMeaningfulStrategyLoss: true },
+  );
   assert.deepEqual(pairings, []);
 });
 

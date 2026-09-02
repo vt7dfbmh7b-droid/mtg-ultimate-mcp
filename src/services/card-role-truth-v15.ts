@@ -441,6 +441,9 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   const interactionTruth = interactionRoleTruthV15(card);
   const sacrificeTruth = sacrificeRoleTruthV15(card);
   const tutorTruth = tutorRoleTruthV15(card);
+  if (/(?:tokens? plus that many|twice as many tokens?|copy of each token|copy each token)/.test(oracle)) {
+    roles.add('token multiplier');
+  }
   const landReplacementOnly = roles.has('land ramp')
     && /\bas an additional cost to cast this spell, sacrifice a land\b/.test(oracle);
   if (landReplacementOnly) {

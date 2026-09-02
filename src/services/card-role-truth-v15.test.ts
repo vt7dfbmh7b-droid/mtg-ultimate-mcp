@@ -462,6 +462,7 @@ test('delayed death returns count as graveyard recursion even when Oracle text o
 
 test('token multipliers and team-wide or board-scaling payoffs retain combat-engine truth', () => {
   assert.ok(inferCardRoles(tokenMultiplier).includes('token production'));
+  assert.ok(effectiveCardRolesV15(tokenMultiplier).includes('token multiplier'));
   assert.ok(inferCardRoles(teamAnthem).includes('go-wide payoff'));
   assert.ok(inferCardRoles(typalAnthem).includes('go-wide payoff'));
   assert.ok(inferCardRoles(distributedTypalPump).includes('go-wide payoff'));
