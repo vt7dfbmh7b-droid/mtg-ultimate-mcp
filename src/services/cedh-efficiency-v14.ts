@@ -9,7 +9,7 @@ import {
   type ResolvedPrintingPolicyV08,
 } from './printing-policy-v08.js';
 import { getCardOracleText, getCardsByIdentifiers, searchCards, type CardIdentifierInput } from './scryfall.js';
-import { effectiveCardRolesV15, manaRoleTruthV15 } from './card-role-truth-v15.js';
+import { effectiveCardRolesV15, manaRoleTruthV15, tutorRoleTruthV15 } from './card-role-truth-v15.js';
 import {
   cardCreatureTypeCoherenceScoreV15,
   deriveCreatureTypePreferencesV15,
@@ -157,6 +157,7 @@ export function strictCedhQualityV14(
   if (isLand(card)) return { eligible: false, score: -999, reasons: [] };
   const roles = new Set(effectiveCardRolesV15(card));
   const manaTruth = manaRoleTruthV15(card);
+  const tutorTruth = tutorRoleTruthV15(card);
   const typal = cardCreatureTypeCoherenceScoreV15(card, creatureTypePreference);
   const highLeverageTutor = isHighLeverageTutorEngineV14(card);
   const broadTutor = isBroadTutorV14(card);
@@ -192,7 +193,7 @@ export function strictCedhQualityV14(
     score += 82;
     reasons.push('cheap broad tutor');
   }
-  if (roles.has('tutor') && !broadTutor && !highLeverageTutor) {
+  if (tutorTruth.searchesLibrary && !tutorTruth.reliableStructuralTutor && !broadTutor && !highLeverageTutor) {
     score -= 25;
     reasons.push('restricted tutor does not receive broad-tutor credit');
   }
