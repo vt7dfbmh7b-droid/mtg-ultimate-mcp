@@ -103,13 +103,13 @@
       ],
       "metadataPath": "test-results/middle-earth-precon-refine/run-metadata.txt",
       "exists": true,
-      "sourceSha": "3bcb7f4ee17d76638c2774ec6238fc9579a18163",
+      "sourceSha": "262e26a3937fcd5425c7ec5fcdc7e66e12c938ee",
       "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "3bcb7f4ee17d76638c2774ec6238fc9579a18163",
-        "workflow_source_sha": "3bcb7f4ee17d76638c2774ec6238fc9579a18163",
-        "executed_head_sha": "3bcb7f4ee17d76638c2774ec6238fc9579a18163",
+        "source_sha": "262e26a3937fcd5425c7ec5fcdc7e66e12c938ee",
+        "workflow_source_sha": "262e26a3937fcd5425c7ec5fcdc7e66e12c938ee",
+        "executed_head_sha": "262e26a3937fcd5425c7ec5fcdc7e66e12c938ee",
         "control_outcome": "success",
         "build_outcome": "success",
         "regression_outcome": "success",
@@ -139,13 +139,13 @@
       ],
       "metadataPath": "test-results/precon-generalization/run-metadata.txt",
       "exists": true,
-      "sourceSha": "3bcb7f4ee17d76638c2774ec6238fc9579a18163",
+      "sourceSha": "262e26a3937fcd5425c7ec5fcdc7e66e12c938ee",
       "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "3bcb7f4ee17d76638c2774ec6238fc9579a18163",
-        "workflow_source_sha": "3bcb7f4ee17d76638c2774ec6238fc9579a18163",
-        "executed_head_sha": "3bcb7f4ee17d76638c2774ec6238fc9579a18163",
+        "source_sha": "262e26a3937fcd5425c7ec5fcdc7e66e12c938ee",
+        "workflow_source_sha": "262e26a3937fcd5425c7ec5fcdc7e66e12c938ee",
+        "executed_head_sha": "262e26a3937fcd5425c7ec5fcdc7e66e12c938ee",
         "control_outcome": "success",
         "build_outcome": "success",
         "regression_outcome": "success",
@@ -216,20 +216,20 @@
       ],
       "metadataPath": "test-results/precon-generalization-squirrels/run-metadata.txt",
       "exists": true,
-      "sourceSha": "3bcb7f4ee17d76638c2774ec6238fc9579a18163",
-      "outcome": "fail",
+      "sourceSha": "262e26a3937fcd5425c7ec5fcdc7e66e12c938ee",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "3bcb7f4ee17d76638c2774ec6238fc9579a18163",
-        "workflow_source_sha": "3bcb7f4ee17d76638c2774ec6238fc9579a18163",
-        "executed_head_sha": "3bcb7f4ee17d76638c2774ec6238fc9579a18163",
-        "control_outcome": "failure",
+        "source_sha": "262e26a3937fcd5425c7ec5fcdc7e66e12c938ee",
+        "workflow_source_sha": "262e26a3937fcd5425c7ec5fcdc7e66e12c938ee",
+        "executed_head_sha": "262e26a3937fcd5425c7ec5fcdc7e66e12c938ee",
+        "control_outcome": "success",
         "build_outcome": "success",
         "regression_outcome": "success",
         "execution_outcome": "success",
         "hard_truth_outcome": "success",
-        "target_quality_outcome": "failure",
-        "strategy_preservation_outcome": "failure",
+        "target_quality_outcome": "success",
+        "strategy_preservation_outcome": "success",
         "policy": "exact-squirreled-away-stock-unrestricted-budgeted-upgrade",
         "printing_family": "unrestricted",
         "exact_card_count": "true",
@@ -243,11 +243,7 @@
         "structural_floors_required": "true",
         "meaningful_strategy_loss_rejected": "true"
       },
-      "unmetPassConditions": [
-        "control_outcome=success",
-        "target_quality_outcome=success",
-        "strategy_preservation_outcome=success"
-      ]
+      "unmetPassConditions": []
     }
   ]
 }
