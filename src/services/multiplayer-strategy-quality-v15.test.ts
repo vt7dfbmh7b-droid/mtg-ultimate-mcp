@@ -5,6 +5,7 @@ import { parseDecklist } from './deck.js';
 import {
   auditUpgradeDeckStrategyRetentionV15,
   cardCommanderStrategyAffinityV15,
+  substantiveCommanderStrategyAffinityScoreV15,
   type CommanderStrategyContextV15,
 } from './commander-strategy-affinity-v15.js';
 
@@ -86,7 +87,7 @@ function deck(payoffName: string): ReturnType<typeof parseDecklist> {
   ].join('\n'));
 }
 
-test('candidate affinity ranks tablewide pressure above equivalent single-target drain without moving substantive overlap', () => {
+test('candidate affinity makes tablewide pressure a substantive ranking tier without moving raw overlap', () => {
   const context: CommanderStrategyContextV15 = {
     commanderNames: [commander.name],
     strategies: [{ archetype: 'aristocrats', score: 6, evidence: ['synthetic substantive threshold'] }],
@@ -98,6 +99,20 @@ test('candidate affinity ranks tablewide pressure above equivalent single-target
   assert.equal(singleTarget.matches[0]?.overlapScore, 6);
   assert.equal(tablewide.score, 8, 'tablewide Commander pressure should carry the shared +2 quality premium');
   assert.equal(singleTarget.score, 6, 'single-target drain keeps the same substantive overlap without the multiplayer premium');
+  assert.equal(substantiveCommanderStrategyAffinityScoreV15(tablewide), 8);
+  assert.equal(substantiveCommanderStrategyAffinityScoreV15(singleTarget), 6);
+});
+
+test('multiplayer quality cannot manufacture substantive strategy support below the raw threshold', () => {
+  const context: CommanderStrategyContextV15 = {
+    commanderNames: ['Unnamed Weak Strategy Commander'],
+    strategies: [{ archetype: 'aristocrats', score: 5, evidence: ['synthetic below-threshold strategy'] }],
+  };
+  const affinity = cardCommanderStrategyAffinityV15(tablewidePayoff, context);
+
+  assert.equal(affinity.matches[0]?.overlapScore, 5);
+  assert.equal(affinity.score, 5, 'quality premium is not added for a non-substantive commander/deck strategy');
+  assert.equal(substantiveCommanderStrategyAffinityScoreV15(affinity), 0, 'non-substantive context matches must not become substantive ranking support');
 });
 
 test('whole-deck strategy retention distinguishes tablewide repeatable drain from single-target drain', () => {
