@@ -222,10 +222,11 @@ export function deriveUpgradeStrategyContextV15(
 /**
  * Compare one card with an already-derived commander strategy context.
  *
- * The overlap score is intentionally built only from the existing V0.15 strategy scores:
- * for each shared archetype, count the smaller of the commander score and card score. This
- * prevents a candidate from receiving more affinity for an archetype than either side
- * actually demonstrated and avoids inventing a second weighting system.
+ * Per-archetype overlap remains built only from the existing V0.15 strategy scores: for each
+ * shared archetype, count the smaller of the commander score and card score. The aggregate score
+ * may then carry the same small multiplayer-scope quality premium used by whole-deck retention,
+ * but only for substantive commander/deck strategies. This improves tie-breaking among cards that
+ * already satisfy the same structural gate without changing substantive thresholds or overlap math.
  */
 export function cardCommanderStrategyAffinityV15(
   card: ScryfallCard,
@@ -251,8 +252,13 @@ export function cardCommanderStrategyAffinityV15(
     });
   }
 
+  const baseScore = matches.reduce((sum, match) => sum + match.overlapScore, 0);
+  const multiplayerQualityBonus = matches
+    .filter((match) => match.commanderScore >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15)
+    .reduce((sum, match) => sum + multiplayerStrategyQualityBonusV15(card, match.archetype), 0);
+
   return {
-    score: matches.reduce((sum, match) => sum + match.overlapScore, 0),
+    score: baseScore + multiplayerQualityBonus,
     matches,
   };
 }
