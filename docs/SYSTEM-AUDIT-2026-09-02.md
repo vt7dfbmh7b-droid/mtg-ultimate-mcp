@@ -2,9 +2,9 @@
 
 ## Executive result
 
-The repository is structurally coherent and deterministic at cleanup source `c543502dceb56c137584f413ecb31dad701bc865`. The audit removed four abandoned or misleading implementation paths, brought all automation scripts into the strict build, repaired validation-state reconciliation for all eleven evidence writers, aligned the environment template with runtime configuration, and added regressions for repository-level invariants. No historical evidence was deleted, no stable/current server selection changed, and PR #29 remains experimental and unmerged.
+The repository is structurally coherent and deterministic at cleanup source `c543502dceb56c137584f413ecb31dad701bc865`, with follow-up provenance hardening at `d5bc84d...`. The audit removed four abandoned or misleading implementation paths, brought all automation scripts into the strict build, repaired validation-state reconciliation for all eleven evidence writers, aligned the environment template with runtime configuration, and added regressions for repository-level invariants. No historical evidence was deleted, no stable/current server selection changed, and PR #29 remains experimental and unmerged.
 
-The combined deterministic system passes 924/924 tests and all three TypeScript projects. Audit-triggered source `974f0f6...` also passed pinned GitHub CI and project integrity. This is engineering validation, not a new accepted INTEL-02 checkpoint: Food and Fellowship, Necron Dynasties, Squirreled Away and generic strategy inference passed at `974f0f6...`, but broad Marvel still failed target-quality and strategy-preservation gates; focused Marvel's latest pass remains `ec4f4d1...`.
+The combined deterministic system passes 925/925 tests and all three TypeScript projects. Audit-triggered source `974f0f6...` also passed pinned GitHub CI and project integrity. This is engineering validation, not a new accepted INTEL-02 checkpoint: Food and Fellowship, Necron Dynasties, Squirreled Away and generic strategy inference passed at `974f0f6...`, but broad Marvel still failed target-quality and strategy-preservation gates; focused Marvel's latest pass remains `ec4f4d1...`.
 
 ## Scope and inventory
 
@@ -35,6 +35,7 @@ The versioned V0.4–V0.15 modules are not dead copies: they form the explicit i
 | Reconciled registered evidence writers | Three writers could update metadata without its generated index/docs. | Registry-derived test proves every registered writer rebuilds and stages both views. |
 | Reconciled all evidence writers | Four unregistered legacy writers still used cancelling groups or a single push attempt. | The regression now discovers all eleven pushing workflows; each has a unique non-cancelling group and eight latest-head retries. |
 | Completed `.env.example` | Six active retry/timeout/pacing variables were undocumented. | Regression compares the template with every `process.env` read in `src/config.ts`. |
+| Preserved empty upgrade-lane diagnostics | Restricted-family refinement could report only `no-supported-swaps-found` while omitting which failed target lanes had no eligible or only already-present cards. | `suggestDeckUpgrades` now retains an availability reason and pre-exclusion role-match count for every target lane; provenance projection and regression coverage pass at `d5bc84d...`. |
 
 ## Structural assessment
 
@@ -59,7 +60,7 @@ Project recovery passes machine-state validation, generated-document validation 
 ## Historical diagnostics and live evidence
 
 - The 100 most recent active-branch Action runs inspected contained 69 successes, 28 failures and 3 cancellations. Many failures are retained adversarial evidence rather than regressions in the stable server.
-- Audit-triggered source `974f0f6...` passed pinned CI, project integrity, Food and Fellowship, Necron Dynasties, Squirreled Away and generic strategy inference. Broad Marvel executed but accepted no supported package, so target-quality and strategy-preservation outcomes failed. Focused Marvel was not retriggered; its latest pass remains `ec4f4d1...`.
+- Audit-triggered source `974f0f6...` passed pinned CI, project integrity, Food and Fellowship, Necron Dynasties, Squirreled Away and generic strategy inference. Broad Marvel executed but accepted no supported package, so target-quality and strategy-preservation outcomes failed. A follow-up local focused-Marvel attempt was stopped after the 15-minute provider timeout and produced no assertion or result artifact; it is recorded as unavailable provider evidence, not intelligence failure. Focused Marvel's last completed pass remains `ec4f4d1...`.
 - Middle-earth run `33611526105` passed its build and live-control steps but failed its single-attempt evidence push. That operational failure exposed four remaining legacy writers, all repaired at `c543502...`.
 - CI run `33606486408` and project-state run `33606486359` exposed a stale validation index. KF-045 records the cause and the completed prevention.
 - Older build and target-pressure diagnostic failures are covered by the now-green deterministic suite. `test-results/intel02-shared-truth-repair/failure-context.txt` remains the only non-empty archived failure-context file and was intentionally retained.
@@ -70,7 +71,7 @@ Project recovery passes machine-state validation, generated-document validation 
 
 | Severity | Finding | Impact | State / required follow-up |
 |---|---|---|---|
-| High | Broad Marvel is red at the latest exact-source live batch. | Prevents a uniform constrained-family INTEL-02 quality claim. | Open: diagnose generic candidate/preservation behavior and rerun the entire common-source family. |
+| High | Broad Marvel is red at the latest exact-source live batch. | Prevents a uniform constrained-family INTEL-02 quality claim. | Open: use the new empty-lane provenance to diagnose generic candidate/preservation behavior, then rerun the entire common-source family. |
 | High | Writer-fix source `c543502...` has deterministic but not complete exact-source evidence. | Local green cannot establish all provider-backed behavior or a new accepted checkpoint. | Open: require its CI and affected live workflows; run focused Marvel at the same source; manually audit accepted swaps. |
 | High | The main-branch dependency-security workflow still targets legacy `agent/package-probabilities`. | Security automation may inspect an obsolete development line rather than the active candidate. | Open outside this branch's authority: correct on `main` under explicit release/governance approval. |
 | Medium | Runtime shutdown has no awaited drain or forced-close deadline. | Active connections can delay deployment termination. | Open: extract a testable lifecycle, stop accepting work, await close, force-close after a configured deadline. |
@@ -89,7 +90,7 @@ No critical security, legality, data-loss or stable-interface defect was found.
 | Runtime TypeScript build | Pass |
 | Project-management TypeScript build | Pass |
 | All automation/E2E TypeScript build | Pass, 46 scripts |
-| Deterministic suite | Pass, 924/924 |
+| Deterministic suite | Pass, 925/925 |
 | Workflow YAML parse | Pass, 39 files |
 | Immutable action references | Pass, all external actions pinned to 40-character SHAs |
 | Runtime environment-template coverage | Pass |
