@@ -2,9 +2,9 @@
 
 ## Executive result
 
-The repository is structurally coherent and deterministic at cleanup source `c543502dceb56c137584f413ecb31dad701bc865`, with follow-up provenance hardening at `d5bc84d...`. The audit removed four abandoned or misleading implementation paths, brought all automation scripts into the strict build, repaired validation-state reconciliation for all eleven evidence writers, aligned the environment template with runtime configuration, and added regressions for repository-level invariants. No historical evidence was deleted, no stable/current server selection changed, and PR #29 remains experimental and unmerged.
+The repository is structurally coherent and deterministic at cleanup source `c543502dceb56c137584f413ecb31dad701bc865`, with follow-up provenance hardening at `07f36a74529a717cf6c6e85f00ea999f40dff098`. The audit removed four abandoned or misleading implementation paths, brought all automation scripts into the strict build, repaired validation-state reconciliation for all eleven evidence writers, aligned the environment template with runtime configuration, and added regressions for repository-level invariants. No historical evidence was deleted, no stable/current server selection changed, and PR #29 remains experimental and unmerged.
 
-The combined deterministic system passes 925/925 tests and all three TypeScript projects. Audit-triggered source `974f0f6...` also passed pinned GitHub CI and project integrity. This is engineering validation, not a new accepted INTEL-02 checkpoint: Food and Fellowship, Necron Dynasties, Squirreled Away and generic strategy inference passed at `974f0f6...`, but broad Marvel still failed target-quality and strategy-preservation gates; focused Marvel's latest pass remains `ec4f4d1...`.
+The combined deterministic system passes 925/925 tests and all three TypeScript projects. Follow-up source `07f36a74529a717cf6c6e85f00ea999f40dff098` passed pinned CI, focused Marvel refinement, Squirreled Away, generic precon, and Middle-earth precon controls; broad Marvel still failed target-quality and strategy-preservation gates. This is engineering validation, not a new accepted INTEL-02 checkpoint.
 
 ## Scope and inventory
 
@@ -60,7 +60,7 @@ Project recovery passes machine-state validation, generated-document validation 
 ## Historical diagnostics and live evidence
 
 - The 100 most recent active-branch Action runs inspected contained 69 successes, 28 failures and 3 cancellations. Many failures are retained adversarial evidence rather than regressions in the stable server.
-- Audit-triggered source `974f0f6...` passed pinned CI, project integrity, Food and Fellowship, Necron Dynasties, Squirreled Away and generic strategy inference. Broad Marvel executed but accepted no supported package, so target-quality and strategy-preservation outcomes failed. A follow-up local focused-Marvel attempt was stopped after the 15-minute provider timeout and produced no assertion or result artifact; it is recorded as unavailable provider evidence, not intelligence failure. Focused Marvel's last completed pass remains `ec4f4d1...`.
+- Follow-up source `07f36a74529a717cf6c6e85f00ea999f40dff098` passed pinned CI and the focused Marvel refinement (`e24829418f5cf9a31ba8d4135bfe1e7211959ed2` in its persisted metadata). Focused refinement accepted five strategy-preserving swaps and removed only the curve failure. Broad Marvel executed successfully but accepted no package; its persisted provenance shows two policy-eligible fast-mana matches and two tutor matches, all already present/excluded, so target-quality and strategy-preservation correctly failed. No deck mutation occurred.
 - Middle-earth run `33611526105` passed its build and live-control steps but failed its single-attempt evidence push. That operational failure exposed four remaining legacy writers, all repaired at `c543502...`.
 - CI run `33606486408` and project-state run `33606486359` exposed a stale validation index. KF-045 records the cause and the completed prevention.
 - Older build and target-pressure diagnostic failures are covered by the now-green deterministic suite. `test-results/intel02-shared-truth-repair/failure-context.txt` remains the only non-empty archived failure-context file and was intentionally retained.
@@ -71,8 +71,8 @@ Project recovery passes machine-state validation, generated-document validation 
 
 | Severity | Finding | Impact | State / required follow-up |
 |---|---|---|---|
-| High | Broad Marvel is red at the latest exact-source live batch. | Prevents a uniform constrained-family INTEL-02 quality claim. | Open: use the new empty-lane provenance to diagnose generic candidate/preservation behavior, then rerun the entire common-source family. |
-| High | Writer-fix source `c543502...` has deterministic but not complete exact-source evidence. | Local green cannot establish all provider-backed behavior or a new accepted checkpoint. | Open: require its CI and affected live workflows; run focused Marvel at the same source; manually audit accepted swaps. |
+| High | Broad Marvel remains red at exact-source live validation. | Prevents a uniform constrained-family INTEL-02 quality claim. | Diagnosed: the exhaustive Marvel pool has only two eligible fast-mana and two eligible tutor role matches, all already present/excluded. Open: decide whether a generic cross-family candidate policy or an explicit constrained-family ceiling is intended; do not add card-name hacks. |
+| High | The cleanup/provenance source has mixed scenario evidence. | Local green and focused refinement success cannot establish a new accepted checkpoint while broad Marvel fails. | Open: manually audit focused accepted swaps and preserve the accepted checkpoint at `77a5383...`; no promotion. |
 | High | The main-branch dependency-security workflow still targets legacy `agent/package-probabilities`. | Security automation may inspect an obsolete development line rather than the active candidate. | Open outside this branch's authority: correct on `main` under explicit release/governance approval. |
 | Medium | Runtime shutdown has no awaited drain or forced-close deadline. | Active connections can delay deployment termination. | Open: extract a testable lifecycle, stop accepting work, await close, force-close after a configured deadline. |
 | Medium | Thirty-nine workflows and independent evidence commits create avoidable cost/race pressure. | Slow feedback and noisy history despite bounded reconciliation. | Open: consolidate related live controls into reusable workflows or one result aggregator without weakening exact-source isolation. |
@@ -103,10 +103,9 @@ No critical security, legality, data-loss or stable-interface defect was found.
 
 ## Prioritized remediation plan
 
-1. Publish cleanup/state commits and require exact-source CI plus project-state integrity to pass on the pinned Node 22.23.2 runner.
-2. Run one common-source registered live-control batch. Treat broad Marvel as blocking; preserve every failed artifact and do not accept a checkpoint from partial green evidence.
-3. Manually review every accepted IN->OUT package from that batch for strategy, infrastructure, mana, legality, printing and budget truth.
-4. Fix broad Marvel through generic semantic or selection logic, then repeat the full affected family rather than tuning a named card or commander.
+1. Keep `07f36a74529a717cf6c6e85f00ea999f40dff098` and its persisted live artifacts as the current mixed-validation candidate; do not promote the accepted checkpoint.
+2. Manually review every focused-Marvel accepted IN->OUT package for strategy, infrastructure, mana, legality, printing and budget truth.
+3. Decide whether the Marvel family should have an explicit construction ceiling or whether the generic candidate policy should be broadened across families; any change must remain semantic and rerun the full affected family.
 5. Add and test bounded graceful shutdown before changing the stable runtime lifecycle.
 6. Correct main-branch dependency-security targeting under explicit main/release authority.
 7. Consolidate live-control orchestration and define a non-destructive evidence-retention manifest before repository growth becomes material.
