@@ -42,6 +42,13 @@ export interface SacrificeRoleTruthV15 {
   reasons: string[];
 }
 
+export interface TutorRoleTruthV15 {
+  searchesLibrary: boolean;
+  randomOutcomeGated: boolean;
+  reliableStructuralTutor: boolean;
+  reasons: string[];
+}
+
 function text(card: ScryfallCard): string {
   return getCardOracleText(card).toLocaleLowerCase();
 }
@@ -218,6 +225,32 @@ function hasActionableGraveyardRecursion(textValue: string): boolean {
     || /\b(?:when|whenever) [^.\n]{0,120}\bdies?\b[^.\n]{0,180}\breturn (?:it|that card|that creature|them) to the battlefield\b/.test(textValue);
 }
 
+function hasRandomOutcomeGatedLibrarySearch(textValue: string): boolean {
+  if (!/\bsearch your library for\b/.test(textValue)) return false;
+  const dieRoll = /\broll (?:a |one |two |three |four )?d(?:4|6|8|10|12|20|100)\b/.test(textValue)
+    || /\broll (?:a |one |two |three |four |\d+ )?dice?\b/.test(textValue);
+  const dieBranchSearch = /(?:\d{1,3}(?:\s*[–—-]\s*\d{1,3})?|\d+\+)\s*(?:\||[–—-])\s*[^.\n]{0,240}\bsearch your library for\b/.test(textValue);
+  const conditionalRollSearch = /\bif (?:the )?(?:result|roll) (?:is|was)\b[^.\n]{0,180}\bsearch your library for\b/.test(textValue);
+  const coinFlipSearch = /\bflip a coin\b[\s\S]{0,500}\bif you (?:win|lose) (?:the )?flip\b[^.\n]{0,220}\bsearch your library for\b/.test(textValue);
+  return (dieRoll && (dieBranchSearch || conditionalRollSearch)) || coinFlipSearch;
+}
+
+export function tutorRoleTruthV15(card: ScryfallCard): TutorRoleTruthV15 {
+  const oracle = text(card);
+  const inferred = new Set(inferCardRoles(card));
+  const searchesLibrary = /\bsearch your library for\b/.test(oracle);
+  const randomOutcomeGated = inferred.has('tutor') && hasRandomOutcomeGatedLibrarySearch(oracle);
+  const reliableStructuralTutor = inferred.has('tutor') && !randomOutcomeGated;
+  const reasons: string[] = [];
+  if (randomOutcomeGated) reasons.push('library search is only available through a random die/coin outcome rather than reliable tutor access');
+  return {
+    searchesLibrary,
+    randomOutcomeGated,
+    reliableStructuralTutor,
+    reasons,
+  };
+}
+
 export function sacrificeRoleTruthV15(card: ScryfallCard): SacrificeRoleTruthV15 {
   const targets = repeatableSacrificeTargets(text(card));
   const genericOutlet = targets.some((target) => /^(?:(?:nonland|nontoken|other)\s+)*(?:creature|permanent|artifact|enchantment|token)s?\b/.test(target));
@@ -363,8 +396,9 @@ export function interactionRoleTruthV15(card: ScryfallCard): InteractionRoleTrut
  * or delayed mana may still be useful in a supported deck, but it cannot impersonate reliable fast
  * mana merely because its text contains a mana ability or creates a mana-producing token. Likewise,
  * a card that sacrifices only a named narrow object (for example a Clue or Saproling) cannot
- * impersonate a generic sacrifice outlet, and merely moving cards into/out of a graveyard is not
- * recursion unless the card can actually recover, replay, or reanimate them.
+ * impersonate a generic sacrifice outlet, merely moving cards into/out of a graveyard is not
+ * recursion unless the card can actually recover, replay, or reanimate them, and a lottery-gated
+ * library search cannot impersonate reliable structural tutor consistency.
  */
 export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   const roles = new Set(inferCardRoles(card));
@@ -372,6 +406,7 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   const manaTruth = manaRoleTruthV15(card);
   const interactionTruth = interactionRoleTruthV15(card);
   const sacrificeTruth = sacrificeRoleTruthV15(card);
+  const tutorTruth = tutorRoleTruthV15(card);
   const landReplacementOnly = roles.has('land ramp')
     && /\bas an additional cost to cast this spell, sacrifice a land\b/.test(oracle);
   if (landReplacementOnly) {
@@ -423,6 +458,10 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
     || card.cmc <= 2 && (roles.has('countermagic') || roles.has('board wipe'))
   ) {
     roles.add('cheap interaction');
+  }
+  if (roles.has('tutor') && !tutorTruth.reliableStructuralTutor) {
+    roles.delete('tutor');
+    if (tutorTruth.randomOutcomeGated) roles.add('random tutor');
   }
   if (roles.has('graveyard recursion') && !hasActionableGraveyardRecursion(oracle)) {
     roles.delete('graveyard recursion');
