@@ -607,6 +607,11 @@ test('token multipliers and team-wide payoffs cannot be traded for generic role 
       'If one or more tokens would be created under your control, those tokens plus that many 1/1 green creature tokens are created instead.',
     ),
     card(
+      'Unnamed Token-Copy Multiplier',
+      'Instant',
+      "For each token you control, create a token that's a copy of that permanent.",
+    ),
+    card(
       'Unnamed Team Anthem',
       'Enchantment',
       'Creatures you control get +5/+5 as long as this permanent has seven or more quest counters on it.',
