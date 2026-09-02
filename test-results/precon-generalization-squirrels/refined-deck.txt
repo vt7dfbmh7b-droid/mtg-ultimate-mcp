@@ -5,7 +5,6 @@
 1 The Odd Acorn Gang (BLC) 7 *F*
 1 Garruk, Cursed Huntsman (BLC) 99 *F*
 1 Chittering Witch (BLC) 180 *N*
-1 Insatiable Frugivore (BLC) 18 *N*
 1 Moonstone Eulogist (BLC) 19 *N*
 1 Swarmyard Massacre (BLC) 20 *N*
 1 Hazel's Brewmaster (BLC) 17 *N*
@@ -14,21 +13,16 @@
 1 Ogre Slumlord (BLC) 186 *N*
 1 Decree of Pain (BLC) 182 *N*
 1 Gourmand's Talent (BLC) 31 *N*
-1 Rootcast Apprenticeship (BLC) 32 *N*
 1 Scurry of Squirrels (BLC) 33 *N*
 1 End-Raze Forerunners (BLC) 214 *N*
-1 Arasta of the Endless Web (BLC) 205 *N*
 1 Deep Forest Hermit (BLC) 213 *N*
 1 Toski, Bearer of Secrets (BLC) 244 *N*
 1 Beastmaster Ascension (BLC) 118 *N*
-1 Second Harvest (BLC) 123 *N*
 1 Shamanic Revelation (BLC) 237 *N*
 1 Chatterfang, Squirrel General (BLC) 209 *N*
 1 Temple of Malady (BLC) 341 *N*
-1 Casualties of War (BLC) 125 *N*
 1 Windgrace's Judgment (BLC) 263 *N*
 1 Maskwood Nexus (BLC) 279 *N*
-1 Academy Manufactor (BLC) 264 *N*
 1 Woodland Cemetery (BLC) 354 *N*
 1 Necroblossom Snarl (BLC) 319 *N*
 1 Oran-Rief, the Vastwood (BLC) 320 *N*
@@ -88,3 +82,9 @@
 4 Swamp (BLB) 374 *N*
 5 Forest (BLB) 377 *N*
 4 Forest (BLB) 378 *N*
+1 Not Dead After All (WOE) 101 *N*
+1 Hangarback Walker (EOC) 139 *N*
+1 Treasure Chest (AFR) 397 *F*
+1 Pest Infestation (EOC) 103 *N*
+1 Fake Your Own Death (OTJ) 87 *N*
+1 From Beyond (BFZ) 167 *N*
