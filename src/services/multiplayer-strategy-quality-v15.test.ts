@@ -2,7 +2,11 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { ScryfallCard } from '../types/scryfall.js';
 import { parseDecklist } from './deck.js';
-import { auditUpgradeDeckStrategyRetentionV15 } from './commander-strategy-affinity-v15.js';
+import {
+  auditUpgradeDeckStrategyRetentionV15,
+  cardCommanderStrategyAffinityV15,
+  type CommanderStrategyContextV15,
+} from './commander-strategy-affinity-v15.js';
 
 function card(name: string, oracleText: string, cmc = 2): ScryfallCard {
   return {
@@ -81,6 +85,20 @@ function deck(payoffName: string): ReturnType<typeof parseDecklist> {
     '98 Swamp',
   ].join('\n'));
 }
+
+test('candidate affinity ranks tablewide pressure above equivalent single-target drain without moving substantive overlap', () => {
+  const context: CommanderStrategyContextV15 = {
+    commanderNames: [commander.name],
+    strategies: [{ archetype: 'aristocrats', score: 6, evidence: ['synthetic substantive threshold'] }],
+  };
+  const tablewide = cardCommanderStrategyAffinityV15(tablewidePayoff, context);
+  const singleTarget = cardCommanderStrategyAffinityV15(singleTargetPayoff, context);
+
+  assert.equal(tablewide.matches[0]?.overlapScore, 6);
+  assert.equal(singleTarget.matches[0]?.overlapScore, 6);
+  assert.equal(tablewide.score, 8, 'tablewide Commander pressure should carry the shared +2 quality premium');
+  assert.equal(singleTarget.score, 6, 'single-target drain keeps the same substantive overlap without the multiplayer premium');
+});
 
 test('whole-deck strategy retention distinguishes tablewide repeatable drain from single-target drain', () => {
   const audit = auditUpgradeDeckStrategyRetentionV15(
