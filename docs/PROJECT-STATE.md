@@ -10,7 +10,7 @@ Generated from `project-state.json`. Last state update: **2026-09-01T11:40:00Z**
 - Active PR: #29
 - Active milestone: **INTEL-02**
 - Intelligence development paused: **no**
-- Reason: INTEL-02 remains active, but the immediate task is consolidation and exact-source proof rather than adding new intelligence features. The latest registered scenario batch at b9ab88d... is mixed: Middle-earth, Necron, Squirreled Away and generic strategy inference passed their registered gates, while focused and broad Marvel failed. Subsequent fixes through executable source 7ed13fa... address graveyard directionality/actionable recursion and board-wipe preservation, while KF-031 through KF-034 record further local/deterministic repairs for secondary-plan inference, strategy-support density, premium early infrastructure and go-wide card advantage. Those newer repairs require one common exact-source revalidation and manual swap audit before any new INTEL-02 checkpoint is accepted.
+- Reason: INTEL-02 remains active, but the immediate task is consolidation and exact-source proof rather than adding new intelligence features. The latest registered scenario batch at b9ab88d... is mixed: Middle-earth, Necron, Squirreled Away and generic strategy inference passed their registered gates, while focused and broad Marvel failed. Subsequent fixes through executable source 4d4287d... address graveyard directionality/actionable recursion and board-wipe preservation, while KF-031 through KF-034 record further local/deterministic repairs for secondary-plan inference, strategy-support density, premium early infrastructure and go-wide card advantage. Those newer repairs require one common exact-source revalidation and manual swap audit before any new INTEL-02 checkpoint is accepted.
 
 ## Stable boundary
 
@@ -23,7 +23,7 @@ Generated from `project-state.json`. Last state update: **2026-09-01T11:40:00Z**
 
 Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
 
-Accepted INTEL-02 checkpoint remains 77a5383... because it is the last source explicitly accepted after exact-source testing and manual review. Focused Marvel and Food and Fellowship supplied useful restricted/precon evidence there, while broad Marvel remained red. Newer persisted controls at b9ab88d... are historical evidence only: Necron Dynasties, Squirreled Away, Middle-earth and generic strategy inference mechanically passed, but both Marvel lanes failed and later semantic/structural fixes changed executable behavior. Executable source was last changed at 7ed13fa... before this documentation-only state refresh; no exact-source CI/control batch is attached to that source, so neither b9ab88d... nor 7ed13fa... is promoted to accepted checkpoint status.
+Accepted INTEL-02 checkpoint remains 77a5383... because it is the last source explicitly accepted after exact-source testing and manual review. Focused Marvel and Food and Fellowship supplied useful restricted/precon evidence there, while broad Marvel remained red. Newer persisted controls at b9ab88d... are historical evidence only: Necron Dynasties, Squirreled Away, Middle-earth and generic strategy inference mechanically passed, but both Marvel lanes failed and later semantic/structural fixes changed executable behavior. Executable source was last changed at 4d4287d... before this documentation-only state refresh; no exact-source CI/control batch is attached to that source, so neither b9ab88d... nor 4d4287d... is promoted to accepted checkpoint status.
 
 Latest fully validated executable experimental baseline recorded by project state:
 
@@ -54,7 +54,7 @@ Always inspect the live active-branch head before editing. A later documentation
 
 Required before resuming broad INTEL-01/INTEL-02 claims:
 
-- Run one exact-source validation batch on the current executable candidate (7ed13fa... plus documentation-only descendants) covering project integrity, deterministic tests, generic strategy inference, Necron Dynasties, Squirreled Away, Food and Fellowship, focused Marvel, broad Marvel and Middle-earth printing-family controls
+- Run one exact-source validation batch on the current executable candidate (4d4287d... plus documentation-only descendants) covering project integrity, deterministic tests, generic strategy inference, Necron Dynasties, Squirreled Away, Food and Fellowship, focused Marvel, broad Marvel and Middle-earth printing-family controls
 - Manually audit every accepted IN→OUT package from that same source; mechanical green is not sufficient, especially for Necron, Squirreled Away, Food and Fellowship and both Marvel lanes
 - Require focused Marvel and broad Marvel to pass target-quality and strategy-preservation gates on the same exact executable source before calling the restricted lane uniformly green
 - Keep graveyard directionality/actionable recursion, explicit artifact engines, self-sacrifice versus repeatable outlets, secondary-plan inference, strategy-support density, premium early infrastructure, board wipes, token-death engines and board-scaling payoffs fail-closed
@@ -95,4 +95,4 @@ Read in this order:
 9. `docs/VALIDATION-MATRIX.md`
 10. `docs/KNOWN-FAILURES.md`
 
-Then: Inspect the live active-branch head and PR state. Treat 77a5383... as the accepted INTEL-02 checkpoint, b9ab88d... as the latest registered historical scenario batch, and executable source 7ed13fa... (plus documentation-only descendants) as unvalidated until one exact-source control family and manual audit are complete. Continue only from the active milestone and nextActions.
+Then: Inspect the live active-branch head and PR state. Treat 77a5383... as the accepted INTEL-02 checkpoint, b9ab88d... as the latest registered historical scenario batch, and executable source 4d4287d... (plus documentation-only descendants) as unvalidated until one exact-source control family and manual audit are complete. Continue only from the active milestone and nextActions.
