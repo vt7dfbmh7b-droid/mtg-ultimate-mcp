@@ -54,6 +54,20 @@ const deterministicCreatureTutor = card(
   2,
 );
 
+const deterministicLandTutor = card(
+  'Unnamed Land Tutor',
+  'Search your library for a land card, put it onto the battlefield tapped, then shuffle.',
+  2,
+  'Creature — Plant Druid',
+);
+
+const narrowSubtypeTutor = card(
+  'Unnamed Subtype Tutor',
+  'Search your library for an Eldrazi card, reveal it, put it into your hand, then shuffle.',
+  4,
+  'Enchantment',
+);
+
 test('lottery-gated library searches remain descriptively visible but do not count as structural tutors', () => {
   assert.equal(inferCardRoles(lotteryTutor).includes('tutor'), true, 'raw text inference may still describe the search ability');
   const truth = tutorRoleTruthV15(lotteryTutor);
@@ -66,22 +80,38 @@ test('lottery-gated library searches remain descriptively visible but do not cou
   assert.equal(roles.includes('random tutor'), true);
 });
 
-test('deterministic generic and broad creature tutors retain structural tutor truth', () => {
-  for (const candidate of [deterministicTutor, deterministicCreatureTutor]) {
+test('deterministic generic, creature and land tutors retain broad structural tutor truth', () => {
+  for (const candidate of [deterministicTutor, deterministicCreatureTutor, deterministicLandTutor]) {
     const truth = tutorRoleTruthV15(candidate);
     assert.equal(truth.randomOutcomeGated, false);
+    assert.equal(truth.targetScope, 'broad');
     assert.equal(truth.reliableStructuralTutor, true);
     assert.equal(effectiveCardRolesV15(candidate).includes('tutor'), true);
   }
 });
 
-test('deck tutor metrics count reliable access but not lottery outcomes', () => {
+test('deterministic subtype-restricted searches are descriptive narrow tutors, not generic bracket consistency', () => {
+  assert.equal(inferCardRoles(narrowSubtypeTutor).includes('tutor'), true);
+  const truth = tutorRoleTruthV15(narrowSubtypeTutor);
+  assert.equal(truth.randomOutcomeGated, false);
+  assert.equal(truth.targetScope, 'narrow');
+  assert.match(truth.targetDescription ?? '', /eldrazi card/i);
+  assert.equal(truth.reliableStructuralTutor, false);
+
+  const roles = effectiveCardRolesV15(narrowSubtypeTutor);
+  assert.equal(roles.includes('tutor'), false);
+  assert.equal(roles.includes('narrow tutor'), true);
+});
+
+test('deck tutor metrics count broad reliable access but not lottery or narrow subtype searches', () => {
   const parsed = parseDecklist([
     '1 Unnamed Deterministic Tutor',
     '1 Unnamed Lottery Tutor',
+    '1 Unnamed Subtype Tutor',
   ].join('\n'));
-  const metrics = buildDeckMetrics(parsed, [deterministicTutor, lotteryTutor]);
+  const metrics = buildDeckMetrics(parsed, [deterministicTutor, lotteryTutor, narrowSubtypeTutor]);
   assert.equal(metrics.tutorCount, 1);
   assert.equal(metrics.roleCounts.tutor, 1);
   assert.equal(metrics.roleCounts['random tutor'], 1);
+  assert.equal(metrics.roleCounts['narrow tutor'], 1);
 });
