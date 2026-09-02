@@ -65,9 +65,17 @@ const MULTIPLAYER_SCOPE_QUALITY_BONUS_V15 = 2;
 export function substantiveCommanderStrategyAffinityScoreV15(
   affinity: CardCommanderStrategyAffinityV15,
 ): number {
-  return affinity.matches
+  const substantiveOverlap = affinity.matches
     .filter((match) => match.commanderScore >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15)
     .reduce((sum, match) => sum + match.overlapScore, 0);
+  if (substantiveOverlap < SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15) return substantiveOverlap;
+
+  // Aggregate affinity may contain a quality premium, but it can never manufacture substantive
+  // strategy support. Only add the premium after the raw substantive overlap already clears the
+  // shared threshold, and exclude any base overlap from non-substantive context matches.
+  const allBaseOverlap = affinity.matches.reduce((sum, match) => sum + match.overlapScore, 0);
+  const qualityPremium = Math.max(0, affinity.score - allBaseOverlap);
+  return substantiveOverlap + qualityPremium;
 }
 
 function normalizeName(value: string): string {
