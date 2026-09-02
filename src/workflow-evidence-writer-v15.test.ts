@@ -1,21 +1,15 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import test from 'node:test';
-
-const activeWriterPaths = [
-  '.github/workflows/marvel-bracket5-live.yml',
-  '.github/workflows/marvel-bracket5-refine-live.yml',
-  '.github/workflows/middle-earth-bracket5-expanded-live.yml',
-  '.github/workflows/middle-earth-precon-refine-live.yml',
-  '.github/workflows/precon-generalization-live.yml',
-  '.github/workflows/precon-generalization-squirrels-live.yml',
-  '.github/workflows/project-state-integrity.yml',
-  '.github/workflows/strategy-inference-generalization.yml',
-] as const;
 
 function workflow(path: string): string {
   return readFileSync(path, 'utf8');
 }
+
+const activeWriterPaths = readdirSync('.github/workflows')
+  .filter((name) => name.endsWith('.yml') || name.endsWith('.yaml'))
+  .map((name) => `.github/workflows/${name}`)
+  .filter((path) => workflow(path).includes('git push origin'));
 
 test('active evidence writers execute independently instead of sharing a cancelling pending queue', () => {
   const groups = activeWriterPaths.map((path) => {

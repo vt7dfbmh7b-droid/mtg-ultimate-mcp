@@ -11,6 +11,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: middle-earth-four-card-package-audit-${{ github.ref }}
+  cancel-in-progress: false
+
 env:
   HTTP_RETRY_BASE_MS: 5000
   HTTP_RETRY_MAX_MS: 15000
@@ -50,13 +54,23 @@ jobs:
           [ ! -f middle-earth-four-card-package-audit.json ] || cp middle-earth-four-card-package-audit.json test-results/middle-earth-four-card-package-audit/result.json
           [ ! -f middle-earth-four-card-package-audit-failure.txt ] || cp middle-earth-four-card-package-audit-failure.txt test-results/middle-earth-four-card-package-audit/failure.txt
           printf 'source_sha=%s\noutcome=%s\n' "$GITHUB_SHA" "$OUTCOME" > test-results/middle-earth-four-card-package-audit/run-metadata.txt
+          rm -rf "$RUNNER_TEMP/middle-earth-four-card-package-audit"
+          cp -R test-results/middle-earth-four-card-package-audit "$RUNNER_TEMP/middle-earth-four-card-package-audit"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- test-results/middle-earth-four-card-package-audit
-          if ! git diff --cached --quiet; then
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            rm -rf test-results/middle-earth-four-card-package-audit
+            cp -R "$RUNNER_TEMP/middle-earth-four-card-package-audit" test-results/middle-earth-four-card-package-audit
+            git add -- test-results/middle-earth-four-card-package-audit
+            if git diff --cached --quiet; then exit 0; fi
             git commit -m "test-results: persist Middle-earth four-card package audit"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
-          fi
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "Package-audit persistence attempt ${attempt} lost a branch race; retrying against the latest head."
+          done
+          echo 'Package-audit persistence exhausted eight branch-race retries.' >&2
+          exit 1
       - name: Require audit success
         if: always()
         env:

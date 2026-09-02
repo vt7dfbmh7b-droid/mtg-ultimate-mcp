@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: middle-earth-bracket5-four-card-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 env:
   HTTP_RETRY_BASE_MS: 5000
@@ -64,13 +64,23 @@ jobs:
           [ ! -f middle-earth-bracket5-expanded-refined-deck.txt ] || cp middle-earth-bracket5-expanded-refined-deck.txt test-results/middle-earth-bracket5-four-card/refined-deck.txt
           [ ! -f middle-earth-bracket5-expanded-failure.txt ] || cp middle-earth-bracket5-expanded-failure.txt test-results/middle-earth-bracket5-four-card/failure.txt
           printf 'source_sha=%s\ncontrol_outcome=%s\npackage_limit=4\n' "$GITHUB_SHA" "$CONTROL_OUTCOME" > test-results/middle-earth-bracket5-four-card/run-metadata.txt
+          rm -rf "$RUNNER_TEMP/middle-earth-bracket5-four-card"
+          cp -R test-results/middle-earth-bracket5-four-card "$RUNNER_TEMP/middle-earth-bracket5-four-card"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- test-results/middle-earth-bracket5-four-card
-          if ! git diff --cached --quiet; then
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            rm -rf test-results/middle-earth-bracket5-four-card
+            cp -R "$RUNNER_TEMP/middle-earth-bracket5-four-card" test-results/middle-earth-bracket5-four-card
+            git add -- test-results/middle-earth-bracket5-four-card
+            if git diff --cached --quiet; then exit 0; fi
             git commit -m "test-results: persist four-card Middle-earth Bracket 5 control"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
-          fi
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "Four-card evidence persistence attempt ${attempt} lost a branch race; retrying against the latest head."
+          done
+          echo 'Four-card evidence persistence exhausted eight branch-race retries.' >&2
+          exit 1
 
       - name: Require four-card control success
         if: always()
