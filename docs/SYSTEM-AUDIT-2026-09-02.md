@@ -2,9 +2,9 @@
 
 ## Executive result
 
-The repository is structurally coherent and deterministic at cleanup source `d70cfe8050c1108db0cd4e6de11a7e929d011a9a`. The audit removed four abandoned or misleading implementation paths, brought all automation scripts into the strict build, repaired validation-state reconciliation, aligned the environment template with runtime configuration, and added regressions for repository-level invariants. No historical evidence was deleted, no stable/current server selection changed, and PR #29 remains experimental and unmerged.
+The repository is structurally coherent and deterministic at cleanup source `c543502dceb56c137584f413ecb31dad701bc865`. The audit removed four abandoned or misleading implementation paths, brought all automation scripts into the strict build, repaired validation-state reconciliation for all eleven evidence writers, aligned the environment template with runtime configuration, and added regressions for repository-level invariants. No historical evidence was deleted, no stable/current server selection changed, and PR #29 remains experimental and unmerged.
 
-The combined deterministic system passes 924/924 tests and all three TypeScript projects. This is engineering validation, not a new accepted INTEL-02 checkpoint: the latest common exact-source live batch at `ec4f4d1...` passed focused Marvel, Food and Fellowship, Necron Dynasties, Squirreled Away, generic strategy inference and expanded Middle-earth controls, but broad Marvel still failed target-quality and strategy-preservation gates.
+The combined deterministic system passes 924/924 tests and all three TypeScript projects. Audit-triggered source `974f0f6...` also passed pinned GitHub CI and project integrity. This is engineering validation, not a new accepted INTEL-02 checkpoint: Food and Fellowship, Necron Dynasties, Squirreled Away and generic strategy inference passed at `974f0f6...`, but broad Marvel still failed target-quality and strategy-preservation gates; focused Marvel's latest pass remains `ec4f4d1...`.
 
 ## Scope and inventory
 
@@ -15,8 +15,8 @@ The combined deterministic system passes 924/924 tests and all three TypeScript 
 | Automation and live controls | 46 TypeScript scripts / 39 workflows | All scripts now compile strictly; workflows parse and external actions use full commit pins. |
 | Integrations | Scryfall, Commander Spellbook, TopDeck, MTGJSON and FX | Shared retry, pacing, provenance and unavailable-versus-absent behavior have deterministic coverage. Live-provider conclusions remain bounded by persisted controls. |
 | Configuration | runtime env, npm, three TypeScript projects, Docker and GitHub Actions | `.env.example` now covers every variable consumed by `src/config.ts`; lockfile install and security audit are clean. |
-| Persisted evidence | 64 files, about 3.84 MB | Retained as historical truth, including failures and duplicate payloads. Generated state is now reconciled by every registered writer. |
-| Project recovery | machine state, generated handoff, validation registry/index | Local generation, validation and fresh-session resume pass. The last persisted PM workflow record is red because it correctly detected a formerly stale index; a fresh workflow run is required. |
+| Persisted evidence | 64 files, about 3.84 MB | Retained as historical truth, including failures and duplicate payloads. Every writer now reconciles branch races; registered writers also regenerate derived state. |
+| Project recovery | machine state, generated handoff, validation registry/index | Local generation, validation and fresh-session resume pass. Exact-source project integrity also passed at `974f0f6...`, including the new automation-script compilation. |
 
 The versioned V0.4–V0.15 modules are not dead copies: they form the explicit inheritance and compatibility chain. Removing them would break the documented basic-feature contract, so they were retained. Ten research-oriented services currently have test-only consumers; they remain bounded libraries for bracket research, competitive evidence, calibration and neural evaluation rather than proven abandoned code.
 
@@ -33,6 +33,7 @@ The versioned V0.4–V0.15 modules are not dead copies: they form the explicit i
 | Added `tsconfig.scripts.json` | Live scripts were outside the unified strict build. | All 46 scripts pass; CI, project integrity and `npm run check` require the result. |
 | Repaired script contract errors | Strict compilation found one unused value, readonly option arrays passed to mutable interfaces and nullable bracket comparisons. | Controls now use the declared options contract and fail closed when assessment is unavailable. |
 | Reconciled registered evidence writers | Three writers could update metadata without its generated index/docs. | Registry-derived test proves every registered writer rebuilds and stages both views. |
+| Reconciled all evidence writers | Four unregistered legacy writers still used cancelling groups or a single push attempt. | The regression now discovers all eleven pushing workflows; each has a unique non-cancelling group and eight latest-head retries. |
 | Completed `.env.example` | Six active retry/timeout/pacing variables were undocumented. | Regression compares the template with every `process.env` read in `src/config.ts`. |
 
 ## Structural assessment
@@ -45,7 +46,7 @@ The project-management path is `project-state.json -> generated state/handoff`, 
 
 ### Concurrency and state management
 
-Registered evidence writers use distinct non-cancelling concurrency groups, reset to the latest branch head, recompute their scoped result, regenerate shared derived state and retry a bounded push. Deterministic tests enforce those properties. The design still creates many bot commits and branch races across 39 workflows; correctness is guarded, but consolidation would reduce cost and operational noise.
+All evidence writers use distinct non-cancelling concurrency groups, preserve their scoped result, reset to the latest branch head and retry a bounded push. Registered writers also regenerate shared derived state. Deterministic tests discover writers from their actual push behavior and enforce those properties. The design still creates many bot commits and branch races across 39 workflows; correctness is guarded, but consolidation would reduce cost and operational noise.
 
 Runtime state is process-local: configuration and HTTP pacing are shared intentionally, while MCP server instances are created through the handler factory. Tests verify process-wide Scryfall pacing and isolated protocol/server construction. No unguarded shared mutable deck state was found.
 
@@ -53,12 +54,13 @@ Runtime state is process-local: configuration and HTTP pacing are shared intenti
 
 Lockfile install, configuration load, TypeScript build, server construction, `/`, `/health`, 404 handling and idle `SIGTERM` shutdown were smoke-tested successfully. The shutdown handler calls `httpServer.close()` without awaiting closure or enforcing a drain timeout; a stuck keep-alive or active request can therefore prolong termination indefinitely. This remains a medium operational follow-up because hardening the stable runtime entry point should be done with lifecycle tests and an explicit deployment timeout contract.
 
-Project recovery passes machine-state validation, generated-document validation and a fresh-session resume smoke locally. The persisted project-integrity record currently describes the earlier stale-index failure accurately; the updated workflow will replace it only after an exact-source GitHub run.
+Project recovery passes machine-state validation, generated-document validation and a fresh-session resume smoke locally. Exact-source project-integrity run `33611526036` passed and published a self-consistent record for `974f0f6...`.
 
 ## Historical diagnostics and live evidence
 
 - The 100 most recent active-branch Action runs inspected contained 69 successes, 28 failures and 3 cancellations. Many failures are retained adversarial evidence rather than regressions in the stable server.
-- The latest common exact-source scenario batch, `ec4f4d1...`, passed focused Marvel, Food and Fellowship, Necron Dynasties, Squirreled Away, generic strategy inference and expanded Middle-earth controls. Broad Marvel executed but accepted no supported package, so target-quality and strategy-preservation outcomes failed.
+- Audit-triggered source `974f0f6...` passed pinned CI, project integrity, Food and Fellowship, Necron Dynasties, Squirreled Away and generic strategy inference. Broad Marvel executed but accepted no supported package, so target-quality and strategy-preservation outcomes failed. Focused Marvel was not retriggered; its latest pass remains `ec4f4d1...`.
+- Middle-earth run `33611526105` passed its build and live-control steps but failed its single-attempt evidence push. That operational failure exposed four remaining legacy writers, all repaired at `c543502...`.
 - CI run `33606486408` and project-state run `33606486359` exposed a stale validation index. KF-045 records the cause and the completed prevention.
 - Older build and target-pressure diagnostic failures are covered by the now-green deterministic suite. `test-results/intel02-shared-truth-repair/failure-context.txt` remains the only non-empty archived failure-context file and was intentionally retained.
 - GitHub had no open or closed repository issues at audit time. The draft PR #29 is the issue/history surface and remains explicitly marked “DO NOT MERGE.”
@@ -69,7 +71,7 @@ Project recovery passes machine-state validation, generated-document validation 
 | Severity | Finding | Impact | State / required follow-up |
 |---|---|---|---|
 | High | Broad Marvel is red at the latest exact-source live batch. | Prevents a uniform constrained-family INTEL-02 quality claim. | Open: diagnose generic candidate/preservation behavior and rerun the entire common-source family. |
-| High | Cleanup source `d70cfe8...` has deterministic but not live exact-source evidence. | Local green cannot establish provider-backed behavior or a new accepted checkpoint. | Open: run CI, PM integrity and all registered live controls; manually audit accepted swaps. |
+| High | Writer-fix source `c543502...` has deterministic but not complete exact-source evidence. | Local green cannot establish all provider-backed behavior or a new accepted checkpoint. | Open: require its CI and affected live workflows; run focused Marvel at the same source; manually audit accepted swaps. |
 | High | The main-branch dependency-security workflow still targets legacy `agent/package-probabilities`. | Security automation may inspect an obsolete development line rather than the active candidate. | Open outside this branch's authority: correct on `main` under explicit release/governance approval. |
 | Medium | Runtime shutdown has no awaited drain or forced-close deadline. | Active connections can delay deployment termination. | Open: extract a testable lifecycle, stop accepting work, await close, force-close after a configured deadline. |
 | Medium | Thirty-nine workflows and independent evidence commits create avoidable cost/race pressure. | Slow feedback and noisy history despite bounded reconciliation. | Open: consolidate related live controls into reusable workflows or one result aggregator without weakening exact-source isolation. |

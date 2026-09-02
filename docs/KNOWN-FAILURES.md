@@ -130,7 +130,7 @@ Risk: valid evidence can remain only in workflow logs/artifacts, while the branc
 
 Protection: active INTEL-02 writers keep isolated result paths and use bounded fetch/reset/recompute/push retries against the latest branch head. Intelligence execution remains independent from persistence, and every registered evidence writer regenerates and stages the validation index and its human-readable view after resetting to the latest branch head.
 
-Status: prevented for every validation-registry writer. Active INTEL-02 paths were live-validated together at `3cfca39...`; the 2026-09-02 audit added deterministic registry-to-writer coverage so new registered writers cannot omit derived-state reconciliation.
+Status: prevented for every active evidence writer at `c543502...`. Audit-triggered run `33611526105` proved the remaining legacy gap when its Middle-earth control passed but a single-attempt evidence push failed. The regression now discovers every pushing workflow, and all eleven writers require distinct non-cancelling groups plus bounded latest-head retries. Registered writers additionally rebuild shared validation state.
 
 ## KF-014 — Failed target gate omitted from candidate generation
 
@@ -470,7 +470,7 @@ Risk: dormant or expensive live paths can rot while normal CI stays green, turni
 
 Protection: `tsconfig.scripts.json` now compiles every TypeScript automation script under the runtime's strict rules. `npm run check`, normal CI and project-state integrity all require that compilation; the affected scripts now fail closed when independent bracket assessment is unavailable.
 
-Status: prevented; all 46 remaining TypeScript scripts compile at cleanup source `d70cfe8...`.
+Status: prevented; all 46 remaining TypeScript scripts compile at cleanup source `c543502...`.
 
 ## Adding a failure
 
