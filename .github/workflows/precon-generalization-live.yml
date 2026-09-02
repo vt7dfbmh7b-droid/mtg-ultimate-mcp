@@ -19,6 +19,7 @@ on:
       - "src/services/optimizer-v12.ts"
       - "src/services/optimizer-v12-attempt-provenance.test.ts"
       - "src/services/scryfall.ts"
+      - "src/services/cedh-efficiency-v14.ts"
       - "src/services/upgrade.ts"
       - "src/services/upgrade-target-priority-v15.test.ts"
       - ".github/workflows/precon-generalization-live.yml"

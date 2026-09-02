@@ -4,6 +4,7 @@ on:
     branches: ["agent/v15-native-deck-intelligence"]
     paths:
       - "scripts/apply-themed-special-presets-from-audit.py"
+      - "src/services/cedh-efficiency-v14.ts"
       - ".github/workflows/marvel-middle-earth-full-family-bracket5.yml"
   pull_request:
     branches: [main]

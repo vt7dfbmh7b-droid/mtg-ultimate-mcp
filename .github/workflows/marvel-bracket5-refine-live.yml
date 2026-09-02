@@ -10,6 +10,7 @@ on:
       - "src/services/deck-builder-v07.ts"
       - "src/services/deck.ts"
       - "src/services/scryfall.ts"
+      - "src/services/cedh-efficiency-v14.ts"
       - "src/services/upgrade.ts"
       - "src/services/card-role-truth-v15.test.ts"
       - "src/services/upgrade-target-priority-v15.test.ts"
