@@ -2,7 +2,7 @@
 
 ## Executive result
 
-The repository is structurally coherent and deterministic at cleanup source `c543502dceb56c137584f413ecb31dad701bc865`, with follow-up provenance hardening at `07f36a74529a717cf6c6e85f00ea999f40dff098`. The audit removed four abandoned or misleading implementation paths, brought all automation scripts into the strict build, repaired validation-state reconciliation for all eleven evidence writers, aligned the environment template with runtime configuration, and added regressions for repository-level invariants. No historical evidence was deleted, no stable/current server selection changed, and PR #29 remains experimental and unmerged.
+The repository is structurally coherent and deterministic at cleanup source `c543502dceb56c137584f413ecb31dad701bc865`, with follow-up provenance hardening at `07f36a74529a717cf6c6e85f00ea999f40dff098`. The audit removed four abandoned or misleading implementation paths, brought all automation scripts into the strict build, repaired validation-state reconciliation for all eleven evidence writers, fixed project-state validation ordering so it no longer persists a false index failure, aligned the environment template with runtime configuration, and added regressions for repository-level invariants. No historical evidence was deleted, no stable/current server selection changed, and PR #29 remains experimental and unmerged.
 
 The combined deterministic system passes 925/925 tests and all three TypeScript projects. Follow-up source `07f36a74529a717cf6c6e85f00ea999f40dff098` passed pinned CI, focused Marvel refinement, Squirreled Away, generic precon, and Middle-earth precon controls; broad Marvel still failed target-quality and strategy-preservation gates. This is engineering validation, not a new accepted INTEL-02 checkpoint.
 
@@ -36,6 +36,7 @@ The versioned V0.4–V0.15 modules are not dead copies: they form the explicit i
 | Reconciled all evidence writers | Four unregistered legacy writers still used cancelling groups or a single push attempt. | The regression now discovers all eleven pushing workflows; each has a unique non-cancelling group and eight latest-head retries. |
 | Completed `.env.example` | Six active retry/timeout/pacing variables were undocumented. | Regression compares the template with every `process.env` read in `src/config.ts`. |
 | Preserved empty upgrade-lane diagnostics | Restricted-family refinement could report only `no-supported-swaps-found` while omitting which failed target lanes had no eligible or only already-present cards. | `suggestDeckUpgrades` now retains an availability reason and pre-exclusion role-match count for every target lane; provenance projection and regression coverage pass at `d5bc84d...`. |
+| Prepared validation index before project-state integrity checks | The integrity workflow validated a stale index before rebuilding it after evidence updates, creating a false PM failure record. | The workflow now runs `npm run validation:index` before validation; run `33694684158` passed and persisted a self-consistent PM record at `6bdea9b...`. |
 
 ## Structural assessment
 
@@ -62,7 +63,7 @@ Project recovery passes machine-state validation, generated-document validation 
 - The 100 most recent active-branch Action runs inspected contained 69 successes, 28 failures and 3 cancellations. Many failures are retained adversarial evidence rather than regressions in the stable server.
 - Follow-up source `07f36a74529a717cf6c6e85f00ea999f40dff098` passed pinned CI and the focused Marvel refinement (`e24829418f5cf9a31ba8d4135bfe1e7211959ed2` in its persisted metadata). Focused refinement accepted five strategy-preserving swaps and removed only the curve failure. Broad Marvel executed successfully but accepted no package; its persisted provenance shows two policy-eligible fast-mana matches and two tutor matches, all already present/excluded, so target-quality and strategy-preservation correctly failed. No deck mutation occurred.
 - Middle-earth run `33611526105` passed its build and live-control steps but failed its single-attempt evidence push. That operational failure exposed four remaining legacy writers, all repaired at `c543502...`.
-- CI run `33606486408` and project-state run `33606486359` exposed a stale validation index. KF-045 records the cause and the completed prevention.
+- CI run `33606486408` and project-state run `33606486359` exposed a stale validation index. KF-045 records the cause; the ordering fix was validated by project-state run `33694684158`, which passed and persisted `validation_index_outcome=success` at `6bdea9b...`.
 - Older build and target-pressure diagnostic failures are covered by the now-green deterministic suite. `test-results/intel02-shared-truth-repair/failure-context.txt` remains the only non-empty archived failure-context file and was intentionally retained.
 - GitHub had no open or closed repository issues at audit time. The draft PR #29 is the issue/history surface and remains explicitly marked “DO NOT MERGE.”
 - `npm audit --audit-level=low` reports zero vulnerabilities. Installed direct dependencies satisfy the lockfile and declared ranges.
@@ -95,7 +96,7 @@ No critical security, legality, data-loss or stable-interface defect was found.
 | Immutable action references | Pass, all external actions pinned to 40-character SHAs |
 | Runtime environment-template coverage | Pass |
 | Production dependency graph | Pass, no fully unreferenced production module |
-| Project-state validation / fresh-session recovery | Pass locally |
+| Project-state validation / fresh-session recovery | Pass locally and in project-state run `33694684158` |
 | Validation-index generation / validation | Pass locally, 7 registered controls |
 | Stable runtime endpoint and idle shutdown smoke | Pass |
 | Dependency vulnerability audit | Pass, 0 vulnerabilities |
