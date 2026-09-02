@@ -432,6 +432,16 @@ Protection: activated/triggered repeatable life gain and activated/triggered rep
 
 Status: name-independent regressions and the full 905/905 deterministic suite pass locally; exact-source Food/family revalidation pending.
 
+## KF-044 — Token-copy multipliers evade payoff protection
+
+Observed: the current exact-source Squirreled Away candidate proposed `Second Harvest → Fake Your Own Death`. `Second Harvest` creates a copy for each token already controlled, but the shared role truth only recognized the more explicit “those tokens plus that many” and “twice as many” multiplication forms. The candidate therefore exposed only generic token production, and per-swap preservation marked the cut as safe.
+
+Risk: semantically equivalent token-doubling text can be traded for generic protection, recursion or token production while the deck loses a board-scaling combat engine. Exact card names must not be needed to protect that component.
+
+Protection: effective role truth now recognizes the generic `for each token you control, create a token ... copy` multiplication pattern as `token multiplier`. The existing strategy-component gate then rejects an uncompensated cut, and unnamed role/affinity/preservation regressions cover the pattern.
+
+Status: fixed in TypeScript; focused and full 921/921 deterministic suites pass locally. Exact-source Squirreled Away rerun was attempted but Scryfall collection requests timed out; full exact-source control-family revalidation remains pending.
+
 ## Adding a failure
 
 Every new material failure should record:
