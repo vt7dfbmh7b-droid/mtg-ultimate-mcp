@@ -45,6 +45,8 @@ export interface SacrificeRoleTruthV15 {
 export interface TutorRoleTruthV15 {
   searchesLibrary: boolean;
   randomOutcomeGated: boolean;
+  targetScope: 'broad' | 'narrow' | 'unknown';
+  targetDescription: string | null;
   reliableStructuralTutor: boolean;
   reasons: string[];
 }
@@ -235,17 +237,49 @@ function hasRandomOutcomeGatedLibrarySearch(textValue: string): boolean {
   return (dieRoll && (dieBranchSearch || conditionalRollSearch)) || coinFlipSearch;
 }
 
+function tutorTargetScopeV15(textValue: string): {
+  scope: 'broad' | 'narrow' | 'unknown';
+  description: string | null;
+} {
+  if (!/\bsearch your library for\b/.test(textValue)) return { scope: 'unknown', description: null };
+  if (/\bsearch your library for (?:a|an|the) card named\b/.test(textValue)) {
+    const named = textValue.match(/\bsearch your library for (?:a|an|the) card named ([^,.\n]{1,100})/);
+    return { scope: 'narrow', description: named?.[1]?.trim() ?? 'named card' };
+  }
+
+  const broadTarget = /\bsearch your library for\s+(?:up to\s+(?:one|two|three|four|five|\d+)\s+)?(?:a|an|any|one|two|three|four|five|\d+)?\s*(?:(?:nonland|permanent|creature|artifact|enchantment|instant|sorcery|planeswalker|land|instant or sorcery|artifact or enchantment|creature or planeswalker)\s+)?cards?\s*(?:,|\.|and\b)/;
+  if (broadTarget.test(textValue)) {
+    const matched = textValue.match(broadTarget)?.[0] ?? 'broad card search';
+    return { scope: 'broad', description: matched.replace(/^.*?for\s+/, '').replace(/[,.].*$/, '').trim() };
+  }
+
+  const narrow = textValue.match(/\bsearch your library for\s+(?:up to\s+(?:one|two|three|four|five|\d+)\s+)?(?:a|an|any|one|two|three|four|five|\d+)?\s*([^,.\n]{1,100}?\bcards?)\b/);
+  if (narrow?.[1]) return { scope: 'narrow', description: narrow[1].trim() };
+  return { scope: 'unknown', description: null };
+}
+
 export function tutorRoleTruthV15(card: ScryfallCard): TutorRoleTruthV15 {
   const oracle = text(card);
   const inferred = new Set(inferCardRoles(card));
   const searchesLibrary = /\bsearch your library for\b/.test(oracle);
   const randomOutcomeGated = inferred.has('tutor') && hasRandomOutcomeGatedLibrarySearch(oracle);
-  const reliableStructuralTutor = inferred.has('tutor') && !randomOutcomeGated;
+  const target = tutorTargetScopeV15(oracle);
+  const reliableStructuralTutor = inferred.has('tutor')
+    && !randomOutcomeGated
+    && target.scope === 'broad';
   const reasons: string[] = [];
   if (randomOutcomeGated) reasons.push('library search is only available through a random die/coin outcome rather than reliable tutor access');
+  if (!randomOutcomeGated && inferred.has('tutor') && target.scope === 'narrow') {
+    reasons.push(`library search is restricted to ${target.description ?? 'a narrow card class'} rather than broad generic access`);
+  }
+  if (!randomOutcomeGated && inferred.has('tutor') && target.scope === 'unknown') {
+    reasons.push('library-search scope could not be proven broad enough for generic structural tutor consistency');
+  }
   return {
     searchesLibrary,
     randomOutcomeGated,
+    targetScope: target.scope,
+    targetDescription: target.description,
     reliableStructuralTutor,
     reasons,
   };
@@ -397,8 +431,8 @@ export function interactionRoleTruthV15(card: ScryfallCard): InteractionRoleTrut
  * mana merely because its text contains a mana ability or creates a mana-producing token. Likewise,
  * a card that sacrifices only a named narrow object (for example a Clue or Saproling) cannot
  * impersonate a generic sacrifice outlet, merely moving cards into/out of a graveyard is not
- * recursion unless the card can actually recover, replay, or reanimate them, and a lottery-gated
- * library search cannot impersonate reliable structural tutor consistency.
+ * recursion unless the card can actually recover, replay, or reanimate them, and lottery-gated or
+ * narrow library searches cannot impersonate broad structural tutor consistency.
  */
 export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   const roles = new Set(inferCardRoles(card));
@@ -462,6 +496,8 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   if (roles.has('tutor') && !tutorTruth.reliableStructuralTutor) {
     roles.delete('tutor');
     if (tutorTruth.randomOutcomeGated) roles.add('random tutor');
+    else if (tutorTruth.targetScope === 'narrow') roles.add('narrow tutor');
+    else roles.add('unverified tutor');
   }
   if (roles.has('graveyard recursion') && !hasActionableGraveyardRecursion(oracle)) {
     roles.delete('graveyard recursion');
