@@ -5,6 +5,7 @@ on:
     paths:
       - "scripts/apply-themed-special-presets-from-audit.py"
       - "src/services/cedh-efficiency-v14.ts"
+      - "src/services/deck-builder-v07.ts"
       - ".github/workflows/marvel-middle-earth-full-family-bracket5.yml"
   pull_request:
     branches: [main]
@@ -77,21 +78,30 @@ jobs:
           MIDDLE_BUILD: ${{ steps.middle_build.outcome }}
         run: |
           set -euo pipefail
-          mkdir -p test-results/full-themed-family-b5
-          rm -f test-results/full-themed-family-b5/*
-          [ ! -f themed-special-printing-audit.json ] || cp themed-special-printing-audit.json test-results/full-themed-family-b5/special-printing-audit.json
-          [ ! -f marvel-bracket5-live-result.json ] || cp marvel-bracket5-live-result.json test-results/full-themed-family-b5/marvel-result.json
-          [ ! -f marvel-bracket5-selected-deck.txt ] || cp marvel-bracket5-selected-deck.txt test-results/full-themed-family-b5/marvel-selected-deck.txt
-          [ ! -f marvel-bracket5-refine-result.json ] || cp marvel-bracket5-refine-result.json test-results/full-themed-family-b5/marvel-refine-result.json
-          [ ! -f marvel-bracket5-refined-deck.txt ] || cp marvel-bracket5-refined-deck.txt test-results/full-themed-family-b5/marvel-refined-deck.txt
-          [ ! -f middle-earth-bracket5-expanded-result.json ] || cp middle-earth-bracket5-expanded-result.json test-results/full-themed-family-b5/middle-earth-result.json
-          [ ! -f middle-earth-bracket5-expanded-selected-deck.txt ] || cp middle-earth-bracket5-expanded-selected-deck.txt test-results/full-themed-family-b5/middle-earth-selected-deck.txt
-          [ ! -f middle-earth-bracket5-expanded-refined-deck.txt ] || cp middle-earth-bracket5-expanded-refined-deck.txt test-results/full-themed-family-b5/middle-earth-refined-deck.txt
-          printf 'source_sha=%s\nmarvel_build=%s\nmarvel_refine=%s\nmiddle_build=%s\n' "$GITHUB_SHA" "$MARVEL_BUILD" "$MARVEL_REFINE" "$MIDDLE_BUILD" > test-results/full-themed-family-b5/run-metadata.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- test-results/full-themed-family-b5
-          if ! git diff --cached --quiet; then git commit -m "test-results: persist full themed-family Bracket 5 controls" && git push origin "HEAD:${GITHUB_REF_NAME}"; fi
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            mkdir -p test-results/full-themed-family-b5
+            rm -f test-results/full-themed-family-b5/*
+            [ ! -f themed-special-printing-audit.json ] || cp themed-special-printing-audit.json test-results/full-themed-family-b5/special-printing-audit.json
+            [ ! -f marvel-bracket5-live-result.json ] || cp marvel-bracket5-live-result.json test-results/full-themed-family-b5/marvel-result.json
+            [ ! -f marvel-bracket5-selected-deck.txt ] || cp marvel-bracket5-selected-deck.txt test-results/full-themed-family-b5/marvel-selected-deck.txt
+            [ ! -f marvel-bracket5-refine-result.json ] || cp marvel-bracket5-refine-result.json test-results/full-themed-family-b5/marvel-refine-result.json
+            [ ! -f marvel-bracket5-refined-deck.txt ] || cp marvel-bracket5-refined-deck.txt test-results/full-themed-family-b5/marvel-refined-deck.txt
+            [ ! -f middle-earth-bracket5-expanded-result.json ] || cp middle-earth-bracket5-expanded-result.json test-results/full-themed-family-b5/middle-earth-result.json
+            [ ! -f middle-earth-bracket5-expanded-selected-deck.txt ] || cp middle-earth-bracket5-expanded-selected-deck.txt test-results/full-themed-family-b5/middle-earth-selected-deck.txt
+            [ ! -f middle-earth-bracket5-expanded-refined-deck.txt ] || cp middle-earth-bracket5-expanded-refined-deck.txt test-results/full-themed-family-b5/middle-earth-refined-deck.txt
+            printf 'source_sha=%s\nmarvel_build=%s\nmarvel_refine=%s\nmiddle_build=%s\n' "$GITHUB_SHA" "$MARVEL_BUILD" "$MARVEL_REFINE" "$MIDDLE_BUILD" > test-results/full-themed-family-b5/run-metadata.txt
+            git add -- test-results/full-themed-family-b5
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "test-results: persist full themed-family Bracket 5 controls"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "Evidence persistence attempt ${attempt} lost a branch race; retrying against the latest head."
+          done
+          echo 'Evidence persistence exhausted eight branch-race retries.' >&2
+          exit 1
       - name: Require both family controls
         if: always()
         env:
