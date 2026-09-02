@@ -192,48 +192,47 @@
     "roundsAccepted": 1,
     "totalSwaps": 5,
     "candidatePackagesPerRound": 5,
-    "estimatedUpgradeSpendUsd": 36.3,
+    "estimatedUpgradeSpendUsd": 25.91,
     "swaps": [
       {
-        "out": "Silver Surfer, Galactus's Herald",
-        "in": "Origin of Spider-Man",
+        "out": "Venom's Hunger",
+        "in": "Quicksilver, Brash Blur",
         "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.71 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, counters. The recommended physical printing satisfies the active printing-family/set policy.",
         "recommendedPrinting": {
-          "set": "SPM",
-          "collectorNumber": "9",
+          "set": "MSH",
+          "collectorNumber": "148",
           "finish": "nonfoil",
-          "priceUsd": 0.49
+          "priceUsd": 0.3
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
           "remainingStructuralDeficitAfterSwap": 10,
           "authoritativeTargetGate": "average-nonland-mv",
-          "nonlandManaValueReduction": 3,
+          "nonlandManaValueReduction": 4,
           "persistentColoredManaSourcesAfterSwap": 11,
           "persistentColoredManaSourceFloor": 8,
           "strategyPreservation": {
-            "cutStrategyAffinityScore": 4,
-            "addStrategyAffinityScore": 12,
-            "cutStrategyProtectionApplied": 4,
-            "cutMatchedStrategies": [
-              "combat-tokens"
-            ],
+            "cutStrategyAffinityScore": 0,
+            "addStrategyAffinityScore": 8,
+            "cutStrategyProtectionApplied": 0,
+            "cutMatchedStrategies": [],
             "addMatchedStrategies": [
               "combat-tokens",
               "counters"
             ],
             "locallyUnreplacedStrategies": [],
             "cutRoles": [
-              "creature",
-              "narrow tutor"
+              "cost reduction",
+              "spot interaction"
             ],
             "addRoles": [
               "+1/+1 counters",
-              "token production"
+              "creature",
+              "haste"
             ],
             "unreplacedRoles": [
-              "creature",
-              "narrow tutor"
+              "cost reduction",
+              "spot interaction"
             ],
             "unreplacedStrategyComponentRoles": [],
             "meaningfulStrategyLoss": false,
@@ -243,153 +242,6 @@
       },
       {
         "out": "Sun-Spider, Nimble Webber",
-        "in": "Teferi's Protection",
-        "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
-        "recommendedPrinting": {
-          "set": "MAR",
-          "collectorNumber": "51",
-          "finish": "nonfoil",
-          "priceUsd": 33.52
-        },
-        "structuralPairing": {
-          "addressedRole": "protection",
-          "remainingStructuralDeficitAfterSwap": 9,
-          "authoritativeTargetGate": null,
-          "nonlandManaValueReduction": null,
-          "persistentColoredManaSourcesAfterSwap": 11,
-          "persistentColoredManaSourceFloor": 8,
-          "strategyPreservation": {
-            "cutStrategyAffinityScore": 0,
-            "addStrategyAffinityScore": 0,
-            "cutStrategyProtectionApplied": 0,
-            "cutMatchedStrategies": [],
-            "addMatchedStrategies": [],
-            "locallyUnreplacedStrategies": [],
-            "cutRoles": [
-              "creature",
-              "equipment",
-              "narrow tutor"
-            ],
-            "addRoles": [
-              "board protection",
-              "protection"
-            ],
-            "unreplacedRoles": [
-              "creature",
-              "equipment",
-              "narrow tutor"
-            ],
-            "unreplacedStrategyComponentRoles": [],
-            "meaningfulStrategyLoss": false,
-            "verdict": "preserved"
-          }
-        }
-      },
-      {
-        "out": "Venom's Hunger",
-        "in": "The Astonishing Ant-Man",
-        "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.71 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, counters. The recommended physical printing satisfies the active printing-family/set policy.",
-        "recommendedPrinting": {
-          "set": "MSH",
-          "collectorNumber": "204",
-          "finish": "nonfoil",
-          "priceUsd": 0.34
-        },
-        "structuralPairing": {
-          "addressedRole": "average-nonland-mv",
-          "remainingStructuralDeficitAfterSwap": 9,
-          "authoritativeTargetGate": "average-nonland-mv",
-          "nonlandManaValueReduction": 3,
-          "persistentColoredManaSourcesAfterSwap": 11,
-          "persistentColoredManaSourceFloor": 8,
-          "strategyPreservation": {
-            "cutStrategyAffinityScore": 0,
-            "addStrategyAffinityScore": 12,
-            "cutStrategyProtectionApplied": 0,
-            "cutMatchedStrategies": [],
-            "addMatchedStrategies": [
-              "combat-tokens",
-              "counters"
-            ],
-            "locallyUnreplacedStrategies": [],
-            "cutRoles": [
-              "cost reduction",
-              "spot interaction"
-            ],
-            "addRoles": [
-              "+1/+1 counters",
-              "card draw",
-              "creature",
-              "repeatable draw",
-              "repeatable token engine",
-              "token production"
-            ],
-            "unreplacedRoles": [
-              "cost reduction",
-              "spot interaction"
-            ],
-            "unreplacedStrategyComponentRoles": [],
-            "meaningfulStrategyLoss": false,
-            "verdict": "preserved"
-          }
-        }
-      },
-      {
-        "out": "Big Score",
-        "in": "White Tiger, Ava Ayala",
-        "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.71 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, counters. The recommended physical printing satisfies the active printing-family/set policy.",
-        "recommendedPrinting": {
-          "set": "MSH",
-          "collectorNumber": "196",
-          "finish": "nonfoil",
-          "priceUsd": 0.11
-        },
-        "structuralPairing": {
-          "addressedRole": "average-nonland-mv",
-          "remainingStructuralDeficitAfterSwap": 9,
-          "authoritativeTargetGate": "average-nonland-mv",
-          "nonlandManaValueReduction": 2,
-          "persistentColoredManaSourcesAfterSwap": 11,
-          "persistentColoredManaSourceFloor": 8,
-          "strategyPreservation": {
-            "cutStrategyAffinityScore": 6,
-            "addStrategyAffinityScore": 12,
-            "cutStrategyProtectionApplied": 4,
-            "cutMatchedStrategies": [
-              "combat-tokens"
-            ],
-            "addMatchedStrategies": [
-              "combat-tokens",
-              "counters"
-            ],
-            "locallyUnreplacedStrategies": [],
-            "cutRoles": [
-              "card draw",
-              "conditional mana acceleration",
-              "self sacrifice",
-              "token production",
-              "treasure"
-            ],
-            "addRoles": [
-              "+1/+1 counters",
-              "creature",
-              "repeatable token engine",
-              "token production"
-            ],
-            "unreplacedRoles": [
-              "card draw",
-              "conditional mana acceleration",
-              "self sacrifice",
-              "treasure"
-            ],
-            "unreplacedStrategyComponentRoles": [],
-            "meaningfulStrategyLoss": false,
-            "verdict": "preserved"
-          }
-        }
-      },
-      {
-        "out": "Thought Vessel",
         "in": "Whispersilk Cloak",
         "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
         "recommendedPrinting": {
@@ -400,7 +252,7 @@
         },
         "structuralPairing": {
           "addressedRole": "protection",
-          "remainingStructuralDeficitAfterSwap": 8,
+          "remainingStructuralDeficitAfterSwap": 9,
           "authoritativeTargetGate": null,
           "nonlandManaValueReduction": null,
           "persistentColoredManaSourcesAfterSwap": 11,
@@ -413,16 +265,163 @@
             "addMatchedStrategies": [],
             "locallyUnreplacedStrategies": [],
             "cutRoles": [
-              "mana acceleration",
-              "mana rock"
+              "creature",
+              "equipment",
+              "narrow tutor"
             ],
             "addRoles": [
               "equipment",
               "protection"
             ],
             "unreplacedRoles": [
-              "mana acceleration",
-              "mana rock"
+              "creature",
+              "narrow tutor"
+            ],
+            "unreplacedStrategyComponentRoles": [],
+            "meaningfulStrategyLoss": false,
+            "verdict": "preserved"
+          }
+        }
+      },
+      {
+        "out": "Silver Surfer, Galactus's Herald",
+        "in": "Tome of Legends",
+        "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.71 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, counters. The recommended physical printing satisfies the active printing-family/set policy.",
+        "recommendedPrinting": {
+          "set": "MSC",
+          "collectorNumber": "223",
+          "finish": "nonfoil",
+          "priceUsd": 0.29
+        },
+        "structuralPairing": {
+          "addressedRole": "average-nonland-mv",
+          "remainingStructuralDeficitAfterSwap": 9,
+          "authoritativeTargetGate": "average-nonland-mv",
+          "nonlandManaValueReduction": 3,
+          "persistentColoredManaSourcesAfterSwap": 11,
+          "persistentColoredManaSourceFloor": 8,
+          "strategyPreservation": {
+            "cutStrategyAffinityScore": 4,
+            "addStrategyAffinityScore": 8,
+            "cutStrategyProtectionApplied": 4,
+            "cutMatchedStrategies": [
+              "combat-tokens"
+            ],
+            "addMatchedStrategies": [
+              "combat-tokens",
+              "counters"
+            ],
+            "locallyUnreplacedStrategies": [],
+            "cutRoles": [
+              "creature",
+              "narrow tutor"
+            ],
+            "addRoles": [
+              "card draw",
+              "etb synergy"
+            ],
+            "unreplacedRoles": [
+              "creature",
+              "narrow tutor"
+            ],
+            "unreplacedStrategyComponentRoles": [],
+            "meaningfulStrategyLoss": false,
+            "verdict": "preserved"
+          }
+        }
+      },
+      {
+        "out": "Fantastic Bounce",
+        "in": "Sword of Fire and Ice",
+        "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+        "recommendedPrinting": {
+          "set": "MAR",
+          "collectorNumber": "100",
+          "finish": "nonfoil",
+          "priceUsd": 21.7
+        },
+        "structuralPairing": {
+          "addressedRole": "protection",
+          "remainingStructuralDeficitAfterSwap": 8,
+          "authoritativeTargetGate": null,
+          "nonlandManaValueReduction": null,
+          "persistentColoredManaSourcesAfterSwap": 11,
+          "persistentColoredManaSourceFloor": 8,
+          "strategyPreservation": {
+            "cutStrategyAffinityScore": 0,
+            "addStrategyAffinityScore": 2,
+            "cutStrategyProtectionApplied": 0,
+            "cutMatchedStrategies": [],
+            "addMatchedStrategies": [
+              "combat-tokens"
+            ],
+            "locallyUnreplacedStrategies": [],
+            "cutRoles": [
+              "card draw",
+              "cost reduction",
+              "spot interaction"
+            ],
+            "addRoles": [
+              "card draw",
+              "equipment",
+              "protection",
+              "repeatable draw",
+              "spot interaction"
+            ],
+            "unreplacedRoles": [
+              "cost reduction"
+            ],
+            "unreplacedStrategyComponentRoles": [],
+            "meaningfulStrategyLoss": false,
+            "verdict": "preserved"
+          }
+        }
+      },
+      {
+        "out": "Doom's Time Platform",
+        "in": "Spider-Punk",
+        "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.71 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, counters. The recommended physical printing satisfies the active printing-family/set policy.",
+        "recommendedPrinting": {
+          "set": "SPM",
+          "collectorNumber": "92",
+          "finish": "nonfoil",
+          "priceUsd": 1.78
+        },
+        "structuralPairing": {
+          "addressedRole": "average-nonland-mv",
+          "remainingStructuralDeficitAfterSwap": 8,
+          "authoritativeTargetGate": "average-nonland-mv",
+          "nonlandManaValueReduction": 2,
+          "persistentColoredManaSourcesAfterSwap": 11,
+          "persistentColoredManaSourceFloor": 8,
+          "strategyPreservation": {
+            "cutStrategyAffinityScore": 10,
+            "addStrategyAffinityScore": 8,
+            "cutStrategyProtectionApplied": 4,
+            "cutMatchedStrategies": [
+              "combat-tokens",
+              "counters"
+            ],
+            "addMatchedStrategies": [
+              "combat-tokens",
+              "counters"
+            ],
+            "locallyUnreplacedStrategies": [],
+            "cutRoles": [
+              "graveyard hate",
+              "graveyard interaction",
+              "graveyard utility",
+              "haste"
+            ],
+            "addRoles": [
+              "+1/+1 counters",
+              "creature",
+              "haste"
+            ],
+            "unreplacedRoles": [
+              "graveyard hate",
+              "graveyard interaction",
+              "graveyard utility"
             ],
             "unreplacedStrategyComponentRoles": [],
             "meaningfulStrategyLoss": false,
@@ -442,9 +441,9 @@
           5
         ],
         "candidatePackagesGeneratedAcrossAttempts": 5,
-        "winningCandidate": 3,
-        "estimatedSpendUsd": 36.3,
-        "improvementScore": 17.12,
+        "winningCandidate": 5,
+        "estimatedSpendUsd": 25.91,
+        "improvementScore": 11.863,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -488,9 +487,9 @@
         "acceptedSwaps": 5,
         "candidatePackagesGenerated": 5,
         "candidatePackagesEligible": 4,
-        "winningCandidate": 3,
-        "estimatedSpendUsd": 36.3,
-        "improvementScore": 17.12,
+        "winningCandidate": 5,
+        "estimatedSpendUsd": 25.91,
+        "improvementScore": 11.863,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -500,54 +499,53 @@
         "themeAuditBefore": null,
         "swaps": [
           {
-            "out": "Silver Surfer, Galactus's Herald",
-            "in": "Origin of Spider-Man",
+            "out": "Venom's Hunger",
+            "in": "Quicksilver, Brash Blur",
             "recommendedPrinting": {
-              "set": "SPM",
-              "setName": "Marvel's Spider-Man",
-              "collectorNumber": "9",
-              "releaseDate": "2025-09-26",
+              "set": "MSH",
+              "setName": "Marvel Super Heroes",
+              "collectorNumber": "148",
+              "releaseDate": "2026-06-26",
               "finish": "nonfoil",
-              "priceUsd": 0.49,
+              "priceUsd": 0.3,
               "promo": false,
               "promoTypes": [
                 "universesbeyond"
               ],
               "flavorName": null,
               "familyMatch": "family-set",
-              "scryfallUrl": "https://scryfall.com/card/spm/9/origin-of-spider-man?utm_source=api"
+              "scryfallUrl": "https://scryfall.com/card/msh/148/quicksilver-brash-blur?utm_source=api"
             },
             "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.71 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, counters. The recommended physical printing satisfies the active printing-family/set policy.",
             "structuralPairing": {
               "addressedRole": "average-nonland-mv",
               "remainingStructuralDeficitAfterSwap": 10,
               "authoritativeTargetGate": "average-nonland-mv",
-              "nonlandManaValueReduction": 3,
+              "nonlandManaValueReduction": 4,
               "persistentColoredManaSourcesAfterSwap": 11,
               "persistentColoredManaSourceFloor": 8,
               "strategyPreservation": {
-                "cutStrategyAffinityScore": 4,
-                "addStrategyAffinityScore": 12,
-                "cutStrategyProtectionApplied": 4,
-                "cutMatchedStrategies": [
-                  "combat-tokens"
-                ],
+                "cutStrategyAffinityScore": 0,
+                "addStrategyAffinityScore": 8,
+                "cutStrategyProtectionApplied": 0,
+                "cutMatchedStrategies": [],
                 "addMatchedStrategies": [
                   "combat-tokens",
                   "counters"
                 ],
                 "locallyUnreplacedStrategies": [],
                 "cutRoles": [
-                  "creature",
-                  "narrow tutor"
+                  "cost reduction",
+                  "spot interaction"
                 ],
                 "addRoles": [
                   "+1/+1 counters",
-                  "token production"
+                  "creature",
+                  "haste"
                 ],
                 "unreplacedRoles": [
-                  "creature",
-                  "narrow tutor"
+                  "cost reduction",
+                  "spot interaction"
                 ],
                 "unreplacedStrategyComponentRoles": [],
                 "meaningfulStrategyLoss": false,
@@ -557,181 +555,6 @@
           },
           {
             "out": "Sun-Spider, Nimble Webber",
-            "in": "Teferi's Protection",
-            "recommendedPrinting": {
-              "set": "MAR",
-              "setName": "Marvel Universe",
-              "collectorNumber": "51",
-              "releaseDate": "2026-06-26",
-              "finish": "nonfoil",
-              "priceUsd": 33.52,
-              "promo": false,
-              "promoTypes": [
-                "sourcematerial",
-                "universesbeyond"
-              ],
-              "flavorName": "T'Challa's Protection",
-              "familyMatch": "family-set",
-              "scryfallUrl": "https://scryfall.com/card/mar/51/teferis-protection?utm_source=api"
-            },
-            "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
-            "structuralPairing": {
-              "addressedRole": "protection",
-              "remainingStructuralDeficitAfterSwap": 9,
-              "authoritativeTargetGate": null,
-              "nonlandManaValueReduction": null,
-              "persistentColoredManaSourcesAfterSwap": 11,
-              "persistentColoredManaSourceFloor": 8,
-              "strategyPreservation": {
-                "cutStrategyAffinityScore": 0,
-                "addStrategyAffinityScore": 0,
-                "cutStrategyProtectionApplied": 0,
-                "cutMatchedStrategies": [],
-                "addMatchedStrategies": [],
-                "locallyUnreplacedStrategies": [],
-                "cutRoles": [
-                  "creature",
-                  "equipment",
-                  "narrow tutor"
-                ],
-                "addRoles": [
-                  "board protection",
-                  "protection"
-                ],
-                "unreplacedRoles": [
-                  "creature",
-                  "equipment",
-                  "narrow tutor"
-                ],
-                "unreplacedStrategyComponentRoles": [],
-                "meaningfulStrategyLoss": false,
-                "verdict": "preserved"
-              }
-            }
-          },
-          {
-            "out": "Venom's Hunger",
-            "in": "The Astonishing Ant-Man",
-            "recommendedPrinting": {
-              "set": "MSH",
-              "setName": "Marvel Super Heroes",
-              "collectorNumber": "204",
-              "releaseDate": "2026-06-26",
-              "finish": "nonfoil",
-              "priceUsd": 0.34,
-              "promo": false,
-              "promoTypes": [
-                "universesbeyond"
-              ],
-              "flavorName": null,
-              "familyMatch": "family-set",
-              "scryfallUrl": "https://scryfall.com/card/msh/204/the-astonishing-ant-man?utm_source=api"
-            },
-            "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.71 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, counters. The recommended physical printing satisfies the active printing-family/set policy.",
-            "structuralPairing": {
-              "addressedRole": "average-nonland-mv",
-              "remainingStructuralDeficitAfterSwap": 9,
-              "authoritativeTargetGate": "average-nonland-mv",
-              "nonlandManaValueReduction": 3,
-              "persistentColoredManaSourcesAfterSwap": 11,
-              "persistentColoredManaSourceFloor": 8,
-              "strategyPreservation": {
-                "cutStrategyAffinityScore": 0,
-                "addStrategyAffinityScore": 12,
-                "cutStrategyProtectionApplied": 0,
-                "cutMatchedStrategies": [],
-                "addMatchedStrategies": [
-                  "combat-tokens",
-                  "counters"
-                ],
-                "locallyUnreplacedStrategies": [],
-                "cutRoles": [
-                  "cost reduction",
-                  "spot interaction"
-                ],
-                "addRoles": [
-                  "+1/+1 counters",
-                  "card draw",
-                  "creature",
-                  "repeatable draw",
-                  "repeatable token engine",
-                  "token production"
-                ],
-                "unreplacedRoles": [
-                  "cost reduction",
-                  "spot interaction"
-                ],
-                "unreplacedStrategyComponentRoles": [],
-                "meaningfulStrategyLoss": false,
-                "verdict": "preserved"
-              }
-            }
-          },
-          {
-            "out": "Big Score",
-            "in": "White Tiger, Ava Ayala",
-            "recommendedPrinting": {
-              "set": "MSH",
-              "setName": "Marvel Super Heroes",
-              "collectorNumber": "196",
-              "releaseDate": "2026-06-26",
-              "finish": "nonfoil",
-              "priceUsd": 0.11,
-              "promo": false,
-              "promoTypes": [
-                "universesbeyond"
-              ],
-              "flavorName": null,
-              "familyMatch": "family-set",
-              "scryfallUrl": "https://scryfall.com/card/msh/196/white-tiger-ava-ayala?utm_source=api"
-            },
-            "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.71 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, counters. The recommended physical printing satisfies the active printing-family/set policy.",
-            "structuralPairing": {
-              "addressedRole": "average-nonland-mv",
-              "remainingStructuralDeficitAfterSwap": 9,
-              "authoritativeTargetGate": "average-nonland-mv",
-              "nonlandManaValueReduction": 2,
-              "persistentColoredManaSourcesAfterSwap": 11,
-              "persistentColoredManaSourceFloor": 8,
-              "strategyPreservation": {
-                "cutStrategyAffinityScore": 6,
-                "addStrategyAffinityScore": 12,
-                "cutStrategyProtectionApplied": 4,
-                "cutMatchedStrategies": [
-                  "combat-tokens"
-                ],
-                "addMatchedStrategies": [
-                  "combat-tokens",
-                  "counters"
-                ],
-                "locallyUnreplacedStrategies": [],
-                "cutRoles": [
-                  "card draw",
-                  "conditional mana acceleration",
-                  "self sacrifice",
-                  "token production",
-                  "treasure"
-                ],
-                "addRoles": [
-                  "+1/+1 counters",
-                  "creature",
-                  "repeatable token engine",
-                  "token production"
-                ],
-                "unreplacedRoles": [
-                  "card draw",
-                  "conditional mana acceleration",
-                  "self sacrifice",
-                  "treasure"
-                ],
-                "unreplacedStrategyComponentRoles": [],
-                "meaningfulStrategyLoss": false,
-                "verdict": "preserved"
-              }
-            }
-          },
-          {
-            "out": "Thought Vessel",
             "in": "Whispersilk Cloak",
             "recommendedPrinting": {
               "set": "MSC",
@@ -752,7 +575,7 @@
             "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
             "structuralPairing": {
               "addressedRole": "protection",
-              "remainingStructuralDeficitAfterSwap": 8,
+              "remainingStructuralDeficitAfterSwap": 9,
               "authoritativeTargetGate": null,
               "nonlandManaValueReduction": null,
               "persistentColoredManaSourcesAfterSwap": 11,
@@ -765,16 +588,192 @@
                 "addMatchedStrategies": [],
                 "locallyUnreplacedStrategies": [],
                 "cutRoles": [
-                  "mana acceleration",
-                  "mana rock"
+                  "creature",
+                  "equipment",
+                  "narrow tutor"
                 ],
                 "addRoles": [
                   "equipment",
                   "protection"
                 ],
                 "unreplacedRoles": [
-                  "mana acceleration",
-                  "mana rock"
+                  "creature",
+                  "narrow tutor"
+                ],
+                "unreplacedStrategyComponentRoles": [],
+                "meaningfulStrategyLoss": false,
+                "verdict": "preserved"
+              }
+            }
+          },
+          {
+            "out": "Silver Surfer, Galactus's Herald",
+            "in": "Tome of Legends",
+            "recommendedPrinting": {
+              "set": "MSC",
+              "setName": "Marvel Super Heroes Commander",
+              "collectorNumber": "223",
+              "releaseDate": "2026-06-26",
+              "finish": "nonfoil",
+              "priceUsd": 0.29,
+              "promo": false,
+              "promoTypes": [
+                "surgefoil",
+                "universesbeyond"
+              ],
+              "flavorName": null,
+              "familyMatch": "family-set",
+              "scryfallUrl": "https://scryfall.com/card/msc/223/tome-of-legends?utm_source=api"
+            },
+            "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.71 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, counters. The recommended physical printing satisfies the active printing-family/set policy.",
+            "structuralPairing": {
+              "addressedRole": "average-nonland-mv",
+              "remainingStructuralDeficitAfterSwap": 9,
+              "authoritativeTargetGate": "average-nonland-mv",
+              "nonlandManaValueReduction": 3,
+              "persistentColoredManaSourcesAfterSwap": 11,
+              "persistentColoredManaSourceFloor": 8,
+              "strategyPreservation": {
+                "cutStrategyAffinityScore": 4,
+                "addStrategyAffinityScore": 8,
+                "cutStrategyProtectionApplied": 4,
+                "cutMatchedStrategies": [
+                  "combat-tokens"
+                ],
+                "addMatchedStrategies": [
+                  "combat-tokens",
+                  "counters"
+                ],
+                "locallyUnreplacedStrategies": [],
+                "cutRoles": [
+                  "creature",
+                  "narrow tutor"
+                ],
+                "addRoles": [
+                  "card draw",
+                  "etb synergy"
+                ],
+                "unreplacedRoles": [
+                  "creature",
+                  "narrow tutor"
+                ],
+                "unreplacedStrategyComponentRoles": [],
+                "meaningfulStrategyLoss": false,
+                "verdict": "preserved"
+              }
+            }
+          },
+          {
+            "out": "Fantastic Bounce",
+            "in": "Sword of Fire and Ice",
+            "recommendedPrinting": {
+              "set": "MAR",
+              "setName": "Marvel Universe",
+              "collectorNumber": "100",
+              "releaseDate": "2026-06-26",
+              "finish": "nonfoil",
+              "priceUsd": 21.7,
+              "promo": false,
+              "promoTypes": [
+                "sourcematerial",
+                "universesbeyond"
+              ],
+              "flavorName": "Patriotic Shield",
+              "familyMatch": "family-set",
+              "scryfallUrl": "https://scryfall.com/card/mar/100/sword-of-fire-and-ice?utm_source=api"
+            },
+            "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+            "structuralPairing": {
+              "addressedRole": "protection",
+              "remainingStructuralDeficitAfterSwap": 8,
+              "authoritativeTargetGate": null,
+              "nonlandManaValueReduction": null,
+              "persistentColoredManaSourcesAfterSwap": 11,
+              "persistentColoredManaSourceFloor": 8,
+              "strategyPreservation": {
+                "cutStrategyAffinityScore": 0,
+                "addStrategyAffinityScore": 2,
+                "cutStrategyProtectionApplied": 0,
+                "cutMatchedStrategies": [],
+                "addMatchedStrategies": [
+                  "combat-tokens"
+                ],
+                "locallyUnreplacedStrategies": [],
+                "cutRoles": [
+                  "card draw",
+                  "cost reduction",
+                  "spot interaction"
+                ],
+                "addRoles": [
+                  "card draw",
+                  "equipment",
+                  "protection",
+                  "repeatable draw",
+                  "spot interaction"
+                ],
+                "unreplacedRoles": [
+                  "cost reduction"
+                ],
+                "unreplacedStrategyComponentRoles": [],
+                "meaningfulStrategyLoss": false,
+                "verdict": "preserved"
+              }
+            }
+          },
+          {
+            "out": "Doom's Time Platform",
+            "in": "Spider-Punk",
+            "recommendedPrinting": {
+              "set": "SPM",
+              "setName": "Marvel's Spider-Man",
+              "collectorNumber": "92",
+              "releaseDate": "2025-09-26",
+              "finish": "nonfoil",
+              "priceUsd": 1.78,
+              "promo": false,
+              "promoTypes": [
+                "universesbeyond"
+              ],
+              "flavorName": null,
+              "familyMatch": "family-set",
+              "scryfallUrl": "https://scryfall.com/card/spm/92/spider-punk?utm_source=api"
+            },
+            "why": "Advances the currently failed authoritative Bracket-5 average-nonland-mv gate (2.71 must fall to 2.6 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, counters. The recommended physical printing satisfies the active printing-family/set policy.",
+            "structuralPairing": {
+              "addressedRole": "average-nonland-mv",
+              "remainingStructuralDeficitAfterSwap": 8,
+              "authoritativeTargetGate": "average-nonland-mv",
+              "nonlandManaValueReduction": 2,
+              "persistentColoredManaSourcesAfterSwap": 11,
+              "persistentColoredManaSourceFloor": 8,
+              "strategyPreservation": {
+                "cutStrategyAffinityScore": 10,
+                "addStrategyAffinityScore": 8,
+                "cutStrategyProtectionApplied": 4,
+                "cutMatchedStrategies": [
+                  "combat-tokens",
+                  "counters"
+                ],
+                "addMatchedStrategies": [
+                  "combat-tokens",
+                  "counters"
+                ],
+                "locallyUnreplacedStrategies": [],
+                "cutRoles": [
+                  "graveyard hate",
+                  "graveyard interaction",
+                  "graveyard utility",
+                  "haste"
+                ],
+                "addRoles": [
+                  "+1/+1 counters",
+                  "creature",
+                  "haste"
+                ],
+                "unreplacedRoles": [
+                  "graveyard hate",
+                  "graveyard interaction",
+                  "graveyard utility"
                 ],
                 "unreplacedStrategyComponentRoles": [],
                 "meaningfulStrategyLoss": false,
@@ -1876,7 +1875,7 @@
             "actualSwaps": 5,
             "estimatedSpendUsd": 36.3,
             "unknownPriceCount": 0,
-            "improvementScore": 17.12,
+            "improvementScore": 7.643,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -2048,16 +2047,16 @@
                   "addMatchedStrategies": [],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
-                    "mana acceleration",
-                    "mana rock"
+                    "card draw",
+                    "mana acceleration"
                   ],
                   "addRoles": [
                     "equipment",
                     "protection"
                   ],
                   "unreplacedRoles": [
-                    "mana acceleration",
-                    "mana rock"
+                    "card draw",
+                    "mana acceleration"
                   ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
@@ -2373,7 +2372,7 @@
                 }
               },
               {
-                "out": "Thought Vessel",
+                "out": "Manamorphose",
                 "in": "Whispersilk Cloak",
                 "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -2397,16 +2396,16 @@
                     "addMatchedStrategies": [],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
-                      "mana acceleration",
-                      "mana rock"
+                      "card draw",
+                      "mana acceleration"
                     ],
                     "addRoles": [
                       "equipment",
                       "protection"
                     ],
                     "unreplacedRoles": [
-                      "mana acceleration",
-                      "mana rock"
+                      "card draw",
+                      "mana acceleration"
                     ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
@@ -3522,7 +3521,7 @@
             "attemptSize": 5,
             "candidatePackagesGenerated": 5,
             "candidatePackagesEligible": 4,
-            "winningCandidate": 3,
+            "winningCandidate": 5,
             "reasonCounts": {
               "eligible": 4,
               "improvement-below-threshold": 1
@@ -4620,7 +4619,7 @@
                 "actualSwaps": 5,
                 "estimatedSpendUsd": 36.3,
                 "unknownPriceCount": 0,
-                "improvementScore": 17.12,
+                "improvementScore": 7.643,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -4792,16 +4791,16 @@
                       "addMatchedStrategies": [],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "mana acceleration",
-                        "mana rock"
+                        "card draw",
+                        "mana acceleration"
                       ],
                       "addRoles": [
                         "equipment",
                         "protection"
                       ],
                       "unreplacedRoles": [
-                        "mana acceleration",
-                        "mana rock"
+                        "card draw",
+                        "mana acceleration"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -5117,7 +5116,7 @@
                     }
                   },
                   {
-                    "out": "Thought Vessel",
+                    "out": "Manamorphose",
                     "in": "Whispersilk Cloak",
                     "why": "Addresses the detected protection deficit. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -5141,16 +5140,16 @@
                         "addMatchedStrategies": [],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "mana acceleration",
-                          "mana rock"
+                          "card draw",
+                          "mana acceleration"
                         ],
                         "addRoles": [
                           "equipment",
                           "protection"
                         ],
                         "unreplacedRoles": [
-                          "mana acceleration",
-                          "mana rock"
+                          "card draw",
+                          "mana acceleration"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -8882,7 +8881,7 @@
       {
         "key": "average-nonland-mv",
         "category": "construction",
-        "observed": 2.59,
+        "observed": 2.55,
         "required": "at most 2.6",
         "passed": true,
         "pressurePoint": "speed/curve"
@@ -8890,7 +8889,7 @@
       {
         "key": "early-plays",
         "category": "construction",
-        "observed": 43,
+        "observed": 44,
         "required": "at least 35",
         "passed": true,
         "pressurePoint": "speed/curve"
@@ -8938,7 +8937,7 @@
       {
         "key": "competitive-combo-signal",
         "category": "construction",
-        "observed": "Ruthless=0, strategic=0, Spellbook=P",
+        "observed": "Ruthless=0, strategic=0, Spellbook=E",
         "required": "at least one Ruthless/strategically relevant/R-tagged signal",
         "passed": false,
         "pressurePoint": "win-package quality/redundancy"
@@ -8964,63 +8963,61 @@
       "landCount": 31,
       "nonlandCount": 69,
       "landRatio": 0.31,
-      "averageNonlandManaValue": 2.59,
+      "averageNonlandManaValue": 2.55,
       "manaCurve": {
         "0": 0,
-        "1": 12,
+        "1": 13,
         "2": 31,
         "3": 9,
-        "4": 11,
+        "4": 10,
         "5": 4,
         "6": 1,
         "7+": 1
       },
       "coloredPips": {
-        "W": 22,
-        "U": 12,
+        "W": 20,
+        "U": 10,
         "B": 10,
-        "R": 20,
-        "G": 11
+        "R": 23,
+        "G": 9
       },
       "roleCounts": {
-        "token production": 23,
-        "repeatable token engine": 14,
-        "haste": 8,
+        "token production": 21,
+        "repeatable token engine": 12,
+        "haste": 9,
         "extra combat": 5,
         "untap engine": 5,
         "creature": 19,
-        "mana acceleration": 14,
-        "mana rock": 12,
+        "mana acceleration": 15,
+        "mana rock": 13,
         "persistent colored mana source": 11,
         "graveyard recursion": 4,
         "high-capacity graveyard recursion": 2,
-        "cost reduction": 3,
-        "card draw": 19,
-        "+1/+1 counters": 12,
-        "treasure": 8,
+        "cost reduction": 2,
+        "card draw": 20,
+        "+1/+1 counters": 11,
+        "treasure": 9,
         "sacrifice synergy": 4,
-        "self sacrifice": 9,
-        "conditional mana acceleration": 9,
+        "self sacrifice": 10,
+        "conditional mana acceleration": 10,
         "board wipe": 2,
         "cheap interaction": 13,
         "countermagic": 3,
         "mana filtering": 2,
         "mana dork": 3,
         "protection": 8,
-        "board protection": 3,
+        "board protection": 2,
         "spot interaction": 13,
         "forced sacrifice interaction": 1,
-        "graveyard hate": 2,
-        "equipment": 6,
+        "graveyard hate": 1,
+        "equipment": 7,
         "narrow tutor": 4,
         "artifact graveyard recursion": 1,
         "free interaction": 1,
         "tutor": 2,
         "fast mana": 2,
-        "etb synergy": 3,
+        "etb synergy": 4,
         "creature tutor": 1,
-        "graveyard interaction": 1,
-        "graveyard utility": 1,
         "repeatable draw": 2,
         "delayed mana acceleration": 2,
         "land ramp": 1,
@@ -9030,10 +9027,10 @@
         "sacrifice outlet": 1,
         "artifact sacrifice outlet": 1
       },
-      "earlyPlayCount": 43,
+      "earlyPlayCount": 44,
       "fastManaCount": 2,
       "rampCount": 18,
-      "drawCount": 22,
+      "drawCount": 23,
       "tutorCount": 2,
       "interactionCount": 18,
       "cheapInteractionCount": 13,
