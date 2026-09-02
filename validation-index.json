@@ -13,21 +13,19 @@
       ],
       "metadataPath": "test-results/project-management/integrity.txt",
       "exists": true,
-      "sourceSha": "91342e0613b10833f39ef0b204b4272e4a31c2e8",
-      "outcome": "fail",
+      "sourceSha": "7bb6c61e864c9bc00e480a13122ffc7a6c344b3b",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "91342e0613b10833f39ef0b204b4272e4a31c2e8",
+        "source_sha": "7bb6c61e864c9bc00e480a13122ffc7a6c344b3b",
         "active_milestone": "INTEL-02",
         "typecheck_outcome": "success",
-        "state_validate_outcome": "failure",
+        "state_validate_outcome": "success",
         "validation_index_outcome": "success",
         "recovery_smoke_outcome": "success",
         "source_build_outcome": "success"
       },
-      "unmetPassConditions": [
-        "state_validate_outcome=success"
-      ]
+      "unmetPassConditions": []
     },
     {
       "id": "MARVEL-B5-REFINE",
