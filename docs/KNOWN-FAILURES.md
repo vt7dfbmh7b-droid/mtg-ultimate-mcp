@@ -434,13 +434,13 @@ Status: name-independent regressions and the full 905/905 deterministic suite pa
 
 ## KF-044 — Token-copy multipliers evade payoff protection
 
-Observed: the current exact-source Squirreled Away candidate proposed `Second Harvest → Fake Your Own Death`. `Second Harvest` creates a copy for each token already controlled, but the shared role truth only recognized the more explicit “those tokens plus that many” and “twice as many” multiplication forms. The candidate therefore exposed only generic token production, and per-swap preservation marked the cut as safe.
+Observed: the current exact-source Squirreled Away candidate proposed `Second Harvest → Fake Your Own Death`, then the corrected rerun proposed `Academy Manufactor → Fake Your Own Death`. `Second Harvest` creates a copy for each token already controlled, while Academy Manufactor replaces one Clue, Food or Treasure with one of each. The shared role truth only recognized the more explicit “those tokens plus that many” and “twice as many” multiplication forms. Both candidates therefore exposed only generic token production, and per-swap preservation marked the cuts as safe.
 
 Risk: semantically equivalent token-doubling text can be traded for generic protection, recursion or token production while the deck loses a board-scaling combat engine. Exact card names must not be needed to protect that component.
 
-Protection: effective role truth now recognizes the generic `for each token you control, create a token ... copy` multiplication pattern as `token multiplier`. The existing strategy-component gate then rejects an uncompensated cut, and unnamed role/affinity/preservation regressions cover the pattern.
+Protection: effective role truth now recognizes generic token-copy and token-conversion replacement patterns as `token multiplier`. The existing strategy-component gate then rejects an uncompensated cut, and unnamed role/affinity/preservation regressions cover both patterns.
 
-Status: fixed in TypeScript; focused and full 921/921 deterministic suites pass locally. Exact-source Squirreled Away rerun was attempted but Scryfall collection requests timed out; full exact-source control-family revalidation remains pending.
+Status: fixed in TypeScript; focused 65/65 and full 921/921 deterministic suites pass locally. The corrected exact-source Squirreled Away rerun completes with four swaps, no meaningful per-swap losses, preserved cumulative combat-token/aristocrats support and affinity, and no `Second Harvest` or `Academy Manufactor` cut. Full exact-source control-family revalidation remains pending.
 
 ## Adding a failure
 
