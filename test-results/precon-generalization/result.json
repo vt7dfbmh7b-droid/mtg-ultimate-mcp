@@ -249,10 +249,10 @@
     "roundsAccepted": 1,
     "totalSwaps": 4,
     "candidatePackagesPerRound": 4,
-    "estimatedUpgradeSpendNzd": 10.06,
-    "estimatedUpgradeSpendUsdReference": 5.89,
+    "estimatedUpgradeSpendNzd": 10.86,
+    "estimatedUpgradeSpendUsdReference": 6.36,
     "maxTotalNzd": 200,
-    "maxTotalUsdReference": 117.1,
+    "maxTotalUsdReference": 117.09,
     "swaps": [
       {
         "out": "Shard of the Nightbringer",
@@ -304,8 +304,8 @@
           "set": "ONE",
           "collectorNumber": "80",
           "finish": "nonfoil",
-          "priceNzd": 0.39,
-          "priceUsdReference": 0.23
+          "priceNzd": 0.43,
+          "priceUsdReference": 0.25
         },
         "structuralPairing": {
           "addressedRole": "interaction",
@@ -383,8 +383,8 @@
           "set": "OTJ",
           "collectorNumber": "93",
           "finish": "nonfoil",
-          "priceNzd": 5.4,
-          "priceUsdReference": 3.16
+          "priceNzd": 6.17,
+          "priceUsdReference": 3.61
         },
         "structuralPairing": {
           "addressedRole": "tutor",
@@ -508,8 +508,8 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 4,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 10.06,
-        "estimatedSpendUsdReference": 5.89,
+        "estimatedSpendNzd": 10.86,
+        "estimatedSpendUsdReference": 6.36,
         "improvementScore": 13.772,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -548,10 +548,10 @@
     ],
     "constraints": {
       "targetBracket": 4,
-      "maxNzdPerCard": 34.99,
+      "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.49,
       "maxTotalNzd": 200,
-      "maxTotalUsdReference": 117.1,
+      "maxTotalUsdReference": 117.09,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -573,8 +573,8 @@
         "candidatePackagesGenerated": 4,
         "candidatePackagesEligible": 1,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 10.06,
-        "estimatedSpendUsdReference": 5.89,
+        "estimatedSpendNzd": 10.86,
+        "estimatedSpendUsdReference": 6.36,
         "improvementScore": 13.772,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -642,8 +642,8 @@
               "collectorNumber": "80",
               "releaseDate": "2023-02-10",
               "finish": "nonfoil",
-              "priceNzd": 0.39,
-              "priceUsdReference": 0.23,
+              "priceNzd": 0.43,
+              "priceUsdReference": 0.25,
               "promo": false,
               "promoTypes": [],
               "flavorName": null,
@@ -735,8 +735,8 @@
               "collectorNumber": "93",
               "releaseDate": "2024-04-19",
               "finish": "nonfoil",
-              "priceNzd": 5.4,
-              "priceUsdReference": 3.16,
+              "priceNzd": 6.17,
+              "priceUsdReference": 3.61,
               "promo": false,
               "promoTypes": [],
               "flavorName": null,
@@ -793,8 +793,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 10.06,
-            "estimatedSpendUsdReference": 5.89,
+            "estimatedSpendNzd": 10.86,
+            "estimatedSpendUsdReference": 6.36,
             "unknownPriceCount": 0,
             "improvementScore": 13.772,
             "significantRegression": false,
@@ -1169,8 +1169,8 @@
                   "set": "ONE",
                   "collectorNumber": "80",
                   "finish": "nonfoil",
-                  "priceNzd": 0.39,
-                  "priceUsdReference": 0.23
+                  "priceNzd": 0.43,
+                  "priceUsdReference": 0.25
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
@@ -1248,8 +1248,8 @@
                   "set": "OTJ",
                   "collectorNumber": "93",
                   "finish": "nonfoil",
-                  "priceNzd": 5.4,
-                  "priceUsdReference": 3.16
+                  "priceNzd": 6.17,
+                  "priceUsdReference": 3.61
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
@@ -1300,8 +1300,8 @@
             "reason": "candidate-deck-strategy-retention-evidence-incomplete",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 9.99,
-            "estimatedSpendUsdReference": 5.85,
+            "estimatedSpendNzd": 10.76,
+            "estimatedSpendUsdReference": 6.3,
             "unknownPriceCount": 0,
             "improvementScore": 15.864,
             "significantRegression": false,
@@ -1769,8 +1769,8 @@
                   "set": "OTJ",
                   "collectorNumber": "93",
                   "finish": "nonfoil",
-                  "priceNzd": 5.4,
-                  "priceUsdReference": 3.16
+                  "priceNzd": 6.17,
+                  "priceUsdReference": 3.61
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
@@ -1821,8 +1821,8 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 8.69,
-            "estimatedSpendUsdReference": 5.09,
+            "estimatedSpendNzd": 9.55,
+            "estimatedSpendUsdReference": 5.59,
             "unknownPriceCount": 0,
             "improvementScore": 16.476,
             "significantRegression": false,
@@ -2161,8 +2161,8 @@
                   "set": "DRC",
                   "collectorNumber": "43",
                   "finish": "nonfoil",
-                  "priceNzd": 2,
-                  "priceUsdReference": 1.17
+                  "priceNzd": 2.08,
+                  "priceUsdReference": 1.22
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2282,8 +2282,8 @@
                   "set": "OTJ",
                   "collectorNumber": "93",
                   "finish": "nonfoil",
-                  "priceNzd": 5.4,
-                  "priceUsdReference": 3.16
+                  "priceNzd": 6.17,
+                  "priceUsdReference": 3.61
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
@@ -2334,8 +2334,8 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 11.27,
-            "estimatedSpendUsdReference": 6.6,
+            "estimatedSpendNzd": 12.13,
+            "estimatedSpendUsdReference": 7.1,
             "unknownPriceCount": 0,
             "improvementScore": 19.056,
             "significantRegression": false,
@@ -2673,8 +2673,8 @@
                   "set": "C15",
                   "collectorNumber": "133",
                   "finish": "nonfoil",
-                  "priceNzd": 4.8,
-                  "priceUsdReference": 2.81
+                  "priceNzd": 4.89,
+                  "priceUsdReference": 2.86
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2793,8 +2793,8 @@
                   "set": "OTJ",
                   "collectorNumber": "93",
                   "finish": "nonfoil",
-                  "priceNzd": 5.4,
-                  "priceUsdReference": 3.16
+                  "priceNzd": 6.17,
+                  "priceUsdReference": 3.61
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
@@ -2858,8 +2858,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 10.06,
-                "estimatedSpendUsdReference": 5.89,
+                "estimatedSpendNzd": 10.86,
+                "estimatedSpendUsdReference": 6.36,
                 "unknownPriceCount": 0,
                 "improvementScore": 13.772,
                 "significantRegression": false,
@@ -3234,8 +3234,8 @@
                       "set": "ONE",
                       "collectorNumber": "80",
                       "finish": "nonfoil",
-                      "priceNzd": 0.39,
-                      "priceUsdReference": 0.23
+                      "priceNzd": 0.43,
+                      "priceUsdReference": 0.25
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -3313,8 +3313,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 5.4,
-                      "priceUsdReference": 3.16
+                      "priceNzd": 6.17,
+                      "priceUsdReference": 3.61
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -3365,8 +3365,8 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 9.99,
-                "estimatedSpendUsdReference": 5.85,
+                "estimatedSpendNzd": 10.76,
+                "estimatedSpendUsdReference": 6.3,
                 "unknownPriceCount": 0,
                 "improvementScore": 15.864,
                 "significantRegression": false,
@@ -3834,8 +3834,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 5.4,
-                      "priceUsdReference": 3.16
+                      "priceNzd": 6.17,
+                      "priceUsdReference": 3.61
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -3886,8 +3886,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 8.69,
-                "estimatedSpendUsdReference": 5.09,
+                "estimatedSpendNzd": 9.55,
+                "estimatedSpendUsdReference": 5.59,
                 "unknownPriceCount": 0,
                 "improvementScore": 16.476,
                 "significantRegression": false,
@@ -4226,8 +4226,8 @@
                       "set": "DRC",
                       "collectorNumber": "43",
                       "finish": "nonfoil",
-                      "priceNzd": 2,
-                      "priceUsdReference": 1.17
+                      "priceNzd": 2.08,
+                      "priceUsdReference": 1.22
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4347,8 +4347,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 5.4,
-                      "priceUsdReference": 3.16
+                      "priceNzd": 6.17,
+                      "priceUsdReference": 3.61
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -4399,8 +4399,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 11.27,
-                "estimatedSpendUsdReference": 6.6,
+                "estimatedSpendNzd": 12.13,
+                "estimatedSpendUsdReference": 7.1,
                 "unknownPriceCount": 0,
                 "improvementScore": 19.056,
                 "significantRegression": false,
@@ -4738,8 +4738,8 @@
                       "set": "C15",
                       "collectorNumber": "133",
                       "finish": "nonfoil",
-                      "priceNzd": 4.8,
-                      "priceUsdReference": 2.81
+                      "priceNzd": 4.89,
+                      "priceUsdReference": 2.86
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4858,8 +4858,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 5.4,
-                      "priceUsdReference": 3.16
+                      "priceNzd": 6.17,
+                      "priceUsdReference": 3.61
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -5192,8 +5192,8 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 2,
-            "estimatedSpendUsdReference": 1.17,
+            "estimatedSpendNzd": 2.08,
+            "estimatedSpendUsdReference": 1.22,
             "unknownPriceCount": 0,
             "improvementScore": 0.629,
             "significantRegression": false,
@@ -5456,8 +5456,8 @@
                   "set": "DRC",
                   "collectorNumber": "43",
                   "finish": "nonfoil",
-                  "priceNzd": 2,
-                  "priceUsdReference": 1.17
+                  "priceNzd": 2.08,
+                  "priceUsdReference": 1.22
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -5506,8 +5506,8 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 4.8,
-            "estimatedSpendUsdReference": 2.81,
+            "estimatedSpendNzd": 4.89,
+            "estimatedSpendUsdReference": 2.86,
             "unknownPriceCount": 0,
             "improvementScore": 1.401,
             "significantRegression": false,
@@ -5770,8 +5770,8 @@
                   "set": "C15",
                   "collectorNumber": "133",
                   "finish": "nonfoil",
-                  "priceNzd": 4.8,
-                  "priceUsdReference": 2.81
+                  "priceNzd": 4.89,
+                  "priceUsdReference": 2.86
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -6107,8 +6107,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 18.7,
-                "estimatedSpendUsdReference": 10.95,
+                "estimatedSpendNzd": 18.96,
+                "estimatedSpendUsdReference": 11.1,
                 "unknownPriceCount": 0,
                 "improvementScore": 8.851,
                 "significantRegression": false,
@@ -6570,8 +6570,8 @@
                       "set": "ACR",
                       "collectorNumber": "100",
                       "finish": "foil",
-                      "priceNzd": 14.04,
-                      "priceUsdReference": 8.22
+                      "priceNzd": 14.3,
+                      "priceUsdReference": 8.37
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -6618,15 +6618,15 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 17.4,
-                "estimatedSpendUsdReference": 10.19,
+                "estimatedSpendNzd": 21.81,
+                "estimatedSpendUsdReference": 12.77,
                 "unknownPriceCount": 0,
-                "improvementScore": 8.627,
+                "improvementScore": 4.162,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 9.5,
+                  "score": 5,
                   "failedBefore": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -6636,11 +6636,10 @@
                   "failedAfter": [
                     "average-nonland-mv",
                     "cheap-interaction",
-                    "early-plays"
-                  ],
-                  "repairedGates": [
+                    "early-plays",
                     "tutors"
                   ],
+                  "repairedGates": [],
                   "advancedFailedGates": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -6672,9 +6671,9 @@
                     },
                     {
                       "strategy": "graveyard-reanimator",
-                      "cutAffinityScore": 12,
+                      "cutAffinityScore": 21,
                       "addAffinityScore": 41,
-                      "netAffinityDelta": 29
+                      "netAffinityDelta": 20
                     }
                   ],
                   "swapImpacts": [
@@ -6737,39 +6736,6 @@
                     },
                     {
                       "cutStrategyAffinityScore": 3,
-                      "addStrategyAffinityScore": 12,
-                      "cutStrategyProtectionApplied": 3,
-                      "cutMatchedStrategies": [
-                        "artifact-engine"
-                      ],
-                      "addMatchedStrategies": [
-                        "graveyard-reanimator"
-                      ],
-                      "locallyUnreplacedStrategies": [
-                        "artifact-engine"
-                      ],
-                      "cutRoles": [
-                        "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
-                      ],
-                      "addRoles": [
-                        "cost reduction",
-                        "creature",
-                        "graveyard recursion",
-                        "tutor"
-                      ],
-                      "unreplacedRoles": [
-                        "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
-                      ],
-                      "unreplacedStrategyComponentRoles": [],
-                      "meaningfulStrategyLoss": false,
-                      "verdict": "preserved"
-                    },
-                    {
-                      "cutStrategyAffinityScore": 3,
                       "addStrategyAffinityScore": 15,
                       "cutStrategyProtectionApplied": 3,
                       "cutMatchedStrategies": [
@@ -6788,6 +6754,34 @@
                         "graveyard recursion",
                         "protection",
                         "repeatable life gain engine"
+                      ],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
+                      "unreplacedStrategyComponentRoles": [],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 12,
+                      "addStrategyAffinityScore": 12,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "artifact-engine",
+                        "graveyard-reanimator"
+                      ],
+                      "addMatchedStrategies": [
+                        "graveyard-reanimator"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "artifact-engine"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "graveyard recursion"
+                      ],
+                      "addRoles": [
+                        "graveyard recursion"
                       ],
                       "unreplacedRoles": [
                         "creature"
@@ -6943,8 +6937,8 @@
                       "set": "DRC",
                       "collectorNumber": "43",
                       "finish": "nonfoil",
-                      "priceNzd": 2,
-                      "priceUsdReference": 1.17
+                      "priceNzd": 2.08,
+                      "priceUsdReference": 1.22
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -7033,59 +7027,6 @@
                     }
                   },
                   {
-                    "out": "Gilded Lotus",
-                    "in": "Gravebreaker Lamia",
-                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
-                    "recommendedPrinting": {
-                      "set": "THB",
-                      "collectorNumber": "98",
-                      "finish": "nonfoil",
-                      "priceNzd": 0.82,
-                      "priceUsdReference": 0.48
-                    },
-                    "structuralPairing": {
-                      "addressedRole": "tutor",
-                      "remainingStructuralDeficitAfterSwap": 13,
-                      "authoritativeTargetGate": "tutors",
-                      "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 4,
-                      "persistentColoredManaSourceFloor": 0,
-                      "strategyPreservation": {
-                        "cutStrategyAffinityScore": 3,
-                        "addStrategyAffinityScore": 12,
-                        "cutStrategyProtectionApplied": 3,
-                        "cutMatchedStrategies": [
-                          "artifact-engine"
-                        ],
-                        "addMatchedStrategies": [
-                          "graveyard-reanimator"
-                        ],
-                        "locallyUnreplacedStrategies": [
-                          "artifact-engine"
-                        ],
-                        "cutRoles": [
-                          "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
-                        ],
-                        "addRoles": [
-                          "cost reduction",
-                          "creature",
-                          "graveyard recursion",
-                          "tutor"
-                        ],
-                        "unreplacedRoles": [
-                          "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
-                        ],
-                        "unreplacedStrategyComponentRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      }
-                    }
-                  },
-                  {
                     "out": "Plasmancer",
                     "in": "Sword of Light and Shadow",
                     "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signals: graveyard-reanimator, artifact-engine. The recommended physical printing satisfies the active printing-family/set policy.",
@@ -7093,15 +7034,15 @@
                       "set": "ACR",
                       "collectorNumber": "100",
                       "finish": "foil",
-                      "priceNzd": 14.04,
-                      "priceUsdReference": 8.22
+                      "priceNzd": 14.3,
+                      "priceUsdReference": 8.37
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 12,
+                      "remainingStructuralDeficitAfterSwap": 13,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 4,
+                      "persistentColoredManaSourcesAfterSwap": 5,
                       "persistentColoredManaSourceFloor": 0,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 3,
@@ -7132,6 +7073,54 @@
                         "verdict": "preserved"
                       }
                     }
+                  },
+                  {
+                    "out": "Cryptek",
+                    "in": "Phyrexian Reclamation",
+                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.56 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "recommendedPrinting": {
+                      "set": "C15",
+                      "collectorNumber": "133",
+                      "finish": "nonfoil",
+                      "priceNzd": 4.89,
+                      "priceUsdReference": 2.86
+                    },
+                    "structuralPairing": {
+                      "addressedRole": "average-nonland-mv",
+                      "remainingStructuralDeficitAfterSwap": 13,
+                      "authoritativeTargetGate": "average-nonland-mv",
+                      "nonlandManaValueReduction": 3,
+                      "persistentColoredManaSourcesAfterSwap": 5,
+                      "persistentColoredManaSourceFloor": 0,
+                      "strategyPreservation": {
+                        "cutStrategyAffinityScore": 12,
+                        "addStrategyAffinityScore": 12,
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "artifact-engine",
+                          "graveyard-reanimator"
+                        ],
+                        "addMatchedStrategies": [
+                          "graveyard-reanimator"
+                        ],
+                        "locallyUnreplacedStrategies": [
+                          "artifact-engine"
+                        ],
+                        "cutRoles": [
+                          "creature",
+                          "graveyard recursion"
+                        ],
+                        "addRoles": [
+                          "graveyard recursion"
+                        ],
+                        "unreplacedRoles": [
+                          "creature"
+                        ],
+                        "unreplacedStrategyComponentRoles": [],
+                        "meaningfulStrategyLoss": false,
+                        "verdict": "preserved"
+                      }
+                    }
                   }
                 ]
               },
@@ -7141,15 +7130,15 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 19.98,
-                "estimatedSpendUsdReference": 11.7,
+                "estimatedSpendNzd": 20.26,
+                "estimatedSpendUsdReference": 11.86,
                 "unknownPriceCount": 0,
-                "improvementScore": 12.265,
+                "improvementScore": 11.783,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 9.5,
+                  "score": 5,
                   "failedBefore": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -7159,11 +7148,10 @@
                   "failedAfter": [
                     "average-nonland-mv",
                     "cheap-interaction",
-                    "early-plays"
-                  ],
-                  "repairedGates": [
+                    "early-plays",
                     "tutors"
                   ],
+                  "repairedGates": [],
                   "advancedFailedGates": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -7195,9 +7183,9 @@
                     },
                     {
                       "strategy": "graveyard-reanimator",
-                      "cutAffinityScore": 12,
+                      "cutAffinityScore": 21,
                       "addAffinityScore": 36,
-                      "netAffinityDelta": 24
+                      "netAffinityDelta": 15
                     }
                   ],
                   "swapImpacts": [
@@ -7258,39 +7246,6 @@
                     },
                     {
                       "cutStrategyAffinityScore": 3,
-                      "addStrategyAffinityScore": 12,
-                      "cutStrategyProtectionApplied": 3,
-                      "cutMatchedStrategies": [
-                        "artifact-engine"
-                      ],
-                      "addMatchedStrategies": [
-                        "graveyard-reanimator"
-                      ],
-                      "locallyUnreplacedStrategies": [
-                        "artifact-engine"
-                      ],
-                      "cutRoles": [
-                        "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
-                      ],
-                      "addRoles": [
-                        "cost reduction",
-                        "creature",
-                        "graveyard recursion",
-                        "tutor"
-                      ],
-                      "unreplacedRoles": [
-                        "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
-                      ],
-                      "unreplacedStrategyComponentRoles": [],
-                      "meaningfulStrategyLoss": false,
-                      "verdict": "preserved"
-                    },
-                    {
-                      "cutStrategyAffinityScore": 3,
                       "addStrategyAffinityScore": 15,
                       "cutStrategyProtectionApplied": 3,
                       "cutMatchedStrategies": [
@@ -7309,6 +7264,34 @@
                         "graveyard recursion",
                         "protection",
                         "repeatable life gain engine"
+                      ],
+                      "unreplacedRoles": [
+                        "creature"
+                      ],
+                      "unreplacedStrategyComponentRoles": [],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 12,
+                      "addStrategyAffinityScore": 12,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "artifact-engine",
+                        "graveyard-reanimator"
+                      ],
+                      "addMatchedStrategies": [
+                        "graveyard-reanimator"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "artifact-engine"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "graveyard recursion"
+                      ],
+                      "addRoles": [
+                        "graveyard recursion"
                       ],
                       "unreplacedRoles": [
                         "creature"
@@ -7464,8 +7447,8 @@
                       "set": "C15",
                       "collectorNumber": "133",
                       "finish": "nonfoil",
-                      "priceNzd": 4.8,
-                      "priceUsdReference": 2.81
+                      "priceNzd": 4.89,
+                      "priceUsdReference": 2.86
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -7552,59 +7535,6 @@
                     }
                   },
                   {
-                    "out": "Gilded Lotus",
-                    "in": "Gravebreaker Lamia",
-                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
-                    "recommendedPrinting": {
-                      "set": "THB",
-                      "collectorNumber": "98",
-                      "finish": "nonfoil",
-                      "priceNzd": 0.82,
-                      "priceUsdReference": 0.48
-                    },
-                    "structuralPairing": {
-                      "addressedRole": "tutor",
-                      "remainingStructuralDeficitAfterSwap": 13,
-                      "authoritativeTargetGate": "tutors",
-                      "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 4,
-                      "persistentColoredManaSourceFloor": 0,
-                      "strategyPreservation": {
-                        "cutStrategyAffinityScore": 3,
-                        "addStrategyAffinityScore": 12,
-                        "cutStrategyProtectionApplied": 3,
-                        "cutMatchedStrategies": [
-                          "artifact-engine"
-                        ],
-                        "addMatchedStrategies": [
-                          "graveyard-reanimator"
-                        ],
-                        "locallyUnreplacedStrategies": [
-                          "artifact-engine"
-                        ],
-                        "cutRoles": [
-                          "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
-                        ],
-                        "addRoles": [
-                          "cost reduction",
-                          "creature",
-                          "graveyard recursion",
-                          "tutor"
-                        ],
-                        "unreplacedRoles": [
-                          "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
-                        ],
-                        "unreplacedStrategyComponentRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      }
-                    }
-                  },
-                  {
                     "out": "Plasmancer",
                     "in": "Sword of Light and Shadow",
                     "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signals: graveyard-reanimator, artifact-engine. The recommended physical printing satisfies the active printing-family/set policy.",
@@ -7612,15 +7542,15 @@
                       "set": "ACR",
                       "collectorNumber": "100",
                       "finish": "foil",
-                      "priceNzd": 14.04,
-                      "priceUsdReference": 8.22
+                      "priceNzd": 14.3,
+                      "priceUsdReference": 8.37
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 12,
+                      "remainingStructuralDeficitAfterSwap": 13,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 4,
+                      "persistentColoredManaSourcesAfterSwap": 5,
                       "persistentColoredManaSourceFloor": 0,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 3,
@@ -7651,6 +7581,54 @@
                         "verdict": "preserved"
                       }
                     }
+                  },
+                  {
+                    "out": "Cryptek",
+                    "in": "Unearth",
+                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.56 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "recommendedPrinting": {
+                      "set": "A25",
+                      "collectorNumber": "113",
+                      "finish": "nonfoil",
+                      "priceNzd": 0.75,
+                      "priceUsdReference": 0.44
+                    },
+                    "structuralPairing": {
+                      "addressedRole": "average-nonland-mv",
+                      "remainingStructuralDeficitAfterSwap": 13,
+                      "authoritativeTargetGate": "average-nonland-mv",
+                      "nonlandManaValueReduction": 3,
+                      "persistentColoredManaSourcesAfterSwap": 5,
+                      "persistentColoredManaSourceFloor": 0,
+                      "strategyPreservation": {
+                        "cutStrategyAffinityScore": 12,
+                        "addStrategyAffinityScore": 12,
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "artifact-engine",
+                          "graveyard-reanimator"
+                        ],
+                        "addMatchedStrategies": [
+                          "graveyard-reanimator"
+                        ],
+                        "locallyUnreplacedStrategies": [
+                          "artifact-engine"
+                        ],
+                        "cutRoles": [
+                          "creature",
+                          "graveyard recursion"
+                        ],
+                        "addRoles": [
+                          "graveyard recursion"
+                        ],
+                        "unreplacedRoles": [
+                          "creature"
+                        ],
+                        "unreplacedStrategyComponentRoles": [],
+                        "meaningfulStrategyLoss": false,
+                        "verdict": "preserved"
+                      }
+                    }
                   }
                 ]
               },
@@ -7660,15 +7638,15 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 15.9,
-                "estimatedSpendUsdReference": 9.31,
+                "estimatedSpendNzd": 15.66,
+                "estimatedSpendUsdReference": 9.17,
                 "unknownPriceCount": 0,
-                "improvementScore": 9.537,
+                "improvementScore": 6.863,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 9.5,
+                  "score": 5,
                   "failedBefore": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -7678,11 +7656,10 @@
                   "failedAfter": [
                     "average-nonland-mv",
                     "cheap-interaction",
-                    "early-plays"
-                  ],
-                  "repairedGates": [
+                    "early-plays",
                     "tutors"
                   ],
+                  "repairedGates": [],
                   "advancedFailedGates": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -7714,9 +7691,9 @@
                     },
                     {
                       "strategy": "graveyard-reanimator",
-                      "cutAffinityScore": 12,
+                      "cutAffinityScore": 21,
                       "addAffinityScore": 36,
-                      "netAffinityDelta": 24
+                      "netAffinityDelta": 15
                     }
                   ],
                   "swapImpacts": [
@@ -7777,39 +7754,6 @@
                     },
                     {
                       "cutStrategyAffinityScore": 3,
-                      "addStrategyAffinityScore": 12,
-                      "cutStrategyProtectionApplied": 3,
-                      "cutMatchedStrategies": [
-                        "artifact-engine"
-                      ],
-                      "addMatchedStrategies": [
-                        "graveyard-reanimator"
-                      ],
-                      "locallyUnreplacedStrategies": [
-                        "artifact-engine"
-                      ],
-                      "cutRoles": [
-                        "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
-                      ],
-                      "addRoles": [
-                        "cost reduction",
-                        "creature",
-                        "graveyard recursion",
-                        "tutor"
-                      ],
-                      "unreplacedRoles": [
-                        "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
-                      ],
-                      "unreplacedStrategyComponentRoles": [],
-                      "meaningfulStrategyLoss": false,
-                      "verdict": "preserved"
-                    },
-                    {
-                      "cutStrategyAffinityScore": 3,
                       "addStrategyAffinityScore": 15,
                       "cutStrategyProtectionApplied": 3,
                       "cutMatchedStrategies": [
@@ -7832,6 +7776,33 @@
                       "unreplacedRoles": [
                         "creature"
                       ],
+                      "unreplacedStrategyComponentRoles": [],
+                      "meaningfulStrategyLoss": false,
+                      "verdict": "preserved"
+                    },
+                    {
+                      "cutStrategyAffinityScore": 12,
+                      "addStrategyAffinityScore": 12,
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "artifact-engine",
+                        "graveyard-reanimator"
+                      ],
+                      "addMatchedStrategies": [
+                        "graveyard-reanimator"
+                      ],
+                      "locallyUnreplacedStrategies": [
+                        "artifact-engine"
+                      ],
+                      "cutRoles": [
+                        "creature",
+                        "graveyard recursion"
+                      ],
+                      "addRoles": [
+                        "creature",
+                        "graveyard recursion"
+                      ],
+                      "unreplacedRoles": [],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -8071,59 +8042,6 @@
                     }
                   },
                   {
-                    "out": "Gilded Lotus",
-                    "in": "Gravebreaker Lamia",
-                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
-                    "recommendedPrinting": {
-                      "set": "THB",
-                      "collectorNumber": "98",
-                      "finish": "nonfoil",
-                      "priceNzd": 0.82,
-                      "priceUsdReference": 0.48
-                    },
-                    "structuralPairing": {
-                      "addressedRole": "tutor",
-                      "remainingStructuralDeficitAfterSwap": 13,
-                      "authoritativeTargetGate": "tutors",
-                      "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 4,
-                      "persistentColoredManaSourceFloor": 0,
-                      "strategyPreservation": {
-                        "cutStrategyAffinityScore": 3,
-                        "addStrategyAffinityScore": 12,
-                        "cutStrategyProtectionApplied": 3,
-                        "cutMatchedStrategies": [
-                          "artifact-engine"
-                        ],
-                        "addMatchedStrategies": [
-                          "graveyard-reanimator"
-                        ],
-                        "locallyUnreplacedStrategies": [
-                          "artifact-engine"
-                        ],
-                        "cutRoles": [
-                          "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
-                        ],
-                        "addRoles": [
-                          "cost reduction",
-                          "creature",
-                          "graveyard recursion",
-                          "tutor"
-                        ],
-                        "unreplacedRoles": [
-                          "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
-                        ],
-                        "unreplacedStrategyComponentRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      }
-                    }
-                  },
-                  {
                     "out": "Plasmancer",
                     "in": "Sword of Light and Shadow",
                     "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signals: graveyard-reanimator, artifact-engine. The recommended physical printing satisfies the active printing-family/set policy.",
@@ -8131,15 +8049,15 @@
                       "set": "ACR",
                       "collectorNumber": "100",
                       "finish": "foil",
-                      "priceNzd": 14.04,
-                      "priceUsdReference": 8.22
+                      "priceNzd": 14.3,
+                      "priceUsdReference": 8.37
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 12,
+                      "remainingStructuralDeficitAfterSwap": 13,
                       "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 4,
+                      "persistentColoredManaSourcesAfterSwap": 5,
                       "persistentColoredManaSourceFloor": 0,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 3,
@@ -8165,6 +8083,53 @@
                         "unreplacedRoles": [
                           "creature"
                         ],
+                        "unreplacedStrategyComponentRoles": [],
+                        "meaningfulStrategyLoss": false,
+                        "verdict": "preserved"
+                      }
+                    }
+                  },
+                  {
+                    "out": "Cryptek",
+                    "in": "Reassembling Skeleton",
+                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.56 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "recommendedPrinting": {
+                      "set": "M19",
+                      "collectorNumber": "116",
+                      "finish": "nonfoil",
+                      "priceNzd": 0.32,
+                      "priceUsdReference": 0.19
+                    },
+                    "structuralPairing": {
+                      "addressedRole": "average-nonland-mv",
+                      "remainingStructuralDeficitAfterSwap": 13,
+                      "authoritativeTargetGate": "average-nonland-mv",
+                      "nonlandManaValueReduction": 2,
+                      "persistentColoredManaSourcesAfterSwap": 5,
+                      "persistentColoredManaSourceFloor": 0,
+                      "strategyPreservation": {
+                        "cutStrategyAffinityScore": 12,
+                        "addStrategyAffinityScore": 12,
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "artifact-engine",
+                          "graveyard-reanimator"
+                        ],
+                        "addMatchedStrategies": [
+                          "graveyard-reanimator"
+                        ],
+                        "locallyUnreplacedStrategies": [
+                          "artifact-engine"
+                        ],
+                        "cutRoles": [
+                          "creature",
+                          "graveyard recursion"
+                        ],
+                        "addRoles": [
+                          "creature",
+                          "graveyard recursion"
+                        ],
+                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -8625,15 +8590,15 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 3.36,
-                "estimatedSpendUsdReference": 1.97,
+                "estimatedSpendNzd": 16.93,
+                "estimatedSpendUsdReference": 9.91,
                 "unknownPriceCount": 0,
-                "improvementScore": 4.421,
+                "improvementScore": 8.585,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 9.1,
+                  "score": 4.5,
                   "failedBefore": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -8643,11 +8608,10 @@
                   "failedAfter": [
                     "average-nonland-mv",
                     "cheap-interaction",
-                    "early-plays"
-                  ],
-                  "repairedGates": [
+                    "early-plays",
                     "tutors"
                   ],
+                  "repairedGates": [],
                   "advancedFailedGates": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -8665,8 +8629,8 @@
                       "strategy": "artifact-engine",
                       "commanderStrategyScore": 9,
                       "cutAffinityScore": 9,
-                      "addAffinityScore": 0,
-                      "netAffinityLoss": 9,
+                      "addAffinityScore": 3,
+                      "netAffinityLoss": 6,
                       "strongestCutProtectionApplied": 4
                     }
                   ],
@@ -8674,8 +8638,8 @@
                     {
                       "strategy": "artifact-engine",
                       "cutAffinityScore": 9,
-                      "addAffinityScore": 0,
-                      "netAffinityDelta": -9
+                      "addAffinityScore": 3,
+                      "netAffinityDelta": -6
                     },
                     {
                       "strategy": "graveyard-reanimator",
@@ -8744,32 +8708,27 @@
                     },
                     {
                       "cutStrategyAffinityScore": 3,
-                      "addStrategyAffinityScore": 12,
+                      "addStrategyAffinityScore": 15,
                       "cutStrategyProtectionApplied": 3,
                       "cutMatchedStrategies": [
                         "artifact-engine"
                       ],
                       "addMatchedStrategies": [
+                        "artifact-engine",
                         "graveyard-reanimator"
                       ],
-                      "locallyUnreplacedStrategies": [
-                        "artifact-engine"
-                      ],
+                      "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
+                        "creature"
                       ],
                       "addRoles": [
-                        "cost reduction",
-                        "creature",
+                        "equipment",
                         "graveyard recursion",
-                        "tutor"
+                        "protection",
+                        "repeatable life gain engine"
                       ],
                       "unreplacedRoles": [
-                        "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
+                        "creature"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -8922,8 +8881,8 @@
                       "set": "DRC",
                       "collectorNumber": "43",
                       "finish": "nonfoil",
-                      "priceNzd": 2,
-                      "priceUsdReference": 1.17
+                      "priceNzd": 2.08,
+                      "priceUsdReference": 1.22
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -9012,51 +8971,46 @@
                     }
                   },
                   {
-                    "out": "Gilded Lotus",
-                    "in": "Gravebreaker Lamia",
-                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "out": "Plasmancer",
+                    "in": "Sword of Light and Shadow",
+                    "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signals: graveyard-reanimator, artifact-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "THB",
-                      "collectorNumber": "98",
-                      "finish": "nonfoil",
-                      "priceNzd": 0.82,
-                      "priceUsdReference": 0.48
+                      "set": "ACR",
+                      "collectorNumber": "100",
+                      "finish": "foil",
+                      "priceNzd": 14.3,
+                      "priceUsdReference": 8.37
                     },
                     "structuralPairing": {
-                      "addressedRole": "tutor",
+                      "addressedRole": "protection",
                       "remainingStructuralDeficitAfterSwap": 13,
-                      "authoritativeTargetGate": "tutors",
+                      "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 4,
+                      "persistentColoredManaSourcesAfterSwap": 5,
                       "persistentColoredManaSourceFloor": 0,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 3,
-                        "addStrategyAffinityScore": 12,
+                        "addStrategyAffinityScore": 15,
                         "cutStrategyProtectionApplied": 3,
                         "cutMatchedStrategies": [
                           "artifact-engine"
                         ],
                         "addMatchedStrategies": [
+                          "artifact-engine",
                           "graveyard-reanimator"
                         ],
-                        "locallyUnreplacedStrategies": [
-                          "artifact-engine"
-                        ],
+                        "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
+                          "creature"
                         ],
                         "addRoles": [
-                          "cost reduction",
-                          "creature",
+                          "equipment",
                           "graveyard recursion",
-                          "tutor"
+                          "protection",
+                          "repeatable life gain engine"
                         ],
                         "unreplacedRoles": [
-                          "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
+                          "creature"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -9072,15 +9026,15 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 5.94,
-                "estimatedSpendUsdReference": 3.48,
+                "estimatedSpendNzd": 19.51,
+                "estimatedSpendUsdReference": 11.42,
                 "unknownPriceCount": 0,
-                "improvementScore": 3.356,
+                "improvementScore": 2.139,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 9.1,
+                  "score": 4.5,
                   "failedBefore": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -9090,11 +9044,10 @@
                   "failedAfter": [
                     "average-nonland-mv",
                     "cheap-interaction",
-                    "early-plays"
-                  ],
-                  "repairedGates": [
+                    "early-plays",
                     "tutors"
                   ],
+                  "repairedGates": [],
                   "advancedFailedGates": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -9112,8 +9065,8 @@
                       "strategy": "artifact-engine",
                       "commanderStrategyScore": 9,
                       "cutAffinityScore": 9,
-                      "addAffinityScore": 0,
-                      "netAffinityLoss": 9,
+                      "addAffinityScore": 3,
+                      "netAffinityLoss": 6,
                       "strongestCutProtectionApplied": 4
                     }
                   ],
@@ -9121,8 +9074,8 @@
                     {
                       "strategy": "artifact-engine",
                       "cutAffinityScore": 9,
-                      "addAffinityScore": 0,
-                      "netAffinityDelta": -9
+                      "addAffinityScore": 3,
+                      "netAffinityDelta": -6
                     },
                     {
                       "strategy": "graveyard-reanimator",
@@ -9189,32 +9142,27 @@
                     },
                     {
                       "cutStrategyAffinityScore": 3,
-                      "addStrategyAffinityScore": 12,
+                      "addStrategyAffinityScore": 15,
                       "cutStrategyProtectionApplied": 3,
                       "cutMatchedStrategies": [
                         "artifact-engine"
                       ],
                       "addMatchedStrategies": [
+                        "artifact-engine",
                         "graveyard-reanimator"
                       ],
-                      "locallyUnreplacedStrategies": [
-                        "artifact-engine"
-                      ],
+                      "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
+                        "creature"
                       ],
                       "addRoles": [
-                        "cost reduction",
-                        "creature",
+                        "equipment",
                         "graveyard recursion",
-                        "tutor"
+                        "protection",
+                        "repeatable life gain engine"
                       ],
                       "unreplacedRoles": [
-                        "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
+                        "creature"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -9367,8 +9315,8 @@
                       "set": "C15",
                       "collectorNumber": "133",
                       "finish": "nonfoil",
-                      "priceNzd": 4.8,
-                      "priceUsdReference": 2.81
+                      "priceNzd": 4.89,
+                      "priceUsdReference": 2.86
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -9455,51 +9403,46 @@
                     }
                   },
                   {
-                    "out": "Gilded Lotus",
-                    "in": "Gravebreaker Lamia",
-                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "out": "Plasmancer",
+                    "in": "Sword of Light and Shadow",
+                    "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signals: graveyard-reanimator, artifact-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "THB",
-                      "collectorNumber": "98",
-                      "finish": "nonfoil",
-                      "priceNzd": 0.82,
-                      "priceUsdReference": 0.48
+                      "set": "ACR",
+                      "collectorNumber": "100",
+                      "finish": "foil",
+                      "priceNzd": 14.3,
+                      "priceUsdReference": 8.37
                     },
                     "structuralPairing": {
-                      "addressedRole": "tutor",
+                      "addressedRole": "protection",
                       "remainingStructuralDeficitAfterSwap": 13,
-                      "authoritativeTargetGate": "tutors",
+                      "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 4,
+                      "persistentColoredManaSourcesAfterSwap": 5,
                       "persistentColoredManaSourceFloor": 0,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 3,
-                        "addStrategyAffinityScore": 12,
+                        "addStrategyAffinityScore": 15,
                         "cutStrategyProtectionApplied": 3,
                         "cutMatchedStrategies": [
                           "artifact-engine"
                         ],
                         "addMatchedStrategies": [
+                          "artifact-engine",
                           "graveyard-reanimator"
                         ],
-                        "locallyUnreplacedStrategies": [
-                          "artifact-engine"
-                        ],
+                        "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
+                          "creature"
                         ],
                         "addRoles": [
-                          "cost reduction",
-                          "creature",
+                          "equipment",
                           "graveyard recursion",
-                          "tutor"
+                          "protection",
+                          "repeatable life gain engine"
                         ],
                         "unreplacedRoles": [
-                          "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
+                          "creature"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -9515,15 +9458,15 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 1.86,
-                "estimatedSpendUsdReference": 1.09,
+                "estimatedSpendNzd": 15.34,
+                "estimatedSpendUsdReference": 8.98,
                 "unknownPriceCount": 0,
-                "improvementScore": 9.085,
+                "improvementScore": 9.412,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 9.5,
+                  "score": 4.5,
                   "failedBefore": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -9533,11 +9476,10 @@
                   "failedAfter": [
                     "average-nonland-mv",
                     "cheap-interaction",
-                    "early-plays"
-                  ],
-                  "repairedGates": [
+                    "early-plays",
                     "tutors"
                   ],
+                  "repairedGates": [],
                   "advancedFailedGates": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -9555,8 +9497,8 @@
                       "strategy": "artifact-engine",
                       "commanderStrategyScore": 9,
                       "cutAffinityScore": 9,
-                      "addAffinityScore": 0,
-                      "netAffinityLoss": 9,
+                      "addAffinityScore": 3,
+                      "netAffinityLoss": 6,
                       "strongestCutProtectionApplied": 4
                     }
                   ],
@@ -9564,8 +9506,8 @@
                     {
                       "strategy": "artifact-engine",
                       "cutAffinityScore": 9,
-                      "addAffinityScore": 0,
-                      "netAffinityDelta": -9
+                      "addAffinityScore": 3,
+                      "netAffinityDelta": -6
                     },
                     {
                       "strategy": "graveyard-reanimator",
@@ -9632,32 +9574,27 @@
                     },
                     {
                       "cutStrategyAffinityScore": 3,
-                      "addStrategyAffinityScore": 12,
+                      "addStrategyAffinityScore": 15,
                       "cutStrategyProtectionApplied": 3,
                       "cutMatchedStrategies": [
                         "artifact-engine"
                       ],
                       "addMatchedStrategies": [
+                        "artifact-engine",
                         "graveyard-reanimator"
                       ],
-                      "locallyUnreplacedStrategies": [
-                        "artifact-engine"
-                      ],
+                      "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
+                        "creature"
                       ],
                       "addRoles": [
-                        "cost reduction",
-                        "creature",
+                        "equipment",
                         "graveyard recursion",
-                        "tutor"
+                        "protection",
+                        "repeatable life gain engine"
                       ],
                       "unreplacedRoles": [
-                        "mana acceleration",
-                        "mana rock",
-                        "persistent colored mana source"
+                        "creature"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -9898,51 +9835,46 @@
                     }
                   },
                   {
-                    "out": "Gilded Lotus",
-                    "in": "Gravebreaker Lamia",
-                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "out": "Plasmancer",
+                    "in": "Sword of Light and Shadow",
+                    "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signals: graveyard-reanimator, artifact-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "THB",
-                      "collectorNumber": "98",
-                      "finish": "nonfoil",
-                      "priceNzd": 0.82,
-                      "priceUsdReference": 0.48
+                      "set": "ACR",
+                      "collectorNumber": "100",
+                      "finish": "foil",
+                      "priceNzd": 14.3,
+                      "priceUsdReference": 8.37
                     },
                     "structuralPairing": {
-                      "addressedRole": "tutor",
+                      "addressedRole": "protection",
                       "remainingStructuralDeficitAfterSwap": 13,
-                      "authoritativeTargetGate": "tutors",
+                      "authoritativeTargetGate": null,
                       "nonlandManaValueReduction": null,
-                      "persistentColoredManaSourcesAfterSwap": 4,
+                      "persistentColoredManaSourcesAfterSwap": 5,
                       "persistentColoredManaSourceFloor": 0,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 3,
-                        "addStrategyAffinityScore": 12,
+                        "addStrategyAffinityScore": 15,
                         "cutStrategyProtectionApplied": 3,
                         "cutMatchedStrategies": [
                           "artifact-engine"
                         ],
                         "addMatchedStrategies": [
+                          "artifact-engine",
                           "graveyard-reanimator"
                         ],
-                        "locallyUnreplacedStrategies": [
-                          "artifact-engine"
-                        ],
+                        "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
+                          "creature"
                         ],
                         "addRoles": [
-                          "cost reduction",
-                          "creature",
+                          "equipment",
                           "graveyard recursion",
-                          "tutor"
+                          "protection",
+                          "repeatable life gain engine"
                         ],
                         "unreplacedRoles": [
-                          "mana acceleration",
-                          "mana rock",
-                          "persistent colored mana source"
+                          "creature"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -10311,8 +10243,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 2.31,
-                "estimatedSpendUsdReference": 1.35,
+                "estimatedSpendNzd": 2.39,
+                "estimatedSpendUsdReference": 1.4,
                 "unknownPriceCount": 0,
                 "improvementScore": 3.709,
                 "significantRegression": false,
@@ -10575,8 +10507,8 @@
                       "set": "DRC",
                       "collectorNumber": "43",
                       "finish": "nonfoil",
-                      "priceNzd": 2,
-                      "priceUsdReference": 1.17
+                      "priceNzd": 2.08,
+                      "priceUsdReference": 1.22
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -10673,8 +10605,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 5.11,
-                "estimatedSpendUsdReference": 2.99,
+                "estimatedSpendNzd": 5.19,
+                "estimatedSpendUsdReference": 3.04,
                 "unknownPriceCount": 0,
                 "improvementScore": 2.726,
                 "significantRegression": false,
@@ -10937,8 +10869,8 @@
                       "set": "C15",
                       "collectorNumber": "133",
                       "finish": "nonfoil",
-                      "priceNzd": 4.8,
-                      "priceUsdReference": 2.81
+                      "priceNzd": 4.89,
+                      "priceUsdReference": 2.86
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -11666,8 +11598,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 2,
-                "estimatedSpendUsdReference": 1.17,
+                "estimatedSpendNzd": 2.08,
+                "estimatedSpendUsdReference": 1.22,
                 "unknownPriceCount": 0,
                 "improvementScore": 0.629,
                 "significantRegression": false,
@@ -11930,8 +11862,8 @@
                       "set": "DRC",
                       "collectorNumber": "43",
                       "finish": "nonfoil",
-                      "priceNzd": 2,
-                      "priceUsdReference": 1.17
+                      "priceNzd": 2.08,
+                      "priceUsdReference": 1.22
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -11980,8 +11912,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 4.8,
-                "estimatedSpendUsdReference": 2.81,
+                "estimatedSpendNzd": 4.89,
+                "estimatedSpendUsdReference": 2.86,
                 "unknownPriceCount": 0,
                 "improvementScore": 1.401,
                 "significantRegression": false,
@@ -12244,8 +12176,8 @@
                       "set": "C15",
                       "collectorNumber": "133",
                       "finish": "nonfoil",
-                      "priceNzd": 4.8,
-                      "priceUsdReference": 2.81
+                      "priceNzd": 4.89,
+                      "priceUsdReference": 2.86
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
