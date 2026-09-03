@@ -36,3 +36,7 @@ The result is a scenario-intelligence pass for discovery, feasibility, injection
 2. **Medium — next benchmark.** After this state reconciliation, run the FF-only Counter Blitz benchmark (#32) as the next materially different case. Record whether route retention, target gates, strategy preservation and exact printing/budget truth remain aligned.
 3. **Low — provider-window maintenance.** Re-run the positive and restricted controls whenever pagination or policy inputs change. A bounded or unavailable provider window must remain `unknown`, never a negative claim.
 4. **Low — checkpoint discipline.** Keep PR #29 experimental and leave `main`/V0.13 unchanged. Promote a new checkpoint only after INTEL-02 controls are mechanically green and manually reviewed together.
+
+## Post-persistence verification
+
+The evidence-writer rerun completed successfully at workflow run `33811643472`, and the project-state integrity run `33812192037` regenerated a self-consistent validation index at head `318023a...`. The persisted metadata now exposes the route distinction directly (`discovery_distinct_library_route_count=6`, `distinct_library_route_count=1`, `meaningful_alternate_routes_retained=false`).
