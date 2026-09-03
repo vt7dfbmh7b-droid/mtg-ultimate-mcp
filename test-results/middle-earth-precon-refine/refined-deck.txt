@@ -87,7 +87,7 @@
 2 Swamp (LTR) 267 *N*
 4 Forest (LTR) 270 *N*
 4 Forest (LTR) 271 *N*
-1 The Sackville-Bagginses (HOB) 83 *N*
+1 Gorbag of Minas Morgul (LTR) 86 *N*
 1 Hobbit's Sting (LTR) 20 *N*
 1 Weathered Wayfarer (LTC) 183 *N*
-1 Meriadoc Brandybuck (LTR) 177 *N*
+1 Samwise Gamgee (LTR) 327 *N*
