@@ -17,7 +17,7 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
 - Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
-- Active branch validation: **accepted-checkpoint-77a-semantic-fix-02e9-manual-review-blocked**
+- Active branch validation: **accepted-checkpoint-77a-compound-resource-45f-manual-review-blocked**
 
 ## Stable safety boundary
 
@@ -31,12 +31,12 @@ Latest fully validated executable experimental baseline documented by the prior 
 
 ## Important pending validation
 
-The last persisted Marvel control is `02e9dd44ddce126b3e30f8e972f32c93b5e1f8f7` with outcome **focused-pass-broad-fail**. At source 02e9dd4..., focused Marvel refinement passed mechanically with seven swaps across two accepted rounds and removed only the curve failure. Generic floors prevented the prior tutor and graveyard-utility losses, but manual review still blocks acceptance for the Arcane Denial and Black Market Connections cuts and requires surplus/resource-quality proof for other trades. Broad Marvel executed successfully but accepted no package: its exhaustive restricted pool exposed exactly two fast-mana and two tutor matches, all already present or excluded. Broad target-quality and strategy-preservation therefore remain blocking.
+The last persisted Marvel control is `7265531610a7012f7940f591c99a2fc6ef3af06e` with outcome **focused-pass-broad-fail**. At source 7265531..., focused Marvel refinement passed mechanically with six swaps across three accepted rounds and removed only the average-nonland-MV failure (2.71→2.58). The package stops with no-supported-swaps-found; manual review remains blocked because accepted substitutions lose spot interaction, land ramp/tutor, persistent colored-mana, mana-rock, treasure, sacrifice or compound card/token/mana-engine roles even when coarse strategy affinity stays green. Broad Marvel executed successfully but accepted no package: exhaustive restricted discovery found two fast-mana and two tutor matches, all already present or excluded, so target quality and strategy preservation remain blocking. Runtime hardening was separately validated by CI at 45f4cb9....
 
 ## Next actions
 
-1. Keep the seven focused-Marvel swaps unaccepted until the current interaction and repeatable-resource tradeoffs are manually resolved with surplus evidence.
-2. If manual review rejects the current focused package, implement only generic resource-quality/engine-preservation rules and rerun focused and broad Marvel from one exact source.
+1. Keep the six focused-Marvel swaps unaccepted until interaction, land/mana infrastructure and compound resource-engine tradeoffs are manually resolved with surplus evidence.
+2. If manual review rejects any focused package, implement only generic semantic/resource-quality rules and rerun focused and broad Marvel from one exact source.
 3. If any control or manual audit fails, fix the generic semantic/selection rule rather than adding name-specific exceptions, then rerun the whole affected family from one exact executable source.
 4. When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.
 5. Then run an eligible verified full-table win-package scenario to close the main INTEL-01 proof gap.

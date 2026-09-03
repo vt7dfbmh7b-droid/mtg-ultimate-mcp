@@ -472,9 +472,29 @@ Protection: `tsconfig.scripts.json` now compiles every TypeScript automation scr
 
 Status: prevented; all 46 remaining TypeScript scripts compile at cleanup source `c543502...`.
 
+## KF-048 — Compound resource engines collapse into narrower upgrades
+
+Observed: focused Marvel source `7265531...` accepted Black Market Connections → The Astonishing Ant-Man, Vibranium Mining Mech → Alicia Masters, Skilled Sculptor and Contract Hero → Spider-Ham, Peter Porker while reducing average nonland mana value. Coarse strategy affinity remained green, but the cuts exposed repeatable card/token/mana, mana-rock, treasure, sacrifice and conditional-acceleration roles that the additions did not replace like-for-like.
+
+Risk: a multi-axis engine can be spent on a cosmetic curve or broad-role gain while the final deck loses the bridge that makes its commander strategy function.
+
+Protection: structural pairing now models resource axes generically. A two-axis card/token/mana engine must retain every axis; a three-axis engine must retain at least two. The focused exact-source run still remains manually blocked when only coarse affinity proves green.
+
+Status: deterministic regression and TypeScript build pass locally; exact-source focused evidence at `7265531...` makes the residual manual-review boundary explicit.
+
+## KF-049 — Unref'd shutdown deadline timer cancels asynchronous cleanup tests
+
+Observed: the first bounded-shutdown implementation called `unref()` on its deadline timer. CI run `33740521234` cancelled the stuck-MCP lifecycle case and three dependent tests because Node exited while the timer was unreferenced, even though the Promise was still pending.
+
+Risk: lifecycle tests can report cancellation instead of exercising forced cleanup, and production shutdown timing becomes dependent on unrelated event-loop handles.
+
+Protection: the deadline timer remains referenced until `Promise.race` completes; lifecycle tests cover normal drain, already-closed servers, forced HTTP close, stuck MCP close and surfaced errors. CI run `33740914240` passed on source `45f4cb9...`.
+
+Status: prevented in TypeScript and pinned CI; the cancelled run and artifact remain retained as historical diagnostic evidence.
+
 ## Current-source refresh — 2026-09-03
 
-The exact-source family rerun at `02e9dd4...` revalidated the generic semantic protections for Necron Dynasties, Squirreled Away, Food and Fellowship, Middle-earth and focused Marvel. Focused Marvel no longer spends the previously observed tutor or graveyard-utility roles, but manual review still blocks acceptance for interaction-quality and repeatable-resource-engine substitutions. Broad Marvel remains an accepted constrained limitation rather than a regression: its exhaustive restricted pool has no eligible new fast-mana or tutor card. These controls do not promote checkpoint `77a5383...` and do not close the positive INTEL-01 win-package proof gap.
+The exact-source rerun at `7265531...` revalidated the generic semantic/resource protections for Necron Dynasties, Squirreled Away and Food and Fellowship, and the focused Marvel refinement. Focused Marvel now accepts six swaps across three rounds and removes only the average-nonland-MV failure (2.71→2.58), but manual review blocks the package because individual substitutions spend spot interaction, land ramp/tutor, persistent colored mana, mana-rock, treasure, sacrifice and compound card/token/mana-engine roles. Broad Marvel remains an accepted constrained limitation rather than a regression: exhaustive discovery found exactly two fast-mana and two tutor matches, all already present or excluded, so no package was accepted. Liliana's NZ$500 challenge passed legality, budget and all measured construction gates with three verified win-oriented combos; it is supplementary benchmark evidence, not the positive INTEL-01 full-table proof. Runtime shutdown hardening passes pinned CI at `45f4cb9...`. These controls do not promote checkpoint `77a5383...`.
 
 ## Adding a failure
 
