@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-02T23:16:00Z",
+  "updatedAt": "2026-09-03T00:05:00Z",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
   "stable": {
@@ -23,7 +23,7 @@
   "workMode": {
     "intelligenceDevelopmentPaused": false,
     "activeMilestone": "INTEL-02",
-    "reason": "INTEL-02 remains active, but the immediate task is evidence review after structural consolidation rather than new intelligence breadth. Follow-up source 07f36a7... passes pinned CI and the focused/expanded supporting controls; broad Marvel remains red with a fully diagnosed constrained-pool limitation. The accepted checkpoint stays 77a5383... until manual swap review and a generic policy decision are complete."
+    "reason": "INTEL-02 remains active, but the immediate task is generic selector hardening after manual review. Follow-up source 07f36a7... passes pinned CI and the focused/expanded supporting controls; broad Marvel remains red with a fully diagnosed constrained-pool limitation. Manual review found the five focused swaps are not safe acceptance evidence because several spend tutor, interaction, cost-reduction or graveyard utility roles. The accepted checkpoint stays 77a5383... until generic protection and rerun evidence are complete."
   },
   "milestones": [
     {
@@ -70,11 +70,11 @@
     }
   ],
   "validation": {
-    "activeBranchStatus": "accepted-checkpoint-77a-audit-cleanup-07f36-mixed-live-validation",
+    "activeBranchStatus": "accepted-checkpoint-77a-audit-cleanup-07f36-manual-review-blocked",
     "latestPersistedMarvelControl": {
       "sourceSha": "07f36a74529a717cf6c6e85f00ea999f40dff098",
       "outcome": "focused-pass-broad-fail",
-      "note": "At follow-up source 07f36a7..., focused Marvel refinement passed with five strategy-preserving swaps and removed only the curve failure. Broad Marvel executed successfully but accepted no package: its exhaustive restricted pool exposed exactly two fast-mana and two tutor matches, all already present or excluded. Broad target-quality and strategy-preservation therefore remain blocking."
+      "note": "At follow-up source 07f36a7..., focused Marvel refinement passed mechanically with five swaps and removed only the curve failure. Manual review does not yet accept those swaps: several spend tutor, interaction, cost-reduction or graveyard-utility roles for generic gains. Broad Marvel executed successfully but accepted no package: its exhaustive restricted pool exposed exactly two fast-mana and two tutor matches, all already present or excluded. Broad target-quality and strategy-preservation therefore remain blocking."
     },
     "latestPersistedFoodPreconControl": {
       "sourceSha": "07f36a74529a717cf6c6e85f00ea999f40dff098",
@@ -94,7 +94,7 @@
       "note": "Squirreled Away passed its registered exact-source gates at follow-up source 07f36a7..., including cumulative combat-token and sacrifice-engine preservation. Accepted swaps still require manual audit before checkpoint use."
     },
     "requiredBeforeResumingIntelligenceClaims": [
-      "Resolve the broad Marvel constrained-pool blocker: manually review the five focused-lane swaps, decide whether the restricted policy should remain capped or gain a generic eligible-card expansion, then rerun both Marvel lanes from one exact source",
+      "Implement generic semantic protection so non-surplus tutors, spot interaction, cost-reduction infrastructure and graveyard utility are not cut for cosmetic role gains; then rerun focused and broad Marvel from one exact source",
       "Manually audit every accepted IN→OUT package from that same source; mechanical green is not sufficient, especially for Necron, Squirreled Away, Food and Fellowship and both Marvel lanes",
       "Require focused Marvel and broad Marvel to pass target-quality and strategy-preservation gates on the same exact executable source before calling the restricted lane uniformly green",
       "Keep graveyard directionality/actionable recursion, explicit artifact engines, self-sacrifice versus repeatable outlets, secondary-plan inference, strategy-support density, premium early infrastructure, board wipes, token-death engines and board-scaling payoffs fail-closed",
@@ -111,8 +111,8 @@
     "No merge, stable/current promotion, version bump, or release without explicit user approval."
   ],
   "nextActions": [
-    "Resolve the broad Marvel constrained-pool blocker: manually review the five focused-lane swaps, decide whether the restricted policy should remain capped or gain a generic eligible-card expansion, then rerun both Marvel lanes from one exact source.",
-    "Manually audit every accepted swap from Necron Dynasties, Squirreled Away, Food and Fellowship, focused Marvel and broad Marvel. Reject any package that weakens a primary/secondary engine, meaningful wipe/interaction infrastructure, premium early mana, recursion, token-death/card-advantage engines or persistent colored mana merely to satisfy generic role counts.",
+    "Implement generic semantic protection so non-surplus tutors, spot interaction, cost-reduction infrastructure and graveyard utility are not cut for cosmetic role gains; then rerun focused and broad Marvel from one exact source.",
+    "Keep the five focused-Marvel swaps unaccepted until the generic protection rule is proven; then manually audit Necron Dynasties, Squirreled Away and Food and Fellowship for the same engine-preservation standard.",
     "If any control or manual audit fails, fix the generic semantic/selection rule rather than adding name-specific exceptions, then rerun the whole affected family from one exact executable source.",
     "When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.",
     "Then run an eligible verified full-table win-package scenario to close the main INTEL-01 proof gap.",

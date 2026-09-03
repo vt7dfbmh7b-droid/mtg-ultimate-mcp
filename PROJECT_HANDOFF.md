@@ -17,7 +17,7 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
 - Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
-- Active branch validation: **accepted-checkpoint-77a-audit-cleanup-07f36-mixed-live-validation**
+- Active branch validation: **accepted-checkpoint-77a-audit-cleanup-07f36-manual-review-blocked**
 
 ## Stable safety boundary
 
@@ -31,12 +31,12 @@ Latest fully validated executable experimental baseline documented by the prior 
 
 ## Important pending validation
 
-The last persisted Marvel control is `07f36a74529a717cf6c6e85f00ea999f40dff098` with outcome **focused-pass-broad-fail**. At follow-up source 07f36a7..., focused Marvel refinement passed with five strategy-preserving swaps and removed only the curve failure. Broad Marvel executed successfully but accepted no package: its exhaustive restricted pool exposed exactly two fast-mana and two tutor matches, all already present or excluded. Broad target-quality and strategy-preservation therefore remain blocking.
+The last persisted Marvel control is `07f36a74529a717cf6c6e85f00ea999f40dff098` with outcome **focused-pass-broad-fail**. At follow-up source 07f36a7..., focused Marvel refinement passed mechanically with five swaps and removed only the curve failure. Manual review does not yet accept those swaps: several spend tutor, interaction, cost-reduction or graveyard-utility roles for generic gains. Broad Marvel executed successfully but accepted no package: its exhaustive restricted pool exposed exactly two fast-mana and two tutor matches, all already present or excluded. Broad target-quality and strategy-preservation therefore remain blocking.
 
 ## Next actions
 
-1. Resolve the broad Marvel constrained-pool blocker: manually review the five focused-lane swaps, decide whether the restricted policy should remain capped or gain a generic eligible-card expansion, then rerun both Marvel lanes from one exact source.
-2. Manually audit every accepted swap from Necron Dynasties, Squirreled Away, Food and Fellowship, focused Marvel and broad Marvel. Reject any package that weakens a primary/secondary engine, meaningful wipe/interaction infrastructure, premium early mana, recursion, token-death/card-advantage engines or persistent colored mana merely to satisfy generic role counts.
+1. Implement generic semantic protection so non-surplus tutors, spot interaction, cost-reduction infrastructure and graveyard utility are not cut for cosmetic role gains; then rerun focused and broad Marvel from one exact source.
+2. Keep the five focused-Marvel swaps unaccepted until the generic protection rule is proven; then manually audit Necron Dynasties, Squirreled Away and Food and Fellowship for the same engine-preservation standard.
 3. If any control or manual audit fails, fix the generic semantic/selection rule rather than adding name-specific exceptions, then rerun the whole affected family from one exact executable source.
 4. When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.
 5. Then run an eligible verified full-table win-package scenario to close the main INTEL-01 proof gap.
