@@ -496,6 +496,16 @@ Status: prevented in TypeScript and pinned CI; the cancelled run and artifact re
 
 The exact-source rerun at `f0c3b9f...` revalidated the generic semantic/resource protections for Necron Dynasties, Squirreled Away, Food and Fellowship and Middle-earth. Focused and broad Marvel both executed and persisted no-supported-improvement with zero swaps: the generic compound operational-component guard rejects the six historical focused swap classes, while broad Marvel still exhausts its restricted fast-mana/tutor pool. The earlier source-`7265531...` six-swap package remains historical/manual-review evidence only. Liliana's NZ$500 challenge passed legality, budget and all measured construction gates with three verified win-oriented combos; it is supplementary benchmark evidence, not the positive INTEL-01 full-table proof. Runtime shutdown hardening passes pinned CI at `45f4cb9...`. These controls do not promote checkpoint `77a5383...`.
 
+## KF-050 — Per-swap strategy preservation permits cumulative package drift
+
+Observed: the isolated FF-only Scions & Spellcraft control at source `a079090...` (workflow `33813323027`) accepted five swaps whose individual pairing records were all marked `preserved`. The final deck remained legal and exact-sized and improved several Bracket-4 construction metrics, but whole-deck Y'shtola spells-control affinity fell from 425 to 421 and Y'shtola trigger-spell density fell from 29 to 27. The persisted failure is retained under `test-results/scions-spellcraft-ff-only/` with no stale success result.
+
+Risk: a sequence of locally safe substitutions can hollow out a substantive commander strategy while coarse affinity, target-gate progress and per-swap evidence remain green. This is a cumulative package-acceptance gap, not a justification for weakening the existing component guard.
+
+Protection: preserve the current per-swap component-family and structural floors, then add a generic package-level non-regression check for substantive command-zone strategy affinity and trigger/support density. The check must fail closed when aggregate evidence is incomplete and must not depend on card or commander names. Add an anonymous multi-swap regression where every local pairing is broadly matched but the package total declines.
+
+Status: open benchmark failure, branch-local to PR #32 source `a079090...` until reproduced on the active executable source. Build, mechanic regressions, exact legality/100-card/printing checks and evidence persistence passed; the intelligence gate correctly failed. Re-run on the active source before any INTEL-02 checkpoint or family-wide claim.
+
 ## Adding a failure
 
 Every new material failure should record:

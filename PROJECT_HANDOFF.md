@@ -17,7 +17,7 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
 - Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
-- Active branch validation: **accepted-checkpoint-77a-intel01-positive-route-follow-up**
+- Active branch validation: **accepted-checkpoint-77a-intel01-positive-route-follow-up-ff32-cumulative-strategy-retention-failure**
 
 ## Stable safety boundary
 
@@ -40,7 +40,7 @@ The last persisted Marvel control is `f0c3b9f82dca49f295e44175e517d992e6e5356e` 
 3. Preserve the component guard and its anonymous multi-axis regression while revalidating any future candidate-pool change against interaction, land/mana, treasure, sacrifice, token, card-advantage and cost-reduction floors.
 4. Treat INTEL-01 as scenario-level validated at source 50e5d19... for package discovery, closure, feasibility, injection, protection, final recognition and access/setup audits; keep the one-route resilience finding open and non-gating.
 5. When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.
-6. After this state reconciliation, run the FF-only Counter Blitz benchmark (#32) as the next materially different case; preserve the INTEL-01 route-resilience follow-up and do not broaden claims from a single scenario.
+6. The FF-only Counter Blitz benchmark (#32) executed on isolated source a079090... (workflow 33813323027) and correctly failed package-wide Y'shtola spells-control retention (425→421 affinity; 29→27 trigger spells) despite five locally preserved swaps; reproduce this failure on the current active source and add a generic aggregate strategy/trigger-density gate before any acceptance.
 7. Keep PR #29 as experimental/evidence history. Do not merge or promote it automatically; when V0.15 is genuinely accepted, prepare a clean promotion candidate rather than treating the current 1,000+ commit evidence branch as release-ready.
 
 ## Permanent recovery references
