@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-03T19:43:30.829Z",
+  "updatedAt": "2026-09-03T19:54:20.981Z",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
   "stable": {
@@ -77,21 +77,21 @@
       "note": "At source f0c3b9f..., exact-source focused and broad Marvel controls executed and persisted with the generic compound operational-component guard enabled. Both lanes returned no-supported-improvement with zero swaps: the six previously observed focused substitutions are now rejected because multi-component operational cards must retain their like-for-like component families, and broad Marvel still has no supported package after its restricted fast-mana/tutor pool is exhausted. Build, deterministic regressions, target execution and persistence passed; target-quality/strategy gates correctly remain red because no accepted package repairs the failed Bracket-5 gates. Dependent Necron Dynasties, Squirreled Away, Food and Fellowship and Middle-earth controls pass at f0c3b9f.... Accepted checkpoint remains 77a5383...; no promotion."
     },
     "latestPersistedFoodPreconControl": {
-      "sourceSha": "7265531610a7012f7940f591c99a2fc6ef3af06e",
+      "sourceSha": "f0c3b9f82dca49f295e44175e517d992e6e5356e",
       "outcome": "pass",
-      "note": "Middle-earth Food and Fellowship passed its exact-source hard-truth, target-quality and strategy-preservation gates at source 7265531...."
+      "note": "Middle-earth Food and Fellowship passed its exact-source hard-truth, target-quality and strategy-preservation gates at source f0c3b9f...."
     },
     "latestPersistedUnrestrictedPreconControl": {
-      "sourceSha": "7265531610a7012f7940f591c99a2fc6ef3af06e",
+      "sourceSha": "f0c3b9f82dca49f295e44175e517d992e6e5356e",
       "outcome": "pass",
       "precon": "Necron Dynasties",
-      "note": "Necron Dynasties passed its registered exact-source gates at source 7265531..., including commander legality, budget, graveyard directionality, recursion floor and artifact/graveyard identities. Accepted swaps still require manual audit before checkpoint use."
+      "note": "Necron Dynasties passed its registered exact-source gates at source f0c3b9f..., including commander legality, budget, graveyard directionality, recursion floor and artifact/graveyard identities. Accepted swaps still require manual audit before checkpoint use."
     },
     "latestPersistedSquirrelPreconControl": {
-      "sourceSha": "7265531610a7012f7940f591c99a2fc6ef3af06e",
+      "sourceSha": "f0c3b9f82dca49f295e44175e517d992e6e5356e",
       "outcome": "pass",
       "precon": "Squirreled Away",
-      "note": "Squirreled Away passed its registered exact-source gates at source 7265531..., including cumulative combat-token and sacrifice-engine preservation. Accepted swaps still require manual audit before checkpoint use."
+      "note": "Squirreled Away passed its registered exact-source gates at source f0c3b9f..., including cumulative combat-token and sacrifice-engine preservation. Accepted swaps still require manual audit before checkpoint use."
     },
     "requiredBeforeResumingIntelligenceClaims": [
       "Retain the source-7265531... six-swap audit as historical evidence; source f0c3b9f... now rejects all six classes generically through compound operational-component preservation",
