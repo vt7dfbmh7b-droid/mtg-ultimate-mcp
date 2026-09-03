@@ -41,6 +41,7 @@
 1 Lychguard (40K) 39 *N*
 1 Necron Deathmark (40K) 42 *N*
 1 Necron Overlord (40K) 43 *N*
+1 Out of the Tombs (40K) 46 *N*
 1 Royal Warden (40K) 52 *N*
 1 Shard of the Void Dragon (40K) 56 *N*
 1 Skorpekh Lord (40K) 58 *N*
@@ -73,4 +74,3 @@
 1 Annihilating Glare (ONE) 80 *N*
 1 Dark Ritual (SUM) 99 *N*
 1 Lively Dirge (OTJ) 93 *N*
-1 Marionette Apprentice (MH3) 100 *F*
