@@ -2163,7 +2163,7 @@
           "G": 0
         },
         "roleCounts": {
-          "graveyard recursion": 15,
+          "graveyard recursion": 16,
           "high-capacity graveyard recursion": 6,
           "+1/+1 counters": 25,
           "creature": 19,
@@ -2214,7 +2214,7 @@
         "interactionCount": 18,
         "cheapInteractionCount": 10,
         "protectionCount": 9,
-        "recursionCount": 15,
+        "recursionCount": 16,
         "boardWipeCount": 3,
         "persistentColoredManaSourceCount": 8,
         "structuralSignals": []
@@ -3096,7 +3096,7 @@
           "persistent colored mana source": 7,
           "card selection": 4,
           "mana rock": 6,
-          "graveyard recursion": 4,
+          "graveyard recursion": 5,
           "high-capacity graveyard recursion": 2,
           "fast mana": 2,
           "death-trigger draw engine": 2,
@@ -3131,7 +3131,7 @@
         "interactionCount": 18,
         "cheapInteractionCount": 7,
         "protectionCount": 6,
-        "recursionCount": 4,
+        "recursionCount": 5,
         "boardWipeCount": 2,
         "persistentColoredManaSourceCount": 7,
         "structuralSignals": []
