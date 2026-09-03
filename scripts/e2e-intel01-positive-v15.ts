@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { writeFile } from 'node:fs/promises';
+import { unlink, writeFile } from 'node:fs/promises';
 import { buildCommanderThroughPipelineV15 } from '../src/services/commander-build-pipeline-v15.js';
 import { assessFullTableWinClosureV15 } from '../src/services/full-table-win-closure-v15.js';
 import { validateCommanderDeck } from '../src/services/commander-rules.js';
@@ -46,6 +46,14 @@ function routeAudit(
 async function main(): Promise<void> {
   const commanderName = "Frodo, Sauron's Bane";
   const maxUsdPerCard = 100;
+
+  // A retry can start from a checkout that contains evidence from an earlier
+  // attempt. Remove both output names before running so a success cannot carry
+  // a stale failure (or vice versa) into the persistence step.
+  await Promise.all([
+    unlink('intel01-positive-result.json').catch(() => undefined),
+    unlink('intel01-positive-failure.txt').catch(() => undefined),
+  ]);
 
   console.log('INTEL-01 POSITIVE FULL-TABLE WIN-PACKAGE PIPELINE LIVE CONTROL');
   console.log(`CASE: ${commanderName}; target Bracket 4; required bounded Spellbook package; US$${maxUsdPerCard} exact per-card cap.`);
@@ -249,6 +257,7 @@ async function main(): Promise<void> {
 
 main().catch(async (error) => {
   const message = error instanceof Error ? `${error.name}: ${error.message}\n${error.stack ?? ''}` : String(error);
+  await unlink('intel01-positive-result.json').catch(() => undefined);
   console.error(message);
   await writeFile('intel01-positive-failure.txt', `${message}\n`, 'utf8').catch(() => undefined);
   process.exitCode = 1;

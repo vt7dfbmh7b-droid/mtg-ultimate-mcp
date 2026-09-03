@@ -99,6 +99,9 @@ jobs:
           const packageDiscovery = value.packageDiscovery ?? {};
           const proof = value.packageProof ?? {};
           const finalMetrics = value.finalMetrics ?? {};
+          const finalRouteAudit = finalMetrics.finalWinRouteAudit ?? {};
+          const finalRoutePortfolio = finalRouteAudit.portfolio ?? {};
+          const discoveryPortfolio = packageDiscovery.portfolio ?? {};
           const line = (key, entry) => console.log(`${key}=${String(entry)}`);
           line('discovery_outcome', packageDiscovery.status === 'verified-win-packages-found' ? 'success' : 'failure');
           line('source_completeness', packageDiscovery.sourceCompleteness ?? 'unknown');
@@ -108,6 +111,10 @@ jobs:
           line('package_protection', proof.packageProtection === true ? 'true' : 'false');
           line('final_recognition', proof.finalRecognition === true ? 'true' : 'false');
           line('alternate_route_audit', proof.alternateRouteAudit === true ? 'true' : 'false');
+          line('meaningful_alternate_routes_retained', proof.meaningfulAlternateRoutesRetained === true ? 'true' : 'false');
+          line('final_route_count', finalRouteAudit.verifiedFullTableWinCount ?? proof.finalRouteCount ?? 'unknown');
+          line('distinct_library_route_count', finalRoutePortfolio.distinctLibraryRouteCount ?? proof.distinctLibraryRouteCount ?? 'unknown');
+          line('discovery_distinct_library_route_count', discoveryPortfolio.distinctLibraryRouteCount ?? 'unknown');
           line('exact_card_count', finalMetrics.exactCardCount === true ? 'true' : 'false');
           line('commander_legality', finalMetrics.commanderLegality === true ? 'true' : 'false');
           line('printing_policy_truth', finalMetrics.printingPolicyTruth === true ? 'true' : 'false');

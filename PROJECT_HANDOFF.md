@@ -17,7 +17,7 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
 - Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
-- Active branch validation: **accepted-checkpoint-77a-compound-component-guard-fail-closed**
+- Active branch validation: **accepted-checkpoint-77a-intel01-positive-route-follow-up**
 
 ## Stable safety boundary
 
@@ -31,16 +31,16 @@ Latest fully validated executable experimental baseline documented by the prior 
 
 ## Important pending validation
 
-The last persisted Marvel control is `f0c3b9f82dca49f295e44175e517d992e6e5356e` with outcome **focused-zero-swap-broad-zero-swap**. At source f0c3b9f..., exact-source focused and broad Marvel controls executed and persisted with the generic compound operational-component guard enabled. Both lanes returned no-supported-improvement with zero swaps: the six previously observed focused substitutions are now rejected because multi-component operational cards must retain their like-for-like component families, and broad Marvel still has no supported package after its restricted fast-mana/tutor pool is exhausted. Build, deterministic regressions, target execution and persistence passed; target-quality/strategy gates correctly remain red because no accepted package repairs the failed Bracket-5 gates. Dependent Necron Dynasties, Squirreled Away, Food and Fellowship and Middle-earth controls pass at f0c3b9f.... Accepted checkpoint remains 77a5383...; no promotion.
+The last persisted Marvel control is `f0c3b9f82dca49f295e44175e517d992e6e5356e` with outcome **focused-zero-swap-broad-zero-swap**. At source f0c3b9f..., exact-source focused and broad Marvel controls executed and persisted with the generic compound operational-component guard enabled. Both lanes returned no-supported-improvement with zero swaps: the six previously observed focused substitutions are now rejected because multi-component operational cards must retain their like-for-like component families, and broad Marvel still has no supported package after its restricted fast-mana/tutor pool is exhausted. Build, deterministic regressions, target execution and persistence passed; target-quality/strategy gates correctly remain red because no accepted package repairs the failed Bracket-5 gates. Dependent Necron Dynasties, Squirreled Away, Food and Fellowship and Middle-earth controls pass at f0c3b9f.... The separate generic INTEL-01 positive control passed at source 73eb089... (workflow 33810727022) with complete discovery, strict closure, exact legal/affordable printings, atomic injection, final recognition and route audits; the finished deck retained one route, so alternate-route resilience remains a follow-up. Accepted checkpoint remains 77a5383...; no promotion.
 
 ## Next actions
 
 1. Keep the historical six focused-Marvel swaps unaccepted; source f0c3b9f... now rejects their compound operational-component losses generically and both exact-source Marvel lanes fail closed with zero swaps.
 2. Decide whether the restricted Marvel family needs an explicit construction ceiling or a generic candidate-pool expansion; do not add card-name exceptions, and rerun both lanes from one exact executable source after any policy change.
 3. Preserve the component guard and its anonymous multi-axis regression while revalidating any future candidate-pool change against interaction, land/mana, treasure, sacrifice, token, card-advantage and cost-reduction floors.
-4. When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.
-5. Then run an eligible verified full-table win-package scenario to close the main INTEL-01 proof gap.
-6. Only after the consolidated checkpoint and positive INTEL-01 proof should BENCH-01 broaden to materially different cases such as FF-only Counter Blitz and the NZ$500 Liliana, Heretical Healer challenge.
+4. Treat INTEL-01 as scenario-level validated at source 73eb089... for package discovery, closure, feasibility, injection, protection, final recognition and access/setup audits; keep the one-route resilience finding open and non-gating.
+5. When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.
+6. After this state reconciliation, run the FF-only Counter Blitz benchmark (#32) as the next materially different case; preserve the INTEL-01 route-resilience follow-up and do not broaden claims from a single scenario.
 7. Keep PR #29 as experimental/evidence history. Do not merge or promote it automatically; when V0.15 is genuinely accepted, prepare a clean promotion candidate rather than treating the current 1,000+ commit evidence branch as release-ready.
 
 ## Permanent recovery references
