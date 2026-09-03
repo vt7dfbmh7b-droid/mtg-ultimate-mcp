@@ -249,10 +249,10 @@
     "roundsAccepted": 2,
     "totalSwaps": 4,
     "candidatePackagesPerRound": 4,
-    "estimatedUpgradeSpendNzd": 9.07,
-    "estimatedUpgradeSpendUsdReference": 5.31,
+    "estimatedUpgradeSpendNzd": 8.87,
+    "estimatedUpgradeSpendUsdReference": 5.19,
     "maxTotalNzd": 200,
-    "maxTotalUsdReference": 117.1,
+    "maxTotalUsdReference": 117.09,
     "swaps": [
       {
         "out": "Insatiable Frugivore",
@@ -262,8 +262,8 @@
           "set": "WOE",
           "collectorNumber": "101",
           "finish": "nonfoil",
-          "priceNzd": 3.74,
-          "priceUsdReference": 2.19
+          "priceNzd": 3.43,
+          "priceUsdReference": 2.01
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -364,8 +364,8 @@
           "set": "EOC",
           "collectorNumber": "103",
           "finish": "nonfoil",
-          "priceNzd": 0.77,
-          "priceUsdReference": 0.45
+          "priceNzd": 0.87,
+          "priceUsdReference": 0.51
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -536,8 +536,8 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 4,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 4.97,
-        "estimatedSpendUsdReference": 2.91,
+        "estimatedSpendNzd": 4.77,
+        "estimatedSpendUsdReference": 2.79,
         "improvementScore": 16.008,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -598,10 +598,10 @@
     ],
     "constraints": {
       "targetBracket": 4,
-      "maxNzdPerCard": 34.99,
+      "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.49,
       "maxTotalNzd": 200,
-      "maxTotalUsdReference": 117.1,
+      "maxTotalUsdReference": 117.09,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -623,8 +623,8 @@
         "candidatePackagesGenerated": 4,
         "candidatePackagesEligible": 4,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 4.97,
-        "estimatedSpendUsdReference": 2.91,
+        "estimatedSpendNzd": 4.77,
+        "estimatedSpendUsdReference": 2.79,
         "improvementScore": 16.008,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -643,8 +643,8 @@
               "collectorNumber": "101",
               "releaseDate": "2023-09-08",
               "finish": "nonfoil",
-              "priceNzd": 3.74,
-              "priceUsdReference": 2.19,
+              "priceNzd": 3.43,
+              "priceUsdReference": 2.01,
               "promo": false,
               "promoTypes": [],
               "flavorName": null,
@@ -759,8 +759,8 @@
               "collectorNumber": "103",
               "releaseDate": "2025-08-01",
               "finish": "nonfoil",
-              "priceNzd": 0.77,
-              "priceUsdReference": 0.45,
+              "priceNzd": 0.87,
+              "priceUsdReference": 0.51,
               "promo": false,
               "promoTypes": [],
               "flavorName": null,
@@ -811,8 +811,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 3,
-            "estimatedSpendNzd": 4.97,
-            "estimatedSpendUsdReference": 2.91,
+            "estimatedSpendNzd": 4.77,
+            "estimatedSpendUsdReference": 2.79,
             "unknownPriceCount": 0,
             "improvementScore": 16.008,
             "significantRegression": false,
@@ -1130,8 +1130,8 @@
                   "set": "WOE",
                   "collectorNumber": "101",
                   "finish": "nonfoil",
-                  "priceNzd": 3.74,
-                  "priceUsdReference": 2.19
+                  "priceNzd": 3.43,
+                  "priceUsdReference": 2.01
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1232,8 +1232,8 @@
                   "set": "EOC",
                   "collectorNumber": "103",
                   "finish": "nonfoil",
-                  "priceNzd": 0.77,
-                  "priceUsdReference": 0.45
+                  "priceNzd": 0.87,
+                  "priceUsdReference": 0.51
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1278,8 +1278,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 3,
-            "estimatedSpendNzd": 6.47,
-            "estimatedSpendUsdReference": 3.79,
+            "estimatedSpendNzd": 6.56,
+            "estimatedSpendUsdReference": 3.84,
             "unknownPriceCount": 0,
             "improvementScore": 10.017,
             "significantRegression": false,
@@ -1601,8 +1601,8 @@
                   "set": "EOC",
                   "collectorNumber": "103",
                   "finish": "nonfoil",
-                  "priceNzd": 0.77,
-                  "priceUsdReference": 0.45
+                  "priceNzd": 0.87,
+                  "priceUsdReference": 0.51
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1647,8 +1647,8 @@
                   "set": "SOC",
                   "collectorNumber": "270",
                   "finish": "nonfoil",
-                  "priceNzd": 5.48,
-                  "priceUsdReference": 3.21
+                  "priceNzd": 5.47,
+                  "priceUsdReference": 3.2
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2482,8 +2482,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 4.97,
-                "estimatedSpendUsdReference": 2.91,
+                "estimatedSpendNzd": 4.77,
+                "estimatedSpendUsdReference": 2.79,
                 "unknownPriceCount": 0,
                 "improvementScore": 16.008,
                 "significantRegression": false,
@@ -2801,8 +2801,8 @@
                       "set": "WOE",
                       "collectorNumber": "101",
                       "finish": "nonfoil",
-                      "priceNzd": 3.74,
-                      "priceUsdReference": 2.19
+                      "priceNzd": 3.43,
+                      "priceUsdReference": 2.01
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2903,8 +2903,8 @@
                       "set": "EOC",
                       "collectorNumber": "103",
                       "finish": "nonfoil",
-                      "priceNzd": 0.77,
-                      "priceUsdReference": 0.45
+                      "priceNzd": 0.87,
+                      "priceUsdReference": 0.51
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2949,8 +2949,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 6.47,
-                "estimatedSpendUsdReference": 3.79,
+                "estimatedSpendNzd": 6.56,
+                "estimatedSpendUsdReference": 3.84,
                 "unknownPriceCount": 0,
                 "improvementScore": 10.017,
                 "significantRegression": false,
@@ -3272,8 +3272,8 @@
                       "set": "EOC",
                       "collectorNumber": "103",
                       "finish": "nonfoil",
-                      "priceNzd": 0.77,
-                      "priceUsdReference": 0.45
+                      "priceNzd": 0.87,
+                      "priceUsdReference": 0.51
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3318,8 +3318,8 @@
                       "set": "SOC",
                       "collectorNumber": "270",
                       "finish": "nonfoil",
-                      "priceNzd": 5.48,
-                      "priceUsdReference": 3.21
+                      "priceNzd": 5.47,
+                      "priceUsdReference": 3.2
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
