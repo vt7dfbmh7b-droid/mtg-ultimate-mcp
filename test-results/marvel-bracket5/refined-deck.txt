@@ -9,12 +9,12 @@
 1 Final Showdown (MAR) 45
 1 Three Steps Ahead (MAR) 62
 1 Daily Bugle Newspaper (MSC) 749
-1 Arcane Denial (MSC) 147
 1 Manamorphose (SLD) 1746
 1 Dora Milaje Elite (MSC) 12
 1 Reprieve (MAR) 5
 1 Whoosh! (MSC) 790
 1 Valorous Stance (MSC) 145
+1 Fantastic Bounce (MSC) 620
 1 Spectacular Tactics (MSC) 775
 1 The Ruinous Wrecking Crew (MSH) 224
 1 Negative Zone Portal (MSC) 111
@@ -30,15 +30,18 @@
 1 Fabricate (SLD) 7118
 1 Lethal Scheme (MSC) 157
 1 Sol Ring (MSC) 211
+1 Silver Surfer, Galactus's Herald (MSC) 10
 1 Path to Exile (MSC) 141
 1 T'Challa, the Black Panther (MSC) 7
 1 Defense of the Heart (MAR) 76
+1 Doom's Time Platform (MSC) 103
 1 Loki, the Deceiver (MSC) 86
 1 Dark Ritual (MSC) 793
 1 Birds of Paradise (MSC) 170
 1 Aurelia, the Warleader (MAR) 86
 1 Stark Industries Executive (MSH) 153
 1 Counterspell (MAR) 52
+1 Sun-Spider, Nimble Webber (SPM) 154
 1 Arcane Signet (MSC) 191
 1 Swiftfoot Boots (MSC) 216
 1 Relentless Assault (MAR) 25
@@ -47,17 +50,14 @@
 1 Fellwar Stone (MSC) 285
 1 Living Laser (MSC) 55
 1 Thought Vessel (MSC) 222
-1 Big Score (MSC) 802
 1 Savage Beating (MAR) 26
 1 Lightning Greaves (MSC) 202
-1 Unexpected Windfall (MAR) 29
 1 Heroic Intervention (MAR) 78
 1 Jocasta, Automaton Avenger (MSC) 108
 1 Killmonger, Ruthless Usurper (MSC) 53
 1 Contract Hero (MSC) 683
 1 Sword of the Animist (MSC) 289
 1 Talisman of Dominance (MSC) 219
-1 Black Market Connections (MSC) 155
 1 Talisman of Creativity (MSC) 218
 1 Talisman of Indulgence (MSC) 220
 1 Miles Morales // Ultimate Spider-Man (SPM) 108
@@ -86,8 +86,8 @@
 3 Mountain (MSC) 858
 3 Island (MSH) 289
 3 Plains (MSC) 866
-1 Quicksilver, Brash Blur (MSH) 148 *N*
-1 Whispersilk Cloak (MSC) 225 *N*
-1 Tome of Legends (MSC) 223 *N*
+1 White Tiger, Ava Ayala (MSH) 196 *N*
 1 Sword of Fire and Ice (MAR) 100 *N*
-1 Spider-Punk (SPM) 92 *N*
+1 Secret Identity (SPM) 43 *N*
+1 Goliath, Mass Manipulator (MSC) 766 *N*
+1 Lucky the Pizza Dog (MSC) 726 *N*
