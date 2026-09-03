@@ -280,6 +280,54 @@ test('single-axis payoffs cannot replace repeatable engines spanning tokens card
   assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Surplus Five Drop');
 });
 
+test('curve repair preserves scarce artifact and high-capacity recursion engines', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{
+      role: 'average-nonland-mv' as const,
+      candidate: {
+        card: { name: 'Low-Cost Token Payoff', roles: ['creature', 'go-wide payoff', 'token production'], manaValue: 2, typeLine: 'Creature' },
+        authoritativeTargetGate: 'average-nonland-mv',
+        strategyAffinity: { score: 12, protectionApplied: 4, matchedStrategies: ['combat-tokens'] },
+      },
+    }],
+    [
+      {
+        card: {
+          name: 'Scarce Artifact Reanimator',
+          roles: ['artifact graveyard recursion', 'graveyard recursion', 'high-capacity graveyard recursion', 'mana rock', 'token production'],
+          manaValue: 4,
+          typeLine: 'Artifact',
+        },
+        heuristicCutPressure: 20,
+        strategyAffinity: { score: 6, protectionApplied: 4, matchedStrategies: ['combat-tokens'] },
+      },
+      {
+        card: { name: 'Surplus Four Drop', roles: ['creature'], manaValue: 4, typeLine: 'Creature' },
+        heuristicCutPressure: 1,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    ],
+    {
+      rampCount: 19, drawCount: 22, interactionCount: 19, protectionCount: 6, tutorCount: 2,
+      recursionCount: 5, boardWipeCount: 2, earlyPlayCount: 41, cheapInteractionCount: 13,
+      fastManaCount: 2, averageNonlandManaValue: 2.71, nonlandCount: 69,
+      persistentColoredManaSourceCount: 11, commanderColorCount: 5,
+      roleCounts: {
+        'artifact graveyard recursion': 1,
+        'high-capacity graveyard recursion': 2,
+        'graveyard recursion': 5,
+        'free interaction': 1,
+        'cheap interaction': 13,
+        'spot interaction': 14,
+      },
+    },
+    { ...bracketFiveTargets },
+    5,
+  );
+
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Surplus Four Drop');
+});
+
 test('curve repair can inspect non-positive-pressure cuts only when the real curve gate is active', () => {
   const candidates = [
     { card: { name: 'Positive Cut' }, heuristicCutPressure: 2 },

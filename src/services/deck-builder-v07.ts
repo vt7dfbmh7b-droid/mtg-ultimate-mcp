@@ -949,6 +949,11 @@ function preservesSemanticSafetyFloorsV15(
     },
     // Preserve at least one graveyard utility effect whenever the deck has only one.
     { role: 'graveyard utility', floor: Math.min(semanticRoleCounts['graveyard utility'] ?? 0, 1) },
+    // Artifact-specific and high-capacity recursion are scarce engines, not generic surplus
+    // recursion. Retain the unique artifact bridge and up to two broad recursion effects unless
+    // the incoming card preserves the same operational role.
+    { role: 'artifact graveyard recursion', floor: Math.min(semanticRoleCounts['artifact graveyard recursion'] ?? 0, 1) },
+    { role: 'high-capacity graveyard recursion', floor: Math.min(semanticRoleCounts['high-capacity graveyard recursion'] ?? 0, 2) },
     // Narrow tutors are consistency infrastructure while the authoritative tutor gate is
     // still failed; do not silently replace them with unrelated protection or creatures.
     {
