@@ -31,6 +31,21 @@ test('moving an exiled card back into a graveyard is graveyard utility, not recu
   const roles = new Set(effectiveCardRolesV15(converterLike));
   assert.equal(roles.has('graveyard recursion'), false);
   assert.equal(roles.has('graveyard utility'), true);
+  assert.equal(roles.has('graveyard hate'), false);
+  assert.equal(roles.has('card draw'), false);
+  assert.equal(roles.has('card selection'), true);
+});
+
+test('token reminder text does not create repeatable life-gain or sacrifice roles on the host card', () => {
+  const foodProducer = card(
+    'Generic Food Producer',
+    'When this creature enters, create a Food token. (It\'s an artifact with "{2}, {T}, Sacrifice this token: You gain 3 life.")',
+  );
+  const roles = new Set(effectiveCardRolesV15(foodProducer));
+  assert.equal(roles.has('token production'), true);
+  assert.equal(roles.has('repeatable life gain engine'), false);
+  assert.equal(roles.has('self sacrifice'), false);
+  assert.equal(roles.has('sacrifice synergy'), false);
 });
 
 test('returning a card from the graveyard to hand remains recursion', () => {

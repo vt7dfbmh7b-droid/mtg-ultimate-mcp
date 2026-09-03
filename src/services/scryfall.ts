@@ -158,6 +158,16 @@ function landProducesExtraMana(text: string): boolean {
     || /\badd [^.]*\bequal to\b/.test(text);
 }
 
+function stripReminderText(text: string): string {
+  let current = text;
+  let previous = '';
+  while (current !== previous) {
+    previous = current;
+    current = current.replace(/\([^()]*\)/g, ' ');
+  }
+  return current.replace(/\s+/g, ' ').trim();
+}
+
 function basicLandRampOnlySearch(text: string): boolean {
   const fragments = [...text.matchAll(/search your library for ([^.]+)/g)]
     .map((match) => match[1]?.trim() ?? '')
@@ -245,6 +255,7 @@ function graveyardReturnCapacity(text: string): {
 
 export function inferCardRoles(card: ScryfallCard): string[] {
   const text = getCardOracleText(card).toLowerCase();
+  const mechanicalText = stripReminderText(text);
   const type = card.type_line.toLowerCase();
   const manaCost = getCardManaCost(card);
   const roles = new Set<string>();
@@ -269,8 +280,11 @@ export function inferCardRoles(card: ScryfallCard): string[] {
     )
   ) roles.add('persistent colored mana source');
 
-  if (/draw (?:a|one|two|three|four|five|\d+) cards?/.test(text)) roles.add('card draw');
-  if (/whenever .* draw (?:a|one|two|three|four|five|\d+) cards?|at the beginning of .* draw|whenever .* deals? combat damage .* draw/.test(text)) roles.add('repeatable draw');
+  const oneForOneLoot = /\bdraw (?:a|one|1) card,? then discard (?:a|one|1) card\b/.test(mechanicalText);
+  const drawText = mechanicalText.replace(/\bdraw (?:a|one|1) card,? then discard (?:a|one|1) card\b/g, '');
+  if (/draw (?:a|one|two|three|four|five|\d+) cards?/.test(drawText)) roles.add('card draw');
+  if (oneForOneLoot) roles.add('card selection');
+  if (/whenever .* draw (?:a|one|two|three|four|five|\d+) cards?|at the beginning of .* draw|whenever .* deals? combat damage .* draw/.test(mechanicalText)) roles.add('repeatable draw');
   const deathTriggeredDraw = /\bwhenever (?:one or more )?[^.]{0,100}\bcreatures?\b[^.]{0,80}\bdies?\b[^.]{0,120}\bdraw (?:a|one|two|three|four|five|\d+) cards?\b/.test(text);
   if (deathTriggeredDraw) roles.add('death-trigger draw engine');
   const teamCombatDamageDraw = /\bwhenever (?:one or more )?(?:a )?creatures? you control deal(?:s)? combat damage to (?:a player|an opponent)[^.]{0,120}\bdraw (?:a|one|two|three|four|five|\d+) cards?\b/.test(text);
@@ -298,7 +312,7 @@ export function inferCardRoles(card: ScryfallCard): string[] {
     roles.add('forced sacrifice interaction');
   }
   if (/destroy target artifact|destroy target enchantment|exile target artifact|exile target enchantment/.test(text)) roles.add('artifact/enchantment interaction');
-  if (/exile .* graveyard|cards? in graveyards? can't|players? can't cast .* graveyards?/.test(text)) roles.add('graveyard hate');
+  if (/cards? in graveyards? can't|players? can't cast .* graveyards?|exile [^.]*\b(?:a graveyard|target player'?s graveyard|an opponent'?s graveyard|each player'?s graveyard|all graveyards?|their graveyard)\b/.test(text)) roles.add('graveyard hate');
   const massGraveyardExchange = /each player exiles all creature cards from [^.]{0,80}graveyard[^.]{0,120}then sacrifices all creatures[^.]{0,80}then puts all cards [^.]{0,80}exiled this way onto the battlefield/.test(text);
   const recursionCapacity = graveyardReturnCapacity(text);
   const artifactGraveyardRecursion = /\b(?:return|put) target [^.]{0,100}\bartifact\b[^.]{0,140}\bfrom (?:a|the|your|any) graveyard\b[^.]{0,120}\b(?:to|onto) (?:the battlefield|your hand)\b/.test(text);
@@ -339,7 +353,7 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   const boardScalingDraw = /\bdraw (?:a card for each|cards equal to (?:the )?number of) (?:artifacts?|creatures?|enchantments?|permanents?|tokens?) you control\b/.test(text);
   if (boardScalingDraw) roles.add('board-scaling card draw');
   if (teamWideStatPayoff || distributedTypalPump || boardScalingEquipment || boardScalingCreature || boardScalingCardAdvantage) roles.add('go-wide payoff');
-  const sacrificeTargets = [...text.matchAll(
+  const sacrificeTargets = [...mechanicalText.matchAll(
     /\bsacrifice (?:a|an|another|target|one or more|any number of|x\b)\s+([^.,:;\n]{1,80})/g,
   )].map((match) => match[1]?.trim() ?? '');
   const sacrificeAction = sacrificeTargets.some((target) => !/^(?:basic )?lands?\b/.test(target));
@@ -347,9 +361,9 @@ export function inferCardRoles(card: ScryfallCard): string[] {
     .flatMap((name) => name.split('//'))
     .map((name) => name.trim().toLocaleLowerCase())
     .filter(Boolean);
-  const selfSacrificeAction = /\bsacrifice this (?:artifact|creature|enchantment|permanent|token|card)\b/.test(text)
-    || selfReferenceNames.some((name) => text.includes(`sacrifice ${name}:`));
-  const repeatableSacrificeCost = /\bsacrifice (?:a|an|another|target|one or more|any number of|x\b)[^.:]{0,80}:/.test(text);
+  const selfSacrificeAction = /\bsacrifice this (?:artifact|creature|enchantment|permanent|token|card)\b/.test(mechanicalText)
+    || selfReferenceNames.some((name) => mechanicalText.includes(`sacrifice ${name}:`));
+  const repeatableSacrificeCost = /\bsacrifice (?:a|an|another|target|one or more|any number of|x\b)[^.:]{0,80}:/.test(mechanicalText);
   if (sacrificeAction) roles.add('sacrifice synergy');
   if (selfSacrificeAction) roles.add('self sacrifice');
   if (repeatableSacrificeCost) roles.add('sacrifice outlet');
@@ -390,9 +404,9 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (/extra combat/.test(text) || /additional combat/.test(text)) roles.add('extra combat');
   if (/you win the game|loses the game/.test(text)) roles.add('alternate win condition');
   if (/whenever .* loses? life|deals? damage to each opponent|each opponent loses/.test(text)) roles.add('life drain');
-  const repeatableLifeGain = /\b(?:whenever|at the beginning of)\b[^.]{0,220}\byou gain (?:\d+|one|two|three|four|five|that much) life\b/.test(text)
-    || /:\s*[^.]{0,180}\byou gain (?:\d+|one|two|three|four|five|that much) life\b/.test(text)
-    || /\{t\}[^:]{0,100}:\s*[^.]{0,180}\.\s*you gain (?:\d+|one|two|three|four|five|that much) life\b/.test(text);
+  const repeatableLifeGain = /\b(?:whenever|at the beginning of)\b[^.]{0,220}\byou gain (?:\d+|one|two|three|four|five|that much) life\b/.test(mechanicalText)
+    || /:\s*[^.]{0,180}\byou gain (?:\d+|one|two|three|four|five|that much) life\b/.test(mechanicalText)
+    || /\{t\}[^:]{0,100}:\s*[^.]{0,180}\.\s*you gain (?:\d+|one|two|three|four|five|that much) life\b/.test(mechanicalText);
   if (repeatableLifeGain) roles.add('repeatable life gain engine');
   if (/\bwhenever\b[^.]{0,220}\b(?:each opponent|target (?:opponent|player)|an opponent)\b[^.]{0,120}\bloses?\b[^.]{0,40}\blife\b/.test(text)) {
     roles.add('repeatable life drain');
