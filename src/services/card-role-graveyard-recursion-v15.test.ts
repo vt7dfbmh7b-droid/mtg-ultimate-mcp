@@ -49,6 +49,14 @@ test('returning a recursive creature from the graveyard to the battlefield remai
   assert.equal(new Set(effectiveCardRolesV15(skeletonLike)).has('graveyard recursion'), true);
 });
 
+test('a self-recursive card that checks its graveyard zone remains recursion', () => {
+  const attackReturn = card(
+    'Generic Command-Attack Return',
+    'Whenever you attack with your commander, if this card is in your graveyard, you may return it to the battlefield tapped and attacking.',
+  );
+  assert.equal(new Set(effectiveCardRolesV15(attackReturn)).has('graveyard recursion'), true);
+});
+
 test('staged multi-card reanimation retains capacity instead of becoming generic card draw', () => {
   const broadReturn = card(
     'Generic Broad Staged Return',

@@ -354,11 +354,13 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (selfSacrificeAction) roles.add('self sacrifice');
   if (repeatableSacrificeCost) roles.add('sacrifice outlet');
   const delayedDeathReturn = /(?:when|whenever) [^.]{0,120}\bdies?\b[^.]{0,160}\breturn (?:it|that card|that creature|them) to the battlefield\b/.test(text);
+  const selfZoneReturn = /\bif (?:this card|it|that card|that creature) is in (?:your|a|the) graveyard\b[^.]{0,200}\breturn (?:it|this card|that card|that creature) to the battlefield\b/.test(text);
   if (
     /from your graveyard/.test(text)
     || /return .* from .* graveyard/.test(text)
     || /put target [^.]{0,120} from (?:a|the|your) graveyard onto the battlefield/.test(text)
     || delayedDeathReturn
+    || selfZoneReturn
     || recursionCapacity.stagedReturn
     || massGraveyardExchange
   ) roles.add('graveyard recursion');

@@ -224,7 +224,8 @@ function hasActionableGraveyardRecursion(textValue: string): boolean {
     || /\b(?:cast|play) [^.\n]{0,180}\bfrom (?:a|the|your) graveyard\b/.test(textValue)
     || /\byou may (?:cast|play) [^.\n]{0,180}\bfrom (?:a|the|your) graveyard\b/.test(textValue)
     || /\b(?:choose|target)\b[^.\n]{0,220}\b(?:cards?|creatures?)\b[^.\n]{0,180}\bin your graveyard\b[^.\n]*\.\s*\breturn (?:each(?: of them)?|them|those cards?)\b[^.\n]{0,120}\bto the battlefield\b/.test(textValue)
-    || /\b(?:when|whenever) [^.\n]{0,120}\bdies?\b[^.\n]{0,180}\breturn (?:it|that card|that creature|them) to the battlefield\b/.test(textValue);
+    || /\b(?:when|whenever) [^.\n]{0,120}\bdies?\b[^.\n]{0,180}\breturn (?:it|that card|that creature|them) to the battlefield\b/.test(textValue)
+    || /\bif (?:this card|it|that card|that creature) is in (?:your|a|the) graveyard\b[^.\n]{0,200}\breturn (?:it|this card|that card|that creature) to the battlefield\b/.test(textValue);
 }
 
 function hasRandomOutcomeGatedLibrarySearch(textValue: string): boolean {
