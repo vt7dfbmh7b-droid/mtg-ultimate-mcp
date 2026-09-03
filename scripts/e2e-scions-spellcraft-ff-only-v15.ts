@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { writeFile } from 'node:fs/promises';
+import { unlink, writeFile } from 'node:fs/promises';
 import { Client, StreamableHTTPClientTransport } from '@modelcontextprotocol/client';
 import { createMcpHandler } from '@modelcontextprotocol/server';
 import { createMtgServerV15 } from '../src/server-v15.js';
@@ -209,6 +209,18 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
 }
 
 async function main(): Promise<void> {
+  // A retry can start from a checkout that contains artifacts from an earlier
+  // attempt. Clear both success and failure names before running so persisted
+  // evidence always describes this attempt.
+  await Promise.all([
+    unlink('scions-spellcraft-ff-only-result.json').catch(() => undefined),
+    unlink('scions-spellcraft-candidate-audit.json').catch(() => undefined),
+    unlink('scions-spellcraft-ff-only-raw-result.json').catch(() => undefined),
+    unlink('scions-spellcraft-stock-deck.txt').catch(() => undefined),
+    unlink('scions-spellcraft-refined-deck.txt').catch(() => undefined),
+    unlink('scions-spellcraft-ff-only-failure.txt').catch(() => undefined),
+  ]);
+
   const stock = await fetchPreconDeckV10(PRECON_REFERENCE);
   assert.equal(stock.entry.fileName, PRECON_REFERENCE, 'must bind exact Scions & Spellcraft product');
   const before = await auditDeck(stock.decklist);
@@ -379,6 +391,7 @@ async function main(): Promise<void> {
 
 main().catch(async (error) => {
   const message = error instanceof Error ? `${error.name}: ${error.message}\n${error.stack ?? ''}` : String(error);
+  await unlink('scions-spellcraft-ff-only-result.json').catch(() => undefined);
   console.error(message);
   await writeFile('scions-spellcraft-ff-only-failure.txt', `${message}\n`).catch(() => undefined);
   process.exitCode = 1;

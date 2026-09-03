@@ -27,7 +27,7 @@ permissions:
 
 concurrency:
   group: scions-spellcraft-ff-only-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 env:
   HTTP_RETRY_BASE_MS: 5000
@@ -96,28 +96,33 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
-          git reset --hard "origin/${GITHUB_REF_NAME}"
-          mkdir -p test-results/scions-spellcraft-ff-only
-          rm -f test-results/scions-spellcraft-ff-only/result.json \
-                test-results/scions-spellcraft-ff-only/candidate-audit.json \
-                test-results/scions-spellcraft-ff-only/raw-result.json \
-                test-results/scions-spellcraft-ff-only/stock-deck.txt \
-                test-results/scions-spellcraft-ff-only/refined-deck.txt \
-                test-results/scions-spellcraft-ff-only/failure.txt
-          [ ! -f scions-spellcraft-ff-only-result.json ] || cp scions-spellcraft-ff-only-result.json test-results/scions-spellcraft-ff-only/result.json
-          [ ! -f scions-spellcraft-candidate-audit.json ] || cp scions-spellcraft-candidate-audit.json test-results/scions-spellcraft-ff-only/candidate-audit.json
-          [ ! -f scions-spellcraft-ff-only-raw-result.json ] || cp scions-spellcraft-ff-only-raw-result.json test-results/scions-spellcraft-ff-only/raw-result.json
-          [ ! -f scions-spellcraft-stock-deck.txt ] || cp scions-spellcraft-stock-deck.txt test-results/scions-spellcraft-ff-only/stock-deck.txt
-          [ ! -f scions-spellcraft-refined-deck.txt ] || cp scions-spellcraft-refined-deck.txt test-results/scions-spellcraft-ff-only/refined-deck.txt
-          [ ! -f scions-spellcraft-ff-only-failure.txt ] || cp scions-spellcraft-ff-only-failure.txt test-results/scions-spellcraft-ff-only/failure.txt
-          printf 'source_sha=%s\nbuild_outcome=%s\nmechanic_test_outcome=%s\ncontrol_outcome=%s\npolicy=scions-spellcraft-final-fantasy-no-new-infinite\ntarget_bracket=3\nstrategy=ysh-tola-spells-control-drain\n' \
-            "$GITHUB_SHA" "$BUILD_OUTCOME" "$MECHANIC_TEST_OUTCOME" "$CONTROL_OUTCOME" \
-            > test-results/scions-spellcraft-ff-only/run-metadata.txt
-          git add -- test-results/scions-spellcraft-ff-only
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m "test-results: persist Scions FF-only validation [skip ci]"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            mkdir -p test-results/scions-spellcraft-ff-only
+            rm -f test-results/scions-spellcraft-ff-only/result.json \
+                  test-results/scions-spellcraft-ff-only/candidate-audit.json \
+                  test-results/scions-spellcraft-ff-only/raw-result.json \
+                  test-results/scions-spellcraft-ff-only/stock-deck.txt \
+                  test-results/scions-spellcraft-ff-only/refined-deck.txt \
+                  test-results/scions-spellcraft-ff-only/failure.txt
+            [ ! -f scions-spellcraft-ff-only-result.json ] || cp scions-spellcraft-ff-only-result.json test-results/scions-spellcraft-ff-only/result.json
+            [ ! -f scions-spellcraft-candidate-audit.json ] || cp scions-spellcraft-candidate-audit.json test-results/scions-spellcraft-ff-only/candidate-audit.json
+            [ ! -f scions-spellcraft-ff-only-raw-result.json ] || cp scions-spellcraft-ff-only-raw-result.json test-results/scions-spellcraft-ff-only/raw-result.json
+            [ ! -f scions-spellcraft-stock-deck.txt ] || cp scions-spellcraft-stock-deck.txt test-results/scions-spellcraft-ff-only/stock-deck.txt
+            [ ! -f scions-spellcraft-refined-deck.txt ] || cp scions-spellcraft-refined-deck.txt test-results/scions-spellcraft-ff-only/refined-deck.txt
+            [ ! -f scions-spellcraft-ff-only-failure.txt ] || cp scions-spellcraft-ff-only-failure.txt test-results/scions-spellcraft-ff-only/failure.txt
+            printf 'source_sha=%s\nbuild_outcome=%s\nmechanic_test_outcome=%s\ncontrol_outcome=%s\npolicy=scions-spellcraft-final-fantasy-no-new-infinite\ntarget_bracket=4\nstrategy=yshtola-spells-control-drain\n' \
+              "$GITHUB_SHA" "$BUILD_OUTCOME" "$MECHANIC_TEST_OUTCOME" "$CONTROL_OUTCOME" \
+              > test-results/scions-spellcraft-ff-only/run-metadata.txt
+            git add -- test-results/scions-spellcraft-ff-only
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "test-results: persist Scions FF-only validation [skip ci]"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "Scions FF-only evidence persistence attempt ${attempt} lost a branch race; retrying against the latest head."
+          done
+          echo 'Scions FF-only evidence persistence exhausted eight branch-race retries.' >&2
+          exit 1
 
       - name: Require Scions validation success
         if: always()
