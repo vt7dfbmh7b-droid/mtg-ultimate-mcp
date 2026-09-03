@@ -906,6 +906,51 @@ function summaryMatchesCountTargetGateV15(card: Record<string, unknown>, gate: U
   return roles.has('tutor');
 }
 
+/**
+ * Preserve low-volume semantic infrastructure even when aggregate structural counts have
+ * surplus. These are deliberately role-level floors, not card-name exceptions: a replacement
+ * may spend the role only when the incoming card supplies the same semantic role and the
+ * starting deck has demonstrated enough redundancy for that role.
+ */
+function preservesSemanticSafetyFloorsV15(
+  cutCard: Record<string, unknown>,
+  addCard: Record<string, unknown>,
+  semanticRoleCounts: Readonly<Record<string, number>>,
+  selectionRole: UpgradeAddressedRoleV15,
+  authoritativeCounts: Record<UpgradeCountTargetGateV15, number>,
+): boolean {
+  const cutRoles = summarizedRoles(cutCard);
+  const addRoles = summarizedRoles(addCard);
+  const safetyFloors: Array<{ role: string; floor: number }> = [
+    // A curve repair must not trade away cost reducers that directly support the speed goal.
+    {
+      role: 'cost reduction',
+      floor: selectionRole === 'average-nonland-mv'
+        ? (semanticRoleCounts['cost reduction'] ?? 0)
+        : Math.min(semanticRoleCounts['cost reduction'] ?? 0, 3),
+    },
+    // Preserve at least one graveyard utility effect whenever the deck has only one.
+    { role: 'graveyard utility', floor: Math.min(semanticRoleCounts['graveyard utility'] ?? 0, 1) },
+    // Narrow tutors are consistency infrastructure while the authoritative tutor gate is
+    // still failed; do not silently replace them with unrelated protection or creatures.
+    {
+      role: 'narrow tutor',
+      floor: authoritativeCounts.tutors < BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.tutors
+        ? (semanticRoleCounts['narrow tutor'] ?? 0)
+        : Math.min(semanticRoleCounts['narrow tutor'] ?? 0, 4),
+    },
+    // Keep a complete spot-interaction floor at the established bracket-5 structural target.
+    { role: 'spot interaction', floor: Math.min(semanticRoleCounts['spot interaction'] ?? 0, 14) },
+  ];
+  return safetyFloors.every(({ role, floor }) => {
+    if (!cutRoles.has(role) || floor <= 0) return true;
+    const after = (semanticRoleCounts[role] ?? 0)
+      - 1
+      + (addRoles.has(role) ? 1 : 0);
+    return after >= floor;
+  });
+}
+
 function applySummaryToStructuralCountsV15(
   counts: UpgradeStructuralCountsV15,
   card: Record<string, unknown>,
@@ -1028,6 +1073,11 @@ export function pairUpgradeSwapsByStructureV15(
     : Math.max(0, Math.trunc(options.maxPairs));
   const remainingCuts = [...cutPool];
   const pairs: UpgradePairingV15[] = [];
+  const semanticRoleCounts: Record<string, number> = Object.fromEntries(
+    Object.entries(currentMetrics.roleCounts && typeof currentMetrics.roleCounts === 'object' && !Array.isArray(currentMetrics.roleCounts)
+      ? currentMetrics.roleCounts as Record<string, unknown>
+      : {}).map(([role, count]) => [role, recordNumber(count)]),
+  );
 
   for (const selection of additions) {
     if (pairs.length >= maxPairs) break;
@@ -1061,6 +1111,13 @@ export function pairUpgradeSwapsByStructureV15(
         if (recordNumber(currentMetrics.commanderColorCount) >= 4
           && summaryIsBroadColorFixingManaSourceV15(cutCard)
           && !summaryIsBroadColorFixingManaSourceV15(addCard)) return false;
+        if (!preservesSemanticSafetyFloorsV15(
+          cutCard,
+          addCard,
+          semanticRoleCounts,
+          selection.role,
+          authoritativeCounts,
+        )) return false;
         const afterSwap = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);
         if (!preservesStructuralFloorsV15(counts, afterSwap, state.targets)) return false;
         const persistentColoredManaSourcesAfterSwap = persistentColoredManaSourcesAfterAdd
@@ -1138,6 +1195,11 @@ export function pairUpgradeSwapsByStructureV15(
     if (cutIndex < 0) continue;
     remainingCuts.splice(cutIndex, 1);
     const cutCard = summarizedCard(cut);
+    for (const role of new Set([...summarizedRoles(addCard), ...summarizedRoles(cutCard)])) {
+      semanticRoleCounts[role] = (semanticRoleCounts[role] ?? 0)
+        + (summarizedRoles(addCard).has(role) ? 1 : 0)
+        - (summarizedRoles(cutCard).has(role) ? 1 : 0);
+    }
     counts = applySummaryToStructuralCountsV15(afterAdd, cutCard, -1);
     persistentColoredManaSources = persistentColoredManaSourcesAfterAdd
       - (summaryIsPersistentColoredManaSourceV15(cutCard) ? 1 : 0);

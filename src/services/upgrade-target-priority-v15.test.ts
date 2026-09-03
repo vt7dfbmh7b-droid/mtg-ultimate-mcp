@@ -163,6 +163,47 @@ test('curve-priority pairing chooses a positive mana-value reduction and records
   assert.equal(pairings[0]?.nonlandManaValueReduction, 4);
 });
 
+test('curve pairing preserves non-surplus semantic infrastructure before cosmetic gains', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{
+      role: 'average-nonland-mv' as const,
+      candidate: { card: { name: 'One-Drop Creature', roles: [], manaValue: 1, typeLine: 'Creature' } },
+    }],
+    [
+      { card: { name: 'Cost Reducer', roles: ['cost reduction'], manaValue: 5, typeLine: 'Creature' }, heuristicCutPressure: 50 },
+      { card: { name: 'Only Graveyard Utility', roles: ['graveyard utility'], manaValue: 5, typeLine: 'Artifact' }, heuristicCutPressure: 49 },
+      { card: { name: 'Narrow Tutor', roles: ['narrow tutor'], manaValue: 5, typeLine: 'Creature' }, heuristicCutPressure: 48 },
+      { card: { name: 'Spot Removal', roles: ['spot interaction'], manaValue: 5, typeLine: 'Instant' }, heuristicCutPressure: 47 },
+      { card: { name: 'Surplus Generic', roles: [], manaValue: 4, typeLine: 'Creature' }, heuristicCutPressure: 1 },
+    ],
+    {
+      rampCount: 20,
+      drawCount: 20,
+      interactionCount: 19,
+      protectionCount: 8,
+      tutorCount: 2,
+      recursionCount: 4,
+      boardWipeCount: 2,
+      earlyPlayCount: 41,
+      averageNonlandManaValue: 2.71,
+      nonlandCount: 69,
+      persistentColoredManaSourceCount: 11,
+      commanderColorCount: 5,
+      roleCounts: {
+        'free interaction': 1,
+        'cost reduction': 4,
+        'graveyard utility': 1,
+        'narrow tutor': 6,
+        'spot interaction': 14,
+      },
+    },
+    { ...bracketFiveTargets },
+    5,
+  );
+
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Surplus Generic');
+});
+
 test('curve repair can inspect non-positive-pressure cuts only when the real curve gate is active', () => {
   const candidates = [
     { card: { name: 'Positive Cut' }, heuristicCutPressure: 2 },
