@@ -33,6 +33,7 @@
 1 Gilded Goose (LTC) 246 *N*
 1 Woodfall Primus (LTC) 264 *N*
 1 Anguished Unmaking (LTC) 265 *N*
+1 Chromatic Lantern (LTC) 275 *N*
 1 Trading Post (LTC) 288 *N*
 1 Brushland (LTC) 297 *N*
 1 Canopy Vista (LTC) 298 *N*
@@ -54,7 +55,6 @@
 1 Swords to Plowshares (LTC) 178 *N*
 1 Revive the Shire (LTR) 185 *N*
 1 Butterbur, Bree Innkeeper (LTR) 197 *N*
-1 Crypt Incursion (LTC) 198 *N*
 1 Go for the Throat (LTC) 201 *N*
 1 Night's Whisper (LTC) 205 *N*
 1 Cultivate (LTC) 236 *N*
