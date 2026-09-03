@@ -20,11 +20,11 @@
 1 Glóin the Mighty // Easy Pickings (HOB) 99
 1 Bilbo's Gambit (HOB) 5
 1 Tempt with Discovery (LTC) 532
-1 Sound the Trumpets (HOB) 55
-1 Weathered Wayfarer (LTC) 183
 1 Frontline Medic (LTC) 169
-1 Sylvan Tutor (LTC) 531
+1 Weathered Wayfarer (LTC) 183
 1 Commander's Sphere (LTC) 276
+1 Sylvan Tutor (LTC) 531
+1 Mystic Confluence (LTC) 193
 1 Courageous Resolve (LTC) 506
 1 Legolas's Quick Reflexes (LTC) 493
 1 Blasphemous Act (LTC) 211
@@ -33,20 +33,20 @@
 1 Phial of Galadriel (LTR) 248
 1 Éowyn, Fearless Knight (LTR) 201
 1 Arcane Signet (HOC) 95
-1 Mystic Confluence (LTC) 193
+1 Trading Post (LTC) 288
 1 Realm Seekers (LTC) 258
+1 Confusticate and Bebother (HOB) 35
 1 Visions of Glory (LTC) 182
 1 Heroic Intervention (LTC) 249
-1 The Queen of Dale (HOB) 24
 1 Swords to Plowshares (LTC) 178
 1 Boromir, Warden of the Tower (LTR) 4
-1 Samwise Gamgee (LTR) 222
 1 Farseek (LTC) 244
 1 Glóin, Dwarf Emissary (LTR) 132
 1 Summons of Saruman (LTC) 70
 1 Rammas Echor, Ancient Shield (LTC) 505
 1 Tireless Provisioner (LTC) 262
 1 Glamdring (LTR) 239
+1 The Queen of Dale (HOB) 24
 1 Gandalf, White Rider (LTR) 290
 1 Flamerush Rider (LTC) 216
 1 Path to Exile (LTC) 175
@@ -56,6 +56,7 @@
 1 Peregrin Took (LTR) 181
 1 Saruman's Trickery (LTR) 68
 1 Bothersome Noisemaker (HOB) 89
+1 Samwise Gamgee (LTR) 222
 1 Dancing from Dark to Dawn (HOB) 123
 1 Dawn of Hope (LTC) 164
 1 Vanquisher's Banner (LTC) 289
@@ -69,7 +70,6 @@
 1 Consider (LTC) 187
 1 Swan Song (LTC) 197
 1 Guttersnipe (HOC) 196
-1 Fellwar Stone (SLD) 2557
 1 Command Tower (LTC) 301
 1 Exotic Orchard (LTC) 307
 1 Cavern of Souls (LTC) 392z
