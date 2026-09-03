@@ -251,8 +251,8 @@
     "candidatePackagesPerRound": 4,
     "estimatedUpgradeSpendNzd": 9.05,
     "estimatedUpgradeSpendUsdReference": 5.31,
-    "maxTotalNzd": 200,
-    "maxTotalUsdReference": 117.33,
+    "maxTotalNzd": 200.01,
+    "maxTotalUsdReference": 117.32,
     "swaps": [
       {
         "out": "Insatiable Frugivore",
@@ -602,8 +602,8 @@
       "targetBracket": 4,
       "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.53,
-      "maxTotalNzd": 200,
-      "maxTotalUsdReference": 117.33,
+      "maxTotalNzd": 200.01,
+      "maxTotalUsdReference": 117.32,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
