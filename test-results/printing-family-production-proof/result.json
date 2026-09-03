@@ -5,13 +5,13 @@
       "family": "Marvel",
       "familyPreset": "marvel",
       "allowedSetCodes": [
-        "MSC",
         "MSH",
+        "MSC",
         "LMAR",
         "PSPM",
-        "SPE",
         "SPM",
-        "MAR"
+        "MAR",
+        "SPE"
       ],
       "includePromos": true,
       "includeSpecialReleases": true,
