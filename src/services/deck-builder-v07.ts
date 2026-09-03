@@ -909,6 +909,96 @@ function summaryMatchesCountTargetGateV15(card: Record<string, unknown>, gate: U
 }
 
 /**
+ * These role families describe operational components rather than broad deck labels. A card can
+ * satisfy several families at once (for example, interaction plus cost reduction, or a repeatable
+ * token/card/mana engine). Once a card carries two or more distinct components, replacing it with
+ * a card that drops one of those components is a semantic downgrade even when aggregate role counts
+ * and commander-affinity scores remain unchanged. Aliases within one family are intentionally
+ * interchangeable; the rule never names a card or a set.
+ */
+const COMPOUND_SEMANTIC_COMPONENTS_V15: ReadonlyArray<{
+  id: string;
+  roles: ReadonlySet<string>;
+}> = [
+  {
+    id: 'interaction',
+    // Board wipes are governed by their own structural floor. Treat spot/stack interaction as
+    // the compound operational component so a broad wipe plus a cost reducer does not make the
+    // independent mass-removal floor stricter than its structural contract.
+    roles: new Set(['spot interaction', 'countermagic', 'free interaction']),
+  },
+  {
+    id: 'counter-synergy',
+    roles: new Set(['+1/+1 counters', 'proliferate']),
+  },
+  {
+    id: 'card-advantage',
+    roles: new Set(['card draw', 'repeatable draw', 'board-scaling card draw']),
+  },
+  {
+    id: 'repeatable-token-engine',
+    roles: new Set(['repeatable token engine', 'token multiplier', 'death-trigger token engine']),
+  },
+  {
+    id: 'reliable-mana',
+    roles: new Set(['fast mana', 'mana acceleration', 'mana rock', 'mana dork']),
+  },
+  {
+    id: 'conditional-mana',
+    roles: new Set(['conditional mana acceleration']),
+  },
+  {
+    id: 'treasure',
+    roles: new Set(['treasure']),
+  },
+  {
+    id: 'land-ramp',
+    roles: new Set(['land ramp']),
+  },
+  {
+    id: 'land-tutor',
+    roles: new Set(['land tutor']),
+  },
+  {
+    id: 'persistent-colored-mana',
+    roles: new Set(['persistent colored mana source']),
+  },
+  {
+    id: 'sacrifice-bridge',
+    roles: new Set([
+      'sacrifice synergy',
+      'sacrifice outlet',
+      'creature sacrifice outlet',
+      'artifact sacrifice outlet',
+      'mass sacrifice conversion',
+      'forced sacrifice interaction',
+    ]),
+  },
+  {
+    id: 'cost-reduction',
+    roles: new Set(['cost reduction']),
+  },
+];
+
+function compoundSemanticComponentsV15(roles: ReadonlySet<string>): Set<string> {
+  return new Set(
+    COMPOUND_SEMANTIC_COMPONENTS_V15
+      .filter((component) => [...component.roles].some((role) => roles.has(role)))
+      .map((component) => component.id),
+  );
+}
+
+function preservesCompoundSemanticComponentsV15(
+  cutRoles: ReadonlySet<string>,
+  addRoles: ReadonlySet<string>,
+): boolean {
+  const cutComponents = compoundSemanticComponentsV15(cutRoles);
+  if (cutComponents.size < 2) return true;
+  const addComponents = compoundSemanticComponentsV15(addRoles);
+  return [...cutComponents].every((component) => addComponents.has(component));
+}
+
+/**
  * Preserve low-volume semantic infrastructure even when aggregate structural counts have
  * surplus. These are deliberately role-level floors, not card-name exceptions: a replacement
  * may spend the role only when the incoming card supplies the same semantic role and the
@@ -923,6 +1013,10 @@ function preservesSemanticSafetyFloorsV15(
 ): boolean {
   const cutRoles = summarizedRoles(cutCard);
   const addRoles = summarizedRoles(addCard);
+  // Aggregate resource axes are useful, but they intentionally group unlike effects such as a
+  // mana rock and a one-shot Treasure. Preserve every distinct operational component on a
+  // multi-component outgoing card before applying the broader role-count floors below.
+  if (!preservesCompoundSemanticComponentsV15(cutRoles, addRoles)) return false;
   const resourceAxes = (roles: Set<string>): [boolean, boolean, boolean] => [
     roles.has('repeatable token engine'),
     roles.has('card draw') || roles.has('repeatable draw') || roles.has('board-scaling card draw'),

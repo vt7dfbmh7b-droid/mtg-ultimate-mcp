@@ -316,6 +316,117 @@ test('two-axis card-and-mana engines cannot collapse into an unrelated protectio
   assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Surplus Five Drop');
 });
 
+test('multi-component operational cards require like-for-like component families', () => {
+  const fixtures: Array<{
+    label: string;
+    addressedRole: 'average-nonland-mv' | 'protection';
+    cutRoles: string[];
+    addRoles: string[];
+  }> = [
+    {
+      label: 'interaction plus counters',
+      addressedRole: 'average-nonland-mv',
+      cutRoles: ['spot interaction', '+1/+1 counters'],
+      addRoles: ['token production'],
+    },
+    {
+      label: 'repeatable card-token-treasure engine',
+      addressedRole: 'average-nonland-mv',
+      cutRoles: ['card draw', 'repeatable draw', 'repeatable token engine', 'treasure'],
+      addRoles: ['card draw', 'repeatable draw', 'repeatable token engine'],
+    },
+    {
+      label: 'mana-rock token bridge',
+      addressedRole: 'average-nonland-mv',
+      cutRoles: ['mana rock', 'conditional mana acceleration', 'repeatable token engine'],
+      addRoles: ['repeatable token engine', 'treasure'],
+    },
+    {
+      label: 'land ramp tutor and color access',
+      addressedRole: 'protection',
+      cutRoles: ['equipment', 'land ramp', 'land tutor', 'persistent colored mana source'],
+      addRoles: ['equipment', 'protection'],
+    },
+    {
+      label: 'conditional treasure sacrifice bridge',
+      addressedRole: 'average-nonland-mv',
+      cutRoles: ['conditional mana acceleration', 'sacrifice synergy', 'treasure'],
+      addRoles: ['go-wide payoff', 'token production'],
+    },
+    {
+      label: 'cost reduction plus interaction',
+      addressedRole: 'protection',
+      cutRoles: ['cost reduction', 'spot interaction'],
+      addRoles: ['card draw', 'protection', 'spot interaction'],
+    },
+  ];
+
+  for (const fixture of fixtures) {
+    const pairings = pairUpgradeSwapsByStructureV15(
+      [{
+        role: fixture.addressedRole,
+        candidate: {
+          card: {
+            name: `Replacement for ${fixture.label}`,
+            roles: fixture.addRoles,
+            manaValue: fixture.addressedRole === 'average-nonland-mv' ? 1 : 2,
+            typeLine: 'Instant',
+          },
+        },
+      }],
+      [
+        {
+          card: {
+            name: `Compound outgoing ${fixture.label}`,
+            roles: fixture.cutRoles,
+            manaValue: 5,
+            typeLine: 'Artifact',
+          },
+          heuristicCutPressure: 50,
+        },
+        {
+          card: {
+            name: `Surplus safe ${fixture.label}`,
+            roles: [],
+            manaValue: 5,
+            typeLine: 'Creature',
+          },
+          heuristicCutPressure: 1,
+        },
+      ],
+      {
+        rampCount: 20,
+        drawCount: 20,
+        interactionCount: 20,
+        protectionCount: 7,
+        tutorCount: 8,
+        recursionCount: 4,
+        boardWipeCount: 2,
+        earlyPlayCount: 41,
+        cheapInteractionCount: 13,
+        fastManaCount: 2,
+        averageNonlandManaValue: 2.71,
+        nonlandCount: 69,
+        persistentColoredManaSourceCount: 11,
+        commanderColorCount: 5,
+        roleCounts: {
+          'free interaction': 1,
+          'cheap interaction': 13,
+        },
+      },
+      { ...bracketFiveTargets },
+      5,
+    );
+
+    assert.equal(pairings.length, 1, `${fixture.label} should retain one safe pairing`);
+    assert.equal(
+      (pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name,
+      `Surplus safe ${fixture.label}`,
+      `${fixture.label} should not spend a compound operational card`,
+    );
+  }
+});
+
 test('curve repair preserves scarce artifact and high-capacity recursion engines', () => {
   const pairings = pairUpgradeSwapsByStructureV15(
     [{
