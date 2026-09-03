@@ -364,6 +364,7 @@ export function inferCardRoles(card: ScryfallCard): string[] {
     || recursionCapacity.stagedReturn
     || massGraveyardExchange
   ) roles.add('graveyard recursion');
+  if (selfZoneReturn) roles.add('self-recurring engine');
   if (recursionCapacity.multiCard || massGraveyardExchange) roles.add('multi-card graveyard recursion');
   if (recursionCapacity.highCapacity || massGraveyardExchange) roles.add('high-capacity graveyard recursion');
   if (artifactGraveyardRecursion) roles.add('artifact graveyard recursion');

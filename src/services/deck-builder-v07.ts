@@ -954,6 +954,7 @@ function preservesSemanticSafetyFloorsV15(
     // the incoming card preserves the same operational role.
     { role: 'artifact graveyard recursion', floor: Math.min(semanticRoleCounts['artifact graveyard recursion'] ?? 0, 1) },
     { role: 'high-capacity graveyard recursion', floor: Math.min(semanticRoleCounts['high-capacity graveyard recursion'] ?? 0, 2) },
+    { role: 'self-recurring engine', floor: Math.min(semanticRoleCounts['self-recurring engine'] ?? 0, 1) },
     // Narrow tutors are consistency infrastructure while the authoritative tutor gate is
     // still failed; do not silently replace them with unrelated protection or creatures.
     {

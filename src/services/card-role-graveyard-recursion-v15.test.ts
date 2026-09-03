@@ -54,7 +54,9 @@ test('a self-recursive card that checks its graveyard zone remains recursion', (
     'Generic Command-Attack Return',
     'Whenever you attack with your commander, if this card is in your graveyard, you may return it to the battlefield tapped and attacking.',
   );
-  assert.equal(new Set(effectiveCardRolesV15(attackReturn)).has('graveyard recursion'), true);
+  const roles = new Set(effectiveCardRolesV15(attackReturn));
+  assert.equal(roles.has('graveyard recursion'), true);
+  assert.equal(roles.has('self-recurring engine'), true);
 });
 
 test('staged multi-card reanimation retains capacity instead of becoming generic card draw', () => {
