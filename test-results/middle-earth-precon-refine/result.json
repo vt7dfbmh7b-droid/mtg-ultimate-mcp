@@ -238,7 +238,7 @@
     "estimatedUpgradeSpendNzd": 4.38,
     "estimatedUpgradeSpendUsdReference": 2.57,
     "maxTotalNzd": 200,
-    "maxTotalUsdReference": 117.37,
+    "maxTotalUsdReference": 117.33,
     "swaps": [
       {
         "out": "Great Oak Guardian",
@@ -568,9 +568,9 @@
     "constraints": {
       "targetBracket": 4,
       "maxNzdPerCard": 35,
-      "maxUsdPerCardReference": 20.54,
+      "maxUsdPerCardReference": 20.53,
       "maxTotalNzd": 200,
-      "maxTotalUsdReference": 117.37,
+      "maxTotalUsdReference": 117.33,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -2519,7 +2519,7 @@
             "estimatedSpendNzd": 3.78,
             "estimatedSpendUsdReference": 2.22,
             "unknownPriceCount": 0,
-            "improvementScore": 18.639,
+            "improvementScore": 20.05,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
@@ -2643,9 +2643,7 @@
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
-                    "creature",
-                    "creature tutor",
-                    "narrow tutor"
+                    "graveyard hate"
                   ],
                   "addRoles": [
                     "creature",
@@ -2653,8 +2651,7 @@
                     "tutor"
                   ],
                   "unreplacedRoles": [
-                    "creature tutor",
-                    "narrow tutor"
+                    "graveyard hate"
                   ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
@@ -2974,7 +2971,7 @@
                 }
               },
               {
-                "out": "Bilbo, Birthday Celebrant",
+                "out": "Crypt Incursion",
                 "in": "Weathered Wayfarer",
                 "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -3003,9 +3000,7 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
-                      "creature",
-                      "creature tutor",
-                      "narrow tutor"
+                      "graveyard hate"
                     ],
                     "addRoles": [
                       "creature",
@@ -3013,8 +3008,7 @@
                       "tutor"
                     ],
                     "unreplacedRoles": [
-                      "creature tutor",
-                      "narrow tutor"
+                      "graveyard hate"
                     ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
@@ -4776,7 +4770,7 @@
                 "estimatedSpendNzd": 3.78,
                 "estimatedSpendUsdReference": 2.22,
                 "unknownPriceCount": 0,
-                "improvementScore": 18.639,
+                "improvementScore": 20.05,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -4900,9 +4894,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "creature",
-                        "creature tutor",
-                        "narrow tutor"
+                        "graveyard hate"
                       ],
                       "addRoles": [
                         "creature",
@@ -4910,8 +4902,7 @@
                         "tutor"
                       ],
                       "unreplacedRoles": [
-                        "creature tutor",
-                        "narrow tutor"
+                        "graveyard hate"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -5231,7 +5222,7 @@
                     }
                   },
                   {
-                    "out": "Bilbo, Birthday Celebrant",
+                    "out": "Crypt Incursion",
                     "in": "Weathered Wayfarer",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -5260,9 +5251,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "creature",
-                          "creature tutor",
-                          "narrow tutor"
+                          "graveyard hate"
                         ],
                         "addRoles": [
                           "creature",
@@ -5270,8 +5259,7 @@
                           "tutor"
                         ],
                         "unreplacedRoles": [
-                          "creature tutor",
-                          "narrow tutor"
+                          "graveyard hate"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -5365,7 +5353,7 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 30.62,
+            "estimatedSpendNzd": 30.63,
             "estimatedSpendUsdReference": 17.97,
             "unknownPriceCount": 0,
             "improvementScore": 4.315,
@@ -5595,7 +5583,7 @@
                   "set": "SLD",
                   "collectorNumber": "2563",
                   "finish": "nonfoil",
-                  "priceNzd": 30.62,
+                  "priceNzd": 30.63,
                   "priceUsdReference": 17.97
                 },
                 "structuralPairing": {
@@ -5640,7 +5628,7 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 10.34,
+            "estimatedSpendNzd": 10.35,
             "estimatedSpendUsdReference": 6.07,
             "unknownPriceCount": 0,
             "improvementScore": 4.394,
@@ -5880,7 +5868,7 @@
                   "set": "LTC",
                   "collectorNumber": "532",
                   "finish": "nonfoil",
-                  "priceNzd": 10.34,
+                  "priceNzd": 10.35,
                   "priceUsdReference": 6.07
                 },
                 "structuralPairing": {
@@ -6204,8 +6192,8 @@
             "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 0.43,
-            "estimatedSpendUsdReference": 0.25,
+            "estimatedSpendNzd": 0.48,
+            "estimatedSpendUsdReference": 0.28,
             "unknownPriceCount": 0,
             "improvementScore": -2.059,
             "significantRegression": false,
@@ -6390,8 +6378,8 @@
                   "set": "HOB",
                   "collectorNumber": "6",
                   "finish": "nonfoil",
-                  "priceNzd": 0.43,
-                  "priceUsdReference": 0.25
+                  "priceNzd": 0.48,
+                  "priceUsdReference": 0.28
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -6447,7 +6435,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 37.03,
+                "estimatedSpendNzd": 37.04,
                 "estimatedSpendUsdReference": 21.73,
                 "unknownPriceCount": 0,
                 "improvementScore": 1.556,
@@ -6717,7 +6705,7 @@
                       "set": "SLD",
                       "collectorNumber": "2563",
                       "finish": "nonfoil",
-                      "priceNzd": 30.62,
+                      "priceNzd": 30.63,
                       "priceUsdReference": 17.97
                     },
                     "structuralPairing": {
@@ -6816,7 +6804,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 16.75,
+                "estimatedSpendNzd": 16.76,
                 "estimatedSpendUsdReference": 9.83,
                 "unknownPriceCount": 0,
                 "improvementScore": 5.486,
@@ -7096,7 +7084,7 @@
                       "set": "LTC",
                       "collectorNumber": "532",
                       "finish": "nonfoil",
-                      "priceNzd": 10.34,
+                      "priceNzd": 10.35,
                       "priceUsdReference": 6.07
                     },
                     "structuralPairing": {
@@ -7568,8 +7556,8 @@
                 "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 6.83,
-                "estimatedSpendUsdReference": 4.01,
+                "estimatedSpendNzd": 6.89,
+                "estimatedSpendUsdReference": 4.04,
                 "unknownPriceCount": 0,
                 "improvementScore": -0.271,
                 "significantRegression": false,
@@ -7794,8 +7782,8 @@
                       "set": "HOB",
                       "collectorNumber": "6",
                       "finish": "nonfoil",
-                      "priceNzd": 0.43,
-                      "priceUsdReference": 0.25
+                      "priceNzd": 0.48,
+                      "priceUsdReference": 0.28
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -7905,7 +7893,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 37.03,
+                "estimatedSpendNzd": 37.04,
                 "estimatedSpendUsdReference": 21.73,
                 "unknownPriceCount": 0,
                 "improvementScore": 1.556,
@@ -8175,7 +8163,7 @@
                       "set": "SLD",
                       "collectorNumber": "2563",
                       "finish": "nonfoil",
-                      "priceNzd": 30.62,
+                      "priceNzd": 30.63,
                       "priceUsdReference": 17.97
                     },
                     "structuralPairing": {
@@ -8274,7 +8262,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 16.75,
+                "estimatedSpendNzd": 16.76,
                 "estimatedSpendUsdReference": 9.83,
                 "unknownPriceCount": 0,
                 "improvementScore": 5.486,
@@ -8554,7 +8542,7 @@
                       "set": "LTC",
                       "collectorNumber": "532",
                       "finish": "nonfoil",
-                      "priceNzd": 10.34,
+                      "priceNzd": 10.35,
                       "priceUsdReference": 6.07
                     },
                     "structuralPairing": {
@@ -9026,8 +9014,8 @@
                 "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                 "attemptedSwaps": 3,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 6.83,
-                "estimatedSpendUsdReference": 4.01,
+                "estimatedSpendNzd": 6.89,
+                "estimatedSpendUsdReference": 4.04,
                 "unknownPriceCount": 0,
                 "improvementScore": -0.271,
                 "significantRegression": false,
@@ -9252,8 +9240,8 @@
                       "set": "HOB",
                       "collectorNumber": "6",
                       "finish": "nonfoil",
-                      "priceNzd": 0.43,
-                      "priceUsdReference": 0.25
+                      "priceNzd": 0.48,
+                      "priceUsdReference": 0.28
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -9363,7 +9351,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 37.03,
+                "estimatedSpendNzd": 37.04,
                 "estimatedSpendUsdReference": 21.73,
                 "unknownPriceCount": 0,
                 "improvementScore": 1.556,
@@ -9633,7 +9621,7 @@
                       "set": "SLD",
                       "collectorNumber": "2563",
                       "finish": "nonfoil",
-                      "priceNzd": 30.62,
+                      "priceNzd": 30.63,
                       "priceUsdReference": 17.97
                     },
                     "structuralPairing": {
@@ -9732,7 +9720,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 16.75,
+                "estimatedSpendNzd": 16.76,
                 "estimatedSpendUsdReference": 9.83,
                 "unknownPriceCount": 0,
                 "improvementScore": 5.486,
@@ -10012,7 +10000,7 @@
                       "set": "LTC",
                       "collectorNumber": "532",
                       "finish": "nonfoil",
-                      "priceNzd": 10.34,
+                      "priceNzd": 10.35,
                       "priceUsdReference": 6.07
                     },
                     "structuralPairing": {
@@ -10484,8 +10472,8 @@
                 "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 6.83,
-                "estimatedSpendUsdReference": 4.01,
+                "estimatedSpendNzd": 6.89,
+                "estimatedSpendUsdReference": 4.04,
                 "unknownPriceCount": 0,
                 "improvementScore": -0.271,
                 "significantRegression": false,
@@ -10710,8 +10698,8 @@
                       "set": "HOB",
                       "collectorNumber": "6",
                       "finish": "nonfoil",
-                      "priceNzd": 0.43,
-                      "priceUsdReference": 0.25
+                      "priceNzd": 0.48,
+                      "priceUsdReference": 0.28
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -10821,7 +10809,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 30.62,
+                "estimatedSpendNzd": 30.63,
                 "estimatedSpendUsdReference": 17.97,
                 "unknownPriceCount": 0,
                 "improvementScore": 4.315,
@@ -11051,7 +11039,7 @@
                       "set": "SLD",
                       "collectorNumber": "2563",
                       "finish": "nonfoil",
-                      "priceNzd": 30.62,
+                      "priceNzd": 30.63,
                       "priceUsdReference": 17.97
                     },
                     "structuralPairing": {
@@ -11096,7 +11084,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 10.34,
+                "estimatedSpendNzd": 10.35,
                 "estimatedSpendUsdReference": 6.07,
                 "unknownPriceCount": 0,
                 "improvementScore": 4.394,
@@ -11336,7 +11324,7 @@
                       "set": "LTC",
                       "collectorNumber": "532",
                       "finish": "nonfoil",
-                      "priceNzd": 10.34,
+                      "priceNzd": 10.35,
                       "priceUsdReference": 6.07
                     },
                     "structuralPairing": {
@@ -11660,8 +11648,8 @@
                 "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 0.43,
-                "estimatedSpendUsdReference": 0.25,
+                "estimatedSpendNzd": 0.48,
+                "estimatedSpendUsdReference": 0.28,
                 "unknownPriceCount": 0,
                 "improvementScore": -2.059,
                 "significantRegression": false,
@@ -11846,8 +11834,8 @@
                       "set": "HOB",
                       "collectorNumber": "6",
                       "finish": "nonfoil",
-                      "priceNzd": 0.43,
-                      "priceUsdReference": 0.25
+                      "priceNzd": 0.48,
+                      "priceUsdReference": 0.28
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
