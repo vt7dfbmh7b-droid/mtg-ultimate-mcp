@@ -46,13 +46,13 @@
 1 Swiftfoot Boots (MSC) 216
 1 Relentless Assault (MAR) 25
 1 Seize the Day (MSC) 166
-1 Vibranium Mining Mech (MSC) 117
 1 Fellwar Stone (MSC) 285
 1 Living Laser (MSC) 55
 1 Thought Vessel (MSC) 222
 1 Savage Beating (MAR) 26
 1 Lightning Greaves (MSC) 202
 1 Heroic Intervention (MAR) 78
+1 Jocasta, Automaton Avenger (MSC) 108
 1 Killmonger, Ruthless Usurper (MSC) 53
 1 Contract Hero (MSC) 683
 1 Sword of the Animist (MSC) 289
@@ -88,6 +88,6 @@
 3 Plains (MSC) 866
 1 Sword of Fire and Ice (MAR) 100 *N*
 1 Secret Identity (SPM) 43 *N*
-1 Shuri, the Black Panther (MSC) 95 *N*
-1 Currency Converter (MSC) 197 *N*
-1 Spider-Ham, Peter Porker (SPM) 114 *N*
+1 Goliath, Mass Manipulator (MSC) 766 *N*
+1 Return of the Mole Man (MSC) 729 *N*
+1 Lucky the Pizza Dog (MSC) 726 *N*
