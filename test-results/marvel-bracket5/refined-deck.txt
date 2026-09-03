@@ -10,6 +10,7 @@
 1 Three Steps Ahead (MAR) 62
 1 Daily Bugle Newspaper (MSC) 749
 1 Arcane Denial (MSC) 147
+1 Manamorphose (SLD) 1746
 1 Dora Milaje Elite (MSC) 12
 1 Reprieve (MAR) 5
 1 Whoosh! (MSC) 790
@@ -45,19 +46,17 @@
 1 Swiftfoot Boots (MSC) 216
 1 Relentless Assault (MAR) 25
 1 Seize the Day (MSC) 166
-1 Vibranium Mining Mech (MSC) 117
 1 Fellwar Stone (MSC) 285
 1 Living Laser (MSC) 55
 1 Thought Vessel (MSC) 222
+1 Big Score (MSC) 802
 1 Savage Beating (MAR) 26
 1 Lightning Greaves (MSC) 202
+1 Unexpected Windfall (MAR) 29
 1 Heroic Intervention (MAR) 78
 1 Jocasta, Automaton Avenger (MSC) 108
 1 Killmonger, Ruthless Usurper (MSC) 53
-1 Contract Hero (MSC) 683
-1 Sword of the Animist (MSC) 289
 1 Talisman of Dominance (MSC) 219
-1 Black Market Connections (MSC) 155
 1 Talisman of Creativity (MSC) 218
 1 Talisman of Indulgence (MSC) 220
 1 Miles Morales // Ultimate Spider-Man (SPM) 108
@@ -86,8 +85,9 @@
 3 Mountain (MSC) 858
 3 Island (MSH) 289
 3 Plains (MSC) 866
-1 Spider-Ham, Peter Porker (SPM) 114 *N*
-1 Sword of Fire and Ice (MAR) 100 *N*
+1 Spiders-Man, Heroic Horde (SPM) 117 *N*
 1 The Astonishing Ant-Man (MSH) 204 *N*
 1 Alicia Masters, Skilled Sculptor (MSC) 48 *N*
-1 Invisible Force Field (MSC) 19 *N*
+1 Silkguard (MAR) 37 *N*
+1 Spider-Ham, Peter Porker (SPM) 114 *N*
+1 Sword of Fire and Ice (MAR) 100 *N*
