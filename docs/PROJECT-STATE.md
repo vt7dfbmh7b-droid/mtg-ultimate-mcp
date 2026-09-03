@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-03T10:05:00Z**.
+Generated from `project-state.json`. Last state update: **2026-09-03T19:43:30.829Z**.
 
 ## Current mode
 
@@ -10,7 +10,7 @@ Generated from `project-state.json`. Last state update: **2026-09-03T10:05:00Z**
 - Active PR: #29
 - Active milestone: **INTEL-02**
 - Intelligence development paused: **no**
-- Reason: INTEL-02 remains active after generic semantic, resource-engine and lifecycle hardening. Source 7265531... passes the current focused and precon controls; broad Marvel remains red with a fully diagnosed constrained-pool limitation. Focused Marvel is mechanically green with six swaps but manual review still blocks acceptance for interaction quality, land/mana infrastructure and compound resource-engine tradeoffs. Runtime source 45f4cb9... passes pinned CI after fixing a shutdown deadline timer race. The accepted checkpoint stays 77a5383... until the current package is manually resolved and the restricted lane policy is decided.
+- Reason: INTEL-02 remains active after generic semantic, resource-engine, compound-component and lifecycle hardening. Source f0c3b9f... passes deterministic validation and the dependent precon/family controls. Exact-source focused and broad Marvel both fail closed with persisted zero-swap results: the generic component guard rejects the six previously unsafe focused packages, and the broad restricted lane remains unable to repair its fast-mana/tutor gates. The accepted checkpoint stays 77a5383... until the restricted-lane policy and a positive intelligence package are resolved. Runtime source 45f4cb9... remains pinned-CI green.
 
 ## Stable boundary
 
@@ -23,7 +23,7 @@ Generated from `project-state.json`. Last state update: **2026-09-03T10:05:00Z**
 
 Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
 
-Accepted INTEL-02 checkpoint remains 77a5383... because it is the last source explicitly accepted after exact-source testing and manual review. Semantic follow-up source 7265531... passes pinned CI-adjacent deterministic validation, focused Marvel, Middle-earth Food and Fellowship, Necron Dynasties and Squirreled Away controls; broad Marvel still fails target quality and strategy preservation because its restricted pool has only two eligible fast-mana and two eligible tutor matches, all already present or excluded. Focused Marvel is mechanically green with six swaps across three rounds, but manual review remains blocked on interaction quality, lost land/mana infrastructure and compound resource-engine tradeoffs. Runtime follow-up 45f4cb9... makes the shutdown deadline timer enforceable and passes pinned CI. Neither follow-up is promoted to accepted checkpoint status.
+Accepted INTEL-02 checkpoint remains 77a5383... because it is the last source explicitly accepted after exact-source testing and manual review. Source f0c3b9f... adds the generic compound operational-component guard and passes deterministic validation plus the dependent Necron Dynasties, Squirreled Away, Food and Fellowship and Middle-earth controls. Exact-source focused and broad Marvel both execute and persist honestly but return no-supported-improvement with zero swaps: the six prior focused substitutions are now rejected when they spend interaction, mana, treasure, sacrifice or other compound operational components without like-for-like replacement, while broad Marvel still exhausts its restricted fast-mana/tutor pool. Runtime follow-up 45f4cb9... remains pinned-CI green. The semantic and runtime follow-ups are not promoted to accepted checkpoint status.
 
 Latest fully validated executable experimental baseline recorded by project state:
 
@@ -47,15 +47,14 @@ Always inspect the live active-branch head before editing. A later documentation
 
 ## Current validation status
 
-- Active branch status: **accepted-checkpoint-77a-compound-resource-45f-manual-review-blocked**
-- Last persisted Marvel control source: `7265531610a7012f7940f591c99a2fc6ef3af06e`
-- Last persisted Marvel control outcome: **focused-pass-broad-fail**
-- Note: At source 7265531..., focused Marvel refinement passed mechanically with six swaps across three accepted rounds and removed only the average-nonland-MV failure (2.71→2.58). The package stops with no-supported-swaps-found; manual review remains blocked because accepted substitutions lose spot interaction, land ramp/tutor, persistent colored-mana, mana-rock, treasure, sacrifice or compound card/token/mana-engine roles even when coarse strategy affinity stays green. Broad Marvel executed successfully but accepted no package: exhaustive restricted discovery found two fast-mana and two tutor matches, all already present or excluded, so target quality and strategy preservation remain blocking. Runtime hardening was separately validated by CI at 45f4cb9....
+- Active branch status: **accepted-checkpoint-77a-compound-component-guard-fail-closed**
+- Last persisted Marvel control source: `f0c3b9f82dca49f295e44175e517d992e6e5356e`
+- Last persisted Marvel control outcome: **focused-zero-swap-broad-zero-swap**
+- Note: At source f0c3b9f..., exact-source focused and broad Marvel controls executed and persisted with the generic compound operational-component guard enabled. Both lanes returned no-supported-improvement with zero swaps: the six previously observed focused substitutions are now rejected because multi-component operational cards must retain their like-for-like component families, and broad Marvel still has no supported package after its restricted fast-mana/tutor pool is exhausted. Build, deterministic regressions, target execution and persistence passed; target-quality/strategy gates correctly remain red because no accepted package repairs the failed Bracket-5 gates. Dependent Necron Dynasties, Squirreled Away, Food and Fellowship and Middle-earth controls pass at f0c3b9f.... Accepted checkpoint remains 77a5383...; no promotion.
 
 Required before resuming broad INTEL-01/INTEL-02 claims:
 
-- Manually audit all six focused-Marvel IN→OUT packages from source 7265531...; mechanical green is not sufficient, especially for interaction quality, land/mana infrastructure and compound resource engines
-- If manual review rejects any package, add only generic semantic/resource-quality rules and rerun focused and broad Marvel from one exact source
+- Retain the source-7265531... six-swap audit as historical evidence; source f0c3b9f... now rejects all six classes generically through compound operational-component preservation
 - Require focused Marvel and broad Marvel to pass target-quality and strategy-preservation gates on the same exact executable source before calling the restricted lane uniformly green
 - Keep graveyard directionality/actionable recursion, explicit artifact engines, self-sacrifice versus repeatable outlets, secondary-plan inference, strategy-support density, premium early infrastructure, board wipes, token-death engines and board-scaling payoffs fail-closed
 - Run a positive eligible verified full-table package scenario so INTEL-01 discovery, feasibility, atomic injection, protection and independent final recognition are proven end to end
@@ -63,9 +62,9 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 
 ## Next actions
 
-1. Keep the six focused-Marvel swaps unaccepted until interaction, land/mana infrastructure and compound resource-engine tradeoffs are manually resolved with surplus evidence.
-2. If manual review rejects any focused package, implement only generic semantic/resource-quality rules and rerun focused and broad Marvel from one exact source.
-3. If any control or manual audit fails, fix the generic semantic/selection rule rather than adding name-specific exceptions, then rerun the whole affected family from one exact executable source.
+1. Keep the historical six focused-Marvel swaps unaccepted; source f0c3b9f... now rejects their compound operational-component losses generically and both exact-source Marvel lanes fail closed with zero swaps.
+2. Decide whether the restricted Marvel family needs an explicit construction ceiling or a generic candidate-pool expansion; do not add card-name exceptions, and rerun both lanes from one exact executable source after any policy change.
+3. Preserve the component guard and its anonymous multi-axis regression while revalidating any future candidate-pool change against interaction, land/mana, treasure, sacrifice, token, card-advantage and cost-reduction floors.
 4. When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.
 5. Then run an eligible verified full-table win-package scenario to close the main INTEL-01 proof gap.
 6. Only after the consolidated checkpoint and positive INTEL-01 proof should BENCH-01 broaden to materially different cases such as FF-only Counter Blitz and the NZ$500 Liliana, Heretical Healer challenge.
@@ -95,4 +94,4 @@ Read in this order:
 9. `docs/VALIDATION-MATRIX.md`
 10. `docs/KNOWN-FAILURES.md`
 
-Then: Inspect the live active-branch head and PR state. Treat 77a5383... as the accepted INTEL-02 checkpoint. Semantic source 7265531... passes focused Marvel and the current precon controls; broad Marvel remains a correctly diagnosed constrained-pool failure, focused package acceptance is manually blocked pending resource-quality review, and runtime shutdown hardening passes CI at 45f4cb9.... Continue only from nextActions and do not promote without explicit approval.
+Then: Inspect the live active-branch head and PR state. Treat 77a5383... as the accepted INTEL-02 checkpoint. Source f0c3b9f... passes deterministic and dependent controls; exact-source focused and broad Marvel both persist no-supported-improvement with zero swaps after the generic compound-component guard, so the restricted lane remains red. Runtime shutdown hardening passes CI at 45f4cb9.... Continue only from nextActions and do not promote without explicit approval.
