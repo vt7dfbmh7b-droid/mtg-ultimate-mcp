@@ -3,8 +3,8 @@
   "currencyPolicy": {
     "primaryCurrency": "NZD",
     "displaySymbol": "NZ$",
-    "usdToNzdRate": 1.6784,
-    "rateDate": "2026-08-22",
+    "usdToNzdRate": 1.708,
+    "rateDate": "2026-09-03",
     "rateSource": "Frankfurter",
     "rateSourceUrl": "https://api.frankfurter.dev/v2/rate/USD/NZD",
     "staleRate": false,
@@ -41,8 +41,8 @@
       "roundsAccepted": 4,
       "totalSwaps": 5,
       "candidatePackagesPerRound": 5,
-      "estimatedUpgradeSpendNzd": 64.6,
-      "estimatedUpgradeSpendUsdReference": 38.49,
+      "estimatedUpgradeSpendNzd": 67.6,
+      "estimatedUpgradeSpendUsdReference": 39.58,
       "maxTotalNzd": null,
       "maxTotalUsdReference": null,
       "swaps": [
@@ -54,8 +54,8 @@
             "set": "FCA",
             "collectorNumber": "28",
             "finish": "nonfoil",
-            "priceNzd": 2.8,
-            "priceUsdReference": 1.67
+            "priceNzd": 3.18,
+            "priceUsdReference": 1.86
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -99,8 +99,8 @@
             "set": "FCA",
             "collectorNumber": "8",
             "finish": "nonfoil",
-            "priceNzd": 16.63,
-            "priceUsdReference": 9.91
+            "priceNzd": 16.74,
+            "priceUsdReference": 9.8
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -142,8 +142,8 @@
             "set": "FCA",
             "collectorNumber": "34",
             "finish": "nonfoil",
-            "priceNzd": 26.47,
-            "priceUsdReference": 15.77
+            "priceNzd": 27.29,
+            "priceUsdReference": 15.98
           },
           "structuralPairing": {
             "addressedRole": "tutor",
@@ -184,8 +184,8 @@
             "set": "FIC",
             "collectorNumber": "267",
             "finish": "nonfoil",
-            "priceNzd": 4.9,
-            "priceUsdReference": 2.92
+            "priceNzd": 5.19,
+            "priceUsdReference": 3.04
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -225,8 +225,8 @@
             "set": "SLD",
             "collectorNumber": "7003",
             "finish": "foil",
-            "priceNzd": 13.8,
-            "priceUsdReference": 8.22
+            "priceNzd": 15.2,
+            "priceUsdReference": 8.9
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -346,8 +346,8 @@
           ],
           "candidatePackagesGeneratedAcrossAttempts": 10,
           "winningCandidate": 5,
-          "estimatedSpendNzd": 2.8,
-          "estimatedSpendUsdReference": 1.67,
+          "estimatedSpendNzd": 3.18,
+          "estimatedSpendUsdReference": 1.86,
           "improvementScore": 1.437,
           "winRouteProtection": {
             "status": "no-verified-route",
@@ -368,8 +368,8 @@
           ],
           "candidatePackagesGeneratedAcrossAttempts": 5,
           "winningCandidate": 3,
-          "estimatedSpendNzd": 43.1,
-          "estimatedSpendUsdReference": 25.68,
+          "estimatedSpendNzd": 44.03,
+          "estimatedSpendUsdReference": 25.78,
           "improvementScore": 0.449,
           "winRouteProtection": {
             "status": "no-verified-route",
@@ -392,8 +392,8 @@
           ],
           "candidatePackagesGeneratedAcrossAttempts": 15,
           "winningCandidate": 2,
-          "estimatedSpendNzd": 4.9,
-          "estimatedSpendUsdReference": 2.92,
+          "estimatedSpendNzd": 5.19,
+          "estimatedSpendUsdReference": 3.04,
           "improvementScore": 0.751,
           "winRouteProtection": {
             "status": "no-verified-route",
@@ -415,8 +415,8 @@
           ],
           "candidatePackagesGeneratedAcrossAttempts": 10,
           "winningCandidate": 4,
-          "estimatedSpendNzd": 13.8,
-          "estimatedSpendUsdReference": 8.22,
+          "estimatedSpendNzd": 15.2,
+          "estimatedSpendUsdReference": 8.9,
           "improvementScore": 0.508,
           "winRouteProtection": {
             "status": "no-verified-route",
@@ -476,8 +476,8 @@
           "candidatePackagesGenerated": 5,
           "candidatePackagesEligible": 1,
           "winningCandidate": 5,
-          "estimatedSpendNzd": 2.8,
-          "estimatedSpendUsdReference": 1.67,
+          "estimatedSpendNzd": 3.18,
+          "estimatedSpendUsdReference": 1.86,
           "improvementScore": 1.437,
           "winRouteProtection": {
             "status": "no-verified-route",
@@ -496,8 +496,8 @@
                 "collectorNumber": "28",
                 "releaseDate": "2025-06-13",
                 "finish": "nonfoil",
-                "priceNzd": 2.8,
-                "priceUsdReference": 1.67,
+                "priceNzd": 3.18,
+                "priceUsdReference": 1.86,
                 "promo": false,
                 "promoTypes": [
                   "boosterfun",
@@ -552,8 +552,8 @@
               "reason": "improvement-below-threshold",
               "attemptedSwaps": 3,
               "actualSwaps": 1,
-              "estimatedSpendNzd": 0.6,
-              "estimatedSpendUsdReference": 0.36,
+              "estimatedSpendNzd": 1.16,
+              "estimatedSpendUsdReference": 0.68,
               "unknownPriceCount": 0,
               "improvementScore": -1.425,
               "significantRegression": false,
@@ -735,8 +735,8 @@
                     "set": "FIC",
                     "collectorNumber": "343",
                     "finish": "nonfoil",
-                    "priceNzd": 0.6,
-                    "priceUsdReference": 0.36
+                    "priceNzd": 1.16,
+                    "priceUsdReference": 0.68
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -780,8 +780,8 @@
               "reason": "package-causes-a-significant-simulated-regression",
               "attemptedSwaps": 3,
               "actualSwaps": 2,
-              "estimatedSpendNzd": 31.37,
-              "estimatedSpendUsdReference": 18.69,
+              "estimatedSpendNzd": 32.49,
+              "estimatedSpendUsdReference": 19.02,
               "unknownPriceCount": 0,
               "improvementScore": -12.762,
               "significantRegression": true,
@@ -996,8 +996,8 @@
                     "set": "FIC",
                     "collectorNumber": "267",
                     "finish": "nonfoil",
-                    "priceNzd": 4.9,
-                    "priceUsdReference": 2.92
+                    "priceNzd": 5.19,
+                    "priceUsdReference": 3.04
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -1043,8 +1043,8 @@
                     "set": "FCA",
                     "collectorNumber": "34",
                     "finish": "nonfoil",
-                    "priceNzd": 26.47,
-                    "priceUsdReference": 15.77
+                    "priceNzd": 27.29,
+                    "priceUsdReference": 15.98
                   },
                   "structuralPairing": {
                     "addressedRole": "tutor",
@@ -1087,8 +1087,8 @@
               "reason": "improvement-below-threshold",
               "attemptedSwaps": 3,
               "actualSwaps": 2,
-              "estimatedSpendNzd": 43.1,
-              "estimatedSpendUsdReference": 25.68,
+              "estimatedSpendNzd": 44.03,
+              "estimatedSpendUsdReference": 25.78,
               "unknownPriceCount": 0,
               "improvementScore": -6.405,
               "significantRegression": false,
@@ -1293,8 +1293,8 @@
                     "set": "FCA",
                     "collectorNumber": "8",
                     "finish": "nonfoil",
-                    "priceNzd": 16.63,
-                    "priceUsdReference": 9.91
+                    "priceNzd": 16.74,
+                    "priceUsdReference": 9.8
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -1337,8 +1337,8 @@
                     "set": "FCA",
                     "collectorNumber": "34",
                     "finish": "nonfoil",
-                    "priceNzd": 26.47,
-                    "priceUsdReference": 15.77
+                    "priceNzd": 27.29,
+                    "priceUsdReference": 15.98
                   },
                   "structuralPairing": {
                     "addressedRole": "tutor",
@@ -1381,8 +1381,8 @@
               "reason": "improvement-below-threshold",
               "attemptedSwaps": 3,
               "actualSwaps": 1,
-              "estimatedSpendNzd": 11.78,
-              "estimatedSpendUsdReference": 7.02,
+              "estimatedSpendNzd": 11.08,
+              "estimatedSpendUsdReference": 6.49,
               "unknownPriceCount": 0,
               "improvementScore": -0.468,
               "significantRegression": false,
@@ -1561,8 +1561,8 @@
                     "set": "FIC",
                     "collectorNumber": "355",
                     "finish": "nonfoil",
-                    "priceNzd": 11.78,
-                    "priceUsdReference": 7.02
+                    "priceNzd": 11.08,
+                    "priceUsdReference": 6.49
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -1606,8 +1606,8 @@
               "reason": "eligible",
               "attemptedSwaps": 3,
               "actualSwaps": 1,
-              "estimatedSpendNzd": 2.8,
-              "estimatedSpendUsdReference": 1.67,
+              "estimatedSpendNzd": 3.18,
+              "estimatedSpendUsdReference": 1.86,
               "unknownPriceCount": 0,
               "improvementScore": 1.437,
               "significantRegression": false,
@@ -1786,8 +1786,8 @@
                     "set": "FCA",
                     "collectorNumber": "28",
                     "finish": "nonfoil",
-                    "priceNzd": 2.8,
-                    "priceUsdReference": 1.67
+                    "priceNzd": 3.18,
+                    "priceUsdReference": 1.86
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -1843,8 +1843,8 @@
                   "reason": "improvement-below-threshold",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 27.07,
-                  "estimatedSpendUsdReference": 16.13,
+                  "estimatedSpendNzd": 28.46,
+                  "estimatedSpendUsdReference": 16.66,
                   "unknownPriceCount": 0,
                   "improvementScore": -1.733,
                   "significantRegression": false,
@@ -2050,8 +2050,8 @@
                         "set": "FIC",
                         "collectorNumber": "343",
                         "finish": "nonfoil",
-                        "priceNzd": 0.6,
-                        "priceUsdReference": 0.36
+                        "priceNzd": 1.16,
+                        "priceUsdReference": 0.68
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -2095,8 +2095,8 @@
                         "set": "FCA",
                         "collectorNumber": "34",
                         "finish": "nonfoil",
-                        "priceNzd": 26.47,
-                        "priceUsdReference": 15.77
+                        "priceNzd": 27.29,
+                        "priceUsdReference": 15.98
                       },
                       "structuralPairing": {
                         "addressedRole": "tutor",
@@ -2139,8 +2139,8 @@
                   "reason": "package-causes-a-significant-simulated-regression",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 31.37,
-                  "estimatedSpendUsdReference": 18.69,
+                  "estimatedSpendNzd": 32.49,
+                  "estimatedSpendUsdReference": 19.02,
                   "unknownPriceCount": 0,
                   "improvementScore": -12.762,
                   "significantRegression": true,
@@ -2355,8 +2355,8 @@
                         "set": "FIC",
                         "collectorNumber": "267",
                         "finish": "nonfoil",
-                        "priceNzd": 4.9,
-                        "priceUsdReference": 2.92
+                        "priceNzd": 5.19,
+                        "priceUsdReference": 3.04
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -2402,8 +2402,8 @@
                         "set": "FCA",
                         "collectorNumber": "34",
                         "finish": "nonfoil",
-                        "priceNzd": 26.47,
-                        "priceUsdReference": 15.77
+                        "priceNzd": 27.29,
+                        "priceUsdReference": 15.98
                       },
                       "structuralPairing": {
                         "addressedRole": "tutor",
@@ -2446,8 +2446,8 @@
                   "reason": "improvement-below-threshold",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 43.1,
-                  "estimatedSpendUsdReference": 25.68,
+                  "estimatedSpendNzd": 44.03,
+                  "estimatedSpendUsdReference": 25.78,
                   "unknownPriceCount": 0,
                   "improvementScore": -6.405,
                   "significantRegression": false,
@@ -2652,8 +2652,8 @@
                         "set": "FCA",
                         "collectorNumber": "8",
                         "finish": "nonfoil",
-                        "priceNzd": 16.63,
-                        "priceUsdReference": 9.91
+                        "priceNzd": 16.74,
+                        "priceUsdReference": 9.8
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -2696,8 +2696,8 @@
                         "set": "FCA",
                         "collectorNumber": "34",
                         "finish": "nonfoil",
-                        "priceNzd": 26.47,
-                        "priceUsdReference": 15.77
+                        "priceNzd": 27.29,
+                        "priceUsdReference": 15.98
                       },
                       "structuralPairing": {
                         "addressedRole": "tutor",
@@ -2740,8 +2740,8 @@
                   "reason": "improvement-below-threshold",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 38.25,
-                  "estimatedSpendUsdReference": 22.79,
+                  "estimatedSpendNzd": 38.38,
+                  "estimatedSpendUsdReference": 22.47,
                   "unknownPriceCount": 0,
                   "improvementScore": -2.15,
                   "significantRegression": false,
@@ -2944,8 +2944,8 @@
                         "set": "FIC",
                         "collectorNumber": "355",
                         "finish": "nonfoil",
-                        "priceNzd": 11.78,
-                        "priceUsdReference": 7.02
+                        "priceNzd": 11.08,
+                        "priceUsdReference": 6.49
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -2989,8 +2989,8 @@
                         "set": "FCA",
                         "collectorNumber": "34",
                         "finish": "nonfoil",
-                        "priceNzd": 26.47,
-                        "priceUsdReference": 15.77
+                        "priceNzd": 27.29,
+                        "priceUsdReference": 15.98
                       },
                       "structuralPairing": {
                         "addressedRole": "tutor",
@@ -3033,8 +3033,8 @@
                   "reason": "improvement-below-threshold",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 29.27,
-                  "estimatedSpendUsdReference": 17.44,
+                  "estimatedSpendNzd": 30.47,
+                  "estimatedSpendUsdReference": 17.84,
                   "unknownPriceCount": 0,
                   "improvementScore": -4.024,
                   "significantRegression": false,
@@ -3237,8 +3237,8 @@
                         "set": "FCA",
                         "collectorNumber": "28",
                         "finish": "nonfoil",
-                        "priceNzd": 2.8,
-                        "priceUsdReference": 1.67
+                        "priceNzd": 3.18,
+                        "priceUsdReference": 1.86
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -3282,8 +3282,8 @@
                         "set": "FCA",
                         "collectorNumber": "34",
                         "finish": "nonfoil",
-                        "priceNzd": 26.47,
-                        "priceUsdReference": 15.77
+                        "priceNzd": 27.29,
+                        "priceUsdReference": 15.98
                       },
                       "structuralPairing": {
                         "addressedRole": "tutor",
@@ -3339,8 +3339,8 @@
                   "reason": "improvement-below-threshold",
                   "attemptedSwaps": 3,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 0.6,
-                  "estimatedSpendUsdReference": 0.36,
+                  "estimatedSpendNzd": 1.16,
+                  "estimatedSpendUsdReference": 0.68,
                   "unknownPriceCount": 0,
                   "improvementScore": -1.425,
                   "significantRegression": false,
@@ -3522,8 +3522,8 @@
                         "set": "FIC",
                         "collectorNumber": "343",
                         "finish": "nonfoil",
-                        "priceNzd": 0.6,
-                        "priceUsdReference": 0.36
+                        "priceNzd": 1.16,
+                        "priceUsdReference": 0.68
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -3567,8 +3567,8 @@
                   "reason": "package-causes-a-significant-simulated-regression",
                   "attemptedSwaps": 3,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 31.37,
-                  "estimatedSpendUsdReference": 18.69,
+                  "estimatedSpendNzd": 32.49,
+                  "estimatedSpendUsdReference": 19.02,
                   "unknownPriceCount": 0,
                   "improvementScore": -12.762,
                   "significantRegression": true,
@@ -3783,8 +3783,8 @@
                         "set": "FIC",
                         "collectorNumber": "267",
                         "finish": "nonfoil",
-                        "priceNzd": 4.9,
-                        "priceUsdReference": 2.92
+                        "priceNzd": 5.19,
+                        "priceUsdReference": 3.04
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -3830,8 +3830,8 @@
                         "set": "FCA",
                         "collectorNumber": "34",
                         "finish": "nonfoil",
-                        "priceNzd": 26.47,
-                        "priceUsdReference": 15.77
+                        "priceNzd": 27.29,
+                        "priceUsdReference": 15.98
                       },
                       "structuralPairing": {
                         "addressedRole": "tutor",
@@ -3874,8 +3874,8 @@
                   "reason": "improvement-below-threshold",
                   "attemptedSwaps": 3,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 43.1,
-                  "estimatedSpendUsdReference": 25.68,
+                  "estimatedSpendNzd": 44.03,
+                  "estimatedSpendUsdReference": 25.78,
                   "unknownPriceCount": 0,
                   "improvementScore": -6.405,
                   "significantRegression": false,
@@ -4080,8 +4080,8 @@
                         "set": "FCA",
                         "collectorNumber": "8",
                         "finish": "nonfoil",
-                        "priceNzd": 16.63,
-                        "priceUsdReference": 9.91
+                        "priceNzd": 16.74,
+                        "priceUsdReference": 9.8
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -4124,8 +4124,8 @@
                         "set": "FCA",
                         "collectorNumber": "34",
                         "finish": "nonfoil",
-                        "priceNzd": 26.47,
-                        "priceUsdReference": 15.77
+                        "priceNzd": 27.29,
+                        "priceUsdReference": 15.98
                       },
                       "structuralPairing": {
                         "addressedRole": "tutor",
@@ -4168,8 +4168,8 @@
                   "reason": "improvement-below-threshold",
                   "attemptedSwaps": 3,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 11.78,
-                  "estimatedSpendUsdReference": 7.02,
+                  "estimatedSpendNzd": 11.08,
+                  "estimatedSpendUsdReference": 6.49,
                   "unknownPriceCount": 0,
                   "improvementScore": -0.468,
                   "significantRegression": false,
@@ -4348,8 +4348,8 @@
                         "set": "FIC",
                         "collectorNumber": "355",
                         "finish": "nonfoil",
-                        "priceNzd": 11.78,
-                        "priceUsdReference": 7.02
+                        "priceNzd": 11.08,
+                        "priceUsdReference": 6.49
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -4393,8 +4393,8 @@
                   "reason": "eligible",
                   "attemptedSwaps": 3,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 2.8,
-                  "estimatedSpendUsdReference": 1.67,
+                  "estimatedSpendNzd": 3.18,
+                  "estimatedSpendUsdReference": 1.86,
                   "unknownPriceCount": 0,
                   "improvementScore": 1.437,
                   "significantRegression": false,
@@ -4573,8 +4573,8 @@
                         "set": "FCA",
                         "collectorNumber": "28",
                         "finish": "nonfoil",
-                        "priceNzd": 2.8,
-                        "priceUsdReference": 1.67
+                        "priceNzd": 3.18,
+                        "priceUsdReference": 1.86
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -4624,8 +4624,8 @@
           "candidatePackagesGenerated": 5,
           "candidatePackagesEligible": 1,
           "winningCandidate": 3,
-          "estimatedSpendNzd": 43.1,
-          "estimatedSpendUsdReference": 25.68,
+          "estimatedSpendNzd": 44.03,
+          "estimatedSpendUsdReference": 25.78,
           "improvementScore": 0.449,
           "winRouteProtection": {
             "status": "no-verified-route",
@@ -4644,8 +4644,8 @@
                 "collectorNumber": "8",
                 "releaseDate": "2025-06-13",
                 "finish": "nonfoil",
-                "priceNzd": 16.63,
-                "priceUsdReference": 9.91,
+                "priceNzd": 16.74,
+                "priceUsdReference": 9.8,
                 "promo": false,
                 "promoTypes": [
                   "sourcematerial",
@@ -4699,8 +4699,8 @@
                 "collectorNumber": "34",
                 "releaseDate": "2025-06-13",
                 "finish": "nonfoil",
-                "priceNzd": 26.47,
-                "priceUsdReference": 15.77,
+                "priceNzd": 27.29,
+                "priceUsdReference": 15.98,
                 "promo": false,
                 "promoTypes": [
                   "sourcematerial",
@@ -4752,8 +4752,8 @@
               "reason": "improvement-below-threshold",
               "attemptedSwaps": 4,
               "actualSwaps": 2,
-              "estimatedSpendNzd": 27.07,
-              "estimatedSpendUsdReference": 16.13,
+              "estimatedSpendNzd": 28.46,
+              "estimatedSpendUsdReference": 16.66,
               "unknownPriceCount": 0,
               "improvementScore": -4.655,
               "significantRegression": false,
@@ -4955,8 +4955,8 @@
                     "set": "FIC",
                     "collectorNumber": "343",
                     "finish": "nonfoil",
-                    "priceNzd": 0.6,
-                    "priceUsdReference": 0.36
+                    "priceNzd": 1.16,
+                    "priceUsdReference": 0.68
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -4998,8 +4998,8 @@
                     "set": "FCA",
                     "collectorNumber": "34",
                     "finish": "nonfoil",
-                    "priceNzd": 26.47,
-                    "priceUsdReference": 15.77
+                    "priceNzd": 27.29,
+                    "priceUsdReference": 15.98
                   },
                   "structuralPairing": {
                     "addressedRole": "tutor",
@@ -5040,8 +5040,8 @@
               "reason": "improvement-below-threshold",
               "attemptedSwaps": 4,
               "actualSwaps": 2,
-              "estimatedSpendNzd": 31.37,
-              "estimatedSpendUsdReference": 18.69,
+              "estimatedSpendNzd": 32.49,
+              "estimatedSpendUsdReference": 19.02,
               "unknownPriceCount": 0,
               "improvementScore": -4.53,
               "significantRegression": false,
@@ -5250,8 +5250,8 @@
                     "set": "FIC",
                     "collectorNumber": "267",
                     "finish": "nonfoil",
-                    "priceNzd": 4.9,
-                    "priceUsdReference": 2.92
+                    "priceNzd": 5.19,
+                    "priceUsdReference": 3.04
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -5291,8 +5291,8 @@
                     "set": "FCA",
                     "collectorNumber": "34",
                     "finish": "nonfoil",
-                    "priceNzd": 26.47,
-                    "priceUsdReference": 15.77
+                    "priceNzd": 27.29,
+                    "priceUsdReference": 15.98
                   },
                   "structuralPairing": {
                     "addressedRole": "tutor",
@@ -5335,8 +5335,8 @@
               "reason": "eligible",
               "attemptedSwaps": 4,
               "actualSwaps": 2,
-              "estimatedSpendNzd": 43.1,
-              "estimatedSpendUsdReference": 25.68,
+              "estimatedSpendNzd": 44.03,
+              "estimatedSpendUsdReference": 25.78,
               "unknownPriceCount": 0,
               "improvementScore": 0.449,
               "significantRegression": false,
@@ -5538,8 +5538,8 @@
                     "set": "FCA",
                     "collectorNumber": "8",
                     "finish": "nonfoil",
-                    "priceNzd": 16.63,
-                    "priceUsdReference": 9.91
+                    "priceNzd": 16.74,
+                    "priceUsdReference": 9.8
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -5581,8 +5581,8 @@
                     "set": "FCA",
                     "collectorNumber": "34",
                     "finish": "nonfoil",
-                    "priceNzd": 26.47,
-                    "priceUsdReference": 15.77
+                    "priceNzd": 27.29,
+                    "priceUsdReference": 15.98
                   },
                   "structuralPairing": {
                     "addressedRole": "tutor",
@@ -5623,8 +5623,8 @@
               "reason": "improvement-below-threshold",
               "attemptedSwaps": 4,
               "actualSwaps": 2,
-              "estimatedSpendNzd": 38.25,
-              "estimatedSpendUsdReference": 22.79,
+              "estimatedSpendNzd": 38.38,
+              "estimatedSpendUsdReference": 22.47,
               "unknownPriceCount": 0,
               "improvementScore": -11.484,
               "significantRegression": false,
@@ -5826,8 +5826,8 @@
                     "set": "FIC",
                     "collectorNumber": "355",
                     "finish": "nonfoil",
-                    "priceNzd": 11.78,
-                    "priceUsdReference": 7.02
+                    "priceNzd": 11.08,
+                    "priceUsdReference": 6.49
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -5872,8 +5872,8 @@
                     "set": "FCA",
                     "collectorNumber": "34",
                     "finish": "nonfoil",
-                    "priceNzd": 26.47,
-                    "priceUsdReference": 15.77
+                    "priceNzd": 27.29,
+                    "priceUsdReference": 15.98
                   },
                   "structuralPairing": {
                     "addressedRole": "tutor",
@@ -5914,8 +5914,8 @@
               "reason": "package-causes-a-significant-simulated-regression",
               "attemptedSwaps": 4,
               "actualSwaps": 2,
-              "estimatedSpendNzd": 28.67,
-              "estimatedSpendUsdReference": 17.08,
+              "estimatedSpendNzd": 29.62,
+              "estimatedSpendUsdReference": 17.34,
               "unknownPriceCount": 0,
               "improvementScore": -12.651,
               "significantRegression": true,
@@ -6116,8 +6116,8 @@
                     "set": "FIC",
                     "collectorNumber": "248",
                     "finish": "nonfoil",
-                    "priceNzd": 2.2,
-                    "priceUsdReference": 1.31
+                    "priceNzd": 2.32,
+                    "priceUsdReference": 1.36
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -6161,8 +6161,8 @@
                     "set": "FCA",
                     "collectorNumber": "34",
                     "finish": "nonfoil",
-                    "priceNzd": 26.47,
-                    "priceUsdReference": 15.77
+                    "priceNzd": 27.29,
+                    "priceUsdReference": 15.98
                   },
                   "structuralPairing": {
                     "addressedRole": "tutor",
@@ -6216,8 +6216,8 @@
                   "reason": "improvement-below-threshold",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 27.07,
-                  "estimatedSpendUsdReference": 16.13,
+                  "estimatedSpendNzd": 28.46,
+                  "estimatedSpendUsdReference": 16.66,
                   "unknownPriceCount": 0,
                   "improvementScore": -4.655,
                   "significantRegression": false,
@@ -6419,8 +6419,8 @@
                         "set": "FIC",
                         "collectorNumber": "343",
                         "finish": "nonfoil",
-                        "priceNzd": 0.6,
-                        "priceUsdReference": 0.36
+                        "priceNzd": 1.16,
+                        "priceUsdReference": 0.68
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -6462,8 +6462,8 @@
                         "set": "FCA",
                         "collectorNumber": "34",
                         "finish": "nonfoil",
-                        "priceNzd": 26.47,
-                        "priceUsdReference": 15.77
+                        "priceNzd": 27.29,
+                        "priceUsdReference": 15.98
                       },
                       "structuralPairing": {
                         "addressedRole": "tutor",
@@ -6504,8 +6504,8 @@
                   "reason": "improvement-below-threshold",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 31.37,
-                  "estimatedSpendUsdReference": 18.69,
+                  "estimatedSpendNzd": 32.49,
+                  "estimatedSpendUsdReference": 19.02,
                   "unknownPriceCount": 0,
                   "improvementScore": -4.53,
                   "significantRegression": false,
@@ -6714,8 +6714,8 @@
                         "set": "FIC",
                         "collectorNumber": "267",
                         "finish": "nonfoil",
-                        "priceNzd": 4.9,
-                        "priceUsdReference": 2.92
+                        "priceNzd": 5.19,
+                        "priceUsdReference": 3.04
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -6755,8 +6755,8 @@
                         "set": "FCA",
                         "collectorNumber": "34",
                         "finish": "nonfoil",
-                        "priceNzd": 26.47,
-                        "priceUsdReference": 15.77
+                        "priceNzd": 27.29,
+                        "priceUsdReference": 15.98
                       },
                       "structuralPairing": {
                         "addressedRole": "tutor",
@@ -6799,8 +6799,8 @@
                   "reason": "eligible",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 43.1,
-                  "estimatedSpendUsdReference": 25.68,
+                  "estimatedSpendNzd": 44.03,
+                  "estimatedSpendUsdReference": 25.78,
                   "unknownPriceCount": 0,
                   "improvementScore": 0.449,
                   "significantRegression": false,
@@ -7002,8 +7002,8 @@
                         "set": "FCA",
                         "collectorNumber": "8",
                         "finish": "nonfoil",
-                        "priceNzd": 16.63,
-                        "priceUsdReference": 9.91
+                        "priceNzd": 16.74,
+                        "priceUsdReference": 9.8
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -7045,8 +7045,8 @@
                         "set": "FCA",
                         "collectorNumber": "34",
                         "finish": "nonfoil",
-                        "priceNzd": 26.47,
-                        "priceUsdReference": 15.77
+                        "priceNzd": 27.29,
+                        "priceUsdReference": 15.98
                       },
                       "structuralPairing": {
                         "addressedRole": "tutor",
@@ -7087,8 +7087,8 @@
                   "reason": "improvement-below-threshold",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 38.25,
-                  "estimatedSpendUsdReference": 22.79,
+                  "estimatedSpendNzd": 38.38,
+                  "estimatedSpendUsdReference": 22.47,
                   "unknownPriceCount": 0,
                   "improvementScore": -11.484,
                   "significantRegression": false,
@@ -7290,8 +7290,8 @@
                         "set": "FIC",
                         "collectorNumber": "355",
                         "finish": "nonfoil",
-                        "priceNzd": 11.78,
-                        "priceUsdReference": 7.02
+                        "priceNzd": 11.08,
+                        "priceUsdReference": 6.49
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -7336,8 +7336,8 @@
                         "set": "FCA",
                         "collectorNumber": "34",
                         "finish": "nonfoil",
-                        "priceNzd": 26.47,
-                        "priceUsdReference": 15.77
+                        "priceNzd": 27.29,
+                        "priceUsdReference": 15.98
                       },
                       "structuralPairing": {
                         "addressedRole": "tutor",
@@ -7378,8 +7378,8 @@
                   "reason": "package-causes-a-significant-simulated-regression",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 28.67,
-                  "estimatedSpendUsdReference": 17.08,
+                  "estimatedSpendNzd": 29.62,
+                  "estimatedSpendUsdReference": 17.34,
                   "unknownPriceCount": 0,
                   "improvementScore": -12.651,
                   "significantRegression": true,
@@ -7580,8 +7580,8 @@
                         "set": "FIC",
                         "collectorNumber": "248",
                         "finish": "nonfoil",
-                        "priceNzd": 2.2,
-                        "priceUsdReference": 1.31
+                        "priceNzd": 2.32,
+                        "priceUsdReference": 1.36
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -7625,8 +7625,8 @@
                         "set": "FCA",
                         "collectorNumber": "34",
                         "finish": "nonfoil",
-                        "priceNzd": 26.47,
-                        "priceUsdReference": 15.77
+                        "priceNzd": 27.29,
+                        "priceUsdReference": 15.98
                       },
                       "structuralPairing": {
                         "addressedRole": "tutor",
@@ -7673,8 +7673,8 @@
           "candidatePackagesGenerated": 5,
           "candidatePackagesEligible": 1,
           "winningCandidate": 2,
-          "estimatedSpendNzd": 4.9,
-          "estimatedSpendUsdReference": 2.92,
+          "estimatedSpendNzd": 5.19,
+          "estimatedSpendUsdReference": 3.04,
           "improvementScore": 0.751,
           "winRouteProtection": {
             "status": "no-verified-route",
@@ -7693,8 +7693,8 @@
                 "collectorNumber": "267",
                 "releaseDate": "2025-06-13",
                 "finish": "nonfoil",
-                "priceNzd": 4.9,
-                "priceUsdReference": 2.92,
+                "priceNzd": 5.19,
+                "priceUsdReference": 3.04,
                 "promo": false,
                 "promoTypes": [
                   "surgefoil",
@@ -7744,8 +7744,8 @@
               "reason": "package-causes-a-meaningful-commander-strategy-loss",
               "attemptedSwaps": 2,
               "actualSwaps": 1,
-              "estimatedSpendNzd": 0.6,
-              "estimatedSpendUsdReference": 0.36,
+              "estimatedSpendNzd": 1.16,
+              "estimatedSpendUsdReference": 0.68,
               "unknownPriceCount": 0,
               "improvementScore": 2.615,
               "significantRegression": false,
@@ -7921,8 +7921,8 @@
                     "set": "FIC",
                     "collectorNumber": "343",
                     "finish": "nonfoil",
-                    "priceNzd": 0.6,
-                    "priceUsdReference": 0.36
+                    "priceNzd": 1.16,
+                    "priceUsdReference": 0.68
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -7962,8 +7962,8 @@
               "reason": "eligible",
               "attemptedSwaps": 2,
               "actualSwaps": 1,
-              "estimatedSpendNzd": 4.9,
-              "estimatedSpendUsdReference": 2.92,
+              "estimatedSpendNzd": 5.19,
+              "estimatedSpendUsdReference": 3.04,
               "unknownPriceCount": 0,
               "improvementScore": 0.751,
               "significantRegression": false,
@@ -8130,8 +8130,8 @@
                     "set": "FIC",
                     "collectorNumber": "267",
                     "finish": "nonfoil",
-                    "priceNzd": 4.9,
-                    "priceUsdReference": 2.92
+                    "priceNzd": 5.19,
+                    "priceUsdReference": 3.04
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -8171,8 +8171,8 @@
               "reason": "package-causes-a-meaningful-commander-strategy-loss",
               "attemptedSwaps": 2,
               "actualSwaps": 1,
-              "estimatedSpendNzd": 11.78,
-              "estimatedSpendUsdReference": 7.02,
+              "estimatedSpendNzd": 11.08,
+              "estimatedSpendUsdReference": 6.49,
               "unknownPriceCount": 0,
               "improvementScore": 4.061,
               "significantRegression": false,
@@ -8355,8 +8355,8 @@
                     "set": "FIC",
                     "collectorNumber": "355",
                     "finish": "nonfoil",
-                    "priceNzd": 11.78,
-                    "priceUsdReference": 7.02
+                    "priceNzd": 11.08,
+                    "priceUsdReference": 6.49
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -8397,8 +8397,8 @@
               "reason": "package-causes-a-meaningful-commander-strategy-loss",
               "attemptedSwaps": 2,
               "actualSwaps": 1,
-              "estimatedSpendNzd": 2.2,
-              "estimatedSpendUsdReference": 1.31,
+              "estimatedSpendNzd": 2.32,
+              "estimatedSpendUsdReference": 1.36,
               "unknownPriceCount": 0,
               "improvementScore": -1.968,
               "significantRegression": false,
@@ -8580,8 +8580,8 @@
                     "set": "FIC",
                     "collectorNumber": "248",
                     "finish": "nonfoil",
-                    "priceNzd": 2.2,
-                    "priceUsdReference": 1.31
+                    "priceNzd": 2.32,
+                    "priceUsdReference": 1.36
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -8621,8 +8621,8 @@
               "reason": "improvement-below-threshold",
               "attemptedSwaps": 2,
               "actualSwaps": 1,
-              "estimatedSpendNzd": 13.8,
-              "estimatedSpendUsdReference": 8.22,
+              "estimatedSpendNzd": 15.2,
+              "estimatedSpendUsdReference": 8.9,
               "unknownPriceCount": 0,
               "improvementScore": -0.668,
               "significantRegression": false,
@@ -8787,8 +8787,8 @@
                     "set": "SLD",
                     "collectorNumber": "7003",
                     "finish": "foil",
-                    "priceNzd": 13.8,
-                    "priceUsdReference": 8.22
+                    "priceNzd": 15.2,
+                    "priceUsdReference": 8.9
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -8837,8 +8837,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 4.95,
-                  "estimatedSpendUsdReference": 2.95,
+                  "estimatedSpendNzd": 5.82,
+                  "estimatedSpendUsdReference": 3.41,
                   "unknownPriceCount": 0,
                   "improvementScore": 10.892,
                   "significantRegression": false,
@@ -9037,8 +9037,8 @@
                         "set": "FIC",
                         "collectorNumber": "343",
                         "finish": "nonfoil",
-                        "priceNzd": 0.6,
-                        "priceUsdReference": 0.36
+                        "priceNzd": 1.16,
+                        "priceUsdReference": 0.68
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -9078,8 +9078,8 @@
                         "set": "FIC",
                         "collectorNumber": "361",
                         "finish": "nonfoil",
-                        "priceNzd": 4.35,
-                        "priceUsdReference": 2.59
+                        "priceNzd": 4.66,
+                        "priceUsdReference": 2.73
                       },
                       "structuralPairing": {
                         "addressedRole": "protection",
@@ -9121,8 +9121,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 9.25,
-                  "estimatedSpendUsdReference": 5.51,
+                  "estimatedSpendNzd": 9.86,
+                  "estimatedSpendUsdReference": 5.77,
                   "unknownPriceCount": 0,
                   "improvementScore": 4.969,
                   "significantRegression": false,
@@ -9321,8 +9321,8 @@
                         "set": "FIC",
                         "collectorNumber": "267",
                         "finish": "nonfoil",
-                        "priceNzd": 4.9,
-                        "priceUsdReference": 2.92
+                        "priceNzd": 5.19,
+                        "priceUsdReference": 3.04
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -9362,8 +9362,8 @@
                         "set": "FIC",
                         "collectorNumber": "361",
                         "finish": "nonfoil",
-                        "priceNzd": 4.35,
-                        "priceUsdReference": 2.59
+                        "priceNzd": 4.66,
+                        "priceUsdReference": 2.73
                       },
                       "structuralPairing": {
                         "addressedRole": "protection",
@@ -9405,8 +9405,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 16.13,
-                  "estimatedSpendUsdReference": 9.61,
+                  "estimatedSpendNzd": 15.75,
+                  "estimatedSpendUsdReference": 9.22,
                   "unknownPriceCount": 0,
                   "improvementScore": 5.304,
                   "significantRegression": false,
@@ -9612,8 +9612,8 @@
                         "set": "FIC",
                         "collectorNumber": "355",
                         "finish": "nonfoil",
-                        "priceNzd": 11.78,
-                        "priceUsdReference": 7.02
+                        "priceNzd": 11.08,
+                        "priceUsdReference": 6.49
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -9654,8 +9654,8 @@
                         "set": "FIC",
                         "collectorNumber": "361",
                         "finish": "nonfoil",
-                        "priceNzd": 4.35,
-                        "priceUsdReference": 2.59
+                        "priceNzd": 4.66,
+                        "priceUsdReference": 2.73
                       },
                       "structuralPairing": {
                         "addressedRole": "protection",
@@ -9697,8 +9697,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 6.55,
-                  "estimatedSpendUsdReference": 3.9,
+                  "estimatedSpendNzd": 6.99,
+                  "estimatedSpendUsdReference": 4.09,
                   "unknownPriceCount": 0,
                   "improvementScore": 6.625,
                   "significantRegression": false,
@@ -9903,8 +9903,8 @@
                         "set": "FIC",
                         "collectorNumber": "248",
                         "finish": "nonfoil",
-                        "priceNzd": 2.2,
-                        "priceUsdReference": 1.31
+                        "priceNzd": 2.32,
+                        "priceUsdReference": 1.36
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -9944,8 +9944,8 @@
                         "set": "FIC",
                         "collectorNumber": "361",
                         "finish": "nonfoil",
-                        "priceNzd": 4.35,
-                        "priceUsdReference": 2.59
+                        "priceNzd": 4.66,
+                        "priceUsdReference": 2.73
                       },
                       "structuralPairing": {
                         "addressedRole": "protection",
@@ -9987,8 +9987,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 18.14,
-                  "estimatedSpendUsdReference": 10.81,
+                  "estimatedSpendNzd": 19.86,
+                  "estimatedSpendUsdReference": 11.63,
                   "unknownPriceCount": 0,
                   "improvementScore": 7.475,
                   "significantRegression": false,
@@ -10185,8 +10185,8 @@
                         "set": "SLD",
                         "collectorNumber": "7003",
                         "finish": "foil",
-                        "priceNzd": 13.8,
-                        "priceUsdReference": 8.22
+                        "priceNzd": 15.2,
+                        "priceUsdReference": 8.9
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -10224,8 +10224,8 @@
                         "set": "FIC",
                         "collectorNumber": "361",
                         "finish": "nonfoil",
-                        "priceNzd": 4.35,
-                        "priceUsdReference": 2.59
+                        "priceNzd": 4.66,
+                        "priceUsdReference": 2.73
                       },
                       "structuralPairing": {
                         "addressedRole": "protection",
@@ -10279,8 +10279,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 3,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 0.6,
-                  "estimatedSpendUsdReference": 0.36,
+                  "estimatedSpendNzd": 1.16,
+                  "estimatedSpendUsdReference": 0.68,
                   "unknownPriceCount": 0,
                   "improvementScore": 2.615,
                   "significantRegression": false,
@@ -10456,8 +10456,8 @@
                         "set": "FIC",
                         "collectorNumber": "343",
                         "finish": "nonfoil",
-                        "priceNzd": 0.6,
-                        "priceUsdReference": 0.36
+                        "priceNzd": 1.16,
+                        "priceUsdReference": 0.68
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -10497,8 +10497,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 3,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 9.25,
-                  "estimatedSpendUsdReference": 5.51,
+                  "estimatedSpendNzd": 9.86,
+                  "estimatedSpendUsdReference": 5.77,
                   "unknownPriceCount": 0,
                   "improvementScore": 4.969,
                   "significantRegression": false,
@@ -10697,8 +10697,8 @@
                         "set": "FIC",
                         "collectorNumber": "267",
                         "finish": "nonfoil",
-                        "priceNzd": 4.9,
-                        "priceUsdReference": 2.92
+                        "priceNzd": 5.19,
+                        "priceUsdReference": 3.04
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -10738,8 +10738,8 @@
                         "set": "FIC",
                         "collectorNumber": "361",
                         "finish": "nonfoil",
-                        "priceNzd": 4.35,
-                        "priceUsdReference": 2.59
+                        "priceNzd": 4.66,
+                        "priceUsdReference": 2.73
                       },
                       "structuralPairing": {
                         "addressedRole": "protection",
@@ -10781,8 +10781,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 3,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 11.78,
-                  "estimatedSpendUsdReference": 7.02,
+                  "estimatedSpendNzd": 11.08,
+                  "estimatedSpendUsdReference": 6.49,
                   "unknownPriceCount": 0,
                   "improvementScore": 4.061,
                   "significantRegression": false,
@@ -10965,8 +10965,8 @@
                         "set": "FIC",
                         "collectorNumber": "355",
                         "finish": "nonfoil",
-                        "priceNzd": 11.78,
-                        "priceUsdReference": 7.02
+                        "priceNzd": 11.08,
+                        "priceUsdReference": 6.49
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -11007,8 +11007,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 3,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 2.2,
-                  "estimatedSpendUsdReference": 1.31,
+                  "estimatedSpendNzd": 2.32,
+                  "estimatedSpendUsdReference": 1.36,
                   "unknownPriceCount": 0,
                   "improvementScore": -1.968,
                   "significantRegression": false,
@@ -11190,8 +11190,8 @@
                         "set": "FIC",
                         "collectorNumber": "248",
                         "finish": "nonfoil",
-                        "priceNzd": 2.2,
-                        "priceUsdReference": 1.31
+                        "priceNzd": 2.32,
+                        "priceUsdReference": 1.36
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -11231,8 +11231,8 @@
                   "reason": "improvement-below-threshold",
                   "attemptedSwaps": 3,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 13.8,
-                  "estimatedSpendUsdReference": 8.22,
+                  "estimatedSpendNzd": 15.2,
+                  "estimatedSpendUsdReference": 8.9,
                   "unknownPriceCount": 0,
                   "improvementScore": -0.668,
                   "significantRegression": false,
@@ -11397,8 +11397,8 @@
                         "set": "SLD",
                         "collectorNumber": "7003",
                         "finish": "foil",
-                        "priceNzd": 13.8,
-                        "priceUsdReference": 8.22
+                        "priceNzd": 15.2,
+                        "priceUsdReference": 8.9
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -11449,8 +11449,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 2,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 0.6,
-                  "estimatedSpendUsdReference": 0.36,
+                  "estimatedSpendNzd": 1.16,
+                  "estimatedSpendUsdReference": 0.68,
                   "unknownPriceCount": 0,
                   "improvementScore": 2.615,
                   "significantRegression": false,
@@ -11626,8 +11626,8 @@
                         "set": "FIC",
                         "collectorNumber": "343",
                         "finish": "nonfoil",
-                        "priceNzd": 0.6,
-                        "priceUsdReference": 0.36
+                        "priceNzd": 1.16,
+                        "priceUsdReference": 0.68
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -11667,8 +11667,8 @@
                   "reason": "eligible",
                   "attemptedSwaps": 2,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 4.9,
-                  "estimatedSpendUsdReference": 2.92,
+                  "estimatedSpendNzd": 5.19,
+                  "estimatedSpendUsdReference": 3.04,
                   "unknownPriceCount": 0,
                   "improvementScore": 0.751,
                   "significantRegression": false,
@@ -11835,8 +11835,8 @@
                         "set": "FIC",
                         "collectorNumber": "267",
                         "finish": "nonfoil",
-                        "priceNzd": 4.9,
-                        "priceUsdReference": 2.92
+                        "priceNzd": 5.19,
+                        "priceUsdReference": 3.04
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -11876,8 +11876,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 2,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 11.78,
-                  "estimatedSpendUsdReference": 7.02,
+                  "estimatedSpendNzd": 11.08,
+                  "estimatedSpendUsdReference": 6.49,
                   "unknownPriceCount": 0,
                   "improvementScore": 4.061,
                   "significantRegression": false,
@@ -12060,8 +12060,8 @@
                         "set": "FIC",
                         "collectorNumber": "355",
                         "finish": "nonfoil",
-                        "priceNzd": 11.78,
-                        "priceUsdReference": 7.02
+                        "priceNzd": 11.08,
+                        "priceUsdReference": 6.49
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -12102,8 +12102,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 2,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 2.2,
-                  "estimatedSpendUsdReference": 1.31,
+                  "estimatedSpendNzd": 2.32,
+                  "estimatedSpendUsdReference": 1.36,
                   "unknownPriceCount": 0,
                   "improvementScore": -1.968,
                   "significantRegression": false,
@@ -12285,8 +12285,8 @@
                         "set": "FIC",
                         "collectorNumber": "248",
                         "finish": "nonfoil",
-                        "priceNzd": 2.2,
-                        "priceUsdReference": 1.31
+                        "priceNzd": 2.32,
+                        "priceUsdReference": 1.36
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -12326,8 +12326,8 @@
                   "reason": "improvement-below-threshold",
                   "attemptedSwaps": 2,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 13.8,
-                  "estimatedSpendUsdReference": 8.22,
+                  "estimatedSpendNzd": 15.2,
+                  "estimatedSpendUsdReference": 8.9,
                   "unknownPriceCount": 0,
                   "improvementScore": -0.668,
                   "significantRegression": false,
@@ -12492,8 +12492,8 @@
                         "set": "SLD",
                         "collectorNumber": "7003",
                         "finish": "foil",
-                        "priceNzd": 13.8,
-                        "priceUsdReference": 8.22
+                        "priceNzd": 15.2,
+                        "priceUsdReference": 8.9
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -12537,8 +12537,8 @@
           "candidatePackagesGenerated": 5,
           "candidatePackagesEligible": 1,
           "winningCandidate": 4,
-          "estimatedSpendNzd": 13.8,
-          "estimatedSpendUsdReference": 8.22,
+          "estimatedSpendNzd": 15.2,
+          "estimatedSpendUsdReference": 8.9,
           "improvementScore": 0.508,
           "winRouteProtection": {
             "status": "no-verified-route",
@@ -12557,8 +12557,8 @@
                 "collectorNumber": "7003",
                 "releaseDate": "2025-06-12",
                 "finish": "foil",
-                "priceNzd": 13.8,
-                "priceUsdReference": 8.22,
+                "priceNzd": 15.2,
+                "priceUsdReference": 8.9,
                 "promo": false,
                 "promoTypes": [
                   "ffiv",
@@ -12610,8 +12610,8 @@
               "reason": "package-causes-a-meaningful-commander-strategy-loss",
               "attemptedSwaps": 3,
               "actualSwaps": 2,
-              "estimatedSpendNzd": 4.95,
-              "estimatedSpendUsdReference": 2.95,
+              "estimatedSpendNzd": 5.82,
+              "estimatedSpendUsdReference": 3.41,
               "unknownPriceCount": 0,
               "improvementScore": 11.48,
               "significantRegression": false,
@@ -12832,8 +12832,8 @@
                     "set": "FIC",
                     "collectorNumber": "343",
                     "finish": "nonfoil",
-                    "priceNzd": 0.6,
-                    "priceUsdReference": 0.36
+                    "priceNzd": 1.16,
+                    "priceUsdReference": 0.68
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -12877,8 +12877,8 @@
                     "set": "FIC",
                     "collectorNumber": "361",
                     "finish": "nonfoil",
-                    "priceNzd": 4.35,
-                    "priceUsdReference": 2.59
+                    "priceNzd": 4.66,
+                    "priceUsdReference": 2.73
                   },
                   "structuralPairing": {
                     "addressedRole": "protection",
@@ -12924,8 +12924,8 @@
               "reason": "package-causes-a-meaningful-commander-strategy-loss",
               "attemptedSwaps": 3,
               "actualSwaps": 1,
-              "estimatedSpendNzd": 11.78,
-              "estimatedSpendUsdReference": 7.02,
+              "estimatedSpendNzd": 11.08,
+              "estimatedSpendUsdReference": 6.49,
               "unknownPriceCount": 0,
               "improvementScore": 4.371,
               "significantRegression": false,
@@ -13110,8 +13110,8 @@
                     "set": "FIC",
                     "collectorNumber": "355",
                     "finish": "nonfoil",
-                    "priceNzd": 11.78,
-                    "priceUsdReference": 7.02
+                    "priceNzd": 11.08,
+                    "priceUsdReference": 6.49
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -13154,8 +13154,8 @@
               "reason": "package-causes-a-meaningful-commander-strategy-loss",
               "attemptedSwaps": 3,
               "actualSwaps": 1,
-              "estimatedSpendNzd": 2.2,
-              "estimatedSpendUsdReference": 1.31,
+              "estimatedSpendNzd": 2.32,
+              "estimatedSpendUsdReference": 1.36,
               "unknownPriceCount": 0,
               "improvementScore": -0.912,
               "significantRegression": false,
@@ -13341,8 +13341,8 @@
                     "set": "FIC",
                     "collectorNumber": "248",
                     "finish": "nonfoil",
-                    "priceNzd": 2.2,
-                    "priceUsdReference": 1.31
+                    "priceNzd": 2.32,
+                    "priceUsdReference": 1.36
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -13386,8 +13386,8 @@
               "reason": "eligible",
               "attemptedSwaps": 3,
               "actualSwaps": 1,
-              "estimatedSpendNzd": 13.8,
-              "estimatedSpendUsdReference": 8.22,
+              "estimatedSpendNzd": 15.2,
+              "estimatedSpendUsdReference": 8.9,
               "unknownPriceCount": 0,
               "improvementScore": 0.508,
               "significantRegression": false,
@@ -13556,8 +13556,8 @@
                     "set": "SLD",
                     "collectorNumber": "7003",
                     "finish": "foil",
-                    "priceNzd": 13.8,
-                    "priceUsdReference": 8.22
+                    "priceNzd": 15.2,
+                    "priceUsdReference": 8.9
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -13599,8 +13599,8 @@
               "reason": "package-causes-a-meaningful-commander-strategy-loss",
               "attemptedSwaps": 3,
               "actualSwaps": 1,
-              "estimatedSpendNzd": 14.08,
-              "estimatedSpendUsdReference": 8.39,
+              "estimatedSpendNzd": 13.99,
+              "estimatedSpendUsdReference": 8.19,
               "unknownPriceCount": 0,
               "improvementScore": 0.508,
               "significantRegression": false,
@@ -13778,8 +13778,8 @@
                     "set": "FIC",
                     "collectorNumber": "282",
                     "finish": "nonfoil",
-                    "priceNzd": 14.08,
-                    "priceUsdReference": 8.39
+                    "priceNzd": 13.99,
+                    "priceUsdReference": 8.19
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
@@ -13832,8 +13832,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 4.95,
-                  "estimatedSpendUsdReference": 2.95,
+                  "estimatedSpendNzd": 5.82,
+                  "estimatedSpendUsdReference": 3.41,
                   "unknownPriceCount": 0,
                   "improvementScore": 11.48,
                   "significantRegression": false,
@@ -14054,8 +14054,8 @@
                         "set": "FIC",
                         "collectorNumber": "343",
                         "finish": "nonfoil",
-                        "priceNzd": 0.6,
-                        "priceUsdReference": 0.36
+                        "priceNzd": 1.16,
+                        "priceUsdReference": 0.68
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -14099,8 +14099,8 @@
                         "set": "FIC",
                         "collectorNumber": "361",
                         "finish": "nonfoil",
-                        "priceNzd": 4.35,
-                        "priceUsdReference": 2.59
+                        "priceNzd": 4.66,
+                        "priceUsdReference": 2.73
                       },
                       "structuralPairing": {
                         "addressedRole": "protection",
@@ -14146,8 +14146,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 16.13,
-                  "estimatedSpendUsdReference": 9.61,
+                  "estimatedSpendNzd": 15.75,
+                  "estimatedSpendUsdReference": 9.22,
                   "unknownPriceCount": 0,
                   "improvementScore": 13.546,
                   "significantRegression": false,
@@ -14373,8 +14373,8 @@
                         "set": "FIC",
                         "collectorNumber": "355",
                         "finish": "nonfoil",
-                        "priceNzd": 11.78,
-                        "priceUsdReference": 7.02
+                        "priceNzd": 11.08,
+                        "priceUsdReference": 6.49
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -14417,8 +14417,8 @@
                         "set": "FIC",
                         "collectorNumber": "361",
                         "finish": "nonfoil",
-                        "priceNzd": 4.35,
-                        "priceUsdReference": 2.59
+                        "priceNzd": 4.66,
+                        "priceUsdReference": 2.73
                       },
                       "structuralPairing": {
                         "addressedRole": "protection",
@@ -14464,8 +14464,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 6.55,
-                  "estimatedSpendUsdReference": 3.9,
+                  "estimatedSpendNzd": 6.99,
+                  "estimatedSpendUsdReference": 4.09,
                   "unknownPriceCount": 0,
                   "improvementScore": 4.645,
                   "significantRegression": false,
@@ -14692,8 +14692,8 @@
                         "set": "FIC",
                         "collectorNumber": "248",
                         "finish": "nonfoil",
-                        "priceNzd": 2.2,
-                        "priceUsdReference": 1.31
+                        "priceNzd": 2.32,
+                        "priceUsdReference": 1.36
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -14737,8 +14737,8 @@
                         "set": "FIC",
                         "collectorNumber": "361",
                         "finish": "nonfoil",
-                        "priceNzd": 4.35,
-                        "priceUsdReference": 2.59
+                        "priceNzd": 4.66,
+                        "priceUsdReference": 2.73
                       },
                       "structuralPairing": {
                         "addressedRole": "protection",
@@ -14784,8 +14784,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 18.14,
-                  "estimatedSpendUsdReference": 10.81,
+                  "estimatedSpendNzd": 19.86,
+                  "estimatedSpendUsdReference": 11.63,
                   "unknownPriceCount": 0,
                   "improvementScore": 4.67,
                   "significantRegression": false,
@@ -15004,8 +15004,8 @@
                         "set": "SLD",
                         "collectorNumber": "7003",
                         "finish": "foil",
-                        "priceNzd": 13.8,
-                        "priceUsdReference": 8.22
+                        "priceNzd": 15.2,
+                        "priceUsdReference": 8.9
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -15047,8 +15047,8 @@
                         "set": "FIC",
                         "collectorNumber": "361",
                         "finish": "nonfoil",
-                        "priceNzd": 4.35,
-                        "priceUsdReference": 2.59
+                        "priceNzd": 4.66,
+                        "priceUsdReference": 2.73
                       },
                       "structuralPairing": {
                         "addressedRole": "protection",
@@ -15094,8 +15094,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 4,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 18.43,
-                  "estimatedSpendUsdReference": 10.98,
+                  "estimatedSpendNzd": 18.65,
+                  "estimatedSpendUsdReference": 10.92,
                   "unknownPriceCount": 0,
                   "improvementScore": 4.82,
                   "significantRegression": false,
@@ -15314,8 +15314,8 @@
                         "set": "FIC",
                         "collectorNumber": "282",
                         "finish": "nonfoil",
-                        "priceNzd": 14.08,
-                        "priceUsdReference": 8.39
+                        "priceNzd": 13.99,
+                        "priceUsdReference": 8.19
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -15357,8 +15357,8 @@
                         "set": "FIC",
                         "collectorNumber": "361",
                         "finish": "nonfoil",
-                        "priceNzd": 4.35,
-                        "priceUsdReference": 2.59
+                        "priceNzd": 4.66,
+                        "priceUsdReference": 2.73
                       },
                       "structuralPairing": {
                         "addressedRole": "protection",
@@ -15416,8 +15416,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 3,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 4.95,
-                  "estimatedSpendUsdReference": 2.95,
+                  "estimatedSpendNzd": 5.82,
+                  "estimatedSpendUsdReference": 3.41,
                   "unknownPriceCount": 0,
                   "improvementScore": 11.48,
                   "significantRegression": false,
@@ -15638,8 +15638,8 @@
                         "set": "FIC",
                         "collectorNumber": "343",
                         "finish": "nonfoil",
-                        "priceNzd": 0.6,
-                        "priceUsdReference": 0.36
+                        "priceNzd": 1.16,
+                        "priceUsdReference": 0.68
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -15683,8 +15683,8 @@
                         "set": "FIC",
                         "collectorNumber": "361",
                         "finish": "nonfoil",
-                        "priceNzd": 4.35,
-                        "priceUsdReference": 2.59
+                        "priceNzd": 4.66,
+                        "priceUsdReference": 2.73
                       },
                       "structuralPairing": {
                         "addressedRole": "protection",
@@ -15730,8 +15730,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 3,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 11.78,
-                  "estimatedSpendUsdReference": 7.02,
+                  "estimatedSpendNzd": 11.08,
+                  "estimatedSpendUsdReference": 6.49,
                   "unknownPriceCount": 0,
                   "improvementScore": 4.371,
                   "significantRegression": false,
@@ -15916,8 +15916,8 @@
                         "set": "FIC",
                         "collectorNumber": "355",
                         "finish": "nonfoil",
-                        "priceNzd": 11.78,
-                        "priceUsdReference": 7.02
+                        "priceNzd": 11.08,
+                        "priceUsdReference": 6.49
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -15960,8 +15960,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 3,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 2.2,
-                  "estimatedSpendUsdReference": 1.31,
+                  "estimatedSpendNzd": 2.32,
+                  "estimatedSpendUsdReference": 1.36,
                   "unknownPriceCount": 0,
                   "improvementScore": -0.912,
                   "significantRegression": false,
@@ -16147,8 +16147,8 @@
                         "set": "FIC",
                         "collectorNumber": "248",
                         "finish": "nonfoil",
-                        "priceNzd": 2.2,
-                        "priceUsdReference": 1.31
+                        "priceNzd": 2.32,
+                        "priceUsdReference": 1.36
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -16192,8 +16192,8 @@
                   "reason": "eligible",
                   "attemptedSwaps": 3,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 13.8,
-                  "estimatedSpendUsdReference": 8.22,
+                  "estimatedSpendNzd": 15.2,
+                  "estimatedSpendUsdReference": 8.9,
                   "unknownPriceCount": 0,
                   "improvementScore": 0.508,
                   "significantRegression": false,
@@ -16362,8 +16362,8 @@
                         "set": "SLD",
                         "collectorNumber": "7003",
                         "finish": "foil",
-                        "priceNzd": 13.8,
-                        "priceUsdReference": 8.22
+                        "priceNzd": 15.2,
+                        "priceUsdReference": 8.9
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -16405,8 +16405,8 @@
                   "reason": "package-causes-a-meaningful-commander-strategy-loss",
                   "attemptedSwaps": 3,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 14.08,
-                  "estimatedSpendUsdReference": 8.39,
+                  "estimatedSpendNzd": 13.99,
+                  "estimatedSpendUsdReference": 8.19,
                   "unknownPriceCount": 0,
                   "improvementScore": 0.508,
                   "significantRegression": false,
@@ -16584,8 +16584,8 @@
                         "set": "FIC",
                         "collectorNumber": "282",
                         "finish": "nonfoil",
-                        "priceNzd": 14.08,
-                        "priceUsdReference": 8.39
+                        "priceNzd": 13.99,
+                        "priceUsdReference": 8.19
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
