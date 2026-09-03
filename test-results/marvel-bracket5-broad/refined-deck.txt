@@ -5,40 +5,40 @@
 1 Norman Osborn // Green Goblin (SPM) 39
 1 Three Steps Ahead (MAR) 62
 1 Arcane Denial (MSC) 147
-1 Abundant Growth (SLD) 870
 1 Sword of Fire and Ice (MAR) 100
 1 Manamorphose (SLD) 1746
 1 The Mind Stone (MSH) 21
 1 Reprieve (MAR) 5
-1 Valorous Stance (MSC) 145
 1 H.E.R.B.I.E., Lovable Robot (MSC) 106
-1 The Wasp, Winsome Avenger (MSC) 39
+1 Valorous Stance (MSC) 145
 1 Depower (MSH) 50
+1 The Wasp, Winsome Avenger (MSC) 39
 1 Armor Wars (MSH) 203
 1 Whoosh! (MSC) 790
-1 Martial Coup (MSC) 138
 1 The Soul Stone (SPM) 66
-1 Sol Ring (MSC) 211
 1 Hawkeye, Master Marksman (MSH) 130
+1 Sol Ring (MSC) 211
+1 Martial Coup (MSC) 138
 1 Dark Ritual (MSC) 793
 1 Fantastic Bounce (MSC) 620
 1 Swiftfoot Boots (MSC) 216
 1 Swords to Plowshares (MSC) 143
 1 Blasphemous Act (MSC) 163
-1 Fabricate (SLD) 7118
 1 Lightning Greaves (MSC) 202
+1 Fabricate (SLD) 7118
 1 Defense of the Heart (MAR) 76
+1 Arcane Signet (MSC) 191
 1 Seize the Day (MSC) 166
 1 Heroic Intervention (MAR) 78
-1 Electro, Assaulting Battery (SPM) 76
+1 Jeska's Will (SLD) 1744
 1 Deadly Rollick (SLD) 1754
 1 Dora Milaje Elite (MSC) 12
-1 Arcane Signet (MSC) 191
 1 Deadly Dispute (MSC) 794
+1 Birds of Paradise (MSC) 170
+1 Path to Exile (MSC) 141
 1 Gift of Immortality (MSC) 134
 1 Aurelia, the Warleader (MAR) 86
 1 Relentless Assault (MAR) 25
-1 Birds of Paradise (MSC) 170
 1 Fellwar Stone (MSC) 285
 1 Thought Vessel (MSC) 222
 1 Big Score (MSC) 802
@@ -46,7 +46,6 @@
 1 Unexpected Windfall (MAR) 29
 1 Spider-Ham, Peter Porker (SPM) 114
 1 Loki, the Deceiver (MSC) 86
-1 Path to Exile (MSC) 141
 1 Talisman of Dominance (MSC) 219
 1 Black Market Connections (MSC) 155
 1 Talisman of Creativity (MSC) 218
@@ -62,7 +61,6 @@
 1 Reanimate (MAR) 20
 1 Stark Industries Executive (MSH) 153
 1 Farseek (MSC) 173
-1 Jeska's Will (SLD) 1744
 1 Nature's Lore (MSC) 177
 1 Brainstorm (SLD) 7013
 1 Herald's Horn (MSC) 287
@@ -70,6 +68,8 @@
 1 Common Crook (MSC) 792
 1 T'Challa, the Black Panther (MSC) 7
 1 Silk, Web Weaver (SPM) 145
+1 Three Visits (MSC) 181
+1 Vandalblast (MSC) 168
 1 Command Tower (MSC) 233
 1 Exotic Orchard (MSC) 241
 1 Secluded Courtyard (MSC) 265
