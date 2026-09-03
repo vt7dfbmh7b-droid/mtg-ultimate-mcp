@@ -459,8 +459,10 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
     roles.add(manaTruth.delayed || manaTruth.summoningSicknessDelay ? 'delayed mana acceleration' : 'conditional mana acceleration');
   }
   if (roles.has('mana acceleration') && !manaTruth.reliableLowCostManaAcceleration) {
-    if (manaTruth.manaFilteringOnly) {
+    if (manaTruth.manaFilteringOnly
+      || (manaTruth.grantsManaAbilityToAnotherPermanent && (manaTruth.fixedManaOutput ?? Number.POSITIVE_INFINITY) <= 1)) {
       roles.delete('mana acceleration');
+      roles.delete('conditional mana acceleration');
       roles.delete('mana rock');
       roles.delete('mana dork');
       roles.delete('persistent colored mana source');
@@ -468,7 +470,10 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
     } else if (manaTruth.manaNeutralOneShot) {
       roles.delete('mana acceleration');
       roles.add('mana storage');
-    } else if (manaTruth.spendingRestriction || manaTruth.externalBoardPrerequisite || manaTruth.createsManaToken) {
+    } else if (manaTruth.spendingRestriction
+      || manaTruth.externalBoardPrerequisite
+      || manaTruth.grantsManaAbilityToAnotherPermanent
+      || manaTruth.createsManaToken) {
       roles.delete('mana acceleration');
       roles.add('conditional mana acceleration');
     }

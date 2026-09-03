@@ -61,6 +61,15 @@ const netPositivePaidRock = card({
   producedMana: ['W', 'U'],
 });
 
+const landAuraColorFilter = card({
+  name: 'Generic Land Aura Filter',
+  cmc: 1,
+  typeLine: 'Enchantment — Aura',
+  manaCost: '{G}',
+  oracleText: 'Enchant land\nWhen this Aura enters, draw a card.\nEnchanted land has "{T}: Add one mana of any color."',
+  producedMana: ['W', 'U', 'B', 'R', 'G'],
+});
+
 const graveyardOnlyZero = card({
   name: 'Generic Graveyard Capsule',
   cmc: 0,
@@ -114,6 +123,19 @@ test('a paid activation that produces net mana remains acceleration', () => {
   assert.equal(roles.has('mana rock'), true);
   assert.equal(roles.has('persistent colored mana source'), true);
   assert.equal(roles.has('fast mana'), false);
+});
+
+test('a land aura that replaces one land tap with one mana is filtering rather than acceleration', () => {
+  const truth = manaRoleTruthV15(landAuraColorFilter);
+  const roles = new Set(effectiveCardRolesV15(landAuraColorFilter));
+  assert.equal(truth.grantsManaAbilityToAnotherPermanent, true);
+  assert.equal(truth.fixedManaOutput, 1);
+  assert.equal(truth.reliableLowCostManaAcceleration, false);
+  assert.equal(roles.has('mana acceleration'), false);
+  assert.equal(roles.has('conditional mana acceleration'), false);
+  assert.equal(roles.has('persistent colored mana source'), false);
+  assert.equal(roles.has('mana filtering'), true);
+  assert.equal(roles.has('card draw'), true);
 });
 
 test('a low-mana permanent with seven-mana removal does not satisfy the cheap-interaction gate', () => {

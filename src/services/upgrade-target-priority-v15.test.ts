@@ -566,43 +566,6 @@ test('non-mana upgrades cannot spend premium low-cost acceleration as a fallback
   assert.deepEqual(pairings, []);
 });
 
-test('non-mana upgrades preserve low-cost conditional fixing infrastructure', () => {
-  const pairings = pairUpgradeSwapsByStructureV15(
-    [{ role: 'protection' as const, candidate: {
-      card: { name: 'Four-Mana Protection', roles: ['protection'], manaValue: 4, typeLine: 'Instant' },
-      strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
-    }}],
-    [
-      {
-        card: {
-          name: 'One-Mana Fixing Cantrip',
-          roles: ['card draw', 'conditional mana acceleration', 'mana acceleration'],
-          manaValue: 1,
-          typeLine: 'Enchantment',
-        },
-        heuristicCutPressure: 20,
-        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
-      },
-      {
-        card: { name: 'Surplus Four Drop', roles: [], manaValue: 4, typeLine: 'Creature' },
-        heuristicCutPressure: 1,
-        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
-      },
-    ],
-    {
-      rampCount: 20, drawCount: 20, interactionCount: 19, protectionCount: 6, tutorCount: 2,
-      recursionCount: 4, boardWipeCount: 2, earlyPlayCount: 41, cheapInteractionCount: 13,
-      fastManaCount: 2, averageNonlandManaValue: 2.6, nonlandCount: 69,
-      persistentColoredManaSourceCount: 11, commanderColorCount: 5,
-      roleCounts: { 'free interaction': 1, 'cheap interaction': 13, 'spot interaction': 14 },
-    },
-    { ...bracketFiveTargets },
-    5,
-  );
-
-  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Surplus Four Drop');
-});
-
 test('four-color upgrades preserve broad fixing rocks against conditional land tutors', () => {
   const pairings = pairUpgradeSwapsByStructureV15(
     [{ role: 'tutor' as const, candidate: {

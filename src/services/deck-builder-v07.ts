@@ -703,10 +703,7 @@ function summaryIsPremiumEarlyInfrastructureV15(card: Record<string, unknown>): 
   const roles = summarizedRoles(card);
   return roles.has('fast mana')
     || roles.has('mana rock')
-    || roles.has('mana dork')
-    || roles.has('mana acceleration')
-    || roles.has('conditional mana acceleration')
-    || roles.has('persistent colored mana source');
+    || roles.has('mana dork');
 }
 
 function summaryIsBroadColorFixingManaSourceV15(card: Record<string, unknown>): boolean {
