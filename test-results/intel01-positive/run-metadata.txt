@@ -1,0 +1,17 @@
+source_sha=fe40cde70c111f16019a34cdb70c263aaa503f11
+workflow_source_sha=fe40cde70c111f16019a34cdb70c263aaa503f11
+executed_head_sha=fe40cde70c111f16019a34cdb70c263aaa503f11
+control_outcome=failure
+build_outcome=success
+execution_outcome=failure
+discovery_outcome=failure
+source_completeness=unknown
+full_table_closure=false
+feasibility=false
+atomic_injection=false
+package_protection=false
+final_recognition=false
+alternate_route_audit=false
+exact_card_count=false
+commander_legality=false
+printing_policy_truth=false
