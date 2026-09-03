@@ -10,7 +10,7 @@ Development checkpoint: `77a5383fa7490aa91360b8186a4bda890f632157`
 | MARVEL-B5-BROAD | scenario-intelligence | fail | `ac0c39b185db76a0afed1d2c1efba65427360869` | no | `test-results/marvel-bracket5-broad/run-metadata.txt` |
 | MIDDLE-EARTH-PRECON-REFINE | scenario-intelligence | pass | `ac0c39b185db76a0afed1d2c1efba65427360869` | no | `test-results/middle-earth-precon-refine/run-metadata.txt` |
 | PRECON-GENERALIZATION | scenario-intelligence | pass | `7561beaf376d561f7bd324658bd78772cccb4fc0` | no | `test-results/precon-generalization/run-metadata.txt` |
-| STRATEGY-INFERENCE-GENERALIZATION | engineering+truth | pass | `7561beaf376d561f7bd324658bd78772cccb4fc0` | no | `test-results/strategy-inference-generalization/run-metadata.txt` |
+| STRATEGY-INFERENCE-GENERALIZATION | engineering+truth | pass | `3d675105fb15742740d67442b2dea9b86b063d01` | no | `test-results/strategy-inference-generalization/run-metadata.txt` |
 | SQUIRRELED-AWAY-GENERALIZATION | scenario-intelligence | pass | `7561beaf376d561f7bd324658bd78772cccb4fc0` | no | `test-results/precon-generalization-squirrels/run-metadata.txt` |
 
 ## Interpretation
