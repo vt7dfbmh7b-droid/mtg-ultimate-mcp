@@ -2199,6 +2199,7 @@
           "board protection": 2,
           "graveyard interaction": 1,
           "artifact/enchantment interaction": 1,
+          "self-recurring engine": 1,
           "conditional mana acceleration": 1,
           "multi-card graveyard recursion": 1,
           "copy effect": 1,
@@ -3119,6 +3120,7 @@
           "narrow sacrifice outlet": 1,
           "copy effect": 1,
           "repeatable life drain": 3,
+          "self-recurring engine": 1,
           "graveyard interaction": 1,
           "conditional protection": 1,
           "land": 31
