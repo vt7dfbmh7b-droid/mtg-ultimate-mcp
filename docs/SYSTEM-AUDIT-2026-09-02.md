@@ -4,7 +4,7 @@
 
 The repository is structurally coherent and deterministic at cleanup source `c543502dceb56c137584f413ecb31dad701bc865`, with follow-up provenance hardening at `07f36a74529a717cf6c6e85f00ea999f40dff098`. The audit removed four abandoned or misleading implementation paths, brought all automation scripts into the strict build, repaired validation-state reconciliation for all eleven evidence writers, fixed project-state validation ordering so it no longer persists a false index failure, aligned the environment template with runtime configuration, and added regressions for repository-level invariants. No historical evidence was deleted, no stable/current server selection changed, and PR #29 remains experimental and unmerged.
 
-The combined deterministic system passes 925/925 tests and all three TypeScript projects. Follow-up source `07f36a74529a717cf6c6e85f00ea999f40dff098` passed pinned CI, focused Marvel refinement, Squirreled Away, generic precon, and Middle-earth precon controls; broad Marvel still failed target-quality and strategy-preservation gates. This is engineering validation, not a new accepted INTEL-02 checkpoint.
+The combined deterministic system passes the full direct Node test sweep (166 test files, zero failures) and all three TypeScript projects. Follow-up source `02e9dd44ddce126b3e30f8e972f32c93b5e1f8f7` passed pinned CI, focused Marvel refinement, Squirreled Away, Necron Dynasties, Food and Fellowship and Middle-earth precon controls; Liliana's NZ$500 challenge also passed. Broad Marvel still failed target-quality and strategy-preservation gates because the restricted pool has no eligible new fast-mana or tutor cards. Focused Marvel is mechanically green but remains manually blocked on resource-quality review. This is engineering and scenario evidence, not a new accepted INTEL-02 checkpoint.
 
 ## Scope and inventory
 
@@ -37,6 +37,7 @@ The versioned V0.4–V0.15 modules are not dead copies: they form the explicit i
 | Completed `.env.example` | Six active retry/timeout/pacing variables were undocumented. | Regression compares the template with every `process.env` read in `src/config.ts`. |
 | Preserved empty upgrade-lane diagnostics | Restricted-family refinement could report only `no-supported-swaps-found` while omitting which failed target lanes had no eligible or only already-present cards. | `suggestDeckUpgrades` now retains an availability reason and pre-exclusion role-match count for every target lane; provenance projection and regression coverage pass at `d5bc84d...`. |
 | Prepared validation index before project-state integrity checks | The integrity workflow validated a stale index before rebuilding it after evidence updates, creating a false PM failure record. | The workflow now runs `npm run validation:index` before validation; run `33694684158` passed and persisted a self-consistent PM record at `6bdea9b...`. |
+| Added generic semantic safety floors to upgrade pairing | Focused Marvel refinement could spend low-volume tutors, interaction, cost reduction or graveyard utility on cosmetic gains. | Role-level floors now protect non-surplus infrastructure across a multi-swap package; source `02e9dd4...` no longer cuts the prior tutor/graveyard-utility examples. Manual review still blocks weaker interaction/resource substitutions. |
 
 ## Structural assessment
 
@@ -61,7 +62,7 @@ Project recovery passes machine-state validation, generated-document validation 
 ## Historical diagnostics and live evidence
 
 - The 100 most recent active-branch Action runs inspected contained 69 successes, 28 failures and 3 cancellations. Many failures are retained adversarial evidence rather than regressions in the stable server.
-- Follow-up source `07f36a74529a717cf6c6e85f00ea999f40dff098` passed pinned CI and the focused Marvel refinement (`e24829418f5cf9a31ba8d4135bfe1e7211959ed2` in its persisted metadata). Focused refinement accepted five strategy-preserving swaps and removed only the curve failure. Broad Marvel executed successfully but accepted no package; its persisted provenance shows two policy-eligible fast-mana matches and two tutor matches, all already present/excluded, so target-quality and strategy-preservation correctly failed. No deck mutation occurred.
+- Source `02e9dd44ddce126b3e30f8e972f32c93b5e1f8f7` passed pinned CI and the focused Marvel refinement. Focused refinement accepted seven swaps across two rounds and removed only the curve failure; generic semantic floors prevented the prior tutor and graveyard-utility losses, but manual review still blocks acceptance for interaction-quality and repeatable-resource trades. Broad Marvel executed successfully but accepted no package; its persisted provenance shows two policy-eligible fast-mana matches and two tutor matches, all already present/excluded, so target-quality and strategy-preservation correctly failed. Necron, Squirreled Away, Food and Fellowship, Middle-earth and Liliana controls passed on the same source.
 - Middle-earth run `33611526105` passed its build and live-control steps but failed its single-attempt evidence push. That operational failure exposed four remaining legacy writers, all repaired at `c543502...`.
 - CI run `33606486408` and project-state run `33606486359` exposed a stale validation index. KF-045 records the cause; the ordering fix was validated by project-state run `33694684158`, which passed and persisted `validation_index_outcome=success` at `6bdea9b...`.
 - Older build and target-pressure diagnostic failures are covered by the now-green deterministic suite. `test-results/intel02-shared-truth-repair/failure-context.txt` remains the only non-empty archived failure-context file and was intentionally retained.
@@ -73,7 +74,7 @@ Project recovery passes machine-state validation, generated-document validation 
 | Severity | Finding | Impact | State / required follow-up |
 |---|---|---|---|
 | High | Broad Marvel remains red at exact-source live validation. | Prevents a uniform constrained-family INTEL-02 quality claim. | Diagnosed: the exhaustive Marvel pool has only two eligible fast-mana and two eligible tutor role matches, all already present/excluded. Open: decide whether a generic cross-family candidate policy or an explicit constrained-family ceiling is intended; do not add card-name hacks. |
-| High | The cleanup/provenance source has mixed scenario evidence. | Local green and focused refinement success cannot establish a new accepted checkpoint while broad Marvel fails. | Open: manually audit focused accepted swaps and preserve the accepted checkpoint at `77a5383...`; no promotion. |
+| High | The semantic-fix source still has mixed scenario evidence. | Focused refinement and family controls pass, but broad Marvel fails and focused package acceptance remains manually blocked. | Open: review the seven focused swaps for interaction/resource-engine quality and preserve the accepted checkpoint at `77a5383...`; no promotion. |
 | High | The main-branch dependency-security workflow still targets legacy `agent/package-probabilities`. | Security automation may inspect an obsolete development line rather than the active candidate. | Open outside this branch's authority: correct on `main` under explicit release/governance approval. |
 | Medium | Runtime shutdown has no awaited drain or forced-close deadline. | Active connections can delay deployment termination. | Open: extract a testable lifecycle, stop accepting work, await close, force-close after a configured deadline. |
 | Medium | Thirty-nine workflows and independent evidence commits create avoidable cost/race pressure. | Slow feedback and noisy history despite bounded reconciliation. | Open: consolidate related live controls into reusable workflows or one result aggregator without weakening exact-source isolation. |
@@ -91,7 +92,7 @@ No critical security, legality, data-loss or stable-interface defect was found.
 | Runtime TypeScript build | Pass |
 | Project-management TypeScript build | Pass |
 | All automation/E2E TypeScript build | Pass, 46 scripts |
-| Deterministic suite | Pass, 925/925 |
+| Deterministic suite | Pass, 166 test files / zero failures in the direct Node sweep; prior 925/925 npm count retained in historical evidence |
 | Workflow YAML parse | Pass, 39 files |
 | Immutable action references | Pass, all external actions pinned to 40-character SHAs |
 | Runtime environment-template coverage | Pass |
@@ -99,15 +100,15 @@ No critical security, legality, data-loss or stable-interface defect was found.
 | Project-state validation / fresh-session recovery | Pass locally and in project-state run `33694684158` |
 | Validation-index generation / validation | Pass locally, 7 registered controls |
 | Stable runtime endpoint and idle shutdown smoke | Pass |
-| Dependency vulnerability audit | Pass, 0 vulnerabilities |
+| Dependency vulnerability audit | Pass, 0 vulnerabilities (last successful CI audit; sandboxed npm audit cannot reach registry) |
 | Residual references to removed paths | None |
 
 ## Prioritized remediation plan
 
-1. Keep `07f36a74529a717cf6c6e85f00ea999f40dff098` and its persisted live artifacts as the current mixed-validation candidate; do not promote the accepted checkpoint.
-2. Manually review every focused-Marvel accepted IN->OUT package for strategy, infrastructure, mana, legality, printing and budget truth.
+1. Keep `02e9dd44ddce126b3e30f8e972f32c93b5e1f8f7` and its persisted live artifacts as the current mixed-validation candidate; do not promote the accepted checkpoint.
+2. Manually review every focused-Marvel accepted IN->OUT package for strategy, interaction quality, infrastructure, mana, legality, printing and budget truth.
 3. Decide whether the Marvel family should have an explicit construction ceiling or whether the generic candidate policy should be broadened across families; any change must remain semantic and rerun the full affected family.
-5. Add and test bounded graceful shutdown before changing the stable runtime lifecycle.
-6. Correct main-branch dependency-security targeting under explicit main/release authority.
-7. Consolidate live-control orchestration and define a non-destructive evidence-retention manifest before repository growth becomes material.
-8. At BENCH-01/INTEL-03, decide which test-only research libraries receive a product surface and which should be archived with their evidence.
+4. Add and test bounded graceful shutdown before changing the stable runtime lifecycle.
+5. Correct main-branch dependency-security targeting under explicit main/release authority.
+6. Consolidate live-control orchestration and define a non-destructive evidence-retention manifest before repository growth becomes material.
+7. At BENCH-01/INTEL-03, decide which test-only research libraries receive a product surface and which should be archived with their evidence.

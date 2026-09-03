@@ -472,6 +472,10 @@ Protection: `tsconfig.scripts.json` now compiles every TypeScript automation scr
 
 Status: prevented; all 46 remaining TypeScript scripts compile at cleanup source `c543502...`.
 
+## Current-source refresh — 2026-09-03
+
+The exact-source family rerun at `02e9dd4...` revalidated the generic semantic protections for Necron Dynasties, Squirreled Away, Food and Fellowship, Middle-earth and focused Marvel. Focused Marvel no longer spends the previously observed tutor or graveyard-utility roles, but manual review still blocks acceptance for interaction-quality and repeatable-resource-engine substitutions. Broad Marvel remains an accepted constrained limitation rather than a regression: its exhaustive restricted pool has no eligible new fast-mana or tutor card. These controls do not promote checkpoint `77a5383...` and do not close the positive INTEL-01 win-package proof gap.
+
 ## Adding a failure
 
 Every new material failure should record:

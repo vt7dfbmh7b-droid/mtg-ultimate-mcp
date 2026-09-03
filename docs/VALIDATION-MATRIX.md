@@ -90,3 +90,7 @@ Every bug discovered during adversarial testing should add:
 1. a `KF-*` entry in `KNOWN-FAILURES.md`;
 2. a deterministic regression where possible;
 3. a matrix row or scenario assertion showing which claim is protected.
+
+## Current-source refresh — 2026-09-03
+
+Source `02e9dd44ddce126b3e30f8e972f32c93b5e1f8f7` passed pinned CI and the exact-source Necron Dynasties, Squirreled Away, Food and Fellowship, Middle-earth and focused Marvel controls. The focused Marvel package is mechanically green but remains manually blocked pending interaction-quality and repeatable-resource-engine review. Broad Marvel remains a correctly diagnosed constrained-pool failure: only two fast-mana and two tutor matches were found, and all were already present or excluded. The NZ$500 Liliana challenge passed as an additional benchmark, but it does not replace the required positive INTEL-01 full-table win-package proof or authorize checkpoint promotion.
