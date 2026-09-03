@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-03T22:07:07.796Z**.
+Generated from `project-state.json`. Last state update: **2026-09-03T22:15:02.184Z**.
 
 ## Current mode
 
@@ -10,7 +10,7 @@ Generated from `project-state.json`. Last state update: **2026-09-03T22:07:07.79
 - Active PR: #29
 - Active milestone: **INTEL-02**
 - Intelligence development paused: **no**
-- Reason: INTEL-02 remains active after generic semantic, resource-engine, compound-component and lifecycle hardening. Source f0c3b9f... passes deterministic validation and the dependent precon/family controls. Exact-source focused and broad Marvel both fail closed with persisted zero-swap results: the generic component guard rejects the six previously unsafe focused packages, and the broad restricted lane remains unable to repair its fast-mana/tutor gates. The generic INTEL-01 positive package control passed at source 73eb089... with complete discovery, strict closure, exact legal printings, atomic injection, final recognition and access/setup audits; its finished deck retained one route, so alternate-route resilience is not claimed. The accepted checkpoint stays 77a5383... and runtime source 45f4cb9... remains pinned-CI green.
+- Reason: INTEL-02 remains active after generic semantic, resource-engine, compound-component and lifecycle hardening. Source f0c3b9f... passes deterministic validation and the dependent precon/family controls. Exact-source focused and broad Marvel both fail closed with persisted zero-swap results: the generic component guard rejects the six previously unsafe focused packages, and the broad restricted lane remains unable to repair its fast-mana/tutor gates. The generic INTEL-01 positive package control passed at source 50e5d19... with complete discovery, strict closure, exact legal printings, atomic injection, final recognition and access/setup audits; its finished deck retained one route, so alternate-route resilience is not claimed. The accepted checkpoint stays 77a5383... and runtime source 45f4cb9... remains pinned-CI green.
 
 ## Stable boundary
 
@@ -50,14 +50,14 @@ Always inspect the live active-branch head before editing. A later documentation
 - Active branch status: **accepted-checkpoint-77a-intel01-positive-route-follow-up**
 - Last persisted Marvel control source: `f0c3b9f82dca49f295e44175e517d992e6e5356e`
 - Last persisted Marvel control outcome: **focused-zero-swap-broad-zero-swap**
-- Note: At source f0c3b9f..., exact-source focused and broad Marvel controls executed and persisted with the generic compound operational-component guard enabled. Both lanes returned no-supported-improvement with zero swaps: the six previously observed focused substitutions are now rejected because multi-component operational cards must retain their like-for-like component families, and broad Marvel still has no supported package after its restricted fast-mana/tutor pool is exhausted. Build, deterministic regressions, target execution and persistence passed; target-quality/strategy gates correctly remain red because no accepted package repairs the failed Bracket-5 gates. Dependent Necron Dynasties, Squirreled Away, Food and Fellowship and Middle-earth controls pass at f0c3b9f.... The separate generic INTEL-01 positive control passed at source 73eb089... (workflow 33810727022) with complete discovery, strict closure, exact legal/affordable printings, atomic injection, final recognition and route audits; the finished deck retained one route, so alternate-route resilience remains a follow-up. Accepted checkpoint remains 77a5383...; no promotion.
+- Note: At source f0c3b9f..., exact-source focused and broad Marvel controls executed and persisted with the generic compound operational-component guard enabled. Both lanes returned no-supported-improvement with zero swaps: the six previously observed focused substitutions are now rejected because multi-component operational cards must retain their like-for-like component families, and broad Marvel still has no supported package after its restricted fast-mana/tutor pool is exhausted. Build, deterministic regressions, target execution and persistence passed; target-quality/strategy gates correctly remain red because no accepted package repairs the failed Bracket-5 gates. Dependent Necron Dynasties, Squirreled Away, Food and Fellowship and Middle-earth controls pass at f0c3b9f.... The separate generic INTEL-01 positive control passed at source 50e5d19... (workflow 33811643472) with complete discovery, strict closure, exact legal/affordable printings, atomic injection, final recognition and route audits; the finished deck retained one route, so alternate-route resilience remains a follow-up. Accepted checkpoint remains 77a5383...; no promotion.
 
 Required before resuming broad INTEL-01/INTEL-02 claims:
 
 - Retain the source-7265531... six-swap audit as historical evidence; source f0c3b9f... now rejects all six classes generically through compound operational-component preservation
 - Require focused Marvel and broad Marvel to pass target-quality and strategy-preservation gates on the same exact executable source before calling the restricted lane uniformly green
 - Keep graveyard directionality/actionable recursion, explicit artifact engines, self-sacrifice versus repeatable outlets, secondary-plan inference, strategy-support density, premium early infrastructure, board wipes, token-death engines and board-scaling payoffs fail-closed
-- Review the exact INTEL-01 positive source 73eb089...: package proof passed end to end, but the finished deck retained one verified route despite a six-route discovery portfolio; do not claim alternate-route resilience until a generic route-retention control passes
+- Review the exact INTEL-01 positive source 50e5d19...: package proof passed end to end, but the finished deck retained one verified route despite a six-route discovery portfolio; do not claim alternate-route resilience until a generic route-retention control passes
 - Commander legality, exact 100 cards, singleton/color identity, printing-family/set restrictions and hard budgets must remain intact in every expanded control
 
 ## Next actions
@@ -65,7 +65,7 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 1. Keep the historical six focused-Marvel swaps unaccepted; source f0c3b9f... now rejects their compound operational-component losses generically and both exact-source Marvel lanes fail closed with zero swaps.
 2. Decide whether the restricted Marvel family needs an explicit construction ceiling or a generic candidate-pool expansion; do not add card-name exceptions, and rerun both lanes from one exact executable source after any policy change.
 3. Preserve the component guard and its anonymous multi-axis regression while revalidating any future candidate-pool change against interaction, land/mana, treasure, sacrifice, token, card-advantage and cost-reduction floors.
-4. Treat INTEL-01 as scenario-level validated at source 73eb089... for package discovery, closure, feasibility, injection, protection, final recognition and access/setup audits; keep the one-route resilience finding open and non-gating.
+4. Treat INTEL-01 as scenario-level validated at source 50e5d19... for package discovery, closure, feasibility, injection, protection, final recognition and access/setup audits; keep the one-route resilience finding open and non-gating.
 5. When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.
 6. After this state reconciliation, run the FF-only Counter Blitz benchmark (#32) as the next materially different case; preserve the INTEL-01 route-resilience follow-up and do not broaden claims from a single scenario.
 7. Keep PR #29 as experimental/evidence history. Do not merge or promote it automatically; when V0.15 is genuinely accepted, prepare a clean promotion candidate rather than treating the current 1,000+ commit evidence branch as release-ready.
