@@ -2,6 +2,7 @@ import { createServer, type IncomingMessage } from 'node:http';
 import { toNodeHandler } from '@modelcontextprotocol/node';
 import { createMcpHandler } from '@modelcontextprotocol/server';
 import { config } from './config.js';
+import { gracefulShutdown } from './lib/server-lifecycle.js';
 import { createCurrentMtgServer } from './server-current.js';
 
 const mcpHandler = createMcpHandler(() => createCurrentMtgServer());
@@ -75,10 +76,25 @@ httpServer.listen(config.port, '0.0.0.0', () => {
   console.error(`MCP endpoint: http://0.0.0.0:${config.port}/mcp`);
 });
 
-const shutdown = async (signal: string): Promise<void> => {
-  console.error(`Received ${signal}; shutting down.`);
-  httpServer.close();
-  await mcpHandler.close();
+let shutdownPromise: Promise<void> | null = null;
+const shutdown = (signal: string): Promise<void> => {
+  if (shutdownPromise) return shutdownPromise;
+  shutdownPromise = (async () => {
+    console.error(`Received ${signal}; shutting down.`);
+    const result = await gracefulShutdown({
+      server: httpServer,
+      closeMcp: () => mcpHandler.close(),
+      timeoutMs: config.shutdownTimeoutMs,
+    });
+    if (result.forcedHttpClose) console.error('Forced close of remaining HTTP connections after shutdown deadline.');
+    if (result.mcpCloseTimedOut) console.error('MCP handler did not close before the shutdown deadline.');
+    if (result.httpCloseError) console.error(`HTTP server close failed: ${result.httpCloseError.message}`);
+    if (result.mcpCloseError) console.error(`MCP handler close failed: ${result.mcpCloseError.message}`);
+    if (result.forcedHttpClose || result.mcpCloseTimedOut || result.httpCloseError || result.mcpCloseError) {
+      process.exitCode = 1;
+    }
+  })();
+  return shutdownPromise;
 };
 
 process.once('SIGTERM', () => void shutdown('SIGTERM'));

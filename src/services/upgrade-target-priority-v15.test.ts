@@ -280,6 +280,42 @@ test('single-axis payoffs cannot replace repeatable engines spanning tokens card
   assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Surplus Five Drop');
 });
 
+test('two-axis card-and-mana engines cannot collapse into an unrelated protection upgrade', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{ role: 'protection' as const, candidate: {
+      card: { name: 'One-Axis Protection', roles: ['protection'], manaValue: 2, typeLine: 'Instant' },
+      strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+    }}],
+    [
+      {
+        card: { name: 'Two-Axis Resource Engine', roles: ['card draw', 'mana acceleration'], manaValue: 5, typeLine: 'Instant' },
+        heuristicCutPressure: 50,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+      {
+        card: { name: 'Surplus Five Drop', roles: [], manaValue: 5, typeLine: 'Creature' },
+        heuristicCutPressure: 1,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    ],
+    {
+      rampCount: 20, drawCount: 20, interactionCount: 19, protectionCount: 5, tutorCount: 2,
+      recursionCount: 4, boardWipeCount: 2, earlyPlayCount: 41, cheapInteractionCount: 13,
+      fastManaCount: 2, averageNonlandManaValue: 2.6, nonlandCount: 69,
+      persistentColoredManaSourceCount: 11, commanderColorCount: 5,
+      roleCounts: {
+        'free interaction': 1,
+        'card draw': 19,
+        'mana acceleration': 14,
+      },
+    },
+    { ...bracketFiveTargets },
+    5,
+  );
+
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Surplus Five Drop');
+});
+
 test('curve repair preserves scarce artifact and high-capacity recursion engines', () => {
   const pairings = pairUpgradeSwapsByStructureV15(
     [{

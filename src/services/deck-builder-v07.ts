@@ -923,21 +923,24 @@ function preservesSemanticSafetyFloorsV15(
 ): boolean {
   const cutRoles = summarizedRoles(cutCard);
   const addRoles = summarizedRoles(addCard);
-  const cutResourceAxes = [
-    cutRoles.has('repeatable token engine'),
-    cutRoles.has('card draw') || cutRoles.has('repeatable draw') || cutRoles.has('board-scaling card draw'),
-    cutRoles.has('treasure') || cutRoles.has('mana acceleration') || cutRoles.has('conditional mana acceleration'),
-  ].filter(Boolean).length;
-  if (cutResourceAxes === 3) {
-    const replacementResourceAxes = [
-      addRoles.has('repeatable token engine'),
-      addRoles.has('card draw') || addRoles.has('repeatable draw') || addRoles.has('board-scaling card draw'),
-      addRoles.has('treasure') || addRoles.has('mana acceleration') || addRoles.has('conditional mana acceleration'),
-    ].filter(Boolean).length;
+  const resourceAxes = (roles: Set<string>): [boolean, boolean, boolean] => [
+    roles.has('repeatable token engine'),
+    roles.has('card draw') || roles.has('repeatable draw') || roles.has('board-scaling card draw'),
+    roles.has('treasure') || roles.has('mana acceleration') || roles.has('conditional mana acceleration'),
+  ];
+  const cutResourceAxes = resourceAxes(cutRoles);
+  const addResourceAxes = resourceAxes(addRoles);
+  const cutResourceAxisCount = cutResourceAxes.filter(Boolean).length;
+  const replacementResourceAxisCount = addResourceAxes.filter(Boolean).length;
+  if (cutResourceAxisCount === 2) {
+    // A two-axis resource card is still a compound engine: do not collapse its
+    // card-advantage, token, or mana axis into an unrelated one-axis upgrade.
+    if (cutResourceAxes.some((present, index) => present && !addResourceAxes[index])) return false;
+  } else if (cutResourceAxisCount === 3) {
     // A repeatable engine spanning bodies, cards and mana is more than an aggregate role
     // count. An incoming card must retain at least two of those functional axes rather
     // than exchanging the engine for a single token/protection payoff.
-    if (replacementResourceAxes < 2) return false;
+    if (replacementResourceAxisCount < 2) return false;
   }
   const safetyFloors: Array<{ role: string; floor: number }> = [
     // A curve repair must not trade away cost reducers that directly support the speed goal.

@@ -18,6 +18,7 @@ const defaultHttpRetryAttempts = clampRetryAttempts(process.env.HTTP_RETRY_ATTEM
 export const config = {
   version: '0.13.0',
   port: parsePositiveInt(process.env.PORT, 3000),
+  shutdownTimeoutMs: parsePositiveInt(process.env.SHUTDOWN_TIMEOUT_MS, 10_000),
   httpTimeoutMs: parsePositiveInt(process.env.HTTP_TIMEOUT_MS, 15_000),
   httpRetryAttempts: defaultHttpRetryAttempts,
   httpRetryBaseMs: Math.max(25, Math.min(5_000, parsePositiveInt(process.env.HTTP_RETRY_BASE_MS, 250))),
