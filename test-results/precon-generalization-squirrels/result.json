@@ -249,10 +249,10 @@
     "roundsAccepted": 2,
     "totalSwaps": 4,
     "candidatePackagesPerRound": 4,
-    "estimatedUpgradeSpendNzd": 9.06,
+    "estimatedUpgradeSpendNzd": 9.07,
     "estimatedUpgradeSpendUsdReference": 5.31,
-    "maxTotalNzd": 199.99,
-    "maxTotalUsdReference": 117.25,
+    "maxTotalNzd": 200,
+    "maxTotalUsdReference": 117.14,
     "swaps": [
       {
         "out": "Insatiable Frugivore",
@@ -412,7 +412,7 @@
           "set": "PDSK",
           "collectorNumber": "201p",
           "finish": "nonfoil",
-          "priceNzd": 4.09,
+          "priceNzd": 4.1,
           "priceUsdReference": 2.4
         },
         "structuralPairing": {
@@ -538,7 +538,7 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 4,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 4.96,
+        "estimatedSpendNzd": 4.97,
         "estimatedSpendUsdReference": 2.91,
         "improvementScore": 16.008,
         "winRouteProtection": {
@@ -560,7 +560,7 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 4,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 4.09,
+        "estimatedSpendNzd": 4.1,
         "estimatedSpendUsdReference": 2.4,
         "improvementScore": 13.922,
         "winRouteProtection": {
@@ -601,9 +601,9 @@
     "constraints": {
       "targetBracket": 4,
       "maxNzdPerCard": 35,
-      "maxUsdPerCardReference": 20.52,
-      "maxTotalNzd": 199.99,
-      "maxTotalUsdReference": 117.25,
+      "maxUsdPerCardReference": 20.5,
+      "maxTotalNzd": 200,
+      "maxTotalUsdReference": 117.14,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -625,7 +625,7 @@
         "candidatePackagesGenerated": 4,
         "candidatePackagesEligible": 4,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 4.96,
+        "estimatedSpendNzd": 4.97,
         "estimatedSpendUsdReference": 2.91,
         "improvementScore": 16.008,
         "winRouteProtection": {
@@ -815,7 +815,7 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 3,
-            "estimatedSpendNzd": 4.96,
+            "estimatedSpendNzd": 4.97,
             "estimatedSpendUsdReference": 2.91,
             "unknownPriceCount": 0,
             "improvementScore": 16.008,
@@ -1286,7 +1286,7 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 3,
-            "estimatedSpendNzd": 6.46,
+            "estimatedSpendNzd": 6.47,
             "estimatedSpendUsdReference": 3.79,
             "unknownPriceCount": 0,
             "improvementScore": 10.017,
@@ -2128,7 +2128,7 @@
                   "set": "PDSK",
                   "collectorNumber": "201p",
                   "finish": "nonfoil",
-                  "priceNzd": 4.09,
+                  "priceNzd": 4.1,
                   "priceUsdReference": 2.4
                 },
                 "structuralPairing": {
@@ -2179,7 +2179,7 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 4.09,
+            "estimatedSpendNzd": 4.1,
             "estimatedSpendUsdReference": 2.4,
             "unknownPriceCount": 0,
             "improvementScore": 3.326,
@@ -2440,7 +2440,7 @@
                   "set": "PDSK",
                   "collectorNumber": "201p",
                   "finish": "nonfoil",
-                  "priceNzd": 4.09,
+                  "priceNzd": 4.1,
                   "priceUsdReference": 2.4
                 },
                 "structuralPairing": {
@@ -2502,7 +2502,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 4.96,
+                "estimatedSpendNzd": 4.97,
                 "estimatedSpendUsdReference": 2.91,
                 "unknownPriceCount": 0,
                 "improvementScore": 16.008,
@@ -2973,7 +2973,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 6.46,
+                "estimatedSpendNzd": 6.47,
                 "estimatedSpendUsdReference": 3.79,
                 "unknownPriceCount": 0,
                 "improvementScore": 10.017,
@@ -3815,7 +3815,7 @@
                       "set": "PDSK",
                       "collectorNumber": "201p",
                       "finish": "nonfoil",
-                      "priceNzd": 4.09,
+                      "priceNzd": 4.1,
                       "priceUsdReference": 2.4
                     },
                     "structuralPairing": {
@@ -3866,7 +3866,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 4.09,
+                "estimatedSpendNzd": 4.1,
                 "estimatedSpendUsdReference": 2.4,
                 "unknownPriceCount": 0,
                 "improvementScore": 3.326,
@@ -4127,7 +4127,7 @@
                       "set": "PDSK",
                       "collectorNumber": "201p",
                       "finish": "nonfoil",
-                      "priceNzd": 4.09,
+                      "priceNzd": 4.1,
                       "priceUsdReference": 2.4
                     },
                     "structuralPairing": {
@@ -4184,7 +4184,7 @@
         "candidatePackagesGenerated": 4,
         "candidatePackagesEligible": 1,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 4.09,
+        "estimatedSpendNzd": 4.1,
         "estimatedSpendUsdReference": 2.4,
         "improvementScore": 13.922,
         "winRouteProtection": {
@@ -4204,7 +4204,7 @@
               "collectorNumber": "201p",
               "releaseDate": "2024-09-27",
               "finish": "nonfoil",
-              "priceNzd": 4.09,
+              "priceNzd": 4.1,
               "priceUsdReference": 2.4,
               "promo": true,
               "promoTypes": [
@@ -4264,7 +4264,7 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 4.09,
+            "estimatedSpendNzd": 4.1,
             "estimatedSpendUsdReference": 2.4,
             "unknownPriceCount": 0,
             "improvementScore": 13.922,
@@ -4523,7 +4523,7 @@
                   "set": "PDSK",
                   "collectorNumber": "201p",
                   "finish": "nonfoil",
-                  "priceNzd": 4.09,
+                  "priceNzd": 4.1,
                   "priceUsdReference": 2.4
                 },
                 "structuralPairing": {
@@ -5126,7 +5126,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 4.09,
+                "estimatedSpendNzd": 4.1,
                 "estimatedSpendUsdReference": 2.4,
                 "unknownPriceCount": 0,
                 "improvementScore": 13.922,
@@ -5385,7 +5385,7 @@
                       "set": "PDSK",
                       "collectorNumber": "201p",
                       "finish": "nonfoil",
-                      "priceNzd": 4.09,
+                      "priceNzd": 4.1,
                       "priceUsdReference": 2.4
                     },
                     "structuralPairing": {
