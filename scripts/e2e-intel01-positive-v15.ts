@@ -175,7 +175,7 @@ async function main(): Promise<void> {
 
   const finalComboProtection = selectedSeeds.every((seed) => exactQuantity(parsed, seed) === 1)
     && verifiedIds.includes(selectedComboId)
-    && String(finalRouteAudit.preferredComboId ?? '') !== '';
+    && Boolean(finalSelected);
   assert.equal(finalComboProtection, true, 'package protection must retain every seed and the verified route after construction');
 
   const targetComparison = record(result.targetComparison);
