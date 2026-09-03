@@ -1,7 +1,7 @@
-source_sha=d11955d5dee13359f846466449b08b45635cb4b4
-control_outcome=failure
+source_sha=3566991e0355e067b3d93a5d3cccadb465e9c75b
+control_outcome=success
 execution_outcome=success
-target_gate_quality_outcome=failure
+target_gate_quality_outcome=success
 policy=checked-in-very-good-candidate
 max_win_package_cards=4
 spellbook_max_rows_per_query=400
