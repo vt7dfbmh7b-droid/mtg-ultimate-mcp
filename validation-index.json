@@ -29,6 +29,36 @@
       "unmetPassConditions": []
     },
     {
+      "id": "INTEL-01-POSITIVE",
+      "label": "Positive full-table win-package pipeline",
+      "claimLevel": "scenario-intelligence",
+      "milestones": [
+        "INTEL-01"
+      ],
+      "metadataPath": "test-results/intel01-positive/run-metadata.txt",
+      "exists": false,
+      "sourceSha": null,
+      "outcome": "unknown",
+      "matchesDevelopmentCheckpoint": null,
+      "metadata": {},
+      "unmetPassConditions": [
+        "control_outcome=success",
+        "build_outcome=success",
+        "execution_outcome=success",
+        "discovery_outcome=success",
+        "source_completeness=complete",
+        "full_table_closure=true",
+        "feasibility=true",
+        "atomic_injection=true",
+        "package_protection=true",
+        "final_recognition=true",
+        "alternate_route_audit=true",
+        "exact_card_count=true",
+        "commander_legality=true",
+        "printing_policy_truth=true"
+      ]
+    },
+    {
       "id": "MARVEL-B5-REFINE",
       "label": "Marvel Bracket 5 autonomous refinement",
       "claimLevel": "scenario-intelligence",

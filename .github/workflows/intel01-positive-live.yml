@@ -1,0 +1,153 @@
+name: INTEL-01 Positive Full-Table Package Live Control
+
+on:
+  push:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - "scripts/e2e-intel01-positive-v15.ts"
+      - ".github/workflows/intel01-positive-live.yml"
+      - "src/services/commander-build-pipeline-v15.ts"
+      - "src/services/general-win-package-v15.ts"
+      - "src/services/full-table-win-closure-v15.ts"
+      - "src/services/win-package-verification-v15.ts"
+      - "src/services/win-package-pagination-v15.ts"
+      - "src/services/win-package-restricted-pool-v15.ts"
+      - "src/services/deck-builder-v07.ts"
+      - "src/services/commander-build-evaluation-v15.ts"
+      - "src/services/win-route-access-v15.ts"
+      - "src/services/final-win-route-audit-v15.ts"
+      - "src/services/scryfall.ts"
+      - "src/services/spellbook.ts"
+      - "validation-registry.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: intel01-positive-live-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  positive-full-table-package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build checked-in source
+        id: build
+        continue-on-error: true
+        run: npm run build
+
+      - name: Run INTEL-01 positive full-table package control
+        id: positive
+        if: steps.build.outcome == 'success'
+        continue-on-error: true
+        run: npx tsx scripts/e2e-intel01-positive-v15.ts
+
+      - name: Upload positive-control evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: intel01-positive-${{ github.sha }}
+          path: |
+            intel01-positive-result.json
+            intel01-positive-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Persist checked-in positive-control evidence
+        id: persist_result
+        if: always()
+        continue-on-error: true
+        env:
+          BUILD_OUTCOME: ${{ steps.build.outcome }}
+          EXECUTION_OUTCOME: ${{ steps.positive.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          evidence_dir="$RUNNER_TEMP/intel01-positive"
+          rm -rf "$evidence_dir"
+          mkdir -p "$evidence_dir" test-results/intel01-positive
+          [ ! -f intel01-positive-result.json ] || cp intel01-positive-result.json "$evidence_dir/result.json"
+          [ ! -f intel01-positive-failure.txt ] || cp intel01-positive-failure.txt "$evidence_dir/failure.txt"
+          node --input-type=module <<'NODE' > "$evidence_dir/proof-fields.txt"
+          import fs from 'node:fs';
+          const file = 'intel01-positive-result.json';
+          let value = {};
+          if (fs.existsSync(file)) {
+            try { value = JSON.parse(fs.readFileSync(file, 'utf8')); } catch { value = {}; }
+          }
+          const packageDiscovery = value.packageDiscovery ?? {};
+          const proof = value.packageProof ?? {};
+          const finalMetrics = value.finalMetrics ?? {};
+          const line = (key, entry) => console.log(`${key}=${String(entry)}`);
+          line('discovery_outcome', packageDiscovery.status === 'verified-win-packages-found' ? 'success' : 'failure');
+          line('source_completeness', packageDiscovery.sourceCompleteness ?? 'unknown');
+          line('full_table_closure', proof.fullTableClosure === true ? 'true' : 'false');
+          line('feasibility', proof.feasibility === true ? 'true' : 'false');
+          line('atomic_injection', proof.atomicInjection === true ? 'true' : 'false');
+          line('package_protection', proof.packageProtection === true ? 'true' : 'false');
+          line('final_recognition', proof.finalRecognition === true ? 'true' : 'false');
+          line('alternate_route_audit', proof.alternateRouteAudit === true ? 'true' : 'false');
+          line('exact_card_count', finalMetrics.exactCardCount === true ? 'true' : 'false');
+          line('commander_legality', finalMetrics.commanderLegality === true ? 'true' : 'false');
+          line('printing_policy_truth', finalMetrics.printingPolicyTruth === true ? 'true' : 'false');
+          NODE
+          {
+            printf 'source_sha=%s\n' "$GITHUB_SHA"
+            printf 'workflow_source_sha=%s\n' "$GITHUB_SHA"
+            printf 'executed_head_sha=%s\n' "$GITHUB_SHA"
+            printf 'control_outcome=%s\n' "$([ "$BUILD_OUTCOME" = success ] && [ "$EXECUTION_OUTCOME" = success ] && echo success || echo failure)"
+            printf 'build_outcome=%s\nexecution_outcome=%s\n' "$BUILD_OUTCOME" "$EXECUTION_OUTCOME"
+            cat "$evidence_dir/proof-fields.txt"
+          } > "$evidence_dir/run-metadata.txt"
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            rm -rf test-results/intel01-positive
+            mkdir -p test-results/intel01-positive
+            [ ! -f "$evidence_dir/result.json" ] || cp "$evidence_dir/result.json" test-results/intel01-positive/result.json
+            [ ! -f "$evidence_dir/failure.txt" ] || cp "$evidence_dir/failure.txt" test-results/intel01-positive/failure.txt
+            cp "$evidence_dir/run-metadata.txt" test-results/intel01-positive/run-metadata.txt
+            npm run validation:index
+            git add -- test-results/intel01-positive validation-index.json docs/VALIDATION-STATE.md
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "test-results(INTEL-01): persist positive full-table package control [skip ci]"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "INTEL-01 evidence persistence attempt ${attempt} lost a branch race; retrying against the latest head."
+          done
+          echo 'INTEL-01 evidence persistence exhausted eight branch-race retries.' >&2
+          exit 1
+
+      - name: Require positive control and persistence
+        if: always()
+        env:
+          BUILD_OUTCOME: ${{ steps.build.outcome }}
+          EXECUTION_OUTCOME: ${{ steps.positive.outcome }}
+          PERSIST_OUTCOME: ${{ steps.persist_result.outcome }}
+        run: |
+          test "$BUILD_OUTCOME" = success
+          test "$EXECUTION_OUTCOME" = success
+          test "$PERSIST_OUTCOME" = success

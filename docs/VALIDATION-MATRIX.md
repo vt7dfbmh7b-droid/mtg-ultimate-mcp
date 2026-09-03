@@ -22,6 +22,7 @@ A passing workflow proves only the claim listed for that control. Do not general
 | FF exact budget | printing-family + exact budget combined | exact FF printing and cap | constrained budget behavior | validated baseline green |
 | tutor value-for-money regressions | marginal route-access pricing logic | physical tutor probability, exact printing/finish price | Pareto comparison quality | implemented/validated on prior baseline |
 | full-table win closure tests | multiplayer win semantics | no unscoped lethal false positives | win-route correctness boundary | implemented; current live integration proof pending |
+| INTEL-01 positive full-table package pipeline | generic package discovery and atomic construction are connected to final recognition | complete bounded source, strict closure, exact legal/affordable printings, exact 100, package protection, route setup/access audits | positive full-table package survives the real V15 pipeline and is recognized independently in the finished deck | new live control at `scripts/e2e-intel01-positive-v15.ts`; exact-source run pending |
 | win-package pagination tests | bounded search truth | truncated/partial != absence | deeper package discovery | implemented |
 | restricted physical-pool tests | early constrained package rejection | printing-family eligible pool truth | efficient constrained discovery | implemented |
 | package ceiling regression | autonomous caller searches through four-card packages | caller policy matches discovery ceiling | expanded package coverage | implemented |
