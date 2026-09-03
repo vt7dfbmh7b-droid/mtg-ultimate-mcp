@@ -38,14 +38,14 @@
       ],
       "metadataPath": "test-results/marvel-bracket5/refine-run-metadata.txt",
       "exists": true,
-      "sourceSha": "1a25f762abcea3e4f56ebd2017933a5755089141",
-      "outcome": "pass",
+      "sourceSha": "d11955d5dee13359f846466449b08b45635cb4b4",
+      "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "1a25f762abcea3e4f56ebd2017933a5755089141",
-        "control_outcome": "success",
+        "source_sha": "d11955d5dee13359f846466449b08b45635cb4b4",
+        "control_outcome": "failure",
         "execution_outcome": "success",
-        "target_gate_quality_outcome": "success",
+        "target_gate_quality_outcome": "failure",
         "policy": "checked-in-very-good-candidate",
         "max_win_package_cards": "4",
         "spellbook_max_rows_per_query": "400",
@@ -61,7 +61,10 @@
         "meaningful_strategy_loss_rejected": "true",
         "persistent_colored_mana_floor": "true"
       },
-      "unmetPassConditions": []
+      "unmetPassConditions": [
+        "control_outcome=success",
+        "target_gate_quality_outcome=success"
+      ]
     },
     {
       "id": "MARVEL-B5-BROAD",
