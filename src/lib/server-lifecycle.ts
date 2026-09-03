@@ -48,7 +48,6 @@ async function waitForClose(
   let timer: ReturnType<typeof setTimeout> | undefined;
   const timeout = new Promise<'timed-out'>((resolve) => {
     timer = setTimeout(() => resolve('timed-out'), positiveTimeout(timeoutMs));
-    timer.unref?.();
   });
   try {
     const outcome = await Promise.race([
