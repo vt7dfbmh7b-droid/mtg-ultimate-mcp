@@ -4,14 +4,14 @@
 
 The repository is structurally coherent and deterministic after semantic/resource hardening at source `7265531610a7012f7940f591c99a2fc6ef3af06e`, with bounded-shutdown CI follow-up at `45f4cb9acb082d0bd4bb89310b90e9e63fbeb44d`. The audit removed four abandoned or misleading implementation paths, brought all automation scripts into the strict build, repaired validation-state reconciliation for all eleven evidence writers, fixed project-state validation ordering so it no longer persists a false index failure, aligned the environment template with runtime configuration, added generic role/engine regressions, and bounded runtime shutdown. No historical evidence was deleted, no stable/current server selection changed, and PR #29 remains experimental and unmerged.
 
-The combined deterministic system passes the full direct Node test sweep (166 test files, 939 cases, zero failures) and all three TypeScript projects. Semantic source `7265531610a7012f7940f591c99a2fc6ef3af06e` passed the focused Marvel, Squirreled Away, Necron Dynasties and Food and Fellowship controls; the exact-source broad Marvel control failed closed with no swaps because the restricted pool has no eligible new fast-mana or tutor cards. Liliana's NZ$500 challenge also passed as an additional benchmark. Focused Marvel is mechanically green with six swaps but remains manually blocked on interaction, land/mana and compound-resource quality. Runtime source `45f4cb9acb082d0bd4bb89310b90e9e63fbeb44d` passes pinned CI after fixing the shutdown timer race. This is engineering and scenario evidence, not a new accepted INTEL-02 checkpoint.
+The combined deterministic system passes the full direct Node test sweep (167 test files, 939 cases, zero failures) and all three TypeScript projects. Semantic source `7265531610a7012f7940f591c99a2fc6ef3af06e` passed the focused Marvel, Squirreled Away, Necron Dynasties and Food and Fellowship controls; the exact-source broad Marvel control failed closed with no swaps because the restricted pool has no eligible new fast-mana or tutor cards. Liliana's NZ$500 challenge also passed as an additional benchmark. Focused Marvel is mechanically green with six swaps but remains manually blocked on interaction, land/mana and compound-resource quality. Runtime source `45f4cb9acb082d0bd4bb89310b90e9e63fbeb44d` passes pinned CI after fixing the shutdown timer race. This is engineering and scenario evidence, not a new accepted INTEL-02 checkpoint.
 
 ## Scope and inventory
 
 | Area | Audited inventory | Assessment |
 |---|---:|---|
-| Runtime and services | 154 non-test TypeScript modules | Every production module has a source, runtime, script or test dependency. No fully unreferenced production module was found. |
-| Deterministic tests | 166 TypeScript test files / 939 cases | Green as one suite. Stable V0.13 and experimental V0.15 surfaces remain deliberately separated. |
+| Runtime and services | 155 non-test TypeScript modules | Every production module has a source, runtime, script or test dependency. No fully unreferenced production module was found. |
+| Deterministic tests | 167 TypeScript test files / 939 cases | Green as one suite. Stable V0.13 and experimental V0.15 surfaces remain deliberately separated. |
 | Automation and live controls | 46 TypeScript scripts / 39 workflows | All scripts now compile strictly; workflows parse and external actions use full commit pins. |
 | Integrations | Scryfall, Commander Spellbook, TopDeck, MTGJSON and FX | Shared retry, pacing, provenance and unavailable-versus-absent behavior have deterministic coverage. Live-provider conclusions remain bounded by persisted controls. |
 | Configuration | runtime env, npm, three TypeScript projects, Docker and GitHub Actions | `.env.example` now covers every variable consumed by `src/config.ts`; lockfile install and security audit are clean. |
@@ -94,7 +94,7 @@ No critical security, legality, data-loss or stable-interface defect was found.
 | Runtime TypeScript build | Pass |
 | Project-management TypeScript build | Pass |
 | All automation/E2E TypeScript build | Pass, 46 scripts |
-| Deterministic suite | Pass, 166 test files / 939 cases in the direct Node sweep |
+| Deterministic suite | Pass, 167 test files / 939 cases in the direct Node sweep |
 | Workflow YAML parse | Pass, 39 files |
 | Immutable action references | Pass, all external actions pinned to 40-character SHAs |
 | Runtime environment-template coverage | Pass |
