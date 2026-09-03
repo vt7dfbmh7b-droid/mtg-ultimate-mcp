@@ -506,6 +506,16 @@ Protection: preserve the current per-swap component-family and structural floors
 
 Status: open benchmark failure, branch-local to PR #32 source `a079090...` until reproduced on the active executable source. Build, mechanic regressions, exact legality/100-card/printing checks and evidence persistence passed; the intelligence gate correctly failed. Re-run on the active source before any INTEL-02 checkpoint or family-wide claim.
 
+## KF-051 — Aggregate affinity misses strategy-specific fuel and structural-floor loss
+
+Observed: a disposable replay of the unchanged FF32 control against active source `7a2a80f...` accepted ten swaps and increased coarse spells-control affinity 222→242 and support count 21→23. The same package reduced Y'shtola trigger-eligible noncreature spells 29→21, total noncreature spells 77→75 and board wipes 3→2, so the independent FF32 gate failed on trigger density. Existing package retention measures broad support and affinity but does not preserve every strategy-specific functional-fuel or benchmark-required structural floor.
+
+Risk: aggregate affinity can rise while the commander loses the actual cards that make its plan operate. A benchmark or caller that requires trigger fuel, wipes or another structural minimum can therefore reject a package only after it has already been accepted by the general optimizer.
+
+Protection: define generic semantic component/floor inputs for each caller and enforce them at package level alongside the existing strategy-affinity and operational-component checks. Strategy-specific trigger fuel, board wipes and other hard floors must remain independently measurable, fail closed when unresolved, and never be implemented as Y'shtola/card-name exceptions.
+
+Status: open active-source diagnostic finding; no branch or persisted evidence was changed by the disposable replay. Add name-independent deterministic coverage, rerun FF32 from one current executable SHA, and then revalidate the full dependent control family.
+
 ## Adding a failure
 
 Every new material failure should record:

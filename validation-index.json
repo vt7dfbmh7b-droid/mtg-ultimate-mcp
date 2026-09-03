@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFromProjectStateUpdatedAt": "2026-09-03T22:44:52.000Z",
+  "generatedFromProjectStateUpdatedAt": "2026-09-03T22:58:41.000Z",
   "developmentCheckpointSha": "77a5383fa7490aa91360b8186a4bda890f632157",
   "records": [
     {
@@ -13,11 +13,11 @@
       ],
       "metadataPath": "test-results/project-management/integrity.txt",
       "exists": true,
-      "sourceSha": "4666ced7eeb857d58d2f8d9a644d5ab2a2218699",
+      "sourceSha": "df7efd9765e9e082faec7d9f2b7f211025301986",
       "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "4666ced7eeb857d58d2f8d9a644d5ab2a2218699",
+        "source_sha": "df7efd9765e9e082faec7d9f2b7f211025301986",
         "active_milestone": "INTEL-02",
         "typecheck_outcome": "success",
         "scripts_typecheck_outcome": "success",

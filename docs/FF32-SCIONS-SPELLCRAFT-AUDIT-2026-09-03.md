@@ -64,3 +64,8 @@ Scope is currently branch-local: the evidence was generated from PR #32 source `
 - The corrected `target_bracket=4` and strategy identifier appear in the persisted metadata and workflow, with no old `target_bracket=3` / `ysh-tola` metadata in the active FF32 workflow.
 - No change was made to `main`, `server-current` V0.13, the accepted checkpoint `77a5383...`, or PR #29's merge state.
 
+## Current-source diagnostic replay
+
+To distinguish the isolated PR's older optimizer from the active architecture, the unchanged FF32 control was run in a disposable worktree using active source `7a2a80f5...` (the code lineage containing the generic aggregate strategy-retention audit). This replay was not persisted as a validation result and is diagnostic only.
+
+The current source accepted ten swaps across three rounds and improved coarse spells-control affinity from 222 to 242 and support count from 21 to 23. It nevertheless reduced the independently counted Y'shtola trigger-eligible noncreature spells from 29 to 21, and noncreature spells from 77 to 75; board wipes also fell from 3 to 2. The control stopped at the trigger-density assertion. This shows that the existing aggregate affinity/support guard does not cover every strategy-specific functional-fuel or structural-floor policy required by FF32. The follow-up remains generic: add package-level preservation for strategy fuel and required structural floors, keep evidence fail-closed, and verify it against the full control family before any checkpoint decision.

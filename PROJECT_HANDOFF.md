@@ -17,7 +17,7 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
 - Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
-- Active branch validation: **accepted-checkpoint-77a-intel01-positive-route-follow-up-ff32-cumulative-strategy-retention-failure**
+- Active branch validation: **accepted-checkpoint-77a-intel01-positive-route-follow-up-ff32-cumulative-strategy-fuel-and-floor-failures**
 
 ## Stable safety boundary
 
@@ -40,7 +40,7 @@ The last persisted Marvel control is `f0c3b9f82dca49f295e44175e517d992e6e5356e` 
 3. Preserve the component guard and its anonymous multi-axis regression while revalidating any future candidate-pool change against interaction, land/mana, treasure, sacrifice, token, card-advantage and cost-reduction floors.
 4. Treat INTEL-01 as scenario-level validated at source 50e5d19... for package discovery, closure, feasibility, injection, protection, final recognition and access/setup audits; keep the one-route resilience finding open and non-gating.
 5. When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.
-6. The FF-only Counter Blitz benchmark (#32) executed on isolated source a079090... (workflow 33813323027) and correctly failed package-wide Y'shtola spells-control retention (425→421 affinity; 29→27 trigger spells) despite five locally preserved swaps; reproduce this failure on the current active source and add a generic aggregate strategy/trigger-density gate before any acceptance.
+6. The FF-only Counter Blitz benchmark (#32) failed on isolated source a079090... (workflow 33813323027) with package-wide Y'shtola spells-control retention loss (425→421 affinity; 29→27 trigger spells) despite five locally preserved swaps; a disposable replay on active source 7a2a80f... also reduced trigger spells 29→21 and board wipes 3→2 despite higher coarse affinity. Reproduce both findings on one current executable source and add generic package-level strategy-fuel/structural-floor gates before any acceptance.
 7. Keep PR #29 as experimental/evidence history. Do not merge or promote it automatically; when V0.15 is genuinely accepted, prepare a clean promotion candidate rather than treating the current 1,000+ commit evidence branch as release-ready.
 
 ## Permanent recovery references
