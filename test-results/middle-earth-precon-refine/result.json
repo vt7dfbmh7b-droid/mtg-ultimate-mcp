@@ -237,8 +237,8 @@
     "candidatePackagesPerRound": 4,
     "estimatedUpgradeSpendNzd": 4.99,
     "estimatedUpgradeSpendUsdReference": 2.92,
-    "maxTotalNzd": 200,
-    "maxTotalUsdReference": 117.09,
+    "maxTotalNzd": 200.01,
+    "maxTotalUsdReference": 117.1,
     "swaps": [
       {
         "out": "Great Oak Guardian",
@@ -564,8 +564,8 @@
       "targetBracket": 4,
       "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.49,
-      "maxTotalNzd": 200,
-      "maxTotalUsdReference": 117.09,
+      "maxTotalNzd": 200.01,
+      "maxTotalUsdReference": 117.1,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
