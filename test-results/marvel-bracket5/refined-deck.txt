@@ -5,11 +5,11 @@
 1 The Soul Stone (SPM) 66
 1 Norman Osborn // Green Goblin (SPM) 39
 1 Deadly Dispute (MSC) 794
+1 Abundant Growth (SLD) 870
 1 Final Showdown (MAR) 45
 1 Three Steps Ahead (MAR) 62
 1 Daily Bugle Newspaper (MSC) 749
 1 Arcane Denial (MSC) 147
-1 Manamorphose (SLD) 1746
 1 Dora Milaje Elite (MSC) 12
 1 Reprieve (MAR) 5
 1 Whoosh! (MSC) 790
@@ -28,7 +28,6 @@
 1 Captain America, Liberator (MSC) 587
 1 Deadly Rollick (SLD) 1754
 1 Fabricate (SLD) 7118
-1 Lethal Scheme (MSC) 157
 1 Sol Ring (MSC) 211
 1 Silver Surfer, Galactus's Herald (MSC) 10
 1 Path to Exile (MSC) 141
@@ -46,6 +45,7 @@
 1 Swiftfoot Boots (MSC) 216
 1 Relentless Assault (MAR) 25
 1 Seize the Day (MSC) 166
+1 Vibranium Mining Mech (MSC) 117
 1 Fellwar Stone (MSC) 285
 1 Living Laser (MSC) 55
 1 Thought Vessel (MSC) 222
@@ -86,8 +86,8 @@
 3 Mountain (MSC) 858
 3 Island (MSH) 289
 3 Plains (MSC) 866
+1 Spider-Ham, Peter Porker (SPM) 114 *N*
 1 Sword of Fire and Ice (MAR) 100 *N*
-1 Secret Identity (SPM) 43 *N*
-1 Goliath, Mass Manipulator (MSC) 766 *N*
-1 Return of the Mole Man (MSC) 729 *N*
-1 Lucky the Pizza Dog (MSC) 726 *N*
+1 The Astonishing Ant-Man (MSH) 204 *N*
+1 Alicia Masters, Skilled Sculptor (MSC) 48 *N*
+1 Invisible Force Field (MSC) 19 *N*
