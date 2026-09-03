@@ -1,0 +1,4 @@
+AssertionError: precon generalization MCP call must execute
+AssertionError [ERR_ASSERTION]: precon generalization MCP call must execute
+    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/e2e-precon-generalization-v15.ts:365:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
