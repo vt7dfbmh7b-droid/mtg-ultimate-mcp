@@ -921,6 +921,22 @@ function preservesSemanticSafetyFloorsV15(
 ): boolean {
   const cutRoles = summarizedRoles(cutCard);
   const addRoles = summarizedRoles(addCard);
+  const cutResourceAxes = [
+    cutRoles.has('repeatable token engine'),
+    cutRoles.has('card draw') || cutRoles.has('repeatable draw') || cutRoles.has('board-scaling card draw'),
+    cutRoles.has('treasure') || cutRoles.has('mana acceleration') || cutRoles.has('conditional mana acceleration'),
+  ].filter(Boolean).length;
+  if (cutResourceAxes === 3) {
+    const replacementResourceAxes = [
+      addRoles.has('repeatable token engine'),
+      addRoles.has('card draw') || addRoles.has('repeatable draw') || addRoles.has('board-scaling card draw'),
+      addRoles.has('treasure') || addRoles.has('mana acceleration') || addRoles.has('conditional mana acceleration'),
+    ].filter(Boolean).length;
+    // A repeatable engine spanning bodies, cards and mana is more than an aggregate role
+    // count. An incoming card must retain at least two of those functional axes rather
+    // than exchanging the engine for a single token/protection payoff.
+    if (replacementResourceAxes < 2) return false;
+  }
   const safetyFloors: Array<{ role: string; floor: number }> = [
     // A curve repair must not trade away cost reducers that directly support the speed goal.
     {
@@ -941,6 +957,9 @@ function preservesSemanticSafetyFloorsV15(
     },
     // Keep a complete spot-interaction floor at the established bracket-5 structural target.
     { role: 'spot interaction', floor: Math.min(semanticRoleCounts['spot interaction'] ?? 0, 14) },
+    // Cheap interaction is operationally premium at high power. Do not spend it on an
+    // unrelated protection/curve quota merely because aggregate interaction has surplus.
+    { role: 'cheap interaction', floor: semanticRoleCounts['cheap interaction'] ?? 0 },
   ];
   return safetyFloors.every(({ role, floor }) => {
     if (!cutRoles.has(role) || floor <= 0) return true;

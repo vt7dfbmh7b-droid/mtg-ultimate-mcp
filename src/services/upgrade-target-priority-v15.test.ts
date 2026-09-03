@@ -204,6 +204,82 @@ test('curve pairing preserves non-surplus semantic infrastructure before cosmeti
   assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Surplus Generic');
 });
 
+test('generic protection upgrades preserve cheap interaction instead of trading down operational quality', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{ role: 'protection' as const, candidate: {
+      card: { name: 'Four-Mana Protection', roles: ['protection'], manaValue: 4, typeLine: 'Instant' },
+      strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+    }}],
+    [
+      {
+        card: { name: 'Two-Mana Counter', roles: ['card draw', 'cheap interaction', 'countermagic'], manaValue: 2, typeLine: 'Instant' },
+        heuristicCutPressure: 50,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+      {
+        card: { name: 'Surplus Four Drop', roles: [], manaValue: 4, typeLine: 'Creature' },
+        heuristicCutPressure: 1,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    ],
+    {
+      rampCount: 20, drawCount: 20, interactionCount: 19, protectionCount: 6, tutorCount: 2,
+      recursionCount: 4, boardWipeCount: 2, earlyPlayCount: 41, cheapInteractionCount: 13,
+      fastManaCount: 2, averageNonlandManaValue: 2.6, nonlandCount: 69,
+      persistentColoredManaSourceCount: 11, commanderColorCount: 5,
+      roleCounts: { 'free interaction': 1, 'cheap interaction': 13, 'spot interaction': 14 },
+    },
+    { ...bracketFiveTargets },
+    5,
+  );
+
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Surplus Four Drop');
+});
+
+test('single-axis payoffs cannot replace repeatable engines spanning tokens cards and mana', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{ role: 'average-nonland-mv' as const, candidate: {
+      card: { name: 'Single-Axis Token Engine', roles: ['repeatable token engine'], manaValue: 2, typeLine: 'Creature' },
+      strategyAffinity: { score: 8, protectionApplied: 4, matchedStrategies: ['combat-tokens'] },
+    }}],
+    [
+      {
+        card: {
+          name: 'Three-Axis Resource Engine',
+          roles: ['repeatable token engine', 'card draw', 'treasure'],
+          manaValue: 5,
+          typeLine: 'Enchantment',
+        },
+        heuristicCutPressure: 50,
+        strategyAffinity: { score: 8, protectionApplied: 4, matchedStrategies: ['combat-tokens'] },
+      },
+      {
+        card: { name: 'Surplus Five Drop', roles: [], manaValue: 5, typeLine: 'Creature' },
+        heuristicCutPressure: 1,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [] },
+      },
+    ],
+    {
+      rampCount: 20, drawCount: 20, interactionCount: 19, protectionCount: 8, tutorCount: 2,
+      recursionCount: 4, boardWipeCount: 2, earlyPlayCount: 41, cheapInteractionCount: 13,
+      fastManaCount: 2, averageNonlandManaValue: 2.71, nonlandCount: 69,
+      persistentColoredManaSourceCount: 11, commanderColorCount: 5,
+      roleCounts: {
+        'free interaction': 1,
+        'cheap interaction': 13,
+        'spot interaction': 14,
+        'repeatable token engine': 12,
+        'card draw': 19,
+        treasure: 9,
+      },
+    },
+    { ...bracketFiveTargets },
+    5,
+  );
+
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Surplus Five Drop');
+});
+
 test('curve repair can inspect non-positive-pressure cuts only when the real curve gate is active', () => {
   const candidates = [
     { card: { name: 'Positive Cut' }, heuristicCutPressure: 2 },
