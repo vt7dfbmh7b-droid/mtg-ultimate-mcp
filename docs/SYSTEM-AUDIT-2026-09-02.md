@@ -69,7 +69,7 @@ Project recovery passes machine-state validation, generated-document validation 
 - CI run `33606486408` and project-state run `33606486359` exposed a stale validation index. KF-045 records the cause; the ordering fix was validated by project-state run `33694684158`, which passed and persisted `validation_index_outcome=success` at `6bdea9b...`.
 - The documentation/state reconciliation commit `432d020...` briefly reproduced the same race (CI `33704306217` saw the pre-writer index), while project-state integrity run `33704306215` repaired and persisted the self-consistent state at `3578ffe...`. The latest branch state is therefore valid; this remains an operational race characteristic of concurrent evidence writers, not a runtime defect.
 - Older build and target-pressure diagnostic failures are covered by the now-green deterministic suite. `test-results/intel02-shared-truth-repair/failure-context.txt` remains the only non-empty archived failure-context file and was intentionally retained.
-- GitHub had no open or closed repository issues at audit time. The draft PR #29 is the issue/history surface and remains explicitly marked “DO NOT MERGE.”
+- The issue tracker currently has four open items: #29 (this experimental branch), #30 (temporary INTEL-02 zero-progress harness), #32 (temporary Final Fantasy Scions & Spellcraft no-infinite upgrade harness), and #2 (legacy package-probabilities recovery surface). All are validation/recovery surfaces marked DO NOT MERGE; #32 is the unresolved materially different FF-only benchmark. Closed history includes #3 unused-code audit, #13 cleanup validation and #28 audit-follow-up hardening. The draft PR #29 remains explicitly marked DO NOT MERGE.
 - `npm audit --audit-level=low` reports zero vulnerabilities. Installed direct dependencies satisfy the lockfile and declared ranges.
 
 ## Findings by severity
@@ -113,4 +113,5 @@ No critical security, legality, data-loss or stable-interface defect was found.
 4. Keep bounded shutdown covered by lifecycle tests and add deployment-level abort telemetry before altering the stable runtime entry point.
 5. Correct main-branch dependency-security targeting under explicit main/release authority.
 6. Consolidate live-control orchestration and define a non-destructive evidence-retention manifest before repository growth becomes material.
-7. At BENCH-01/INTEL-03, decide which test-only research libraries receive a product surface and which should be archived with their evidence.
+7. Resolve or close temporary validation surfaces #30 and #32 after current-source evidence capture; keep the legacy recovery surface #2 separate from PR #29 and decide its archival path.
+8. At BENCH-01/INTEL-03, decide which test-only research libraries receive a product surface and which should be archived with their evidence.
