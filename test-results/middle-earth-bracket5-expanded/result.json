@@ -4148,10 +4148,10 @@
         "key": "competitive-combo-signal",
         "category": "construction",
         "label": "Competitive combo signal",
-        "observed": "Ruthless=0, strategic=0, Spellbook=E",
+        "observed": "Ruthless=0, strategic=0, Spellbook=none",
         "required": "at least one Ruthless/strategically relevant/R-tagged signal",
         "passed": false,
-        "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=E; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+        "detail": "Competitive combo signal: observed Ruthless=0, strategic=0, Spellbook=none; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
         "pressurePoint": "win-package quality/redundancy"
       },
       {
