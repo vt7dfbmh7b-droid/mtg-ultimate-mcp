@@ -17,7 +17,7 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
 - Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
-- Active branch validation: **accepted-checkpoint-77a-intel01-positive-route-follow-up-ff32-package-gates-green-marvel-ceiling-recorded-family-unresolved**
+- Active branch validation: **accepted-checkpoint-77a-intel01-route-resilience-green-ff32-package-gates-green-marvel-ceiling-recorded-family-unresolved**
 
 ## Audit reuse rule
 
@@ -35,7 +35,7 @@ Latest fully validated executable experimental baseline documented by the prior 
 
 ## Important pending validation
 
-The last persisted Marvel control is `f0c3b9f82dca49f295e44175e517d992e6e5356e` with outcome **focused-zero-swap-broad-zero-swap**. At source f0c3b9f..., exact-source focused and broad Marvel controls executed and persisted with the generic compound operational-component guard enabled. Both lanes returned no-supported-improvement with zero swaps: the six previously observed focused substitutions are now rejected because multi-component operational cards must retain their like-for-like component families, and broad Marvel still has no supported package after its restricted fast-mana/tutor pool is exhausted. Build, deterministic regressions, target execution and persistence passed; target-quality/strategy gates correctly remain red because no accepted package repairs the failed Bracket-5 gates. Dependent Necron Dynasties, Squirreled Away, Food and Fellowship and Middle-earth controls pass at f0c3b9f.... The separate generic INTEL-01 positive control passed at source 50e5d19... (workflow 33811643472) with complete discovery, strict closure, exact legal/affordable printings, atomic injection, final recognition and route audits; the finished deck retained one route, so alternate-route resilience remains a follow-up. Accepted checkpoint remains 77a5383...; no promotion. The restricted Marvel pool audit is resolved as an honest generic construction ceiling (D-020): no pool expansion or threshold relaxation is justified because the failed fast-mana and tutor role lanes are exhausted; exact-source zero-swap results remain red for INTEL-02 target quality.
+The last persisted Marvel control is `f0c3b9f82dca49f295e44175e517d992e6e5356e` with outcome **focused-zero-swap-broad-zero-swap**. At source f0c3b9f..., exact-source focused and broad Marvel controls executed and persisted with the generic compound operational-component guard enabled. Both lanes returned no-supported-improvement with zero swaps: the six previously observed focused substitutions are now rejected because multi-component operational cards must retain their like-for-like component families, and broad Marvel still has no supported package after its restricted fast-mana/tutor pool is exhausted. Build, deterministic regressions, target execution and persistence passed; target-quality/strategy gates correctly remain red because no accepted package repairs the failed Bracket-5 gates. Dependent Necron Dynasties, Squirreled Away, Food and Fellowship and Middle-earth controls pass at f0c3b9f.... The current INTEL-01 positive control at source 54f823f2faeec5c312bd2a7954d30e6eaa8eeae8 (workflow 33832178963) passed complete discovery, strict full-table closure, exact legal/affordable printings, atomic two-package seeding, final recognition and route/access/setup audits; its finished deck retained four full-table routes and two distinct library routes. This remains scenario-level evidence rather than a full INTEL-02 family checkpoint. Accepted checkpoint remains 77a5383...; no promotion. The restricted Marvel pool audit is resolved as an honest generic construction ceiling (D-020): no pool expansion or threshold relaxation is justified because the failed fast-mana and tutor role lanes are exhausted; exact-source zero-swap results remain red for INTEL-02 target quality.
 
 ## Next actions
 
@@ -43,7 +43,7 @@ The last persisted Marvel control is `f0c3b9f82dca49f295e44175e517d992e6e5356e` 
 2. Keep the historical six focused-Marvel swaps unaccepted; source f0c3b9f... now rejects their compound operational-component losses generically and both exact-source Marvel lanes fail closed with zero swaps.
 3. Retain the generic Marvel construction ceiling recorded in D-020: the exhaustive restricted pool has no new fast-mana/tutor candidates beyond existing or excluded cards; do not expand the pool or lower Bracket-5 standards. Rerun only when provider or policy ceilings change.
 4. Preserve the component guard and its anonymous multi-axis regression while revalidating any future candidate-pool change against interaction, land/mana, treasure, sacrifice, token, card-advantage and cost-reduction floors.
-5. Treat INTEL-01 as scenario-level validated at source 50e5d19... for package discovery, closure, feasibility, injection, protection, final recognition and access/setup audits; keep the one-route resilience finding open and non-gating.
+5. Treat the current INTEL-01 positive control at source 54f823f2faeec5c312bd2a7954d30e6eaa8eeae8 (workflow 33832178963) as scenario-level validated: complete discovery, strict closure, exact printings, atomic two-package seeding, final recognition, four full-table routes and two distinct library routes all passed. Keep this evidence separate from the unresolved full INTEL-02 family checkpoint.
 6. When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.
 7. Record the current-source FF32 Scions & Spellcraft control as scenario-green at run 33830011009, executable source dcfc78d93e707e1d1a5199ad3cf852f8a3e993fb: generic package-level strategy-fuel and structural-floor gates preserved Y'shtola MV3+ trigger fuel, nonland spell density, board wipes and fast mana while allowing three target-advancing swaps. Keep the historical PR #32 failure retained; revalidate the broader dependent INTEL-02 family before any checkpoint claim.
 8. Keep PR #29 as experimental/evidence history. Do not merge or promote it automatically; when V0.15 is genuinely accepted, prepare a clean promotion candidate rather than treating the current 1,000+ commit evidence branch as release-ready.
@@ -54,6 +54,6 @@ The last persisted Marvel control is `f0c3b9f82dca49f295e44175e517d992e6e5356e` 
 - `ULTIMATE_MTG_SPEC.md` — north-star behavior.
 - `docs/ROADMAP.md` — milestone plan.
 - `docs/DECISIONS.md` — durable architectural decisions.
-- `docs/KNOWN-FAILURES.md` — failure modes that must remain prevented.
-- `docs/VALIDATION-MATRIX.md` — what each control actually proves.
+- `docs/KNOWN-FAILURES.md` — failures that must remain prevented.
+- `docs/VALIDATION-MATRIX.md` — what each test/control actually proves.
 - `docs/PROJECT-MANAGEMENT.md` — recovery/update protocol.
