@@ -232,7 +232,7 @@ test('package gate fails closed when a required card is unresolved or the contra
     afterParsed: after,
     afterCards: [commander, fuel],
     contract: {
-      strategyFuel: [null as unknown as RefinementPackageAcceptanceContractV15['strategyFuel'][number]],
+      strategyFuel: [null as unknown as NonNullable<RefinementPackageAcceptanceContractV15['strategyFuel']>[number]],
     },
   });
   assert.ok(malformedEntry);
