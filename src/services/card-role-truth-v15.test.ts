@@ -1,598 +1,707 @@
-import { config } from '../config.js';
-import { fetchJson } from '../lib/http.js';
-import type {
-  ScryfallCard,
-  ScryfallCollectionResult,
-  ScryfallList,
-  ScryfallSet,
-} from '../types/scryfall.js';
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import type { ScryfallCard } from '../types/scryfall.js';
+import { buildDeckMetrics, parseDecklist } from './deck.js';
+import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
+import { inferCardRoles, normalizeScryfallSearchQueryV15 } from './scryfall.js';
 
-export interface CardIdentifierInput {
+function card(input: {
   name: string;
-  set?: string;
-  collectorNumber?: string;
-}
-
-export interface CardSummary {
-  id: string;
-  oracleId?: string;
-  name: string;
-  printedName?: string;
-  flavorName?: string;
-  manaCost: string;
-  manaValue: number;
   typeLine: string;
   oracleText: string;
-  colorIdentity: string[];
-  keywords: string[];
-  roles: string[];
-  commanderLegality: string;
-  legalities: ScryfallCard['legalities'];
-  edhrecRank?: number;
+  cmc?: number;
+  manaCost?: string;
   producedMana?: string[];
-  set: string;
-  setName: string;
-  collectorNumber: string;
-  releaseDate?: string;
-  rarity: string;
-  finishes: string[];
-  foil: boolean;
-  nonfoil: boolean;
-  promo: boolean;
-  promoTypes: string[];
-  digital: boolean;
-  fullArt: boolean;
-  frame?: string;
-  frameEffects: string[];
-  borderColor?: string;
-  tcgplayerId?: number;
-  cardmarketId?: number;
-  prices: Record<string, string | null>;
-  purchaseUris: Record<string, string>;
-  scryfallUrl: string;
-  imageUrl?: string;
-}
-
-interface TimedCardCacheEntry {
-  loadedAt: number;
-  cards: ScryfallCard[];
-}
-
-let rateLimitQueue: Promise<void> = Promise.resolve();
-let lastRequestAt = 0;
-const MIN_REQUEST_GAP_MS = 300;
-let setCache: ScryfallSet[] | null = null;
-let setCacheAt = 0;
-const SET_CACHE_TTL_MS = 6 * 60 * 60 * 1_000;
-const QUERY_CACHE_TTL_MS = 5 * 60 * 1_000;
-const IDENTIFIER_CACHE_MAX = 5_000;
-const searchCache = new Map<string, TimedCardCacheEntry>();
-const printingsCache = new Map<string, TimedCardCacheEntry>();
-const identifierCache = new Map<string, ScryfallCard>();
-
-const LEGACY_FREE_INTERACTION_SEARCH_CLAUSE_V15 = '((mv=0 OR o:"rather than pay") (o:"counter target" OR o:"destroy target" OR o:"exile target"))';
-export const FREE_INTERACTION_SEARCH_CLAUSE_V15 = '((mv=0 OR o:"rather than pay" OR o:"without paying" OR kw:evoke OR is:phyrexian) (o:counter OR o:destroy OR o:exile OR o:"return target" OR o:"choose new targets" OR o:"puts it on the top" OR o:"puts it on the bottom"))';
-const LEGACY_PROTECTION_SEARCH_CLAUSE_V15 = '(o:"hexproof" OR o:"indestructible" OR o:"protection from" OR o:"phase out")';
-export const PROTECTION_SEARCH_CLAUSE_V15 = '(o:"hexproof" OR o:"indestructible" OR o:"protection from" OR o:"phase out" OR o:"when this creature dies" OR o:"when enchanted creature dies" OR o:"dies this turn" OR o:"regenerate target")';
-
-/** Keep older Build/Upgrade role queries aligned with the shared card-role truth boundary. */
-export function normalizeScryfallSearchQueryV15(query: string): string {
-  return query
-    .trim()
-    .replace(LEGACY_FREE_INTERACTION_SEARCH_CLAUSE_V15, FREE_INTERACTION_SEARCH_CLAUSE_V15)
-    .replace(LEGACY_PROTECTION_SEARCH_CLAUSE_V15, PROTECTION_SEARCH_CLAUSE_V15);
-}
-
-function sleep(ms: number): Promise<void> {
-  return ms <= 0 ? Promise.resolve() : new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function scryfallRequest<T>(url: string, init: RequestInit = {}): Promise<T> {
-  let releaseQueue: () => void = () => undefined;
-  const previous = rateLimitQueue;
-  rateLimitQueue = new Promise<void>((resolve) => {
-    releaseQueue = resolve;
-  });
-
-  await previous;
-  try {
-    const waitMs = Math.max(0, MIN_REQUEST_GAP_MS - (Date.now() - lastRequestAt));
-    if (waitMs > 0) await sleep(waitMs);
-    lastRequestAt = Date.now();
-    return await fetchJson<T>(url, init);
-  } finally {
-    releaseQueue();
-  }
-}
-
-function freshTimedCards(entry: TimedCardCacheEntry | undefined): ScryfallCard[] | null {
-  if (!entry || Date.now() - entry.loadedAt >= QUERY_CACHE_TTL_MS) return null;
-  return entry.cards;
-}
-
-function rememberIdentifier(key: string, card: ScryfallCard): void {
-  if (!identifierCache.has(key) && identifierCache.size >= IDENTIFIER_CACHE_MAX) {
-    const oldest = identifierCache.keys().next().value as string | undefined;
-    if (oldest) identifierCache.delete(oldest);
-  }
-  identifierCache.set(key, card);
-}
-
-function identifierKey(identifier: CardIdentifierInput): string {
-  return [identifier.name.toLocaleLowerCase(), identifier.set?.toLocaleLowerCase() ?? '', identifier.collectorNumber ?? ''].join('|');
-}
-
-function cacheCardAliases(card: ScryfallCard): void {
-  rememberIdentifier(identifierKey({ name: card.name }), card);
-  rememberIdentifier(identifierKey({ name: card.name, set: card.set }), card);
-  rememberIdentifier(identifierKey({ name: card.name, set: card.set, collectorNumber: card.collector_number }), card);
-}
-
-function cardMatchesIdentifier(card: ScryfallCard, identifier: CardIdentifierInput): boolean {
-  if (identifier.set && card.set.toLocaleLowerCase() !== identifier.set.toLocaleLowerCase()) return false;
-  if (identifier.collectorNumber && card.collector_number.toLocaleLowerCase() !== identifier.collectorNumber.toLocaleLowerCase()) return false;
-  return card.name.toLocaleLowerCase() === identifier.name.toLocaleLowerCase();
-}
-
-export function getCardOracleText(card: ScryfallCard): string {
-  if (card.oracle_text) return card.oracle_text;
-  return (card.card_faces ?? [])
-    .map((face) => [face.name, face.oracle_text].filter(Boolean).join(' — '))
-    .filter(Boolean)
-    .join('\n');
-}
-
-export function getCardManaCost(card: ScryfallCard): string {
-  if (card.mana_cost) return card.mana_cost;
-  return (card.card_faces ?? [])
-    .map((face) => face.mana_cost)
-    .filter((value): value is string => Boolean(value))
-    .join(' // ');
-}
-
-function landProducesExtraMana(text: string): boolean {
-  return /\badd \{[^}]+\}\{[^}]+\}/.test(text)
-    || /\badd (?:two|three|four|five|six|seven|eight|nine|ten)(?:\s+mana|\s+\{)/.test(text)
-    || /\badd [^.]*\bfor each\b/.test(text)
-    || /\badd an amount of mana [^.]*\bequal to\b/.test(text)
-    || /\badd [^.]*\bequal to\b/.test(text);
-}
-
-function stripReminderText(text: string): string {
-  let current = text;
-  let previous = '';
-  while (current !== previous) {
-    previous = current;
-    current = current.replace(/\([^()]*\)/g, ' ');
-  }
-  return current.replace(/\s+/g, ' ').trim();
-}
-
-function basicLandRampOnlySearch(text: string): boolean {
-  const fragments = [...text.matchAll(/search your library for ([^.]+)/g)]
-    .map((match) => match[1]?.trim() ?? '')
-    .filter(Boolean);
-  if (fragments.length === 0) return false;
-  return fragments.every((fragment) => {
-    if (/\b(?:creature|artifact|enchantment|instant|sorcery|planeswalker|battle) cards?\b/.test(fragment)) return false;
-    if (/\ba cards?\b/.test(fragment) && !/\b(?:basic )?land cards?\b/.test(fragment)) return false;
-    return /\bbasic land cards?\b/.test(fragment)
-      || /\b(?:plains|island|swamp|mountain|forest)(?:\s*,|\s+or|\s+and|\s+cards?\b)/.test(fragment);
-  });
-}
-
-function hasManaFreeEvoke(text: string): boolean {
-  const costs = [...text.matchAll(/evoke[—-]([^\n.]+)/g)]
-    .map((match) => match[1]?.trim() ?? '')
-    .filter(Boolean);
-  return costs.some((cost) => !/\{[^}]+\}/.test(cost));
-}
-
-function manaCostPayableWithoutMana(manaCost: string): boolean {
-  return manaCost.split(/\s*\/\/\s*/).some((faceCost) => {
-    const symbols = [...faceCost.matchAll(/\{([^}]+)\}/g)]
-      .map((match) => match[1]?.trim().toUpperCase() ?? '')
-      .filter(Boolean);
-    return symbols.length > 0 && symbols.every((symbol) =>
-      symbol === '0' || /^[WUBRG]\/P$/.test(symbol) || /^P\/[WUBRG]$/.test(symbol));
-  });
-}
-
-function hasFreeCastAlternative(card: ScryfallCard, manaCost: string, text: string, isLand: boolean): boolean {
-  if (!isLand && card.cmc === 0 && /\{0\}/.test(manaCost)) return true;
-  if (/rather than pay (?:this spell's|its|the)?\s*mana cost/.test(text)) return true;
-  if (/cast this spell without paying (?:its|this spell's) mana cost/.test(text)) return true;
-  if (!isLand && manaCostPayableWithoutMana(manaCost)) return true;
-  return !isLand && hasManaFreeEvoke(text);
-}
-
-function hasDirectInteractionText(text: string): boolean {
-  return /counter target/.test(text)
-    || /(?:destroy|exile)(?: up to [^.]{0,80})? target/.test(text)
-    || /exile any number of target/.test(text)
-    || /return target .* to (?:its|their) owner's hand/.test(text)
-    || /put target [^.]{0,100} on (?:the )?top of (?:its|their) owner's library/.test(text)
-    || /choose up to one target (?:creature|planeswalker) spell[\s\S]*owner puts it on the (?:top|bottom)/.test(text)
-    || /choose new targets? for target (?:spell|ability)/.test(text)
-    || /deals? [^.]{0,120} damage [^.]{0,120} target/.test(text)
-    || /target opponent reveals their hand/.test(text)
-    || /target player [^.]{0,120}graveyard[^.]{0,120}bottom/.test(text);
-}
-
-function hasDeathReplacementProtection(text: string): boolean {
-  const temporaryDeathShield = /until end of turn[\s\S]{0,320}(?:when (?:this|that) creature dies|dies this turn)[\s\S]{0,240}return (?:it|that card|that creature) to the battlefield/.test(text);
-  const enchantedDeathShield = /enchanted (?:creature|permanent)[\s\S]{0,220}(?:dies|is put into exile)[\s\S]{0,240}return (?:it|that card) to the battlefield/.test(text);
-  return temporaryDeathShield || enchantedDeathShield || /\bregenerate target creature\b/.test(text);
-}
-
-function hasMassSacrificeRemoval(text: string): boolean {
-  return /each player sacrifices (?:(?:all|half|two|three|four|five|six|seven|eight|nine|ten|x)\b[^.]{0,120}creatures?|(?:a|the) number of creatures?[^.]{0,80}(?:equal to|for each)|(?:a|one) creature for each\b)/.test(text);
-}
-
-function graveyardReturnCapacity(text: string): {
-  stagedReturn: boolean;
-  multiCard: boolean;
-  highCapacity: boolean;
-} {
-  const stagedReturn = /\b(?:choose|target)\b[^.]{0,220}\b(?:cards?|creatures?)\b[^.]{0,180}\bin your graveyard\b[^.]*\.\s*\breturn (?:each(?: of them)?|them|those cards?)\b[^.]{0,120}\bto the battlefield\b/.test(text);
-  const multiCard = /\breturn (?:any number of|all|up to (?:two|three|four|five|six|seven|eight|nine|ten))\b[^.]{0,220}\bfrom (?:a|the|your|any) graveyard\b[^.]{0,120}\bto the battlefield\b/.test(text)
-    || /\b(?:choose|target) up to (?:two|three|four|five|six|seven|eight|nine|ten)\b[^.]{0,220}\bin your graveyard\b[^.]*\.\s*\breturn (?:each(?: of them)?|them|those cards?)\b[^.]{0,120}\bto the battlefield\b/.test(text);
-  const highCardCount = /\breturn (?:any number of|all|up to (?:three|four|five|six|seven|eight|nine|ten))\b[^.]{0,220}\bfrom (?:a|the|your|any) graveyard\b[^.]{0,120}\bto the battlefield\b/.test(text)
-    || /\b(?:choose|target) up to (?:three|four|five|six|seven|eight|nine|ten)\b[^.]{0,220}\bin your graveyard\b[^.]*\.\s*\breturn (?:each(?: of them)?|them|those cards?)\b[^.]{0,120}\bto the battlefield\b/.test(text);
-  const totalManaValue = [...text.matchAll(/\btotal mana value (\d+) or less\b/g)]
-    .map((match) => Number.parseInt(match[1] ?? '0', 10))
-    .filter(Number.isFinite);
-  const unboundedSingleReturn = /\b(?:return|put) target [^.]{0,220}\bfrom (?:a|the|your|any) graveyard\b[^.]{0,120}\b(?:to|onto) the battlefield\b/.test(text)
-    && !/\bmana value (?:\d+|x) or less\b/.test(text);
+}): ScryfallCard {
   return {
-    stagedReturn,
-    multiCard,
-    highCapacity: unboundedSingleReturn
-      || highCardCount
-      || totalManaValue.some((value) => value >= 6) && (multiCard || stagedReturn),
-  };
+    id: input.name.toLocaleLowerCase().replace(/[^a-z0-9]+/g, '-'),
+    oracle_id: `${input.name}-oracle`,
+    lang: 'en',
+    name: input.name,
+    set: 'tst',
+    set_name: 'Test Set',
+    collector_number: '1',
+    released_at: '2026-01-01',
+    type_line: input.typeLine,
+    oracle_text: input.oracleText,
+    mana_cost: input.manaCost ?? '',
+    cmc: input.cmc ?? 0,
+    colors: [],
+    color_identity: [],
+    keywords: [],
+    legalities: { commander: 'legal' },
+    rarity: 'common',
+    prices: { usd: null, usd_foil: null, usd_etched: null, eur: null, eur_foil: null, tix: null },
+    finishes: ['nonfoil'],
+    foil: false,
+    nonfoil: true,
+    promo: false,
+    digital: false,
+    full_art: false,
+    scryfall_uri: 'https://scryfall.com',
+    ...(input.producedMana ? { produced_mana: input.producedMana } : {}),
+  } as ScryfallCard;
 }
 
-export function inferCardRoles(card: ScryfallCard): string[] {
-  const text = getCardOracleText(card).toLowerCase();
-  const mechanicalText = stripReminderText(text);
-  const type = card.type_line.toLowerCase();
-  const manaCost = getCardManaCost(card);
-  const roles = new Set<string>();
-  const isLand = type.includes('land');
+const forest = card({
+  name: 'Forest',
+  typeLine: 'Basic Land — Forest',
+  oracleText: '({T}: Add {G}.)',
+  producedMana: ['G'],
+});
 
-  const addsMana = /\badd (?:\{|one mana|two mana|three mana|four mana|five mana|mana)/.test(text);
-  const requiresPaidManaSetup = /\b(?:multi)?kicker\b/.test(text) || /\{x\}/i.test(manaCost);
-  if (addsMana && (!isLand || landProducesExtraMana(text))) roles.add('mana acceleration');
-  if (type.includes('artifact') && addsMana && !type.includes('creature')) roles.add('mana rock');
-  if (type.includes('creature') && /\{t\}:\s*add|whenever .* add .* mana/.test(text)) roles.add('mana dork');
-  if (card.cmc <= 1 && addsMana && !isLand && !requiresPaidManaSetup) roles.add('fast mana');
-  if (/search your library for .*land/.test(text) && /battlefield/.test(text)) roles.add('land ramp');
-  if (/costs? .* less to cast/.test(text)) roles.add('cost reduction');
-  if (/create .* treasure token/.test(text)) roles.add('treasure');
-  const producesColoredMana = (card.produced_mana ?? []).some((color) => /^[WUBRG]$/i.test(color));
-  const grantsPersistentManaAbility = /(?:enchanted|equipped) (?:land|permanent|creature)[^.]*\badd\b/.test(text);
-  if (
-    !isLand
-    && (
-      roles.has('land ramp')
-      || (producesColoredMana && (roles.has('mana rock') || roles.has('mana dork') || grantsPersistentManaAbility))
-    )
-  ) roles.add('persistent colored mana source');
+const ancientTomb = card({
+  name: 'Ancient Tomb',
+  typeLine: 'Land',
+  oracleText: '{T}: Add {C}{C}. Ancient Tomb deals 2 damage to you.',
+  producedMana: ['C'],
+});
 
-  const oneForOneLoot = /\bdraw (?:a|one|1) card,? then discard (?:a|one|1) card\b/.test(mechanicalText);
-  const drawText = mechanicalText.replace(/\bdraw (?:a|one|1) card,? then discard (?:a|one|1) card\b/g, '');
-  if (/draw (?:a|one|two|three|four|five|x|\d+) cards?/.test(drawText)) roles.add('card draw');
-  if (oneForOneLoot) roles.add('card selection');
-  const repeatableDraw = /\b(?:whenever|at the beginning of)\b[\s\S]{0,260}\bdraw (?:a|one|two|three|four|five|x|\d+) cards?/.test(mechanicalText)
-    || /:\s*[\s\S]{0,260}\bdraw (?:a|one|two|three|four|five|x|\d+) cards?/.test(mechanicalText);
-  if (repeatableDraw) roles.add('repeatable draw');
-  const lifeGainTriggeredDraw = /\b(?:whenever|at the beginning of)\b[\s\S]{0,260}\bgain(?: (?:\d+|one|two|three|four|five|x|that much))? life\b[\s\S]{0,180}\bdraw (?:a|one|two|three|four|five|x|\d+) cards?/.test(mechanicalText);
-  if (lifeGainTriggeredDraw) roles.add('life-gain-triggered draw engine');
-  const deathTriggeredDraw = /\bwhenever (?:one or more )?[^.]{0,100}\bcreatures?\b[^.]{0,80}\bdies?\b[^.]{0,120}\bdraw (?:a|one|two|three|four|five|x|\d+) cards?\b/.test(text);
-  if (deathTriggeredDraw) roles.add('death-trigger draw engine');
-  const teamCombatDamageDraw = /\bwhenever (?:one or more )?(?:a )?creatures? you control deal(?:s)? combat damage to (?:a player|an opponent)[^.]{0,120}\bdraw (?:a|one|two|three|four|five|x|\d+) cards?\b/.test(text);
-  if (teamCombatDamageDraw) roles.add('team combat-damage draw engine');
-  if (/scry|surveil|look at the top .* cards|exile the top .* you may play/.test(text)) roles.add('card selection');
-  if (/discard your hand.*draw|each player discards .* hand.*draw/.test(text)) roles.add('wheel');
+const everflowingChalice = card({
+  name: 'Everflowing Chalice',
+  typeLine: 'Artifact',
+  oracleText: 'Multikicker {2}. Everflowing Chalice enters with a charge counter on it for each time it was kicked. {T}: Add {C} for each charge counter on Everflowing Chalice.',
+  cmc: 0,
+  manaCost: '{0}',
+  producedMana: ['C'],
+});
 
-  const searchesLibrary = /search your library for/.test(text);
-  if (searchesLibrary && !basicLandRampOnlySearch(text)) roles.add('tutor');
-  if (/search your library for .*creature/.test(text)) roles.add('creature tutor');
-  if (/search your library for .*land/.test(text)) roles.add('land tutor');
+const farseek = card({
+  name: 'Farseek',
+  typeLine: 'Sorcery',
+  oracleText: 'Search your library for a Plains, Island, Swamp, or Mountain card, put it onto the battlefield tapped, then shuffle.',
+  cmc: 2,
+  manaCost: '{1}{G}',
+});
 
-  if (/counter target spell/.test(text)) roles.add('countermagic');
-  if (hasFreeCastAlternative(card, manaCost, text, isLand) && hasDirectInteractionText(text)) roles.add('free interaction');
-  if (
-    /(?:destroy|exile)(?: up to [^.]{0,80})? target/.test(text)
-    || /return target .* to (?:its|their) owner's hand/.test(text)
-    || /tap target (?:artifact|creature|permanent)/.test(text)
-    || /target [^.]{0,100}(?:creature|planeswalker)[^.]{0,60}gets? -(?:x|\d+)\/-(?:x|\d+)/.test(text)
-    || /deals? [^.]{0,120} damage (?:to )?(?:any |up to one )?target/.test(text)
-  ) roles.add('spot interaction');
-  const forcedSacrificeInteraction = /\beach (?:opponent|player) sacrifices (?:a|one) (?:creature|artifact|enchantment|nonland permanent|permanent)\b/.test(text);
-  if (forcedSacrificeInteraction) {
-    roles.add('spot interaction');
-    roles.add('forced sacrifice interaction');
-  }
-  if (/destroy target artifact|destroy target enchantment|exile target artifact|exile target enchantment/.test(text)) roles.add('artifact/enchantment interaction');
-  if (/cards? in graveyards? can't|players? can't cast .* graveyards?|exile [^.]*\b(?:a graveyard|target player'?s graveyard|an opponent'?s graveyard|each player'?s graveyard|all graveyards?|their graveyard)\b/.test(text)) roles.add('graveyard hate');
-  const massGraveyardExchange = /each player exiles all creature cards from [^.]{0,80}graveyard[^.]{0,120}then sacrifices all creatures[^.]{0,80}then puts all cards [^.]{0,80}exiled this way onto the battlefield/.test(text);
-  const recursionCapacity = graveyardReturnCapacity(text);
-  const artifactGraveyardRecursion = /\b(?:return|put) target [^.]{0,100}\bartifact\b[^.]{0,140}\bfrom (?:a|the|your|any) graveyard\b[^.]{0,120}\b(?:to|onto) (?:the battlefield|your hand)\b/.test(text);
-  const scalingSelectiveWipe = /\beach creature (?:that|with)[^.]{0,120}\bgets? -\d+\/-\d+ until end of turn for each creature you control (?:that(?:'s| is)|with)\b/.test(text);
-  if (
-    /(destroy|exile) (?:all|each) (?:[a-z-]+ ){0,3}(?:creatures|artifacts|enchantments|nonland permanents|permanents)/.test(text)
-    || /(?:all creatures get|each creature gets) -(?:x|\d+)\/-(?:x|\d+)/.test(text)
-    || /put [^.]*-1\/-1 counters? on each creature/.test(text)
-    || /deals? [^.]* damage to each creature/.test(text)
-    || /return (?:all|each) (?:creatures|nonland permanents|permanents)[^.]*owners?' hands?/.test(text)
-    || hasMassSacrificeRemoval(text)
-    || scalingSelectiveWipe
-    || massGraveyardExchange
-  ) roles.add('board wipe');
-  if (scalingSelectiveWipe) roles.add('typal board control payoff');
+const cultivate = card({
+  name: 'Cultivate',
+  typeLine: 'Sorcery',
+  oracleText: 'Search your library for up to two basic land cards, reveal those cards, put one onto the battlefield tapped and the other into your hand, then shuffle.',
+  cmc: 3,
+  manaCost: '{2}{G}',
+});
 
-  const createsOrMultipliesTokens = /create [^.]* tokens?/.test(text)
-    || /\bif (?:one or more )?tokens? would be created under your control\b/.test(text)
-    || /\bif you would create [^.]{0,80}tokens?\b/.test(text)
-    || /\bthose tokens plus\b/.test(text)
-    || /\bcreate twice that many [^.]{0,40}tokens?\b/.test(text);
-  if (createsOrMultipliesTokens) roles.add('token production');
-  const repeatableTokenEngine = /\b(?:whenever|at the beginning of)\b[^.]{0,220}\bcreate [^.]{0,120}\btokens?\b/.test(text)
-    || /:\s*[^.]{0,180}\bcreate [^.]{0,120}\btokens?\b/.test(text);
-  if (repeatableTokenEngine) roles.add('repeatable token engine');
-  const spellTriggeredTokenEngine = /\b(?:when|whenever)\b[^.]{0,220}\bcasts?\b[^.]{0,140}\b(?:instant|sorcery)\b[^.]{0,160}\bcreate [^.]{0,120}\btokens?\b/.test(text);
-  if (spellTriggeredTokenEngine) roles.add('spell-triggered token engine');
-  const deathTriggeredTokenEngine = /\bwhenever (?:one or more )?[^.]{0,100}\bcreatures?\b[^.]{0,80}\bdies?\b[^.]{0,140}\bcreate [^.]{0,100}\btokens?\b/.test(text);
-  if (deathTriggeredTokenEngine) roles.add('death-trigger token engine');
-  const tokenEventLifeDrain = /\bwhenever [^.]{0,140}(?:(?:create|sacrifice)[^.]{0,60}\btokens?\b|\btokens? you control leave(?:s)? the battlefield\b)[^.]{0,140}\b(?:each opponent|target opponent)[^.]{0,80}\bloses? (?:1|one|\d+) life\b/.test(text);
-  if (tokenEventLifeDrain) roles.add('token-event life drain');
-  const massSacrificeConversion = /\bsacrifice (?:one or more|any number of|x) creatures?\b[\s\S]{0,300}\b(?:copy this spell|draw|create|deals? damage|loses? life|gain life)\b/.test(text);
-  if (massSacrificeConversion) roles.add('mass sacrifice conversion');
-  const teamWideStatPayoff = /(?<!target )(?<!commander )\b(?:other )?(?:creatures|[a-z][a-z'-]*s) you control (?:get|gain) \+\d+\/\+\d+/.test(text);
-  const distributedTypalPump = /\b(?:creatures|[a-z][a-z'-]*s) you control have "[^"]{0,100}\btarget (?:creature|[a-z][a-z'-]*) gets? \+\d+\/\+\d+/.test(text);
-  const boardScalingEquipment = /\bequipped creature (?:gets?|has) [^.]{0,100}\bfor each (?:other )?creature you control\b/.test(text);
-  const boardScalingCreature = type.includes('creature')
-    && /\bput (?:a|one|two|three|\d+) \+1\/\+1 counters? on (?:it|this creature)[^.]{0,80}\bfor each (?:other )?[^.]{1,80} you control\b/.test(text);
-  const boardScalingCardAdvantage = /\bdraw (?:a card for each|cards equal to (?:the )?number of) creatures? you control\b/.test(text);
-  const boardScalingDraw = /\bdraw (?:a card for each|cards equal to (?:the )?number of) (?:artifacts?|creatures?|enchantments?|permanents?|tokens?) you control\b/.test(text);
-  if (boardScalingDraw) roles.add('board-scaling card draw');
-  if (teamWideStatPayoff || distributedTypalPump || boardScalingEquipment || boardScalingCreature || boardScalingCardAdvantage) roles.add('go-wide payoff');
-  const sacrificeTargets = [...mechanicalText.matchAll(
-    /\bsacrifice (?:a|an|another|target|one or more|any number of|x\b)\s+([^.,:;\n]{1,80})/g,
-  )].map((match) => match[1]?.trim() ?? '');
-  const sacrificeAction = sacrificeTargets.some((target) => !/^(?:basic )?lands?\b/.test(target));
-  const selfReferenceNames = [card.name, ...(card.card_faces ?? []).map((face) => face.name)]
-    .flatMap((name) => name.split('//'))
-    .map((name) => name.trim().toLocaleLowerCase())
-    .filter(Boolean);
-  const selfSacrificeAction = /\bsacrifice this (?:artifact|creature|enchantment|permanent|token|card)\b/.test(mechanicalText)
-    || selfReferenceNames.some((name) => mechanicalText.includes(`sacrifice ${name}:`));
-  const repeatableSacrificeCost = /\bsacrifice (?:a|an|another|target|one or more|any number of|x\b)[^.:]{0,80}:/.test(mechanicalText);
-  if (sacrificeAction) roles.add('sacrifice synergy');
-  if (selfSacrificeAction) roles.add('self sacrifice');
-  if (repeatableSacrificeCost) roles.add('sacrifice outlet');
-  const delayedDeathReturn = /(?:when|whenever) [^.]{0,120}\bdies?\b[^.]{0,160}\breturn (?:it|that card|that creature|them) to the battlefield\b/.test(text);
-  const selfZoneReturn = /\bif (?:this card|it|that card|that creature) is in (?:your|a|the) graveyard\b[^.]{0,200}\breturn (?:it|this card|that card|that creature) to the battlefield\b/.test(text);
-  if (
-    /from your graveyard/.test(text)
-    || /return .* from .* graveyard/.test(text)
-    || /put target [^.]{0,120} from (?:a|the|your) graveyard onto the battlefield/.test(text)
-    || delayedDeathReturn
-    || selfZoneReturn
-    || recursionCapacity.stagedReturn
-    || massGraveyardExchange
-  ) roles.add('graveyard recursion');
-  if (selfZoneReturn) roles.add('self-recurring engine');
-  if (recursionCapacity.multiCard || massGraveyardExchange) roles.add('multi-card graveyard recursion');
-  if (recursionCapacity.highCapacity || massGraveyardExchange) roles.add('high-capacity graveyard recursion');
-  if (artifactGraveyardRecursion) roles.add('artifact graveyard recursion');
-  const boardProtection = /(?:other )?(?:creatures|permanents|artifacts|enchantments) you control\s+(?:have|gain)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text)
-    || /(?:all |any number of )?(?:permanents|creatures) you control phase out/.test(text);
-  const targetedProtection = /(?:target|another target|equipped|enchanted|commander)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text)
-    || /(?:target|another target|any number of target)[^.]{0,100}phases? out/.test(text)
-    || hasDeathReplacementProtection(text);
-  const conditionalGroupProtection = /(?:creatures|permanents|artifacts|enchantments) you control\s+(?:with|that|if|as long as)[^.]{0,100}(?:have|has|gain|gains)[^.]{0,80}(?:hexproof|indestructible|protection from|shroud)/.test(text);
-  const equipmentWearerProtection = type.includes('equipment')
-    && /\bequipped creature[^.]{0,120}(?:hexproof|indestructible|protection from|shroud)/.test(text);
-  const genericEquipCost = text.match(/\bequip\s*\{(\d+)\}/);
-  const expensiveEquipmentProtection = equipmentWearerProtection
-    && genericEquipCost !== null
-    && Number.parseInt(genericEquipCost[1] ?? '0', 10) > 2
-    && !/\battach (?:this equipment|it) to\b/.test(text);
-  if ((boardProtection || targetedProtection) && !expensiveEquipmentProtection) roles.add('protection');
-  if ((conditionalGroupProtection && !boardProtection) || expensiveEquipmentProtection) roles.add('conditional protection');
-  if (boardProtection) roles.add('board protection');
-  if (/haste/.test(text)) roles.add('haste');
-  if (/can't cast|can't activate|players can't|opponents can't|doesn't untap|enter the battlefield tapped/.test(text)) roles.add('stax/control');
-  if (/extra turn/.test(text)) roles.add('extra turn');
-  if (/extra combat/.test(text) || /additional combat/.test(text)) roles.add('extra combat');
-  if (/you win the game|loses the game/.test(text)) roles.add('alternate win condition');
-  if (/whenever .* loses? life|deals? damage to each opponent|each opponent loses/.test(text)) roles.add('life drain');
-  const combatScalingLifeDrain = /\bwhenever\b[^.]{0,220}\bcombat damage\b[^.]{0,220}\bloses? life equal to (?:the )?number of\b/.test(text);
-  if (combatScalingLifeDrain) roles.add('combat-scaling life drain');
-  const repeatableLifeGain = /\b(?:whenever|at the beginning of)\b[^.]{0,220}\byou gain (?:\d+|one|two|three|four|five|x|that much) life\b/.test(mechanicalText)
-    || /:\s*[^.]{0,180}\byou gain (?:\d+|one|two|three|four|five|x|that much) life\b/.test(mechanicalText)
-    || /\{t\}[^:]{0,100}:\s*[^.]{0,180}\.\s*you gain (?:\d+|one|two|three|four|five|x|that much) life\b/.test(mechanicalText);
-  if (repeatableLifeGain) roles.add('repeatable life gain engine');
-  if (/\bwhenever\b[^.]{0,220}\b(?:each opponent|target (?:opponent|player)|an opponent)\b[^.]{0,120}\bloses?\b[^.]{0,40}\blife\b/.test(text)) {
-    roles.add('repeatable life drain');
-  }
-  if (/\+1\/\+1 counter/.test(text)) roles.add('+1/+1 counters');
-  if (/equipment|equip /.test(text) || type.includes('equipment')) roles.add('equipment');
-  if (/copy target .* spell|copy .* triggered ability|copy .* activated ability/.test(text)) roles.add('copy effect');
-  if (/untap target|untap all|untap another/.test(text)) roles.add('untap engine');
-  if (/whenever .* enters|enters the battlefield/.test(text)) roles.add('etb synergy');
-  if (isLand) roles.add('land');
-  if (type.includes('creature')) roles.add('creature');
+const cropRotation = card({
+  name: 'Crop Rotation',
+  typeLine: 'Instant',
+  oracleText: 'As an additional cost to cast this spell, sacrifice a land. Search your library for a land card, put that card onto the battlefield, then shuffle.',
+  cmc: 1,
+  manaCost: '{G}',
+});
 
-  return [...roles];
-}
+const demonicTutor = card({
+  name: 'Demonic Tutor',
+  typeLine: 'Sorcery',
+  oracleText: 'Search your library for a card, put that card into your hand, then shuffle.',
+  cmc: 2,
+  manaCost: '{1}{B}',
+});
 
-export function summarizeCard(card: ScryfallCard): CardSummary {
-  const imageUrl = card.image_uris?.normal ?? card.card_faces?.[0]?.image_uris?.normal;
-  return {
-    id: card.id,
-    ...(card.oracle_id ? { oracleId: card.oracle_id } : {}),
-    name: card.name,
-    ...(card.printed_name ? { printedName: card.printed_name } : {}),
-    ...(card.flavor_name ? { flavorName: card.flavor_name } : {}),
-    manaCost: getCardManaCost(card),
-    manaValue: card.cmc,
-    typeLine: card.type_line,
-    oracleText: getCardOracleText(card),
-    colorIdentity: card.color_identity,
-    keywords: card.keywords,
-    roles: inferCardRoles(card),
-    commanderLegality: card.legalities.commander ?? 'unknown',
-    legalities: card.legalities,
-    ...(card.edhrec_rank !== undefined ? { edhrecRank: card.edhrec_rank } : {}),
-    ...(card.produced_mana ? { producedMana: card.produced_mana } : {}),
-    set: card.set.toUpperCase(),
-    setName: card.set_name,
-    collectorNumber: card.collector_number,
-    ...(card.released_at ? { releaseDate: card.released_at } : {}),
-    rarity: card.rarity,
-    finishes: card.finishes ?? [card.foil ? 'foil' : '', card.nonfoil ? 'nonfoil' : ''].filter(Boolean),
-    foil: Boolean(card.foil),
-    nonfoil: Boolean(card.nonfoil),
-    promo: Boolean(card.promo),
-    promoTypes: card.promo_types ?? [],
-    digital: Boolean(card.digital),
-    fullArt: Boolean(card.full_art),
-    ...(card.frame ? { frame: card.frame } : {}),
-    frameEffects: card.frame_effects ?? [],
-    ...(card.border_color ? { borderColor: card.border_color } : {}),
-    ...(card.tcgplayer_id !== undefined ? { tcgplayerId: card.tcgplayer_id } : {}),
-    ...(card.cardmarket_id !== undefined ? { cardmarketId: card.cardmarket_id } : {}),
-    prices: card.prices ?? {},
-    purchaseUris: card.purchase_uris ?? {},
-    scryfallUrl: card.scryfall_uri,
-    ...(imageUrl ? { imageUrl } : {}),
-  };
-}
+const directDamageInteraction = card({
+  name: 'Direct Damage Interaction',
+  typeLine: 'Instant',
+  oracleText: 'Direct Damage Interaction deals 3 damage to any target.',
+  cmc: 1,
+  manaCost: '{R}',
+});
 
-export async function lookupCard(name: string, exact = false, set?: string): Promise<ScryfallCard> {
-  const parameter = exact ? 'exact' : 'fuzzy';
-  const setPart = set?.trim() ? `&set=${encodeURIComponent(set.trim().toLowerCase())}` : '';
-  const url = `${config.scryfallApiBase}/cards/named?${parameter}=${encodeURIComponent(name.trim())}${setPart}`;
-  const card = await scryfallRequest<ScryfallCard>(url);
-  cacheCardAliases(card);
-  return card;
-}
+const conditionalTapExile = card({
+  name: 'Conditional Tap Exile',
+  typeLine: 'Instant',
+  oracleText: 'Tap target creature. Metalcraft — If you control three or more artifacts, exile that creature.',
+  cmc: 1,
+  manaCost: '{W}',
+});
 
-export async function lookupPrinting(set: string, collectorNumber: string, lang?: string): Promise<ScryfallCard> {
-  const language = lang?.trim() ? `/${encodeURIComponent(lang.trim().toLowerCase())}` : '';
-  const url = `${config.scryfallApiBase}/cards/${encodeURIComponent(set.trim().toLowerCase())}/${encodeURIComponent(collectorNumber.trim())}${language}`;
-  const card = await scryfallRequest<ScryfallCard>(url);
-  cacheCardAliases(card);
-  return card;
-}
+const anyGraveyardReanimation = card({
+  name: 'Any Graveyard Reanimation',
+  typeLine: 'Sorcery',
+  oracleText: "Put target creature card from a graveyard onto the battlefield under your control. You lose life equal to that card's mana value.",
+  cmc: 1,
+  manaCost: '{B}',
+});
 
-export async function searchCards(query: string, limit = 10): Promise<ScryfallCard[]> {
-  const safeLimit = Math.max(1, Math.min(limit, 50));
-  const normalizedQuery = normalizeScryfallSearchQueryV15(query);
-  const cached = freshTimedCards(searchCache.get(normalizedQuery));
-  if (cached) return cached.slice(0, safeLimit);
+const deadlyRollick = card({
+  name: 'Deadly Rollick',
+  typeLine: 'Instant',
+  oracleText: 'If you control a commander, you may cast this spell without paying its mana cost. Exile target creature.',
+  cmc: 4,
+  manaCost: '{3}{B}',
+});
 
-  const url = `${config.scryfallApiBase}/cards/search?q=${encodeURIComponent(normalizedQuery)}&unique=cards&order=edhrec`;
-  const result = await scryfallRequest<ScryfallList<ScryfallCard>>(url);
-  searchCache.set(normalizedQuery, { loadedAt: Date.now(), cards: result.data });
-  for (const card of result.data) cacheCardAliases(card);
-  return result.data.slice(0, safeLimit);
-}
+const fierceGuardianship = card({
+  name: 'Fierce Guardianship',
+  typeLine: 'Instant',
+  oracleText: 'If you control a commander, you may cast this spell without paying its mana cost. Counter target noncreature spell.',
+  cmc: 3,
+  manaCost: '{2}{U}',
+});
 
-export async function getScryfallSets(forceRefresh = false): Promise<ScryfallSet[]> {
-  const now = Date.now();
-  if (!forceRefresh && setCache && now - setCacheAt < SET_CACHE_TTL_MS) return setCache;
-  const result = await scryfallRequest<ScryfallList<ScryfallSet>>(`${config.scryfallApiBase}/sets`);
-  setCache = result.data;
-  setCacheAt = now;
-  return setCache;
-}
+const deflectingSwat = card({
+  name: 'Deflecting Swat',
+  typeLine: 'Instant',
+  oracleText: 'If you control a commander, you may cast this spell without paying its mana cost. You may choose new targets for target spell or ability.',
+  cmc: 3,
+  manaCost: '{2}{R}',
+});
 
-export async function getCardPrintings(name: string, limit = 100): Promise<ScryfallCard[]> {
-  const safeLimit = Math.max(1, Math.min(limit, 250));
-  const normalizedName = name.trim();
-  const cacheKey = `${normalizedName.toLocaleLowerCase()}|${safeLimit}`;
-  const cached = freshTimedCards(printingsCache.get(cacheKey));
-  if (cached) return cached.slice(0, safeLimit);
+const submerge = card({
+  name: 'Submerge',
+  typeLine: 'Instant',
+  oracleText: "If an opponent controls a Forest and you control an Island, you may cast this spell without paying its mana cost. Put target creature on top of its owner's library.",
+  cmc: 5,
+  manaCost: '{4}{U}',
+});
 
-  const cards: ScryfallCard[] = [];
-  const escapedName = normalizedName.replace(/"/g, '\\"');
-  let nextUrl: string | undefined = `${config.scryfallApiBase}/cards/search?q=${encodeURIComponent(`!"${escapedName}"`)}&unique=prints&order=released&dir=desc`;
+const forceOfWill = card({
+  name: 'Force of Will',
+  typeLine: 'Instant',
+  oracleText: "You may pay 1 life and exile a blue card from your hand rather than pay this spell's mana cost. Counter target spell.",
+  cmc: 5,
+  manaCost: '{3}{U}{U}',
+});
 
-  while (nextUrl && cards.length < safeLimit) {
-    const page: ScryfallList<ScryfallCard> = await scryfallRequest<ScryfallList<ScryfallCard>>(nextUrl);
-    cards.push(...page.data.slice(0, safeLimit - cards.length));
-    nextUrl = page.has_more ? page.next_page : undefined;
-  }
+const solitude = card({
+  name: 'Solitude',
+  typeLine: 'Creature — Elemental Incarnation',
+  oracleText: "Flash\nLifelink\nWhen Solitude enters, exile up to one other target creature. That creature's controller gains life equal to its power.\nEvoke—Exile a white card from your hand.",
+  cmc: 5,
+  manaCost: '{3}{W}{W}',
+});
 
-  printingsCache.set(cacheKey, { loadedAt: Date.now(), cards });
-  for (const card of cards) cacheCardAliases(card);
-  return cards;
-}
+const mentalMisstep = card({
+  name: 'Mental Misstep',
+  typeLine: 'Instant',
+  oracleText: 'Counter target spell with mana value 1.',
+  cmc: 1,
+  manaCost: '{U/P}',
+});
 
-export async function getCardsByIdentifiers(identifiers: CardIdentifierInput[]): Promise<{
-  cards: ScryfallCard[];
-  notFound: string[];
-}> {
-  const unique = [...new Map(
-    identifiers
-      .filter((identifier) => identifier.name.trim())
-      .map((identifier) => [identifierKey(identifier), identifier]),
-  ).values()];
-  const cards: ScryfallCard[] = [];
-  const pending: CardIdentifierInput[] = [];
-  const notFound: string[] = [];
+const phyrexianButNotFree = card({
+  name: 'Phyrexian But Not Free',
+  typeLine: 'Instant',
+  oracleText: 'Destroy target creature.',
+  cmc: 3,
+  manaCost: '{1}{B/P}{B/P}',
+});
 
-  for (const identifier of unique) {
-    const cached = identifierCache.get(identifierKey(identifier));
-    if (cached) cards.push(cached);
-    else pending.push(identifier);
-  }
+const counterspell = card({
+  name: 'Counterspell',
+  typeLine: 'Instant',
+  oracleText: 'Counter target spell.',
+  cmc: 2,
+  manaCost: '{U}{U}',
+});
 
-  for (let index = 0; index < pending.length; index += 75) {
-    const batch = pending.slice(index, index + 75);
-    const apiIdentifiers = batch.map((identifier) => {
-      if (identifier.set && identifier.collectorNumber) {
-        return {
-          set: identifier.set.toLowerCase(),
-          collector_number: identifier.collectorNumber,
-        };
-      }
-      if (identifier.set) return { name: identifier.name, set: identifier.set.toLowerCase() };
-      return { name: identifier.name };
-    });
+const selfProtectedManaDork = card({
+  name: 'Self-Protected Mana Dork',
+  typeLine: 'Creature — Elf Druid',
+  oracleText: 'Self-Protected Mana Dork has hexproof as long as it is untapped.\n{T}: Add one mana of any color.',
+  cmc: 2,
+  manaCost: '{1}{G}',
+});
 
-    const result = await scryfallRequest<ScryfallCollectionResult>(
-      `${config.scryfallApiBase}/cards/collection`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ identifiers: apiIdentifiers }),
-      },
-    );
-    cards.push(...result.data);
-    for (const card of result.data) cacheCardAliases(card);
-    for (const identifier of batch) {
-      const match = result.data.find((card) => cardMatchesIdentifier(card, identifier));
-      if (match) rememberIdentifier(identifierKey(identifier), match);
-    }
-    notFound.push(
-      ...result.not_found.map((entry) =>
-        [entry.name, entry.set, entry.collector_number].filter(Boolean).join(' ') || JSON.stringify(entry),
-      ),
-    );
-  }
+const targetedProtection = card({
+  name: 'Targeted Protection',
+  typeLine: 'Instant',
+  oracleText: 'Target permanent you control gains hexproof and indestructible until end of turn.',
+  cmc: 1,
+  manaCost: '{G}',
+});
 
-  return { cards, notFound };
-}
+const boardProtection = card({
+  name: 'Board Protection',
+  typeLine: 'Instant',
+  oracleText: 'Permanents you control gain hexproof and indestructible until end of turn.',
+  cmc: 2,
+  manaCost: '{1}{G}',
+});
 
-export async function getCardsByNames(names: string[]): Promise<{
-  cards: ScryfallCard[];
-  notFound: string[];
-}> {
-  return getCardsByIdentifiers(names.map((name) => ({ name })));
-}
+const targetedMinusRemoval = card({
+  name: 'Generic Negative Removal',
+  typeLine: 'Instant',
+  oracleText: 'Target creature gets -1/-1 until end of turn for each Swamp you control.',
+  cmc: 1,
+  manaCost: '{B}',
+});
+
+const expensiveWearerProtection = card({
+  name: 'Generic Expensive Protective Equipment',
+  typeLine: 'Artifact — Equipment',
+  oracleText: 'Equipped creature gets +2/+2 and has hexproof from monocolored. Equip {4}.',
+  cmc: 1,
+  manaCost: '{1}',
+});
+
+const efficientWearerProtection = card({
+  name: 'Generic Efficient Protective Equipment',
+  typeLine: 'Artifact — Equipment',
+  oracleText: 'Equipped creature has hexproof and haste. Equip {1}.',
+  cmc: 2,
+  manaCost: '{2}',
+});
+
+const conditionalGroupProtection = card({
+  name: 'Conditional Group Protection',
+  typeLine: 'Instant',
+  oracleText: 'Creatures you control with power 4 or greater gain hexproof and indestructible until end of turn.',
+  cmc: 1,
+  manaCost: '{G}',
+});
+
+const massMinusWipe = card({
+  name: 'Mass Minus Wipe',
+  typeLine: 'Sorcery',
+  oracleText: 'As an additional cost to cast this spell, pay X life. All creatures get -X/-X until end of turn.',
+  cmc: 3,
+  manaCost: '{2}{B}',
+});
+
+const qualifiedMassWipe = card({
+  name: 'Qualified Mass Wipe',
+  typeLine: 'Sorcery',
+  oracleText: 'Destroy all nonartifact creatures.',
+  cmc: 6,
+  manaCost: '{3}{B}{B}{B}',
+});
+
+const graveyardExchange = card({
+  name: 'Graveyard Exchange',
+  typeLine: 'Sorcery',
+  oracleText: 'Each player exiles all creature cards from their graveyard, then sacrifices all creatures they control, then puts all cards they exiled this way onto the battlefield.',
+  cmc: 5,
+  manaCost: '{3}{B}{B}',
+});
+
+const delayedEquippedReturn = card({
+  name: 'Generic Delayed Equipment Return',
+  typeLine: 'Artifact — Equipment',
+  oracleText: "Equipped creature has lifelink. Whenever equipped creature dies, return that card to the battlefield under its owner's control at the beginning of the next end step.",
+  cmc: 2,
+  manaCost: '{2}',
+});
+
+const delayedArtifactCreatureReturn = card({
+  name: 'Generic Delayed Artifact Return',
+  typeLine: 'Artifact Creature — Construct Wizard',
+  oracleText: '{1}{B}, {T}: Choose another target artifact creature you control. When that creature dies this turn, return it to the battlefield tapped under your control.',
+  cmc: 4,
+  manaCost: '{3}{B}',
+});
+
+const tokenMultiplier = card({
+  name: 'Generic Token Multiplier',
+  typeLine: 'Creature — Test Warrior',
+  oracleText: 'If one or more tokens would be created under your control, those tokens plus that many 1/1 green creature tokens are created instead.',
+  cmc: 3,
+  manaCost: '{2}{G}',
+});
+
+const tokenCopyMultiplier = card({
+  name: 'Generic Token-Copy Multiplier',
+  typeLine: 'Instant',
+  oracleText: "For each token you control, create a token that's a copy of that permanent.",
+  cmc: 4,
+  manaCost: '{3}{G}',
+});
+
+const tokenConversionMultiplier = card({
+  name: 'Generic Token-Conversion Multiplier',
+  typeLine: 'Artifact',
+  oracleText: 'If you would create a Clue, Food, or Treasure token, instead create one of each.',
+  cmc: 3,
+  manaCost: '{3}',
+});
+
+const teamAnthem = card({
+  name: 'Generic Team Anthem',
+  typeLine: 'Enchantment',
+  oracleText: 'Whenever a creature you control attacks, put a quest counter on this permanent. Creatures you control get +5/+5 as long as it has seven or more quest counters on it.',
+  cmc: 3,
+  manaCost: '{2}{G}',
+});
+
+const typalAnthem = card({
+  name: 'Generic Typal Anthem',
+  typeLine: 'Creature — Test Noble',
+  oracleText: 'Other Squirrels you control get +1/+1.',
+  cmc: 2,
+  manaCost: '{1}{G}',
+});
+
+const distributedTypalPump = card({
+  name: 'Generic Distributed Typal Pump',
+  typeLine: 'Creature — Test Warrior',
+  oracleText: 'Squirrels you control have "{T}: Target Squirrel gets +2/+2 and gains trample until end of turn. Activate only as a sorcery."',
+  cmc: 5,
+  manaCost: '{3}{G}{G}',
+});
+
+const boardScalingEquipment = card({
+  name: 'Generic Board-Scaling Equipment',
+  typeLine: 'Artifact — Equipment',
+  oracleText: 'Equipped creature gets +1/+1 for each creature you control with base power and toughness 1/1. Whenever a Mouse or Squirrel you control enters, you may attach this Equipment to that creature.',
+  cmc: 2,
+  manaCost: '{2}',
+});
+
+const boardScalingCardAdvantage = card({
+  name: 'Generic Board-Scaling Card Advantage',
+  typeLine: 'Sorcery',
+  oracleText: 'Draw a card for each creature you control. Ferocious — You gain 4 life for each creature you control with power 4 or greater.',
+  cmc: 5,
+  manaCost: '{3}{G}{G}',
+});
+
+const variableTypalSacrificeOutlet = card({
+  name: 'Generic Variable Typal Sacrifice Outlet',
+  typeLine: 'Legendary Creature — Test Warrior',
+  oracleText: '{B}, Sacrifice X Squirrels: Target creature gets +X/-X until end of turn.',
+  cmc: 3,
+  manaCost: '{2}{G}',
+});
+
+const selfSacrificingUtility = card({
+  name: 'Generic Self-Sacrificing Utility',
+  typeLine: 'Artifact',
+  oracleText: '{T}, Sacrifice Generic Self-Sacrificing Utility: Exile all cards from target player\'s graveyard.',
+  cmc: 0,
+  manaCost: '{0}',
+});
+
+const boardScalingTypalCreature = card({
+  name: 'Generic Board-Scaling Typal Creature',
+  typeLine: 'Creature — Test Warrior',
+  oracleText: 'When this creature enters, put a +1/+1 counter on it for each other Squirrel and/or Food you control. Whenever another Squirrel or Food you control enters, put a +1/+1 counter on this creature.',
+  cmc: 3,
+  manaCost: '{2}{G}',
+});
+
+const persistentRainbowRock = card({
+  name: 'Persistent Rainbow Rock',
+  typeLine: 'Artifact',
+  oracleText: '{T}: Add one mana of any color.',
+  cmc: 2,
+  manaCost: '{2}',
+  producedMana: ['W', 'U', 'B', 'R', 'G'],
+});
+
+const oneShotColorFilter = card({
+  name: 'One-Shot Color Filter',
+  typeLine: 'Instant',
+  oracleText: 'Add two mana in any combination of colors. Draw a card.',
+  cmc: 2,
+  manaCost: '{1}{G}',
+  producedMana: ['W', 'U', 'B', 'R', 'G'],
+});
+
+test('ordinary lands are mana sources, not mana acceleration, while true multi-mana lands remain acceleration', () => {
+  assert.equal(inferCardRoles(forest).includes('mana acceleration'), false);
+  assert.equal(inferCardRoles(forest).includes('land'), true);
+  assert.equal(inferCardRoles(ancientTomb).includes('mana acceleration'), true);
+});
+
+test('zero-mana rocks that require paid setup are acceleration but not fast mana', () => {
+  const roles = inferCardRoles(everflowingChalice);
+  assert.equal(roles.includes('mana acceleration'), true);
+  assert.equal(roles.includes('mana rock'), true);
+  assert.equal(roles.includes('fast mana'), false);
+});
+
+test('basic-land ramp is not promoted to strategic tutor while unrestricted land and card tutors remain tutors', () => {
+  const farseekRoles = inferCardRoles(farseek);
+  assert.equal(farseekRoles.includes('land ramp'), true);
+  assert.equal(farseekRoles.includes('land tutor'), true);
+  assert.equal(farseekRoles.includes('tutor'), false);
+
+  const cultivateRoles = inferCardRoles(cultivate);
+  assert.equal(cultivateRoles.includes('land ramp'), true);
+  assert.equal(cultivateRoles.includes('land tutor'), true);
+  assert.equal(cultivateRoles.includes('tutor'), false);
+
+  const cropRoles = inferCardRoles(cropRotation);
+  assert.equal(cropRoles.includes('land tutor'), true);
+  assert.equal(cropRoles.includes('tutor'), true);
+  assert.equal(cropRoles.includes('sacrifice synergy'), false);
+  const effectiveCropRoles = effectiveCardRolesV15(cropRotation);
+  assert.equal(effectiveCropRoles.includes('land ramp'), false);
+  assert.equal(effectiveCropRoles.includes('persistent colored mana source'), false);
+  assert.equal(effectiveCropRoles.includes('land replacement'), true);
+
+  assert.equal(inferCardRoles(demonicTutor).includes('tutor'), true);
+});
+
+test('free interaction recognizes commander-enabled, pitch, evoke, retarget, library-top, and zero-mana Phyrexian lines', () => {
+  assert.equal(inferCardRoles(deadlyRollick).includes('free interaction'), true);
+  assert.equal(inferCardRoles(fierceGuardianship).includes('free interaction'), true);
+  assert.equal(inferCardRoles(deflectingSwat).includes('free interaction'), true);
+  assert.equal(inferCardRoles(submerge).includes('free interaction'), true);
+  assert.equal(inferCardRoles(forceOfWill).includes('free interaction'), true);
+  assert.equal(inferCardRoles(solitude).includes('free interaction'), true);
+  assert.equal(inferCardRoles(mentalMisstep).includes('free interaction'), true);
+  assert.equal(inferCardRoles(phyrexianButNotFree).includes('free interaction'), false);
+  assert.equal(inferCardRoles(counterspell).includes('free interaction'), false);
+});
+
+test('self-only, targeted, conditional-group, and board-wide protection stay distinct', () => {
+  const targetedRoles = inferCardRoles(targetedProtection);
+  const boardRoles = inferCardRoles(boardProtection);
+  const conditionalRoles = inferCardRoles(conditionalGroupProtection);
+
+  assert.equal(inferCardRoles(selfProtectedManaDork).includes('protection'), false);
+  assert.equal(targetedRoles.includes('protection'), true);
+  assert.equal(targetedRoles.includes('board protection'), false);
+  assert.equal(boardRoles.includes('protection'), true);
+  assert.equal(boardRoles.includes('board protection'), true);
+  assert.equal(conditionalRoles.includes('protection'), false);
+  assert.equal(conditionalRoles.includes('board protection'), false);
+  assert.equal(conditionalRoles.includes('conditional protection'), true);
+});
+
+// This shared wipe boundary also keeps every registered INTEL-02 exact-source control on the
+// same semantic revision when structural board-wipe preservation changes.
+test('mass negative-power removal is recognized as a board wipe', () => {
+  assert.equal(inferCardRoles(massMinusWipe).includes('board wipe'), true);
+});
+
+test('qualified mass destruction and graveyard exchanges retain wipe and recursion truth', () => {
+  assert.equal(inferCardRoles(qualifiedMassWipe).includes('board wipe'), true);
+  assert.equal(inferCardRoles(graveyardExchange).includes('board wipe'), true);
+  assert.equal(inferCardRoles(graveyardExchange).includes('graveyard recursion'), true);
+});
+
+test('delayed death returns count as graveyard recursion even when Oracle text omits the word graveyard', () => {
+  assert.equal(inferCardRoles(delayedEquippedReturn).includes('graveyard recursion'), true);
+  assert.equal(inferCardRoles(delayedArtifactCreatureReturn).includes('graveyard recursion'), true);
+});
+
+test('token multipliers and team-wide or board-scaling payoffs retain combat-engine truth', () => {
+  assert.ok(inferCardRoles(tokenMultiplier).includes('token production'));
+  assert.ok(effectiveCardRolesV15(tokenMultiplier).includes('token multiplier'));
+  assert.ok(inferCardRoles(tokenCopyMultiplier).includes('token production'));
+  assert.ok(effectiveCardRolesV15(tokenCopyMultiplier).includes('token multiplier'));
+  assert.ok(inferCardRoles(tokenConversionMultiplier).includes('token production'));
+  assert.ok(effectiveCardRolesV15(tokenConversionMultiplier).includes('token multiplier'));
+  assert.ok(inferCardRoles(teamAnthem).includes('go-wide payoff'));
+  assert.ok(inferCardRoles(typalAnthem).includes('go-wide payoff'));
+  assert.ok(inferCardRoles(distributedTypalPump).includes('go-wide payoff'));
+  assert.ok(inferCardRoles(boardScalingEquipment).includes('go-wide payoff'));
+  assert.ok(inferCardRoles(boardScalingTypalCreature).includes('go-wide payoff'));
+  assert.ok(inferCardRoles(boardScalingCardAdvantage).includes('go-wide payoff'));
+});
+
+test('commander-only buffs do not impersonate a go-wide team payoff', () => {
+  const commanderOnlyBuff = card({
+    name: 'Generic Commander Guard',
+    typeLine: 'Creature — Test Soldier',
+    oracleText: 'Commander creatures you control get +2/+2 and have indestructible.',
+    cmc: 3,
+    manaCost: '{2}{W}',
+  });
+
+  assert.equal(inferCardRoles(commanderOnlyBuff).includes('go-wide payoff'), false);
+});
+
+test('death-trigger draw, scaling board draw, and typal board control retain distinct engine truth', () => {
+  const deathDraw = card({
+    name: 'Generic Death Draw Engine',
+    typeLine: 'Enchantment',
+    oracleText: 'Whenever a creature you control dies, you gain 1 life and draw a card.',
+  });
+  const artifactDraw = card({
+    name: 'Generic Artifact Chronicle',
+    typeLine: 'Enchantment — Saga',
+    oracleText: 'I — You may draw a card for each artifact you control. If you do, each opponent draws a card.',
+  });
+  const typalControl = card({
+    name: 'Generic Typal Massacre',
+    typeLine: 'Sorcery',
+    oracleText: "Create two 1/1 green Squirrel creature tokens. Then each creature that isn't an Insect, Rat, Spider, or Squirrel gets -1/-1 until end of turn for each creature you control that's an Insect, Rat, Spider, or Squirrel.",
+  });
+
+  assert.equal(inferCardRoles(deathDraw).includes('death-trigger draw engine'), true);
+  assert.equal(inferCardRoles(artifactDraw).includes('board-scaling card draw'), true);
+  assert.equal(inferCardRoles(typalControl).includes('board wipe'), true);
+  assert.equal(inferCardRoles(typalControl).includes('typal board control payoff'), true);
+});
+
+test('token-sacrifice and artifact-recursion bridges retain their exact operational roles', () => {
+  const multiDeathDraw = card({
+    name: 'Generic Equipped Death Draw',
+    typeLine: 'Artifact — Equipment',
+    oracleText: 'Equipped creature gets +1/-1. Whenever equipped creature dies, draw two cards. Equip {1}.',
+  });
+  const massSacrifice = card({
+    name: 'Generic Mass Sacrifice Conversion',
+    typeLine: 'Instant',
+    oracleText: 'As an additional cost to cast this spell, you may sacrifice one or more creatures. When you do, copy this spell for each creature sacrificed this way. You draw a card and you lose 1 life.',
+  });
+  const deathTokens = card({
+    name: 'Generic Death Token Engine',
+    typeLine: 'Creature — Test Rogue',
+    oracleText: 'Whenever a nontoken creature dies, create a 1/1 black Rat creature token.',
+  });
+  const teamCombatDraw = card({
+    name: 'Generic Team Combat Draw',
+    typeLine: 'Legendary Creature — Test Squirrel',
+    oracleText: 'Whenever a creature you control deals combat damage to a player, draw a card.',
+  });
+  const artifactReturn = card({
+    name: 'Generic Artifact Return',
+    typeLine: 'Sorcery',
+    oracleText: 'Put target artifact or creature card from a graveyard onto the battlefield under your control.',
+  });
+  const tokenDrain = card({
+    name: 'Generic Token Event Drain',
+    typeLine: 'Creature — Test Bat',
+    oracleText: 'Whenever you create or sacrifice a token, each opponent loses 1 life.',
+  });
+  const artifactEntryTokens = card({
+    name: 'Generic Artifact Entry Token Engine',
+    typeLine: 'Creature — Test Advisor',
+    oracleText: 'Whenever one or more artifacts you control enter, create a 1/1 white Soldier creature token with lifelink. This ability triggers only once each turn.',
+  });
+  const activatedLifeGain = card({
+    name: 'Generic Mana Lifegain Engine',
+    typeLine: 'Artifact',
+    oracleText: '{T}: Add {C}. You gain 1 life.',
+  });
+  const oneShotTokensAndLife = card({
+    name: 'Generic One-Shot Token and Life',
+    typeLine: 'Sorcery',
+    oracleText: 'Create a 1/1 white Soldier creature token. You gain 1 life.',
+  });
+
+  assert.equal(inferCardRoles(multiDeathDraw).includes('death-trigger draw engine'), true);
+  assert.equal(inferCardRoles(massSacrifice).includes('mass sacrifice conversion'), true);
+  assert.equal(inferCardRoles(deathTokens).includes('death-trigger token engine'), true);
+  assert.equal(inferCardRoles(teamCombatDraw).includes('team combat-damage draw engine'), true);
+  assert.equal(inferCardRoles(artifactReturn).includes('artifact graveyard recursion'), true);
+  assert.equal(inferCardRoles(tokenDrain).includes('token-event life drain'), true);
+  assert.equal(inferCardRoles(artifactEntryTokens).includes('repeatable token engine'), true);
+  assert.equal(inferCardRoles(activatedLifeGain).includes('repeatable life gain engine'), true);
+  assert.equal(inferCardRoles(oneShotTokensAndLife).includes('repeatable token engine'), false);
+  assert.equal(inferCardRoles(oneShotTokensAndLife).includes('repeatable life gain engine'), false);
+});
+
+
+test('trigger-specific token and combat-scaling drain roles remain visible', () => {
+  const spellTriggeredTokens = card({
+    name: 'Generic Spell-Triggered Spider Engine',
+    typeLine: 'Enchantment Creature — Spider',
+    oracleText: 'Reach. Whenever an opponent casts an instant or sorcery spell, create a 1/2 green Spider creature token with reach.',
+  });
+  const landTriggeredTokens = card({
+    name: 'Generic Land-Triggered Token Engine',
+    typeLine: 'Creature — Test Elemental',
+    oracleText: 'Whenever a land enters the battlefield under your control, create a 1/1 colorless Thopter artifact creature token.',
+  });
+  const combatScalingDrain = card({
+    name: 'Generic Combat-Scaling Life Drain',
+    typeLine: 'Artifact Creature — Test Necron',
+    oracleText: 'Flying. Whenever this creature deals combat damage to a player, that player loses life equal to the number of creatures they control unless they sacrifice a creature of their choice.',
+  });
+
+  const spellRoles = effectiveCardRolesV15(spellTriggeredTokens);
+  assert.ok(spellRoles.includes('repeatable token engine'));
+  assert.ok(spellRoles.includes('spell-triggered token engine'));
+  assert.equal(effectiveCardRolesV15(landTriggeredTokens).includes('spell-triggered token engine'), false);
+  assert.ok(effectiveCardRolesV15(combatScalingDrain).includes('combat-scaling life drain'));
+});
+
+
+test('life-gain-triggered draw is distinct from one-shot draw', () => {
+  const lifeGainTriggeredDraw = card({
+    name: 'Generic Life-Gain Triggered Draw',
+    typeLine: 'Artifact',
+    oracleText: 'Whenever you gain life, you may pay {X}, where X is less than or equal to the amount of life you gained. If you do, draw X cards.',
+  });
+
+  const oneShotLifeDraw = card({
+    name: 'Generic One-Shot Life Draw',
+    typeLine: 'Sorcery',
+    oracleText: 'You gain 3 life. Draw a card.',
+  });
+
+  const engineRoles = inferCardRoles(lifeGainTriggeredDraw);
+  assert.ok(engineRoles.includes('repeatable draw'));
+  assert.ok(engineRoles.includes('life-gain-triggered draw engine'));
+  assert.ok(effectiveCardRolesV15(lifeGainTriggeredDraw).includes('life-gain-triggered draw engine'));
+
+  const oneShotRoles = inferCardRoles(oneShotLifeDraw);
+  assert.equal(oneShotRoles.includes('repeatable draw'), false);
+  assert.equal(oneShotRoles.includes('life-gain-triggered draw engine'), false);
+});
+
+test('multiplayer edicts retain interaction and sacrifice-bridge truth', () => {
+  const forcedSacrifice = card({
+    name: 'Generic Forced Sacrifice',
+    typeLine: 'Creature — Test Shaman',
+    oracleText: 'When this creature enters, each player sacrifices a creature or planeswalker. Each player who cannot discards a card.',
+  });
+  const roles = inferCardRoles(forcedSacrifice);
+
+  assert.equal(roles.includes('spot interaction'), true);
+  assert.equal(roles.includes('forced sacrifice interaction'), true);
+  assert.equal(roles.includes('board wipe'), false);
+});
+
+test('variable-quantity typal sacrifice costs remain repeatable sacrifice outlets', () => {
+  const roles = inferCardRoles(variableTypalSacrificeOutlet);
+  assert.ok(roles.includes('sacrifice synergy'));
+  assert.ok(roles.includes('sacrifice outlet'));
+});
+
+test('self-sacrificing utility is not promoted to a repeatable sacrifice outlet', () => {
+  const roles = inferCardRoles(selfSacrificingUtility);
+  assert.ok(roles.includes('self sacrifice'));
+  assert.equal(roles.includes('sacrifice synergy'), false);
+  assert.equal(roles.includes('sacrifice outlet'), false);
+});
+
+test('direct damage, conditional tap-exile, and targeted negative-power cards count as spot interaction', () => {
+  assert.equal(inferCardRoles(directDamageInteraction).includes('spot interaction'), true);
+  assert.equal(inferCardRoles(conditionalTapExile).includes('spot interaction'), true);
+  assert.equal(inferCardRoles(targetedMinusRemoval).includes('spot interaction'), true);
+});
+
+test('expensive wearer-only Equipment protection is conditional while efficient Equip remains normal protection', () => {
+  const expensiveRoles = inferCardRoles(expensiveWearerProtection);
+  const efficientRoles = inferCardRoles(efficientWearerProtection);
+  assert.equal(expensiveRoles.includes('protection'), false);
+  assert.equal(expensiveRoles.includes('conditional protection'), true);
+  assert.equal(efficientRoles.includes('protection'), true);
+});
+
+test('putting a target creature from any graveyard onto the battlefield counts as recursion', () => {
+  assert.equal(inferCardRoles(anyGraveyardReanimation).includes('graveyard recursion'), true);
+});
+
+test('persistent colored mana excludes one-shot color filtering', () => {
+  assert.equal(inferCardRoles(persistentRainbowRock).includes('persistent colored mana source'), true);
+  assert.equal(inferCardRoles(oneShotColorFilter).includes('persistent colored mana source'), false);
+});
+
+// This shared-query regression intentionally exercises the exact legacy clause still emitted by
+// both targeted Build and unrestricted Upgrade so their discovery semantics cannot drift again.
+test('legacy Build and Upgrade free-interaction searches are expanded to the shared semantics before Scryfall lookup', () => {
+  const legacy = 'f:commander id<=ubr -t:land ((mv=0 OR o:"rather than pay") (o:"counter target" OR o:"destroy target" OR o:"exile target"))';
+  const normalized = normalizeScryfallSearchQueryV15(legacy);
+  assert.match(normalized, /o:"without paying"/);
+  assert.match(normalized, /kw:evoke/);
+  assert.match(normalized, /is:phyrexian/);
+  assert.match(normalized, /o:"choose new targets"/);
+  assert.match(normalized, /o:"puts it on the top"/);
+  assert.doesNotMatch(normalized, /\(\(mv=0 OR o:"rather than pay"\) \(o:"counter target"/);
+});
+
+test('deck metrics no longer let basic lands or Farseek-style ramp satisfy ramp and tutor targets simultaneously', () => {
+  const parsed = parseDecklist('31 Forest\n1 Farseek\n1 Demonic Tutor');
+  const metrics = buildDeckMetrics(parsed, [forest, farseek, demonicTutor]);
+  assert.equal(metrics.landCount, 31);
+  assert.equal(metrics.rampCount, 1);
+  assert.equal(metrics.tutorCount, 1);
+  assert.equal(metrics.roleCounts['mana acceleration'] ?? 0, 0);
+  assert.equal(metrics.roleCounts['land ramp'] ?? 0, 1);
+});
