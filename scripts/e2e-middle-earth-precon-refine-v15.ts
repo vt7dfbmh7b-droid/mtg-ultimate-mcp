@@ -252,7 +252,7 @@ async function main(): Promise<void> {
         packageAcceptanceContract: {
           strategyFuel: [{
             id: 'repeatable-life-gain-draw-engine',
-            minimumCount: 1,
+            minimumCount: 2,
             matcher: {
               requiredRoles: ['life-gain-triggered draw engine'],
               requireNonland: true,
