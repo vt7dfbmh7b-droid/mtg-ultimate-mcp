@@ -2,3 +2,5 @@
 > mtg-ultimate-mcp@0.13.0 build
 > tsc -p tsconfig.json
 
+src/services/deck-builder-v07.ts(745,5): error TS2532: Object is possibly 'undefined'.
+src/services/deck-builder-v07.ts(1389,7): error TS2532: Object is possibly 'undefined'.
