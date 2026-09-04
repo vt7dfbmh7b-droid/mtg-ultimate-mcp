@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFromProjectStateUpdatedAt": "2026-09-04T00:36:55.187Z",
+  "generatedFromProjectStateUpdatedAt": "2026-09-04T02:41:36.044Z",
   "developmentCheckpointSha": "77a5383fa7490aa91360b8186a4bda890f632157",
   "records": [
     {
@@ -75,14 +75,14 @@
       ],
       "metadataPath": "test-results/marvel-bracket5/refine-run-metadata.txt",
       "exists": true,
-      "sourceSha": "be59f5ab5b7adabc5318e042c0f1920d163935f2",
+      "sourceSha": "dcfc78d93e707e1d1a5199ad3cf852f8a3e993fb",
       "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "be59f5ab5b7adabc5318e042c0f1920d163935f2",
+        "source_sha": "dcfc78d93e707e1d1a5199ad3cf852f8a3e993fb",
         "control_outcome": "failure",
-        "execution_outcome": "skipped",
-        "target_gate_quality_outcome": "skipped",
+        "execution_outcome": "success",
+        "target_gate_quality_outcome": "failure",
         "policy": "checked-in-very-good-candidate",
         "max_win_package_cards": "4",
         "spellbook_max_rows_per_query": "400",
@@ -100,7 +100,6 @@
       },
       "unmetPassConditions": [
         "control_outcome=success",
-        "execution_outcome=success",
         "target_gate_quality_outcome=success"
       ]
     },
@@ -142,6 +141,29 @@
         "target_quality_outcome=success",
         "strategy_preservation_outcome=success"
       ]
+    },
+    {
+      "id": "SCIONS-SPELLCRAFT-FF-ONLY",
+      "label": "Scions & Spellcraft Final Fantasy-only autonomous refinement",
+      "claimLevel": "scenario-intelligence",
+      "milestones": [
+        "INTEL-02"
+      ],
+      "metadataPath": "test-results/scions-spellcraft-ff-only/run-metadata.txt",
+      "exists": true,
+      "sourceSha": "dcfc78d93e707e1d1a5199ad3cf852f8a3e993fb",
+      "outcome": "pass",
+      "matchesDevelopmentCheckpoint": false,
+      "metadata": {
+        "source_sha": "dcfc78d93e707e1d1a5199ad3cf852f8a3e993fb",
+        "build_outcome": "success",
+        "mechanic_test_outcome": "success",
+        "control_outcome": "success",
+        "policy": "scions-spellcraft-final-fantasy-no-new-infinite",
+        "target_bracket": "4",
+        "strategy": "yshtola-spells-control-drain"
+      },
+      "unmetPassConditions": []
     },
     {
       "id": "MIDDLE-EARTH-PRECON-REFINE",
