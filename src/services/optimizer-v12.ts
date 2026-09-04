@@ -382,6 +382,22 @@ function diversifyRejectedStrategyCuts(blocked: Set<string>, candidate: Candidat
   for (const name of rejectedStrategyCutNamesV15(candidate.plan)) blocked.add(name.toLocaleLowerCase());
 }
 
+const PACKAGE_ACCEPTANCE_REJECTION_REASONS_V15 = new Set([
+  'package-reduces-declared-strategy-fuel',
+  'package-breaks-declared-structural-floor',
+  'package-reduces-declared-strategy-fuel-and-structural-floor',
+  'package-fails-declared-acceptance-contract',
+]);
+
+function diversifyRejectedPackageAcceptanceCuts(
+  blocked: Set<string>,
+  candidate: CandidateEvaluationV12,
+): void {
+  if (!candidate.plan || !PACKAGE_ACCEPTANCE_REJECTION_REASONS_V15.has(candidate.reason)) return;
+  const swaps = Array.isArray(candidate.plan.swaps) ? candidate.plan.swaps.map(asRecord) : [];
+  for (const name of namesFromSwaps(swaps, 'out')) blocked.add(name.toLocaleLowerCase());
+}
+
 function uniqueNames(values: readonly string[]): string[] {
   return [...new Map(values
     .map((value) => value.trim())
@@ -934,6 +950,7 @@ export async function refineCommanderDeckIterativelyV12(
         candidates.push(evaluated);
         if (evaluated.plan) diversifyNextPackage(diversityBlocked, evaluated.plan);
         diversifyRejectedStrategyCuts(strategyCutBlocked, evaluated);
+        diversifyRejectedPackageAcceptanceCuts(strategyCutBlocked, evaluated);
       }
       winner = chooseWinner(candidates);
       evaluatedAtWinningSize = candidates;
