@@ -72,3 +72,36 @@ Manual acceptance is still incomplete. The remaining review holds include Necron
 ## Next action
 
 Keep the accepted development checkpoint at `77a5383...`. Complete the remaining manual family review and resolve the Necron/Squirrels/Food holds before considering a new checkpoint. Keep BENCH-01 gated until the broader INTEL-02 family is mechanically green and manually acceptable. Do not merge or promote PR #29.
+
+
+## Exact-source replay follow-up — source `5829b37b686255ba35d419b37be17095e54fb696`
+
+After the targeted role-truth corrections, the complete dependent family was replayed from one exact executable source, `5829b37b686255ba35d419b37be17095e54fb696`. The source is a validation marker descendant of the semantic fix; it makes the path-filtered workflows execute the same source without changing runtime behavior. Every family result records this source in its workflow/executed-source metadata. Later branch-head commits are evidence-writer descendants only.
+
+| Control | Run | Result | Interpretation |
+|---|---:|---|---|
+| CI | 33919245845 | pass | Build and repository control green |
+| Strategy-inference regression | 33919245930 | pass | Generic semantic regression control green |
+| INTEL-01 positive full-table package | 33919245779 | pass | Positive package/control evidence green |
+| Food and Fellowship | 33919245869 | pass | Exact legality, budget, target quality and strategy preservation green |
+| Necron Dynasties | 33919245821 | pass | Exact legality, budget, directionality, recursion and artifact-engine gates green |
+| Squirreled Away | 33919245870 | pass | Exact legality, budget, combat-token and token-sacrifice gates green |
+| Scions & Spellcraft FF-only | 33919245811 | pass | Package fuel, structural floors and policy control green |
+| Expanded Middle-earth permanent family | 33919245932 | success | Exact printing-family control green; zero swaps, so no improvement claim |
+| Marvel focused Bracket 5 | 33919245868 | fail closed | Zero swaps; target-quality gate remains honestly red |
+| Marvel broad Bracket 5 | 33919245819 | fail closed | Zero swaps; target-quality/strategy gates remain honestly red |
+| Themed special-printing audit | 33919245834 | provider-unknown | Scryfall HTTP 429; not evidence of absence or a product regression |
+| Liliana NZ$500 whole-deck challenge | 33919245800 | supplementary pass | Useful budget evidence, not promoted to a separate family registry claim |
+
+### Manual deck disposition
+
+- Food and Fellowship no longer accepts the old Great Oak Guardian or Well of Lost Dreams false greens. Great Oak and Well remain in the final deck. The accepted package keeps the Food/lifegain/draw/token backbone; Feasting Hobbit → Hobbit's Sting and Lobelia → The Sackville-Bagginses remain incidental-role watch items, not declared-core losses.
+- Necron retains the commander-facing artifact/reanimation spine, including Trazyn the Infinite, Resurrection Orb and Tomb Blade. The Triarch Stalker → Increasing Ambition package has a local artifact-engine watch, but the final deck remains substantively artifact/reanimator dense.
+- Squirreled Away retains the principal token/death-payoff spine, including Second Harvest, Poison-Tip Archer, Moldervine Reclamation and Nadier's Nightblade. Rootcast Apprenticeship → Not Dead After All loses an incidental counter mode and is accepted with that watch.
+- Scions retains meaningful equipment/attachment support after the three accepted swaps, so the Sram draw role is supportable in the final list.
+
+This replay therefore shows consistent positive controls and honest negative/ceiling behavior from one source, with no previously identified Food false green resurfacing in manual review. It is not a new INTEL-02 checkpoint: the two Marvel target-quality controls remain red by policy, and the themed printing truth control is still provider-unknown.
+
+## Current disposition
+
+Keep the accepted experimental checkpoint at `77a5383fa7490aa91360b8186a4bda890f632157`. Keep BENCH-01 gated pending a future replay with the themed provider available and a policy-level decision on the restricted Marvel ceiling. Stable `main` remains V0.13.0, and PR #29 remains an open draft/unmerged experimental record.
