@@ -590,7 +590,7 @@ test('life-gain-triggered draw is distinct from one-shot draw', () => {
   const lifeGainTriggeredDraw = card({
     name: 'Generic Life-Gain Triggered Draw',
     typeLine: 'Artifact',
-    oracleText: 'Whenever you gain life, you may pay {2}.\\nIf you do, draw a card.',
+    oracleText: 'Whenever you gain life, you may pay {X}, where X is less than or equal to the amount of life you gained. If you do, draw X cards.',
   });
 
   const oneShotLifeDraw = card({
