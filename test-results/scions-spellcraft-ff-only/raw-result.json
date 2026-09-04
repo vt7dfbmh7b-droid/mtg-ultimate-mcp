@@ -3,7 +3,7 @@
   "currencyPolicy": {
     "primaryCurrency": "NZD",
     "displaySymbol": "NZ$",
-    "usdToNzdRate": 1.7079,
+    "usdToNzdRate": 1.7069,
     "rateDate": "2026-09-04",
     "rateSource": "Frankfurter",
     "rateSourceUrl": "https://api.frankfurter.dev/v2/rate/USD/NZD",
@@ -83,7 +83,7 @@
           }
         ]
       },
-      "estimatedUpgradeSpendNzd": 63.93,
+      "estimatedUpgradeSpendNzd": 63.89,
       "estimatedUpgradeSpendUsdReference": 37.43,
       "maxTotalNzd": null,
       "maxTotalUsdReference": null,
@@ -96,7 +96,7 @@
             "set": "RFIN",
             "collectorNumber": "J2",
             "finish": "nonfoil",
-            "priceNzd": 23.01,
+            "priceNzd": 22.99,
             "priceUsdReference": 13.47
           },
           "structuralPairing": {
@@ -147,7 +147,7 @@
             "set": "FCA",
             "collectorNumber": "34",
             "finish": "nonfoil",
-            "priceNzd": 27.29,
+            "priceNzd": 27.28,
             "priceUsdReference": 15.98
           },
           "structuralPairing": {
@@ -192,7 +192,7 @@
             "set": "FCA",
             "collectorNumber": "3",
             "finish": "nonfoil",
-            "priceNzd": 13.63,
+            "priceNzd": 13.62,
             "priceUsdReference": 7.98
           },
           "structuralPairing": {
@@ -318,7 +318,7 @@
           ],
           "candidatePackagesGeneratedAcrossAttempts": 5,
           "winningCandidate": 1,
-          "estimatedSpendNzd": 63.93,
+          "estimatedSpendNzd": 63.89,
           "estimatedSpendUsdReference": 37.43,
           "improvementScore": 3.125,
           "winRouteProtection": {
@@ -405,7 +405,7 @@
           "candidatePackagesGenerated": 5,
           "candidatePackagesEligible": 2,
           "winningCandidate": 1,
-          "estimatedSpendNzd": 63.93,
+          "estimatedSpendNzd": 63.89,
           "estimatedSpendUsdReference": 37.43,
           "improvementScore": 3.125,
           "winRouteProtection": {
@@ -425,7 +425,7 @@
                 "collectorNumber": "J2",
                 "releaseDate": "2025-06-13",
                 "finish": "nonfoil",
-                "priceNzd": 23.01,
+                "priceNzd": 22.99,
                 "priceUsdReference": 13.47,
                 "promo": true,
                 "promoTypes": [
@@ -487,7 +487,7 @@
                 "collectorNumber": "34",
                 "releaseDate": "2025-06-13",
                 "finish": "nonfoil",
-                "priceNzd": 27.29,
+                "priceNzd": 27.28,
                 "priceUsdReference": 15.98,
                 "promo": false,
                 "promoTypes": [
@@ -544,7 +544,7 @@
                 "collectorNumber": "3",
                 "releaseDate": "2025-06-13",
                 "finish": "nonfoil",
-                "priceNzd": 13.63,
+                "priceNzd": 13.62,
                 "priceUsdReference": 7.98,
                 "promo": false,
                 "promoTypes": [
@@ -604,7 +604,7 @@
               "reason": "eligible",
               "attemptedSwaps": 4,
               "actualSwaps": 3,
-              "estimatedSpendNzd": 63.93,
+              "estimatedSpendNzd": 63.89,
               "estimatedSpendUsdReference": 37.43,
               "unknownPriceCount": 0,
               "improvementScore": 3.125,
@@ -1006,7 +1006,7 @@
                     "set": "RFIN",
                     "collectorNumber": "J2",
                     "finish": "nonfoil",
-                    "priceNzd": 23.01,
+                    "priceNzd": 22.99,
                     "priceUsdReference": 13.47
                   },
                   "structuralPairing": {
@@ -1057,7 +1057,7 @@
                     "set": "FCA",
                     "collectorNumber": "34",
                     "finish": "nonfoil",
-                    "priceNzd": 27.29,
+                    "priceNzd": 27.28,
                     "priceUsdReference": 15.98
                   },
                   "structuralPairing": {
@@ -1102,7 +1102,7 @@
                     "set": "FCA",
                     "collectorNumber": "3",
                     "finish": "nonfoil",
-                    "priceNzd": 13.63,
+                    "priceNzd": 13.62,
                     "priceUsdReference": 7.98
                   },
                   "structuralPairing": {
@@ -1151,7 +1151,7 @@
               "reason": "eligible",
               "attemptedSwaps": 4,
               "actualSwaps": 1,
-              "estimatedSpendNzd": 13.63,
+              "estimatedSpendNzd": 13.62,
               "estimatedSpendUsdReference": 7.98,
               "unknownPriceCount": 0,
               "improvementScore": 2.098,
@@ -1495,7 +1495,7 @@
                     "set": "FCA",
                     "collectorNumber": "3",
                     "finish": "nonfoil",
-                    "priceNzd": 13.63,
+                    "priceNzd": 13.62,
                     "priceUsdReference": 7.98
                   },
                   "structuralPairing": {
@@ -2099,7 +2099,7 @@
                   "reason": "eligible",
                   "attemptedSwaps": 4,
                   "actualSwaps": 3,
-                  "estimatedSpendNzd": 63.93,
+                  "estimatedSpendNzd": 63.89,
                   "estimatedSpendUsdReference": 37.43,
                   "unknownPriceCount": 0,
                   "improvementScore": 3.125,
@@ -2501,7 +2501,7 @@
                         "set": "RFIN",
                         "collectorNumber": "J2",
                         "finish": "nonfoil",
-                        "priceNzd": 23.01,
+                        "priceNzd": 22.99,
                         "priceUsdReference": 13.47
                       },
                       "structuralPairing": {
@@ -2552,7 +2552,7 @@
                         "set": "FCA",
                         "collectorNumber": "34",
                         "finish": "nonfoil",
-                        "priceNzd": 27.29,
+                        "priceNzd": 27.28,
                         "priceUsdReference": 15.98
                       },
                       "structuralPairing": {
@@ -2597,7 +2597,7 @@
                         "set": "FCA",
                         "collectorNumber": "3",
                         "finish": "nonfoil",
-                        "priceNzd": 13.63,
+                        "priceNzd": 13.62,
                         "priceUsdReference": 7.98
                       },
                       "structuralPairing": {
@@ -2646,7 +2646,7 @@
                   "reason": "eligible",
                   "attemptedSwaps": 4,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 13.63,
+                  "estimatedSpendNzd": 13.62,
                   "estimatedSpendUsdReference": 7.98,
                   "unknownPriceCount": 0,
                   "improvementScore": 2.098,
@@ -2990,7 +2990,7 @@
                         "set": "FCA",
                         "collectorNumber": "3",
                         "finish": "nonfoil",
-                        "priceNzd": 13.63,
+                        "priceNzd": 13.62,
                         "priceUsdReference": 7.98
                       },
                       "structuralPairing": {

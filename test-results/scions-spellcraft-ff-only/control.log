@@ -23,7 +23,7 @@
         "set": "RFIN",
         "collectorNumber": "J2",
         "finish": "nonfoil",
-        "priceNzd": 23.01,
+        "priceNzd": 22.99,
         "priceUsdReference": 13.47
       },
       "structuralPairing": {
@@ -74,7 +74,7 @@
         "set": "FCA",
         "collectorNumber": "34",
         "finish": "nonfoil",
-        "priceNzd": 27.29,
+        "priceNzd": 27.28,
         "priceUsdReference": 15.98
       },
       "structuralPairing": {
@@ -119,7 +119,7 @@
         "set": "FCA",
         "collectorNumber": "3",
         "finish": "nonfoil",
-        "priceNzd": 13.63,
+        "priceNzd": 13.62,
         "priceUsdReference": 7.98
       },
       "structuralPairing": {
