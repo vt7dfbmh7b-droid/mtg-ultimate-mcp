@@ -1,0 +1,92 @@
+name: "Current-source Scions & Spellcraft FF-Only Validation"
+
+# Temporary validation-only workflow. Do not merge or promote from this branch.
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "scripts/e2e-scions-spellcraft-ff-only-v15.ts"
+      - "src/services/commander-strategy-affinity-v15.ts"
+      - "src/services/refinement-acceptance-v15.ts"
+      - "src/services/refinement-acceptance-v15.test.ts"
+      - "src/services/optimizer-v12.ts"
+      - "src/services/deck-builder-v07.ts"
+      - "src/services/refinement-workflows-v12.ts"
+      - "src/server-v12.ts"
+      - "src/server-v13.ts"
+      - ".github/workflows/scions-spellcraft-ff-only-current-source.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: scions-spellcraft-ff-only-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  refine-scions-spellcraft:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Check out current experimental PR source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build checked-in source
+        id: source_build
+        continue-on-error: true
+        run: npm run build
+
+      - name: Run direct commander-mechanic regression tests
+        id: mechanic_tests
+        if: steps.source_build.outcome == 'success'
+        continue-on-error: true
+        run: npx tsx --test src/services/commander-direct-support-v15.test.ts src/services/commander-strategy-affinity-v15.test.ts src/services/upgrade-cut-pressure-v15.test.ts src/services/refinement-acceptance-v15.test.ts
+
+      - name: "Run Scions & Spellcraft restricted precon refinement"
+        id: scions_control
+        if: steps.source_build.outcome == 'success' && steps.mechanic_tests.outcome == 'success'
+        continue-on-error: true
+        run: npx tsx scripts/e2e-scions-spellcraft-ff-only-v15.ts
+
+      - name: Upload Scions validation evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: scions-spellcraft-ff-only-${{ github.sha }}
+          path: |
+            scions-spellcraft-ff-only-result.json
+            scions-spellcraft-candidate-audit.json
+            scions-spellcraft-ff-only-raw-result.json
+            scions-spellcraft-stock-deck.txt
+            scions-spellcraft-refined-deck.txt
+            scions-spellcraft-ff-only-failure.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Require Scions validation success
+        if: always()
+        env:
+          BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          MECHANIC_TEST_OUTCOME: ${{ steps.mechanic_tests.outcome }}
+          CONTROL_OUTCOME: ${{ steps.scions_control.outcome }}
+        run: |
+          test "$BUILD_OUTCOME" = success
+          test "$MECHANIC_TEST_OUTCOME" = success
+          test "$CONTROL_OUTCOME" = success
