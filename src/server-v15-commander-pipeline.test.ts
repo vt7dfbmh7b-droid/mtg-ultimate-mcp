@@ -164,6 +164,7 @@ test('experimental V0.15 registers the universal pipeline schema while stable cu
       'landCount',
       'maxNonbasicLands',
       'winPackageMode',
+      'minimumDistinctLibraryRoutes',
     ]) {
       assert.ok(field in properties, `schema should expose ${field}`);
     }
@@ -209,6 +210,7 @@ test('MCP boundary preserves exact commander identity, true no-target behavior, 
       landCount: 36,
       maxNonbasicLands: 30,
       winPackageMode: 'auto',
+      minimumDistinctLibraryRoutes: 2,
     });
 
     assert.deepEqual(capturedIdentifiers, [{ name: exactCommander.name, set: 'FCA', collectorNumber: '42' }]);
@@ -223,6 +225,7 @@ test('MCP boundary preserves exact commander identity, true no-target behavior, 
     assert.equal(capturedOptions?.landCount, 36);
     assert.equal(capturedOptions?.maxNonbasicLands, 30);
     assert.equal(capturedOptions?.winPackageMode, 'auto');
+    assert.equal(capturedOptions?.minimumDistinctLibraryRoutes, 2);
 
     assert.equal(result.status, 'complete-evaluated-build');
     const built = result.built as Record<string, unknown>;
