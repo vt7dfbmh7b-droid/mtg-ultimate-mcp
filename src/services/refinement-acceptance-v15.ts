@@ -156,9 +156,10 @@ function validateRequirements(
   seenIds: Set<string>,
 ): string[] {
   if (requirements === undefined) return [];
-  if (!Array.isArray(requirements) || requirements.length === 0) {
-    return [kind + ': at least one component is required when the list is supplied'];
+  if (!Array.isArray(requirements)) {
+    return [kind + ': components must be supplied as an array'];
   }
+  if (requirements.length === 0) return [];
 
   const errors: string[] = [];
   for (const rawRequirement of requirements) {
