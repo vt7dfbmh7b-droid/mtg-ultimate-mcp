@@ -15,6 +15,25 @@ const errorResult = (error: unknown) => ({
 });
 
 const detailLevel = z.enum(['simple', 'standard', 'detailed']).optional().default('simple');
+const refinementComponentMatcher = z.object({
+  requiredRoles: z.array(z.string().min(1).max(100)).max(20).optional(),
+  anyRoles: z.array(z.string().min(1).max(100)).max(20).optional(),
+  requireNonland: z.boolean().optional(),
+  requireNoncreature: z.boolean().optional(),
+  minManaValue: z.number().min(0).max(30).optional(),
+  maxManaValue: z.number().min(0).max(30).optional(),
+  countXAsAtLeastManaValue: z.number().min(0).max(30).optional(),
+});
+const refinementComponent = z.object({
+  id: z.string().min(1).max(120),
+  minimumCount: z.number().int().min(0).max(100),
+  matcher: refinementComponentMatcher,
+  zone: z.enum(['main', 'all']).optional(),
+});
+const packageAcceptanceContract = z.object({
+  strategyFuel: z.array(refinementComponent).max(20).optional(),
+  structuralFloors: z.array(refinementComponent).max(20).optional(),
+});
 const printingFields = {
   printingFamily: z.string().min(1).max(120).optional(),
   allowedSets: z.array(z.string().min(2).max(12)).max(50).optional().default([]),
@@ -37,6 +56,7 @@ const refinementFields = {
   simulationTurns: z.number().int().min(3).max(12).optional(),
   seed: z.number().int().min(1).max(2_147_483_647).optional(),
   detailLevel,
+  packageAcceptanceContract: packageAcceptanceContract.optional(),
   ...printingFields,
 };
 
@@ -83,6 +103,7 @@ export function registerMtgToolsV12(server: McpServer): McpServer {
           candidatePackagesPerRound: input.candidatePackagesPerRound,
           ...(input.minimumImprovementScore !== undefined ? { minimumImprovementScore: input.minimumImprovementScore } : {}),
           ...(input.themeQuery ? { themeQuery: input.themeQuery } : {}),
+           ...(input.packageAcceptanceContract ? { packageAcceptanceContract: input.packageAcceptanceContract } : {}),
           excludedCards: input.excludedCards,
           protectedCards: input.protectedCards,
           ...(input.simulationIterations !== undefined ? { simulationIterations: input.simulationIterations } : {}),
@@ -130,6 +151,7 @@ export function registerMtgToolsV12(server: McpServer): McpServer {
           candidatePackagesPerRound: input.candidatePackagesPerRound ?? defaults.candidatePackagesPerRound ?? 3,
           ...(input.minimumImprovementScore !== undefined ? { minimumImprovementScore: input.minimumImprovementScore } : {}),
           ...(input.themeQuery ? { themeQuery: input.themeQuery } : {}),
+           ...(input.packageAcceptanceContract ? { packageAcceptanceContract: input.packageAcceptanceContract } : {}),
           excludedCards: input.excludedCards,
           protectedCards: input.protectedCards,
           ...(input.simulationIterations !== undefined ? { simulationIterations: input.simulationIterations } : {}),
@@ -171,6 +193,7 @@ export function registerMtgToolsV12(server: McpServer): McpServer {
         simulationTurns: z.number().int().min(3).max(12).optional().default(7),
         seed: z.number().int().min(1).max(2_147_483_647).optional().default(20_260_816),
         detailLevel,
+        packageAcceptanceContract: packageAcceptanceContract.optional(),
         ...printingFields,
       }),
       annotations: { readOnlyHint: true, openWorldHint: true },
@@ -180,6 +203,7 @@ export function registerMtgToolsV12(server: McpServer): McpServer {
         return jsonResult(await buildAndRefineCommanderDeckV12(input.commanderNames, {
           targetBracket: input.targetBracket,
           ...(input.themeQuery ? { themeQuery: input.themeQuery } : {}),
+           ...(input.packageAcceptanceContract ? { packageAcceptanceContract: input.packageAcceptanceContract } : {}),
           ...(input.maxUsdPerCard !== undefined ? { maxUsdPerCard: input.maxUsdPerCard } : {}),
           ...(input.maxPostDraftUpgradeUsd !== undefined ? { maxPostDraftUpgradeUsd: input.maxPostDraftUpgradeUsd } : {}),
           excludedCards: input.excludedCards,
