@@ -516,6 +516,15 @@ Protection: caller-declared generic semantic component/floor inputs are now trac
 
 Status: partially prevented on the active branch. The deterministic acceptance suite passes 23/23, and current-source FF32 workflow `33830011009` at executable source `dcfc78d93e707e1d1a5199ad3cf852f8a3e993fb` passed with 29 trigger spells preserved, nonland noncreature spell density 40→41, board wipes 3→3 and fast mana 1→1. Historical failures `a079090...` and `7a2a80f...` remain retained as regression evidence; broader INTEL-02 family revalidation is still pending.
 
+## KF-052 — Caller metric and matcher disagreement creates a false package floor
+
+Observed: the first current-source FF32 contract used a coarse `noncreatureSpellCount` metric that included lands (77), while its nonland/noncreature semantic matcher counted only spells (40). The contract therefore declared a baseline minimum that the matcher could never satisfy, even though the deck's actual nonland spell density was intact.
+
+Risk: a valid package can be rejected, or a benchmark can report a misleading regression, when the caller's measured baseline and its semantic acceptance descriptor count different populations. This is an evidence-contract defect rather than a deck-quality result.
+
+Protection: caller controls must define metric baselines over the same semantic population their acceptance matcher audits. The FF32 control now counts nonland noncreature spells consistently, the exact-source workflow `33830011009` at executable source `dcfc78d93e707e1d1a5199ad3cf852f8a3e993fb` passes, and the generic acceptance suite covers descriptor validation and exact-package auditing.
+
+Status: prevented for the current FF32 control; keep the contract/matcher alignment requirement as a reusable caller-level regression.
 ## Adding a failure
 
 Every new material failure should record:
