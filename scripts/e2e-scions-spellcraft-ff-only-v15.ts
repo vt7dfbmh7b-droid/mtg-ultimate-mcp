@@ -120,8 +120,10 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
   for (const entry of parsed.main) {
     const card = cardByName.get(entry.name.toLocaleLowerCase());
     if (!card) continue;
-    const isCreature = card.type_line.toLocaleLowerCase().includes('creature');
-    if (!isCreature) {
+    const typeLine = card.type_line.toLocaleLowerCase();
+    const isCreature = typeLine.includes('creature');
+    const isLand = typeLine.includes('land');
+    if (!isCreature && !isLand) {
       noncreatureSpellCount += entry.quantity;
       if (card.cmc >= 3 || /\{X\}/i.test(card.mana_cost ?? '')) {
         yshtolaTriggerSpellCount += entry.quantity;
