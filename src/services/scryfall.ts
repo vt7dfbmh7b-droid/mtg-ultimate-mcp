@@ -282,16 +282,16 @@ export function inferCardRoles(card: ScryfallCard): string[] {
 
   const oneForOneLoot = /\bdraw (?:a|one|1) card,? then discard (?:a|one|1) card\b/.test(mechanicalText);
   const drawText = mechanicalText.replace(/\bdraw (?:a|one|1) card,? then discard (?:a|one|1) card\b/g, '');
-  if (/draw (?:a|one|two|three|four|five|\d+) cards?/.test(drawText)) roles.add('card draw');
+  if (/draw (?:a|one|two|three|four|five|x|\d+) cards?/.test(drawText)) roles.add('card draw');
   if (oneForOneLoot) roles.add('card selection');
-  const repeatableDraw = /\b(?:whenever|at the beginning of)\b[\s\S]{0,260}\bdraw (?:a|one|two|three|four|five|\d+) cards?/.test(mechanicalText)
-    || /:\s*[\s\S]{0,260}\bdraw (?:a|one|two|three|four|five|\d+) cards?/.test(mechanicalText);
+  const repeatableDraw = /\b(?:whenever|at the beginning of)\b[\s\S]{0,260}\bdraw (?:a|one|two|three|four|five|x|\d+) cards?/.test(mechanicalText)
+    || /:\s*[\s\S]{0,260}\bdraw (?:a|one|two|three|four|five|x|\d+) cards?/.test(mechanicalText);
   if (repeatableDraw) roles.add('repeatable draw');
-  const lifeGainTriggeredDraw = /\b(?:whenever|at the beginning of)\b[\s\S]{0,260}\bgain(?: (?:\d+|one|two|three|four|five|that much))? life\b[\s\S]{0,180}\bdraw (?:a|one|two|three|four|five|\d+) cards?/.test(mechanicalText);
+  const lifeGainTriggeredDraw = /\b(?:whenever|at the beginning of)\b[\s\S]{0,260}\bgain(?: (?:\d+|one|two|three|four|five|x|that much))? life\b[\s\S]{0,180}\bdraw (?:a|one|two|three|four|five|x|\d+) cards?/.test(mechanicalText);
   if (lifeGainTriggeredDraw) roles.add('life-gain-triggered draw engine');
-  const deathTriggeredDraw = /\bwhenever (?:one or more )?[^.]{0,100}\bcreatures?\b[^.]{0,80}\bdies?\b[^.]{0,120}\bdraw (?:a|one|two|three|four|five|\d+) cards?\b/.test(text);
+  const deathTriggeredDraw = /\bwhenever (?:one or more )?[^.]{0,100}\bcreatures?\b[^.]{0,80}\bdies?\b[^.]{0,120}\bdraw (?:a|one|two|three|four|five|x|\d+) cards?\b/.test(text);
   if (deathTriggeredDraw) roles.add('death-trigger draw engine');
-  const teamCombatDamageDraw = /\bwhenever (?:one or more )?(?:a )?creatures? you control deal(?:s)? combat damage to (?:a player|an opponent)[^.]{0,120}\bdraw (?:a|one|two|three|four|five|\d+) cards?\b/.test(text);
+  const teamCombatDamageDraw = /\bwhenever (?:one or more )?(?:a )?creatures? you control deal(?:s)? combat damage to (?:a player|an opponent)[^.]{0,120}\bdraw (?:a|one|two|three|four|five|x|\d+) cards?\b/.test(text);
   if (teamCombatDamageDraw) roles.add('team combat-damage draw engine');
   if (/scry|surveil|look at the top .* cards|exile the top .* you may play/.test(text)) roles.add('card selection');
   if (/discard your hand.*draw|each player discards .* hand.*draw/.test(text)) roles.add('wheel');
@@ -408,9 +408,9 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (/extra combat/.test(text) || /additional combat/.test(text)) roles.add('extra combat');
   if (/you win the game|loses the game/.test(text)) roles.add('alternate win condition');
   if (/whenever .* loses? life|deals? damage to each opponent|each opponent loses/.test(text)) roles.add('life drain');
-  const repeatableLifeGain = /\b(?:whenever|at the beginning of)\b[^.]{0,220}\byou gain (?:\d+|one|two|three|four|five|that much) life\b/.test(mechanicalText)
-    || /:\s*[^.]{0,180}\byou gain (?:\d+|one|two|three|four|five|that much) life\b/.test(mechanicalText)
-    || /\{t\}[^:]{0,100}:\s*[^.]{0,180}\.\s*you gain (?:\d+|one|two|three|four|five|that much) life\b/.test(mechanicalText);
+  const repeatableLifeGain = /\b(?:whenever|at the beginning of)\b[^.]{0,220}\byou gain (?:\d+|one|two|three|four|five|x|that much) life\b/.test(mechanicalText)
+    || /:\s*[^.]{0,180}\byou gain (?:\d+|one|two|three|four|five|x|that much) life\b/.test(mechanicalText)
+    || /\{t\}[^:]{0,100}:\s*[^.]{0,180}\.\s*you gain (?:\d+|one|two|three|four|five|x|that much) life\b/.test(mechanicalText);
   if (repeatableLifeGain) roles.add('repeatable life gain engine');
   if (/\bwhenever\b[^.]{0,220}\b(?:each opponent|target (?:opponent|player)|an opponent)\b[^.]{0,120}\bloses?\b[^.]{0,40}\blife\b/.test(text)) {
     roles.add('repeatable life drain');
