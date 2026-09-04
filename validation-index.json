@@ -40,7 +40,7 @@
       "metadataPath": "test-results/intel01-positive/run-metadata.txt",
       "exists": true,
       "sourceSha": "2b5b1338a102e8f6cf5be37f32f0ff9c64624d62",
-      "outcome": "pass",
+      "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
         "source_sha": "2b5b1338a102e8f6cf5be37f32f0ff9c64624d62",
@@ -65,7 +65,9 @@
         "commander_legality": "true",
         "printing_policy_truth": "true"
       },
-      "unmetPassConditions": []
+      "unmetPassConditions": [
+        "meaningful_alternate_routes_retained=true"
+      ]
     },
     {
       "id": "MARVEL-B5-REFINE",
@@ -173,13 +175,13 @@
       ],
       "metadataPath": "test-results/middle-earth-precon-refine/run-metadata.txt",
       "exists": true,
-      "sourceSha": "2b5b1338a102e8f6cf5be37f32f0ff9c64624d62",
+      "sourceSha": "54f823f2faeec5c312bd2a7954d30e6eaa8eeae8",
       "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "2b5b1338a102e8f6cf5be37f32f0ff9c64624d62",
-        "workflow_source_sha": "2b5b1338a102e8f6cf5be37f32f0ff9c64624d62",
-        "executed_head_sha": "2b5b1338a102e8f6cf5be37f32f0ff9c64624d62",
+        "source_sha": "54f823f2faeec5c312bd2a7954d30e6eaa8eeae8",
+        "workflow_source_sha": "54f823f2faeec5c312bd2a7954d30e6eaa8eeae8",
+        "executed_head_sha": "54f823f2faeec5c312bd2a7954d30e6eaa8eeae8",
         "control_outcome": "success",
         "build_outcome": "success",
         "regression_outcome": "success",
