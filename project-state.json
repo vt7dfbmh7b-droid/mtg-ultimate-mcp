@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-04T03:19:23.421Z",
+  "updatedAt": "2026-09-04T03:19:45.007Z",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
   "stable": {
@@ -70,7 +70,7 @@
     }
   ],
   "validation": {
-    "activeBranchStatus": "accepted-checkpoint-77a-intel01-positive-route-follow-up-ff32-package-gates-green-marvel-ceiling-recorded-family-unresolved",
+    "activeBranchStatus": "accepted-checkpoint-77a-intel01-route-resilience-green-ff32-package-gates-green-marvel-ceiling-recorded-family-unresolved",
     "latestPersistedMarvelControl": {
       "sourceSha": "f0c3b9f82dca49f295e44175e517d992e6e5356e",
       "outcome": "focused-zero-swap-broad-zero-swap",
@@ -97,7 +97,7 @@
       "Retain the source-7265531... six-swap audit as historical evidence; source f0c3b9f... now rejects all six classes generically through compound operational-component preservation",
       "Retain the generic Marvel construction ceiling recorded in D-020: the exhaustive restricted pool has no new fast-mana/tutor candidates beyond existing or excluded cards; keep focused and broad zero-swap results red and rerun only when provider or policy ceilings change.",
       "Keep graveyard directionality/actionable recursion, explicit artifact engines, self-sacrifice versus repeatable outlets, secondary-plan inference, strategy-support density, premium early infrastructure, board wipes, token-death engines and board-scaling payoffs fail-closed",
-      "Review the exact INTEL-01 positive source 50e5d19...: package proof passed end to end, but the finished deck retained one verified route despite a six-route discovery portfolio; do not claim alternate-route resilience until a generic route-retention control passes",
+      "Treat the current INTEL-01 positive control at source 54f823f2faeec5c312bd2a7954d30e6eaa8eeae8 (workflow 33832178963) as scenario-level validated: complete discovery, strict closure, exact printings, atomic two-package seeding, final recognition, four full-table routes and two distinct library routes all passed. Keep this evidence separate from the unresolved full INTEL-02 family checkpoint.",
       "Commander legality, exact 100 cards, singleton/color identity, printing-family/set restrictions and hard budgets must remain intact in every expanded control",
       "FF32 current-source Scions & Spellcraft control run 33830011009 at executable source dcfc78d93e707e1d1a5199ad3cf852f8a3e993fb passes generic package-level strategy-fuel/structural-floor acceptance, exact legality/printing/no-new-infinite/protected-core checks, and three accepted swaps; revalidate the broader dependent INTEL-02 family from one executable source before checkpoint promotion."
     ]
@@ -115,7 +115,7 @@
     "Keep the historical six focused-Marvel swaps unaccepted; source f0c3b9f... now rejects their compound operational-component losses generically and both exact-source Marvel lanes fail closed with zero swaps.",
     "Retain the generic Marvel construction ceiling recorded in D-020: the exhaustive restricted pool has no new fast-mana/tutor candidates beyond existing or excluded cards; do not expand the pool or lower Bracket-5 standards. Rerun only when provider or policy ceilings change.",
     "Preserve the component guard and its anonymous multi-axis regression while revalidating any future candidate-pool change against interaction, land/mana, treasure, sacrifice, token, card-advantage and cost-reduction floors.",
-    "Treat INTEL-01 as scenario-level validated at source 50e5d19... for package discovery, closure, feasibility, injection, protection, final recognition and access/setup audits; keep the one-route resilience finding open and non-gating.",
+    "Treat the current INTEL-01 positive control at source 54f823f2faeec5c312bd2a7954d30e6eaa8eeae8 (workflow 33832178963) as scenario-level validated: complete discovery, strict closure, exact printings, atomic two-package seeding, final recognition, four full-table routes and two distinct library routes all passed. Keep this evidence separate from the unresolved full INTEL-02 family checkpoint.",
     "When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.",
     "Record the current-source FF32 Scions & Spellcraft control as scenario-green at run 33830011009, executable source dcfc78d93e707e1d1a5199ad3cf852f8a3e993fb: generic package-level strategy-fuel and structural-floor gates preserved Y'shtola MV3+ trigger fuel, nonland spell density, board wipes and fast mana while allowing three target-advancing swaps. Keep the historical PR #32 failure retained; revalidate the broader dependent INTEL-02 family before any checkpoint claim.",
     "Keep PR #29 as experimental/evidence history. Do not merge or promote it automatically; when V0.15 is genuinely accepted, prepare a clean promotion candidate rather than treating the current 1,000+ commit evidence branch as release-ready."
