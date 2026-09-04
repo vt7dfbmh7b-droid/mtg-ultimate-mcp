@@ -10,4 +10,4 @@ AssertionError [ERR_ASSERTION]: addressable Scions precon must produce a support
 + 'no-supported-improvement'
 - 'refined'
 
-    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/e2e-scions-spellcraft-ff-only-v15.ts:317:10)
+    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/e2e-scions-spellcraft-ff-only-v15.ts:319:10)

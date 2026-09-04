@@ -55,7 +55,7 @@
           },
           {
             "id": "noncreature-spell-density",
-            "minimumCount": 77,
+            "minimumCount": 40,
             "matcher": {
               "requireNonland": true,
               "requireNoncreature": true
@@ -363,7 +363,7 @@
                   {
                     "kind": "strategy-fuel",
                     "id": "noncreature-spell-density",
-                    "minimumCount": 77,
+                    "minimumCount": 40,
                     "zone": "main",
                     "matcher": {
                       "requireNonland": true,
@@ -372,7 +372,7 @@
                     "beforeCount": 40,
                     "afterCount": 40,
                     "delta": 0,
-                    "preserved": false
+                    "preserved": true
                   }
                 ],
                 "structuralFloors": [
@@ -422,20 +422,6 @@
                     "beforeCount": 29,
                     "afterCount": 28,
                     "delta": -1,
-                    "preserved": false
-                  },
-                  {
-                    "kind": "strategy-fuel",
-                    "id": "noncreature-spell-density",
-                    "minimumCount": 77,
-                    "zone": "main",
-                    "matcher": {
-                      "requireNonland": true,
-                      "requireNoncreature": true
-                    },
-                    "beforeCount": 40,
-                    "afterCount": 40,
-                    "delta": 0,
                     "preserved": false
                   },
                   {
@@ -758,7 +744,7 @@
                   {
                     "kind": "strategy-fuel",
                     "id": "noncreature-spell-density",
-                    "minimumCount": 77,
+                    "minimumCount": 40,
                     "zone": "main",
                     "matcher": {
                       "requireNonland": true,
@@ -822,7 +808,7 @@
                   {
                     "kind": "strategy-fuel",
                     "id": "noncreature-spell-density",
-                    "minimumCount": 77,
+                    "minimumCount": 40,
                     "zone": "main",
                     "matcher": {
                       "requireNonland": true,
@@ -1132,7 +1118,7 @@
                   {
                     "kind": "strategy-fuel",
                     "id": "noncreature-spell-density",
-                    "minimumCount": 77,
+                    "minimumCount": 40,
                     "zone": "main",
                     "matcher": {
                       "requireNonland": true,
@@ -1141,7 +1127,7 @@
                     "beforeCount": 40,
                     "afterCount": 40,
                     "delta": 0,
-                    "preserved": false
+                    "preserved": true
                   }
                 ],
                 "structuralFloors": [
@@ -1191,20 +1177,6 @@
                     "beforeCount": 29,
                     "afterCount": 28,
                     "delta": -1,
-                    "preserved": false
-                  },
-                  {
-                    "kind": "strategy-fuel",
-                    "id": "noncreature-spell-density",
-                    "minimumCount": 77,
-                    "zone": "main",
-                    "matcher": {
-                      "requireNonland": true,
-                      "requireNoncreature": true
-                    },
-                    "beforeCount": 40,
-                    "afterCount": 40,
-                    "delta": 0,
                     "preserved": false
                   }
                 ],
@@ -1775,7 +1747,7 @@
                   {
                     "kind": "strategy-fuel",
                     "id": "noncreature-spell-density",
-                    "minimumCount": 77,
+                    "minimumCount": 40,
                     "zone": "main",
                     "matcher": {
                       "requireNonland": true,
@@ -1784,7 +1756,7 @@
                     "beforeCount": 40,
                     "afterCount": 40,
                     "delta": 0,
-                    "preserved": false
+                    "preserved": true
                   }
                 ],
                 "structuralFloors": [
@@ -1834,20 +1806,6 @@
                     "beforeCount": 29,
                     "afterCount": 28,
                     "delta": -1,
-                    "preserved": false
-                  },
-                  {
-                    "kind": "strategy-fuel",
-                    "id": "noncreature-spell-density",
-                    "minimumCount": 77,
-                    "zone": "main",
-                    "matcher": {
-                      "requireNonland": true,
-                      "requireNoncreature": true
-                    },
-                    "beforeCount": 40,
-                    "afterCount": 40,
-                    "delta": 0,
                     "preserved": false
                   }
                 ],
@@ -2238,7 +2196,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -2302,7 +2260,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -2815,7 +2773,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -2879,7 +2837,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -3328,7 +3286,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -3392,7 +3350,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -3836,7 +3794,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -3845,7 +3803,7 @@
                         "beforeCount": 40,
                         "afterCount": 40,
                         "delta": 0,
-                        "preserved": false
+                        "preserved": true
                       }
                     ],
                     "structuralFloors": [
@@ -3895,20 +3853,6 @@
                         "beforeCount": 29,
                         "afterCount": 26,
                         "delta": -3,
-                        "preserved": false
-                      },
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "noncreature-spell-density",
-                        "minimumCount": 77,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true
-                        },
-                        "beforeCount": 40,
-                        "afterCount": 40,
-                        "delta": 0,
                         "preserved": false
                       }
                     ],
@@ -4346,7 +4290,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -4355,7 +4299,7 @@
                         "beforeCount": 40,
                         "afterCount": 40,
                         "delta": 0,
-                        "preserved": false
+                        "preserved": true
                       }
                     ],
                     "structuralFloors": [
@@ -4405,20 +4349,6 @@
                         "beforeCount": 29,
                         "afterCount": 26,
                         "delta": -3,
-                        "preserved": false
-                      },
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "noncreature-spell-density",
-                        "minimumCount": 77,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true
-                        },
-                        "beforeCount": 40,
-                        "afterCount": 40,
-                        "delta": 0,
                         "preserved": false
                       }
                     ],
@@ -4869,7 +4799,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -4933,7 +4863,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -5401,7 +5331,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -5465,7 +5395,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -5914,7 +5844,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -5978,7 +5908,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -6422,7 +6352,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -6431,7 +6361,7 @@
                         "beforeCount": 40,
                         "afterCount": 40,
                         "delta": 0,
-                        "preserved": false
+                        "preserved": true
                       }
                     ],
                     "structuralFloors": [
@@ -6481,20 +6411,6 @@
                         "beforeCount": 29,
                         "afterCount": 26,
                         "delta": -3,
-                        "preserved": false
-                      },
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "noncreature-spell-density",
-                        "minimumCount": 77,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true
-                        },
-                        "beforeCount": 40,
-                        "afterCount": 40,
-                        "delta": 0,
                         "preserved": false
                       }
                     ],
@@ -6932,7 +6848,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -6941,7 +6857,7 @@
                         "beforeCount": 40,
                         "afterCount": 40,
                         "delta": 0,
-                        "preserved": false
+                        "preserved": true
                       }
                     ],
                     "structuralFloors": [
@@ -6991,20 +6907,6 @@
                         "beforeCount": 29,
                         "afterCount": 26,
                         "delta": -3,
-                        "preserved": false
-                      },
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "noncreature-spell-density",
-                        "minimumCount": 77,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true
-                        },
-                        "beforeCount": 40,
-                        "afterCount": 40,
-                        "delta": 0,
                         "preserved": false
                       }
                     ],
@@ -7427,7 +7329,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -7436,7 +7338,7 @@
                         "beforeCount": 40,
                         "afterCount": 40,
                         "delta": 0,
-                        "preserved": false
+                        "preserved": true
                       }
                     ],
                     "structuralFloors": [
@@ -7486,20 +7388,6 @@
                         "beforeCount": 29,
                         "afterCount": 27,
                         "delta": -2,
-                        "preserved": false
-                      },
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "noncreature-spell-density",
-                        "minimumCount": 77,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true
-                        },
-                        "beforeCount": 40,
-                        "afterCount": 40,
-                        "delta": 0,
                         "preserved": false
                       },
                       {
@@ -7877,7 +7765,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -7941,7 +7829,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -8631,7 +8519,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -8695,7 +8583,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -9059,7 +8947,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -9068,7 +8956,7 @@
                         "beforeCount": 40,
                         "afterCount": 40,
                         "delta": 0,
-                        "preserved": false
+                        "preserved": true
                       }
                     ],
                     "structuralFloors": [
@@ -9118,20 +9006,6 @@
                         "beforeCount": 29,
                         "afterCount": 27,
                         "delta": -2,
-                        "preserved": false
-                      },
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "noncreature-spell-density",
-                        "minimumCount": 77,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true
-                        },
-                        "beforeCount": 40,
-                        "afterCount": 40,
-                        "delta": 0,
                         "preserved": false
                       }
                     ],
@@ -9488,7 +9362,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -9497,7 +9371,7 @@
                         "beforeCount": 40,
                         "afterCount": 40,
                         "delta": 0,
-                        "preserved": false
+                        "preserved": true
                       }
                     ],
                     "structuralFloors": [
@@ -9547,20 +9421,6 @@
                         "beforeCount": 29,
                         "afterCount": 28,
                         "delta": -1,
-                        "preserved": false
-                      },
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "noncreature-spell-density",
-                        "minimumCount": 77,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true
-                        },
-                        "beforeCount": 40,
-                        "afterCount": 40,
-                        "delta": 0,
                         "preserved": false
                       },
                       {
@@ -9883,7 +9743,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -9947,7 +9807,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -10257,7 +10117,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -10266,7 +10126,7 @@
                         "beforeCount": 40,
                         "afterCount": 40,
                         "delta": 0,
-                        "preserved": false
+                        "preserved": true
                       }
                     ],
                     "structuralFloors": [
@@ -10316,20 +10176,6 @@
                         "beforeCount": 29,
                         "afterCount": 28,
                         "delta": -1,
-                        "preserved": false
-                      },
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "noncreature-spell-density",
-                        "minimumCount": 77,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true
-                        },
-                        "beforeCount": 40,
-                        "afterCount": 40,
-                        "delta": 0,
                         "preserved": false
                       }
                     ],
@@ -10900,7 +10746,7 @@
                       {
                         "kind": "strategy-fuel",
                         "id": "noncreature-spell-density",
-                        "minimumCount": 77,
+                        "minimumCount": 40,
                         "zone": "main",
                         "matcher": {
                           "requireNonland": true,
@@ -10909,7 +10755,7 @@
                         "beforeCount": 40,
                         "afterCount": 40,
                         "delta": 0,
-                        "preserved": false
+                        "preserved": true
                       }
                     ],
                     "structuralFloors": [
@@ -10959,20 +10805,6 @@
                         "beforeCount": 29,
                         "afterCount": 28,
                         "delta": -1,
-                        "preserved": false
-                      },
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "noncreature-spell-density",
-                        "minimumCount": 77,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true
-                        },
-                        "beforeCount": 40,
-                        "afterCount": 40,
-                        "delta": 0,
                         "preserved": false
                       }
                     ],
