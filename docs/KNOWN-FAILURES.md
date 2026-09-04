@@ -525,6 +525,16 @@ Risk: a valid package can be rejected, or a benchmark can report a misleading re
 Protection: caller controls must define metric baselines over the same semantic population their acceptance matcher audits. The FF32 control now counts nonland noncreature spells consistently, the exact-source workflow `33830011009` at executable source `dcfc78d93e707e1d1a5199ad3cf852f8a3e993fb` passes, and the generic acceptance suite covers descriptor validation and exact-package auditing.
 
 Status: prevented for the current FF32 control; keep the contract/matcher alignment requirement as a reusable caller-level regression.
+## KF-053 — Repeatable draw engines collapse into one-shot interaction
+
+Observed: the exact-source Food and Fellowship control at d51c7b686a92ac3ebfbb0a70d0d1e25f8939b7a1 accepted Well of Lost Dreams → Hobbit's Sting. Well of Lost Dreams is a repeatable life-gain-triggered draw engine; Hobbit's Sting is one-shot spot removal. The control's whole-deck Food/lifegain support and affinity still passed (30 support cards remained and aggregate affinity rose 269→270), while the cut's role projection was empty and no caller-owned component floor protected the engine.
+
+Risk: aggregate strategy retention can report a green package while an autonomous precon refinement spends the repeatable draw bridge that converts Food/lifegain into sustained card advantage.
+
+Protection: generic role truth must classify repeatable life-gain-triggered draw as both repeatable draw and a Food/lifegain engine component. Caller-declared component floors must audit that function across the complete accepted package, fail closed when it is unresolved, and use anonymous name-independent regressions covering a repeatable engine versus one-shot interaction replacement.
+
+Status: open. Found by manual review of the d51c7b686a92ac3ebfbb0a70d0d1e25f8939b7a1 family batch; no source fix or checkpoint promotion was made in this batch.
+
 ## Adding a failure
 
 Every new material failure should record:
