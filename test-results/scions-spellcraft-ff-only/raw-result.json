@@ -1021,7 +1021,7 @@
               "estimatedSpendNzd": 11.09,
               "estimatedSpendUsdReference": 6.49,
               "unknownPriceCount": 0,
-              "improvementScore": 4.46,
+              "improvementScore": 3.065,
               "significantRegression": false,
               "zeroTargetProgressWhileFailedGatesRemain": false,
               "targetGate": {
@@ -1073,8 +1073,6 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
-                      "equipment",
-                      "go-wide payoff",
                       "token production"
                     ],
                     "addRoles": [
@@ -1084,7 +1082,6 @@
                       "repeatable draw"
                     ],
                     "unreplacedRoles": [
-                      "go-wide payoff",
                       "token production"
                     ],
                     "unreplacedStrategyComponentRoles": [],
@@ -1322,7 +1319,7 @@
               },
               "swaps": [
                 {
-                  "out": "Dancer's Chakrams",
+                  "out": "Rite of Replication",
                   "in": "Skullclamp",
                   "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                   "recommendedPrinting": {
@@ -1349,8 +1346,6 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "equipment",
-                        "go-wide payoff",
                         "token production"
                       ],
                       "addRoles": [
@@ -1360,7 +1355,6 @@
                         "repeatable draw"
                       ],
                       "unreplacedRoles": [
-                        "go-wide payoff",
                         "token production"
                       ],
                       "unreplacedStrategyComponentRoles": [],
@@ -1374,13 +1368,13 @@
             {
               "candidate": 4,
               "eligible": false,
-              "reason": "improvement-below-threshold",
+              "reason": "package-reduces-declared-strategy-fuel",
               "attemptedSwaps": 1,
               "actualSwaps": 1,
               "estimatedSpendNzd": 1.33,
               "estimatedSpendUsdReference": 0.78,
               "unknownPriceCount": 0,
-              "improvementScore": -2.469,
+              "improvementScore": 0.895,
               "significantRegression": false,
               "zeroTargetProgressWhileFailedGatesRemain": false,
               "targetGate": {
@@ -1416,25 +1410,25 @@
                 "strategyDeltas": [
                   {
                     "strategy": "value-engine",
-                    "cutAffinityScore": 0,
+                    "cutAffinityScore": 5,
                     "addAffinityScore": 14,
-                    "netAffinityDelta": 14
+                    "netAffinityDelta": 9
                   }
                 ],
                 "swapImpacts": [
                   {
-                    "cutStrategyAffinityScore": 0,
+                    "cutStrategyAffinityScore": 5,
                     "addStrategyAffinityScore": 14,
-                    "cutStrategyProtectionApplied": 0,
-                    "cutMatchedStrategies": [],
+                    "cutStrategyProtectionApplied": 4,
+                    "cutMatchedStrategies": [
+                      "value-engine"
+                    ],
                     "addMatchedStrategies": [
                       "value-engine"
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
-                      "equipment",
-                      "go-wide payoff",
-                      "token production"
+                      "card draw"
                     ],
                     "addRoles": [
                       "card draw",
@@ -1443,10 +1437,7 @@
                       "etb synergy",
                       "repeatable draw"
                     ],
-                    "unreplacedRoles": [
-                      "go-wide payoff",
-                      "token production"
-                    ],
+                    "unreplacedRoles": [],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -1454,7 +1445,111 @@
                 ],
                 "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
               },
-              "packageAcceptance": null,
+              "packageAcceptance": {
+                "status": "strategy-fuel-loss",
+                "evidenceComplete": true,
+                "preserved": false,
+                "strategyFuel": [
+                  {
+                    "kind": "strategy-fuel",
+                    "id": "mv3-plus-or-x-noncreature-spells",
+                    "minimumCount": 29,
+                    "zone": "main",
+                    "matcher": {
+                      "requireNonland": true,
+                      "requireNoncreature": true,
+                      "minManaValue": 3,
+                      "countXAsAtLeastManaValue": 3
+                    },
+                    "beforeCount": 29,
+                    "afterCount": 28,
+                    "delta": -1,
+                    "preserved": false
+                  },
+                  {
+                    "kind": "strategy-fuel",
+                    "id": "noncreature-spell-density",
+                    "minimumCount": 40,
+                    "zone": "main",
+                    "matcher": {
+                      "requireNonland": true,
+                      "requireNoncreature": true
+                    },
+                    "beforeCount": 40,
+                    "afterCount": 39,
+                    "delta": -1,
+                    "preserved": false
+                  }
+                ],
+                "structuralFloors": [
+                  {
+                    "kind": "structural-floor",
+                    "id": "board-wipe-package",
+                    "minimumCount": 3,
+                    "zone": "main",
+                    "matcher": {
+                      "requiredRoles": [
+                        "board wipe"
+                      ]
+                    },
+                    "beforeCount": 3,
+                    "afterCount": 3,
+                    "delta": 0,
+                    "preserved": true
+                  },
+                  {
+                    "kind": "structural-floor",
+                    "id": "premium-fast-mana-package",
+                    "minimumCount": 1,
+                    "zone": "main",
+                    "matcher": {
+                      "requiredRoles": [
+                        "fast mana"
+                      ]
+                    },
+                    "beforeCount": 1,
+                    "afterCount": 1,
+                    "delta": 0,
+                    "preserved": true
+                  }
+                ],
+                "losses": [
+                  {
+                    "kind": "strategy-fuel",
+                    "id": "mv3-plus-or-x-noncreature-spells",
+                    "minimumCount": 29,
+                    "zone": "main",
+                    "matcher": {
+                      "requireNonland": true,
+                      "requireNoncreature": true,
+                      "minManaValue": 3,
+                      "countXAsAtLeastManaValue": 3
+                    },
+                    "beforeCount": 29,
+                    "afterCount": 28,
+                    "delta": -1,
+                    "preserved": false
+                  },
+                  {
+                    "kind": "strategy-fuel",
+                    "id": "noncreature-spell-density",
+                    "minimumCount": 40,
+                    "zone": "main",
+                    "matcher": {
+                      "requireNonland": true,
+                      "requireNoncreature": true
+                    },
+                    "beforeCount": 40,
+                    "afterCount": 39,
+                    "delta": -1,
+                    "preserved": false
+                  }
+                ],
+                "unresolvedBefore": [],
+                "unresolvedAfter": [],
+                "invalidRequirements": [],
+                "acceptanceRule": "Every caller-declared strategy-fuel component and structural-floor component must retain at least its declared minimum count across the complete accepted package. Exact card resolution and descriptor validation are required; a missing or malformed component cannot be treated as preserved."
+              },
               "deckStrategyRetention": {},
               "planProvenance": {
                 "targetBracket": 4,
@@ -1592,7 +1687,7 @@
               },
               "swaps": [
                 {
-                  "out": "Dancer's Chakrams",
+                  "out": "Observed Stasis",
                   "in": "Puresteel Paladin",
                   "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                   "recommendedPrinting": {
@@ -1610,18 +1705,18 @@
                     "persistentColoredManaSourcesAfterSwap": 6,
                     "persistentColoredManaSourceFloor": 6,
                     "strategyPreservation": {
-                      "cutStrategyAffinityScore": 0,
+                      "cutStrategyAffinityScore": 5,
                       "addStrategyAffinityScore": 14,
-                      "cutStrategyProtectionApplied": 0,
-                      "cutMatchedStrategies": [],
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "value-engine"
+                      ],
                       "addMatchedStrategies": [
                         "value-engine"
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "equipment",
-                        "go-wide payoff",
-                        "token production"
+                        "card draw"
                       ],
                       "addRoles": [
                         "card draw",
@@ -1630,10 +1725,7 @@
                         "etb synergy",
                         "repeatable draw"
                       ],
-                      "unreplacedRoles": [
-                        "go-wide payoff",
-                        "token production"
-                      ],
+                      "unreplacedRoles": [],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -1651,7 +1743,7 @@
               "estimatedSpendNzd": 0.63,
               "estimatedSpendUsdReference": 0.37,
               "unknownPriceCount": 0,
-              "improvementScore": 3.426,
+              "improvementScore": 0.416,
               "significantRegression": false,
               "zeroTargetProgressWhileFailedGatesRemain": false,
               "targetGate": {
@@ -1687,35 +1779,32 @@
                 "strategyDeltas": [
                   {
                     "strategy": "value-engine",
-                    "cutAffinityScore": 0,
+                    "cutAffinityScore": 5,
                     "addAffinityScore": 14,
-                    "netAffinityDelta": 14
+                    "netAffinityDelta": 9
                   }
                 ],
                 "swapImpacts": [
                   {
-                    "cutStrategyAffinityScore": 0,
+                    "cutStrategyAffinityScore": 5,
                     "addStrategyAffinityScore": 14,
-                    "cutStrategyProtectionApplied": 0,
-                    "cutMatchedStrategies": [],
+                    "cutStrategyProtectionApplied": 4,
+                    "cutMatchedStrategies": [
+                      "value-engine"
+                    ],
                     "addMatchedStrategies": [
                       "value-engine"
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
-                      "equipment",
-                      "go-wide payoff",
-                      "token production"
+                      "card draw"
                     ],
                     "addRoles": [
                       "card draw",
                       "equipment",
                       "repeatable draw"
                     ],
-                    "unreplacedRoles": [
-                      "go-wide payoff",
-                      "token production"
-                    ],
+                    "unreplacedRoles": [],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -1951,7 +2040,7 @@
               },
               "swaps": [
                 {
-                  "out": "Dancer's Chakrams",
+                  "out": "Syphon Mind",
                   "in": "Mask of Memory",
                   "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                   "recommendedPrinting": {
@@ -1969,28 +2058,25 @@
                     "persistentColoredManaSourcesAfterSwap": 6,
                     "persistentColoredManaSourceFloor": 6,
                     "strategyPreservation": {
-                      "cutStrategyAffinityScore": 0,
+                      "cutStrategyAffinityScore": 5,
                       "addStrategyAffinityScore": 14,
-                      "cutStrategyProtectionApplied": 0,
-                      "cutMatchedStrategies": [],
+                      "cutStrategyProtectionApplied": 4,
+                      "cutMatchedStrategies": [
+                        "value-engine"
+                      ],
                       "addMatchedStrategies": [
                         "value-engine"
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "equipment",
-                        "go-wide payoff",
-                        "token production"
+                        "card draw"
                       ],
                       "addRoles": [
                         "card draw",
                         "equipment",
                         "repeatable draw"
                       ],
-                      "unreplacedRoles": [
-                        "go-wide payoff",
-                        "token production"
-                      ],
+                      "unreplacedRoles": [],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -2007,7 +2093,8 @@
               "candidatePackagesEligible": 0,
               "winningCandidate": null,
               "reasonCounts": {
-                "package-reduces-declared-strategy-fuel": 4,
+                "improvement-below-threshold": 2,
+                "package-reduces-declared-strategy-fuel": 2,
                 "package-reduces-declared-strategy-fuel-and-structural-floor": 1
               },
               "candidateComparisons": [
@@ -2618,7 +2705,7 @@
                   "estimatedSpendNzd": 26.05,
                   "estimatedSpendUsdReference": 15.25,
                   "unknownPriceCount": 0,
-                  "improvementScore": 6.852,
+                  "improvementScore": 3.374,
                   "significantRegression": false,
                   "zeroTargetProgressWhileFailedGatesRemain": false,
                   "targetGate": {
@@ -2654,32 +2741,35 @@
                     "strategyDeltas": [
                       {
                         "strategy": "spells-control",
-                        "cutAffinityScore": 0,
+                        "cutAffinityScore": 7,
                         "addAffinityScore": 7,
-                        "netAffinityDelta": 7
+                        "netAffinityDelta": 0
                       },
                       {
                         "strategy": "value-engine",
-                        "cutAffinityScore": 5,
+                        "cutAffinityScore": 24,
                         "addAffinityScore": 42,
-                        "netAffinityDelta": 37
+                        "netAffinityDelta": 18
                       }
                     ],
                     "swapImpacts": [
                       {
-                        "cutStrategyAffinityScore": 0,
+                        "cutStrategyAffinityScore": 21,
                         "addStrategyAffinityScore": 21,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "spells-control",
+                          "value-engine"
+                        ],
                         "addMatchedStrategies": [
                           "spells-control",
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "equipment",
-                          "go-wide payoff",
-                          "token production"
+                          "card draw",
+                          "creature",
+                          "repeatable draw"
                         ],
                         "addRoles": [
                           "card draw",
@@ -2687,25 +2777,24 @@
                           "equipment",
                           "repeatable draw"
                         ],
-                        "unreplacedRoles": [
-                          "go-wide payoff",
-                          "token production"
-                        ],
+                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
                       },
                       {
-                        "cutStrategyAffinityScore": 0,
+                        "cutStrategyAffinityScore": 5,
                         "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "value-engine"
+                        ],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "token production"
+                          "card draw"
                         ],
                         "addRoles": [
                           "card draw",
@@ -2713,9 +2802,7 @@
                           "equipment",
                           "repeatable draw"
                         ],
-                        "unreplacedRoles": [
-                          "token production"
-                        ],
+                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -2766,8 +2853,8 @@
                           "countXAsAtLeastManaValue": 3
                         },
                         "beforeCount": 29,
-                        "afterCount": 26,
-                        "delta": -3,
+                        "afterCount": 27,
+                        "delta": -2,
                         "preserved": false
                       },
                       {
@@ -2780,8 +2867,8 @@
                           "requireNoncreature": true
                         },
                         "beforeCount": 40,
-                        "afterCount": 38,
-                        "delta": -2,
+                        "afterCount": 39,
+                        "delta": -1,
                         "preserved": false
                       }
                     ],
@@ -2830,8 +2917,8 @@
                           "countXAsAtLeastManaValue": 3
                         },
                         "beforeCount": 29,
-                        "afterCount": 26,
-                        "delta": -3,
+                        "afterCount": 27,
+                        "delta": -2,
                         "preserved": false
                       },
                       {
@@ -2844,8 +2931,8 @@
                           "requireNoncreature": true
                         },
                         "beforeCount": 40,
-                        "afterCount": 38,
-                        "delta": -2,
+                        "afterCount": 39,
+                        "delta": -1,
                         "preserved": false
                       }
                     ],
@@ -2991,7 +3078,7 @@
                   },
                   "swaps": [
                     {
-                      "out": "Dancer's Chakrams",
+                      "out": "Alphinaud Leveilleur",
                       "in": "Sram, Senior Edificer",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, spells-control. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -3009,19 +3096,22 @@
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
+                          "cutStrategyAffinityScore": 21,
                           "addStrategyAffinityScore": 21,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
+                          "cutStrategyProtectionApplied": 4,
+                          "cutMatchedStrategies": [
+                            "spells-control",
+                            "value-engine"
+                          ],
                           "addMatchedStrategies": [
                             "spells-control",
                             "value-engine"
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "equipment",
-                            "go-wide payoff",
-                            "token production"
+                            "card draw",
+                            "creature",
+                            "repeatable draw"
                           ],
                           "addRoles": [
                             "card draw",
@@ -3029,10 +3119,7 @@
                             "equipment",
                             "repeatable draw"
                           ],
-                          "unreplacedRoles": [
-                            "go-wide payoff",
-                            "token production"
-                          ],
+                          "unreplacedRoles": [],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
                           "verdict": "preserved"
@@ -3040,7 +3127,7 @@
                       }
                     },
                     {
-                      "out": "Rite of Replication",
+                      "out": "Observed Stasis",
                       "in": "Skullclamp",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -3058,16 +3145,18 @@
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
+                          "cutStrategyAffinityScore": 5,
                           "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
+                          "cutStrategyProtectionApplied": 4,
+                          "cutMatchedStrategies": [
+                            "value-engine"
+                          ],
                           "addMatchedStrategies": [
                             "value-engine"
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "token production"
+                            "card draw"
                           ],
                           "addRoles": [
                             "card draw",
@@ -3075,9 +3164,7 @@
                             "equipment",
                             "repeatable draw"
                           ],
-                          "unreplacedRoles": [
-                            "token production"
-                          ],
+                          "unreplacedRoles": [],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
                           "verdict": "preserved"
@@ -3085,7 +3172,7 @@
                       }
                     },
                     {
-                      "out": "Observed Stasis",
+                      "out": "Syphon Mind",
                       "in": "Puresteel Paladin",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -3141,12 +3228,12 @@
                   "estimatedSpendNzd": 2.48,
                   "estimatedSpendUsdReference": 1.45,
                   "unknownPriceCount": 0,
-                  "improvementScore": 7.198,
+                  "improvementScore": 1.38,
                   "significantRegression": false,
                   "zeroTargetProgressWhileFailedGatesRemain": false,
                   "targetGate": {
                     "applicable": true,
-                    "score": 3.3,
+                    "score": 2.5,
                     "failedBefore": [
                       "average-nonland-mv",
                       "cheap-interaction",
@@ -3177,9 +3264,9 @@
                     "strategyDeltas": [
                       {
                         "strategy": "value-engine",
-                        "cutAffinityScore": 5,
+                        "cutAffinityScore": 9,
                         "addAffinityScore": 42,
-                        "netAffinityDelta": 37
+                        "netAffinityDelta": 33
                       }
                     ],
                     "swapImpacts": [
@@ -3193,9 +3280,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "equipment",
-                          "go-wide payoff",
-                          "token production"
+                          "equipment"
                         ],
                         "addRoles": [
                           "card draw",
@@ -3204,25 +3289,24 @@
                           "etb synergy",
                           "repeatable draw"
                         ],
-                        "unreplacedRoles": [
-                          "go-wide payoff",
-                          "token production"
-                        ],
+                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
                       },
                       {
-                        "cutStrategyAffinityScore": 0,
+                        "cutStrategyAffinityScore": 4,
                         "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "value-engine"
+                        ],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "token production"
+                          "etb synergy"
                         ],
                         "addRoles": [
                           "card draw",
@@ -3230,7 +3314,7 @@
                           "repeatable draw"
                         ],
                         "unreplacedRoles": [
-                          "token production"
+                          "etb synergy"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -3504,7 +3588,7 @@
                   },
                   "swaps": [
                     {
-                      "out": "Dancer's Chakrams",
+                      "out": "Reaper's Scythe",
                       "in": "Puresteel Paladin",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -3518,7 +3602,7 @@
                         "addressedRole": "average-nonland-mv",
                         "remainingStructuralDeficitAfterSwap": 11,
                         "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
+                        "nonlandManaValueReduction": 1,
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
@@ -3531,9 +3615,7 @@
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "equipment",
-                            "go-wide payoff",
-                            "token production"
+                            "equipment"
                           ],
                           "addRoles": [
                             "card draw",
@@ -3542,10 +3624,7 @@
                             "etb synergy",
                             "repeatable draw"
                           ],
-                          "unreplacedRoles": [
-                            "go-wide payoff",
-                            "token production"
-                          ],
+                          "unreplacedRoles": [],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
                           "verdict": "preserved"
@@ -3553,7 +3632,7 @@
                       }
                     },
                     {
-                      "out": "Rite of Replication",
+                      "out": "Archaeomancer's Map",
                       "in": "Mask of Memory",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -3567,20 +3646,22 @@
                         "addressedRole": "average-nonland-mv",
                         "remainingStructuralDeficitAfterSwap": 11,
                         "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
+                        "nonlandManaValueReduction": 1,
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
+                          "cutStrategyAffinityScore": 4,
                           "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
+                          "cutStrategyProtectionApplied": 4,
+                          "cutMatchedStrategies": [
+                            "value-engine"
+                          ],
                           "addMatchedStrategies": [
                             "value-engine"
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "token production"
+                            "etb synergy"
                           ],
                           "addRoles": [
                             "card draw",
@@ -3588,7 +3669,7 @@
                             "repeatable draw"
                           ],
                           "unreplacedRoles": [
-                            "token production"
+                            "etb synergy"
                           ],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
@@ -3597,7 +3678,7 @@
                       }
                     },
                     {
-                      "out": "Observed Stasis",
+                      "out": "Cut a Deal",
                       "in": "Key to the City",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -3611,7 +3692,7 @@
                         "addressedRole": "average-nonland-mv",
                         "remainingStructuralDeficitAfterSwap": 11,
                         "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
+                        "nonlandManaValueReduction": 1,
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
@@ -3644,18 +3725,18 @@
                 {
                   "candidate": 4,
                   "eligible": false,
-                  "reason": "package-reduces-declared-strategy-fuel",
+                  "reason": "improvement-below-threshold",
                   "attemptedSwaps": 4,
-                  "actualSwaps": 3,
-                  "estimatedSpendNzd": 11.44,
-                  "estimatedSpendUsdReference": 6.7,
+                  "actualSwaps": 1,
+                  "estimatedSpendNzd": 0.51,
+                  "estimatedSpendUsdReference": 0.3,
                   "unknownPriceCount": 0,
-                  "improvementScore": 5.72,
+                  "improvementScore": -2.879,
                   "significantRegression": false,
                   "zeroTargetProgressWhileFailedGatesRemain": false,
                   "targetGate": {
                     "applicable": true,
-                    "score": 3.3,
+                    "score": 0.7,
                     "failedBefore": [
                       "average-nonland-mv",
                       "cheap-interaction",
@@ -3686,64 +3767,14 @@
                     "strategyDeltas": [
                       {
                         "strategy": "value-engine",
-                        "cutAffinityScore": 5,
-                        "addAffinityScore": 42,
-                        "netAffinityDelta": 37
+                        "cutAffinityScore": 6,
+                        "addAffinityScore": 14,
+                        "netAffinityDelta": 8
                       }
                     ],
                     "swapImpacts": [
                       {
-                        "cutStrategyAffinityScore": 0,
-                        "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
-                        "addMatchedStrategies": [
-                          "value-engine"
-                        ],
-                        "locallyUnreplacedStrategies": [],
-                        "cutRoles": [
-                          "equipment",
-                          "go-wide payoff",
-                          "token production"
-                        ],
-                        "addRoles": [
-                          "card draw",
-                          "repeatable draw"
-                        ],
-                        "unreplacedRoles": [
-                          "equipment",
-                          "go-wide payoff",
-                          "token production"
-                        ],
-                        "unreplacedStrategyComponentRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      },
-                      {
-                        "cutStrategyAffinityScore": 0,
-                        "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
-                        "addMatchedStrategies": [
-                          "value-engine"
-                        ],
-                        "locallyUnreplacedStrategies": [],
-                        "cutRoles": [
-                          "token production"
-                        ],
-                        "addRoles": [
-                          "card draw",
-                          "repeatable draw"
-                        ],
-                        "unreplacedRoles": [
-                          "token production"
-                        ],
-                        "unreplacedStrategyComponentRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      },
-                      {
-                        "cutStrategyAffinityScore": 5,
+                        "cutStrategyAffinityScore": 6,
                         "addStrategyAffinityScore": 14,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
@@ -3754,15 +3785,17 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "card draw"
+                          "graveyard recursion",
+                          "token production"
                         ],
                         "addRoles": [
                           "card draw",
-                          "repeatable draw",
-                          "repeatable token engine",
+                          "repeatable draw"
+                        ],
+                        "unreplacedRoles": [
+                          "graveyard recursion",
                           "token production"
                         ],
-                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -3770,97 +3803,7 @@
                     ],
                     "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                   },
-                  "packageAcceptance": {
-                    "status": "strategy-fuel-loss",
-                    "evidenceComplete": true,
-                    "preserved": false,
-                    "strategyFuel": [
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "mv3-plus-or-x-noncreature-spells",
-                        "minimumCount": 29,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true,
-                          "minManaValue": 3,
-                          "countXAsAtLeastManaValue": 3
-                        },
-                        "beforeCount": 29,
-                        "afterCount": 26,
-                        "delta": -3,
-                        "preserved": false
-                      },
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "noncreature-spell-density",
-                        "minimumCount": 40,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true
-                        },
-                        "beforeCount": 40,
-                        "afterCount": 40,
-                        "delta": 0,
-                        "preserved": true
-                      }
-                    ],
-                    "structuralFloors": [
-                      {
-                        "kind": "structural-floor",
-                        "id": "board-wipe-package",
-                        "minimumCount": 3,
-                        "zone": "main",
-                        "matcher": {
-                          "requiredRoles": [
-                            "board wipe"
-                          ]
-                        },
-                        "beforeCount": 3,
-                        "afterCount": 3,
-                        "delta": 0,
-                        "preserved": true
-                      },
-                      {
-                        "kind": "structural-floor",
-                        "id": "premium-fast-mana-package",
-                        "minimumCount": 1,
-                        "zone": "main",
-                        "matcher": {
-                          "requiredRoles": [
-                            "fast mana"
-                          ]
-                        },
-                        "beforeCount": 1,
-                        "afterCount": 1,
-                        "delta": 0,
-                        "preserved": true
-                      }
-                    ],
-                    "losses": [
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "mv3-plus-or-x-noncreature-spells",
-                        "minimumCount": 29,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true,
-                          "minManaValue": 3,
-                          "countXAsAtLeastManaValue": 3
-                        },
-                        "beforeCount": 29,
-                        "afterCount": 26,
-                        "delta": -3,
-                        "preserved": false
-                      }
-                    ],
-                    "unresolvedBefore": [],
-                    "unresolvedAfter": [],
-                    "invalidRequirements": [],
-                    "acceptanceRule": "Every caller-declared strategy-fuel component and structural-floor component must retain at least its declared minimum count across the complete accepted package. Exact card resolution and descriptor validation are required; a missing or malformed component cannot be treated as preserved."
-                  },
+                  "packageAcceptance": null,
                   "deckStrategyRetention": {},
                   "planProvenance": {
                     "targetBracket": 4,
@@ -3998,7 +3941,7 @@
                   },
                   "swaps": [
                     {
-                      "out": "Dancer's Chakrams",
+                      "out": "Lingering Souls",
                       "in": "Key to the City",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -4012,101 +3955,11 @@
                         "addressedRole": "average-nonland-mv",
                         "remainingStructuralDeficitAfterSwap": 11,
                         "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
+                        "nonlandManaValueReduction": 1,
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
-                          "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
-                          "addMatchedStrategies": [
-                            "value-engine"
-                          ],
-                          "locallyUnreplacedStrategies": [],
-                          "cutRoles": [
-                            "equipment",
-                            "go-wide payoff",
-                            "token production"
-                          ],
-                          "addRoles": [
-                            "card draw",
-                            "repeatable draw"
-                          ],
-                          "unreplacedRoles": [
-                            "equipment",
-                            "go-wide payoff",
-                            "token production"
-                          ],
-                          "unreplacedStrategyComponentRoles": [],
-                          "meaningfulStrategyLoss": false,
-                          "verdict": "preserved"
-                        }
-                      }
-                    },
-                    {
-                      "out": "Rite of Replication",
-                      "in": "Smuggler's Copter",
-                      "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
-                      "recommendedPrinting": {
-                        "set": "FCA",
-                        "collectorNumber": "62",
-                        "finish": "nonfoil",
-                        "priceNzd": 3.09,
-                        "priceUsdReference": 1.81
-                      },
-                      "structuralPairing": {
-                        "addressedRole": "average-nonland-mv",
-                        "remainingStructuralDeficitAfterSwap": 11,
-                        "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
-                        "persistentColoredManaSourcesAfterSwap": 6,
-                        "persistentColoredManaSourceFloor": 6,
-                        "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
-                          "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
-                          "addMatchedStrategies": [
-                            "value-engine"
-                          ],
-                          "locallyUnreplacedStrategies": [],
-                          "cutRoles": [
-                            "token production"
-                          ],
-                          "addRoles": [
-                            "card draw",
-                            "repeatable draw"
-                          ],
-                          "unreplacedRoles": [
-                            "token production"
-                          ],
-                          "unreplacedStrategyComponentRoles": [],
-                          "meaningfulStrategyLoss": false,
-                          "verdict": "preserved"
-                        }
-                      }
-                    },
-                    {
-                      "out": "Observed Stasis",
-                      "in": "Staff of the Storyteller",
-                      "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
-                      "recommendedPrinting": {
-                        "set": "SLD",
-                        "collectorNumber": "1863",
-                        "finish": "nonfoil",
-                        "priceNzd": 7.84,
-                        "priceUsdReference": 4.59
-                      },
-                      "structuralPairing": {
-                        "addressedRole": "average-nonland-mv",
-                        "remainingStructuralDeficitAfterSwap": 11,
-                        "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
-                        "persistentColoredManaSourcesAfterSwap": 6,
-                        "persistentColoredManaSourceFloor": 6,
-                        "strategyPreservation": {
-                          "cutStrategyAffinityScore": 5,
+                          "cutStrategyAffinityScore": 6,
                           "addStrategyAffinityScore": 14,
                           "cutStrategyProtectionApplied": 4,
                           "cutMatchedStrategies": [
@@ -4117,15 +3970,17 @@
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "card draw"
+                            "graveyard recursion",
+                            "token production"
                           ],
                           "addRoles": [
                             "card draw",
-                            "repeatable draw",
-                            "repeatable token engine",
+                            "repeatable draw"
+                          ],
+                          "unreplacedRoles": [
+                            "graveyard recursion",
                             "token production"
                           ],
-                          "unreplacedRoles": [],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
                           "verdict": "preserved"
@@ -4137,18 +3992,18 @@
                 {
                   "candidate": 5,
                   "eligible": false,
-                  "reason": "package-reduces-declared-strategy-fuel",
+                  "reason": "improvement-below-threshold",
                   "attemptedSwaps": 4,
-                  "actualSwaps": 3,
-                  "estimatedSpendNzd": 8.42,
-                  "estimatedSpendUsdReference": 4.93,
+                  "actualSwaps": 1,
+                  "estimatedSpendNzd": 3.09,
+                  "estimatedSpendUsdReference": 1.81,
                   "unknownPriceCount": 0,
-                  "improvementScore": 4.45,
+                  "improvementScore": -2.879,
                   "significantRegression": false,
                   "zeroTargetProgressWhileFailedGatesRemain": false,
                   "targetGate": {
                     "applicable": true,
-                    "score": 3.1,
+                    "score": 0.7,
                     "failedBefore": [
                       "average-nonland-mv",
                       "cheap-interaction",
@@ -4178,87 +4033,36 @@
                     "meaningfulLosses": [],
                     "strategyDeltas": [
                       {
-                        "strategy": "food-lifegain",
-                        "cutAffinityScore": 0,
-                        "addAffinityScore": 14,
-                        "netAffinityDelta": 14
-                      },
-                      {
                         "strategy": "value-engine",
-                        "cutAffinityScore": 0,
-                        "addAffinityScore": 28,
-                        "netAffinityDelta": 28
+                        "cutAffinityScore": 6,
+                        "addAffinityScore": 14,
+                        "netAffinityDelta": 8
                       }
                     ],
                     "swapImpacts": [
                       {
-                        "cutStrategyAffinityScore": 0,
+                        "cutStrategyAffinityScore": 6,
                         "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "value-engine"
+                        ],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "equipment",
-                          "go-wide payoff",
+                          "graveyard recursion",
                           "token production"
                         ],
                         "addRoles": [
                           "card draw",
-                          "repeatable draw",
-                          "repeatable token engine",
-                          "token production"
+                          "repeatable draw"
                         ],
                         "unreplacedRoles": [
-                          "equipment",
-                          "go-wide payoff"
-                        ],
-                        "unreplacedStrategyComponentRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      },
-                      {
-                        "cutStrategyAffinityScore": 0,
-                        "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
-                        "addMatchedStrategies": [
-                          "value-engine"
-                        ],
-                        "locallyUnreplacedStrategies": [],
-                        "cutRoles": [
+                          "graveyard recursion",
                           "token production"
                         ],
-                        "addRoles": [
-                          "card draw",
-                          "card selection",
-                          "graveyard recursion"
-                        ],
-                        "unreplacedRoles": [
-                          "token production"
-                        ],
-                        "unreplacedStrategyComponentRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      },
-                      {
-                        "cutStrategyAffinityScore": 0,
-                        "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
-                        "addMatchedStrategies": [
-                          "food-lifegain"
-                        ],
-                        "locallyUnreplacedStrategies": [],
-                        "cutRoles": [],
-                        "addRoles": [
-                          "equipment",
-                          "repeatable life gain engine",
-                          "token production"
-                        ],
-                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -4266,97 +4070,7 @@
                     ],
                     "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                   },
-                  "packageAcceptance": {
-                    "status": "strategy-fuel-loss",
-                    "evidenceComplete": true,
-                    "preserved": false,
-                    "strategyFuel": [
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "mv3-plus-or-x-noncreature-spells",
-                        "minimumCount": 29,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true,
-                          "minManaValue": 3,
-                          "countXAsAtLeastManaValue": 3
-                        },
-                        "beforeCount": 29,
-                        "afterCount": 26,
-                        "delta": -3,
-                        "preserved": false
-                      },
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "noncreature-spell-density",
-                        "minimumCount": 40,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true
-                        },
-                        "beforeCount": 40,
-                        "afterCount": 40,
-                        "delta": 0,
-                        "preserved": true
-                      }
-                    ],
-                    "structuralFloors": [
-                      {
-                        "kind": "structural-floor",
-                        "id": "board-wipe-package",
-                        "minimumCount": 3,
-                        "zone": "main",
-                        "matcher": {
-                          "requiredRoles": [
-                            "board wipe"
-                          ]
-                        },
-                        "beforeCount": 3,
-                        "afterCount": 3,
-                        "delta": 0,
-                        "preserved": true
-                      },
-                      {
-                        "kind": "structural-floor",
-                        "id": "premium-fast-mana-package",
-                        "minimumCount": 1,
-                        "zone": "main",
-                        "matcher": {
-                          "requiredRoles": [
-                            "fast mana"
-                          ]
-                        },
-                        "beforeCount": 1,
-                        "afterCount": 1,
-                        "delta": 0,
-                        "preserved": true
-                      }
-                    ],
-                    "losses": [
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "mv3-plus-or-x-noncreature-spells",
-                        "minimumCount": 29,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true,
-                          "minManaValue": 3,
-                          "countXAsAtLeastManaValue": 3
-                        },
-                        "beforeCount": 29,
-                        "afterCount": 26,
-                        "delta": -3,
-                        "preserved": false
-                      }
-                    ],
-                    "unresolvedBefore": [],
-                    "unresolvedAfter": [],
-                    "invalidRequirements": [],
-                    "acceptanceRule": "Every caller-declared strategy-fuel component and structural-floor component must retain at least its declared minimum count across the complete accepted package. Exact card resolution and descriptor validation are required; a missing or malformed component cannot be treated as preserved."
-                  },
+                  "packageAcceptance": null,
                   "deckStrategyRetention": {},
                   "planProvenance": {
                     "targetBracket": 4,
@@ -4494,107 +4208,15 @@
                   },
                   "swaps": [
                     {
-                      "out": "Dancer's Chakrams",
-                      "in": "Staff of the Storyteller",
+                      "out": "Lingering Souls",
+                      "in": "Smuggler's Copter",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
-                        "set": "SLD",
-                        "collectorNumber": "1863",
+                        "set": "FCA",
+                        "collectorNumber": "62",
                         "finish": "nonfoil",
-                        "priceNzd": 7.84,
-                        "priceUsdReference": 4.59
-                      },
-                      "structuralPairing": {
-                        "addressedRole": "average-nonland-mv",
-                        "remainingStructuralDeficitAfterSwap": 11,
-                        "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
-                        "persistentColoredManaSourcesAfterSwap": 6,
-                        "persistentColoredManaSourceFloor": 6,
-                        "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
-                          "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
-                          "addMatchedStrategies": [
-                            "value-engine"
-                          ],
-                          "locallyUnreplacedStrategies": [],
-                          "cutRoles": [
-                            "equipment",
-                            "go-wide payoff",
-                            "token production"
-                          ],
-                          "addRoles": [
-                            "card draw",
-                            "repeatable draw",
-                            "repeatable token engine",
-                            "token production"
-                          ],
-                          "unreplacedRoles": [
-                            "equipment",
-                            "go-wide payoff"
-                          ],
-                          "unreplacedStrategyComponentRoles": [],
-                          "meaningfulStrategyLoss": false,
-                          "verdict": "preserved"
-                        }
-                      }
-                    },
-                    {
-                      "out": "Rite of Replication",
-                      "in": "Dreams of Laguna",
-                      "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
-                      "recommendedPrinting": {
-                        "set": "FIN",
-                        "collectorNumber": "50",
-                        "finish": "nonfoil",
-                        "priceNzd": 0.39,
-                        "priceUsdReference": 0.23
-                      },
-                      "structuralPairing": {
-                        "addressedRole": "average-nonland-mv",
-                        "remainingStructuralDeficitAfterSwap": 11,
-                        "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
-                        "persistentColoredManaSourcesAfterSwap": 6,
-                        "persistentColoredManaSourceFloor": 6,
-                        "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
-                          "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
-                          "addMatchedStrategies": [
-                            "value-engine"
-                          ],
-                          "locallyUnreplacedStrategies": [],
-                          "cutRoles": [
-                            "token production"
-                          ],
-                          "addRoles": [
-                            "card draw",
-                            "card selection",
-                            "graveyard recursion"
-                          ],
-                          "unreplacedRoles": [
-                            "token production"
-                          ],
-                          "unreplacedStrategyComponentRoles": [],
-                          "meaningfulStrategyLoss": false,
-                          "verdict": "preserved"
-                        }
-                      }
-                    },
-                    {
-                      "out": "Eye of Nidhogg",
-                      "in": "White Mage's Staff",
-                      "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
-                      "recommendedPrinting": {
-                        "set": "FIN",
-                        "collectorNumber": "42",
-                        "finish": "nonfoil",
-                        "priceNzd": 0.19,
-                        "priceUsdReference": 0.11
+                        "priceNzd": 3.09,
+                        "priceUsdReference": 1.81
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -4604,21 +4226,28 @@
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
+                          "cutStrategyAffinityScore": 6,
                           "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
+                          "cutStrategyProtectionApplied": 4,
+                          "cutMatchedStrategies": [
+                            "value-engine"
+                          ],
                           "addMatchedStrategies": [
-                            "food-lifegain"
+                            "value-engine"
                           ],
                           "locallyUnreplacedStrategies": [],
-                          "cutRoles": [],
-                          "addRoles": [
-                            "equipment",
-                            "repeatable life gain engine",
+                          "cutRoles": [
+                            "graveyard recursion",
                             "token production"
                           ],
-                          "unreplacedRoles": [],
+                          "addRoles": [
+                            "card draw",
+                            "repeatable draw"
+                          ],
+                          "unreplacedRoles": [
+                            "graveyard recursion",
+                            "token production"
+                          ],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
                           "verdict": "preserved"
@@ -4635,7 +4264,8 @@
               "candidatePackagesEligible": 0,
               "winningCandidate": null,
               "reasonCounts": {
-                "package-reduces-declared-strategy-fuel": 4,
+                "improvement-below-threshold": 2,
+                "package-reduces-declared-strategy-fuel": 2,
                 "package-reduces-declared-strategy-fuel-and-structural-floor": 1
               },
               "candidateComparisons": [
@@ -5176,7 +4806,7 @@
                   "estimatedSpendNzd": 26.05,
                   "estimatedSpendUsdReference": 15.25,
                   "unknownPriceCount": 0,
-                  "improvementScore": 6.852,
+                  "improvementScore": 5.917,
                   "significantRegression": false,
                   "zeroTargetProgressWhileFailedGatesRemain": false,
                   "targetGate": {
@@ -5218,9 +4848,9 @@
                       },
                       {
                         "strategy": "value-engine",
-                        "cutAffinityScore": 5,
+                        "cutAffinityScore": 10,
                         "addAffinityScore": 42,
-                        "netAffinityDelta": 37
+                        "netAffinityDelta": 32
                       }
                     ],
                     "swapImpacts": [
@@ -5235,8 +4865,6 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "equipment",
-                          "go-wide payoff",
                           "token production"
                         ],
                         "addRoles": [
@@ -5246,7 +4874,6 @@
                           "repeatable draw"
                         ],
                         "unreplacedRoles": [
-                          "go-wide payoff",
                           "token production"
                         ],
                         "unreplacedStrategyComponentRoles": [],
@@ -5254,16 +4881,18 @@
                         "verdict": "preserved"
                       },
                       {
-                        "cutStrategyAffinityScore": 0,
+                        "cutStrategyAffinityScore": 5,
                         "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "value-engine"
+                        ],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "token production"
+                          "card draw"
                         ],
                         "addRoles": [
                           "card draw",
@@ -5271,9 +4900,7 @@
                           "equipment",
                           "repeatable draw"
                         ],
-                        "unreplacedRoles": [
-                          "token production"
-                        ],
+                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -5549,7 +5176,7 @@
                   },
                   "swaps": [
                     {
-                      "out": "Dancer's Chakrams",
+                      "out": "Rite of Replication",
                       "in": "Sram, Senior Edificer",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, spells-control. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -5577,8 +5204,6 @@
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "equipment",
-                            "go-wide payoff",
                             "token production"
                           ],
                           "addRoles": [
@@ -5588,7 +5213,6 @@
                             "repeatable draw"
                           ],
                           "unreplacedRoles": [
-                            "go-wide payoff",
                             "token production"
                           ],
                           "unreplacedStrategyComponentRoles": [],
@@ -5598,7 +5222,7 @@
                       }
                     },
                     {
-                      "out": "Rite of Replication",
+                      "out": "Observed Stasis",
                       "in": "Skullclamp",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -5616,16 +5240,18 @@
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
+                          "cutStrategyAffinityScore": 5,
                           "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
+                          "cutStrategyProtectionApplied": 4,
+                          "cutMatchedStrategies": [
+                            "value-engine"
+                          ],
                           "addMatchedStrategies": [
                             "value-engine"
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "token production"
+                            "card draw"
                           ],
                           "addRoles": [
                             "card draw",
@@ -5633,9 +5259,7 @@
                             "equipment",
                             "repeatable draw"
                           ],
-                          "unreplacedRoles": [
-                            "token production"
-                          ],
+                          "unreplacedRoles": [],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
                           "verdict": "preserved"
@@ -5643,7 +5267,7 @@
                       }
                     },
                     {
-                      "out": "Observed Stasis",
+                      "out": "Syphon Mind",
                       "in": "Puresteel Paladin",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -5699,12 +5323,12 @@
                   "estimatedSpendNzd": 2.48,
                   "estimatedSpendUsdReference": 1.45,
                   "unknownPriceCount": 0,
-                  "improvementScore": 7.198,
+                  "improvementScore": 1.38,
                   "significantRegression": false,
                   "zeroTargetProgressWhileFailedGatesRemain": false,
                   "targetGate": {
                     "applicable": true,
-                    "score": 3.3,
+                    "score": 2.5,
                     "failedBefore": [
                       "average-nonland-mv",
                       "cheap-interaction",
@@ -5735,9 +5359,9 @@
                     "strategyDeltas": [
                       {
                         "strategy": "value-engine",
-                        "cutAffinityScore": 5,
+                        "cutAffinityScore": 9,
                         "addAffinityScore": 42,
-                        "netAffinityDelta": 37
+                        "netAffinityDelta": 33
                       }
                     ],
                     "swapImpacts": [
@@ -5751,9 +5375,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "equipment",
-                          "go-wide payoff",
-                          "token production"
+                          "equipment"
                         ],
                         "addRoles": [
                           "card draw",
@@ -5762,25 +5384,24 @@
                           "etb synergy",
                           "repeatable draw"
                         ],
-                        "unreplacedRoles": [
-                          "go-wide payoff",
-                          "token production"
-                        ],
+                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
                       },
                       {
-                        "cutStrategyAffinityScore": 0,
+                        "cutStrategyAffinityScore": 4,
                         "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "value-engine"
+                        ],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "token production"
+                          "etb synergy"
                         ],
                         "addRoles": [
                           "card draw",
@@ -5788,7 +5409,7 @@
                           "repeatable draw"
                         ],
                         "unreplacedRoles": [
-                          "token production"
+                          "etb synergy"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -6062,7 +5683,7 @@
                   },
                   "swaps": [
                     {
-                      "out": "Dancer's Chakrams",
+                      "out": "Reaper's Scythe",
                       "in": "Puresteel Paladin",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -6076,7 +5697,7 @@
                         "addressedRole": "average-nonland-mv",
                         "remainingStructuralDeficitAfterSwap": 11,
                         "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
+                        "nonlandManaValueReduction": 1,
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
@@ -6089,9 +5710,7 @@
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "equipment",
-                            "go-wide payoff",
-                            "token production"
+                            "equipment"
                           ],
                           "addRoles": [
                             "card draw",
@@ -6100,10 +5719,7 @@
                             "etb synergy",
                             "repeatable draw"
                           ],
-                          "unreplacedRoles": [
-                            "go-wide payoff",
-                            "token production"
-                          ],
+                          "unreplacedRoles": [],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
                           "verdict": "preserved"
@@ -6111,7 +5727,7 @@
                       }
                     },
                     {
-                      "out": "Rite of Replication",
+                      "out": "Archaeomancer's Map",
                       "in": "Mask of Memory",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -6125,20 +5741,22 @@
                         "addressedRole": "average-nonland-mv",
                         "remainingStructuralDeficitAfterSwap": 11,
                         "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
+                        "nonlandManaValueReduction": 1,
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
+                          "cutStrategyAffinityScore": 4,
                           "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
+                          "cutStrategyProtectionApplied": 4,
+                          "cutMatchedStrategies": [
+                            "value-engine"
+                          ],
                           "addMatchedStrategies": [
                             "value-engine"
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "token production"
+                            "etb synergy"
                           ],
                           "addRoles": [
                             "card draw",
@@ -6146,7 +5764,7 @@
                             "repeatable draw"
                           ],
                           "unreplacedRoles": [
-                            "token production"
+                            "etb synergy"
                           ],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
@@ -6155,7 +5773,7 @@
                       }
                     },
                     {
-                      "out": "Observed Stasis",
+                      "out": "Cut a Deal",
                       "in": "Key to the City",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -6169,7 +5787,7 @@
                         "addressedRole": "average-nonland-mv",
                         "remainingStructuralDeficitAfterSwap": 11,
                         "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
+                        "nonlandManaValueReduction": 1,
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
@@ -6202,18 +5820,18 @@
                 {
                   "candidate": 4,
                   "eligible": false,
-                  "reason": "package-reduces-declared-strategy-fuel",
+                  "reason": "improvement-below-threshold",
                   "attemptedSwaps": 3,
-                  "actualSwaps": 3,
-                  "estimatedSpendNzd": 11.44,
-                  "estimatedSpendUsdReference": 6.7,
+                  "actualSwaps": 1,
+                  "estimatedSpendNzd": 0.51,
+                  "estimatedSpendUsdReference": 0.3,
                   "unknownPriceCount": 0,
-                  "improvementScore": 5.72,
+                  "improvementScore": -2.879,
                   "significantRegression": false,
                   "zeroTargetProgressWhileFailedGatesRemain": false,
                   "targetGate": {
                     "applicable": true,
-                    "score": 3.3,
+                    "score": 0.7,
                     "failedBefore": [
                       "average-nonland-mv",
                       "cheap-interaction",
@@ -6244,64 +5862,14 @@
                     "strategyDeltas": [
                       {
                         "strategy": "value-engine",
-                        "cutAffinityScore": 5,
-                        "addAffinityScore": 42,
-                        "netAffinityDelta": 37
+                        "cutAffinityScore": 6,
+                        "addAffinityScore": 14,
+                        "netAffinityDelta": 8
                       }
                     ],
                     "swapImpacts": [
                       {
-                        "cutStrategyAffinityScore": 0,
-                        "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
-                        "addMatchedStrategies": [
-                          "value-engine"
-                        ],
-                        "locallyUnreplacedStrategies": [],
-                        "cutRoles": [
-                          "equipment",
-                          "go-wide payoff",
-                          "token production"
-                        ],
-                        "addRoles": [
-                          "card draw",
-                          "repeatable draw"
-                        ],
-                        "unreplacedRoles": [
-                          "equipment",
-                          "go-wide payoff",
-                          "token production"
-                        ],
-                        "unreplacedStrategyComponentRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      },
-                      {
-                        "cutStrategyAffinityScore": 0,
-                        "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
-                        "addMatchedStrategies": [
-                          "value-engine"
-                        ],
-                        "locallyUnreplacedStrategies": [],
-                        "cutRoles": [
-                          "token production"
-                        ],
-                        "addRoles": [
-                          "card draw",
-                          "repeatable draw"
-                        ],
-                        "unreplacedRoles": [
-                          "token production"
-                        ],
-                        "unreplacedStrategyComponentRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      },
-                      {
-                        "cutStrategyAffinityScore": 5,
+                        "cutStrategyAffinityScore": 6,
                         "addStrategyAffinityScore": 14,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
@@ -6312,15 +5880,17 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "card draw"
+                          "graveyard recursion",
+                          "token production"
                         ],
                         "addRoles": [
                           "card draw",
-                          "repeatable draw",
-                          "repeatable token engine",
+                          "repeatable draw"
+                        ],
+                        "unreplacedRoles": [
+                          "graveyard recursion",
                           "token production"
                         ],
-                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -6328,97 +5898,7 @@
                     ],
                     "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                   },
-                  "packageAcceptance": {
-                    "status": "strategy-fuel-loss",
-                    "evidenceComplete": true,
-                    "preserved": false,
-                    "strategyFuel": [
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "mv3-plus-or-x-noncreature-spells",
-                        "minimumCount": 29,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true,
-                          "minManaValue": 3,
-                          "countXAsAtLeastManaValue": 3
-                        },
-                        "beforeCount": 29,
-                        "afterCount": 26,
-                        "delta": -3,
-                        "preserved": false
-                      },
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "noncreature-spell-density",
-                        "minimumCount": 40,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true
-                        },
-                        "beforeCount": 40,
-                        "afterCount": 40,
-                        "delta": 0,
-                        "preserved": true
-                      }
-                    ],
-                    "structuralFloors": [
-                      {
-                        "kind": "structural-floor",
-                        "id": "board-wipe-package",
-                        "minimumCount": 3,
-                        "zone": "main",
-                        "matcher": {
-                          "requiredRoles": [
-                            "board wipe"
-                          ]
-                        },
-                        "beforeCount": 3,
-                        "afterCount": 3,
-                        "delta": 0,
-                        "preserved": true
-                      },
-                      {
-                        "kind": "structural-floor",
-                        "id": "premium-fast-mana-package",
-                        "minimumCount": 1,
-                        "zone": "main",
-                        "matcher": {
-                          "requiredRoles": [
-                            "fast mana"
-                          ]
-                        },
-                        "beforeCount": 1,
-                        "afterCount": 1,
-                        "delta": 0,
-                        "preserved": true
-                      }
-                    ],
-                    "losses": [
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "mv3-plus-or-x-noncreature-spells",
-                        "minimumCount": 29,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true,
-                          "minManaValue": 3,
-                          "countXAsAtLeastManaValue": 3
-                        },
-                        "beforeCount": 29,
-                        "afterCount": 26,
-                        "delta": -3,
-                        "preserved": false
-                      }
-                    ],
-                    "unresolvedBefore": [],
-                    "unresolvedAfter": [],
-                    "invalidRequirements": [],
-                    "acceptanceRule": "Every caller-declared strategy-fuel component and structural-floor component must retain at least its declared minimum count across the complete accepted package. Exact card resolution and descriptor validation are required; a missing or malformed component cannot be treated as preserved."
-                  },
+                  "packageAcceptance": null,
                   "deckStrategyRetention": {},
                   "planProvenance": {
                     "targetBracket": 4,
@@ -6556,7 +6036,7 @@
                   },
                   "swaps": [
                     {
-                      "out": "Dancer's Chakrams",
+                      "out": "Lingering Souls",
                       "in": "Key to the City",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -6570,101 +6050,11 @@
                         "addressedRole": "average-nonland-mv",
                         "remainingStructuralDeficitAfterSwap": 11,
                         "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
+                        "nonlandManaValueReduction": 1,
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
-                          "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
-                          "addMatchedStrategies": [
-                            "value-engine"
-                          ],
-                          "locallyUnreplacedStrategies": [],
-                          "cutRoles": [
-                            "equipment",
-                            "go-wide payoff",
-                            "token production"
-                          ],
-                          "addRoles": [
-                            "card draw",
-                            "repeatable draw"
-                          ],
-                          "unreplacedRoles": [
-                            "equipment",
-                            "go-wide payoff",
-                            "token production"
-                          ],
-                          "unreplacedStrategyComponentRoles": [],
-                          "meaningfulStrategyLoss": false,
-                          "verdict": "preserved"
-                        }
-                      }
-                    },
-                    {
-                      "out": "Rite of Replication",
-                      "in": "Smuggler's Copter",
-                      "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
-                      "recommendedPrinting": {
-                        "set": "FCA",
-                        "collectorNumber": "62",
-                        "finish": "nonfoil",
-                        "priceNzd": 3.09,
-                        "priceUsdReference": 1.81
-                      },
-                      "structuralPairing": {
-                        "addressedRole": "average-nonland-mv",
-                        "remainingStructuralDeficitAfterSwap": 11,
-                        "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
-                        "persistentColoredManaSourcesAfterSwap": 6,
-                        "persistentColoredManaSourceFloor": 6,
-                        "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
-                          "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
-                          "addMatchedStrategies": [
-                            "value-engine"
-                          ],
-                          "locallyUnreplacedStrategies": [],
-                          "cutRoles": [
-                            "token production"
-                          ],
-                          "addRoles": [
-                            "card draw",
-                            "repeatable draw"
-                          ],
-                          "unreplacedRoles": [
-                            "token production"
-                          ],
-                          "unreplacedStrategyComponentRoles": [],
-                          "meaningfulStrategyLoss": false,
-                          "verdict": "preserved"
-                        }
-                      }
-                    },
-                    {
-                      "out": "Observed Stasis",
-                      "in": "Staff of the Storyteller",
-                      "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
-                      "recommendedPrinting": {
-                        "set": "SLD",
-                        "collectorNumber": "1863",
-                        "finish": "nonfoil",
-                        "priceNzd": 7.84,
-                        "priceUsdReference": 4.59
-                      },
-                      "structuralPairing": {
-                        "addressedRole": "average-nonland-mv",
-                        "remainingStructuralDeficitAfterSwap": 11,
-                        "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
-                        "persistentColoredManaSourcesAfterSwap": 6,
-                        "persistentColoredManaSourceFloor": 6,
-                        "strategyPreservation": {
-                          "cutStrategyAffinityScore": 5,
+                          "cutStrategyAffinityScore": 6,
                           "addStrategyAffinityScore": 14,
                           "cutStrategyProtectionApplied": 4,
                           "cutMatchedStrategies": [
@@ -6675,15 +6065,17 @@
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "card draw"
+                            "graveyard recursion",
+                            "token production"
                           ],
                           "addRoles": [
                             "card draw",
-                            "repeatable draw",
-                            "repeatable token engine",
+                            "repeatable draw"
+                          ],
+                          "unreplacedRoles": [
+                            "graveyard recursion",
                             "token production"
                           ],
-                          "unreplacedRoles": [],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
                           "verdict": "preserved"
@@ -6695,18 +6087,18 @@
                 {
                   "candidate": 5,
                   "eligible": false,
-                  "reason": "package-reduces-declared-strategy-fuel",
+                  "reason": "improvement-below-threshold",
                   "attemptedSwaps": 3,
-                  "actualSwaps": 3,
-                  "estimatedSpendNzd": 8.42,
-                  "estimatedSpendUsdReference": 4.93,
+                  "actualSwaps": 1,
+                  "estimatedSpendNzd": 3.09,
+                  "estimatedSpendUsdReference": 1.81,
                   "unknownPriceCount": 0,
-                  "improvementScore": 4.45,
+                  "improvementScore": -2.879,
                   "significantRegression": false,
                   "zeroTargetProgressWhileFailedGatesRemain": false,
                   "targetGate": {
                     "applicable": true,
-                    "score": 3.1,
+                    "score": 0.7,
                     "failedBefore": [
                       "average-nonland-mv",
                       "cheap-interaction",
@@ -6736,87 +6128,36 @@
                     "meaningfulLosses": [],
                     "strategyDeltas": [
                       {
-                        "strategy": "food-lifegain",
-                        "cutAffinityScore": 0,
-                        "addAffinityScore": 14,
-                        "netAffinityDelta": 14
-                      },
-                      {
                         "strategy": "value-engine",
-                        "cutAffinityScore": 0,
-                        "addAffinityScore": 28,
-                        "netAffinityDelta": 28
+                        "cutAffinityScore": 6,
+                        "addAffinityScore": 14,
+                        "netAffinityDelta": 8
                       }
                     ],
                     "swapImpacts": [
                       {
-                        "cutStrategyAffinityScore": 0,
+                        "cutStrategyAffinityScore": 6,
                         "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "value-engine"
+                        ],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "equipment",
-                          "go-wide payoff",
+                          "graveyard recursion",
                           "token production"
                         ],
                         "addRoles": [
                           "card draw",
-                          "repeatable draw",
-                          "repeatable token engine",
-                          "token production"
+                          "repeatable draw"
                         ],
                         "unreplacedRoles": [
-                          "equipment",
-                          "go-wide payoff"
-                        ],
-                        "unreplacedStrategyComponentRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      },
-                      {
-                        "cutStrategyAffinityScore": 0,
-                        "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
-                        "addMatchedStrategies": [
-                          "value-engine"
-                        ],
-                        "locallyUnreplacedStrategies": [],
-                        "cutRoles": [
+                          "graveyard recursion",
                           "token production"
                         ],
-                        "addRoles": [
-                          "card draw",
-                          "card selection",
-                          "graveyard recursion"
-                        ],
-                        "unreplacedRoles": [
-                          "token production"
-                        ],
-                        "unreplacedStrategyComponentRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      },
-                      {
-                        "cutStrategyAffinityScore": 0,
-                        "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
-                        "addMatchedStrategies": [
-                          "food-lifegain"
-                        ],
-                        "locallyUnreplacedStrategies": [],
-                        "cutRoles": [],
-                        "addRoles": [
-                          "equipment",
-                          "repeatable life gain engine",
-                          "token production"
-                        ],
-                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -6824,97 +6165,7 @@
                     ],
                     "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                   },
-                  "packageAcceptance": {
-                    "status": "strategy-fuel-loss",
-                    "evidenceComplete": true,
-                    "preserved": false,
-                    "strategyFuel": [
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "mv3-plus-or-x-noncreature-spells",
-                        "minimumCount": 29,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true,
-                          "minManaValue": 3,
-                          "countXAsAtLeastManaValue": 3
-                        },
-                        "beforeCount": 29,
-                        "afterCount": 26,
-                        "delta": -3,
-                        "preserved": false
-                      },
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "noncreature-spell-density",
-                        "minimumCount": 40,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true
-                        },
-                        "beforeCount": 40,
-                        "afterCount": 40,
-                        "delta": 0,
-                        "preserved": true
-                      }
-                    ],
-                    "structuralFloors": [
-                      {
-                        "kind": "structural-floor",
-                        "id": "board-wipe-package",
-                        "minimumCount": 3,
-                        "zone": "main",
-                        "matcher": {
-                          "requiredRoles": [
-                            "board wipe"
-                          ]
-                        },
-                        "beforeCount": 3,
-                        "afterCount": 3,
-                        "delta": 0,
-                        "preserved": true
-                      },
-                      {
-                        "kind": "structural-floor",
-                        "id": "premium-fast-mana-package",
-                        "minimumCount": 1,
-                        "zone": "main",
-                        "matcher": {
-                          "requiredRoles": [
-                            "fast mana"
-                          ]
-                        },
-                        "beforeCount": 1,
-                        "afterCount": 1,
-                        "delta": 0,
-                        "preserved": true
-                      }
-                    ],
-                    "losses": [
-                      {
-                        "kind": "strategy-fuel",
-                        "id": "mv3-plus-or-x-noncreature-spells",
-                        "minimumCount": 29,
-                        "zone": "main",
-                        "matcher": {
-                          "requireNonland": true,
-                          "requireNoncreature": true,
-                          "minManaValue": 3,
-                          "countXAsAtLeastManaValue": 3
-                        },
-                        "beforeCount": 29,
-                        "afterCount": 26,
-                        "delta": -3,
-                        "preserved": false
-                      }
-                    ],
-                    "unresolvedBefore": [],
-                    "unresolvedAfter": [],
-                    "invalidRequirements": [],
-                    "acceptanceRule": "Every caller-declared strategy-fuel component and structural-floor component must retain at least its declared minimum count across the complete accepted package. Exact card resolution and descriptor validation are required; a missing or malformed component cannot be treated as preserved."
-                  },
+                  "packageAcceptance": null,
                   "deckStrategyRetention": {},
                   "planProvenance": {
                     "targetBracket": 4,
@@ -7052,107 +6303,15 @@
                   },
                   "swaps": [
                     {
-                      "out": "Dancer's Chakrams",
-                      "in": "Staff of the Storyteller",
+                      "out": "Lingering Souls",
+                      "in": "Smuggler's Copter",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
-                        "set": "SLD",
-                        "collectorNumber": "1863",
+                        "set": "FCA",
+                        "collectorNumber": "62",
                         "finish": "nonfoil",
-                        "priceNzd": 7.84,
-                        "priceUsdReference": 4.59
-                      },
-                      "structuralPairing": {
-                        "addressedRole": "average-nonland-mv",
-                        "remainingStructuralDeficitAfterSwap": 11,
-                        "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
-                        "persistentColoredManaSourcesAfterSwap": 6,
-                        "persistentColoredManaSourceFloor": 6,
-                        "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
-                          "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
-                          "addMatchedStrategies": [
-                            "value-engine"
-                          ],
-                          "locallyUnreplacedStrategies": [],
-                          "cutRoles": [
-                            "equipment",
-                            "go-wide payoff",
-                            "token production"
-                          ],
-                          "addRoles": [
-                            "card draw",
-                            "repeatable draw",
-                            "repeatable token engine",
-                            "token production"
-                          ],
-                          "unreplacedRoles": [
-                            "equipment",
-                            "go-wide payoff"
-                          ],
-                          "unreplacedStrategyComponentRoles": [],
-                          "meaningfulStrategyLoss": false,
-                          "verdict": "preserved"
-                        }
-                      }
-                    },
-                    {
-                      "out": "Rite of Replication",
-                      "in": "Dreams of Laguna",
-                      "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
-                      "recommendedPrinting": {
-                        "set": "FIN",
-                        "collectorNumber": "50",
-                        "finish": "nonfoil",
-                        "priceNzd": 0.39,
-                        "priceUsdReference": 0.23
-                      },
-                      "structuralPairing": {
-                        "addressedRole": "average-nonland-mv",
-                        "remainingStructuralDeficitAfterSwap": 11,
-                        "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
-                        "persistentColoredManaSourcesAfterSwap": 6,
-                        "persistentColoredManaSourceFloor": 6,
-                        "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
-                          "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
-                          "addMatchedStrategies": [
-                            "value-engine"
-                          ],
-                          "locallyUnreplacedStrategies": [],
-                          "cutRoles": [
-                            "token production"
-                          ],
-                          "addRoles": [
-                            "card draw",
-                            "card selection",
-                            "graveyard recursion"
-                          ],
-                          "unreplacedRoles": [
-                            "token production"
-                          ],
-                          "unreplacedStrategyComponentRoles": [],
-                          "meaningfulStrategyLoss": false,
-                          "verdict": "preserved"
-                        }
-                      }
-                    },
-                    {
-                      "out": "Eye of Nidhogg",
-                      "in": "White Mage's Staff",
-                      "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
-                      "recommendedPrinting": {
-                        "set": "FIN",
-                        "collectorNumber": "42",
-                        "finish": "nonfoil",
-                        "priceNzd": 0.19,
-                        "priceUsdReference": 0.11
+                        "priceNzd": 3.09,
+                        "priceUsdReference": 1.81
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
@@ -7162,21 +6321,28 @@
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
+                          "cutStrategyAffinityScore": 6,
                           "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
+                          "cutStrategyProtectionApplied": 4,
+                          "cutMatchedStrategies": [
+                            "value-engine"
+                          ],
                           "addMatchedStrategies": [
-                            "food-lifegain"
+                            "value-engine"
                           ],
                           "locallyUnreplacedStrategies": [],
-                          "cutRoles": [],
-                          "addRoles": [
-                            "equipment",
-                            "repeatable life gain engine",
+                          "cutRoles": [
+                            "graveyard recursion",
                             "token production"
                           ],
-                          "unreplacedRoles": [],
+                          "addRoles": [
+                            "card draw",
+                            "repeatable draw"
+                          ],
+                          "unreplacedRoles": [
+                            "graveyard recursion",
+                            "token production"
+                          ],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
                           "verdict": "preserved"
@@ -7193,8 +6359,7 @@
               "candidatePackagesEligible": 0,
               "winningCandidate": null,
               "reasonCounts": {
-                "improvement-below-threshold": 1,
-                "package-reduces-declared-strategy-fuel": 3,
+                "package-reduces-declared-strategy-fuel": 4,
                 "package-reduces-declared-strategy-fuel-and-structural-floor": 1
               },
               "candidateComparisons": [
@@ -7643,7 +6808,7 @@
                   "estimatedSpendNzd": 40.93,
                   "estimatedSpendUsdReference": 23.96,
                   "unknownPriceCount": 0,
-                  "improvementScore": 3.065,
+                  "improvementScore": 2.592,
                   "significantRegression": false,
                   "zeroTargetProgressWhileFailedGatesRemain": false,
                   "targetGate": {
@@ -7728,12 +6893,16 @@
                         "cutMatchedStrategies": [],
                         "addMatchedStrategies": [],
                         "locallyUnreplacedStrategies": [],
-                        "cutRoles": [],
+                        "cutRoles": [
+                          "equipment"
+                        ],
                         "addRoles": [
                           "sacrifice synergy",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "equipment"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -8032,7 +7201,7 @@
                       }
                     },
                     {
-                      "out": "Eye of Nidhogg",
+                      "out": "Reaper's Scythe",
                       "in": "Diabolic Intent",
                       "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher). The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -8056,12 +7225,16 @@
                           "cutMatchedStrategies": [],
                           "addMatchedStrategies": [],
                           "locallyUnreplacedStrategies": [],
-                          "cutRoles": [],
+                          "cutRoles": [
+                            "equipment"
+                          ],
                           "addRoles": [
                             "sacrifice synergy",
                             "tutor"
                           ],
-                          "unreplacedRoles": [],
+                          "unreplacedRoles": [
+                            "equipment"
+                          ],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
                           "verdict": "preserved"
@@ -8073,18 +7246,18 @@
                 {
                   "candidate": 3,
                   "eligible": false,
-                  "reason": "improvement-below-threshold",
+                  "reason": "package-reduces-declared-strategy-fuel",
                   "attemptedSwaps": 2,
                   "actualSwaps": 2,
                   "estimatedSpendNzd": 38.38,
                   "estimatedSpendUsdReference": 22.47,
                   "unknownPriceCount": 0,
-                  "improvementScore": -0.814,
+                  "improvementScore": 1.785,
                   "significantRegression": false,
                   "zeroTargetProgressWhileFailedGatesRemain": false,
                   "targetGate": {
                     "applicable": true,
-                    "score": 2.7,
+                    "score": 2,
                     "failedBefore": [
                       "average-nonland-mv",
                       "cheap-interaction",
@@ -8132,8 +7305,6 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "equipment",
-                          "go-wide payoff",
                           "token production"
                         ],
                         "addRoles": [
@@ -8143,7 +7314,6 @@
                           "repeatable draw"
                         ],
                         "unreplacedRoles": [
-                          "go-wide payoff",
                           "token production"
                         ],
                         "unreplacedStrategyComponentRoles": [],
@@ -8157,12 +7327,20 @@
                         "cutMatchedStrategies": [],
                         "addMatchedStrategies": [],
                         "locallyUnreplacedStrategies": [],
-                        "cutRoles": [],
+                        "cutRoles": [
+                          "equipment",
+                          "token production",
+                          "untap engine"
+                        ],
                         "addRoles": [
                           "sacrifice synergy",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "equipment",
+                          "token production",
+                          "untap engine"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -8170,7 +7348,97 @@
                     ],
                     "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                   },
-                  "packageAcceptance": null,
+                  "packageAcceptance": {
+                    "status": "strategy-fuel-loss",
+                    "evidenceComplete": true,
+                    "preserved": false,
+                    "strategyFuel": [
+                      {
+                        "kind": "strategy-fuel",
+                        "id": "mv3-plus-or-x-noncreature-spells",
+                        "minimumCount": 29,
+                        "zone": "main",
+                        "matcher": {
+                          "requireNonland": true,
+                          "requireNoncreature": true,
+                          "minManaValue": 3,
+                          "countXAsAtLeastManaValue": 3
+                        },
+                        "beforeCount": 29,
+                        "afterCount": 28,
+                        "delta": -1,
+                        "preserved": false
+                      },
+                      {
+                        "kind": "strategy-fuel",
+                        "id": "noncreature-spell-density",
+                        "minimumCount": 40,
+                        "zone": "main",
+                        "matcher": {
+                          "requireNonland": true,
+                          "requireNoncreature": true
+                        },
+                        "beforeCount": 40,
+                        "afterCount": 40,
+                        "delta": 0,
+                        "preserved": true
+                      }
+                    ],
+                    "structuralFloors": [
+                      {
+                        "kind": "structural-floor",
+                        "id": "board-wipe-package",
+                        "minimumCount": 3,
+                        "zone": "main",
+                        "matcher": {
+                          "requiredRoles": [
+                            "board wipe"
+                          ]
+                        },
+                        "beforeCount": 3,
+                        "afterCount": 3,
+                        "delta": 0,
+                        "preserved": true
+                      },
+                      {
+                        "kind": "structural-floor",
+                        "id": "premium-fast-mana-package",
+                        "minimumCount": 1,
+                        "zone": "main",
+                        "matcher": {
+                          "requiredRoles": [
+                            "fast mana"
+                          ]
+                        },
+                        "beforeCount": 1,
+                        "afterCount": 1,
+                        "delta": 0,
+                        "preserved": true
+                      }
+                    ],
+                    "losses": [
+                      {
+                        "kind": "strategy-fuel",
+                        "id": "mv3-plus-or-x-noncreature-spells",
+                        "minimumCount": 29,
+                        "zone": "main",
+                        "matcher": {
+                          "requireNonland": true,
+                          "requireNoncreature": true,
+                          "minManaValue": 3,
+                          "countXAsAtLeastManaValue": 3
+                        },
+                        "beforeCount": 29,
+                        "afterCount": 28,
+                        "delta": -1,
+                        "preserved": false
+                      }
+                    ],
+                    "unresolvedBefore": [],
+                    "unresolvedAfter": [],
+                    "invalidRequirements": [],
+                    "acceptanceRule": "Every caller-declared strategy-fuel component and structural-floor component must retain at least its declared minimum count across the complete accepted package. Exact card resolution and descriptor validation are required; a missing or malformed component cannot be treated as preserved."
+                  },
                   "deckStrategyRetention": {},
                   "planProvenance": {
                     "targetBracket": 4,
@@ -8308,7 +7576,7 @@
                   },
                   "swaps": [
                     {
-                      "out": "Dancer's Chakrams",
+                      "out": "Rite of Replication",
                       "in": "Skullclamp",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -8335,8 +7603,6 @@
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "equipment",
-                            "go-wide payoff",
                             "token production"
                           ],
                           "addRoles": [
@@ -8346,7 +7612,6 @@
                             "repeatable draw"
                           ],
                           "unreplacedRoles": [
-                            "go-wide payoff",
                             "token production"
                           ],
                           "unreplacedStrategyComponentRoles": [],
@@ -8356,7 +7621,7 @@
                       }
                     },
                     {
-                      "out": "Eye of Nidhogg",
+                      "out": "Sage's Nouliths",
                       "in": "Diabolic Intent",
                       "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher). The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -8380,12 +7645,20 @@
                           "cutMatchedStrategies": [],
                           "addMatchedStrategies": [],
                           "locallyUnreplacedStrategies": [],
-                          "cutRoles": [],
+                          "cutRoles": [
+                            "equipment",
+                            "token production",
+                            "untap engine"
+                          ],
                           "addRoles": [
                             "sacrifice synergy",
                             "tutor"
                           ],
-                          "unreplacedRoles": [],
+                          "unreplacedRoles": [
+                            "equipment",
+                            "token production",
+                            "untap engine"
+                          ],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
                           "verdict": "preserved"
@@ -8400,15 +7673,15 @@
                   "reason": "package-reduces-declared-strategy-fuel",
                   "attemptedSwaps": 2,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 28.63,
-                  "estimatedSpendUsdReference": 16.76,
+                  "estimatedSpendNzd": 1.96,
+                  "estimatedSpendUsdReference": 1.15,
                   "unknownPriceCount": 0,
-                  "improvementScore": 5.21,
+                  "improvementScore": 2.637,
                   "significantRegression": false,
                   "zeroTargetProgressWhileFailedGatesRemain": false,
                   "targetGate": {
                     "applicable": true,
-                    "score": 2.5,
+                    "score": 2.2,
                     "failedBefore": [
                       "average-nonland-mv",
                       "cheap-interaction",
@@ -8426,8 +7699,7 @@
                     "repairedGates": [],
                     "advancedFailedGates": [
                       "average-nonland-mv",
-                      "early-plays",
-                      "tutors"
+                      "early-plays"
                     ],
                     "regressedGates": [],
                     "ignoredUnverifiedGates": []
@@ -8440,25 +7712,25 @@
                     "strategyDeltas": [
                       {
                         "strategy": "value-engine",
-                        "cutAffinityScore": 0,
-                        "addAffinityScore": 14,
-                        "netAffinityDelta": 14
+                        "cutAffinityScore": 10,
+                        "addAffinityScore": 28,
+                        "netAffinityDelta": 18
                       }
                     ],
                     "swapImpacts": [
                       {
-                        "cutStrategyAffinityScore": 0,
+                        "cutStrategyAffinityScore": 5,
                         "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "value-engine"
+                        ],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "equipment",
-                          "go-wide payoff",
-                          "token production"
+                          "card draw"
                         ],
                         "addRoles": [
                           "card draw",
@@ -8467,25 +7739,29 @@
                           "etb synergy",
                           "repeatable draw"
                         ],
-                        "unreplacedRoles": [
-                          "go-wide payoff",
-                          "token production"
-                        ],
+                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
                       },
                       {
-                        "cutStrategyAffinityScore": 0,
-                        "addStrategyAffinityScore": 0,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
-                        "addMatchedStrategies": [],
+                        "cutStrategyAffinityScore": 5,
+                        "addStrategyAffinityScore": 14,
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "value-engine"
+                        ],
+                        "addMatchedStrategies": [
+                          "value-engine"
+                        ],
                         "locallyUnreplacedStrategies": [],
-                        "cutRoles": [],
+                        "cutRoles": [
+                          "card draw"
+                        ],
                         "addRoles": [
-                          "sacrifice synergy",
-                          "tutor"
+                          "card draw",
+                          "equipment",
+                          "repeatable draw"
                         ],
                         "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
@@ -8737,7 +8013,7 @@
                   },
                   "swaps": [
                     {
-                      "out": "Dancer's Chakrams",
+                      "out": "Observed Stasis",
                       "in": "Puresteel Paladin",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -8755,18 +8031,18 @@
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
+                          "cutStrategyAffinityScore": 5,
                           "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
+                          "cutStrategyProtectionApplied": 4,
+                          "cutMatchedStrategies": [
+                            "value-engine"
+                          ],
                           "addMatchedStrategies": [
                             "value-engine"
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "equipment",
-                            "go-wide payoff",
-                            "token production"
+                            "card draw"
                           ],
                           "addRoles": [
                             "card draw",
@@ -8775,10 +8051,7 @@
                             "etb synergy",
                             "repeatable draw"
                           ],
-                          "unreplacedRoles": [
-                            "go-wide payoff",
-                            "token production"
-                          ],
+                          "unreplacedRoles": [],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
                           "verdict": "preserved"
@@ -8786,34 +8059,41 @@
                       }
                     },
                     {
-                      "out": "Eye of Nidhogg",
-                      "in": "Diabolic Intent",
-                      "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher). The recommended physical printing satisfies the active printing-family/set policy.",
+                      "out": "Syphon Mind",
+                      "in": "Mask of Memory",
+                      "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
-                        "set": "FCA",
-                        "collectorNumber": "34",
+                        "set": "FIC",
+                        "collectorNumber": "350",
                         "finish": "nonfoil",
-                        "priceNzd": 27.3,
-                        "priceUsdReference": 15.98
+                        "priceNzd": 0.63,
+                        "priceUsdReference": 0.37
                       },
                       "structuralPairing": {
-                        "addressedRole": "tutor",
-                        "remainingStructuralDeficitAfterSwap": 10,
-                        "authoritativeTargetGate": "tutors",
-                        "nonlandManaValueReduction": null,
+                        "addressedRole": "average-nonland-mv",
+                        "remainingStructuralDeficitAfterSwap": 11,
+                        "authoritativeTargetGate": "average-nonland-mv",
+                        "nonlandManaValueReduction": 2,
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
-                          "addStrategyAffinityScore": 0,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
-                          "addMatchedStrategies": [],
+                          "cutStrategyAffinityScore": 5,
+                          "addStrategyAffinityScore": 14,
+                          "cutStrategyProtectionApplied": 4,
+                          "cutMatchedStrategies": [
+                            "value-engine"
+                          ],
+                          "addMatchedStrategies": [
+                            "value-engine"
+                          ],
                           "locallyUnreplacedStrategies": [],
-                          "cutRoles": [],
+                          "cutRoles": [
+                            "card draw"
+                          ],
                           "addRoles": [
-                            "sacrifice synergy",
-                            "tutor"
+                            "card draw",
+                            "equipment",
+                            "repeatable draw"
                           ],
                           "unreplacedRoles": [],
                           "unreplacedStrategyComponentRoles": [],
@@ -8830,15 +8110,15 @@
                   "reason": "package-reduces-declared-strategy-fuel",
                   "attemptedSwaps": 2,
                   "actualSwaps": 2,
-                  "estimatedSpendNzd": 27.93,
-                  "estimatedSpendUsdReference": 16.35,
+                  "estimatedSpendNzd": 1.14,
+                  "estimatedSpendUsdReference": 0.67,
                   "unknownPriceCount": 0,
-                  "improvementScore": 2.184,
+                  "improvementScore": 0.264,
                   "significantRegression": false,
                   "zeroTargetProgressWhileFailedGatesRemain": false,
                   "targetGate": {
                     "applicable": true,
-                    "score": 2.5,
+                    "score": 1.6,
                     "failedBefore": [
                       "average-nonland-mv",
                       "cheap-interaction",
@@ -8856,8 +8136,7 @@
                     "repairedGates": [],
                     "advancedFailedGates": [
                       "average-nonland-mv",
-                      "early-plays",
-                      "tutors"
+                      "early-plays"
                     ],
                     "regressedGates": [],
                     "ignoredUnverifiedGates": []
@@ -8870,25 +8149,25 @@
                     "strategyDeltas": [
                       {
                         "strategy": "value-engine",
-                        "cutAffinityScore": 0,
-                        "addAffinityScore": 14,
-                        "netAffinityDelta": 14
+                        "cutAffinityScore": 9,
+                        "addAffinityScore": 28,
+                        "netAffinityDelta": 19
                       }
                     ],
                     "swapImpacts": [
                       {
-                        "cutStrategyAffinityScore": 0,
+                        "cutStrategyAffinityScore": 4,
                         "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "value-engine"
+                        ],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "equipment",
-                          "go-wide payoff",
-                          "token production"
+                          "etb synergy"
                         ],
                         "addRoles": [
                           "card draw",
@@ -8896,24 +8175,29 @@
                           "repeatable draw"
                         ],
                         "unreplacedRoles": [
-                          "go-wide payoff",
-                          "token production"
+                          "etb synergy"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
                       },
                       {
-                        "cutStrategyAffinityScore": 0,
-                        "addStrategyAffinityScore": 0,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
-                        "addMatchedStrategies": [],
+                        "cutStrategyAffinityScore": 5,
+                        "addStrategyAffinityScore": 14,
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "value-engine"
+                        ],
+                        "addMatchedStrategies": [
+                          "value-engine"
+                        ],
                         "locallyUnreplacedStrategies": [],
-                        "cutRoles": [],
+                        "cutRoles": [
+                          "card draw"
+                        ],
                         "addRoles": [
-                          "sacrifice synergy",
-                          "tutor"
+                          "card draw",
+                          "repeatable draw"
                         ],
                         "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
@@ -9151,7 +8435,7 @@
                   },
                   "swaps": [
                     {
-                      "out": "Dancer's Chakrams",
+                      "out": "Archaeomancer's Map",
                       "in": "Mask of Memory",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -9165,22 +8449,22 @@
                         "addressedRole": "average-nonland-mv",
                         "remainingStructuralDeficitAfterSwap": 11,
                         "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
+                        "nonlandManaValueReduction": 1,
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
+                          "cutStrategyAffinityScore": 4,
                           "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
+                          "cutStrategyProtectionApplied": 4,
+                          "cutMatchedStrategies": [
+                            "value-engine"
+                          ],
                           "addMatchedStrategies": [
                             "value-engine"
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "equipment",
-                            "go-wide payoff",
-                            "token production"
+                            "etb synergy"
                           ],
                           "addRoles": [
                             "card draw",
@@ -9188,8 +8472,7 @@
                             "repeatable draw"
                           ],
                           "unreplacedRoles": [
-                            "go-wide payoff",
-                            "token production"
+                            "etb synergy"
                           ],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
@@ -9198,34 +8481,40 @@
                       }
                     },
                     {
-                      "out": "Eye of Nidhogg",
-                      "in": "Diabolic Intent",
-                      "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher). The recommended physical printing satisfies the active printing-family/set policy.",
+                      "out": "Cut a Deal",
+                      "in": "Key to the City",
+                      "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
-                        "set": "FCA",
-                        "collectorNumber": "34",
+                        "set": "FIC",
+                        "collectorNumber": "348",
                         "finish": "nonfoil",
-                        "priceNzd": 27.3,
-                        "priceUsdReference": 15.98
+                        "priceNzd": 0.51,
+                        "priceUsdReference": 0.3
                       },
                       "structuralPairing": {
-                        "addressedRole": "tutor",
-                        "remainingStructuralDeficitAfterSwap": 10,
-                        "authoritativeTargetGate": "tutors",
-                        "nonlandManaValueReduction": null,
+                        "addressedRole": "average-nonland-mv",
+                        "remainingStructuralDeficitAfterSwap": 11,
+                        "authoritativeTargetGate": "average-nonland-mv",
+                        "nonlandManaValueReduction": 1,
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
-                          "addStrategyAffinityScore": 0,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
-                          "addMatchedStrategies": [],
+                          "cutStrategyAffinityScore": 5,
+                          "addStrategyAffinityScore": 14,
+                          "cutStrategyProtectionApplied": 4,
+                          "cutMatchedStrategies": [
+                            "value-engine"
+                          ],
+                          "addMatchedStrategies": [
+                            "value-engine"
+                          ],
                           "locallyUnreplacedStrategies": [],
-                          "cutRoles": [],
+                          "cutRoles": [
+                            "card draw"
+                          ],
                           "addRoles": [
-                            "sacrifice synergy",
-                            "tutor"
+                            "card draw",
+                            "repeatable draw"
                           ],
                           "unreplacedRoles": [],
                           "unreplacedStrategyComponentRoles": [],
@@ -9244,8 +8533,7 @@
               "candidatePackagesEligible": 0,
               "winningCandidate": null,
               "reasonCounts": {
-                "improvement-below-threshold": 1,
-                "package-reduces-declared-strategy-fuel": 3,
+                "package-reduces-declared-strategy-fuel": 4,
                 "package-reduces-declared-strategy-fuel-and-structural-floor": 1
               },
               "candidateComparisons": [
@@ -10020,7 +9308,7 @@
                   "estimatedSpendNzd": 11.09,
                   "estimatedSpendUsdReference": 6.49,
                   "unknownPriceCount": 0,
-                  "improvementScore": 4.46,
+                  "improvementScore": 3.065,
                   "significantRegression": false,
                   "zeroTargetProgressWhileFailedGatesRemain": false,
                   "targetGate": {
@@ -10072,8 +9360,6 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "equipment",
-                          "go-wide payoff",
                           "token production"
                         ],
                         "addRoles": [
@@ -10083,7 +9369,6 @@
                           "repeatable draw"
                         ],
                         "unreplacedRoles": [
-                          "go-wide payoff",
                           "token production"
                         ],
                         "unreplacedStrategyComponentRoles": [],
@@ -10321,7 +9606,7 @@
                   },
                   "swaps": [
                     {
-                      "out": "Dancer's Chakrams",
+                      "out": "Rite of Replication",
                       "in": "Skullclamp",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -10348,8 +9633,6 @@
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "equipment",
-                            "go-wide payoff",
                             "token production"
                           ],
                           "addRoles": [
@@ -10359,7 +9642,6 @@
                             "repeatable draw"
                           ],
                           "unreplacedRoles": [
-                            "go-wide payoff",
                             "token production"
                           ],
                           "unreplacedStrategyComponentRoles": [],
@@ -10373,13 +9655,13 @@
                 {
                   "candidate": 4,
                   "eligible": false,
-                  "reason": "improvement-below-threshold",
+                  "reason": "package-reduces-declared-strategy-fuel",
                   "attemptedSwaps": 1,
                   "actualSwaps": 1,
                   "estimatedSpendNzd": 1.33,
                   "estimatedSpendUsdReference": 0.78,
                   "unknownPriceCount": 0,
-                  "improvementScore": -2.469,
+                  "improvementScore": 0.895,
                   "significantRegression": false,
                   "zeroTargetProgressWhileFailedGatesRemain": false,
                   "targetGate": {
@@ -10415,25 +9697,25 @@
                     "strategyDeltas": [
                       {
                         "strategy": "value-engine",
-                        "cutAffinityScore": 0,
+                        "cutAffinityScore": 5,
                         "addAffinityScore": 14,
-                        "netAffinityDelta": 14
+                        "netAffinityDelta": 9
                       }
                     ],
                     "swapImpacts": [
                       {
-                        "cutStrategyAffinityScore": 0,
+                        "cutStrategyAffinityScore": 5,
                         "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "value-engine"
+                        ],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "equipment",
-                          "go-wide payoff",
-                          "token production"
+                          "card draw"
                         ],
                         "addRoles": [
                           "card draw",
@@ -10442,10 +9724,7 @@
                           "etb synergy",
                           "repeatable draw"
                         ],
-                        "unreplacedRoles": [
-                          "go-wide payoff",
-                          "token production"
-                        ],
+                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -10453,7 +9732,111 @@
                     ],
                     "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                   },
-                  "packageAcceptance": null,
+                  "packageAcceptance": {
+                    "status": "strategy-fuel-loss",
+                    "evidenceComplete": true,
+                    "preserved": false,
+                    "strategyFuel": [
+                      {
+                        "kind": "strategy-fuel",
+                        "id": "mv3-plus-or-x-noncreature-spells",
+                        "minimumCount": 29,
+                        "zone": "main",
+                        "matcher": {
+                          "requireNonland": true,
+                          "requireNoncreature": true,
+                          "minManaValue": 3,
+                          "countXAsAtLeastManaValue": 3
+                        },
+                        "beforeCount": 29,
+                        "afterCount": 28,
+                        "delta": -1,
+                        "preserved": false
+                      },
+                      {
+                        "kind": "strategy-fuel",
+                        "id": "noncreature-spell-density",
+                        "minimumCount": 40,
+                        "zone": "main",
+                        "matcher": {
+                          "requireNonland": true,
+                          "requireNoncreature": true
+                        },
+                        "beforeCount": 40,
+                        "afterCount": 39,
+                        "delta": -1,
+                        "preserved": false
+                      }
+                    ],
+                    "structuralFloors": [
+                      {
+                        "kind": "structural-floor",
+                        "id": "board-wipe-package",
+                        "minimumCount": 3,
+                        "zone": "main",
+                        "matcher": {
+                          "requiredRoles": [
+                            "board wipe"
+                          ]
+                        },
+                        "beforeCount": 3,
+                        "afterCount": 3,
+                        "delta": 0,
+                        "preserved": true
+                      },
+                      {
+                        "kind": "structural-floor",
+                        "id": "premium-fast-mana-package",
+                        "minimumCount": 1,
+                        "zone": "main",
+                        "matcher": {
+                          "requiredRoles": [
+                            "fast mana"
+                          ]
+                        },
+                        "beforeCount": 1,
+                        "afterCount": 1,
+                        "delta": 0,
+                        "preserved": true
+                      }
+                    ],
+                    "losses": [
+                      {
+                        "kind": "strategy-fuel",
+                        "id": "mv3-plus-or-x-noncreature-spells",
+                        "minimumCount": 29,
+                        "zone": "main",
+                        "matcher": {
+                          "requireNonland": true,
+                          "requireNoncreature": true,
+                          "minManaValue": 3,
+                          "countXAsAtLeastManaValue": 3
+                        },
+                        "beforeCount": 29,
+                        "afterCount": 28,
+                        "delta": -1,
+                        "preserved": false
+                      },
+                      {
+                        "kind": "strategy-fuel",
+                        "id": "noncreature-spell-density",
+                        "minimumCount": 40,
+                        "zone": "main",
+                        "matcher": {
+                          "requireNonland": true,
+                          "requireNoncreature": true
+                        },
+                        "beforeCount": 40,
+                        "afterCount": 39,
+                        "delta": -1,
+                        "preserved": false
+                      }
+                    ],
+                    "unresolvedBefore": [],
+                    "unresolvedAfter": [],
+                    "invalidRequirements": [],
+                    "acceptanceRule": "Every caller-declared strategy-fuel component and structural-floor component must retain at least its declared minimum count across the complete accepted package. Exact card resolution and descriptor validation are required; a missing or malformed component cannot be treated as preserved."
+                  },
                   "deckStrategyRetention": {},
                   "planProvenance": {
                     "targetBracket": 4,
@@ -10591,7 +9974,7 @@
                   },
                   "swaps": [
                     {
-                      "out": "Dancer's Chakrams",
+                      "out": "Observed Stasis",
                       "in": "Puresteel Paladin",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -10609,18 +9992,18 @@
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
+                          "cutStrategyAffinityScore": 5,
                           "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
+                          "cutStrategyProtectionApplied": 4,
+                          "cutMatchedStrategies": [
+                            "value-engine"
+                          ],
                           "addMatchedStrategies": [
                             "value-engine"
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "equipment",
-                            "go-wide payoff",
-                            "token production"
+                            "card draw"
                           ],
                           "addRoles": [
                             "card draw",
@@ -10629,10 +10012,7 @@
                             "etb synergy",
                             "repeatable draw"
                           ],
-                          "unreplacedRoles": [
-                            "go-wide payoff",
-                            "token production"
-                          ],
+                          "unreplacedRoles": [],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
                           "verdict": "preserved"
@@ -10650,7 +10030,7 @@
                   "estimatedSpendNzd": 0.63,
                   "estimatedSpendUsdReference": 0.37,
                   "unknownPriceCount": 0,
-                  "improvementScore": 3.426,
+                  "improvementScore": 0.416,
                   "significantRegression": false,
                   "zeroTargetProgressWhileFailedGatesRemain": false,
                   "targetGate": {
@@ -10686,35 +10066,32 @@
                     "strategyDeltas": [
                       {
                         "strategy": "value-engine",
-                        "cutAffinityScore": 0,
+                        "cutAffinityScore": 5,
                         "addAffinityScore": 14,
-                        "netAffinityDelta": 14
+                        "netAffinityDelta": 9
                       }
                     ],
                     "swapImpacts": [
                       {
-                        "cutStrategyAffinityScore": 0,
+                        "cutStrategyAffinityScore": 5,
                         "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [],
+                        "cutStrategyProtectionApplied": 4,
+                        "cutMatchedStrategies": [
+                          "value-engine"
+                        ],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "equipment",
-                          "go-wide payoff",
-                          "token production"
+                          "card draw"
                         ],
                         "addRoles": [
                           "card draw",
                           "equipment",
                           "repeatable draw"
                         ],
-                        "unreplacedRoles": [
-                          "go-wide payoff",
-                          "token production"
-                        ],
+                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -10950,7 +10327,7 @@
                   },
                   "swaps": [
                     {
-                      "out": "Dancer's Chakrams",
+                      "out": "Syphon Mind",
                       "in": "Mask of Memory",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
@@ -10968,28 +10345,25 @@
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 0,
+                          "cutStrategyAffinityScore": 5,
                           "addStrategyAffinityScore": 14,
-                          "cutStrategyProtectionApplied": 0,
-                          "cutMatchedStrategies": [],
+                          "cutStrategyProtectionApplied": 4,
+                          "cutMatchedStrategies": [
+                            "value-engine"
+                          ],
                           "addMatchedStrategies": [
                             "value-engine"
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "equipment",
-                            "go-wide payoff",
-                            "token production"
+                            "card draw"
                           ],
                           "addRoles": [
                             "card draw",
                             "equipment",
                             "repeatable draw"
                           ],
-                          "unreplacedRoles": [
-                            "go-wide payoff",
-                            "token production"
-                          ],
+                          "unreplacedRoles": [],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
                           "verdict": "preserved"

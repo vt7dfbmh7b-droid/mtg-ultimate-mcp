@@ -2,139 +2,139 @@ TAP version 13
 # Subtest: builder-side commander context reuses the same V0.15 strategy inference
 ok 1 - builder-side commander context reuses the same V0.15 strategy inference
   ---
-  duration_ms: 22.441298
+  duration_ms: 28.756128
   type: 'test'
   ...
 # Subtest: existing V0.15 strategy inference gives on-plan cards more affinity than unrelated utility
 ok 2 - existing V0.15 strategy inference gives on-plan cards more affinity than unrelated utility
   ---
-  duration_ms: 1.674955
+  duration_ms: 2.065226
   type: 'test'
   ...
 # Subtest: strategy-aware cut pressure protects on-plan cards without making them uncuttable
 ok 3 - strategy-aware cut pressure protects on-plan cards without making them uncuttable
   ---
-  duration_ms: 1.471273
+  duration_ms: 1.851113
   type: 'test'
   ...
 # Subtest: weak incidental commander archetypes do not grant strategy protection
 ok 4 - weak incidental commander archetypes do not grant strategy protection
   ---
-  duration_ms: 1.264918
+  duration_ms: 1.651231
   type: 'test'
   ...
 # Subtest: cut pressure protects premium low-cost acceleration before slower generic mana
 ok 5 - cut pressure protects premium low-cost acceleration before slower generic mana
   ---
-  duration_ms: 0.44025
+  duration_ms: 0.536199
   type: 'test'
   ...
 # Subtest: upgrade context excludes weak incidental command-zone signals from deck identity
 ok 6 - upgrade context excludes weak incidental command-zone signals from deck identity
   ---
-  duration_ms: 0.610372
+  duration_ms: 0.766316
   type: 'test'
   ...
 # Subtest: upgrade pairing preserves the structural role an incoming card is repairing when a safer cut exists
 ok 7 - upgrade pairing preserves the structural role an incoming card is repairing when a safer cut exists
   ---
-  duration_ms: 1.301793
+  duration_ms: 1.672123
   type: 'test'
   ...
 # Subtest: top-three commander context preserves multiple already-detected deck identities
 ok 8 - top-three commander context preserves multiple already-detected deck identities
   ---
-  duration_ms: 0.86696
+  duration_ms: 1.111468
   type: 'test'
   ...
 # Subtest: upgrade context promotes a densely evidenced secondary deck plan that bridges to the commander
 ok 9 - upgrade context promotes a densely evidenced secondary deck plan that bridges to the commander
   ---
-  duration_ms: 2.732466
+  duration_ms: 3.46594
   type: 'test'
   ...
 # Subtest: upgrade context does not promote a shallow incidental secondary pattern
 ok 10 - upgrade context does not promote a shallow incidental secondary pattern
   ---
-  duration_ms: 0.9409
+  duration_ms: 1.297518
   type: 'test'
   ...
 # Subtest: whole-deck retention rejects a package that spends substantive strategy density
 ok 11 - whole-deck retention rejects a package that spends substantive strategy density
   ---
-  duration_ms: 1.754822
+  duration_ms: 2.278608
   type: 'test'
   ...
 # Subtest: upgrade pairing prefers zero strategy erosion over a sub-threshold affinity loss
 ok 12 - upgrade pairing prefers zero strategy erosion over a sub-threshold affinity loss
   ---
-  duration_ms: 0.662249
+  duration_ms: 0.856162
   type: 'test'
   ...
 # Subtest: Food and repeatable life-gain text form a substantive commander identity without card-name shortcuts
 ok 13 - Food and repeatable life-gain text form a substantive commander identity without card-name shortcuts
   ---
-  duration_ms: 1.500295
+  duration_ms: 0.647057
   type: 'test'
   ...
 # Subtest: Food/lifegain payoffs receive cut protection and uncompensated removal fails strategy preservation
 ok 14 - Food/lifegain payoffs receive cut protection and uncompensated removal fails strategy preservation
   ---
-  duration_ms: 1.488839
+  duration_ms: 2.780695
   type: 'test'
   ...
 # Subtest: artifact graveyard engines receive cut protection while graveyard hate cannot replace them
 ok 15 - artifact graveyard engines receive cut protection while graveyard hate cannot replace them
   ---
-  duration_ms: 0.934951
+  duration_ms: 1.236766
   type: 'test'
   ...
 # Subtest: token multipliers and team-wide payoffs cannot be traded for generic role gains
 ok 16 - token multipliers and team-wide payoffs cannot be traded for generic role gains
   ---
-  duration_ms: 1.786169
+  duration_ms: 2.329114
   type: 'test'
   ...
 # Subtest: token-death engines and board-scaling typal payoffs cannot be traded for generic protection
 ok 17 - token-death engines and board-scaling typal payoffs cannot be traded for generic protection
   ---
-  duration_ms: 1.850263
+  duration_ms: 2.337777
   type: 'test'
   ...
 # Subtest: caller-declared strategy fuel counts ordinary and X noncreature spells
 ok 18 - caller-declared strategy fuel counts ordinary and X noncreature spells
   ---
-  duration_ms: 17.968802
+  duration_ms: 28.616328
   type: 'test'
   ...
 # Subtest: package gate rejects cumulative strategy-fuel loss even when the descriptor is otherwise valid
 ok 19 - package gate rejects cumulative strategy-fuel loss even when the descriptor is otherwise valid
   ---
-  duration_ms: 1.368371
+  duration_ms: 1.527344
   type: 'test'
   ...
 # Subtest: package gate rejects multiple structural floors without relying on card names
 ok 20 - package gate rejects multiple structural floors without relying on card names
   ---
-  duration_ms: 1.387129
+  duration_ms: 1.951094
   type: 'test'
   ...
 # Subtest: package gate reports combined strategy-fuel and structural-floor loss
 ok 21 - package gate reports combined strategy-fuel and structural-floor loss
   ---
-  duration_ms: 1.156078
+  duration_ms: 1.561566
   type: 'test'
   ...
 # Subtest: package gate fails closed when a required card is unresolved or the contract is malformed
 ok 22 - package gate fails closed when a required card is unresolved or the contract is malformed
   ---
-  duration_ms: 0.516213
+  duration_ms: 0.837724
   type: 'test'
   ...
 # Subtest: an omitted package contract preserves existing refinement behavior
 ok 23 - an omitted package contract preserves existing refinement behavior
   ---
-  duration_ms: 0.784509
+  duration_ms: 1.119599
   type: 'test'
   ...
 1..23
@@ -145,4 +145,4 @@ ok 23 - an omitted package contract preserves existing refinement behavior
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 485.225301
+# duration_ms 543.522731
