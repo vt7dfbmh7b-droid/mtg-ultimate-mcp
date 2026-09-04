@@ -57,6 +57,18 @@ The manual deck comparison also confirmed that the current Necron result did not
 3. Marvel's restricted construction pool still cannot repair the fast-mana, tutor and verified-win gates; no threshold relaxation or pool expansion is justified.
 4. The themed-printing result needs a later provider-available rerun.
 
+## Targeted follow-up — KF-053 correction
+
+The initial batch's Food false green was reproduced as a real role-truth defect. A test-first Well-shaped regression was added at source `f3d63d02d5bb6f9baeb537a39f1f4f5e79d7b634`; the semantic fix landed in source `5c926d8fbe02df8b86f649af460cdd22b515a385`, and the final Food control used source `63b664dc0f93d57c100ea284062a453523aa23dc`.
+
+The role parser now recognizes variable-quantity repeatable draws such as Well of Lost Dreams' `draw X cards` wording, including the specialized life-gain-triggered draw role. The Food control also declares a minimum of two such baseline engines.
+
+The final exact-source Food result (workflow `33855550907`) passed build, deterministic regressions, exact 100-card legality, Middle-earth printings, budget, measurable target improvement, and strategy preservation. Its package acceptance evidence records the declared engine floor as **2 → 2**; the selected package retains both Dawn of Hope and Well of Lost Dreams and no longer accepts Well → Hobbit's Sting. It accepted four swaps, improved average nonland mana value 3.26 → 3.08, early plays 22 → 26, and cheap interaction 5 → 6. Persisted evidence is in `test-results/middle-earth-precon-refine/`.
+
+The post-fix family replay from source `5c926d8fbe02df8b86f649af460cdd22b515a385` is mechanically green for the completed Necron, Squirreled Away, INTEL-01 positive, strategy-inference, precon-generalization, Liliana and CI lanes. Marvel focused and broad remain honest target-quality failures with zero supported improvement; the expanded Middle-earth lane was still executing when this follow-up was recorded.
+
+Manual acceptance is still incomplete. The remaining review holds include Necron's Tomb Blade → Increasing Ambition component loss, Squirreled Away's Insatiable Frugivore → Not Dead After All and Arasta → Twitching Doll role changes, and Food's Crypt Incursion → Weathered Wayfarer graveyard-hate trade. These are separate from the corrected KF-053 false green and remain sufficient to block checkpoint promotion.
+
 ## Next action
 
-Make one targeted semantic-preservation correction for the observed repeatable draw/resource blind spot, add anonymous regression coverage, then rerun the entire INTEL-02 family from a new frozen source and repeat the manual deck pass. Keep BENCH-01 gated until that family is mechanically green and manually acceptable.
+Keep the accepted development checkpoint at `77a5383...`. Complete the remaining manual family review and resolve the Necron/Squirrels/Food holds before considering a new checkpoint. Keep BENCH-01 gated until the broader INTEL-02 family is mechanically green and manually acceptable. Do not merge or promote PR #29.
