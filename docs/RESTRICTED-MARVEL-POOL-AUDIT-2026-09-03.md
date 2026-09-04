@@ -1,5 +1,9 @@
 # Restricted Marvel Candidate-Pool Audit — 2026-09-03
 
+Decision: retain an explicit generic construction ceiling for the restricted Marvel family; do not expand the candidate pool or lower Bracket-5 standards. Current-source FF32 package-gate work does not change this conclusion.
+
+Current exact-source evidence: source `dcfc78d93e707e1d1a5199ad3cf852f8a3e993fb` (workflow `33830011009`) and the persisted Marvel diagnostics enumerate the bounded eligible physical-printing pool. The pool contains curve candidates, but the failed fast-mana and tutor lanes have only two role matches each, all already present or excluded; the verified full-table route lane also has no eligible physical package. Focused and broad Marvel therefore remain honest zero-swap, under-target controls.
+
 ## Decision
 
 No candidate-pool expansion or construction exception is justified by the current Marvel Bracket-5 evidence. The exact-source focused and broad controls both used the same bounded restricted policy pool and both ended with zero swaps after complete, fail-closed package evaluation. The result is an eligible-pool saturation/no-safe-package condition, not evidence of a recall hole.
