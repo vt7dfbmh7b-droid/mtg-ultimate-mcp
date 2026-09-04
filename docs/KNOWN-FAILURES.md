@@ -512,9 +512,9 @@ Observed: a disposable replay of the unchanged FF32 control against active sourc
 
 Risk: aggregate affinity can rise while the commander loses the actual cards that make its plan operate. A benchmark or caller that requires trigger fuel, wipes or another structural minimum can therefore reject a package only after it has already been accepted by the general optimizer.
 
-Protection: define generic semantic component/floor inputs for each caller and enforce them at package level alongside the existing strategy-affinity and operational-component checks. Strategy-specific trigger fuel, board wipes and other hard floors must remain independently measurable, fail closed when unresolved, and never be implemented as Y'shtola/card-name exceptions.
+Protection: caller-declared generic semantic component/floor inputs are now tracked during candidate package construction and audited again after exact package resolution. Strategy-specific trigger fuel, board wipes and other hard floors remain independently measurable, fail closed when unresolved, and are not implemented as Y'shtola/card-name exceptions.
 
-Status: open active-source diagnostic finding; no branch or persisted evidence was changed by the disposable replay. Add name-independent deterministic coverage, rerun FF32 from one current executable SHA, and then revalidate the full dependent control family.
+Status: partially prevented on the active branch. The deterministic acceptance suite passes 23/23, and current-source FF32 workflow `33830011009` at executable source `dcfc78d93e707e1d1a5199ad3cf852f8a3e993fb` passed with 29 trigger spells preserved, nonland noncreature spell density 40→41, board wipes 3→3 and fast mana 1→1. Historical failures `a079090...` and `7a2a80f...` remain retained as regression evidence; broader INTEL-02 family revalidation is still pending.
 
 ## Adding a failure
 
