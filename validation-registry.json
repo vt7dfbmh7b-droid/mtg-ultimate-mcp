@@ -47,6 +47,7 @@
         "package_protection": "true",
         "final_recognition": "true",
         "alternate_route_audit": "true",
+        "meaningful_alternate_routes_retained": "true",
         "exact_card_count": "true",
         "commander_legality": "true",
         "printing_policy_truth": "true"
