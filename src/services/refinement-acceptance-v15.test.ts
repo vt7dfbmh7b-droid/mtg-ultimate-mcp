@@ -263,3 +263,35 @@ test('an omitted package contract preserves existing refinement behavior', () =>
     reason: 'package-acceptance-contract-not-configured',
   });
 });
+
+test('package gate rejects life-gain-triggered draw engine loss without card-name rules', () => {
+  const engine = card(
+    'Generic Life-Gain Triggered Draw',
+    'Artifact',
+    'Whenever you gain life, you may pay {2}. If you do, draw a card.',
+  );
+  const removal = card('Generic One-Shot Removal', 'Instant', 'Destroy target creature.', 1, '{B}');
+  const before = parsed([engine.name]);
+  const after = parsed([removal.name]);
+  const allCards = [commander, engine, removal];
+
+  const audit = auditRefinementPackageAcceptanceV15({
+    beforeParsed: before,
+    beforeCards: allCards,
+    afterParsed: after,
+    afterCards: allCards,
+    contract: contract([{
+      id: 'repeatable-life-gain-draw-engine',
+      minimumCount: 1,
+      matcher: { requiredRoles: ['life-gain-triggered draw engine'], requireNonland: true },
+    }]),
+  });
+
+  assert.ok(audit);
+  assert.equal(audit.strategyFuel[0]?.beforeCount, 1);
+  assert.equal(audit.strategyFuel[0]?.afterCount, 0);
+  assert.equal(audit.status, 'strategy-fuel-loss');
+  assert.equal(packageAcceptanceGateV15(audit).eligible, false);
+  assert.equal(packageAcceptanceGateV15(audit).reason, 'package-reduces-declared-strategy-fuel');
+});
+

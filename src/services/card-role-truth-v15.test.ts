@@ -571,6 +571,18 @@ test('token-sacrifice and artifact-recursion bridges retain their exact operatio
     name: 'Generic One-Shot Token and Life',
     typeLine: 'Sorcery',
     oracleText: 'Create a 1/1 white Soldier creature token. You gain 1 life.',
+
+  const lifeGainTriggeredDraw = card({
+    name: 'Generic Life-Gain Triggered Draw',
+    typeLine: 'Artifact',
+    oracleText: 'Whenever you gain life, you may pay {2}.\\nIf you do, draw a card.',
+  });
+
+  const oneShotLifeDraw = card({
+    name: 'Generic One-Shot Life Draw',
+    typeLine: 'Sorcery',
+    oracleText: 'You gain 3 life. Draw a card.',
+  });
   });
 
   assert.equal(inferCardRoles(multiDeathDraw).includes('death-trigger draw engine'), true);
@@ -583,6 +595,18 @@ test('token-sacrifice and artifact-recursion bridges retain their exact operatio
   assert.equal(inferCardRoles(activatedLifeGain).includes('repeatable life gain engine'), true);
   assert.equal(inferCardRoles(oneShotTokensAndLife).includes('repeatable token engine'), false);
   assert.equal(inferCardRoles(oneShotTokensAndLife).includes('repeatable life gain engine'), false);
+});
+
+
+test('life-gain-triggered draw is distinct from one-shot draw', () => {
+  const engineRoles = inferCardRoles(lifeGainTriggeredDraw);
+  assert.ok(engineRoles.includes('repeatable draw'));
+  assert.ok(engineRoles.includes('life-gain-triggered draw engine'));
+  assert.ok(effectiveCardRolesV15(lifeGainTriggeredDraw).includes('life-gain-triggered draw engine'));
+
+  const oneShotRoles = inferCardRoles(oneShotLifeDraw);
+  assert.equal(oneShotRoles.includes('repeatable draw'), false);
+  assert.equal(oneShotRoles.includes('life-gain-triggered draw engine'), false);
 });
 
 test('multiplayer edicts retain interaction and sacrifice-bridge truth', () => {
