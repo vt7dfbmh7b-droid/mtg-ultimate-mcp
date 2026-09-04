@@ -1,4 +1,4 @@
-source_sha=8d04466ad55fc49ca12141dc83da9e9b1c03a136
+source_sha=3a39d8fe93e3411540606b80165db78dcb0cda9e
 build_outcome=failure
 mechanic_test_outcome=skipped
 control_outcome=skipped
