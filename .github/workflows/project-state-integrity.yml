@@ -152,3 +152,4 @@ jobs:
           test "$RECOVERY_SMOKE_OUTCOME" = success
           test "$BUILD_OUTCOME" = success
           test "$INDEX_REBUILD_OUTCOME" = success
+# INTEL-02-FAMILY-BATCH-2026-09-04: frozen-source trigger

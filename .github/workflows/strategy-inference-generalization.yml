@@ -92,3 +92,4 @@ jobs:
           test "$BUILD_OUTCOME" = success
           test "$REGRESSION_OUTCOME" = success
           test "$PERSIST_OUTCOME" = success
+# INTEL-02-FAMILY-BATCH-2026-09-04: frozen-source trigger

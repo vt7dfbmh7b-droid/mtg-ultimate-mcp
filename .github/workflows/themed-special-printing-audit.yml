@@ -59,3 +59,4 @@ jobs:
           OUTCOME: ${{ steps.audit.outcome }}
         run: test "$OUTCOME" = "success"
 # retrigger: 2026-08-21
+# INTEL-02-FAMILY-BATCH-2026-09-04: frozen-source trigger

@@ -176,3 +176,4 @@ jobs:
         run: |
           test "$PRODUCTION_PERSIST_OUTCOME" = "success"
           test "$MIDDLE_EARTH_PERSIST_OUTCOME" = "success"
+# INTEL-02-FAMILY-BATCH-2026-09-04: frozen-source trigger

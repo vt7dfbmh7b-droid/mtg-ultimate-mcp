@@ -145,3 +145,4 @@ jobs:
           test "$BUILD_OUTCOME" = success
           test "$MECHANIC_TEST_OUTCOME" = success
           test "$CONTROL_OUTCOME" = success
+# INTEL-02-FAMILY-BATCH-2026-09-04: frozen-source trigger

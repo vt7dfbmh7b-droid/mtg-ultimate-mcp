@@ -246,3 +246,4 @@ jobs:
         env:
           PERSIST_OUTCOME: ${{ steps.persist_result.outcome }}
         run: test "$PERSIST_OUTCOME" = success
+# INTEL-02-FAMILY-BATCH-2026-09-04: frozen-source trigger
