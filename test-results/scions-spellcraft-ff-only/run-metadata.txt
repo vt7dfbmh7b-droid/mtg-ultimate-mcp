@@ -1,0 +1,7 @@
+source_sha=27f1dbde6c6ae154ba7b10ea64fecb1ab3f0c672
+build_outcome=failure
+mechanic_test_outcome=skipped
+control_outcome=skipped
+policy=scions-spellcraft-final-fantasy-no-new-infinite
+target_bracket=4
+strategy=yshtola-spells-control-drain
