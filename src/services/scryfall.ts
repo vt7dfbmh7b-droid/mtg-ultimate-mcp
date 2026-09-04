@@ -425,7 +425,7 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (/\+1\/\+1 counter/.test(text)) roles.add('+1/+1 counters');
   if (/equipment|equip /.test(text) || type.includes('equipment')) roles.add('equipment');
   if (/copy target .* spell|copy .* triggered ability|copy .* activated ability/.test(text)) roles.add('copy effect');
-  if (/untap target|untap all|untap another/.test(text)) roles.add('untap engine');
+  if (/untap target|untap all|untap another|untap (?:them|those creatures|those permanents)/.test(text)) roles.add('untap engine');
   if (/whenever .* enters|enters the battlefield/.test(text)) roles.add('etb synergy');
   if (isLand) roles.add('land');
   if (type.includes('creature')) roles.add('creature');
