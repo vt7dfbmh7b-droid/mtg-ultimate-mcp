@@ -1351,6 +1351,93 @@ test('same-archetype affinity cannot spend death-draw, typal-control, or scaling
   }
 });
 
+test('protected narrow and trigger-specific engines cannot be spent on generic gains', () => {
+  const strategyAudit = auditUpgradeStrategyPreservationV15([{
+    cut: {
+      card: {
+        name: 'Generic Narrow Squirrel Sacrifice Outlet',
+        roles: ['narrow sacrifice outlet'],
+        manaValue: 4,
+      },
+      strategyAffinity: {
+        score: 8,
+        protectionApplied: 4,
+        matchedStrategies: ['aristocrats'],
+        matches: [{ archetype: 'aristocrats', commanderScore: 16, cardScore: 8, overlapScore: 8 }],
+      },
+    },
+    add: {
+      card: {
+        name: 'Generic Graveyard Protection Gain',
+        roles: ['graveyard recursion', 'protection'],
+        manaValue: 2,
+      },
+      strategyAffinity: {
+        score: 8,
+        protectionApplied: 4,
+        matchedStrategies: ['aristocrats'],
+        matches: [{ archetype: 'aristocrats', commanderScore: 16, cardScore: 8, overlapScore: 8 }],
+      },
+    },
+  }]);
+  const strategyGate = candidateStrategyPreservationGateV15({ strategyPreservation: strategyAudit });
+
+  assert.deepEqual(strategyAudit.swapImpacts[0]?.unreplacedStrategyComponentRoles, ['narrow sacrifice outlet']);
+  assert.equal(strategyAudit.swapImpacts[0]?.meaningfulStrategyLoss, true);
+  assert.equal(strategyGate.eligible, false);
+
+  for (const protectedRole of ['graveyard hate', 'spell-triggered token engine', 'combat-scaling life drain'] as const) {
+    const pairings = pairUpgradeSwapsByStructureV15(
+      [{
+        role: 'average-nonland-mv' as const,
+        candidate: {
+          card: { name: `Generic Low-Cost Replacement for ${protectedRole}`, roles: [], manaValue: 1, typeLine: 'Creature' },
+        },
+      }],
+      [
+        {
+          card: { name: `Only ${protectedRole}`, roles: [protectedRole], manaValue: 5, typeLine: 'Creature' },
+          heuristicCutPressure: 50,
+        },
+        {
+          card: { name: `Surplus ${protectedRole}`, roles: [], manaValue: 5, typeLine: 'Creature' },
+          heuristicCutPressure: 1,
+        },
+      ],
+      {
+        rampCount: 20,
+        drawCount: 20,
+        interactionCount: 20,
+        protectionCount: 8,
+        tutorCount: 8,
+        recursionCount: 4,
+        boardWipeCount: 2,
+        earlyPlayCount: 41,
+        cheapInteractionCount: 13,
+        fastManaCount: 2,
+        averageNonlandManaValue: 2.71,
+        nonlandCount: 69,
+        persistentColoredManaSourceCount: 11,
+        commanderColorCount: 5,
+        roleCounts: {
+          'free interaction': 1,
+          'cheap interaction': 13,
+          'spot interaction': 14,
+          [protectedRole]: 1,
+        },
+      },
+      { ...bracketFiveTargets },
+      5,
+    );
+
+    assert.equal(
+      (pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name,
+      `Surplus ${protectedRole}`,
+    );
+  }
+});
+
+
 test('curve repair inspects a safe surplus cut even when protected high-pressure cards fill the old shortlist', () => {
   const protectedCuts = Array.from({ length: 15 }, (_, index) => ({
     card: {
