@@ -8,27 +8,27 @@ export interface RefinementComponentMatcherV15 {
   /**
    * Every listed effective role must be present. Role names are compared case-insensitively.
    */
-  requiredRoles?: readonly string[];
+  requiredRoles?: readonly string[] | undefined;
   /**
    * At least one listed effective role must be present. Role names are compared case-insensitively.
    */
-  anyRoles?: readonly string[];
-  requireNonland?: boolean;
-  requireNoncreature?: boolean;
-  minManaValue?: number;
-  maxManaValue?: number;
+  anyRoles?: readonly string[] | undefined;
+  requireNonland?: boolean | undefined;
+  requireNoncreature?: boolean | undefined;
+  minManaValue?: number | undefined;
+  maxManaValue?: number | undefined;
   /**
    * Treat an X spell as satisfying minManaValue when the X value could reach this threshold.
    * This is useful for stack mana-value triggers, where a printed CMC alone is insufficient.
    */
-  countXAsAtLeastManaValue?: number;
+  countXAsAtLeastManaValue?: number | undefined;
 }
 
 export interface RefinementComponentRequirementV15 {
   id: string;
   minimumCount: number;
   matcher: RefinementComponentMatcherV15;
-  zone?: RefinementComponentZoneV15;
+  zone?: RefinementComponentZoneV15 | undefined;
 }
 
 export interface RefinementPackageAcceptanceContractV15 {
@@ -36,11 +36,11 @@ export interface RefinementPackageAcceptanceContractV15 {
    * Caller-declared strategy fuel that must remain available after an accepted package.
    * These are structural descriptors, never card-name allow/deny lists.
    */
-  strategyFuel?: readonly RefinementComponentRequirementV15[];
+  strategyFuel?: readonly RefinementComponentRequirementV15[] | undefined;
   /**
    * Caller-declared low-volume structural floors that an accepted package may not cross.
    */
-  structuralFloors?: readonly RefinementComponentRequirementV15[];
+  structuralFloors?: readonly RefinementComponentRequirementV15[] | undefined;
 }
 
 export interface RefinementComponentAuditV15 {
@@ -199,6 +199,53 @@ function isAuditableRequirement(value: unknown): value is RefinementComponentReq
   }
   if (value.zone !== undefined && value.zone !== 'main' && value.zone !== 'all') return false;
   return validateMatcher(value.id.trim(), value.matcher).length === 0;
+}
+
+function cardMatchesMatcher(card: ScryfallCard, matcher: RefinementComponentMatcherV15): boolean {
+  const roles = new Set(effectiveCardRolesV15(card).map(normalize));
+  const requiredRoles = matcher.requiredRoles?.map(normalize).filter(Boolean) ?? [];
+  const anyRoles = matcher.anyRoles?.map(normalize).filter(Boolean) ?? [];
+  if (requiredRoles.some((role) => !roles.has(role))) return false;
+  if (anyRoles.length > 0 && !anyRoles.some((role) => roles.has(role))) return false;
+
+  const typeLine = card.type_line.toLocaleLowerCase();
+  if (matcher.requireNonland === true && typeLine.includes('land')) return false;
+  if (matcher.requireNoncreature === true && typeLine.includes('creature')) return false;
+
+  const manaValue = card.cmc;
+  if (matcher.minManaValue !== undefined) {
+    const ordinaryMatch = manaValue >= matcher.minManaValue;
+    const xMatch = matcher.countXAsAtLeastManaValue !== undefined
+      && matcher.countXAsAtLeastManaValue >= matcher.minManaValue
+      && /\{x(?:[},/]|$)/i.test(card.mana_cost ?? '');
+    if (!ordinaryMatch && !xMatch) return false;
+  }
+  if (matcher.maxManaValue !== undefined && manaValue > matcher.maxManaValue) return false;
+  return true;
+}
+
+function entriesForZone(parsed: ParsedDeck, zone: RefinementComponentZoneV15) {
+  return zone === 'all'
+    ? [...parsed.commanders, ...parsed.main]
+    : parsed.main;
+}
+
+function countComponent(
+  parsed: ParsedDeck,
+  cards: readonly ScryfallCard[],
+  requirement: RefinementComponentRequirementV15,
+): { count: number; unresolved: string[] } {
+  const unresolved = new Set<string>();
+  let count = 0;
+  for (const entry of entriesForZone(parsed, requirement.zone ?? 'main')) {
+    const card = resolveEntryCard(entry, cards);
+    if (!card) {
+      unresolved.add(entry.name);
+      continue;
+    }
+    if (cardMatchesMatcher(card, requirement.matcher)) count += entry.quantity;
+  }
+  return { count, unresolved: [...unresolved].sort((left, right) => left.localeCompare(right)) };
 }
 
 function auditRequirements(
