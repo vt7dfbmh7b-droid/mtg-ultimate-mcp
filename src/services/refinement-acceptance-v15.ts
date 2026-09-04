@@ -1,0 +1,350 @@
+import type { ScryfallCard } from '../types/scryfall.js';
+import { parseDecklist, resolveEntryCard, type ParsedDeck } from './deck.js';
+import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
+
+export type RefinementComponentZoneV15 = 'main' | 'all';
+
+export interface RefinementComponentMatcherV15 {
+  /**
+   * Every listed effective role must be present. Role names are compared case-insensitively.
+   */
+  requiredRoles?: readonly string[];
+  /**
+   * At least one listed effective role must be present. Role names are compared case-insensitively.
+   */
+  anyRoles?: readonly string[];
+  requireNonland?: boolean;
+  requireNoncreature?: boolean;
+  minManaValue?: number;
+  maxManaValue?: number;
+  /**
+   * Treat an X spell as satisfying minManaValue when the X value could reach this threshold.
+   * This is useful for stack mana-value triggers, where a printed CMC alone is insufficient.
+   */
+  countXAsAtLeastManaValue?: number;
+}
+
+export interface RefinementComponentRequirementV15 {
+  id: string;
+  minimumCount: number;
+  matcher: RefinementComponentMatcherV15;
+  zone?: RefinementComponentZoneV15;
+}
+
+export interface RefinementPackageAcceptanceContractV15 {
+  /**
+   * Caller-declared strategy fuel that must remain available after an accepted package.
+   * These are structural descriptors, never card-name allow/deny lists.
+   */
+  strategyFuel?: readonly RefinementComponentRequirementV15[];
+  /**
+   * Caller-declared low-volume structural floors that an accepted package may not cross.
+   */
+  structuralFloors?: readonly RefinementComponentRequirementV15[];
+}
+
+export interface RefinementComponentAuditV15 {
+  kind: 'strategy-fuel' | 'structural-floor';
+  id: string;
+  minimumCount: number;
+  zone: RefinementComponentZoneV15;
+  matcher: RefinementComponentMatcherV15;
+  beforeCount: number;
+  afterCount: number;
+  delta: number;
+  preserved: boolean;
+}
+
+export type RefinementPackageAcceptanceStatusV15 =
+  | 'preserved'
+  | 'strategy-fuel-loss'
+  | 'structural-floor-loss'
+  | 'strategy-fuel-and-structural-floor-loss'
+  | 'evidence-incomplete';
+
+export interface RefinementPackageAcceptanceAuditV15 {
+  status: RefinementPackageAcceptanceStatusV15;
+  evidenceComplete: boolean;
+  preserved: boolean;
+  strategyFuel: RefinementComponentAuditV15[];
+  structuralFloors: RefinementComponentAuditV15[];
+  losses: RefinementComponentAuditV15[];
+  unresolvedBefore: string[];
+  unresolvedAfter: string[];
+  invalidRequirements: string[];
+  acceptanceRule: string;
+}
+
+const ACCEPTANCE_RULE_V15 =
+  'Every caller-declared strategy-fuel component and structural-floor component must retain at least its declared minimum count across the complete accepted package. Exact card resolution and descriptor validation are required; a missing or malformed component cannot be treated as preserved.';
+
+function normalize(value: string): string {
+  return value.trim().toLocaleLowerCase();
+}
+
+function uniqueSorted(values: readonly string[]): string[] {
+  return [...new Set(values.map(normalize).filter(Boolean))].sort((left, right) => left.localeCompare(right));
+}
+
+function finiteNonNegative(value: unknown): boolean {
+  return typeof value === 'number' && Number.isFinite(value) && value >= 0;
+}
+
+function validRoles(values: unknown): boolean {
+  return Array.isArray(values) && values.length > 0 && values.every(
+    (value) => typeof value === 'string' && value.trim().length > 0,
+  );
+}
+
+function matcherHasSelector(matcher: RefinementComponentMatcherV15): boolean {
+  return (
+    validRoles(matcher.requiredRoles)
+    || validRoles(matcher.anyRoles)
+    || matcher.requireNonland === true
+    || matcher.requireNoncreature === true
+    || finiteNonNegative(matcher.minManaValue)
+    || finiteNonNegative(matcher.maxManaValue)
+    || finiteNonNegative(matcher.countXAsAtLeastManaValue)
+  );
+}
+
+function validateMatcher(id: string, matcher: RefinementComponentMatcherV15): string[] {
+  const errors: string[] = [];
+  if (!matcher || typeof matcher !== 'object' || Array.isArray(matcher)) {
+    return [id + ': matcher must be an object'];
+  }
+  if (!matcherHasSelector(matcher)) errors.push(id + ': matcher must declare at least one selector');
+  if (matcher.requiredRoles !== undefined && !validRoles(matcher.requiredRoles)) {
+    errors.push(id + ': requiredRoles must contain at least one non-empty role');
+  }
+  if (matcher.anyRoles !== undefined && !validRoles(matcher.anyRoles)) {
+    errors.push(id + ': anyRoles must contain at least one non-empty role');
+  }
+  if (matcher.minManaValue !== undefined && !finiteNonNegative(matcher.minManaValue)) {
+    errors.push(id + ': minManaValue must be a finite non-negative number');
+  }
+  if (matcher.maxManaValue !== undefined && !finiteNonNegative(matcher.maxManaValue)) {
+    errors.push(id + ': maxManaValue must be a finite non-negative number');
+  }
+  if (
+    finiteNonNegative(matcher.minManaValue)
+    && finiteNonNegative(matcher.maxManaValue)
+    && matcher.minManaValue! > matcher.maxManaValue!
+  ) {
+    errors.push(id + ': minManaValue cannot exceed maxManaValue');
+  }
+  if (matcher.countXAsAtLeastManaValue !== undefined && !finiteNonNegative(matcher.countXAsAtLeastManaValue)) {
+    errors.push(id + ': countXAsAtLeastManaValue must be a finite non-negative number');
+  }
+  return errors;
+}
+
+function validateRequirements(
+  kind: 'strategy-fuel' | 'structural-floor',
+  requirements: readonly RefinementComponentRequirementV15[] | undefined,
+  seenIds: Set<string>,
+): string[] {
+  if (requirements === undefined) return [];
+  if (!Array.isArray(requirements) || requirements.length === 0) {
+    return [kind + ': at least one component is required when the list is supplied'];
+  }
+
+  const errors: string[] = [];
+  for (const requirement of requirements) {
+    if (!requirement || typeof requirement !== 'object' || Array.isArray(requirement)) {
+      errors.push(kind + ': each component must be an object');
+      continue;
+    }
+    const id = typeof requirement.id === 'string' ? requirement.id.trim() : '';
+    const normalizedId = normalize(id);
+    if (!id) errors.push(kind + ': each component requires a non-empty id');
+    if (normalizedId && seenIds.has(normalizedId)) errors.push(id + ': component id is duplicated');
+    if (normalizedId) seenIds.add(normalizedId);
+    if (
+      typeof requirement.minimumCount !== 'number'
+      || !Number.isInteger(requirement.minimumCount)
+      || requirement.minimumCount < 0
+    ) {
+      errors.push((id || kind) + ': minimumCount must be a non-negative integer');
+    }
+    if (requirement.zone !== undefined && requirement.zone !== 'main' && requirement.zone !== 'all') {
+      errors.push((id || kind) + ': zone must be main or all');
+    }
+    errors.push(...validateMatcher(id || kind, requirement.matcher));
+  }
+  return errors;
+}
+
+function cardMatchesMatcher(card: ScryfallCard, matcher: RefinementComponentMatcherV15): boolean {
+  const roles = new Set(effectiveCardRolesV15(card).map(normalize));
+  const requiredRoles = matcher.requiredRoles?.map(normalize).filter(Boolean) ?? [];
+  const anyRoles = matcher.anyRoles?.map(normalize).filter(Boolean) ?? [];
+  if (requiredRoles.some((role) => !roles.has(role))) return false;
+  if (anyRoles.length > 0 && !anyRoles.some((role) => roles.has(role))) return false;
+
+  const typeLine = card.type_line.toLocaleLowerCase();
+  if (matcher.requireNonland === true && typeLine.includes('land')) return false;
+  if (matcher.requireNoncreature === true && typeLine.includes('creature')) return false;
+
+  const manaValue = card.cmc;
+  if (matcher.minManaValue !== undefined) {
+    const ordinaryMatch = manaValue >= matcher.minManaValue;
+    const xMatch = matcher.countXAsAtLeastManaValue !== undefined
+      && matcher.countXAsAtLeastManaValue >= matcher.minManaValue
+      && /\{x(?:[},/]|$)/i.test(card.mana_cost ?? '');
+    if (!ordinaryMatch && !xMatch) return false;
+  }
+  if (matcher.maxManaValue !== undefined && manaValue > matcher.maxManaValue) return false;
+  return true;
+}
+
+function entriesForZone(parsed: ParsedDeck, zone: RefinementComponentZoneV15) {
+  return zone === 'all'
+    ? [...parsed.commanders, ...parsed.main]
+    : parsed.main;
+}
+
+function countComponent(
+  parsed: ParsedDeck,
+  cards: readonly ScryfallCard[],
+  requirement: RefinementComponentRequirementV15,
+): { count: number; unresolved: string[] } {
+  const unresolved = new Set<string>();
+  let count = 0;
+  for (const entry of entriesForZone(parsed, requirement.zone ?? 'main')) {
+    const card = resolveEntryCard(entry, cards);
+    if (!card) {
+      unresolved.add(entry.name);
+      continue;
+    }
+    if (cardMatchesMatcher(card, requirement.matcher)) count += entry.quantity;
+  }
+  return { count, unresolved: [...unresolved].sort((left, right) => left.localeCompare(right)) };
+}
+
+function auditRequirements(
+  kind: 'strategy-fuel' | 'structural-floor',
+  requirements: readonly RefinementComponentRequirementV15[] | undefined,
+  beforeParsed: ParsedDeck,
+  beforeCards: readonly ScryfallCard[],
+  afterParsed: ParsedDeck,
+  afterCards: readonly ScryfallCard[],
+): { audits: RefinementComponentAuditV15[]; unresolvedBefore: string[]; unresolvedAfter: string[] } {
+  const audits: RefinementComponentAuditV15[] = [];
+  const unresolvedBefore = new Set<string>();
+  const unresolvedAfter = new Set<string>();
+  for (const requirement of requirements ?? []) {
+    const before = countComponent(beforeParsed, beforeCards, requirement);
+    const after = countComponent(afterParsed, afterCards, requirement);
+    before.unresolved.forEach((name) => unresolvedBefore.add(name));
+    after.unresolved.forEach((name) => unresolvedAfter.add(name));
+    const zone = requirement.zone ?? 'main';
+    audits.push({
+      kind,
+      id: requirement.id.trim(),
+      minimumCount: requirement.minimumCount,
+      zone,
+      matcher: requirement.matcher,
+      beforeCount: before.count,
+      afterCount: after.count,
+      delta: after.count - before.count,
+      preserved: after.count >= requirement.minimumCount,
+    });
+  }
+  return {
+    audits,
+    unresolvedBefore: [...unresolvedBefore].sort((left, right) => left.localeCompare(right)),
+    unresolvedAfter: [...unresolvedAfter].sort((left, right) => left.localeCompare(right)),
+  };
+}
+
+export function auditRefinementPackageAcceptanceV15(input: {
+  beforeParsed: ParsedDeck;
+  beforeCards: readonly ScryfallCard[];
+  afterParsed: ParsedDeck;
+  afterCards: readonly ScryfallCard[];
+  contract?: RefinementPackageAcceptanceContractV15;
+}): RefinementPackageAcceptanceAuditV15 | null {
+  if (input.contract === undefined) return null;
+
+  const seenIds = new Set<string>();
+  const invalidRequirements = [
+    ...validateRequirements('strategy-fuel', input.contract.strategyFuel, seenIds),
+    ...validateRequirements('structural-floor', input.contract.structuralFloors, seenIds),
+  ];
+  const hasRequirements = (input.contract.strategyFuel?.length ?? 0) + (input.contract.structuralFloors?.length ?? 0) > 0;
+  if (!hasRequirements) invalidRequirements.push('packageAcceptanceContract: at least one component is required');
+
+  const strategyFuel = auditRequirements(
+    'strategy-fuel',
+    input.contract.strategyFuel,
+    input.beforeParsed,
+    input.beforeCards,
+    input.afterParsed,
+    input.afterCards,
+  );
+  const structuralFloors = auditRequirements(
+    'structural-floor',
+    input.contract.structuralFloors,
+    input.beforeParsed,
+    input.beforeCards,
+    input.afterParsed,
+    input.afterCards,
+  );
+  const unresolvedBefore = uniqueSorted([...strategyFuel.unresolvedBefore, ...structuralFloors.unresolvedBefore]);
+  const unresolvedAfter = uniqueSorted([...strategyFuel.unresolvedAfter, ...structuralFloors.unresolvedAfter]);
+  const allAudits = [...strategyFuel.audits, ...structuralFloors.audits];
+  const losses = allAudits.filter((audit) => !audit.preserved);
+  const evidenceComplete = invalidRequirements.length === 0 && unresolvedBefore.length === 0 && unresolvedAfter.length === 0;
+  const strategyFuelLoss = losses.some((loss) => loss.kind === 'strategy-fuel');
+  const structuralFloorLoss = losses.some((loss) => loss.kind === 'structural-floor');
+  const status: RefinementPackageAcceptanceStatusV15 = !evidenceComplete
+    ? 'evidence-incomplete'
+    : strategyFuelLoss && structuralFloorLoss
+      ? 'strategy-fuel-and-structural-floor-loss'
+      : strategyFuelLoss
+        ? 'strategy-fuel-loss'
+        : structuralFloorLoss
+          ? 'structural-floor-loss'
+          : 'preserved';
+
+  return {
+    status,
+    evidenceComplete,
+    preserved: evidenceComplete && losses.length === 0,
+    strategyFuel,
+    structuralFloors,
+    losses,
+    unresolvedBefore,
+    unresolvedAfter,
+    invalidRequirements,
+    acceptanceRule: ACCEPTANCE_RULE_V15,
+  };
+}
+
+export function packageAcceptanceGateV15(
+  audit: RefinementPackageAcceptanceAuditV15 | null,
+): { eligible: boolean; reason: string } {
+  if (audit === null) return { eligible: true, reason: 'package-acceptance-contract-not-configured' };
+  if (!audit.evidenceComplete) return { eligible: false, reason: 'package-acceptance-evidence-incomplete' };
+  if (audit.preserved) return { eligible: true, reason: 'caller-declared-package-acceptance-preserved' };
+  if (audit.status === 'strategy-fuel-loss') {
+    return { eligible: false, reason: 'package-reduces-declared-strategy-fuel' };
+  }
+  if (audit.status === 'structural-floor-loss') {
+    return { eligible: false, reason: 'package-breaks-declared-structural-floor' };
+  }
+  if (audit.status === 'strategy-fuel-and-structural-floor-loss') {
+    return { eligible: false, reason: 'package-reduces-declared-strategy-fuel-and-structural-floor' };
+  }
+  return { eligible: false, reason: 'package-fails-declared-acceptance-contract' };
+}
+
+/**
+ * Kept as a tiny local guard for malformed direct callers. The public deck pipeline uses
+ * parseDecklist before this module, but parsing here makes the module's own matcher contract
+ * deterministic for tests and future non-pipeline callers.
+ */
+export function parseDecklistForAcceptanceV15(decklist: string): ParsedDeck {
+  return parseDecklist(decklist);
+}
