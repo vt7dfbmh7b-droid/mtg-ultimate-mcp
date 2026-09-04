@@ -85,7 +85,7 @@ export function planCommanderBuildPipelineV15(
   const seedWinPackage = mode === 'require'
     || mode === 'prefer'
     || (mode === 'auto' && target !== null && target >= 4)
-    || minimumDistinctLibraryRoutes > 1;
+    || (mode !== 'forbid' && minimumDistinctLibraryRoutes > 1);
   const unsupportedConstraints = mode === 'forbid' && minimumDistinctLibraryRoutes > 1
     ? ['minimumDistinctLibraryRoutes requires win-package discovery and seeding, but winPackageMode=forbid disables both.']
     : [];
