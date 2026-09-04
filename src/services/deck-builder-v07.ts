@@ -7,7 +7,12 @@ import {
 } from './commander-strategy-affinity-v15.js';
 import { commanderTargetPressureV15, selectInjectableTargetAwareWinPackageV15 } from './commander-target-pressure-v15.js';
 import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
-import type { RefinementPackageAcceptanceContractV15 } from './refinement-acceptance-v15.js';
+import {
+  auditRefinementPackageAcceptanceV15,
+  type RefinementComponentAuditV15,
+  type RefinementComponentMatcherV15,
+  type RefinementPackageAcceptanceContractV15,
+} from './refinement-acceptance-v15.js';
 import { buildDeckMetrics, parseDecklist, type DeckEntry, type ParsedDeck } from './deck.js';
 import { discoverGeneralWinPackagesV15 } from './general-win-package-v15.js';
 import { discoverEligiblePoolV15 } from './neutral-deck-builder-v15.js';
@@ -615,6 +620,8 @@ interface UpgradePairingV15 {
 interface UpgradePairingOptionsV15 {
   rejectMeaningfulStrategyLoss?: boolean;
   maxPairs?: number;
+  /** Valid caller-declared package floors used to avoid generating known-invalid swap packages. */
+  packageAcceptanceFloors?: readonly RefinementComponentAuditV15[];
 }
 
 interface UpgradeStrategyAffinityEvidenceV15 {
@@ -696,6 +703,49 @@ function summarizedCard(item: Record<string, unknown>): Record<string, unknown> 
 
 function summarizedRoles(card: Record<string, unknown>): Set<string> {
   return new Set(Array.isArray(card.roles) ? card.roles.filter((role): role is string => typeof role === 'string') : []);
+}
+
+function summaryMatchesPackageAcceptanceMatcherV15(
+  card: Record<string, unknown>,
+  matcher: RefinementComponentMatcherV15,
+): boolean {
+  const roles = new Set([...summarizedRoles(card)].map((role) => role.trim().toLocaleLowerCase()));
+  const requiredRoles = Array.isArray(matcher.requiredRoles)
+    ? matcher.requiredRoles.map((role) => role.trim().toLocaleLowerCase()).filter(Boolean)
+    : [];
+  const anyRoles = Array.isArray(matcher.anyRoles)
+    ? matcher.anyRoles.map((role) => role.trim().toLocaleLowerCase()).filter(Boolean)
+    : [];
+  if (requiredRoles.some((role) => !roles.has(role))) return false;
+  if (anyRoles.length > 0 && !anyRoles.some((role) => roles.has(role))) return false;
+
+  const typeLine = recordString(card.typeLine).toLocaleLowerCase();
+  if (matcher.requireNonland === true && typeLine.includes('land')) return false;
+  if (matcher.requireNoncreature === true && typeLine.includes('creature')) return false;
+
+  const manaValue = recordNumber(card.manaValue);
+  if (matcher.minManaValue !== undefined) {
+    const ordinaryMatch = manaValue >= matcher.minManaValue;
+    const xMatch = matcher.countXAsAtLeastManaValue !== undefined
+      && matcher.countXAsAtLeastManaValue >= matcher.minManaValue
+      && /\{x(?:[},/]|$)/i.test(recordString(card.manaCost));
+    if (!ordinaryMatch && !xMatch) return false;
+  }
+  if (matcher.maxManaValue !== undefined && manaValue > matcher.maxManaValue) return false;
+  return true;
+}
+
+function packageAcceptanceFloorPreservedV15(
+  floors: readonly RefinementComponentAuditV15[],
+  counts: readonly number[],
+  addCard: Record<string, unknown>,
+  cutCard: Record<string, unknown>,
+): boolean {
+  return floors.every((floor, index) => (
+    counts[index] + (summaryMatchesPackageAcceptanceMatcherV15(addCard, floor.matcher) ? 1 : 0)
+      - (summaryMatchesPackageAcceptanceMatcherV15(cutCard, floor.matcher) ? 1 : 0)
+      >= floor.minimumCount
+  ));
 }
 
 function summaryIsPersistentColoredManaSourceV15(card: Record<string, unknown>): boolean {
@@ -1197,6 +1247,8 @@ export function pairUpgradeSwapsByStructureV15(
   const persistentColoredManaSourceTarget = minimumPersistentColoredManaSourcesV15(
     recordNumber(currentMetrics.commanderColorCount),
   );
+  const packageAcceptanceFloors = options.packageAcceptanceFloors ?? [];
+  let packageAcceptanceCounts = packageAcceptanceFloors.map((floor) => floor.beforeCount);
   const maxPairs = options.maxPairs === undefined
     ? Number.POSITIVE_INFINITY
     : Math.max(0, Math.trunc(options.maxPairs));
@@ -1247,6 +1299,7 @@ export function pairUpgradeSwapsByStructureV15(
           selection.role,
           authoritativeCounts,
         )) return false;
+        if (!packageAcceptanceFloorPreservedV15(packageAcceptanceFloors, packageAcceptanceCounts, addCard, cutCard)) return false;
         const afterSwap = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);
         if (!preservesStructuralFloorsV15(counts, afterSwap, state.targets)) return false;
         const persistentColoredManaSourcesAfterSwap = persistentColoredManaSourcesAfterAdd
@@ -1332,6 +1385,11 @@ export function pairUpgradeSwapsByStructureV15(
     counts = applySummaryToStructuralCountsV15(afterAdd, cutCard, -1);
     persistentColoredManaSources = persistentColoredManaSourcesAfterAdd
       - (summaryIsPersistentColoredManaSourceV15(cutCard) ? 1 : 0);
+    packageAcceptanceCounts = packageAcceptanceFloors.map((floor, index) => (
+      packageAcceptanceCounts[index]
+        + (summaryMatchesPackageAcceptanceMatcherV15(addCard, floor.matcher) ? 1 : 0)
+        - (summaryMatchesPackageAcceptanceMatcherV15(cutCard, floor.matcher) ? 1 : 0)
+    ));
     for (const gate of Object.keys(authoritativeCountTargets) as UpgradeCountTargetGateV15[]) {
       authoritativeCounts[gate] += (summaryMatchesCountTargetGateV15(addCard, gate) ? 1 : 0)
         - (summaryMatchesCountTargetGateV15(cutCard, gate) ? 1 : 0);
@@ -1605,13 +1663,29 @@ export async function buildSimulationBackedUpgradePlanV07(
     }
   }
 
+  const packageAcceptanceBaseline = options.packageAcceptanceContract
+    ? auditRefinementPackageAcceptanceV15({
+        beforeParsed: parsed,
+        beforeCards: cards,
+        afterParsed: parsed,
+        afterCards: cards,
+        contract: options.packageAcceptanceContract,
+      })
+    : null;
+  const packageAcceptanceFloors = packageAcceptanceBaseline
+    ? [...packageAcceptanceBaseline.strategyFuel, ...packageAcceptanceBaseline.structuralFloors]
+    : [];
   const pairings = pairUpgradeSwapsByStructureV15(
     chosenAdds,
     cutPool,
     (suggestions.currentMetrics ?? {}) as Record<string, unknown>,
     (suggestions.structuralTargets ?? {}) as Record<string, unknown>,
     options.targetBracket ?? 4,
-    { rejectMeaningfulStrategyLoss: true, maxPairs: swapCapacity },
+    {
+      rejectMeaningfulStrategyLoss: true,
+      maxPairs: swapCapacity,
+      packageAcceptanceFloors,
+    },
   );
   const strategyPreservation = auditUpgradeStrategyPreservationV15(pairings);
   const chosenCuts = pairings.map((pair) => pair.cut);
