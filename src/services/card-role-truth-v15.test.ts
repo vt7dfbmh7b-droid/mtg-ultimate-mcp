@@ -571,6 +571,7 @@ test('token-sacrifice and artifact-recursion bridges retain their exact operatio
     name: 'Generic One-Shot Token and Life',
     typeLine: 'Sorcery',
     oracleText: 'Create a 1/1 white Soldier creature token. You gain 1 life.',
+  });
 
   const lifeGainTriggeredDraw = card({
     name: 'Generic Life-Gain Triggered Draw',
@@ -582,7 +583,6 @@ test('token-sacrifice and artifact-recursion bridges retain their exact operatio
     name: 'Generic One-Shot Life Draw',
     typeLine: 'Sorcery',
     oracleText: 'You gain 3 life. Draw a card.',
-  });
   });
 
   assert.equal(inferCardRoles(multiDeathDraw).includes('death-trigger draw engine'), true);
