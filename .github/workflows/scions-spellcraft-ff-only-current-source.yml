@@ -51,19 +51,25 @@ jobs:
       - name: Build checked-in source
         id: source_build
         continue-on-error: true
-        run: npm run build
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee scions-source-build.log
 
       - name: Run direct commander-mechanic regression tests
         id: mechanic_tests
         if: steps.source_build.outcome == 'success'
         continue-on-error: true
-        run: npx tsx --test src/services/commander-direct-support-v15.test.ts src/services/commander-strategy-affinity-v15.test.ts src/services/upgrade-cut-pressure-v15.test.ts src/services/refinement-acceptance-v15.test.ts
+        run: |
+          set -o pipefail
+          npx tsx --test src/services/commander-direct-support-v15.test.ts src/services/commander-strategy-affinity-v15.test.ts src/services/upgrade-cut-pressure-v15.test.ts src/services/refinement-acceptance-v15.test.ts 2>&1 | tee scions-mechanic-tests.log
 
       - name: "Run Scions & Spellcraft restricted precon refinement"
         id: scions_control
         if: steps.source_build.outcome == 'success' && steps.mechanic_tests.outcome == 'success'
         continue-on-error: true
-        run: npx tsx scripts/e2e-scions-spellcraft-ff-only-v15.ts
+        run: |
+          set -o pipefail
+          npx tsx scripts/e2e-scions-spellcraft-ff-only-v15.ts 2>&1 | tee scions-control.log
 
       - name: Upload Scions validation evidence
         if: always()
@@ -77,6 +83,9 @@ jobs:
             scions-spellcraft-stock-deck.txt
             scions-spellcraft-refined-deck.txt
             scions-spellcraft-ff-only-failure.txt
+            scions-source-build.log
+            scions-mechanic-tests.log
+            scions-control.log
           if-no-files-found: ignore
           retention-days: 14
 
@@ -100,13 +109,19 @@ jobs:
                   test-results/scions-spellcraft-ff-only/raw-result.json \
                   test-results/scions-spellcraft-ff-only/stock-deck.txt \
                   test-results/scions-spellcraft-ff-only/refined-deck.txt \
-                  test-results/scions-spellcraft-ff-only/failure.txt
+                  test-results/scions-spellcraft-ff-only/failure.txt \
+                  test-results/scions-spellcraft-ff-only/build.log \
+                  test-results/scions-spellcraft-ff-only/mechanic-tests.log \
+                  test-results/scions-spellcraft-ff-only/control.log
             [ ! -f scions-spellcraft-ff-only-result.json ] || cp scions-spellcraft-ff-only-result.json test-results/scions-spellcraft-ff-only/result.json
             [ ! -f scions-spellcraft-candidate-audit.json ] || cp scions-spellcraft-candidate-audit.json test-results/scions-spellcraft-ff-only/candidate-audit.json
             [ ! -f scions-spellcraft-ff-only-raw-result.json ] || cp scions-spellcraft-ff-only-raw-result.json test-results/scions-spellcraft-ff-only/raw-result.json
             [ ! -f scions-spellcraft-stock-deck.txt ] || cp scions-spellcraft-stock-deck.txt test-results/scions-spellcraft-ff-only/stock-deck.txt
             [ ! -f scions-spellcraft-refined-deck.txt ] || cp scions-spellcraft-refined-deck.txt test-results/scions-spellcraft-ff-only/refined-deck.txt
             [ ! -f scions-spellcraft-ff-only-failure.txt ] || cp scions-spellcraft-ff-only-failure.txt test-results/scions-spellcraft-ff-only/failure.txt
+            [ ! -f scions-source-build.log ] || cp scions-source-build.log test-results/scions-spellcraft-ff-only/build.log
+            [ ! -f scions-mechanic-tests.log ] || cp scions-mechanic-tests.log test-results/scions-spellcraft-ff-only/mechanic-tests.log
+            [ ! -f scions-control.log ] || cp scions-control.log test-results/scions-spellcraft-ff-only/control.log
             printf 'source_sha=%s\nbuild_outcome=%s\nmechanic_test_outcome=%s\ncontrol_outcome=%s\npolicy=scions-spellcraft-final-fantasy-no-new-infinite\ntarget_bracket=4\nstrategy=yshtola-spells-control-drain\n' \
               "$GITHUB_SHA" "$BUILD_OUTCOME" "$MECHANIC_TEST_OUTCOME" "$CONTROL_OUTCOME" \
               > test-results/scions-spellcraft-ff-only/run-metadata.txt
