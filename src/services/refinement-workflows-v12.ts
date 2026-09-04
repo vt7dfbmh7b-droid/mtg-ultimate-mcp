@@ -103,6 +103,9 @@ export async function buildAndRefineCommanderDeckV12(
     ...(options.themeQuery ? { themeQuery: options.themeQuery } : {}),
     excludedCards: options.excludedCards ?? [],
     protectedCards,
+    ...(options.packageAcceptanceContract !== undefined
+      ? { packageAcceptanceContract: options.packageAcceptanceContract }
+      : {}),
     maxSwaps: options.maxRefinementSwaps ?? 12,
     maxRounds: options.maxRefinementRounds ?? 3,
     swapsPerRound: options.swapsPerRound ?? 4,
