@@ -360,7 +360,7 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   const boardScalingDraw = /\bdraw (?:a card for each|cards equal to (?:the )?number of) (?:artifacts?|creatures?|enchantments?|permanents?|tokens?) you control\b/.test(text);
   if (boardScalingDraw) roles.add('board-scaling card draw');
   if (teamWideStatPayoff || distributedTypalPump || boardScalingEquipment || boardScalingCreature || boardScalingCardAdvantage) roles.add('go-wide payoff');
-  const teamWideUntapPump = /\buntap\b[\s\S]{0,240}\b(?:creatures|permanents) you control\b[\s\S]{0,240}\bget \+\d+\/\+\d+/.test(text);
+  const teamWideUntapPump = /\b(?:creatures|permanents) (?:you control|target player controls)\b[\s\S]{0,240}\bget \+\d+\/\+\d+[\s\S]{0,240}\buntap\b/.test(text) || /\buntap\b[\s\S]{0,240}\b(?:creatures|permanents) (?:you control|target player controls)\b[\s\S]{0,240}\bget \+\d+\/\+\d+/.test(text);
   if (teamWideUntapPump) roles.add('team-wide untap pump');
   const sacrificeTargets = [...mechanicalText.matchAll(
     /\bsacrifice (?:a|an|another|target|one or more|any number of|x\b)\s+([^.,:;\n]{1,80})/g,

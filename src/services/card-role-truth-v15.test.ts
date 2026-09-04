@@ -622,11 +622,18 @@ test('bounded artifact/enchantment removal and team untap pumps retain their rol
     typeLine: 'Creature — Test Treefolk',
     oracleText: 'Flash. When this creature enters, untap all creatures you control. They get +2/+2 until end of turn.',
   });
+  const targetPlayerUntapPump = card({
+    name: 'Generic Target-Player Untap Pump',
+    typeLine: 'Creature — Test Treefolk',
+    oracleText: 'When this creature enters the battlefield, creatures target player controls get +2/+2 until end of turn. Untap them.',
+  });
 
   assert.ok(inferCardRoles(boundedArtifactRemoval).includes('artifact/enchantment interaction'));
   assert.ok(inferCardRoles(boundedArtifactRemoval).includes('token production'));
   assert.ok(inferCardRoles(teamUntapPump).includes('team-wide untap pump'));
   assert.ok(inferCardRoles(teamUntapPump).includes('untap engine'));
+  assert.ok(inferCardRoles(targetPlayerUntapPump).includes('team-wide untap pump'));
+  assert.ok(inferCardRoles(targetPlayerUntapPump).includes('untap engine'));
 });
 
 
