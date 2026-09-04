@@ -1,6 +1,6 @@
 {
   "schema": "intel01-positive-full-table-package-live-v15.1",
-  "sourceSha": "2b5b1338a102e8f6cf5be37f32f0ff9c64624d62",
+  "sourceSha": "19c0e7ec1802f9fd9d933135a3f2281cd4a8a830",
   "commander": "Frodo, Sauron's Bane",
   "request": {
     "targetBracket": 4,
@@ -182,6 +182,7 @@
     "winPackageDiscoveryComplete": true,
     "winPackagesDiscovered": true,
     "winPackageSeeded": true,
+    "winPackagePortfolioSeeded": true,
     "deckConstructed": true,
     "hardTruthEvaluationCompleted": true,
     "exactPerCardBudgetVerified": true,
