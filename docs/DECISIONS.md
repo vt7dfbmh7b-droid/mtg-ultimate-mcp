@@ -1,4 +1,11 @@
 # Ultimate MTG Architecture Decisions
+## D-020 — Restricted printing-family exhaustion is an honest construction ceiling
+
+Status: accepted.
+
+When a restricted physical-printing pool is exhaustively enumerated within declared safety ceilings and every failed authoritative role gate has no candidate beyond existing or excluded cards, widening candidate ranking cannot create a valid repair. The system must retain the requested target, report the measured lower bracket and exact failed gates, and return no change with the pool evidence. It must not lower thresholds, invent route/evidence, or add benchmark/card-name exceptions. Re-run when the provider or policy ceilings change.
+
+Reason: the Marvel restricted pool contains broad curve candidates but no new fast-mana or tutor role candidates beyond the cards already in the deck or excluded. The current zero-swap result is therefore a truthful constrained construction ceiling, not a recall defect.
 
 This is a durable decision log. Record decisions that future chats or contributors must not casually rediscover or reverse. Add new entries; do not silently rewrite history.
 
