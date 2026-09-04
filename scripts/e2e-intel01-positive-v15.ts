@@ -56,8 +56,8 @@ async function main(): Promise<void> {
   ]);
 
   console.log('INTEL-01 POSITIVE FULL-TABLE WIN-PACKAGE PIPELINE LIVE CONTROL');
-  console.log(`CASE: ${commanderName}; target Bracket 4; required bounded Spellbook package; US$${maxUsdPerCard} exact per-card cap.`);
-  console.log('PASS CONDITION: complete package discovery, strict full-table closure, legal affordable exact printings, atomic seed injection, final route recognition, and independent route/access/setup audits.');
+  console.log(`CASE: ${commanderName}; target Bracket 4; required bounded Spellbook package portfolio with two distinct library routes; US${maxUsdPerCard} exact per-card cap.`);
+  console.log('PASS CONDITION: complete package discovery, strict full-table closure, legal affordable exact printings, atomic multi-package seed injection, final route recognition, two distinct library routes, and independent route/access/setup audits.');
 
   const commanderLookup = await getCardsByNames([commanderName]);
   assert.deepEqual(commanderLookup.notFound, [], 'positive INTEL-01 commander must resolve');
@@ -72,6 +72,7 @@ async function main(): Promise<void> {
     targetBracket: 4,
     winPackageMode: 'require',
     maxWinPackageCards: 3,
+    minimumDistinctLibraryRoutes: 2,
     maxUsdPerCard,
     includePromos: true,
     includeSpecialReleases: true,
@@ -86,6 +87,7 @@ async function main(): Promise<void> {
   assert.deepEqual(plan.unsupportedConstraints, [], 'the positive control must not silently drop constraints');
   assert.equal(plan.discoverWinPackages, true, 'required-package mode must discover packages');
   assert.equal(plan.seedWinPackage, true, 'required-package mode must seed the selected package');
+  assert.equal(plan.minimumDistinctLibraryRoutes, 2, 'the positive control must preserve its explicit two-route requirement');
 
   const stages = record(result.stages);
   for (const stage of [
@@ -95,6 +97,7 @@ async function main(): Promise<void> {
     'winPackageDiscoveryComplete',
     'winPackagesDiscovered',
     'winPackageSeeded',
+    'winPackagePortfolioSeeded',
     'deckConstructed',
     'hardTruthEvaluationCompleted',
     'actualBracketAssessedAfterConstruction',
@@ -113,6 +116,30 @@ async function main(): Promise<void> {
   assert.ok(selectedNames.length >= 2 && selectedNames.length <= 3, 'selected package must contain two or three explicit cards');
   assert.ok(selectedSeeds.length >= 1, 'selected package must contain at least one library seed');
   assert.ok(selectedSeeds.length <= 2, 'selected package must fit the targeted builder injection capacity');
+
+  const selectedPackages = arrayRecords(result.selectedPackages);
+  assert.equal(result.minimumDistinctLibraryRoutes, 2, 'the result must preserve the explicit two-route requirement');
+  assert.equal(selectedPackages.length, 2, 'the pipeline must select exactly the requested two disjoint library-route packages');
+  assert.equal(result.seededPackageCount, 2, 'both selected packages must be seeded');
+  assert.equal(result.seededPackagesVerifiedInFinalDeck, true, 'all selected packages must be recognized in the final deck');
+  assert.equal(result.winPackagePortfolioSatisfied, true, 'the final route portfolio must satisfy the caller-declared requirement');
+  const selectedPackageIds = selectedPackages.map((candidate) => String(candidate.comboId ?? '')).filter(Boolean);
+  assert.equal(new Set(selectedPackageIds).size, selectedPackageIds.length, 'selected route packages must have distinct provider IDs');
+  assert.equal(selectedPackageIds[0], selectedComboId, 'the primary selected package must remain first in the seeded portfolio');
+  const portfolioSeedNames = [...new Set(selectedPackages.flatMap((candidate) => Array.isArray(candidate.seedNames) ? candidate.seedNames.map(String).filter(Boolean) : []))];
+  assert.ok(portfolioSeedNames.length >= selectedSeeds.length, 'the seeded portfolio must retain every primary package seed');
+  for (const candidate of selectedPackages) {
+    const candidateSeeds = Array.isArray(candidate.seedNames) ? candidate.seedNames.map(String).filter(Boolean) : [];
+    assert.ok(candidateSeeds.length >= 1, 'every selected portfolio package must have at least one library seed');
+    const candidatePrintings = arrayRecords(candidate.exactPrintings);
+    const candidatePrintingByName = new Map(candidatePrintings.map((printing) => [normalizeName(String(printing.name ?? '')), printing]));
+    for (const seed of candidateSeeds) {
+      const printing = candidatePrintingByName.get(normalizeName(seed));
+      assert.ok(printing, `every selected portfolio seed must retain an exact printing: ${seed}`);
+      assert.equal(typeof printing?.priceUsd, 'number', `${seed} must retain numeric price evidence under the hard cap`);
+      assert.ok(Number(printing?.priceUsd) <= maxUsdPerCard, `${seed} exact printing must satisfy the hard per-card cap`);
+    }
+  }
 
   const selectedResults = Array.isArray(selected.results) ? selected.results.map(String) : [];
   const selectedClosure = assessFullTableWinClosureV15(selectedResults);
@@ -136,8 +163,8 @@ async function main(): Promise<void> {
   const parsed = parseDecklist(decklist);
   assert.equal(parsed.totalCards, 100, 'the final deck must contain exactly 100 Commander cards');
   assert.equal(exactQuantity(parsed, commanderName), 1, 'the final deck must contain exactly one resolved commander');
-  for (const seed of selectedSeeds) {
-    assert.equal(exactQuantity(parsed, seed), 1, `the selected seed ${seed} must be injected exactly once`);
+  for (const seed of portfolioSeedNames) {
+    assert.equal(exactQuantity(parsed, seed), 1, `the selected portfolio seed ${seed} must be injected exactly once`);
   }
 
   const resolved = await getCardsByIdentifiers([...parsed.commanders, ...parsed.main].map((entry) => ({
@@ -160,6 +187,7 @@ async function main(): Promise<void> {
   assert.ok(finite(post.verifiedWinningCombos) >= 1, 'the final deck must contain at least one verified full-table route');
   const verifiedIds = Array.isArray(post.verifiedWinningComboIds) ? post.verifiedWinningComboIds.map(String) : [];
   assert.ok(verifiedIds.includes(selectedComboId), 'the selected package ID must survive final Spellbook recognition');
+  assert.ok(selectedPackageIds.every((comboId) => verifiedIds.includes(comboId)), 'every seeded package ID must survive final Spellbook recognition');
   const details = arrayRecords(post.verifiedWinningComboDetails);
   const finalSelected = selectedRoute(details, selectedComboId);
   assert.ok(finalSelected, 'the selected package must retain detailed final route evidence');
@@ -169,7 +197,7 @@ async function main(): Promise<void> {
   assert.notEqual(finalRouteAudit.status, 'verification-unavailable', 'final route audit must complete rather than fail open');
   assert.ok(finite(finalRouteAudit.verifiedFullTableWinCount) >= 1, 'final route audit must count the selected full-table route');
   const portfolio = record(finalRouteAudit.portfolio);
-  assert.ok(finite(portfolio.distinctLibraryRouteCount) >= 1, 'final route portfolio must retain at least one distinct library route');
+  assert.ok(finite(portfolio.distinctLibraryRouteCount) >= 2, 'final route portfolio must retain at least two distinct library routes');
   const setupAudits = arrayRecords(evaluation.winRouteSetupAudits);
   const selectedSetup = routeAudit(setupAudits, selectedComboId);
   assert.ok(selectedSetup, 'selected route setup/interruption audit must be present');
@@ -177,12 +205,18 @@ async function main(): Promise<void> {
   const accessAudits = arrayRecords(evaluation.winRouteAccessAudits);
   const selectedAccess = routeAudit(accessAudits, selectedComboId);
   assert.ok(selectedAccess, 'selected route access audit must be present');
+  for (const comboId of selectedPackageIds) {
+    assert.ok(selectedRoute(details, comboId), `selected portfolio route ${comboId} must retain final route evidence`);
+    assert.ok(routeAudit(setupAudits, comboId), `selected portfolio route ${comboId} must retain setup/interruption evidence`);
+    const portfolioAccess = routeAudit(accessAudits, comboId);
+    assert.equal(portfolioAccess?.status, 'exact-card-access', `selected portfolio route ${comboId} must have exact card access`);
+  }
   assert.equal(selectedAccess?.status, 'exact-card-access', 'selected route must have exact card access in the final deck');
   assert.equal(selectedAccess?.missingPieces instanceof Array ? (selectedAccess.missingPieces as unknown[]).length : -1, 0, 'selected route may not have missing card pieces');
   assert.equal(record(selectedAccess?.distinctTutorCoverage).allLibraryPiecesFetchableFromDistinctTutors, true, 'selected route access audit must close its explicit library-piece coverage');
 
-  const finalComboProtection = selectedSeeds.every((seed) => exactQuantity(parsed, seed) === 1)
-    && verifiedIds.includes(selectedComboId)
+  const finalComboProtection = portfolioSeedNames.every((seed) => exactQuantity(parsed, seed) === 1)
+    && selectedPackageIds.every((comboId) => verifiedIds.includes(comboId))
     && Boolean(finalSelected);
   assert.equal(finalComboProtection, true, 'package protection must retain every seed and the verified route after construction');
 
@@ -190,6 +224,7 @@ async function main(): Promise<void> {
   assert.equal(targetComparison.requestedBracket, 4, 'target comparison must preserve Bracket 4');
   const meaningfulAlternateRoutesRetained = finite(portfolio.distinctLibraryRouteCount) >= 2
     || finite(finalRouteAudit.verifiedFullTableWinCount) >= 2;
+  assert.equal(meaningfulAlternateRoutesRetained, true, 'the positive control must retain a meaningful alternate route');
   const summary = {
     schema: 'intel01-positive-full-table-package-live-v15.1',
     sourceSha: process.env.GITHUB_SHA ?? 'local',
@@ -198,6 +233,7 @@ async function main(): Promise<void> {
       targetBracket: 4,
       winPackageMode: 'require',
       maxWinPackageCards: 3,
+      minimumDistinctLibraryRoutes: 2,
       maxUsdPerCard,
       includePromos: true,
       includeSpecialReleases: true,
@@ -223,6 +259,11 @@ async function main(): Promise<void> {
       atomicInjection: stages.winPackageSeeded === true && selectedSeeds.every((seed) => exactQuantity(parsed, seed) === 1),
       packageProtection: finalComboProtection,
       finalRecognition: result.seededPackageVerifiedInFinalDeck === true,
+      portfolioSeeding: result.seededPackageCount === 2
+        && selectedPackageIds.length === 2
+        && stages.winPackagePortfolioSeeded === true,
+      portfolioRecognition: result.seededPackagesVerifiedInFinalDeck === true,
+      winPackagePortfolioSatisfied: result.winPackagePortfolioSatisfied === true,
       alternateRouteAudit: finalRouteAudit.status !== 'verification-unavailable',
       meaningfulAlternateRoutesRetained,
       finalRouteCount: finite(finalRouteAudit.verifiedFullTableWinCount),
