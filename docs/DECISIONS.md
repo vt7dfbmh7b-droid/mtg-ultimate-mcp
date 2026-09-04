@@ -115,3 +115,12 @@ The intended advantage is not simply knowing more card names or producing a high
 A claim that Ultimate MTG is better than general-purpose AI must be earned through comparative adversarial benchmarks using the same Commander problem, constraints and evidence. Single metrics, feature count, pipeline success or one favorable control are insufficient. If a strong general-purpose AI or knowledgeable Commander specialist can reliably make a better legal whole-deck decision from the same evidence, the product objective has not yet been met.
 
 The detailed standing objective and proof standard live in `docs/COMMANDER-SPECIALIST-OBJECTIVE.md` and should be read during fresh-session recovery.
+
+
+## D-019 — Caller-declared package floors are first-class refinement contracts
+
+Status: accepted.
+
+Refinement callers may declare structural strategy-fuel and low-volume package floors using generic semantic matchers rather than card-name exceptions. Valid floors are applied while constructing candidate IN/OUT packages and audited again after exact package resolution; malformed descriptors, unresolved cards or unmet minimum counts fail closed. An omitted contract preserves existing refinement behavior.
+
+Reason: per-swap strategy preservation and aggregate affinity can both pass while a complete package loses the actual fuel or structural components a caller needs. The contract must be caller-owned, measurable, name-independent and visible in final evidence, while still allowing the caller to define different strategy components for different decks.
