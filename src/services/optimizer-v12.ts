@@ -1,6 +1,11 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import { derivePostBuildEvidenceV15 } from './commander-build-evaluation-v15.js';
 import { auditUpgradeDeckStrategyRetentionV15 } from './commander-strategy-affinity-v15.js';
+import {
+  auditRefinementPackageAcceptanceV15,
+  packageAcceptanceGateV15,
+  type RefinementPackageAcceptanceAuditV15,
+} from './refinement-acceptance-v15.js';
 import { validateCommanderDeck } from './commander-rules.js';
 import { buildSimulationBackedUpgradePlanV07, type UpgradePlanOptionsV07 } from './deck-builder-v07.js';
 import { parseDecklist, resolveEntryCard, type ParsedDeck } from './deck.js';
@@ -50,6 +55,7 @@ interface CandidateEvaluationV12 {
   significantRegression: boolean;
   zeroTargetProgressWhileFailedGatesRemain: boolean;
   targetGate: RefinementImprovementScoreV11['targetGate'];
+  packageAcceptance: RefinementPackageAcceptanceAuditV15 | null;
   themeAudit: NeutralThemeAuditV15 | null;
   plan: Record<string, unknown> | null;
   nextDecklist: string | null;
@@ -188,6 +194,23 @@ function compactStrategyPreservationV15(plan: Record<string, unknown> | null): R
   };
 }
 
+function compactPackageAcceptanceV15(
+  audit: RefinementPackageAcceptanceAuditV15 | null,
+): Record<string, unknown> | null {
+  if (!audit) return null;
+  return {
+    status: audit.status,
+    evidenceComplete: audit.evidenceComplete,
+    preserved: audit.preserved,
+    strategyFuel: audit.strategyFuel,
+    structuralFloors: audit.structuralFloors,
+    losses: audit.losses,
+    unresolvedBefore: audit.unresolvedBefore,
+    unresolvedAfter: audit.unresolvedAfter,
+    invalidRequirements: audit.invalidRequirements,
+    acceptanceRule: audit.acceptanceRule,
+  };
+}
 export function candidateStrategyPreservationGateV15(
   plan: Record<string, unknown> | null,
 ): { eligible: boolean; reason: string; audit: Record<string, unknown> | null } {
@@ -316,6 +339,7 @@ function candidateSummary(candidate: CandidateEvaluationV12): Record<string, unk
     },
     themeAudit: compactThemeAudit(candidate.themeAudit),
     strategyPreservation: compactStrategyPreservationV15(candidate.plan),
+    packageAcceptance: compactPackageAcceptanceV15(candidate.packageAcceptance),
     deckStrategyRetention: asRecord(candidate.plan?.deckStrategyRetention),
     planProvenance: candidatePlanProvenanceV15(candidate.plan),
     swaps: candidate.plan && Array.isArray(candidate.plan.swaps)
@@ -687,6 +711,7 @@ async function evaluateCandidate(
     significantRegression: score.significantRegression,
     zeroTargetProgressWhileFailedGatesRemain: score.zeroTargetProgressWhileFailedGatesRemain,
     targetGate: score.targetGate,
+    packageAcceptance: null,
     themeAudit: null,
     plan,
   };
@@ -722,6 +747,30 @@ async function evaluateCandidate(
   const rules = validateCommanderDeck(resolved.parsed, resolved.cards);
   if (resolved.notFound.length > 0 || !rules.isLegal) {
     return { ...base, eligible: false, reason: 'candidate-plan-failed-post-build-resolution-or-legality', nextDecklist, resolved };
+  }
+
+  const packageAcceptance = auditRefinementPackageAcceptanceV15({
+    beforeParsed: currentParsed,
+    beforeCards: currentCards,
+    afterParsed: resolved.parsed,
+    afterCards: resolved.cards,
+    ...(options.packageAcceptanceContract !== undefined
+      ? { contract: options.packageAcceptanceContract }
+      : {}),
+  });
+  if (packageAcceptance) {
+    plan.packageAcceptanceAudit = packageAcceptance;
+    base.packageAcceptance = packageAcceptance;
+  }
+  const packageAcceptanceGate = packageAcceptanceGateV15(packageAcceptance);
+  if (!packageAcceptanceGate.eligible) {
+    return {
+      ...base,
+      eligible: false,
+      reason: packageAcceptanceGate.reason,
+      nextDecklist,
+      resolved,
+    };
   }
 
   const deckStrategyRetention = auditUpgradeDeckStrategyRetentionV15(
@@ -900,9 +949,17 @@ export async function refineCommanderDeckIterativelyV12(
       });
       if (!winner) {
         const reasons = candidates.map((candidate) => candidate.reason);
-        lastReason = reasons.includes('improvement-below-threshold')
-          ? 'all-competing-packages-below-improvement-threshold'
-          : reasons.includes('package-exceeds-total-budget')
+        lastReason = reasons.includes('package-acceptance-evidence-incomplete')
+          ? 'all-competing-packages-failed-declared-package-acceptance-evidence'
+          : reasons.includes('package-reduces-declared-strategy-fuel-and-structural-floor')
+            ? 'all-competing-packages-reduced-declared-strategy-fuel-and-structural-floor'
+            : reasons.includes('package-reduces-declared-strategy-fuel')
+              ? 'all-competing-packages-reduced-declared-strategy-fuel'
+              : reasons.includes('package-breaks-declared-structural-floor')
+                ? 'all-competing-packages-broke-declared-structural-floor'
+                : reasons.includes('improvement-below-threshold')
+                  ? 'all-competing-packages-below-improvement-threshold'
+                  : reasons.includes('package-exceeds-total-budget')
             ? 'all-competing-packages-failed-budget-or-quality-checks'
             : reasons.includes('package-would-break-required-theme-density')
               ? 'all-competing-packages-would-break-theme-density'
@@ -978,6 +1035,7 @@ export async function refineCommanderDeckIterativelyV12(
     roundsAccepted: rounds.filter((round) => round.accepted).length,
     totalSwaps: acceptedSwaps.length,
     candidatePackagesPerRound,
+    packageAcceptanceContract: effectiveOptions.packageAcceptanceContract ?? null,
     estimatedUpgradeSpendUsd: totalSpend,
     maxTotalUsd: maxTotalUsd ?? null,
     swaps: acceptedSwaps.map(refinementSwapEvidenceV15),
