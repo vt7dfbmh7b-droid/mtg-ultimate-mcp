@@ -239,7 +239,7 @@
       "strategyFuel": [
         {
           "id": "repeatable-life-gain-draw-engine",
-          "minimumCount": 1,
+          "minimumCount": 2,
           "matcher": {
             "requiredRoles": [
               "life-gain-triggered draw engine"
@@ -253,7 +253,7 @@
     "estimatedUpgradeSpendNzd": 4.18,
     "estimatedUpgradeSpendUsdReference": 2.45,
     "maxTotalNzd": 200,
-    "maxTotalUsdReference": 117.2,
+    "maxTotalUsdReference": 117.24,
     "swaps": [
       {
         "out": "Great Oak Guardian",
@@ -582,10 +582,10 @@
     ],
     "constraints": {
       "targetBracket": 4,
-      "maxNzdPerCard": 35,
-      "maxUsdPerCardReference": 20.51,
+      "maxNzdPerCard": 35.01,
+      "maxUsdPerCardReference": 20.52,
       "maxTotalNzd": 200,
-      "maxTotalUsdReference": 117.2,
+      "maxTotalUsdReference": 117.24,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -852,7 +852,7 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 14.22,
+            "estimatedSpendNzd": 14.21,
             "estimatedSpendUsdReference": 8.33,
             "unknownPriceCount": 0,
             "improvementScore": 21.886,
@@ -1035,7 +1035,7 @@
                 {
                   "kind": "strategy-fuel",
                   "id": "repeatable-life-gain-draw-engine",
-                  "minimumCount": 1,
+                  "minimumCount": 2,
                   "zone": "main",
                   "matcher": {
                     "requiredRoles": [
@@ -1616,7 +1616,7 @@
                 {
                   "kind": "strategy-fuel",
                   "id": "repeatable-life-gain-draw-engine",
-                  "minimumCount": 1,
+                  "minimumCount": 2,
                   "zone": "main",
                   "matcher": {
                     "requiredRoles": [
@@ -2193,7 +2193,7 @@
                 {
                   "kind": "strategy-fuel",
                   "id": "repeatable-life-gain-draw-engine",
-                  "minimumCount": 1,
+                  "minimumCount": 2,
                   "zone": "main",
                   "matcher": {
                     "requiredRoles": [
@@ -2592,8 +2592,8 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 7.71,
-            "estimatedSpendUsdReference": 4.52,
+            "estimatedSpendNzd": 7.42,
+            "estimatedSpendUsdReference": 4.35,
             "unknownPriceCount": 0,
             "improvementScore": 25.162,
             "significantRegression": false,
@@ -2769,7 +2769,7 @@
                 {
                   "kind": "strategy-fuel",
                   "id": "repeatable-life-gain-draw-engine",
-                  "minimumCount": 1,
+                  "minimumCount": 2,
                   "zone": "main",
                   "matcher": {
                     "requiredRoles": [
@@ -3124,8 +3124,8 @@
                   "set": "LTR",
                   "collectorNumber": "243",
                   "finish": "nonfoil",
-                  "priceNzd": 2.87,
-                  "priceUsdReference": 1.68
+                  "priceNzd": 2.58,
+                  "priceUsdReference": 1.51
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -3184,7 +3184,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 14.22,
+                "estimatedSpendNzd": 14.21,
                 "estimatedSpendUsdReference": 8.33,
                 "unknownPriceCount": 0,
                 "improvementScore": 21.886,
@@ -3367,7 +3367,7 @@
                     {
                       "kind": "strategy-fuel",
                       "id": "repeatable-life-gain-draw-engine",
-                      "minimumCount": 1,
+                      "minimumCount": 2,
                       "zone": "main",
                       "matcher": {
                         "requiredRoles": [
@@ -3948,7 +3948,7 @@
                     {
                       "kind": "strategy-fuel",
                       "id": "repeatable-life-gain-draw-engine",
-                      "minimumCount": 1,
+                      "minimumCount": 2,
                       "zone": "main",
                       "matcher": {
                         "requiredRoles": [
@@ -4525,7 +4525,7 @@
                     {
                       "kind": "strategy-fuel",
                       "id": "repeatable-life-gain-draw-engine",
-                      "minimumCount": 1,
+                      "minimumCount": 2,
                       "zone": "main",
                       "matcher": {
                         "requiredRoles": [
@@ -4924,8 +4924,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 7.71,
-                "estimatedSpendUsdReference": 4.52,
+                "estimatedSpendNzd": 7.42,
+                "estimatedSpendUsdReference": 4.35,
                 "unknownPriceCount": 0,
                 "improvementScore": 25.162,
                 "significantRegression": false,
@@ -5101,7 +5101,7 @@
                     {
                       "kind": "strategy-fuel",
                       "id": "repeatable-life-gain-draw-engine",
-                      "minimumCount": 1,
+                      "minimumCount": 2,
                       "zone": "main",
                       "matcher": {
                         "requiredRoles": [
@@ -5456,8 +5456,8 @@
                       "set": "LTR",
                       "collectorNumber": "243",
                       "finish": "nonfoil",
-                      "priceNzd": 2.87,
-                      "priceUsdReference": 1.68
+                      "priceNzd": 2.58,
+                      "priceUsdReference": 1.51
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5529,7 +5529,7 @@
             "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 6.42,
+            "estimatedSpendNzd": 6.41,
             "estimatedSpendUsdReference": 3.76,
             "unknownPriceCount": 0,
             "improvementScore": 1.77,
@@ -5719,7 +5719,7 @@
                   "set": "LTR",
                   "collectorNumber": "757",
                   "finish": "foil",
-                  "priceNzd": 6.42,
+                  "priceNzd": 6.41,
                   "priceUsdReference": 3.76
                 },
                 "structuralPairing": {
@@ -6311,7 +6311,7 @@
                 "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                 "attemptedSwaps": 4,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 6.42,
+                "estimatedSpendNzd": 6.41,
                 "estimatedSpendUsdReference": 3.76,
                 "unknownPriceCount": 0,
                 "improvementScore": 1.77,
@@ -6501,7 +6501,7 @@
                       "set": "LTR",
                       "collectorNumber": "757",
                       "finish": "foil",
-                      "priceNzd": 6.42,
+                      "priceNzd": 6.41,
                       "priceUsdReference": 3.76
                     },
                     "structuralPairing": {
@@ -7093,7 +7093,7 @@
                 "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                 "attemptedSwaps": 3,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 6.42,
+                "estimatedSpendNzd": 6.41,
                 "estimatedSpendUsdReference": 3.76,
                 "unknownPriceCount": 0,
                 "improvementScore": 1.77,
@@ -7283,7 +7283,7 @@
                       "set": "LTR",
                       "collectorNumber": "757",
                       "finish": "foil",
-                      "priceNzd": 6.42,
+                      "priceNzd": 6.41,
                       "priceUsdReference": 3.76
                     },
                     "structuralPairing": {
@@ -7875,7 +7875,7 @@
                 "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                 "attemptedSwaps": 2,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 6.42,
+                "estimatedSpendNzd": 6.41,
                 "estimatedSpendUsdReference": 3.76,
                 "unknownPriceCount": 0,
                 "improvementScore": 1.77,
@@ -8065,7 +8065,7 @@
                       "set": "LTR",
                       "collectorNumber": "757",
                       "finish": "foil",
-                      "priceNzd": 6.42,
+                      "priceNzd": 6.41,
                       "priceUsdReference": 3.76
                     },
                     "structuralPairing": {
@@ -8657,7 +8657,7 @@
                 "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 6.42,
+                "estimatedSpendNzd": 6.41,
                 "estimatedSpendUsdReference": 3.76,
                 "unknownPriceCount": 0,
                 "improvementScore": 1.77,
@@ -8847,7 +8847,7 @@
                       "set": "LTR",
                       "collectorNumber": "757",
                       "finish": "foil",
-                      "priceNzd": 6.42,
+                      "priceNzd": 6.41,
                       "priceUsdReference": 3.76
                     },
                     "structuralPairing": {
