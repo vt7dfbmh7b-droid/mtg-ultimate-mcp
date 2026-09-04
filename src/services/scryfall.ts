@@ -284,7 +284,11 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   const drawText = mechanicalText.replace(/\bdraw (?:a|one|1) card,? then discard (?:a|one|1) card\b/g, '');
   if (/draw (?:a|one|two|three|four|five|\d+) cards?/.test(drawText)) roles.add('card draw');
   if (oneForOneLoot) roles.add('card selection');
-  if (/whenever .* draw (?:a|one|two|three|four|five|\d+) cards?|at the beginning of .* draw|whenever .* deals? combat damage .* draw/.test(mechanicalText)) roles.add('repeatable draw');
+  const repeatableDraw = /\b(?:whenever|at the beginning of)\b[\s\S]{0,260}\bdraw (?:a|one|two|three|four|five|\d+) cards?/.test(mechanicalText)
+    || /:\s*[\s\S]{0,260}\bdraw (?:a|one|two|three|four|five|\d+) cards?/.test(mechanicalText);
+  if (repeatableDraw) roles.add('repeatable draw');
+  const lifeGainTriggeredDraw = /\b(?:whenever|at the beginning of)\b[\s\S]{0,260}\bgain(?: (?:\d+|one|two|three|four|five|that much))? life\b[\s\S]{0,180}\bdraw (?:a|one|two|three|four|five|\d+) cards?/.test(mechanicalText);
+  if (lifeGainTriggeredDraw) roles.add('life-gain-triggered draw engine');
   const deathTriggeredDraw = /\bwhenever (?:one or more )?[^.]{0,100}\bcreatures?\b[^.]{0,80}\bdies?\b[^.]{0,120}\bdraw (?:a|one|two|three|four|five|\d+) cards?\b/.test(text);
   if (deathTriggeredDraw) roles.add('death-trigger draw engine');
   const teamCombatDamageDraw = /\bwhenever (?:one or more )?(?:a )?creatures? you control deal(?:s)? combat damage to (?:a player|an opponent)[^.]{0,120}\bdraw (?:a|one|two|three|four|five|\d+) cards?\b/.test(text);

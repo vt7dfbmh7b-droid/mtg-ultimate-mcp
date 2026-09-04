@@ -249,6 +249,17 @@ async function main(): Promise<void> {
         simulationTurns: 7,
         seed: 20260822,
         detailLevel: 'detailed',
+        packageAcceptanceContract: {
+          strategyFuel: [{
+            id: 'repeatable-life-gain-draw-engine',
+            minimumCount: 1,
+            matcher: {
+              requiredRoles: ['life-gain-triggered draw engine'],
+              requireNonland: true,
+            },
+            zone: 'main',
+          }],
+        },
       },
     }, { timeout: 15 * 60_000 }) as unknown as {
       content: Array<{ type: string; text?: string }>;

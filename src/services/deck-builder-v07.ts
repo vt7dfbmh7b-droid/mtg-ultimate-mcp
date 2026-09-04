@@ -682,7 +682,7 @@ const STRATEGY_COMPONENT_ROLES_V15: Record<string, ReadonlySet<string>> = {
   'graveyard-reanimator': new Set(['graveyard recursion', 'high-capacity graveyard recursion']),
   'artifact-engine': new Set(['artifact sacrifice outlet', 'sacrifice outlet', 'artifact graveyard recursion', 'graveyard recursion']),
   aristocrats: new Set(['repeatable life drain', 'token-event life drain', 'death-trigger draw engine', 'death-trigger token engine', 'mass sacrifice conversion', 'forced sacrifice interaction', 'sacrifice outlet', 'creature sacrifice outlet']),
-  'food-lifegain': new Set(['repeatable life gain engine', 'repeatable life drain', 'token-event life drain']),
+  'food-lifegain': new Set(['repeatable life gain engine', 'repeatable life drain', 'token-event life drain', 'repeatable draw', 'life-gain-triggered draw engine']),
   'spells-control': new Set(['countermagic', 'stax/control', 'copy effect']),
   'value-engine': new Set(['repeatable draw', 'board-scaling card draw']),
   'big-mana': new Set(['mana acceleration', 'cost reduction', 'untap engine']),
