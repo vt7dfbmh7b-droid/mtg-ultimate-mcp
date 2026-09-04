@@ -225,6 +225,30 @@ test('package gate fails closed when a required card is unresolved or the contra
   assert.ok(malformed);
   assert.equal(malformed.evidenceComplete, false);
   assert.equal(packageAcceptanceGateV15(malformed).eligible, false);
+
+  const malformedEntry = auditRefinementPackageAcceptanceV15({
+    beforeParsed: before,
+    beforeCards: [commander, fuel],
+    afterParsed: after,
+    afterCards: [commander, fuel],
+    contract: {
+      strategyFuel: [null as unknown as RefinementPackageAcceptanceContractV15['strategyFuel'][number]],
+    },
+  });
+  assert.ok(malformedEntry);
+  assert.equal(malformedEntry.evidenceComplete, false);
+  assert.equal(packageAcceptanceGateV15(malformedEntry).reason, 'package-acceptance-evidence-incomplete');
+
+  const malformedContract = auditRefinementPackageAcceptanceV15({
+    beforeParsed: before,
+    beforeCards: [commander, fuel],
+    afterParsed: after,
+    afterCards: [commander, fuel],
+    contract: null as unknown as RefinementPackageAcceptanceContractV15,
+  });
+  assert.ok(malformedContract);
+  assert.equal(malformedContract.evidenceComplete, false);
+  assert.equal(packageAcceptanceGateV15(malformedContract).reason, 'package-acceptance-evidence-incomplete');
 });
 
 test('an omitted package contract preserves existing refinement behavior', () => {
