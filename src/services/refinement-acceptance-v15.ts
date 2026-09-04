@@ -1,5 +1,5 @@
 import type { ScryfallCard } from '../types/scryfall.js';
-import { parseDecklist, resolveEntryCard, type ParsedDeck } from './deck.js';
+import { resolveEntryCard, type ParsedDeck } from './deck.js';
 import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
 
 export type RefinementComponentZoneV15 = 'main' | 'all';
@@ -78,6 +78,10 @@ export interface RefinementPackageAcceptanceAuditV15 {
 const ACCEPTANCE_RULE_V15 =
   'Every caller-declared strategy-fuel component and structural-floor component must retain at least its declared minimum count across the complete accepted package. Exact card resolution and descriptor validation are required; a missing or malformed component cannot be treated as preserved.';
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
 function normalize(value: string): string {
   return value.trim().toLocaleLowerCase();
 }
@@ -108,40 +112,47 @@ function matcherHasSelector(matcher: RefinementComponentMatcherV15): boolean {
   );
 }
 
-function validateMatcher(id: string, matcher: RefinementComponentMatcherV15): string[] {
-  const errors: string[] = [];
-  if (!matcher || typeof matcher !== 'object' || Array.isArray(matcher)) {
+function validateMatcher(id: string, matcher: unknown): string[] {
+  if (!isRecord(matcher)) {
     return [id + ': matcher must be an object'];
   }
-  if (!matcherHasSelector(matcher)) errors.push(id + ': matcher must declare at least one selector');
-  if (matcher.requiredRoles !== undefined && !validRoles(matcher.requiredRoles)) {
+  const candidate = matcher as RefinementComponentMatcherV15;
+  const errors: string[] = [];
+  if (!matcherHasSelector(candidate)) errors.push(id + ': matcher must declare at least one selector');
+  if (candidate.requiredRoles !== undefined && !validRoles(candidate.requiredRoles)) {
     errors.push(id + ': requiredRoles must contain at least one non-empty role');
   }
-  if (matcher.anyRoles !== undefined && !validRoles(matcher.anyRoles)) {
+  if (candidate.anyRoles !== undefined && !validRoles(candidate.anyRoles)) {
     errors.push(id + ': anyRoles must contain at least one non-empty role');
   }
-  if (matcher.minManaValue !== undefined && !finiteNonNegative(matcher.minManaValue)) {
+  if (candidate.minManaValue !== undefined && !finiteNonNegative(candidate.minManaValue)) {
     errors.push(id + ': minManaValue must be a finite non-negative number');
   }
-  if (matcher.maxManaValue !== undefined && !finiteNonNegative(matcher.maxManaValue)) {
+  if (candidate.maxManaValue !== undefined && !finiteNonNegative(candidate.maxManaValue)) {
     errors.push(id + ': maxManaValue must be a finite non-negative number');
   }
   if (
-    finiteNonNegative(matcher.minManaValue)
-    && finiteNonNegative(matcher.maxManaValue)
-    && matcher.minManaValue! > matcher.maxManaValue!
+    finiteNonNegative(candidate.minManaValue)
+    && finiteNonNegative(candidate.maxManaValue)
+    && candidate.minManaValue! > candidate.maxManaValue!
   ) {
     errors.push(id + ': minManaValue cannot exceed maxManaValue');
   }
-  if (matcher.countXAsAtLeastManaValue !== undefined && !finiteNonNegative(matcher.countXAsAtLeastManaValue)) {
+  if (
+    candidate.countXAsAtLeastManaValue !== undefined
+    && !finiteNonNegative(candidate.countXAsAtLeastManaValue)
+  ) {
     errors.push(id + ': countXAsAtLeastManaValue must be a finite non-negative number');
+  }
+  if (candidate.countXAsAtLeastManaValue !== undefined && candidate.minManaValue === undefined) {
+    errors.push(id + ': countXAsAtLeastManaValue requires minManaValue');
   }
   return errors;
 }
 
 function validateRequirements(
   kind: 'strategy-fuel' | 'structural-floor',
-  requirements: readonly RefinementComponentRequirementV15[] | undefined,
+  requirements: unknown,
   seenIds: Set<string>,
 ): string[] {
   if (requirements === undefined) return [];
@@ -150,11 +161,12 @@ function validateRequirements(
   }
 
   const errors: string[] = [];
-  for (const requirement of requirements) {
-    if (!requirement || typeof requirement !== 'object' || Array.isArray(requirement)) {
+  for (const rawRequirement of requirements) {
+    if (!isRecord(rawRequirement)) {
       errors.push(kind + ': each component must be an object');
       continue;
     }
+    const requirement = rawRequirement as unknown as RefinementComponentRequirementV15;
     const id = typeof requirement.id === 'string' ? requirement.id.trim() : '';
     const normalizedId = normalize(id);
     if (!id) errors.push(kind + ': each component requires a non-empty id');
@@ -175,56 +187,23 @@ function validateRequirements(
   return errors;
 }
 
-function cardMatchesMatcher(card: ScryfallCard, matcher: RefinementComponentMatcherV15): boolean {
-  const roles = new Set(effectiveCardRolesV15(card).map(normalize));
-  const requiredRoles = matcher.requiredRoles?.map(normalize).filter(Boolean) ?? [];
-  const anyRoles = matcher.anyRoles?.map(normalize).filter(Boolean) ?? [];
-  if (requiredRoles.some((role) => !roles.has(role))) return false;
-  if (anyRoles.length > 0 && !anyRoles.some((role) => roles.has(role))) return false;
-
-  const typeLine = card.type_line.toLocaleLowerCase();
-  if (matcher.requireNonland === true && typeLine.includes('land')) return false;
-  if (matcher.requireNoncreature === true && typeLine.includes('creature')) return false;
-
-  const manaValue = card.cmc;
-  if (matcher.minManaValue !== undefined) {
-    const ordinaryMatch = manaValue >= matcher.minManaValue;
-    const xMatch = matcher.countXAsAtLeastManaValue !== undefined
-      && matcher.countXAsAtLeastManaValue >= matcher.minManaValue
-      && /\{x(?:[},/]|$)/i.test(card.mana_cost ?? '');
-    if (!ordinaryMatch && !xMatch) return false;
+function isAuditableRequirement(value: unknown): value is RefinementComponentRequirementV15 {
+  if (!isRecord(value)) return false;
+  if (typeof value.id !== 'string' || value.id.trim().length === 0) return false;
+  if (
+    typeof value.minimumCount !== 'number'
+    || !Number.isInteger(value.minimumCount)
+    || value.minimumCount < 0
+  ) {
+    return false;
   }
-  if (matcher.maxManaValue !== undefined && manaValue > matcher.maxManaValue) return false;
-  return true;
-}
-
-function entriesForZone(parsed: ParsedDeck, zone: RefinementComponentZoneV15) {
-  return zone === 'all'
-    ? [...parsed.commanders, ...parsed.main]
-    : parsed.main;
-}
-
-function countComponent(
-  parsed: ParsedDeck,
-  cards: readonly ScryfallCard[],
-  requirement: RefinementComponentRequirementV15,
-): { count: number; unresolved: string[] } {
-  const unresolved = new Set<string>();
-  let count = 0;
-  for (const entry of entriesForZone(parsed, requirement.zone ?? 'main')) {
-    const card = resolveEntryCard(entry, cards);
-    if (!card) {
-      unresolved.add(entry.name);
-      continue;
-    }
-    if (cardMatchesMatcher(card, requirement.matcher)) count += entry.quantity;
-  }
-  return { count, unresolved: [...unresolved].sort((left, right) => left.localeCompare(right)) };
+  if (value.zone !== undefined && value.zone !== 'main' && value.zone !== 'all') return false;
+  return validateMatcher(value.id.trim(), value.matcher).length === 0;
 }
 
 function auditRequirements(
   kind: 'strategy-fuel' | 'structural-floor',
-  requirements: readonly RefinementComponentRequirementV15[] | undefined,
+  requirements: unknown,
   beforeParsed: ParsedDeck,
   beforeCards: readonly ScryfallCard[],
   afterParsed: ParsedDeck,
@@ -233,7 +212,10 @@ function auditRequirements(
   const audits: RefinementComponentAuditV15[] = [];
   const unresolvedBefore = new Set<string>();
   const unresolvedAfter = new Set<string>();
-  for (const requirement of requirements ?? []) {
+  const candidates = Array.isArray(requirements) ? requirements : [];
+  for (const rawRequirement of candidates) {
+    if (!isAuditableRequirement(rawRequirement)) continue;
+    const requirement = rawRequirement;
     const before = countComponent(beforeParsed, beforeCards, requirement);
     const after = countComponent(afterParsed, afterCards, requirement);
     before.unresolved.forEach((name) => unresolvedBefore.add(name));
@@ -267,17 +249,25 @@ export function auditRefinementPackageAcceptanceV15(input: {
 }): RefinementPackageAcceptanceAuditV15 | null {
   if (input.contract === undefined) return null;
 
+  const rawContract: unknown = input.contract;
+  const contractRecord = isRecord(rawContract) ? rawContract : null;
+  const strategyFuelRequirements: unknown = contractRecord?.strategyFuel;
+  const structuralFloorRequirements: unknown = contractRecord?.structuralFloors;
   const seenIds = new Set<string>();
   const invalidRequirements = [
-    ...validateRequirements('strategy-fuel', input.contract.strategyFuel, seenIds),
-    ...validateRequirements('structural-floor', input.contract.structuralFloors, seenIds),
+    ...(contractRecord === null ? ['packageAcceptanceContract: contract must be an object'] : []),
+    ...validateRequirements('strategy-fuel', strategyFuelRequirements, seenIds),
+    ...validateRequirements('structural-floor', structuralFloorRequirements, seenIds),
   ];
-  const hasRequirements = (input.contract.strategyFuel?.length ?? 0) + (input.contract.structuralFloors?.length ?? 0) > 0;
+  const hasRequirements = (
+    (Array.isArray(strategyFuelRequirements) ? strategyFuelRequirements.length : 0)
+    + (Array.isArray(structuralFloorRequirements) ? structuralFloorRequirements.length : 0)
+  ) > 0;
   if (!hasRequirements) invalidRequirements.push('packageAcceptanceContract: at least one component is required');
 
   const strategyFuel = auditRequirements(
     'strategy-fuel',
-    input.contract.strategyFuel,
+    strategyFuelRequirements,
     input.beforeParsed,
     input.beforeCards,
     input.afterParsed,
@@ -285,7 +275,7 @@ export function auditRefinementPackageAcceptanceV15(input: {
   );
   const structuralFloors = auditRequirements(
     'structural-floor',
-    input.contract.structuralFloors,
+    structuralFloorRequirements,
     input.beforeParsed,
     input.beforeCards,
     input.afterParsed,
@@ -338,13 +328,4 @@ export function packageAcceptanceGateV15(
     return { eligible: false, reason: 'package-reduces-declared-strategy-fuel-and-structural-floor' };
   }
   return { eligible: false, reason: 'package-fails-declared-acceptance-contract' };
-}
-
-/**
- * Kept as a tiny local guard for malformed direct callers. The public deck pipeline uses
- * parseDecklist before this module, but parsing here makes the module's own matcher contract
- * deterministic for tests and future non-pipeline callers.
- */
-export function parseDecklistForAcceptanceV15(decklist: string): ParsedDeck {
-  return parseDecklist(decklist);
 }
