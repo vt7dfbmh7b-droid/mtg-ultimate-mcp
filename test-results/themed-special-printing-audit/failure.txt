@@ -1,5 +1,5 @@
-HttpError: HTTP 429 Too Many Requests from https://api.scryfall.com/cards/search?q=!%22Go%20for%20the%20Throat%22&unique=prints&order=released&dir=desc
-HttpError: HTTP 429 Too Many Requests from https://api.scryfall.com/cards/search?q=!%22Go%20for%20the%20Throat%22&unique=prints&order=released&dir=desc
+HttpError: HTTP 429 Too Many Requests from https://api.scryfall.com/cards/search?q=!%22Wolverine%2C%20Best%20There%20Is%22&unique=prints&order=released&dir=desc
+HttpError: HTTP 429 Too Many Requests from https://api.scryfall.com/cards/search?q=!%22Wolverine%2C%20Best%20There%20Is%22&unique=prints&order=released&dir=desc
     at fetchJson (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/lib/http.ts:259:11)
     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
     at async scryfallRequest (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/services/scryfall.ts:102:12)
