@@ -2,6 +2,3 @@
 > mtg-ultimate-mcp@0.13.0 build
 > tsc -p tsconfig.json
 
-src/services/refinement-acceptance-v15.ts(241,42): error TS4104: The type 'readonly ScryfallCard[]' is 'readonly' and cannot be assigned to the mutable type 'ScryfallCard[]'.
-src/services/refinement-acceptance-v15.ts(352,5): error TS2740: Type '{ audits: RefinementComponentAuditV15[]; unresolvedBefore: string[]; unresolvedAfter: string[]; }' is missing the following properties from type 'RefinementComponentAuditV15[]': length, pop, push, concat, and 35 more.
-src/services/refinement-acceptance-v15.ts(353,5): error TS2740: Type '{ audits: RefinementComponentAuditV15[]; unresolvedBefore: string[]; unresolvedAfter: string[]; }' is missing the following properties from type 'RefinementComponentAuditV15[]': length, pop, push, concat, and 35 more.

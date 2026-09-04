@@ -1,6 +1,6 @@
-source_sha=3a39d8fe93e3411540606b80165db78dcb0cda9e
-build_outcome=failure
-mechanic_test_outcome=skipped
+source_sha=734a51394dbdd33d764c086232ddae378c6684e9
+build_outcome=success
+mechanic_test_outcome=failure
 control_outcome=skipped
 policy=scions-spellcraft-final-fantasy-no-new-infinite
 target_bracket=4
