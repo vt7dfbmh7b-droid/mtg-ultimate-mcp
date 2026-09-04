@@ -118,9 +118,9 @@ Known product risk: pushing combo/tutor density can erase combat, commander-dama
 
 Risk: numerically stronger-looking list no longer matches the deck's strategic identity.
 
-Protection: route protection, strategy-aware cuts, hybrid/multi-route design decision D-013; adversarial benchmark coverage required.
+Protection: generic route protection, strategy-aware cuts, hybrid/multi-route design decision D-013 and the V15 caller-declared minimum distinct-library-route portfolio; the current INTEL-01 live control at source 32353840b5c1aeb849171a411043ad3e8c370d7c (workflow 33833931627) preserved four full-table routes with two pairwise-disjoint library routes. Broader adversarial benchmark coverage remains required.
 
-Status: partially prevented / BENCH-01 required.
+Status: partially prevented; scenario-level alternate-route resilience proven, but BENCH-01 / family-wide INTEL-02 evidence remains required.
 
 ## KF-013 — Concurrent live controls race to persist evidence
 
