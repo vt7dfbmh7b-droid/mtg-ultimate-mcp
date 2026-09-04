@@ -171,20 +171,20 @@
       ],
       "metadataPath": "test-results/middle-earth-precon-refine/run-metadata.txt",
       "exists": true,
-      "sourceSha": "d9e58b17e61d451e0783fffd243ed6284c8f93dc",
-      "outcome": "fail",
+      "sourceSha": "049bc39704a1d4bf3621e3dcb22359345897f116",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "d9e58b17e61d451e0783fffd243ed6284c8f93dc",
-        "workflow_source_sha": "d9e58b17e61d451e0783fffd243ed6284c8f93dc",
-        "executed_head_sha": "d9e58b17e61d451e0783fffd243ed6284c8f93dc",
-        "control_outcome": "failure",
+        "source_sha": "049bc39704a1d4bf3621e3dcb22359345897f116",
+        "workflow_source_sha": "049bc39704a1d4bf3621e3dcb22359345897f116",
+        "executed_head_sha": "049bc39704a1d4bf3621e3dcb22359345897f116",
+        "control_outcome": "success",
         "build_outcome": "success",
-        "regression_outcome": "failure",
-        "execution_outcome": "skipped",
-        "hard_truth_outcome": "skipped",
-        "target_quality_outcome": "skipped",
-        "strategy_preservation_outcome": "skipped",
+        "regression_outcome": "success",
+        "execution_outcome": "success",
+        "hard_truth_outcome": "success",
+        "target_quality_outcome": "success",
+        "strategy_preservation_outcome": "success",
         "policy": "exact-food-and-fellowship-middle-earth-precon",
         "printing_family": "Middle-earth",
         "exact_card_count": "true",
@@ -196,14 +196,7 @@
         "meaningful_strategy_loss_rejected": "true",
         "negative_win_evidence_complete": "true"
       },
-      "unmetPassConditions": [
-        "control_outcome=success",
-        "regression_outcome=success",
-        "execution_outcome=success",
-        "hard_truth_outcome=success",
-        "target_quality_outcome=success",
-        "strategy_preservation_outcome=success"
-      ]
+      "unmetPassConditions": []
     },
     {
       "id": "PRECON-GENERALIZATION",
