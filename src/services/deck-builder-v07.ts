@@ -7,6 +7,7 @@ import {
 } from './commander-strategy-affinity-v15.js';
 import { commanderTargetPressureV15, selectInjectableTargetAwareWinPackageV15 } from './commander-target-pressure-v15.js';
 import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
+import type { RefinementPackageAcceptanceContractV15 } from './refinement-acceptance-v15.js';
 import { buildDeckMetrics, parseDecklist, type DeckEntry, type ParsedDeck } from './deck.js';
 import { discoverGeneralWinPackagesV15 } from './general-win-package-v15.js';
 import { discoverEligiblePoolV15 } from './neutral-deck-builder-v15.js';
@@ -50,6 +51,8 @@ export interface DeckBuildOptionsV07 {
   mustInclude?: string[];
   landCount?: number;
   maxNonbasicLands?: number;
+  /** Optional caller-declared strategy-fuel and structural-floor package contract. */
+  packageAcceptanceContract?: RefinementPackageAcceptanceContractV15;
 }
 
 export interface UpgradePlanOptionsV07 extends UpgradeOptions {
@@ -59,6 +62,8 @@ export interface UpgradePlanOptionsV07 extends UpgradeOptions {
   simulationIterations?: number;
   simulationTurns?: number;
   seed?: number;
+  /** Optional caller-declared strategy-fuel and structural-floor package contract. */
+  packageAcceptanceContract?: RefinementPackageAcceptanceContractV15;
 }
 
 interface RoleTargetsV07 {
