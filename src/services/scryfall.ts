@@ -315,7 +315,8 @@ export function inferCardRoles(card: ScryfallCard): string[] {
     roles.add('spot interaction');
     roles.add('forced sacrifice interaction');
   }
-  if (/destroy target artifact|destroy target enchantment|exile target artifact|exile target enchantment/.test(text)) roles.add('artifact/enchantment interaction');
+  const artifactEnchantmentInteraction = /(?:destroy|exile)(?: up to [^.]{0,80})? target [^.]{0,80}\b(?:artifacts?|enchantments?)\b/.test(text);
+  if (artifactEnchantmentInteraction) roles.add('artifact/enchantment interaction');
   if (/cards? in graveyards? can't|players? can't cast .* graveyards?|exile [^.]*\b(?:a graveyard|target player'?s graveyard|an opponent'?s graveyard|each player'?s graveyard|all graveyards?|their graveyard)\b/.test(text)) roles.add('graveyard hate');
   const massGraveyardExchange = /each player exiles all creature cards from [^.]{0,80}graveyard[^.]{0,120}then sacrifices all creatures[^.]{0,80}then puts all cards [^.]{0,80}exiled this way onto the battlefield/.test(text);
   const recursionCapacity = graveyardReturnCapacity(text);
@@ -359,6 +360,8 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   const boardScalingDraw = /\bdraw (?:a card for each|cards equal to (?:the )?number of) (?:artifacts?|creatures?|enchantments?|permanents?|tokens?) you control\b/.test(text);
   if (boardScalingDraw) roles.add('board-scaling card draw');
   if (teamWideStatPayoff || distributedTypalPump || boardScalingEquipment || boardScalingCreature || boardScalingCardAdvantage) roles.add('go-wide payoff');
+  const teamWideUntapPump = /\buntap (?:all|each|every)\b[^.]{0,120}\b(?:creatures|permanents) you control\b[\s\S]{0,180}\b(?:they|those creatures|those permanents)\b[^.]{0,80}\bget \+\d+\/\+\d+/.test(text);
+  if (teamWideUntapPump) roles.add('team-wide untap pump');
   const sacrificeTargets = [...mechanicalText.matchAll(
     /\bsacrifice (?:a|an|another|target|one or more|any number of|x\b)\s+([^.,:;\n]{1,80})/g,
   )].map((match) => match[1]?.trim() ?? '');

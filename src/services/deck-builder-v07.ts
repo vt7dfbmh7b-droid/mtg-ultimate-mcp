@@ -676,7 +676,7 @@ const UPGRADE_CANDIDATE_ROLES_V15: UpgradeAddressedRoleV15[] = [
 ];
 const MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15 = 4;
 const STRATEGY_COMPONENT_ROLES_V15: Record<string, ReadonlySet<string>> = {
-  'combat-tokens': new Set(['go-wide payoff', 'typal board control payoff', 'repeatable token engine', 'spell-triggered token engine', 'death-trigger token engine', 'token multiplier', 'token-event life drain', 'team combat-damage draw engine', 'extra combat', 'untap engine', 'haste']),
+  'combat-tokens': new Set(['go-wide payoff', 'typal board control payoff', 'repeatable token engine', 'spell-triggered token engine', 'death-trigger token engine', 'token multiplier', 'token-event life drain', 'team combat-damage draw engine', 'team-wide untap pump', 'extra combat', 'untap engine', 'haste']),
   'equipment-voltron': new Set(['equipment', 'protection', 'board protection']),
   counters: new Set(['+1/+1 counters', 'proliferate']),
   'graveyard-reanimator': new Set(['graveyard recursion', 'high-capacity graveyard recursion']),
@@ -1108,6 +1108,8 @@ function preservesSemanticSafetyFloorsV15(
     { role: 'narrow sacrifice outlet', floor: Math.min(semanticRoleCounts['narrow sacrifice outlet'] ?? 0, 1) },
     { role: 'spell-triggered token engine', floor: Math.min(semanticRoleCounts['spell-triggered token engine'] ?? 0, 1) },
     { role: 'combat-scaling life drain', floor: Math.min(semanticRoleCounts['combat-scaling life drain'] ?? 0, 1) },
+    { role: '+1/+1 counters', floor: Math.min(semanticRoleCounts['+1/+1 counters'] ?? 0, 1) },
+    { role: 'team-wide untap pump', floor: Math.min(semanticRoleCounts['team-wide untap pump'] ?? 0, 1) },
     // Artifact-specific and high-capacity recursion are scarce engines, not generic surplus
     // recursion. Retain the unique artifact bridge and up to two broad recursion effects unless
     // the incoming card preserves the same operational role.

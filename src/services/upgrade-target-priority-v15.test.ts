@@ -1386,7 +1386,7 @@ test('protected narrow and trigger-specific engines cannot be spent on generic g
   assert.equal(strategyAudit.swapImpacts[0]?.meaningfulStrategyLoss, true);
   assert.equal(strategyGate.eligible, false);
 
-  for (const protectedRole of ['graveyard hate', 'spell-triggered token engine', 'combat-scaling life drain'] as const) {
+  for (const protectedRole of ['graveyard hate', 'narrow sacrifice outlet', '+1/+1 counters', 'spell-triggered token engine', 'combat-scaling life drain', 'team-wide untap pump'] as const) {
     const pairings = pairUpgradeSwapsByStructureV15(
       [{
         role: 'average-nonland-mv' as const,

@@ -611,6 +611,25 @@ test('trigger-specific token and combat-scaling drain roles remain visible', () 
 });
 
 
+test('bounded artifact/enchantment removal and team untap pumps retain their roles', () => {
+  const boundedArtifactRemoval = card({
+    name: 'Generic Bounded Artifact Enchantment Removal',
+    typeLine: 'Sorcery',
+    oracleText: 'Destroy up to X target artifacts and/or enchantments. Create a 1/1 green Squirrel creature token for each permanent destroyed this way.',
+  });
+  const teamUntapPump = card({
+    name: 'Generic Team Untap Pump',
+    typeLine: 'Creature — Test Treefolk',
+    oracleText: 'Flash. When this creature enters, untap all creatures you control. They get +2/+2 until end of turn.',
+  });
+
+  assert.ok(inferCardRoles(boundedArtifactRemoval).includes('artifact/enchantment interaction'));
+  assert.ok(inferCardRoles(boundedArtifactRemoval).includes('token production'));
+  assert.ok(inferCardRoles(teamUntapPump).includes('team-wide untap pump'));
+  assert.ok(inferCardRoles(teamUntapPump).includes('untap engine'));
+});
+
+
 test('life-gain-triggered draw is distinct from one-shot draw', () => {
   const lifeGainTriggeredDraw = card({
     name: 'Generic Life-Gain Triggered Draw',
