@@ -1793,3 +1793,4 @@ export async function buildSimulationBackedUpgradePlanV07(
     ],
   };
 }
+// INTEL-02 exact-source family replay marker: no runtime behavior change.

@@ -599,3 +599,4 @@ export async function getCardsByNames(names: string[]): Promise<{
 }> {
   return getCardsByIdentifiers(names.map((name) => ({ name })));
 }
+// INTEL-02 exact-source family replay marker: no runtime behavior change.
