@@ -238,6 +238,14 @@
         },
         "alternativeStrategies": [
           {
+            "archetype": "value-engine",
+            "score": 14,
+            "evidence": [
+              "repeatable draw +9",
+              "card draw +5"
+            ]
+          },
+          {
             "archetype": "aristocrats",
             "score": 12,
             "evidence": [
@@ -252,11 +260,6 @@
               "haste +2",
               "attack trigger +2"
             ]
-          },
-          {
-            "archetype": "artifact-engine",
-            "score": 0,
-            "evidence": []
           }
         ],
         "coherenceScore": 21,
@@ -2613,7 +2616,7 @@
         },
         "roleCounts": {
           "life drain": 4,
-          "repeatable life gain engine": 9,
+          "repeatable life gain engine": 10,
           "repeatable life drain": 5,
           "+1/+1 counters": 21,
           "creature": 23,
@@ -3081,7 +3084,7 @@
           "free interaction": 1,
           "repeatable token engine": 2,
           "artifact graveyard recursion": 1,
-          "repeatable life gain engine": 4,
+          "repeatable life gain engine": 5,
           "artifact sacrifice outlet": 2,
           "forced sacrifice interaction": 1,
           "life drain": 5,
