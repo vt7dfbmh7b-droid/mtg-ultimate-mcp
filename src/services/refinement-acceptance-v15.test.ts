@@ -95,7 +95,6 @@ test('caller-declared strategy fuel counts ordinary and X noncreature spells', (
   });
 
   assert.ok(audit);
-  console.log('DEBUG acceptance ordinary-x', JSON.stringify(audit));
   assert.equal(audit.evidenceComplete, true);
   assert.equal(audit.preserved, true);
   assert.equal(audit.strategyFuel[0]?.beforeCount, 2);
@@ -130,7 +129,6 @@ test('package gate rejects cumulative strategy-fuel loss even when the descripto
   });
 
   assert.ok(audit);
-  console.log('DEBUG acceptance strategy-loss', JSON.stringify(audit));
   assert.equal(audit.status, 'strategy-fuel-loss');
   assert.equal(audit.preserved, false);
   assert.equal(audit.strategyFuel[0]?.beforeCount, 2);
@@ -161,7 +159,6 @@ test('package gate rejects multiple structural floors without relying on card na
   });
 
   assert.ok(audit);
-  console.log('DEBUG acceptance structural-loss', JSON.stringify(audit));
   assert.equal(audit.status, 'structural-floor-loss');
   assert.equal(audit.structuralFloors.every((floor) => floor.preserved), false);
   assert.equal(audit.losses.length, 2);
