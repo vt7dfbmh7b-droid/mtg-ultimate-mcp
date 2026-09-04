@@ -252,7 +252,7 @@
     },
     "estimatedUpgradeSpendNzd": 4.93,
     "estimatedUpgradeSpendUsdReference": 2.9,
-    "maxTotalNzd": 200.01,
+    "maxTotalNzd": 199.99,
     "maxTotalUsdReference": 117.54,
     "swaps": [
       {
@@ -585,7 +585,7 @@
       "targetBracket": 4,
       "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.57,
-      "maxTotalNzd": 200.01,
+      "maxTotalNzd": 199.99,
       "maxTotalUsdReference": 117.54,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
@@ -2705,6 +2705,7 @@
                     "creature"
                   ],
                   "addRoles": [
+                    "artifact/enchantment interaction",
                     "cheap interaction",
                     "spot interaction"
                   ],
@@ -3069,6 +3070,7 @@
                       "creature"
                     ],
                     "addRoles": [
+                      "artifact/enchantment interaction",
                       "cheap interaction",
                       "spot interaction"
                     ],
@@ -5043,6 +5045,7 @@
                         "creature"
                       ],
                       "addRoles": [
+                        "artifact/enchantment interaction",
                         "cheap interaction",
                         "spot interaction"
                       ],
@@ -5407,6 +5410,7 @@
                           "creature"
                         ],
                         "addRoles": [
+                          "artifact/enchantment interaction",
                           "cheap interaction",
                           "spot interaction"
                         ],
