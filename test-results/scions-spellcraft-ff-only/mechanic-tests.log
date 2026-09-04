@@ -2,209 +2,147 @@ TAP version 13
 # Subtest: builder-side commander context reuses the same V0.15 strategy inference
 ok 1 - builder-side commander context reuses the same V0.15 strategy inference
   ---
-  duration_ms: 28.071061
+  duration_ms: 28.438849
   type: 'test'
   ...
 # Subtest: existing V0.15 strategy inference gives on-plan cards more affinity than unrelated utility
 ok 2 - existing V0.15 strategy inference gives on-plan cards more affinity than unrelated utility
   ---
-  duration_ms: 1.972442
+  duration_ms: 2.078892
   type: 'test'
   ...
 # Subtest: strategy-aware cut pressure protects on-plan cards without making them uncuttable
 ok 3 - strategy-aware cut pressure protects on-plan cards without making them uncuttable
   ---
-  duration_ms: 1.77735
+  duration_ms: 1.970129
   type: 'test'
   ...
 # Subtest: weak incidental commander archetypes do not grant strategy protection
 ok 4 - weak incidental commander archetypes do not grant strategy protection
   ---
-  duration_ms: 1.547153
+  duration_ms: 1.717946
   type: 'test'
   ...
 # Subtest: cut pressure protects premium low-cost acceleration before slower generic mana
 ok 5 - cut pressure protects premium low-cost acceleration before slower generic mana
   ---
-  duration_ms: 0.52239
+  duration_ms: 0.560659
   type: 'test'
   ...
 # Subtest: upgrade context excludes weak incidental command-zone signals from deck identity
 ok 6 - upgrade context excludes weak incidental command-zone signals from deck identity
   ---
-  duration_ms: 0.693608
+  duration_ms: 0.785831
   type: 'test'
   ...
 # Subtest: upgrade pairing preserves the structural role an incoming card is repairing when a safer cut exists
 ok 7 - upgrade pairing preserves the structural role an incoming card is repairing when a safer cut exists
   ---
-  duration_ms: 1.736985
+  duration_ms: 1.785041
   type: 'test'
   ...
 # Subtest: top-three commander context preserves multiple already-detected deck identities
 ok 8 - top-three commander context preserves multiple already-detected deck identities
   ---
-  duration_ms: 1.015987
+  duration_ms: 1.159651
   type: 'test'
   ...
 # Subtest: upgrade context promotes a densely evidenced secondary deck plan that bridges to the commander
 ok 9 - upgrade context promotes a densely evidenced secondary deck plan that bridges to the commander
   ---
-  duration_ms: 3.34421
+  duration_ms: 3.713171
   type: 'test'
   ...
 # Subtest: upgrade context does not promote a shallow incidental secondary pattern
 ok 10 - upgrade context does not promote a shallow incidental secondary pattern
   ---
-  duration_ms: 1.123516
+  duration_ms: 1.285237
   type: 'test'
   ...
 # Subtest: whole-deck retention rejects a package that spends substantive strategy density
 ok 11 - whole-deck retention rejects a package that spends substantive strategy density
   ---
-  duration_ms: 2.396149
+  duration_ms: 2.467599
   type: 'test'
   ...
 # Subtest: upgrade pairing prefers zero strategy erosion over a sub-threshold affinity loss
 ok 12 - upgrade pairing prefers zero strategy erosion over a sub-threshold affinity loss
   ---
-  duration_ms: 0.931149
+  duration_ms: 0.932906
   type: 'test'
   ...
 # Subtest: Food and repeatable life-gain text form a substantive commander identity without card-name shortcuts
 ok 13 - Food and repeatable life-gain text form a substantive commander identity without card-name shortcuts
   ---
-  duration_ms: 0.76513
+  duration_ms: 0.745516
   type: 'test'
   ...
 # Subtest: Food/lifegain payoffs receive cut protection and uncompensated removal fails strategy preservation
 ok 14 - Food/lifegain payoffs receive cut protection and uncompensated removal fails strategy preservation
   ---
-  duration_ms: 2.236423
+  duration_ms: 2.880503
   type: 'test'
   ...
 # Subtest: artifact graveyard engines receive cut protection while graveyard hate cannot replace them
 ok 15 - artifact graveyard engines receive cut protection while graveyard hate cannot replace them
   ---
-  duration_ms: 1.495046
+  duration_ms: 1.33012
   type: 'test'
   ...
 # Subtest: token multipliers and team-wide payoffs cannot be traded for generic role gains
 ok 16 - token multipliers and team-wide payoffs cannot be traded for generic role gains
   ---
-  duration_ms: 3.306359
+  duration_ms: 2.816383
   type: 'test'
   ...
 # Subtest: token-death engines and board-scaling typal payoffs cannot be traded for generic protection
 ok 17 - token-death engines and board-scaling typal payoffs cannot be traded for generic protection
   ---
-  duration_ms: 3.175226
+  duration_ms: 2.768213
   type: 'test'
   ...
 # Subtest: caller-declared strategy fuel counts ordinary and X noncreature spells
-not ok 18 - caller-declared strategy fuel counts ordinary and X noncreature spells
+ok 18 - caller-declared strategy fuel counts ordinary and X noncreature spells
   ---
-  duration_ms: 24.509547
+  duration_ms: 24.009507
   type: 'test'
-  location: '/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/services/refinement-acceptance-v15.test.ts:72:1'
-  failureType: 'testCodeFailure'
-  error: |-
-    Expected values to be strictly equal:
-    
-    false !== true
-    
-  code: 'ERR_ASSERTION'
-  name: 'AssertionError'
-  expected: true
-  actual: false
-  operator: 'strictEqual'
-  stack: |-
-    TestContext.<anonymous> (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/services/refinement-acceptance-v15.test.ts:98:10)
-    Test.runInAsyncScope (node:async_hooks:214:14)
-    Test.run (node:internal/test_runner/test:1047:25)
-    Test.start (node:internal/test_runner/test:944:17)
-    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
   ...
 # Subtest: package gate rejects cumulative strategy-fuel loss even when the descriptor is otherwise valid
-not ok 19 - package gate rejects cumulative strategy-fuel loss even when the descriptor is otherwise valid
+ok 19 - package gate rejects cumulative strategy-fuel loss even when the descriptor is otherwise valid
   ---
-  duration_ms: 1.927118
+  duration_ms: 1.935754
   type: 'test'
-  location: '/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/services/refinement-acceptance-v15.test.ts:106:1'
-  failureType: 'testCodeFailure'
-  error: |-
-    Expected values to be strictly equal:
-    + actual - expected
-    
-    + 'evidence-incomplete'
-    - 'strategy-fuel-loss'
-    
-  code: 'ERR_ASSERTION'
-  name: 'AssertionError'
-  expected: 'strategy-fuel-loss'
-  actual: 'evidence-incomplete'
-  operator: 'strictEqual'
-  stack: |-
-    TestContext.<anonymous> (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/services/refinement-acceptance-v15.test.ts:132:10)
-    Test.runInAsyncScope (node:async_hooks:214:14)
-    Test.run (node:internal/test_runner/test:1047:25)
-    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
-    Test.postRun (node:internal/test_runner/test:1173:19)
-    Test.run (node:internal/test_runner/test:1101:12)
-    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
   ...
 # Subtest: package gate rejects multiple structural floors without relying on card names
-not ok 20 - package gate rejects multiple structural floors without relying on card names
+ok 20 - package gate rejects multiple structural floors without relying on card names
   ---
-  duration_ms: 1.808929
+  duration_ms: 1.960711
   type: 'test'
-  location: '/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/services/refinement-acceptance-v15.test.ts:141:1'
-  failureType: 'testCodeFailure'
-  error: |-
-    Expected values to be strictly equal:
-    + actual - expected
-    
-    + 'evidence-incomplete'
-    - 'structural-floor-loss'
-    
-  code: 'ERR_ASSERTION'
-  name: 'AssertionError'
-  expected: 'structural-floor-loss'
-  actual: 'evidence-incomplete'
-  operator: 'strictEqual'
-  stack: |-
-    TestContext.<anonymous> (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/services/refinement-acceptance-v15.test.ts:162:10)
-    Test.runInAsyncScope (node:async_hooks:214:14)
-    Test.run (node:internal/test_runner/test:1047:25)
-    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
-    Test.postRun (node:internal/test_runner/test:1173:19)
-    Test.run (node:internal/test_runner/test:1101:12)
-    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
   ...
 # Subtest: package gate reports combined strategy-fuel and structural-floor loss
 ok 21 - package gate reports combined strategy-fuel and structural-floor loss
   ---
-  duration_ms: 1.243429
+  duration_ms: 1.552787
   type: 'test'
   ...
 # Subtest: package gate fails closed when a required card is unresolved or the contract is malformed
 ok 22 - package gate fails closed when a required card is unresolved or the contract is malformed
   ---
-  duration_ms: 0.581519
+  duration_ms: 0.751828
   type: 'test'
   ...
 # Subtest: an omitted package contract preserves existing refinement behavior
 ok 23 - an omitted package contract preserves existing refinement behavior
   ---
-  duration_ms: 0.767845
+  duration_ms: 1.15418
   type: 'test'
   ...
 1..23
 # tests 23
 # suites 0
-# pass 20
-# fail 3
+# pass 23
+# fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 558.998196
+# duration_ms 571.970239
