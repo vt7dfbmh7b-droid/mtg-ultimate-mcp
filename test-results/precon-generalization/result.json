@@ -258,7 +258,7 @@
     "packageAcceptanceContract": null,
     "estimatedUpgradeSpendNzd": 8.73,
     "estimatedUpgradeSpendUsdReference": 5.13,
-    "maxTotalNzd": 200.01,
+    "maxTotalNzd": 199.99,
     "maxTotalUsdReference": 117.54,
     "swaps": [
       {
@@ -573,7 +573,7 @@
       "targetBracket": 4,
       "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.57,
-      "maxTotalNzd": 200.01,
+      "maxTotalNzd": 199.99,
       "maxTotalUsdReference": 117.54,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
@@ -1950,7 +1950,7 @@
             "reason": "package-causes-a-meaningful-commander-strategy-loss",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 6.59,
+            "estimatedSpendNzd": 6.58,
             "estimatedSpendUsdReference": 3.87,
             "unknownPriceCount": 0,
             "improvementScore": 19.451,
@@ -2060,6 +2060,7 @@
                   ],
                   "cutRoles": [],
                   "addRoles": [
+                    "artifact/enchantment interaction",
                     "cheap interaction",
                     "spot interaction"
                   ],
@@ -2357,6 +2358,7 @@
                     ],
                     "cutRoles": [],
                     "addRoles": [
+                      "artifact/enchantment interaction",
                       "cheap interaction",
                       "spot interaction"
                     ],
@@ -4166,7 +4168,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 6.59,
+                "estimatedSpendNzd": 6.58,
                 "estimatedSpendUsdReference": 3.87,
                 "unknownPriceCount": 0,
                 "improvementScore": 19.451,
@@ -4276,6 +4278,7 @@
                       ],
                       "cutRoles": [],
                       "addRoles": [
+                        "artifact/enchantment interaction",
                         "cheap interaction",
                         "spot interaction"
                       ],
@@ -4573,6 +4576,7 @@
                         ],
                         "cutRoles": [],
                         "addRoles": [
+                          "artifact/enchantment interaction",
                           "cheap interaction",
                           "spot interaction"
                         ],
@@ -7247,6 +7251,7 @@
                         "creature"
                       ],
                       "addRoles": [
+                        "artifact/enchantment interaction",
                         "cheap interaction",
                         "spot interaction"
                       ],
@@ -7530,6 +7535,7 @@
                           "creature"
                         ],
                         "addRoles": [
+                          "artifact/enchantment interaction",
                           "cheap interaction",
                           "spot interaction"
                         ],
@@ -9255,6 +9261,7 @@
                         "creature"
                       ],
                       "addRoles": [
+                        "artifact/enchantment interaction",
                         "cheap interaction",
                         "spot interaction"
                       ],
@@ -9508,6 +9515,7 @@
                           "creature"
                         ],
                         "addRoles": [
+                          "artifact/enchantment interaction",
                           "cheap interaction",
                           "spot interaction"
                         ],
