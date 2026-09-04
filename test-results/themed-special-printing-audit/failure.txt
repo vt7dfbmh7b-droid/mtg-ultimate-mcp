@@ -1,8 +1,8 @@
-HttpError: HTTP 429 Too Many Requests from https://api.scryfall.com/cards/search?q=!%22Wolverine%2C%20Best%20There%20Is%22&unique=prints&order=released&dir=desc
-HttpError: HTTP 429 Too Many Requests from https://api.scryfall.com/cards/search?q=!%22Wolverine%2C%20Best%20There%20Is%22&unique=prints&order=released&dir=desc
+HttpError: HTTP 429 Too Many Requests from https://api.scryfall.com/cards/search?q=!%22Arcane%20Signet%22&unique=prints&order=released&dir=desc
+HttpError: HTTP 429 Too Many Requests from https://api.scryfall.com/cards/search?q=!%22Arcane%20Signet%22&unique=prints&order=released&dir=desc
     at fetchJson (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/lib/http.ts:259:11)
     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
     at async scryfallRequest (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/services/scryfall.ts:102:12)
-    at async getCardPrintings (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/services/scryfall.ts:519:46)
+    at async getCardPrintings (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/services/scryfall.ts:530:46)
     at async resolveSpecials (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/audit-marvel-middle-earth-special-printings-v15.ts:38:25)
     at async main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/audit-marvel-middle-earth-special-printings-v15.ts:52:26)
