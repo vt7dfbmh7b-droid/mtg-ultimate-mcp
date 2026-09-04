@@ -2,3 +2,7 @@
 > mtg-ultimate-mcp@0.13.0 build
 > tsc -p tsconfig.json
 
+src/services/card-role-truth-v15.test.ts(575,9): error TS1005: ':' expected.
+src/services/card-role-truth-v15.test.ts(579,5): error TS1005: ',' expected.
+src/services/card-role-truth-v15.test.ts(581,9): error TS1005: ':' expected.
+src/services/card-role-truth-v15.test.ts(585,5): error TS1005: ',' expected.
