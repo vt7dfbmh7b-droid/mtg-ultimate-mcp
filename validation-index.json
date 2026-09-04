@@ -148,11 +148,11 @@
       ],
       "metadataPath": "test-results/scions-spellcraft-ff-only/run-metadata.txt",
       "exists": true,
-      "sourceSha": "ba18349e74d57a7ce353e4758f6f1d8d47d52bf7",
+      "sourceSha": "ebdbe84ea9d5af9d0935a5c5f3cbeaa718c11ab2",
       "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "ba18349e74d57a7ce353e4758f6f1d8d47d52bf7",
+        "source_sha": "ebdbe84ea9d5af9d0935a5c5f3cbeaa718c11ab2",
         "build_outcome": "failure",
         "mechanic_test_outcome": "skipped",
         "control_outcome": "skipped",

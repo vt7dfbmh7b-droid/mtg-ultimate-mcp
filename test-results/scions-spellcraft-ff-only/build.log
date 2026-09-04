@@ -2,7 +2,197 @@
 > mtg-ultimate-mcp@0.13.0 build
 > tsc -p tsconfig.json
 
-src/services/card-role-truth-v15.test.ts(575,9): error TS1005: ':' expected.
-src/services/card-role-truth-v15.test.ts(579,5): error TS1005: ',' expected.
-src/services/card-role-truth-v15.test.ts(581,9): error TS1005: ':' expected.
-src/services/card-role-truth-v15.test.ts(585,5): error TS1005: ',' expected.
+src/server-v04.ts(8,10): error TS2305: Module '"./services/scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/server-v04.ts(8,33): error TS2305: Module '"./services/scryfall.js"' has no exported member 'lookupCard'.
+src/server-v04.ts(88,64): error TS7006: Parameter 'color' implicitly has an 'any' type.
+src/server-v04.ts(99,39): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/server-v05.ts(9,10): error TS2305: Module '"./services/scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/server-v05.ts(9,33): error TS2305: Module '"./services/scryfall.js"' has no exported member 'lookupCard'.
+src/server-v05.ts(248,51): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/server-v05.ts(249,48): error TS2345: Argument of type 'Map<unknown, unknown>' is not assignable to parameter of type 'Map<string, ScryfallCard>'.
+  Type 'unknown' is not assignable to type 'string'.
+src/server-v05.ts(250,47): error TS2345: Argument of type 'Map<unknown, unknown>' is not assignable to parameter of type 'Map<string, ScryfallCard>'.
+  Type 'unknown' is not assignable to type 'string'.
+src/server-v06.ts(5,10): error TS2305: Module '"./services/scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/server-v07.ts(16,10): error TS2305: Module '"./services/scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/server-v07.ts(16,33): error TS2305: Module '"./services/scryfall.js"' has no exported member 'lookupCard'.
+src/server-v07.ts(16,50): error TS2305: Module '"./services/scryfall.js"' has no exported member 'CardIdentifierInput'.
+src/server-v08.ts(13,3): error TS2305: Module '"./services/scryfall.js"' has no exported member 'getCardPrintings'.
+src/server-v08.ts(14,3): error TS2305: Module '"./services/scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/server-v08.ts(15,3): error TS2305: Module '"./services/scryfall.js"' has no exported member 'lookupCard'.
+src/server-v08.ts(16,3): error TS2305: Module '"./services/scryfall.js"' has no exported member 'lookupPrinting'.
+src/server-v08.ts(17,3): error TS2305: Module '"./services/scryfall.js"' has no exported member 'summarizeCard'.
+src/server-v08.ts(18,8): error TS2305: Module '"./services/scryfall.js"' has no exported member 'CardIdentifierInput'.
+src/server-v08.ts(102,44): error TS7006: Parameter 'printing' implicitly has an 'any' type.
+src/server-v15-commander-pipeline.test.ts(13,15): error TS2305: Module '"./services/scryfall.js"' has no exported member 'CardIdentifierInput'.
+src/server-v15-commander-pipeline.test.ts(190,26): error TS7006: Parameter 'identifiers' implicitly has an 'any' type.
+src/server-v15-commander-pipeline.ts(10,3): error TS2305: Module '"./services/scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/server-v15-commander-pipeline.ts(11,8): error TS2305: Module '"./services/scryfall.js"' has no exported member 'CardIdentifierInput'.
+src/server-v15-commander-pipeline.ts(171,42): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/server-v15.ts(27,10): error TS2305: Module '"./services/scryfall.js"' has no exported member 'getCardsByNames'.
+src/server-v15.ts(181,60): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/server.ts(9,3): error TS2305: Module '"./services/scryfall.js"' has no exported member 'getCardPrintings'.
+src/server.ts(10,3): error TS2305: Module '"./services/scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/server.ts(11,3): error TS2305: Module '"./services/scryfall.js"' has no exported member 'lookupCard'.
+src/server.ts(12,3): error TS2305: Module '"./services/scryfall.js"' has no exported member 'lookupPrinting'.
+src/server.ts(13,3): error TS2305: Module '"./services/scryfall.js"' has no exported member 'searchCards'.
+src/server.ts(14,3): error TS2305: Module '"./services/scryfall.js"' has no exported member 'summarizeCard'.
+src/server.ts(141,73): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/server.ts(171,20): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/server.ts(172,17): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/server.ts(173,20): error TS7006: Parameter 'row' implicitly has an 'any' type.
+src/server.ts(174,18): error TS7006: Parameter 'a' implicitly has an 'any' type.
+src/server.ts(174,21): error TS7006: Parameter 'b' implicitly has an 'any' type.
+src/server.ts(181,39): error TS7031: Binding element 'card' implicitly has an 'any' type.
+src/server.ts(181,45): error TS7031: Binding element 'price' implicitly has an 'any' type.
+src/services/auto-commander-selection-v15.ts(8,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/auto-commander-selection-v15.ts(8,29): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/services/auto-commander-selection-v15.ts(8,52): error TS2459: Module '"./scryfall.js"' declares 'inferCardRoles' locally, but it is not exported.
+src/services/card-intelligence-v05.ts(6,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/card-intelligence-v05.ts(6,29): error TS2459: Module '"./scryfall.js"' declares 'inferCardRoles' locally, but it is not exported.
+src/services/card-intelligence-v05.ts(6,45): error TS2305: Module '"./scryfall.js"' has no exported member 'summarizeCard'.
+src/services/card-role-board-wipe-v15.test.ts(4,10): error TS2459: Module '"./scryfall.js"' declares 'inferCardRoles' locally, but it is not exported.
+src/services/card-role-death-protection-v15.test.ts(5,3): error TS2459: Module '"./scryfall.js"' declares 'inferCardRoles' locally, but it is not exported.
+src/services/card-role-death-protection-v15.test.ts(6,3): error TS2459: Module '"./scryfall.js"' declares 'normalizeScryfallSearchQueryV15' locally, but it is not exported.
+src/services/card-role-death-protection-v15.test.ts(7,3): error TS2305: Module '"./scryfall.js"' has no exported member 'PROTECTION_SEARCH_CLAUSE_V15'.
+src/services/card-role-truth-v15.ts(2,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardManaCost'.
+src/services/card-role-truth-v15.ts(2,27): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/card-role-truth-v15.ts(2,46): error TS2459: Module '"./scryfall.js"' declares 'inferCardRoles' locally, but it is not exported.
+src/services/card-role-truth-v15.ts(529,3): error TS2322: Type 'unknown[]' is not assignable to type 'string[]'.
+  Type 'unknown' is not assignable to type 'string'.
+src/services/casting-v05.ts(2,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardManaCost'.
+src/services/casting-v05.ts(2,27): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/casting-v05.ts(76,3): error TS2322: Type 'unknown[]' is not assignable to type 'string[]'.
+  Type 'unknown' is not assignable to type 'string'.
+src/services/casting-v05.ts(76,89): error TS7006: Parameter 'symbol' implicitly has an 'any' type.
+src/services/cedh-efficiency-v14.ts(11,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/cedh-efficiency-v14.ts(11,29): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/services/cedh-efficiency-v14.ts(11,52): error TS2305: Module '"./scryfall.js"' has no exported member 'searchCards'.
+src/services/cedh-efficiency-v14.ts(11,70): error TS2305: Module '"./scryfall.js"' has no exported member 'CardIdentifierInput'.
+src/services/cedh-manabase-v14.ts(11,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/services/cedh-manabase-v14.ts(11,33): error TS2305: Module '"./scryfall.js"' has no exported member 'searchCards'.
+src/services/cedh-manabase-v14.ts(11,51): error TS2305: Module '"./scryfall.js"' has no exported member 'CardIdentifierInput'.
+src/services/cedh-seed-package-v14.ts(8,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByNames'.
+src/services/cedh-seed-package-v14.ts(346,56): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/services/cedh-seed-package-v14.ts(372,22): error TS2339: Property 'name' does not exist on type '{}'.
+src/services/cedh-seed-package-v14.ts(373,21): error TS2339: Property 'cmc' does not exist on type '{}'.
+src/services/cedh-seed-package-v14.ts(374,26): error TS2339: Property 'type_line' does not exist on type '{}'.
+src/services/cedh-seed-package-v14.ts(375,20): error TS2339: Property 'oracle_text' does not exist on type '{}'.
+src/services/cedh-seed-package-v14.ts(375,55): error TS2339: Property 'oracle_text' does not exist on type '{}'.
+src/services/cedh-seed-package-v14.ts(376,38): error TS2740: Type '{}' is missing the following properties from type 'ScryfallCard': id, name, lang, cmc, and 9 more.
+src/services/cedh-seed-package-v14.ts(379,18): error TS2339: Property 'legalities' does not exist on type '{}'.
+src/services/cedh-seed-package-v14.ts(379,61): error TS2339: Property 'color_identity' does not exist on type '{}'.
+src/services/cedh-seed-package-v14.ts(379,82): error TS7006: Parameter 'color' implicitly has an 'any' type.
+src/services/cedh-seed-package-v14.ts(384,56): error TS2740: Type '{}' is missing the following properties from type 'ScryfallCard': id, name, lang, cmc, and 9 more.
+src/services/cedh-seed-package-v14.ts(391,22): error TS2339: Property 'name' does not exist on type '{}'.
+src/services/cedh-win-package-v14.ts(12,3): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/services/cedh-win-package-v14.ts(13,3): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByNames'.
+src/services/cedh-win-package-v14.ts(14,8): error TS2305: Module '"./scryfall.js"' has no exported member 'CardIdentifierInput'.
+src/services/cedh-win-package-v14.ts(380,56): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/services/cedh-win-package-v14.ts(393,37): error TS2339: Property 'legalities' does not exist on type '{}'.
+src/services/cedh-win-package-v14.ts(393,84): error TS2339: Property 'color_identity' does not exist on type '{}'.
+src/services/cedh-win-package-v14.ts(393,105): error TS7006: Parameter 'color' implicitly has an 'any' type.
+src/services/cedh-win-package-v14.ts(397,56): error TS2740: Type '{}' is missing the following properties from type 'ScryfallCard': id, name, lang, cmc, and 9 more.
+src/services/cedh-win-package-v14.ts(403,26): error TS2339: Property 'name' does not exist on type '{}'.
+src/services/cedh-workflow-v14.ts(22,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/services/cedh-workflow-v14.ts(22,33): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByNames'.
+src/services/cedh-workflow-v14.ts(22,55): error TS2305: Module '"./scryfall.js"' has no exported member 'CardIdentifierInput'.
+src/services/cedh-workflow-v14.ts(80,14): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/services/cedh-workflow-v14.ts(81,11): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/services/combat-v05.ts(2,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/combat-v05.ts(91,57): error TS7006: Parameter 'part' implicitly has an 'any' type.
+src/services/combat-v05.ts(92,45): error TS7006: Parameter 'fragment' implicitly has an 'any' type.
+src/services/combat-v07.ts(2,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/combo-zones-v07.ts(2,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/commander-build-evaluation-v15.ts(19,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/services/commander-build-evaluation-v15.ts(19,38): error TS2305: Module '"./scryfall.js"' has no exported member 'CardIdentifierInput'.
+src/services/commander-build-evaluation-v15.ts(294,44): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/services/commander-build-evaluation-v15.ts(336,46): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/services/commander-build-evaluation-v15.ts(336,88): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/services/commander-build-evaluation-v15.ts(362,36): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/services/commander-rules-temporal-v15.ts(4,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/commander-rules.ts(3,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/commander-strategy-affinity-v15.ts(8,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/creature-type-coherence-v15.ts(4,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/deck-builder-v07.ts(26,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/services/deck-builder-v07.ts(26,33): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByNames'.
+src/services/deck-builder-v07.ts(26,50): error TS2305: Module '"./scryfall.js"' has no exported member 'searchCards'.
+src/services/deck-builder-v07.ts(26,63): error TS2305: Module '"./scryfall.js"' has no exported member 'summarizeCard'.
+src/services/deck-builder-v07.ts(279,36): error TS7006: Parameter 'candidate' implicitly has an 'any' type.
+src/services/deck-builder-v07.ts(1571,44): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/services/deck-builder-v07.ts(1591,70): error TS2740: Type '{}' is missing the following properties from type 'ScryfallCard': id, name, lang, cmc, and 9 more.
+src/services/deck-whole-budget-v15.ts(12,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/services/deck-whole-budget-v15.ts(12,38): error TS2305: Module '"./scryfall.js"' has no exported member 'CardIdentifierInput'.
+src/services/deck.ts(3,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardManaCost'.
+src/services/deck.ts(3,27): error TS2305: Module '"./scryfall.js"' has no exported member 'summarizeCard'.
+src/services/efficient-win-plan-v15.ts(3,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/general-win-package-v15.ts(9,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByNames'.
+src/services/general-win-package-v15.ts(9,27): error TS2459: Module '"./scryfall.js"' declares 'inferCardRoles' locally, but it is not exported.
+src/services/general-win-package-v15.ts(176,53): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+src/services/general-win-package-v15.ts(269,44): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/services/general-win-package-v15.ts(302,21): error TS2740: Type '{}' is missing the following properties from type 'ScryfallCard': id, name, lang, cmc, and 9 more.
+src/services/general-win-package-v15.ts(304,18): error TS2339: Property 'legalities' does not exist on type '{}'.
+src/services/general-win-package-v15.ts(304,61): error TS2339: Property 'color_identity' does not exist on type '{}'.
+src/services/general-win-package-v15.ts(304,82): error TS7006: Parameter 'color' implicitly has an 'any' type.
+src/services/general-win-package-v15.ts(311,52): error TS2740: Type '{}' is missing the following properties from type 'ScryfallCard': id, name, lang, cmc, and 9 more.
+src/services/general-win-package-v15.ts(320,22): error TS2339: Property 'name' does not exist on type '{}'.
+src/services/interaction-v05.ts(2,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/interaction-v07.ts(3,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/interaction-v07.ts(3,29): error TS2459: Module '"./scryfall.js"' declares 'inferCardRoles' locally, but it is not exported.
+src/services/mana-v04.ts(4,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/neutral-commander-selection-v15.ts(9,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/neutral-commander-selection-v15.ts(9,29): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/services/neutral-deck-builder-v15.ts(22,3): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/neutral-deck-builder-v15.ts(23,3): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/services/neutral-deck-builder-v15.ts(24,3): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByNames'.
+src/services/neutral-deck-builder-v15.ts(25,3): error TS2459: Module '"./scryfall.js"' declares 'inferCardRoles' locally, but it is not exported.
+src/services/neutral-deck-builder-v15.ts(26,8): error TS2305: Module '"./scryfall.js"' has no exported member 'CardIdentifierInput'.
+src/services/neutral-deck-builder-v15.ts(255,42): error TS7006: Parameter 'candidate' implicitly has an 'any' type.
+src/services/neutral-theme-v15.ts(4,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/neutral-theme-v15.ts(4,29): error TS2459: Module '"./scryfall.js"' declares 'inferCardRoles' locally, but it is not exported.
+src/services/neutral-themed-deck-builder-v15.ts(24,3): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/neutral-themed-deck-builder-v15.ts(25,3): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/services/neutral-themed-deck-builder-v15.ts(26,3): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByNames'.
+src/services/neutral-themed-deck-builder-v15.ts(27,3): error TS2459: Module '"./scryfall.js"' declares 'inferCardRoles' locally, but it is not exported.
+src/services/neutral-themed-deck-builder-v15.ts(28,8): error TS2305: Module '"./scryfall.js"' has no exported member 'CardIdentifierInput'.
+src/services/neutral-themed-deck-builder-v15.ts(189,31): error TS7006: Parameter 'card' implicitly has an 'any' type.
+src/services/neutral-unrestricted-pool-v15.ts(12,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByNames'.
+src/services/neutral-win-routes-v15.ts(3,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/neutral-win-routes-v15.ts(3,29): error TS2459: Module '"./scryfall.js"' declares 'inferCardRoles' locally, but it is not exported.
+src/services/optimizer-v11.ts(5,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/services/optimizer-v11.ts(5,38): error TS2305: Module '"./scryfall.js"' has no exported member 'CardIdentifierInput'.
+src/services/optimizer-v12.ts(26,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/services/optimizer-v12.ts(26,38): error TS2305: Module '"./scryfall.js"' has no exported member 'CardIdentifierInput'.
+src/services/payment-v05.ts(3,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardManaCost'.
+src/services/precons-v10.ts(8,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/services/precons-v10.ts(8,38): error TS2305: Module '"./scryfall.js"' has no exported member 'CardIdentifierInput'.
+src/services/pricing-v13.ts(2,10): error TS2305: Module '"./scryfall.js"' has no exported member 'lookupCard'.
+src/services/pricing-v13.ts(2,22): error TS2305: Module '"./scryfall.js"' has no exported member 'lookupPrinting'.
+src/services/printing-policy-v08.ts(10,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardPrintings'.
+src/services/printing-policy-v08.ts(10,28): error TS2305: Module '"./scryfall.js"' has no exported member 'getScryfallSets'.
+src/services/printing-policy-v08.ts(203,18): error TS7006: Parameter 'set' implicitly has an 'any' type.
+src/services/printing-policy-v08.ts(204,18): error TS7006: Parameter 'set' implicitly has an 'any' type.
+src/services/printing-policy-v08.ts(208,15): error TS7006: Parameter 'set' implicitly has an 'any' type.
+src/services/references.ts(4,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByNames'.
+src/services/refinement-workflows-v11.ts(3,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByNames'.
+src/services/refinement-workflows-v12.ts(9,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByNames'.
+src/services/scryfall.ts(6,10): error TS2459: Module '"./scryfall.js"' declares 'inferCardRoles' locally, but it is not exported.
+src/services/scryfall.ts(6,26): error TS2459: Module '"./scryfall.js"' declares 'normalizeScryfallSearchQueryV15' locally, but it is not exported.
+src/services/simulation-v04.ts(5,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardManaCost'.
+src/services/simulation-v04.ts(5,27): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/simulation-v04.ts(5,46): error TS2459: Module '"./scryfall.js"' declares 'inferCardRoles' locally, but it is not exported.
+src/services/simulation-v04.ts(349,5): error TS2322: Type 'Set<unknown>' is not assignable to type 'Set<string>'.
+  Type 'unknown' is not assignable to type 'string'.
+src/services/simulation-v06.ts(7,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/simulation-v06.ts(7,29): error TS2459: Module '"./scryfall.js"' declares 'inferCardRoles' locally, but it is not exported.
+src/services/simulation-v06.ts(191,5): error TS2322: Type 'Set<unknown>' is not assignable to type 'Set<string>'.
+  Type 'unknown' is not assignable to type 'string'.
+src/services/tutor-replacement-intelligence-v15.ts(18,10): error TS2305: Module '"./scryfall.js"' has no exported member 'searchCards'.
+src/services/tutor-replacement-portfolio-v15.ts(8,3): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardsByIdentifiers'.
+src/services/tutor-replacement-portfolio-v15.ts(9,8): error TS2305: Module '"./scryfall.js"' has no exported member 'CardIdentifierInput'.
+src/services/tutor-role-truth-v15.test.ts(6,10): error TS2459: Module '"./scryfall.js"' declares 'inferCardRoles' locally, but it is not exported.
+src/services/upgrade.ts(19,10): error TS2305: Module '"./scryfall.js"' has no exported member 'searchCards'.
+src/services/upgrade.ts(19,23): error TS2305: Module '"./scryfall.js"' has no exported member 'summarizeCard'.
+src/services/win-route-access-v15.ts(8,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/win-route-setup-interruption-v15.ts(2,10): error TS2305: Module '"./scryfall.js"' has no exported member 'getCardOracleText'.
+src/services/win-route-setup-interruption-v15.ts(2,29): error TS2459: Module '"./scryfall.js"' declares 'inferCardRoles' locally, but it is not exported.
