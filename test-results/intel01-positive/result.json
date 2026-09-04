@@ -1,11 +1,12 @@
 {
   "schema": "intel01-positive-full-table-package-live-v15.1",
-  "sourceSha": "19c0e7ec1802f9fd9d933135a3f2281cd4a8a830",
+  "sourceSha": "54f823f2faeec5c312bd2a7954d30e6eaa8eeae8",
   "commander": "Frodo, Sauron's Bane",
   "request": {
     "targetBracket": 4,
     "winPackageMode": "require",
     "maxWinPackageCards": 3,
+    "minimumDistinctLibraryRoutes": 2,
     "maxUsdPerCard": 100,
     "includePromos": true,
     "includeSpecialReleases": true
@@ -197,10 +198,13 @@
     "atomicInjection": true,
     "packageProtection": true,
     "finalRecognition": true,
+    "portfolioSeeding": true,
+    "portfolioRecognition": true,
+    "winPackagePortfolioSatisfied": true,
     "alternateRouteAudit": true,
-    "meaningfulAlternateRoutesRetained": false,
-    "finalRouteCount": 1,
-    "distinctLibraryRouteCount": 1
+    "meaningfulAlternateRoutesRetained": true,
+    "finalRouteCount": 4,
+    "distinctLibraryRouteCount": 2
   },
   "finalMetrics": {
     "status": "complete-evaluated-build",
@@ -229,7 +233,8 @@
       "unverifiedChecks": [],
       "whatWouldReachTarget": [],
       "restrictionObservations": [
-        "Constraint \"Maximum USD reference price per card: 100.\" was active while the finished list missed 1 Bracket-5 construction gate: Cheap interaction (7 vs at least 8). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
+        "Constraint \"Maximum USD reference price per card: 100.\" was active while the finished list missed 1 Bracket-5 construction gate: Cheap interaction (6 vs at least 8). These are observed shortfalls under the constraint, not proof that the restriction alone caused them.",
+        "Constraint \"Minimum distinct library win routes: 2.\" was active while the finished list missed 1 Bracket-5 construction gate: Cheap interaction (6 vs at least 8). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
       ],
       "guidance": "The finished deck meets or exceeds the requested bracket under the target-free post-build assessment."
     },
@@ -274,6 +279,28 @@
           "requestedFinish": null,
           "finish": "nonfoil",
           "priceUsd": 0.56,
+          "status": "within-cap"
+        },
+        {
+          "line": "1 Approach of the Second Sun (AKH) 4",
+          "quantity": 1,
+          "name": "Approach of the Second Sun",
+          "set": "AKH",
+          "collectorNumber": "4",
+          "requestedFinish": null,
+          "finish": "nonfoil",
+          "priceUsd": 6.51,
+          "status": "within-cap"
+        },
+        {
+          "line": "1 Vampiric Tutor (DMR) 108",
+          "quantity": 1,
+          "name": "Vampiric Tutor",
+          "set": "DMR",
+          "collectorNumber": "108",
+          "requestedFinish": null,
+          "finish": "nonfoil",
+          "priceUsd": 53.73,
           "status": "within-cap"
         },
         {
@@ -376,17 +403,6 @@
           "status": "within-cap"
         },
         {
-          "line": "1 Path to Exile (MSC) 141",
-          "quantity": 1,
-          "name": "Path to Exile",
-          "set": "MSC",
-          "collectorNumber": "141",
-          "requestedFinish": null,
-          "finish": "nonfoil",
-          "priceUsd": 1.69,
-          "status": "within-cap"
-        },
-        {
           "line": "1 Loran of the Third Path (MKC) 71",
           "quantity": 1,
           "name": "Loran of the Third Path",
@@ -398,14 +414,25 @@
           "status": "within-cap"
         },
         {
-          "line": "1 White Sun's Twilight (ONE) 38",
+          "line": "1 Path to Exile (MSC) 141",
           "quantity": 1,
-          "name": "White Sun's Twilight",
-          "set": "ONE",
-          "collectorNumber": "38",
+          "name": "Path to Exile",
+          "set": "MSC",
+          "collectorNumber": "141",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 1.93,
+          "priceUsd": 1.69,
+          "status": "within-cap"
+        },
+        {
+          "line": "1 Vanquish the Horde (MSC) 146",
+          "quantity": 1,
+          "name": "Vanquish the Horde",
+          "set": "MSC",
+          "collectorNumber": "146",
+          "requestedFinish": null,
+          "finish": "nonfoil",
+          "priceUsd": 0.26,
           "status": "within-cap"
         },
         {
@@ -417,17 +444,6 @@
           "requestedFinish": null,
           "finish": "nonfoil",
           "priceUsd": 0.36,
-          "status": "within-cap"
-        },
-        {
-          "line": "1 Lotus Petal (MB2) 226",
-          "quantity": 1,
-          "name": "Lotus Petal",
-          "set": "MB2",
-          "collectorNumber": "226",
-          "requestedFinish": null,
-          "finish": "nonfoil",
-          "priceUsd": 33.76,
           "status": "within-cap"
         },
         {
@@ -475,28 +491,6 @@
           "status": "within-cap"
         },
         {
-          "line": "1 Vampiric Tutor (DMR) 108",
-          "quantity": 1,
-          "name": "Vampiric Tutor",
-          "set": "DMR",
-          "collectorNumber": "108",
-          "requestedFinish": null,
-          "finish": "nonfoil",
-          "priceUsd": 53.73,
-          "status": "within-cap"
-        },
-        {
-          "line": "1 Vanquish the Horde (MSC) 146",
-          "quantity": 1,
-          "name": "Vanquish the Horde",
-          "set": "MSC",
-          "collectorNumber": "146",
-          "requestedFinish": null,
-          "finish": "nonfoil",
-          "priceUsd": 0.26,
-          "status": "within-cap"
-        },
-        {
           "line": "1 Lightning Greaves (MSC) 202",
           "quantity": 1,
           "name": "Lightning Greaves",
@@ -505,6 +499,17 @@
           "requestedFinish": null,
           "finish": "nonfoil",
           "priceUsd": 4.97,
+          "status": "within-cap"
+        },
+        {
+          "line": "1 Lotus Petal (MB2) 226",
+          "quantity": 1,
+          "name": "Lotus Petal",
+          "set": "MB2",
+          "collectorNumber": "226",
+          "requestedFinish": null,
+          "finish": "nonfoil",
+          "priceUsd": 33.76,
           "status": "within-cap"
         },
         {
@@ -527,6 +532,17 @@
           "requestedFinish": null,
           "finish": "nonfoil",
           "priceUsd": 0.3,
+          "status": "within-cap"
+        },
+        {
+          "line": "1 Deadly Rollick (CMM) 147",
+          "quantity": 1,
+          "name": "Deadly Rollick",
+          "set": "CMM",
+          "collectorNumber": "147",
+          "requestedFinish": null,
+          "finish": "nonfoil",
+          "priceUsd": 28.48,
           "status": "within-cap"
         },
         {
@@ -563,17 +579,6 @@
           "status": "within-cap"
         },
         {
-          "line": "1 Deadly Rollick (CMM) 147",
-          "quantity": 1,
-          "name": "Deadly Rollick",
-          "set": "CMM",
-          "collectorNumber": "147",
-          "requestedFinish": null,
-          "finish": "nonfoil",
-          "priceUsd": 28.48,
-          "status": "within-cap"
-        },
-        {
           "line": "1 Mother of Runes (CLB) 702",
           "quantity": 1,
           "name": "Mother of Runes",
@@ -582,6 +587,17 @@
           "requestedFinish": null,
           "finish": "nonfoil",
           "priceUsd": 12.51,
+          "status": "within-cap"
+        },
+        {
+          "line": "1 Snuff Out (GVL) 53",
+          "quantity": 1,
+          "name": "Snuff Out",
+          "set": "GVL",
+          "collectorNumber": "53",
+          "requestedFinish": null,
+          "finish": "nonfoil",
+          "priceUsd": 11.79,
           "status": "within-cap"
         },
         {
@@ -640,17 +656,6 @@
           "status": "within-cap"
         },
         {
-          "line": "1 Snuff Out (GVL) 53",
-          "quantity": 1,
-          "name": "Snuff Out",
-          "set": "GVL",
-          "collectorNumber": "53",
-          "requestedFinish": null,
-          "finish": "nonfoil",
-          "priceUsd": 11.79,
-          "status": "within-cap"
-        },
-        {
           "line": "1 Idol of Oblivion (TDC) 319",
           "quantity": 1,
           "name": "Idol of Oblivion",
@@ -659,6 +664,17 @@
           "requestedFinish": null,
           "finish": "nonfoil",
           "priceUsd": 2.09,
+          "status": "within-cap"
+        },
+        {
+          "line": "1 Baleful Mastery (OTC) 126",
+          "quantity": 1,
+          "name": "Baleful Mastery",
+          "set": "OTC",
+          "collectorNumber": "126",
+          "requestedFinish": null,
+          "finish": "nonfoil",
+          "priceUsd": 3,
           "status": "within-cap"
         },
         {
@@ -695,17 +711,6 @@
           "status": "within-cap"
         },
         {
-          "line": "1 Baleful Mastery (OTC) 126",
-          "quantity": 1,
-          "name": "Baleful Mastery",
-          "set": "OTC",
-          "collectorNumber": "126",
-          "requestedFinish": null,
-          "finish": "nonfoil",
-          "priceUsd": 3,
-          "status": "within-cap"
-        },
-        {
           "line": "1 Sram, Senior Edificer (SOC) 176",
           "quantity": 1,
           "name": "Sram, Senior Edificer",
@@ -714,6 +719,17 @@
           "requestedFinish": null,
           "finish": "nonfoil",
           "priceUsd": 1.44,
+          "status": "within-cap"
+        },
+        {
+          "line": "1 Feed the Swarm (TLE) 257",
+          "quantity": 1,
+          "name": "Feed the Swarm",
+          "set": "TLE",
+          "collectorNumber": "257",
+          "requestedFinish": null,
+          "finish": "nonfoil",
+          "priceUsd": 0.19,
           "status": "within-cap"
         },
         {
@@ -937,17 +953,6 @@
           "status": "within-cap"
         },
         {
-          "line": "1 Feed the Swarm (TLE) 257",
-          "quantity": 1,
-          "name": "Feed the Swarm",
-          "set": "TLE",
-          "collectorNumber": "257",
-          "requestedFinish": null,
-          "finish": "nonfoil",
-          "priceUsd": 0.19,
-          "status": "within-cap"
-        },
-        {
           "line": "1 Sensei's Divining Top (2X2) 314",
           "quantity": 1,
           "name": "Sensei's Divining Top",
@@ -1093,14 +1098,14 @@
         "fullyResolved": true,
         "printingPolicyCompliant": true,
         "spellbookTag": "R",
-        "verifiedWinningCombos": 1,
+        "verifiedWinningCombos": 4,
         "ruthlessWinningCombos": 0,
-        "strategicallyRelevantCombos": 1,
-        "averageNonlandManaValue": 2.26,
-        "earlyPlayCount": 44,
+        "strategicallyRelevantCombos": 4,
+        "averageNonlandManaValue": 2.33,
+        "earlyPlayCount": 43,
         "fastManaCount": 4,
         "freeInteractionCount": 3,
-        "cheapInteractionCount": 7,
+        "cheapInteractionCount": 6,
         "tutorCount": 6,
         "gameChangerCount": 5,
         "efficientWinConditionEvidence": false,
@@ -1115,10 +1120,13 @@
       "spellbookComboSourceStatus": "available",
       "spellbookComboSourceFailure": null,
       "comboVerificationComplete": true,
-      "completeComboCount": 1,
-      "verifiedWinningCombos": 1,
+      "completeComboCount": 4,
+      "verifiedWinningCombos": 4,
       "verifiedWinningComboIds": [
-        "156-5342"
+        "156-5342",
+        "553-1827",
+        "553-1891",
+        "553-4105"
       ],
       "verifiedWinningComboDetails": [
         {
@@ -1144,10 +1152,79 @@
           "closureKind": "all-opponents-lose",
           "closureTiming": "immediate",
           "closureScope": "all-opponents"
+        },
+        {
+          "comboId": "553-1827",
+          "bracketTag": "P",
+          "comboCardNames": [
+            "Approach of the Second Sun",
+            "Vampiric Tutor"
+          ],
+          "seedNames": [
+            "Approach of the Second Sun",
+            "Vampiric Tutor"
+          ],
+          "results": [
+            "Win the game"
+          ],
+          "requirementNames": [],
+          "description": "Cast Approach of the Second Sun by paying {6}{W}, causing you to gain 7 life and put Approach of the Second Sun into your library seventh from the top.\nCast Vampiric Tutor by paying {B}, searching your library for Approach of the Second Sun and putting it on top of your library and causing you to lose 2 life.\nDraw Approach of the Second Sun from your library.\nCast Approach of the Second Sun by paying {6}{W}, causing you to win the game.",
+          "manaNeeded": "{12}{W}{W}{B}",
+          "otherPrerequisites": null,
+          "dependencyCompleteness": "explicit-cards-only",
+          "closureKind": "direct-game-win",
+          "closureTiming": "immediate",
+          "closureScope": "self-win"
+        },
+        {
+          "comboId": "553-1891",
+          "bracketTag": "C",
+          "comboCardNames": [
+            "Approach of the Second Sun",
+            "Reprieve"
+          ],
+          "seedNames": [
+            "Approach of the Second Sun",
+            "Reprieve"
+          ],
+          "results": [
+            "Win the game"
+          ],
+          "requirementNames": [],
+          "description": "Cast Approach of the Second Sun by paying {6}{W}.\nHolding priority, cast Reprieve by paying {1}{W}, returning Approach of the Second Sun to your hand and causing you to draw a card.\nCast Approach of the Second Sun by paying {6}{W}, causing you to win the game.",
+          "manaNeeded": "{13}{W}{W}{W}",
+          "otherPrerequisites": null,
+          "dependencyCompleteness": "explicit-cards-only",
+          "closureKind": "direct-game-win",
+          "closureTiming": "immediate",
+          "closureScope": "self-win"
+        },
+        {
+          "comboId": "553-4105",
+          "bracketTag": "P",
+          "comboCardNames": [
+            "Approach of the Second Sun",
+            "Demonic Tutor"
+          ],
+          "seedNames": [
+            "Approach of the Second Sun",
+            "Demonic Tutor"
+          ],
+          "results": [
+            "Win the game"
+          ],
+          "requirementNames": [],
+          "description": "Cast Approach of the Second Sun by paying {6}{W}, causing you to gain 7 life and put Approach of the Second Sun into your library seventh from the top.\nCast Demonic Tutor by paying {1}{B}, searching your library for Approach of the Second Sun and putting it into your hand.\nDraw Approach of the Second Sun from your library.\nCast Approach of the Second Sun by paying {6}{W}, causing you to win the game.",
+          "manaNeeded": "{13}{W}{W}{B}",
+          "otherPrerequisites": null,
+          "dependencyCompleteness": "explicit-cards-only",
+          "closureKind": "direct-game-win",
+          "closureTiming": "immediate",
+          "closureScope": "self-win"
         }
       ],
       "ruthlessWinningCombos": 0,
-      "strategicallyRelevantCombos": 1,
+      "strategicallyRelevantCombos": 4,
       "gameChangerNames": [
         "Demonic Tutor",
         "Enlightened Tutor",
@@ -1157,27 +1234,58 @@
       ]
     },
     "finalWinRouteAudit": {
-      "status": "single-route",
+      "status": "multiple-routes-analyzed",
       "comboVerificationComplete": true,
-      "verifiedFullTableWinCount": 1,
-      "explicitDependencyRouteCount": 1,
+      "verifiedFullTableWinCount": 4,
+      "explicitDependencyRouteCount": 4,
       "unresolvedDependencyRouteCount": 0,
       "preferredComboId": null,
       "preferredComboVerified": false,
       "portfolio": {
         "primaryComboId": "156-5342",
-        "backupComboId": null,
-        "verifiedCandidateCount": 1,
-        "distinctLibraryRouteCount": 1,
-        "fullyIndependentRouteCount": 1,
+        "backupComboId": "553-1827",
+        "verifiedCandidateCount": 4,
+        "distinctLibraryRouteCount": 2,
+        "fullyIndependentRouteCount": 2,
         "sharedCoreCandidateCount": 0,
-        "resilienceBand": "single-route",
-        "relationships": [],
-        "selectionRationale": "Primary 156-5342 is the only strict deterministic route in the supplied candidate set."
+        "resilienceBand": "independent-backup",
+        "relationships": [
+          {
+            "primaryComboId": "156-5342",
+            "candidateComboId": "553-1827",
+            "relationship": "fully-independent",
+            "sharedSeedCards": [],
+            "sharedCommanderCards": [],
+            "seedOverlapRatio": 0,
+            "allCardOverlapRatio": 0,
+            "resilienceAdjustment": 420
+          },
+          {
+            "primaryComboId": "156-5342",
+            "candidateComboId": "553-1891",
+            "relationship": "fully-independent",
+            "sharedSeedCards": [],
+            "sharedCommanderCards": [],
+            "seedOverlapRatio": 0,
+            "allCardOverlapRatio": 0,
+            "resilienceAdjustment": 420
+          },
+          {
+            "primaryComboId": "156-5342",
+            "candidateComboId": "553-4105",
+            "relationship": "fully-independent",
+            "sharedSeedCards": [],
+            "sharedCommanderCards": [],
+            "seedOverlapRatio": 0,
+            "allCardOverlapRatio": 0,
+            "resilienceAdjustment": 420
+          }
+        ],
+        "selectionRationale": "Primary 156-5342 is highest-ranked after strict closure verification; backup 553-1827 is preferred as fully-independent rather than counting raw combo IDs as equivalent redundancy."
       },
       "unresolvedDependencyComboIds": [],
       "delayedWinComboIds": [],
-      "resilienceSummary": "Exactly one full-table deterministic combo route was verified; no combo-backup resilience is claimed."
+      "resilienceSummary": "The finished deck has at least one verified backup combo with a fully independent explicit disruption surface."
     },
     "selectedRoute": {
       "comboId": "156-5342",

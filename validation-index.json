@@ -39,13 +39,13 @@
       ],
       "metadataPath": "test-results/intel01-positive/run-metadata.txt",
       "exists": true,
-      "sourceSha": "19c0e7ec1802f9fd9d933135a3f2281cd4a8a830",
-      "outcome": "fail",
+      "sourceSha": "54f823f2faeec5c312bd2a7954d30e6eaa8eeae8",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "19c0e7ec1802f9fd9d933135a3f2281cd4a8a830",
-        "workflow_source_sha": "19c0e7ec1802f9fd9d933135a3f2281cd4a8a830",
-        "executed_head_sha": "19c0e7ec1802f9fd9d933135a3f2281cd4a8a830",
+        "source_sha": "54f823f2faeec5c312bd2a7954d30e6eaa8eeae8",
+        "workflow_source_sha": "54f823f2faeec5c312bd2a7954d30e6eaa8eeae8",
+        "executed_head_sha": "54f823f2faeec5c312bd2a7954d30e6eaa8eeae8",
         "control_outcome": "success",
         "build_outcome": "success",
         "execution_outcome": "success",
@@ -57,17 +57,15 @@
         "package_protection": "true",
         "final_recognition": "true",
         "alternate_route_audit": "true",
-        "meaningful_alternate_routes_retained": "false",
-        "final_route_count": "1",
-        "distinct_library_route_count": "1",
+        "meaningful_alternate_routes_retained": "true",
+        "final_route_count": "4",
+        "distinct_library_route_count": "2",
         "discovery_distinct_library_route_count": "6",
         "exact_card_count": "true",
         "commander_legality": "true",
         "printing_policy_truth": "true"
       },
-      "unmetPassConditions": [
-        "meaningful_alternate_routes_retained=true"
-      ]
+      "unmetPassConditions": []
     },
     {
       "id": "MARVEL-B5-REFINE",
