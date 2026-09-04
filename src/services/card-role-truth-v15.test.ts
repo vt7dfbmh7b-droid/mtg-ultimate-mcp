@@ -573,18 +573,6 @@ test('token-sacrifice and artifact-recursion bridges retain their exact operatio
     oracleText: 'Create a 1/1 white Soldier creature token. You gain 1 life.',
   });
 
-  const lifeGainTriggeredDraw = card({
-    name: 'Generic Life-Gain Triggered Draw',
-    typeLine: 'Artifact',
-    oracleText: 'Whenever you gain life, you may pay {2}.\\nIf you do, draw a card.',
-  });
-
-  const oneShotLifeDraw = card({
-    name: 'Generic One-Shot Life Draw',
-    typeLine: 'Sorcery',
-    oracleText: 'You gain 3 life. Draw a card.',
-  });
-
   assert.equal(inferCardRoles(multiDeathDraw).includes('death-trigger draw engine'), true);
   assert.equal(inferCardRoles(massSacrifice).includes('mass sacrifice conversion'), true);
   assert.equal(inferCardRoles(deathTokens).includes('death-trigger token engine'), true);
@@ -599,6 +587,18 @@ test('token-sacrifice and artifact-recursion bridges retain their exact operatio
 
 
 test('life-gain-triggered draw is distinct from one-shot draw', () => {
+  const lifeGainTriggeredDraw = card({
+    name: 'Generic Life-Gain Triggered Draw',
+    typeLine: 'Artifact',
+    oracleText: 'Whenever you gain life, you may pay {2}.\\nIf you do, draw a card.',
+  });
+
+  const oneShotLifeDraw = card({
+    name: 'Generic One-Shot Life Draw',
+    typeLine: 'Sorcery',
+    oracleText: 'You gain 3 life. Draw a card.',
+  });
+
   const engineRoles = inferCardRoles(lifeGainTriggeredDraw);
   assert.ok(engineRoles.includes('repeatable draw'));
   assert.ok(engineRoles.includes('life-gain-triggered draw engine'));
