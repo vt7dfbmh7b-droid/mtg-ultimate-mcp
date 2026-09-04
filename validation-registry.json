@@ -5,9 +5,14 @@
       "id": "PM-STATE-INTEGRITY",
       "label": "Project State Integrity",
       "claimLevel": "engineering+truth",
-      "milestones": ["PM-01", "PM-02"],
+      "milestones": [
+        "PM-01",
+        "PM-02"
+      ],
       "metadataPath": "test-results/project-management/integrity.txt",
-      "sourceKeys": ["source_sha"],
+      "sourceKeys": [
+        "source_sha"
+      ],
       "passWhen": {
         "typecheck_outcome": "success",
         "scripts_typecheck_outcome": "success",
@@ -21,9 +26,15 @@
       "id": "INTEL-01-POSITIVE",
       "label": "Positive full-table win-package pipeline",
       "claimLevel": "scenario-intelligence",
-      "milestones": ["INTEL-01"],
+      "milestones": [
+        "INTEL-01"
+      ],
       "metadataPath": "test-results/intel01-positive/run-metadata.txt",
-      "sourceKeys": ["source_sha", "workflow_source_sha", "executed_head_sha"],
+      "sourceKeys": [
+        "source_sha",
+        "workflow_source_sha",
+        "executed_head_sha"
+      ],
       "passWhen": {
         "control_outcome": "success",
         "build_outcome": "success",
@@ -45,9 +56,16 @@
       "id": "MARVEL-B5-REFINE",
       "label": "Marvel Bracket 5 autonomous refinement",
       "claimLevel": "scenario-intelligence",
-      "milestones": ["INTEL-01", "INTEL-02"],
+      "milestones": [
+        "INTEL-01",
+        "INTEL-02"
+      ],
       "metadataPath": "test-results/marvel-bracket5/refine-run-metadata.txt",
-      "sourceKeys": ["source_sha", "workflow_source_sha", "executed_head_sha"],
+      "sourceKeys": [
+        "source_sha",
+        "workflow_source_sha",
+        "executed_head_sha"
+      ],
       "passWhen": {
         "control_outcome": "success",
         "execution_outcome": "success",
@@ -63,9 +81,15 @@
       "id": "MARVEL-B5-BROAD",
       "label": "Marvel Bracket 5 broad autonomous refinement",
       "claimLevel": "scenario-intelligence",
-      "milestones": ["INTEL-02"],
+      "milestones": [
+        "INTEL-02"
+      ],
       "metadataPath": "test-results/marvel-bracket5-broad/run-metadata.txt",
-      "sourceKeys": ["source_sha", "workflow_source_sha", "executed_head_sha"],
+      "sourceKeys": [
+        "source_sha",
+        "workflow_source_sha",
+        "executed_head_sha"
+      ],
       "passWhen": {
         "control_outcome": "success",
         "build_outcome": "success",
@@ -81,12 +105,40 @@
       }
     },
     {
+      "id": "SCIONS-SPELLCRAFT-FF-ONLY",
+      "label": "Scions & Spellcraft Final Fantasy-only autonomous refinement",
+      "claimLevel": "scenario-intelligence",
+      "milestones": [
+        "INTEL-02"
+      ],
+      "metadataPath": "test-results/scions-spellcraft-ff-only/run-metadata.txt",
+      "sourceKeys": [
+        "source_sha",
+        "workflow_source_sha",
+        "executed_head_sha"
+      ],
+      "passWhen": {
+        "control_outcome": "success",
+        "build_outcome": "success",
+        "mechanic_test_outcome": "success",
+        "policy": "scions-spellcraft-final-fantasy-no-new-infinite",
+        "target_bracket": "4",
+        "strategy": "yshtola-spells-control-drain"
+      }
+    },
+    {
       "id": "MIDDLE-EARTH-PRECON-REFINE",
       "label": "Middle-earth Food and Fellowship precon refinement",
       "claimLevel": "scenario-intelligence",
-      "milestones": ["INTEL-02"],
+      "milestones": [
+        "INTEL-02"
+      ],
       "metadataPath": "test-results/middle-earth-precon-refine/run-metadata.txt",
-      "sourceKeys": ["source_sha", "workflow_source_sha", "executed_head_sha"],
+      "sourceKeys": [
+        "source_sha",
+        "workflow_source_sha",
+        "executed_head_sha"
+      ],
       "passWhen": {
         "control_outcome": "success",
         "build_outcome": "success",
@@ -109,9 +161,15 @@
       "id": "PRECON-GENERALIZATION",
       "label": "Necron Dynasties unrestricted precon generalization",
       "claimLevel": "scenario-intelligence",
-      "milestones": ["INTEL-02"],
+      "milestones": [
+        "INTEL-02"
+      ],
       "metadataPath": "test-results/precon-generalization/run-metadata.txt",
-      "sourceKeys": ["source_sha", "workflow_source_sha", "executed_head_sha"],
+      "sourceKeys": [
+        "source_sha",
+        "workflow_source_sha",
+        "executed_head_sha"
+      ],
       "passWhen": {
         "control_outcome": "success",
         "build_outcome": "success",
@@ -136,9 +194,15 @@
       "id": "STRATEGY-INFERENCE-GENERALIZATION",
       "label": "Generic commander strategy inference regression",
       "claimLevel": "engineering+truth",
-      "milestones": ["INTEL-02"],
+      "milestones": [
+        "INTEL-02"
+      ],
       "metadataPath": "test-results/strategy-inference-generalization/run-metadata.txt",
-      "sourceKeys": ["source_sha", "workflow_source_sha", "executed_head_sha"],
+      "sourceKeys": [
+        "source_sha",
+        "workflow_source_sha",
+        "executed_head_sha"
+      ],
       "passWhen": {
         "control_outcome": "success",
         "build_outcome": "success",
@@ -162,9 +226,15 @@
       "id": "SQUIRRELED-AWAY-GENERALIZATION",
       "label": "Squirreled Away unrestricted precon generalization",
       "claimLevel": "scenario-intelligence",
-      "milestones": ["INTEL-02"],
+      "milestones": [
+        "INTEL-02"
+      ],
       "metadataPath": "test-results/precon-generalization-squirrels/run-metadata.txt",
-      "sourceKeys": ["source_sha", "workflow_source_sha", "executed_head_sha"],
+      "sourceKeys": [
+        "source_sha",
+        "workflow_source_sha",
+        "executed_head_sha"
+      ],
       "passWhen": {
         "control_outcome": "success",
         "build_outcome": "success",
