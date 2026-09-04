@@ -140,7 +140,7 @@ test('package gate rejects cumulative strategy-fuel loss even when the descripto
 
 test('package gate rejects multiple structural floors without relying on card names', () => {
   const wipe = card('Board Wipe', 'Sorcery', 'Destroy all creatures.', 4, '{3}{B}');
-  const fastMana = card('Fast Mana', 'Artifact', '{T}: Add {C}.', 1, '{1}');
+  const fastMana = card('Fast Mana', 'Artifact', '{T}: Add {C}{C}.', 1, '{1}');
   const removal = card('Target Removal', 'Instant', 'Exile target creature.', 1, '{B}');
   const slowRock = card('Slow Rock', 'Artifact', '{T}: Add {C}.', 3, '{3}');
   const before = parsed([wipe.name, fastMana.name]);
