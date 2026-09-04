@@ -6,6 +6,10 @@ The repository is structurally coherent and deterministic after the generic comp
 
 The combined deterministic system passes the full direct Node test sweep (167 test files, 940 cases, zero failures) and all three TypeScript projects. Exact-source controls at `f0c3b9f82dca49f295e44175e517d992e6e5356e` pass the dependent Squirreled Away, Necron Dynasties, Food and Fellowship and Middle-earth lanes. Focused and broad Marvel execute and persist correctly but both fail closed with no-supported-improvement and zero swaps: the generic component-family guard rejects the six previously unsafe focused substitutions, while the restricted broad pool still cannot repair its fast-mana/tutor gates. Liliana's NZ$500 challenge passes as supplementary benchmark evidence. Runtime source `45f4cb9acb082d0bd4bb89310b90e9e63fbeb44d` passes pinned CI after fixing the shutdown timer race. This is engineering and bounded scenario evidence, not a new accepted INTEL-02 checkpoint.
 
+## Audit reuse rule
+
+**Status: complete.** This document is the reusable comprehensive baseline for the repository-wide audit. Future continuation sessions must not rerun or restate the full audit. They should read the authoritative project state and validation index, then work only from the targeted remediation and revalidation queue. A fresh comprehensive audit is warranted only after a material architecture or runtime-entry-point change, a stable-boundary change, or a failed project-state integrity check.
+
 ## Scope and inventory
 
 | Area | Audited inventory | Assessment |

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-03T22:58:41.000Z",
+  "updatedAt": "2026-09-04T00:36:55.187Z",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
   "stable": {
@@ -111,6 +111,7 @@
     "No merge, stable/current promotion, version bump, or release without explicit user approval."
   ],
   "nextActions": [
+    "Do not repeat the completed comprehensive system audit unless a material architecture, runtime-entry-point, stable-boundary or project-state-integrity change triggers a re-audit; treat docs/SYSTEM-AUDIT-2026-09-02.md as the baseline and work only from the targeted remediation queue.",
     "Keep the historical six focused-Marvel swaps unaccepted; source f0c3b9f... now rejects their compound operational-component losses generically and both exact-source Marvel lanes fail closed with zero swaps.",
     "Decide whether the restricted Marvel family needs an explicit construction ceiling or a generic candidate-pool expansion; do not add card-name exceptions, and rerun both lanes from one exact executable source after any policy change.",
     "Preserve the component guard and its anonymous multi-axis regression while revalidating any future candidate-pool change against interaction, land/mana, treasure, sacrifice, token, card-advantage and cost-reduction floors.",
@@ -132,7 +133,7 @@
       "docs/VALIDATION-MATRIX.md",
       "docs/KNOWN-FAILURES.md"
     ],
-    "then": "Inspect the live active-branch head and PR state. Treat 77a5383... as the accepted INTEL-02 checkpoint. Source f0c3b9f... passes deterministic and dependent controls; exact-source focused and broad Marvel both persist no-supported-improvement with zero swaps after the generic compound-component guard, so the restricted lane remains red. Runtime shutdown hardening passes CI at 45f4cb9.... PR #32's isolated FF-only run 33813323027 and the disposable active-source replay are benchmark failures exposing cumulative strategy-fuel/structural-floor gaps, not acceptance or promotion signals. Continue only from nextActions and do not promote without explicit approval.",
+    "then": "The comprehensive system audit in docs/SYSTEM-AUDIT-2026-09-02.md is complete and is a reusable baseline, not a recurring task. Do not rerun or restate the full audit unless a material architecture, runtime-entry-point, stable-boundary or project-state-integrity change triggers a re-audit. Inspect the live active-branch head, then continue only from nextActions and the open targeted findings. Treat source f0c3b9f... as semantic/component evidence, source 45f4cb9... as runtime evidence, and the FF32 isolated/current-source replay as benchmark findings; no promotion without explicit approval.",
     "compatibilityEntryPoint": "PROJECT_HANDOFF.md"
   }
 }

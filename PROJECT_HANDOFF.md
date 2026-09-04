@@ -35,13 +35,14 @@ The last persisted Marvel control is `f0c3b9f82dca49f295e44175e517d992e6e5356e` 
 
 ## Next actions
 
-1. Keep the historical six focused-Marvel swaps unaccepted; source f0c3b9f... now rejects their compound operational-component losses generically and both exact-source Marvel lanes fail closed with zero swaps.
-2. Decide whether the restricted Marvel family needs an explicit construction ceiling or a generic candidate-pool expansion; do not add card-name exceptions, and rerun both lanes from one exact executable source after any policy change.
-3. Preserve the component guard and its anonymous multi-axis regression while revalidating any future candidate-pool change against interaction, land/mana, treasure, sacrifice, token, card-advantage and cost-reduction floors.
-4. Treat INTEL-01 as scenario-level validated at source 50e5d19... for package discovery, closure, feasibility, injection, protection, final recognition and access/setup audits; keep the one-route resilience finding open and non-gating.
-5. When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.
-6. The FF-only Counter Blitz benchmark (#32) failed on isolated source a079090... (workflow 33813323027) with package-wide Y'shtola spells-control retention loss (425→421 affinity; 29→27 trigger spells) despite five locally preserved swaps; a disposable replay on active source 7a2a80f... also reduced trigger spells 29→21 and board wipes 3→2 despite higher coarse affinity. Reproduce both findings on one current executable source and add generic package-level strategy-fuel/structural-floor gates before any acceptance.
-7. Keep PR #29 as experimental/evidence history. Do not merge or promote it automatically; when V0.15 is genuinely accepted, prepare a clean promotion candidate rather than treating the current 1,000+ commit evidence branch as release-ready.
+1. Do not repeat the completed comprehensive system audit unless a material architecture, runtime-entry-point, stable-boundary or project-state-integrity change triggers a re-audit; treat docs/SYSTEM-AUDIT-2026-09-02.md as the baseline and work only from the targeted remediation queue.
+2. Keep the historical six focused-Marvel swaps unaccepted; source f0c3b9f... now rejects their compound operational-component losses generically and both exact-source Marvel lanes fail closed with zero swaps.
+3. Decide whether the restricted Marvel family needs an explicit construction ceiling or a generic candidate-pool expansion; do not add card-name exceptions, and rerun both lanes from one exact executable source after any policy change.
+4. Preserve the component guard and its anonymous multi-axis regression while revalidating any future candidate-pool change against interaction, land/mana, treasure, sacrifice, token, card-advantage and cost-reduction floors.
+5. Treat INTEL-01 as scenario-level validated at source 50e5d19... for package discovery, closure, feasibility, injection, protection, final recognition and access/setup audits; keep the one-route resilience finding open and non-gating.
+6. When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.
+7. The FF-only Counter Blitz benchmark (#32) failed on isolated source a079090... (workflow 33813323027) with package-wide Y'shtola spells-control retention loss (425→421 affinity; 29→27 trigger spells) despite five locally preserved swaps; a disposable replay on active source 7a2a80f... also reduced trigger spells 29→21 and board wipes 3→2 despite higher coarse affinity. Reproduce both findings on one current executable source and add generic package-level strategy-fuel/structural-floor gates before any acceptance.
+8. Keep PR #29 as experimental/evidence history. Do not merge or promote it automatically; when V0.15 is genuinely accepted, prepare a clean promotion candidate rather than treating the current 1,000+ commit evidence branch as release-ready.
 
 ## Permanent recovery references
 

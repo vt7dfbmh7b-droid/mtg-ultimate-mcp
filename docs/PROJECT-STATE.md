@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-03T22:58:41.000Z**.
+Generated from `project-state.json`. Last state update: **2026-09-04T00:36:55.187Z**.
 
 ## Current mode
 
@@ -63,13 +63,14 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 
 ## Next actions
 
-1. Keep the historical six focused-Marvel swaps unaccepted; source f0c3b9f... now rejects their compound operational-component losses generically and both exact-source Marvel lanes fail closed with zero swaps.
-2. Decide whether the restricted Marvel family needs an explicit construction ceiling or a generic candidate-pool expansion; do not add card-name exceptions, and rerun both lanes from one exact executable source after any policy change.
-3. Preserve the component guard and its anonymous multi-axis regression while revalidating any future candidate-pool change against interaction, land/mana, treasure, sacrifice, token, card-advantage and cost-reduction floors.
-4. Treat INTEL-01 as scenario-level validated at source 50e5d19... for package discovery, closure, feasibility, injection, protection, final recognition and access/setup audits; keep the one-route resilience finding open and non-gating.
-5. When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.
-6. The FF-only Counter Blitz benchmark (#32) failed on isolated source a079090... (workflow 33813323027) with package-wide Y'shtola spells-control retention loss (425→421 affinity; 29→27 trigger spells) despite five locally preserved swaps; a disposable replay on active source 7a2a80f... also reduced trigger spells 29→21 and board wipes 3→2 despite higher coarse affinity. Reproduce both findings on one current executable source and add generic package-level strategy-fuel/structural-floor gates before any acceptance.
-7. Keep PR #29 as experimental/evidence history. Do not merge or promote it automatically; when V0.15 is genuinely accepted, prepare a clean promotion candidate rather than treating the current 1,000+ commit evidence branch as release-ready.
+1. Do not repeat the completed comprehensive system audit unless a material architecture, runtime-entry-point, stable-boundary or project-state-integrity change triggers a re-audit; treat docs/SYSTEM-AUDIT-2026-09-02.md as the baseline and work only from the targeted remediation queue.
+2. Keep the historical six focused-Marvel swaps unaccepted; source f0c3b9f... now rejects their compound operational-component losses generically and both exact-source Marvel lanes fail closed with zero swaps.
+3. Decide whether the restricted Marvel family needs an explicit construction ceiling or a generic candidate-pool expansion; do not add card-name exceptions, and rerun both lanes from one exact executable source after any policy change.
+4. Preserve the component guard and its anonymous multi-axis regression while revalidating any future candidate-pool change against interaction, land/mana, treasure, sacrifice, token, card-advantage and cost-reduction floors.
+5. Treat INTEL-01 as scenario-level validated at source 50e5d19... for package discovery, closure, feasibility, injection, protection, final recognition and access/setup audits; keep the one-route resilience finding open and non-gating.
+6. When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.
+7. The FF-only Counter Blitz benchmark (#32) failed on isolated source a079090... (workflow 33813323027) with package-wide Y'shtola spells-control retention loss (425→421 affinity; 29→27 trigger spells) despite five locally preserved swaps; a disposable replay on active source 7a2a80f... also reduced trigger spells 29→21 and board wipes 3→2 despite higher coarse affinity. Reproduce both findings on one current executable source and add generic package-level strategy-fuel/structural-floor gates before any acceptance.
+8. Keep PR #29 as experimental/evidence history. Do not merge or promote it automatically; when V0.15 is genuinely accepted, prepare a clean promotion candidate rather than treating the current 1,000+ commit evidence branch as release-ready.
 
 ## Permanent truth boundary
 
@@ -95,4 +96,4 @@ Read in this order:
 9. `docs/VALIDATION-MATRIX.md`
 10. `docs/KNOWN-FAILURES.md`
 
-Then: Inspect the live active-branch head and PR state. Treat 77a5383... as the accepted INTEL-02 checkpoint. Source f0c3b9f... passes deterministic and dependent controls; exact-source focused and broad Marvel both persist no-supported-improvement with zero swaps after the generic compound-component guard, so the restricted lane remains red. Runtime shutdown hardening passes CI at 45f4cb9.... PR #32's isolated FF-only run 33813323027 and the disposable active-source replay are benchmark failures exposing cumulative strategy-fuel/structural-floor gaps, not acceptance or promotion signals. Continue only from nextActions and do not promote without explicit approval.
+Then: The comprehensive system audit in docs/SYSTEM-AUDIT-2026-09-02.md is complete and is a reusable baseline, not a recurring task. Do not rerun or restate the full audit unless a material architecture, runtime-entry-point, stable-boundary or project-state-integrity change triggers a re-audit. Inspect the live active-branch head, then continue only from nextActions and the open targeted findings. Treat source f0c3b9f... as semantic/component evidence, source 45f4cb9... as runtime evidence, and the FF32 isolated/current-source replay as benchmark findings; no promotion without explicit approval.

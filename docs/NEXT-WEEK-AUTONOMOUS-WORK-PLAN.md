@@ -19,6 +19,10 @@ This is an execution plan, not permission to merge or release. GitHub remains th
 
 If live GitHub disagrees with this snapshot, GitHub wins. Update the working diagnosis, not history.
 
+## Audit baseline — do not repeat
+
+The comprehensive end-to-end audit recorded in `docs/SYSTEM-AUDIT-2026-09-02.md` is complete. Treat it as the baseline for this execution window; do not start another repository-wide audit or repeat its inventory. Use `project-state.json`, `validation-index.json` and the live branch to select only unresolved targeted findings. Re-audit the whole system only after a material architecture/runtime-entry-point change, stable-boundary change, or project-state integrity failure.
+
 ## Justin's standing quality rules
 
 1. Improve the actual deck, not a generic score or role count.
