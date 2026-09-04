@@ -533,7 +533,9 @@ Risk: aggregate strategy retention can report a green package while an autonomou
 
 Protection: generic role truth must classify repeatable life-gain-triggered draw as both repeatable draw and a Food/lifegain engine component. Caller-declared component floors must audit that function across the complete accepted package, fail closed when it is unresolved, and use anonymous name-independent regressions covering a repeatable engine versus one-shot interaction replacement.
 
-Status: open. Found by manual review of the d51c7b686a92ac3ebfbb0a70d0d1e25f8939b7a1 family batch; no source fix or checkpoint promotion was made in this batch.
+Remediation: the anonymous variable-quantity regression was added at source `f3d63d02d5bb6f9baeb537a39f1f4f5e79d7b634`; source `5c926d8fbe02df8b86f649af460cdd22b515a385` widened role truth to recognize `draw X cards`; and Food control source `63b664dc0f93d57c100ea284062a453523aa23dc` declared a two-engine floor. Workflow `33855550907` passed with package evidence `2 → 2`, retaining both Dawn of Hope and Well of Lost Dreams and rejecting the former Well → Hobbit's Sting result.
+
+Status: prevented for the exact Food control at source `63b664dc0f93d57c100ea284062a453523aa23dc`; keep this failure open as a broader regression watch until the full INTEL-02 family is manually acceptable.
 
 ## Adding a failure
 
