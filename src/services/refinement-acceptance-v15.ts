@@ -237,8 +237,9 @@ function countComponent(
 ): { count: number; unresolved: string[] } {
   const unresolved = new Set<string>();
   let count = 0;
+  const resolvedCards = cards as ScryfallCard[];
   for (const entry of entriesForZone(parsed, requirement.zone ?? 'main')) {
-    const card = resolveEntryCard(entry, cards);
+    const card = resolveEntryCard(entry, resolvedCards);
     if (!card) {
       unresolved.add(entry.name);
       continue;
@@ -349,8 +350,8 @@ export function auditRefinementPackageAcceptanceV15(input: {
     status,
     evidenceComplete,
     preserved: evidenceComplete && losses.length === 0,
-    strategyFuel,
-    structuralFloors,
+    strategyFuel: strategyFuel.audits,
+    structuralFloors: structuralFloors.audits,
     losses,
     unresolvedBefore,
     unresolvedAfter,
