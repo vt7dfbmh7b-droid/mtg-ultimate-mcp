@@ -283,16 +283,16 @@
       ],
       "metadataPath": "test-results/strategy-inference-generalization/run-metadata.txt",
       "exists": true,
-      "sourceSha": "f3d63d02d5bb6f9baeb537a39f1f4f5e79d7b634",
-      "outcome": "fail",
+      "sourceSha": "5c926d8fbe02df8b86f649af460cdd22b515a385",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "f3d63d02d5bb6f9baeb537a39f1f4f5e79d7b634",
-        "workflow_source_sha": "f3d63d02d5bb6f9baeb537a39f1f4f5e79d7b634",
-        "executed_head_sha": "f3d63d02d5bb6f9baeb537a39f1f4f5e79d7b634",
-        "control_outcome": "failure",
+        "source_sha": "5c926d8fbe02df8b86f649af460cdd22b515a385",
+        "workflow_source_sha": "5c926d8fbe02df8b86f649af460cdd22b515a385",
+        "executed_head_sha": "5c926d8fbe02df8b86f649af460cdd22b515a385",
+        "control_outcome": "success",
         "build_outcome": "success",
-        "regression_outcome": "failure",
+        "regression_outcome": "success",
         "name_specific_rule": "false",
         "incidental_attack_trigger_substantive": "false",
         "self_mill_recovery_substantive": "true",
@@ -311,10 +311,7 @@
         "board_scaling_typal_payoff_substantive": "true",
         "delayed_death_return_recursion": "true"
       },
-      "unmetPassConditions": [
-        "control_outcome=success",
-        "regression_outcome=success"
-      ]
+      "unmetPassConditions": []
     },
     {
       "id": "SQUIRRELED-AWAY-GENERALIZATION",
