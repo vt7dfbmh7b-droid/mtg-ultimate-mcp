@@ -19,6 +19,10 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
 - Active branch validation: **accepted-checkpoint-77a-intel01-positive-route-follow-up-ff32-cumulative-strategy-fuel-and-floor-failures**
 
+## Audit reuse rule
+
+The comprehensive system audit in docs/SYSTEM-AUDIT-2026-09-02.md is complete and is a reusable baseline, not a recurring task. Do not rerun or restate the full audit unless a material architecture, runtime-entry-point, stable-boundary or project-state-integrity change triggers a re-audit. Inspect the live active-branch head, then continue only from nextActions and the open targeted findings. Treat source f0c3b9f... as semantic/component evidence, source 45f4cb9... as runtime evidence, and the FF32 isolated/current-source replay as benchmark findings; no promotion without explicit approval.
+
 ## Stable safety boundary
 
 Stable remains **V0.13 / 0.13.0** on `main`. No merge, stable/current promotion, version bump or release is authorized by this handoff.
