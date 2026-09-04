@@ -83,6 +83,8 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 
 ## Fresh-chat recovery
 
+Read in this order:
+
 1. `project-state.json`
 2. `docs/PROJECT-STATE.md`
 3. `validation-index.json`
