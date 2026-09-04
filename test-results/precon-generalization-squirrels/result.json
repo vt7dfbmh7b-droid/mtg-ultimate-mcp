@@ -252,7 +252,7 @@
     "packageAcceptanceContract": null,
     "estimatedUpgradeSpendNzd": 3.76,
     "estimatedUpgradeSpendUsdReference": 2.21,
-    "maxTotalNzd": 200.01,
+    "maxTotalNzd": 199.99,
     "maxTotalUsdReference": 117.54,
     "swaps": [
       {
@@ -337,13 +337,12 @@
               "spot interaction"
             ],
             "addRoles": [
+              "artifact/enchantment interaction",
               "cheap interaction",
               "spot interaction",
               "token production"
             ],
-            "unreplacedRoles": [
-              "artifact/enchantment interaction"
-            ],
+            "unreplacedRoles": [],
             "unreplacedStrategyComponentRoles": [],
             "meaningfulStrategyLoss": false,
             "verdict": "preserved"
@@ -475,7 +474,7 @@
       "targetBracket": 4,
       "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.57,
-      "maxTotalNzd": 200.01,
+      "maxTotalNzd": 199.99,
       "maxTotalUsdReference": 117.54,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
@@ -605,13 +604,12 @@
                   "spot interaction"
                 ],
                 "addRoles": [
+                  "artifact/enchantment interaction",
                   "cheap interaction",
                   "spot interaction",
                   "token production"
                 ],
-                "unreplacedRoles": [
-                  "artifact/enchantment interaction"
-                ],
+                "unreplacedRoles": [],
                 "unreplacedStrategyComponentRoles": [],
                 "meaningfulStrategyLoss": false,
                 "verdict": "preserved"
@@ -722,13 +720,12 @@
                     "spot interaction"
                   ],
                   "addRoles": [
+                    "artifact/enchantment interaction",
                     "cheap interaction",
                     "spot interaction",
                     "token production"
                   ],
-                  "unreplacedRoles": [
-                    "artifact/enchantment interaction"
-                  ],
+                  "unreplacedRoles": [],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
                   "verdict": "preserved"
@@ -987,13 +984,12 @@
                       "spot interaction"
                     ],
                     "addRoles": [
+                      "artifact/enchantment interaction",
                       "cheap interaction",
                       "spot interaction",
                       "token production"
                     ],
-                    "unreplacedRoles": [
-                      "artifact/enchantment interaction"
-                    ],
+                    "unreplacedRoles": [],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -1101,13 +1097,12 @@
                     "spot interaction"
                   ],
                   "addRoles": [
+                    "artifact/enchantment interaction",
                     "cheap interaction",
                     "spot interaction",
                     "token production"
                   ],
-                  "unreplacedRoles": [
-                    "artifact/enchantment interaction"
-                  ],
+                  "unreplacedRoles": [],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
                   "verdict": "preserved"
@@ -1363,13 +1358,12 @@
                       "spot interaction"
                     ],
                     "addRoles": [
+                      "artifact/enchantment interaction",
                       "cheap interaction",
                       "spot interaction",
                       "token production"
                     ],
-                    "unreplacedRoles": [
-                      "artifact/enchantment interaction"
-                    ],
+                    "unreplacedRoles": [],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -1451,13 +1445,12 @@
                     "spot interaction"
                   ],
                   "addRoles": [
+                    "artifact/enchantment interaction",
                     "cheap interaction",
                     "spot interaction",
                     "token production"
                   ],
-                  "unreplacedRoles": [
-                    "artifact/enchantment interaction"
-                  ],
+                  "unreplacedRoles": [],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
                   "verdict": "preserved"
@@ -1695,13 +1688,12 @@
                       "spot interaction"
                     ],
                     "addRoles": [
+                      "artifact/enchantment interaction",
                       "cheap interaction",
                       "spot interaction",
                       "token production"
                     ],
-                    "unreplacedRoles": [
-                      "artifact/enchantment interaction"
-                    ],
+                    "unreplacedRoles": [],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -2274,13 +2266,12 @@
                         "spot interaction"
                       ],
                       "addRoles": [
+                        "artifact/enchantment interaction",
                         "cheap interaction",
                         "spot interaction",
                         "token production"
                       ],
-                      "unreplacedRoles": [
-                        "artifact/enchantment interaction"
-                      ],
+                      "unreplacedRoles": [],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -2539,13 +2530,12 @@
                           "spot interaction"
                         ],
                         "addRoles": [
+                          "artifact/enchantment interaction",
                           "cheap interaction",
                           "spot interaction",
                           "token production"
                         ],
-                        "unreplacedRoles": [
-                          "artifact/enchantment interaction"
-                        ],
+                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -2653,13 +2643,12 @@
                         "spot interaction"
                       ],
                       "addRoles": [
+                        "artifact/enchantment interaction",
                         "cheap interaction",
                         "spot interaction",
                         "token production"
                       ],
-                      "unreplacedRoles": [
-                        "artifact/enchantment interaction"
-                      ],
+                      "unreplacedRoles": [],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -2915,13 +2904,12 @@
                           "spot interaction"
                         ],
                         "addRoles": [
+                          "artifact/enchantment interaction",
                           "cheap interaction",
                           "spot interaction",
                           "token production"
                         ],
-                        "unreplacedRoles": [
-                          "artifact/enchantment interaction"
-                        ],
+                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -3003,13 +2991,12 @@
                         "spot interaction"
                       ],
                       "addRoles": [
+                        "artifact/enchantment interaction",
                         "cheap interaction",
                         "spot interaction",
                         "token production"
                       ],
-                      "unreplacedRoles": [
-                        "artifact/enchantment interaction"
-                      ],
+                      "unreplacedRoles": [],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -3247,13 +3234,12 @@
                           "spot interaction"
                         ],
                         "addRoles": [
+                          "artifact/enchantment interaction",
                           "cheap interaction",
                           "spot interaction",
                           "token production"
                         ],
-                        "unreplacedRoles": [
-                          "artifact/enchantment interaction"
-                        ],
+                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
