@@ -2,8 +2,3 @@
 > mtg-ultimate-mcp@0.13.0 build
 > tsc -p tsconfig.json
 
-src/services/card-role-truth-v15.test.ts(576,9): error TS6133: 'lifeGainTriggeredDraw' is declared but its value is never read.
-src/services/card-role-truth-v15.test.ts(582,9): error TS6133: 'oneShotLifeDraw' is declared but its value is never read.
-src/services/card-role-truth-v15.test.ts(602,38): error TS2304: Cannot find name 'lifeGainTriggeredDraw'.
-src/services/card-role-truth-v15.test.ts(605,35): error TS2304: Cannot find name 'lifeGainTriggeredDraw'.
-src/services/card-role-truth-v15.test.ts(607,39): error TS2304: Cannot find name 'oneShotLifeDraw'.
