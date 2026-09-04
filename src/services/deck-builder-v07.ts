@@ -742,7 +742,7 @@ function packageAcceptanceFloorPreservedV15(
   cutCard: Record<string, unknown>,
 ): boolean {
   return floors.every((floor, index) => (
-    counts[index] + (summaryMatchesPackageAcceptanceMatcherV15(addCard, floor.matcher) ? 1 : 0)
+    (counts[index] ?? 0) + (summaryMatchesPackageAcceptanceMatcherV15(addCard, floor.matcher) ? 1 : 0)
       - (summaryMatchesPackageAcceptanceMatcherV15(cutCard, floor.matcher) ? 1 : 0)
       >= floor.minimumCount
   ));
@@ -1386,7 +1386,7 @@ export function pairUpgradeSwapsByStructureV15(
     persistentColoredManaSources = persistentColoredManaSourcesAfterAdd
       - (summaryIsPersistentColoredManaSourceV15(cutCard) ? 1 : 0);
     packageAcceptanceCounts = packageAcceptanceFloors.map((floor, index) => (
-      packageAcceptanceCounts[index]
+      (packageAcceptanceCounts[index] ?? 0)
         + (summaryMatchesPackageAcceptanceMatcherV15(addCard, floor.matcher) ? 1 : 0)
         - (summaryMatchesPackageAcceptanceMatcherV15(cutCard, floor.matcher) ? 1 : 0)
     ));
