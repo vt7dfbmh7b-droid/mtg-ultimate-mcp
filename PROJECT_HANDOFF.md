@@ -17,11 +17,11 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
 - Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
-- Active branch validation: **bench01-active-from-5829-exact-source-replay-positive-family-green-marvel-ceiling-explicit-provider-unknown-nonblocking-no-promotion**
+- Active branch validation: **bench01-compound-theme-repair-validation-blocked-focused-regressions-green-full-validation-failed-no-repaired-sha-accepted-no-promotion**
 
 ## Audit reuse rule
 
-The comprehensive system audit in docs/SYSTEM-AUDIT-2026-09-02.md is complete and reusable. Do not rerun it without a material trigger. BENCH-01 is active from frozen source 5829b37...; preserve expected Marvel ceiling behaviour as red target evidence, keep provider-unknown separate from failure, freeze source within benchmark batches, and only make generic Commander-intelligence changes after multiple unseen fixtures expose a repeated weakness. No promotion without explicit approval.
+The comprehensive system audit in docs/SYSTEM-AUDIT-2026-09-02.md is complete and reusable; do not rerun it without a material trigger. BENCH-01 is active. Batch A is complete at 1-1, Cavalry independently reproduced the Counter compound-theme defect, and the generic compound-theme repair is the immediate validation gate. Do not replay repaired benchmarks until a fully green repaired source is accepted and frozen. Then replay Counter Blitz and Cavalry Charge from the same unchanged repair SHA, inspect complete-deck quality, continue unseen contrasting fixtures, and only make further generic intelligence changes from repeated evidence. Stable remains V0.13 until promotion-grade evidence exists; standing user authorization allows merge/promotion once the full validation and evidence gates are satisfied.
 
 ## Stable safety boundary
 
@@ -31,21 +31,23 @@ Stable remains **V0.13 / 0.13.0** on `main`. No merge, stable/current promotion,
 
 `63bb7274004060eea507f7991a04b84921d0cd47` on `agent/package-probabilities`.
 
-Latest fully validated executable experimental baseline documented by the prior authoritative handoff. Later V0.15 deck-intelligence and BENCH-01 work on PR #29 remain experimental until benchmark evidence justifies a new accepted checkpoint.
+Latest fully validated executable experimental baseline recorded by project state. Later V0.15 deck-intelligence, BENCH-01 evidence and the in-progress compound-theme repair remain experimental until benchmark and validation evidence justify a new accepted checkpoint.
 
 ## Important pending validation
 
-The last persisted Marvel control is `5829b37b686255ba35d419b37be17095e54fb696` with outcome **expected-ceiling-fail-closed-zero-swap**. At exact source 5829b37..., focused and broad Marvel both execute and persist honestly with zero accepted swaps because the restricted pool cannot repair the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure. Keep these controls red for target achievement. Treat the result as expected construction-ceiling behaviour, not as a passing target and not as a blocker to BENCH-01 on other archetypes. Rerun only when the relevant pool, provider truth or policy changes.
+The last persisted Marvel control is `5829b37b686255ba35d419b37be17095e54fb696` with outcome **expected-ceiling-fail-closed-zero-swap**. At exact source 5829b37..., focused and broad Marvel execute and persist honestly with zero accepted swaps because the restricted pool cannot repair the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure. Keep these controls red for target achievement. Treat the result as expected construction-ceiling behaviour, not as a passing target and not as a blocker to BENCH-01 on other archetypes. Rerun only when the relevant pool, provider truth or policy changes.
 
 ## Next actions
 
 1. Do not repeat the completed comprehensive system audit; docs/SYSTEM-AUDIT-2026-09-02.md remains the reusable baseline unless a material architecture, runtime-entry-point, stable-boundary or project-state-integrity change occurs.
-2. Use source 5829b37b686255ba35d419b37be17095e54fb696 as the frozen starting source for BENCH-01 Batch A; do not modify Commander intelligence between fixtures in that batch.
-3. Run the two first contrasting BENCH-01 fixtures: Counter Blitz as an FF-only Bant counters/proliferate deck with dense countermagic and hybrid combat/combo identity, and Liliana, Heretical Healer // Liliana, Defiant Necromancer under a NZ$500 whole-deck budget as the aristocrats/graveyard benchmark.
-4. For each fixture, score legality and exact constraints first, then target-gate movement, whole-deck strategy preservation, win-route correctness/resilience, cut quality, mana/interaction/resource structure, budget/printing truth and complete 100-card manual quality.
-5. Compare each complete benchmark result against a strong general-purpose-AI build under the same commander, budget, printing and theme restrictions; record concrete wins, losses and ambiguous trade-offs rather than relying on aggregate internal scores alone.
-6. After the first frozen batch, expand unseen fixtures across combat, control, typal, aristocrats, unrestricted combo and hybrid decks. Accumulate repeated failure patterns before making generic fixes; never add card-name or scenario-specific hacks to make a benchmark pass.
-7. Keep PR #29 open/draft and unmerged. PRs #30 and #32 are closed unmerged with evidence retained; keep PR #2 separate until its own archival decision. Stable main remains V0.13.
+2. Preserve BENCH-01 Batch A as completed evidence from product baseline 5829b37...: Liliana NZ$500 is the specialist win; Counter Blitz is the general-AI win; aggregate verdict is split-not-promotion-grade. Preserve the locked general-AI baselines rather than regenerating them after seeing specialist results.
+3. Preserve Cavalry Charge as the second unrelated reproduction of the compound-theme rejection. Together with Counter Blitz, this is sufficient generic evidence for the centralized controlled compound-theme repair; do not seek a card/deck-specific workaround.
+4. At the current active branch head, isolate the exact failure in corrected validation run 33949687254 / job 101261983495. Focused neutral-theme regressions already passed; fix only the demonstrated remaining full-suite/build/compatibility problem and preserve the bounded combat discovery contract.
+5. Require the repaired source to pass focused neutral-theme regressions, the full repository test suite and build. Remove temporary one-shot repair workflows/scripts from the accepted product commit. Do not mark the repair accepted or freeze a repaired SHA before all of those conditions are true.
+6. Once green, freeze the exact repaired product SHA and replay Counter Blitz FF-only plus Cavalry Charge compound from that same unchanged source. Verify legality, exact restrictions, budgets/swap limits, actual accepted swaps, requested strategy axes, whole-deck cohesion and benchmark target movement rather than relying on status alone.
+7. Compare the repaired Counter result against the locked 18-swap general-AI baseline and inspect Cavalry against its NZ$35-per-card, NZ$200-total and 12-swap limits. Record whether the repair merely parses the request or actually produces stronger complete decks.
+8. If the repaired replay is sound, continue several unseen fixtures across combat, control, typal, aristocrats, unrestricted combo, hybrid and other contrasting families before making another intelligence change. Convert only repeated cross-fixture weaknesses into generic repairs.
+9. PR #29 and stable V0.13 remain unchanged while BENCH-01 is not promotion-grade. Once all relevant validation is green and broad benchmark evidence shows the specialist consistently deserves promotion, the standing user authorization permits merging/promotion without another approval; document the evidence and resulting state in the same run.
 
 ## Permanent recovery references
 
