@@ -39,20 +39,11 @@ Delivered:
 - the self-reporting PM integrity control regenerates the index whenever it updates its own persisted result;
 - `npm run project:resume` derives a fresh-session recovery brief without old chat history or individual result-folder inspection.
 
-Validated PM-02 control:
-- tested source `b920087e41d22a1575404620815c4882801cae9b`;
-- management tooling typecheck: success;
-- generated project-state validation: success;
-- consolidated validation-index validation: success;
-- fresh-session recovery smoke: success;
-- normal MTG source build: success;
-- validation index regenerated self-consistently and shows no unmet PM pass conditions.
-
-## INTEL-01 — Win-package intelligence — IMPLEMENTED / VALIDATION PENDING
+## INTEL-01 — Win-package intelligence — VALIDATED
 
 Goal: very-good verified win-package reasoning.
 
-Implemented direction includes:
+Validated direction includes:
 - bounded but deep Commander Spellbook discovery with honest incomplete-evidence semantics;
 - exact commander legality/color/printing/budget filtering;
 - multiplayer full-table closure aligned with final evaluation semantics;
@@ -60,35 +51,47 @@ Implemented direction includes:
 - atomic package injection;
 - protection of already-present package pieces;
 - R/competitive preference among feasible verified packages;
-- no false absence when discovery is truncated or unavailable.
+- no false absence when discovery is truncated or unavailable;
+- final route recognition, alternate-route retention, route setup/interruption and exact tutor/access auditing.
 
-Exit evidence must include fresh constrained and unrestricted controls, not Marvel alone.
+The exact-source positive control at `5829b37b686255ba35d419b37be17095e54fb696` is green and retains four verified full-table routes with two distinct library routes. BENCH-01 still tests whether this intelligence translates into better complete decks across adversarial archetypes.
 
-## INTEL-02 — Actual autonomous deck improvement — ACTIVE
+## INTEL-02 — Actual autonomous deck improvement — IMPLEMENTED / BENCHMARK VALIDATION PENDING
 
 Goal: improve the deck that exists, not an abstract score.
 
-Current seven-day execution plan: `docs/NEXT-WEEK-AUTONOMOUS-WORK-PLAN.md`. It is subordinate to `project-state.json` and the live GitHub state, but should be used as the default autonomous work queue while INTEL-02 remains active.
+The role-truth, structural-floor and package-preservation hardening is implemented far enough to enter adversarial benchmarking. The complete dependent family was replayed from one frozen executable source, `5829b37b686255ba35d419b37be17095e54fb696`.
 
-Required capabilities:
-- diagnose actual failed target gates;
-- distinguish hard target requirements from aspirational role counts;
-- prioritize first verified win route and other real blockers over cosmetic density;
-- allow measurable multi-round progress toward failed gates;
-- reject regressions of already-passing gates;
-- reject zero-target-progress changes while known target construction failures remain;
-- preserve meaningful primary/secondary strategy;
-- choose coherent IN→OUT pairings and know when no change is better.
+On that replay:
+- Food and Fellowship, Necron Dynasties, Squirreled Away and Scions & Spellcraft are mechanically green and manually acceptable with recorded watch items;
+- the earlier Food false green that spent `Well of Lost Dreams` on one-shot interaction did not recur;
+- generic strategy/resource/component guards remained active;
+- Marvel focused and broad fail closed with zero swaps because the restricted pool cannot satisfy the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure;
+- that Marvel result is an expected construction ceiling, not target achievement and not a reason to relax standards;
+- the themed special-printing audit is provider-unknown after Scryfall HTTP 429, not evidence of absence and not a BENCH-01 blocker.
 
-The hard zero-target-progress guard remains live-proven at `e11826c...`. Source checkpoint `758c565...` cleared the observed upstream candidate-generation blocker: failed Bracket-5 gates now precede aspirational role deficits, full candidate and win-package provenance survives every attempted swap size, and the fresh Marvel control accepted two legal Marvel swaps that repaired average nonland mana value from 2.71 to 2.54 without regressing a previously passing construction gate.
+The accepted development checkpoint remains `77a5383fa7490aa91360b8186a4bda890f632157`. Starting BENCH-01 does not promote `5829b37...`; it uses that source as a frozen evaluation baseline while broader quality evidence is gathered.
 
-That result is one scenario-intelligence pass, not milestone validation. The final deck remains Bracket 4 with zero verified winning combos; Marvel's completed no-eligible-package result cannot prove package injection; and the control currently infers strategy preservation from coarse role counts rather than independently auditing the consequences of cutting an extra-combat card and a board wipe. Next work must make cut/route preservation explicit, then reproduce improvement in fresh constrained and unrestricted archetypes before INTEL-02 can advance.
+## BENCH-01 — Adversarial Commander benchmark suite — ACTIVE
 
-## BENCH-01 — Adversarial Commander benchmark suite — PLANNED
+Goal: measure intelligence rather than anecdotes and determine whether the specialist actually beats strong general-purpose AI on complete Commander deck decisions.
 
-Goal: measure intelligence rather than anecdotes.
+Operating rules:
+- freeze executable source for each benchmark batch;
+- run several unseen, contrasting fixtures before changing Commander intelligence;
+- never add card-name or scenario-specific hacks merely to pass a fixture;
+- score hard truth before subjective quality;
+- compare complete 100-card outputs under identical commander, budget, theme/printing and bracket constraints;
+- record concrete expert-review wins, losses and ambiguous trade-offs;
+- only convert repeated cross-fixture weaknesses into generic INTEL-03/INTEL-04 or INTEL-02 remediation work.
 
-Benchmark families:
+### Batch A — frozen source `5829b37...`
+
+First contrasting fixtures:
+1. **Counter Blitz / Tidus, Yuna's Guardian** — FINAL FANTASY printings only; Bant +1/+1 counters/proliferate; dense countermagic; hybrid combat and combo identity; preserve meaningful non-combo combat routes rather than collapsing into a single infinite line.
+2. **Liliana, Heretical Healer // Liliana, Defiant Necromancer** — unrestricted mono-black with a hard NZ$500 whole-deck budget; aristocrats/graveyard/reanimation identity; compare the already-captured specialist result against a fresh strong general-AI build under the same constraints.
+
+Benchmark families to expand after Batch A:
 - combat/commander-damage;
 - compact combo;
 - hybrid combat-combo;
@@ -105,7 +108,19 @@ Benchmark families:
 - high Bracket 4;
 - Bracket 5 / cEDH-ish construction.
 
-Scored dimensions should include legality, constraint truth, target-gate movement, win-route correctness, strategy preservation, cut quality, probability/simulation improvement, spend efficiency, explanation quality and expert review.
+Scored dimensions:
+- Commander legality, exact 100, singleton/color identity;
+- exact printing-family/theme restrictions and hard budgets;
+- target-gate movement and bracket truth;
+- win-route correctness, closure and resilience;
+- primary/secondary strategy preservation;
+- cut quality and structural-card losses;
+- mana, interaction, card advantage and resource-engine structure;
+- probability/simulation improvement where the claim is supported;
+- spend efficiency;
+- complete-deck coherence;
+- explanation quality;
+- expert manual comparison against the strong general-AI baseline.
 
 ## INTEL-03 — Human-level strategic reasoning layer — PLANNED
 
