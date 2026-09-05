@@ -71,7 +71,7 @@ On that replay:
 - that Marvel result is an expected construction ceiling, not target achievement and not a reason to relax standards;
 - the themed special-printing audit is provider-unknown after Scryfall HTTP 429, not evidence of absence and not a BENCH-01 blocker.
 
-The formal accepted development checkpoint remains `77a5383fa7490aa91360b8186a4bda890f632157`. The current fully validated executable BENCH product source is `ce4c9eba59617be2cf57718408b40252230bccf4`, which contains the generic controlled compound-theme parsing repair. It is a validated experimental replay baseline, not a stable promotion or proof of benchmark superiority.
+The formal accepted development checkpoint remains `77a5383fa7490aa91360b8186a4bda890f632157`. The current fully validated executable BENCH product source is `dd085caf4e47f6f5e1976667dc90de2db46c00a1`, which contains the generic compound-component preservation repair. It is a validated experimental replay baseline, not a stable promotion or proof of benchmark superiority.
 
 ## BENCH-01 — Adversarial Commander benchmark suite — ACTIVE
 
@@ -152,27 +152,23 @@ The generic repair now:
 - preserves the bounded combat discovery contract `(o:attack OR o:"combat damage")`;
 - contains no Counter Blitz, Cavalry Charge or card-name special cases.
 
-Accepted executable product source: `ce4c9eba59617be2cf57718408b40252230bccf4`.
+Accepted parser-repair source: `ce4c9eba59617be2cf57718408b40252230bccf4`.
 
 Validation evidence:
 - dedicated run `33958162827` passed the focused neutral-theme regression suite;
 - the same clean locally committed product tree passed the full repository test suite;
 - the same tree passed build;
-- temporary one-shot repair workflow/script surfaces were absent from the accepted product commit before validation/publish;
-- only after those gates passed was `ce4c9eba...` published to the active branch.
+- temporary one-shot repair workflow/script surfaces were absent from the accepted product commit before validation/publish.
 
-This closes the parser-validation gate. It does **not** establish benchmark superiority.
+This closed the parser-validation gate. It did **not** establish benchmark superiority.
 
-### Repaired Cavalry Charge replay — COMPLETE — quality gap found
-
-The replay used a benchmark-harness-only descendant of product source `ce4c9eba...`; no Commander-intelligence source changed after that product SHA.
+### Repaired Cavalry Charge replay on `ce4c9eba...` — COMPLETE — component regression found
 
 Result:
-- compound request resolves to `Knight typal + Combat / attacks + Graveyard / reanimator` rather than failing closed;
+- compound request resolves rather than failing closed;
 - refinement executes and accepts 8 swaps;
 - exact 100 and Commander legality remain true;
-- about NZ$32.12 total upgrade spend, within the NZ$200 total limit;
-- accepted cards remain within NZ$35 per-added-card cap;
+- about NZ$32.12 total upgrade spend, within the NZ$200 total limit and NZ$35 per-added-card cap;
 - 8 swaps remain within the 12-swap limit;
 - assessed bracket moves 2 → 3, but target Bracket 4 is not achieved;
 - average nonland MV improves 3.34 → 2.97;
@@ -180,46 +176,64 @@ Result:
 - cheap interaction improves 3 → 6;
 - tutors improve 0 → 2;
 - recursion improves by 3;
-- graveyard-reference count improves by 2.
-
-However, two explicitly requested facets regress:
+- graveyard-reference count improves by 2;
 - Knight creature count falls **32 → 27**;
 - combat-reference count falls **21 → 17**.
 
-Verdict: **meaningful target movement, but not a benchmark pass and not promotion-grade**. The compound parser is fixed, yet aggregate OR-style theme satisfaction can currently remain green while one requested component compensates for another. This is now a candidate generic quality defect, not yet a product-change authorization by itself.
+Verdict: meaningful target movement but not a benchmark pass. Aggregate OR-style theme satisfaction remained compatible with regression in explicit components.
 
-### Repaired Counter Blitz replay — IN PROGRESS
+### Repaired Counter Blitz replay on `ce4c9eba...` — COMPLETE — same component defect reproduced
 
-Workflow run `33958274005` is executing from the same frozen product source `ce4c9eba...` through a benchmark-harness-only descendant; no `src/**` change is allowed until this paired replay is interpreted.
+Workflow run `33958274005` completed successfully from the same frozen parser-repair source.
 
-When persisted, inspect:
-- exact 100 / Commander legality / FF-only physical printing truth;
-- accepted swaps and whether refinement actually occurs;
-- +1/+1 counter engine and proliferate support;
-- countermagic and protection;
-- combat identity;
-- verified combo routes/access;
-- curve, early plays and interaction;
-- bracket truth;
-- every requested compound facet independently, not only aggregate theme density.
+Persisted paired evidence shows:
+- aggregate themed cards **53 → 55**;
+- instant/sorcery references **37 → 40**;
+- counter-related references **51 → 53**;
+- proliferate **4 → 2**;
+- aggregate theme density **86 → 88** and aggregate target remains green;
+- proliferate target fails.
 
-Compare the final complete deck against the already locked 18-swap general-AI baseline. Do not regenerate that baseline after seeing the repaired specialist result.
+Verdict: **independent cross-fixture reproduction of the same component-compensation defect**. Cavalry and Counter together established a generic correctness blocker and authorized one narrow component-level repair.
 
-### Decision rule after Counter finishes
+### Generic compound-component preservation repair — VALIDATED
 
-If Counter independently shows that aggregate compound satisfaction remains green while an explicitly requested component materially regresses, that is sufficient cross-fixture evidence for one **generic per-component compound-theme preservation/achievement gate**. Such a repair must:
-- operate on controlled `components[]`, not deck/card names;
-- preserve single-theme behavior;
-- prevent gains in one requested component from silently compensating for material loss in another;
-- retain hard legality/budget/printing/strategy guards;
-- be fully regression/full-suite/build validated;
-- then freeze one exact new product SHA and replay both Counter Blitz and Cavalry Charge without source changes between them.
+Root cause: compound matching is intentionally OR-style for aggregate discovery/audit, while `candidateThemeGateV15()` previously compared only aggregate before/after counts. That let improvement in one controlled component compensate for loss in another.
 
-If Counter does **not** reproduce the component-compensation pattern, do not patch based on Cavalry alone. Run at least one additional contrasting unseen compound fixture first.
+The generic candidate-acceptance repair now:
+- operates only on controlled `components[]` metadata;
+- independently audits every component before and after a candidate package;
+- prevents any previously satisfied component from being pushed below its own controlled target;
+- prevents any below-target component from moving backward while gains elsewhere compensate;
+- fails closed when component evidence is missing, inconsistent or cannot be bound exactly;
+- preserves existing aggregate theme gating after component checks;
+- leaves single-theme behavior unchanged;
+- retains legality, budget, printing, strategy-retention, package-acceptance and bracket-target gates unchanged;
+- contains no deck, commander or card-name special cases.
 
-### After the compound-quality decision
+Implementation commit: `d0e40cadee555468b9b5574234d1b63b477f8b55`.
+Focused regression commit / final combined product source: `dd085caf4e47f6f5e1976667dc90de2db46c00a1`.
 
-Once this blocker is resolved, continue several unseen fixtures before making another product change. Remaining benchmark families include:
+Validation evidence:
+- focused deterministic tests cover satisfied-component preservation, below-target non-regression, fail-closed missing/inconsistent evidence and unchanged single-theme aggregate behavior;
+- normal CI run `33972639473` on exact final SHA `dd085caf...` passed project-management tooling checks, state validation, validation-index validation, fresh-session recovery smoke test, type-check/build and the full repository test suite;
+- therefore `dd085caf...` is the frozen validated product source for the paired post-repair replay.
+
+This validates the generic repair mechanically. It does **not** prove the benchmark blocker is closed until the two affected fixtures are replayed from this exact unchanged source.
+
+### Paired post-repair replay — NEXT
+
+Freeze `dd085caf4e47f6f5e1976667dc90de2db46c00a1`. Do not change `src/**` between these fixtures.
+
+1. **Counter Blitz** — rerun the same FF-only Bant +1/+1 counters/proliferate/countermagic/combat request. Confirm proliferate no longer regresses, then judge legality, FF printing truth, counters, countermagic, combat identity, protection/access, verified routes, curve, bracket truth and the complete deck against the locked 18-swap general-AI baseline.
+2. **Cavalry Charge** — rerun the same Knights typal + combat + graveyard recursion/reanimation request with NZ$35 per-card, NZ$200 total and 12-swap caps. Confirm Knight/combat components are preserved while recursion/structural improvements, legality, budget and whole-deck coherence remain acceptable.
+3. Interpret both together. Record every controlled component before/after. Aggregate theme density alone cannot close the blocker.
+
+If both fixtures show the compensation defect closed without unacceptable strategy/quality regression, close this correctness blocker and move to several unseen contrasting BENCH-01 fixtures before any further intelligence edit. If the pair exposes another repeated generic defect, localize it from cross-fixture evidence and authorize only the smallest generic repair that addresses it.
+
+### After the compound-quality blocker
+
+Continue several unseen fixtures before making another product change. Remaining benchmark families include:
 - combat/commander-damage;
 - compact combo;
 - hybrid combat-combo;
@@ -252,7 +266,7 @@ Scored dimensions:
 
 ### Promotion gate
 
-V0.15 is **not promotion-ready today**. The parser repair is validated, but BENCH-01 still has a repaired-source quality question and broad superiority has not yet been demonstrated. PR #29 and stable V0.13 remain unchanged for now.
+V0.15 is **not promotion-ready today**. The parser repair and component-preservation repair are both mechanically validated, but the post-repair paired benchmark replays and broader superiority evidence are still required. PR #29 and stable V0.13 remain unchanged for now.
 
 The user has granted standing authority for autonomous merge/promotion once the evidence genuinely supports it. No additional approval is required when all relevant work is fully validated, non-redundant, safe, blocker-free and broad BENCH-01 evidence shows the Commander specialist consistently deserves promotion. Merge/promotion must never be done merely to tidy branches or because experimental work exists; persist the validating evidence and update project state in the same run.
 
