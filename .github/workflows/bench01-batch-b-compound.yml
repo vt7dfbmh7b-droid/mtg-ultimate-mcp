@@ -1,7 +1,7 @@
 name: "BENCH-01 Batch B — Cavalry Charge Compound Plan"
 
-# Measurement-only benchmark. Product intelligence remains frozen at 5829b37...
-# until unseen compound-plan evidence is captured and reviewed.
+# Measurement-only benchmark. Commander-intelligence product source is frozen
+# at ce4c9eba59617be2cf57718408b40252230bccf4 for the repaired-source replay.
 on:
   push:
     branches: ["agent/v15-native-deck-intelligence"]
@@ -95,12 +95,12 @@ jobs:
             [ ! -f bench01-batch-b-cavalry-failure.txt ] || cp bench01-batch-b-cavalry-failure.txt test-results/bench01-batch-b/cavalry-charge/failure.txt
             [ ! -f bench01-batch-b-cavalry.log ] || cp bench01-batch-b-cavalry.log test-results/bench01-batch-b/cavalry-charge/control.log
             [ ! -f bench01-batch-b-build.log ] || cp bench01-batch-b-build.log test-results/bench01-batch-b/build.log
-            printf 'executed_source_sha=%s\nproduct_runtime_baseline_sha=5829b37b686255ba35d419b37be17095e54fb696\nsource_relationship=measurement-only-descendant-no-src-intelligence-change\nbuild_outcome=%s\ncavalry_charge_outcome=%s\nbatch=BENCH-01-B\nsource_frozen_within_fixture=true\n' \
+            printf 'executed_source_sha=%s\nproduct_runtime_baseline_sha=ce4c9eba59617be2cf57718408b40252230bccf4\nsource_relationship=benchmark-harness-only-descendant-product-src-frozen-at-repair-sha\nbuild_outcome=%s\ncavalry_charge_outcome=%s\nbatch=BENCH-01-B-REPAIRED-REPLAY\nsource_frozen_within_fixture=true\n' \
               "$GITHUB_SHA" "$BUILD_OUTCOME" "$CAVALRY_OUTCOME" \
               > test-results/bench01-batch-b/run-metadata.txt
             git add -- test-results/bench01-batch-b
             if git diff --cached --quiet; then exit 0; fi
-            git commit -m "test-results(BENCH-01): persist Batch B Cavalry evidence [skip ci]"
+            git commit -m "test-results(BENCH-01): persist repaired Batch B Cavalry evidence [skip ci]"
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
             echo "BENCH-01 Batch B persistence attempt ${attempt} lost a branch race; retrying."
           done
