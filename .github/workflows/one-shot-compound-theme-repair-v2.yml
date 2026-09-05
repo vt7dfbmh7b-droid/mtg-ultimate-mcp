@@ -31,8 +31,8 @@ jobs:
           from pathlib import Path
           path = Path('scripts/apply-compound-theme-repair.py')
           text = path.read_text()
-          old = 'queryClause: \'(o:attack OR o:attacking OR o:\\"combat damage\\" OR o:\\"additional combat\\")\','
-          new = 'queryClause: \'(o:attack OR o:\\"combat damage\\")\','
+          old = 'queryClause: \'(o:attack OR o:attacking OR o:\"combat damage\" OR o:\"additional combat\")\','
+          new = 'queryClause: \'(o:attack OR o:\"combat damage\")\','
           count = text.count(old)
           if count != 1:
               raise SystemExit(f'expected exactly one staged combat query, found {count}')
@@ -41,6 +41,13 @@ jobs:
 
       - name: Apply generic compound-theme repair
         run: python scripts/apply-compound-theme-repair.py
+
+      - name: Remove temporary development harness before validation
+        shell: bash
+        run: |
+          rm -f .github/workflows/one-shot-compound-theme-repair.yml
+          rm -f .github/workflows/one-shot-compound-theme-repair-v2.yml
+          rm -f scripts/apply-compound-theme-repair.py
 
       - name: Install dependencies
         run: npm ci
@@ -60,10 +67,7 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git rm .github/workflows/one-shot-compound-theme-repair.yml
-          git rm .github/workflows/one-shot-compound-theme-repair-v2.yml
-          git rm scripts/apply-compound-theme-repair.py
-          git add src/services/neutral-theme-v15.ts src/services/neutral-theme-v15.test.ts
+          git add -A .github/workflows scripts/apply-compound-theme-repair.py src/services/neutral-theme-v15.ts src/services/neutral-theme-v15.test.ts
           git commit -m 'fix(INTEL): compose controlled compound themes'
           git pull --rebase origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
