@@ -31,13 +31,12 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           path = Path('scripts/apply-compound-theme-repair.py')
-          text = path.read_text()
-          old = 'queryClause: \'(o:attack OR o:attacking OR o:\"combat damage\" OR o:\"additional combat\")\','
-          new = 'queryClause: \'(o:attack OR o:\"combat damage\")\','
-          count = text.count(old)
-          if count != 1:
-              raise SystemExit(f'expected exactly one staged combat query, found {count}')
-          path.write_text(text.replace(old, new, 1))
+          lines = path.read_text().splitlines()
+          matches = [i for i, line in enumerate(lines) if 'queryClause:' in line and 'additional combat' in line]
+          if len(matches) != 1:
+              raise SystemExit(f'expected exactly one staged broad combat query, found {len(matches)}')
+          lines[matches[0]] = "    queryClause: '(o:attack OR o:\\"combat damage\\")',"
+          path.write_text('\n'.join(lines) + '\n')
           PY
       - name: Apply generic compound-theme repair
         run: python scripts/apply-compound-theme-repair.py
