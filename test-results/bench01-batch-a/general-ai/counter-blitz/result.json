@@ -1,0 +1,553 @@
+{
+  "schema": "bench01-counter-general-ai-baseline-v1",
+  "fixture": "BENCH-01 Batch A / Counter Blitz independent general-AI comparison",
+  "lockDocument": "docs/BENCH-01-BATCH-A-BASELINE-LOCK-2026-09-05.md",
+  "antiLeak": true,
+  "sourceProduct": "CounterBlitzFinalFantasyX_FIC",
+  "commander": "Tidus, Yuna's Guardian",
+  "targetBracket": 5,
+  "lockedAdditions": [
+    "The Destined White Mage",
+    "Ranger-Captain of Eos",
+    "Delivery Moogle",
+    "Search for Dagger",
+    "Counterspell",
+    "Dovin's Veto",
+    "Force of Negation",
+    "Arcane Denial",
+    "Syncopate",
+    "Louisoix's Sacrifice",
+    "Hypnotic Sprite",
+    "Rhystic Study",
+    "The Earth Crystal",
+    "Clever Concealment",
+    "Akroma's Will",
+    "Nature's Lore",
+    "Conqueror's Flail",
+    "Lightning Greaves"
+  ],
+  "lockedCuts": [
+    "Temple of the False God",
+    "Rampant Rejuvenator",
+    "Collective Effort",
+    "Promise of Loyalty",
+    "Luminous Broodmoth",
+    "Sunscorch Regent",
+    "Together Forever",
+    "Pull from Tomorrow",
+    "Bane of Progress",
+    "Altered Ego",
+    "Lord Jyscal Guado",
+    "Tromell, Seymour's Butler",
+    "Shelinda, Yevon Acolyte",
+    "Summoner's Sending",
+    "Farewell",
+    "Summon: Valefor",
+    "Sin, Unending Cataclysm",
+    "Generous Patron"
+  ],
+  "selectedAdditions": [
+    {
+      "oracleName": "The Destined White Mage",
+      "set": "FIC",
+      "collectorNumber": "444",
+      "releasedAt": "2025-12-05",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 12.07
+    },
+    {
+      "oracleName": "Ranger-Captain of Eos",
+      "set": "FCA",
+      "collectorNumber": "2",
+      "releasedAt": "2025-06-13",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 42.03
+    },
+    {
+      "oracleName": "Delivery Moogle",
+      "set": "FIN",
+      "collectorNumber": "15",
+      "releasedAt": "2025-06-13",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 0.29
+    },
+    {
+      "oracleName": "Search for Dagger",
+      "set": "FIC",
+      "collectorNumber": "459",
+      "releasedAt": "2025-12-05",
+      "matchedBy": "family-set",
+      "selectedFinish": "foil",
+      "observedUsd": 2.23
+    },
+    {
+      "oracleName": "Counterspell",
+      "set": "FCA",
+      "collectorNumber": "4",
+      "releasedAt": "2025-06-13",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 2.59
+    },
+    {
+      "oracleName": "Dovin's Veto",
+      "set": "FCA",
+      "collectorNumber": "51",
+      "releasedAt": "2025-06-13",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 2.15
+    },
+    {
+      "oracleName": "Force of Negation",
+      "set": "RFIN",
+      "collectorNumber": "J1",
+      "releasedAt": "2025-06-13",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 1501.81
+    },
+    {
+      "oracleName": "Arcane Denial",
+      "set": "RFIN",
+      "collectorNumber": "J2",
+      "releasedAt": "2025-06-13",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 13.47
+    },
+    {
+      "oracleName": "Syncopate",
+      "set": "FIN",
+      "collectorNumber": "80",
+      "releasedAt": "2025-06-13",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 0.27
+    },
+    {
+      "oracleName": "Louisoix's Sacrifice",
+      "set": "FIN",
+      "collectorNumber": "59",
+      "releasedAt": "2025-06-13",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 0.34
+    },
+    {
+      "oracleName": "Hypnotic Sprite // Mesmeric Glare",
+      "set": "FIC",
+      "collectorNumber": "264",
+      "releasedAt": "2025-06-13",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 0.29
+    },
+    {
+      "oracleName": "Rhystic Study",
+      "set": "FCA",
+      "collectorNumber": "31",
+      "releasedAt": "2025-06-13",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 110.45
+    },
+    {
+      "oracleName": "The Earth Crystal",
+      "set": "FIN",
+      "collectorNumber": "184",
+      "releasedAt": "2025-06-13",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 13.76
+    },
+    {
+      "oracleName": "Clever Concealment",
+      "set": "FIC",
+      "collectorNumber": "236",
+      "releasedAt": "2025-06-13",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 4.68
+    },
+    {
+      "oracleName": "Akroma's Will",
+      "set": "FCA",
+      "collectorNumber": "21",
+      "releasedAt": "2025-06-13",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 34.15
+    },
+    {
+      "oracleName": "Nature's Lore",
+      "set": "FIC",
+      "collectorNumber": "311",
+      "releasedAt": "2025-06-13",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 2.38
+    },
+    {
+      "oracleName": "Conqueror's Flail",
+      "set": "FIC",
+      "collectorNumber": "340",
+      "releasedAt": "2025-06-13",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 0.8
+    },
+    {
+      "oracleName": "Lightning Greaves",
+      "set": "FIC",
+      "collectorNumber": "349",
+      "releasedAt": "2025-06-13",
+      "matchedBy": "family-set",
+      "selectedFinish": "nonfoil",
+      "observedUsd": 4.74
+    }
+  ],
+  "audit": {
+    "exactCardCount": 100,
+    "commanderLegal": true,
+    "printingPolicySatisfied": true,
+    "commanderStrategies": [
+      {
+        "archetype": "value-engine",
+        "score": 14,
+        "evidence": [
+          "repeatable draw +9",
+          "card draw +5"
+        ]
+      },
+      {
+        "archetype": "counters",
+        "score": 13,
+        "evidence": [
+          "proliferate +7",
+          "counter movement +6"
+        ]
+      },
+      {
+        "archetype": "combat-tokens",
+        "score": 2,
+        "evidence": [
+          "combat-damage trigger +2"
+        ]
+      }
+    ],
+    "assessedBracket": 3,
+    "assessedBand": "bracket-3-upgraded-range",
+    "bracketEvidence": {
+      "assessedBracket": 3,
+      "assessedBand": "bracket-3-upgraded-range",
+      "confidence": "medium",
+      "hardGatesPassed": true,
+      "bracket5ConstructionCandidate": false,
+      "bracket5CertifiedByThisAssessment": false,
+      "bracket5ThresholdChecks": [
+        {
+          "key": "average-nonland-mv",
+          "category": "construction",
+          "label": "Average nonland mana value",
+          "observed": 2.69,
+          "required": "at most 2.6",
+          "passed": false,
+          "detail": "Average nonland mana value: observed 2.69; Bracket-5 construction gate requires at most 2.6.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "early-plays",
+          "category": "construction",
+          "label": "Early plays",
+          "observed": 29,
+          "required": "at least 35",
+          "passed": false,
+          "detail": "Early plays: observed 29; Bracket-5 construction gate requires at least 35.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "fast-mana",
+          "category": "construction",
+          "label": "Fast mana",
+          "observed": 1,
+          "required": "at least 3",
+          "passed": false,
+          "detail": "Fast mana: observed 1; Bracket-5 construction gate requires at least 3.",
+          "pressurePoint": "fast-mana density"
+        },
+        {
+          "key": "free-interaction",
+          "category": "construction",
+          "label": "Free interaction",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Free interaction: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "cheap-interaction",
+          "category": "construction",
+          "label": "Cheap interaction",
+          "observed": 7,
+          "required": "at least 8",
+          "passed": false,
+          "detail": "Cheap interaction: observed 7; Bracket-5 construction gate requires at least 8.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "tutors",
+          "category": "construction",
+          "label": "Tutors",
+          "observed": 0,
+          "required": "at least 4",
+          "passed": false,
+          "detail": "Tutors: observed 0; Bracket-5 construction gate requires at least 4.",
+          "pressurePoint": "tutor consistency"
+        },
+        {
+          "key": "verified-winning-combo",
+          "category": "construction",
+          "label": "Verified win-oriented combos",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "competitive-combo-signal",
+          "category": "construction",
+          "label": "Competitive combo signal",
+          "observed": "Ruthless=0, strategic=3, Spellbook=S",
+          "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+          "passed": true,
+          "detail": "Competitive combo signal: observed Ruthless=0, strategic=3, Spellbook=S; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "cedh-intent",
+          "category": "evidence",
+          "label": "Explicit cEDH intent",
+          "observed": false,
+          "required": "true",
+          "passed": false,
+          "detail": "Explicit cEDH intent: observed false; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "competitive intent"
+        },
+        {
+          "key": "competitive-metagame-evidence",
+          "category": "evidence",
+          "label": "Independent current competitive-metagame evidence",
+          "observed": false,
+          "required": "true",
+          "passed": false,
+          "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "metagame evidence"
+        }
+      ],
+      "supportingSignals": [
+        "3 strategically relevant combo signals.",
+        "1 current Game Changer.",
+        "1 fast-mana signal."
+      ],
+      "constraints": [
+        "Independent strong general-purpose-AI baseline locked before specialist result review.",
+        "Exact Counter Blitz stock lineage with 18 fixed swaps.",
+        "FINAL FANTASY physical printings only.",
+        "Tidus remains the commander.",
+        "Preserve counters/proliferate and meaningful combat while adding dense countermagic and compact combo access.",
+        "Target Bracket 5 remains an assessed target rather than a declared result."
+      ],
+      "restrictionObservations": [
+        "Constraint \"Independent strong general-purpose-AI baseline locked before specialist result review.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (2.69 vs at most 2.6); Early plays (29 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (7 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them.",
+        "Constraint \"Exact Counter Blitz stock lineage with 18 fixed swaps.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (2.69 vs at most 2.6); Early plays (29 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (7 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them.",
+        "Constraint \"FINAL FANTASY physical printings only.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (2.69 vs at most 2.6); Early plays (29 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (7 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them.",
+        "Constraint \"Tidus remains the commander.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (2.69 vs at most 2.6); Early plays (29 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (7 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them.",
+        "Constraint \"Preserve counters/proliferate and meaningful combat while adding dense countermagic and compact combo access.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (2.69 vs at most 2.6); Early plays (29 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (7 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them.",
+        "Constraint \"Target Bracket 5 remains an assessed target rather than a declared result.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (2.69 vs at most 2.6); Early plays (29 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (7 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
+      ],
+      "guidance": "This is an after-construction assessment. No requested bracket was supplied to the assessor, and a strong commander name or themed restriction is not evidence for a higher bracket."
+    },
+    "metrics": {
+      "landCount": 36,
+      "nonlandCount": 64,
+      "landRatio": 0.36,
+      "averageNonlandManaValue": 2.69,
+      "manaCurve": {
+        "0": 2,
+        "1": 7,
+        "2": 20,
+        "3": 18,
+        "4": 14,
+        "5": 3,
+        "6": 0,
+        "7+": 0
+      },
+      "coloredPips": {
+        "W": 26,
+        "U": 26,
+        "B": 0,
+        "R": 0,
+        "G": 27
+      },
+      "roleCounts": {
+        "card draw": 10,
+        "repeatable draw": 8,
+        "creature": 28,
+        "mana acceleration": 11,
+        "mana dork": 3,
+        "persistent colored mana source": 5,
+        "+1/+1 counters": 28,
+        "spot interaction": 8,
+        "treasure": 1,
+        "artifact/enchantment interaction": 3,
+        "token production": 3,
+        "haste": 2,
+        "sacrifice synergy": 3,
+        "graveyard recursion": 1,
+        "board wipe": 1,
+        "land ramp": 3,
+        "land tutor": 4,
+        "card selection": 6,
+        "etb synergy": 5,
+        "cheap interaction": 8,
+        "land": 36,
+        "conditional mana acceleration": 1,
+        "board-scaling card draw": 1,
+        "go-wide payoff": 1,
+        "mana rock": 3,
+        "fast mana": 1,
+        "creature tutor": 1,
+        "self sacrifice": 1,
+        "stax/control": 2,
+        "narrow tutor": 1,
+        "countermagic": 4,
+        "cost reduction": 1,
+        "protection": 3,
+        "board protection": 2,
+        "equipment": 2
+      },
+      "earlyPlayCount": 29,
+      "fastManaCount": 1,
+      "rampCount": 15,
+      "drawCount": 16,
+      "tutorCount": 0,
+      "interactionCount": 13,
+      "cheapInteractionCount": 7,
+      "protectionCount": 3,
+      "recursionCount": 1,
+      "boardWipeCount": 1,
+      "persistentColoredManaSourceCount": 5,
+      "structuralSignals": []
+    },
+    "measuredIdentity": {
+      "counterEngineCount": 39,
+      "proliferateCount": 3,
+      "counterspellCount": 7,
+      "combatReferenceCount": 12,
+      "creatureCount": 27
+    },
+    "comboEvidence": {
+      "sourceStatus": "available",
+      "verificationComplete": true,
+      "included": [
+        {
+          "id": "2265-3693-6593",
+          "identity": "GW",
+          "status": "OK",
+          "bracketTag": "S",
+          "cards": [
+            {
+              "name": "Gatta and Luzzu",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Hardened Scales",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Walking Ballista",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite damage",
+            "Infinite +1/+1 counters on a creature"
+          ],
+          "requirements": [],
+          "description": "Cast Gatta and Luzzu by paying {2}{W}.\nWhen Gatta and Luzzu enters the battlefield, it triggers, targeting Walking Ballista.\nActivate Walking Ballista by removing a +1/+1 counter from it, targeting itself, but instead putting two +1/+1 counters on it due to Gatta and Luzzu and Hardened Scales.\nActivate Walking Ballista by removing a +1/+1 counter from it, dealing 1 damage to any target.\nRepeat from step 3.",
+          "manaNeeded": "{2}{W}",
+          "popularity": 15571
+        },
+        {
+          "id": "3693-6593-6627",
+          "identity": "GW",
+          "status": "OK",
+          "bracketTag": "S",
+          "cards": [
+            {
+              "name": "Gatta and Luzzu",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Walking Ballista",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "The Earth Crystal",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite damage",
+            "Infinite +1/+1 counters on a creature"
+          ],
+          "requirements": [],
+          "description": "Cast Gatta and Luzzu by paying {2}{W}.\nWhen Gatta and Luzzu enters the battlefield, it triggers, targeting Walking Ballista.\nActivate Walking Ballista by removing a +1/+1 counter from it, targeting itself, but instead putting two +1/+1 counters on it due to Gatta and Luzzu and The Earth Crystal.\nActivate Walking Ballista by removing a +1/+1 counter from it, dealing 1 damage to any target.\nRepeat from step 3.",
+          "manaNeeded": "{2}{W}",
+          "popularity": 6644
+        },
+        {
+          "id": "3693-6996",
+          "identity": "W",
+          "status": "OK",
+          "bracketTag": "S",
+          "cards": [
+            {
+              "name": "Walking Ballista",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "The Destined White Mage",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite damage",
+            "Infinite lifegain",
+            "Infinite lifegain triggers"
+          ],
+          "requirements": [],
+          "description": "Give Walking Ballista lifelink.\nActivate Walking Ballista by removing a +1/+1 counter from it, dealing 1 damage to any target and causing you to gain 1 life.\nThe Destined White Mage triggers, putting a +1/+1 counter on Walking Ballista.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 1021
+        }
+      ],
+      "excluded": [],
+      "error": null
+    }
+  }
+}

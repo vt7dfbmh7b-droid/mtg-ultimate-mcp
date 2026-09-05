@@ -1,0 +1,14 @@
+BENCH-01 COUNTER GENERAL-AI BASELINE — VERIFIED
+EXACT CARDS: 100
+ASSESSED BRACKET: 3
+IDENTITY: {"counterEngineCount":39,"proliferateCount":3,"counterspellCount":7,"combatReferenceCount":12,"creatureCount":27}
+BENCH-01 COUNTER GENERAL-AI BASELINE — HARD FAILURE
+AssertionError: locked baseline must actually deliver dense countermagic
+
+false !== true
+
+AssertionError [ERR_ASSERTION]: locked baseline must actually deliver dense countermagic
+
+false !== true
+
+    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/bench01-counter-blitz-general-ai-baseline-v15.ts:308:10)

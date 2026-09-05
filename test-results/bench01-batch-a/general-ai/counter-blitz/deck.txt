@@ -1,0 +1,103 @@
+Commander
+1 Tidus, Yuna's Guardian (FIC) 5 *F*
+
+Mainboard
+1 Yuna, Grand Summoner (FIC) 8 *F*
+1 Auron, Venerated Guardian (FIC) 10 *N*
+1 Chocobo Knights (FIC) 12 *N*
+1 Gatta and Luzzu (FIC) 19 *N*
+1 Protection Magic (FIC) 24 *N*
+1 Summon: Ixion (FIC) 27 *N*
+1 Summon: Yojimbo (FIC) 28 *N*
+1 Blitzball Stadium (FIC) 34 *N*
+1 Lulu, Stern Guardian (FIC) 38 *N*
+1 O'aka, Traveling Merchant (FIC) 39 *N*
+1 Rikku, Resourceful Guardian (FIC) 41 *N*
+1 Maester Seymour (FIC) 68 *N*
+1 Sphere Grid (FIC) 70 *N*
+1 Summon: Magus Sisters (FIC) 71 *N*
+1 Yuna's Decision (FIC) 74 *N*
+1 Yuna's Whistle (FIC) 75 *N*
+1 Kimahri, Valiant Guardian (FIC) 85 *N*
+1 Wakka, Devoted Guardian (FIC) 97 *N*
+1 Damning Verdict (FIC) 239 *N*
+1 Resourceful Defense (FIC) 251 *N*
+1 Scholar of New Horizons (FIC) 252 *N*
+1 Chasm Skulker (FIC) 262 *N*
+1 Inexorable Tide (FIC) 265 *N*
+1 Fight Rigging (FIC) 303 *N*
+1 Forgotten Ancient (FIC) 304 *N*
+1 Gyre Sage (FIC) 306 *N*
+1 Hardened Scales (FIC) 307 *N*
+1 Incubation Druid (FIC) 309 *N*
+1 Path of Discovery (FIC) 312 *N*
+1 Tireless Tracker (FIC) 316 *N*
+1 Endless Detour (FIC) 324 *N*
+1 Fathom Mage (FIC) 325 *N*
+1 Walking Ballista (FIC) 371 *N*
+1 Brushland (FIC) 377 *N*
+1 Canopy Vista (FIC) 378 *N*
+1 Exotic Orchard (FIC) 390 *N*
+1 Flooded Grove (FIC) 393 *N*
+1 Fortified Village (FIC) 396 *N*
+1 Glacial Fortress (FIC) 400 *N*
+1 Hinterland Harbor (FIC) 403 *N*
+1 Overflowing Basin (FIC) 410 *N*
+1 Port Town (FIC) 412 *N*
+1 Prairie Stream (FIC) 413 *N*
+1 Skycloud Expanse (FIC) 423 *N*
+1 Sungrass Prairie (FIC) 428 *N*
+1 Sunpetal Grove (FIC) 432 *N*
+1 Temple of Enlightenment (FIC) 435 *N*
+1 Temple of Mystery (FIC) 436 *N*
+1 Temple of Plenty (FIC) 437 *N*
+1 Vineglimmer Snarl (FIC) 440 *N*
+1 Destroy Evil (FIC) 240 *N*
+1 Grateful Apparition (FIC) 244 *N*
+1 Path to Exile (FIC) 248 *N*
+1 An Offer You Can't Refuse (FIC) 267 *N*
+1 Duskshell Crawler (FIC) 301 *N*
+1 Farseek (FIC) 302 *N*
+1 Inspiring Call (FIC) 310 *N*
+1 Three Visits (FIC) 315 *N*
+1 Bred for the Hunt (FIC) 321 *N*
+1 Arcane Signet (FIC) 334 *N*
+1 Everflowing Chalice (FIC) 343 *N*
+1 Sol Ring (FIC) 358 *N*
+1 Ash Barrens (FIC) 374 *N*
+1 Evolving Wilds (FIC) 389 *N*
+1 Forge of Heroes (FIC) 395 *N*
+1 Idyllic Beachfront (FIC) 404 *N*
+1 Nesting Grounds (FIC) 408 *N*
+1 Path of Ancestry (FIC) 411 *N*
+1 Radiant Grove (FIC) 414 *N*
+1 Seaside Citadel (FIC) 420 *N*
+1 Tangled Islet (FIC) 434 *N*
+1 Command Tower (FIC) 486 *N*
+1 Island (FIN) 297 *N*
+1 Island (FIN) 298 *N*
+1 Island (FIN) 299 *N*
+1 Forest (FIN) 306 *N*
+1 Forest (FIN) 307 *N*
+1 Forest (FIN) 308 *N*
+1 Plains (FIN) 294 *N*
+1 Plains (FIN) 295 *N*
+1 Plains (FIN) 296 *N*
+1 The Destined White Mage (FIC) 444
+1 Ranger-Captain of Eos (FCA) 2
+1 Delivery Moogle (FIN) 15
+1 Search for Dagger (FIC) 459
+1 Counterspell (FCA) 4
+1 Dovin's Veto (FCA) 51
+1 Force of Negation (RFIN) J1
+1 Arcane Denial (RFIN) J2
+1 Syncopate (FIN) 80
+1 Louisoix's Sacrifice (FIN) 59
+1 Hypnotic Sprite // Mesmeric Glare (FIC) 264
+1 Rhystic Study (FCA) 31
+1 The Earth Crystal (FIN) 184
+1 Clever Concealment (FIC) 236
+1 Akroma's Will (FCA) 21
+1 Nature's Lore (FIC) 311
+1 Conqueror's Flail (FIC) 340
+1 Lightning Greaves (FIC) 349

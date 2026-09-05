@@ -1,0 +1,10 @@
+BENCH-01 LILIANA GENERAL-AI BASELINE — HARD FAILURE
+AssertionError: locked Liliana baseline must contain exactly 100 cards
+
+99 !== 100
+
+AssertionError [ERR_ASSERTION]: locked Liliana baseline must contain exactly 100 cards
+
+99 !== 100
+
+    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/bench01-liliana-general-ai-baseline-v15.ts:143:10)
