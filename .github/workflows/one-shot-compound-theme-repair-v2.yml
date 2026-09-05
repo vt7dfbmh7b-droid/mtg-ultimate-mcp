@@ -1,5 +1,5 @@
 name: One-shot compound theme repair v2
-# Final retry after obsolete v1 harness removal.
+# Validate the repaired source from a clean local commit before publishing it.
 
 on:
   push:
@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Check out branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
       - name: Set up Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
@@ -39,11 +41,16 @@ jobs:
           PY
       - name: Apply generic compound-theme repair
         run: python scripts/apply-compound-theme-repair.py
-      - name: Remove temporary development harness before validation
+      - name: Create clean local repair commit
         shell: bash
         run: |
+          set -euo pipefail
           rm -f .github/workflows/one-shot-compound-theme-repair-v2.yml
           rm -f scripts/apply-compound-theme-repair.py
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A .github/workflows scripts/apply-compound-theme-repair.py src/services/neutral-theme-v15.ts src/services/neutral-theme-v15.test.ts
+          git commit -m 'fix(INTEL): compose controlled compound themes'
       - name: Install dependencies
         run: npm ci
       - name: Run focused regression tests
@@ -52,13 +59,15 @@ jobs:
         run: npm test
       - name: Build
         run: npm run build
-      - name: Commit repaired source
+      - name: Publish validated repair
         shell: bash
         run: |
           set -euo pipefail
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A .github/workflows scripts/apply-compound-theme-repair.py src/services/neutral-theme-v15.ts src/services/neutral-theme-v15.test.ts
-          git commit -m 'fix(INTEL): compose controlled compound themes'
-          git pull --rebase origin "${GITHUB_REF_NAME}"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          for attempt in 1 2 3; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            if [ "$attempt" -eq 3 ]; then
+              echo 'Unable to publish validated repair after three attempts.' >&2
+              exit 1
+            fi
+            sleep $((attempt * 2))
+          done
