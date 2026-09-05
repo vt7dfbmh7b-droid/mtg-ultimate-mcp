@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-05T20:24:00.000Z",
+  "updatedAt": "2026-09-05T14:45:00.000Z",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
   "stable": {
@@ -47,7 +47,7 @@
       "Preserve ce4c9eba59617be2cf57718408b40252230bccf4 as the validated parser-repair baseline and dd085caf4e47f6f5e1976667dc90de2db46c00a1 as the validated compound-component preservation baseline.",
       "Treat the paired post-repair Counter Blitz/Cavalry evidence as closure of the component-compensation correctness blocker; do not reopen that repair without new contradictory evidence.",
       "Treat unseen Batch C as evidence from the same frozen dd085caf... product runtime: repository tests/build and frozen-source guard passed; Witherbloom stopped on unsupported lifegain, Urza stopped on unsupported card draw, and Necron passed the parser vocabulary layer.",
-      "Do not convert the earlier Counter-only dense-counternagic allocation watch item into a product repair because Batch C did not independently reproduce it.",
+      "Do not convert the earlier Counter-only dense-countermagic allocation watch item into a product repair because Batch C did not independently reproduce it.",
       "Before editing the neutral-theme registry, prove each proposed vocabulary addition is backed by generic measurable semantics already represented in shared card-role/audit logic. Card draw meets that criterion through the existing card draw role. Verify lifegain equivalently or leave it unsupported rather than inventing a benchmark-specific matcher.",
       "After any generic vocabulary repair, run focused parser/audit regressions plus the full repository suite and build, freeze the exact validated SHA, then replay Witherbloom and Urza from that unchanged source before broader BENCH-01 expansion.",
       "Keep Marvel expected restricted-pool ceiling evidence and provider-unknown Scryfall HTTP 429 semantics separate from BENCH blockers."
