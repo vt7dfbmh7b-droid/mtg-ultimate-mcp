@@ -1,0 +1,117 @@
+name: "BENCH-01 Batch B — Cavalry Charge Compound Plan"
+
+# Measurement-only benchmark. Product intelligence remains frozen at 5829b37...
+# until unseen compound-plan evidence is captured and reviewed.
+on:
+  push:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - "scripts/bench01-batch-b-cavalry-charge-compound-v15.ts"
+      - ".github/workflows/bench01-batch-b-compound.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bench01-batch-b-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  cavalry-charge:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Check out exact Batch B source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build checked-in source
+        id: source_build
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee bench01-batch-b-build.log
+
+      - name: Run unseen Cavalry Charge compound-plan benchmark
+        id: cavalry
+        if: steps.source_build.outcome == 'success'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npx tsx scripts/bench01-batch-b-cavalry-charge-compound-v15.ts 2>&1 | tee bench01-batch-b-cavalry.log
+
+      - name: Upload Batch B evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: bench01-batch-b-cavalry-${{ github.sha }}
+          path: |
+            bench01-batch-b-cavalry-result.json
+            bench01-batch-b-cavalry-raw-result.json
+            bench01-batch-b-cavalry-stock-deck.txt
+            bench01-batch-b-cavalry-refined-deck.txt
+            bench01-batch-b-cavalry-failure.txt
+            bench01-batch-b-build.log
+            bench01-batch-b-cavalry.log
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Persist Batch B evidence
+        if: always() && github.event_name == 'push'
+        env:
+          BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          CAVALRY_OUTCOME: ${{ steps.cavalry.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            mkdir -p test-results/bench01-batch-b/cavalry-charge
+            rm -f test-results/bench01-batch-b/cavalry-charge/* \
+                  test-results/bench01-batch-b/run-metadata.txt
+            [ ! -f bench01-batch-b-cavalry-result.json ] || cp bench01-batch-b-cavalry-result.json test-results/bench01-batch-b/cavalry-charge/result.json
+            [ ! -f bench01-batch-b-cavalry-raw-result.json ] || cp bench01-batch-b-cavalry-raw-result.json test-results/bench01-batch-b/cavalry-charge/raw-result.json
+            [ ! -f bench01-batch-b-cavalry-stock-deck.txt ] || cp bench01-batch-b-cavalry-stock-deck.txt test-results/bench01-batch-b/cavalry-charge/stock-deck.txt
+            [ ! -f bench01-batch-b-cavalry-refined-deck.txt ] || cp bench01-batch-b-cavalry-refined-deck.txt test-results/bench01-batch-b/cavalry-charge/refined-deck.txt
+            [ ! -f bench01-batch-b-cavalry-failure.txt ] || cp bench01-batch-b-cavalry-failure.txt test-results/bench01-batch-b/cavalry-charge/failure.txt
+            [ ! -f bench01-batch-b-cavalry.log ] || cp bench01-batch-b-cavalry.log test-results/bench01-batch-b/cavalry-charge/control.log
+            [ ! -f bench01-batch-b-build.log ] || cp bench01-batch-b-build.log test-results/bench01-batch-b/build.log
+            printf 'executed_source_sha=%s\nproduct_runtime_baseline_sha=5829b37b686255ba35d419b37be17095e54fb696\nsource_relationship=measurement-only-descendant-no-src-intelligence-change\nbuild_outcome=%s\ncavalry_charge_outcome=%s\nbatch=BENCH-01-B\nsource_frozen_within_fixture=true\n' \
+              "$GITHUB_SHA" "$BUILD_OUTCOME" "$CAVALRY_OUTCOME" \
+              > test-results/bench01-batch-b/run-metadata.txt
+            git add -- test-results/bench01-batch-b
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "test-results(BENCH-01): persist Batch B Cavalry evidence [skip ci]"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "BENCH-01 Batch B persistence attempt ${attempt} lost a branch race; retrying."
+          done
+          echo 'BENCH-01 Batch B evidence persistence exhausted eight branch-race retries.' >&2
+          exit 1
+
+      - name: Require Batch B harness execution
+        if: always()
+        env:
+          BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          CAVALRY_OUTCOME: ${{ steps.cavalry.outcome }}
+        run: |
+          test "$BUILD_OUTCOME" = success
+          test "$CAVALRY_OUTCOME" = success
