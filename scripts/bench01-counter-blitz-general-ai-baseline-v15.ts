@@ -230,7 +230,10 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
   for (const entry of parsed.main) {
     const card = byName.get(entry.name.toLocaleLowerCase());
     if (!card) continue;
-    const oracle = lower(card.oracle_text);
+    const oracle = [card.oracle_text, ...(card.card_faces ?? []).map((face) => face.oracle_text)]
+      .filter((text): text is string => typeof text === 'string' && text.length > 0)
+      .join('\n')
+      .toLocaleLowerCase();
     const typeLine = lower(card.type_line);
     if (typeLine.includes('creature')) creatureCount += entry.quantity;
     if (/\+1\/\+1 counter|\bproliferate\b|move (?:a|any number of) counter|counter(?:s)? on (?:it|them|a|target|another|each)/i.test(oracle)) {
