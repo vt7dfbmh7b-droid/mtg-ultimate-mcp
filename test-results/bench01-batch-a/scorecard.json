@@ -1,0 +1,95 @@
+{
+  "schema": "bench01-batch-a-scorecard-v1",
+  "date": "2026-09-05",
+  "productRuntimeBaselineSha": "5829b37b686255ba35d419b37be17095e54fb696",
+  "specialistEvidenceSourceSha": "da0eede5ae2173cd75495385338678dfc4ced873",
+  "generalAiComparisonSourceSha": "6264e7f0fcf59c8bfb64bda2baebc8d8e625b8c0",
+  "baselinesLockedBeforeSpecialistReview": true,
+  "stableBoundary": "V0.13",
+  "promotionAuthorized": false,
+  "fixtureRecord": {
+    "specialistWins": 1,
+    "generalAiWins": 1,
+    "ties": 0
+  },
+  "fixtures": [
+    {
+      "id": "counter-blitz-ff-only",
+      "winner": "general-ai",
+      "specialist": {
+        "hardTruthPassed": true,
+        "refinementStatus": "unsupported-theme",
+        "swaps": 0,
+        "assessedBracket": 3,
+        "averageNonlandManaValue": 3.03,
+        "earlyPlayCount": 24,
+        "fastManaCount": 1,
+        "cheapInteractionCount": 3,
+        "freeInteractionCount": 0,
+        "tutorCount": 0,
+        "counterspellCount": 1,
+        "counterEngineCount": 52,
+        "proliferateCount": 4,
+        "combatReferenceCount": 12
+      },
+      "generalAi": {
+        "hardTruthPassed": true,
+        "fixedSwaps": 18,
+        "assessedBracket": 3,
+        "averageNonlandManaValue": 2.69,
+        "earlyPlayCount": 29,
+        "fastManaCount": 1,
+        "cheapInteractionCount": 7,
+        "freeInteractionCount": 0,
+        "tutorCount": 0,
+        "counterspellCount": 8,
+        "counterEngineCount": 39,
+        "proliferateCount": 3,
+        "combatReferenceCount": 12,
+        "verifiedComboRoutes": 3
+      },
+      "reason": "The specialist rejected the normal multi-part strategy request as an unsupported compound free-form theme and made no upgrades; the locked general-AI list materially improved the deck while preserving hard truth and identity. Neither achieved the Bracket-5 target."
+    },
+    {
+      "id": "liliana-nzd-500-zero-tribal",
+      "winner": "specialist",
+      "specialist": {
+        "hardTruthPassed": true,
+        "withinBudget": true,
+        "auditedTotalNzd": 443.21,
+        "budgetHeadroomNzd": 56.79,
+        "assessedBracket": 4,
+        "readiness": "strong-competitive-construction-signals",
+        "averageNonlandManaValue": 1.81,
+        "earlyPlayCount": 58,
+        "fastManaCount": 3,
+        "cheapInteractionCount": 11,
+        "protectionCount": 5,
+        "tutorCount": 5,
+        "freeInteractionCount": 2,
+        "verifiedWinningCombos": 3,
+        "independentWinningComboCores": 1
+      },
+      "generalAi": {
+        "hardTruthPassedExceptBudget": true,
+        "withinBudget": false,
+        "auditedTotalNzd": 960.79,
+        "budgetOverageNzd": 460.79,
+        "assessedBracket": 4,
+        "readiness": "strong-competitive-construction-signals",
+        "averageNonlandManaValue": 2.51,
+        "earlyPlayCount": 38,
+        "fastManaCount": 3,
+        "cheapInteractionCount": 6,
+        "tutorCount": 5,
+        "freeInteractionCount": 1,
+        "verifiedWinningCombos": 16,
+        "independentWinningComboCores": 4
+      },
+      "reason": "The general-AI list has greater raw combo redundancy but violates the central NZ$500 whole-deck cap by NZ$460.79. The specialist remains under budget and also posts stronger curve, early-play and interaction metrics."
+    }
+  ],
+  "aggregateVerdict": "split-not-promotion-grade",
+  "primaryFinding": "Strong hard-truth and whole-budget specialization coexist with a major compound-natural-language instruction failure.",
+  "nextAction": "Run an unseen BENCH-01 Batch B compound/multi-plan fixture on the frozen product runtime before any generalized product repair."
+}
