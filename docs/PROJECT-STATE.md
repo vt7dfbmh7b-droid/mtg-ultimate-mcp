@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-05T07:13:11.000Z**.
+Generated from `project-state.json`. Last state update: **2026-09-05T07:22:00.000Z**.
 
 ## Current mode
 
@@ -17,7 +17,7 @@ Generated from `project-state.json`. Last state update: **2026-09-05T07:13:11.00
 - Branch: `main`
 - Version: `0.13.0`
 - `server-current`: V0.13
-- Stable promotion authorized: **no**
+- Stable promotion authorized: **yes**
 
 ## Experimental checkpoints
 
