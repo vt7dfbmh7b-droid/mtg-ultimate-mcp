@@ -1,16 +1,16 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-04T03:45:22.117Z**.
+Generated from `project-state.json`. Last state update: **2026-09-05T02:47:55.000Z**.
 
 ## Current mode
 
 - Repository: `vt7dfbmh7b-droid/mtg-ultimate-mcp`
 - Active experimental branch: `agent/v15-native-deck-intelligence`
 - Active PR: #29
-- Active milestone: **INTEL-02**
+- Active milestone: **BENCH-01**
 - Intelligence development paused: **no**
-- Reason: INTEL-02 remains active after generic semantic, resource-engine, compound-component and lifecycle hardening. Source f0c3b9f... passes deterministic validation and the dependent precon/family controls. Exact-source focused and broad Marvel both fail closed with persisted zero-swap results: the generic component guard rejects the six previously unsafe focused packages, and the broad restricted lane remains unable to repair its fast-mana/tutor gates. The current INTEL-01 positive control at source 32353840b5c1aeb849171a411043ad3e8c370d7c (workflow 33833931627) passed complete discovery, strict full-table closure, exact legal/affordable printings, atomic two-package seeding, final recognition and route/access/setup audits; its finished deck retained four full-table routes and two distinct library routes. This remains scenario-level evidence rather than a full INTEL-02 family checkpoint. The accepted checkpoint stays 77a5383... and runtime source 45f4cb9... remains pinned-CI green. The historical PR #32 Scions & Spellcraft run 33813323027 remains retained as failure evidence: source a079090... lost package-wide Y'shtola spells-control affinity and trigger density. Current-source run 33830011009 at dcfc78d93e707e1d1a5199ad3cf852f8a3e993fb now passes the generic package strategy-fuel/structural-floor control with three accepted swaps and no protected-floor regressions. FF32 is scenario-green, while Marvel remains the active family blocker; the accepted checkpoint stays 77a5383... and no INTEL-02 family-wide claim is made. The restricted Marvel pool audit is resolved as an honest generic construction ceiling (D-020): no pool expansion or threshold relaxation is justified because the failed fast-mana and tutor role lanes are exhausted; exact-source zero-swap results remain red for INTEL-02 target quality.
+- Reason: The complete dependent INTEL-02 family was replayed from frozen source 5829b37... after targeted role-truth corrections. Positive lanes are mechanically green and manually acceptable enough to begin adversarial evaluation; the previously identified Food false green did not recur. Marvel remains an expected restricted-pool construction ceiling with honest zero-swap failures, and the Scryfall HTTP 429 special-printing audit remains provider-unknown rather than a product or benchmark failure. BENCH-01 now becomes the active evidence-gathering milestone: freeze source within each batch, run unseen contrasting decks before making fixes, compare complete legal 100-card results against strong general-AI baselines, and only then convert repeated failures into generic Commander-intelligence work.
 
 ## Stable boundary
 
@@ -23,13 +23,13 @@ Generated from `project-state.json`. Last state update: **2026-09-04T03:45:22.11
 
 Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
 
-Accepted INTEL-02 checkpoint remains 77a5383... because it is the last source explicitly accepted after exact-source testing and manual review. Source f0c3b9f... adds the generic compound operational-component guard and passes deterministic validation plus the dependent Necron Dynasties, Squirreled Away, Food and Fellowship and Middle-earth controls. Exact-source focused and broad Marvel both execute and persist honestly but return no-supported-improvement with zero swaps: the six prior focused substitutions are now rejected when they spend interaction, mana, treasure, sacrifice or other compound operational components without like-for-like replacement, while broad Marvel still exhausts its restricted fast-mana/tutor pool. Runtime follow-up 45f4cb9... remains pinned-CI green. The semantic and runtime follow-ups are not promoted to accepted checkpoint status. The historical FF-only Scions & Spellcraft benchmark on PR #32 remains retained as failure evidence: source a079090... reduced package-wide Y'shtola spells-control affinity 425→421 and trigger-spell density 29→27 despite locally preserved swaps. The current-source revalidation run 33830011009 executed source dcfc78d93e707e1d1a5199ad3cf852f8a3e993fb with generic caller-declared strategy-fuel and structural-floor gates; it passed build, direct mechanics and the live control, accepted three swaps, preserved MV3+ trigger fuel at 29, raised nonland noncreature spell density from 40 to 41, and held board wipes at 3 and fast mana at 1. This targeted scenario is now green, but it is not a full INTEL-02 family checkpoint; the accepted checkpoint remains 77a5383... until the broader family is mechanically green and manually acceptable. The restricted Marvel pool audit is resolved as an honest generic construction ceiling (D-020): no pool expansion or threshold relaxation is justified because the failed fast-mana and tutor role lanes are exhausted; exact-source zero-swap results remain red for INTEL-02 target quality.
+The accepted development checkpoint remains 77a5383...; no checkpoint promotion is implied by the later replay. Source 5829b37b686255ba35d419b37be17095e54fb696 is the frozen exact-source evidence baseline for the completed INTEL-02 family replay and the starting BENCH-01 batch. On that source, CI, strategy inference, INTEL-01 positive control, Food and Fellowship, Necron Dynasties, Squirreled Away and Scions & Spellcraft are mechanically green and manually acceptable with recorded watch items. Marvel focused and broad remain honest zero-swap target-quality failures caused by the restricted construction ceiling; this is expected ceiling behaviour, not target achievement and not a regression in the positive family controls. The themed special-printing audit is provider-unknown after Scryfall HTTP 429 and is not evidence of absence or a BENCH blocker. PRs #30 and #32 were closed unmerged after evidence retention; PR #2 remains separate and PR #29 remains the open draft experimental record.
 
 Latest fully validated executable experimental baseline recorded by project state:
 
 - Branch: `agent/package-probabilities`
 - SHA: `63bb7274004060eea507f7991a04b84921d0cd47`
-- Scope: Latest fully validated executable experimental baseline documented by the prior authoritative handoff. Later V0.15 deck-intelligence work on PR #29 remains experimental until milestone controls complete.
+- Scope: Latest fully validated executable experimental baseline documented by the prior authoritative handoff. Later V0.15 deck-intelligence and BENCH-01 work on PR #29 remain experimental until benchmark evidence justifies a new accepted checkpoint.
 
 Always inspect the live active-branch head before editing. A later documentation/project-management commit is not automatically a new executable validation milestone.
 
@@ -40,37 +40,35 @@ Always inspect the live active-branch head before editing. A later documentation
 | PM-01 | Persistent Project State & Handoff Automation | validated | Make repository state authoritative so a fresh chat can recover exact project context with minimal rechecking. |
 | PM-02 | Validation State Indexing | validated | Consolidate key persisted control metadata into one deterministic validation index so fresh chats can identify current, stale, passing and failing evidence immediately. |
 | INTEL-01 | Win-package intelligence | validated | Very-good verified full-table win-package discovery, feasibility, injection, and protection. |
-| INTEL-02 | Actual autonomous deck improvement | active | Very-good target-aware autonomous refinement that repairs real deck weaknesses rather than cosmetic metrics. |
-| BENCH-01 | Adversarial Commander benchmark suite | planned | Prove deck-building quality across combo, combat, control, aristocrats, typal, budget, theme-restricted, cEDH-ish, and hybrid decks. |
+| INTEL-02 | Actual autonomous deck improvement | implemented-validation-pending | Very-good target-aware autonomous refinement that repairs real deck weaknesses rather than cosmetic metrics. |
+| BENCH-01 | Adversarial Commander benchmark suite | active | Prove deck-building quality across combo, combat, control, aristocrats, typal, budget, theme-restricted, cEDH-ish, and hybrid decks. |
 | INTEL-03 | Human-level strategic reasoning layer | planned | Model commander role, synergy networks, structural-card importance, cut consequences, primary/secondary plans, and coherent package trade-offs. |
 | INTEL-04 | Counterfactual deck comparison & expert explanation | planned | Compare complete 100-card alternatives and explain why one deck state is stronger under the exact requested constraints. |
 
 ## Current validation status
 
-- Active branch status: **accepted-checkpoint-77a-intel01-route-resilience-green-ff32-package-gates-green-marvel-ceiling-recorded-family-unresolved**
-- Last persisted Marvel control source: `f0c3b9f82dca49f295e44175e517d992e6e5356e`
-- Last persisted Marvel control outcome: **focused-zero-swap-broad-zero-swap**
-- Note: At source f0c3b9f..., exact-source focused and broad Marvel controls executed and persisted with the generic compound operational-component guard enabled. Both lanes returned no-supported-improvement with zero swaps: the six previously observed focused substitutions are now rejected because multi-component operational cards must retain their like-for-like component families, and broad Marvel still has no supported package after its restricted fast-mana/tutor pool is exhausted. Build, deterministic regressions, target execution and persistence passed; target-quality/strategy gates correctly remain red because no accepted package repairs the failed Bracket-5 gates. Dependent Necron Dynasties, Squirreled Away, Food and Fellowship and Middle-earth controls pass at f0c3b9f.... The current INTEL-01 positive control at source 32353840b5c1aeb849171a411043ad3e8c370d7c (workflow 33833931627) passed complete discovery, strict full-table closure, exact legal/affordable printings, atomic two-package seeding, final recognition and route/access/setup audits; its finished deck retained four full-table routes and two distinct library routes. This remains scenario-level evidence rather than a full INTEL-02 family checkpoint. Accepted checkpoint remains 77a5383...; no promotion. The restricted Marvel pool audit is resolved as an honest generic construction ceiling (D-020): no pool expansion or threshold relaxation is justified because the failed fast-mana and tutor role lanes are exhausted; exact-source zero-swap results remain red for INTEL-02 target quality.
+- Active branch status: **bench01-active-from-5829-exact-source-replay-positive-family-green-marvel-ceiling-explicit-provider-unknown-nonblocking-no-promotion**
+- Last persisted Marvel control source: `5829b37b686255ba35d419b37be17095e54fb696`
+- Last persisted Marvel control outcome: **expected-ceiling-fail-closed-zero-swap**
+- Note: At exact source 5829b37..., focused and broad Marvel both execute and persist honestly with zero accepted swaps because the restricted pool cannot repair the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure. Keep these controls red for target achievement. Treat the result as expected construction-ceiling behaviour, not as a passing target and not as a blocker to BENCH-01 on other archetypes. Rerun only when the relevant pool, provider truth or policy changes.
 
 Required before resuming broad INTEL-01/INTEL-02 claims:
 
-- Retain the source-7265531... six-swap audit as historical evidence; source f0c3b9f... now rejects all six classes generically through compound operational-component preservation
-- Retain the generic Marvel construction ceiling recorded in D-020: the exhaustive restricted pool has no new fast-mana/tutor candidates beyond existing or excluded cards; keep focused and broad zero-swap results red and rerun only when provider or policy ceilings change.
-- Keep graveyard directionality/actionable recursion, explicit artifact engines, self-sacrifice versus repeatable outlets, secondary-plan inference, strategy-support density, premium early infrastructure, board wipes, token-death engines and board-scaling payoffs fail-closed
-- Treat the current INTEL-01 positive control at source 32353840b5c1aeb849171a411043ad3e8c370d7c (workflow 33833931627) as scenario-level validated: complete discovery, strict closure, exact printings, atomic two-package seeding, final recognition, four full-table routes and two distinct library routes all passed. Keep this evidence separate from the unresolved full INTEL-02 family checkpoint.
-- Commander legality, exact 100 cards, singleton/color identity, printing-family/set restrictions and hard budgets must remain intact in every expanded control
-- FF32 current-source Scions & Spellcraft control run 33830011009 at executable source dcfc78d93e707e1d1a5199ad3cf852f8a3e993fb passes generic package-level strategy-fuel/structural-floor acceptance, exact legality/printing/no-new-infinite/protected-core checks, and three accepted swaps; revalidate the broader dependent INTEL-02 family from one executable source before checkpoint promotion.
+- Preserve all generic guards proven by the 5829b37... family replay, including strategy-fuel, structural-floor, graveyard-directionality, artifact-engine, token/death-payoff, resource-component and exact legality/budget/printing truth.
+- Keep Marvel focused and broad target-quality controls red: expected fail-closed ceiling behaviour must never be relabelled as target achievement.
+- Keep provider unavailable separate from absence or regression; the themed Scryfall HTTP 429 result is provider-unknown and may be rerun opportunistically but does not gate BENCH-01.
+- Freeze executable source during each BENCH-01 batch and run several unseen fixtures before changing intelligence so benchmark evidence is not contaminated by scenario-by-scenario patching.
+- Do not promote the accepted development checkpoint, merge PR #29, or change stable/current until broad BENCH-01 evidence is mechanically sound and manually stronger than strong general-AI comparison decks.
 
 ## Next actions
 
-1. Do not repeat the completed comprehensive system audit unless a material architecture, runtime-entry-point, stable-boundary or project-state-integrity change triggers a re-audit; treat docs/SYSTEM-AUDIT-2026-09-02.md as the baseline and work only from the targeted remediation queue.
-2. Keep the historical six focused-Marvel swaps unaccepted; source f0c3b9f... now rejects their compound operational-component losses generically and both exact-source Marvel lanes fail closed with zero swaps.
-3. Retain the generic Marvel construction ceiling recorded in D-020: the exhaustive restricted pool has no new fast-mana/tutor candidates beyond existing or excluded cards; do not expand the pool or lower Bracket-5 standards. Rerun only when provider or policy ceilings change.
-4. Preserve the component guard and its anonymous multi-axis regression while revalidating any future candidate-pool change against interaction, land/mana, treasure, sacrifice, token, card-advantage and cost-reduction floors.
-5. Treat the current INTEL-01 positive control at source 32353840b5c1aeb849171a411043ad3e8c370d7c (workflow 33833931627) as scenario-level validated: complete discovery, strict closure, exact printings, atomic two-package seeding, final recognition, four full-table routes and two distinct library routes all passed. Keep this evidence separate from the unresolved full INTEL-02 family checkpoint.
-6. When the full INTEL-02 family is mechanically green and manually acceptable, update project-state.json and validation-index.json together and record that exact executable SHA as the new accepted development checkpoint.
-7. Record the current-source FF32 Scions & Spellcraft control as scenario-green at run 33830011009, executable source dcfc78d93e707e1d1a5199ad3cf852f8a3e993fb: generic package-level strategy-fuel and structural-floor gates preserved Y'shtola MV3+ trigger fuel, nonland spell density, board wipes and fast mana while allowing three target-advancing swaps. Keep the historical PR #32 failure retained; revalidate the broader dependent INTEL-02 family before any checkpoint claim.
-8. Keep PR #29 as experimental/evidence history. Do not merge or promote it automatically; when V0.15 is genuinely accepted, prepare a clean promotion candidate rather than treating the current 1,000+ commit evidence branch as release-ready.
+1. Do not repeat the completed comprehensive system audit; docs/SYSTEM-AUDIT-2026-09-02.md remains the reusable baseline unless a material architecture, runtime-entry-point, stable-boundary or project-state-integrity change occurs.
+2. Use source 5829b37b686255ba35d419b37be17095e54fb696 as the frozen starting source for BENCH-01 Batch A; do not modify Commander intelligence between fixtures in that batch.
+3. Run the two first contrasting BENCH-01 fixtures: Counter Blitz as an FF-only Bant counters/proliferate deck with dense countermagic and hybrid combat/combo identity, and Liliana, Heretical Healer // Liliana, Defiant Necromancer under a NZ$500 whole-deck budget as the aristocrats/graveyard benchmark.
+4. For each fixture, score legality and exact constraints first, then target-gate movement, whole-deck strategy preservation, win-route correctness/resilience, cut quality, mana/interaction/resource structure, budget/printing truth and complete 100-card manual quality.
+5. Compare each complete benchmark result against a strong general-purpose-AI build under the same commander, budget, printing and theme restrictions; record concrete wins, losses and ambiguous trade-offs rather than relying on aggregate internal scores alone.
+6. After the first frozen batch, expand unseen fixtures across combat, control, typal, aristocrats, unrestricted combo and hybrid decks. Accumulate repeated failure patterns before making generic fixes; never add card-name or scenario-specific hacks to make a benchmark pass.
+7. Keep PR #29 open/draft and unmerged. PRs #30 and #32 are closed unmerged with evidence retained; keep PR #2 separate until its own archival decision. Stable main remains V0.13.
 
 ## Permanent truth boundary
 
@@ -79,6 +77,7 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 - Provider unavailable is not evidence of absence.
 - A generic infinite-damage statement is not a verified multiplayer full-table win unless opponent scope is proven.
 - Pipeline execution is not proof of intelligent deck improvement.
+- Expected construction-ceiling behaviour is not the same as target achievement.
 - No merge, stable/current promotion, version bump, or release without explicit user approval.
 
 ## Fresh-chat recovery
@@ -96,4 +95,4 @@ Read in this order:
 9. `docs/VALIDATION-MATRIX.md`
 10. `docs/KNOWN-FAILURES.md`
 
-Then: The comprehensive system audit in docs/SYSTEM-AUDIT-2026-09-02.md is complete and is a reusable baseline, not a recurring task. Do not rerun or restate the full audit unless a material architecture, runtime-entry-point, stable-boundary or project-state-integrity change triggers a re-audit. Inspect the live active-branch head, then continue only from nextActions and the open targeted findings. Treat source f0c3b9f... as semantic/component evidence, source 45f4cb9... as runtime evidence, and the FF32 isolated/current-source replay as benchmark findings; no promotion without explicit approval.
+Then: The comprehensive system audit in docs/SYSTEM-AUDIT-2026-09-02.md is complete and reusable. Do not rerun it without a material trigger. BENCH-01 is active from frozen source 5829b37...; preserve expected Marvel ceiling behaviour as red target evidence, keep provider-unknown separate from failure, freeze source within benchmark batches, and only make generic Commander-intelligence changes after multiple unseen fixtures expose a repeated weakness. No promotion without explicit approval.
