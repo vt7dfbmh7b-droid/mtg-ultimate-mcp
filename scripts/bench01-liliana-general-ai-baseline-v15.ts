@@ -113,6 +113,12 @@ function finite(value: unknown, fallback = 0): number {
   return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
 }
 
+function canonicalLookupName(name: string): string {
+  if (name === COMMANDER) return COMMANDER_LOOKUP;
+  if (name === 'Malakir Rebirth // Malakir Mire') return 'Malakir Rebirth';
+  return name;
+}
+
 function identifiers(parsed: ParsedDeck): CardIdentifierInput[] {
   return [...parsed.commanders, ...parsed.main].map((entry) => ({
     name: entry.name,
@@ -145,13 +151,14 @@ async function main(): Promise<void> {
   const rate = await getUsdNzdRateV13();
   const maxDeckUsdReference = nzdToUsdV13(MAX_DECK_NZD, rate.rate);
   const policy = await resolvePrintingPolicyV08({});
-  const oracleNames = LOCKED_COUNTS.map(([, name]) => name === COMMANDER ? COMMANDER_LOOKUP : name);
+  const oracleNames = LOCKED_COUNTS.map(([, name]) => canonicalLookupName(name));
   const canonical = await getCardsByNames(oracleNames);
   assert.deepEqual(canonical.notFound, [], 'every locked Liliana Oracle card must resolve');
   const byName = new Map<string, (typeof canonical.cards)[number]>();
   for (const card of canonical.cards) {
     byName.set(card.name.toLocaleLowerCase(), card);
     if (card.name === COMMANDER) byName.set(COMMANDER_LOOKUP.toLocaleLowerCase(), card);
+    if (card.name === 'Malakir Rebirth // Malakir Mire') byName.set('malakir rebirth', card);
   }
 
   const commanderEntries: DeckEntry[] = [];
@@ -160,7 +167,7 @@ async function main(): Promise<void> {
   let totalUsd = 0;
 
   for (const [quantity, requestedName] of LOCKED_COUNTS) {
-    const lookupName = requestedName === COMMANDER ? COMMANDER_LOOKUP : requestedName;
+    const lookupName = canonicalLookupName(requestedName);
     const card = byName.get(lookupName.toLocaleLowerCase()) ?? byName.get(requestedName.toLocaleLowerCase());
     assert.ok(card, `canonical card missing after collection resolve: ${requestedName}`);
     const selected = await selectEligiblePrintingV08(card, policy);
@@ -258,9 +265,9 @@ async function main(): Promise<void> {
   ]);
 
   const result = {
-    schema: 'bench01-liliana-general-ai-baseline-v1',
+    schema: 'bench01-liliana-general-ai-baseline-v2',
     fixture: 'BENCH-01 Batch A / Liliana independent general-AI comparison',
-    lockDocument: 'docs/BENCH-01-BATCH-A-LILIANA-BASELINE-LOCK-2026-09-05.md',
+    lockDocument: 'docs/BENCH-01-BATCH-A-LILIANA-BASELINE-CORRECTION-V2-2026-09-05.md',
     antiLeak: true,
     commander: COMMANDER,
     targetBracket: TARGET_BRACKET,
