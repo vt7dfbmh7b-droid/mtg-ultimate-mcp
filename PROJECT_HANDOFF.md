@@ -25,7 +25,7 @@ The comprehensive system audit in docs/SYSTEM-AUDIT-2026-09-02.md is complete an
 
 ## Stable safety boundary
 
-Stable remains **V0.13 / 0.13.0** on `main`. No merge, stable/current promotion, version bump or release is authorized by this handoff.
+Stable remains **V0.13 / 0.13.0** on `main`. Standing user authorization permits merge/promotion without another approval once the repository records complete validation, non-redundancy, safety, no relevant unresolved blocker, and promotion-grade benchmark evidence. Until those gates are satisfied, stable/current remains unchanged.
 
 ## Latest fully validated executable experimental baseline
 
