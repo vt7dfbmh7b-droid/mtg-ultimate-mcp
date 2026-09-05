@@ -1,0 +1,103 @@
+// COMMANDER
+1 Tidus, Yuna's Guardian (FIC) 5 *F*
+
+// MAIN
+1 Yuna, Grand Summoner (FIC) 8 *F*
+1 Auron, Venerated Guardian (FIC) 10 *N*
+1 Gatta and Luzzu (FIC) 19 *N*
+1 Protection Magic (FIC) 24 *N*
+1 Summon: Ixion (FIC) 27 *N*
+1 Summon: Yojimbo (FIC) 28 *N*
+1 Summoner's Sending (FIC) 29 *N*
+1 Blitzball Stadium (FIC) 34 *N*
+1 Lulu, Stern Guardian (FIC) 38 *N*
+1 O'aka, Traveling Merchant (FIC) 39 *N*
+1 Rikku, Resourceful Guardian (FIC) 41 *N*
+1 Maester Seymour (FIC) 68 *N*
+1 Sphere Grid (FIC) 70 *N*
+1 Summon: Magus Sisters (FIC) 71 *N*
+1 Tromell, Seymour's Butler (FIC) 73 *N*
+1 Yuna's Decision (FIC) 74 *N*
+1 Yuna's Whistle (FIC) 75 *N*
+1 Kimahri, Valiant Guardian (FIC) 85 *N*
+1 Shelinda, Yevon Acolyte (FIC) 94 *N*
+1 Wakka, Devoted Guardian (FIC) 97 *N*
+1 Collective Effort (FIC) 237 *N*
+1 Damning Verdict (FIC) 239 *N*
+1 Resourceful Defense (FIC) 251 *N*
+1 Scholar of New Horizons (FIC) 252 *N*
+1 Sunscorch Regent (FIC) 255 *N*
+1 Together Forever (FIC) 257 *N*
+1 Chasm Skulker (FIC) 262 *N*
+1 Inexorable Tide (FIC) 265 *N*
+1 Bane of Progress (FIC) 299 *N*
+1 Fight Rigging (FIC) 303 *N*
+1 Forgotten Ancient (FIC) 304 *N*
+1 Generous Patron (FIC) 305 *N*
+1 Gyre Sage (FIC) 306 *N*
+1 Hardened Scales (FIC) 307 *N*
+1 Incubation Druid (FIC) 309 *N*
+1 Path of Discovery (FIC) 312 *N*
+1 Rampant Rejuvenator (FIC) 314 *N*
+1 Tireless Tracker (FIC) 316 *N*
+1 Altered Ego (FIC) 317 *N*
+1 Fathom Mage (FIC) 325 *N*
+1 Walking Ballista (FIC) 371 *N*
+1 Brushland (FIC) 377 *N*
+1 Canopy Vista (FIC) 378 *N*
+1 Exotic Orchard (FIC) 390 *N*
+1 Flooded Grove (FIC) 393 *N*
+1 Fortified Village (FIC) 396 *N*
+1 Glacial Fortress (FIC) 400 *N*
+1 Hinterland Harbor (FIC) 403 *N*
+1 Overflowing Basin (FIC) 410 *N*
+1 Port Town (FIC) 412 *N*
+1 Prairie Stream (FIC) 413 *N*
+1 Skycloud Expanse (FIC) 423 *N*
+1 Sungrass Prairie (FIC) 428 *N*
+1 Sunpetal Grove (FIC) 432 *N*
+1 Temple of Enlightenment (FIC) 435 *N*
+1 Temple of Mystery (FIC) 436 *N*
+1 Temple of Plenty (FIC) 437 *N*
+1 Vineglimmer Snarl (FIC) 440 *N*
+1 Destroy Evil (FIC) 240 *N*
+1 Grateful Apparition (FIC) 244 *N*
+1 Path to Exile (FIC) 248 *N*
+1 An Offer You Can't Refuse (FIC) 267 *N*
+1 Duskshell Crawler (FIC) 301 *N*
+1 Farseek (FIC) 302 *N*
+1 Inspiring Call (FIC) 310 *N*
+1 Bred for the Hunt (FIC) 321 *N*
+1 Arcane Signet (FIC) 334 *N*
+1 Everflowing Chalice (FIC) 343 *N*
+1 Sol Ring (FIC) 358 *N*
+1 Ash Barrens (FIC) 374 *N*
+1 Evolving Wilds (FIC) 389 *N*
+1 Forge of Heroes (FIC) 395 *N*
+1 Idyllic Beachfront (FIC) 404 *N*
+1 Nesting Grounds (FIC) 408 *N*
+1 Path of Ancestry (FIC) 411 *N*
+1 Radiant Grove (FIC) 414 *N*
+1 Seaside Citadel (FIC) 420 *N*
+1 Tangled Islet (FIC) 434 *N*
+1 Temple of the False God (FIC) 438 *N*
+1 Command Tower (FIC) 486 *N*
+1 Island (FIN) 297 *N*
+1 Island (FIN) 298 *N*
+1 Island (FIN) 299 *N*
+1 Forest (FIN) 306 *N*
+1 Forest (FIN) 307 *N*
+1 Forest (FIN) 308 *N*
+1 Plains (FIN) 294 *N*
+1 Plains (FIN) 295 *N*
+1 Plains (FIN) 296 *N*
+1 Tome of Legends (FIC) 369 *N*
+1 Sram, Senior Edificer (FCA) 3 *N*
+1 Umezawa's Jitte (SLD) 1865 *N*
+1 Puresteel Paladin (FIC) 250 *N*
+1 Hypnotic Sprite // Mesmeric Glare (FIC) 264 *N*
+1 Swords to Plowshares (FIC) 256 *N*
+1 Esper Origins // Summon: Esper Maduin (FIN) 185 *N*
+1 Cyclonic Rift (SLD) 1869 *N*
+1 Solitude (SLD) 7004 *F*
+1 Ultros, Obnoxious Octopus (FIN) 83 *N*

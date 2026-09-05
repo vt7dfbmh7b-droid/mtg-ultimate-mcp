@@ -1,0 +1,11 @@
+executed_source_sha=9d4776c5ffe250127282fc4923b5dbea568176a3
+product_runtime_baseline_sha=dd085caf4e47f6f5e1976667dc90de2db46c00a1
+source_relationship=benchmark-state-wrapper-descendant-src-verified-equal-to-frozen-product-sha
+frozen_source_guard_outcome=success
+component_regression_outcome=success
+build_outcome=success
+counter_blitz_outcome=success
+cavalry_charge_outcome=success
+batch=BENCH-01-POST-COMPONENT-GATE-PAIRED-REPLAY
+source_frozen_within_batch=true
+historical_batch_a_evidence_overwritten=false
