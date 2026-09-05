@@ -1,11 +1,13 @@
-name: "BENCH-01 Batch B — Cavalry Charge Compound Plan"
+name: "BENCH-01 — paired post-component-gate replay"
 
 # Measurement-only benchmark. Commander-intelligence product source is frozen
-# at ce4c9eba59617be2cf57718408b40252230bccf4 for the repaired-source replay.
+# at dd085caf4e47f6f5e1976667dc90de2db46c00a1. Later commits may change only
+# benchmark/state wrappers; this workflow fails closed if src/** differs.
 on:
   push:
     branches: ["agent/v15-native-deck-intelligence"]
     paths:
+      - "scripts/bench01-counter-blitz-ff-only-v15.ts"
       - "scripts/bench01-batch-b-cavalry-charge-compound-v15.ts"
       - ".github/workflows/bench01-batch-b-compound.yml"
   workflow_dispatch:
@@ -14,10 +16,11 @@ permissions:
   contents: write
 
 concurrency:
-  group: bench01-batch-b-${{ github.ref }}
+  group: bench01-post-component-gate-${{ github.ref }}
   cancel-in-progress: false
 
 env:
+  FROZEN_PRODUCT_SHA: dd085caf4e47f6f5e1976667dc90de2db46c00a1
   HTTP_RETRY_BASE_MS: 5000
   HTTP_RETRY_MAX_MS: 15000
   SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
@@ -25,12 +28,27 @@ env:
   COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
 
 jobs:
-  cavalry-charge:
+  paired-replay:
     runs-on: ubuntu-24.04
-    timeout-minutes: 120
+    timeout-minutes: 180
     steps:
-      - name: Check out exact Batch B source
+      - name: Check out benchmark wrapper head
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+
+      - name: Prove Commander product source is frozen
+        id: frozen_source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git cat-file -e "${FROZEN_PRODUCT_SHA}^{commit}"
+          if ! git diff --quiet "$FROZEN_PRODUCT_SHA" HEAD -- src/; then
+            echo "src/** differs from frozen BENCH product source ${FROZEN_PRODUCT_SHA}." >&2
+            git diff --stat "$FROZEN_PRODUCT_SHA" HEAD -- src/ >&2
+            exit 1
+          fi
+          echo "src/** exactly matches frozen product source ${FROZEN_PRODUCT_SHA}."
 
       - name: Set up Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
@@ -41,41 +59,76 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build checked-in source
+      - name: Run focused compound-component regressions
+        id: component_regression
+        continue-on-error: true
+        run: npx tsx --test src/services/optimizer-v12-compound-theme-components.test.ts
+
+      - name: Build frozen product source
         id: source_build
         continue-on-error: true
         run: |
           set -o pipefail
-          npm run build 2>&1 | tee bench01-batch-b-build.log
+          npm run build 2>&1 | tee bench01-post-component-gate-build.log
 
-      - name: Run unseen Cavalry Charge compound-plan benchmark
-        id: cavalry
-        if: steps.source_build.outcome == 'success'
+      - name: Run Counter Blitz post-repair replay
+        id: counter_blitz
+        if: steps.frozen_source.outcome == 'success' && steps.component_regression.outcome == 'success' && steps.source_build.outcome == 'success'
         continue-on-error: true
         run: |
           set -o pipefail
-          npx tsx scripts/bench01-batch-b-cavalry-charge-compound-v15.ts 2>&1 | tee bench01-batch-b-cavalry.log
+          npx tsx scripts/bench01-counter-blitz-ff-only-v15.ts 2>&1 | tee bench01-post-component-gate-counter.log
 
-      - name: Upload Batch B evidence
+      - name: Run Cavalry Charge post-repair replay
+        id: cavalry
+        if: steps.frozen_source.outcome == 'success' && steps.component_regression.outcome == 'success' && steps.source_build.outcome == 'success'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npx tsx scripts/bench01-batch-b-cavalry-charge-compound-v15.ts 2>&1 | tee bench01-post-component-gate-cavalry.log
+
+      - name: Bind Cavalry measurement metadata to frozen product source
+        if: steps.cavalry.outcome == 'success'
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const path = 'bench01-batch-b-cavalry-result.json';
+          const result = JSON.parse(fs.readFileSync(path, 'utf8'));
+          result.productRuntimeBaselineSha = process.env.FROZEN_PRODUCT_SHA;
+          result.sourceRelationship = 'benchmark/state-wrapper descendant; src/** verified byte-for-byte-equivalent to frozen product SHA before execution';
+          fs.writeFileSync(path, JSON.stringify(result, null, 2) + '\n');
+          NODE
+
+      - name: Upload paired replay evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: bench01-batch-b-cavalry-${{ github.sha }}
+          name: bench01-post-component-gate-${{ github.sha }}
           path: |
+            bench01-counter-blitz-result.json
+            bench01-counter-blitz-raw-result.json
+            bench01-counter-blitz-stock-deck.txt
+            bench01-counter-blitz-refined-deck.txt
+            bench01-counter-blitz-failure.txt
             bench01-batch-b-cavalry-result.json
             bench01-batch-b-cavalry-raw-result.json
             bench01-batch-b-cavalry-stock-deck.txt
             bench01-batch-b-cavalry-refined-deck.txt
             bench01-batch-b-cavalry-failure.txt
-            bench01-batch-b-build.log
-            bench01-batch-b-cavalry.log
+            bench01-post-component-gate-build.log
+            bench01-post-component-gate-counter.log
+            bench01-post-component-gate-cavalry.log
           if-no-files-found: ignore
           retention-days: 30
 
-      - name: Persist Batch B evidence
+      - name: Persist paired replay evidence without overwriting historical batches
         if: always() && github.event_name == 'push'
         env:
+          FROZEN_OUTCOME: ${{ steps.frozen_source.outcome }}
+          REGRESSION_OUTCOME: ${{ steps.component_regression.outcome }}
           BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          COUNTER_OUTCOME: ${{ steps.counter_blitz.outcome }}
           CAVALRY_OUTCOME: ${{ steps.cavalry.outcome }}
         shell: bash
         run: |
@@ -85,33 +138,47 @@ jobs:
           for attempt in 1 2 3 4 5 6 7 8; do
             git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
             git reset --hard "origin/${GITHUB_REF_NAME}"
-            mkdir -p test-results/bench01-batch-b/cavalry-charge
-            rm -f test-results/bench01-batch-b/cavalry-charge/* \
-                  test-results/bench01-batch-b/run-metadata.txt
-            [ ! -f bench01-batch-b-cavalry-result.json ] || cp bench01-batch-b-cavalry-result.json test-results/bench01-batch-b/cavalry-charge/result.json
-            [ ! -f bench01-batch-b-cavalry-raw-result.json ] || cp bench01-batch-b-cavalry-raw-result.json test-results/bench01-batch-b/cavalry-charge/raw-result.json
-            [ ! -f bench01-batch-b-cavalry-stock-deck.txt ] || cp bench01-batch-b-cavalry-stock-deck.txt test-results/bench01-batch-b/cavalry-charge/stock-deck.txt
-            [ ! -f bench01-batch-b-cavalry-refined-deck.txt ] || cp bench01-batch-b-cavalry-refined-deck.txt test-results/bench01-batch-b/cavalry-charge/refined-deck.txt
-            [ ! -f bench01-batch-b-cavalry-failure.txt ] || cp bench01-batch-b-cavalry-failure.txt test-results/bench01-batch-b/cavalry-charge/failure.txt
-            [ ! -f bench01-batch-b-cavalry.log ] || cp bench01-batch-b-cavalry.log test-results/bench01-batch-b/cavalry-charge/control.log
-            [ ! -f bench01-batch-b-build.log ] || cp bench01-batch-b-build.log test-results/bench01-batch-b/build.log
-            printf 'executed_source_sha=%s\nproduct_runtime_baseline_sha=ce4c9eba59617be2cf57718408b40252230bccf4\nsource_relationship=benchmark-harness-only-descendant-product-src-frozen-at-repair-sha\nbuild_outcome=%s\ncavalry_charge_outcome=%s\nbatch=BENCH-01-B-REPAIRED-REPLAY\nsource_frozen_within_fixture=true\n' \
-              "$GITHUB_SHA" "$BUILD_OUTCOME" "$CAVALRY_OUTCOME" \
-              > test-results/bench01-batch-b/run-metadata.txt
-            git add -- test-results/bench01-batch-b
+            mkdir -p test-results/bench01-post-component-gate/counter-blitz \
+                     test-results/bench01-post-component-gate/cavalry-charge
+            rm -f test-results/bench01-post-component-gate/counter-blitz/* \
+                  test-results/bench01-post-component-gate/cavalry-charge/* \
+                  test-results/bench01-post-component-gate/run-metadata.txt
+            [ ! -f bench01-counter-blitz-result.json ] || cp bench01-counter-blitz-result.json test-results/bench01-post-component-gate/counter-blitz/result.json
+            [ ! -f bench01-counter-blitz-raw-result.json ] || cp bench01-counter-blitz-raw-result.json test-results/bench01-post-component-gate/counter-blitz/raw-result.json
+            [ ! -f bench01-counter-blitz-stock-deck.txt ] || cp bench01-counter-blitz-stock-deck.txt test-results/bench01-post-component-gate/counter-blitz/stock-deck.txt
+            [ ! -f bench01-counter-blitz-refined-deck.txt ] || cp bench01-counter-blitz-refined-deck.txt test-results/bench01-post-component-gate/counter-blitz/refined-deck.txt
+            [ ! -f bench01-counter-blitz-failure.txt ] || cp bench01-counter-blitz-failure.txt test-results/bench01-post-component-gate/counter-blitz/failure.txt
+            [ ! -f bench01-post-component-gate-counter.log ] || cp bench01-post-component-gate-counter.log test-results/bench01-post-component-gate/counter-blitz/control.log
+            [ ! -f bench01-batch-b-cavalry-result.json ] || cp bench01-batch-b-cavalry-result.json test-results/bench01-post-component-gate/cavalry-charge/result.json
+            [ ! -f bench01-batch-b-cavalry-raw-result.json ] || cp bench01-batch-b-cavalry-raw-result.json test-results/bench01-post-component-gate/cavalry-charge/raw-result.json
+            [ ! -f bench01-batch-b-cavalry-stock-deck.txt ] || cp bench01-batch-b-cavalry-stock-deck.txt test-results/bench01-post-component-gate/cavalry-charge/stock-deck.txt
+            [ ! -f bench01-batch-b-cavalry-refined-deck.txt ] || cp bench01-batch-b-cavalry-refined-deck.txt test-results/bench01-post-component-gate/cavalry-charge/refined-deck.txt
+            [ ! -f bench01-batch-b-cavalry-failure.txt ] || cp bench01-batch-b-cavalry-failure.txt test-results/bench01-post-component-gate/cavalry-charge/failure.txt
+            [ ! -f bench01-post-component-gate-cavalry.log ] || cp bench01-post-component-gate-cavalry.log test-results/bench01-post-component-gate/cavalry-charge/control.log
+            [ ! -f bench01-post-component-gate-build.log ] || cp bench01-post-component-gate-build.log test-results/bench01-post-component-gate/build.log
+            printf 'executed_source_sha=%s\nproduct_runtime_baseline_sha=%s\nsource_relationship=benchmark-state-wrapper-descendant-src-verified-equal-to-frozen-product-sha\nfrozen_source_guard_outcome=%s\ncomponent_regression_outcome=%s\nbuild_outcome=%s\ncounter_blitz_outcome=%s\ncavalry_charge_outcome=%s\nbatch=BENCH-01-POST-COMPONENT-GATE-PAIRED-REPLAY\nsource_frozen_within_batch=true\nhistorical_batch_a_evidence_overwritten=false\n' \
+              "$GITHUB_SHA" "$FROZEN_PRODUCT_SHA" "$FROZEN_OUTCOME" "$REGRESSION_OUTCOME" "$BUILD_OUTCOME" "$COUNTER_OUTCOME" "$CAVALRY_OUTCOME" \
+              > test-results/bench01-post-component-gate/run-metadata.txt
+            git add -- test-results/bench01-post-component-gate
             if git diff --cached --quiet; then exit 0; fi
-            git commit -m "test-results(BENCH-01): persist repaired Batch B Cavalry evidence [skip ci]"
+            git commit -m "test-results(BENCH-01): persist post-component-gate paired replay [skip ci]"
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
-            echo "BENCH-01 Batch B persistence attempt ${attempt} lost a branch race; retrying."
+            echo "BENCH-01 paired replay persistence attempt ${attempt} lost a branch race; retrying."
           done
-          echo 'BENCH-01 Batch B evidence persistence exhausted eight branch-race retries.' >&2
+          echo 'BENCH-01 paired replay persistence exhausted eight branch-race retries.' >&2
           exit 1
 
-      - name: Require Batch B harness execution
+      - name: Require paired replay harness execution
         if: always()
         env:
+          FROZEN_OUTCOME: ${{ steps.frozen_source.outcome }}
+          REGRESSION_OUTCOME: ${{ steps.component_regression.outcome }}
           BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          COUNTER_OUTCOME: ${{ steps.counter_blitz.outcome }}
           CAVALRY_OUTCOME: ${{ steps.cavalry.outcome }}
         run: |
+          test "$FROZEN_OUTCOME" = success
+          test "$REGRESSION_OUTCOME" = success
           test "$BUILD_OUTCOME" = success
+          test "$COUNTER_OUTCOME" = success
           test "$CAVALRY_OUTCOME" = success
