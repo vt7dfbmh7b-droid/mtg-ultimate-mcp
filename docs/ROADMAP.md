@@ -71,7 +71,7 @@ On that replay:
 - that Marvel result is an expected construction ceiling, not target achievement and not a reason to relax standards;
 - the themed special-printing audit is provider-unknown after Scryfall HTTP 429, not evidence of absence and not a BENCH-01 blocker.
 
-The accepted development checkpoint remains `77a5383fa7490aa91360b8186a4bda890f632157`. The `5829b37...` source is an exact replay/BENCH baseline, not a promoted checkpoint.
+The formal accepted development checkpoint remains `77a5383fa7490aa91360b8186a4bda890f632157`. The current fully validated executable BENCH product source is `ce4c9eba59617be2cf57718408b40252230bccf4`, which contains the generic controlled compound-theme parsing repair. It is a validated experimental replay baseline, not a stable promotion or proof of benchmark superiority.
 
 ## BENCH-01 — Adversarial Commander benchmark suite — ACTIVE
 
@@ -88,7 +88,7 @@ Operating rules:
 - only convert repeated cross-fixture weaknesses into generic remediation work;
 - a green workflow is not enough: inspect the resulting legal 100-card deck and whether the requested strategy actually improved.
 
-### Batch A — COMPLETE — frozen product baseline `5829b37...`
+### Batch A — COMPLETE — pre-repair product baseline `5829b37...`
 
 #### Counter Blitz / Tidus, Yuna's Guardian
 Constraint family: FINAL FANTASY printings only; Bant +1/+1 counters/proliferate; dense countermagic; hybrid combat/combo identity.
@@ -104,7 +104,7 @@ Locked strong general-AI baseline:
 - materially improved countermagic/protection/access and added verified combo routes;
 - remained Bracket 3 rather than reaching the requested aspirational ceiling.
 
-Verdict: **decisive general-AI win**. This is evidence of a natural compound-request understanding defect, not a legality failure.
+Verdict: **decisive general-AI win**. This is permanent pre-repair evidence and must not be relabelled after later repairs.
 
 #### Liliana, Heretical Healer // Liliana, Defiant Necromancer — NZ$500 whole-deck budget
 Specialist outcome:
@@ -121,78 +121,105 @@ Locked strong general-AI baseline:
 
 Verdict: **decisive specialist win** because central hard-budget truth outranks raw power gained by violating the request.
 
-### Batch A aggregate verdict
+### Batch A aggregate pre-repair verdict
 
 **Specialist 1 — General AI 1. `split-not-promotion-grade`.**
 
 This result is permanent benchmark evidence. Do not regenerate the locked baselines after seeing specialist outputs and do not relabel either outcome because later repairs improve the system.
 
-### Batch B first unseen fixture — Cavalry Charge — COMPLETE AS DEFECT REPRODUCTION
+### Batch B first unseen fixture — Cavalry Charge — PRE-REPAIR DEFECT REPRODUCTION COMPLETE
 
 Constraint family: Knights typal + combat + graveyard recursion/reanimation, target Bracket 4 assessment, NZ$35 maximum per added card, NZ$200 total upgrade budget, maximum 12 swaps.
 
-Outcome from the frozen pre-repair product baseline:
+Pre-repair outcome:
 - exact 100 and Commander legal;
-- stock deck measured correctly enough for benchmark use;
 - natural request `Knights typal combat graveyard recursion reanimation` was rejected as `unsupported-theme`;
 - zero swaps;
 - same centralized compound free-form theme rejection as Counter Blitz.
 
-Verdict: **independent cross-fixture reproduction of the compound-theme defect**. Together with Counter Blitz, this is sufficient evidence to justify one generic repair rather than another unseen reproduction before fixing that specific defect.
+Verdict: **independent cross-fixture reproduction of the compound-theme parsing defect**. Together with Counter Blitz, it justified one generic controlled repair.
 
-### Current gate — controlled compound-theme repair — IN VALIDATION
+### Controlled compound-theme parsing repair — VALIDATED
 
-Root cause is centralized in the neutral-theme resolver: compound free-form requests were intentionally fail-closed before controlled decomposition.
+Root cause was centralized in the neutral-theme resolver: compound free-form requests were intentionally fail-closed before controlled decomposition.
 
-Required generic repair behavior:
-- preserve exact single-theme behavior;
-- accept a compound request only when the entire request decomposes into known controlled facets;
-- preserve explicit component metadata;
-- keep unknown leftovers fail-closed rather than silently dropping them;
-- never execute raw user text as Scryfall/provider query grammar;
-- preserve the existing bounded combat discovery contract rather than broadening it merely to satisfy benchmarks;
-- do not add Counter Blitz, Cavalry Charge or card-name special cases.
+The generic repair now:
+- preserves exact single-theme behavior;
+- accepts a compound request only when the entire request decomposes into known controlled facets;
+- preserves explicit component metadata;
+- keeps unknown leftovers fail-closed rather than silently dropping them;
+- never executes raw user text as Scryfall/provider query grammar;
+- preserves the bounded combat discovery contract `(o:attack OR o:"combat damage")`;
+- contains no Counter Blitz, Cavalry Charge or card-name special cases.
 
-Validation status:
-- focused neutral-theme regressions have passed on the staged repair direction;
-- an earlier full-suite run exposed an over-broad combat-query compatibility issue, which was corrected back to the bounded existing combat contract;
-- corrected validation run `33949687254` still ultimately failed;
-- therefore **no compound-theme repair SHA is accepted, frozen or benchmark-ready yet**.
+Accepted executable product source: `ce4c9eba59617be2cf57718408b40252230bccf4`.
 
-Immediate development action:
-1. isolate the exact remaining failure in run `33949687254` / job `101261983495`;
-2. make only the demonstrated generic compatibility/build correction;
-3. require focused regressions + full repository tests + build green from the same source;
-4. remove temporary one-shot repair workflows/scripts from the accepted product commit;
-5. freeze that exact repaired product SHA;
-6. replay **Counter Blitz and Cavalry Charge from the same unchanged repaired source** before any further Commander-intelligence edits.
+Validation evidence:
+- dedicated run `33958162827` passed the focused neutral-theme regression suite;
+- the same clean locally committed product tree passed the full repository test suite;
+- the same tree passed build;
+- temporary one-shot repair workflow/script surfaces were absent from the accepted product commit before validation/publish;
+- only after those gates passed was `ce4c9eba...` published to the active branch.
 
-### Repaired-source replay acceptance criteria
+This closes the parser-validation gate. It does **not** establish benchmark superiority.
 
-Counter Blitz must be judged against the locked 18-swap general-AI baseline, including:
-- exact legality and FF physical-printing truth;
-- actual swaps rather than merely successful parsing;
-- +1/+1 counter/proliferate support;
+### Repaired Cavalry Charge replay — COMPLETE — quality gap found
+
+The replay used a benchmark-harness-only descendant of product source `ce4c9eba...`; no Commander-intelligence source changed after that product SHA.
+
+Result:
+- compound request resolves to `Knight typal + Combat / attacks + Graveyard / reanimator` rather than failing closed;
+- refinement executes and accepts 8 swaps;
+- exact 100 and Commander legality remain true;
+- about NZ$32.12 total upgrade spend, within the NZ$200 total limit;
+- accepted cards remain within NZ$35 per-added-card cap;
+- 8 swaps remain within the 12-swap limit;
+- assessed bracket moves 2 → 3, but target Bracket 4 is not achieved;
+- average nonland MV improves 3.34 → 2.97;
+- early plays improve 19 → 26;
+- cheap interaction improves 3 → 6;
+- tutors improve 0 → 2;
+- recursion improves by 3;
+- graveyard-reference count improves by 2.
+
+However, two explicitly requested facets regress:
+- Knight creature count falls **32 → 27**;
+- combat-reference count falls **21 → 17**.
+
+Verdict: **meaningful target movement, but not a benchmark pass and not promotion-grade**. The compound parser is fixed, yet aggregate OR-style theme satisfaction can currently remain green while one requested component compensates for another. This is now a candidate generic quality defect, not yet a product-change authorization by itself.
+
+### Repaired Counter Blitz replay — IN PROGRESS
+
+Workflow run `33958274005` is executing from the same frozen product source `ce4c9eba...` through a benchmark-harness-only descendant; no `src/**` change is allowed until this paired replay is interpreted.
+
+When persisted, inspect:
+- exact 100 / Commander legality / FF-only physical printing truth;
+- accepted swaps and whether refinement actually occurs;
+- +1/+1 counter engine and proliferate support;
 - countermagic and protection;
-- combat identity retention;
-- verified routes/access;
-- whole-deck cohesion and bracket truth.
+- combat identity;
+- verified combo routes/access;
+- curve, early plays and interaction;
+- bracket truth;
+- every requested compound facet independently, not only aggregate theme density.
 
-Cavalry Charge must preserve:
-- exact Commander legality;
-- NZ$35 per-added-card cap;
-- NZ$200 total upgrade budget;
-- maximum 12 swaps;
-- Knights typal density/identity;
-- meaningful combat plan;
-- graveyard recursion/reanimation support;
-- whole-deck structural quality.
+Compare the final complete deck against the already locked 18-swap general-AI baseline. Do not regenerate that baseline after seeing the repaired specialist result.
 
-A parser status change from `unsupported-theme` to accepted is **not** by itself a benchmark win.
+### Decision rule after Counter finishes
 
-### After the repaired replay
+If Counter independently shows that aggregate compound satisfaction remains green while an explicitly requested component materially regresses, that is sufficient cross-fixture evidence for one **generic per-component compound-theme preservation/achievement gate**. Such a repair must:
+- operate on controlled `components[]`, not deck/card names;
+- preserve single-theme behavior;
+- prevent gains in one requested component from silently compensating for material loss in another;
+- retain hard legality/budget/printing/strategy guards;
+- be fully regression/full-suite/build validated;
+- then freeze one exact new product SHA and replay both Counter Blitz and Cavalry Charge without source changes between them.
 
-If the repaired replay is mechanically and manually sound, continue several unseen fixtures before making another product change. Remaining benchmark families include:
+If Counter does **not** reproduce the component-compensation pattern, do not patch based on Cavalry alone. Run at least one additional contrasting unseen compound fixture first.
+
+### After the compound-quality decision
+
+Once this blocker is resolved, continue several unseen fixtures before making another product change. Remaining benchmark families include:
 - combat/commander-damage;
 - compact combo;
 - hybrid combat-combo;
@@ -225,7 +252,7 @@ Scored dimensions:
 
 ### Promotion gate
 
-V0.15 is **not promotion-ready today**. PR #29 and stable V0.13 remain unchanged while BENCH-01 is split and the compound repair is unaccepted.
+V0.15 is **not promotion-ready today**. The parser repair is validated, but BENCH-01 still has a repaired-source quality question and broad superiority has not yet been demonstrated. PR #29 and stable V0.13 remain unchanged for now.
 
 The user has granted standing authority for autonomous merge/promotion once the evidence genuinely supports it. No additional approval is required when all relevant work is fully validated, non-redundant, safe, blocker-free and broad BENCH-01 evidence shows the Commander specialist consistently deserves promotion. Merge/promotion must never be done merely to tidy branches or because experimental work exists; persist the validating evidence and update project state in the same run.
 
