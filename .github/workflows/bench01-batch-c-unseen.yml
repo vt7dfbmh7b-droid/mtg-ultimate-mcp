@@ -114,6 +114,7 @@ jobs:
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
             echo "BENCH-01 batch C persistence attempt ${attempt} lost a branch race; retrying."
           done
+          echo "BENCH-01 batch C persistence exhausted eight branch-race retries." >&2
           exit 1
 
       - name: Require benchmark execution
