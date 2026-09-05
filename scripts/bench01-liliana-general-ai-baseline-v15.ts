@@ -90,7 +90,7 @@ const LOCKED_COUNTS: Array<[number, string]> = [
   [1, 'Unearth'],
   [1, 'Bone Shards'],
   [1, 'Eaten Alive'],
-  [19, 'Swamp'],
+  [20, 'Swamp'],
   [1, 'Bojuka Bog'],
   [1, 'Takenuma, Abandoned Mire'],
   [1, 'Castle Locthwain'],
