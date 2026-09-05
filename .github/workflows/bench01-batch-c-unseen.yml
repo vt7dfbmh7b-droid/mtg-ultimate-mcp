@@ -1,0 +1,130 @@
+name: "BENCH-01 — unseen contrasting batch C"
+
+on:
+  push:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - "scripts/bench01-batch-c-unseen-v15.ts"
+      - ".github/workflows/bench01-batch-c-unseen.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bench01-batch-c-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  FROZEN_PRODUCT_SHA: dd085caf4e47f6f5e1976667dc90de2db46c00a1
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  unseen-batch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - name: Check out benchmark wrapper head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+
+      - name: Prove Commander product source is frozen
+        id: frozen_source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git cat-file -e "${FROZEN_PRODUCT_SHA}^{commit}"
+          if ! git diff --quiet "$FROZEN_PRODUCT_SHA" HEAD -- src/; then
+            echo "src/** differs from frozen BENCH product source ${FROZEN_PRODUCT_SHA}." >&2
+            git diff --stat "$FROZEN_PRODUCT_SHA" HEAD -- src/ >&2
+            exit 1
+          fi
+          echo "src/** exactly matches frozen product source ${FROZEN_PRODUCT_SHA}."
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run repository tests
+        id: tests
+        continue-on-error: true
+        run: npm test
+
+      - name: Build frozen product source
+        id: build
+        continue-on-error: true
+        run: npm run build
+
+      - name: Run BENCH-01 unseen batch C
+        id: bench
+        if: steps.frozen_source.outcome == 'success' && steps.tests.outcome == 'success' && steps.build.outcome == 'success'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npx tsx scripts/bench01-batch-c-unseen-v15.ts 2>&1 | tee bench01-batch-c.log
+
+      - name: Upload batch C evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: bench01-batch-c-${{ github.sha }}
+          path: |
+            bench01-batch-c-result.json
+            bench01-batch-c-failure.txt
+            bench01-batch-c.log
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Persist batch C evidence
+        if: always() && github.event_name == 'push'
+        env:
+          FROZEN_OUTCOME: ${{ steps.frozen_source.outcome }}
+          TEST_OUTCOME: ${{ steps.tests.outcome }}
+          BUILD_OUTCOME: ${{ steps.build.outcome }}
+          BENCH_OUTCOME: ${{ steps.bench.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            mkdir -p test-results/bench01-batch-c
+            rm -f test-results/bench01-batch-c/*
+            [ ! -f bench01-batch-c-result.json ] || cp bench01-batch-c-result.json test-results/bench01-batch-c/result.json
+            [ ! -f bench01-batch-c-failure.txt ] || cp bench01-batch-c-failure.txt test-results/bench01-batch-c/failure.txt
+            [ ! -f bench01-batch-c.log ] || cp bench01-batch-c.log test-results/bench01-batch-c/control.log
+            printf 'executed_source_sha=%s\nproduct_runtime_baseline_sha=%s\nsource_relationship=benchmark-wrapper-descendant-src-verified-equal-to-frozen-product-sha\nfrozen_source_guard_outcome=%s\nrepository_tests_outcome=%s\nbuild_outcome=%s\nbench_outcome=%s\nbatch=BENCH-01-C\nsource_frozen_within_batch=true\nfixtures=witherbloom-witchcraft,urzas-iron-alliance,necron-dynasties\n' \
+              "$GITHUB_SHA" "$FROZEN_PRODUCT_SHA" "$FROZEN_OUTCOME" "$TEST_OUTCOME" "$BUILD_OUTCOME" "$BENCH_OUTCOME" \
+              > test-results/bench01-batch-c/run-metadata.txt
+            git add -- test-results/bench01-batch-c
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "test-results(BENCH-01): persist unseen batch C [skip ci]"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "BENCH-01 batch C persistence attempt ${attempt} lost a branch race; retrying."
+          done
+          exit 1
+
+      - name: Require benchmark execution
+        if: always()
+        env:
+          FROZEN_OUTCOME: ${{ steps.frozen_source.outcome }}
+          TEST_OUTCOME: ${{ steps.tests.outcome }}
+          BUILD_OUTCOME: ${{ steps.build.outcome }}
+          BENCH_OUTCOME: ${{ steps.bench.outcome }}
+        run: |
+          test "$FROZEN_OUTCOME" = success
+          test "$TEST_OUTCOME" = success
+          test "$BUILD_OUTCOME" = success
+          test "$BENCH_OUTCOME" = success
