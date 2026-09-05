@@ -13,22 +13,20 @@
       ],
       "metadataPath": "test-results/project-management/integrity.txt",
       "exists": true,
-      "sourceSha": "0e2871beb1c2c97d8a50c65d6aa565956c5e6c2c",
-      "outcome": "fail",
+      "sourceSha": "6629ea0d3b9ad6286aade8f0b2b26dfd344dcc1b",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "0e2871beb1c2c97d8a50c65d6aa565956c5e6c2c",
+        "source_sha": "6629ea0d3b9ad6286aade8f0b2b26dfd344dcc1b",
         "active_milestone": "BENCH-01",
         "typecheck_outcome": "success",
         "scripts_typecheck_outcome": "success",
-        "state_validate_outcome": "failure",
+        "state_validate_outcome": "success",
         "validation_index_outcome": "success",
         "recovery_smoke_outcome": "success",
         "source_build_outcome": "success"
       },
-      "unmetPassConditions": [
-        "state_validate_outcome=success"
-      ]
+      "unmetPassConditions": []
     },
     {
       "id": "INTEL-01-POSITIVE",
