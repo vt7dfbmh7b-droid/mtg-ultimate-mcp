@@ -1,7 +1,7 @@
-executed_source_sha=27109f893e109c1dae3cd4b3479c01ede110ac0f
-product_runtime_baseline_sha=5829b37b686255ba35d419b37be17095e54fb696
-source_relationship=measurement-only-descendant-no-src-intelligence-change
+executed_source_sha=e33fca811af721cf090f2d64e3cb25b10699df39
+product_runtime_baseline_sha=ce4c9eba59617be2cf57718408b40252230bccf4
+source_relationship=benchmark-harness-only-descendant-product-src-frozen-at-repair-sha
 build_outcome=success
 cavalry_charge_outcome=success
-batch=BENCH-01-B
+batch=BENCH-01-B-REPAIRED-REPLAY
 source_frozen_within_fixture=true

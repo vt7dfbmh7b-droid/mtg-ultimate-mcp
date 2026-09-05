@@ -2,13 +2,10 @@
 1 Sidar Jabari of Zhalfir (MOC) 5 *F*
 
 // MAIN
-1 Elenda and Azor (MOC) 6 *F*
 1 Exsanguinator Cavalry (MOC) 26 *N*
 1 Ichor Elixir (MOC) 46 *N*
-1 Herald of Hoofbeats (MOC) 22 *N*
 1 Locthwain Lancer (MOC) 27 *N*
 1 Chivalric Alliance (MOC) 11 *N*
-1 Path of the Enigma (MOC) 23 *N*
 1 Vodalian Wave-Knight (MOC) 43 *N*
 1 Conjurer's Mantle (MOC) 12 *N*
 1 Ethersworn Adjudicator (MOC) 222 *N*
@@ -26,17 +23,14 @@
 1 Knight of the White Orchid (MOC) 193 *N*
 1 Knights' Charge (MOC) 333 *N*
 1 Liliana's Standard Bearer (MOC) 255 *N*
-1 Maul of the Skyclaves (MOC) 195 *N*
 1 Midnight Reaper (MOC) 257 *N*
 1 Murderous Rider // Swift End (MOC) 258 *N*
 1 Painful Truths (MOC) 262 *N*
 1 Port Town (MOC) 419 *N*
 1 Prairie Stream (MOC) 420 *N*
-1 Promise of Loyalty (MOC) 200 *N*
 1 Pull from Tomorrow (MOC) 230 *N*
 1 Shineshadow Snarl (MOC) 422 *N*
 1 Sigiled Sword of Valeron (MOC) 377 *N*
-1 Silverwing Squadron (MOC) 207 *N*
 1 Sunken Hollow (MOC) 428 *N*
 1 Temple of Deceit (MOC) 431 *N*
 1 Temple of Enlightenment (MOC) 432 *N*
@@ -62,7 +56,6 @@
 1 Thriving Moor (MOC) 442 *N*
 1 Arcane Sanctum (MOC) 390 *N*
 1 Arcane Signet (MOC) 348 *N*
-1 Arvad the Cursed (MOC) 317 *N*
 1 Corpse Knight (MOC) 321 *N*
 1 Despark (MOC) 322 *N*
 1 Fellwar Stone (MOC) 356 *N*
@@ -78,10 +71,17 @@
 1 Sol Ring (MOC) 381 *N*
 1 Swords to Plowshares (MOC) 211 *N*
 1 Syr Elenora, the Discerning (MOC) 239 *N*
-1 Syr Konrad, the Grim (MOC) 269 *N*
 1 Temple of the False God (MOC) 437 *N*
 1 Wintermoor Commander (MOC) 345 *N*
 1 Xerex Strobe-Knight (MOM) 85 *N*
 8 Plains (MOM) 277 *N*
 6 Island (MOM) 278 *N*
 5 Swamp (MOM) 279 *N*
+1 Myr Retriever (MRD) 215 *N*
+1 Arcane Denial (MSC) 147 *N*
+1 Lively Dirge (OTJ) 93 *N*
+1 Skullclamp (MSC) 210 *N*
+1 Deadly Dispute (MSC) 794 *N*
+1 Bone Shards (PLST) MH2-76 *N*
+1 The Cruelty of Gix (PDMU) 87p *N*
+1 Three Steps Ahead (MAR) 62 *N*
