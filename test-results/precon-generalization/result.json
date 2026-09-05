@@ -258,8 +258,8 @@
     "packageAcceptanceContract": null,
     "estimatedUpgradeSpendNzd": 8.73,
     "estimatedUpgradeSpendUsdReference": 5.13,
-    "maxTotalNzd": 199.99,
-    "maxTotalUsdReference": 117.54,
+    "maxTotalNzd": 200,
+    "maxTotalUsdReference": 117.56,
     "swaps": [
       {
         "out": "Necron Monolith",
@@ -269,8 +269,8 @@
           "set": "MRD",
           "collectorNumber": "215",
           "finish": "nonfoil",
-          "priceNzd": 3.51,
-          "priceUsdReference": 2.06
+          "priceNzd": 3.52,
+          "priceUsdReference": 2.07
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -364,8 +364,8 @@
           "set": "RAV",
           "collectorNumber": "273",
           "finish": "nonfoil",
-          "priceNzd": 0.19,
-          "priceUsdReference": 0.11
+          "priceNzd": 0.17,
+          "priceUsdReference": 0.1
         },
         "structuralPairing": {
           "addressedRole": "ramp",
@@ -573,8 +573,8 @@
       "targetBracket": 4,
       "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.57,
-      "maxTotalNzd": 199.99,
-      "maxTotalUsdReference": 117.54,
+      "maxTotalNzd": 200,
+      "maxTotalUsdReference": 117.56,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -616,8 +616,8 @@
               "collectorNumber": "215",
               "releaseDate": "2003-10-02",
               "finish": "nonfoil",
-              "priceNzd": 3.51,
-              "priceUsdReference": 2.06,
+              "priceNzd": 3.52,
+              "priceUsdReference": 2.07,
               "promo": false,
               "promoTypes": [],
               "flavorName": null,
@@ -725,8 +725,8 @@
               "collectorNumber": "273",
               "releaseDate": "2005-10-07",
               "finish": "nonfoil",
-              "priceNzd": 0.19,
-              "priceUsdReference": 0.11,
+              "priceNzd": 0.17,
+              "priceUsdReference": 0.1,
               "promo": false,
               "promoTypes": [],
               "flavorName": null,
@@ -1200,8 +1200,8 @@
                   "set": "MRD",
                   "collectorNumber": "215",
                   "finish": "nonfoil",
-                  "priceNzd": 3.51,
-                  "priceUsdReference": 2.06
+                  "priceNzd": 3.52,
+                  "priceUsdReference": 2.07
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1295,8 +1295,8 @@
                   "set": "RAV",
                   "collectorNumber": "273",
                   "finish": "nonfoil",
-                  "priceNzd": 0.19,
-                  "priceUsdReference": 0.11
+                  "priceNzd": 0.17,
+                  "priceUsdReference": 0.1
                 },
                 "structuralPairing": {
                   "addressedRole": "ramp",
@@ -1389,8 +1389,8 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 7.5,
-            "estimatedSpendUsdReference": 4.41,
+            "estimatedSpendNzd": 7.49,
+            "estimatedSpendUsdReference": 4.4,
             "unknownPriceCount": 0,
             "improvementScore": 22.999,
             "significantRegression": false,
@@ -1762,8 +1762,8 @@
                   "set": "DRC",
                   "collectorNumber": "43",
                   "finish": "nonfoil",
-                  "priceNzd": 2.14,
-                  "priceUsdReference": 1.26
+                  "priceNzd": 2.18,
+                  "priceUsdReference": 1.28
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1806,8 +1806,8 @@
                   "set": "ONE",
                   "collectorNumber": "80",
                   "finish": "nonfoil",
-                  "priceNzd": 0.43,
-                  "priceUsdReference": 0.25
+                  "priceNzd": 0.39,
+                  "priceUsdReference": 0.23
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
@@ -1848,8 +1848,8 @@
                   "set": "RAV",
                   "collectorNumber": "273",
                   "finish": "nonfoil",
-                  "priceNzd": 0.19,
-                  "priceUsdReference": 0.11
+                  "priceNzd": 0.17,
+                  "priceUsdReference": 0.1
                 },
                 "structuralPairing": {
                   "addressedRole": "ramp",
@@ -1950,8 +1950,8 @@
             "reason": "package-causes-a-meaningful-commander-strategy-loss",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 6.58,
-            "estimatedSpendUsdReference": 3.87,
+            "estimatedSpendNzd": 6.6,
+            "estimatedSpendUsdReference": 3.88,
             "unknownPriceCount": 0,
             "improvementScore": 19.451,
             "significantRegression": false,
@@ -2287,8 +2287,8 @@
                   "set": "SOC",
                   "collectorNumber": "210",
                   "finish": "nonfoil",
-                  "priceNzd": 1.33,
-                  "priceUsdReference": 0.78
+                  "priceNzd": 1.36,
+                  "priceUsdReference": 0.8
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2377,8 +2377,8 @@
                   "set": "RAV",
                   "collectorNumber": "273",
                   "finish": "nonfoil",
-                  "priceNzd": 0.19,
-                  "priceUsdReference": 0.11
+                  "priceNzd": 0.17,
+                  "priceUsdReference": 0.1
                 },
                 "structuralPairing": {
                   "addressedRole": "ramp",
@@ -2851,8 +2851,8 @@
                   "set": "SOS",
                   "collectorNumber": "85",
                   "finish": "nonfoil",
-                  "priceNzd": 3.35,
-                  "priceUsdReference": 1.97
+                  "priceNzd": 3.37,
+                  "priceUsdReference": 1.98
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2942,8 +2942,8 @@
                   "set": "RAV",
                   "collectorNumber": "273",
                   "finish": "nonfoil",
-                  "priceNzd": 0.19,
-                  "priceUsdReference": 0.11
+                  "priceNzd": 0.17,
+                  "priceUsdReference": 0.1
                 },
                 "structuralPairing": {
                   "addressedRole": "ramp",
@@ -3418,8 +3418,8 @@
                       "set": "MRD",
                       "collectorNumber": "215",
                       "finish": "nonfoil",
-                      "priceNzd": 3.51,
-                      "priceUsdReference": 2.06
+                      "priceNzd": 3.52,
+                      "priceUsdReference": 2.07
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3513,8 +3513,8 @@
                       "set": "RAV",
                       "collectorNumber": "273",
                       "finish": "nonfoil",
-                      "priceNzd": 0.19,
-                      "priceUsdReference": 0.11
+                      "priceNzd": 0.17,
+                      "priceUsdReference": 0.1
                     },
                     "structuralPairing": {
                       "addressedRole": "ramp",
@@ -3607,8 +3607,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 7.5,
-                "estimatedSpendUsdReference": 4.41,
+                "estimatedSpendNzd": 7.49,
+                "estimatedSpendUsdReference": 4.4,
                 "unknownPriceCount": 0,
                 "improvementScore": 22.999,
                 "significantRegression": false,
@@ -3980,8 +3980,8 @@
                       "set": "DRC",
                       "collectorNumber": "43",
                       "finish": "nonfoil",
-                      "priceNzd": 2.14,
-                      "priceUsdReference": 1.26
+                      "priceNzd": 2.18,
+                      "priceUsdReference": 1.28
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4024,8 +4024,8 @@
                       "set": "ONE",
                       "collectorNumber": "80",
                       "finish": "nonfoil",
-                      "priceNzd": 0.43,
-                      "priceUsdReference": 0.25
+                      "priceNzd": 0.39,
+                      "priceUsdReference": 0.23
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -4066,8 +4066,8 @@
                       "set": "RAV",
                       "collectorNumber": "273",
                       "finish": "nonfoil",
-                      "priceNzd": 0.19,
-                      "priceUsdReference": 0.11
+                      "priceNzd": 0.17,
+                      "priceUsdReference": 0.1
                     },
                     "structuralPairing": {
                       "addressedRole": "ramp",
@@ -4168,8 +4168,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 6.58,
-                "estimatedSpendUsdReference": 3.87,
+                "estimatedSpendNzd": 6.6,
+                "estimatedSpendUsdReference": 3.88,
                 "unknownPriceCount": 0,
                 "improvementScore": 19.451,
                 "significantRegression": false,
@@ -4505,8 +4505,8 @@
                       "set": "SOC",
                       "collectorNumber": "210",
                       "finish": "nonfoil",
-                      "priceNzd": 1.33,
-                      "priceUsdReference": 0.78
+                      "priceNzd": 1.36,
+                      "priceUsdReference": 0.8
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4595,8 +4595,8 @@
                       "set": "RAV",
                       "collectorNumber": "273",
                       "finish": "nonfoil",
-                      "priceNzd": 0.19,
-                      "priceUsdReference": 0.11
+                      "priceNzd": 0.17,
+                      "priceUsdReference": 0.1
                     },
                     "structuralPairing": {
                       "addressedRole": "ramp",
@@ -5069,8 +5069,8 @@
                       "set": "SOS",
                       "collectorNumber": "85",
                       "finish": "nonfoil",
-                      "priceNzd": 3.35,
-                      "priceUsdReference": 1.97
+                      "priceNzd": 3.37,
+                      "priceUsdReference": 1.98
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5160,8 +5160,8 @@
                       "set": "RAV",
                       "collectorNumber": "273",
                       "finish": "nonfoil",
-                      "priceNzd": 0.19,
-                      "priceUsdReference": 0.11
+                      "priceNzd": 0.17,
+                      "priceUsdReference": 0.1
                     },
                     "structuralPairing": {
                       "addressedRole": "ramp",
@@ -5279,8 +5279,8 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 2.14,
-            "estimatedSpendUsdReference": 1.26,
+            "estimatedSpendNzd": 2.18,
+            "estimatedSpendUsdReference": 1.28,
             "unknownPriceCount": 0,
             "improvementScore": 7.501,
             "significantRegression": false,
@@ -5554,8 +5554,8 @@
                   "set": "DRC",
                   "collectorNumber": "43",
                   "finish": "nonfoil",
-                  "priceNzd": 2.14,
-                  "priceUsdReference": 1.26
+                  "priceNzd": 2.18,
+                  "priceUsdReference": 1.28
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -5605,8 +5605,8 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 1.33,
-            "estimatedSpendUsdReference": 0.78,
+            "estimatedSpendNzd": 1.36,
+            "estimatedSpendUsdReference": 0.8,
             "unknownPriceCount": 0,
             "improvementScore": 5.222,
             "significantRegression": false,
@@ -5880,8 +5880,8 @@
                   "set": "SOC",
                   "collectorNumber": "210",
                   "finish": "nonfoil",
-                  "priceNzd": 1.33,
-                  "priceUsdReference": 0.78
+                  "priceNzd": 1.36,
+                  "priceUsdReference": 0.8
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -5931,8 +5931,8 @@
             "reason": "candidate-deck-strategy-retention-evidence-incomplete",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 3.35,
-            "estimatedSpendUsdReference": 1.97,
+            "estimatedSpendNzd": 3.37,
+            "estimatedSpendUsdReference": 1.98,
             "unknownPriceCount": 0,
             "improvementScore": 7.748,
             "significantRegression": false,
@@ -6206,8 +6206,8 @@
                   "set": "SOS",
                   "collectorNumber": "85",
                   "finish": "nonfoil",
-                  "priceNzd": 3.35,
-                  "priceUsdReference": 1.97
+                  "priceNzd": 3.37,
+                  "priceUsdReference": 1.98
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -6257,8 +6257,8 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 4.88,
-            "estimatedSpendUsdReference": 2.87,
+            "estimatedSpendNzd": 4.83,
+            "estimatedSpendUsdReference": 2.84,
             "unknownPriceCount": 0,
             "improvementScore": 7.475,
             "significantRegression": false,
@@ -6525,8 +6525,8 @@
                   "set": "C15",
                   "collectorNumber": "133",
                   "finish": "nonfoil",
-                  "priceNzd": 4.88,
-                  "priceUsdReference": 2.87
+                  "priceNzd": 4.83,
+                  "priceUsdReference": 2.84
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -6587,8 +6587,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 17.07,
-                "estimatedSpendUsdReference": 10.03,
+                "estimatedSpendNzd": 17.15,
+                "estimatedSpendUsdReference": 10.08,
                 "unknownPriceCount": 0,
                 "improvementScore": 21.318,
                 "significantRegression": false,
@@ -6945,8 +6945,8 @@
                       "set": "DRC",
                       "collectorNumber": "43",
                       "finish": "nonfoil",
-                      "priceNzd": 2.14,
-                      "priceUsdReference": 1.26
+                      "priceNzd": 2.18,
+                      "priceUsdReference": 1.28
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -6996,8 +6996,8 @@
                       "set": "ONE",
                       "collectorNumber": "80",
                       "finish": "nonfoil",
-                      "priceNzd": 0.43,
-                      "priceUsdReference": 0.25
+                      "priceNzd": 0.39,
+                      "priceUsdReference": 0.23
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -7042,8 +7042,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.38,
-                      "priceUsdReference": 3.75
+                      "priceNzd": 6.48,
+                      "priceUsdReference": 3.81
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -7087,8 +7087,8 @@
                       "set": "MOM",
                       "collectorNumber": "265",
                       "finish": "nonfoil",
-                      "priceNzd": 8.12,
-                      "priceUsdReference": 4.77
+                      "priceNzd": 8.1,
+                      "priceUsdReference": 4.76
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -7137,8 +7137,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 16.15,
-                "estimatedSpendUsdReference": 9.49,
+                "estimatedSpendNzd": 16.26,
+                "estimatedSpendUsdReference": 9.56,
                 "unknownPriceCount": 0,
                 "improvementScore": 21.057,
                 "significantRegression": false,
@@ -7457,8 +7457,8 @@
                       "set": "SOC",
                       "collectorNumber": "210",
                       "finish": "nonfoil",
-                      "priceNzd": 1.33,
-                      "priceUsdReference": 0.78
+                      "priceNzd": 1.36,
+                      "priceUsdReference": 0.8
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -7556,8 +7556,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.38,
-                      "priceUsdReference": 3.75
+                      "priceNzd": 6.48,
+                      "priceUsdReference": 3.81
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -7601,8 +7601,8 @@
                       "set": "MOM",
                       "collectorNumber": "265",
                       "finish": "nonfoil",
-                      "priceNzd": 8.12,
-                      "priceUsdReference": 4.77
+                      "priceNzd": 8.1,
+                      "priceUsdReference": 4.76
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -7651,8 +7651,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 18.16,
-                "estimatedSpendUsdReference": 10.67,
+                "estimatedSpendNzd": 18.25,
+                "estimatedSpendUsdReference": 10.73,
                 "unknownPriceCount": 0,
                 "improvementScore": 16.031,
                 "significantRegression": false,
@@ -7966,8 +7966,8 @@
                       "set": "SOS",
                       "collectorNumber": "85",
                       "finish": "nonfoil",
-                      "priceNzd": 3.35,
-                      "priceUsdReference": 1.97
+                      "priceNzd": 3.37,
+                      "priceUsdReference": 1.98
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -8061,8 +8061,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.38,
-                      "priceUsdReference": 3.75
+                      "priceNzd": 6.48,
+                      "priceUsdReference": 3.81
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -8109,8 +8109,8 @@
                       "set": "MOM",
                       "collectorNumber": "265",
                       "finish": "nonfoil",
-                      "priceNzd": 8.12,
-                      "priceUsdReference": 4.77
+                      "priceNzd": 8.1,
+                      "priceUsdReference": 4.76
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -8155,8 +8155,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 19.91,
-                "estimatedSpendUsdReference": 11.7,
+                "estimatedSpendNzd": 19.94,
+                "estimatedSpendUsdReference": 11.72,
                 "unknownPriceCount": 0,
                 "improvementScore": 16.909,
                 "significantRegression": false,
@@ -8473,8 +8473,8 @@
                       "set": "C15",
                       "collectorNumber": "133",
                       "finish": "nonfoil",
-                      "priceNzd": 4.88,
-                      "priceUsdReference": 2.87
+                      "priceNzd": 4.83,
+                      "priceUsdReference": 2.84
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -8570,8 +8570,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.38,
-                      "priceUsdReference": 3.75
+                      "priceNzd": 6.48,
+                      "priceUsdReference": 3.81
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -8615,8 +8615,8 @@
                       "set": "MOM",
                       "collectorNumber": "265",
                       "finish": "nonfoil",
-                      "priceNzd": 8.12,
-                      "priceUsdReference": 4.77
+                      "priceNzd": 8.1,
+                      "priceUsdReference": 4.76
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -8677,8 +8677,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 8.95,
-                "estimatedSpendUsdReference": 5.26,
+                "estimatedSpendNzd": 9.05,
+                "estimatedSpendUsdReference": 5.32,
                 "unknownPriceCount": 0,
                 "improvementScore": 16.608,
                 "significantRegression": false,
@@ -9005,8 +9005,8 @@
                       "set": "DRC",
                       "collectorNumber": "43",
                       "finish": "nonfoil",
-                      "priceNzd": 2.14,
-                      "priceUsdReference": 1.26
+                      "priceNzd": 2.18,
+                      "priceUsdReference": 1.28
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -9056,8 +9056,8 @@
                       "set": "ONE",
                       "collectorNumber": "80",
                       "finish": "nonfoil",
-                      "priceNzd": 0.43,
-                      "priceUsdReference": 0.25
+                      "priceNzd": 0.39,
+                      "priceUsdReference": 0.23
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -9102,8 +9102,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.38,
-                      "priceUsdReference": 3.75
+                      "priceNzd": 6.48,
+                      "priceUsdReference": 3.81
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -9147,8 +9147,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 8.03,
-                "estimatedSpendUsdReference": 4.72,
+                "estimatedSpendNzd": 8.17,
+                "estimatedSpendUsdReference": 4.8,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.582,
                 "significantRegression": false,
@@ -9437,8 +9437,8 @@
                       "set": "SOC",
                       "collectorNumber": "210",
                       "finish": "nonfoil",
-                      "priceNzd": 1.33,
-                      "priceUsdReference": 0.78
+                      "priceNzd": 1.36,
+                      "priceUsdReference": 0.8
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -9536,8 +9536,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.38,
-                      "priceUsdReference": 3.75
+                      "priceNzd": 6.48,
+                      "priceUsdReference": 3.81
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -9581,8 +9581,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 10.04,
-                "estimatedSpendUsdReference": 5.9,
+                "estimatedSpendNzd": 10.16,
+                "estimatedSpendUsdReference": 5.97,
                 "unknownPriceCount": 0,
                 "improvementScore": 14.351,
                 "significantRegression": false,
@@ -9870,8 +9870,8 @@
                       "set": "SOS",
                       "collectorNumber": "85",
                       "finish": "nonfoil",
-                      "priceNzd": 3.35,
-                      "priceUsdReference": 1.97
+                      "priceNzd": 3.37,
+                      "priceUsdReference": 1.98
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -9965,8 +9965,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.38,
-                      "priceUsdReference": 3.75
+                      "priceNzd": 6.48,
+                      "priceUsdReference": 3.81
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -10013,8 +10013,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 11.79,
-                "estimatedSpendUsdReference": 6.93,
+                "estimatedSpendNzd": 11.84,
+                "estimatedSpendUsdReference": 6.96,
                 "unknownPriceCount": 0,
                 "improvementScore": 14.374,
                 "significantRegression": false,
@@ -10295,8 +10295,8 @@
                       "set": "C15",
                       "collectorNumber": "133",
                       "finish": "nonfoil",
-                      "priceNzd": 4.88,
-                      "priceUsdReference": 2.87
+                      "priceNzd": 4.83,
+                      "priceUsdReference": 2.84
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -10392,8 +10392,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.38,
-                      "priceUsdReference": 3.75
+                      "priceNzd": 6.48,
+                      "priceUsdReference": 3.81
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -10751,8 +10751,8 @@
                       "set": "DRC",
                       "collectorNumber": "43",
                       "finish": "nonfoil",
-                      "priceNzd": 2.14,
-                      "priceUsdReference": 1.26
+                      "priceNzd": 2.18,
+                      "priceUsdReference": 1.28
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -10802,8 +10802,8 @@
                       "set": "ONE",
                       "collectorNumber": "80",
                       "finish": "nonfoil",
-                      "priceNzd": 0.43,
-                      "priceUsdReference": 0.25
+                      "priceNzd": 0.39,
+                      "priceUsdReference": 0.23
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -11150,8 +11150,8 @@
                       "set": "SOC",
                       "collectorNumber": "210",
                       "finish": "nonfoil",
-                      "priceNzd": 1.33,
-                      "priceUsdReference": 0.78
+                      "priceNzd": 1.36,
+                      "priceUsdReference": 0.8
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -11201,8 +11201,8 @@
                       "set": "ONE",
                       "collectorNumber": "80",
                       "finish": "nonfoil",
-                      "priceNzd": 0.43,
-                      "priceUsdReference": 0.25
+                      "priceNzd": 0.39,
+                      "priceUsdReference": 0.23
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -11247,8 +11247,8 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 3.78,
-                "estimatedSpendUsdReference": 2.22,
+                "estimatedSpendNzd": 3.76,
+                "estimatedSpendUsdReference": 2.21,
                 "unknownPriceCount": 0,
                 "improvementScore": 3.688,
                 "significantRegression": false,
@@ -11550,8 +11550,8 @@
                       "set": "SOS",
                       "collectorNumber": "85",
                       "finish": "nonfoil",
-                      "priceNzd": 3.35,
-                      "priceUsdReference": 1.97
+                      "priceNzd": 3.37,
+                      "priceUsdReference": 1.98
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -11601,8 +11601,8 @@
                       "set": "ONE",
                       "collectorNumber": "80",
                       "finish": "nonfoil",
-                      "priceNzd": 0.43,
-                      "priceUsdReference": 0.25
+                      "priceNzd": 0.39,
+                      "priceUsdReference": 0.23
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -11647,8 +11647,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 5.31,
-                "estimatedSpendUsdReference": 3.12,
+                "estimatedSpendNzd": 5.22,
+                "estimatedSpendUsdReference": 3.07,
                 "unknownPriceCount": 0,
                 "improvementScore": 6.171,
                 "significantRegression": false,
@@ -11942,8 +11942,8 @@
                       "set": "C15",
                       "collectorNumber": "133",
                       "finish": "nonfoil",
-                      "priceNzd": 4.88,
-                      "priceUsdReference": 2.87
+                      "priceNzd": 4.83,
+                      "priceUsdReference": 2.84
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -11992,8 +11992,8 @@
                       "set": "ONE",
                       "collectorNumber": "80",
                       "finish": "nonfoil",
-                      "priceNzd": 0.43,
-                      "priceUsdReference": 0.25
+                      "priceNzd": 0.39,
+                      "priceUsdReference": 0.23
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -12050,8 +12050,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 2.14,
-                "estimatedSpendUsdReference": 1.26,
+                "estimatedSpendNzd": 2.18,
+                "estimatedSpendUsdReference": 1.28,
                 "unknownPriceCount": 0,
                 "improvementScore": 7.501,
                 "significantRegression": false,
@@ -12325,8 +12325,8 @@
                       "set": "DRC",
                       "collectorNumber": "43",
                       "finish": "nonfoil",
-                      "priceNzd": 2.14,
-                      "priceUsdReference": 1.26
+                      "priceNzd": 2.18,
+                      "priceUsdReference": 1.28
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -12376,8 +12376,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 1.33,
-                "estimatedSpendUsdReference": 0.78,
+                "estimatedSpendNzd": 1.36,
+                "estimatedSpendUsdReference": 0.8,
                 "unknownPriceCount": 0,
                 "improvementScore": 5.222,
                 "significantRegression": false,
@@ -12651,8 +12651,8 @@
                       "set": "SOC",
                       "collectorNumber": "210",
                       "finish": "nonfoil",
-                      "priceNzd": 1.33,
-                      "priceUsdReference": 0.78
+                      "priceNzd": 1.36,
+                      "priceUsdReference": 0.8
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -12702,8 +12702,8 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 3.35,
-                "estimatedSpendUsdReference": 1.97,
+                "estimatedSpendNzd": 3.37,
+                "estimatedSpendUsdReference": 1.98,
                 "unknownPriceCount": 0,
                 "improvementScore": 7.748,
                 "significantRegression": false,
@@ -12977,8 +12977,8 @@
                       "set": "SOS",
                       "collectorNumber": "85",
                       "finish": "nonfoil",
-                      "priceNzd": 3.35,
-                      "priceUsdReference": 1.97
+                      "priceNzd": 3.37,
+                      "priceUsdReference": 1.98
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -13028,8 +13028,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 4.88,
-                "estimatedSpendUsdReference": 2.87,
+                "estimatedSpendNzd": 4.83,
+                "estimatedSpendUsdReference": 2.84,
                 "unknownPriceCount": 0,
                 "improvementScore": 7.475,
                 "significantRegression": false,
@@ -13296,8 +13296,8 @@
                       "set": "C15",
                       "collectorNumber": "133",
                       "finish": "nonfoil",
-                      "priceNzd": 4.88,
-                      "priceUsdReference": 2.87
+                      "priceNzd": 4.83,
+                      "priceUsdReference": 2.84
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -13348,7 +13348,7 @@
     "scoringGuidance": "Competing packages are compared with the same per-round seed. The improvement score is still a within-deck heuristic, not a universal power score or measured multiplayer win rate.",
     "diversityGuidance": "Later candidates temporarily exclude part of earlier candidates’ incoming package so the optimizer explores alternatives rather than resimulating the same swap set repeatedly.",
     "winRouteGuidance": "Route protection is derived from the existing V0.15 final full-table win-route portfolio. Verification unavailable is surfaced explicitly and never treated as evidence that the deck has no route.",
-    "themeGuidance": "User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck, while physical printing-family themes are delegated to the exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches."
+    "themeGuidance": "User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck, compound themes additionally preserve every independently controlled component before aggregate density is considered, while physical printing-family themes are delegated to the exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches."
   },
   "after": {
     "truth": {
