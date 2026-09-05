@@ -1,0 +1,87 @@
+// COMMANDER
+1 Sidar Jabari of Zhalfir (MOC) 5 *F*
+
+// MAIN
+1 Elenda and Azor (MOC) 6 *F*
+1 Exsanguinator Cavalry (MOC) 26 *N*
+1 Ichor Elixir (MOC) 46 *N*
+1 Herald of Hoofbeats (MOC) 22 *N*
+1 Locthwain Lancer (MOC) 27 *N*
+1 Chivalric Alliance (MOC) 11 *N*
+1 Path of the Enigma (MOC) 23 *N*
+1 Vodalian Wave-Knight (MOC) 43 *N*
+1 Conjurer's Mantle (MOC) 12 *N*
+1 Ethersworn Adjudicator (MOC) 222 *N*
+1 Hero of Bladehold (MOC) 188 *N*
+1 Vona, Butcher of Magan (MOC) 342 *N*
+1 Acclaimed Contender (MOC) 166 *N*
+1 Adeline, Resplendent Cathar (MOC) 167 *N*
+1 Aryel, Knight of Windgrace (MOC) 318 *N*
+1 Choked Estuary (MOC) 394 *N*
+1 Exotic Orchard (MOC) 398 *N*
+1 Fell the Mighty (MOC) 185 *N*
+1 Haakon, Stromgald Scourge (MOC) 252 *N*
+1 Josu Vess, Lich Knight (MOC) 253 *N*
+1 Knight Exemplar (MOC) 192 *N*
+1 Knight of the White Orchid (MOC) 193 *N*
+1 Knights' Charge (MOC) 333 *N*
+1 Liliana's Standard Bearer (MOC) 255 *N*
+1 Maul of the Skyclaves (MOC) 195 *N*
+1 Midnight Reaper (MOC) 257 *N*
+1 Murderous Rider // Swift End (MOC) 258 *N*
+1 Painful Truths (MOC) 262 *N*
+1 Port Town (MOC) 419 *N*
+1 Prairie Stream (MOC) 420 *N*
+1 Promise of Loyalty (MOC) 200 *N*
+1 Pull from Tomorrow (MOC) 230 *N*
+1 Shineshadow Snarl (MOC) 422 *N*
+1 Sigiled Sword of Valeron (MOC) 377 *N*
+1 Silverwing Squadron (MOC) 207 *N*
+1 Sunken Hollow (MOC) 428 *N*
+1 Temple of Deceit (MOC) 431 *N*
+1 Temple of Enlightenment (MOC) 432 *N*
+1 Temple of Silence (MOC) 436 *N*
+1 Time Wipe (MOC) 340 *N*
+1 Unbreakable Formation (MOC) 213 *N*
+1 Valiant Knight (MOC) 214 *N*
+1 Vanquisher's Banner (MOC) 388 *N*
+1 Worthy Knight (MOC) 217 *N*
+1 Bojuka Bog (MOC) 391 *N*
+1 Command Tower (MOC) 396 *N*
+1 Commander's Sphere (MOC) 352 *N*
+1 Distant Melody (MOC) 220 *N*
+1 Evolving Wilds (MOC) 397 *N*
+1 Fractured Powerstone (MOC) 357 *N*
+1 Orzhov Signet (MOC) 369 *N*
+1 Path of Ancestry (MOC) 418 *N*
+1 Read the Bones (MOC) 267 *N*
+1 Smitten Swordmaster // Curry Favor (MOC) 268 *N*
+1 Terramorphic Expanse (MOC) 439 *N*
+1 Thriving Heath (MOC) 440 *N*
+1 Thriving Isle (MOC) 441 *N*
+1 Thriving Moor (MOC) 442 *N*
+1 Arcane Sanctum (MOC) 390 *N*
+1 Arcane Signet (MOC) 348 *N*
+1 Arvad the Cursed (MOC) 317 *N*
+1 Corpse Knight (MOC) 321 *N*
+1 Despark (MOC) 322 *N*
+1 Fellwar Stone (MOC) 356 *N*
+1 Foulmire Knight // Profane Insight (MOC) 249 *N*
+1 Herald's Horn (MOC) 360 *N*
+1 Knight of the Last Breath (MOC) 331 *N*
+1 Knights of the Black Rose (MOC) 332 *N*
+1 Mind Stone (MOC) 364 *N*
+1 Myriad Landscape (MOC) 416 *N*
+1 Order of Midnight // Alter Fate (MOC) 261 *N*
+1 Path to Exile (MOC) 198 *N*
+1 Return to Dust (MOC) 202 *N*
+1 Sol Ring (MOC) 381 *N*
+1 Swords to Plowshares (MOC) 211 *N*
+1 Syr Elenora, the Discerning (MOC) 239 *N*
+1 Syr Konrad, the Grim (MOC) 269 *N*
+1 Temple of the False God (MOC) 437 *N*
+1 Wintermoor Commander (MOC) 345 *N*
+1 Xerex Strobe-Knight (MOM) 85 *N*
+8 Plains (MOM) 277 *N*
+6 Island (MOM) 278 *N*
+5 Swamp (MOM) 279 *N*

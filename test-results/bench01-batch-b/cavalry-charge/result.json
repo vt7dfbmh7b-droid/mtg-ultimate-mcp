@@ -1,0 +1,263 @@
+{
+  "schema": "bench01-batch-b-cavalry-charge-compound-v1",
+  "fixture": "BENCH-01 Batch B / Cavalry Charge unseen compound-plan test",
+  "productRuntimeBaselineSha": "5829b37b686255ba35d419b37be17095e54fb696",
+  "sourceRelationship": "measurement-only descendant; no src intelligence change before fixture execution",
+  "sourceBaseline": "MTGJSON exact stock precon",
+  "precon": {
+    "name": "Cavalry Charge",
+    "fileName": "CavalryCharge_MOC",
+    "releaseDate": "2023-04-21",
+    "commanders": [
+      "Sidar Jabari of Zhalfir"
+    ]
+  },
+  "constraints": {
+    "targetBracket": 4,
+    "maxNzdPerCard": 35,
+    "maxTotalNzd": 200,
+    "maxSwaps": 12,
+    "themeQuery": "Knights typal combat graveyard recursion reanimation",
+    "hardTruthFirst": true,
+    "targetIsMeasurementNotAutomaticPassClaim": true,
+    "unseenForBench01": true
+  },
+  "refinement": {
+    "status": "unsupported-theme",
+    "totalSwaps": 0,
+    "reason": "The free-form theme could not be mapped to one supported creature type, mechanic, card type, printing family, or explicit Oracle-text phrase. It is not silently ignored or executed as raw Scryfall grammar.",
+    "themeIntent": {
+      "original": "Knights typal combat graveyard recursion reanimation",
+      "normalizedInput": "knights typal combat graveyard recursion reanimation",
+      "kind": "unsupported",
+      "enforceability": "unsupported",
+      "canonicalLabel": null,
+      "queryClause": null,
+      "minimumMainMatches": 0,
+      "printingFamily": null,
+      "matchRule": {
+        "type": "none"
+      },
+      "explanation": "The free-form theme could not be mapped to one supported creature type, mechanic, card type, printing family, or explicit Oracle-text phrase. It is not silently ignored or executed as raw Scryfall grammar."
+    },
+    "rawRefinement": {
+      "status": "unsupported-theme",
+      "reason": "The free-form theme could not be mapped to one supported creature type, mechanic, card type, printing family, or explicit Oracle-text phrase. It is not silently ignored or executed as raw Scryfall grammar.",
+      "themeIntent": {
+        "original": "Knights typal combat graveyard recursion reanimation",
+        "normalizedInput": "knights typal combat graveyard recursion reanimation",
+        "kind": "unsupported",
+        "enforceability": "unsupported",
+        "canonicalLabel": null,
+        "queryClause": null,
+        "minimumMainMatches": 0,
+        "printingFamily": null,
+        "matchRule": {
+          "type": "none"
+        },
+        "explanation": "The free-form theme could not be mapped to one supported creature type, mechanic, card type, printing family, or explicit Oracle-text phrase. It is not silently ignored or executed as raw Scryfall grammar."
+      }
+    }
+  },
+  "before": {
+    "cardCount": 100,
+    "commanderLegal": true,
+    "unresolvedCount": 0,
+    "commanderNames": [
+      "Sidar Jabari of Zhalfir"
+    ],
+    "commanderStrategies": [
+      {
+        "archetype": "graveyard-reanimator",
+        "score": 26,
+        "evidence": [
+          "graveyard recursion +9",
+          "own-graveyard access +6",
+          "graveyard setup +5",
+          "reanimation text +6"
+        ]
+      },
+      {
+        "archetype": "value-engine",
+        "score": 13,
+        "evidence": [
+          "repeatable draw +9",
+          "card selection +4"
+        ]
+      },
+      {
+        "archetype": "aristocrats",
+        "score": 6,
+        "evidence": [
+          "whole-deck support: 9 substantive card(s), 5 bridge card(s), 77 affinity +6"
+        ]
+      }
+    ],
+    "requestedAxes": {
+      "knightCreatureCount": 32,
+      "combatReferenceCount": 21,
+      "graveyardReferenceCount": 5,
+      "recursionReanimationCount": 3
+    },
+    "assessedBracket": 2,
+    "assessedBand": "bracket-2-core-range",
+    "metrics": {
+      "averageNonlandManaValue": 3.34,
+      "earlyPlayCount": 19,
+      "fastManaCount": 1,
+      "cheapInteractionCount": 3,
+      "tutorCount": 0,
+      "recursionCount": 4,
+      "boardWipeCount": 2,
+      "rampCount": 12,
+      "drawCount": 22,
+      "interactionCount": 10,
+      "protectionCount": 2
+    },
+    "postBuildEvidence": {
+      "signals": {
+        "commanderLegal": true,
+        "exactCardCount": true,
+        "fullyResolved": true,
+        "printingPolicyCompliant": true,
+        "spellbookTag": "E",
+        "verifiedWinningCombos": 0,
+        "ruthlessWinningCombos": 0,
+        "strategicallyRelevantCombos": 0,
+        "averageNonlandManaValue": 3.34,
+        "earlyPlayCount": 19,
+        "fastManaCount": 1,
+        "freeInteractionCount": 0,
+        "cheapInteractionCount": 3,
+        "tutorCount": 0,
+        "gameChangerCount": 0,
+        "efficientWinConditionEvidence": false,
+        "cedhIntent": false,
+        "competitiveMetagameEvidence": false,
+        "optimizedPlanEvidence": false,
+        "exhibitionIntent": false
+      },
+      "spellbookTag": "E",
+      "spellbookBracketSourceStatus": "available",
+      "spellbookBracketSourceFailure": null,
+      "spellbookComboSourceStatus": "available",
+      "spellbookComboSourceFailure": null,
+      "comboVerificationComplete": true,
+      "completeComboCount": 0,
+      "verifiedWinningCombos": 0,
+      "verifiedWinningComboIds": [],
+      "verifiedWinningComboDetails": [],
+      "ruthlessWinningCombos": 0,
+      "strategicallyRelevantCombos": 0,
+      "gameChangerNames": []
+    }
+  },
+  "after": {
+    "cardCount": 100,
+    "commanderLegal": true,
+    "unresolvedCount": 0,
+    "commanderNames": [
+      "Sidar Jabari of Zhalfir"
+    ],
+    "commanderStrategies": [
+      {
+        "archetype": "graveyard-reanimator",
+        "score": 26,
+        "evidence": [
+          "graveyard recursion +9",
+          "own-graveyard access +6",
+          "graveyard setup +5",
+          "reanimation text +6"
+        ]
+      },
+      {
+        "archetype": "value-engine",
+        "score": 13,
+        "evidence": [
+          "repeatable draw +9",
+          "card selection +4"
+        ]
+      },
+      {
+        "archetype": "aristocrats",
+        "score": 6,
+        "evidence": [
+          "whole-deck support: 9 substantive card(s), 5 bridge card(s), 77 affinity +6"
+        ]
+      }
+    ],
+    "requestedAxes": {
+      "knightCreatureCount": 32,
+      "combatReferenceCount": 21,
+      "graveyardReferenceCount": 5,
+      "recursionReanimationCount": 3
+    },
+    "assessedBracket": 2,
+    "assessedBand": "bracket-2-core-range",
+    "metrics": {
+      "averageNonlandManaValue": 3.34,
+      "earlyPlayCount": 19,
+      "fastManaCount": 1,
+      "cheapInteractionCount": 3,
+      "tutorCount": 0,
+      "recursionCount": 4,
+      "boardWipeCount": 2,
+      "rampCount": 12,
+      "drawCount": 22,
+      "interactionCount": 10,
+      "protectionCount": 2
+    },
+    "postBuildEvidence": {
+      "signals": {
+        "commanderLegal": true,
+        "exactCardCount": true,
+        "fullyResolved": true,
+        "printingPolicyCompliant": true,
+        "spellbookTag": "E",
+        "verifiedWinningCombos": 0,
+        "ruthlessWinningCombos": 0,
+        "strategicallyRelevantCombos": 0,
+        "averageNonlandManaValue": 3.34,
+        "earlyPlayCount": 19,
+        "fastManaCount": 1,
+        "freeInteractionCount": 0,
+        "cheapInteractionCount": 3,
+        "tutorCount": 0,
+        "gameChangerCount": 0,
+        "efficientWinConditionEvidence": false,
+        "cedhIntent": false,
+        "competitiveMetagameEvidence": false,
+        "optimizedPlanEvidence": false,
+        "exhibitionIntent": false
+      },
+      "spellbookTag": "E",
+      "spellbookBracketSourceStatus": "available",
+      "spellbookBracketSourceFailure": null,
+      "spellbookComboSourceStatus": "available",
+      "spellbookComboSourceFailure": null,
+      "comboVerificationComplete": true,
+      "completeComboCount": 0,
+      "verifiedWinningCombos": 0,
+      "verifiedWinningComboIds": [],
+      "verifiedWinningComboDetails": [],
+      "ruthlessWinningCombos": 0,
+      "strategicallyRelevantCombos": 0,
+      "gameChangerNames": []
+    }
+  },
+  "requestedAxisDeltas": {
+    "knightCreatureCount": 0,
+    "combatReferenceCount": 0,
+    "graveyardReferenceCount": 0,
+    "recursionReanimationCount": 0
+  },
+  "structuralDeltas": {
+    "assessedBracket": 0,
+    "averageNonlandManaValue": 0,
+    "earlyPlayCount": 0,
+    "cheapInteractionCount": 0,
+    "tutorCount": 0,
+    "recursionCount": 0
+  },
+  "interpretationOutcome": "compound-theme-rejected"
+}

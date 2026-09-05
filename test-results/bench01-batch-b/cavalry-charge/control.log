@@ -1,0 +1,9 @@
+BENCH-01 BATCH B / CAVALRY CHARGE — EXECUTION COMPLETE
+PRECON: Cavalry Charge [CavalryCharge_MOC]
+COMMANDERS: ["Sidar Jabari of Zhalfir"]
+THEME QUERY: Knights typal combat graveyard recursion reanimation
+REFINEMENT: unsupported-theme; SWAPS: 0
+INTERPRETATION OUTCOME: compound-theme-rejected
+REQUESTED AXES BEFORE: {"knightCreatureCount":32,"combatReferenceCount":21,"graveyardReferenceCount":5,"recursionReanimationCount":3}
+REQUESTED AXES AFTER: {"knightCreatureCount":32,"combatReferenceCount":21,"graveyardReferenceCount":5,"recursionReanimationCount":3}
+BRACKET: 2 -> 2

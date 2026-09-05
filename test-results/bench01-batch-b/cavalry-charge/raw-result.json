@@ -1,0 +1,59 @@
+{
+  "currency": "NZD",
+  "currencyPolicy": {
+    "primaryCurrency": "NZD",
+    "displaySymbol": "NZ$",
+    "usdToNzdRate": 1.7015,
+    "rateDate": "2026-09-04",
+    "rateSource": "Frankfurter",
+    "rateSourceUrl": "https://api.frankfurter.dev/v2/rate/USD/NZD",
+    "staleRate": false,
+    "localPricePriority": [
+      "Use a directly checked New Zealand seller/TCGfind NZ price when one is available for the exact printing.",
+      "Otherwise show the Scryfall USD printing reference converted to NZD with this FX rate.",
+      "Converted reference prices are estimates, not guaranteed New Zealand checkout prices or landed costs."
+    ]
+  },
+  "requestedBudgets": {
+    "primaryCurrency": "NZD",
+    "maxNzdPerCard": 35,
+    "maxTotalNzd": 200
+  },
+  "result": {
+    "precon": {
+      "name": "Cavalry Charge",
+      "familyName": "Cavalry Charge",
+      "productVariant": "standard",
+      "code": "MOC",
+      "fileName": "CavalryCharge_MOC",
+      "releaseDate": "2023-04-21",
+      "year": "2023",
+      "type": "Commander Deck",
+      "mtgJsonDeckUrl": "https://mtgjson.com/api/v5/decks/CavalryCharge_MOC.json",
+      "edhrecPreconUrl": "https://edhrec.com/precon/cavalry-charge"
+    },
+    "stockCommanders": [
+      "Sidar Jabari of Zhalfir"
+    ],
+    "refinement": {
+      "status": "unsupported-theme",
+      "reason": "The free-form theme could not be mapped to one supported creature type, mechanic, card type, printing family, or explicit Oracle-text phrase. It is not silently ignored or executed as raw Scryfall grammar.",
+      "themeIntent": {
+        "original": "Knights typal combat graveyard recursion reanimation",
+        "normalizedInput": "knights typal combat graveyard recursion reanimation",
+        "kind": "unsupported",
+        "enforceability": "unsupported",
+        "canonicalLabel": null,
+        "queryClause": null,
+        "minimumMainMatches": 0,
+        "printingFamily": null,
+        "matchRule": {
+          "type": "none"
+        },
+        "explanation": "The free-form theme could not be mapped to one supported creature type, mechanic, card type, printing family, or explicit Oracle-text phrase. It is not silently ignored or executed as raw Scryfall grammar."
+      }
+    },
+    "sourceBaseline": "MTGJSON exact stock deck",
+    "guidance": "The stock precon remains the untouched baseline. Each round can compare several competing packages; only the strongest package that clears legality, printing, budget, theme, win-route preservation, and improvement checks becomes the next baseline."
+  }
+}
