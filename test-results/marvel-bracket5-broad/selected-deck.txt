@@ -64,8 +64,8 @@
 1 Farseek (MSC) 173
 1 Nature's Lore (MSC) 177
 1 Brainstorm (SLD) 7013
-1 Herald's Horn (MSC) 287
 1 Currency Converter (MSC) 197
+1 Herald's Horn (MSC) 287
 1 Common Crook (MSC) 792
 1 T'Challa, the Black Panther (MSC) 7
 1 Silk, Web Weaver (SPM) 145
