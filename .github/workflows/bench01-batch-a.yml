@@ -1,0 +1,137 @@
+name: "BENCH-01 Batch A — Counter Blitz + Liliana"
+
+# Benchmark harness only. The product/runtime source is intentionally unchanged
+# from the 5829b37... INTEL-02 family replay; this workflow and the Counter Blitz
+# fixture are measurement surfaces, not Commander-intelligence changes.
+on:
+  push:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - "scripts/bench01-counter-blitz-ff-only-v15.ts"
+      - "scripts/e2e-liliana-budget-500-v15.ts"
+      - ".github/workflows/bench01-batch-a.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bench01-batch-a-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  batch-a:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - name: Check out exact benchmark source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build checked-in source
+        id: source_build
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee bench01-source-build.log
+
+      - name: Run Counter Blitz FF-only benchmark
+        id: counter_blitz
+        if: steps.source_build.outcome == 'success'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npx tsx scripts/bench01-counter-blitz-ff-only-v15.ts 2>&1 | tee bench01-counter-blitz.log
+
+      - name: Run Liliana NZ$500 benchmark
+        id: liliana
+        if: steps.source_build.outcome == 'success'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npx tsx scripts/e2e-liliana-budget-500-v15.ts 2>&1 | tee bench01-liliana.log
+
+      - name: Upload Batch A evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: bench01-batch-a-${{ github.sha }}
+          path: |
+            bench01-counter-blitz-result.json
+            bench01-counter-blitz-raw-result.json
+            bench01-counter-blitz-stock-deck.txt
+            bench01-counter-blitz-refined-deck.txt
+            bench01-counter-blitz-failure.txt
+            liliana-budget-500-result.json
+            liliana-budget-500-deck.txt
+            bench01-source-build.log
+            bench01-counter-blitz.log
+            bench01-liliana.log
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Persist Batch A evidence
+        if: always() && github.event_name == 'push'
+        env:
+          BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          COUNTER_OUTCOME: ${{ steps.counter_blitz.outcome }}
+          LILIANA_OUTCOME: ${{ steps.liliana.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            mkdir -p test-results/bench01-batch-a/counter-blitz test-results/bench01-batch-a/liliana
+            rm -f test-results/bench01-batch-a/counter-blitz/* \
+                  test-results/bench01-batch-a/liliana/* \
+                  test-results/bench01-batch-a/run-metadata.txt
+            [ ! -f bench01-counter-blitz-result.json ] || cp bench01-counter-blitz-result.json test-results/bench01-batch-a/counter-blitz/result.json
+            [ ! -f bench01-counter-blitz-raw-result.json ] || cp bench01-counter-blitz-raw-result.json test-results/bench01-batch-a/counter-blitz/raw-result.json
+            [ ! -f bench01-counter-blitz-stock-deck.txt ] || cp bench01-counter-blitz-stock-deck.txt test-results/bench01-batch-a/counter-blitz/stock-deck.txt
+            [ ! -f bench01-counter-blitz-refined-deck.txt ] || cp bench01-counter-blitz-refined-deck.txt test-results/bench01-batch-a/counter-blitz/refined-deck.txt
+            [ ! -f bench01-counter-blitz-failure.txt ] || cp bench01-counter-blitz-failure.txt test-results/bench01-batch-a/counter-blitz/failure.txt
+            [ ! -f bench01-counter-blitz.log ] || cp bench01-counter-blitz.log test-results/bench01-batch-a/counter-blitz/control.log
+            [ ! -f liliana-budget-500-result.json ] || cp liliana-budget-500-result.json test-results/bench01-batch-a/liliana/result.json
+            [ ! -f liliana-budget-500-deck.txt ] || cp liliana-budget-500-deck.txt test-results/bench01-batch-a/liliana/deck.txt
+            [ ! -f bench01-liliana.log ] || cp bench01-liliana.log test-results/bench01-batch-a/liliana/control.log
+            [ ! -f bench01-source-build.log ] || cp bench01-source-build.log test-results/bench01-batch-a/build.log
+            printf 'executed_source_sha=%s\nproduct_runtime_baseline_sha=5829b37b686255ba35d419b37be17095e54fb696\nsource_relationship=harness-docs-only-descendant-no-src-intelligence-change\nbuild_outcome=%s\ncounter_blitz_outcome=%s\nliliana_outcome=%s\nbatch=BENCH-01-A\nsource_frozen_within_batch=true\n' \
+              "$GITHUB_SHA" "$BUILD_OUTCOME" "$COUNTER_OUTCOME" "$LILIANA_OUTCOME" \
+              > test-results/bench01-batch-a/run-metadata.txt
+            git add -- test-results/bench01-batch-a
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "test-results(BENCH-01): persist Batch A evidence [skip ci]"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "BENCH-01 Batch A persistence attempt ${attempt} lost a branch race; retrying."
+          done
+          echo 'BENCH-01 Batch A evidence persistence exhausted eight branch-race retries.' >&2
+          exit 1
+
+      - name: Require benchmark harness execution
+        if: always()
+        env:
+          BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          COUNTER_OUTCOME: ${{ steps.counter_blitz.outcome }}
+          LILIANA_OUTCOME: ${{ steps.liliana.outcome }}
+        run: |
+          test "$BUILD_OUTCOME" = success
+          test "$COUNTER_OUTCOME" = success
+          test "$LILIANA_OUTCOME" = success
