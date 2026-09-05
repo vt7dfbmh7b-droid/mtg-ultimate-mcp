@@ -250,10 +250,10 @@
         }
       ]
     },
-    "estimatedUpgradeSpendNzd": 23.41,
-    "estimatedUpgradeSpendUsdReference": 13.76,
-    "maxTotalNzd": 199.99,
-    "maxTotalUsdReference": 117.54,
+    "estimatedUpgradeSpendNzd": 23.8,
+    "estimatedUpgradeSpendUsdReference": 13.99,
+    "maxTotalNzd": 200,
+    "maxTotalUsdReference": 117.56,
     "swaps": [
       {
         "out": "Landroval, Horizon Witness",
@@ -263,8 +263,8 @@
           "set": "LTR",
           "collectorNumber": "86",
           "finish": "nonfoil",
-          "priceNzd": 0.41,
-          "priceUsdReference": 0.24
+          "priceNzd": 0.44,
+          "priceUsdReference": 0.26
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -311,8 +311,8 @@
           "set": "LTR",
           "collectorNumber": "20",
           "finish": "nonfoil",
-          "priceNzd": 0.27,
-          "priceUsdReference": 0.16
+          "priceNzd": 0.31,
+          "priceUsdReference": 0.18
         },
         "structuralPairing": {
           "addressedRole": "interaction",
@@ -358,8 +358,8 @@
           "set": "LTR",
           "collectorNumber": "327",
           "finish": "nonfoil",
-          "priceNzd": 1.82,
-          "priceUsdReference": 1.07
+          "priceNzd": 1.91,
+          "priceUsdReference": 1.12
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -408,8 +408,8 @@
           "set": "LTR",
           "collectorNumber": "243",
           "finish": "nonfoil",
-          "priceNzd": 2.57,
-          "priceUsdReference": 1.51
+          "priceNzd": 2.72,
+          "priceUsdReference": 1.6
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -454,8 +454,8 @@
           "set": "HOB",
           "collectorNumber": "83",
           "finish": "nonfoil",
-          "priceNzd": 1.17,
-          "priceUsdReference": 0.69
+          "priceNzd": 1.12,
+          "priceUsdReference": 0.66
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -611,8 +611,8 @@
           "set": "LTC",
           "collectorNumber": "532",
           "finish": "nonfoil",
-          "priceNzd": 10.17,
-          "priceUsdReference": 5.98
+          "priceNzd": 10.31,
+          "priceUsdReference": 6.06
         },
         "structuralPairing": {
           "addressedRole": "tutor",
@@ -747,8 +747,8 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 4,
         "winningCandidate": 3,
-        "estimatedSpendNzd": 5.07,
-        "estimatedSpendUsdReference": 2.98,
+        "estimatedSpendNzd": 5.38,
+        "estimatedSpendUsdReference": 3.16,
         "improvementScore": 15.44,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -769,8 +769,8 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 4,
         "winningCandidate": 2,
-        "estimatedSpendNzd": 18.34,
-        "estimatedSpendUsdReference": 10.78,
+        "estimatedSpendNzd": 18.43,
+        "estimatedSpendUsdReference": 10.83,
         "improvementScore": 11.407,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -811,8 +811,8 @@
       "targetBracket": 4,
       "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.57,
-      "maxTotalNzd": 199.99,
-      "maxTotalUsdReference": 117.54,
+      "maxTotalNzd": 200,
+      "maxTotalUsdReference": 117.56,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -834,8 +834,8 @@
         "candidatePackagesGenerated": 4,
         "candidatePackagesEligible": 3,
         "winningCandidate": 3,
-        "estimatedSpendNzd": 5.07,
-        "estimatedSpendUsdReference": 2.98,
+        "estimatedSpendNzd": 5.38,
+        "estimatedSpendUsdReference": 3.16,
         "improvementScore": 15.44,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -854,8 +854,8 @@
               "collectorNumber": "86",
               "releaseDate": "2023-06-23",
               "finish": "nonfoil",
-              "priceNzd": 0.41,
-              "priceUsdReference": 0.24,
+              "priceNzd": 0.44,
+              "priceUsdReference": 0.26,
               "promo": false,
               "promoTypes": [
                 "universesbeyond"
@@ -911,8 +911,8 @@
               "collectorNumber": "20",
               "releaseDate": "2023-06-23",
               "finish": "nonfoil",
-              "priceNzd": 0.27,
-              "priceUsdReference": 0.16,
+              "priceNzd": 0.31,
+              "priceUsdReference": 0.18,
               "promo": false,
               "promoTypes": [
                 "universesbeyond"
@@ -967,8 +967,8 @@
               "collectorNumber": "327",
               "releaseDate": "2023-06-23",
               "finish": "nonfoil",
-              "priceNzd": 1.82,
-              "priceUsdReference": 1.07,
+              "priceNzd": 1.91,
+              "priceUsdReference": 1.12,
               "promo": false,
               "promoTypes": [
                 "universesbeyond",
@@ -1027,8 +1027,8 @@
               "collectorNumber": "243",
               "releaseDate": "2023-06-23",
               "finish": "nonfoil",
-              "priceNzd": 2.57,
-              "priceUsdReference": 1.51,
+              "priceNzd": 2.72,
+              "priceUsdReference": 1.6,
               "promo": false,
               "promoTypes": [
                 "universesbeyond"
@@ -1081,8 +1081,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 12.34,
-            "estimatedSpendUsdReference": 7.25,
+            "estimatedSpendNzd": 11.18,
+            "estimatedSpendUsdReference": 6.57,
             "unknownPriceCount": 0,
             "improvementScore": 11.986,
             "significantRegression": false,
@@ -1485,8 +1485,8 @@
                   "set": "HOB",
                   "collectorNumber": "4",
                   "finish": "nonfoil",
-                  "priceNzd": 7.16,
-                  "priceUsdReference": 4.21
+                  "priceNzd": 6.38,
+                  "priceUsdReference": 3.75
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1534,8 +1534,8 @@
                   "set": "HOB",
                   "collectorNumber": "5",
                   "finish": "nonfoil",
-                  "priceNzd": 3.79,
-                  "priceUsdReference": 2.23
+                  "priceNzd": 3.47,
+                  "priceUsdReference": 2.04
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
@@ -1584,8 +1584,8 @@
                   "set": "HOB",
                   "collectorNumber": "83",
                   "finish": "nonfoil",
-                  "priceNzd": 1.17,
-                  "priceUsdReference": 0.69
+                  "priceNzd": 1.12,
+                  "priceUsdReference": 0.66
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1693,8 +1693,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 3.61,
-            "estimatedSpendUsdReference": 2.12,
+            "estimatedSpendNzd": 3.67,
+            "estimatedSpendUsdReference": 2.16,
             "unknownPriceCount": 0,
             "improvementScore": 14.615,
             "significantRegression": false,
@@ -2086,8 +2086,8 @@
                   "set": "HOB",
                   "collectorNumber": "83",
                   "finish": "nonfoil",
-                  "priceNzd": 1.17,
-                  "priceUsdReference": 0.69
+                  "priceNzd": 1.12,
+                  "priceUsdReference": 0.66
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2185,8 +2185,8 @@
                   "set": "LTR",
                   "collectorNumber": "86",
                   "finish": "nonfoil",
-                  "priceNzd": 0.41,
-                  "priceUsdReference": 0.24
+                  "priceNzd": 0.44,
+                  "priceUsdReference": 0.26
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2233,8 +2233,8 @@
                   "set": "LTR",
                   "collectorNumber": "327",
                   "finish": "nonfoil",
-                  "priceNzd": 1.82,
-                  "priceUsdReference": 1.07
+                  "priceNzd": 1.91,
+                  "priceUsdReference": 1.12
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2283,8 +2283,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 5.07,
-            "estimatedSpendUsdReference": 2.98,
+            "estimatedSpendNzd": 5.38,
+            "estimatedSpendUsdReference": 3.16,
             "unknownPriceCount": 0,
             "improvementScore": 15.44,
             "significantRegression": false,
@@ -2670,8 +2670,8 @@
                   "set": "LTR",
                   "collectorNumber": "86",
                   "finish": "nonfoil",
-                  "priceNzd": 0.41,
-                  "priceUsdReference": 0.24
+                  "priceNzd": 0.44,
+                  "priceUsdReference": 0.26
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2718,8 +2718,8 @@
                   "set": "LTR",
                   "collectorNumber": "20",
                   "finish": "nonfoil",
-                  "priceNzd": 0.27,
-                  "priceUsdReference": 0.16
+                  "priceNzd": 0.31,
+                  "priceUsdReference": 0.18
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
@@ -2765,8 +2765,8 @@
                   "set": "LTR",
                   "collectorNumber": "327",
                   "finish": "nonfoil",
-                  "priceNzd": 1.82,
-                  "priceUsdReference": 1.07
+                  "priceNzd": 1.91,
+                  "priceUsdReference": 1.12
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2815,8 +2815,8 @@
                   "set": "LTR",
                   "collectorNumber": "243",
                   "finish": "nonfoil",
-                  "priceNzd": 2.57,
-                  "priceUsdReference": 1.51
+                  "priceNzd": 2.72,
+                  "priceUsdReference": 1.6
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2861,8 +2861,8 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 7.95,
-            "estimatedSpendUsdReference": 4.67,
+            "estimatedSpendNzd": 8.29,
+            "estimatedSpendUsdReference": 4.87,
             "unknownPriceCount": 0,
             "improvementScore": 9.621,
             "significantRegression": false,
@@ -3251,8 +3251,8 @@
                   "set": "LTR",
                   "collectorNumber": "327",
                   "finish": "nonfoil",
-                  "priceNzd": 1.82,
-                  "priceUsdReference": 1.07
+                  "priceNzd": 1.91,
+                  "priceUsdReference": 1.12
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -3349,8 +3349,8 @@
                   "set": "LTR",
                   "collectorNumber": "243",
                   "finish": "nonfoil",
-                  "priceNzd": 2.57,
-                  "priceUsdReference": 1.51
+                  "priceNzd": 2.72,
+                  "priceUsdReference": 1.6
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -3395,8 +3395,8 @@
                   "set": "LTR",
                   "collectorNumber": "26",
                   "finish": "nonfoil",
-                  "priceNzd": 3.03,
-                  "priceUsdReference": 1.78
+                  "priceNzd": 3.13,
+                  "priceUsdReference": 1.84
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
@@ -3451,8 +3451,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 12.34,
-                "estimatedSpendUsdReference": 7.25,
+                "estimatedSpendNzd": 11.18,
+                "estimatedSpendUsdReference": 6.57,
                 "unknownPriceCount": 0,
                 "improvementScore": 11.986,
                 "significantRegression": false,
@@ -3855,8 +3855,8 @@
                       "set": "HOB",
                       "collectorNumber": "4",
                       "finish": "nonfoil",
-                      "priceNzd": 7.16,
-                      "priceUsdReference": 4.21
+                      "priceNzd": 6.38,
+                      "priceUsdReference": 3.75
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3904,8 +3904,8 @@
                       "set": "HOB",
                       "collectorNumber": "5",
                       "finish": "nonfoil",
-                      "priceNzd": 3.79,
-                      "priceUsdReference": 2.23
+                      "priceNzd": 3.47,
+                      "priceUsdReference": 2.04
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -3954,8 +3954,8 @@
                       "set": "HOB",
                       "collectorNumber": "83",
                       "finish": "nonfoil",
-                      "priceNzd": 1.17,
-                      "priceUsdReference": 0.69
+                      "priceNzd": 1.12,
+                      "priceUsdReference": 0.66
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4063,8 +4063,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 3.61,
-                "estimatedSpendUsdReference": 2.12,
+                "estimatedSpendNzd": 3.67,
+                "estimatedSpendUsdReference": 2.16,
                 "unknownPriceCount": 0,
                 "improvementScore": 14.615,
                 "significantRegression": false,
@@ -4456,8 +4456,8 @@
                       "set": "HOB",
                       "collectorNumber": "83",
                       "finish": "nonfoil",
-                      "priceNzd": 1.17,
-                      "priceUsdReference": 0.69
+                      "priceNzd": 1.12,
+                      "priceUsdReference": 0.66
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4555,8 +4555,8 @@
                       "set": "LTR",
                       "collectorNumber": "86",
                       "finish": "nonfoil",
-                      "priceNzd": 0.41,
-                      "priceUsdReference": 0.24
+                      "priceNzd": 0.44,
+                      "priceUsdReference": 0.26
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4603,8 +4603,8 @@
                       "set": "LTR",
                       "collectorNumber": "327",
                       "finish": "nonfoil",
-                      "priceNzd": 1.82,
-                      "priceUsdReference": 1.07
+                      "priceNzd": 1.91,
+                      "priceUsdReference": 1.12
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -4653,8 +4653,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 5.07,
-                "estimatedSpendUsdReference": 2.98,
+                "estimatedSpendNzd": 5.38,
+                "estimatedSpendUsdReference": 3.16,
                 "unknownPriceCount": 0,
                 "improvementScore": 15.44,
                 "significantRegression": false,
@@ -5040,8 +5040,8 @@
                       "set": "LTR",
                       "collectorNumber": "86",
                       "finish": "nonfoil",
-                      "priceNzd": 0.41,
-                      "priceUsdReference": 0.24
+                      "priceNzd": 0.44,
+                      "priceUsdReference": 0.26
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5088,8 +5088,8 @@
                       "set": "LTR",
                       "collectorNumber": "20",
                       "finish": "nonfoil",
-                      "priceNzd": 0.27,
-                      "priceUsdReference": 0.16
+                      "priceNzd": 0.31,
+                      "priceUsdReference": 0.18
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -5135,8 +5135,8 @@
                       "set": "LTR",
                       "collectorNumber": "327",
                       "finish": "nonfoil",
-                      "priceNzd": 1.82,
-                      "priceUsdReference": 1.07
+                      "priceNzd": 1.91,
+                      "priceUsdReference": 1.12
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5185,8 +5185,8 @@
                       "set": "LTR",
                       "collectorNumber": "243",
                       "finish": "nonfoil",
-                      "priceNzd": 2.57,
-                      "priceUsdReference": 1.51
+                      "priceNzd": 2.72,
+                      "priceUsdReference": 1.6
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5231,8 +5231,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 7.95,
-                "estimatedSpendUsdReference": 4.67,
+                "estimatedSpendNzd": 8.29,
+                "estimatedSpendUsdReference": 4.87,
                 "unknownPriceCount": 0,
                 "improvementScore": 9.621,
                 "significantRegression": false,
@@ -5621,8 +5621,8 @@
                       "set": "LTR",
                       "collectorNumber": "327",
                       "finish": "nonfoil",
-                      "priceNzd": 1.82,
-                      "priceUsdReference": 1.07
+                      "priceNzd": 1.91,
+                      "priceUsdReference": 1.12
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5719,8 +5719,8 @@
                       "set": "LTR",
                       "collectorNumber": "243",
                       "finish": "nonfoil",
-                      "priceNzd": 2.57,
-                      "priceUsdReference": 1.51
+                      "priceNzd": 2.72,
+                      "priceUsdReference": 1.6
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5765,8 +5765,8 @@
                       "set": "LTR",
                       "collectorNumber": "26",
                       "finish": "nonfoil",
-                      "priceNzd": 3.03,
-                      "priceUsdReference": 1.78
+                      "priceNzd": 3.13,
+                      "priceUsdReference": 1.84
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -5815,8 +5815,8 @@
         "candidatePackagesGenerated": 4,
         "candidatePackagesEligible": 4,
         "winningCandidate": 2,
-        "estimatedSpendNzd": 18.34,
-        "estimatedSpendUsdReference": 10.78,
+        "estimatedSpendNzd": 18.43,
+        "estimatedSpendUsdReference": 10.83,
         "improvementScore": 11.407,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -5835,8 +5835,8 @@
               "collectorNumber": "83",
               "releaseDate": "2026-08-14",
               "finish": "nonfoil",
-              "priceNzd": 1.17,
-              "priceUsdReference": 0.69,
+              "priceNzd": 1.12,
+              "priceUsdReference": 0.66,
               "promo": false,
               "promoTypes": [
                 "universesbeyond"
@@ -6021,8 +6021,8 @@
               "collectorNumber": "532",
               "releaseDate": "2023-11-03",
               "finish": "nonfoil",
-              "priceNzd": 10.17,
-              "priceUsdReference": 5.98,
+              "priceNzd": 10.31,
+              "priceUsdReference": 6.06,
               "promo": false,
               "promoTypes": [
                 "silverfoil",
@@ -6078,8 +6078,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 24.23,
-            "estimatedSpendUsdReference": 14.24,
+            "estimatedSpendNzd": 23.61,
+            "estimatedSpendUsdReference": 13.88,
             "unknownPriceCount": 0,
             "improvementScore": 8.802,
             "significantRegression": false,
@@ -6464,8 +6464,8 @@
                   "set": "HOB",
                   "collectorNumber": "4",
                   "finish": "nonfoil",
-                  "priceNzd": 7.16,
-                  "priceUsdReference": 4.21
+                  "priceNzd": 6.38,
+                  "priceUsdReference": 3.75
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -6524,8 +6524,8 @@
                   "set": "HOB",
                   "collectorNumber": "6",
                   "finish": "nonfoil",
-                  "priceNzd": 0.46,
-                  "priceUsdReference": 0.27
+                  "priceNzd": 0.49,
+                  "priceUsdReference": 0.29
                 },
                 "structuralPairing": {
                   "addressedRole": "protection",
@@ -6619,8 +6619,8 @@
                   "set": "LTC",
                   "collectorNumber": "532",
                   "finish": "nonfoil",
-                  "priceNzd": 10.17,
-                  "priceUsdReference": 5.98
+                  "priceNzd": 10.31,
+                  "priceUsdReference": 6.06
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
@@ -6666,8 +6666,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 18.34,
-            "estimatedSpendUsdReference": 10.78,
+            "estimatedSpendNzd": 18.43,
+            "estimatedSpendUsdReference": 10.83,
             "unknownPriceCount": 0,
             "improvementScore": 11.407,
             "significantRegression": false,
@@ -7054,8 +7054,8 @@
                   "set": "HOB",
                   "collectorNumber": "83",
                   "finish": "nonfoil",
-                  "priceNzd": 1.17,
-                  "priceUsdReference": 0.69
+                  "priceNzd": 1.12,
+                  "priceUsdReference": 0.66
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -7211,8 +7211,8 @@
                   "set": "LTC",
                   "collectorNumber": "532",
                   "finish": "nonfoil",
-                  "priceNzd": 10.17,
-                  "priceUsdReference": 5.98
+                  "priceNzd": 10.31,
+                  "priceUsdReference": 6.06
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
@@ -7258,8 +7258,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 14.87,
-            "estimatedSpendUsdReference": 8.74,
+            "estimatedSpendNzd": 14.7,
+            "estimatedSpendUsdReference": 8.64,
             "unknownPriceCount": 0,
             "improvementScore": 8.55,
             "significantRegression": false,
@@ -7636,8 +7636,8 @@
                   "set": "LTR",
                   "collectorNumber": "177",
                   "finish": "nonfoil",
-                  "priceNzd": 0.34,
-                  "priceUsdReference": 0.2
+                  "priceNzd": 0.36,
+                  "priceUsdReference": 0.21
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -7733,8 +7733,8 @@
                   "set": "HOB",
                   "collectorNumber": "5",
                   "finish": "nonfoil",
-                  "priceNzd": 3.79,
-                  "priceUsdReference": 2.23
+                  "priceNzd": 3.47,
+                  "priceUsdReference": 2.04
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
@@ -7783,8 +7783,8 @@
                   "set": "LTC",
                   "collectorNumber": "532",
                   "finish": "nonfoil",
-                  "priceNzd": 10.17,
-                  "priceUsdReference": 5.98
+                  "priceNzd": 10.31,
+                  "priceUsdReference": 6.06
                 },
                 "structuralPairing": {
                   "addressedRole": "tutor",
@@ -7830,8 +7830,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 2,
-            "estimatedSpendNzd": 0.54,
-            "estimatedSpendUsdReference": 0.32,
+            "estimatedSpendNzd": 0.61,
+            "estimatedSpendUsdReference": 0.36,
             "unknownPriceCount": 0,
             "improvementScore": 7.336,
             "significantRegression": false,
@@ -8146,8 +8146,8 @@
                   "set": "HOB",
                   "collectorNumber": "80",
                   "finish": "nonfoil",
-                  "priceNzd": 0.27,
-                  "priceUsdReference": 0.16
+                  "priceNzd": 0.34,
+                  "priceUsdReference": 0.2
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -8257,8 +8257,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 24.23,
-                "estimatedSpendUsdReference": 14.24,
+                "estimatedSpendNzd": 23.61,
+                "estimatedSpendUsdReference": 13.88,
                 "unknownPriceCount": 0,
                 "improvementScore": 8.802,
                 "significantRegression": false,
@@ -8643,8 +8643,8 @@
                       "set": "HOB",
                       "collectorNumber": "4",
                       "finish": "nonfoil",
-                      "priceNzd": 7.16,
-                      "priceUsdReference": 4.21
+                      "priceNzd": 6.38,
+                      "priceUsdReference": 3.75
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -8703,8 +8703,8 @@
                       "set": "HOB",
                       "collectorNumber": "6",
                       "finish": "nonfoil",
-                      "priceNzd": 0.46,
-                      "priceUsdReference": 0.27
+                      "priceNzd": 0.49,
+                      "priceUsdReference": 0.29
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -8798,8 +8798,8 @@
                       "set": "LTC",
                       "collectorNumber": "532",
                       "finish": "nonfoil",
-                      "priceNzd": 10.17,
-                      "priceUsdReference": 5.98
+                      "priceNzd": 10.31,
+                      "priceUsdReference": 6.06
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -8845,8 +8845,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 18.34,
-                "estimatedSpendUsdReference": 10.78,
+                "estimatedSpendNzd": 18.43,
+                "estimatedSpendUsdReference": 10.83,
                 "unknownPriceCount": 0,
                 "improvementScore": 11.407,
                 "significantRegression": false,
@@ -9233,8 +9233,8 @@
                       "set": "HOB",
                       "collectorNumber": "83",
                       "finish": "nonfoil",
-                      "priceNzd": 1.17,
-                      "priceUsdReference": 0.69
+                      "priceNzd": 1.12,
+                      "priceUsdReference": 0.66
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -9390,8 +9390,8 @@
                       "set": "LTC",
                       "collectorNumber": "532",
                       "finish": "nonfoil",
-                      "priceNzd": 10.17,
-                      "priceUsdReference": 5.98
+                      "priceNzd": 10.31,
+                      "priceUsdReference": 6.06
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -9437,8 +9437,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 14.87,
-                "estimatedSpendUsdReference": 8.74,
+                "estimatedSpendNzd": 14.7,
+                "estimatedSpendUsdReference": 8.64,
                 "unknownPriceCount": 0,
                 "improvementScore": 8.55,
                 "significantRegression": false,
@@ -9815,8 +9815,8 @@
                       "set": "LTR",
                       "collectorNumber": "177",
                       "finish": "nonfoil",
-                      "priceNzd": 0.34,
-                      "priceUsdReference": 0.2
+                      "priceNzd": 0.36,
+                      "priceUsdReference": 0.21
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -9912,8 +9912,8 @@
                       "set": "HOB",
                       "collectorNumber": "5",
                       "finish": "nonfoil",
-                      "priceNzd": 3.79,
-                      "priceUsdReference": 2.23
+                      "priceNzd": 3.47,
+                      "priceUsdReference": 2.04
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -9962,8 +9962,8 @@
                       "set": "LTC",
                       "collectorNumber": "532",
                       "finish": "nonfoil",
-                      "priceNzd": 10.17,
-                      "priceUsdReference": 5.98
+                      "priceNzd": 10.31,
+                      "priceUsdReference": 6.06
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -10009,8 +10009,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 0.54,
-                "estimatedSpendUsdReference": 0.32,
+                "estimatedSpendNzd": 0.61,
+                "estimatedSpendUsdReference": 0.36,
                 "unknownPriceCount": 0,
                 "improvementScore": 7.336,
                 "significantRegression": false,
@@ -10325,8 +10325,8 @@
                       "set": "HOB",
                       "collectorNumber": "80",
                       "finish": "nonfoil",
-                      "priceNzd": 0.27,
-                      "priceUsdReference": 0.16
+                      "priceNzd": 0.34,
+                      "priceUsdReference": 0.2
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -13036,7 +13036,7 @@
     "scoringGuidance": "Competing packages are compared with the same per-round seed. The improvement score is still a within-deck heuristic, not a universal power score or measured multiplayer win rate.",
     "diversityGuidance": "Later candidates temporarily exclude part of earlier candidates’ incoming package so the optimizer explores alternatives rather than resimulating the same swap set repeatedly.",
     "winRouteGuidance": "Route protection is derived from the existing V0.15 final full-table win-route portfolio. Verification unavailable is surfaced explicitly and never treated as evidence that the deck has no route.",
-    "themeGuidance": "User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck, while physical printing-family themes are delegated to the exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches."
+    "themeGuidance": "User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck, compound themes additionally preserve every independently controlled component before aggregate density is considered, while physical printing-family themes are delegated to the exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches."
   },
   "after": {
     "truth": {
