@@ -9,6 +9,7 @@ export type NeutralThemeKindV15 =
   | 'card-type'
   | 'oracle-text'
   | 'printing-family'
+  | 'compound'
   | 'unresolved'
   | 'unsupported';
 
@@ -36,6 +37,7 @@ export interface NeutralThemeIntentV15 {
   minimumMainMatches: number;
   printingFamily: string | null;
   matchRule: NeutralThemeMatchRuleV15;
+  components?: NeutralThemeIntentV15[];
   explanation: string;
 }
 
@@ -118,7 +120,7 @@ const MECHANICAL_THEMES: MechanicalThemeDefinitionV15[] = [
   {
     id: 'graveyard',
     label: 'Graveyard / reanimator',
-    aliases: ['graveyard', 'graveyard matters', 'reanimator', 'reanimation', 'self mill'],
+    aliases: ['graveyard', 'graveyard matters', 'graveyard recursion', 'recursion', 'reanimator', 'reanimation', 'self mill'],
     queryClause: 'o:graveyard',
     minimumMainMatches: 15,
     roles: ['graveyard recursion'],
@@ -150,6 +152,24 @@ const MECHANICAL_THEMES: MechanicalThemeDefinitionV15[] = [
     minimumMainMatches: 12,
     roles: ['treasure'],
     oracleFallbacks: ['treasure'],
+  },
+  {
+    id: 'combat',
+    label: 'Combat / attacks',
+    aliases: ['combat', 'combat matters', 'attack', 'attacks', 'attacking', 'combat damage'],
+    queryClause: '(o:attack OR o:"combat damage")',
+    minimumMainMatches: 12,
+    roles: [],
+    oracleFallbacks: ['attack', 'attacking', 'combat damage', 'additional combat', 'double strike'],
+  },
+  {
+    id: 'countermagic',
+    label: 'Countermagic',
+    aliases: ['countermagic', 'counter magic', 'counterspell', 'counterspells'],
+    queryClause: '(o:"counter target" o:spell)',
+    minimumMainMatches: 8,
+    roles: ['countermagic'],
+    oracleFallbacks: ['counter target spell', 'counter that spell', 'counter it'],
   },
   {
     id: 'proliferate',
@@ -273,6 +293,169 @@ function cardTypeIntent(original: string, normalizedInput: string, cleaned: stri
   };
 }
 
+interface ControlledThemeAtomV15 {
+  key: string;
+  aliasTokens: string[];
+  intent: NeutralThemeIntentV15;
+}
+
+function creatureTypeIntentV15(
+  original: string,
+  normalizedInput: string,
+  creatureType: string,
+): NeutralThemeIntentV15 {
+  return {
+    original,
+    normalizedInput,
+    kind: 'creature-type',
+    enforceability: 'full',
+    canonicalLabel: `${creatureType} typal`,
+    queryClause: `t:"${escapeScryfallLiteral(creatureType)}"`,
+    minimumMainMatches: 20,
+    printingFamily: null,
+    matchRule: { type: 'creature-type', creatureType },
+    explanation: `The requested typal theme is verified against Scryfall's creature-type catalog as ${creatureType}. Discovery uses a generated quoted type clause and the final audit checks resolved type/rules data, including Changeling.`,
+  };
+}
+
+function controlledThemeAtomsV15(creatureTypes: string[]): ControlledThemeAtomV15[] {
+  const atoms: ControlledThemeAtomV15[] = [];
+  for (const definition of MECHANICAL_THEMES) {
+    for (const alias of definition.aliases) {
+      const normalizedAlias = normalize(alias);
+      const aliasTokens = stripThemeWrappers(normalizedAlias).split(' ').filter(Boolean);
+      const intent = mechanicIntent(alias, normalizedAlias, normalizedAlias);
+      if (!intent || aliasTokens.length === 0) continue;
+      atoms.push({ key: `mechanic:${definition.id}`, aliasTokens, intent });
+    }
+  }
+  for (const definition of CARD_TYPE_THEMES) {
+    for (const alias of definition.aliases) {
+      const normalizedAlias = normalize(alias);
+      const aliasTokens = stripThemeWrappers(normalizedAlias).split(' ').filter(Boolean);
+      const intent = cardTypeIntent(alias, normalizedAlias, normalizedAlias);
+      if (!intent || aliasTokens.length === 0) continue;
+      atoms.push({ key: `card-type:${definition.id}`, aliasTokens, intent });
+    }
+  }
+  for (const rawCreatureType of creatureTypes) {
+    const creatureType = rawCreatureType.trim();
+    if (!creatureType) continue;
+    const normalizedType = normalize(creatureType);
+    for (const alias of new Set([normalizedType, pluralizeCreatureType(normalizedType)])) {
+      const aliasTokens = alias.split(' ').filter(Boolean);
+      if (aliasTokens.length === 0) continue;
+      atoms.push({
+        key: `creature-type:${normalizedType}`,
+        aliasTokens,
+        intent: creatureTypeIntentV15(alias, normalize(alias), creatureType),
+      });
+    }
+  }
+  return atoms.sort((left, right) => (
+    right.aliasTokens.length - left.aliasTokens.length
+    || right.aliasTokens.join(' ').length - left.aliasTokens.join(' ').length
+    || left.key.localeCompare(right.key)
+  ));
+}
+
+function decomposeControlledThemeV15(
+  cleaned: string,
+  creatureTypes: string[],
+): { components: NeutralThemeIntentV15[]; unknownTokens: string[] } {
+  const tokens = cleaned.split(' ').filter(Boolean);
+  const connectors = new Set(['and', 'with', 'plus', '+']);
+  const atoms = controlledThemeAtomsV15(creatureTypes);
+  const components: NeutralThemeIntentV15[] = [];
+  const seen = new Set<string>();
+  const unknownTokens: string[] = [];
+
+  for (let index = 0; index < tokens.length;) {
+    const token = tokens[index]!;
+    const atom = atoms.find((candidate) => candidate.aliasTokens.every(
+      (aliasToken, offset) => tokens[index + offset] === aliasToken,
+    ));
+    if (atom) {
+      if (!seen.has(atom.key)) {
+        components.push(atom.intent);
+        seen.add(atom.key);
+      }
+      index += atom.aliasTokens.length;
+      continue;
+    }
+    if (connectors.has(token)) {
+      index += 1;
+      continue;
+    }
+    unknownTokens.push(token);
+    index += 1;
+  }
+  return { components, unknownTokens };
+}
+
+function composedThemeIntentV15(
+  original: string,
+  normalizedInput: string,
+  components: NeutralThemeIntentV15[],
+): NeutralThemeIntentV15 {
+  if (components.length === 1) return { ...components[0]!, original, normalizedInput };
+  const clauses = [...new Set(components
+    .map((component) => component.queryClause)
+    .filter((value): value is string => Boolean(value)))];
+  const labels = components
+    .map((component) => component.canonicalLabel)
+    .filter((value): value is string => Boolean(value));
+  return {
+    original,
+    normalizedInput,
+    kind: 'compound',
+    enforceability: 'full',
+    canonicalLabel: labels.join(' + '),
+    queryClause: `(${clauses.join(' OR ')})`,
+    minimumMainMatches: Math.max(...components.map((component) => component.minimumMainMatches)),
+    printingFamily: null,
+    matchRule: { type: 'none' },
+    components,
+    explanation: `The compound request decomposes completely into controlled facets: ${labels.join(', ')}. Candidate discovery uses only generated bounded clauses joined with OR; the original user text is never executed as Scryfall grammar. Aggregate theme density means a card matches at least one requested facet; individual facet achievement remains independent evidence and is not inferred from this aggregate gate.`,
+  };
+}
+
+async function resolveControlledCompoundThemeV15(
+  original: string,
+  normalizedInput: string,
+  cleaned: string,
+  options: { creatureTypes?: string[]; creatureTypeProvider?: () => Promise<string[]> },
+): Promise<NeutralThemeIntentV15 | null> {
+  const controlledOnly = decomposeControlledThemeV15(cleaned, []);
+  if (controlledOnly.unknownTokens.length === 0 && controlledOnly.components.length > 1) {
+    return composedThemeIntentV15(original, normalizedInput, controlledOnly.components);
+  }
+  if (controlledOnly.unknownTokens.length === 0) return null;
+  if (controlledOnly.components.length === 0 && controlledOnly.unknownTokens.length === 1) return null;
+
+  let creatureTypes: string[];
+  try {
+    creatureTypes = await loadCreatureTypes(options);
+  } catch (error) {
+    return unavailableTheme(
+      original,
+      normalizedInput,
+      `Creature-type verification is currently unavailable while resolving a compound theme: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  const decomposed = decomposeControlledThemeV15(cleaned, creatureTypes);
+  if (decomposed.unknownTokens.length > 0) {
+    return unsupportedTheme(
+      original,
+      normalizedInput,
+      `The free-form theme contains unrecognized or unenforceable terms: ${[...new Set(decomposed.unknownTokens)].join(', ')}. Known facets are not silently accepted while unknown leftovers are dropped.`,
+    );
+  }
+  if (decomposed.components.length === 0) return null;
+  return composedThemeIntentV15(original, normalizedInput, decomposed.components);
+}
+
 function explicitOraclePhrase(original: string): string | null {
   const trimmed = original.trim();
   const patterns = [
@@ -370,6 +553,9 @@ export async function resolveNeutralThemeIntentV15(
   const cardType = cardTypeIntent(original, normalizedInput, cleaned);
   if (cardType) return cardType;
 
+  const compound = await resolveControlledCompoundThemeV15(original, normalizedInput, cleaned, options);
+  if (compound) return compound;
+
   if (/\b(?:and|with)\b|[&+]/.test(cleaned)) {
     return unsupportedTheme(original, normalizedInput, 'Compound free-form themes are not yet losslessly enforceable. Supply one primary theme or use explicit structured constraints instead.');
   }
@@ -423,6 +609,9 @@ function typeContainsWord(typeLine: string, needle: string): boolean {
 }
 
 export function cardMatchesNeutralThemeV15(card: ScryfallCard, intent: NeutralThemeIntentV15): boolean {
+  if ((intent.components?.length ?? 0) > 0) {
+    return intent.components!.some((component) => cardMatchesNeutralThemeV15(card, component));
+  }
   switch (intent.matchRule.type) {
     case 'creature-type': {
       if (typeContainsWord(card.type_line, intent.matchRule.creatureType)) return true;

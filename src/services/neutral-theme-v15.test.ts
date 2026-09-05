@@ -77,10 +77,46 @@ test('catalog mismatch and raw query-like input fail closed instead of becoming 
   assert.equal(vague.queryClause, null);
 });
 
-test('compound free-form themes fail closed instead of silently choosing one half', async () => {
+test('compound controlled themes decompose completely instead of silently choosing one half', async () => {
   const compound = await resolveNeutralThemeIntentV15('Vampires and sacrifice', { creatureTypes: ['Vampire'] });
+  assert.equal(compound.kind, 'compound');
+  assert.equal(compound.enforceability, 'full');
+  assert.deepEqual(compound.components?.map((component) => component.canonicalLabel), ['Vampire typal', 'Sacrifice / aristocrats']);
+  assert.match(compound.queryClause ?? '', /t:\"Vampire\"/);
+  assert.match(compound.queryClause ?? '', /o:sacrifice/);
+});
+
+test('compound parser recognizes counters, proliferate, countermagic and combat without creature-type lookup', async () => {
+  const compound = await resolveNeutralThemeIntentV15('+1/+1 counters proliferate countermagic combat', {
+    creatureTypeProvider: async () => { throw new Error('creature catalog should not be needed'); },
+  });
+  assert.equal(compound.kind, 'compound');
+  assert.deepEqual(compound.components?.map((component) => component.canonicalLabel), [
+    '+1/+1 counters',
+    'Proliferate',
+    'Countermagic',
+    'Combat / attacks',
+  ]);
+  assert.match(compound.queryClause ?? '', /counter target/);
+  assert.match(compound.queryClause ?? '', /combat damage/);
+});
+
+test('compound parser recognizes typal plus combat and graveyard synonyms as distinct controlled facets', async () => {
+  const compound = await resolveNeutralThemeIntentV15('Knights typal combat graveyard recursion reanimation', { creatureTypes: ['Knight'] });
+  assert.equal(compound.kind, 'compound');
+  assert.deepEqual(compound.components?.map((component) => component.canonicalLabel), [
+    'Knight typal',
+    'Combat / attacks',
+    'Graveyard / reanimator',
+  ]);
+});
+
+test('compound themes still fail closed when any leftover term is unknown', async () => {
+  const compound = await resolveNeutralThemeIntentV15('tokens and banana', { creatureTypes: [] });
   assert.equal(compound.kind, 'unsupported');
-  assert.match(compound.explanation, /compound/i);
+  assert.equal(compound.enforceability, 'unsupported');
+  assert.match(compound.explanation, /banana/);
+  assert.equal(compound.queryClause, null);
 });
 
 test('explicit Oracle-text themes are bounded literal phrases and reject query grammar characters', async () => {
