@@ -1,8 +1,7 @@
 name: "BENCH-01 Batch A — Counter Blitz + Liliana"
 
-# Benchmark harness only. The product/runtime source is intentionally unchanged
-# from the 5829b37... INTEL-02 family replay; this workflow and the Counter Blitz
-# fixture are measurement surfaces, not Commander-intelligence changes.
+# Benchmark harness only. Commander-intelligence product source is frozen at
+# ce4c9eba59617be2cf57718408b40252230bccf4 for the repaired-source replay.
 on:
   push:
     branches: ["agent/v15-native-deck-intelligence"]
@@ -113,12 +112,12 @@ jobs:
             [ ! -f liliana-budget-500-deck.txt ] || cp liliana-budget-500-deck.txt test-results/bench01-batch-a/liliana/deck.txt
             [ ! -f bench01-liliana.log ] || cp bench01-liliana.log test-results/bench01-batch-a/liliana/control.log
             [ ! -f bench01-source-build.log ] || cp bench01-source-build.log test-results/bench01-batch-a/build.log
-            printf 'executed_source_sha=%s\nproduct_runtime_baseline_sha=5829b37b686255ba35d419b37be17095e54fb696\nsource_relationship=harness-docs-only-descendant-no-src-intelligence-change\nbuild_outcome=%s\ncounter_blitz_outcome=%s\nliliana_outcome=%s\nbatch=BENCH-01-A\nsource_frozen_within_batch=true\n' \
+            printf 'executed_source_sha=%s\nproduct_runtime_baseline_sha=ce4c9eba59617be2cf57718408b40252230bccf4\nsource_relationship=benchmark-harness-only-descendant-product-src-frozen-at-repair-sha\nbuild_outcome=%s\ncounter_blitz_outcome=%s\nliliana_outcome=%s\nbatch=BENCH-01-A-REPAIRED-REPLAY\nsource_frozen_within_batch=true\n' \
               "$GITHUB_SHA" "$BUILD_OUTCOME" "$COUNTER_OUTCOME" "$LILIANA_OUTCOME" \
               > test-results/bench01-batch-a/run-metadata.txt
             git add -- test-results/bench01-batch-a
             if git diff --cached --quiet; then exit 0; fi
-            git commit -m "test-results(BENCH-01): persist Batch A evidence [skip ci]"
+            git commit -m "test-results(BENCH-01): persist repaired Batch A evidence [skip ci]"
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
             echo "BENCH-01 Batch A persistence attempt ${attempt} lost a branch race; retrying."
           done
