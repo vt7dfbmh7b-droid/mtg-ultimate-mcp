@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-05T09:48:00.000Z**.
+Generated from `project-state.json`. Last state update: **2026-09-05T14:45:00.000Z**.
 
 ## Current mode
 
@@ -10,7 +10,7 @@ Generated from `project-state.json`. Last state update: **2026-09-05T09:48:00.00
 - Active PR: #29
 - Active milestone: **BENCH-01**
 - Intelligence development paused: **no**
-- Reason: BENCH-01 remains the critical path. The centralized compound-theme parsing defect has been generically repaired and fully validated at ce4c9eba.... Cavalry Charge now refines instead of rejecting the request, proving parser progress, but its accepted 8-swap result loses five Knights and four combat-reference cards while improving graveyard/recursion and structural quality, so aggregate compound-theme satisfaction may still mask per-facet regression. Counter Blitz repaired replay 33958274005 is still running from the same frozen product source. Hold further product edits until Counter provides the second repaired cross-fixture result; then decide whether a generic per-component preservation/achievement gate is justified.
+- Reason: BENCH-01 remains the critical path. The repaired ce4c9eba source proved the compound parser worked, then Cavalry Charge and Counter Blitz independently exposed the same generic component-compensation defect: requested Knight/combat facets regressed in Cavalry and proliferate regressed 4→2 in Counter while aggregate compound metrics remained green. The generic component-preservation gate is now fully validated at dd085caf4e47f6f5e1976667dc90de2db46c00a1. Freeze that exact source and replay Counter Blitz plus Cavalry Charge without Commander-intelligence edits between them. Judge each requested component independently and only then decide whether the blocker is closed or another generic repair is justified.
 
 ## Stable boundary
 
@@ -23,13 +23,13 @@ Generated from `project-state.json`. Last state update: **2026-09-05T09:48:00.00
 
 Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
 
-The formal accepted development checkpoint remains 77a5383..., while the generic controlled compound-theme repair is now fully validated as executable product source `ce4c9eba59617be2cf57718408b40252230bccf4`. Dedicated validation run 33958162827 passed focused neutral-theme regressions, the full repository test suite and build from a clean local commit, removed the temporary repair workflow/script from the accepted tree, and only then published that exact product commit. BENCH-01 pre-repair Batch A remains historically 1-1: Liliana NZ$500 specialist win, Counter Blitz general-AI win. The repaired Cavalry Charge replay from a no-src descendant of ce4c9eba now accepts the compound request and makes 8 legal, budget-compliant swaps, but reaches only Bracket 3 and regresses requested Knight count by 5 and combat-reference count by 4 while improving graveyard/recursion and structural metrics. Counter Blitz repaired replay run 33958274005 is still in progress from the same frozen product source; no Commander-intelligence source change is permitted until that result is interpreted. PR #29 remains active and stable remains V0.13 because BENCH-01 is not promotion-grade.
+The formal accepted development checkpoint remains 77a5383..., while BENCH-01 has now advanced beyond the parser repair. Repaired Cavalry Charge and Counter Blitz independently proved that aggregate compound-theme density could hide regression in an explicitly requested component. The generic per-component candidate-acceptance repair was implemented without deck/card-specific logic, focused regressions were added, and final combined source dd085caf4e47f6f5e1976667dc90de2db46c00a1 passed normal CI run 33972639473 end-to-end: project-management checks, validation-index checks, recovery smoke test, type-check/build, and the full test suite. This exact SHA is now the frozen repaired experimental product source for paired Counter Blitz and Cavalry Charge replay. PR #29 remains active and stable remains V0.13 because BENCH-01 is not yet promotion-grade.
 
 Latest fully validated executable experimental baseline recorded by project state:
 
 - Branch: `agent/v15-native-deck-intelligence`
-- SHA: `ce4c9eba59617be2cf57718408b40252230bccf4`
-- Scope: Fully validated executable generic compound-theme repair. Run 33958162827 passed focused regressions, full repository tests and build on the clean committed tree before publishing. This is a validated experimental product baseline for BENCH-01 replay, not a stable promotion or proof of benchmark superiority.
+- SHA: `dd085caf4e47f6f5e1976667dc90de2db46c00a1`
+- Scope: Fully validated generic compound-component preservation repair. It independently audits every controlled compound component before the existing aggregate theme gate, preserves satisfied components, prevents below-target components from moving backward, fails closed on missing/inconsistent component evidence, leaves single-theme behavior unchanged, and passed normal CI run 33972639473 including full tests and build. This is a validated experimental BENCH-01 replay baseline, not stable promotion or proof of benchmark superiority.
 
 Always inspect the live active-branch head before editing. A later documentation/project-management commit is not automatically a new executable validation milestone.
 
@@ -47,7 +47,7 @@ Always inspect the live active-branch head before editing. A later documentation
 
 ## Current validation status
 
-- Active branch status: **bench01-compound-repair-validated-ce4c9eba-cavalry-replay-complete-with-requested-facet-regression-counter-replay-in-progress-no-promotion**
+- Active branch status: **bench01-compound-component-gate-validated-dd085caf-paired-replay-required-no-promotion**
 - Last persisted Marvel control source: `5829b37b686255ba35d419b37be17095e54fb696`
 - Last persisted Marvel control outcome: **expected-ceiling-fail-closed-zero-swap**
 - Note: At exact source 5829b37..., focused and broad Marvel execute and persist honestly with zero accepted swaps because the restricted pool cannot repair the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure. Keep these controls red for target achievement. Treat the result as expected construction-ceiling behaviour, not as a passing target and not as a blocker to BENCH-01 on other archetypes. Rerun only when the relevant pool, provider truth or policy changes.
@@ -55,24 +55,24 @@ Always inspect the live active-branch head before editing. A later documentation
 Required before resuming broad INTEL-01/INTEL-02 claims:
 
 - Preserve all generic guards proven by the 5829b37... family replay, including strategy-fuel, structural-floor, graveyard-directionality, artifact-engine, token/death-payoff, resource-component and exact legality/budget/printing truth.
-- Preserve historical BENCH-01 Batch A as a 1-1 pre-repair result: Liliana NZ$500 specialist win; Counter Blitz general-AI win. Do not relabel that evidence because the compound parser is now repaired.
-- Treat ce4c9eba59617be2cf57718408b40252230bccf4 as the exact fully validated repaired experimental product source for the current replay. Its dedicated validator run 33958162827 is the focused-regression + full-suite + build acceptance evidence; temporary one-shot repair surfaces are absent from the accepted tree.
-- Preserve Cavalry repaired replay as target-movement evidence, not a blanket pass: exact legality and budget/swap limits hold, the compound request is accepted and structural/graveyard metrics improve, but Knight count falls by 5, combat references fall by 4 and target Bracket 4 is not achieved.
-- Do not make another Commander-intelligence change until repaired Counter Blitz run 33958274005 completes and is compared against the locked 18-swap general-AI baseline. Use that second repaired fixture to decide whether Cavalry's per-facet regression is generic.
+- Preserve historical BENCH-01 Batch A as a 1-1 pre-repair result: Liliana NZ$500 specialist win; Counter Blitz general-AI win. Do not relabel that evidence because later repairs improve the specialist.
+- Preserve ce4c9eba59617be2cf57718408b40252230bccf4 as the validated parser-repair baseline and its repaired replay evidence. Cavalry Charge regressed Knights 32→27 and combat references 21→17; Counter Blitz independently regressed proliferate 4→2 while aggregate compound metrics remained green. Together those fixtures authorized one generic component-preservation repair.
+- Treat dd085caf4e47f6f5e1976667dc90de2db46c00a1 as the exact fully validated compound-component repair source. Normal CI run 33972639473 passed project-state/index/recovery checks, type-check/build, and the full repository tests on that SHA.
+- Freeze dd085caf4e47f6f5e1976667dc90de2db46c00a1 for the paired repaired Counter Blitz and Cavalry Charge replays. Do not change Commander-intelligence source between those two fixtures.
+- For each replay, inspect exact legality/printing/budget truth, whole-deck quality, target movement/achievement and every requested compound component independently. Aggregate theme density alone is insufficient evidence.
 - Keep Marvel expected restricted-pool ceiling evidence and provider-unknown Scryfall HTTP 429 semantics separate from BENCH blockers.
-- Continue unseen contrasting BENCH-01 fixtures before further product changes unless the repaired cross-fixture evidence exposes a clear generic correctness blocker.
+- After the paired replay, continue several unseen contrasting BENCH-01 fixtures before another intelligence change unless the pair reveals another clear repeated generic correctness blocker.
 
 ## Next actions
 
 1. Do not repeat the completed comprehensive system audit; docs/SYSTEM-AUDIT-2026-09-02.md remains the reusable baseline unless a material architecture, runtime-entry-point, stable-boundary or project-state-integrity change occurs.
-2. Preserve ce4c9eba59617be2cf57718408b40252230bccf4 as the frozen validated product source for the repaired compound-theme BENCH replay. Subsequent benchmark workflow/evidence commits are harness-only descendants; do not change src/** until the paired replay is interpreted.
-3. Preserve the repaired Cavalry Charge result: refinement status refined, 8 swaps, about NZ$32.12 upgrade spend, exact 100/legal, within NZ$35-per-card/NZ$200-total/12-swap limits, Bracket 2→3, MV 3.34→2.97, early 19→26, cheap interaction 3→6, tutors 0→2, recursion +3; however Knight creatures 32→27 and combat references 21→17. Aggregate compound satisfaction is therefore not sufficient evidence of per-component success.
-4. Wait for repaired Counter Blitz workflow run 33958274005 to complete and persist evidence. Verify run metadata points to ce4c9eba..., then inspect exact 100/legality/FF-only truth, accepted swaps, bracket, curve, interaction/protection, verified routes and each requested compound facet (+1/+1 counters, proliferate, countermagic, combat).
-5. Compare repaired Counter Blitz against the locked 18-swap general-AI baseline. Determine whether any requested facet materially regresses while aggregate compound satisfaction remains green.
-6. If Counter independently reproduces per-component compensation/regression, implement one generic compound-component preservation/achievement acceptance gate, validate it fully, freeze the exact new product SHA, and replay Counter Blitz plus Cavalry Charge from that same unchanged source. Do not use deck/card-specific thresholds or fixes.
-7. If Counter does not reproduce the facet-regression pattern, run at least one additional contrasting unseen compound fixture before changing product source; Cavalry alone remains a BENCH quality failure but is not enough to justify a broad gate without further evidence.
-8. Once the compound quality blocker is resolved, continue several unseen BENCH-01 fixtures across combat, control, typal, aristocrats, unrestricted combo, hybrid and other contrasting families before another intelligence change. Convert only repeated cross-fixture weaknesses into generic repairs.
-9. PR #29 and stable V0.13 remain unchanged while BENCH-01 is not promotion-grade. Standing authorization permits merge/promotion without another approval only after complete validation and broad benchmark evidence demonstrate the specialist is genuinely ready.
+2. Freeze dd085caf4e47f6f5e1976667dc90de2db46c00a1 as the exact validated product source for the next paired BENCH replay. Normal CI run 33972639473 is the acceptance evidence for this repair; do not alter src/** between Counter Blitz and Cavalry Charge.
+3. Replay Counter Blitz from dd085caf... under the same FF-only Bant +1/+1 counters/proliferate/countermagic/combat constraints and compare the complete final deck to the locked 18-swap general-AI baseline. Verify proliferate no longer regresses while legality, FF printing truth, counters, countermagic, combat identity, protection/access, routes, curve and bracket truth remain acceptable.
+4. Replay Cavalry Charge from the same unchanged dd085caf... source under Knights typal + combat + graveyard recursion/reanimation, NZ$35 per added card, NZ$200 total and maximum 12 swaps. Verify Knight and combat components are preserved while legality, budget, recursion/structural improvements and whole-deck quality remain acceptable.
+5. Interpret the two replays together. A green aggregate compound score is insufficient: record every controlled component before/after and distinguish target movement from target achievement. If both fixtures show the compensation defect closed without unacceptable quality regression, close this BENCH correctness blocker.
+6. If the paired replay exposes another repeated generic defect, localize and justify one generic repair from cross-fixture evidence before changing product source. Do not add deck/card-specific thresholds or exceptions.
+7. Once this blocker is closed, continue several unseen BENCH-01 fixtures across combat, control, typal, aristocrats, unrestricted combo, hybrid and other contrasting families before another intelligence change. Convert only repeated cross-fixture weaknesses into generic repairs.
+8. PR #29 and stable V0.13 remain unchanged while BENCH-01 is not promotion-grade. Standing authorization permits merge/promotion without another approval only after complete validation and broad benchmark evidence demonstrate the specialist is genuinely ready.
 
 ## Permanent truth boundary
 
@@ -83,6 +83,7 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 - Pipeline execution or a green harness is not proof of intelligent deck improvement.
 - Expected construction-ceiling behaviour is not the same as target achievement.
 - A compound aggregate theme-density pass does not prove that every explicitly requested component was preserved or improved.
+- For a controlled compound request, candidate acceptance must preserve every already-satisfied component and must not move any below-target component backward while gains elsewhere compensate.
 - Never treat an unvalidated head or staged repair as an accepted checkpoint.
 - No scenario-specific, card-name or benchmark-specific hacks; product changes require generic evidence.
 - Stable/current promotion or PR merging requires complete validation, non-redundancy, safety and promotion-grade benchmark evidence. The user has granted standing authority to perform those actions once those gates are genuinely satisfied; no extra approval is required at that point.
@@ -102,4 +103,4 @@ Read in this order:
 9. `docs/VALIDATION-MATRIX.md`
 10. `docs/KNOWN-FAILURES.md`
 
-Then: The comprehensive system audit in docs/SYSTEM-AUDIT-2026-09-02.md is complete and reusable; do not rerun it without a material trigger. BENCH-01 is active. The generic compound-theme parser repair is fully validated at ce4c9eba..., and the product source is frozen for paired repaired replays. Cavalry now refines but regresses explicit Knight and combat facets while improving graveyard/structural quality; Counter repaired replay 33958274005 is still in progress. Do not change Commander-intelligence source until Counter is interpreted. If the same per-component compensation appears across both fixtures, repair it generically and replay both from one exact new source; otherwise gather another contrasting fixture first. Stable remains V0.13 until promotion-grade evidence exists; standing user authorization allows merge/promotion once full validation and evidence gates are satisfied.
+Then: The comprehensive system audit in docs/SYSTEM-AUDIT-2026-09-02.md is complete and reusable; do not rerun it without a material trigger. BENCH-01 is active. Repaired Cavalry Charge and Counter Blitz independently proved a generic compound-component compensation defect on frozen source ce4c9eba.... The one authorized generic component-preservation repair is now fully validated at dd085caf4e47f6f5e1976667dc90de2db46c00a1 by normal CI run 33972639473. Freeze that exact source and replay Counter Blitz plus Cavalry Charge without src changes between them, judging every requested component independently as well as whole-deck quality. Stable remains V0.13 until broad promotion-grade evidence exists; standing user authorization allows merge/promotion once full validation and evidence gates are satisfied.
