@@ -1,0 +1,8 @@
+executed_source_sha=2a0570b9828cf048a1f3cedbecc737643481c148
+product_runtime_baseline_sha=5829b37b686255ba35d419b37be17095e54fb696
+source_relationship=harness-docs-only-descendant-no-src-intelligence-change
+build_outcome=success
+counter_blitz_outcome=success
+liliana_outcome=success
+batch=BENCH-01-A
+source_frozen_within_batch=true

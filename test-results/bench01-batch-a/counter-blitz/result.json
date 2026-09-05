@@ -1,0 +1,583 @@
+{
+  "schema": "bench01-counter-blitz-ff-only-v1",
+  "fixture": "BENCH-01 Batch A / Counter Blitz",
+  "sourceBaseline": "MTGJSON exact standard precon",
+  "precon": {
+    "name": "Counter Blitz (FINAL FANTASY X)",
+    "fileName": "CounterBlitzFinalFantasyX_FIC",
+    "releaseDate": "2025-06-13",
+    "commanders": [
+      "Tidus, Yuna's Guardian"
+    ]
+  },
+  "constraints": {
+    "commander": "Tidus, Yuna's Guardian",
+    "printingFamily": "Final Fantasy",
+    "targetBracket": 5,
+    "maxSwaps": 20,
+    "identity": "Bant +1/+1 counters/proliferate with dense countermagic and hybrid combat/combo routes",
+    "hardTruthFirst": true,
+    "benchmarkTargetsAreMeasurementsNotAutomaticPassClaims": true
+  },
+  "refinement": {
+    "status": "unsupported-theme",
+    "totalSwaps": 0,
+    "rawRefinement": {
+      "status": "unsupported-theme",
+      "reason": "Compound free-form themes are not yet losslessly enforceable. Supply one primary theme or use explicit structured constraints instead.",
+      "themeIntent": {
+        "original": "+1/+1 counters proliferate countermagic combat",
+        "normalizedInput": "+1/+1 counters proliferate countermagic combat",
+        "kind": "unsupported",
+        "enforceability": "unsupported",
+        "canonicalLabel": null,
+        "queryClause": null,
+        "minimumMainMatches": 0,
+        "printingFamily": null,
+        "matchRule": {
+          "type": "none"
+        },
+        "explanation": "Compound free-form themes are not yet losslessly enforceable. Supply one primary theme or use explicit structured constraints instead."
+      }
+    }
+  },
+  "before": {
+    "cardCount": 100,
+    "commanderLegal": true,
+    "printingPolicySatisfied": true,
+    "commanderNames": [
+      "Tidus, Yuna's Guardian"
+    ],
+    "commanderStrategies": [
+      {
+        "archetype": "value-engine",
+        "score": 14,
+        "evidence": [
+          "repeatable draw +9",
+          "card draw +5"
+        ]
+      },
+      {
+        "archetype": "counters",
+        "score": 13,
+        "evidence": [
+          "proliferate +7",
+          "counter movement +6"
+        ]
+      },
+      {
+        "archetype": "combat-tokens",
+        "score": 2,
+        "evidence": [
+          "combat-damage trigger +2"
+        ]
+      }
+    ],
+    "counterEngineCount": 52,
+    "proliferateCount": 4,
+    "counterspellCount": 1,
+    "combatReferenceCount": 12,
+    "creatureCount": 34,
+    "nonlandCount": 62,
+    "notableRoutePieces": {
+      "walkingBallista": true,
+      "destinedWhiteMage": false,
+      "hardenedScales": true,
+      "gyreSage": true,
+      "incubationDruid": true,
+      "earthCrystal": false,
+      "inexorableTide": true,
+      "resourcefulDefense": true
+    },
+    "comboEvidence": {
+      "verificationComplete": true,
+      "sourceStatus": "available",
+      "includedCount": 1,
+      "included": [
+        {
+          "id": "2265-3693-6593",
+          "identity": "GW",
+          "status": "OK",
+          "bracketTag": "S",
+          "cards": [
+            {
+              "name": "Gatta and Luzzu",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Hardened Scales",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Walking Ballista",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite damage",
+            "Infinite +1/+1 counters on a creature"
+          ],
+          "requirements": [],
+          "description": "Cast Gatta and Luzzu by paying {2}{W}.\nWhen Gatta and Luzzu enters the battlefield, it triggers, targeting Walking Ballista.\nActivate Walking Ballista by removing a +1/+1 counter from it, targeting itself, but instead putting two +1/+1 counters on it due to Gatta and Luzzu and Hardened Scales.\nActivate Walking Ballista by removing a +1/+1 counter from it, dealing 1 damage to any target.\nRepeat from step 3.",
+          "manaNeeded": "{2}{W}",
+          "popularity": 15571
+        }
+      ],
+      "error": null
+    },
+    "assessedBracket": 3,
+    "assessedBand": "bracket-3-upgraded-range",
+    "bracketEvidence": {
+      "assessedBracket": 3,
+      "assessedBand": "bracket-3-upgraded-range",
+      "confidence": "high",
+      "hardGatesPassed": true,
+      "bracket5ConstructionCandidate": false,
+      "bracket5CertifiedByThisAssessment": false,
+      "bracket5ThresholdChecks": [
+        {
+          "key": "average-nonland-mv",
+          "category": "construction",
+          "label": "Average nonland mana value",
+          "observed": 3.03,
+          "required": "at most 2.6",
+          "passed": false,
+          "detail": "Average nonland mana value: observed 3.03; Bracket-5 construction gate requires at most 2.6.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "early-plays",
+          "category": "construction",
+          "label": "Early plays",
+          "observed": 24,
+          "required": "at least 35",
+          "passed": false,
+          "detail": "Early plays: observed 24; Bracket-5 construction gate requires at least 35.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "fast-mana",
+          "category": "construction",
+          "label": "Fast mana",
+          "observed": 1,
+          "required": "at least 3",
+          "passed": false,
+          "detail": "Fast mana: observed 1; Bracket-5 construction gate requires at least 3.",
+          "pressurePoint": "fast-mana density"
+        },
+        {
+          "key": "free-interaction",
+          "category": "construction",
+          "label": "Free interaction",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Free interaction: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "cheap-interaction",
+          "category": "construction",
+          "label": "Cheap interaction",
+          "observed": 3,
+          "required": "at least 8",
+          "passed": false,
+          "detail": "Cheap interaction: observed 3; Bracket-5 construction gate requires at least 8.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "tutors",
+          "category": "construction",
+          "label": "Tutors",
+          "observed": 0,
+          "required": "at least 4",
+          "passed": false,
+          "detail": "Tutors: observed 0; Bracket-5 construction gate requires at least 4.",
+          "pressurePoint": "tutor consistency"
+        },
+        {
+          "key": "verified-winning-combo",
+          "category": "construction",
+          "label": "Verified win-oriented combos",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "competitive-combo-signal",
+          "category": "construction",
+          "label": "Competitive combo signal",
+          "observed": "Ruthless=0, strategic=1, Spellbook=P",
+          "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+          "passed": true,
+          "detail": "Competitive combo signal: observed Ruthless=0, strategic=1, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "cedh-intent",
+          "category": "evidence",
+          "label": "Explicit cEDH intent",
+          "observed": false,
+          "required": "true",
+          "passed": false,
+          "detail": "Explicit cEDH intent: observed false; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "competitive intent"
+        },
+        {
+          "key": "competitive-metagame-evidence",
+          "category": "evidence",
+          "label": "Independent current competitive-metagame evidence",
+          "observed": false,
+          "required": "true",
+          "passed": false,
+          "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "metagame evidence"
+        }
+      ],
+      "supportingSignals": [
+        "1 strategically relevant combo signal.",
+        "1 current Game Changer.",
+        "1 fast-mana signal."
+      ],
+      "constraints": [
+        "Exact Counter Blitz stock-precon lineage.",
+        "FINAL FANTASY physical printings only.",
+        "Tidus, Yuna's Guardian remains the commander.",
+        "Target Bracket 5 is a benchmark target, not permission to falsify target achievement.",
+        "Preserve a hybrid counters/proliferate combat plan while allowing compact combo routes.",
+        "Dense countermagic is an explicit benchmark objective."
+      ],
+      "restrictionObservations": [
+        "Constraint \"Exact Counter Blitz stock-precon lineage.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (3.03 vs at most 2.6); Early plays (24 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (3 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them.",
+        "Constraint \"FINAL FANTASY physical printings only.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (3.03 vs at most 2.6); Early plays (24 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (3 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them.",
+        "Constraint \"Tidus, Yuna's Guardian remains the commander.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (3.03 vs at most 2.6); Early plays (24 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (3 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them.",
+        "Constraint \"Target Bracket 5 is a benchmark target, not permission to falsify target achievement.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (3.03 vs at most 2.6); Early plays (24 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (3 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them.",
+        "Constraint \"Preserve a hybrid counters/proliferate combat plan while allowing compact combo routes.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (3.03 vs at most 2.6); Early plays (24 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (3 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them.",
+        "Constraint \"Dense countermagic is an explicit benchmark objective.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (3.03 vs at most 2.6); Early plays (24 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (3 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
+      ],
+      "guidance": "This is an after-construction assessment. No requested bracket was supplied to the assessor, and a strong commander name or themed restriction is not evidence for a higher bracket."
+    },
+    "metrics": {
+      "averageNonlandManaValue": 3.03,
+      "earlyPlayCount": 24,
+      "cheapInteractionCount": 3,
+      "fastManaCount": 1,
+      "tutorCount": 0,
+      "recursionCount": 2,
+      "boardWipeCount": 3,
+      "rampCount": 15,
+      "drawCount": 15,
+      "interactionCount": 12,
+      "protectionCount": 0,
+      "persistentColoredManaSourceCount": 6
+    },
+    "benchmarkTargets": {
+      "targetBracket": 5,
+      "bracketTargetAchieved": false,
+      "countermagicTarget": 8,
+      "denseCountermagicAchieved": false,
+      "counterEngineTarget": 16,
+      "counterEngineTargetAchieved": true,
+      "proliferateTarget": 3,
+      "proliferateTargetAchieved": true,
+      "combatReferenceTarget": 8,
+      "combatReferenceTargetAchieved": true,
+      "minimumCreaturesForHybridPlan": 18,
+      "hybridCreatureFloorAchieved": true
+    }
+  },
+  "after": {
+    "cardCount": 100,
+    "commanderLegal": true,
+    "printingPolicySatisfied": true,
+    "commanderNames": [
+      "Tidus, Yuna's Guardian"
+    ],
+    "commanderStrategies": [
+      {
+        "archetype": "value-engine",
+        "score": 14,
+        "evidence": [
+          "repeatable draw +9",
+          "card draw +5"
+        ]
+      },
+      {
+        "archetype": "counters",
+        "score": 13,
+        "evidence": [
+          "proliferate +7",
+          "counter movement +6"
+        ]
+      },
+      {
+        "archetype": "combat-tokens",
+        "score": 2,
+        "evidence": [
+          "combat-damage trigger +2"
+        ]
+      }
+    ],
+    "counterEngineCount": 52,
+    "proliferateCount": 4,
+    "counterspellCount": 1,
+    "combatReferenceCount": 12,
+    "creatureCount": 34,
+    "nonlandCount": 62,
+    "notableRoutePieces": {
+      "walkingBallista": true,
+      "destinedWhiteMage": false,
+      "hardenedScales": true,
+      "gyreSage": true,
+      "incubationDruid": true,
+      "earthCrystal": false,
+      "inexorableTide": true,
+      "resourcefulDefense": true
+    },
+    "comboEvidence": {
+      "verificationComplete": true,
+      "sourceStatus": "available",
+      "includedCount": 1,
+      "included": [
+        {
+          "id": "2265-3693-6593",
+          "identity": "GW",
+          "status": "OK",
+          "bracketTag": "S",
+          "cards": [
+            {
+              "name": "Gatta and Luzzu",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Hardened Scales",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Walking Ballista",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite damage",
+            "Infinite +1/+1 counters on a creature"
+          ],
+          "requirements": [],
+          "description": "Cast Gatta and Luzzu by paying {2}{W}.\nWhen Gatta and Luzzu enters the battlefield, it triggers, targeting Walking Ballista.\nActivate Walking Ballista by removing a +1/+1 counter from it, targeting itself, but instead putting two +1/+1 counters on it due to Gatta and Luzzu and Hardened Scales.\nActivate Walking Ballista by removing a +1/+1 counter from it, dealing 1 damage to any target.\nRepeat from step 3.",
+          "manaNeeded": "{2}{W}",
+          "popularity": 15571
+        }
+      ],
+      "error": null
+    },
+    "assessedBracket": 3,
+    "assessedBand": "bracket-3-upgraded-range",
+    "bracketEvidence": {
+      "assessedBracket": 3,
+      "assessedBand": "bracket-3-upgraded-range",
+      "confidence": "high",
+      "hardGatesPassed": true,
+      "bracket5ConstructionCandidate": false,
+      "bracket5CertifiedByThisAssessment": false,
+      "bracket5ThresholdChecks": [
+        {
+          "key": "average-nonland-mv",
+          "category": "construction",
+          "label": "Average nonland mana value",
+          "observed": 3.03,
+          "required": "at most 2.6",
+          "passed": false,
+          "detail": "Average nonland mana value: observed 3.03; Bracket-5 construction gate requires at most 2.6.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "early-plays",
+          "category": "construction",
+          "label": "Early plays",
+          "observed": 24,
+          "required": "at least 35",
+          "passed": false,
+          "detail": "Early plays: observed 24; Bracket-5 construction gate requires at least 35.",
+          "pressurePoint": "speed/curve"
+        },
+        {
+          "key": "fast-mana",
+          "category": "construction",
+          "label": "Fast mana",
+          "observed": 1,
+          "required": "at least 3",
+          "passed": false,
+          "detail": "Fast mana: observed 1; Bracket-5 construction gate requires at least 3.",
+          "pressurePoint": "fast-mana density"
+        },
+        {
+          "key": "free-interaction",
+          "category": "construction",
+          "label": "Free interaction",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Free interaction: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "cheap-interaction",
+          "category": "construction",
+          "label": "Cheap interaction",
+          "observed": 3,
+          "required": "at least 8",
+          "passed": false,
+          "detail": "Cheap interaction: observed 3; Bracket-5 construction gate requires at least 8.",
+          "pressurePoint": "free/cheap interaction"
+        },
+        {
+          "key": "tutors",
+          "category": "construction",
+          "label": "Tutors",
+          "observed": 0,
+          "required": "at least 4",
+          "passed": false,
+          "detail": "Tutors: observed 0; Bracket-5 construction gate requires at least 4.",
+          "pressurePoint": "tutor consistency"
+        },
+        {
+          "key": "verified-winning-combo",
+          "category": "construction",
+          "label": "Verified win-oriented combos",
+          "observed": 0,
+          "required": "at least 1",
+          "passed": false,
+          "detail": "Verified win-oriented combos: observed 0; Bracket-5 construction gate requires at least 1.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "competitive-combo-signal",
+          "category": "construction",
+          "label": "Competitive combo signal",
+          "observed": "Ruthless=0, strategic=1, Spellbook=P",
+          "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+          "passed": true,
+          "detail": "Competitive combo signal: observed Ruthless=0, strategic=1, Spellbook=P; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+          "pressurePoint": "win-package quality/redundancy"
+        },
+        {
+          "key": "cedh-intent",
+          "category": "evidence",
+          "label": "Explicit cEDH intent",
+          "observed": false,
+          "required": "true",
+          "passed": false,
+          "detail": "Explicit cEDH intent: observed false; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "competitive intent"
+        },
+        {
+          "key": "competitive-metagame-evidence",
+          "category": "evidence",
+          "label": "Independent current competitive-metagame evidence",
+          "observed": false,
+          "required": "true",
+          "passed": false,
+          "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true.",
+          "pressurePoint": "metagame evidence"
+        }
+      ],
+      "supportingSignals": [
+        "1 strategically relevant combo signal.",
+        "1 current Game Changer.",
+        "1 fast-mana signal."
+      ],
+      "constraints": [
+        "Exact Counter Blitz stock-precon lineage.",
+        "FINAL FANTASY physical printings only.",
+        "Tidus, Yuna's Guardian remains the commander.",
+        "Target Bracket 5 is a benchmark target, not permission to falsify target achievement.",
+        "Preserve a hybrid counters/proliferate combat plan while allowing compact combo routes.",
+        "Dense countermagic is an explicit benchmark objective."
+      ],
+      "restrictionObservations": [
+        "Constraint \"Exact Counter Blitz stock-precon lineage.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (3.03 vs at most 2.6); Early plays (24 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (3 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them.",
+        "Constraint \"FINAL FANTASY physical printings only.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (3.03 vs at most 2.6); Early plays (24 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (3 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them.",
+        "Constraint \"Tidus, Yuna's Guardian remains the commander.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (3.03 vs at most 2.6); Early plays (24 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (3 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them.",
+        "Constraint \"Target Bracket 5 is a benchmark target, not permission to falsify target achievement.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (3.03 vs at most 2.6); Early plays (24 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (3 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them.",
+        "Constraint \"Preserve a hybrid counters/proliferate combat plan while allowing compact combo routes.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (3.03 vs at most 2.6); Early plays (24 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (3 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them.",
+        "Constraint \"Dense countermagic is an explicit benchmark objective.\" was active while the finished list missed 7 Bracket-5 construction gates: Average nonland mana value (3.03 vs at most 2.6); Early plays (24 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (3 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
+      ],
+      "guidance": "This is an after-construction assessment. No requested bracket was supplied to the assessor, and a strong commander name or themed restriction is not evidence for a higher bracket."
+    },
+    "metrics": {
+      "averageNonlandManaValue": 3.03,
+      "earlyPlayCount": 24,
+      "cheapInteractionCount": 3,
+      "fastManaCount": 1,
+      "tutorCount": 0,
+      "recursionCount": 2,
+      "boardWipeCount": 3,
+      "rampCount": 15,
+      "drawCount": 15,
+      "interactionCount": 12,
+      "protectionCount": 0,
+      "persistentColoredManaSourceCount": 6
+    },
+    "benchmarkTargets": {
+      "targetBracket": 5,
+      "bracketTargetAchieved": false,
+      "countermagicTarget": 8,
+      "denseCountermagicAchieved": false,
+      "counterEngineTarget": 16,
+      "counterEngineTargetAchieved": true,
+      "proliferateTarget": 3,
+      "proliferateTargetAchieved": true,
+      "combatReferenceTarget": 8,
+      "combatReferenceTargetAchieved": true,
+      "minimumCreaturesForHybridPlan": 18,
+      "hybridCreatureFloorAchieved": true
+    }
+  },
+  "deltas": {
+    "counterEngineCount": 0,
+    "proliferateCount": 0,
+    "counterspellCount": 0,
+    "combatReferenceCount": 0,
+    "creatureCount": 0,
+    "assessedBracket": 0,
+    "averageNonlandManaValue": 0,
+    "earlyPlayCount": 0,
+    "cheapInteractionCount": 0,
+    "fastManaCount": 0,
+    "tutorCount": 0
+  },
+  "targetMovement": {
+    "bracket": {
+      "before": false,
+      "after": false
+    },
+    "denseCountermagic": {
+      "before": false,
+      "after": false
+    },
+    "counterEngine": {
+      "before": true,
+      "after": true
+    },
+    "proliferate": {
+      "before": true,
+      "after": true
+    },
+    "combatReference": {
+      "before": true,
+      "after": true
+    },
+    "hybridCreatureFloor": {
+      "before": true,
+      "after": true
+    }
+  }
+}

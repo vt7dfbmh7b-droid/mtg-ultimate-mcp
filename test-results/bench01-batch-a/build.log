@@ -1,0 +1,4 @@
+
+> mtg-ultimate-mcp@0.13.0 build
+> tsc -p tsconfig.json
+

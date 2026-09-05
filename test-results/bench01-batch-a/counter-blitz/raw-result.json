@@ -1,0 +1,59 @@
+{
+  "currency": "NZD",
+  "currencyPolicy": {
+    "primaryCurrency": "NZD",
+    "displaySymbol": "NZ$",
+    "usdToNzdRate": 1.7015,
+    "rateDate": "2026-09-04",
+    "rateSource": "Frankfurter",
+    "rateSourceUrl": "https://api.frankfurter.dev/v2/rate/USD/NZD",
+    "staleRate": false,
+    "localPricePriority": [
+      "Use a directly checked New Zealand seller/TCGfind NZ price when one is available for the exact printing.",
+      "Otherwise show the Scryfall USD printing reference converted to NZD with this FX rate.",
+      "Converted reference prices are estimates, not guaranteed New Zealand checkout prices or landed costs."
+    ]
+  },
+  "requestedBudgets": {
+    "primaryCurrency": "NZD",
+    "maxNzdPerCard": null,
+    "maxTotalNzd": null
+  },
+  "result": {
+    "precon": {
+      "name": "Counter Blitz (FINAL FANTASY X)",
+      "familyName": "Counter Blitz (FINAL FANTASY X)",
+      "productVariant": "standard",
+      "code": "FIC",
+      "fileName": "CounterBlitzFinalFantasyX_FIC",
+      "releaseDate": "2025-06-13",
+      "year": "2025",
+      "type": "Commander Deck",
+      "mtgJsonDeckUrl": "https://mtgjson.com/api/v5/decks/CounterBlitzFinalFantasyX_FIC.json",
+      "edhrecPreconUrl": "https://edhrec.com/precon/counter-blitz-final-fantasy-x"
+    },
+    "stockCommanders": [
+      "Tidus, Yuna's Guardian"
+    ],
+    "refinement": {
+      "status": "unsupported-theme",
+      "reason": "Compound free-form themes are not yet losslessly enforceable. Supply one primary theme or use explicit structured constraints instead.",
+      "themeIntent": {
+        "original": "+1/+1 counters proliferate countermagic combat",
+        "normalizedInput": "+1/+1 counters proliferate countermagic combat",
+        "kind": "unsupported",
+        "enforceability": "unsupported",
+        "canonicalLabel": null,
+        "queryClause": null,
+        "minimumMainMatches": 0,
+        "printingFamily": null,
+        "matchRule": {
+          "type": "none"
+        },
+        "explanation": "Compound free-form themes are not yet losslessly enforceable. Supply one primary theme or use explicit structured constraints instead."
+      }
+    },
+    "sourceBaseline": "MTGJSON exact stock deck",
+    "guidance": "The stock precon remains the untouched baseline. Each round can compare several competing packages; only the strongest package that clears legality, printing, budget, theme, win-route preservation, and improvement checks becomes the next baseline."
+  }
+}
