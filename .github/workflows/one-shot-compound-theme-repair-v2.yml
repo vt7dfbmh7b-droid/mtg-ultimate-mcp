@@ -24,6 +24,21 @@ jobs:
           node-version-file: .node-version
           package-manager-cache: false
 
+      - name: Preserve bounded combat discovery contract
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/apply-compound-theme-repair.py')
+          text = path.read_text()
+          old = 'queryClause: \'(o:attack OR o:attacking OR o:\\"combat damage\\" OR o:\\"additional combat\\")\','
+          new = 'queryClause: \'(o:attack OR o:\\"combat damage\\")\','
+          count = text.count(old)
+          if count != 1:
+              raise SystemExit(f'expected exactly one staged combat query, found {count}')
+          path.write_text(text.replace(old, new, 1))
+          PY
+
       - name: Apply generic compound-theme repair
         run: python scripts/apply-compound-theme-repair.py
 
