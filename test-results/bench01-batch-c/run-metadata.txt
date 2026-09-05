@@ -1,0 +1,10 @@
+executed_source_sha=2d54e30431755b24c550ed8b4d211e963144921e
+product_runtime_baseline_sha=dd085caf4e47f6f5e1976667dc90de2db46c00a1
+source_relationship=benchmark-wrapper-descendant-src-verified-equal-to-frozen-product-sha
+frozen_source_guard_outcome=success
+repository_tests_outcome=failure
+build_outcome=success
+bench_outcome=skipped
+batch=BENCH-01-C
+source_frozen_within_batch=true
+fixtures=witherbloom-witchcraft,urzas-iron-alliance,necron-dynasties
