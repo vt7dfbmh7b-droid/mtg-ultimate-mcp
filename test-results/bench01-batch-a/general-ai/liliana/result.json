@@ -1,0 +1,2438 @@
+{
+  "schema": "bench01-liliana-general-ai-baseline-v2",
+  "fixture": "BENCH-01 Batch A / Liliana independent general-AI comparison",
+  "lockDocument": "docs/BENCH-01-BATCH-A-LILIANA-BASELINE-CORRECTION-V2-2026-09-05.md",
+  "antiLeak": true,
+  "commander": "Liliana, Heretical Healer // Liliana, Defiant Necromancer",
+  "targetBracket": 5,
+  "maxDeckNzd": 500,
+  "maxDeckUsdReference": 293.86,
+  "currencyPolicy": {
+    "primaryCurrency": "NZD",
+    "usdToNzdRate": 1.7015,
+    "rateDate": "2026-09-04",
+    "rateSource": "Frankfurter"
+  },
+  "budgetAudit": {
+    "auditedTotalUsd": 564.67,
+    "auditedTotalNzd": 960.79,
+    "withinBudget": false,
+    "headroomNzd": -460.79,
+    "selectedPrintings": [
+      {
+        "requestedName": "Liliana, Heretical Healer // Liliana, Defiant Necromancer",
+        "oracleName": "Liliana, Heretical Healer // Liliana, Defiant Necromancer",
+        "quantity": 1,
+        "set": "CC2",
+        "collectorNumber": "1",
+        "finish": "nonfoil",
+        "unitUsd": 6.59,
+        "extendedUsd": 6.59,
+        "releasedAt": "2022-01-28",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Accursed Marauder",
+        "oracleName": "Accursed Marauder",
+        "quantity": 1,
+        "set": "MH3",
+        "collectorNumber": "80",
+        "finish": "nonfoil",
+        "unitUsd": 0.32,
+        "extendedUsd": 0.32,
+        "releasedAt": "2024-06-14",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Ayara, First of Locthwain",
+        "oracleName": "Ayara, First of Locthwain",
+        "quantity": 1,
+        "set": "ELD",
+        "collectorNumber": "75",
+        "finish": "nonfoil",
+        "unitUsd": 7.69,
+        "extendedUsd": 7.69,
+        "releasedAt": "2019-10-04",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Blood Artist",
+        "oracleName": "Blood Artist",
+        "quantity": 1,
+        "set": "AVR",
+        "collectorNumber": "86",
+        "finish": "nonfoil",
+        "unitUsd": 2.79,
+        "extendedUsd": 2.79,
+        "releasedAt": "2012-05-04",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Bloodghast",
+        "oracleName": "Bloodghast",
+        "quantity": 1,
+        "set": "SOC",
+        "collectorNumber": "210",
+        "finish": "nonfoil",
+        "unitUsd": 0.78,
+        "extendedUsd": 0.78,
+        "releasedAt": "2026-04-24",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Braids, Arisen Nightmare",
+        "oracleName": "Braids, Arisen Nightmare",
+        "quantity": 1,
+        "set": "DMU",
+        "collectorNumber": "84",
+        "finish": "nonfoil",
+        "unitUsd": 3.89,
+        "extendedUsd": 3.89,
+        "releasedAt": "2022-09-09",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Carrion Feeder",
+        "oracleName": "Carrion Feeder",
+        "quantity": 1,
+        "set": "EMA",
+        "collectorNumber": "84",
+        "finish": "nonfoil",
+        "unitUsd": 4.27,
+        "extendedUsd": 4.27,
+        "releasedAt": "2016-06-10",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Crypt Ghast",
+        "oracleName": "Crypt Ghast",
+        "quantity": 1,
+        "set": "C14",
+        "collectorNumber": "139",
+        "finish": "nonfoil",
+        "unitUsd": 12.64,
+        "extendedUsd": 12.64,
+        "releasedAt": "2014-11-07",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Dauthi Voidwalker",
+        "oracleName": "Dauthi Voidwalker",
+        "quantity": 1,
+        "set": "MAR",
+        "collectorNumber": "63",
+        "finish": "nonfoil",
+        "unitUsd": 3.92,
+        "extendedUsd": 3.92,
+        "releasedAt": "2026-06-26",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Forsaken Miner",
+        "oracleName": "Forsaken Miner",
+        "quantity": 1,
+        "set": "OTJ",
+        "collectorNumber": "88",
+        "finish": "nonfoil",
+        "unitUsd": 1.96,
+        "extendedUsd": 1.96,
+        "releasedAt": "2024-04-19",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Geralf's Messenger",
+        "oracleName": "Geralf's Messenger",
+        "quantity": 1,
+        "set": "DKA",
+        "collectorNumber": "63",
+        "finish": "nonfoil",
+        "unitUsd": 3.22,
+        "extendedUsd": 3.22,
+        "releasedAt": "2012-02-03",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Gravecrawler",
+        "oracleName": "Gravecrawler",
+        "quantity": 1,
+        "set": "DRC",
+        "collectorNumber": "43",
+        "finish": "nonfoil",
+        "unitUsd": 1.26,
+        "extendedUsd": 1.26,
+        "releasedAt": "2025-02-14",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Jadar, Ghoulcaller of Nephalia",
+        "oracleName": "Jadar, Ghoulcaller of Nephalia",
+        "quantity": 1,
+        "set": "SOC",
+        "collectorNumber": "217",
+        "finish": "nonfoil",
+        "unitUsd": 1.22,
+        "extendedUsd": 1.22,
+        "releasedAt": "2026-04-24",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Mikaeus, the Unhallowed",
+        "oracleName": "Mikaeus, the Unhallowed",
+        "quantity": 1,
+        "set": "UMA",
+        "collectorNumber": "106",
+        "finish": "nonfoil",
+        "unitUsd": 23.48,
+        "extendedUsd": 23.48,
+        "releasedAt": "2018-12-07",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Morbid Opportunist",
+        "oracleName": "Morbid Opportunist",
+        "quantity": 1,
+        "set": "FIC",
+        "collectorNumber": "278",
+        "finish": "nonfoil",
+        "unitUsd": 0.26,
+        "extendedUsd": 0.26,
+        "releasedAt": "2025-06-13",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Nested Shambler",
+        "oracleName": "Nested Shambler",
+        "quantity": 1,
+        "set": "MH2",
+        "collectorNumber": "399",
+        "finish": "nonfoil",
+        "unitUsd": 0.26,
+        "extendedUsd": 0.26,
+        "releasedAt": "2021-06-18",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Ophiomancer",
+        "oracleName": "Ophiomancer",
+        "quantity": 1,
+        "set": "TDC",
+        "collectorNumber": "193",
+        "finish": "nonfoil",
+        "unitUsd": 0.89,
+        "extendedUsd": 0.89,
+        "releasedAt": "2025-04-11",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Pawn of Ulamog",
+        "oracleName": "Pawn of Ulamog",
+        "quantity": 1,
+        "set": "SOC",
+        "collectorNumber": "223",
+        "finish": "nonfoil",
+        "unitUsd": 0.54,
+        "extendedUsd": 0.54,
+        "releasedAt": "2026-04-24",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Pitiless Plunderer",
+        "oracleName": "Pitiless Plunderer",
+        "quantity": 1,
+        "set": "MB2",
+        "collectorNumber": "46",
+        "finish": "nonfoil",
+        "unitUsd": 3.42,
+        "extendedUsd": 3.42,
+        "releasedAt": "2024-08-02",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Plaguecrafter",
+        "oracleName": "Plaguecrafter",
+        "quantity": 1,
+        "set": "BLC",
+        "collectorNumber": "187",
+        "finish": "nonfoil",
+        "unitUsd": 0.37,
+        "extendedUsd": 0.37,
+        "releasedAt": "2024-08-02",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Priest of Forgotten Gods",
+        "oracleName": "Priest of Forgotten Gods",
+        "quantity": 1,
+        "set": "SOC",
+        "collectorNumber": "225",
+        "finish": "nonfoil",
+        "unitUsd": 0.59,
+        "extendedUsd": 0.59,
+        "releasedAt": "2026-04-24",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Putrid Goblin",
+        "oracleName": "Putrid Goblin",
+        "quantity": 1,
+        "set": "PLST",
+        "collectorNumber": "MH1-101",
+        "finish": "nonfoil",
+        "unitUsd": 0.41,
+        "extendedUsd": 0.41,
+        "releasedAt": "2024-08-02",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Reassembling Skeleton",
+        "oracleName": "Reassembling Skeleton",
+        "quantity": 1,
+        "set": "M19",
+        "collectorNumber": "116",
+        "finish": "nonfoil",
+        "unitUsd": 0.19,
+        "extendedUsd": 0.19,
+        "releasedAt": "2018-07-13",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Syr Konrad, the Grim",
+        "oracleName": "Syr Konrad, the Grim",
+        "quantity": 1,
+        "set": "ZNC",
+        "collectorNumber": "56",
+        "finish": "nonfoil",
+        "unitUsd": 1.01,
+        "extendedUsd": 1.01,
+        "releasedAt": "2020-09-25",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Triskelion",
+        "oracleName": "Triskelion",
+        "quantity": 1,
+        "set": "M11",
+        "collectorNumber": "218",
+        "finish": "nonfoil",
+        "unitUsd": 0.27,
+        "extendedUsd": 0.27,
+        "releasedAt": "2010-07-16",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Viscera Seer",
+        "oracleName": "Viscera Seer",
+        "quantity": 1,
+        "set": "SOC",
+        "collectorNumber": "229",
+        "finish": "nonfoil",
+        "unitUsd": 0.35,
+        "extendedUsd": 0.35,
+        "releasedAt": "2026-04-24",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Warren Soultrader",
+        "oracleName": "Warren Soultrader",
+        "quantity": 1,
+        "set": "PMH3",
+        "collectorNumber": "110p",
+        "finish": "nonfoil",
+        "unitUsd": 15.48,
+        "extendedUsd": 15.48,
+        "releasedAt": "2026-01-23",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Yawgmoth, Thran Physician",
+        "oracleName": "Yawgmoth, Thran Physician",
+        "quantity": 1,
+        "set": "MH1",
+        "collectorNumber": "116",
+        "finish": "nonfoil",
+        "unitUsd": 27.57,
+        "extendedUsd": 27.57,
+        "releasedAt": "2019-06-14",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Zulaport Cutthroat",
+        "oracleName": "Zulaport Cutthroat",
+        "quantity": 1,
+        "set": "PLST",
+        "collectorNumber": "GNT-36",
+        "finish": "nonfoil",
+        "unitUsd": 1.05,
+        "extendedUsd": 1.05,
+        "releasedAt": "2024-08-02",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Sol Ring",
+        "oracleName": "Sol Ring",
+        "quantity": 1,
+        "set": "MSC",
+        "collectorNumber": "214",
+        "finish": "nonfoil",
+        "unitUsd": 1.48,
+        "extendedUsd": 1.48,
+        "releasedAt": "2026-06-26",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Arcane Signet",
+        "oracleName": "Arcane Signet",
+        "quantity": 1,
+        "set": "MSC",
+        "collectorNumber": "194",
+        "finish": "nonfoil",
+        "unitUsd": 0.41,
+        "extendedUsd": 0.41,
+        "releasedAt": "2026-06-26",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Jet Medallion",
+        "oracleName": "Jet Medallion",
+        "quantity": 1,
+        "set": "MH3",
+        "collectorNumber": "292",
+        "finish": "foil",
+        "unitUsd": 12.06,
+        "extendedUsd": 12.06,
+        "releasedAt": "2024-06-14",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Skullclamp",
+        "oracleName": "Skullclamp",
+        "quantity": 1,
+        "set": "MSC",
+        "collectorNumber": "210",
+        "finish": "nonfoil",
+        "unitUsd": 5.78,
+        "extendedUsd": 5.78,
+        "releasedAt": "2026-06-26",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Ashnod's Altar",
+        "oracleName": "Ashnod's Altar",
+        "quantity": 1,
+        "set": "BRR",
+        "collectorNumber": "4",
+        "finish": "nonfoil",
+        "unitUsd": 12.83,
+        "extendedUsd": 12.83,
+        "releasedAt": "2022-11-18",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Phyrexian Altar",
+        "oracleName": "Phyrexian Altar",
+        "quantity": 1,
+        "set": "PLST",
+        "collectorNumber": "UMA-232",
+        "finish": "nonfoil",
+        "unitUsd": 55.87,
+        "extendedUsd": 55.87,
+        "releasedAt": "2023-02-10",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Altar of Dementia",
+        "oracleName": "Altar of Dementia",
+        "quantity": 1,
+        "set": "BRR",
+        "collectorNumber": "3",
+        "finish": "nonfoil",
+        "unitUsd": 18.42,
+        "extendedUsd": 18.42,
+        "releasedAt": "2022-11-18",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Bolas's Citadel",
+        "oracleName": "Bolas's Citadel",
+        "quantity": 1,
+        "set": "MB2",
+        "collectorNumber": "39",
+        "finish": "nonfoil",
+        "unitUsd": 8.51,
+        "extendedUsd": 8.51,
+        "releasedAt": "2024-08-02",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Sensei's Divining Top",
+        "oracleName": "Sensei's Divining Top",
+        "quantity": 1,
+        "set": "MB2",
+        "collectorNumber": "231",
+        "finish": "nonfoil",
+        "unitUsd": 36.25,
+        "extendedUsd": 36.25,
+        "releasedAt": "2024-08-02",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Aetherflux Reservoir",
+        "oracleName": "Aetherflux Reservoir",
+        "quantity": 1,
+        "set": "PLST",
+        "collectorNumber": "KLD-192",
+        "finish": "nonfoil",
+        "unitUsd": 19.73,
+        "extendedUsd": 19.73,
+        "releasedAt": "2019-11-07",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Mind Stone",
+        "oracleName": "Mind Stone",
+        "quantity": 1,
+        "set": "DMR",
+        "collectorNumber": "385",
+        "finish": "nonfoil",
+        "unitUsd": 0.29,
+        "extendedUsd": 0.29,
+        "releasedAt": "2023-01-13",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Animate Dead",
+        "oracleName": "Animate Dead",
+        "quantity": 1,
+        "set": "PLST",
+        "collectorNumber": "EMA-78",
+        "finish": "nonfoil",
+        "unitUsd": 6.21,
+        "extendedUsd": 6.21,
+        "releasedAt": "2021-06-19",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Bastion of Remembrance",
+        "oracleName": "Bastion of Remembrance",
+        "quantity": 1,
+        "set": "PLST",
+        "collectorNumber": "IKO-73",
+        "finish": "nonfoil",
+        "unitUsd": 0.26,
+        "extendedUsd": 0.26,
+        "releasedAt": "2024-08-02",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Necropotence",
+        "oracleName": "Necropotence",
+        "quantity": 1,
+        "set": "EMA",
+        "collectorNumber": "98",
+        "finish": "nonfoil",
+        "unitUsd": 35.7,
+        "extendedUsd": 35.7,
+        "releasedAt": "2016-06-10",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Phyrexian Arena",
+        "oracleName": "Phyrexian Arena",
+        "quantity": 1,
+        "set": "ONE",
+        "collectorNumber": "283",
+        "finish": "foil",
+        "unitUsd": 2.58,
+        "extendedUsd": 2.58,
+        "releasedAt": "2023-02-10",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Grave Pact",
+        "oracleName": "Grave Pact",
+        "quantity": 1,
+        "set": "HOP",
+        "collectorNumber": "28",
+        "finish": "nonfoil",
+        "unitUsd": 29.22,
+        "extendedUsd": 29.22,
+        "releasedAt": "2009-09-04",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Dance of the Dead",
+        "oracleName": "Dance of the Dead",
+        "quantity": 1,
+        "set": "ICE",
+        "collectorNumber": "118",
+        "finish": "nonfoil",
+        "unitUsd": 18.77,
+        "extendedUsd": 18.77,
+        "releasedAt": "1995-06-03",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Necromancy",
+        "oracleName": "Necromancy",
+        "quantity": 1,
+        "set": "VIS",
+        "collectorNumber": "64",
+        "finish": "nonfoil",
+        "unitUsd": 19.13,
+        "extendedUsd": 19.13,
+        "releasedAt": "1997-02-03",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Dark Ritual",
+        "oracleName": "Dark Ritual",
+        "quantity": 1,
+        "set": "SUM",
+        "collectorNumber": "99",
+        "finish": "nonfoil",
+        "unitUsd": 0.44,
+        "extendedUsd": 0.44,
+        "releasedAt": "1994-06-21",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Cabal Ritual",
+        "oracleName": "Cabal Ritual",
+        "quantity": 1,
+        "set": "MB2",
+        "collectorNumber": "177",
+        "finish": "nonfoil",
+        "unitUsd": 13.84,
+        "extendedUsd": 13.84,
+        "releasedAt": "2024-08-02",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Culling the Weak",
+        "oracleName": "Culling the Weak",
+        "quantity": 1,
+        "set": "EXO",
+        "collectorNumber": "55",
+        "finish": "nonfoil",
+        "unitUsd": 6.97,
+        "extendedUsd": 6.97,
+        "releasedAt": "1998-06-15",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Deadly Dispute",
+        "oracleName": "Deadly Dispute",
+        "quantity": 1,
+        "set": "MSC",
+        "collectorNumber": "794",
+        "finish": "nonfoil",
+        "unitUsd": 0.27,
+        "extendedUsd": 0.27,
+        "releasedAt": "2026-06-26",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Village Rites",
+        "oracleName": "Village Rites",
+        "quantity": 1,
+        "set": "LCC",
+        "collectorNumber": "212",
+        "finish": "nonfoil",
+        "unitUsd": 0.32,
+        "extendedUsd": 0.32,
+        "releasedAt": "2023-11-17",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Corrupted Conviction",
+        "oracleName": "Corrupted Conviction",
+        "quantity": 1,
+        "set": "OTJ",
+        "collectorNumber": "84",
+        "finish": "nonfoil",
+        "unitUsd": 0.4,
+        "extendedUsd": 0.4,
+        "releasedAt": "2024-04-19",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Entomb",
+        "oracleName": "Entomb",
+        "quantity": 1,
+        "set": "TLE",
+        "collectorNumber": "310",
+        "finish": "nonfoil",
+        "unitUsd": 16.04,
+        "extendedUsd": 16.04,
+        "releasedAt": "2025-11-21",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Buried Alive",
+        "oracleName": "Buried Alive",
+        "quantity": 1,
+        "set": "PLST",
+        "collectorNumber": "WTH-63",
+        "finish": "nonfoil",
+        "unitUsd": 1.66,
+        "extendedUsd": 1.66,
+        "releasedAt": "2024-08-02",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Reanimate",
+        "oracleName": "Grave Researcher // Reanimate",
+        "quantity": 1,
+        "set": "SOS",
+        "collectorNumber": "85",
+        "finish": "nonfoil",
+        "unitUsd": 1.97,
+        "extendedUsd": 1.97,
+        "releasedAt": "2026-04-24",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Victimize",
+        "oracleName": "Victimize",
+        "quantity": 1,
+        "set": "SCD",
+        "collectorNumber": "118",
+        "finish": "nonfoil",
+        "unitUsd": 0.5,
+        "extendedUsd": 0.5,
+        "releasedAt": "2022-12-02",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Living Death",
+        "oracleName": "Living Death",
+        "quantity": 1,
+        "set": "A25",
+        "collectorNumber": "96",
+        "finish": "nonfoil",
+        "unitUsd": 3.01,
+        "extendedUsd": 3.01,
+        "releasedAt": "2018-03-16",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Diabolic Intent",
+        "oracleName": "Diabolic Intent",
+        "quantity": 1,
+        "set": "FCA",
+        "collectorNumber": "34",
+        "finish": "nonfoil",
+        "unitUsd": 15.95,
+        "extendedUsd": 15.95,
+        "releasedAt": "2025-06-13",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Beseech the Mirror",
+        "oracleName": "Beseech the Mirror",
+        "quantity": 1,
+        "set": "PWOE",
+        "collectorNumber": "82p",
+        "finish": "foil",
+        "unitUsd": 18.54,
+        "extendedUsd": 18.54,
+        "releasedAt": "2023-09-08",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Wishclaw Talisman",
+        "oracleName": "Wishclaw Talisman",
+        "quantity": 1,
+        "set": "FDN",
+        "collectorNumber": "617",
+        "finish": "nonfoil",
+        "unitUsd": 1.82,
+        "extendedUsd": 1.82,
+        "releasedAt": "2024-11-15",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Feed the Swarm",
+        "oracleName": "Feed the Swarm",
+        "quantity": 1,
+        "set": "TLE",
+        "collectorNumber": "257",
+        "finish": "nonfoil",
+        "unitUsd": 0.19,
+        "extendedUsd": 0.19,
+        "releasedAt": "2025-11-21",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Bitter Triumph",
+        "oracleName": "Bitter Triumph",
+        "quantity": 1,
+        "set": "TDC",
+        "collectorNumber": "173",
+        "finish": "nonfoil",
+        "unitUsd": 0.31,
+        "extendedUsd": 0.31,
+        "releasedAt": "2025-04-11",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Snuff Out",
+        "oracleName": "Snuff Out",
+        "quantity": 1,
+        "set": "WHO",
+        "collectorNumber": "222",
+        "finish": "nonfoil",
+        "unitUsd": 6.28,
+        "extendedUsd": 6.28,
+        "releasedAt": "2023-10-13",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Toxic Deluge",
+        "oracleName": "Toxic Deluge",
+        "quantity": 1,
+        "set": "MSC",
+        "collectorNumber": "161",
+        "finish": "nonfoil",
+        "unitUsd": 4.49,
+        "extendedUsd": 4.49,
+        "releasedAt": "2026-06-26",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Black Sun's Zenith",
+        "oracleName": "Black Sun's Zenith",
+        "quantity": 1,
+        "set": "ECC",
+        "collectorNumber": "71",
+        "finish": "nonfoil",
+        "unitUsd": 0.35,
+        "extendedUsd": 0.35,
+        "releasedAt": "2026-01-23",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Malakir Rebirth // Malakir Mire",
+        "oracleName": "Malakir Rebirth // Malakir Mire",
+        "quantity": 1,
+        "set": "ZNR",
+        "collectorNumber": "111",
+        "finish": "nonfoil",
+        "unitUsd": 14.08,
+        "extendedUsd": 14.08,
+        "releasedAt": "2020-09-25",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Unearth",
+        "oracleName": "Unearth",
+        "quantity": 1,
+        "set": "A25",
+        "collectorNumber": "113",
+        "finish": "nonfoil",
+        "unitUsd": 0.44,
+        "extendedUsd": 0.44,
+        "releasedAt": "2018-03-16",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Bone Shards",
+        "oracleName": "Bone Shards",
+        "quantity": 1,
+        "set": "PLST",
+        "collectorNumber": "MH2-76",
+        "finish": "nonfoil",
+        "unitUsd": 0.18,
+        "extendedUsd": 0.18,
+        "releasedAt": "2024-08-02",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Eaten Alive",
+        "oracleName": "Eaten Alive",
+        "quantity": 1,
+        "set": "MID",
+        "collectorNumber": "99",
+        "finish": "nonfoil",
+        "unitUsd": 0.13,
+        "extendedUsd": 0.13,
+        "releasedAt": "2021-09-24",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Swamp",
+        "oracleName": "Swamp",
+        "quantity": 20,
+        "set": "MSH",
+        "collectorNumber": "291",
+        "finish": "nonfoil",
+        "unitUsd": 0.1,
+        "extendedUsd": 2,
+        "releasedAt": "2026-06-26",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Bojuka Bog",
+        "oracleName": "Bojuka Bog",
+        "quantity": 1,
+        "set": "SOC",
+        "collectorNumber": "363",
+        "finish": "nonfoil",
+        "unitUsd": 1.12,
+        "extendedUsd": 1.12,
+        "releasedAt": "2026-04-24",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Takenuma, Abandoned Mire",
+        "oracleName": "Takenuma, Abandoned Mire",
+        "quantity": 1,
+        "set": "NEO",
+        "collectorNumber": "278",
+        "finish": "nonfoil",
+        "unitUsd": 10.8,
+        "extendedUsd": 10.8,
+        "releasedAt": "2022-02-18",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Castle Locthwain",
+        "oracleName": "Castle Locthwain",
+        "quantity": 1,
+        "set": "ELD",
+        "collectorNumber": "241",
+        "finish": "nonfoil",
+        "unitUsd": 4.07,
+        "extendedUsd": 4.07,
+        "releasedAt": "2019-10-04",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "War Room",
+        "oracleName": "War Room",
+        "quantity": 1,
+        "set": "CMR",
+        "collectorNumber": "361",
+        "finish": "nonfoil",
+        "unitUsd": 4.87,
+        "extendedUsd": 4.87,
+        "releasedAt": "2020-11-20",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "High Market",
+        "oracleName": "High Market",
+        "quantity": 1,
+        "set": "FIC",
+        "collectorNumber": "402",
+        "finish": "nonfoil",
+        "unitUsd": 0.4,
+        "extendedUsd": 0.4,
+        "releasedAt": "2025-06-13",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Cabal Coffers",
+        "oracleName": "Cabal Coffers",
+        "quantity": 1,
+        "set": "MB2",
+        "collectorNumber": "106",
+        "finish": "nonfoil",
+        "unitUsd": 21.14,
+        "extendedUsd": 21.14,
+        "releasedAt": "2024-08-02",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Myriad Landscape",
+        "oracleName": "Myriad Landscape",
+        "quantity": 1,
+        "set": "C19",
+        "collectorNumber": "261",
+        "finish": "nonfoil",
+        "unitUsd": 0.23,
+        "extendedUsd": 0.23,
+        "releasedAt": "2019-08-23",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Demolition Field",
+        "oracleName": "Demolition Field",
+        "quantity": 1,
+        "set": "FDN",
+        "collectorNumber": "687",
+        "finish": "nonfoil",
+        "unitUsd": 0.28,
+        "extendedUsd": 0.28,
+        "releasedAt": "2024-11-15",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Witch's Cottage",
+        "oracleName": "Witch's Cottage",
+        "quantity": 1,
+        "set": "ELD",
+        "collectorNumber": "249",
+        "finish": "nonfoil",
+        "unitUsd": 1.09,
+        "extendedUsd": 1.09,
+        "releasedAt": "2019-10-04",
+        "matchedBy": "unrestricted"
+      },
+      {
+        "requestedName": "Mortuary Mire",
+        "oracleName": "Mortuary Mire",
+        "quantity": 1,
+        "set": "J22",
+        "collectorNumber": "817",
+        "finish": "nonfoil",
+        "unitUsd": 0.3,
+        "extendedUsd": 0.3,
+        "releasedAt": "2022-12-02",
+        "matchedBy": "unrestricted"
+      }
+    ]
+  },
+  "legality": {
+    "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
+    "status": "legal",
+    "isLegal": true,
+    "commanderCount": 1,
+    "commanderColorIdentity": [
+      "B"
+    ],
+    "commanderColorIdentityLabel": "B",
+    "commanderChecks": [
+      {
+        "name": "Liliana, Heretical Healer // Liliana, Defiant Necromancer",
+        "resolved": true,
+        "quantity": 1,
+        "typeLine": "Legendary Creature — Human Cleric // Legendary Planeswalker — Liliana",
+        "colorIdentity": [
+          "B"
+        ],
+        "commanderFormatLegality": "legal",
+        "eligible": true,
+        "reason": "Legendary creature or card text explicitly allows it to be a commander."
+      }
+    ],
+    "pairing": {
+      "legal": true,
+      "method": "single commander",
+      "reason": "One commander is designated."
+    },
+    "deckSize": {
+      "totalCards": 100,
+      "commanders": 1,
+      "libraryCards": 99,
+      "requiredTotal": 100,
+      "valid": true,
+      "expectedLibraryCards": 99
+    },
+    "colorIdentityViolations": [],
+    "commanderLegalityViolations": [],
+    "singletonViolations": [],
+    "unresolvedEntries": [],
+    "rulesApplied": [
+      "Exactly 100 cards including commander(s).",
+      "Normally one commander; two only when an applicable pairing mechanic permits them.",
+      "Partner variants are distinct: original Partner, Friends forever, Partner—Character select, Doctor’s companion, Choose a Background, and Partner with follow their own pairing conditions.",
+      "Commander eligibility includes legendary creatures, cards explicitly allowed to be commanders, and legendary Vehicles/Spacecraft with printed power and toughness; paired Backgrounds follow Choose a Background.",
+      "Every card must be legal in the Commander format.",
+      "Every card’s color identity must be a subset of the combined commander color identity; colorless cards are allowed.",
+      "Hybrid mana contributes all of its colors to color identity under the current rule.",
+      "Basic land types cannot introduce mana colors outside the commander color identity.",
+      "Except for basic lands and cards with their own copy-count exception, the deck is singleton by English card name."
+    ],
+    "warnings": []
+  },
+  "strategyContext": {
+    "commanderNames": [
+      "Liliana, Heretical Healer // Liliana, Defiant Necromancer"
+    ],
+    "strategies": [
+      {
+        "archetype": "graveyard-reanimator",
+        "score": 26,
+        "evidence": [
+          "graveyard recursion +9",
+          "own-graveyard access +6",
+          "graveyard setup +5",
+          "reanimation text +6"
+        ]
+      },
+      {
+        "archetype": "aristocrats",
+        "score": 6,
+        "evidence": [
+          "death trigger +6"
+        ]
+      },
+      {
+        "archetype": "combat-tokens",
+        "score": 6,
+        "evidence": [
+          "token production +6"
+        ]
+      }
+    ]
+  },
+  "strategySupport": {
+    "evidenceComplete": true,
+    "unresolved": [],
+    "strategies": [
+      {
+        "archetype": "graveyard-reanimator",
+        "commanderScore": 26,
+        "supportCount": 24,
+        "affinityTotal": 273
+      },
+      {
+        "archetype": "aristocrats",
+        "commanderScore": 6,
+        "supportCount": 38,
+        "affinityTotal": 230
+      },
+      {
+        "archetype": "combat-tokens",
+        "commanderScore": 6,
+        "supportCount": 10,
+        "affinityTotal": 56
+      }
+    ]
+  },
+  "spellbookBracket": {
+    "bracketTag": "S",
+    "flaggedCards": [
+      {
+        "name": "Bolas's Citadel",
+        "quantity": 1,
+        "banned": false,
+        "gameChanger": true,
+        "massLandDenial": false,
+        "extraTurn": false
+      },
+      {
+        "name": "Necropotence",
+        "quantity": 1,
+        "banned": false,
+        "gameChanger": true,
+        "massLandDenial": false,
+        "extraTurn": false
+      }
+    ],
+    "comboCount": 27,
+    "strategicallyRelevantCombos": [
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "628-2034--5",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "S",
+          "cards": [
+            {
+              "name": "Mikaeus, the Unhallowed",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Ashnod's Altar",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite colorless mana",
+            "Infinite creature ETB",
+            "Infinite creature LTB",
+            "Infinite creature sacrifice triggers",
+            "Infinite death triggers"
+          ],
+          "requirements": [
+            {
+              "name": "Persist Creature",
+              "quantity": 1
+            }
+          ],
+          "description": "Activate Ashnod's Altar by sacrificing the creature with persist, adding {C}{C}.\nWhen that creature dies, its persist ability triggers, returning it from your graveyard to the battlefield with a -1/-1 counter on it.\nActivate Ashnod's Altar by sacrificing the persist creature, adding {C}{C}.\nWhen the persist creature dies, its undying ability triggers, returning it from your graveyard to the battlefield with a +1/+1 counter on it.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 45163
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "628-4050--5",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "S",
+          "cards": [
+            {
+              "name": "Mikaeus, the Unhallowed",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Phyrexian Altar",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite colored mana",
+            "Infinite creature ETB",
+            "Infinite creature LTB",
+            "Infinite creature sacrifice triggers",
+            "Infinite death triggers"
+          ],
+          "requirements": [
+            {
+              "name": "Persist Creature",
+              "quantity": 1
+            }
+          ],
+          "description": "Activate Phyrexian Altar by sacrificing the creature with persist, adding one mana.\nWhen that creature dies, its persist ability triggers, returning it from your graveyard to the battlefield with a -1/-1 counter on it.\nActivate Phyrexian Altar by sacrificing the persist creature, adding one mana.\nWhen the persist creature dies, its undying ability triggers, returning it from your graveyard to the battlefield with a +1/+1 counter on it.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 40363
+        }
+      },
+      {
+        "relevant": false,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "628-2438--5",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "O",
+          "cards": [
+            {
+              "name": "Mikaeus, the Unhallowed",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Carrion Feeder",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite +1/+1 counters on a creature",
+            "Infinite creature ETB",
+            "Infinite creature LTB",
+            "Infinite creature sacrifice triggers",
+            "Infinite death triggers"
+          ],
+          "requirements": [
+            {
+              "name": "Persist Creature",
+              "quantity": 1
+            }
+          ],
+          "description": "Activate Carrion Feeder by sacrificing the creature with persist.\nWhen that creature dies, its persist ability triggers, returning it from your graveyard to the battlefield with a -1/-1 counter on it.\nResolve the Carrion Feeder ability.\nActivate Carrion Feeder by sacrificing the persist creature.\nWhen the persist creature dies, its undying ability triggers, returning it from your graveyard to the battlefield with a +1/+1 counter on it.\nResolve the Carrion Feeder ability.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 38638
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "628-5256--5",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "S",
+          "cards": [
+            {
+              "name": "Mikaeus, the Unhallowed",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Altar of Dementia",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite creature ETB",
+            "Infinite creature LTB",
+            "Infinite creature sacrifice triggers",
+            "Infinite death triggers",
+            "Infinite mill",
+            "Infinite self-mill"
+          ],
+          "requirements": [
+            {
+              "name": "Persist Creature",
+              "quantity": 1
+            }
+          ],
+          "description": "Activate Altar of Dementia by sacrificing the creature with persist.\nWhen that creature dies, its persist ability triggers, returning it from your graveyard to the battlefield with a -1/-1 counter on it.\nResolve the Altar of Dementia ability.\nActivate Altar of Dementia by sacrificing the persist creature.\nWhen the persist creature dies, its undying ability triggers, returning it from your graveyard to the battlefield with a +1/+1 counter on it.\nResolve the Altar of Dementia ability.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 19676
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "628-2842-5670--5",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "E",
+          "cards": [
+            {
+              "name": "Mikaeus, the Unhallowed",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Warren Soultrader",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Blood Artist",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite artifact ETB",
+            "Infinite artifact LTB",
+            "Infinite artifact sacrifice triggers",
+            "Infinite artifact tokens",
+            "Infinite creature LTB",
+            "Infinite creature ETB",
+            "Infinite colored mana",
+            "Infinite creature sacrifice triggers",
+            "Infinite death triggers",
+            "Infinite lifegain triggers",
+            "Infinite lifeloss",
+            "Infinite Treasure tokens"
+          ],
+          "requirements": [
+            {
+              "name": "Persist Creature",
+              "quantity": 1
+            }
+          ],
+          "description": "Activate Warren Soultrader by paying 1 life and sacrificing the persist creature.\nWhen the persist creature dies, its persist ability triggers if it didn't have a -1/-1 counter on it, and its undying ability triggers if it didn't have a +1/+1 counter on it. Blood Artist also triggers regardless.\nResolve the Blood Artist trigger, causing target opponent to lose 1 life and you to gain 1 life.\nResolve the persist trigger, if applicable, returning the creature from your graveyard to the battlefield with a -1/-1 counter on it.\nResolve the undying trigger, if applicable, returning the creature from your graveyard to the battlefield with a +1/+1 counter on it.\nResolve the Warren Soultrader ability, creating a Treasure token.\nRepeat",
+          "manaNeeded": "",
+          "popularity": 15374
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "628-1385-5670--5",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "E",
+          "cards": [
+            {
+              "name": "Mikaeus, the Unhallowed",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Warren Soultrader",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Zulaport Cutthroat",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite artifact ETB",
+            "Infinite artifact LTB",
+            "Infinite artifact sacrifice triggers",
+            "Infinite artifact tokens",
+            "Infinite creature LTB",
+            "Infinite creature ETB",
+            "Infinite colored mana",
+            "Infinite creature sacrifice triggers",
+            "Infinite death triggers",
+            "Infinite lifegain triggers",
+            "Infinite lifeloss",
+            "Infinite Treasure tokens"
+          ],
+          "requirements": [
+            {
+              "name": "Persist Creature",
+              "quantity": 1
+            }
+          ],
+          "description": "Activate Warren Soultrader by paying 1 life and sacrificing the persist creature.\nWhen the persist creature dies, its persist ability triggers if it didn't have a -1/-1 counter on it, and its undying ability triggers if it didn't have a +1/+1 counter on it. Zulaport Cutthroat also triggers regardless.\nResolve the Zulaport Cutthroat trigger, causing each opponent to lose 1 life and you to gain 1 life.\nResolve the persist trigger, if applicable, returning the creature from your graveyard to the battlefield with a -1/-1 counter on it.\nResolve the undying trigger, if applicable, returning the creature from your graveyard to the battlefield with a +1/+1 counter on it.\nResolve the Warren Soultrader ability, creating a Treasure token.\nRepeat",
+          "manaNeeded": "",
+          "popularity": 13887
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "628-3025-5670--5",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "E",
+          "cards": [
+            {
+              "name": "Mikaeus, the Unhallowed",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Warren Soultrader",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Bastion of Remembrance",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite artifact ETB",
+            "Infinite artifact LTB",
+            "Infinite artifact sacrifice triggers",
+            "Infinite artifact tokens",
+            "Infinite creature LTB",
+            "Infinite creature ETB",
+            "Infinite colored mana",
+            "Infinite creature sacrifice triggers",
+            "Infinite death triggers",
+            "Infinite lifegain triggers",
+            "Infinite lifeloss",
+            "Infinite Treasure tokens"
+          ],
+          "requirements": [
+            {
+              "name": "Persist Creature",
+              "quantity": 1
+            }
+          ],
+          "description": "Activate Warren Soultrader by paying 1 life and sacrificing the persist creature.\nWhen the persist creature dies, its persist ability triggers if it didn't have a -1/-1 counter on it, and its undying ability triggers if it didn't have a +1/+1 counter on it. Bastion of Remembrance also triggers regardless.\nResolve the Bastion of Remembrance trigger, causing each opponent to lose 1 life and you to gain 1 life.\nResolve the persist trigger, if applicable, returning the creature from your graveyard to the battlefield with a -1/-1 counter on it.\nResolve the undying trigger, if applicable, returning the creature from your graveyard to the battlefield with a +1/+1 counter on it.\nResolve the Warren Soultrader ability, creating a Treasure token.\nRepeat",
+          "manaNeeded": "",
+          "popularity": 8858
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "884-2577-5670",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "S",
+          "cards": [
+            {
+              "name": "Warren Soultrader",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Gravecrawler",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Ayara, First of Locthwain",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite creature LTB",
+            "Infinite creature ETB",
+            "Infinite creature sacrifice triggers",
+            "Infinite death triggers",
+            "Infinite lifegain triggers",
+            "Infinite storm count",
+            "Infinite lifeloss"
+          ],
+          "requirements": [],
+          "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nWhen Gravecrawler enters, Ayara triggers, causing you to gain 1 life and each opponent to lose 1 life.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 22597
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "2577-4740-5670",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "E",
+          "cards": [
+            {
+              "name": "Warren Soultrader",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Aetherflux Reservoir",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Gravecrawler",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite creature LTB",
+            "Infinite creature ETB",
+            "Infinite creature sacrifice triggers",
+            "Infinite death triggers",
+            "Infinite damage",
+            "Infinite lifegain triggers",
+            "Infinite lifegain",
+            "Infinite storm count"
+          ],
+          "requirements": [],
+          "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nAetherflux Reservoir triggers, causing you to gain 1 life for each spell you've cast this turn.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 4963
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "2842-5544-5670",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "E",
+          "cards": [
+            {
+              "name": "Warren Soultrader",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Forsaken Miner",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Blood Artist",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite death triggers",
+            "Infinite creature ETB",
+            "Infinite creature LTB",
+            "Infinite lifegain triggers",
+            "Infinite lifeloss",
+            "Infinite creature sacrifice triggers"
+          ],
+          "requirements": [],
+          "description": "Activate Warren Soultrader by paying 1 life and sacrificing Forsaken Miner.\nWhen Forsaken Miner dies, Blood Artist triggers, targeting an opponent.\nForsaken Miner triggers, causing you to pay {B} to return it from your graveyard to the battlefield.\nResolve the Blood Artist ability, causing you to gain 1 life and causing an opponent to lose 1 life.\nResolve the Warren Soultrader ability, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nRepeat.",
+          "manaNeeded": "{B}",
+          "popularity": 28327
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "2577-3025-5670",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "E",
+          "cards": [
+            {
+              "name": "Warren Soultrader",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Gravecrawler",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Bastion of Remembrance",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite death triggers",
+            "Infinite creature ETB",
+            "Infinite lifegain triggers",
+            "Infinite lifeloss",
+            "Infinite creature LTB",
+            "Infinite creature sacrifice triggers",
+            "Infinite storm count"
+          ],
+          "requirements": [],
+          "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler.\nWhen Gravecrawler dies, Bastion of Remembrance triggers, causing you to gain 1 life and each opponent to lose 1 life.\nResolve the Warren Soultrader ability, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 25974
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "1385-2577-5670",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "E",
+          "cards": [
+            {
+              "name": "Warren Soultrader",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Gravecrawler",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Zulaport Cutthroat",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite death triggers",
+            "Infinite creature ETB",
+            "Infinite lifegain triggers",
+            "Infinite lifeloss",
+            "Infinite creature LTB",
+            "Infinite creature sacrifice triggers",
+            "Infinite storm count"
+          ],
+          "requirements": [],
+          "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler.\nWhen Gravecrawler dies, Zulaport Cutthroat triggers, causing you to gain 1 life and each opponent to lose 1 life.\nResolve the Warren Soultrader ability, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 39536
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "2577-2842-5670",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "E",
+          "cards": [
+            {
+              "name": "Warren Soultrader",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Gravecrawler",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Blood Artist",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite death triggers",
+            "Infinite creature ETB",
+            "Infinite lifegain triggers",
+            "Infinite lifeloss",
+            "Infinite creature LTB",
+            "Infinite creature sacrifice triggers",
+            "Infinite storm count"
+          ],
+          "requirements": [],
+          "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler.\nWhen Gravecrawler dies, Blood Artist triggers, causing you to gain 1 life and target opponent to lose 1 life.\nResolve the Warren Soultrader ability, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 44152
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "4871-5256-5544",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "E",
+          "cards": [
+            {
+              "name": "Forsaken Miner",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Pitiless Plunderer",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Altar of Dementia",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite death triggers",
+            "Infinite creature ETB",
+            "Infinite creature LTB",
+            "Infinite mill",
+            "Infinite creature sacrifice triggers"
+          ],
+          "requirements": [],
+          "description": "Activate Altar of Dementia by sacrificing Forsaken Miner, targeting any opponent.\nPitiless Plunderer triggers when Forsaken Miner dies, and Forsaken Miner triggers when you commit the crime in step 1.\nResolve the Pitiless Plunderer trigger, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nResolve the Forsaken Miner trigger, causing you to pay {B} to return it from your graveyard to the battlefield.\nResolve the Altar of Dementia ability from step 1, causing the opponent to mill cards equal to Forsaken Miner's power.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 3345
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "2842-4050-5544",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "E",
+          "cards": [
+            {
+              "name": "Forsaken Miner",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Phyrexian Altar",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Blood Artist",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite death triggers",
+            "Infinite creature ETB",
+            "Infinite lifegain",
+            "Infinite lifegain triggers",
+            "Infinite lifeloss",
+            "Infinite creature LTB",
+            "Infinite creature sacrifice triggers"
+          ],
+          "requirements": [],
+          "description": "Activate Phyrexian Altar by sacrificing Forsaken Miner, adding {B}.\nWhen Forsaken Miner dies, Blood Artist triggers.\nWhen you commit that crime, Forsaken Miner triggers, causing you to pay {B} to return it from your graveyard to the battlefield.\nResolve the Blood Artist trigger, causing target opponent to lose 1 life and gaining 1 life.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 19904
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "628-884-4279",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "E",
+          "cards": [
+            {
+              "name": "Yawgmoth, Thran Physician",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Mikaeus, the Unhallowed",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Ayara, First of Locthwain",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite card draw",
+            "Infinite draw triggers",
+            "Near-infinite death triggers",
+            "Near-infinite creature ETB",
+            "Near-infinite lifegain",
+            "Near-infinite lifegain triggers",
+            "Near-infinite lifeloss",
+            "Near-infinite creature LTB",
+            "Near-infinite creature sacrifice triggers"
+          ],
+          "requirements": [],
+          "description": "Activate Yawgmoth by paying 1 life and sacrificing Ayara, targeting any other nontoken non-Human creature you control.\nAyara dies, triggering its undying ability, returning it from your graveyard to the battlefield with a +1/+1 counter on it.\nAyara enters the battlefield, causing each opponent to lose 1 life and you to gain 1 life.\nResolve the Yawgmoth ability from step 1, putting a -1/-1 counter on the additional creature and causing you to draw a card.\nActivate Yawgmoth by paying 1 life and sacrificing the additional creature, targeting Ayara.\nThe creature dies, triggering its undying ability, returning it from your graveyard to the battlefield with a +1/+1 counter on it.\nIf the creature was black, it enters the battlefield, triggering Ayara, causing each opponent to lose 1 life and you to gain 1 life.\nResolve the Yawgmoth ability, putting a -1/-1 counter on Ayara and causing you to draw a card.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 8154
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "1580-2034-4871",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "E",
+          "cards": [
+            {
+              "name": "Pitiless Plunderer",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Ashnod's Altar",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Reassembling Skeleton",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite colorless mana",
+            "Infinite death triggers",
+            "Infinite creature ETB",
+            "Infinite creature LTB",
+            "Infinite creature sacrifice triggers"
+          ],
+          "requirements": [],
+          "description": "Activate Ashnod's Altar by sacrificing Reassembling Skeleton, adding {C}{C}.\nWhen Reassembling Skeleton dies, Pitiless Plunderer triggers, creating a Treasure token.\nActivate the Treasure token by tapping and sacrificing it, adding {B}.\nActivate Reassembling Skeleton by paying {1}{B}, returning it from your graveyard to the battlefield tapped.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 61933
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "2034-2577-4871",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "E",
+          "cards": [
+            {
+              "name": "Gravecrawler",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Pitiless Plunderer",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Ashnod's Altar",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite colorless mana",
+            "Infinite death triggers",
+            "Infinite creature ETB",
+            "Infinite creature LTB",
+            "Infinite creature sacrifice triggers",
+            "Infinite storm count"
+          ],
+          "requirements": [],
+          "description": "Activate Ashnod's Altar by sacrificing Gravecrawler, adding {C}{C}.\nWhen Gravecrawler dies, Pitiless Plunderer triggers, creating a Treasure token.\nActivate the Treasure token by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 37005
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "2173-4740-5078",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "P",
+          "cards": [
+            {
+              "name": "Sensei's Divining Top",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Aetherflux Reservoir",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Bolas's Citadel",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite card draw",
+            "Infinite draw triggers",
+            "Near-infinite damage",
+            "Near-infinite lifegain",
+            "Near-infinite lifegain triggers",
+            "Near-infinite storm count"
+          ],
+          "requirements": [],
+          "description": "Activate Sensei's Divining Top by tapping it, drawing a card and then putting Sensei's Divining Top on top of your library.\nCast Sensei's Divining Top from the top of your library by paying 1 life.\nAetherflux Reservoir triggers, gaining you 1 life for each spell you have cast this turn.\nRepeat until your life total is 52 or greater.\nActivate Aetherflux Reservoir by paying 50 life, dealing 50 damage to any target.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 50208
+        }
+      },
+      {
+        "relevant": false,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "2438-2577-4871",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "E",
+          "cards": [
+            {
+              "name": "Gravecrawler",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Pitiless Plunderer",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Carrion Feeder",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite +1/+1 counters on a creature",
+            "Infinite death triggers",
+            "Infinite creature ETB",
+            "Infinite creature LTB",
+            "Infinite creature sacrifice triggers",
+            "Infinite storm count"
+          ],
+          "requirements": [],
+          "description": "Activate Carrion Feeder by sacrificing Gravecrawler.\nWhen Gravecrawler dies, Pitiless Plunderer triggers, creating a Treasure token.\nResolve the Carrion Feeder ability.\nActivate the Treasure token by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 29787
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": false,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "2577-4871-5256",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "E",
+          "cards": [
+            {
+              "name": "Gravecrawler",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Pitiless Plunderer",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Altar of Dementia",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite death triggers",
+            "Infinite creature ETB",
+            "Infinite creature LTB",
+            "Infinite mill",
+            "Infinite creature sacrifice triggers",
+            "Infinite self-mill",
+            "Infinite storm count"
+          ],
+          "requirements": [],
+          "description": "Activate Altar of Dementia by sacrificing Gravecrawler.\nWhen Gravecrawler dies, Pitiless Plunderer triggers, creating a Treasure token.\nResolve the Altar of Dementia ability.\nActivate the Treasure token by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 9684
+        }
+      },
+      {
+        "relevant": true,
+        "borderlineRelevant": true,
+        "arguablyTwoCard": true,
+        "definitelyTwoCard": false,
+        "speed": 5,
+        "lock": false,
+        "combo": {
+          "id": "628-1495",
+          "identity": "B",
+          "status": "OK",
+          "bracketTag": "S",
+          "cards": [
+            {
+              "name": "Mikaeus, the Unhallowed",
+              "quantity": 1,
+              "mustBeCommander": false
+            },
+            {
+              "name": "Triskelion",
+              "quantity": 1,
+              "mustBeCommander": false
+            }
+          ],
+          "results": [
+            "Infinite damage",
+            "Infinite death triggers",
+            "Infinite creature ETB",
+            "Infinite creature LTB"
+          ],
+          "requirements": [],
+          "description": "If Triskelion has at least three +1/+1 counters on it, activate Triskelion by removing a +1/+1 counter from it, dealing 1 damage to any target.\nRepeat step 1 until there are two +1/+1 counters remaining on Triskelion.\nActivate Triskelion by removing a +1/+1 counter from Triskelion, dealing 1 damage to itself.\nRepeat step 3 an additional time.\nTriskelion dies.\nTriskelion's undying ability triggers, returning it to the battlefield with an additional +1/+1 counter on it.\nRepeat.",
+          "manaNeeded": "",
+          "popularity": 8388
+        }
+      }
+    ],
+    "source": "Commander Spellbook bracket estimator",
+    "sourceStatus": "available"
+  },
+  "comboSummary": {
+    "completeCombos": 27,
+    "winningCombos": 16,
+    "ruthlessCombos": 0,
+    "strategicallyRelevant": 22
+  },
+  "readiness": {
+    "status": "strong-competitive-construction-signals",
+    "bracketTag": "S",
+    "includedCombos": 27,
+    "winningCombos": 16,
+    "winningComboCoreCount": 4,
+    "ruthlessCombos": 0,
+    "strategicallyRelevantCombos": 22,
+    "metrics": {
+      "landCount": 31,
+      "averageNonlandManaValue": 2.51,
+      "earlyPlayCount": 38,
+      "fastManaCount": 3,
+      "rawInferredFastManaCount": 3,
+      "conditionalManaCount": 6,
+      "delayedManaCount": 0,
+      "cheapInteractionCount": 6,
+      "protectionCount": 1,
+      "tutorCount": 5,
+      "freeInteractionCount": 1
+    },
+    "constructionSignals": {
+      "verifiedCompleteCombo": true,
+      "verifiedWinningCombo": true,
+      "independentWinningComboCore": true,
+      "ruthlessCombo": false,
+      "strategicallyRelevantCombo": true,
+      "spellbookRuthlessDeckTag": false,
+      "lowAverageNonlandManaValue": true,
+      "substantialEarlyGameDensity": true,
+      "freeInteractionPresent": true,
+      "fastManaPresent": true
+    },
+    "validation": {
+      "commanderRules": {
+        "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
+        "status": "legal",
+        "isLegal": true,
+        "commanderCount": 1,
+        "commanderColorIdentity": [
+          "B"
+        ],
+        "commanderColorIdentityLabel": "B",
+        "commanderChecks": [
+          {
+            "name": "Liliana, Heretical Healer // Liliana, Defiant Necromancer",
+            "resolved": true,
+            "quantity": 1,
+            "typeLine": "Legendary Creature — Human Cleric // Legendary Planeswalker — Liliana",
+            "colorIdentity": [
+              "B"
+            ],
+            "commanderFormatLegality": "legal",
+            "eligible": true,
+            "reason": "Legendary creature or card text explicitly allows it to be a commander."
+          }
+        ],
+        "pairing": {
+          "legal": true,
+          "method": "single commander",
+          "reason": "One commander is designated."
+        },
+        "deckSize": {
+          "totalCards": 100,
+          "commanders": 1,
+          "libraryCards": 99,
+          "requiredTotal": 100,
+          "valid": true,
+          "expectedLibraryCards": 99
+        },
+        "colorIdentityViolations": [],
+        "commanderLegalityViolations": [],
+        "singletonViolations": [],
+        "unresolvedEntries": [],
+        "rulesApplied": [
+          "Exactly 100 cards including commander(s).",
+          "Normally one commander; two only when an applicable pairing mechanic permits them.",
+          "Partner variants are distinct: original Partner, Friends forever, Partner—Character select, Doctor’s companion, Choose a Background, and Partner with follow their own pairing conditions.",
+          "Commander eligibility includes legendary creatures, cards explicitly allowed to be commanders, and legendary Vehicles/Spacecraft with printed power and toughness; paired Backgrounds follow Choose a Background.",
+          "Every card must be legal in the Commander format.",
+          "Every card’s color identity must be a subset of the combined commander color identity; colorless cards are allowed.",
+          "Hybrid mana contributes all of its colors to color identity under the current rule.",
+          "Basic land types cannot introduce mana colors outside the commander color identity.",
+          "Except for basic lands and cards with their own copy-count exception, the deck is singleton by English card name."
+        ],
+        "warnings": []
+      },
+      "printingPolicy": {
+        "family": null,
+        "familyPreset": null,
+        "allowedSetCodes": [],
+        "includePromos": true,
+        "includeSpecialReleases": true,
+        "specialPrintingCount": 0,
+        "specialOracleNames": [],
+        "specialReleaseCoverageAsOf": null,
+        "specialReleaseCoverageNote": null,
+        "explanation": "No themed printing-family restriction is active."
+      }
+    },
+    "roleTruth": {
+      "source": "effective-card-role-truth-v15",
+      "rawInferredFastManaCount": 3,
+      "effectiveFastManaCount": 3,
+      "conditionalManaCount": 6,
+      "delayedManaCount": 0,
+      "rule": "Conditional or delayed mana cannot satisfy competitive fast-mana evidence merely because Oracle text contains a mana ability."
+    },
+    "comboTruth": {
+      "winningComboCount": 16,
+      "independentWinningComboCoreCount": 4,
+      "rule": "Independent win redundancy is the maximum supported set of pairwise-disjoint non-commander winning packages; overlapping variants sharing a required piece do not multiply redundancy."
+    },
+    "caveat": "This is a construction-readiness assessment, not a declaration that the deck is officially Bracket 5. A combo only satisfies the win-package gate when Commander Spellbook reports a win-oriented result; lifegain-only, value-only, and standalone infinite-mana engines do not qualify. Multiple winning variants that require the same non-commander card do not become independent redundancy, while genuinely pairwise-disjoint winning packages remain separate even if other bridge variants connect them. Fast-mana evidence is fail-closed against delayed and prerequisite-dependent mana. Bracket 5/cEDH also depends on competitive intent, metagame knowledge, pilot decisions, and tournament-minded play."
+  },
+  "gameChangerNames": [
+    "Bolas's Citadel",
+    "Necropotence"
+  ],
+  "ceiling": {
+    "targetBracket": 5,
+    "assessedBracket": 4,
+    "assessedBand": "bracket-4-optimized-range",
+    "confidence": "high",
+    "targetGap": 1,
+    "hardGatesPassed": true,
+    "bracket5ConstructionCandidate": false,
+    "bracket5CertifiedByThisAssessment": false,
+    "bracket5ThresholdChecks": [
+      {
+        "key": "average-nonland-mv",
+        "category": "construction",
+        "label": "Average nonland mana value",
+        "observed": 2.51,
+        "required": "at most 2.6",
+        "passed": true,
+        "detail": "Average nonland mana value: observed 2.51; Bracket-5 construction gate requires at most 2.6.",
+        "pressurePoint": "speed/curve"
+      },
+      {
+        "key": "early-plays",
+        "category": "construction",
+        "label": "Early plays",
+        "observed": 38,
+        "required": "at least 35",
+        "passed": true,
+        "detail": "Early plays: observed 38; Bracket-5 construction gate requires at least 35.",
+        "pressurePoint": "speed/curve"
+      },
+      {
+        "key": "fast-mana",
+        "category": "construction",
+        "label": "Fast mana",
+        "observed": 3,
+        "required": "at least 3",
+        "passed": true,
+        "detail": "Fast mana: observed 3; Bracket-5 construction gate requires at least 3.",
+        "pressurePoint": "fast-mana density"
+      },
+      {
+        "key": "free-interaction",
+        "category": "construction",
+        "label": "Free interaction",
+        "observed": 1,
+        "required": "at least 1",
+        "passed": true,
+        "detail": "Free interaction: observed 1; Bracket-5 construction gate requires at least 1.",
+        "pressurePoint": "free/cheap interaction"
+      },
+      {
+        "key": "cheap-interaction",
+        "category": "construction",
+        "label": "Cheap interaction",
+        "observed": 6,
+        "required": "at least 8",
+        "passed": false,
+        "detail": "Cheap interaction: observed 6; Bracket-5 construction gate requires at least 8.",
+        "pressurePoint": "free/cheap interaction"
+      },
+      {
+        "key": "tutors",
+        "category": "construction",
+        "label": "Tutors",
+        "observed": 5,
+        "required": "at least 4",
+        "passed": true,
+        "detail": "Tutors: observed 5; Bracket-5 construction gate requires at least 4.",
+        "pressurePoint": "tutor consistency"
+      },
+      {
+        "key": "verified-winning-combo",
+        "category": "construction",
+        "label": "Verified win-oriented combos",
+        "observed": 16,
+        "required": "at least 1",
+        "passed": true,
+        "detail": "Verified win-oriented combos: observed 16; Bracket-5 construction gate requires at least 1.",
+        "pressurePoint": "win-package quality/redundancy"
+      },
+      {
+        "key": "competitive-combo-signal",
+        "category": "construction",
+        "label": "Competitive combo signal",
+        "observed": "Ruthless=0, strategic=22, Spellbook=S",
+        "required": "at least one Ruthless/strategically relevant/R-tagged signal",
+        "passed": true,
+        "detail": "Competitive combo signal: observed Ruthless=0, strategic=22, Spellbook=S; Bracket-5 construction gate requires at least one Ruthless/strategically relevant/R-tagged signal.",
+        "pressurePoint": "win-package quality/redundancy"
+      },
+      {
+        "key": "cedh-intent",
+        "category": "evidence",
+        "label": "Explicit cEDH intent",
+        "observed": true,
+        "required": "true",
+        "passed": true,
+        "detail": "Explicit cEDH intent: observed true; Bracket-5 evidence gate requires true.",
+        "pressurePoint": "competitive intent"
+      },
+      {
+        "key": "competitive-metagame-evidence",
+        "category": "evidence",
+        "label": "Independent current competitive-metagame evidence",
+        "observed": false,
+        "required": "true",
+        "passed": false,
+        "detail": "Independent current competitive-metagame evidence: observed false; Bracket-5 evidence gate requires true.",
+        "pressurePoint": "metagame evidence"
+      }
+    ],
+    "constraintAnalysis": [
+      {
+        "constraint": "Independent general-purpose-AI baseline locked before specialist result review.",
+        "kind": "other",
+        "causality": "observed-under-constraint-not-proven-causal",
+        "failedThresholdKeys": [
+          "cheap-interaction"
+        ],
+        "pressurePoints": [
+          "free/cheap interaction"
+        ],
+        "summary": "Constraint \"Independent general-purpose-AI baseline locked before specialist result review.\" was active while the finished list missed 1 Bracket-5 construction gate: Cheap interaction (6 vs at least 8). These are observed shortfalls in the constrained build; this does not prove the restriction alone caused every miss."
+      },
+      {
+        "constraint": "NZ$500 hard whole-deck budget.",
+        "kind": "budget",
+        "causality": "observed-under-constraint-not-proven-causal",
+        "failedThresholdKeys": [
+          "cheap-interaction"
+        ],
+        "pressurePoints": [
+          "free/cheap interaction"
+        ],
+        "summary": "Constraint \"NZ$500 hard whole-deck budget.\" was active while the finished list missed 1 Bracket-5 construction gate: Cheap interaction (6 vs at least 8). These are observed shortfalls in the constrained build; this does not prove the restriction alone caused every miss."
+      },
+      {
+        "constraint": "Fixed commander: Liliana, Heretical Healer // Liliana, Defiant Necromancer.",
+        "kind": "other",
+        "causality": "observed-under-constraint-not-proven-causal",
+        "failedThresholdKeys": [
+          "cheap-interaction"
+        ],
+        "pressurePoints": [
+          "free/cheap interaction"
+        ],
+        "summary": "Constraint \"Fixed commander: Liliana, Heretical Healer // Liliana, Defiant Necromancer.\" was active while the finished list missed 1 Bracket-5 construction gate: Cheap interaction (6 vs at least 8). These are observed shortfalls in the constrained build; this does not prove the restriction alone caused every miss."
+      },
+      {
+        "constraint": "Creature-type/tribal optimization receives no credit.",
+        "kind": "other",
+        "causality": "observed-under-constraint-not-proven-causal",
+        "failedThresholdKeys": [
+          "cheap-interaction"
+        ],
+        "pressurePoints": [
+          "free/cheap interaction"
+        ],
+        "summary": "Constraint \"Creature-type/tribal optimization receives no credit.\" was active while the finished list missed 1 Bracket-5 construction gate: Cheap interaction (6 vs at least 8). These are observed shortfalls in the constrained build; this does not prove the restriction alone caused every miss."
+      },
+      {
+        "constraint": "Primary identity: sacrifice/aristocrats plus graveyard recursion/reanimation.",
+        "kind": "other",
+        "causality": "observed-under-constraint-not-proven-causal",
+        "failedThresholdKeys": [
+          "cheap-interaction"
+        ],
+        "pressurePoints": [
+          "free/cheap interaction"
+        ],
+        "summary": "Constraint \"Primary identity: sacrifice/aristocrats plus graveyard recursion/reanimation.\" was active while the finished list missed 1 Bracket-5 construction gate: Cheap interaction (6 vs at least 8). These are observed shortfalls in the constrained build; this does not prove the restriction alone caused every miss."
+      }
+    ],
+    "ceilingReasons": [
+      "The finished list does not yet satisfy the plugin’s conservative cEDH construction gate.",
+      "Cheap interaction: observed 6; Bracket-5 construction gate requires at least 8.",
+      "No independent competitive-metagame evidence currently supports a Bracket 5 claim.",
+      "Constraint ceiling: Independent general-purpose-AI baseline locked before specialist result review.",
+      "Constraint ceiling: NZ$500 hard whole-deck budget.",
+      "Constraint ceiling: Fixed commander: Liliana, Heretical Healer // Liliana, Defiant Necromancer.",
+      "Constraint ceiling: Creature-type/tribal optimization receives no credit.",
+      "Constraint ceiling: Primary identity: sacrifice/aristocrats plus graveyard recursion/reanimation.",
+      "Constraint analysis: Constraint \"Independent general-purpose-AI baseline locked before specialist result review.\" was active while the finished list missed 1 Bracket-5 construction gate: Cheap interaction (6 vs at least 8). These are observed shortfalls in the constrained build; this does not prove the restriction alone caused every miss.",
+      "Constraint analysis: Constraint \"NZ$500 hard whole-deck budget.\" was active while the finished list missed 1 Bracket-5 construction gate: Cheap interaction (6 vs at least 8). These are observed shortfalls in the constrained build; this does not prove the restriction alone caused every miss.",
+      "Constraint analysis: Constraint \"Fixed commander: Liliana, Heretical Healer // Liliana, Defiant Necromancer.\" was active while the finished list missed 1 Bracket-5 construction gate: Cheap interaction (6 vs at least 8). These are observed shortfalls in the constrained build; this does not prove the restriction alone caused every miss.",
+      "Constraint analysis: Constraint \"Creature-type/tribal optimization receives no credit.\" was active while the finished list missed 1 Bracket-5 construction gate: Cheap interaction (6 vs at least 8). These are observed shortfalls in the constrained build; this does not prove the restriction alone caused every miss.",
+      "Constraint analysis: Constraint \"Primary identity: sacrifice/aristocrats plus graveyard recursion/reanimation.\" was active while the finished list missed 1 Bracket-5 construction gate: Cheap interaction (6 vs at least 8). These are observed shortfalls in the constrained build; this does not prove the restriction alone caused every miss."
+    ],
+    "supportingSignals": [
+      "16 verified win-oriented combos.",
+      "22 strategically relevant combo signals.",
+      "2 current Game Changers.",
+      "3 fast-mana signals.",
+      "1 free-interaction signal.",
+      "5 tutor signals."
+    ],
+    "constraints": [
+      "Independent general-purpose-AI baseline locked before specialist result review.",
+      "NZ$500 hard whole-deck budget.",
+      "Fixed commander: Liliana, Heretical Healer // Liliana, Defiant Necromancer.",
+      "Creature-type/tribal optimization receives no credit.",
+      "Primary identity: sacrifice/aristocrats plus graveyard recursion/reanimation."
+    ],
+    "guidance": "Optimize toward the requested bracket, but report the bracket the finished deck actually supports. Current Game Changer limits are enforced as bracket floors, but Game Changers alone are not treated as proof of an optimized win plan. Bracket 4 may also be supported by independently evidenced efficient non-combo wins; Bracket 5 keeps stricter cEDH package and metagame requirements. A target, budget, theme, printing family, or requested label is never evidence for a higher bracket."
+  }
+}

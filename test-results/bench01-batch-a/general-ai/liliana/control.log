@@ -1,19 +1,15 @@
+BENCH-01 LILIANA GENERAL-AI BASELINE — VERIFICATION COMPLETE
+BUDGET: NZ$960.79 / NZ$500.00; within=false
+COMBOS: complete=27; winning=16; ruthless=0
+READINESS: strong-competitive-construction-signals
+ASSESSED BRACKET: 4 (bracket-4-optimized-range)
 BENCH-01 LILIANA GENERAL-AI BASELINE — HARD FAILURE
-AssertionError: every locked Liliana Oracle card must resolve
-+ actual - expected
+AssertionError: locked general-AI baseline exceeds NZ$500; record this baseline as a comparison loss rather than mutating it
 
-+ [
-+   'Malakir Rebirth // Malakir Mire'
-+ ]
-- []
+false !== true
 
-AssertionError [ERR_ASSERTION]: every locked Liliana Oracle card must resolve
-+ actual - expected
+AssertionError [ERR_ASSERTION]: locked general-AI baseline exceeds NZ$500; record this baseline as a comparison loss rather than mutating it
 
-+ [
-+   'Malakir Rebirth // Malakir Mire'
-+ ]
-- []
+false !== true
 
-    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/bench01-liliana-general-ai-baseline-v15.ts:150:10)
-    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/bench01-liliana-general-ai-baseline-v15.ts:313:10)
