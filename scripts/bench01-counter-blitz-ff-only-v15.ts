@@ -163,7 +163,7 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
       averageNonlandManaValue: metrics.averageNonlandManaValue,
       earlyPlayCount: metrics.earlyPlayCount,
       cheapInteractionCount: metrics.cheapInteractionCount,
-      freeInteractionCount: metrics.freeInteractionCount,
+      freeInteractionCount: Number(metrics.roleCounts['free interaction'] ?? 0),
       fastManaCount: metrics.fastManaCount,
       tutorCount: metrics.tutorCount,
       recursionCount: metrics.recursionCount,
