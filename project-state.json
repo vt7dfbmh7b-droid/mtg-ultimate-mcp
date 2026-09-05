@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-05T07:13:11.000Z",
+  "updatedAt": "2026-09-05T07:22:00.000Z",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
   "stable": {
     "branch": "main",
     "version": "0.13.0",
     "serverCurrent": "V0.13",
-    "promotionAuthorized": false
+    "promotionAuthorized": true
   },
   "experimental": {
     "activeBranch": "agent/v15-native-deck-intelligence",
