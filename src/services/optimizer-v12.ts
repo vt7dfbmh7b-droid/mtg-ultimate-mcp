@@ -426,6 +426,24 @@ function auditResolvedThemeV15(
   return auditNeutralThemeV15(entries, intent, options);
 }
 
+function auditResolvedCompoundThemeComponentsV15(
+  parsed: ParsedDeck,
+  cards: ScryfallCard[],
+  intent: NeutralThemeIntentV15,
+): NeutralThemeAuditV15[] | null {
+  if (intent.kind !== 'compound') return [];
+  const components = intent.components ?? [];
+  if (components.length === 0) return null;
+  const audits: NeutralThemeAuditV15[] = [];
+  for (const component of components) {
+    if (component.enforceability !== 'full') return null;
+    const audit = auditResolvedThemeV15(parsed, cards, component);
+    if (!audit) return null;
+    audits.push(audit);
+  }
+  return audits;
+}
+
 async function prepareRefinementThemeV15(
   initial: Awaited<ReturnType<typeof resolveDeck>>,
   options: IterativeRefinementOptionsV12,
@@ -652,6 +670,29 @@ async function currentWinRouteProtectionV15(
   }
 }
 
+export function candidateCompoundThemeComponentGateV15(
+  before: readonly NeutralThemeAuditV15[] | null,
+  after: readonly NeutralThemeAuditV15[] | null,
+): { eligible: boolean; reason: string } {
+  if (!before || !after || before.length === 0 || before.length !== after.length) {
+    return { eligible: false, reason: 'compound-theme-component-verification-unavailable' };
+  }
+  for (let index = 0; index < before.length; index += 1) {
+    const prior = before[index];
+    const next = after[index];
+    if (!prior || !next || prior.requiredMainMatches !== next.requiredMainMatches) {
+      return { eligible: false, reason: 'compound-theme-component-verification-unavailable' };
+    }
+    if (prior.satisfied && !next.satisfied) {
+      return { eligible: false, reason: 'package-would-break-required-compound-theme-component-density' };
+    }
+    if (!prior.satisfied && next.matchedMainCards < prior.matchedMainCards) {
+      return { eligible: false, reason: 'package-would-regress-required-compound-theme-component-density' };
+    }
+  }
+  return { eligible: true, reason: 'compound-theme-components-preserved-or-not-regressed' };
+}
+
 export function candidateThemeGateV15(
   before: NeutralThemeAuditV15,
   after: NeutralThemeAuditV15,
@@ -827,6 +868,21 @@ async function evaluateCandidate(
         resolved,
       };
     }
+    if (themeIntent.kind === 'compound') {
+      const beforeComponents = auditResolvedCompoundThemeComponentsV15(currentParsed, currentCards, themeIntent);
+      const afterComponents = auditResolvedCompoundThemeComponentsV15(resolved.parsed, resolved.cards, themeIntent);
+      const componentGate = candidateCompoundThemeComponentGateV15(beforeComponents, afterComponents);
+      if (!componentGate.eligible) {
+        return {
+          ...base,
+          themeAudit,
+          eligible: false,
+          reason: componentGate.reason,
+          nextDecklist,
+          resolved,
+        };
+      }
+    }
     const gate = candidateThemeGateV15(currentThemeAudit, themeAudit);
     if (!gate.eligible) {
       return {
@@ -977,12 +1033,18 @@ export async function refineCommanderDeckIterativelyV12(
                 : reasons.includes('improvement-below-threshold')
                   ? 'all-competing-packages-below-improvement-threshold'
                   : reasons.includes('package-exceeds-total-budget')
-            ? 'all-competing-packages-failed-budget-or-quality-checks'
-            : reasons.includes('package-would-break-required-theme-density')
-              ? 'all-competing-packages-would-break-theme-density'
-              : reasons.includes('package-does-not-advance-required-theme-density')
-                ? 'all-competing-packages-failed-to-advance-theme-density'
-                : reasons[0] ?? 'no-acceptable-package';
+                    ? 'all-competing-packages-failed-budget-or-quality-checks'
+                    : reasons.includes('compound-theme-component-verification-unavailable')
+                      ? 'all-competing-packages-lacked-compound-theme-component-verification'
+                      : reasons.includes('package-would-break-required-compound-theme-component-density')
+                        ? 'all-competing-packages-would-break-a-required-compound-theme-component'
+                        : reasons.includes('package-would-regress-required-compound-theme-component-density')
+                          ? 'all-competing-packages-would-regress-a-required-compound-theme-component'
+                          : reasons.includes('package-would-break-required-theme-density')
+                            ? 'all-competing-packages-would-break-theme-density'
+                            : reasons.includes('package-does-not-advance-required-theme-density')
+                              ? 'all-competing-packages-failed-to-advance-theme-density'
+                              : reasons[0] ?? 'no-acceptable-package';
         attemptSize -= 1;
       }
     }
@@ -1123,6 +1185,6 @@ export async function refineCommanderDeckIterativelyV12(
     scoringGuidance: 'Competing packages are compared with the same per-round seed. The improvement score is still a within-deck heuristic, not a universal power score or measured multiplayer win rate.',
     diversityGuidance: 'Later candidates temporarily exclude part of earlier candidates’ incoming package so the optimizer explores alternatives rather than resimulating the same swap set repeatedly.',
     winRouteGuidance: 'Route protection is derived from the existing V0.15 final full-table win-route portfolio. Verification unavailable is surfaced explicitly and never treated as evidence that the deck has no route.',
-    themeGuidance: 'User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck, while physical printing-family themes are delegated to the exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches.',
+    themeGuidance: 'User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck, compound themes additionally preserve every independently controlled component before aggregate density is considered, while physical printing-family themes are delegated to the exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches.',
   };
 }
