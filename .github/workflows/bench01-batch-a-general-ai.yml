@@ -1,0 +1,132 @@
+name: "BENCH-01 Batch A — Locked General-AI Baselines"
+
+on:
+  push:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - "scripts/bench01-counter-blitz-general-ai-baseline-v15.ts"
+      - "scripts/bench01-liliana-general-ai-baseline-v15.ts"
+      - ".github/workflows/bench01-batch-a-general-ai.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bench01-batch-a-general-ai-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  locked-baselines:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - name: Check out exact comparison source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build checked-in source
+        id: source_build
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee bench01-general-ai-build.log
+
+      - name: Verify locked Counter Blitz general-AI baseline
+        id: counter
+        if: steps.source_build.outcome == 'success'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npx tsx scripts/bench01-counter-blitz-general-ai-baseline-v15.ts 2>&1 | tee bench01-counter-general-ai.log
+
+      - name: Verify locked Liliana general-AI baseline
+        id: liliana
+        if: steps.source_build.outcome == 'success'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npx tsx scripts/bench01-liliana-general-ai-baseline-v15.ts 2>&1 | tee bench01-liliana-general-ai.log
+
+      - name: Upload comparison evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: bench01-batch-a-general-ai-${{ github.sha }}
+          path: |
+            bench01-counter-general-ai-baseline-result.json
+            bench01-counter-general-ai-baseline-deck.txt
+            bench01-counter-general-ai-baseline-failure.txt
+            bench01-liliana-general-ai-result.json
+            bench01-liliana-general-ai-deck.txt
+            bench01-liliana-general-ai-failure.txt
+            bench01-general-ai-build.log
+            bench01-counter-general-ai.log
+            bench01-liliana-general-ai.log
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Persist locked comparison evidence
+        if: always() && github.event_name == 'push'
+        env:
+          BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          COUNTER_OUTCOME: ${{ steps.counter.outcome }}
+          LILIANA_OUTCOME: ${{ steps.liliana.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            mkdir -p test-results/bench01-batch-a/general-ai/counter-blitz test-results/bench01-batch-a/general-ai/liliana
+            rm -f test-results/bench01-batch-a/general-ai/counter-blitz/* \
+                  test-results/bench01-batch-a/general-ai/liliana/* \
+                  test-results/bench01-batch-a/general-ai/run-metadata.txt
+            [ ! -f bench01-counter-general-ai-baseline-result.json ] || cp bench01-counter-general-ai-baseline-result.json test-results/bench01-batch-a/general-ai/counter-blitz/result.json
+            [ ! -f bench01-counter-general-ai-baseline-deck.txt ] || cp bench01-counter-general-ai-baseline-deck.txt test-results/bench01-batch-a/general-ai/counter-blitz/deck.txt
+            [ ! -f bench01-counter-general-ai-baseline-failure.txt ] || cp bench01-counter-general-ai-baseline-failure.txt test-results/bench01-batch-a/general-ai/counter-blitz/failure.txt
+            [ ! -f bench01-counter-general-ai.log ] || cp bench01-counter-general-ai.log test-results/bench01-batch-a/general-ai/counter-blitz/control.log
+            [ ! -f bench01-liliana-general-ai-result.json ] || cp bench01-liliana-general-ai-result.json test-results/bench01-batch-a/general-ai/liliana/result.json
+            [ ! -f bench01-liliana-general-ai-deck.txt ] || cp bench01-liliana-general-ai-deck.txt test-results/bench01-batch-a/general-ai/liliana/deck.txt
+            [ ! -f bench01-liliana-general-ai-failure.txt ] || cp bench01-liliana-general-ai-failure.txt test-results/bench01-batch-a/general-ai/liliana/failure.txt
+            [ ! -f bench01-liliana-general-ai.log ] || cp bench01-liliana-general-ai.log test-results/bench01-batch-a/general-ai/liliana/control.log
+            [ ! -f bench01-general-ai-build.log ] || cp bench01-general-ai-build.log test-results/bench01-batch-a/general-ai/build.log
+            printf 'executed_source_sha=%s\nproduct_runtime_baseline_sha=5829b37b686255ba35d419b37be17095e54fb696\ncomparison_baselines_locked_before_specialist_review=true\nbuild_outcome=%s\ncounter_general_ai_outcome=%s\nliliana_general_ai_outcome=%s\nbatch=BENCH-01-A\n' \
+              "$GITHUB_SHA" "$BUILD_OUTCOME" "$COUNTER_OUTCOME" "$LILIANA_OUTCOME" \
+              > test-results/bench01-batch-a/general-ai/run-metadata.txt
+            git add -- test-results/bench01-batch-a/general-ai
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "test-results(BENCH-01): persist locked general-AI baselines [skip ci]"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "BENCH-01 general-AI persistence attempt ${attempt} lost a branch race; retrying."
+          done
+          echo 'BENCH-01 general-AI evidence persistence exhausted eight branch-race retries.' >&2
+          exit 1
+
+      - name: Require locked comparison verification
+        if: always()
+        env:
+          BUILD_OUTCOME: ${{ steps.source_build.outcome }}
+          COUNTER_OUTCOME: ${{ steps.counter.outcome }}
+          LILIANA_OUTCOME: ${{ steps.liliana.outcome }}
+        run: |
+          test "$BUILD_OUTCOME" = success
+          test "$COUNTER_OUTCOME" = success
+          test "$LILIANA_OUTCOME" = success
