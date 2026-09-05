@@ -1,9 +1,18 @@
-AssertionError: locked Liliana baseline must contain exactly 100 cards
+AssertionError: every locked Liliana Oracle card must resolve
++ actual - expected
 
-99 !== 100
++ [
++   'Malakir Rebirth // Malakir Mire'
++ ]
+- []
 
-AssertionError [ERR_ASSERTION]: locked Liliana baseline must contain exactly 100 cards
+AssertionError [ERR_ASSERTION]: every locked Liliana Oracle card must resolve
++ actual - expected
 
-99 !== 100
++ [
++   'Malakir Rebirth // Malakir Mire'
++ ]
+- []
 
-    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/bench01-liliana-general-ai-baseline-v15.ts:143:10)
+    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/bench01-liliana-general-ai-baseline-v15.ts:150:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
