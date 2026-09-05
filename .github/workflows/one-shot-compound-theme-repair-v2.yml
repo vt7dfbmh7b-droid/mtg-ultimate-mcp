@@ -35,7 +35,7 @@ jobs:
           matches = [i for i, line in enumerate(lines) if 'queryClause:' in line and 'additional combat' in line]
           if len(matches) != 1:
               raise SystemExit(f'expected exactly one staged broad combat query, found {len(matches)}')
-          lines[matches[0]] = "    queryClause: '(o:attack OR o:\\"combat damage\\")',"
+          lines[matches[0]] = r'''    queryClause: '(o:attack OR o:\"combat damage\")','''
           path.write_text('\n'.join(lines) + '\n')
           PY
       - name: Apply generic compound-theme repair
