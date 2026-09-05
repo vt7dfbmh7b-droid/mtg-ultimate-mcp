@@ -1,9 +1,0 @@
-AssertionError: locked baseline must actually deliver dense countermagic
-
-false !== true
-
-AssertionError [ERR_ASSERTION]: locked baseline must actually deliver dense countermagic
-
-false !== true
-
-    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/bench01-counter-blitz-general-ai-baseline-v15.ts:308:10)
