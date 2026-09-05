@@ -4,18 +4,14 @@
 // MAIN
 1 Yuna, Grand Summoner (FIC) 8 *F*
 1 Auron, Venerated Guardian (FIC) 10 *N*
-1 Chocobo Knights (FIC) 12 *N*
 1 Gatta and Luzzu (FIC) 19 *N*
-1 Lord Jyscal Guado (FIC) 23 *N*
 1 Protection Magic (FIC) 24 *N*
 1 Summon: Ixion (FIC) 27 *N*
 1 Summon: Yojimbo (FIC) 28 *N*
 1 Summoner's Sending (FIC) 29 *N*
 1 Blitzball Stadium (FIC) 34 *N*
-1 Lulu, Stern Guardian (FIC) 38 *N*
 1 O'aka, Traveling Merchant (FIC) 39 *N*
 1 Rikku, Resourceful Guardian (FIC) 41 *N*
-1 Summon: Valefor (FIC) 42 *N*
 1 Maester Seymour (FIC) 68 *N*
 1 Sphere Grid (FIC) 70 *N*
 1 Summon: Magus Sisters (FIC) 71 *N*
@@ -24,19 +20,13 @@
 1 Yuna's Whistle (FIC) 75 *N*
 1 Kimahri, Valiant Guardian (FIC) 85 *N*
 1 Shelinda, Yevon Acolyte (FIC) 94 *N*
-1 Sin, Unending Cataclysm (FIC) 95 *N*
 1 Wakka, Devoted Guardian (FIC) 97 *N*
 1 Collective Effort (FIC) 237 *N*
 1 Damning Verdict (FIC) 239 *N*
-1 Farewell (FIC) 242 *N*
-1 Luminous Broodmoth (FIC) 246 *N*
-1 Promise of Loyalty (FIC) 249 *N*
-1 Resourceful Defense (FIC) 251 *N*
 1 Scholar of New Horizons (FIC) 252 *N*
 1 Sunscorch Regent (FIC) 255 *N*
 1 Together Forever (FIC) 257 *N*
 1 Chasm Skulker (FIC) 262 *N*
-1 Inexorable Tide (FIC) 265 *N*
 1 Pull from Tomorrow (FIC) 269 *N*
 1 Bane of Progress (FIC) 299 *N*
 1 Fight Rigging (FIC) 303 *N*
@@ -49,7 +39,6 @@
 1 Rampant Rejuvenator (FIC) 314 *N*
 1 Tireless Tracker (FIC) 316 *N*
 1 Altered Ego (FIC) 317 *N*
-1 Endless Detour (FIC) 324 *N*
 1 Fathom Mage (FIC) 325 *N*
 1 Walking Ballista (FIC) 371 *N*
 1 Brushland (FIC) 377 *N*
@@ -70,13 +59,10 @@
 1 Temple of Plenty (FIC) 437 *N*
 1 Vineglimmer Snarl (FIC) 440 *N*
 1 Destroy Evil (FIC) 240 *N*
-1 Grateful Apparition (FIC) 244 *N*
 1 Path to Exile (FIC) 248 *N*
 1 An Offer You Can't Refuse (FIC) 267 *N*
 1 Duskshell Crawler (FIC) 301 *N*
-1 Farseek (FIC) 302 *N*
 1 Inspiring Call (FIC) 310 *N*
-1 Three Visits (FIC) 315 *N*
 1 Bred for the Hunt (FIC) 321 *N*
 1 Arcane Signet (FIC) 334 *N*
 1 Everflowing Chalice (FIC) 343 *N*
@@ -101,3 +87,17 @@
 1 Plains (FIN) 294 *N*
 1 Plains (FIN) 295 *N*
 1 Plains (FIN) 296 *N*
+1 Tome of Legends (FIC) 369 *N*
+1 Arcane Denial (RFIN) J2 *N*
+1 Solitude (SLD) 7004 *F*
+1 Staff of the Storyteller (SLD) 1863 *N*
+1 Ultros, Obnoxious Octopus (FIN) 83 *N*
+1 Bugenhagen, Wise Elder (FIC) 66 *N*
+1 Umezawa's Jitte (SLD) 1865 *N*
+1 Esper Origins // Summon: Esper Maduin (FIN) 185 *N*
+1 Hypnotic Sprite // Mesmeric Glare (FIC) 264 *N*
+1 Swords to Plowshares (FIC) 256 *N*
+1 Torgal, A Fine Hound (FIN) 208 *N*
+1 Sword of Truth and Justice (SLD) 1867 *N*
+1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
+1 Zack Fair (FIN) 45 *N*

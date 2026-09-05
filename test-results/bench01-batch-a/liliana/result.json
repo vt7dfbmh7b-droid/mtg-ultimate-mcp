@@ -2,7 +2,7 @@
   "commanderLookupName": "Liliana, Heretical Healer",
   "commanderName": "Liliana, Heretical Healer // Liliana, Defiant Necromancer",
   "maxDeckNzd": 500,
-  "maxDeckUsdReference": 293.86,
+  "maxDeckUsdReference": 293.89,
   "targetBracket": 5,
   "creatureTypePolicy": "none",
   "excludedCards": [
@@ -37,13 +37,13 @@
     "Jet Medallion",
     "Accursed Marauder"
   ],
-  "auditedTotalNzd": 443.21,
-  "auditedTotalUsdReference": 260.48,
+  "auditedTotalNzd": 444.19,
+  "auditedTotalUsdReference": 261.09,
   "currencyPolicy": {
     "primaryCurrency": "NZD",
     "displaySymbol": "NZ$",
-    "usdToNzdRate": 1.7015,
-    "rateDate": "2026-09-04",
+    "usdToNzdRate": 1.7013,
+    "rateDate": "2026-09-05",
     "rateSource": "Frankfurter",
     "rateSourceUrl": "https://api.frankfurter.dev/v2/rate/USD/NZD",
     "staleRate": false,
@@ -611,8 +611,8 @@
     "currencyPolicy": {
       "primaryCurrency": "NZD",
       "displaySymbol": "NZ$",
-      "usdToNzdRate": 1.7015,
-      "rateDate": "2026-09-04",
+      "usdToNzdRate": 1.7013,
+      "rateDate": "2026-09-05",
       "rateSource": "Frankfurter",
       "rateSourceUrl": "https://api.frankfurter.dev/v2/rate/USD/NZD",
       "staleRate": false,
@@ -628,11 +628,11 @@
     "result": {
       "status": "budget-compliant",
       "maxDeckNzd": 500,
-      "maxDeckUsdReference": 293.86,
-      "estimatedFixedCommanderCostNzd": 11.21,
-      "estimatedFixedCommanderCostUsdReference": 6.59,
-      "remainingCandidateBudgetEstimateNzd": 488.79,
-      "remainingCandidateBudgetEstimateUsdReference": 287.27,
+      "maxDeckUsdReference": 293.89,
+      "estimatedFixedCommanderCostNzd": 11.59,
+      "estimatedFixedCommanderCostUsdReference": 6.81,
+      "remainingCandidateBudgetEstimateNzd": 488.41,
+      "remainingCandidateBudgetEstimateUsdReference": 287.08,
       "chosenCandidateSearchCapNzd": 12.22,
       "chosenCandidateSearchCapUsdReference": 7.18,
       "userMaxNzdPerCard": null,
@@ -642,9 +642,9 @@
         "status": "complete",
         "withinBudget": true,
         "maxDeckNzd": 500,
-        "maxDeckUsdReference": 293.86,
-        "auditedTotalNzd": 443.21,
-        "auditedTotalUsdReference": 260.48,
+        "maxDeckUsdReference": 293.89,
+        "auditedTotalNzd": 444.19,
+        "auditedTotalUsdReference": 261.09,
         "overageNzd": 0,
         "overageUsdReference": 0,
         "unknownPriceEntries": [],
@@ -658,8 +658,8 @@
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 359.82,
-          "auditedTotalUsdReference": 211.47,
+          "auditedTotalNzd": 359.42,
+          "auditedTotalUsdReference": 211.26,
           "overageNzd": 0,
           "overageUsdReference": 0,
           "remainingStructuralDeficitTotal": 10,
@@ -672,14 +672,14 @@
           }
         },
         {
-          "candidateMaxNzdPerCard": 6.18,
-          "candidateMaxUsdPerCardReference": 3.63,
+          "candidateMaxNzdPerCard": 6.16,
+          "candidateMaxUsdPerCardReference": 3.62,
           "userMaxNzdPerCard": null,
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 365.69,
-          "auditedTotalUsdReference": 214.92,
+          "auditedTotalNzd": 365.29,
+          "auditedTotalUsdReference": 214.71,
           "overageNzd": 0,
           "overageUsdReference": 0,
           "remainingStructuralDeficitTotal": 10,
@@ -698,8 +698,8 @@
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 351.34,
-          "auditedTotalUsdReference": 206.49,
+          "auditedTotalNzd": 351.27,
+          "auditedTotalUsdReference": 206.47,
           "overageNzd": 0,
           "overageUsdReference": 0,
           "remainingStructuralDeficitTotal": 11,
@@ -718,8 +718,8 @@
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 338.22,
-          "auditedTotalUsdReference": 198.78,
+          "auditedTotalNzd": 338.07,
+          "auditedTotalUsdReference": 198.71,
           "overageNzd": 0,
           "overageUsdReference": 0,
           "remainingStructuralDeficitTotal": 11,
@@ -738,7 +738,7 @@
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 439.5,
+          "auditedTotalNzd": 439.45,
           "auditedTotalUsdReference": 258.3,
           "overageNzd": 0,
           "overageUsdReference": 0,
@@ -752,16 +752,16 @@
           }
         },
         {
-          "candidateMaxNzdPerCard": 24.43,
-          "candidateMaxUsdPerCardReference": 14.36,
+          "candidateMaxNzdPerCard": 24.41,
+          "candidateMaxUsdPerCardReference": 14.35,
           "userMaxNzdPerCard": null,
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "over-budget",
-          "auditedTotalNzd": 577.88,
-          "auditedTotalUsdReference": 339.63,
-          "overageNzd": 77.88,
-          "overageUsdReference": 45.77,
+          "auditedTotalNzd": 577.59,
+          "auditedTotalUsdReference": 339.5,
+          "overageNzd": 77.6,
+          "overageUsdReference": 45.61,
           "remainingStructuralDeficitTotal": 7,
           "unknownPriceEntries": [],
           "unresolvedEntries": [],
@@ -772,16 +772,16 @@
           }
         },
         {
-          "candidateMaxNzdPerCard": 48.88,
-          "candidateMaxUsdPerCardReference": 28.73,
+          "candidateMaxNzdPerCard": 48.84,
+          "candidateMaxUsdPerCardReference": 28.71,
           "userMaxNzdPerCard": null,
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "over-budget",
-          "auditedTotalNzd": 872.14,
-          "auditedTotalUsdReference": 512.57,
-          "overageNzd": 372.14,
-          "overageUsdReference": 218.71,
+          "auditedTotalNzd": 870.84,
+          "auditedTotalUsdReference": 511.87,
+          "overageNzd": 370.85,
+          "overageUsdReference": 217.98,
           "remainingStructuralDeficitTotal": 5,
           "unknownPriceEntries": [],
           "unresolvedEntries": [],
@@ -792,16 +792,16 @@
           }
         },
         {
-          "candidateMaxNzdPerCard": 488.79,
-          "candidateMaxUsdPerCardReference": 287.27,
+          "candidateMaxNzdPerCard": 488.41,
+          "candidateMaxUsdPerCardReference": 287.08,
           "userMaxNzdPerCard": null,
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "over-budget",
-          "auditedTotalNzd": 2368.05,
-          "auditedTotalUsdReference": 1391.74,
-          "overageNzd": 1868.04,
-          "overageUsdReference": 1097.88,
+          "auditedTotalNzd": 2371.41,
+          "auditedTotalUsdReference": 1393.88,
+          "overageNzd": 1871.41,
+          "overageUsdReference": 1099.99,
           "remainingStructuralDeficitTotal": 2,
           "unknownPriceEntries": [],
           "unresolvedEntries": [],
@@ -1191,8 +1191,8 @@
         "source": "Commander Spellbook + Scryfall exact-printing verification",
         "guidance": "The package is only a construction seed. Discovery uses deterministic result evidence rather than Commander Spellbook manual winning tags, then independently applies the local deterministic-win result gate. User exclusions are hard filters, while overlap with user-required/preferred cards is rewarded because it reduces added slots and preserves the requested plan. Candidate selection treats compactness and bracket tags as supporting evidence rather than overriding practical card utility, reserves verification space for each supported package size, permits at most one lightweight prerequisite, and prefers lower-mana cards with useful roles outside the combo. The finished 100-card deck must still independently resolve, pass Commander legality and printing policy, and reproduce a winning combo through find-my-combos before it can satisfy the competitive win-package gate.",
         "attempted": true,
-        "seedSearchCapNzd": 488.79,
-        "seedSearchCapUsdReference": 287.27
+        "seedSearchCapNzd": 488.41,
+        "seedSearchCapUsdReference": 287.08
       },
       "postBudgetRefinement": {
         "attempted": true,
@@ -1237,9 +1237,9 @@
           "status": "complete",
           "withinBudget": true,
           "maxDeckNzd": 500,
-          "maxDeckUsdReference": 293.86,
-          "auditedTotalNzd": 443.21,
-          "auditedTotalUsdReference": 260.48,
+          "maxDeckUsdReference": 293.89,
+          "auditedTotalNzd": 444.19,
+          "auditedTotalUsdReference": 261.09,
           "overageNzd": 0,
           "overageUsdReference": 0,
           "unknownPriceEntries": [],
@@ -1721,11 +1721,11 @@
                     "spot interaction already covered at 14; marginal score -30"
                   ],
                   "printing": {
-                    "set": "MID",
-                    "collectorNumber": "99",
+                    "set": "J22",
+                    "collectorNumber": "409",
                     "finish": "nonfoil",
-                    "priceNzd": 0.22,
-                    "priceUsdReference": 0.13
+                    "priceNzd": 0.24,
+                    "priceUsdReference": 0.14
                   }
                 },
                 {
@@ -1973,7 +1973,7 @@
               "afterWinningComboCount": 3,
               "beforeWinningComboCoreCount": 1,
               "afterWinningComboCoreCount": 1,
-              "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 211\n1 Undying Malice (FDN) 528\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (MSC) 793\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Feed the Swarm (TLE) 257\n1 Snuff Out (WHO) 222\n1 Woe Strider (SOC) 231\n1 Infernal Grasp (SOC) 216\n1 Baleful Mastery (OTC) 126\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (MSC) 191\n1 Swiftfoot Boots (A25) 234\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Buried Alive (MH3) 273\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Withering Torment (MSC) 162\n1 Thought Vessel (MB2) 100\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 233\n1 Exotic Orchard (CN2) 219\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (SCD) 312\n1 Bojuka Bog (SOC) 363\n22 Swamp (MSH) 291\n1 Zulaport Cutthroat (PLST) GNT-36 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Master of Dark Rites (LCC) 83 *N*\n1 Culling the Weak (EXO) 55 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Black Sun's Twilight (ONE) 84 *N*\n1 Eaten Alive (MID) 99 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Worthy Cost (TDM) 99 *N*",
+              "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 211\n1 Undying Malice (FDN) 528\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (MSC) 793\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Feed the Swarm (TLE) 257\n1 Snuff Out (WHO) 222\n1 Woe Strider (SOC) 231\n1 Infernal Grasp (SOC) 216\n1 Baleful Mastery (OTC) 126\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (MSC) 191\n1 Swiftfoot Boots (A25) 234\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Buried Alive (MH3) 273\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Withering Torment (MSC) 162\n1 Thought Vessel (MB2) 100\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 233\n1 Exotic Orchard (CN2) 219\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (SCD) 312\n1 Bojuka Bog (SOC) 363\n22 Swamp (MSH) 291\n1 Zulaport Cutthroat (PLST) GNT-36 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Master of Dark Rites (LCC) 83 *N*\n1 Culling the Weak (EXO) 55 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Black Sun's Twilight (ONE) 84 *N*\n1 Eaten Alive (J22) 409 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Worthy Cost (TDM) 99 *N*",
               "finalCommanderRules": {
                 "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
                 "status": "legal",
@@ -2104,7 +2104,7 @@
                       "set": "EMA",
                       "collectorNumber": "84",
                       "finish": "nonfoil",
-                      "priceNzd": 7.27,
+                      "priceNzd": 7.26,
                       "priceUsdReference": 4.27
                     }
                   },
@@ -2535,11 +2535,11 @@
                       "spot interaction already covered at 14; marginal score -30"
                     ],
                     "printing": {
-                      "set": "MID",
-                      "collectorNumber": "99",
+                      "set": "J22",
+                      "collectorNumber": "409",
                       "finish": "nonfoil",
-                      "priceNzd": 0.22,
-                      "priceUsdReference": 0.13
+                      "priceNzd": 0.24,
+                      "priceUsdReference": 0.14
                     }
                   },
                   {
@@ -2787,7 +2787,7 @@
                 "afterWinningComboCount": 3,
                 "beforeWinningComboCoreCount": 1,
                 "afterWinningComboCoreCount": 1,
-                "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 211\n1 Undying Malice (FDN) 528\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (MSC) 793\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Feed the Swarm (TLE) 257\n1 Snuff Out (WHO) 222\n1 Woe Strider (SOC) 231\n1 Infernal Grasp (SOC) 216\n1 Baleful Mastery (OTC) 126\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (MSC) 191\n1 Swiftfoot Boots (A25) 234\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Buried Alive (MH3) 273\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Withering Torment (MSC) 162\n1 Thought Vessel (MB2) 100\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 233\n1 Exotic Orchard (CN2) 219\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (SCD) 312\n1 Bojuka Bog (SOC) 363\n22 Swamp (MSH) 291\n1 Zulaport Cutthroat (PLST) GNT-36 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Master of Dark Rites (LCC) 83 *N*\n1 Culling the Weak (EXO) 55 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Black Sun's Twilight (ONE) 84 *N*\n1 Eaten Alive (MID) 99 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Worthy Cost (TDM) 99 *N*",
+                "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 211\n1 Undying Malice (FDN) 528\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (MSC) 793\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Feed the Swarm (TLE) 257\n1 Snuff Out (WHO) 222\n1 Woe Strider (SOC) 231\n1 Infernal Grasp (SOC) 216\n1 Baleful Mastery (OTC) 126\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (MSC) 191\n1 Swiftfoot Boots (A25) 234\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Buried Alive (MH3) 273\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Withering Torment (MSC) 162\n1 Thought Vessel (MB2) 100\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 233\n1 Exotic Orchard (CN2) 219\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (SCD) 312\n1 Bojuka Bog (SOC) 363\n22 Swamp (MSH) 291\n1 Zulaport Cutthroat (PLST) GNT-36 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Master of Dark Rites (LCC) 83 *N*\n1 Culling the Weak (EXO) 55 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Black Sun's Twilight (ONE) 84 *N*\n1 Eaten Alive (J22) 409 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Worthy Cost (TDM) 99 *N*",
                 "finalCommanderRules": {
                   "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
                   "status": "legal",
@@ -2937,7 +2937,7 @@
               "afterLandCount": 30,
               "beforeComboCount": 3,
               "afterComboCount": 3,
-              "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 211\n1 Undying Malice (FDN) 528\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (MSC) 793\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Feed the Swarm (TLE) 257\n1 Snuff Out (WHO) 222\n1 Woe Strider (SOC) 231\n1 Infernal Grasp (SOC) 216\n1 Baleful Mastery (OTC) 126\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (MSC) 191\n1 Swiftfoot Boots (A25) 234\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Buried Alive (MH3) 273\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Withering Torment (MSC) 162\n1 Thought Vessel (MB2) 100\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 233\n1 Exotic Orchard (CN2) 219\n1 War Room (CMR) 361 *N*\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Demolition Field (FDN) 687 *N*\n1 Ash Barrens (NCC) 386 *N*\n22 Swamp (MSH) 291\n1 Zulaport Cutthroat (PLST) GNT-36 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Master of Dark Rites (LCC) 83 *N*\n1 Culling the Weak (EXO) 55 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Black Sun's Twilight (ONE) 84 *N*\n1 Eaten Alive (MID) 99 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Worthy Cost (TDM) 99 *N*",
+              "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 211\n1 Undying Malice (FDN) 528\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (MSC) 793\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Feed the Swarm (TLE) 257\n1 Snuff Out (WHO) 222\n1 Woe Strider (SOC) 231\n1 Infernal Grasp (SOC) 216\n1 Baleful Mastery (OTC) 126\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (MSC) 191\n1 Swiftfoot Boots (A25) 234\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Buried Alive (MH3) 273\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Withering Torment (MSC) 162\n1 Thought Vessel (MB2) 100\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 233\n1 Exotic Orchard (CN2) 219\n1 War Room (CMR) 361 *N*\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Demolition Field (FDN) 687 *N*\n1 Ash Barrens (NCC) 386 *N*\n22 Swamp (MSH) 291\n1 Zulaport Cutthroat (PLST) GNT-36 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Master of Dark Rites (LCC) 83 *N*\n1 Culling the Weak (EXO) 55 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Black Sun's Twilight (ONE) 84 *N*\n1 Eaten Alive (J22) 409 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Worthy Cost (TDM) 99 *N*",
               "finalCommanderRules": {
                 "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
                 "status": "legal",
@@ -3124,19 +3124,19 @@
           "comboWasPreserved": true,
           "baselineWinningComboCores": 1,
           "finalWinningComboCores": 1,
-          "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 211\n1 Undying Malice (FDN) 528\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (MSC) 793\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Feed the Swarm (TLE) 257\n1 Snuff Out (WHO) 222\n1 Woe Strider (SOC) 231\n1 Infernal Grasp (SOC) 216\n1 Baleful Mastery (OTC) 126\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (MSC) 191\n1 Swiftfoot Boots (A25) 234\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Buried Alive (MH3) 273\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Withering Torment (MSC) 162\n1 Thought Vessel (MB2) 100\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 233\n1 Exotic Orchard (CN2) 219\n1 War Room (CMR) 361 *N*\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Demolition Field (FDN) 687 *N*\n1 Ash Barrens (NCC) 386 *N*\n22 Swamp (MSH) 291\n1 Zulaport Cutthroat (PLST) GNT-36 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Master of Dark Rites (LCC) 83 *N*\n1 Culling the Weak (EXO) 55 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Black Sun's Twilight (ONE) 84 *N*\n1 Eaten Alive (MID) 99 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Worthy Cost (TDM) 99 *N*",
+          "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 211\n1 Undying Malice (FDN) 528\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (MSC) 793\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Feed the Swarm (TLE) 257\n1 Snuff Out (WHO) 222\n1 Woe Strider (SOC) 231\n1 Infernal Grasp (SOC) 216\n1 Baleful Mastery (OTC) 126\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (MSC) 191\n1 Swiftfoot Boots (A25) 234\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Buried Alive (MH3) 273\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Withering Torment (MSC) 162\n1 Thought Vessel (MB2) 100\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 233\n1 Exotic Orchard (CN2) 219\n1 War Room (CMR) 361 *N*\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Demolition Field (FDN) 687 *N*\n1 Ash Barrens (NCC) 386 *N*\n22 Swamp (MSH) 291\n1 Zulaport Cutthroat (PLST) GNT-36 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Master of Dark Rites (LCC) 83 *N*\n1 Culling the Weak (EXO) 55 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Black Sun's Twilight (ONE) 84 *N*\n1 Eaten Alive (J22) 409 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Worthy Cost (TDM) 99 *N*",
           "guidance": "The cEDH path is win-package-first and explicit exclusions remain authoritative through win completion and efficiency refinement. Creature-type coherence is disabled for this run, so strict efficiency cannot claim improvement from tribal density. Up to two marginal-value efficiency passes recalculate role saturation while preserving critical role floors and independent winning cores, then lands are optimized separately and the finished list is reassessed."
         }
       },
       "premiumHeadroomRefinement": {
         "attempted": true,
         "status": "rejected-hard-budget",
-        "startingAuditedTotalNzd": 443.21,
-        "startingAuditedTotalUsdReference": 260.48,
-        "remainingHeadroomNzd": 56.8,
-        "remainingHeadroomUsdReference": 33.38,
-        "premiumMaxNzdPerCard": 69.01,
-        "premiumMaxUsdPerCardReference": 40.56,
+        "startingAuditedTotalNzd": 444.19,
+        "startingAuditedTotalUsdReference": 261.09,
+        "remainingHeadroomNzd": 55.8,
+        "remainingHeadroomUsdReference": 32.8,
+        "premiumMaxNzdPerCard": 68.02,
+        "premiumMaxUsdPerCardReference": 39.98,
         "baseDeckUnchanged": true,
         "attempts": [
           {
@@ -3180,11 +3180,11 @@
               "status": "over-budget",
               "withinBudget": false,
               "maxDeckNzd": 500,
-              "maxDeckUsdReference": 293.86,
-              "auditedTotalNzd": 541.74,
-              "auditedTotalUsdReference": 318.39,
-              "overageNzd": 41.74,
-              "overageUsdReference": 24.53,
+              "maxDeckUsdReference": 293.89,
+              "auditedTotalNzd": 542.26,
+              "auditedTotalUsdReference": 318.73,
+              "overageNzd": 42.26,
+              "overageUsdReference": 24.84,
               "unknownPriceEntries": [],
               "unresolvedEntries": []
             }
@@ -3230,11 +3230,11 @@
               "status": "over-budget",
               "withinBudget": false,
               "maxDeckNzd": 500,
-              "maxDeckUsdReference": 293.86,
-              "auditedTotalNzd": 516.95,
-              "auditedTotalUsdReference": 303.82,
-              "overageNzd": 16.95,
-              "overageUsdReference": 9.96,
+              "maxDeckUsdReference": 293.89,
+              "auditedTotalNzd": 517.57,
+              "auditedTotalUsdReference": 304.22,
+              "overageNzd": 17.57,
+              "overageUsdReference": 10.33,
               "unknownPriceEntries": [],
               "unresolvedEntries": []
             }
@@ -3324,10 +3324,10 @@
             "tcgplayerId": 247521,
             "cardmarketId": 577315,
             "prices": {
-              "usd": "6.59",
+              "usd": "6.81",
               "usd_foil": "8.45",
               "usd_etched": null,
-              "eur": "2.79",
+              "eur": "2.78",
               "eur_foil": "4.37",
               "tix": null
             },
@@ -3462,8 +3462,8 @@
           "candidateSource": "role-search"
         },
         "exactPrintingPolicy": "Every selected line carries an exact Scryfall set code and collector number. Oracle identity drives rules; the selected physical printing must independently satisfy the active family/set/promo policy. User maxUsdPerCard applies to required and optional cards; candidateMaxUsdPerCard, when supplied, only tightens optional candidate search.",
-        "selectedPrintingEstimatedNzd": 439.5,
-        "selectedPrintingEstimatedUsdReference": 258.3,
+        "selectedPrintingEstimatedNzd": 439.51,
+        "selectedPrintingEstimatedUsdReference": 258.34,
         "constraints": {
           "maxNzdPerCard": null,
           "maxUsdPerCardReference": null,
@@ -3518,8 +3518,8 @@
         ]
       },
       "baseDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 211\n1 Undying Malice (FDN) 528\n1 Decree of Pain (DSC) 136\n1 Solemn Simulacrum (MSC) 215\n1 Deadly Dispute (MSC) 794\n1 Season of Loss (BLB) 112\n1 Dark Ritual (MSC) 793\n1 Ugin, the Ineffable (CMM) 811\n1 Hedron Archive (FDN) 726\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Feed the Swarm (TLE) 257\n1 Gix's Command (BRO) 97\n1 Snuff Out (WHO) 222\n1 Woe Strider (SOC) 231\n1 Infernal Grasp (SOC) 216\n1 Szat's Will (CMR) 152\n1 Baleful Mastery (OTC) 126\n1 Grave Researcher // Reanimate (SOS) 85\n1 Expedition Map (FDN) 724\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (MSC) 191\n1 Swiftfoot Boots (A25) 234\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Lethal Scheme (MSC) 157\n1 Buried Alive (MH3) 273\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Withering Torment (MSC) 162\n1 Thought Vessel (MB2) 100\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Swarmyard Massacre (BLC) 20\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Dread Return (CMM) 153\n1 Junk Diver (MH3) 293\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Revenge of the Rats (FDN) 67\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Saw in Half (UNF) 88\n1 Zombie Apocalypse (MIC) 131\n1 Command Tower (MSC) 233\n1 Exotic Orchard (CN2) 219\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (SCD) 312\n1 Bojuka Bog (SOC) 363\n22 Swamp (MSH) 291",
-      "decklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 211\n1 Undying Malice (FDN) 528\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (MSC) 793\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Feed the Swarm (TLE) 257\n1 Snuff Out (WHO) 222\n1 Woe Strider (SOC) 231\n1 Infernal Grasp (SOC) 216\n1 Baleful Mastery (OTC) 126\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (MSC) 191\n1 Swiftfoot Boots (A25) 234\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Buried Alive (MH3) 273\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Withering Torment (MSC) 162\n1 Thought Vessel (MB2) 100\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 233\n1 Exotic Orchard (CN2) 219\n1 War Room (CMR) 361 *N*\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Demolition Field (FDN) 687 *N*\n1 Ash Barrens (NCC) 386 *N*\n22 Swamp (MSH) 291\n1 Zulaport Cutthroat (PLST) GNT-36 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Master of Dark Rites (LCC) 83 *N*\n1 Culling the Weak (EXO) 55 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Black Sun's Twilight (ONE) 84 *N*\n1 Eaten Alive (MID) 99 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Worthy Cost (TDM) 99 *N*",
-      "constraint": "US$293.86 maximum total deck budget",
+      "decklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 211\n1 Undying Malice (FDN) 528\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (MSC) 793\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Feed the Swarm (TLE) 257\n1 Snuff Out (WHO) 222\n1 Woe Strider (SOC) 231\n1 Infernal Grasp (SOC) 216\n1 Baleful Mastery (OTC) 126\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (MSC) 191\n1 Swiftfoot Boots (A25) 234\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Buried Alive (MH3) 273\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Withering Torment (MSC) 162\n1 Thought Vessel (MB2) 100\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 233\n1 Exotic Orchard (CN2) 219\n1 War Room (CMR) 361 *N*\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Demolition Field (FDN) 687 *N*\n1 Ash Barrens (NCC) 386 *N*\n22 Swamp (MSH) 291\n1 Zulaport Cutthroat (PLST) GNT-36 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Master of Dark Rites (LCC) 83 *N*\n1 Culling the Weak (EXO) 55 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Black Sun's Twilight (ONE) 84 *N*\n1 Eaten Alive (J22) 409 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Worthy Cost (TDM) 99 *N*",
+      "constraint": "US$293.89 maximum total deck budget",
       "caveat": "Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. Explicit exclusions and required cards are rechecked after draft selection and again after every accepted refinement; later win-package or efficiency stages cannot silently override them. The search compares every generated budget-compliant draft rather than stopping at the first cheap fit. Candidate quality is ordered by remaining structural deficits and then by the widest legal candidate search cap; raw spend is never treated as power by itself. Bracket-5 whole-budget construction first uses the selected draft’s conservative candidate cap for broad efficiency work. If exact audited headroom remains, a separate premium pass may widen only the per-card search ceiling by the actual unused whole-deck budget and tries at most two efficiency swaps, falling back to one. Premium candidates still need a material strategic/role improvement, preserved winning cores, non-worsened average nonland mana value, preserved protection floor, hard required/excluded-card compliance, and another exact whole-deck budget audit. Creature-type optimization can be explicitly disabled when the requested construction objective has no tribal component. The search remains heuristic rather than proof of the globally strongest possible list."
     }
   }

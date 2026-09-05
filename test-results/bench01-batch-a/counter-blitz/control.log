@@ -1,8 +1,8 @@
 BENCH-01 COUNTER BLITZ — EXECUTION COMPLETE
-REFINEMENT STATUS: unsupported-theme; SWAPS: 0
+REFINEMENT STATUS: refined; SWAPS: 14
 BRACKET: 3 -> 3
-COUNTERMAGIC: 1 -> 1 (target 8)
-COUNTER ENGINE: 52 -> 52 (target 16)
-PROLIFERATE: 4 -> 4 (target 3)
-COMBAT REFERENCES: 12 -> 12 (target 8)
-TARGET MOVEMENT: {"bracket":{"before":false,"after":false},"denseCountermagic":{"before":false,"after":false},"counterEngine":{"before":true,"after":true},"proliferate":{"before":true,"after":true},"combatReference":{"before":true,"after":true},"hybridCreatureFloor":{"before":true,"after":true}}
+COUNTERMAGIC: 1 -> 2 (target 8)
+COUNTER ENGINE: 52 -> 47 (target 16)
+PROLIFERATE: 4 -> 2 (target 3)
+COMBAT REFERENCES: 12 -> 10 (target 8)
+TARGET MOVEMENT: {"bracket":{"before":false,"after":false},"denseCountermagic":{"before":false,"after":false},"counterEngine":{"before":true,"after":true},"proliferate":{"before":true,"after":false},"combatReference":{"before":true,"after":true},"hybridCreatureFloor":{"before":true,"after":true}}
