@@ -74,8 +74,8 @@
         "set": "FCA",
         "collectorNumber": "34",
         "finish": "nonfoil",
-        "priceNzd": 27.14,
-        "priceUsdReference": 15.95
+        "priceNzd": 26.63,
+        "priceUsdReference": 15.65
       },
       "structuralPairing": {
         "addressedRole": "tutor",
@@ -119,8 +119,8 @@
         "set": "FCA",
         "collectorNumber": "3",
         "finish": "nonfoil",
-        "priceNzd": 13.66,
-        "priceUsdReference": 8.03
+        "priceNzd": 15.58,
+        "priceUsdReference": 9.16
       },
       "structuralPairing": {
         "addressedRole": "average-nonland-mv",
