@@ -1,0 +1,181 @@
+name: BENCH-01 identity-aware replacement repair
+
+on:
+  push:
+    branches:
+      - agent/v15-native-deck-intelligence
+    paths:
+      - .github/workflows/bench01-identity-replacement-repair.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/v15-native-deck-intelligence
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Apply generic controlled-theme IN-vs-OUT preference
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('src/services/deck-builder-v07.ts')
+          text = path.read_text()
+
+          helper_anchor = """function upgradeSwapSubstantiveStrategyLossScoreV15(\n  add: Record<string, unknown>,\n  cut: Record<string, unknown>,\n): number {\n  const addAffinity = strategyAffinityEvidenceV15(add);\n  const cutAffinity = strategyAffinityEvidenceV15(cut);\n  let loss = 0;\n  for (const [strategy, cutScore] of cutAffinity.scoreByStrategy) {\n    if ((cutAffinity.commanderScoreByStrategy.get(strategy) ?? 0) < SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15) continue;\n    loss += Math.max(0, cutScore - (addAffinity.scoreByStrategy.get(strategy) ?? 0));\n  }\n  return loss;\n}\n"""
+          helper_replacement = helper_anchor + """\nfunction controlledThemeMatchV15(item: Record<string, unknown>): boolean {\n  return recordObject(item.explicitTheme).matchesControlledTheme === true;\n}\n\n/**\n * Preserve explicit requested identity above its hard minimum opportunistically. This is a\n * ranking preference, not a rejection gate: if every structurally legal cut is on-theme, the\n * optimizer may still make the necessary cut. Theme-to-theme replacements are never penalized.\n */\nfunction upgradeSwapControlledThemeLossScoreV15(\n  add: Record<string, unknown>,\n  cut: Record<string, unknown>,\n): number {\n  return controlledThemeMatchV15(cut) && !controlledThemeMatchV15(add) ? 1 : 0;\n}\n"""
+          if 'upgradeSwapControlledThemeLossScoreV15' not in text:
+              if helper_anchor not in text:
+                  raise SystemExit('helper anchor not found; refusing to patch')
+              text = text.replace(helper_anchor, helper_replacement, 1)
+
+          sort_anchor = """      const leftStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, left);\n      const rightStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, right);\n      if (leftStrategyLoss !== rightStrategyLoss) return leftStrategyLoss - rightStrategyLoss;\n"""
+          sort_replacement = sort_anchor + """      const leftControlledThemeLoss = upgradeSwapControlledThemeLossScoreV15(selection.candidate, left);\n      const rightControlledThemeLoss = upgradeSwapControlledThemeLossScoreV15(selection.candidate, right);\n      if (leftControlledThemeLoss !== rightControlledThemeLoss) {\n        return leftControlledThemeLoss - rightControlledThemeLoss;\n      }\n"""
+          if 'leftControlledThemeLoss' not in text:
+              if sort_anchor not in text:
+                  raise SystemExit('sort anchor not found; refusing to patch')
+              text = text.replace(sort_anchor, sort_replacement, 1)
+
+          path.write_text(text)
+
+      - name: Add generic replacement-priority regressions
+        shell: bash
+        run: |
+          cat > src/services/controlled-theme-replacement-priority-v15.test.ts <<'EOF'
+          import assert from 'node:assert/strict';
+          import test from 'node:test';
+          import { pairUpgradeSwapsByStructureV15 } from './deck-builder-v07.js';
+
+          function baselineMetrics() {
+            return {
+              rampCount: 8,
+              drawCount: 8,
+              interactionCount: 8,
+              protectionCount: 2,
+              tutorCount: 1,
+              recursionCount: 2,
+              boardWipeCount: 2,
+              earlyPlayCount: 10,
+              cheapInteractionCount: 6,
+              fastManaCount: 2,
+              averageNonlandManaValue: 3,
+              nonlandCount: 60,
+              commanderColorCount: 2,
+              persistentColoredManaSourceCount: 4,
+              roleCounts: {},
+            };
+          }
+
+          function targets() {
+            return {
+              ramp: 8,
+              draw: 8,
+              interaction: 8,
+              freeInteraction: 0,
+              protection: 3,
+              tutors: 1,
+              recursion: 2,
+              boardWipes: 2,
+              earlyPlays: 10,
+            };
+          }
+
+          function add(matchesControlledTheme: boolean) {
+            return {
+              role: 'protection' as const,
+              candidate: {
+                card: {
+                  name: 'Unnamed Protective Upgrade',
+                  roles: ['protection'],
+                  manaValue: 2,
+                  typeLine: 'Instant',
+                },
+                explicitTheme: { matchesControlledTheme },
+              },
+            };
+          }
+
+          function cut(name: string, pressure: number, matchesControlledTheme: boolean) {
+            return {
+              card: { name, roles: [], manaValue: 4, typeLine: 'Creature — Test' },
+              heuristicCutPressure: pressure,
+              explicitTheme: { matchesControlledTheme },
+            };
+          }
+
+          test('pairing preserves explicit requested identity when an equally legal off-theme cut exists', () => {
+            const pairings = pairUpgradeSwapsByStructureV15(
+              [add(false)],
+              [
+                cut('Unnamed On-Theme Engine', 10, true),
+                cut('Unnamed Off-Theme Filler', 8, false),
+              ],
+              baselineMetrics(),
+              targets(),
+              3,
+            );
+
+            assert.equal(pairings.length, 1);
+            assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Unnamed Off-Theme Filler');
+          });
+
+          test('theme-to-theme replacement is not penalized by the relative identity preference', () => {
+            const pairings = pairUpgradeSwapsByStructureV15(
+              [add(true)],
+              [
+                cut('Unnamed On-Theme Engine', 10, true),
+                cut('Unnamed Off-Theme Filler', 8, false),
+              ],
+              baselineMetrics(),
+              targets(),
+              3,
+            );
+
+            assert.equal(pairings.length, 1);
+            assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Unnamed On-Theme Engine');
+          });
+
+          test('explicit-theme cards remain cuttable when no safer structurally legal cut exists', () => {
+            const pairings = pairUpgradeSwapsByStructureV15(
+              [add(false)],
+              [cut('Unnamed Required On-Theme Cut', 10, true)],
+              baselineMetrics(),
+              targets(),
+              3,
+            );
+
+            assert.equal(pairings.length, 1);
+            assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Unnamed Required On-Theme Cut');
+          });
+          EOF
+
+      - name: Focused identity-aware replacement regression
+        run: npx tsx --test src/services/controlled-theme-replacement-priority-v15.test.ts
+
+      - name: Full repository validation
+        run: npm run check
+
+      - name: Commit validated product repair
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/services/deck-builder-v07.ts src/services/controlled-theme-replacement-priority-v15.test.ts
+          if git diff --cached --quiet; then
+            echo "No product changes to commit."
+            exit 0
+          fi
+          git commit -m "fix(INTEL-02): prefer identity-preserving replacement cuts"
+          git push origin HEAD:agent/v15-native-deck-intelligence
