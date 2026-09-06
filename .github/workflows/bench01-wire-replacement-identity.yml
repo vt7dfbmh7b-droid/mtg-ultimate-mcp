@@ -153,6 +153,9 @@ jobs:
       - name: Focused replacement-identity tests
         run: npx tsx --test src/services/replacement-identity-priority-v15.test.ts src/services/replacement-identity-pairing-v15.test.ts
 
+      - name: Regenerate derived project-state surfaces
+        run: npm run project:handoff
+
       - name: Full repository validation
         run: npm run check
 
@@ -165,6 +168,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/services/replacement-identity-priority-v15.ts src/services/deck-builder-v07.ts src/services/replacement-identity-pairing-v15.test.ts
+          git add src/services/replacement-identity-priority-v15.ts src/services/deck-builder-v07.ts src/services/replacement-identity-pairing-v15.test.ts docs/PROJECT-STATE.md PROJECT_HANDOFF.md
           git commit -m "fix(INTEL-02): rank cuts by relative requested identity"
           git push origin HEAD:agent/v15-native-deck-intelligence
