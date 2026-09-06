@@ -900,6 +900,34 @@ async function evaluateCandidate(
   return { ...base, eligible: true, reason: 'eligible', nextDecklist, resolved };
 }
 
+export interface CandidateDiversificationBudgetV15 {
+  minimumAttempts: number;
+  hardLimit: number;
+  adaptive: boolean;
+}
+
+export function candidateDiversificationBudgetV15(configuredAttempts?: number): CandidateDiversificationBudgetV15 {
+  const explicitlyConfigured = configuredAttempts !== undefined && Number.isFinite(configuredAttempts);
+  const minimumAttempts = Math.max(1, Math.min(6, Math.trunc(configuredAttempts ?? 3)));
+  return {
+    minimumAttempts,
+    hardLimit: explicitlyConfigured ? minimumAttempts : 6,
+    adaptive: !explicitlyConfigured && minimumAttempts < 6,
+  };
+}
+
+export function shouldContinueCandidateDiversificationV15(input: {
+  attemptsCompleted: number;
+  budget: CandidateDiversificationBudgetV15;
+  candidateProducedPlan: boolean;
+  searchStateChanged: boolean;
+}): boolean {
+  if (input.attemptsCompleted >= input.budget.hardLimit) return false;
+  if (input.attemptsCompleted < input.budget.minimumAttempts) return true;
+  if (!input.budget.adaptive) return false;
+  return input.candidateProducedPlan && input.searchStateChanged;
+}
+
 export async function refineCommanderDeckIterativelyV12(
   decklist: string,
   options: IterativeRefinementOptionsV12 = {},
@@ -907,7 +935,8 @@ export async function refineCommanderDeckIterativelyV12(
   const maxRounds = Math.max(1, Math.min(5, Math.trunc(options.maxRounds ?? 3)));
   const maxTotalSwaps = Math.max(1, Math.min(30, Math.trunc(options.maxSwaps ?? 12)));
   const swapsPerRound = Math.max(1, Math.min(8, Math.trunc(options.swapsPerRound ?? 4)));
-  const candidatePackagesPerRound = Math.max(1, Math.min(6, Math.trunc(options.candidatePackagesPerRound ?? 3)));
+  const candidateDiversification = candidateDiversificationBudgetV15(options.candidatePackagesPerRound);
+  const candidatePackagesPerRound = candidateDiversification.minimumAttempts;
   const minScore = Number.isFinite(options.minimumImprovementScore)
     ? Math.max(-10, Math.min(100, options.minimumImprovementScore ?? 0.1))
     : 0.1;
@@ -986,7 +1015,9 @@ export async function refineCommanderDeckIterativelyV12(
       const diversityBlocked = new Set<string>();
       const strategyCutBlocked = new Set<string>();
       const candidates: CandidateEvaluationV12[] = [];
-      for (let candidate = 1; candidate <= candidatePackagesPerRound; candidate += 1) {
+      for (let candidate = 1; candidate <= candidateDiversification.hardLimit; candidate += 1) {
+        const diversityBlockedBefore = diversityBlocked.size;
+        const strategyCutBlockedBefore = strategyCutBlocked.size;
         const evaluated = await evaluateCandidate(
           candidate,
           currentParsed,
@@ -1007,6 +1038,14 @@ export async function refineCommanderDeckIterativelyV12(
         if (evaluated.plan) diversifyNextPackage(diversityBlocked, evaluated.plan);
         diversifyRejectedStrategyCuts(strategyCutBlocked, evaluated);
         diversifyRejectedPackageAcceptanceCuts(strategyCutBlocked, evaluated);
+        const searchStateChanged = diversityBlocked.size > diversityBlockedBefore
+          || strategyCutBlocked.size > strategyCutBlockedBefore;
+        if (!shouldContinueCandidateDiversificationV15({
+          attemptsCompleted: candidate,
+          budget: candidateDiversification,
+          candidateProducedPlan: evaluated.plan !== null,
+          searchStateChanged,
+        })) break;
       }
       winner = chooseWinner(candidates);
       evaluatedAtWinningSize = candidates;
@@ -1114,6 +1153,7 @@ export async function refineCommanderDeckIterativelyV12(
     roundsAccepted: rounds.filter((round) => round.accepted).length,
     totalSwaps: acceptedSwaps.length,
     candidatePackagesPerRound,
+    candidateDiversification,
     packageAcceptanceContract: effectiveOptions.packageAcceptanceContract ?? null,
     estimatedUpgradeSpendUsd: totalSpend,
     maxTotalUsd: maxTotalUsd ?? null,
@@ -1138,8 +1178,8 @@ export async function refineCommanderDeckIterativelyV12(
       verificationUnavailableRounds: rounds.filter((round) => round.winRouteProtection.status === 'verification-unavailable').map((round) => round.round),
     },
     explanation: acceptedSwaps.length > 0
-      ? `Each round compared up to ${candidatePackagesPerRound} materially different upgrade packages using the same simulation seed, protected the existing V0.15 verified primary/backup win-route pieces when verification was available, independently enforced the resolved V0.15 theme at deck level when requested, then accepted the strongest package that stayed legal and passed printing, budget, regression, and minimum-improvement checks.`
-      : `The engine compared up to ${candidatePackagesPerRound} competing packages per round while protecting existing V0.15 verified primary/backup win-route pieces and independently enforcing the resolved V0.15 theme when requested, but none cleared every legality, theme, budget, printing and improvement check, so it kept the starting list.`,
+      ? `Each round compared at least ${candidateDiversification.minimumAttempts} and at most ${candidateDiversification.hardLimit} materially different upgrade packages while new candidate search states were still being produced, using the same simulation seed, protecting the existing V0.15 verified primary/backup win-route pieces when verification was available, independently enforcing the resolved V0.15 theme at deck level when requested, then accepting the strongest package that stayed legal and passed printing, budget, regression, and minimum-improvement checks.`
+      : `The engine compared at least ${candidateDiversification.minimumAttempts} and at most ${candidateDiversification.hardLimit} competing packages per round while candidate search states remained novel, protecting existing V0.15 verified primary/backup win-route pieces and independently enforcing the resolved V0.15 theme when requested, but none cleared every legality, theme, budget, printing and improvement check, so it kept the starting list.`,
   };
 
   if (detailLevel === 'simple') return simple;
@@ -1169,6 +1209,7 @@ export async function refineCommanderDeckIterativelyV12(
       swapsPerRound,
       maxRounds,
       candidatePackagesPerRound,
+      candidateDiversification,
       minimumImprovementScore: minScore,
       printingFamily: effectiveOptions.printingFamily ?? null,
       allowedSets: effectiveOptions.allowedSets ?? [],
@@ -1183,7 +1224,7 @@ export async function refineCommanderDeckIterativelyV12(
     ...standard,
     detailedRounds: rounds,
     scoringGuidance: 'Competing packages are compared with the same per-round seed. The improvement score is still a within-deck heuristic, not a universal power score or measured multiplayer win rate.',
-    diversityGuidance: 'Later candidates temporarily exclude part of earlier candidates’ incoming package so the optimizer explores alternatives rather than resimulating the same swap set repeatedly.',
+    diversityGuidance: 'Default refinement explores the historical minimum candidate breadth, then continues only while each additional candidate produces a new blocked search state, with the existing six-candidate ceiling as a hard work bound. Explicit candidatePackagesPerRound remains an exact caller-controlled breadth for controlled benchmarks.',
     winRouteGuidance: 'Route protection is derived from the existing V0.15 final full-table win-route portfolio. Verification unavailable is surfaced explicitly and never treated as evidence that the deck has no route.',
     themeGuidance: 'User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck, compound themes additionally preserve every independently controlled component before aggregate density is considered, while physical printing-family themes are delegated to the exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches.',
   };
