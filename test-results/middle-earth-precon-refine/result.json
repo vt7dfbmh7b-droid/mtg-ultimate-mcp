@@ -257,8 +257,8 @@
     },
     "estimatedUpgradeSpendNzd": 13.66,
     "estimatedUpgradeSpendUsdReference": 8.03,
-    "maxTotalNzd": 199.99,
-    "maxTotalUsdReference": 117.58,
+    "maxTotalNzd": 200,
+    "maxTotalUsdReference": 117.59,
     "swaps": [
       {
         "out": "Landroval, Horizon Witness",
@@ -819,8 +819,8 @@
       "targetBracket": 4,
       "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.58,
-      "maxTotalNzd": 199.99,
-      "maxTotalUsdReference": 117.58,
+      "maxTotalNzd": 200,
+      "maxTotalUsdReference": 117.59,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -2062,7 +2062,7 @@
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 21,
-                  "candidateCount": 3
+                  "candidateCount": 2
                 },
                 {
                   "role": "ramp",
@@ -2646,7 +2646,7 @@
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 21,
-                  "candidateCount": 3
+                  "candidateCount": 1
                 },
                 {
                   "role": "ramp",
@@ -4419,7 +4419,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 21,
-                      "candidateCount": 3
+                      "candidateCount": 2
                     },
                     {
                       "role": "ramp",
@@ -5003,7 +5003,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 21,
-                      "candidateCount": 3
+                      "candidateCount": 1
                     },
                     {
                       "role": "ramp",
@@ -6431,7 +6431,7 @@
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 17,
-                  "candidateCount": 5
+                  "candidateCount": 3
                 },
                 {
                   "role": "interaction",
@@ -7027,7 +7027,7 @@
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 17,
-                  "candidateCount": 5
+                  "candidateCount": 2
                 },
                 {
                   "role": "interaction",
@@ -7507,7 +7507,7 @@
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 17,
-                  "candidateCount": 5
+                  "candidateCount": 2
                 },
                 {
                   "role": "interaction",
@@ -8032,7 +8032,7 @@
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 17,
-                  "candidateCount": 5
+                  "candidateCount": 2
                 },
                 {
                   "role": "interaction",
@@ -8627,7 +8627,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     },
                     {
                       "role": "interaction",
@@ -9223,7 +9223,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 2
                     },
                     {
                       "role": "interaction",
@@ -9703,7 +9703,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 2
                     },
                     {
                       "role": "interaction",
@@ -10228,7 +10228,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 2
                     },
                     {
                       "role": "interaction",
@@ -10587,7 +10587,7 @@
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 17,
-                  "candidateCount": 5
+                  "candidateCount": 3
                 }
               ]
             },
@@ -10714,7 +10714,7 @@
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 17,
-                  "candidateCount": 5
+                  "candidateCount": 3
                 }
               ]
             },
@@ -10841,7 +10841,7 @@
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 17,
-                  "candidateCount": 5
+                  "candidateCount": 3
                 }
               ]
             },
@@ -10968,7 +10968,7 @@
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 17,
-                  "candidateCount": 5
+                  "candidateCount": 3
                 }
               ]
             },
@@ -11106,7 +11106,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -11233,7 +11233,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -11360,7 +11360,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -11487,7 +11487,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -11625,7 +11625,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -11752,7 +11752,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -11879,7 +11879,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -12006,7 +12006,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -12144,7 +12144,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -12271,7 +12271,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -12398,7 +12398,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -12525,7 +12525,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -12663,7 +12663,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -12790,7 +12790,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -12917,7 +12917,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -13044,7 +13044,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
