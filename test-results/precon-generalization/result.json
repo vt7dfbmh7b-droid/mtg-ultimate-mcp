@@ -2471,8 +2471,8 @@
             "reason": "candidate-deck-strategy-retention-evidence-incomplete",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 8.5,
-            "estimatedSpendUsdReference": 5,
+            "estimatedSpendNzd": 8.52,
+            "estimatedSpendUsdReference": 5.01,
             "unknownPriceCount": 0,
             "improvementScore": 15.542,
             "significantRegression": false,
@@ -2890,8 +2890,8 @@
                   "set": "PLST",
                   "collectorNumber": "MH2-76",
                   "finish": "nonfoil",
-                  "priceNzd": 0.31,
-                  "priceUsdReference": 0.18
+                  "priceNzd": 0.32,
+                  "priceUsdReference": 0.19
                 },
                 "structuralPairing": {
                   "addressedRole": "interaction",
@@ -4680,8 +4680,8 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 8.5,
-                "estimatedSpendUsdReference": 5,
+                "estimatedSpendNzd": 8.52,
+                "estimatedSpendUsdReference": 5.01,
                 "unknownPriceCount": 0,
                 "improvementScore": 15.542,
                 "significantRegression": false,
@@ -5099,8 +5099,8 @@
                       "set": "PLST",
                       "collectorNumber": "MH2-76",
                       "finish": "nonfoil",
-                      "priceNzd": 0.31,
-                      "priceUsdReference": 0.18
+                      "priceNzd": 0.32,
+                      "priceUsdReference": 0.19
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -6533,8 +6533,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 17.6,
-                "estimatedSpendUsdReference": 10.35,
+                "estimatedSpendNzd": 17.57,
+                "estimatedSpendUsdReference": 10.33,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.765,
                 "significantRegression": false,
@@ -7047,8 +7047,8 @@
                       "set": "MOM",
                       "collectorNumber": "265",
                       "finish": "nonfoil",
-                      "priceNzd": 8.13,
-                      "priceUsdReference": 4.78
+                      "priceNzd": 8.1,
+                      "priceUsdReference": 4.76
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -7097,8 +7097,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 16.77,
-                "estimatedSpendUsdReference": 9.86,
+                "estimatedSpendNzd": 16.74,
+                "estimatedSpendUsdReference": 9.84,
                 "unknownPriceCount": 0,
                 "improvementScore": 16.847,
                 "significantRegression": false,
@@ -7581,8 +7581,8 @@
                       "set": "MOM",
                       "collectorNumber": "265",
                       "finish": "nonfoil",
-                      "priceNzd": 8.13,
-                      "priceUsdReference": 4.78
+                      "priceNzd": 8.1,
+                      "priceUsdReference": 4.76
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -7631,8 +7631,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 18.59,
-                "estimatedSpendUsdReference": 10.93,
+                "estimatedSpendNzd": 18.57,
+                "estimatedSpendUsdReference": 10.92,
                 "unknownPriceCount": 0,
                 "improvementScore": 24.337,
                 "significantRegression": false,
@@ -8006,8 +8006,8 @@
                       "set": "PLST",
                       "collectorNumber": "MH2-76",
                       "finish": "nonfoil",
-                      "priceNzd": 0.31,
-                      "priceUsdReference": 0.18
+                      "priceNzd": 0.32,
+                      "priceUsdReference": 0.19
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -8111,8 +8111,8 @@
                       "set": "MOM",
                       "collectorNumber": "265",
                       "finish": "nonfoil",
-                      "priceNzd": 8.13,
-                      "priceUsdReference": 4.78
+                      "priceNzd": 8.1,
+                      "priceUsdReference": 4.76
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -8161,8 +8161,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 20.44,
-                "estimatedSpendUsdReference": 12.02,
+                "estimatedSpendNzd": 20.41,
+                "estimatedSpendUsdReference": 12,
                 "unknownPriceCount": 0,
                 "improvementScore": 10.426,
                 "significantRegression": false,
@@ -8639,8 +8639,8 @@
                       "set": "MOM",
                       "collectorNumber": "265",
                       "finish": "nonfoil",
-                      "priceNzd": 8.13,
-                      "priceUsdReference": 4.78
+                      "priceNzd": 8.1,
+                      "priceUsdReference": 4.76
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -9679,8 +9679,8 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 10.46,
-                "estimatedSpendUsdReference": 6.15,
+                "estimatedSpendNzd": 10.48,
+                "estimatedSpendUsdReference": 6.16,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.782,
                 "significantRegression": false,
@@ -10060,8 +10060,8 @@
                       "set": "PLST",
                       "collectorNumber": "MH2-76",
                       "finish": "nonfoil",
-                      "priceNzd": 0.31,
-                      "priceUsdReference": 0.18
+                      "priceNzd": 0.32,
+                      "priceUsdReference": 0.19
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -13540,7 +13540,7 @@
     "scoringGuidance": "Competing packages are compared with the same per-round seed. The improvement score is still a within-deck heuristic, not a universal power score or measured multiplayer win rate.",
     "diversityGuidance": "Default refinement explores the historical minimum candidate breadth, then continues only while each additional candidate produces a new blocked search state, with the existing six-candidate ceiling as a hard work bound. Explicit candidatePackagesPerRound remains an exact caller-controlled breadth for controlled benchmarks.",
     "winRouteGuidance": "Route protection is derived from the existing V0.15 final full-table win-route portfolio. Verification unavailable is surfaced explicitly and never treated as evidence that the deck has no route.",
-    "themeGuidance": "User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck, compound themes additionally preserve every independently controlled component before aggregate density is considered, while physical printing-family themes are delegated to the exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches."
+    "themeGuidance": "User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck; compound themes additionally pass their already-resolved component query/density evidence into bounded incoming-candidate affinity while preserving every component independently after construction. Physical printing-family themes remain delegated to exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches."
   },
   "after": {
     "truth": {
