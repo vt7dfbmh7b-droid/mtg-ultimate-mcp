@@ -23,7 +23,7 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Apply generic adaptive diversification repair
-        shell: python
+        shell: python {0}
         run: |
           from pathlib import Path
 
