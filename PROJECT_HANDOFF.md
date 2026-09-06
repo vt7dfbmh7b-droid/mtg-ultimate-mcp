@@ -17,11 +17,11 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
 - Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
-- Active branch validation: **bench01-replacement-identity-priority-staged-unwired-unvalidated**
+- Active branch validation: **bench01-theme-candidate-priority-repair-validation-pending**
 
 ## Audit reuse rule
 
-BENCH-01 remains active. Keep e17b0a1c... as the latest accepted product baseline. The source diagnosis for identity erosion is complete: deck-builder-v07 lacks relative requested-theme IN-vs-OUT ranking after hard gates. Commits db471dc7/9e809785 stage a generic advisory comparator and contrasting regression contract, but runtime wiring and validation remain unfinished. Next: wire the comparator into legal cut ordering, add integration coverage, fully validate, freeze the green SHA, then replay Animated Army / Elven Empire / Explorers plus Quick Draw / Virtue and Valor controls. Stable remains V0.13 and PR #29 remains unmerged.
+BENCH-01 remains active. Keep e17b0a1c... as the latest accepted Commander baseline. Frozen runtime f65f4b7... and replay evidence 0322790... are formally green but manually rejected: repeated off-plan incoming additions remain across Quick Draw, Virtue and Valor, Explorers and Elven Empire. The centralized defect is incoming requested-theme candidate ordering after the aggregate floor. Next: fully validate the smallest advisory candidate priority repair, freeze the exact green SHA, replay the same five fixtures unchanged, and accept only if complete manual deck quality materially improves. Stable remains V0.13 and PR #29 remains unmerged.
 
 ## Stable safety boundary
 
@@ -39,11 +39,10 @@ The last persisted Marvel control is `5829b37b686255ba35d419b37be17095e54fb696` 
 
 ## Next actions
 
-1. Wire replacement-identity-priority-v15 into deck-builder-v07 candidate-cut ordering only after existing hard semantic/structural/authoritative/package/curve gates; derive controlled-theme match from existing explicitTheme metadata and substantive strategy affinity from existing V0.15 strategyAffinity matches.
-2. Add an integration regression proving an on-identity legal cut outranks an identity-eroding legal cut while a structurally necessary identity cut remains possible when no equal legal alternative exists.
-3. Run focused replacement-priority regressions, then full repository tests/type-check/build/project-state integrity; freeze the exact green repair SHA.
-4. Replay Animated Army, Elven Empire and Explorers of the Deep plus Quick Draw and Virtue and Valor controls from that unchanged SHA; manually inspect complete decks and compare against the rejected 247fb37/2e34 lineage before acceptance.
-5. Only after manual whole-deck quality improves across the repeated failure pattern should BENCH-01 broaden or PR #29 / V0.15 promotion readiness be reconsidered.
+1. Validate the generic advisory incoming-candidate requested-theme priority after the aggregate floor using focused replacement/strategy regressions and the complete repository check; do not accept or commit product source unless all required gates are green.
+2. If validation is green, freeze the exact product SHA and replay Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army from that unchanged source.
+3. Manually inspect all five complete decks against rejected frozen source f65f4b7b77ee832e2ac66b2a7403f9dda603b84c, requiring materially better replacement identity without Animated Army regression before accepting the lineage.
+4. After acceptance or rejection, persist the batch verdict and broaden BENCH-01 only when the repeated replacement-quality pattern is resolved; keep PR #29 and stable/current V0.13 unchanged until promotion-grade evidence exists.
 
 ## Permanent recovery references
 
