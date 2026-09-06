@@ -249,6 +249,11 @@
     "roundsAccepted": 1,
     "totalSwaps": 2,
     "candidatePackagesPerRound": 4,
+    "candidateDiversification": {
+      "minimumAttempts": 4,
+      "hardLimit": 4,
+      "adaptive": false
+    },
     "packageAcceptanceContract": null,
     "estimatedUpgradeSpendNzd": 3.52,
     "estimatedUpgradeSpendUsdReference": 2.07,
@@ -419,7 +424,7 @@
       "protectedCardNamesObservedAcrossRounds": [],
       "verificationUnavailableRounds": []
     },
-    "explanation": "Each round compared up to 4 materially different upgrade packages using the same simulation seed, protected the existing V0.15 verified primary/backup win-route pieces when verification was available, independently enforced the resolved V0.15 theme at deck level when requested, then accepted the strongest package that stayed legal and passed printing, budget, regression, and minimum-improvement checks.",
+    "explanation": "Each round compared at least 4 and at most 4 materially different upgrade packages while new candidate search states were still being produced, using the same simulation seed, protecting the existing V0.15 verified primary/backup win-route pieces when verification was available, independently enforcing the resolved V0.15 theme at deck level when requested, then accepting the strongest package that stayed legal and passed printing, budget, regression, and minimum-improvement checks.",
     "rounds": [
       {
         "round": 1,
@@ -480,6 +485,11 @@
       "swapsPerRound": 4,
       "maxRounds": 4,
       "candidatePackagesPerRound": 4,
+      "candidateDiversification": {
+        "minimumAttempts": 4,
+        "hardLimit": 4,
+        "adaptive": false
+      },
       "minimumImprovementScore": 0.1,
       "printingFamily": null,
       "allowedSets": [],
@@ -1004,8 +1014,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 2,
-            "estimatedSpendNzd": 1.33,
-            "estimatedSpendUsdReference": 0.78,
+            "estimatedSpendNzd": 1.31,
+            "estimatedSpendUsdReference": 0.77,
             "unknownPriceCount": 0,
             "improvementScore": 3.662,
             "significantRegression": false,
@@ -1287,8 +1297,8 @@
                   "set": "EOC",
                   "collectorNumber": "139",
                   "finish": "nonfoil",
-                  "priceNzd": 0.44,
-                  "priceUsdReference": 0.26
+                  "priceNzd": 0.43,
+                  "priceUsdReference": 0.25
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2550,8 +2560,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 1.33,
-                "estimatedSpendUsdReference": 0.78,
+                "estimatedSpendNzd": 1.31,
+                "estimatedSpendUsdReference": 0.77,
                 "unknownPriceCount": 0,
                 "improvementScore": 3.662,
                 "significantRegression": false,
@@ -2833,8 +2843,8 @@
                       "set": "EOC",
                       "collectorNumber": "139",
                       "finish": "nonfoil",
-                      "priceNzd": 0.44,
-                      "priceUsdReference": 0.26
+                      "priceNzd": 0.43,
+                      "priceUsdReference": 0.25
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -7394,7 +7404,7 @@
       }
     ],
     "scoringGuidance": "Competing packages are compared with the same per-round seed. The improvement score is still a within-deck heuristic, not a universal power score or measured multiplayer win rate.",
-    "diversityGuidance": "Later candidates temporarily exclude part of earlier candidates’ incoming package so the optimizer explores alternatives rather than resimulating the same swap set repeatedly.",
+    "diversityGuidance": "Default refinement explores the historical minimum candidate breadth, then continues only while each additional candidate produces a new blocked search state, with the existing six-candidate ceiling as a hard work bound. Explicit candidatePackagesPerRound remains an exact caller-controlled breadth for controlled benchmarks.",
     "winRouteGuidance": "Route protection is derived from the existing V0.15 final full-table win-route portfolio. Verification unavailable is surfaced explicitly and never treated as evidence that the deck has no route.",
     "themeGuidance": "User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck, compound themes additionally preserve every independently controlled component before aggregate density is considered, while physical printing-family themes are delegated to the exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches."
   },
