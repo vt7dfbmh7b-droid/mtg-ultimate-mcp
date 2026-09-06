@@ -16,12 +16,12 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Active milestone: **BENCH-01 — Adversarial Commander benchmark suite**
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
-- Development checkpoint at pause: `90eae44f0fca63f51d82f2e05c1e656492a9b768`
-- Active branch validation: **bench01-component-aware-theme-affinity-repair-needed**
+- Development checkpoint: `37ae1efef351f6b502aa0156b9cdd704c294406c`
+- Active branch validation: **bench01-role-compatible-strategic-affinity-repair-needed**
 
 ## Audit reuse rule
 
-BENCH-01 remains active. Keep e17b0a1c... as the latest accepted Commander baseline. The advisory any-theme-component repair at frozen 2c5bbceb... passed immutable full validation but failed mandatory five-precon manual whole-deck review; evidence is persisted at 36f6734e... with manual verdict manual-verdict-2c5bbceb.md. The remaining centralized defect is compound-theme component priority: broad support components can outrank defining typal/enchantment/spellslinger identity. Next: implement only a generic component-aware advisory candidate affinity, validate fully, freeze the exact green SHA, replay the same comparison fixtures, then broaden BENCH-01 only after this pattern is resolved. Stable remains V0.13 and PR #29 remains unmerged.
+BENCH-01 remains active. Keep `e17b0a1c...` as the latest accepted Commander baseline. Component-aware affinity source `27a2fab...` passed focused/full formal validation and an unchanged five-precon replay, but mandatory whole-deck review rejected the lineage; verdict is `test-results/bench01-strategy-anchor-replay/manual-verdict-27a2fab.md`. The remaining centralized defect is role-only structural drift: cards can satisfy draw/protection/tutor/interaction labels while weakly serving the requested commander strategy. Next: implement only a generic role-compatible strategic/requested-identity preference with structural fallback, validate fully, freeze the exact green SHA, replay contrasting fixtures, then broaden BENCH-01. Stable remains V0.13 and PR #29 remains unmerged.
 
 ## Stable safety boundary
 
@@ -31,7 +31,7 @@ Stable remains **V0.13 / 0.13.0** on `main`. Standing user authorization permits
 
 `e17b0a1cba659b229fd6f0b6e2df79c5e464a616` on `agent/v15-native-deck-intelligence`.
 
-Latest accepted fully validated Commander product baseline. Generic neutral-theme taxonomy bridge for shared card-draw and lifegain semantics. Later adaptive-diversification and strategy-anchor descendants contain useful engineering fixes/evidence but have not passed required manual whole-deck Commander-quality acceptance as a product lineage.
+Latest accepted fully validated Commander product baseline. Generic neutral-theme taxonomy bridge for shared card-draw and lifegain semantics. Later adaptive-diversification, strategy-anchor and component-affinity descendants contain useful engineering fixes/evidence but have not passed required manual whole-deck Commander-quality acceptance as a product lineage.
 
 ## Important pending validation
 
@@ -39,10 +39,10 @@ The last persisted Marvel control is `5829b37b686255ba35d419b37be17095e54fb696` 
 
 ## Next actions
 
-1. Design the smallest generic component-aware advisory theme-affinity signal so role-compatible incoming candidates are ranked by support for defining and/or currently underrepresented requested compound-theme components instead of binary any-component membership.
-2. Add focused generic regressions spanning spellslinger, enchantment-combat, Merfolk typal, Elf typal and artifact/enchantment compound requests; do not encode fixture names or card-specific exceptions.
-3. Run the complete immutable repository validation. Only if green, freeze the exact repair SHA and replay Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army from unchanged source, then manually compare complete decks against f65f4b7... and 2c5bbceb....
-4. Accept the lineage only if replacement identity materially improves across the repeated problem fixtures without Animated Army regression; otherwise persist the new generic failure pattern. After resolution, broaden BENCH-01 to fresh combo, hybrid, control, aristocrats, budget and unusual-commander fixtures with strong general-AI comparison.
+1. Implement the smallest generic role-compatible strategic/requested-identity preference so candidates satisfying the same structural deficit are ordered by commander/request affinity before identity-poor generic role cards, while preserving structural fallback when no compatible candidate exists.
+2. Add focused generic regressions spanning spellslinger, enchantment-combat, Merfolk typal, Elf typal and high-MV artifact/enchantment commander incentives; do not encode fixture names, commander names or card-specific exceptions.
+3. Run the complete immutable repository validation. Only if green, freeze the exact repair SHA and replay several contrasting fixtures from unchanged source, including representative prior failures for pre/post comparison.
+4. Accept the lineage only if whole-deck replacement coherence materially improves without structural target regressions. After resolving this repeated defect, broaden BENCH-01 to fresh combo, hybrid, control, aristocrats, budget and unusual-commander fixtures with strong general-AI comparison rather than repeatedly polishing the same five precons.
 
 ## Permanent recovery references
 
