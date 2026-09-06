@@ -16,30 +16,29 @@
   "newInfiniteCombos": [],
   "swaps": [
     {
-      "out": "Alphinaud Leveilleur",
+      "out": "Ardbert, Warrior of Darkness",
       "in": "Arcane Denial",
       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, spells-control. The recommended physical printing satisfies the active printing-family/set policy.",
       "recommendedPrinting": {
         "set": "RFIN",
         "collectorNumber": "J2",
         "finish": "nonfoil",
-        "priceNzd": 22.92,
-        "priceUsdReference": 13.47
+        "priceNzd": 22.89,
+        "priceUsdReference": 13.46
       },
       "structuralPairing": {
         "addressedRole": "average-nonland-mv",
         "remainingStructuralDeficitAfterSwap": 11,
         "authoritativeTargetGate": "average-nonland-mv",
-        "nonlandManaValueReduction": 2,
+        "nonlandManaValueReduction": 1,
         "persistentColoredManaSourcesAfterSwap": 6,
         "persistentColoredManaSourceFloor": 6,
         "strategyPreservation": {
-          "cutStrategyAffinityScore": 21,
+          "cutStrategyAffinityScore": 7,
           "addStrategyAffinityScore": 22,
           "cutStrategyProtectionApplied": 4,
           "cutMatchedStrategies": [
-            "spells-control",
-            "value-engine"
+            "spells-control"
           ],
           "addMatchedStrategies": [
             "spells-control",
@@ -47,9 +46,8 @@
           ],
           "locallyUnreplacedStrategies": [],
           "cutRoles": [
-            "card draw",
-            "creature",
-            "repeatable draw"
+            "+1/+1 counters",
+            "creature"
           ],
           "addRoles": [
             "card draw",
@@ -58,6 +56,7 @@
             "repeatable draw"
           ],
           "unreplacedRoles": [
+            "+1/+1 counters",
             "creature"
           ],
           "unreplacedStrategyComponentRoles": [],
@@ -74,7 +73,7 @@
         "set": "FCA",
         "collectorNumber": "34",
         "finish": "nonfoil",
-        "priceNzd": 26.63,
+        "priceNzd": 26.62,
         "priceUsdReference": 15.65
       },
       "structuralPairing": {
@@ -112,29 +111,30 @@
       }
     },
     {
-      "out": "Ardbert, Warrior of Darkness",
+      "out": "Alphinaud Leveilleur",
       "in": "Sram, Senior Edificer",
       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, spells-control. The recommended physical printing satisfies the active printing-family/set policy.",
       "recommendedPrinting": {
         "set": "FCA",
         "collectorNumber": "3",
         "finish": "nonfoil",
-        "priceNzd": 15.58,
-        "priceUsdReference": 9.16
+        "priceNzd": 14.05,
+        "priceUsdReference": 8.26
       },
       "structuralPairing": {
         "addressedRole": "average-nonland-mv",
         "remainingStructuralDeficitAfterSwap": 10,
         "authoritativeTargetGate": "average-nonland-mv",
-        "nonlandManaValueReduction": 1,
+        "nonlandManaValueReduction": 2,
         "persistentColoredManaSourcesAfterSwap": 6,
         "persistentColoredManaSourceFloor": 6,
         "strategyPreservation": {
-          "cutStrategyAffinityScore": 7,
+          "cutStrategyAffinityScore": 21,
           "addStrategyAffinityScore": 21,
           "cutStrategyProtectionApplied": 4,
           "cutMatchedStrategies": [
-            "spells-control"
+            "spells-control",
+            "value-engine"
           ],
           "addMatchedStrategies": [
             "spells-control",
@@ -142,8 +142,9 @@
           ],
           "locallyUnreplacedStrategies": [],
           "cutRoles": [
-            "+1/+1 counters",
-            "creature"
+            "card draw",
+            "creature",
+            "repeatable draw"
           ],
           "addRoles": [
             "card draw",
@@ -151,9 +152,7 @@
             "equipment",
             "repeatable draw"
           ],
-          "unreplacedRoles": [
-            "+1/+1 counters"
-          ],
+          "unreplacedRoles": [],
           "unreplacedStrategyComponentRoles": [],
           "meaningfulStrategyLoss": false,
           "verdict": "preserved"

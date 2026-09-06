@@ -3,8 +3,8 @@
   "currencyPolicy": {
     "primaryCurrency": "NZD",
     "displaySymbol": "NZ$",
-    "usdToNzdRate": 1.7013,
-    "rateDate": "2026-09-05",
+    "usdToNzdRate": 1.7009,
+    "rateDate": "2026-09-06",
     "rateSource": "Frankfurter",
     "rateSourceUrl": "https://api.frankfurter.dev/v2/rate/USD/NZD",
     "staleRate": false,
@@ -88,36 +88,35 @@
           }
         ]
       },
-      "estimatedUpgradeSpendNzd": 65.13,
-      "estimatedUpgradeSpendUsdReference": 38.28,
+      "estimatedUpgradeSpendNzd": 63.56,
+      "estimatedUpgradeSpendUsdReference": 37.37,
       "maxTotalNzd": null,
       "maxTotalUsdReference": null,
       "swaps": [
         {
-          "out": "Alphinaud Leveilleur",
+          "out": "Ardbert, Warrior of Darkness",
           "in": "Arcane Denial",
           "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, spells-control. The recommended physical printing satisfies the active printing-family/set policy.",
           "recommendedPrinting": {
             "set": "RFIN",
             "collectorNumber": "J2",
             "finish": "nonfoil",
-            "priceNzd": 22.92,
-            "priceUsdReference": 13.47
+            "priceNzd": 22.89,
+            "priceUsdReference": 13.46
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
             "remainingStructuralDeficitAfterSwap": 11,
             "authoritativeTargetGate": "average-nonland-mv",
-            "nonlandManaValueReduction": 2,
+            "nonlandManaValueReduction": 1,
             "persistentColoredManaSourcesAfterSwap": 6,
             "persistentColoredManaSourceFloor": 6,
             "strategyPreservation": {
-              "cutStrategyAffinityScore": 21,
+              "cutStrategyAffinityScore": 7,
               "addStrategyAffinityScore": 22,
               "cutStrategyProtectionApplied": 4,
               "cutMatchedStrategies": [
-                "spells-control",
-                "value-engine"
+                "spells-control"
               ],
               "addMatchedStrategies": [
                 "spells-control",
@@ -125,9 +124,8 @@
               ],
               "locallyUnreplacedStrategies": [],
               "cutRoles": [
-                "card draw",
-                "creature",
-                "repeatable draw"
+                "+1/+1 counters",
+                "creature"
               ],
               "addRoles": [
                 "card draw",
@@ -136,6 +134,7 @@
                 "repeatable draw"
               ],
               "unreplacedRoles": [
+                "+1/+1 counters",
                 "creature"
               ],
               "unreplacedStrategyComponentRoles": [],
@@ -152,7 +151,7 @@
             "set": "FCA",
             "collectorNumber": "34",
             "finish": "nonfoil",
-            "priceNzd": 26.63,
+            "priceNzd": 26.62,
             "priceUsdReference": 15.65
           },
           "structuralPairing": {
@@ -190,29 +189,30 @@
           }
         },
         {
-          "out": "Ardbert, Warrior of Darkness",
+          "out": "Alphinaud Leveilleur",
           "in": "Sram, Senior Edificer",
           "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, spells-control. The recommended physical printing satisfies the active printing-family/set policy.",
           "recommendedPrinting": {
             "set": "FCA",
             "collectorNumber": "3",
             "finish": "nonfoil",
-            "priceNzd": 15.58,
-            "priceUsdReference": 9.16
+            "priceNzd": 14.05,
+            "priceUsdReference": 8.26
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
             "remainingStructuralDeficitAfterSwap": 10,
             "authoritativeTargetGate": "average-nonland-mv",
-            "nonlandManaValueReduction": 1,
+            "nonlandManaValueReduction": 2,
             "persistentColoredManaSourcesAfterSwap": 6,
             "persistentColoredManaSourceFloor": 6,
             "strategyPreservation": {
-              "cutStrategyAffinityScore": 7,
+              "cutStrategyAffinityScore": 21,
               "addStrategyAffinityScore": 21,
               "cutStrategyProtectionApplied": 4,
               "cutMatchedStrategies": [
-                "spells-control"
+                "spells-control",
+                "value-engine"
               ],
               "addMatchedStrategies": [
                 "spells-control",
@@ -220,8 +220,9 @@
               ],
               "locallyUnreplacedStrategies": [],
               "cutRoles": [
-                "+1/+1 counters",
-                "creature"
+                "card draw",
+                "creature",
+                "repeatable draw"
               ],
               "addRoles": [
                 "card draw",
@@ -229,9 +230,7 @@
                 "equipment",
                 "repeatable draw"
               ],
-              "unreplacedRoles": [
-                "+1/+1 counters"
-              ],
+              "unreplacedRoles": [],
               "unreplacedStrategyComponentRoles": [],
               "meaningfulStrategyLoss": false,
               "verdict": "preserved"
@@ -323,8 +322,8 @@
           ],
           "candidatePackagesGeneratedAcrossAttempts": 5,
           "winningCandidate": 1,
-          "estimatedSpendNzd": 65.13,
-          "estimatedSpendUsdReference": 38.28,
+          "estimatedSpendNzd": 63.56,
+          "estimatedSpendUsdReference": 37.37,
           "improvementScore": 3.125,
           "winRouteProtection": {
             "status": "no-verified-route",
@@ -415,8 +414,8 @@
           "candidatePackagesGenerated": 5,
           "candidatePackagesEligible": 2,
           "winningCandidate": 1,
-          "estimatedSpendNzd": 65.13,
-          "estimatedSpendUsdReference": 38.28,
+          "estimatedSpendNzd": 63.56,
+          "estimatedSpendUsdReference": 37.37,
           "improvementScore": 3.125,
           "winRouteProtection": {
             "status": "no-verified-route",
@@ -427,7 +426,7 @@
           "themeAuditBefore": null,
           "swaps": [
             {
-              "out": "Alphinaud Leveilleur",
+              "out": "Ardbert, Warrior of Darkness",
               "in": "Arcane Denial",
               "recommendedPrinting": {
                 "set": "RFIN",
@@ -435,8 +434,8 @@
                 "collectorNumber": "J2",
                 "releaseDate": "2025-06-13",
                 "finish": "nonfoil",
-                "priceNzd": 22.92,
-                "priceUsdReference": 13.47,
+                "priceNzd": 22.89,
+                "priceUsdReference": 13.46,
                 "promo": true,
                 "promoTypes": [
                   "ffxiv",
@@ -452,16 +451,15 @@
                 "addressedRole": "average-nonland-mv",
                 "remainingStructuralDeficitAfterSwap": 11,
                 "authoritativeTargetGate": "average-nonland-mv",
-                "nonlandManaValueReduction": 2,
+                "nonlandManaValueReduction": 1,
                 "persistentColoredManaSourcesAfterSwap": 6,
                 "persistentColoredManaSourceFloor": 6,
                 "strategyPreservation": {
-                  "cutStrategyAffinityScore": 21,
+                  "cutStrategyAffinityScore": 7,
                   "addStrategyAffinityScore": 22,
                   "cutStrategyProtectionApplied": 4,
                   "cutMatchedStrategies": [
-                    "spells-control",
-                    "value-engine"
+                    "spells-control"
                   ],
                   "addMatchedStrategies": [
                     "spells-control",
@@ -469,9 +467,8 @@
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
-                    "card draw",
-                    "creature",
-                    "repeatable draw"
+                    "+1/+1 counters",
+                    "creature"
                   ],
                   "addRoles": [
                     "card draw",
@@ -480,6 +477,7 @@
                     "repeatable draw"
                   ],
                   "unreplacedRoles": [
+                    "+1/+1 counters",
                     "creature"
                   ],
                   "unreplacedStrategyComponentRoles": [],
@@ -497,7 +495,7 @@
                 "collectorNumber": "34",
                 "releaseDate": "2025-06-13",
                 "finish": "nonfoil",
-                "priceNzd": 26.63,
+                "priceNzd": 26.62,
                 "priceUsdReference": 15.65,
                 "promo": false,
                 "promoTypes": [
@@ -546,7 +544,7 @@
               }
             },
             {
-              "out": "Ardbert, Warrior of Darkness",
+              "out": "Alphinaud Leveilleur",
               "in": "Sram, Senior Edificer",
               "recommendedPrinting": {
                 "set": "FCA",
@@ -554,8 +552,8 @@
                 "collectorNumber": "3",
                 "releaseDate": "2025-06-13",
                 "finish": "nonfoil",
-                "priceNzd": 15.58,
-                "priceUsdReference": 9.16,
+                "priceNzd": 14.05,
+                "priceUsdReference": 8.26,
                 "promo": false,
                 "promoTypes": [
                   "ffii",
@@ -572,15 +570,16 @@
                 "addressedRole": "average-nonland-mv",
                 "remainingStructuralDeficitAfterSwap": 10,
                 "authoritativeTargetGate": "average-nonland-mv",
-                "nonlandManaValueReduction": 1,
+                "nonlandManaValueReduction": 2,
                 "persistentColoredManaSourcesAfterSwap": 6,
                 "persistentColoredManaSourceFloor": 6,
                 "strategyPreservation": {
-                  "cutStrategyAffinityScore": 7,
+                  "cutStrategyAffinityScore": 21,
                   "addStrategyAffinityScore": 21,
                   "cutStrategyProtectionApplied": 4,
                   "cutMatchedStrategies": [
-                    "spells-control"
+                    "spells-control",
+                    "value-engine"
                   ],
                   "addMatchedStrategies": [
                     "spells-control",
@@ -588,8 +587,9 @@
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
-                    "+1/+1 counters",
-                    "creature"
+                    "card draw",
+                    "creature",
+                    "repeatable draw"
                   ],
                   "addRoles": [
                     "card draw",
@@ -597,9 +597,7 @@
                     "equipment",
                     "repeatable draw"
                   ],
-                  "unreplacedRoles": [
-                    "+1/+1 counters"
-                  ],
+                  "unreplacedRoles": [],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
                   "verdict": "preserved"
@@ -614,8 +612,8 @@
               "reason": "eligible",
               "attemptedSwaps": 4,
               "actualSwaps": 3,
-              "estimatedSpendNzd": 65.13,
-              "estimatedSpendUsdReference": 38.28,
+              "estimatedSpendNzd": 63.56,
+              "estimatedSpendUsdReference": 37.37,
               "unknownPriceCount": 0,
               "improvementScore": 3.125,
               "significantRegression": false,
@@ -668,12 +666,11 @@
                 ],
                 "swapImpacts": [
                   {
-                    "cutStrategyAffinityScore": 21,
+                    "cutStrategyAffinityScore": 7,
                     "addStrategyAffinityScore": 22,
                     "cutStrategyProtectionApplied": 4,
                     "cutMatchedStrategies": [
-                      "spells-control",
-                      "value-engine"
+                      "spells-control"
                     ],
                     "addMatchedStrategies": [
                       "spells-control",
@@ -681,9 +678,8 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
-                      "card draw",
-                      "creature",
-                      "repeatable draw"
+                      "+1/+1 counters",
+                      "creature"
                     ],
                     "addRoles": [
                       "card draw",
@@ -692,6 +688,7 @@
                       "repeatable draw"
                     ],
                     "unreplacedRoles": [
+                      "+1/+1 counters",
                       "creature"
                     ],
                     "unreplacedStrategyComponentRoles": [],
@@ -724,11 +721,12 @@
                     "verdict": "preserved"
                   },
                   {
-                    "cutStrategyAffinityScore": 7,
+                    "cutStrategyAffinityScore": 21,
                     "addStrategyAffinityScore": 21,
                     "cutStrategyProtectionApplied": 4,
                     "cutMatchedStrategies": [
-                      "spells-control"
+                      "spells-control",
+                      "value-engine"
                     ],
                     "addMatchedStrategies": [
                       "spells-control",
@@ -736,8 +734,9 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
-                      "+1/+1 counters",
-                      "creature"
+                      "card draw",
+                      "creature",
+                      "repeatable draw"
                     ],
                     "addRoles": [
                       "card draw",
@@ -745,9 +744,7 @@
                       "equipment",
                       "repeatable draw"
                     ],
-                    "unreplacedRoles": [
-                      "+1/+1 counters"
-                    ],
+                    "unreplacedRoles": [],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -850,11 +847,11 @@
                   {
                     "archetype": "value-engine",
                     "commanderScore": 14,
-                    "beforeSupportCount": 63,
-                    "afterSupportCount": 64,
+                    "beforeSupportCount": 64,
+                    "afterSupportCount": 65,
                     "supportDelta": 1,
-                    "beforeAffinityTotal": 232,
-                    "afterAffinityTotal": 246,
+                    "beforeAffinityTotal": 233,
+                    "afterAffinityTotal": 247,
                     "affinityDelta": 14,
                     "preserved": true
                   },
@@ -1009,30 +1006,29 @@
               },
               "swaps": [
                 {
-                  "out": "Alphinaud Leveilleur",
+                  "out": "Ardbert, Warrior of Darkness",
                   "in": "Arcane Denial",
                   "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, spells-control. The recommended physical printing satisfies the active printing-family/set policy.",
                   "recommendedPrinting": {
                     "set": "RFIN",
                     "collectorNumber": "J2",
                     "finish": "nonfoil",
-                    "priceNzd": 22.92,
-                    "priceUsdReference": 13.47
+                    "priceNzd": 22.89,
+                    "priceUsdReference": 13.46
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
                     "remainingStructuralDeficitAfterSwap": 11,
                     "authoritativeTargetGate": "average-nonland-mv",
-                    "nonlandManaValueReduction": 2,
+                    "nonlandManaValueReduction": 1,
                     "persistentColoredManaSourcesAfterSwap": 6,
                     "persistentColoredManaSourceFloor": 6,
                     "strategyPreservation": {
-                      "cutStrategyAffinityScore": 21,
+                      "cutStrategyAffinityScore": 7,
                       "addStrategyAffinityScore": 22,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
-                        "spells-control",
-                        "value-engine"
+                        "spells-control"
                       ],
                       "addMatchedStrategies": [
                         "spells-control",
@@ -1040,9 +1036,8 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "card draw",
-                        "creature",
-                        "repeatable draw"
+                        "+1/+1 counters",
+                        "creature"
                       ],
                       "addRoles": [
                         "card draw",
@@ -1051,6 +1046,7 @@
                         "repeatable draw"
                       ],
                       "unreplacedRoles": [
+                        "+1/+1 counters",
                         "creature"
                       ],
                       "unreplacedStrategyComponentRoles": [],
@@ -1067,7 +1063,7 @@
                     "set": "FCA",
                     "collectorNumber": "34",
                     "finish": "nonfoil",
-                    "priceNzd": 26.63,
+                    "priceNzd": 26.62,
                     "priceUsdReference": 15.65
                   },
                   "structuralPairing": {
@@ -1105,29 +1101,30 @@
                   }
                 },
                 {
-                  "out": "Ardbert, Warrior of Darkness",
+                  "out": "Alphinaud Leveilleur",
                   "in": "Sram, Senior Edificer",
                   "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, spells-control. The recommended physical printing satisfies the active printing-family/set policy.",
                   "recommendedPrinting": {
                     "set": "FCA",
                     "collectorNumber": "3",
                     "finish": "nonfoil",
-                    "priceNzd": 15.58,
-                    "priceUsdReference": 9.16
+                    "priceNzd": 14.05,
+                    "priceUsdReference": 8.26
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
                     "remainingStructuralDeficitAfterSwap": 10,
                     "authoritativeTargetGate": "average-nonland-mv",
-                    "nonlandManaValueReduction": 1,
+                    "nonlandManaValueReduction": 2,
                     "persistentColoredManaSourcesAfterSwap": 6,
                     "persistentColoredManaSourceFloor": 6,
                     "strategyPreservation": {
-                      "cutStrategyAffinityScore": 7,
+                      "cutStrategyAffinityScore": 21,
                       "addStrategyAffinityScore": 21,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
-                        "spells-control"
+                        "spells-control",
+                        "value-engine"
                       ],
                       "addMatchedStrategies": [
                         "spells-control",
@@ -1135,8 +1132,9 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "+1/+1 counters",
-                        "creature"
+                        "card draw",
+                        "creature",
+                        "repeatable draw"
                       ],
                       "addRoles": [
                         "card draw",
@@ -1144,9 +1142,7 @@
                         "equipment",
                         "repeatable draw"
                       ],
-                      "unreplacedRoles": [
-                        "+1/+1 counters"
-                      ],
+                      "unreplacedRoles": [],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -1161,15 +1157,15 @@
               "reason": "eligible",
               "attemptedSwaps": 4,
               "actualSwaps": 1,
-              "estimatedSpendNzd": 15.58,
-              "estimatedSpendUsdReference": 9.16,
+              "estimatedSpendNzd": 14.05,
+              "estimatedSpendUsdReference": 8.26,
               "unknownPriceCount": 0,
-              "improvementScore": 2.098,
+              "improvementScore": 1.267,
               "significantRegression": false,
               "zeroTargetProgressWhileFailedGatesRemain": false,
               "targetGate": {
                 "applicable": true,
-                "score": 1.1,
+                "score": 0.7,
                 "failedBefore": [
                   "average-nonland-mv",
                   "cheap-interaction",
@@ -1206,19 +1202,18 @@
                   },
                   {
                     "strategy": "value-engine",
-                    "cutAffinityScore": 14,
+                    "cutAffinityScore": 0,
                     "addAffinityScore": 14,
-                    "netAffinityDelta": 0
+                    "netAffinityDelta": 14
                   }
                 ],
                 "swapImpacts": [
                   {
-                    "cutStrategyAffinityScore": 21,
+                    "cutStrategyAffinityScore": 7,
                     "addStrategyAffinityScore": 21,
                     "cutStrategyProtectionApplied": 4,
                     "cutMatchedStrategies": [
-                      "spells-control",
-                      "value-engine"
+                      "spells-control"
                     ],
                     "addMatchedStrategies": [
                       "spells-control",
@@ -1226,9 +1221,8 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
-                      "card draw",
-                      "creature",
-                      "repeatable draw"
+                      "+1/+1 counters",
+                      "creature"
                     ],
                     "addRoles": [
                       "card draw",
@@ -1236,7 +1230,9 @@
                       "equipment",
                       "repeatable draw"
                     ],
-                    "unreplacedRoles": [],
+                    "unreplacedRoles": [
+                      "+1/+1 counters"
+                    ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -1339,12 +1335,12 @@
                   {
                     "archetype": "value-engine",
                     "commanderScore": 14,
-                    "beforeSupportCount": 63,
-                    "afterSupportCount": 63,
-                    "supportDelta": 0,
-                    "beforeAffinityTotal": 232,
-                    "afterAffinityTotal": 232,
-                    "affinityDelta": 0,
+                    "beforeSupportCount": 64,
+                    "afterSupportCount": 65,
+                    "supportDelta": 1,
+                    "beforeAffinityTotal": 233,
+                    "afterAffinityTotal": 247,
+                    "affinityDelta": 14,
                     "preserved": true
                   },
                   {
@@ -1498,30 +1494,29 @@
               },
               "swaps": [
                 {
-                  "out": "Alphinaud Leveilleur",
+                  "out": "Ardbert, Warrior of Darkness",
                   "in": "Sram, Senior Edificer",
                   "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, spells-control. The recommended physical printing satisfies the active printing-family/set policy.",
                   "recommendedPrinting": {
                     "set": "FCA",
                     "collectorNumber": "3",
                     "finish": "nonfoil",
-                    "priceNzd": 15.58,
-                    "priceUsdReference": 9.16
+                    "priceNzd": 14.05,
+                    "priceUsdReference": 8.26
                   },
                   "structuralPairing": {
                     "addressedRole": "average-nonland-mv",
                     "remainingStructuralDeficitAfterSwap": 11,
                     "authoritativeTargetGate": "average-nonland-mv",
-                    "nonlandManaValueReduction": 2,
+                    "nonlandManaValueReduction": 1,
                     "persistentColoredManaSourcesAfterSwap": 6,
                     "persistentColoredManaSourceFloor": 6,
                     "strategyPreservation": {
-                      "cutStrategyAffinityScore": 21,
+                      "cutStrategyAffinityScore": 7,
                       "addStrategyAffinityScore": 21,
                       "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
-                        "spells-control",
-                        "value-engine"
+                        "spells-control"
                       ],
                       "addMatchedStrategies": [
                         "spells-control",
@@ -1529,9 +1524,8 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "card draw",
-                        "creature",
-                        "repeatable draw"
+                        "+1/+1 counters",
+                        "creature"
                       ],
                       "addRoles": [
                         "card draw",
@@ -1539,7 +1533,9 @@
                         "equipment",
                         "repeatable draw"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "+1/+1 counters"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -2109,8 +2105,8 @@
                   "reason": "eligible",
                   "attemptedSwaps": 4,
                   "actualSwaps": 3,
-                  "estimatedSpendNzd": 65.13,
-                  "estimatedSpendUsdReference": 38.28,
+                  "estimatedSpendNzd": 63.56,
+                  "estimatedSpendUsdReference": 37.37,
                   "unknownPriceCount": 0,
                   "improvementScore": 3.125,
                   "significantRegression": false,
@@ -2163,12 +2159,11 @@
                     ],
                     "swapImpacts": [
                       {
-                        "cutStrategyAffinityScore": 21,
+                        "cutStrategyAffinityScore": 7,
                         "addStrategyAffinityScore": 22,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
-                          "spells-control",
-                          "value-engine"
+                          "spells-control"
                         ],
                         "addMatchedStrategies": [
                           "spells-control",
@@ -2176,9 +2171,8 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "card draw",
-                          "creature",
-                          "repeatable draw"
+                          "+1/+1 counters",
+                          "creature"
                         ],
                         "addRoles": [
                           "card draw",
@@ -2187,6 +2181,7 @@
                           "repeatable draw"
                         ],
                         "unreplacedRoles": [
+                          "+1/+1 counters",
                           "creature"
                         ],
                         "unreplacedStrategyComponentRoles": [],
@@ -2219,11 +2214,12 @@
                         "verdict": "preserved"
                       },
                       {
-                        "cutStrategyAffinityScore": 7,
+                        "cutStrategyAffinityScore": 21,
                         "addStrategyAffinityScore": 21,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
-                          "spells-control"
+                          "spells-control",
+                          "value-engine"
                         ],
                         "addMatchedStrategies": [
                           "spells-control",
@@ -2231,8 +2227,9 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "+1/+1 counters",
-                          "creature"
+                          "card draw",
+                          "creature",
+                          "repeatable draw"
                         ],
                         "addRoles": [
                           "card draw",
@@ -2240,9 +2237,7 @@
                           "equipment",
                           "repeatable draw"
                         ],
-                        "unreplacedRoles": [
-                          "+1/+1 counters"
-                        ],
+                        "unreplacedRoles": [],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -2345,11 +2340,11 @@
                       {
                         "archetype": "value-engine",
                         "commanderScore": 14,
-                        "beforeSupportCount": 63,
-                        "afterSupportCount": 64,
+                        "beforeSupportCount": 64,
+                        "afterSupportCount": 65,
                         "supportDelta": 1,
-                        "beforeAffinityTotal": 232,
-                        "afterAffinityTotal": 246,
+                        "beforeAffinityTotal": 233,
+                        "afterAffinityTotal": 247,
                         "affinityDelta": 14,
                         "preserved": true
                       },
@@ -2504,30 +2499,29 @@
                   },
                   "swaps": [
                     {
-                      "out": "Alphinaud Leveilleur",
+                      "out": "Ardbert, Warrior of Darkness",
                       "in": "Arcane Denial",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, spells-control. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
                         "set": "RFIN",
                         "collectorNumber": "J2",
                         "finish": "nonfoil",
-                        "priceNzd": 22.92,
-                        "priceUsdReference": 13.47
+                        "priceNzd": 22.89,
+                        "priceUsdReference": 13.46
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
                         "remainingStructuralDeficitAfterSwap": 11,
                         "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
+                        "nonlandManaValueReduction": 1,
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 21,
+                          "cutStrategyAffinityScore": 7,
                           "addStrategyAffinityScore": 22,
                           "cutStrategyProtectionApplied": 4,
                           "cutMatchedStrategies": [
-                            "spells-control",
-                            "value-engine"
+                            "spells-control"
                           ],
                           "addMatchedStrategies": [
                             "spells-control",
@@ -2535,9 +2529,8 @@
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "card draw",
-                            "creature",
-                            "repeatable draw"
+                            "+1/+1 counters",
+                            "creature"
                           ],
                           "addRoles": [
                             "card draw",
@@ -2546,6 +2539,7 @@
                             "repeatable draw"
                           ],
                           "unreplacedRoles": [
+                            "+1/+1 counters",
                             "creature"
                           ],
                           "unreplacedStrategyComponentRoles": [],
@@ -2562,7 +2556,7 @@
                         "set": "FCA",
                         "collectorNumber": "34",
                         "finish": "nonfoil",
-                        "priceNzd": 26.63,
+                        "priceNzd": 26.62,
                         "priceUsdReference": 15.65
                       },
                       "structuralPairing": {
@@ -2600,29 +2594,30 @@
                       }
                     },
                     {
-                      "out": "Ardbert, Warrior of Darkness",
+                      "out": "Alphinaud Leveilleur",
                       "in": "Sram, Senior Edificer",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, spells-control. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
                         "set": "FCA",
                         "collectorNumber": "3",
                         "finish": "nonfoil",
-                        "priceNzd": 15.58,
-                        "priceUsdReference": 9.16
+                        "priceNzd": 14.05,
+                        "priceUsdReference": 8.26
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
                         "remainingStructuralDeficitAfterSwap": 10,
                         "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 1,
+                        "nonlandManaValueReduction": 2,
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 7,
+                          "cutStrategyAffinityScore": 21,
                           "addStrategyAffinityScore": 21,
                           "cutStrategyProtectionApplied": 4,
                           "cutMatchedStrategies": [
-                            "spells-control"
+                            "spells-control",
+                            "value-engine"
                           ],
                           "addMatchedStrategies": [
                             "spells-control",
@@ -2630,8 +2625,9 @@
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "+1/+1 counters",
-                            "creature"
+                            "card draw",
+                            "creature",
+                            "repeatable draw"
                           ],
                           "addRoles": [
                             "card draw",
@@ -2639,9 +2635,7 @@
                             "equipment",
                             "repeatable draw"
                           ],
-                          "unreplacedRoles": [
-                            "+1/+1 counters"
-                          ],
+                          "unreplacedRoles": [],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
                           "verdict": "preserved"
@@ -2656,15 +2650,15 @@
                   "reason": "eligible",
                   "attemptedSwaps": 4,
                   "actualSwaps": 1,
-                  "estimatedSpendNzd": 15.58,
-                  "estimatedSpendUsdReference": 9.16,
+                  "estimatedSpendNzd": 14.05,
+                  "estimatedSpendUsdReference": 8.26,
                   "unknownPriceCount": 0,
-                  "improvementScore": 2.098,
+                  "improvementScore": 1.267,
                   "significantRegression": false,
                   "zeroTargetProgressWhileFailedGatesRemain": false,
                   "targetGate": {
                     "applicable": true,
-                    "score": 1.1,
+                    "score": 0.7,
                     "failedBefore": [
                       "average-nonland-mv",
                       "cheap-interaction",
@@ -2701,19 +2695,18 @@
                       },
                       {
                         "strategy": "value-engine",
-                        "cutAffinityScore": 14,
+                        "cutAffinityScore": 0,
                         "addAffinityScore": 14,
-                        "netAffinityDelta": 0
+                        "netAffinityDelta": 14
                       }
                     ],
                     "swapImpacts": [
                       {
-                        "cutStrategyAffinityScore": 21,
+                        "cutStrategyAffinityScore": 7,
                         "addStrategyAffinityScore": 21,
                         "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
-                          "spells-control",
-                          "value-engine"
+                          "spells-control"
                         ],
                         "addMatchedStrategies": [
                           "spells-control",
@@ -2721,9 +2714,8 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "card draw",
-                          "creature",
-                          "repeatable draw"
+                          "+1/+1 counters",
+                          "creature"
                         ],
                         "addRoles": [
                           "card draw",
@@ -2731,7 +2723,9 @@
                           "equipment",
                           "repeatable draw"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "+1/+1 counters"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -2834,12 +2828,12 @@
                       {
                         "archetype": "value-engine",
                         "commanderScore": 14,
-                        "beforeSupportCount": 63,
-                        "afterSupportCount": 63,
-                        "supportDelta": 0,
-                        "beforeAffinityTotal": 232,
-                        "afterAffinityTotal": 232,
-                        "affinityDelta": 0,
+                        "beforeSupportCount": 64,
+                        "afterSupportCount": 65,
+                        "supportDelta": 1,
+                        "beforeAffinityTotal": 233,
+                        "afterAffinityTotal": 247,
+                        "affinityDelta": 14,
                         "preserved": true
                       },
                       {
@@ -2993,30 +2987,29 @@
                   },
                   "swaps": [
                     {
-                      "out": "Alphinaud Leveilleur",
+                      "out": "Ardbert, Warrior of Darkness",
                       "in": "Sram, Senior Edificer",
                       "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, spells-control. The recommended physical printing satisfies the active printing-family/set policy.",
                       "recommendedPrinting": {
                         "set": "FCA",
                         "collectorNumber": "3",
                         "finish": "nonfoil",
-                        "priceNzd": 15.58,
-                        "priceUsdReference": 9.16
+                        "priceNzd": 14.05,
+                        "priceUsdReference": 8.26
                       },
                       "structuralPairing": {
                         "addressedRole": "average-nonland-mv",
                         "remainingStructuralDeficitAfterSwap": 11,
                         "authoritativeTargetGate": "average-nonland-mv",
-                        "nonlandManaValueReduction": 2,
+                        "nonlandManaValueReduction": 1,
                         "persistentColoredManaSourcesAfterSwap": 6,
                         "persistentColoredManaSourceFloor": 6,
                         "strategyPreservation": {
-                          "cutStrategyAffinityScore": 21,
+                          "cutStrategyAffinityScore": 7,
                           "addStrategyAffinityScore": 21,
                           "cutStrategyProtectionApplied": 4,
                           "cutMatchedStrategies": [
-                            "spells-control",
-                            "value-engine"
+                            "spells-control"
                           ],
                           "addMatchedStrategies": [
                             "spells-control",
@@ -3024,9 +3017,8 @@
                           ],
                           "locallyUnreplacedStrategies": [],
                           "cutRoles": [
-                            "card draw",
-                            "creature",
-                            "repeatable draw"
+                            "+1/+1 counters",
+                            "creature"
                           ],
                           "addRoles": [
                             "card draw",
@@ -3034,7 +3026,9 @@
                             "equipment",
                             "repeatable draw"
                           ],
-                          "unreplacedRoles": [],
+                          "unreplacedRoles": [
+                            "+1/+1 counters"
+                          ],
                           "unreplacedStrategyComponentRoles": [],
                           "meaningfulStrategyLoss": false,
                           "verdict": "preserved"
@@ -8188,7 +8182,7 @@
       "scoringGuidance": "Competing packages are compared with the same per-round seed. The improvement score is still a within-deck heuristic, not a universal power score or measured multiplayer win rate.",
       "diversityGuidance": "Default refinement explores the historical minimum candidate breadth, then continues only while each additional candidate produces a new blocked search state, with the existing six-candidate ceiling as a hard work bound. Explicit candidatePackagesPerRound remains an exact caller-controlled breadth for controlled benchmarks.",
       "winRouteGuidance": "Route protection is derived from the existing V0.15 final full-table win-route portfolio. Verification unavailable is surfaced explicitly and never treated as evidence that the deck has no route.",
-      "themeGuidance": "User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck, compound themes additionally preserve every independently controlled component before aggregate density is considered, while physical printing-family themes are delegated to the exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches."
+      "themeGuidance": "User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck; compound themes additionally pass their already-resolved component query/density evidence into bounded incoming-candidate affinity while preserving every component independently after construction. Physical printing-family themes remain delegated to exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches."
     },
     "sourceBaseline": "MTGJSON exact stock deck",
     "guidance": "The stock precon remains the untouched baseline. Each round can compare several competing packages; only the strongest package that clears legality, printing, budget, theme, win-route preservation, and improvement checks becomes the next baseline."
