@@ -48,7 +48,7 @@ const refinementFields = {
   maxSwaps: z.number().int().min(1).max(30).optional(),
   maxRounds: z.number().int().min(1).max(5).optional(),
   swapsPerRound: z.number().int().min(1).max(8).optional(),
-  candidatePackagesPerRound: z.number().int().min(1).max(6).optional().default(3),
+  candidatePackagesPerRound: z.number().int().min(1).max(6).optional(),
   minimumImprovementScore: z.number().min(-10).max(100).optional(),
   themeQuery: z.string().min(1).max(500).optional(),
   excludedCards: z.array(z.string().min(1).max(256)).max(300).optional().default([]),
@@ -74,6 +74,15 @@ function profileDefaultsNzd(profile: PreconProfileV13): Record<string, number> {
 
 function numberOr(input: number | undefined, fallback: unknown, defaultValue: number): number {
   return input ?? (typeof fallback === 'number' ? fallback : defaultValue);
+}
+
+export function candidatePackagesPerRoundForProfileV13(
+  input: number | undefined,
+  profile: PreconProfileV13,
+): number | undefined {
+  if (input !== undefined) return input;
+  const fallback = profileDefaultsNzd(profile).candidatePackagesPerRound;
+  return typeof fallback === 'number' ? fallback : undefined;
 }
 
 export function registerMtgToolsV13(server: McpServer): McpServer {
@@ -133,10 +142,10 @@ export function registerMtgToolsV13(server: McpServer): McpServer {
           ...(input.maxSwaps !== undefined ? { maxSwaps: input.maxSwaps } : {}),
           ...(input.maxRounds !== undefined ? { maxRounds: input.maxRounds } : {}),
           ...(input.swapsPerRound !== undefined ? { swapsPerRound: input.swapsPerRound } : {}),
-          candidatePackagesPerRound: input.candidatePackagesPerRound,
+          ...(input.candidatePackagesPerRound !== undefined ? { candidatePackagesPerRound: input.candidatePackagesPerRound } : {}),
           ...(input.minimumImprovementScore !== undefined ? { minimumImprovementScore: input.minimumImprovementScore } : {}),
           ...(input.themeQuery ? { themeQuery: input.themeQuery } : {}),
-           ...(input.packageAcceptanceContract ? { packageAcceptanceContract: input.packageAcceptanceContract } : {}),
+          ...(input.packageAcceptanceContract ? { packageAcceptanceContract: input.packageAcceptanceContract } : {}),
           excludedCards: input.excludedCards,
           protectedCards: input.protectedCards,
           ...(input.simulationIterations !== undefined ? { simulationIterations: input.simulationIterations } : {}),
@@ -165,6 +174,7 @@ export function registerMtgToolsV13(server: McpServer): McpServer {
     async (input) => {
       try {
         const defaults = profileDefaultsNzd(input.profile);
+        const candidatePackagesPerRound = candidatePackagesPerRoundForProfileV13(input.candidatePackagesPerRound, input.profile);
         return jsonResult(await refinePreconNzdV13({
           reference: input.reference,
           targetBracket: numberOr(input.targetBracket, defaults.targetBracket, 3),
@@ -175,10 +185,10 @@ export function registerMtgToolsV13(server: McpServer): McpServer {
           maxSwaps: numberOr(input.maxSwaps, defaults.maxSwaps, 12),
           maxRounds: numberOr(input.maxRounds, defaults.maxRounds, 3),
           swapsPerRound: numberOr(input.swapsPerRound, defaults.swapsPerRound, 4),
-          candidatePackagesPerRound: numberOr(input.candidatePackagesPerRound, defaults.candidatePackagesPerRound, 3),
+          ...(candidatePackagesPerRound !== undefined ? { candidatePackagesPerRound } : {}),
           ...(input.minimumImprovementScore !== undefined ? { minimumImprovementScore: input.minimumImprovementScore } : {}),
           ...(input.themeQuery ? { themeQuery: input.themeQuery } : {}),
-           ...(input.packageAcceptanceContract ? { packageAcceptanceContract: input.packageAcceptanceContract } : {}),
+          ...(input.packageAcceptanceContract ? { packageAcceptanceContract: input.packageAcceptanceContract } : {}),
           excludedCards: input.excludedCards,
           protectedCards: input.protectedCards,
           ...(input.simulationIterations !== undefined ? { simulationIterations: input.simulationIterations } : {}),
@@ -214,7 +224,7 @@ export function registerMtgToolsV13(server: McpServer): McpServer {
         maxRefinementRounds: z.number().int().min(1).max(5).optional().default(3),
         maxRefinementSwaps: z.number().int().min(1).max(30).optional().default(12),
         swapsPerRound: z.number().int().min(1).max(8).optional().default(4),
-        candidatePackagesPerRound: z.number().int().min(1).max(6).optional().default(3),
+        candidatePackagesPerRound: z.number().int().min(1).max(6).optional(),
         minimumImprovementScore: z.number().min(-10).max(100).optional().default(0.1),
         simulationIterations: z.number().int().min(100).max(5_000).optional().default(750),
         simulationTurns: z.number().int().min(3).max(12).optional().default(7),
@@ -230,7 +240,7 @@ export function registerMtgToolsV13(server: McpServer): McpServer {
         return jsonResult(await buildAndRefineCommanderDeckNzdV13(input.commanderNames, {
           targetBracket: input.targetBracket,
           ...(input.themeQuery ? { themeQuery: input.themeQuery } : {}),
-           ...(input.packageAcceptanceContract ? { packageAcceptanceContract: input.packageAcceptanceContract } : {}),
+          ...(input.packageAcceptanceContract ? { packageAcceptanceContract: input.packageAcceptanceContract } : {}),
           ...(input.maxNzdPerCard !== undefined ? { maxNzdPerCard: input.maxNzdPerCard } : {}),
           ...(input.maxPostDraftUpgradeNzd !== undefined ? { maxPostDraftUpgradeNzd: input.maxPostDraftUpgradeNzd } : {}),
           excludedCards: input.excludedCards,
@@ -240,7 +250,7 @@ export function registerMtgToolsV13(server: McpServer): McpServer {
           maxRefinementRounds: input.maxRefinementRounds,
           maxRefinementSwaps: input.maxRefinementSwaps,
           swapsPerRound: input.swapsPerRound,
-          candidatePackagesPerRound: input.candidatePackagesPerRound,
+          ...(input.candidatePackagesPerRound !== undefined ? { candidatePackagesPerRound: input.candidatePackagesPerRound } : {}),
           minimumImprovementScore: input.minimumImprovementScore,
           simulationIterations: input.simulationIterations,
           simulationTurns: input.simulationTurns,
