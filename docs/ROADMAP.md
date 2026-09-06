@@ -1,335 +1,136 @@
 # Ultimate MTG Roadmap
 
-This roadmap converts the north-star specification into bounded development milestones. `project-state.json` is authoritative for which milestone is active now and for the exact next actions. Scheduled/autonomous work must read that state first, reconcile it against newer committed evidence and live GitHub status, execute forward work, then update state/roadmap/handoff/validation records in the same run whenever a material milestone, blocker, accepted source, benchmark verdict or next action changes. Do not allow stale roadmap wording to recreate completed work.
+This roadmap tracks milestone-level direction and durable completed evidence. `project-state.json` is authoritative for the active milestone, current status and exact next actions. Autonomous work must reconcile this roadmap against newer committed evidence before using it; stale roadmap language must never recreate completed work.
 
 ## North star
 
-Build the best evidence-backed autonomous Commander deck-building intelligence we can, then prove it deserves to be trusted.
-
-The intended end state is a Commander specialist that can outperform a strong general-purpose AI on Commander deck construction through deeper domain focus, structured evidence, exhaustive checking, counterfactual comparison, and consistent verification.
+Build an evidence-backed Commander specialist that can consistently outperform strong general-purpose AI on complete deck construction and analysis while preserving exact legality, budget, printing, strategy and user constraints.
 
 ## PM-01 — Persistent Project State & Handoff Automation — VALIDATED
 
-Goal: stop treating chat history as project memory.
-
 Delivered:
-- `project-state.json` is the machine-readable current-state authority;
-- `docs/PROJECT-STATE.md` and `PROJECT_HANDOFF.md` are generated from it;
-- architecture decisions, known failures, roadmap and validation matrix are committed;
-- CI detects state/handoff drift;
-- a self-reporting integrity control binds project-management typecheck/state validation/source build to an exact source SHA;
-- scheduled/autonomous recovery is expected to reconcile stale state against newer GitHub evidence before continuing and to persist material state changes before ending a run.
+- `project-state.json` as machine-readable current-state authority;
+- generated `docs/PROJECT-STATE.md` and `PROJECT_HANDOFF.md`;
+- recovery protocol, decisions, known failures and validation matrix;
+- CI state/handoff drift detection and self-reporting project-state integrity.
 
-Initial validated control:
-- `test-results/project-management/integrity.txt`
-- source `73366cf57c055fc0ae7831209ad155b360bf036f`
-- project-management typecheck: success
-- state validation: success
-- normal source build: success
+Do not repeat the completed comprehensive system audit unless a material architecture, runtime-entry-point, stable-boundary or state-integrity change invalidates it.
 
 ## PM-02 — Validation State Indexing — VALIDATED
 
-Goal: stop making fresh chats hunt through individual result directories to determine what is current, stale, passing or failing.
-
 Delivered:
-- `validation-registry.json` registers high-value controls needed for recovery and milestone claims;
-- `validation-index.json` is deterministically generated from registry + persisted metadata + project state;
-- `docs/VALIDATION-STATE.md` is the generated human snapshot;
-- index records bind tested source SHA, pass/fail/unknown state, claim level and checkpoint match;
-- CI fails on a stale validation index;
-- the self-reporting PM integrity control regenerates the index whenever it updates its own persisted result;
-- `npm run project:resume` derives a fresh-session recovery brief without old chat history or individual result-folder inspection.
+- deterministic `validation-index.json` from registry + persisted metadata + project state;
+- generated `docs/VALIDATION-STATE.md`;
+- CI validation-index integrity;
+- fresh-session recovery that distinguishes current, stale, passing and failing evidence.
 
 ## INTEL-01 — Win-package intelligence — VALIDATED
 
-Goal: very-good verified win-package reasoning.
+Validated direction includes bounded Commander Spellbook discovery with honest incomplete-evidence semantics, legality/color/printing/budget filtering, full-table closure, swap-feasible package selection, atomic injection, package protection and final route recognition.
 
-Validated direction includes:
-- bounded but deep Commander Spellbook discovery with honest incomplete-evidence semantics;
-- exact commander legality/color/printing/budget filtering;
-- multiplayer full-table closure aligned with final evaluation semantics;
-- package feasibility against swap capacity;
-- atomic package injection;
-- protection of already-present package pieces;
-- R/competitive preference among feasible verified packages;
-- no false absence when discovery is truncated or unavailable;
-- final route recognition, alternate-route retention, route setup/interruption and exact tutor/access auditing.
-
-The exact-source positive control at `5829b37b686255ba35d419b37be17095e54fb696` is green and retains four verified full-table routes with two distinct library routes. BENCH-01 still tests whether this intelligence translates into better complete decks across adversarial archetypes.
+The exact-source positive control at `5829b37b686255ba35d419b37be17095e54fb696` remains green. BENCH-01 still determines whether that intelligence translates into better complete decks.
 
 ## INTEL-02 — Actual autonomous deck improvement — IMPLEMENTED / BENCHMARK VALIDATION PENDING
 
-Goal: improve the deck that exists, not an abstract score.
+Implemented safeguards include role truth, structural floors, strategy/resource/component preservation, exact legality/budget/printing truth and iterative candidate comparison.
 
-The role-truth, structural-floor and package-preservation hardening is implemented far enough for adversarial benchmarking. The complete dependent family was replayed from one frozen executable source, `5829b37b686255ba35d419b37be17095e54fb696`.
+Durable evidence:
+- Food and Fellowship, Necron Dynasties, Squirreled Away and Scions & Spellcraft have useful exact-source scenario evidence;
+- Marvel focused/broad remain red for target achievement because their restricted pool reaches an expected Bracket-5 construction ceiling; this must not be relabelled as success or weakened away;
+- provider-unavailable evidence remains provider-unknown, not evidence of card absence.
 
-On that replay:
-- Food and Fellowship, Necron Dynasties, Squirreled Away and Scions & Spellcraft are mechanically green and manually acceptable with recorded watch items;
-- the earlier Food false green that spent `Well of Lost Dreams` on one-shot interaction did not recur;
-- generic strategy/resource/component guards remained active;
-- Marvel focused and broad fail closed with zero swaps because the restricted pool cannot satisfy the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure;
-- that Marvel result is an expected construction ceiling, not target achievement and not a reason to relax standards;
-- the themed special-printing audit is provider-unknown after Scryfall HTTP 429, not evidence of absence and not a BENCH-01 blocker.
-
-The formal accepted development checkpoint remains `77a5383fa7490aa91360b8186a4bda890f632157`. The current fully validated executable BENCH product source is `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`, containing the validated compound-component preservation work plus the generic card-draw/lifegain taxonomy bridge. It is a validated experimental replay baseline, not a stable promotion or proof of benchmark superiority.
+The current latest fully validated executable BENCH product source is `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`. It is experimental validation evidence, not stable promotion.
 
 ## BENCH-01 — Adversarial Commander benchmark suite — ACTIVE
 
-Goal: measure intelligence rather than anecdotes and determine whether the specialist actually beats strong general-purpose AI on complete Commander deck decisions.
+Goal: measure complete Commander decision quality across contrasting archetypes and prove whether the specialist actually beats strong general-purpose AI.
 
 Operating rules:
-- freeze executable source for each benchmark batch;
-- run several unseen, contrasting fixtures before changing Commander intelligence;
-- never add card-name or scenario-specific hacks merely to pass a fixture;
+- freeze executable product source across each benchmark batch;
+- run multiple contrasting/unseen fixtures before intelligence fixes where appropriate;
 - score hard truth before subjective quality;
-- compare complete 100-card outputs under identical commander, budget, theme/printing and bracket constraints;
-- record concrete expert-review wins, losses and ambiguous trade-offs;
-- distinguish provider/harness failure, expected construction ceiling, target movement, target achievement and formal validation;
-- only convert repeated cross-fixture weaknesses into generic remediation work;
-- a green workflow is not enough: inspect the resulting legal 100-card deck and whether the requested strategy actually improved.
+- distinguish harness/provider failure, expected construction ceiling, target movement, target achievement and formal validation;
+- preserve locked historical baselines;
+- convert only repeated generic failures into tested product repairs;
+- never add card-name, deck-name or benchmark-specific hacks;
+- never treat a green workflow as proof of whole-deck superiority.
 
-### Batch A — COMPLETE — pre-repair product baseline `5829b37...`
+### Batch A — COMPLETE — historical pre-repair verdict
 
-#### Counter Blitz / Tidus, Yuna's Guardian
-Constraint family: FINAL FANTASY printings only; Bant +1/+1 counters/proliferate; dense countermagic; hybrid combat/combo identity.
+- Counter Blitz / Tidus: specialist failed the natural compound theme request and left the deck unchanged; locked strong general-AI baseline materially improved the deck. **General-AI win.**
+- Liliana NZ$500: specialist produced a legal strong deck within the NZ$500 whole-deck cap while the locked strong general-AI baseline exceeded budget substantially. **Specialist win.**
 
-Specialist outcome:
-- exact 100, Commander legal and FF-printing compliant;
-- natural compound request `+1/+1 counters proliferate countermagic combat` was rejected as `unsupported-theme`;
-- zero swaps, leaving the stock deck unchanged;
-- specialist therefore failed the substantive improvement request despite hard-truth compliance.
+Aggregate historical verdict: **1–1, split-not-promotion-grade.** Later repairs must not rewrite this evidence.
 
-Locked strong general-AI baseline:
-- 18 legal FF-only swaps;
-- materially improved countermagic/protection/access and added verified combo routes;
-- remained Bracket 3 rather than reaching the requested aspirational ceiling.
+### Batch B — COMPLETE — compound-theme defect reproduced and repaired
 
-Verdict: **decisive general-AI win**. This is permanent pre-repair evidence and must not be relabelled after later repairs.
+Cavalry Charge independently reproduced Counter Blitz's compound free-form theme rejection. That cross-fixture evidence justified one generic controlled parser repair.
 
-#### Liliana, Heretical Healer // Liliana, Defiant Necromancer — NZ$500 whole-deck budget
-Specialist outcome:
-- exact 100 and legal mono-black construction;
-- audited total NZ$443.21, leaving NZ$56.79 headroom;
-- strong graveyard/reanimator + aristocrats identity;
-- three verified winning combos sharing one Warren Soultrader + Gravecrawler core;
-- strong competitive-construction signals and Bracket 4 assessment.
+Parser repair baseline: `ce4c9eba59617be2cf57718408b40252230bccf4`.
 
-Locked strong general-AI baseline:
-- exact 100 and legal;
-- much greater raw combo diversity;
-- NZ$960.79 whole-deck cost, exceeding the NZ$500 hard limit by NZ$460.79.
+Paired replay then exposed a second generic defect: aggregate OR-style theme satisfaction could improve while explicit requested components regressed. Counter lost proliferate density and Cavalry lost typal/combat density.
 
-Verdict: **decisive specialist win** because central hard-budget truth outranks raw power gained by violating the request.
+Generic component-preservation implementation: `d0e40cadee555468b9b5574234d1b63b477f8b55`.
+Validated combined source: `dd085caf4e47f6f5e1976667dc90de2db46c00a1`.
 
-### Batch A aggregate pre-repair verdict
+Post-repair paired replay preserved explicit components and closed the component-compensation correctness blocker. Counter's dense-countermagic target remained a watch item only; later unseen batches did not reproduce the zero-target-progress allocation pattern.
 
-**Specialist 1 — General AI 1. `split-not-promotion-grade`.**
+### Batch C — COMPLETE — vocabulary boundary found, repaired and replay-accepted
 
-This result is permanent benchmark evidence. Do not regenerate the locked baselines after seeing specialist outputs and do not relabel either outcome because later repairs improve the system.
+Unseen Witherbloom Witchcraft and Urza's Iron Alliance exposed `lifegain` and `card draw` as missing controlled neutral-theme vocabulary, while Necron Dynasties provided a supported-vocabulary control. Source inspection proved both missing concepts already mapped to reusable measurable role semantics.
 
-### Batch B first unseen fixture — Cavalry Charge — PRE-REPAIR DEFECT REPRODUCTION COMPLETE
+Generic taxonomy bridge product commit: `387709983880fa2fd10c7f0aa50cd8b1524852f5`.
+Latest fully validated source-equivalent executable baseline: `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`.
 
-Constraint family: Knights typal + combat + graveyard recursion/reanimation, target Bracket 4 assessment, NZ$35 maximum per added card, NZ$200 total upgrade budget, maximum 12 swaps.
+Corrected-provenance replay accepted the bridge:
+- Witherbloom: 12 swaps, Bracket 2 → 3, requested components preserved and lifegain/recursion improved;
+- Urza: 6 swaps, Bracket 2 → 2, identity floors preserved before later package exhaustion;
+- Necron: 2 swaps, Bracket 2 → 2, identity floors preserved before later package exhaustion;
+- no fixture reproduced `zeroTargetProgressWhileFailedGatesRemain`.
 
-Pre-repair outcome:
-- exact 100 and Commander legal;
-- natural request `Knights typal combat graveyard recursion reanimation` was rejected as `unsupported-theme`;
-- zero swaps;
-- same centralized compound free-form theme rejection as Counter Blitz.
+Verdict: vocabulary bridge accepted; no allocation repair or guard weakening authorized from Batch C.
 
-Verdict: **independent cross-fixture reproduction of the compound-theme parsing defect**. Together with Counter Blitz, it justified one generic controlled repair.
+### Batch D — COMPLETE — repeated preservation-veto exhaustion requires diagnostics, not guard relaxation
 
-### Controlled compound-theme parsing repair — VALIDATED
+Frozen executable product source: `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`.
+Persisted evidence head: `ffcadb3c6d49e3acecbd2f626e14416bdf4dd7a9`.
+Detailed interpretation: `docs/BENCH-01-BATCH-D-2026-09-06.md`.
 
-Root cause was centralized in the neutral-theme resolver: compound free-form requests were intentionally fail-closed before controlled decomposition.
+Unseen results:
+- **Quick Draw**: 12 swaps, Bracket 2 → 3; draw 8 → 12, countermagic 6 → 10, board wipes 0 → 3, cheap interaction 9 → 13; later candidates exhausted on component-preservation vetoes.
+- **Virtue and Valor**: 8 swaps, Bracket 2 → 2; modest structural movement, then every attempted package size exhausted on component-preservation vetoes.
+- **Explorers of the Deep**: 4 swaps, Bracket 2 → 2; interaction/ramp movement, then every attempted package size exhausted on component-preservation vetoes.
+- None reproduced the earlier Counter zero-target-progress pattern.
 
-The generic repair now:
-- preserves exact single-theme behavior;
-- accepts a compound request only when the entire request decomposes into known controlled facets;
-- preserves explicit component metadata;
-- keeps unknown leftovers fail-closed rather than silently dropping them;
-- never executes raw user text as Scryfall/provider query grammar;
-- preserves the bounded combat discovery contract `(o:attack OR o:"combat damage")`;
-- contains no Counter Blitz, Cavalry Charge or card-name special cases.
+The downstream compound-component guard is still doing necessary correctness work: rejected packages include cuts from requested identity material for largely off-theme structural additions. Do **not** weaken `candidateCompoundThemeComponentGateV15()`.
 
-Accepted parser-repair source: `ce4c9eba59617be2cf57718408b40252230bccf4`.
+Source review shows candidate plans are generated through bounded role-plus-strategy search and only afterward checked by the component-preservation gate. The repeated Batch D terminal pattern therefore creates a narrower diagnostic question:
 
-Validation evidence:
-- dedicated run `33958162827` passed the focused neutral-theme regression suite;
-- the same clean locally committed product tree passed the full repository test suite;
-- the same tree passed build;
-- temporary one-shot repair workflow/script surfaces were absent from the accepted product commit before validation/publish.
+1. Are there no legal/budget/strategy-compatible candidates that repair the structural deficit while preserving the requested component? If so, this is an expected bounded construction ceiling.
+2. Or do compatible candidates exist inside the relevant search universe but bounded discovery/ranking systematically omits them? If so, repeated cross-fixture evidence may justify one generic theme-aware candidate-discovery/ranking repair.
 
-This closed the parser-validation gate. It did **not** establish benchmark superiority.
+### Current BENCH-01 gate
 
-### Repaired Cavalry Charge replay on `ce4c9eba...` — COMPLETE — component regression found
+Freeze `e17b0a1c...` as the latest fully validated executable product source and perform candidate-discovery diagnostics on the terminal Virtue and Valor and Explorers of the Deep rounds, using Quick Draw as a control.
 
-Result:
-- compound request resolves rather than failing closed;
-- refinement executes and accepts 8 swaps;
-- exact 100 and Commander legality remain true;
-- about NZ$32.12 total upgrade spend, within the NZ$200 total limit and NZ$35 per-added-card cap;
-- 8 swaps remain within the 12-swap limit;
-- assessed bracket moves 2 → 3, but target Bracket 4 is not achieved;
-- average nonland MV improves 3.34 → 2.97;
-- early plays improve 19 → 26;
-- cheap interaction improves 3 → 6;
-- tutors improve 0 → 2;
-- recursion improves by 3;
-- graveyard-reference count improves by 2;
-- Knight creature count falls **32 → 27**;
-- combat-reference count falls **21 → 17**.
+Required evidence before another Commander product edit:
+- identify the specific requested component threatened by terminal rejected packages;
+- establish whether policy-compliant alternatives for the same structural role exist before final ranking/exclusion;
+- show the same inappropriate omission/ranking pattern in multiple unrelated fixtures before implementing a generic repair;
+- otherwise classify the result as an expected bounded construction ceiling and broaden unseen fixtures without changing product intelligence.
 
-Verdict: meaningful target movement but not a benchmark pass. Aggregate OR-style theme satisfaction remained compatible with regression in explicit components.
-
-### Repaired Counter Blitz replay on `ce4c9eba...` — COMPLETE — same component defect reproduced
-
-Workflow run `33958274005` completed successfully from the same frozen parser-repair source.
-
-Persisted paired evidence shows:
-- aggregate themed cards **53 → 55**;
-- instant/sorcery references **37 → 40**;
-- counter-related references **51 → 53**;
-- proliferate **4 → 2**;
-- aggregate theme density **86 → 88** and aggregate target remains green;
-- proliferate target fails.
-
-Verdict: **independent cross-fixture reproduction of the same component-compensation defect**. Cavalry and Counter together established a generic correctness blocker and authorized one narrow component-level repair.
-
-### Generic compound-component preservation repair — VALIDATED
-
-Root cause: compound matching is intentionally OR-style for aggregate discovery/audit, while `candidateThemeGateV15()` previously compared only aggregate before/after counts. That let improvement in one controlled component compensate for loss in another.
-
-The generic candidate-acceptance repair now:
-- operates only on controlled `components[]` metadata;
-- independently audits every component before and after a candidate package;
-- prevents any previously satisfied component from being pushed below its own controlled target;
-- prevents any below-target component from moving backward while gains elsewhere compensate;
-- fails closed when component evidence is missing, inconsistent or cannot be bound exactly;
-- preserves existing aggregate theme gating after component checks;
-- leaves single-theme behavior unchanged;
-- retains legality, budget, printing, strategy-retention, package-acceptance and bracket-target gates unchanged;
-- contains no deck, commander or card-name special cases.
-
-Implementation commit: `d0e40cadee555468b9b5574234d1b63b477f8b55`.
-Focused regression commit / final combined product source: `dd085caf4e47f6f5e1976667dc90de2db46c00a1`.
-
-Validation evidence:
-- focused deterministic tests cover satisfied-component preservation, below-target non-regression, fail-closed missing/inconsistent evidence and unchanged single-theme aggregate behavior;
-- normal CI run `33972639473` on exact final SHA `dd085caf...` passed project-management tooling checks, state validation, validation-index validation, fresh-session recovery smoke test, type-check/build and the full repository test suite;
-- therefore `dd085caf...` was the frozen validated product source for the paired post-repair replay.
-
-### Paired post-repair replay — COMPLETE — component-compensation blocker closed
-
-The paired Counter Blitz/Cavalry replay ran from frozen validated product source `dd085caf4e47f6f5e1976667dc90de2db46c00a1`. Counter preserved proliferate at 4 → 4 instead of the pre-repair 4 → 2 regression. Cavalry preserved its explicit typal/combat facets materially better while still improving graveyard/recursion. This closes the generic component-compensation correctness blocker.
-
-Counter Blitz still left dense countermagic at 1 → 1 against an explicit target of 8 while spending swaps, but unseen Batch C did not reproduce that allocation pattern. It remains a watch item, not an authorized optimizer repair.
-
-### Unseen Batch C — COMPLETE — generic vocabulary boundary found
-
-With product `src/**` frozen equal to `dd085caf...`, three unrelated fixtures were run: Witherbloom Witchcraft, Urza's Iron Alliance and Necron Dynasties. Witherbloom stopped before optimization because `lifegain` was unsupported; Urza stopped because `card draw` was unsupported; Necron passed the same parser layer with supported vocabulary. Source inspection proved both omitted concepts already have generic measurable truth in `inferCardRoles()`.
-
-### Generic card-draw / lifegain taxonomy bridge — VALIDATED
-
-Product implementation commit: `387709983880fa2fd10c7f0aa50cd8b1524852f5`.
-
-Validated source-equivalent head: `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`; its only delta from the product commit is BENCH evidence documentation.
-
-The repair adds controlled neutral-theme registry definitions for card draw and lifegain using bounded generated discovery clauses and independent shared role/Oracle matching. It changes no optimizer allocation, legality, budget, printing, bracket or component-preservation behavior and contains no deck/card-specific conditions. Unknown leftovers remain fail-closed. Focused parser/audit regressions and build passed before publish, then normal CI run `34006676470` passed project-state/index/recovery checks, build/type-check and the full repository test suite.
-
-### Taxonomy post-repair replay — COMPLETE — vocabulary bridge accepted
-
-Corrected-provenance workflow run `34009618840` passed the frozen-source guard, repository tests and build, then executed Witherbloom Witchcraft, Urza's Iron Alliance and Necron Dynasties from exact validated product source `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`. Persisted evidence commit `d87f76c5ba9eded92784440673d5cc3ddf897eab` is benchmark evidence only, not a newer formal product-validation milestone.
-
-Results:
-- Witherbloom: 12 swaps, assessed Bracket 2 → 3, all requested sacrifice/aristocrats/lifegain/graveyard-recursion component floors preserved; lifegain improves 19 → 23 and recursion 7 → 9. Bracket 4 target is not achieved, so this is meaningful target movement rather than target achievement.
-- Urza: 6 swaps, Bracket 2 → 2; artifact-creature floor improves 27 → 33 while tokens/combat/card-draw floors remain preserved. Later packages are rejected across theme, strategy and simulation gates.
-- Necron: 2 swaps, Bracket 2 → 2; artifacts improve 48 → 50 and combat 40 → 42 while graveyard-recursion/tokens floors remain preserved. Later packages are rejected across theme, strategy and simulation gates.
-- No fixture records the earlier Counter Blitz `zeroTargetProgressWhileFailedGatesRemain` pattern.
-
-Verdict: **the card-draw/lifegain taxonomy bridge is replay-confirmed.** The Counter allocation concern remains watch-only. Urza/Necron early acceptance exhaustion is not yet a demonstrated defect because rejected packages include legitimate identity-floor regressions and modeled strategy/simulation losses. Do not weaken generic guards on this evidence alone.
-
-### Next unseen batch — broader guard/ceiling discrimination
-
-Continue several unseen fixtures from the unchanged validated `e17b0a1c...` product source before making another product change. Explicitly distinguish legitimate identity/restricted-pool construction ceilings from repeated inappropriate acceptance vetoes. Only a repeated cross-fixture failure pattern may authorize one generic tested repair.
-
-Prioritize remaining benchmark families:
-- combat/commander-damage;
-- compact unrestricted combo;
-- hybrid combat-combo;
-- aristocrats;
-- control;
-- typal/tribal;
-- graveyard/reanimator;
-- counters;
-- spellslinger;
-- equipment;
-- budget constrained;
-- exact printing-family/theme constrained;
-- unusual partner pairs;
-- high Bracket 4;
-- Bracket 5 / cEDH-ish construction.
-
-Scored dimensions:
-- Commander legality, exact 100, singleton/color identity;
-- exact printing-family/theme restrictions and hard budgets;
-- target-gate movement and bracket truth;
-- win-route correctness, closure and resilience;
-- primary/secondary strategy preservation;
-- cut quality and structural-card losses;
-- mana, interaction, card advantage and resource-engine structure;
-- probability/simulation improvement where the claim is supported;
-- spend efficiency;
-- complete-deck coherence;
-- explanation quality;
-- expert manual comparison against the strong general-AI baseline.
-
-### Promotion gate
-
-V0.15 is **not promotion-ready today**. The parser, component-preservation and card-draw/lifegain taxonomy repairs are mechanically validated, and their affected-fixture replays are now complete. What remains is broader promotion-grade adversarial evidence showing consistent whole-deck superiority across contrasting Commander families. PR #29 and stable V0.13 remain unchanged for now.
-
-The user has granted standing authority for autonomous merge/promotion once the evidence genuinely supports it. No additional approval is required when all relevant work is fully validated, non-redundant, safe, blocker-free and broad BENCH-01 evidence shows the Commander specialist consistently deserves promotion. Merge/promotion must never be done merely to tidy branches or because experimental work exists; persist the validating evidence and update project state in the same run.
+Remaining benchmark coverage should continue across compact unrestricted combo, hybrid combat-combo, commander-damage/combat, control, aristocrats, budget and unusual-partner families. Complete expert comparison against strong locked general-AI baselines remains necessary before promotion.
 
 ## INTEL-03 — Human-level strategic reasoning layer — PLANNED
 
-Goal: represent why cards and packages matter to this deck.
+Goal: strengthen commander role, synergy-network, structural-card importance, cut consequence, primary/secondary plan and coherent-package reasoning after BENCH-01 demonstrates where those capabilities are genuinely needed.
 
-Planned concepts:
-- commander role and dependency graph;
-- primary, secondary and fallback game plans;
-- synergy clusters and shared-core cards;
-- structural-card importance / cut blast radius;
-- setup cost, interruption exposure and recovery;
-- dead-piece risk and card-role reuse;
-- package overlap and redundancy;
-- meta-sensitive interaction needs;
-- deck identity / theme preservation.
-
-Do not start broad INTEL-03 feature development merely because it is planned. BENCH-01 evidence must demonstrate a repeated generic strategic-reasoning need first.
+Do not start speculative INTEL-03 feature work while BENCH-01 has a narrower evidenced gate.
 
 ## INTEL-04 — Counterfactual deck comparison & expert explanation — PLANNED
 
-Goal: compare whole legal deck states, not isolated card grades.
+Goal: compare complete legal 100-card alternatives and explain why one deck state is better under the exact constraints. This remains downstream of current BENCH evidence gathering.
 
-Expected behavior:
-- original deck vs candidate A/B/C under identical seeds/evidence;
-- explicit hard-gate deltas;
-- route-access and resilience deltas;
-- mana/curve/interaction effects;
-- price and printing truth;
-- strategy trade-offs;
-- smallest coherent improvement preference;
-- expert-quality explanation of both accepted and rejected swaps.
+## Promotion boundary
 
-Do not start broad INTEL-04 feature development until BENCH-01 shows that missing counterfactual reasoning is a repeated product weakness rather than a benchmark-specific symptom.
-
-## Later phases
-
-Potential later work is intentionally subordinate to demonstrated Commander intelligence:
-- richer tournament/meta learning;
-- historical model evidence;
-- personalized pilot preferences;
-- additional formats;
-- UI polish and convenience features.
-
-Do not add breadth merely because it is possible. New work should either improve Commander expertise, verification, autonomous decision quality, or the evidence used to prove those qualities.
+PR #29 and stable/current V0.13 remain unchanged while BENCH-01 is not promotion-grade. Standing authorization permits autonomous merge/promotion only after the candidate is fully validated, non-redundant, safe, blocker-free and supported by broad benchmark evidence demonstrating real forward quality rather than mere workflow success.
