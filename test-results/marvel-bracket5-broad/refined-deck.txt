@@ -59,8 +59,8 @@
 1 Living Laser (MSC) 55
 1 Chromatic Lantern (MSC) 195
 1 Helm of the Host (MSC) 200
-1 Reanimate (MAR) 20
 1 Stark Industries Executive (MSH) 153
+1 Reanimate (MAR) 20
 1 Farseek (MSC) 173
 1 Nature's Lore (MSC) 177
 1 Brainstorm (SLD) 7013
@@ -79,8 +79,8 @@
 1 Daily Bugle Building (SPM) 179
 1 Avengers Tower (MSH) 260
 1 Villainous Hideout (MSH) 276
-1 Castle Doom (MSH) 263
 1 Baxter Building (MSH) 261
+1 Castle Doom (MSH) 263
 1 Surveillance Room (MSH) 274
 1 Thriving Isle (MSC) 581
 1 Thriving Heath (MSC) 580

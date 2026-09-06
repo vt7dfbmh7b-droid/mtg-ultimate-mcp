@@ -3578,6 +3578,11 @@
       "swapsPerRound": 5,
       "maxRounds": 5,
       "candidatePackagesPerRound": 5,
+      "candidateDiversification": {
+        "minimumAttempts": 5,
+        "hardLimit": 5,
+        "adaptive": false
+      },
       "minimumImprovementScore": 0.1,
       "printingFamily": "Marvel",
       "allowedSets": [],
