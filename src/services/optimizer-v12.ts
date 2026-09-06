@@ -363,7 +363,6 @@ function diversifyNextPackage(blocked: Set<string>, plan: Record<string, unknown
   const swaps = Array.isArray(plan.swaps) ? plan.swaps.map(asRecord) : [];
   const incoming = namesFromSwaps(swaps, 'in');
   if (incoming.length === 0) return;
-  // Block roughly half of the prior package's additions so the next package must explore a materially different path.
   const count = Math.max(1, Math.ceil(incoming.length / 2));
   for (const name of incoming.slice(0, count)) blocked.add(name.toLocaleLowerCase());
 }
@@ -452,6 +451,7 @@ async function prepareRefinementThemeV15(
   delete effectiveOptions.themeQuery;
   delete effectiveOptions.themeMinimumMainMatches;
   delete effectiveOptions.themeCurrentMainMatches;
+  delete effectiveOptions.themeComponents;
   const requestedTheme = options.themeQuery?.trim();
   if (!requestedTheme) {
     return { ok: true, context: { intent: null, effectiveOptions, initialAudit: null } };
@@ -573,12 +573,6 @@ async function prepareRefinementThemeV15(
   return { ok: true, context: { intent, effectiveOptions, initialAudit } };
 }
 
-/**
- * Convert the existing V0.15 final-route portfolio into cut protection for the existing V0.12
- * optimizer. We protect the portfolio primary + backup rather than every incidental verified combo;
- * a single verified route is protected when the portfolio cannot name a route because dependencies
- * are partially unresolved. Verification unavailable never becomes a false "no routes" claim.
- */
 export function deriveWinRouteProtectionV15(input: {
   comboVerificationComplete: boolean;
   primaryComboId: string | null;
@@ -629,10 +623,6 @@ async function currentWinRouteProtectionV15(
 ): Promise<WinRouteProtectionV15> {
   try {
     const combos = await findDeckCombosEvidence(decklist, 100);
-    // The current round's deck has already passed resolution and Commander legality. We reuse the
-    // existing V0.15 Spellbook-to-full-table-win derivation here only for verified combo details;
-    // the unrelated bracket/curve signal fields below are deliberately inert and are not surfaced
-    // as an analysis or bracket result by refinement.
     const evidence = derivePostBuildEvidenceV15({
       commanderLegal: true,
       exactCardCount: parsed.totalCards === 100,
@@ -750,7 +740,6 @@ async function evaluateCandidate(
       maxSwaps: attemptSize,
       protectedCards: [...protectedNames],
       excludedCards: [...new Set([...excludedNames, ...diversityBlocked])],
-      // All candidates in a round use the same seed so their simulation outputs are directly comparable.
       seed: (options.seed ?? 20_260_816) + round - 1,
     },
   );
@@ -998,6 +987,22 @@ export async function refineCommanderDeckIterativelyV12(
       roundOptions.themeQuery = themeContext.intent.queryClause;
       roundOptions.themeMinimumMainMatches = themeContext.intent.minimumMainMatches;
       roundOptions.themeCurrentMainMatches = currentThemeAudit.matchedMainCards;
+      if (themeContext.intent.kind === 'compound') {
+        const componentAudits = auditResolvedCompoundThemeComponentsV15(currentParsed, currentCards, themeContext.intent);
+        const components = themeContext.intent.components ?? [];
+        if (componentAudits && componentAudits.length === components.length) {
+          roundOptions.themeComponents = components.flatMap((component, index) => {
+            const audit = componentAudits[index];
+            if (!audit || component.enforceability !== 'full' || !component.queryClause) return [];
+            return [{
+              id: component.canonicalLabel ?? component.original,
+              queryClause: component.queryClause,
+              currentMainMatches: audit.matchedMainCards,
+              requiredMainMatches: component.minimumMainMatches,
+            }];
+          });
+        }
+      }
     }
 
     const winRouteProtection = await currentWinRouteProtectionV15(currentDecklist, currentParsed);
@@ -1226,6 +1231,6 @@ export async function refineCommanderDeckIterativelyV12(
     scoringGuidance: 'Competing packages are compared with the same per-round seed. The improvement score is still a within-deck heuristic, not a universal power score or measured multiplayer win rate.',
     diversityGuidance: 'Default refinement explores the historical minimum candidate breadth, then continues only while each additional candidate produces a new blocked search state, with the existing six-candidate ceiling as a hard work bound. Explicit candidatePackagesPerRound remains an exact caller-controlled breadth for controlled benchmarks.',
     winRouteGuidance: 'Route protection is derived from the existing V0.15 final full-table win-route portfolio. Verification unavailable is surfaced explicitly and never treated as evidence that the deck has no route.',
-    themeGuidance: 'User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck, compound themes additionally preserve every independently controlled component before aggregate density is considered, while physical printing-family themes are delegated to the exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches.',
+    themeGuidance: 'User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck; compound themes additionally pass their already-resolved component query/density evidence into bounded incoming-candidate affinity while preserving every component independently after construction. Physical printing-family themes remain delegated to exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches.',
   };
 }
