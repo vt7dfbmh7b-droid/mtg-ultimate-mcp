@@ -90,28 +90,31 @@ Corrected-provenance replay accepted the bridge:
 
 Verdict: vocabulary bridge accepted; no allocation repair or guard weakening authorized from Batch C.
 
-### Batch D — COMPLETE — repeated preservation-veto exhaustion requires diagnostics, not guard relaxation
+### Batch D — COMPLETE — raw evidence reconciled; two terminal preservation-veto fixtures require diagnostics
 
 Frozen executable product source: `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`.
 Persisted evidence head: `ffcadb3c6d49e3acecbd2f626e14416bdf4dd7a9`.
-Detailed interpretation: `docs/BENCH-01-BATCH-D-2026-09-06.md`.
+Authoritative raw artifact: `test-results/bench01-batch-d/result.json`.
+Detailed reconciled interpretation: `docs/BENCH-01-BATCH-D-2026-09-06.md`.
 
-Unseen results:
-- **Quick Draw**: 12 swaps, Bracket 2 → 3; draw 8 → 12, countermagic 6 → 10, board wipes 0 → 3, cheap interaction 9 → 13; later candidates exhausted on component-preservation vetoes.
-- **Virtue and Valor**: 8 swaps, Bracket 2 → 2; modest structural movement, then every attempted package size exhausted on component-preservation vetoes.
-- **Explorers of the Deep**: 4 swaps, Bracket 2 → 2; interaction/ramp movement, then every attempted package size exhausted on component-preservation vetoes.
+A recovery pass found that the first prose interpretation overstated Quick Draw and Virtue and Valor. The persisted JSON is authoritative and records:
+- **Quick Draw**: 8 swaps, Bracket 3 → 3; average nonland MV 3.27 → 2.84, early plays +4, cheap interaction +3, tutors +2; stopped for target-advancement rather than the terminal all-packages component veto.
+- **Virtue and Valor**: 4 swaps, Bracket 2 → 2; average nonland MV 3.31 → 3.10, early plays +4, cheap interaction +1, tutors +1; then terminated because all competing packages would regress a required compound-theme component.
+- **Explorers of the Deep**: 4 swaps, Bracket 2 → 2; average nonland MV 3.13 → 2.92, early plays +2, cheap interaction +1, tutors +1; then terminated on the same all-competing-packages component-veto class.
 - None reproduced the earlier Counter zero-target-progress pattern.
 
-The downstream compound-component guard is still doing necessary correctness work: rejected packages include cuts from requested identity material for largely off-theme structural additions. Do **not** weaken `candidateCompoundThemeComponentGateV15()`.
+The downstream compound-component guard is still doing necessary correctness work. Do **not** weaken `candidateCompoundThemeComponentGateV15()` merely because Virtue and Explorers terminate on it.
 
-Source review shows candidate plans are generated through bounded role-plus-strategy search and only afterward checked by the component-preservation gate. The repeated Batch D terminal pattern therefore creates a narrower diagnostic question:
+Source review shows candidate plans are generated through bounded role/strategy search and only afterward checked by the component-preservation gate. The repeated pattern across the two unrelated terminal fixtures therefore creates a narrower diagnostic question:
 
 1. Are there no legal/budget/strategy-compatible candidates that repair the structural deficit while preserving the requested component? If so, this is an expected bounded construction ceiling.
 2. Or do compatible candidates exist inside the relevant search universe but bounded discovery/ranking systematically omits them? If so, repeated cross-fixture evidence may justify one generic theme-aware candidate-discovery/ranking repair.
 
+Quick Draw is the control because it made meaningful structural progress from the same frozen source and terminated for a different reason.
+
 ### Current BENCH-01 gate
 
-Freeze `e17b0a1c...` as the latest fully validated executable product source and perform candidate-discovery diagnostics on the terminal Virtue and Valor and Explorers of the Deep rounds, using Quick Draw as a control.
+Freeze `e17b0a1c...` as the latest fully validated executable product source and perform candidate-discovery diagnostics on the terminal Virtue and Valor and Explorers of the Deep decisions, using Quick Draw as control.
 
 Required evidence before another Commander product edit:
 - identify the specific requested component threatened by terminal rejected packages;
