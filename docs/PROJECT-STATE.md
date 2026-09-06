@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-06T05:32:00.000Z**.
+Generated from `project-state.json`. Last state update: **2026-09-06T06:24:57.000Z**.
 
 ## Current mode
 
@@ -10,7 +10,7 @@ Generated from `project-state.json`. Last state update: **2026-09-06T05:32:00.00
 - Active PR: #29
 - Active milestone: **BENCH-01**
 - Intelligence development paused: **no**
-- Reason: BENCH-01 remains the critical path. Batch D broadened unseen coverage from frozen e17b0a1c...: Quick Draw moved Bracket 2→3 with 12 swaps, while Virtue and Valor and Explorers of the Deep made smaller structural gains before terminal compound-component preservation vetoes. The guard is demonstrably preventing requested identity regression, so it must not be weakened. The repeated terminal pattern now justifies one diagnostic pass on candidate discovery: prove whether component-compatible legal alternatives exist but are missed/ranked out, or classify the result as a legitimate bounded construction ceiling. No Commander product repair is authorized until that distinction is evidenced.
+- Reason: BENCH-01 remains the critical path. Raw Batch D evidence from frozen e17b0a1c... is now reconciled: Quick Draw accepted 8 swaps, remained Bracket 3→3 and stopped for target-advancement reasons; Virtue and Valor accepted 4 swaps and Explorers of the Deep accepted 4, both remaining Bracket 2→2 before terminal compound-component preservation vetoes. The guard is demonstrably preventing requested identity regression, so it must not be weakened. The repeated terminal pattern across the two unrelated veto fixtures justifies one diagnostic pass on candidate discovery: prove whether component-compatible legal alternatives exist but are missed/ranked out, or classify the result as a legitimate bounded construction ceiling. No Commander product repair is authorized until that distinction is evidenced.
 
 ## Stable boundary
 
@@ -23,7 +23,7 @@ Generated from `project-state.json`. Last state update: **2026-09-06T05:32:00.00
 
 Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
 
-The formal accepted development checkpoint remains 77a5383.... The latest fully validated executable Commander product remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. BENCH-01 Batch D ran unseen Quick Draw, Virtue and Valor, and Explorers of the Deep from that unchanged source and persisted evidence at ffcadb3c6d49e3acecbd2f626e14416bdf4dd7a9. Batch D did not reproduce the earlier zero-target-progress allocation concern. All three fixtures eventually encountered compound-component preservation vetoes; two terminated on them. Source review shows the component gate is a downstream correctness boundary after bounded role-plus-strategy candidate generation, so the next evidence gate is to distinguish a legitimate bounded construction ceiling from an upstream component-compatible candidate-discovery/ranking blind spot. Do not weaken the preservation gate without that evidence.
+The formal accepted development checkpoint remains 77a5383.... The latest fully validated executable Commander product remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. BENCH-01 Batch D ran unseen Quick Draw, Virtue and Valor, and Explorers of the Deep from that unchanged source and persisted raw evidence at ffcadb3c6d49e3acecbd2f626e14416bdf4dd7a9. Reconciliation against the persisted JSON corrected earlier human-readable overstatements: Quick Draw accepted 8 swaps and remained Bracket 3→3 before stopping for target-advancement reasons; Virtue and Valor accepted 4 swaps and remained Bracket 2→2 before terminal compound-component veto exhaustion; Explorers accepted 4 swaps and remained Bracket 2→2 before the same terminal veto class. Batch D did not reproduce the earlier zero-target-progress allocation concern. The component gate remains a downstream correctness boundary after bounded role-plus-strategy candidate generation, so the next evidence gate is to distinguish a legitimate bounded construction ceiling from an upstream component-compatible candidate-discovery/ranking blind spot. Do not weaken the preservation gate without that evidence.
 
 Latest fully validated executable experimental baseline recorded by project state:
 
@@ -47,7 +47,7 @@ Always inspect the live active-branch head before editing. A later documentation
 
 ## Current validation status
 
-- Active branch status: **bench01-batch-d-complete-component-compatible-candidate-diagnostics-next**
+- Active branch status: **bench01-batch-d-raw-evidence-reconciled-candidate-diagnostics-next**
 - Last persisted Marvel control source: `5829b37b686255ba35d419b37be17095e54fb696`
 - Last persisted Marvel control outcome: **expected-ceiling-fail-closed-zero-swap**
 - Note: At exact source 5829b37..., focused and broad Marvel execute and persist honestly with zero accepted swaps because the restricted pool cannot repair the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure. Keep these controls red for target achievement. Treat the result as expected construction-ceiling behaviour, not as a passing target and not as a blocker to BENCH-01 on other archetypes. Rerun only when the relevant pool, provider truth or policy changes.
@@ -61,9 +61,9 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 - Preserve the generic taxonomy repair product commit 387709983880fa2fd10c7f0aa50cd8b1524852f5 and validated source-equivalent head e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Card draw and lifegain are controlled only because both map to existing shared measurable role truth; unknown leftovers remain fail-closed.
 - Normal CI run 34006676470 is the formal full-suite/build/state/recovery validation for the repaired source tree at e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Never treat later evidence or state-persistence heads as newer formally validated Commander products.
 - Treat corrected-provenance Batch C run 34009618840 as replay acceptance of the card-draw/lifegain taxonomy bridge.
-- Treat BENCH-01 Batch D persisted at ffcadb3c6d49e3acecbd2f626e14416bdf4dd7a9 as unseen benchmark evidence from frozen e17b0a1c.... Quick Draw moved Bracket 2→3 with 12 swaps; Virtue and Valor accepted 8 swaps; Explorers of the Deep accepted 4. None reproduced zeroTargetProgressWhileFailedGatesRemain.
+- Treat BENCH-01 Batch D persisted at ffcadb3c6d49e3acecbd2f626e14416bdf4dd7a9 as unseen benchmark evidence from frozen e17b0a1c.... The persisted raw JSON is authoritative: Quick Draw accepted 8 swaps and remained Bracket 3→3; Virtue and Valor accepted 4 swaps and remained Bracket 2→2; Explorers of the Deep accepted 4 swaps and remained Bracket 2→2. Virtue and Explorers terminated on all-competing-packages compound-component vetoes; Quick Draw stopped for a different target-advancement reason. None reproduced zeroTargetProgressWhileFailedGatesRemain.
 - Do not convert the earlier Counter-only dense-countermagic allocation watch item into a product repair; Batch C and Batch D do not reproduce it.
-- Do not weaken candidateCompoundThemeComponentGateV15 from Batch D. Its rejected packages include requested-identity regression. The repeated terminal veto pattern authorizes diagnostics of candidate discovery/ranking, not a guard relaxation.
+- Do not weaken candidateCompoundThemeComponentGateV15 from Batch D. Its rejected packages include requested-identity regression. The repeated terminal veto pattern across Virtue and Valor and Explorers authorizes diagnostics of candidate discovery/ranking, not a guard relaxation.
 - Before any theme-aware discovery/ranking product repair, prove across unrelated fixtures that policy-compliant component-compatible structural alternatives exist inside the relevant search universe but are systematically missed or ranked out. Otherwise classify the terminal vetoes as an expected bounded construction ceiling.
 - Keep Marvel expected restricted-pool ceiling evidence and provider-unknown Scryfall HTTP 429 semantics separate from BENCH blockers.
 
@@ -71,8 +71,8 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 
 1. Do not repeat the completed comprehensive system audit; docs/SYSTEM-AUDIT-2026-09-02.md remains the reusable baseline unless a material architecture, runtime-entry-point, stable-boundary or project-state-integrity change occurs.
 2. Freeze e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest fully validated executable Commander product source. Batch D evidence persistence at ffcadb3c... is not a newer validated product baseline.
-3. Use docs/BENCH-01-BATCH-D-2026-09-06.md as the current Batch D interpretation. Do not reopen the compound parser/component repair or the dense-countermagic allocation watch item without contradictory cross-fixture evidence.
-4. Inspect/instrument bounded candidate discovery for the terminal Virtue and Valor and Explorers of the Deep rounds, with Quick Draw as a control. Record which requested component each rejected package would regress and whether a legal, budget-compliant, strategy-compatible candidate satisfying the same structural deficit exists before final ranking/exclusion.
+3. Use the reconciled docs/BENCH-01-BATCH-D-2026-09-06.md and persisted test-results/bench01-batch-d/result.json as the current Batch D evidence, with the raw JSON authoritative if any prose drifts. Do not reopen the compound parser/component repair or the dense-countermagic allocation watch item without contradictory cross-fixture evidence.
+4. Inspect/instrument bounded candidate discovery for the terminal Virtue and Valor and Explorers of the Deep decisions, with Quick Draw as a control. Record which requested component each rejected package would regress and whether a legal, budget-compliant, strategy-compatible candidate satisfying the same structural deficit exists before final ranking/exclusion.
 5. Do not weaken candidateCompoundThemeComponentGateV15. Only if multiple unrelated fixtures contain valid component-compatible alternatives that are systematically omitted/ranked out may one generic theme-aware candidate-discovery/ranking repair be implemented with focused regressions, full suite/build validation, then exact-source replay.
 6. If component-compatible alternatives do not exist within the bounded policy-compliant universe, record the result as an expected construction ceiling and broaden BENCH-01 to the remaining compact-combo, hybrid combat-combo, commander-damage, control, budget and unusual-partner families without changing product intelligence.
 7. Continue scoring hard truth, each requested component before/after, target movement versus target achievement, swap quality, strategy preservation, whole-deck coherence and expert comparison against a strong general-AI baseline. Do not equate workflow success with benchmark superiority.
@@ -109,4 +109,4 @@ Read in this order:
 9. `docs/VALIDATION-MATRIX.md`
 10. `docs/KNOWN-FAILURES.md`
 
-Then: The comprehensive audit remains reusable. BENCH-01 Batch D is complete on frozen validated source e17b0a1c.... Quick Draw made substantial progress; Virtue and Valor and Explorers of the Deep terminated on repeated component-preservation vetoes. The guard itself remains required. The exact next task is candidate-discovery diagnostics to determine whether compatible structural alternatives existed but were missed/ranked out versus a legitimate bounded construction ceiling. No product repair, PR merge or stable promotion is authorized yet. Stable remains V0.13.
+Then: The comprehensive audit remains reusable. BENCH-01 Batch D is complete on frozen validated source e17b0a1c.... Raw evidence is authoritative and has been reconciled: Quick Draw accepted 8 swaps and remained Bracket 3→3, then stopped for target-advancement reasons; Virtue and Valor accepted 4 swaps and Explorers accepted 4, both remaining Bracket 2→2 before terminal component-preservation vetoes. The guard itself remains required. The exact next task is candidate-discovery diagnostics on Virtue and Explorers, using Quick Draw as control, to determine whether compatible structural alternatives existed but were missed/ranked out versus a legitimate bounded construction ceiling. No product repair, PR merge or stable promotion is authorized yet. Stable remains V0.13.
