@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-06T08:24:54.000Z**.
+Generated from `project-state.json`. Last state update: **2026-09-06T08:41:00.000Z**.
 
 ## Current mode
 
@@ -10,7 +10,7 @@ Generated from `project-state.json`. Last state update: **2026-09-06T08:24:54.00
 - Active PR: #29
 - Active milestone: **BENCH-01**
 - Intelligence development paused: **no**
-- Reason: BENCH-01 remains active. Cross-family breadth generalization has completed: Animated Army independently reproduces the Explorers bounded-search sensitivity while Elven Empire is unchanged. Together with unchanged Quick Draw and Virtue controls, this establishes a generic candidate-discovery/ranking defect signal. The next gate is architectural diagnosis of pre-truncation discovery/ranking; no product change is accepted yet.
+- Reason: BENCH-01 remains active. Repeated cross-family breadth sensitivity plus frozen-source inspection now identifies the generic mechanism: a fixed count of serial heuristic diversification attempts can stop before viable distinct packages are reached. The next product gate is a generic adaptive bounded-diversification repair with generic control-flow regressions, while all downstream truth and preservation gates remain unchanged.
 
 ## Stable boundary
 
@@ -23,13 +23,13 @@ Generated from `project-state.json`. Last state update: **2026-09-06T08:24:54.00
 
 Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
 
-The formal accepted development checkpoint remains 77a5383.... The latest fully validated executable Commander product remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Candidate-breadth sensitivity now reproduces across two unrelated families from that unchanged frozen product: Explorers of the Deep improves from 4 swaps/Bracket 2 at breadth 4 to 9 swaps/Bracket 3 at breadth 6, and Animated Army improves from 9 swaps/Bracket 2 to 12 swaps/Bracket 3. Quick Draw, Virtue and Valor, and Elven Empire remain unchanged controls. This satisfies the cross-fixture evidence threshold for a generic bounded candidate-discovery/ranking defect signal, but does not authorize simply raising candidatePackagesPerRound. Diagnose the shared pre-truncation discovery/ranking mechanism and preserve downstream correctness gates before any product repair.
+The formal accepted development checkpoint remains 77a5383.... The latest fully validated executable Commander product remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Cross-family breadth sensitivity is established in Explorers of the Deep and Animated Army, with Quick Draw, Virtue and Valor, and Elven Empire unchanged controls. Source diagnosis at the frozen baseline shows candidatePackagesPerRound limits serial diversification attempts rather than truncating a pre-ranked pool: each candidate rebuild accumulates diversityBlocked names, and diversifyNextPackage blocks roughly half of the prior package's additions before the next planner call. Breadth 5-6 therefore reaches search states breadth 4 never explores. This justifies a generic adaptive bounded-diversification control-flow repair, not a global fixed breadth increase. No repair is accepted until focused regressions, full validation, performance evidence, and exact-source positive/control replay are green.
 
 Latest fully validated executable experimental baseline recorded by project state:
 
 - Branch: `agent/v15-native-deck-intelligence`
 - SHA: `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`
-- Scope: Fully validated generic neutral-theme taxonomy bridge for shared card-draw and lifegain semantics. Product code change is commit 387709983880fa2fd10c7f0aa50cd8b1524852f5; e17b0a1cba659b229fd6f0b6e2df79c5e464a616 differs only by persisted BENCH evidence documentation. Focused regressions cover standalone resolution/matching, unrelated compound decomposition and unchanged fail-closed unknown leftovers. Normal CI run 34006676470 passed project/state/index/recovery checks, build/type-check and the full repository test suite. Subsequent BENCH wrappers/evidence descendants are not newer formally validated product baselines.
+- Scope: Fully validated generic neutral-theme taxonomy bridge for shared card-draw and lifegain semantics. Product code change is commit 387709983880fa2fd10c7f0aa50cd8b1524852f5; e17b0a1cba659b229fd6f0b6e2df79c5e464a616 differs only by persisted BENCH evidence documentation. Focused regressions cover standalone resolution/matching, unrelated compound decomposition and unchanged fail-closed unknown leftovers. Normal CI run 34006676470 passed project/state/index/recovery checks, build/type-check and the full repository test suite. Subsequent BENCH wrappers/evidence/state descendants are not newer formally validated product baselines.
 
 Always inspect the live active-branch head before editing. A later documentation/project-management commit is not automatically a new executable validation milestone.
 
@@ -47,27 +47,29 @@ Always inspect the live active-branch head before editing. A later documentation
 
 ## Current validation status
 
-- Active branch status: **bench01-candidate-discovery-ranking-diagnosis-active**
+- Active branch status: **bench01-adaptive-diversification-repair-authorized-validation-pending**
 - Last persisted Marvel control source: `5829b37b686255ba35d419b37be17095e54fb696`
 - Last persisted Marvel control outcome: **expected-ceiling-fail-closed-zero-swap**
 - Note: At exact source 5829b37..., focused and broad Marvel execute and persist honestly with zero accepted swaps because the restricted pool cannot repair the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure. Keep these controls red for target achievement. Treat the result as expected construction-ceiling behaviour, not as a passing target and not as a blocker to BENCH-01 on other archetypes. Rerun only when the relevant pool, provider truth or policy changes.
 
 Required before resuming broad INTEL-01/INTEL-02 claims:
 
-- Keep the latest fully validated executable Commander baseline e17b0a1cba659b229fd6f0b6e2df79c5e464a616 frozen while the shared candidate-discovery/ranking mechanism is diagnosed.
-- Treat cross-family breadth reproduction as established: Explorers of the Deep and Animated Army improve at breadth 6, while Quick Draw, Virtue and Valor, and Elven Empire are unchanged controls.
-- Do not equate the reproduced defect signal with authorization to raise candidatePackagesPerRound globally. Inspect pre-truncation candidate sources, ordering, deduplication, diversity, target coverage, and ranking; prefer benchmark-only diagnostics before product edits when mechanism evidence is incomplete.
-- Do not weaken compound-theme/component preservation, legality, budget, printing, strategy-preservation, or simulation gates to manufacture target achievement.
+- Keep e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest fully validated executable Commander baseline until an exact adaptive-diversification repair SHA completes formal validation.
+- Treat the mechanism as established: candidatePackagesPerRound bounds serial planner diversification attempts with accumulated blocked additions; positions 5-6 are new search states, not merely lower-ranked entries from a precomputed pool.
+- Implement only a generic adaptive bounded-diversification control flow with a hard work ceiling and novelty/no-progress termination; do not encode a global breadth-6 magic-number fix.
+- Add generic regressions proving continued exploration while diversification is novel, termination on duplicate/no-new states, bounded work, unchanged winner selection/provenance, and unchanged downstream correctness gates.
+- Do not weaken compound-theme/component preservation, legality, budget, printing, strategy-preservation, package acceptance, target-progress, or simulation gates.
+- After focused + full validation, replay Explorers and Animated Army plus unchanged controls from one exact repair SHA and record runtime/performance cost before acceptance.
 - Keep the earlier Counter Blitz dense-countermagic allocation concern watch-only unless a broader cross-fixture batch reproduces it.
 - Do not merge PR #29 or promote stable/current V0.13 until BENCH-01 becomes promotion-grade and all relevant validation evidence is green.
 
 ## Next actions
 
-1. Inspect the shared bounded candidate-discovery/ranking implementation at frozen source e17b0a1c..., specifically the pre-truncation candidate sources, ordering, deduplication, target/component coverage, diversity and top-N selection used by candidatePackagesPerRound.
-2. Instrument benchmark-only pre-truncation diagnostics on Explorers of the Deep and Animated Army, with at least one unchanged control, if source inspection alone cannot prove why breadth positions 5-6 expose viable accepted packages.
-3. Only after the repeated mechanism is demonstrated, implement the smallest generic discovery/ranking repair; do not simply increase the global breadth cap and do not weaken downstream correctness gates.
-4. Validate any exact repair SHA with focused regressions, full repository CI/build/state-integrity checks, then replay the positive fixtures and controls from one unchanged validated source before accepting it.
-5. Keep PR #29 unmerged and stable/current V0.13 unchanged until BENCH-01 is promotion-grade.
+1. Add generic control-flow regression coverage for adaptive bounded diversification: continue beyond an initial soft breadth only while materially novel packages/search states are produced; stop on duplicate/no-new states; enforce a strict hard work ceiling; preserve current winner selection and candidate-attempt provenance.
+2. Implement the smallest generic adaptive bounded-diversification repair in optimizer-v12 without changing downstream legality, budget, printing, strategy, package-acceptance, target-progress, simulation, theme or component gates.
+3. Run focused optimizer regressions first, then full repository tests/type-check/build/project-state integrity; never mark the repair validated before all required evidence is green.
+4. Freeze the exact validated repair SHA and replay Explorers of the Deep and Animated Army plus Quick Draw, Virtue and Valor, and Elven Empire controls; compare quality movement and runtime/work cost against e17b0a1c....
+5. Accept or reject the repair from cross-fixture replay; only then broaden BENCH-01 or consider PR #29 / V0.15 promotion readiness.
 
 ## Permanent truth boundary
 
@@ -80,7 +82,7 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 - A compound aggregate theme-density pass does not prove that every explicitly requested component was preserved or improved.
 - For a controlled compound request, candidate acceptance must preserve every already-satisfied component and must not move any below-target component backward while gains elsewhere compensate.
 - A downstream preservation veto does not by itself prove the guard is too strict; distinguish lack of compatible candidates from candidate-discovery/ranking failure before changing product behavior.
-- Repeated candidate-breadth sensitivity across unrelated benchmark fixtures is a generic candidate-discovery/ranking defect signal, but it does not by itself prove that a higher global breadth cap is the correct repair.
+- Repeated breadth sensitivity plus source proof that the breadth parameter bounds serial diversification justifies repairing the diversification control flow, not simply moving the fixed cap.
 - Common Commander vocabulary must only become enforceable when it maps to generic measurable card semantics; never silently accept unknown leftovers.
 - Never treat an unvalidated head or staged repair as an accepted checkpoint.
 - No scenario-specific, card-name or benchmark-specific hacks; product changes require generic evidence.
@@ -101,4 +103,4 @@ Read in this order:
 9. `docs/VALIDATION-MATRIX.md`
 10. `docs/KNOWN-FAILURES.md`
 
-Then: BENCH-01 remains active on frozen validated product e17b0a1c.... Cross-family breadth sensitivity now reproduces in Explorers of the Deep and Animated Army, while Quick Draw, Virtue and Valor, and Elven Empire remain unchanged controls. This is sufficient evidence of a generic bounded candidate-discovery/ranking defect signal, but not evidence that globally raising candidatePackagesPerRound is the right repair. Diagnose/instrument the shared pre-truncation mechanism first, preserve all downstream correctness gates, and only then consider a generic product repair. Stable remains V0.13 and PR #29 remains unmerged.
+Then: BENCH-01 remains active on frozen validated product e17b0a1c.... Explorers and Animated Army reproduce breadth sensitivity; Quick Draw, Virtue and Valor, and Elven Empire are controls. Frozen-source inspection establishes that candidatePackagesPerRound bounds serial diversification attempts: each planner call accumulates blocked prior additions, so later candidate numbers are genuinely new search states. A generic adaptive bounded-diversification repair is now justified, but no fixed breadth increase or downstream guard weakening is authorized. Add generic control-flow regressions, implement the smallest adaptive bounded repair, fully validate the exact SHA, then replay positives and controls before acceptance. Stable remains V0.13 and PR #29 remains unmerged.
