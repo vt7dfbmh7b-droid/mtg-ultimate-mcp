@@ -17,11 +17,11 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
 - Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
-- Active branch validation: **bench01-batch-d-complete-component-compatible-candidate-diagnostics-next**
+- Active branch validation: **bench01-batch-d-raw-evidence-reconciled-candidate-diagnostics-next**
 
 ## Audit reuse rule
 
-The comprehensive audit remains reusable. BENCH-01 Batch D is complete on frozen validated source e17b0a1c.... Quick Draw made substantial progress; Virtue and Valor and Explorers of the Deep terminated on repeated component-preservation vetoes. The guard itself remains required. The exact next task is candidate-discovery diagnostics to determine whether compatible structural alternatives existed but were missed/ranked out versus a legitimate bounded construction ceiling. No product repair, PR merge or stable promotion is authorized yet. Stable remains V0.13.
+The comprehensive audit remains reusable. BENCH-01 Batch D is complete on frozen validated source e17b0a1c.... Raw evidence is authoritative and has been reconciled: Quick Draw accepted 8 swaps and remained Bracket 3→3, then stopped for target-advancement reasons; Virtue and Valor accepted 4 swaps and Explorers accepted 4, both remaining Bracket 2→2 before terminal component-preservation vetoes. The guard itself remains required. The exact next task is candidate-discovery diagnostics on Virtue and Explorers, using Quick Draw as control, to determine whether compatible structural alternatives existed but were missed/ranked out versus a legitimate bounded construction ceiling. No product repair, PR merge or stable promotion is authorized yet. Stable remains V0.13.
 
 ## Stable safety boundary
 
@@ -41,9 +41,9 @@ The last persisted Marvel control is `5829b37b686255ba35d419b37be17095e54fb696` 
 
 1. Do not repeat the completed comprehensive system audit; docs/SYSTEM-AUDIT-2026-09-02.md remains the reusable baseline unless a material architecture, runtime-entry-point, stable-boundary or project-state-integrity change occurs.
 2. Freeze e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest fully validated executable Commander product source. Batch D evidence persistence at ffcadb3c... is not a newer validated product baseline.
-3. Use docs/BENCH-01-BATCH-D-2026-09-06.md as the current Batch D interpretation. Do not reopen the compound parser/component repair or the dense-countermagic allocation watch item without contradictory cross-fixture evidence.
-4. Inspect/instrument bounded candidate discovery for the terminal Virtue and Valor and Explorers of the Deep rounds, with Quick Draw as a control. Record which requested component each rejected package would regress and whether a legal, budget-compliant, strategy-compatible candidate satisfying the same structural deficit exists before final ranking/exclusion.
-5. Do not weaken candidateCompoundThemeComponentGateV15. Only if multiple unrelated fixtures contain valid component-compatible alternatives that are systematically omitted/ranked out may one generic theme-aware candidate-discovery/ranking repair be implemented with focused regressions, full suite/build validation, then exact-source replay.
+3. Use the reconciled `docs/BENCH-01-BATCH-D-2026-09-06.md` and persisted `test-results/bench01-batch-d/result.json` as the current Batch D evidence, with the raw JSON authoritative if any prose drifts. Do not reopen the compound parser/component repair or the dense-countermagic allocation watch item without contradictory cross-fixture evidence.
+4. Inspect/instrument bounded candidate discovery for the terminal Virtue and Valor and Explorers of the Deep decisions, with Quick Draw as a control. Record which requested component each rejected package would regress and whether a legal, budget-compliant, strategy-compatible candidate satisfying the same structural deficit exists before final ranking/exclusion.
+5. Do not weaken `candidateCompoundThemeComponentGateV15`. Only if multiple unrelated fixtures contain valid component-compatible alternatives that are systematically omitted/ranked out may one generic theme-aware candidate-discovery/ranking repair be implemented with focused regressions, full suite/build validation, then exact-source replay.
 6. If component-compatible alternatives do not exist within the bounded policy-compliant universe, record the result as an expected construction ceiling and broaden BENCH-01 to the remaining compact-combo, hybrid combat-combo, commander-damage, control, budget and unusual-partner families without changing product intelligence.
 7. Continue scoring hard truth, each requested component before/after, target movement versus target achievement, swap quality, strategy preservation, whole-deck coherence and expert comparison against a strong general-AI baseline. Do not equate workflow success with benchmark superiority.
 8. PR #29 and stable V0.13 remain unchanged while BENCH-01 is not promotion-grade. Standing authorization permits merge/promotion without another approval only after complete validation and broad benchmark evidence demonstrate the specialist is genuinely ready.
