@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-06T08:41:00.000Z",
+  "updatedAt": "2026-09-06T11:08:00.000Z",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
   "stable": {"branch":"main","version":"0.13.0","serverCurrent":"V0.13","promotionAuthorized":true},
@@ -8,17 +8,17 @@
     "activeBranch": "agent/v15-native-deck-intelligence",
     "activePullRequest": 29,
     "developmentCheckpointSha": "77a5383fa7490aa91360b8186a4bda890f632157",
-    "developmentCheckpointNote": "The formal accepted development checkpoint remains 77a5383.... The latest fully validated executable Commander product remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Cross-family breadth sensitivity is established in Explorers of the Deep and Animated Army, with Quick Draw, Virtue and Valor, and Elven Empire unchanged controls. Source diagnosis at the frozen baseline shows candidatePackagesPerRound limits serial diversification attempts rather than truncating a pre-ranked pool: each candidate rebuild accumulates diversityBlocked names, and diversifyNextPackage blocks roughly half of the prior package's additions before the next planner call. Breadth 5-6 therefore reaches search states breadth 4 never explores. This justifies a generic adaptive bounded-diversification control-flow repair, not a global fixed breadth increase. No repair is accepted until focused regressions, full validation, performance evidence, and exact-source positive/control replay are green.",
+    "developmentCheckpointNote": "The formal accepted development checkpoint remains 77a5383.... The latest accepted fully validated Commander product remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Adaptive diversification candidate 247fb37bc34ad70678ff12ec297a6e9bdc220323 was engineering-green but failed manual whole-deck acceptance. Strategy-anchor descendant 2e34ebff20d0a66b7c4649feb1e9984c156e43ca passed focused regression, full repository tests and build, and its five-fixture replay confirms the false Equipment/Voltron inference was corrected. However, Animated Army still regressed in whole-deck quality and Elven Empire / Explorers still expose generic structural replacement pressure overriding requested identity quality. The adaptive lineage therefore remains unaccepted. The next product gate is generic identity-aware replacement-priority diagnosis/repair, not more breadth tuning or weaker preservation gates.",
     "lastFullyValidatedExperimentalBaseline": {
       "branch":"agent/v15-native-deck-intelligence",
       "sha":"e17b0a1cba659b229fd6f0b6e2df79c5e464a616",
-      "scope":"Fully validated generic neutral-theme taxonomy bridge for shared card-draw and lifegain semantics. Product code change is commit 387709983880fa2fd10c7f0aa50cd8b1524852f5; e17b0a1cba659b229fd6f0b6e2df79c5e464a616 differs only by persisted BENCH evidence documentation. Focused regressions cover standalone resolution/matching, unrelated compound decomposition and unchanged fail-closed unknown leftovers. Normal CI run 34006676470 passed project/state/index/recovery checks, build/type-check and the full repository test suite. Subsequent BENCH wrappers/evidence/state descendants are not newer formally validated product baselines."
+      "scope":"Latest accepted fully validated Commander product baseline. Generic neutral-theme taxonomy bridge for shared card-draw and lifegain semantics. Later adaptive-diversification and strategy-anchor descendants contain useful engineering fixes/evidence but have not passed required manual whole-deck Commander-quality acceptance as a product lineage."
     }
   },
   "workMode": {
     "intelligenceDevelopmentPaused": false,
     "activeMilestone":"BENCH-01",
-    "reason":"BENCH-01 remains active. Repeated cross-family breadth sensitivity plus frozen-source inspection now identifies the generic mechanism: a fixed count of serial heuristic diversification attempts can stop before viable distinct packages are reached. The next product gate is a generic adaptive bounded-diversification repair with generic control-flow regressions, while all downstream truth and preservation gates remain unchanged."
+    "reason":"BENCH-01 remains active. Manual replay now shows candidate breadth was only part of the problem: corrected strategy inference still permits structurally attractive replacements that materially weaken commander/requested identity. The next evidence-driven capability is generic identity-aware replacement priority while all hard truth, component, strategy-loss, simulation and validation gates remain unchanged."
   },
   "milestones": [
     {"id":"PM-01","name":"Persistent Project State & Handoff Automation","status":"validated","goal":"Make repository state authoritative so a fresh chat can recover exact project context with minimal rechecking."},
@@ -30,17 +30,18 @@
     {"id":"INTEL-04","name":"Counterfactual deck comparison & expert explanation","status":"planned","goal":"Compare complete 100-card alternatives and explain why one deck state is stronger under the exact requested constraints."}
   ],
   "validation": {
-    "activeBranchStatus":"bench01-adaptive-diversification-repair-authorized-validation-pending",
+    "activeBranchStatus":"bench01-strategy-anchor-fixed-adaptive-lineage-manual-rejected-identity-replacement-priority-next",
     "latestPersistedMarvelControl":{"sourceSha":"5829b37b686255ba35d419b37be17095e54fb696","outcome":"expected-ceiling-fail-closed-zero-swap","note":"At exact source 5829b37..., focused and broad Marvel execute and persist honestly with zero accepted swaps because the restricted pool cannot repair the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure. Keep these controls red for target achievement. Treat the result as expected construction-ceiling behaviour, not as a passing target and not as a blocker to BENCH-01 on other archetypes. Rerun only when the relevant pool, provider truth or policy changes."},
     "requiredBeforeResumingIntelligenceClaims":[
-      "Keep e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest fully validated executable Commander baseline until an exact adaptive-diversification repair SHA completes formal validation.",
-      "Treat the mechanism as established: candidatePackagesPerRound bounds serial planner diversification attempts with accumulated blocked additions; positions 5-6 are new search states, not merely lower-ranked entries from a precomputed pool.",
-      "Implement only a generic adaptive bounded-diversification control flow with a hard work ceiling and novelty/no-progress termination; do not encode a global breadth-6 magic-number fix.",
-      "Add generic regressions proving continued exploration while diversification is novel, termination on duplicate/no-new states, bounded work, unchanged winner selection/provenance, and unchanged downstream correctness gates.",
-      "Do not weaken compound-theme/component preservation, legality, budget, printing, strategy-preservation, package acceptance, target-progress, or simulation gates.",
-      "After focused + full validation, replay Explorers and Animated Army plus unchanged controls from one exact repair SHA and record runtime/performance cost before acceptance.",
+      "Keep e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest accepted fully validated Commander baseline until a later product lineage passes both formal validation and required whole-deck BENCH acceptance.",
+      "Retain the generic positive Equipment/equip/attach anchor regression from 2e34ebff20d0a66b7c4649feb1e9984c156e43ca; the false Bello Equipment/Voltron strategy signal is a closed semantic defect.",
+      "Treat 247fb37bc34ad70678ff12ec297a6e9bdc220323 adaptive diversification as engineering-green but manually rejected, and 2e34ebff20d0a66b7c4649feb1e9984c156e43ca as a fully tested strategy-anchor descendant whose overall adaptive lineage remains manually rejected.",
+      "Diagnose the generic replacement-priority path that lets structural Bracket gains outrank commander/requested-theme identity quality above minimum theme/component floors.",
+      "Any repair must compare relative IN-versus-OUT identity/strategy value generically; do not freeze all typal/theme cards, add fixture/card exceptions, weaken target gates, or simply raise theme minimums.",
+      "Do not weaken compound-theme/component preservation, legality, budget, printing, strategy-preservation, package acceptance, target-progress, simulation or win-route truth gates.",
+      "Require focused + full validation and one frozen-source multi-fixture replay with manual whole-deck review before accepting a replacement-priority repair.",
       "Keep the earlier Counter Blitz dense-countermagic allocation concern watch-only unless a broader cross-fixture batch reproduces it.",
-      "Do not merge PR #29 or promote stable/current V0.13 until BENCH-01 becomes promotion-grade and all relevant validation evidence is green."
+      "Do not merge PR #29 or promote stable/current V0.13 until BENCH-01 becomes promotion-grade and all relevant validation and manual quality evidence are green."
     ]
   },
   "truthBoundary":[
@@ -53,22 +54,24 @@
     "A compound aggregate theme-density pass does not prove that every explicitly requested component was preserved or improved.",
     "For a controlled compound request, candidate acceptance must preserve every already-satisfied component and must not move any below-target component backward while gains elsewhere compensate.",
     "A downstream preservation veto does not by itself prove the guard is too strict; distinguish lack of compatible candidates from candidate-discovery/ranking failure before changing product behavior.",
-    "Repeated breadth sensitivity plus source proof that the breadth parameter bounds serial diversification justifies repairing the diversification control flow, not simply moving the fixed cap.",
+    "Repeated breadth sensitivity plus source proof that the breadth parameter bounds serial diversification justified adaptive-search experimentation, but manual whole-deck rejection means breadth movement alone is not product-quality success.",
+    "Correct strategy labels do not by themselves prove replacement quality; relative commander/requested-identity value of IN versus OUT must be considered above hard minimum floors.",
     "Common Commander vocabulary must only become enforceable when it maps to generic measurable card semantics; never silently accept unknown leftovers.",
-    "Never treat an unvalidated head or staged repair as an accepted checkpoint.",
+    "Never treat an unvalidated or manually rejected head as an accepted checkpoint.",
     "No scenario-specific, card-name or benchmark-specific hacks; product changes require generic evidence.",
     "Stable/current promotion or PR merging requires complete validation, non-redundancy, safety and promotion-grade benchmark evidence. The user has granted standing authority to perform those actions once those gates are genuinely satisfied; no extra approval is required at that point."
   ],
   "nextActions":[
-    "Add generic control-flow regression coverage for adaptive bounded diversification: continue beyond an initial soft breadth only while materially novel packages/search states are produced; stop on duplicate/no-new states; enforce a strict hard work ceiling; preserve current winner selection and candidate-attempt provenance.",
-    "Implement the smallest generic adaptive bounded-diversification repair in optimizer-v12 without changing downstream legality, budget, printing, strategy, package-acceptance, target-progress, simulation, theme or component gates.",
-    "Run focused optimizer regressions first, then full repository tests/type-check/build/project-state integrity; never mark the repair validated before all required evidence is green.",
-    "Freeze the exact validated repair SHA and replay Explorers of the Deep and Animated Army plus Quick Draw, Virtue and Valor, and Elven Empire controls; compare quality movement and runtime/work cost against e17b0a1c....",
-    "Accept or reject the repair from cross-fixture replay; only then broaden BENCH-01 or consider PR #29 / V0.15 promotion readiness."
+    "Inspect optimizer-v12 / deck-builder-v07 / strategy-affinity and theme-scoring paths to locate where structural target pressure can select an IN card that is materially weaker than the OUT card for explicit commander/requested identity while aggregate strategy/theme floors still pass.",
+    "Define generic identity-aware replacement-priority regressions across at least typal (Elven Empire), artifact/enchantment (Animated Army), and spellslinger/enchantment controls; require relative IN-versus-OUT identity/strategy preservation without forbidding necessary structural cuts.",
+    "Implement the smallest generic replacement-priority repair only if source diagnosis supports a centralized mechanism; keep all downstream truth/preservation/simulation gates unchanged.",
+    "Run focused regressions, then full repository tests/type-check/build/project-state integrity; freeze the exact green repair SHA.",
+    "Replay Animated Army, Elven Empire and Explorers of the Deep plus Quick Draw and Virtue and Valor controls from that unchanged SHA; manually inspect complete decks and compare against the rejected 247fb37/2e34 lineage before acceptance.",
+    "Only after manual whole-deck quality improves across the repeated failure pattern should BENCH-01 broaden or PR #29 / V0.15 promotion readiness be reconsidered."
   ],
   "handoffProtocol": {
     "readFirst":["project-state.json","docs/PROJECT-STATE.md","validation-index.json","docs/VALIDATION-STATE.md","ULTIMATE_MTG_SPEC.md","docs/COMMANDER-SPECIALIST-OBJECTIVE.md","docs/ROADMAP.md","docs/DECISIONS.md","docs/VALIDATION-MATRIX.md","docs/KNOWN-FAILURES.md"],
-    "then":"BENCH-01 remains active on frozen validated product e17b0a1c.... Explorers and Animated Army reproduce breadth sensitivity; Quick Draw, Virtue and Valor, and Elven Empire are controls. Frozen-source inspection establishes that candidatePackagesPerRound bounds serial diversification attempts: each planner call accumulates blocked prior additions, so later candidate numbers are genuinely new search states. A generic adaptive bounded-diversification repair is now justified, but no fixed breadth increase or downstream guard weakening is authorized. Add generic control-flow regressions, implement the smallest adaptive bounded repair, fully validate the exact SHA, then replay positives and controls before acceptance. Stable remains V0.13 and PR #29 remains unmerged.",
+    "then":"BENCH-01 remains active. The adaptive-diversification candidate 247fb37... was engineering-green but manually rejected. Generic strategy-anchor repair descendant 2e34ebff... passed focused/full/build validation and closed the false Equipment/Voltron inference defect, but its five-fixture replay still fails whole-deck Commander-quality acceptance: Animated Army remains a structural-but-strategic regression and Elven Empire / Explorers still expose identity erosion above hard theme floors. Keep e17b0a1c... as the latest accepted product baseline. Next: diagnose and generically repair identity-aware replacement priority, then fully validate and replay positives + controls from one frozen SHA. Stable remains V0.13 and PR #29 remains unmerged.",
     "compatibilityEntryPoint":"PROJECT_HANDOFF.md"
   }
 }
