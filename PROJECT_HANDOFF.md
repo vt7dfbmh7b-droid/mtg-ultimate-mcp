@@ -21,7 +21,7 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 
 ## Audit reuse rule
 
-BENCH-01 remains active. Keep `e17b0a1c...` as the latest accepted product baseline. Source diagnosis for the repeated identity erosion is complete: `deck-builder-v07` applies hard semantic/structural/authoritative/package/curve gates first, then chooses among surviving cuts without a relative requested-theme IN-vs-OUT identity comparison. Commits `db471dc7...` / `9e809785...` stage a generic advisory replacement-identity comparator and contrasting typal, artifact/enchantment, and spellslinger regressions. The primitive is **not runtime-wired, validated, or accepted**. Next: wire it into legal cut ordering, add integration coverage, fully validate, freeze the green SHA, then replay failures + controls. Stable remains V0.13 and PR #29 remains unmerged.
+BENCH-01 remains active. Keep e17b0a1c... as the latest accepted product baseline. The source diagnosis for identity erosion is complete: deck-builder-v07 lacks relative requested-theme IN-vs-OUT ranking after hard gates. Commits db471dc7/9e809785 stage a generic advisory comparator and contrasting regression contract, but runtime wiring and validation remain unfinished. Next: wire the comparator into legal cut ordering, add integration coverage, fully validate, freeze the green SHA, then replay Animated Army / Elven Empire / Explorers plus Quick Draw / Virtue and Valor controls. Stable remains V0.13 and PR #29 remains unmerged.
 
 ## Stable safety boundary
 
@@ -39,7 +39,7 @@ The last persisted Marvel control is `5829b37b686255ba35d419b37be17095e54fb696` 
 
 ## Next actions
 
-1. Wire `replacement-identity-priority-v15` into `deck-builder-v07` candidate-cut ordering only after all existing hard semantic/structural/authoritative/package/curve gates; derive controlled-theme membership from existing `explicitTheme` metadata and substantive strategy affinity from existing V0.15 `strategyAffinity` matches.
+1. Wire replacement-identity-priority-v15 into deck-builder-v07 candidate-cut ordering only after existing hard semantic/structural/authoritative/package/curve gates; derive controlled-theme match from existing explicitTheme metadata and substantive strategy affinity from existing V0.15 strategyAffinity matches.
 2. Add an integration regression proving an on-identity legal cut outranks an identity-eroding legal cut while a structurally necessary identity cut remains possible when no equal legal alternative exists.
 3. Run focused replacement-priority regressions, then full repository tests/type-check/build/project-state integrity; freeze the exact green repair SHA.
 4. Replay Animated Army, Elven Empire and Explorers of the Deep plus Quick Draw and Virtue and Valor controls from that unchanged SHA; manually inspect complete decks and compare against the rejected 247fb37/2e34 lineage before acceptance.
