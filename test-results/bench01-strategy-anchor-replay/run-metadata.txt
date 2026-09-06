@@ -1,0 +1,8 @@
+product_runtime_baseline_sha=2e34ebff20d0a66b7c4649feb1e9984c156e43ca
+source_relationship=wrapper-descendant-src-verified-equal-to-frozen-product-sha
+repository_tests_outcome=success
+build_outcome=success
+bench_outcome=success
+batch=BENCH-01-STRATEGY-ANCHOR-REPLAY
+source_frozen_within_batch=true
+fixtures=quick-draw,virtue-and-valor,explorers-of-the-deep,elven-empire,animated-army
