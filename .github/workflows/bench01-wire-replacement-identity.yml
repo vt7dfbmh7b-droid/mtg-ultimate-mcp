@@ -156,8 +156,26 @@ jobs:
       - name: Regenerate derived project-state surfaces
         run: npm run project:handoff
 
-      - name: Full repository validation
-        run: npm run check
+      - name: Validate project-state TypeScript
+        run: npm run project:typecheck
+
+      - name: Validate scripts TypeScript
+        run: npm run scripts:typecheck
+
+      - name: Validate project state
+        run: npm run project:validate
+
+      - name: Validate validation index
+        run: npm run validation:validate
+
+      - name: Validate project resume
+        run: npm run project:resume > /dev/null
+
+      - name: Build production TypeScript
+        run: npm run build
+
+      - name: Full test suite
+        run: npm test
 
       - name: Fail closed if branch moved during validation
         run: |
