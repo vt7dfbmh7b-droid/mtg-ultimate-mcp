@@ -90,37 +90,54 @@ Corrected-provenance replay accepted the bridge:
 
 Verdict: vocabulary bridge accepted; no allocation repair or guard weakening authorized from Batch C.
 
-### Batch D — COMPLETE — raw evidence reconciled; two terminal preservation-veto fixtures require diagnostics
+### Batch D — COMPLETE — raw evidence reconciled
 
 Frozen executable product source: `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`.
 Persisted evidence head: `ffcadb3c6d49e3acecbd2f626e14416bdf4dd7a9`.
 Authoritative raw artifact: `test-results/bench01-batch-d/result.json`.
 Detailed reconciled interpretation: `docs/BENCH-01-BATCH-D-2026-09-06.md`.
 
-A recovery pass found that the first prose interpretation overstated Quick Draw and Virtue and Valor. The persisted JSON is authoritative and records:
-- **Quick Draw**: 8 swaps, Bracket 3 → 3; average nonland MV 3.27 → 2.84, early plays +4, cheap interaction +3, tutors +2; stopped for target-advancement rather than the terminal all-packages component veto.
-- **Virtue and Valor**: 4 swaps, Bracket 2 → 2; average nonland MV 3.31 → 3.10, early plays +4, cheap interaction +1, tutors +1; then terminated because all competing packages would regress a required compound-theme component.
-- **Explorers of the Deep**: 4 swaps, Bracket 2 → 2; average nonland MV 3.13 → 2.92, early plays +2, cheap interaction +1, tutors +1; then terminated on the same all-competing-packages component-veto class.
+Authoritative results:
+- **Quick Draw**: 8 swaps, Bracket 3 → 3; meaningful structural improvement, then target-advancement stop.
+- **Virtue and Valor**: 4 swaps, Bracket 2 → 2; terminal competing packages would regress required compound-theme components.
+- **Explorers of the Deep**: 4 swaps, Bracket 2 → 2; same terminal component-veto class.
 - None reproduced the earlier Counter zero-target-progress pattern.
 
-The downstream compound-component guard is still doing necessary correctness work. Do **not** weaken `candidateCompoundThemeComponentGateV15()` merely because Virtue and Explorers terminate on it.
+The downstream compound-component guard is doing necessary correctness work and remains locked.
 
-Source review shows candidate plans are generated through bounded role/strategy search and only afterward checked by the component-preservation gate. The repeated pattern across the two unrelated terminal fixtures therefore creates a narrower diagnostic question:
+### Batch D candidate-breadth diagnostic — COMPLETE / PERSISTENCE VERIFICATION ACTIVE
 
-1. Are there no legal/budget/strategy-compatible candidates that repair the structural deficit while preserving the requested component? If so, this is an expected bounded construction ceiling.
-2. Or do compatible candidates exist inside the relevant search universe but bounded discovery/ranking systematically omits them? If so, repeated cross-fixture evidence may justify one generic theme-aware candidate-discovery/ranking repair.
+Detailed interpretation: `docs/BENCH-01-BATCH-D-CANDIDATE-BREADTH-2026-09-06.md`.
 
-Quick Draw is the control because it made meaningful structural progress from the same frozen source and terminated for a different reason.
+The diagnostic kept executable source frozen at `e17b0a1c...` and changed only `candidatePackagesPerRound` from the Batch D value 4 to the currently supported maximum 6.
+
+Actions run `34019315945` passed the frozen-source guard, repository tests, build and diagnostic execution. Its uploaded raw artifact records:
+- **Quick Draw**: unchanged at 8 swaps, Bracket 3;
+- **Virtue and Valor**: unchanged at 4 swaps, Bracket 2;
+- **Explorers of the Deep**: **9 swaps, Bracket 3**, versus 4 swaps/Bracket 2 at breadth 4.
+
+Explorers therefore proves a real bounded package-diversification sensitivity: broader supported search surfaced additional component-preserving accepted paths and produced +5 swaps / +1 assessed bracket. Virtue provides the counterexample—the same breadth increase did not change its ceiling—and Quick Draw is an unchanged control.
+
+This is **one positive fixture, not a repeated unrelated-fixture defect**. It does not authorize a Commander product change yet. `candidateCompoundThemeComponentGateV15()` must not be weakened; the terminal rejected packages still include genuine requested-component regressions.
+
+The first diagnostic persistence attempt committed empty raw result/log copies because checkout reset occurred before runtime output was copied. The full uploaded Actions artifact remains intact. Workflow commit `18f47aec4d3a1109cb26a88d51960dd5100b0ac9` stages runtime evidence outside the checkout before reset and is being rerun to verify durable non-empty persistence. This is a harness/provenance correction only, not product validation movement.
 
 ### Current BENCH-01 gate
 
-Freeze `e17b0a1c...` as the latest fully validated executable product source and perform candidate-discovery diagnostics on the terminal Virtue and Valor and Explorers of the Deep decisions, using Quick Draw as control.
+Freeze `e17b0a1c...` as the latest fully validated executable product source.
+
+After corrected persistence is verified, broaden the diagnostic across unchanged source with at least:
+1. another unseen component-rich typal/theme fixture; and
+2. an unrelated non-typal compound-theme fixture.
+
+Compare normal package breadth 4 with supported breadth 6 while keeping all other fixture inputs and executable product source unchanged.
 
 Required evidence before another Commander product edit:
-- identify the specific requested component threatened by terminal rejected packages;
-- establish whether policy-compliant alternatives for the same structural role exist before final ranking/exclusion;
-- show the same inappropriate omission/ranking pattern in multiple unrelated fixtures before implementing a generic repair;
-- otherwise classify the result as an expected bounded construction ceiling and broaden unseen fixtures without changing product intelligence.
+- reproduce breadth-sensitive missed opportunities in multiple unrelated families;
+- retain exact legality, budget, strategy and every requested component floor;
+- distinguish extra target movement from actual target achievement;
+- if the pattern repeats, justify one generic candidate-discovery/ranking repair and validate it with focused regressions, full suite/build, then exact-source benchmark replay;
+- if it does not repeat, classify Explorers as an isolated bounded-search sensitivity, Virtue as a supported-breadth construction ceiling, and continue broader BENCH coverage without changing product intelligence.
 
 Remaining benchmark coverage should continue across compact unrestricted combo, hybrid combat-combo, commander-damage/combat, control, aristocrats, budget and unusual-partner families. Complete expert comparison against strong locked general-AI baselines remains necessary before promotion.
 
