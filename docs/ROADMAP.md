@@ -46,32 +46,38 @@ Frozen source `e17b0a1c...` produced: Quick Draw 8 swaps / Bracket 3→3; Virtue
 
 ### Candidate-breadth diagnostic — COMPLETE
 
-With the same frozen product source and all other inputs unchanged, changing only `candidatePackagesPerRound` from 4 to supported maximum 6 produced:
-- Quick Draw: unchanged at 8 swaps / Bracket 3;
-- Virtue and Valor: unchanged at 4 swaps / Bracket 2;
-- Explorers of the Deep: **4 swaps / Bracket 2 → 9 swaps / Bracket 3**.
+With the same frozen product source and all other inputs unchanged, changing only `candidatePackagesPerRound` from 4 to supported maximum 6 produced Quick Draw unchanged, Virtue unchanged, and Explorers improving from **4 swaps / Bracket 2 to 9 swaps / Bracket 3**.
 
-This established one real bounded-search sensitivity but was insufficient alone for a product edit.
+### Cross-family breadth generalization — COMPLETE
 
-### Cross-family breadth generalization — COMPLETE / GENERIC DEFECT SIGNAL ESTABLISHED
+The frozen-source follow-up compared breadth 4 vs 6 on two unrelated unseen families. **Elven Empire** remained 8 swaps / Bracket 2. **Animated Army** improved from 9 swaps / Bracket 2 to **12 swaps / Bracket 3**, with stronger rubric total and strategy count.
 
-The follow-up frozen-source generalization used two unrelated unseen families while keeping executable Commander source exactly `e17b0a1c...` and comparing breadth 4 vs 6 with all other refinement inputs unchanged. Frozen-source guard, repository tests and build passed before execution.
+Explorers + Animated Army therefore establish a repeated cross-family bounded candidate-discovery/ranking defect signal, while Quick Draw, Virtue and Valor, and Elven Empire are unchanged controls.
 
-Results:
-- **Elven Empire**: unchanged breadth 4 vs 6 at 8 swaps / Bracket 2; control non-reproduction.
-- **Animated Army**: breadth 4 = 9 swaps / Bracket 2; breadth 6 = **12 swaps / Bracket 3**, with stronger rubric total and strategy count; positive reproduction.
+### Candidate-discovery mechanism diagnosis — COMPLETE / REPAIR AUTHORIZED, VALIDATION PENDING
 
-Together, Explorers of the Deep and Animated Army provide two unrelated positive fixtures, while Quick Draw, Virtue and Valor, and Elven Empire are unchanged controls. This satisfies the cross-fixture evidence threshold for a **generic bounded candidate-discovery/ranking defect signal**.
+Detailed diagnosis: `docs/BENCH-01-CANDIDATE-DISCOVERY-DIAGNOSIS-2026-09-06.md`.
 
-It does **not** prove that globally raising `candidatePackagesPerRound` is the correct product repair. The next gate is architectural diagnosis of the shared pre-truncation candidate pipeline: candidate sources, ordering, deduplication, priority-target/component coverage, diversity and top-N selection. If source inspection alone is insufficient, add benchmark-only instrumentation on Explorers and Animated Army with at least one unchanged control to determine why positions 5–6 expose viable accepted packages.
+Frozen-source inspection establishes that `candidatePackagesPerRound` does not merely truncate a pre-ranked candidate pool. `refineCommanderDeckIterativelyV12()` invokes the planner sequentially. After each generated plan, `diversifyNextPackage()` adds roughly half of that package's incoming cards to `diversityBlocked`; later planner calls therefore explore search states that earlier candidate numbers never enter. Rejected strategy/package-acceptance cuts can also expand blocked-cut state.
 
-No downstream legality, budget, printing, strategy-preservation, simulation or compound-component gate may be weakened. Only after the repeated mechanism is demonstrated may the smallest generic discovery/ranking repair be implemented. Any repair must pass focused regressions, full repository tests/build/state integrity and exact-source replay of positive fixtures plus controls before acceptance.
+That mechanism explains why positions 5–6 can expose viable accepted packages for Explorers and Animated Army. A fixed breadth of 4 can terminate the serial diversification chain while it is still producing materially new paths.
+
+This source proof plus repeated unrelated-fixture evidence justifies a **generic adaptive bounded-diversification control-flow repair**. It does **not** justify changing the default/global breadth from 4 to 6: moving a fixed magic number would preserve the same failure mode at the new boundary.
+
+Required repair properties:
+- continue bounded diversification only while search states/packages remain materially novel and the attempt remains unresolved;
+- terminate on duplicate/no-new-package states;
+- maintain a strict hard work ceiling;
+- preserve existing winner selection and candidate-attempt provenance;
+- leave legality, budget, printing, package acceptance, strategy retention, target-progress, simulation, theme and compound-component correctness gates unchanged.
+
+Before acceptance, add generic control-flow regressions, run focused and full validation, then freeze the exact repair SHA and replay Explorers + Animated Army plus Quick Draw, Virtue and Valor, and Elven Empire controls. Record runtime/work cost as well as quality movement. An unvalidated repair head is not a new validated baseline.
 
 Remaining promotion evidence should still cover compact unrestricted combo, hybrid combat-combo, commander damage/combat, control, aristocrats, budget and unusual-partner families, plus expert comparison against strong locked general-AI baselines.
 
 ## INTEL-03 — Human-level strategic reasoning layer — PLANNED
 
-Do not start speculative INTEL-03 work while BENCH-01 has a narrower evidenced discovery/ranking gate.
+Do not start speculative INTEL-03 work while BENCH-01 has the narrower adaptive-diversification repair/validation gate.
 
 ## INTEL-04 — Counterfactual deck comparison & expert explanation — PLANNED
 
