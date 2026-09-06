@@ -4,8 +4,12 @@ on:
   push:
     branches: ["agent/v15-native-deck-intelligence"]
     paths:
-      - ".github/workflows/bench01-strategy-anchor-replay.yml"
+      - ".github/workflows/bench01-strategy-anchor-replay.trigger"
   workflow_dispatch:
+
+concurrency:
+  group: bench01-strategy-anchor-replay-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -96,8 +100,8 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          for attempt in 1 2 3 4 5 6; do
-            git fetch origin "${GITHUB_REF_NAME}"
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
             git reset --hard "origin/${GITHUB_REF_NAME}"
             rm -rf test-results/bench01-strategy-anchor-replay
             mkdir -p test-results/bench01-strategy-anchor-replay
@@ -107,4 +111,5 @@ jobs:
             git commit -m "test-results(BENCH-01): persist strategy-anchor replay [skip ci]"
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
           done
+          echo "exhausted eight branch-race retries" >&2
           exit 1
