@@ -389,7 +389,7 @@
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 23,
-                  "candidateCount": 5
+                  "candidateCount": 3
                 }
               ]
             },
@@ -541,7 +541,7 @@
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 23,
-                  "candidateCount": 5
+                  "candidateCount": 3
                 }
               ]
             },
@@ -693,7 +693,7 @@
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 23,
-                  "candidateCount": 5
+                  "candidateCount": 3
                 }
               ]
             },
@@ -845,7 +845,7 @@
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 23,
-                  "candidateCount": 5
+                  "candidateCount": 3
                 }
               ]
             },
@@ -997,7 +997,7 @@
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 23,
-                  "candidateCount": 5
+                  "candidateCount": 3
                 }
               ]
             },
@@ -1160,7 +1160,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -1312,7 +1312,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -1464,7 +1464,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -1616,7 +1616,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -1768,7 +1768,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -1931,7 +1931,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -2083,7 +2083,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -2235,7 +2235,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -2387,7 +2387,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -2539,7 +2539,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -2702,7 +2702,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -2854,7 +2854,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -3006,7 +3006,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -3158,7 +3158,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -3310,7 +3310,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -3473,7 +3473,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -3625,7 +3625,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -3777,7 +3777,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -3929,7 +3929,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -4081,7 +4081,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -4244,7 +4244,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -4396,7 +4396,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -4548,7 +4548,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -4700,7 +4700,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
@@ -4852,7 +4852,7 @@
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 23,
-                      "candidateCount": 5
+                      "candidateCount": 3
                     }
                   ]
                 },
