@@ -1,10 +1,10 @@
-executed_source_sha=ce15a606c82013277aa2a18d9680fbf08ec2e277
+executed_source_sha=c9f1566bd5a8e75bc8d2b10618de6defe1e78f02
 product_runtime_baseline_sha=53a18a65f51c3c023ccee35c126164729d522dba
 source_relationship=benchmark-wrapper-descendant-src-verified-equal-to-frozen-product-sha
-frozen_source_guard_outcome=success
-repository_tests_outcome=success
-build_outcome=success
-bench_outcome=success
+frozen_source_guard_outcome=failure
+repository_tests_outcome=skipped
+build_outcome=skipped
+bench_outcome=skipped
 batch=BENCH-01-ADAPTIVE-DIVERSIFICATION-REPLAY
 source_frozen_within_batch=true
 fixtures=quick-draw,virtue-and-valor,explorers-of-the-deep,elven-empire,animated-army
