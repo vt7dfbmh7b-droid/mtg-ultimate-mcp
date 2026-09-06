@@ -73,6 +73,17 @@ jobs:
           set -o pipefail
           npx tsx scripts/bench01-batch-d-candidate-breadth-v15.ts 2>&1 | tee bench01-batch-d-candidate-breadth.log
 
+      - name: Stage runtime evidence outside the checkout
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/bench01-batch-d-candidate-breadth
+          mkdir -p /tmp/bench01-batch-d-candidate-breadth
+          [ ! -f bench01-batch-d-candidate-breadth-result.json ] || cp bench01-batch-d-candidate-breadth-result.json /tmp/bench01-batch-d-candidate-breadth/result.json
+          [ ! -f bench01-batch-d-candidate-breadth-failure.txt ] || cp bench01-batch-d-candidate-breadth-failure.txt /tmp/bench01-batch-d-candidate-breadth/failure.txt
+          [ ! -f bench01-batch-d-candidate-breadth.log ] || cp bench01-batch-d-candidate-breadth.log /tmp/bench01-batch-d-candidate-breadth/control.log
+
       - name: Upload candidate breadth evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -102,9 +113,9 @@ jobs:
             git reset --hard "origin/${GITHUB_REF_NAME}"
             mkdir -p test-results/bench01-batch-d-candidate-breadth
             rm -f test-results/bench01-batch-d-candidate-breadth/*
-            [ ! -f bench01-batch-d-candidate-breadth-result.json ] || cp bench01-batch-d-candidate-breadth-result.json test-results/bench01-batch-d-candidate-breadth/result.json
-            [ ! -f bench01-batch-d-candidate-breadth-failure.txt ] || cp bench01-batch-d-candidate-breadth-failure.txt test-results/bench01-batch-d-candidate-breadth/failure.txt
-            [ ! -f bench01-batch-d-candidate-breadth.log ] || cp bench01-batch-d-candidate-breadth.log test-results/bench01-batch-d-candidate-breadth/control.log
+            [ ! -f /tmp/bench01-batch-d-candidate-breadth/result.json ] || cp /tmp/bench01-batch-d-candidate-breadth/result.json test-results/bench01-batch-d-candidate-breadth/result.json
+            [ ! -f /tmp/bench01-batch-d-candidate-breadth/failure.txt ] || cp /tmp/bench01-batch-d-candidate-breadth/failure.txt test-results/bench01-batch-d-candidate-breadth/failure.txt
+            [ ! -f /tmp/bench01-batch-d-candidate-breadth/control.log ] || cp /tmp/bench01-batch-d-candidate-breadth/control.log test-results/bench01-batch-d-candidate-breadth/control.log
             printf 'executed_source_sha=%s\nproduct_runtime_baseline_sha=%s\nsource_relationship=diagnostic-wrapper-descendant-src-verified-equal-to-frozen-product-sha\nfrozen_source_guard_outcome=%s\nrepository_tests_outcome=%s\nbuild_outcome=%s\nbench_outcome=%s\nbatch=BENCH-01-D-CANDIDATE-BREADTH\nsource_frozen_within_batch=true\ncandidate_packages_per_round=6\nfixtures=quick-draw,virtue-and-valor,explorers-of-the-deep\n' \
               "$GITHUB_SHA" "$FROZEN_PRODUCT_SHA" "$FROZEN_OUTCOME" "$TEST_OUTCOME" "$BUILD_OUTCOME" "$BENCH_OUTCOME" \
               > test-results/bench01-batch-d-candidate-breadth/run-metadata.txt
