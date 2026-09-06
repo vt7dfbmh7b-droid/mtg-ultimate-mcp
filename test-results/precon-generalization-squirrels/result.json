@@ -255,8 +255,8 @@
       "adaptive": false
     },
     "packageAcceptanceContract": null,
-    "estimatedUpgradeSpendNzd": 3.37,
-    "estimatedUpgradeSpendUsdReference": 1.98,
+    "estimatedUpgradeSpendNzd": 3.52,
+    "estimatedUpgradeSpendUsdReference": 2.07,
     "maxTotalNzd": 199.99,
     "maxTotalUsdReference": 117.58,
     "swaps": [
@@ -268,8 +268,8 @@
           "set": "WOE",
           "collectorNumber": "101",
           "finish": "nonfoil",
-          "priceNzd": 2.48,
-          "priceUsdReference": 1.46
+          "priceNzd": 2.64,
+          "priceUsdReference": 1.55
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -437,8 +437,8 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 4,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 3.37,
-        "estimatedSpendUsdReference": 1.98,
+        "estimatedSpendNzd": 3.52,
+        "estimatedSpendUsdReference": 2.07,
         "improvementScore": 13.856,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -507,8 +507,8 @@
         "candidatePackagesGenerated": 4,
         "candidatePackagesEligible": 4,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 3.37,
-        "estimatedSpendUsdReference": 1.98,
+        "estimatedSpendNzd": 3.52,
+        "estimatedSpendUsdReference": 2.07,
         "improvementScore": 13.856,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -527,8 +527,8 @@
               "collectorNumber": "101",
               "releaseDate": "2023-09-08",
               "finish": "nonfoil",
-              "priceNzd": 2.48,
-              "priceUsdReference": 1.46,
+              "priceNzd": 2.64,
+              "priceUsdReference": 1.55,
               "promo": false,
               "promoTypes": [],
               "flavorName": null,
@@ -634,8 +634,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 2,
-            "estimatedSpendNzd": 3.37,
-            "estimatedSpendUsdReference": 1.98,
+            "estimatedSpendNzd": 3.52,
+            "estimatedSpendUsdReference": 2.07,
             "unknownPriceCount": 0,
             "improvementScore": 13.856,
             "significantRegression": false,
@@ -920,8 +920,8 @@
                   "set": "WOE",
                   "collectorNumber": "101",
                   "finish": "nonfoil",
-                  "priceNzd": 2.48,
-                  "priceUsdReference": 1.46
+                  "priceNzd": 2.64,
+                  "priceUsdReference": 1.55
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1388,8 +1388,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 2,
-            "estimatedSpendNzd": 6.14,
-            "estimatedSpendUsdReference": 3.61,
+            "estimatedSpendNzd": 6.02,
+            "estimatedSpendUsdReference": 3.54,
             "unknownPriceCount": 0,
             "improvementScore": 6.516,
             "significantRegression": false,
@@ -1718,8 +1718,8 @@
                   "set": "SOC",
                   "collectorNumber": "270",
                   "finish": "nonfoil",
-                  "priceNzd": 5.26,
-                  "priceUsdReference": 3.09
+                  "priceNzd": 5.14,
+                  "priceUsdReference": 3.02
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1766,8 +1766,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 2,
-            "estimatedSpendNzd": 9.34,
-            "estimatedSpendUsdReference": 5.49,
+            "estimatedSpendNzd": 9.22,
+            "estimatedSpendUsdReference": 5.42,
             "unknownPriceCount": 0,
             "improvementScore": 5.496,
             "significantRegression": false,
@@ -2063,8 +2063,8 @@
                   "set": "SOC",
                   "collectorNumber": "270",
                   "finish": "nonfoil",
-                  "priceNzd": 5.26,
-                  "priceUsdReference": 3.09
+                  "priceNzd": 5.14,
+                  "priceUsdReference": 3.02
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2180,8 +2180,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 3.37,
-                "estimatedSpendUsdReference": 1.98,
+                "estimatedSpendNzd": 3.52,
+                "estimatedSpendUsdReference": 2.07,
                 "unknownPriceCount": 0,
                 "improvementScore": 13.856,
                 "significantRegression": false,
@@ -2466,8 +2466,8 @@
                       "set": "WOE",
                       "collectorNumber": "101",
                       "finish": "nonfoil",
-                      "priceNzd": 2.48,
-                      "priceUsdReference": 1.46
+                      "priceNzd": 2.64,
+                      "priceUsdReference": 1.55
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -2934,8 +2934,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 6.14,
-                "estimatedSpendUsdReference": 3.61,
+                "estimatedSpendNzd": 6.02,
+                "estimatedSpendUsdReference": 3.54,
                 "unknownPriceCount": 0,
                 "improvementScore": 6.516,
                 "significantRegression": false,
@@ -3264,8 +3264,8 @@
                       "set": "SOC",
                       "collectorNumber": "270",
                       "finish": "nonfoil",
-                      "priceNzd": 5.26,
-                      "priceUsdReference": 3.09
+                      "priceNzd": 5.14,
+                      "priceUsdReference": 3.02
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3312,8 +3312,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 9.34,
-                "estimatedSpendUsdReference": 5.49,
+                "estimatedSpendNzd": 9.22,
+                "estimatedSpendUsdReference": 5.42,
                 "unknownPriceCount": 0,
                 "improvementScore": 5.496,
                 "significantRegression": false,
@@ -3609,8 +3609,8 @@
                       "set": "SOC",
                       "collectorNumber": "270",
                       "finish": "nonfoil",
-                      "priceNzd": 5.26,
-                      "priceUsdReference": 3.09
+                      "priceNzd": 5.14,
+                      "priceUsdReference": 3.02
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -7406,7 +7406,7 @@
     "scoringGuidance": "Competing packages are compared with the same per-round seed. The improvement score is still a within-deck heuristic, not a universal power score or measured multiplayer win rate.",
     "diversityGuidance": "Default refinement explores the historical minimum candidate breadth, then continues only while each additional candidate produces a new blocked search state, with the existing six-candidate ceiling as a hard work bound. Explicit candidatePackagesPerRound remains an exact caller-controlled breadth for controlled benchmarks.",
     "winRouteGuidance": "Route protection is derived from the existing V0.15 final full-table win-route portfolio. Verification unavailable is surfaced explicitly and never treated as evidence that the deck has no route.",
-    "themeGuidance": "User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck, compound themes additionally preserve every independently controlled component before aggregate density is considered, while physical printing-family themes are delegated to the exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches."
+    "themeGuidance": "User theme text is resolved once through the existing V0.15 controlled theme adapter. Mechanical/typal/card-type themes are audited on every candidate deck; compound themes additionally pass their already-resolved component query/density evidence into bounded incoming-candidate affinity while preserving every component independently after construction. Physical printing-family themes remain delegated to exact printing policy. Raw user theme text is never appended to candidate Scryfall role searches."
   },
   "after": {
     "truth": {
