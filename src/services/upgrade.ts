@@ -392,6 +392,22 @@ function candidateStrategyPriorityV15(
   };
 }
 
+/**
+ * Split an already structurally-compatible role pool into an identity-aligned normal lane and a
+ * generic structural fallback. Callers advance to fallback only when the aligned lane produces
+ * zero actually eligible printings after downstream printing/price policy checks.
+ */
+export function strategyCompatibleCandidateLanesV15<T>(
+  candidates: readonly T[],
+  isStrategyCompatible: (candidate: T) => boolean,
+): T[][] {
+  const preferred = candidates.filter(isStrategyCompatible);
+  if (preferred.length === 0) return [[...candidates]];
+  const preferredSet = new Set(preferred);
+  const fallback = candidates.filter((candidate) => !preferredSet.has(candidate));
+  return fallback.length > 0 ? [preferred, fallback] : [preferred];
+}
+
 export function upgradeThemeComponentAffinityScoreV15(
   matchedComponentIds: readonly string[],
   components: readonly UpgradeThemeComponentSignalV15[],
@@ -730,63 +746,82 @@ export async function suggestDeckUpgrades(
       ? ranked.slice(0, Math.max(candidatesForPriority * 3, candidatesForPriority))
       : ranked;
 
+    const candidateSelectionLanes = strategyCompatibleCandidateLanesV15(
+      rankedForPrinting,
+      (card) => {
+        const strategy = candidateStrategyPriorityV15(card, strategyContext);
+        if (strategy.substantive) return true;
+        if (componentAwareThemeRanking) {
+          // Score 2 is the saturated component floor; 4+ indicates meaningful scarcity/deficit support.
+          return componentAffinityForCard(card).score >= 4;
+        }
+        return Boolean(themeClause) && themeCandidateNames.has(card.name.toLocaleLowerCase());
+      },
+    );
+
     const candidates: Array<Record<string, unknown>> = [];
-    for (const card of rankedForPrinting) {
-      if (candidates.length >= candidatesForPriority) break;
-      const printing = await selectEligiblePrintingV08(card, printingPolicy, options.maxUsdPerCard);
-      if (!printing) continue;
-      const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
-      const substantiveAffinityScore = substantiveCommanderStrategyAffinityScoreV15(affinity);
-      const matchedStrategies = affinity.matches.map((match) => match.archetype);
-      const matchesControlledTheme = themeCandidateNames.has(card.name.toLocaleLowerCase());
-      const componentAffinity = componentAffinityForCard(card);
-      const strategyReason = matchedStrategies.length > 0
-        ? ` and also supports the existing V0.15 deck strategy signal${matchedStrategies.length === 1 ? '' : 's'}: ${matchedStrategies.join(', ')}`
-        : '';
-      const themeReason = matchesControlledTheme && themeDeficit > 0
-        ? ' It also helps close the current controlled theme-density deficit.'
-        : componentAffinity.score > 0
-          ? ` It supports the compound-theme component balance (${componentAffinity.matchedComponentIds.join(', ')}) without becoming a hard theme requirement.`
+    for (const candidateLane of candidateSelectionLanes) {
+      const laneStartCount = candidates.length;
+      for (const card of candidateLane) {
+        if (candidates.length >= candidatesForPriority) break;
+        const printing = await selectEligiblePrintingV08(card, printingPolicy, options.maxUsdPerCard);
+        if (!printing) continue;
+        const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
+        const substantiveAffinityScore = substantiveCommanderStrategyAffinityScoreV15(affinity);
+        const matchedStrategies = affinity.matches.map((match) => match.archetype);
+        const matchesControlledTheme = themeCandidateNames.has(card.name.toLocaleLowerCase());
+        const componentAffinity = componentAffinityForCard(card);
+        const strategyReason = matchedStrategies.length > 0
+          ? ` and also supports the existing V0.15 deck strategy signal${matchedStrategies.length === 1 ? '' : 's'}: ${matchedStrategies.join(', ')}`
           : '';
-      const targetDirection = deficit.targetGate === 'average-nonland-mv'
-        ? `${deficit.current} must fall to ${deficit.target} or lower`
-        : `${deficit.current} must rise to ${deficit.target} or higher`;
-      const targetReason = deficit.prioritySource === 'authoritative-target-gate'
-        ? `Advances the currently failed authoritative Bracket-${targetBracket} ${deficit.targetGate} gate (${targetDirection})`
-        : `Addresses the detected ${deficit.role} deficit`;
-      candidates.push({
-        card: { ...summarizeCard(card), roles: effectiveCardRolesV15(card) },
-        score: Number(candidateScore(card, deficit.role, strategyContext, deficit.target, deficit.targetGate).toFixed(1)),
-        authoritativeTargetGate: deficit.prioritySource === 'authoritative-target-gate' ? deficit.targetGate : null,
-        strategyAffinity: {
-          score: Number(affinity.score.toFixed(1)),
-          protectionApplied: Number(Math.min(4, substantiveAffinityScore).toFixed(1)),
-          matchedStrategies,
-          matches: affinity.matches,
-        },
-        explicitTheme: {
-          matchesControlledTheme,
-          currentMainMatches: themeCurrentMainMatches,
-          requiredMainMatches: themeMinimumMainMatches,
-          deficitBeforeSwap: themeDeficit,
-          componentAffinityScore: componentAffinity.score,
-          matchedComponentIds: componentAffinity.matchedComponentIds,
-        },
-        recommendedPrinting: {
-          set: printing.card.set.toUpperCase(),
-          setName: printing.card.set_name,
-          collectorNumber: printing.card.collector_number,
-          releaseDate: printing.card.released_at ?? null,
-          finish: printing.finish,
-          priceUsd: printing.priceUsd,
-          promo: Boolean(printing.card.promo),
-          promoTypes: printing.card.promo_types ?? [],
-          flavorName: printing.card.flavor_name ?? null,
-          familyMatch: printing.matchedBy,
-          scryfallUrl: printing.card.scryfall_uri,
-        },
-        whyItFits: `${targetReason}${strategyReason}. The recommended physical printing satisfies the active printing-family/set policy.${themeReason}`,
-      });
+        const themeReason = matchesControlledTheme && themeDeficit > 0
+          ? ' It also helps close the current controlled theme-density deficit.'
+          : componentAffinity.score > 0
+            ? ` It supports the compound-theme component balance (${componentAffinity.matchedComponentIds.join(', ')}) without becoming a hard theme requirement.`
+            : '';
+        const targetDirection = deficit.targetGate === 'average-nonland-mv'
+          ? `${deficit.current} must fall to ${deficit.target} or lower`
+          : `${deficit.current} must rise to ${deficit.target} or higher`;
+        const targetReason = deficit.prioritySource === 'authoritative-target-gate'
+          ? `Advances the currently failed authoritative Bracket-${targetBracket} ${deficit.targetGate} gate (${targetDirection})`
+          : `Addresses the detected ${deficit.role} deficit`;
+        candidates.push({
+          card: { ...summarizeCard(card), roles: effectiveCardRolesV15(card) },
+          score: Number(candidateScore(card, deficit.role, strategyContext, deficit.target, deficit.targetGate).toFixed(1)),
+          authoritativeTargetGate: deficit.prioritySource === 'authoritative-target-gate' ? deficit.targetGate : null,
+          strategyAffinity: {
+            score: Number(affinity.score.toFixed(1)),
+            protectionApplied: Number(Math.min(4, substantiveAffinityScore).toFixed(1)),
+            matchedStrategies,
+            matches: affinity.matches,
+          },
+          explicitTheme: {
+            matchesControlledTheme,
+            currentMainMatches: themeCurrentMainMatches,
+            requiredMainMatches: themeMinimumMainMatches,
+            deficitBeforeSwap: themeDeficit,
+            componentAffinityScore: componentAffinity.score,
+            matchedComponentIds: componentAffinity.matchedComponentIds,
+          },
+          recommendedPrinting: {
+            set: printing.card.set.toUpperCase(),
+            setName: printing.card.set_name,
+            collectorNumber: printing.card.collector_number,
+            releaseDate: printing.card.released_at ?? null,
+            finish: printing.finish,
+            priceUsd: printing.priceUsd,
+            promo: Boolean(printing.card.promo),
+            promoTypes: printing.card.promo_types ?? [],
+            flavorName: printing.card.flavor_name ?? null,
+            familyMatch: printing.matchedBy,
+            scryfallUrl: printing.card.scryfall_uri,
+          },
+          whyItFits: `${targetReason}${strategyReason}. The recommended physical printing satisfies the active printing-family/set policy.${themeReason}`,
+        });
+      }
+      // Do not pad a successful identity-aligned lane with generic role cards. Generic cards are a
+      // fallback only when the aligned lane yields zero actually eligible printings.
+      if (candidates.length > laneStartCount) break;
     }
 
     candidateGroups.push({
@@ -849,7 +884,7 @@ export async function suggestDeckUpgrades(
     },
     caveats: [
       'Role-count targets are engineering heuristics for deck consistency, but failed Bracket-4/5 construction gates now outrank aspirational role targets. When several authoritative gates are failing, candidate generation retains a small ranked backup set for each gate so downstream pairing can preserve gate diversity while trying strategy-safe alternatives.',
-      'Within an already-required structural role or target gate, candidate ordering treats the existing V0.15 substantive-strategy threshold as a first-class tier before generic mana-efficiency and EDHREC/community-adoption scoring. For compound themes, bounded component-aware affinity then prefers relatively underrepresented controlled components within that structural/strategy-safe lane; it never makes a themed card mandatory.',
+      'Within an already-required structural role or target gate, candidates are first split into a strategy/identity-compatible lane and a generic structural fallback. Generic role-only cards are considered only when the aligned lane yields zero eligible printings after printing/price policy checks. Within the aligned lane, substantive commander strategy remains first-class and compound-theme component affinity stays bounded/advisory rather than becoming a hard theme requirement.',
       'Unrestricted Upgrade supplements the bounded popularity-ordered role search with bounded per-archetype searches for strategies the starting deck has already proven substantive. The merged pool is still independently filtered by the requested structural gate, legality, printing policy, exclusions, price, and final candidate cap, so strategy search improves recall without bypassing construction constraints.',
       'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window.',
       'When a V0.15 controlled theme is below its minimum density, the engine uses the controlled theme query as a positive membership/ranking signal. Under a printing restriction, only cards already admitted by the exhaustive shared eligible pool can become candidates.',
