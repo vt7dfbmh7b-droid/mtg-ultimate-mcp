@@ -45,6 +45,14 @@ test('neutral inference finds a combat-token identity from semantics', () => {
   assert.ok((result[0]?.score ?? 0) > 0);
 });
 
+test('negative Equipment references plus incidental combat/protection text cannot manufacture equipment-voltron', () => {
+  const result = inferNeutralStrategyV15([card({
+    name: 'Protected Animator',
+    oracle: 'During your turn, each non-Equipment artifact and non-Aura enchantment you control with mana value 4 or greater has base power and toughness 4/4 and has indestructible. Whenever one of those creatures deals combat damage to a player, draw a card.',
+  })]);
+  const equipment = result.find((strategy) => strategy.archetype === 'equipment-voltron');
+  assert.ok((equipment?.score ?? 0) < 6);
+});
 test('neutral inference distinguishes graveyard and equipment identities', () => {
   const graveyard = inferNeutralStrategyV15([card({
     name: 'Grave Hero',

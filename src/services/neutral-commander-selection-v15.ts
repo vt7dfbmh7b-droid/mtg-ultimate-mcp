@@ -136,10 +136,13 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   addSignal(table, 'combat-tokens', /tapped and attacking/i.test(text), 6, 'attacking-token text');
   addSignal(table, 'combat-tokens', /combat damage to a player/i.test(text), 2, 'combat-damage trigger');
 
-  addSignal(table, 'equipment-voltron', roles.has('equipment'), 8, 'equipment role');
-  addSignal(table, 'equipment-voltron', roles.has('protection'), 3, 'protection');
+  const positiveEquipmentReference = roles.has('equipment') && !/\bnon-equipment\b/i.test(text);
+  const equipmentVoltronAnchor = positiveEquipmentReference
+    || /equip |equipped creature|attach target|attach it/i.test(text);
+  addSignal(table, 'equipment-voltron', positiveEquipmentReference, 8, 'equipment role');
+  addSignal(table, 'equipment-voltron', equipmentVoltronAnchor && roles.has('protection'), 3, 'protection');
   addSignal(table, 'equipment-voltron', /equip |equipped creature|attach target|attach it/i.test(text), 7, 'equip/attach text');
-  addSignal(table, 'equipment-voltron', /double strike|commander damage|power and toughness/i.test(text), 3, 'combat scaling');
+  addSignal(table, 'equipment-voltron', equipmentVoltronAnchor && /double strike|commander damage|power and toughness/i.test(text), 3, 'combat scaling');
 
   addSignal(table, 'counters', roles.has('+1/+1 counters'), 9, '+1/+1 counters');
   addSignal(table, 'counters', /proliferate/i.test(text), 7, 'proliferate');
