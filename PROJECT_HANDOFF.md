@@ -17,11 +17,11 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
 - Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
-- Active branch validation: **bench01-strategy-anchor-fixed-adaptive-lineage-manual-rejected-identity-replacement-priority-next**
+- Active branch validation: **bench01-replacement-identity-priority-staged-unwired-unvalidated**
 
 ## Audit reuse rule
 
-BENCH-01 remains active. The adaptive-diversification candidate 247fb37... was engineering-green but manually rejected. Generic strategy-anchor repair descendant 2e34ebff... passed focused/full/build validation and closed the false Equipment/Voltron inference defect, but its five-fixture replay still fails whole-deck Commander-quality acceptance: Animated Army remains a structural-but-strategic regression and Elven Empire / Explorers still expose identity erosion above hard theme floors. Keep e17b0a1c... as the latest accepted product baseline. Next: diagnose and generically repair identity-aware replacement priority, then fully validate and replay positives + controls from one frozen SHA. Stable remains V0.13 and PR #29 remains unmerged.
+BENCH-01 remains active. Keep `e17b0a1c...` as the latest accepted product baseline. Source diagnosis for the repeated identity erosion is complete: `deck-builder-v07` applies hard semantic/structural/authoritative/package/curve gates first, then chooses among surviving cuts without a relative requested-theme IN-vs-OUT identity comparison. Commits `db471dc7...` / `9e809785...` stage a generic advisory replacement-identity comparator and contrasting typal, artifact/enchantment, and spellslinger regressions. The primitive is **not runtime-wired, validated, or accepted**. Next: wire it into legal cut ordering, add integration coverage, fully validate, freeze the green SHA, then replay failures + controls. Stable remains V0.13 and PR #29 remains unmerged.
 
 ## Stable safety boundary
 
@@ -39,12 +39,11 @@ The last persisted Marvel control is `5829b37b686255ba35d419b37be17095e54fb696` 
 
 ## Next actions
 
-1. Inspect optimizer-v12 / deck-builder-v07 / strategy-affinity and theme-scoring paths to locate where structural target pressure can select an IN card that is materially weaker than the OUT card for explicit commander/requested identity while aggregate strategy/theme floors still pass.
-2. Define generic identity-aware replacement-priority regressions across at least typal (Elven Empire), artifact/enchantment (Animated Army), and spellslinger/enchantment controls; require relative IN-versus-OUT identity/strategy preservation without forbidding necessary structural cuts.
-3. Implement the smallest generic replacement-priority repair only if source diagnosis supports a centralized mechanism; keep all downstream truth/preservation/simulation gates unchanged.
-4. Run focused regressions, then full repository tests/type-check/build/project-state integrity; freeze the exact green repair SHA.
-5. Replay Animated Army, Elven Empire and Explorers of the Deep plus Quick Draw and Virtue and Valor controls from that unchanged SHA; manually inspect complete decks and compare against the rejected 247fb37/2e34 lineage before acceptance.
-6. Only after manual whole-deck quality improves across the repeated failure pattern should BENCH-01 broaden or PR #29 / V0.15 promotion readiness be reconsidered.
+1. Wire `replacement-identity-priority-v15` into `deck-builder-v07` candidate-cut ordering only after all existing hard semantic/structural/authoritative/package/curve gates; derive controlled-theme membership from existing `explicitTheme` metadata and substantive strategy affinity from existing V0.15 `strategyAffinity` matches.
+2. Add an integration regression proving an on-identity legal cut outranks an identity-eroding legal cut while a structurally necessary identity cut remains possible when no equal legal alternative exists.
+3. Run focused replacement-priority regressions, then full repository tests/type-check/build/project-state integrity; freeze the exact green repair SHA.
+4. Replay Animated Army, Elven Empire and Explorers of the Deep plus Quick Draw and Virtue and Valor controls from that unchanged SHA; manually inspect complete decks and compare against the rejected 247fb37/2e34 lineage before acceptance.
+5. Only after manual whole-deck quality improves across the repeated failure pattern should BENCH-01 broaden or PR #29 / V0.15 promotion readiness be reconsidered.
 
 ## Permanent recovery references
 
