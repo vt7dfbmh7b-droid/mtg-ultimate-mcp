@@ -1,0 +1,11 @@
+executed_source_sha=9cef25101d4dd10e68296f4f5601d90ebb3f2ec0
+product_runtime_baseline_sha=e17b0a1cba659b229fd6f0b6e2df79c5e464a616
+source_relationship=diagnostic-wrapper-descendant-src-verified-equal-to-frozen-product-sha
+frozen_source_guard_outcome=success
+repository_tests_outcome=success
+build_outcome=success
+bench_outcome=success
+batch=BENCH-01-CANDIDATE-BREADTH-GENERALIZATION
+source_frozen_within_batch=true
+compared_candidate_packages_per_round=4,6
+fixtures=elven-empire,animated-army
