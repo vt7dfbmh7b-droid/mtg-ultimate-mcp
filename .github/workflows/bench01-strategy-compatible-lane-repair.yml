@@ -78,29 +78,29 @@ jobs:
           s = s.replace(old, new, 1)
 
           old = '''    const candidates: Array<Record<string, unknown>> = [];
-              for (const card of rankedForPrinting) {
-                if (candidates.length >= candidatesForPriority) break;
+          for (const card of rankedForPrinting) {
+            if (candidates.length >= candidatesForPriority) break;
           '''
           new = '''    const candidateSelectionLanes = strategyCompatibleCandidateLanesV15(
-              rankedForPrinting,
-              (card) => {
-                const strategy = candidateStrategyPriorityV15(card, strategyContext);
-                if (strategy.substantive) return true;
-                if (componentAwareThemeRanking) {
-                  // A saturated/broad component receives only the score floor (2). Requiring at
-                  // least 4 here reserves the normal lane for meaningfully underrepresented
-                  // compound-theme support while keeping generic structural cards as fallback.
-                  return componentAffinityForCard(card).score >= 4;
-                }
-                return Boolean(themeClause) && themeCandidateNames.has(card.name.toLocaleLowerCase());
-              },
-            );
+            rankedForPrinting,
+            (card) => {
+              const strategy = candidateStrategyPriorityV15(card, strategyContext);
+              if (strategy.substantive) return true;
+              if (componentAwareThemeRanking) {
+                // A saturated/broad component receives only the score floor (2). Requiring at
+                // least 4 here reserves the normal lane for meaningfully underrepresented
+                // compound-theme support while keeping generic structural cards as fallback.
+                return componentAffinityForCard(card).score >= 4;
+              }
+              return Boolean(themeClause) && themeCandidateNames.has(card.name.toLocaleLowerCase());
+            },
+          );
 
-            const candidates: Array<Record<string, unknown>> = [];
-            for (const candidateLane of candidateSelectionLanes) {
-              const laneStartCount = candidates.length;
-              for (const card of candidateLane) {
-                if (candidates.length >= candidatesForPriority) break;
+          const candidates: Array<Record<string, unknown>> = [];
+          for (const candidateLane of candidateSelectionLanes) {
+            const laneStartCount = candidates.length;
+            for (const card of candidateLane) {
+              if (candidates.length >= candidatesForPriority) break;
           '''
           if old not in s:
               raise SystemExit('candidate loop opening anchor not found')
@@ -112,17 +112,24 @@ jobs:
 
             candidateGroups.push({
           '''
-          new = '''        whyItFits: `${targetReason}${strategyReason}. The recommended physical printing satisfies the active printing-family/set policy.${themeReason}`,
-              });
-              }
-              // Once the identity-aligned lane yields any eligible candidate, do not pad the role
-              // package with generic cards merely to fill maxCandidatesPerRole. The generic lane is
-              // a resilience fallback, not a co-equal source of additions.
-              if (candidates.length > laneStartCount) break;
-            }
+          if old not in s:
+              old = '''        whyItFits: `${targetReason}${strategyReason}. The recommended physical printing satisfies the active printing-family/set policy.${themeReason}`,
+      });
+    }
 
-            candidateGroups.push({
-          '''
+    candidateGroups.push({
+'''
+          new = '''        whyItFits: `${targetReason}${strategyReason}. The recommended physical printing satisfies the active printing-family/set policy.${themeReason}`,
+      });
+            }
+            // Once the identity-aligned lane yields any eligible candidate, do not pad the role
+            // package with generic cards merely to fill maxCandidatesPerRole. The generic lane is
+            // a resilience fallback, not a co-equal source of additions.
+            if (candidates.length > laneStartCount) break;
+          }
+
+    candidateGroups.push({
+'''
           if old not in s:
               raise SystemExit('candidate loop closing anchor not found')
           s = s.replace(old, new, 1)
