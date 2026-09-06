@@ -110,6 +110,8 @@ jobs:
           """)
       - name: Focused strategy-compatible lane regressions
         run: npx tsx --test src/services/upgrade-strategy-compatible-lane-v15.test.ts
+      - name: Regenerate authoritative derived state
+        run: npm run project:handoff
       - name: Full repository validation
         run: npm run check
       - name: Commit validated Commander repair
@@ -117,7 +119,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add src/services/upgrade.ts src/services/upgrade-strategy-compatible-lane-v15.test.ts
+          git add src/services/upgrade.ts src/services/upgrade-strategy-compatible-lane-v15.test.ts docs/PROJECT-STATE.md PROJECT_HANDOFF.md
           git diff --cached --quiet && exit 0
           git commit -m 'fix: prefer strategy-compatible upgrade candidates'
           git push origin HEAD:agent/v15-native-deck-intelligence
