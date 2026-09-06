@@ -1,0 +1,117 @@
+name: "BENCH-01 — Strategy-anchor five-fixture replay"
+
+on:
+  push:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - ".github/workflows/bench01-strategy-anchor-replay.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  FROZEN_PRODUCT_SHA: 2e34ebff20d0a66b7c4649feb1e9984c156e43ca
+  HTTP_RETRY_BASE_MS: 5000
+  HTTP_RETRY_MAX_MS: 15000
+  SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_MIN_REQUEST_GAP_MS: 750
+  COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+      - name: Prove product source is frozen
+        shell: bash
+        run: |
+          set -euo pipefail
+          git cat-file -e "${FROZEN_PRODUCT_SHA}^{commit}"
+          git diff --quiet "$FROZEN_PRODUCT_SHA" HEAD -- src/
+          echo "src/** exactly matches ${FROZEN_PRODUCT_SHA}."
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+      - run: npm ci
+      - name: Validate frozen source without one-shot workflow in checkout
+        shell: bash
+        run: |
+          rm -f .github/workflows/bench01-strategy-anchor-replay.yml
+          npm test
+          npm run build
+      - name: Run five-fixture replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx tsx scripts/bench01-adaptive-diversification-replay-v15.ts 2>&1 | tee strategy-anchor-replay.log
+      - name: Extract compact manual-review evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('node:fs');
+          const p = 'bench01-adaptive-diversification-replay-result.json';
+          const data = JSON.parse(fs.readFileSync(p, 'utf8'));
+          const out = '/tmp/bench01-strategy-anchor-replay';
+          fs.mkdirSync(`${out}/review`, { recursive: true });
+          const compact = {
+            schema: data.schema,
+            batch: 'BENCH-01-STRATEGY-ANCHOR-REPLAY',
+            productRuntimeBaselineSha: process.env.FROZEN_PRODUCT_SHA,
+            sourceFrozenWithinBatch: true,
+            results: data.results.map((r) => ({
+              fixture: r.fixture,
+              family: r.family,
+              reference: r.reference,
+              themeQuery: r.themeQuery,
+              totalSwaps: r.totalSwaps,
+              assessedBracket: r.assessedBracket,
+              before: r.before,
+              after: r.after,
+              terminalRound: r.terminalRound,
+              candidateWork: r.candidateWork,
+              acceptedSwaps: Array.isArray(r.rawRefinement?.swaps) ? r.rawRefinement.swaps : null,
+            })),
+          };
+          fs.writeFileSync(`${out}/review/summary.json`, JSON.stringify(compact, null, 2) + '\n');
+          for (const r of data.results) {
+            const id = String(r.reference).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            const deck = r.rawRefinement?.finalDecklist;
+            if (typeof deck === 'string' && deck.trim()) fs.writeFileSync(`${out}/review/${id}-final-deck.txt`, deck.trim() + '\n');
+          }
+          fs.copyFileSync(p, `${out}/result.json`);
+          fs.copyFileSync('strategy-anchor-replay.log', `${out}/control.log`);
+          fs.writeFileSync(`${out}/run-metadata.txt`, [
+            `product_runtime_baseline_sha=${process.env.FROZEN_PRODUCT_SHA}`,
+            'source_relationship=wrapper-descendant-src-verified-equal-to-frozen-product-sha',
+            'repository_tests_outcome=success',
+            'build_outcome=success',
+            'bench_outcome=success',
+            'batch=BENCH-01-STRATEGY-ANCHOR-REPLAY',
+            'source_frozen_within_batch=true',
+            'fixtures=quick-draw,virtue-and-valor,explorers-of-the-deep,elven-empire,animated-army',
+            '',
+          ].join('\n'));
+          NODE
+      - name: Persist replay evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4 5 6; do
+            git fetch origin "${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            rm -rf test-results/bench01-strategy-anchor-replay
+            mkdir -p test-results/bench01-strategy-anchor-replay
+            cp -R /tmp/bench01-strategy-anchor-replay/. test-results/bench01-strategy-anchor-replay/
+            git add -- test-results/bench01-strategy-anchor-replay
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "test-results(BENCH-01): persist strategy-anchor replay [skip ci]"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+          done
+          exit 1
