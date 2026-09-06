@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-06T02:32:00.000Z**.
+Generated from `project-state.json`. Last state update: **2026-09-06T04:40:00.000Z**.
 
 ## Current mode
 
@@ -10,7 +10,7 @@ Generated from `project-state.json`. Last state update: **2026-09-06T02:32:00.00
 - Active PR: #29
 - Active milestone: **BENCH-01**
 - Intelligence development paused: **no**
-- Reason: BENCH-01 remains the critical path. The compound-component compensation blocker is closed. Unseen Batch C then exposed a shared pre-optimization vocabulary gap: card draw and lifegain were absent from the neutral-theme registry despite existing measurable semantic truth in inferCardRoles(). The smallest generic registry bridge is now fully validated on frozen source e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Replay Witherbloom and Urza from this unchanged source, keep Necron as the supported-vocabulary control, and do not make another intelligence edit until the replay is interpreted across fixtures.
+- Reason: BENCH-01 remains the critical path. The compound-component compensation blocker is closed and the generic card-draw/lifegain taxonomy bridge is both fully validated and accepted by corrected Batch C replay from frozen e17b0a1c.... Witherbloom used all 12 swaps and moved Bracket 2→3 while preserving every requested component; Urza and Necron exhausted accepted packages earlier while all requested component floors remained satisfied. Their rejections span legitimate theme-floor, strategy and simulation vetoes, so this batch does not yet justify weakening generic acceptance guards. Broaden unseen contrasting fixtures from the unchanged validated product source before another intelligence edit.
 
 ## Stable boundary
 
@@ -23,13 +23,13 @@ Generated from `project-state.json`. Last state update: **2026-09-06T02:32:00.00
 
 Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
 
-The formal accepted development checkpoint remains 77a5383.... BENCH-01 Batch C established two independent neutral-theme vocabulary omissions backed by existing shared semantic truth: card draw and lifegain. The smallest generic registry bridge was implemented at 387709983880fa2fd10c7f0aa50cd8b1524852f5 with no optimizer/deck/card-specific conditions. Focused parser/audit regressions and build passed before publish, and normal CI run 34006676470 passed on source-equivalent head e17b0a1cba659b229fd6f0b6e2df79c5e464a616; the only delta from the product commit is benchmark evidence documentation. Freeze this exact validated source tree for the affected-fixture replay.
+The formal accepted development checkpoint remains 77a5383.... BENCH-01 Batch C established two independent neutral-theme vocabulary omissions backed by existing shared semantic truth: card draw and lifegain. The smallest generic registry bridge was implemented at 387709983880fa2fd10c7f0aa50cd8b1524852f5 and fully validated on source-equivalent head e17b0a1cba659b229fd6f0b6e2df79c5e464a616 by normal CI run 34006676470. Corrected-provenance Batch C replay run 34009618840 then executed from that exact frozen source and persisted evidence at d87f76c5ba9eded92784440673d5cc3ddf897eab. The vocabulary repair is replay-accepted; no further product repair is justified from this batch.
 
 Latest fully validated executable experimental baseline recorded by project state:
 
 - Branch: `agent/v15-native-deck-intelligence`
 - SHA: `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`
-- Scope: Fully validated generic neutral-theme taxonomy bridge for shared card-draw and lifegain semantics. Product code change is commit 387709983880fa2fd10c7f0aa50cd8b1524852f5; e17b0a1cba659b229fd6f0b6e2df79c5e464a616 differs only by the persisted BENCH evidence document. Focused regressions cover standalone resolution/matching, unrelated compound decomposition and unchanged fail-closed unknown leftovers. Normal CI run 34006676470 passed project/state/index/recovery checks, build/type-check and the full repository test suite. This is the frozen executable source for the Witherbloom + Urza replay; it is not yet promotion evidence.
+- Scope: Fully validated generic neutral-theme taxonomy bridge for shared card-draw and lifegain semantics. Product code change is commit 387709983880fa2fd10c7f0aa50cd8b1524852f5; e17b0a1cba659b229fd6f0b6e2df79c5e464a616 differs only by persisted BENCH evidence documentation. Focused regressions cover standalone resolution/matching, unrelated compound decomposition and unchanged fail-closed unknown leftovers. Normal CI run 34006676470 passed project/state/index/recovery checks, build/type-check and the full repository test suite. Corrected Batch C replay run 34009618840 later used this exact frozen executable source; its persisted descendant d87f76c5ba9eded92784440673d5cc3ddf897eab is benchmark evidence, not a newer formally validated product baseline.
 
 Always inspect the live active-branch head before editing. A later documentation/project-management commit is not automatically a new executable validation milestone.
 
@@ -47,7 +47,7 @@ Always inspect the live active-branch head before editing. A later documentation
 
 ## Current validation status
 
-- Active branch status: **bench01-generic-card-draw-lifegain-taxonomy-repair-validated-replay-pending**
+- Active branch status: **bench01-taxonomy-replay-accepted-broader-unseen-benchmarking-next**
 - Last persisted Marvel control source: `5829b37b686255ba35d419b37be17095e54fb696`
 - Last persisted Marvel control outcome: **expected-ceiling-fail-closed-zero-swap**
 - Note: At exact source 5829b37..., focused and broad Marvel execute and persist honestly with zero accepted swaps because the restricted pool cannot repair the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure. Keep these controls red for target achievement. Treat the result as expected construction-ceiling behaviour, not as a passing target and not as a blocker to BENCH-01 on other archetypes. Rerun only when the relevant pool, provider truth or policy changes.
@@ -58,21 +58,22 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 - Preserve historical BENCH-01 Batch A as a 1-1 pre-repair result: Liliana NZ$500 specialist win; Counter Blitz general-AI win. Do not relabel that evidence because later repairs improve the specialist.
 - Preserve ce4c9eba59617be2cf57718408b40252230bccf4 as the validated parser-repair baseline and dd085caf4e47f6f5e1976667dc90de2db46c00a1 as the validated compound-component preservation baseline.
 - Treat the paired post-repair Counter Blitz/Cavalry evidence as closure of the component-compensation correctness blocker; do not reopen that repair without new contradictory evidence.
-- Treat unseen Batch C as evidence from the same frozen dd085caf... product runtime: repository tests/build and frozen-source guard passed; Witherbloom stopped on unsupported lifegain, Urza stopped on unsupported card draw, and Necron passed the parser vocabulary layer.
-- Do not convert the earlier Counter-only dense-countermagic allocation watch item into a product repair because Batch C did not independently reproduce it.
-- Keep Marvel expected restricted-pool ceiling evidence and provider-unknown Scryfall HTTP 429 semantics separate from BENCH blockers.
 - Preserve the generic taxonomy repair product commit 387709983880fa2fd10c7f0aa50cd8b1524852f5 and validated source-equivalent head e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Card draw and lifegain are controlled only because both map to existing shared measurable role truth; unknown leftovers remain fail-closed.
-- Normal CI run 34006676470 is the formal full-suite/build/state/recovery validation for the repaired source tree at e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Never treat the earlier staging workflow alone as formal validation.
-- Replay Witherbloom Witchcraft and Urza's Iron Alliance from the same unchanged validated taxonomy-repair source. Keep Necron Dynasties as the supported-vocabulary control and inspect component movement/achievement plus whole-deck quality before another product edit.
+- Normal CI run 34006676470 is the formal full-suite/build/state/recovery validation for the repaired source tree at e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Never treat the later evidence-persistence head as a newer formally validated Commander product.
+- Treat corrected-provenance Batch C run 34009618840 and persisted evidence d87f76c5ba9eded92784440673d5cc3ddf897eab as replay acceptance of the card-draw/lifegain taxonomy bridge. Witherbloom moved Bracket 2→3 with 12 swaps and preserved all requested component floors; Urza used 6 swaps and Necron 2 while preserving all requested component floors.
+- Do not convert the earlier Counter-only dense-countermagic allocation watch item into a product repair: corrected Batch C recorded no zero-target-progress-while-failed-gates pattern across Witherbloom, Urza or Necron.
+- Do not classify Urza/Necron package exhaustion as a generic guard defect yet. Rejections span theme-floor, strategy and simulation reasons, including packages that would regress explicit preserved identity or modeled win rate. Require repeated inappropriate vetoes across unrelated unseen fixtures before authorizing a guard repair.
+- Keep Marvel expected restricted-pool ceiling evidence and provider-unknown Scryfall HTTP 429 semantics separate from BENCH blockers.
+- Broaden BENCH-01 from the unchanged validated e17b0a1c... product source across contrasting unseen families before another intelligence edit; distinguish expected identity/restricted-pool ceilings from repeated generic acceptance failures.
 
 ## Next actions
 
 1. Do not repeat the completed comprehensive system audit; docs/SYSTEM-AUDIT-2026-09-02.md remains the reusable baseline unless a material architecture, runtime-entry-point, stable-boundary or project-state-integrity change occurs.
-2. Freeze e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest fully validated executable Commander product source. Its src/** contains generic taxonomy repair 387709983880fa2fd10c7f0aa50cd8b1524852f5; the descendant adds only persisted benchmark evidence.
-3. Replay Witherbloom Witchcraft and Urza's Iron Alliance from the same unchanged frozen source. Require card draw and lifegain to resolve through controlled semantics, not raw provider grammar, and keep Necron Dynasties as the supported-vocabulary control.
-4. Interpret the replay before another intelligence edit: verify Commander legality/exact 100, budgets/printing truth where applicable, every requested component before/after, target movement versus target achievement, swap quality, strategy preservation and complete-deck coherence.
-5. Keep the earlier Counter Blitz dense-countermagic allocation concern as a watch item only unless an unrelated fixture independently reproduces the same spend-swaps/leave-high-priority-target-stationary pattern.
-6. If the taxonomy replay is sound, broaden BENCH-01 across control, unrestricted combo, hybrid, combat/commander-damage, spellslinger/equipment, budget and unusual-partner families with product source frozen across each batch before another intelligence edit.
+2. Freeze e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest fully validated executable Commander product source. Corrected Batch C already replayed this exact source; d87f76c5ba9eded92784440673d5cc3ddf897eab is evidence persistence only.
+3. Accept the card-draw/lifegain taxonomy bridge as replay-confirmed. Do not reopen the compound parser/component repairs or the Counter Blitz allocation watch item without new contradictory cross-fixture evidence.
+4. Broaden BENCH-01 with several contrasting unseen fixtures from the same unchanged validated product source, prioritizing control, unrestricted compact combo, hybrid combat-combo, combat/commander-damage, spellslinger/equipment, budget and unusual-partner families.
+5. For the next batch, explicitly classify rejected packages and final decks as legitimate identity/restricted-pool ceilings versus inappropriate acceptance vetoes. Only a repeated inappropriate veto pattern across unrelated fixtures may authorize one generic tested guard repair.
+6. Continue scoring hard truth, each requested component before/after, target movement versus target achievement, swap quality, strategy preservation, whole-deck coherence and expert comparison against a strong general-AI baseline. Do not equate workflow success with benchmark superiority.
 7. PR #29 and stable V0.13 remain unchanged while BENCH-01 is not promotion-grade. Standing authorization permits merge/promotion without another approval only after complete validation and broad benchmark evidence demonstrate the specialist is genuinely ready.
 
 ## Permanent truth boundary
@@ -105,4 +106,4 @@ Read in this order:
 9. `docs/VALIDATION-MATRIX.md`
 10. `docs/KNOWN-FAILURES.md`
 
-Then: The comprehensive system audit remains complete and reusable. BENCH-01 is active. Compound parsing/component-preservation repairs are validated. Unseen Batch C exposed two generic neutral-theme registry omissions backed by existing shared role truth. The card-draw/lifegain bridge is now fully validated on source e17b0a1cba659b229fd6f0b6e2df79c5e464a616 (product change 387709983880fa2fd10c7f0aa50cd8b1524852f5, normal CI 34006676470). Freeze that source and replay Witherbloom + Urza together, with Necron as control, before any further intelligence change. Counter dense-countermagic allocation remains watch-only. Stable remains V0.13.
+Then: The comprehensive system audit remains complete and reusable. BENCH-01 is active. Compound parsing/component-preservation repairs are validated and their blocker is closed. The generic card-draw/lifegain taxonomy bridge is fully validated on e17b0a1cba659b229fd6f0b6e2df79c5e464a616 and accepted by corrected-provenance Batch C run 34009618840 persisted at d87f76c5ba9eded92784440673d5cc3ddf897eab. Witherbloom moved Bracket 2→3 while preserving all requested components; Urza/Necron exhausted accepted packages earlier but do not yet prove an over-restrictive guard defect. Counter dense-countermagic allocation remains watch-only. Freeze e17b0a1c... and broaden unseen BENCH fixtures before another product edit. Stable remains V0.13.
