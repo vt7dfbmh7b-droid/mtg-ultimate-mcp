@@ -1,56 +1,46 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project Handoff
 
-This is the short compatibility handoff. **`project-state.json` is the authoritative current-state source.**
+`project-state.json` is the authoritative current-state source.
 
-## Resume in under five minutes
+## Resume quickly
 
-1. Read `project-state.json` and `docs/PROJECT-STATE.md`.
-2. Read `validation-index.json` and `docs/VALIDATION-STATE.md` to identify current versus stale registered evidence.
-3. Inspect live head of `agent/v15-native-deck-intelligence` and PR #29.
-4. Read `ULTIMATE_MTG_SPEC.md`, then only the decision/failure/validation docs relevant to the active milestone.
-5. Continue from the Next actions below. Do not reconstruct old chats unless state integrity fails.
+1. Read `project-state.json` first.
+2. Read `docs/PROJECT-STATE.md`, `validation-index.json`, `docs/VALIDATION-STATE.md`, then only milestone-relevant evidence/docs.
+3. Inspect live head of `agent/v15-native-deck-intelligence`, PR #29 and current/recent Actions before editing.
+4. Do not reconstruct old chat context if repository state is sufficient.
 
 ## Current mode
 
 - Active milestone: **BENCH-01 — Adversarial Commander benchmark suite**
-- Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
-- Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
-- Active branch validation: **bench01-adaptive-diversification-repair-authorized-validation-pending**
+- Stable/current: **V0.13**
+- PR #29: keep open/unmerged until promotion-grade evidence exists.
+- Latest accepted fully validated Commander product: `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`.
 
-## Audit reuse rule
+## What just completed
 
-BENCH-01 remains active on frozen validated product e17b0a1c.... Explorers and Animated Army reproduce breadth sensitivity; Quick Draw, Virtue and Valor, and Elven Empire are controls. Frozen-source inspection establishes that candidatePackagesPerRound bounds serial diversification attempts: each planner call accumulates blocked prior additions, so later candidate numbers are genuinely new search states. A generic adaptive bounded-diversification repair is now justified, but no fixed breadth increase or downstream guard weakening is authorized. Add generic control-flow regressions, implement the smallest adaptive bounded repair, fully validate the exact SHA, then replay positives and controls before acceptance. Stable remains V0.13 and PR #29 remains unmerged.
+Adaptive diversification candidate `247fb37bc34ad70678ff12ec297a6e9bdc220323` passed engineering validation but failed mandatory manual whole-deck quality review.
 
-## Stable safety boundary
+Generic strategy-anchor repair descendant `2e34ebff20d0a66b7c4649feb1e9984c156e43ca` passed focused regression + full suite + build and replayed five fixtures from frozen source. It correctly removes the false Equipment/Voltron strategy inference caused by negative `non-Equipment` wording, but the overall adaptive lineage still fails Commander-quality acceptance.
 
-Stable remains **V0.13 / 0.13.0** on `main`. Standing user authorization permits merge/promotion without another approval once the repository records complete validation, non-redundancy, safety, no relevant unresolved blocker, and promotion-grade benchmark evidence. Until those gates are satisfied, stable/current remains unchanged.
+Manual replay evidence shows:
+- Animated Army: 3 swaps / Bracket 2; strategically relevant combo evidence 1→0; generic structural replacements still displace high-value Bello cards.
+- Elven Empire: structural target pressure still accepts generic aristocrats/food/tutor/fast-mana cards over stronger Elf identity pieces.
+- Explorers: hard theme floors remain satisfied but replacement quality above those floors is still mixed.
+- Quick Draw / Virtue and Valor remain controls; the strategy-anchor repair does not resolve their broader generic-structural-versus-identity concerns.
 
-## Latest fully validated executable experimental baseline
+Evidence: `docs/benchmarks/BENCH-01-STRATEGY-ANCHOR-MANUAL-REVIEW.md`.
 
-`e17b0a1cba659b229fd6f0b6e2df79c5e464a616` on `agent/v15-native-deck-intelligence`.
+## Exact next actions
 
-Fully validated generic neutral-theme taxonomy bridge for shared card-draw and lifegain semantics. Product code change is commit 387709983880fa2fd10c7f0aa50cd8b1524852f5; e17b0a1cba659b229fd6f0b6e2df79c5e464a616 differs only by persisted BENCH evidence documentation. Focused regressions cover standalone resolution/matching, unrelated compound decomposition and unchanged fail-closed unknown leftovers. Normal CI run 34006676470 passed project/state/index/recovery checks, build/type-check and the full repository test suite. Subsequent BENCH wrappers/evidence/state descendants are not newer formally validated product baselines.
+1. Diagnose where structural target pressure and candidate scoring can allow an IN card with materially weaker commander/requested-theme affinity than the OUT card while aggregate floors still pass.
+2. Define generic identity-aware replacement-priority regressions across typal, artifact/enchantment and control families.
+3. Implement only the smallest centralized generic repair supported by source diagnosis.
+4. Do not freeze all typal/theme cards, raise minimum floors as a proxy for quality, add card/deck exceptions, or weaken legality/budget/printing/component/strategy/simulation/target-progress gates.
+5. Run focused + full validation, freeze the exact repair SHA, replay Animated Army + Elven Empire + Explorers with Quick Draw + Virtue controls, and manually review full decks before acceptance.
+6. Only after actual cross-fixture whole-deck quality improves should BENCH-01 broaden or PR #29 / V0.15 promotion readiness be reconsidered.
 
-## Important pending validation
+## Recovery guardrails
 
-The last persisted Marvel control is `5829b37b686255ba35d419b37be17095e54fb696` with outcome **expected-ceiling-fail-closed-zero-swap**. At exact source 5829b37..., focused and broad Marvel execute and persist honestly with zero accepted swaps because the restricted pool cannot repair the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure. Keep these controls red for target achievement. Treat the result as expected construction-ceiling behaviour, not as a passing target and not as a blocker to BENCH-01 on other archetypes. Rerun only when the relevant pool, provider truth or policy changes.
-
-## Next actions
-
-1. Add generic control-flow regression coverage for adaptive bounded diversification: continue beyond an initial soft breadth only while materially novel packages/search states are produced; stop on duplicate/no-new states; enforce a strict hard work ceiling; preserve current winner selection and candidate-attempt provenance.
-2. Implement the smallest generic adaptive bounded-diversification repair in optimizer-v12 without changing downstream legality, budget, printing, strategy, package-acceptance, target-progress, simulation, theme or component gates.
-3. Run focused optimizer regressions first, then full repository tests/type-check/build/project-state integrity; never mark the repair validated before all required evidence is green.
-4. Freeze the exact validated repair SHA and replay Explorers of the Deep and Animated Army plus Quick Draw, Virtue and Valor, and Elven Empire controls; compare quality movement and runtime/work cost against e17b0a1c....
-5. Accept or reject the repair from cross-fixture replay; only then broaden BENCH-01 or consider PR #29 / V0.15 promotion readiness.
-
-## Permanent recovery references
-
-- `validation-index.json` / `docs/VALIDATION-STATE.md` — consolidated registered validation status.
-- `ULTIMATE_MTG_SPEC.md` — north-star behavior.
-- `docs/ROADMAP.md` — milestone plan.
-- `docs/DECISIONS.md` — durable architectural decisions.
-- `docs/KNOWN-FAILURES.md` — failures that must remain prevented.
-- `docs/VALIDATION-MATRIX.md` — what each test/control actually proves.
-- `docs/PROJECT-MANAGEMENT.md` — recovery/update protocol.
+Treat execution/tool limits as interruptions, not product failures. Resume from durable GitHub checkpoints. Never repeat completed batches because a prior invocation ended. Persist material evidence/state changes, but do not create state/doc commits just for activity.
