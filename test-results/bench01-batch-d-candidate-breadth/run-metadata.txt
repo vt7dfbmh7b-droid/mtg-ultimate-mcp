@@ -1,0 +1,11 @@
+executed_source_sha=d78770f7934fcb8b472dd37c5e7ca5c0bed2a737
+product_runtime_baseline_sha=e17b0a1cba659b229fd6f0b6e2df79c5e464a616
+source_relationship=diagnostic-wrapper-descendant-src-verified-equal-to-frozen-product-sha
+frozen_source_guard_outcome=success
+repository_tests_outcome=success
+build_outcome=success
+bench_outcome=success
+batch=BENCH-01-D-CANDIDATE-BREADTH
+source_frozen_within_batch=true
+candidate_packages_per_round=6
+fixtures=quick-draw,virtue-and-valor,explorers-of-the-deep
