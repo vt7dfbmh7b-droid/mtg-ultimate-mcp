@@ -1,0 +1,39 @@
+name: Reconcile validation index
+
+on:
+  push:
+    branches:
+      - agent/v15-native-deck-intelligence
+    paths:
+      - .github/workflows/reconcile-validation-index.yml
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/v15-native-deck-intelligence
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - run: npm ci
+      - name: Regenerate validation index surfaces
+        run: |
+          npm run validation:index
+          npm run validation:validate
+          npm run project:validate
+      - name: Commit synchronized validation state
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm .github/workflows/reconcile-validation-index.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add validation-index.json docs/VALIDATION-STATE.md .github/workflows/reconcile-validation-index.yml
+          git commit -m 'docs(BENCH-01): synchronize validation index'
+          git push origin HEAD:agent/v15-native-deck-intelligence
