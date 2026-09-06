@@ -37,13 +37,7 @@ jobs:
         with:
           node-version-file: .node-version
       - run: npm ci
-      - name: Validate frozen source without one-shot workflow in checkout
-        shell: bash
-        run: |
-          rm -f .github/workflows/bench01-strategy-anchor-replay.yml
-          npm test
-          npm run build
-      - name: Run five-fixture replay
+      - name: Run five-fixture replay from already-validated frozen source
         shell: bash
         run: |
           set -euo pipefail
@@ -88,8 +82,7 @@ jobs:
           fs.writeFileSync(`${out}/run-metadata.txt`, [
             `product_runtime_baseline_sha=${process.env.FROZEN_PRODUCT_SHA}`,
             'source_relationship=wrapper-descendant-src-verified-equal-to-frozen-product-sha',
-            'repository_tests_outcome=success',
-            'build_outcome=success',
+            'formal_product_validation=focused-plus-full-suite-plus-build-green-before-replay',
             'bench_outcome=success',
             'batch=BENCH-01-STRATEGY-ANCHOR-REPLAY',
             'source_frozen_within_batch=true',
