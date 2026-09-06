@@ -71,7 +71,7 @@ On that replay:
 - that Marvel result is an expected construction ceiling, not target achievement and not a reason to relax standards;
 - the themed special-printing audit is provider-unknown after Scryfall HTTP 429, not evidence of absence and not a BENCH-01 blocker.
 
-The formal accepted development checkpoint remains `77a5383fa7490aa91360b8186a4bda890f632157`. The current fully validated executable BENCH product source is `dd085caf4e47f6f5e1976667dc90de2db46c00a1`, which contains the generic compound-component preservation repair. It is a validated experimental replay baseline, not a stable promotion or proof of benchmark superiority.
+The formal accepted development checkpoint remains `77a5383fa7490aa91360b8186a4bda890f632157`. The current fully validated executable BENCH product source is `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`, containing the validated compound-component preservation work plus the generic card-draw/lifegain taxonomy bridge. It is a validated experimental replay baseline, not a stable promotion or proof of benchmark superiority.
 
 ## BENCH-01 — Adversarial Commander benchmark suite — ACTIVE
 
@@ -217,9 +217,7 @@ Focused regression commit / final combined product source: `dd085caf4e47f6f5e197
 Validation evidence:
 - focused deterministic tests cover satisfied-component preservation, below-target non-regression, fail-closed missing/inconsistent evidence and unchanged single-theme aggregate behavior;
 - normal CI run `33972639473` on exact final SHA `dd085caf...` passed project-management tooling checks, state validation, validation-index validation, fresh-session recovery smoke test, type-check/build and the full repository test suite;
-- therefore `dd085caf...` is the frozen validated product source for the paired post-repair replay.
-
-This validates the generic repair mechanically. It does **not** prove the benchmark blocker is closed until the two affected fixtures are replayed from this exact unchanged source.
+- therefore `dd085caf...` was the frozen validated product source for the paired post-repair replay.
 
 ### Paired post-repair replay — COMPLETE — component-compensation blocker closed
 
@@ -235,19 +233,29 @@ With product `src/**` frozen equal to `dd085caf...`, three unrelated fixtures we
 
 Product implementation commit: `387709983880fa2fd10c7f0aa50cd8b1524852f5`.
 
-Validated source-equivalent head: `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`; its only delta from the product commit is the BENCH evidence document.
+Validated source-equivalent head: `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`; its only delta from the product commit is BENCH evidence documentation.
 
 The repair adds controlled neutral-theme registry definitions for card draw and lifegain using bounded generated discovery clauses and independent shared role/Oracle matching. It changes no optimizer allocation, legality, budget, printing, bracket or component-preservation behavior and contains no deck/card-specific conditions. Unknown leftovers remain fail-closed. Focused parser/audit regressions and build passed before publish, then normal CI run `34006676470` passed project-state/index/recovery checks, build/type-check and the full repository test suite.
 
-### Taxonomy post-repair replay — NEXT
+### Taxonomy post-repair replay — COMPLETE — vocabulary bridge accepted
 
-Freeze `e17b0a1cba659b229fd6f0b6e2df79c5e464a616` for the replay. Run Witherbloom Witchcraft and Urza's Iron Alliance from that same unchanged source, keeping Necron Dynasties as the supported-vocabulary control. Confirm the natural-language requests resolve through controlled semantics, then inspect hard truth, each requested component's movement/achievement, swap quality, strategy preservation and whole-deck coherence. Do not make another intelligence change before interpreting the fixtures together.
+Corrected-provenance workflow run `34009618840` passed the frozen-source guard, repository tests and build, then executed Witherbloom Witchcraft, Urza's Iron Alliance and Necron Dynasties from exact validated product source `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`. Persisted evidence commit `d87f76c5ba9eded92784440673d5cc3ddf897eab` is benchmark evidence only, not a newer formal product-validation milestone.
 
-### After the compound-quality blocker
+Results:
+- Witherbloom: 12 swaps, assessed Bracket 2 → 3, all requested sacrifice/aristocrats/lifegain/graveyard-recursion component floors preserved; lifegain improves 19 → 23 and recursion 7 → 9. Bracket 4 target is not achieved, so this is meaningful target movement rather than target achievement.
+- Urza: 6 swaps, Bracket 2 → 2; artifact-creature floor improves 27 → 33 while tokens/combat/card-draw floors remain preserved. Later packages are rejected across theme, strategy and simulation gates.
+- Necron: 2 swaps, Bracket 2 → 2; artifacts improve 48 → 50 and combat 40 → 42 while graveyard-recursion/tokens floors remain preserved. Later packages are rejected across theme, strategy and simulation gates.
+- No fixture records the earlier Counter Blitz `zeroTargetProgressWhileFailedGatesRemain` pattern.
 
-Continue several unseen fixtures before making another product change. Remaining benchmark families include:
+Verdict: **the card-draw/lifegain taxonomy bridge is replay-confirmed.** The Counter allocation concern remains watch-only. Urza/Necron early acceptance exhaustion is not yet a demonstrated defect because rejected packages include legitimate identity-floor regressions and modeled strategy/simulation losses. Do not weaken generic guards on this evidence alone.
+
+### Next unseen batch — broader guard/ceiling discrimination
+
+Continue several unseen fixtures from the unchanged validated `e17b0a1c...` product source before making another product change. Explicitly distinguish legitimate identity/restricted-pool construction ceilings from repeated inappropriate acceptance vetoes. Only a repeated cross-fixture failure pattern may authorize one generic tested repair.
+
+Prioritize remaining benchmark families:
 - combat/commander-damage;
-- compact combo;
+- compact unrestricted combo;
 - hybrid combat-combo;
 - aristocrats;
 - control;
@@ -278,7 +286,7 @@ Scored dimensions:
 
 ### Promotion gate
 
-V0.15 is **not promotion-ready today**. The parser repair and component-preservation repair are both mechanically validated, but the post-repair paired benchmark replays and broader superiority evidence are still required. PR #29 and stable V0.13 remain unchanged for now.
+V0.15 is **not promotion-ready today**. The parser, component-preservation and card-draw/lifegain taxonomy repairs are mechanically validated, and their affected-fixture replays are now complete. What remains is broader promotion-grade adversarial evidence showing consistent whole-deck superiority across contrasting Commander families. PR #29 and stable V0.13 remain unchanged for now.
 
 The user has granted standing authority for autonomous merge/promotion once the evidence genuinely supports it. No additional approval is required when all relevant work is fully validated, non-redundant, safe, blocker-free and broad BENCH-01 evidence shows the Commander specialist consistently deserves promotion. Merge/promotion must never be done merely to tidy branches or because experimental work exists; persist the validating evidence and update project state in the same run.
 
