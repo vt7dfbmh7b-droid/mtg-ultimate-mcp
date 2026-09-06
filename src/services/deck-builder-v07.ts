@@ -7,6 +7,7 @@ import {
 } from './commander-strategy-affinity-v15.js';
 import { commanderTargetPressureV15, selectInjectableTargetAwareWinPackageV15 } from './commander-target-pressure-v15.js';
 import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
+import { compareReplacementIdentityPriorityV15, replacementIdentityPriorityV15 } from './replacement-identity-priority-v15.js';
 import {
   auditRefinementPackageAcceptanceV15,
   type RefinementComponentAuditV15,
@@ -857,6 +858,24 @@ function upgradeSwapStrategyPreservationV15(
   };
 }
 
+function upgradeSwapReplacementIdentityPriorityV15(
+  add: Record<string, unknown>,
+  cut: Record<string, unknown>,
+) {
+  const addAffinity = strategyAffinityEvidenceV15(add);
+  const cutAffinity = strategyAffinityEvidenceV15(cut);
+  return replacementIdentityPriorityV15(
+    {
+      matchesControlledTheme: recordObject(add.explicitTheme).matchesControlledTheme === true,
+      substantiveStrategyAffinity: addAffinity.score,
+    },
+    {
+      matchesControlledTheme: recordObject(cut.explicitTheme).matchesControlledTheme === true,
+      substantiveStrategyAffinity: cutAffinity.score,
+    },
+  );
+}
+
 function upgradeSwapSubstantiveStrategyLossScoreV15(
   add: Record<string, unknown>,
   cut: Record<string, unknown>,
@@ -1351,6 +1370,11 @@ export function pairUpgradeSwapsByStructureV15(
       const leftStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, left);
       const rightStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, right);
       if (leftStrategyLoss !== rightStrategyLoss) return leftStrategyLoss - rightStrategyLoss;
+      const identityPriority = compareReplacementIdentityPriorityV15(
+        upgradeSwapReplacementIdentityPriorityV15(selection.candidate, left),
+        upgradeSwapReplacementIdentityPriorityV15(selection.candidate, right),
+      );
+      if (identityPriority !== 0) return identityPriority;
       let leftCurveReduction: number | null = null;
       let rightCurveReduction: number | null = null;
       let bothCurveCutsSufficient = false;
