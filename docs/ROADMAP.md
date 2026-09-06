@@ -1,6 +1,6 @@
 # Ultimate MTG Roadmap
 
-This roadmap tracks milestone-level direction and durable completed evidence. `project-state.json` is authoritative for the active milestone, current status and exact next actions. Autonomous work must reconcile this roadmap against newer committed evidence before using it; stale roadmap language must never recreate completed work.
+This roadmap tracks milestone-level direction and durable completed evidence. `project-state.json` is authoritative for the active milestone, current status, blockers and exact next actions. Reconcile this roadmap against newer committed evidence before using it.
 
 ## North star
 
@@ -8,76 +8,94 @@ Build an evidence-backed Commander specialist that can consistently outperform s
 
 ## PM-01 — Persistent Project State & Handoff Automation — VALIDATED
 
-Delivered `project-state.json`, generated recovery/handoff documents, recovery protocol and CI state-integrity checks. Do not repeat the completed comprehensive system audit unless a material architecture, runtime-entry-point, stable-boundary or state-integrity change invalidates it.
+Repository-authoritative project state, generated recovery/handoff surfaces and state-integrity checks are established. Do not repeat the comprehensive audit without a material architecture/runtime/stable-boundary/state-integrity change.
 
 ## PM-02 — Validation State Indexing — VALIDATED
 
-Delivered deterministic validation indexing, generated validation-state recovery, CI integrity and fresh-session distinction between current/stale/passing/failing evidence.
+Deterministic validation indexing and fresh-session recovery are established.
 
 ## INTEL-01 — Win-package intelligence — VALIDATED
 
-Bounded verified win-package discovery, legality/color/printing/budget filtering, full-table closure, swap-feasible selection, atomic injection, package protection and final-route recognition are validated. The exact-source positive control at `5829b37b686255ba35d419b37be17095e54fb696` remains green.
+Verified full-table win-package discovery/injection/protection and final-route recognition remain validated at their registered controls.
 
 ## INTEL-02 — Actual autonomous deck improvement — IMPLEMENTED / BENCHMARK VALIDATION PENDING
 
-Implemented safeguards include role truth, structural floors, strategy/resource/component preservation, exact legality/budget/printing truth and iterative candidate comparison. Marvel restricted-pool controls remain honest expected-ceiling failures rather than target achievements. Provider unavailable remains provider-unknown, not evidence of absence.
+Hard-truth and preservation safeguards are implemented. BENCH-01 remains the active proof gate for actual whole-deck Commander quality.
 
-The latest fully validated executable BENCH product source remains `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`. It is experimental validation evidence, not stable promotion.
+The latest **accepted** fully validated executable Commander product remains `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`. Later descendants contain useful engineering work and evidence but have not yet passed the required manual whole-deck acceptance boundary.
 
 ## BENCH-01 — Adversarial Commander benchmark suite — ACTIVE
 
-Operating rules remain: freeze executable source per batch; use contrasting unseen fixtures; score hard truth before subjective quality; distinguish harness/provider failure, construction ceiling, target movement, target achievement and formal validation; convert only repeated generic failures into tested repairs; never add deck/card/benchmark-specific hacks; never treat workflow success as whole-deck superiority.
+Operating rules: freeze one executable source per batch; use contrasting unseen fixtures; inspect complete decks manually; distinguish target movement from target achievement; convert only repeated generic weaknesses into tested repairs; never use fixture/card-specific hacks; never treat green workflows as proof of Commander superiority.
 
 ### Batch A — COMPLETE
 
-Historical pre-repair verdict: Counter Blitz general-AI win due compound-theme rejection; Liliana NZ$500 specialist win due exact budget compliance. Aggregate historical verdict remains **1–1, split-not-promotion-grade**.
+Historical split: Liliana NZ$500 specialist win; Counter Blitz general-AI win due compound-theme rejection.
 
 ### Batch B — COMPLETE
 
-Cavalry Charge independently reproduced Counter Blitz compound-theme rejection, justifying the generic controlled parser repair. Paired replay then exposed aggregate component compensation. Generic component-preservation implementation was validated at `dd085caf4e47f6f5e1976667dc90de2db46c00a1`; paired replay closed that blocker. Counter dense-countermagic allocation remains watch-only because later unseen fixtures did not reproduce it.
+Cavalry Charge reproduced the compound-language defect. Generic compound parsing and per-component preservation were subsequently validated. Counter dense-counters allocation remains watch-only because later batches did not reproduce it.
 
 ### Batch C — COMPLETE
 
-Unseen Witherbloom/Urza exposed missing controlled `lifegain`/`card draw` vocabulary while Necron controlled supported vocabulary. Source inspection proved reusable measurable semantics, justifying the generic taxonomy bridge. Product commit `387709983880fa2fd10c7f0aa50cd8b1524852f5`; latest fully validated source-equivalent executable baseline `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`. Corrected replay accepted the bridge without reproducing the allocation concern.
+Witherbloom/Urza exposed missing controlled lifegain/card-draw vocabulary. The generic measurable taxonomy bridge was validated; `e17b0a1c...` remains the latest accepted product baseline.
 
 ### Batch D — COMPLETE
 
-Frozen source `e17b0a1c...` produced: Quick Draw 8 swaps / Bracket 3→3; Virtue and Valor 4 swaps / Bracket 2→2; Explorers of the Deep 4 swaps / Bracket 2→2. Terminal Virtue/Explorers packages included genuine component regressions, so the downstream compound-component preservation guard remains required and must not be weakened.
+Quick Draw, Virtue and Valor and Explorers showed terminal construction behavior under the frozen baseline. The downstream compound-component preservation guard was proven necessary and remains locked.
 
 ### Candidate-breadth diagnostic — COMPLETE
 
-With the same frozen product source and all other inputs unchanged, changing only `candidatePackagesPerRound` from 4 to supported maximum 6 produced Quick Draw unchanged, Virtue unchanged, and Explorers improving from **4 swaps / Bracket 2 to 9 swaps / Bracket 3**.
+Changing only candidate breadth 4→6 improved Explorers and, independently, Animated Army while several controls were unchanged. Source inspection showed the parameter bounded serial planner diversification rather than truncating a pre-ranked pool.
 
-### Cross-family breadth generalization — COMPLETE
+### Adaptive bounded-diversification candidate — ENGINEERING GREEN / MANUAL REJECT
 
-The frozen-source follow-up compared breadth 4 vs 6 on two unrelated unseen families. **Elven Empire** remained 8 swaps / Bracket 2. **Animated Army** improved from 9 swaps / Bracket 2 to **12 swaps / Bracket 3**, with stronger rubric total and strategy count.
+A generic adaptive diversification implementation was produced at `247fb37bc34ad70678ff12ec297a6e9bdc220323`. Engineering validation and replay mechanics were green, but mandatory manual whole-deck review rejected the product candidate.
 
-Explorers + Animated Army therefore establish a repeated cross-family bounded candidate-discovery/ranking defect signal, while Quick Draw, Virtue and Valor, and Elven Empire are unchanged controls.
+Manual review found:
+- Quick Draw: mechanically improved but several generic additions remained weakly on-plan.
+- Virtue and Valor: structural fillers did not convincingly improve Ellivere identity.
+- Explorers: 9 swaps / Bracket 3 recovered the breadth-6 state but replacement quality remained mixed.
+- Elven Empire: clear identity regression; generic aristocrats/food/structural cards displaced Elf/Elf-payoff pieces while remaining Bracket 2.
+- Animated Army: 5 swaps / Bracket 2 versus prior 12/B3 breadth-6 diagnostic, with strategy evidence incorrectly manufacturing Equipment/Voltron context from negative `non-Equipment` wording.
 
-### Candidate-discovery mechanism diagnosis — COMPLETE / REPAIR AUTHORIZED, VALIDATION PENDING
+Evidence: `docs/benchmarks/BENCH-01-ADAPTIVE-MANUAL-REVIEW.md`.
 
-Detailed diagnosis: `docs/BENCH-01-CANDIDATE-DISCOVERY-DIAGNOSIS-2026-09-06.md`.
+### Generic strategy-anchor repair — VALIDATED LOCALLY / PRODUCT LINEAGE STILL MANUAL REJECT
 
-Frozen-source inspection establishes that `candidatePackagesPerRound` does not merely truncate a pre-ranked candidate pool. `refineCommanderDeckIterativelyV12()` invokes the planner sequentially. After each generated plan, `diversifyNextPackage()` adds roughly half of that package's incoming cards to `diversityBlocked`; later planner calls therefore explore search states that earlier candidate numbers never enter. Rejected strategy/package-acceptance cuts can also expand blocked-cut state.
+A centralized semantic repair at `2e34ebff20d0a66b7c4649feb1e9984c156e43ca` requires a positive Equipment/equip/attach anchor before incidental protection/combat text can substantively create `equipment-voltron` identity. Focused strategy regression, full repository suite and build were green before a frozen-source five-fixture replay.
 
-That mechanism explains why positions 5–6 can expose viable accepted packages for Explorers and Animated Army. A fixed breadth of 4 can terminate the serial diversification chain while it is still producing materially new paths.
+The repair **successfully closes the false Equipment/Voltron inference defect**, but does not make the overall adaptive lineage acceptable:
+- Animated Army now uses `value-engine` rather than fabricated Equipment/Voltron strategy, yet still ends at only **3 swaps / Bracket 2**, cuts high-value Bello pieces for generic structural cards, and drops strategically relevant combo evidence **1→0**.
+- Elven Empire still allows structural Bracket pressure and incidental strategy signals to displace stronger Elf identity cards.
+- Explorers still demonstrates that passing minimum theme/component floors is not equivalent to preserving identity quality above those floors.
+- Quick Draw and Virtue and Valor remain controls with broader replacement-quality concerns unresolved.
 
-This source proof plus repeated unrelated-fixture evidence justifies a **generic adaptive bounded-diversification control-flow repair**. It does **not** justify changing the default/global breadth from 4 to 6: moving a fixed magic number would preserve the same failure mode at the new boundary.
+Evidence: `docs/benchmarks/BENCH-01-STRATEGY-ANCHOR-MANUAL-REVIEW.md`.
 
-Required repair properties:
-- continue bounded diversification only while search states/packages remain materially novel and the attempt remains unresolved;
-- terminate on duplicate/no-new-package states;
-- maintain a strict hard work ceiling;
-- preserve existing winner selection and candidate-attempt provenance;
-- leave legality, budget, printing, package acceptance, strategy retention, target-progress, simulation, theme and compound-component correctness gates unchanged.
+### Current generic weakness — IDENTITY-AWARE REPLACEMENT PRIORITY
 
-Before acceptance, add generic control-flow regressions, run focused and full validation, then freeze the exact repair SHA and replay Explorers + Animated Army plus Quick Draw, Virtue and Valor, and Elven Empire controls. Record runtime/work cost as well as quality movement. An unvalidated repair head is not a new validated baseline.
+The repeated cross-fixture problem is now narrower and better supported:
 
-Remaining promotion evidence should still cover compact unrestricted combo, hybrid combat-combo, commander damage/combat, control, aristocrats, budget and unusual-partner families, plus expert comparison against strong locked general-AI baselines.
+1. Hard legality, budget, printing, component and strategy-loss gates are required and should remain unchanged.
+2. Structural Bracket targets can still make a candidate package look better even when the incoming card contributes materially less to the commander/requested identity than the outgoing card.
+3. Aggregate theme/component minimums prevent catastrophic failure but can allow meaningful erosion above the minimum floor.
+4. Correct strategy labels alone are insufficient; replacement scoring must account for relative identity/strategy value of **IN versus OUT**.
+
+The next authorized product work is source diagnosis and, only if the mechanism is centralized, a small generic identity-aware replacement-priority repair. The repair must not freeze all typal/theme cards, simply raise minimum theme floors, weaken structural target gates, or add deck/card exceptions.
+
+Required proof before acceptance:
+- generic regressions across at least typal, artifact/enchantment and control families;
+- focused + full repository validation and build;
+- one exact frozen repair SHA;
+- multi-fixture replay on Animated Army, Elven Empire and Explorers with Quick Draw and Virtue controls;
+- manual complete-deck review showing actual Commander-quality improvement, not only Bracket/metric movement.
+
+Remaining BENCH breadth should still cover unrestricted combo, hybrid combat/combo, commander damage, control, aristocrats, budget, unusual commander/partner incentives and strong general-AI comparison before promotion readiness.
 
 ## INTEL-03 — Human-level strategic reasoning layer — PLANNED
 
-Do not start speculative INTEL-03 work while BENCH-01 has the narrower adaptive-diversification repair/validation gate.
+Do not start speculative INTEL-03 work while BENCH-01 has the narrower identity-aware replacement-priority gate.
 
 ## INTEL-04 — Counterfactual deck comparison & expert explanation — PLANNED
 
@@ -85,4 +103,4 @@ Remains downstream of current BENCH evidence gathering.
 
 ## Promotion boundary
 
-PR #29 and stable/current V0.13 remain unchanged while BENCH-01 is not promotion-grade. Standing authorization permits autonomous merge/promotion only after the candidate is fully validated, non-redundant, safe, blocker-free and supported by broad benchmark evidence demonstrating real forward quality rather than workflow success.
+PR #29 remains open/draft/unmerged and stable/current remains V0.13. Standing authorization permits autonomous merge/promotion only after the candidate is fully validated, safe, non-redundant, blocker-free and supported by promotion-grade benchmark evidence demonstrating real whole-deck Commander quality.
