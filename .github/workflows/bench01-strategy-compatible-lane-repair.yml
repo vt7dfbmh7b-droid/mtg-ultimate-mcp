@@ -1,0 +1,202 @@
+name: BENCH-01 strategy-compatible candidate lane repair
+
+on:
+  push:
+    branches:
+      - agent/v15-native-deck-intelligence
+    paths:
+      - .github/workflows/bench01-strategy-compatible-lane-repair.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/v15-native-deck-intelligence
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Apply centralized strategy-compatible lane repair
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('src/services/upgrade.ts')
+          s = p.read_text()
+
+          old = '''function candidateStrategyPriorityV15(
+            card: ScryfallCard,
+            strategyContext: CommanderStrategyContextV15,
+          ): { substantive: boolean; score: number } {
+            const score = substantiveCommanderStrategyAffinityScoreV15(
+              cardCommanderStrategyAffinityV15(card, strategyContext),
+            );
+            return {
+              substantive: score >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15,
+              score,
+            };
+          }
+          '''
+          new = '''function candidateStrategyPriorityV15(
+            card: ScryfallCard,
+            strategyContext: CommanderStrategyContextV15,
+          ): { substantive: boolean; score: number } {
+            const score = substantiveCommanderStrategyAffinityScoreV15(
+              cardCommanderStrategyAffinityV15(card, strategyContext),
+            );
+            return {
+              substantive: score >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15,
+              score,
+            };
+          }
+
+          /**
+           * Split an already structurally-compatible role pool into an identity-aligned normal lane
+           * and a generic fallback lane. Callers must only advance to the fallback when the aligned
+           * lane produces zero actually eligible candidates (for example after printing/budget checks).
+           */
+          export function strategyCompatibleCandidateLanesV15<T>(
+            candidates: readonly T[],
+            isStrategyCompatible: (candidate: T) => boolean,
+          ): T[][] {
+            const preferred = candidates.filter(isStrategyCompatible);
+            if (preferred.length === 0) return [[...candidates]];
+            const preferredSet = new Set(preferred);
+            const fallback = candidates.filter((candidate) => !preferredSet.has(candidate));
+            return fallback.length > 0 ? [preferred, fallback] : [preferred];
+          }
+          '''
+          if old not in s:
+              raise SystemExit('candidateStrategyPriority insertion anchor not found')
+          s = s.replace(old, new, 1)
+
+          old = '''    const candidates: Array<Record<string, unknown>> = [];
+              for (const card of rankedForPrinting) {
+                if (candidates.length >= candidatesForPriority) break;
+          '''
+          new = '''    const candidateSelectionLanes = strategyCompatibleCandidateLanesV15(
+              rankedForPrinting,
+              (card) => {
+                const strategy = candidateStrategyPriorityV15(card, strategyContext);
+                if (strategy.substantive) return true;
+                if (componentAwareThemeRanking) {
+                  // A saturated/broad component receives only the score floor (2). Requiring at
+                  // least 4 here reserves the normal lane for meaningfully underrepresented
+                  // compound-theme support while keeping generic structural cards as fallback.
+                  return componentAffinityForCard(card).score >= 4;
+                }
+                return Boolean(themeClause) && themeCandidateNames.has(card.name.toLocaleLowerCase());
+              },
+            );
+
+            const candidates: Array<Record<string, unknown>> = [];
+            for (const candidateLane of candidateSelectionLanes) {
+              const laneStartCount = candidates.length;
+              for (const card of candidateLane) {
+                if (candidates.length >= candidatesForPriority) break;
+          '''
+          if old not in s:
+              raise SystemExit('candidate loop opening anchor not found')
+          s = s.replace(old, new, 1)
+
+          old = '''        whyItFits: `${targetReason}${strategyReason}. The recommended physical printing satisfies the active printing-family/set policy.${themeReason}`,
+              });
+            }
+
+            candidateGroups.push({
+          '''
+          new = '''        whyItFits: `${targetReason}${strategyReason}. The recommended physical printing satisfies the active printing-family/set policy.${themeReason}`,
+              });
+              }
+              // Once the identity-aligned lane yields any eligible candidate, do not pad the role
+              // package with generic cards merely to fill maxCandidatesPerRole. The generic lane is
+              // a resilience fallback, not a co-equal source of additions.
+              if (candidates.length > laneStartCount) break;
+            }
+
+            candidateGroups.push({
+          '''
+          if old not in s:
+              raise SystemExit('candidate loop closing anchor not found')
+          s = s.replace(old, new, 1)
+
+          old = "'Within an already-required structural role or target gate, candidate ordering treats the existing V0.15 substantive-strategy threshold as a first-class tier before generic mana-efficiency and EDHREC/community-adoption scoring. For compound themes, bounded component-aware affinity then prefers relatively underrepresented controlled components within that structural/strategy-safe lane; it never makes a themed card mandatory.',"
+          new = "'Within an already-required structural role or target gate, candidate generation first attempts an identity-compatible lane: substantive commander-strategy support, meaningful underrepresented compound-theme support, or controlled single-theme membership. Generic structural cards are used only when that aligned lane produces no eligible printing; they do not pad a successful aligned lane to the candidate cap. This preserves role coverage as a fallback without letting generic utility displace available on-plan upgrades.',"
+          if old not in s:
+              raise SystemExit('caveat anchor not found')
+          s = s.replace(old, new, 1)
+          p.write_text(s)
+
+          test = Path('src/services/upgrade-strategy-compatible-lane-v15.test.ts')
+          test.write_text('''import assert from 'node:assert/strict';
+          import test from 'node:test';
+          import { strategyCompatibleCandidateLanesV15 } from './upgrade.js';
+
+          type Candidate = { name: string; identityFit: boolean; printingEligible?: boolean };
+
+          test('typal role candidates keep aligned cards in the normal lane and generic cards only in fallback', () => {
+            const elfDraw = { name: 'Elf draw engine', identityFit: true };
+            const genericDraw = { name: 'Generic draw spell', identityFit: false };
+            const lanes = strategyCompatibleCandidateLanesV15([genericDraw, elfDraw], (card) => card.identityFit);
+            assert.deepEqual(lanes, [[elfDraw], [genericDraw]]);
+          });
+
+          test('non-typal spells strategy gets the same aligned-first lane behavior', () => {
+            const spellPayoff = { name: 'Spellslinger interaction', identityFit: true };
+            const genericRemoval = { name: 'Generic removal', identityFit: false };
+            const lanes = strategyCompatibleCandidateLanesV15([genericRemoval, spellPayoff], (card) => card.identityFit);
+            assert.deepEqual(lanes, [[spellPayoff], [genericRemoval]]);
+          });
+
+          test('generic structural candidates remain the only lane when no identity-compatible option exists', () => {
+            const a = { name: 'Generic ramp A', identityFit: false };
+            const b = { name: 'Generic ramp B', identityFit: false };
+            assert.deepEqual(strategyCompatibleCandidateLanesV15([a, b], (card) => card.identityFit), [[a, b]]);
+          });
+
+          test('selection semantics use generic fallback only when the aligned lane yields zero eligible printings', () => {
+            const alignedBadPrinting: Candidate = { name: 'Aligned but unavailable', identityFit: true, printingEligible: false };
+            const genericAvailable: Candidate = { name: 'Generic available', identityFit: false, printingEligible: true };
+            const lanes = strategyCompatibleCandidateLanesV15([genericAvailable, alignedBadPrinting], (card) => card.identityFit);
+            const selected: Candidate[] = [];
+            for (const lane of lanes) {
+              const before = selected.length;
+              selected.push(...lane.filter((card) => card.printingEligible));
+              if (selected.length > before) break;
+            }
+            assert.deepEqual(selected, [genericAvailable]);
+
+            const alignedAvailable: Candidate = { name: 'Aligned available', identityFit: true, printingEligible: true };
+            const successfulLanes = strategyCompatibleCandidateLanesV15([genericAvailable, alignedAvailable], (card) => card.identityFit);
+            const successful: Candidate[] = [];
+            for (const lane of successfulLanes) {
+              const before = successful.length;
+              successful.push(...lane.filter((card) => card.printingEligible));
+              if (successful.length > before) break;
+            }
+            assert.deepEqual(successful, [alignedAvailable]);
+          });
+          ''')
+      - name: Focused strategy-compatible lane regressions
+        run: npx tsx --test src/services/upgrade-strategy-compatible-lane-v15.test.ts
+      - name: Full repository validation
+        run: npm run check
+      - name: Commit validated Commander repair
+        shell: bash
+        run: |
+          if git diff --quiet -- src/services/upgrade.ts src/services/upgrade-strategy-compatible-lane-v15.test.ts; then
+            echo 'No product changes to commit'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/services/upgrade.ts src/services/upgrade-strategy-compatible-lane-v15.test.ts
+          git commit -m 'fix: prefer strategy-compatible upgrade candidates'
+          git push origin HEAD:agent/v15-native-deck-intelligence
