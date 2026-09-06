@@ -32,6 +32,14 @@ const targets = {
   earlyPlays: 10,
 };
 
+function affinity(strategy: number) {
+  return {
+    score: strategy,
+    protectionApplied: 0,
+    matchedStrategies: strategy > 0 ? ['combat-tokens'] : [],
+  };
+}
+
 function addition(theme: boolean, strategy = 0) {
   return {
     role: 'protection' as const,
@@ -43,7 +51,7 @@ function addition(theme: boolean, strategy = 0) {
         typeLine: 'Instant',
       },
       explicitTheme: { matchesControlledTheme: theme },
-      strategyAffinity: { score: strategy, protectionApplied: 0, matchedStrategies: [] },
+      strategyAffinity: affinity(strategy),
     },
   };
 }
@@ -53,7 +61,7 @@ function cut(name: string, pressure: number, theme: boolean, strategy = 0) {
     card: { name, roles: [], manaValue: 4, typeLine: 'Creature — Test' },
     heuristicCutPressure: pressure,
     explicitTheme: { matchesControlledTheme: theme },
-    strategyAffinity: { score: strategy, protectionApplied: 0, matchedStrategies: [] },
+    strategyAffinity: affinity(strategy),
   };
 }
 
