@@ -36,9 +36,10 @@ jobs:
             "  addSignal(table, 'equipment-voltron', /double strike|commander damage|power and toughness/i.test(text), 3, 'combat scaling');",
           ].join('\n');
           const newBlock = [
-            "  const equipmentVoltronAnchor = roles.has('equipment')",
+            "  const positiveEquipmentReference = roles.has('equipment') && !/\\bnon-equipment\\b/i.test(text);",
+            "  const equipmentVoltronAnchor = positiveEquipmentReference",
             "    || /equip |equipped creature|attach target|attach it/i.test(text);",
-            "  addSignal(table, 'equipment-voltron', roles.has('equipment'), 8, 'equipment role');",
+            "  addSignal(table, 'equipment-voltron', positiveEquipmentReference, 8, 'equipment role');",
             "  addSignal(table, 'equipment-voltron', equipmentVoltronAnchor && roles.has('protection'), 3, 'protection');",
             "  addSignal(table, 'equipment-voltron', /equip |equipped creature|attach target|attach it/i.test(text), 7, 'equip/attach text');",
             "  addSignal(table, 'equipment-voltron', equipmentVoltronAnchor && /double strike|commander damage|power and toughness/i.test(text), 3, 'combat scaling');",
@@ -51,7 +52,7 @@ jobs:
           let tests = fs.readFileSync(testPath, 'utf8');
           const anchor = "test('neutral inference distinguishes graveyard and equipment identities', () => {";
           const regression = [
-            "test('incidental protection and power/toughness text cannot manufacture equipment-voltron without an equipment anchor', () => {",
+            "test('negative Equipment references plus incidental combat/protection text cannot manufacture equipment-voltron', () => {",
             "  const result = inferNeutralStrategyV15([card({",
             "    name: 'Protected Animator',",
             "    oracle: 'During your turn, each non-Equipment artifact and non-Aura enchantment you control with mana value 4 or greater has base power and toughness 4/4 and has indestructible. Whenever one of those creatures deals combat damage to a player, draw a card.',",
@@ -78,7 +79,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- src/services/neutral-commander-selection-v15.ts src/services/neutral-commander-selection-v15.test.ts
-          git commit -m "fix(BENCH-01): require equipment anchor for voltron inference"
+          git commit -m "fix(BENCH-01): require positive equipment anchor for voltron inference"
           for attempt in 1 2 3 4 5 6; do
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
             git fetch origin "${GITHUB_REF_NAME}"
