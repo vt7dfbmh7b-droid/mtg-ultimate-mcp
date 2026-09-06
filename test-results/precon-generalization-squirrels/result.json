@@ -257,8 +257,8 @@
     "packageAcceptanceContract": null,
     "estimatedUpgradeSpendNzd": 3.52,
     "estimatedUpgradeSpendUsdReference": 2.07,
-    "maxTotalNzd": 199.99,
-    "maxTotalUsdReference": 117.58,
+    "maxTotalNzd": 200,
+    "maxTotalUsdReference": 117.59,
     "swaps": [
       {
         "out": "Rootcast Apprenticeship",
@@ -479,8 +479,8 @@
       "targetBracket": 4,
       "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.58,
-      "maxTotalNzd": 199.99,
-      "maxTotalUsdReference": 117.58,
+      "maxTotalNzd": 200,
+      "maxTotalUsdReference": 117.59,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -895,7 +895,7 @@
                   "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": null,
-                  "candidateCount": 2
+                  "candidateCount": 1
                 },
                 {
                   "role": "tutor",
@@ -1272,7 +1272,7 @@
                   "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": null,
-                  "candidateCount": 2
+                  "candidateCount": 1
                 },
                 {
                   "role": "tutor",
@@ -1648,7 +1648,7 @@
                   "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": null,
-                  "candidateCount": 2
+                  "candidateCount": 1
                 },
                 {
                   "role": "tutor",
@@ -2038,7 +2038,7 @@
                   "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": null,
-                  "candidateCount": 2
+                  "candidateCount": 1
                 },
                 {
                   "role": "tutor",
@@ -2441,7 +2441,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -2818,7 +2818,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -3194,7 +3194,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -3584,7 +3584,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -3897,7 +3897,7 @@
                   "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": null,
-                  "candidateCount": 2
+                  "candidateCount": 1
                 },
                 {
                   "role": "tutor",
@@ -4078,7 +4078,7 @@
                   "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": null,
-                  "candidateCount": 2
+                  "candidateCount": 1
                 },
                 {
                   "role": "tutor",
@@ -4259,7 +4259,7 @@
                   "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": null,
-                  "candidateCount": 2
+                  "candidateCount": 1
                 },
                 {
                   "role": "tutor",
@@ -4440,7 +4440,7 @@
                   "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": null,
-                  "candidateCount": 2
+                  "candidateCount": 1
                 },
                 {
                   "role": "tutor",
@@ -4632,7 +4632,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -4813,7 +4813,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -4994,7 +4994,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -5175,7 +5175,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -5367,7 +5367,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -5548,7 +5548,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -5729,7 +5729,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -5910,7 +5910,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -6102,7 +6102,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -6283,7 +6283,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -6464,7 +6464,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -6645,7 +6645,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -6837,7 +6837,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -7018,7 +7018,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -7199,7 +7199,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
@@ -7380,7 +7380,7 @@
                       "candidateDiscoveryMode": "bounded-role-plus-strategy-search",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": null,
-                      "candidateCount": 2
+                      "candidateCount": 1
                     },
                     {
                       "role": "tutor",
