@@ -67,19 +67,20 @@ jobs:
           fs.writeFileSync(testPath, tests);
           NODE
           rm -f .github/workflows/bench01-strategy-anchor-repair.yml
+          rm -f .github/workflows/bench01-adaptive-review-extract.yml
       - name: Focused strategy inference regression
         run: npx tsx --test src/services/neutral-commander-selection-v15.test.ts
       - name: Full repository tests
         run: npm test
       - name: Build
         run: npm run build
-      - name: Commit validated generic repair and remove one-shot runner
+      - name: Commit validated generic repair and remove temporary support workflows
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A -- src/services/neutral-commander-selection-v15.ts src/services/neutral-commander-selection-v15.test.ts .github/workflows/bench01-strategy-anchor-repair.yml
+          git add -A -- src/services/neutral-commander-selection-v15.ts src/services/neutral-commander-selection-v15.test.ts .github/workflows/bench01-strategy-anchor-repair.yml .github/workflows/bench01-adaptive-review-extract.yml
           git commit -m "fix(BENCH-01): require positive equipment anchor for voltron inference"
           for attempt in 1 2 3 4 5 6; do
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
