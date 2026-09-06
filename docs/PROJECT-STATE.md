@@ -21,7 +21,7 @@ Generated from `project-state.json`. Last state update: **2026-09-06T20:32:00.00
 
 ## Experimental checkpoints
 
-Development checkpoint: `37ae1efef351f6b502aa0156b9cdd704c294406c`
+Development checkpoint at pause: `37ae1efef351f6b502aa0156b9cdd704c294406c`
 
 The latest accepted fully validated Commander product remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. The generic component-aware compound-theme affinity repair is formally validated at 27a2fab9561d3aa89e9306d07e15c248106988eb and was replayed from that exact frozen src/** across Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army. Mandatory whole-deck review rejected the lineage; evidence is persisted at test-results/bench01-strategy-anchor-replay/manual-verdict-27a2fab.md in checkpoint 37ae1efef351f6b502aa0156b9cdd704c294406c. Repeated off-plan structural replacements remain across spellslinger, enchantment-combat, Merfolk, Elf and Bello decks. The next justified generic capability is role-compatible strategic/requested-identity preference among candidates that satisfy the same structural deficit, with structural fallback preserved when no compatible candidate exists.
 
