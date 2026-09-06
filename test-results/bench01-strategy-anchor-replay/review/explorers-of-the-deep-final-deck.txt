@@ -11,11 +11,10 @@
 1 Tributary Instructor (LCC) 96 *N*
 1 Singer of Swift Rivers (LCC) 98 *N*
 1 Benthic Biomancer (LCC) 145 *N*
-1 Commit // Memory (LCC) 147 *N*
-1 Coralhelm Commander (LCC) 148 *N*
 1 Emperor Mihail II (LCC) 155 *N*
 1 Herald of Secret Streams (LCC) 158 *N*
 1 Kindred Discovery (LCC) 159 *N*
+1 Kopala, Warden of Waves (LCC) 160 *N*
 1 Master of the Pearl Trident (LCC) 162 *N*
 1 Merfolk Sovereign (LCC) 164 *N*
 1 Seafloor Oracle (LCC) 170 *N*
@@ -28,7 +27,6 @@
 1 Realmwalker (LCC) 250 *N*
 1 Ruinous Intrusion (LCC) 255 *N*
 1 Kumena, Tyrant of Orazca (LCC) 274 *N*
-1 Prime Speaker Zegana (LCC) 278 *N*
 1 Quandrix Command (LCC) 280 *N*
 1 Simic Ascendancy (LCC) 288 *N*
 1 Tishana, Voice of Thunder (LCC) 291 *N*
@@ -77,11 +75,13 @@
 3 Forest (LCI) 402 *N*
 7 Island (LCI) 395 *N*
 6 Island (LCI) 396 *N*
-1 Walking Ballista (FIC) 371 *N*
-1 Essence Flux (INR) 64 *N*
+1 Curiosity (ISD) 49 *N*
+1 Mind Stone (DMR) 385 *N*
+1 Jace, Vryn's Prodigy // Jace, Telepath Unbound (ORI) 60 *N*
 1 Archmage Ascension (ZEN) 42 *N*
-1 District Mascot (DFT) 344 *N*
-1 Trade Routes (8ED) 109 *N*
+1 Essence Flux (INR) 64 *N*
 1 Worldly Tutor (CC1) 6 *N*
 1 Sword of Fire and Ice (MAR) 100 *N*
+1 District Mascot (DFT) 344 *N*
 1 Origin of Metalbending (TLA) 187 *N*
+1 Padeem, Consul of Innovation (J25) 62 *N*
