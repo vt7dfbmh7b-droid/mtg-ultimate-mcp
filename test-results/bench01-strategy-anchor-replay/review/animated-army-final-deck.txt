@@ -4,13 +4,14 @@
 // MAIN
 1 Wildsear, Scouring Maw (BLC) 8 *F*
 1 Domri, Anarch of Bolas (BLC) 98 *F*
+1 Etali, Primal Storm (BLC) 196 *N*
 1 Prosperous Bandit (BLC) 25 *N*
-1 Pyreswipe Hawk (BLC) 26 *N*
 1 Alchemist's Talent (BLC) 22 *N*
 1 Berserkers' Onslaught (BLC) 192 *N*
 1 Outpost Siege (BLC) 199 *N*
 1 Rain of Riches (BLC) 200 *N*
 1 Chaos Warp (BLC) 115 *N*
+1 Sunbird's Invocation (BLC) 116 *N*
 1 Gratuitous Violence (BLC) 197 *N*
 1 Warstorm Surge (BLC) 117 *N*
 1 Starstorm (BLC) 203 *N*
@@ -23,7 +24,7 @@
 1 Esika's Chariot (BLC) 215 *N*
 1 Unnatural Growth (BLC) 245 *N*
 1 Greater Good (BLC) 223 *N*
-1 Grothama, All-Devouring (BLC) 224 *N*
+1 Kodama of the East Tree (BLC) 227 *N*
 1 Rampaging Baloths (BLC) 233 *N*
 1 Bootleggers' Stash (BLC) 207 *N*
 1 Primeval Bounty (BLC) 232 *N*
@@ -42,7 +43,6 @@
 1 Mosswort Bridge (BLC) 317 *N*
 1 Blasphemous Act (BLC) 114 *N*
 1 Llanowar Loamspeaker (BLC) 228 *N*
-1 Tendershoot Dryad (BLC) 242 *N*
 1 Goreclaw, Terror of Qal Sisma (BLC) 222 *N*
 1 Path of Discovery (BLC) 231 *N*
 1 Decimate (BLC) 251 *N*
@@ -84,6 +84,6 @@
 4 Mountain (BLB) 376 *N*
 5 Forest (BLB) 377 *N*
 5 Forest (BLB) 378 *N*
-1 Idol of Oblivion (SCD) 268 *N*
-1 Negative Zone Portal (MSC) 111 *N*
+1 Mask of Memory (FIC) 350 *N*
+1 You Find Some Prisoners (PLST) AFR-169 *N*
 1 Cool but Rude (TMT) 89 *N*
