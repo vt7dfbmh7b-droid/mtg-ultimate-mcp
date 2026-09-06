@@ -381,19 +381,17 @@
         },
         "alternativeStrategies": [
           {
-            "archetype": "equipment-voltron",
-            "score": 3,
-            "evidence": [
-              "combat scaling +3"
-            ]
-          },
-          {
             "archetype": "aristocrats",
             "score": 0,
             "evidence": []
           },
           {
             "archetype": "artifact-engine",
+            "score": 0,
+            "evidence": []
+          },
+          {
+            "archetype": "big-mana",
             "score": 0,
             "evidence": []
           }
