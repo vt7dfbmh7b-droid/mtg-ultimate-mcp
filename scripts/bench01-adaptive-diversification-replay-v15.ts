@@ -94,6 +94,10 @@ async function runFixture(fixture: typeof FIXTURES[number]): Promise<Json> {
   } finally { await client.close(); await handler.close(); }
   const preconResult = record(rawResult.result);
   const refinement = record(preconResult.refinement);
+  const adaptiveContract = record(refinement.candidateDiversification);
+  assert.equal(adaptiveContract.adaptive, true, `${fixture.reference} must execute with adaptive candidate diversification active`);
+  assert.equal(adaptiveContract.minimumAttempts, 3, `${fixture.reference} must retain the historical three-attempt minimum`);
+  assert.equal(adaptiveContract.hardLimit, 6, `${fixture.reference} must retain the bounded six-attempt hard ceiling`);
   const finalDecklist = typeof refinement.finalDecklist === 'string' && refinement.finalDecklist.trim() ? refinement.finalDecklist.trim() : stock.decklist.trim();
   const after = await auditDeck(finalDecklist);
   assert.deepEqual(after.commanderNames, before.commanderNames, `${fixture.reference} must preserve the command zone`);
@@ -105,7 +109,7 @@ async function runFixture(fixture: typeof FIXTURES[number]): Promise<Json> {
     themeQuery: fixture.themeQuery,
     productRuntimeBaselineSha: FROZEN_PRODUCT_SHA,
     sourceFrozenWithinBatch: true,
-    adaptiveContract: record(refinement.candidateDiversification),
+    adaptiveContract,
     totalSwaps: finite(refinement.totalSwaps),
     assessedBracket: finite(after.assessedBracket),
     before,
@@ -136,12 +140,13 @@ async function main(): Promise<void> {
   const results: Json[] = [];
   for (const fixture of FIXTURES) results.push(await runFixture(fixture));
   const output = {
-    schema: 'bench01-adaptive-diversification-replay-v1',
+    schema: 'bench01-adaptive-diversification-replay-v2',
     batch: 'BENCH-01-ADAPTIVE-DIVERSIFICATION-REPLAY',
     productRuntimeBaselineSha: FROZEN_PRODUCT_SHA,
     sourceFrozenWithinBatch: true,
     noCommanderIntelligenceChangesBetweenFixtures: true,
     explicitCandidatePackagesPerRoundOmitted: true,
+    adaptiveContractRequired: { minimumAttempts: 3, hardLimit: 6, adaptive: true },
     purpose: 'Validate whether the bounded adaptive diversification repair recovers broader-search quality on affected fixtures without regressing unrelated controls, while exposing actual candidate-work cost.',
     acceptanceRule: 'Affected fixtures Explorers of the Deep and Animated Army should recover meaningful breadth-6 quality without violating legality/theme/strategy gates; Quick Draw, Virtue and Valor, and Elven Empire must not materially regress. Whole-deck manual review remains required before product acceptance.',
     results,
