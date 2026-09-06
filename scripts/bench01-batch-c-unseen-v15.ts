@@ -9,7 +9,8 @@ import { parseDecklist, type ParsedDeck } from '../src/services/deck.js';
 import { fetchPreconDeckV10 } from '../src/services/precons-v10.js';
 import { getCardsByIdentifiers, type CardIdentifierInput } from '../src/services/scryfall.js';
 
-const FROZEN_PRODUCT_SHA = 'dd085caf4e47f6f5e1976667dc90de2db46c00a1';
+const FROZEN_PRODUCT_SHA = process.env.FROZEN_PRODUCT_SHA?.trim();
+assert.ok(FROZEN_PRODUCT_SHA, 'FROZEN_PRODUCT_SHA must be supplied by the BENCH workflow');
 const MAX_NZD_PER_CARD = 50;
 const MAX_TOTAL_NZD = 250;
 const MAX_SWAPS = 12;
