@@ -1,0 +1,154 @@
+name: BENCH-01 wire replacement identity
+
+on:
+  push:
+    branches:
+      - agent/v15-native-deck-intelligence
+    paths:
+      - .github/workflows/bench01-wire-replacement-identity.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  wire-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/v15-native-deck-intelligence
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Guard expected staged primitive
+        run: |
+          test -f src/services/replacement-identity-priority-v15.ts
+          if grep -q "replacementIdentityPriorityV15" src/services/deck-builder-v07.ts; then
+            echo "Replacement identity is already wired; refusing duplicate patch."
+            exit 1
+          fi
+          echo "BASE_HEAD=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
+      - name: Wire relative requested-identity loss into safe-cut ranking
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('src/services/deck-builder-v07.ts')
+          text = p.read_text()
+
+          import_anchor = "import { effectiveCardRolesV15 } from './card-role-truth-v15.js';\n"
+          import_line = "import { replacementIdentityPriorityV15 } from './replacement-identity-priority-v15.js';\n"
+          if import_line not in text:
+              if import_anchor not in text:
+                  raise SystemExit('import anchor missing')
+              text = text.replace(import_anchor, import_anchor + import_line, 1)
+
+          sort_anchor = """      const leftStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, left);\n      const rightStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, right);\n      if (leftStrategyLoss !== rightStrategyLoss) return leftStrategyLoss - rightStrategyLoss;\n"""
+          identity_sort = sort_anchor + """      const leftIdentityLoss = replacementIdentityPriorityV15({ add: selection.candidate, cut: left }).totalLoss;\n      const rightIdentityLoss = replacementIdentityPriorityV15({ add: selection.candidate, cut: right }).totalLoss;\n      if (leftIdentityLoss !== rightIdentityLoss) return leftIdentityLoss - rightIdentityLoss;\n"""
+          if 'leftIdentityLoss = replacementIdentityPriorityV15' not in text:
+              if sort_anchor not in text:
+                  raise SystemExit('sort anchor missing')
+              text = text.replace(sort_anchor, identity_sort, 1)
+          p.write_text(text)
+
+      - name: Add pairing-level generic regressions
+        shell: bash
+        run: |
+          cat > src/services/replacement-identity-pairing-v15.test.ts <<'EOF'
+          import assert from 'node:assert/strict';
+          import test from 'node:test';
+          import { pairUpgradeSwapsByStructureV15 } from './deck-builder-v07.js';
+
+          const metrics = {
+            rampCount: 8, drawCount: 8, interactionCount: 8, protectionCount: 2,
+            tutorCount: 1, recursionCount: 2, boardWipeCount: 2, earlyPlayCount: 10,
+            cheapInteractionCount: 6, fastManaCount: 2, averageNonlandManaValue: 3,
+            nonlandCount: 60, commanderColorCount: 2, persistentColoredManaSourceCount: 4,
+            roleCounts: {},
+          };
+          const targets = {
+            ramp: 8, draw: 8, interaction: 8, freeInteraction: 0, protection: 3,
+            tutors: 1, recursion: 2, boardWipes: 2, earlyPlays: 10,
+          };
+
+          function component(normalized: string) {
+            return { normalized, requested: normalized, matches: true };
+          }
+
+          function addition(components: string[]) {
+            return {
+              role: 'protection' as const,
+              candidate: {
+                card: { name: 'Unnamed Protective Upgrade', roles: ['protection'], manaValue: 2, typeLine: 'Instant' },
+                requestedThemeComponents: components.map(component),
+              },
+            };
+          }
+
+          function cut(name: string, pressure: number, components: string[]) {
+            return {
+              card: { name, roles: [], manaValue: 4, typeLine: 'Creature — Test' },
+              heuristicCutPressure: pressure,
+              requestedThemeComponents: components.map(component),
+            };
+          }
+
+          test('safe-cut ranking preserves requested component identity when an equally legal neutral cut exists', () => {
+            const pairs = pairUpgradeSwapsByStructureV15(
+              [addition([])] as any,
+              [cut('Unnamed Identity Engine', 10, ['typal']), cut('Unnamed Neutral Filler', 8, [])],
+              metrics,
+              targets,
+              3,
+            );
+            assert.equal((pairs[0]?.cut.card as any)?.name, 'Unnamed Neutral Filler');
+          });
+
+          test('identity-to-identity replacement does not suppress normal cut pressure', () => {
+            const pairs = pairUpgradeSwapsByStructureV15(
+              [addition(['typal'])] as any,
+              [cut('Unnamed Identity Engine', 10, ['typal']), cut('Unnamed Neutral Filler', 8, [])],
+              metrics,
+              targets,
+              3,
+            );
+            assert.equal((pairs[0]?.cut.card as any)?.name, 'Unnamed Identity Engine');
+          });
+
+          test('identity-rich cards remain cuttable when no safer legal alternative exists', () => {
+            const pairs = pairUpgradeSwapsByStructureV15(
+              [addition([])] as any,
+              [cut('Unnamed Required Identity Cut', 10, ['typal'])],
+              metrics,
+              targets,
+              3,
+            );
+            assert.equal((pairs[0]?.cut.card as any)?.name, 'Unnamed Required Identity Cut');
+          });
+          EOF
+
+      - name: Focused replacement-identity tests
+        run: npx tsx --test src/services/replacement-identity-priority-v15.test.ts src/services/replacement-identity-pairing-v15.test.ts
+
+      - name: Full repository validation
+        run: npm run check
+
+      - name: Fail closed if branch moved during validation
+        run: |
+          REMOTE_HEAD=$(git ls-remote origin refs/heads/agent/v15-native-deck-intelligence | cut -f1)
+          test "$REMOTE_HEAD" = "$BASE_HEAD" || { echo "Branch advanced during validation; refusing to push stale product."; exit 1; }
+
+      - name: Commit green product wiring
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/services/deck-builder-v07.ts src/services/replacement-identity-pairing-v15.test.ts
+          git commit -m "fix(INTEL-02): rank cuts by relative requested identity"
+          git push origin HEAD:agent/v15-native-deck-intelligence
