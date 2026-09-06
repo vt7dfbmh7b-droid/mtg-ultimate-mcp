@@ -105,11 +105,13 @@ Authoritative results:
 
 The downstream compound-component guard is doing necessary correctness work and remains locked.
 
-### Batch D candidate-breadth diagnostic — COMPLETE / PERSISTENCE VERIFICATION ACTIVE
+### Batch D candidate-breadth diagnostic — COMPLETE / PERSISTENCE VERIFIED; CROSS-FIXTURE GENERALIZATION ACTIVE
 
 Detailed interpretation: `docs/BENCH-01-BATCH-D-CANDIDATE-BREADTH-2026-09-06.md`.
 
 The diagnostic kept executable source frozen at `e17b0a1c...` and changed only `candidatePackagesPerRound` from the Batch D value 4 to the currently supported maximum 6.
+
+Recovery correction (2026-09-06): durable Git-blob verification closed the persistence question. The tracked diagnostic is non-empty: Quick Draw and Virtue and Valor were unchanged, while Explorers improved from 4 swaps/Bracket 2 to 9 swaps/Bracket 3 at breadth 6. That is one positive fixture only, so no product repair is authorized yet; cross-family breadth generalization is the active BENCH-01 gate.
 
 Actions run `34019315945` passed the frozen-source guard, repository tests, build and diagnostic execution. Its uploaded raw artifact records:
 - **Quick Draw**: unchanged at 8 swaps, Bracket 3;

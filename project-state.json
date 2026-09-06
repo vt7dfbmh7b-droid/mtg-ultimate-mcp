@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-06T07:50:00.000Z",
+  "updatedAt": "2026-09-06T08:01:12.339Z",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
   "stable": {
@@ -23,39 +23,66 @@
   "workMode": {
     "intelligenceDevelopmentPaused": false,
     "activeMilestone": "BENCH-01",
-    "reason": "BENCH-01 remains the critical path. The candidate-breadth diagnostic isolates an upstream bounded-search sensitivity without changing product intelligence: Quick Draw and Virtue and Valor are unchanged at breadth 6, while Explorers of the Deep improves by five accepted swaps and one assessed bracket. The Explorers result establishes that bounded package diversification can hide viable component-preserving paths, but only one of the two terminal-veto problem fixtures reproduces it. Per the cross-fixture evidence rule, this is not enough to justify a generic discovery/ranking repair. The preservation guard remains a required correctness boundary. The next gate is to broaden frozen-source evidence across another component-rich typal/theme fixture and an unrelated non-typal compound-theme fixture before deciding whether a generic candidate-discovery repair is warranted or Explorers is an isolated bounded-search sensitivity."
+    "reason": "BENCH-01 remains active. The corrected Batch D candidate-breadth result is durably persisted: Quick Draw and Virtue and Valor were unchanged at breadth 6, while Explorers of the Deep improved from 4 swaps/Bracket 2 to 9 swaps/Bracket 3. One positive fixture is insufficient for a product change, so cross-family breadth generalization is the current evidence gate."
   },
   "milestones": [
-    {"id":"PM-01","name":"Persistent Project State & Handoff Automation","status":"validated","goal":"Make repository state authoritative so a fresh chat can recover exact project context with minimal rechecking."},
-    {"id":"PM-02","name":"Validation State Indexing","status":"validated","goal":"Consolidate key persisted control metadata into one deterministic validation index so fresh chats can identify current, stale, passing and failing evidence immediately."},
-    {"id":"INTEL-01","name":"Win-package intelligence","status":"validated","goal":"Very-good verified full-table win-package discovery, feasibility, injection, and protection."},
-    {"id":"INTEL-02","name":"Actual autonomous deck improvement","status":"implemented-validation-pending","goal":"Very-good target-aware autonomous refinement that repairs real deck weaknesses rather than cosmetic metrics."},
-    {"id":"BENCH-01","name":"Adversarial Commander benchmark suite","status":"active","goal":"Prove deck-building quality across combo, combat, control, aristocrats, typal, budget, theme-restricted, cEDH-ish, and hybrid decks."},
-    {"id":"INTEL-03","name":"Human-level strategic reasoning layer","status":"planned","goal":"Model commander role, synergy networks, structural-card importance, cut consequences, primary/secondary plans, and coherent package trade-offs."},
-    {"id":"INTEL-04","name":"Counterfactual deck comparison & expert explanation","status":"planned","goal":"Compare complete 100-card alternatives and explain why one deck state is stronger under the exact requested constraints."}
+    {
+      "id": "PM-01",
+      "name": "Persistent Project State & Handoff Automation",
+      "status": "validated",
+      "goal": "Make repository state authoritative so a fresh chat can recover exact project context with minimal rechecking."
+    },
+    {
+      "id": "PM-02",
+      "name": "Validation State Indexing",
+      "status": "validated",
+      "goal": "Consolidate key persisted control metadata into one deterministic validation index so fresh chats can identify current, stale, passing and failing evidence immediately."
+    },
+    {
+      "id": "INTEL-01",
+      "name": "Win-package intelligence",
+      "status": "validated",
+      "goal": "Very-good verified full-table win-package discovery, feasibility, injection, and protection."
+    },
+    {
+      "id": "INTEL-02",
+      "name": "Actual autonomous deck improvement",
+      "status": "implemented-validation-pending",
+      "goal": "Very-good target-aware autonomous refinement that repairs real deck weaknesses rather than cosmetic metrics."
+    },
+    {
+      "id": "BENCH-01",
+      "name": "Adversarial Commander benchmark suite",
+      "status": "active",
+      "goal": "Prove deck-building quality across combo, combat, control, aristocrats, typal, budget, theme-restricted, cEDH-ish, and hybrid decks."
+    },
+    {
+      "id": "INTEL-03",
+      "name": "Human-level strategic reasoning layer",
+      "status": "planned",
+      "goal": "Model commander role, synergy networks, structural-card importance, cut consequences, primary/secondary plans, and coherent package trade-offs."
+    },
+    {
+      "id": "INTEL-04",
+      "name": "Counterfactual deck comparison & expert explanation",
+      "status": "planned",
+      "goal": "Compare complete 100-card alternatives and explain why one deck state is stronger under the exact requested constraints."
+    }
   ],
   "validation": {
-    "activeBranchStatus": "bench01-candidate-breadth-split-broader-cross-fixture-evidence-next",
+    "activeBranchStatus": "bench01-candidate-breadth-generalization-active",
     "latestPersistedMarvelControl": {
       "sourceSha": "5829b37b686255ba35d419b37be17095e54fb696",
       "outcome": "expected-ceiling-fail-closed-zero-swap",
       "note": "At exact source 5829b37..., focused and broad Marvel execute and persist honestly with zero accepted swaps because the restricted pool cannot repair the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure. Keep these controls red for target achievement. Treat the result as expected construction-ceiling behaviour, not as a passing target and not as a blocker to BENCH-01 on other archetypes. Rerun only when the relevant pool, provider truth or policy changes."
     },
     "requiredBeforeResumingIntelligenceClaims": [
-      "Preserve all generic guards proven by the 5829b37... family replay, including strategy-fuel, structural-floor, graveyard-directionality, artifact-engine, token/death-payoff, resource-component and exact legality/budget/printing truth.",
-      "Preserve historical BENCH-01 Batch A as a 1-1 pre-repair result: Liliana NZ$500 specialist win; Counter Blitz general-AI win. Do not relabel that evidence because later repairs improve the specialist.",
-      "Preserve ce4c9eba59617be2cf57718408b40252230bccf4 as the validated parser-repair baseline and dd085caf4e47f6f5e1976667dc90de2db46c00a1 as the validated compound-component preservation baseline.",
-      "Treat the paired post-repair Counter Blitz/Cavalry evidence as closure of the component-compensation correctness blocker; do not reopen that repair without new contradictory evidence.",
-      "Preserve the generic taxonomy repair product commit 387709983880fa2fd10c7f0aa50cd8b1524852f5 and validated source-equivalent head e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Card draw and lifegain are controlled only because both map to existing shared measurable role truth; unknown leftovers remain fail-closed.",
-      "Normal CI run 34006676470 is the formal full-suite/build/state/recovery validation for the repaired source tree at e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Never treat later benchmark or state-persistence heads as newer formally validated Commander products.",
-      "Treat corrected-provenance Batch C run 34009618840 as replay acceptance of the card-draw/lifegain taxonomy bridge.",
-      "Treat BENCH-01 Batch D persisted at ffcadb3c6d49e3acecbd2f626e14416bdf4dd7a9 as unseen benchmark evidence from frozen e17b0a1c.... Raw JSON is authoritative: Quick Draw accepted 8 swaps and remained Bracket 3→3; Virtue and Valor accepted 4 swaps and remained Bracket 2→2; Explorers of the Deep accepted 4 swaps and remained Bracket 2→2. None reproduced zeroTargetProgressWhileFailedGatesRemain.",
-      "Treat BENCH-01 Batch D candidate-breadth Actions run 34019315945 as diagnostic evidence from the same frozen e17b0a1c... source. Changing only candidatePackagesPerRound from 4 to 6 left Quick Draw at 8 swaps/Bracket 3 and Virtue at 4 swaps/Bracket 2, while Explorers improved to 9 swaps/Bracket 3. This establishes bounded-search sensitivity for Explorers only; it does not yet justify a product repair.",
-      "The first candidate-breadth persistence commit produced empty tracked result/log copies because checkout reset preceded copying runtime output. Full raw evidence remains in Actions artifact 9985050796. Workflow commit 18f47aec4d3a1109cb26a88d51960dd5100b0ac9 stages outputs outside the checkout before reset; require its rerun to prove durable non-empty persistence before relying on the tracked raw copy.",
-      "Do not convert the Counter-only dense-countermagic allocation watch item into a product repair; later batches do not reproduce it.",
-      "Do not weaken candidateCompoundThemeComponentGateV15. Virtue and Explorers terminal rejected packages include requested-identity regression. Broader search finding earlier acceptable paths for Explorers is evidence about discovery breadth, not a preservation-guard defect.",
-      "Before any theme-aware discovery/ranking product repair, reproduce candidate-breadth sensitivity across at least one additional unrelated component-rich fixture while keeping the executable product source frozen. Otherwise classify Explorers as an isolated bounded-search sensitivity and continue broad BENCH coverage.",
-      "Keep Marvel expected restricted-pool ceiling evidence and provider-unknown Scryfall HTTP 429 semantics separate from BENCH blockers."
+      "Keep the latest fully validated executable Commander baseline e17b0a1cba659b229fd6f0b6e2df79c5e464a616 frozen while BENCH-01 breadth-generalization evidence is collected.",
+      "Treat the corrected Batch D candidate-breadth persistence gate as closed: the tracked Git blob is non-empty and records Quick Draw unchanged, Virtue and Valor unchanged, and Explorers of the Deep improved at breadth 6.",
+      "Require repeated breadth sensitivity across an unrelated Commander family before authorizing any generic candidate-discovery/ranking repair; one positive Explorers fixture alone is insufficient.",
+      "Do not weaken compound-theme/component preservation, legality, budget, printing, strategy-preservation, or simulation gates to manufacture target achievement.",
+      "Keep the earlier Counter Blitz dense-countermagic allocation concern watch-only unless a broader cross-fixture batch reproduces it.",
+      "Do not merge PR #29 or promote stable/current V0.13 until BENCH-01 becomes promotion-grade and all relevant validation evidence is green."
     ]
   },
   "truthBoundary": [
@@ -75,18 +102,24 @@
     "Stable/current promotion or PR merging requires complete validation, non-redundancy, safety and promotion-grade benchmark evidence. The user has granted standing authority to perform those actions once those gates are genuinely satisfied; no extra approval is required at that point."
   ],
   "nextActions": [
-    "Do not repeat the completed comprehensive system audit; docs/SYSTEM-AUDIT-2026-09-02.md remains the reusable baseline unless a material architecture, runtime-entry-point, stable-boundary or project-state-integrity change occurs.",
-    "Freeze e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest fully validated executable Commander product source. Candidate-breadth wrapper/evidence commits are not newer validated product baselines.",
-    "Use docs/BENCH-01-BATCH-D-2026-09-06.md for reconciled Batch D and docs/BENCH-01-BATCH-D-CANDIDATE-BREADTH-2026-09-06.md for the breadth diagnostic. The Actions artifact from run 34019315945 is the full raw source until the corrected persistence rerun proves the tracked result is non-empty.",
-    "Complete the candidate-breadth persistence verification after workflow commit 18f47aec4d3a1109cb26a88d51960dd5100b0ac9. This is a harness/provenance fix only; do not interpret it as product validation or intelligence movement.",
-    "Then broaden BENCH-01 from unchanged frozen e17b0a1c... with at least one unseen component-rich typal/theme fixture and one unrelated non-typal compound-theme fixture. Compare normal breadth 4 against supported breadth 6 without changing product source between fixtures.",
-    "Only if candidate-breadth sensitivity repeats across unrelated families may one generic theme-aware candidate-discovery/ranking repair be implemented with focused regressions, full suite/build validation, and exact-source benchmark replay. Do not weaken candidateCompoundThemeComponentGateV15.",
-    "If breadth sensitivity does not repeat, record Explorers as an isolated bounded-search sensitivity, Virtue as a supported-breadth construction ceiling, and continue BENCH-01 across compact-combo, hybrid combat-combo, commander-damage, control, budget and unusual-partner families without changing product intelligence.",
-    "Continue scoring hard truth, each requested component before/after, target movement versus target achievement, swap quality, strategy preservation, whole-deck coherence and expert comparison against a strong general-AI baseline. Do not equate workflow success with benchmark superiority.",
-    "PR #29 and stable V0.13 remain unchanged while BENCH-01 is not promotion-grade. Standing authorization permits merge/promotion without another approval only after complete validation and broad benchmark evidence demonstrate the specialist is genuinely ready."
+    "Complete the frozen-source breadth-4 versus breadth-6 generalization diagnostic on at least one unseen component-rich typal family and one unrelated non-typal compound-theme family.",
+    "If broader breadth repeatedly improves outcomes across unrelated families, inspect the shared bounded candidate-discovery/ranking architecture and justify only a generic repair with focused regressions before changing product intelligence.",
+    "If the Explorers breadth effect does not reproduce, classify it as isolated bounded-search sensitivity, keep the current product source unchanged, and broaden BENCH-01 to another contrasting unseen batch.",
+    "After the generalization verdict, reconcile project-state, roadmap, handoff, validation records and PR #29 in the same run before any merge or promotion decision."
   ],
   "handoffProtocol": {
-    "readFirst": ["project-state.json","docs/PROJECT-STATE.md","validation-index.json","docs/VALIDATION-STATE.md","ULTIMATE_MTG_SPEC.md","docs/COMMANDER-SPECIALIST-OBJECTIVE.md","docs/ROADMAP.md","docs/DECISIONS.md","docs/VALIDATION-MATRIX.md","docs/KNOWN-FAILURES.md"],
+    "readFirst": [
+      "project-state.json",
+      "docs/PROJECT-STATE.md",
+      "validation-index.json",
+      "docs/VALIDATION-STATE.md",
+      "ULTIMATE_MTG_SPEC.md",
+      "docs/COMMANDER-SPECIALIST-OBJECTIVE.md",
+      "docs/ROADMAP.md",
+      "docs/DECISIONS.md",
+      "docs/VALIDATION-MATRIX.md",
+      "docs/KNOWN-FAILURES.md"
+    ],
     "then": "BENCH-01 remains active on frozen validated product e17b0a1c.... Batch D candidate-breadth diagnostics changed only package breadth 4→6: Quick Draw was unchanged at 8 swaps/Bracket 3, Virtue unchanged at 4 swaps/Bracket 2, Explorers improved to 9 swaps/Bracket 3 from 4/Bracket 2. This proves one-fixture bounded-search sensitivity but not the repeated unrelated pattern required for a product repair. Keep the component-preservation guard. First verify corrected non-empty evidence persistence, then broaden frozen-source breadth diagnostics across another component-rich fixture and an unrelated non-typal compound fixture. No product repair, PR merge or stable promotion is authorized yet. Stable remains V0.13.",
     "compatibilityEntryPoint": "PROJECT_HANDOFF.md"
   }
