@@ -1,0 +1,136 @@
+name: BENCH-01 Generic Theme Taxonomy Repair
+
+on:
+  push:
+    branches:
+      - agent/v15-native-deck-intelligence
+    paths:
+      - .github/workflows/bench01-taxonomy-repair.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Guard exact authorized parent
+        run: |
+          test "$(git rev-parse HEAD^)" = "1f5dbd302cfc0e16a33c19e86e1df58c3f7ce214"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm ci
+
+      - name: Apply shared registry bridge and regressions
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          source_path = Path('src/services/neutral-theme-v15.ts')
+          source = source_path.read_text()
+          needle = """  {
+              id: 'treasure',
+              label: 'Treasure',
+              aliases: ['treasure', 'treasures', 'treasure matters'],
+              queryClause: 'o:treasure',
+              minimumMainMatches: 12,
+              roles: ['treasure'],
+              oracleFallbacks: ['treasure'],
+            },
+          """
+          replacement = needle + """  {
+              id: 'card-draw',
+              label: 'Card draw',
+              aliases: ['card draw', 'draw cards', 'drawing cards', 'card advantage'],
+              queryClause: 'o:draw',
+              minimumMainMatches: 12,
+              roles: ['card draw', 'repeatable draw', 'board-scaling card draw'],
+              oracleFallbacks: ['draw a card', 'draw one card', 'draw two cards', 'draw three cards', 'draw x cards'],
+            },
+            {
+              id: 'lifegain',
+              label: 'Lifegain',
+              aliases: ['lifegain', 'life gain', 'gain life', 'life gain synergy'],
+              queryClause: '(o:gain o:life)',
+              minimumMainMatches: 12,
+              roles: ['repeatable life gain engine', 'life-gain-triggered draw engine'],
+              oracleFallbacks: ['gain 1 life', 'gain 2 life', 'gain 3 life', 'gain life', 'gains life'],
+            },
+          """
+          if source.count(needle) != 1:
+              raise SystemExit('expected exact Treasure definition insertion point once')
+          source_path.write_text(source.replace(needle, replacement))
+
+          test_path = Path('src/services/neutral-theme-v15.test.ts')
+          tests = test_path.read_text()
+          anchor = """test('compound themes still fail closed when any leftover term is unknown', async () => {
+          """
+          addition = """test('shared card-role concepts bridge into controlled card-draw and lifegain themes', async () => {
+            const draw = await resolveNeutralThemeIntentV15('card draw', { creatureTypes: [] });
+            assert.equal(draw.kind, 'mechanic');
+            assert.equal(draw.canonicalLabel, 'Card draw');
+            assert.equal(draw.queryClause, 'o:draw');
+            assert.equal(cardMatchesNeutralThemeV15(card('Draw spell', { oracle_text: 'Draw two cards.' }), draw), true);
+
+            const lifegain = await resolveNeutralThemeIntentV15('lifegain', { creatureTypes: [] });
+            assert.equal(lifegain.kind, 'mechanic');
+            assert.equal(lifegain.canonicalLabel, 'Lifegain');
+            assert.equal(lifegain.queryClause, '(o:gain o:life)');
+            assert.equal(cardMatchesNeutralThemeV15(card('Life engine', { oracle_text: 'At the beginning of your end step, you gain 2 life.' }), lifegain), true);
+          });
+
+          test('compound parser accepts shared card-draw and lifegain semantics across unrelated theme families', async () => {
+            const urzaLike = await resolveNeutralThemeIntentV15('artifacts tokens combat card draw', { creatureTypes: [] });
+            assert.equal(urzaLike.kind, 'compound');
+            assert.deepEqual(urzaLike.components?.map((component) => component.canonicalLabel), [
+              'Artifacts',
+              'Tokens',
+              'Combat / attacks',
+              'Card draw',
+            ]);
+
+            const witherbloomLike = await resolveNeutralThemeIntentV15('sacrifice aristocrats lifegain graveyard recursion', { creatureTypes: [] });
+            assert.equal(witherbloomLike.kind, 'compound');
+            assert.deepEqual(witherbloomLike.components?.map((component) => component.canonicalLabel), [
+              'Sacrifice / aristocrats',
+              'Lifegain',
+              'Graveyard / reanimator',
+            ]);
+          });
+
+          test('new shared vocabulary does not weaken unknown-token fail-closed behavior', async () => {
+            const unknown = await resolveNeutralThemeIntentV15('card draw lifegain banana', { creatureTypes: [] });
+            assert.equal(unknown.kind, 'unsupported');
+            assert.equal(unknown.enforceability, 'unsupported');
+            assert.match(unknown.explanation, /banana/);
+            assert.equal(unknown.queryClause, null);
+          });
+
+          """
+          if tests.count(anchor) != 1:
+              raise SystemExit('expected unknown-token regression anchor once')
+          test_path.write_text(tests.replace(anchor, addition + anchor))
+          PY
+
+      - name: Focused taxonomy regressions
+        run: npx tsx --test src/services/neutral-theme-v15.test.ts
+
+      - name: Build and type-check
+        run: npm run build
+
+      - name: Commit validated staged repair
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/bench01-taxonomy-repair.yml
+          git add src/services/neutral-theme-v15.ts src/services/neutral-theme-v15.test.ts
+          git commit -m "feat(v15): bridge shared card draw and lifegain theme semantics"
+          git push origin HEAD:agent/v15-native-deck-intelligence
