@@ -40,12 +40,12 @@ export function replacementIdentityPriorityV15(
       - finiteNonNegative(cut.substantiveStrategyAffinity)
   ).toFixed(3));
 
-  const themeErosion = Math.max(0, -requestedThemeDelta);
-  const themeGain = Math.max(0, requestedThemeDelta);
-  const strategyErosion = Math.max(0, -substantiveStrategyAffinityDelta);
-  const strategyGain = Math.max(0, substantiveStrategyAffinityDelta);
-  const identityErosion = Number((themeErosion + strategyErosion).toFixed(3));
-  const identityGain = Number((themeGain + strategyGain).toFixed(3));
+  // Theme and substantive strategy are both caller-declared identity evidence. Evaluate their
+  // net delta so a genuine strategy upgrade can compensate for spending one controlled-theme
+  // unit. This remains advisory ranking and never bypasses any hard preservation gate.
+  const netIdentityDelta = Number((requestedThemeDelta + substantiveStrategyAffinityDelta).toFixed(3));
+  const identityErosion = Number(Math.max(0, -netIdentityDelta).toFixed(3));
+  const identityGain = Number(Math.max(0, netIdentityDelta).toFixed(3));
 
   return {
     requestedThemeDelta,
