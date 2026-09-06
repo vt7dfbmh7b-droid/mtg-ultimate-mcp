@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-06T11:08:00.000Z**.
+Generated from `project-state.json`. Last state update: **2026-09-06T11:28:00.000Z**.
 
 ## Current mode
 
@@ -10,7 +10,7 @@ Generated from `project-state.json`. Last state update: **2026-09-06T11:08:00.00
 - Active PR: #29
 - Active milestone: **BENCH-01**
 - Intelligence development paused: **no**
-- Reason: BENCH-01 remains active. Manual replay now shows candidate breadth was only part of the problem: corrected strategy inference still permits structurally attractive replacements that materially weaken commander/requested identity. The next evidence-driven capability is generic identity-aware replacement priority while all hard truth, component, strategy-loss, simulation and validation gates remain unchanged.
+- Reason: BENCH-01 remains active. Manual replay showed corrected strategy inference still permits structurally attractive replacements that materially weaken commander/requested identity. The generic relative replacement-identity comparator is now staged but unwired; the next action is runtime integration into the already-legal cut ordering, followed by focused/full validation and frozen-source replay.
 
 ## Stable boundary
 
@@ -23,7 +23,7 @@ Generated from `project-state.json`. Last state update: **2026-09-06T11:08:00.00
 
 Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
 
-The formal accepted development checkpoint remains 77a5383.... The latest accepted fully validated Commander product remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Adaptive diversification candidate 247fb37bc34ad70678ff12ec297a6e9bdc220323 was engineering-green but failed manual whole-deck acceptance. Strategy-anchor descendant 2e34ebff20d0a66b7c4649feb1e9984c156e43ca passed focused regression, full repository tests and build, and its five-fixture replay confirms the false Equipment/Voltron inference was corrected. However, Animated Army still regressed in whole-deck quality and Elven Empire / Explorers still expose generic structural replacement pressure overriding requested identity quality. The adaptive lineage therefore remains unaccepted. The next product gate is generic identity-aware replacement-priority diagnosis/repair, not more breadth tuning or weaker preservation gates.
+The formal accepted development checkpoint remains 77a5383.... The latest accepted fully validated Commander product remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Adaptive diversification candidate 247fb37bc34ad70678ff12ec297a6e9bdc220323 was engineering-green but failed manual whole-deck acceptance. Strategy-anchor descendant 2e34ebff20d0a66b7c4649feb1e9984c156e43ca passed focused regression, full repository tests and build, and its five-fixture replay confirms the false Equipment/Voltron inference was corrected. However, Animated Army still regressed in whole-deck quality and Elven Empire / Explorers still expose generic structural replacement pressure overriding requested identity quality. Source diagnosis is now complete: deck-builder-v07 performs hard semantic/structural/authoritative gates first, then chooses among surviving cuts using strategy-loss, structural-deficit, curve and heuristic pressure without a relative controlled-theme IN-vs-OUT identity comparison. Commits db471dc7/9e809785 stage a generic advisory replacement-identity comparator plus typal, artifact/enchantment and spellslinger control regressions. This staged primitive is not wired into runtime and is not validated or accepted. The adaptive lineage therefore remains unaccepted.
 
 Latest fully validated executable experimental baseline recorded by project state:
 
@@ -47,7 +47,7 @@ Always inspect the live active-branch head before editing. A later documentation
 
 ## Current validation status
 
-- Active branch status: **bench01-strategy-anchor-fixed-adaptive-lineage-manual-rejected-identity-replacement-priority-next**
+- Active branch status: **bench01-replacement-identity-priority-staged-unwired-unvalidated**
 - Last persisted Marvel control source: `5829b37b686255ba35d419b37be17095e54fb696`
 - Last persisted Marvel control outcome: **expected-ceiling-fail-closed-zero-swap**
 - Note: At exact source 5829b37..., focused and broad Marvel execute and persist honestly with zero accepted swaps because the restricted pool cannot repair the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure. Keep these controls red for target achievement. Treat the result as expected construction-ceiling behaviour, not as a passing target and not as a blocker to BENCH-01 on other archetypes. Rerun only when the relevant pool, provider truth or policy changes.
@@ -57,8 +57,9 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 - Keep e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest accepted fully validated Commander baseline until a later product lineage passes both formal validation and required whole-deck BENCH acceptance.
 - Retain the generic positive Equipment/equip/attach anchor regression from 2e34ebff20d0a66b7c4649feb1e9984c156e43ca; the false Bello Equipment/Voltron strategy signal is a closed semantic defect.
 - Treat 247fb37bc34ad70678ff12ec297a6e9bdc220323 adaptive diversification as engineering-green but manually rejected, and 2e34ebff20d0a66b7c4649feb1e9984c156e43ca as a fully tested strategy-anchor descendant whose overall adaptive lineage remains manually rejected.
-- Diagnose the generic replacement-priority path that lets structural Bracket gains outrank commander/requested-theme identity quality above minimum theme/component floors.
-- Any repair must compare relative IN-versus-OUT identity/strategy value generically; do not freeze all typal/theme cards, add fixture/card exceptions, weaken target gates, or simply raise theme minimums.
+- Treat db471dc7afa4a2207be0e2d63e6f2002fe0a8c71 / 9e809785addff5d3e52c67e8c0bbf1573f4da921 as a staged, advisory relative replacement-identity primitive and regression contract only; it is not runtime-wired, validated, or accepted product behavior.
+- Wire the generic comparator only after all existing hard legality, package, strategy-loss, structural, authoritative-target and curve gates have admitted candidate swaps; it must rank legal alternatives rather than veto necessary structural cuts.
+- Do not freeze all typal/theme cards, add fixture/card exceptions, weaken target gates, or simply raise theme minimums.
 - Do not weaken compound-theme/component preservation, legality, budget, printing, strategy-preservation, package acceptance, target-progress, simulation or win-route truth gates.
 - Require focused + full validation and one frozen-source multi-fixture replay with manual whole-deck review before accepting a replacement-priority repair.
 - Keep the earlier Counter Blitz dense-countermagic allocation concern watch-only unless a broader cross-fixture batch reproduces it.
@@ -66,12 +67,11 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 
 ## Next actions
 
-1. Inspect optimizer-v12 / deck-builder-v07 / strategy-affinity and theme-scoring paths to locate where structural target pressure can select an IN card that is materially weaker than the OUT card for explicit commander/requested identity while aggregate strategy/theme floors still pass.
-2. Define generic identity-aware replacement-priority regressions across at least typal (Elven Empire), artifact/enchantment (Animated Army), and spellslinger/enchantment controls; require relative IN-versus-OUT identity/strategy preservation without forbidding necessary structural cuts.
-3. Implement the smallest generic replacement-priority repair only if source diagnosis supports a centralized mechanism; keep all downstream truth/preservation/simulation gates unchanged.
-4. Run focused regressions, then full repository tests/type-check/build/project-state integrity; freeze the exact green repair SHA.
-5. Replay Animated Army, Elven Empire and Explorers of the Deep plus Quick Draw and Virtue and Valor controls from that unchanged SHA; manually inspect complete decks and compare against the rejected 247fb37/2e34 lineage before acceptance.
-6. Only after manual whole-deck quality improves across the repeated failure pattern should BENCH-01 broaden or PR #29 / V0.15 promotion readiness be reconsidered.
+1. Wire replacement-identity-priority-v15 into deck-builder-v07 candidate-cut ordering only after existing hard semantic/structural/authoritative/package/curve gates; derive controlled-theme match from existing explicitTheme metadata and substantive strategy affinity from existing V0.15 strategyAffinity matches.
+2. Add an integration regression proving an on-identity legal cut outranks an identity-eroding legal cut while a structurally necessary identity cut remains possible when no equal legal alternative exists.
+3. Run focused replacement-priority regressions, then full repository tests/type-check/build/project-state integrity; freeze the exact green repair SHA.
+4. Replay Animated Army, Elven Empire and Explorers of the Deep plus Quick Draw and Virtue and Valor controls from that unchanged SHA; manually inspect complete decks and compare against the rejected 247fb37/2e34 lineage before acceptance.
+5. Only after manual whole-deck quality improves across the repeated failure pattern should BENCH-01 broaden or PR #29 / V0.15 promotion readiness be reconsidered.
 
 ## Permanent truth boundary
 
@@ -86,6 +86,7 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 - A downstream preservation veto does not by itself prove the guard is too strict; distinguish lack of compatible candidates from candidate-discovery/ranking failure before changing product behavior.
 - Repeated breadth sensitivity plus source proof that the breadth parameter bounds serial diversification justified adaptive-search experimentation, but manual whole-deck rejection means breadth movement alone is not product-quality success.
 - Correct strategy labels do not by themselves prove replacement quality; relative commander/requested-identity value of IN versus OUT must be considered above hard minimum floors.
+- Relative identity priority is advisory ordering among already-legal replacements, not a new hard preservation floor; necessary structural cuts must remain possible.
 - Common Commander vocabulary must only become enforceable when it maps to generic measurable card semantics; never silently accept unknown leftovers.
 - Never treat an unvalidated or manually rejected head as an accepted checkpoint.
 - No scenario-specific, card-name or benchmark-specific hacks; product changes require generic evidence.
@@ -106,4 +107,4 @@ Read in this order:
 9. `docs/VALIDATION-MATRIX.md`
 10. `docs/KNOWN-FAILURES.md`
 
-Then: BENCH-01 remains active. The adaptive-diversification candidate 247fb37... was engineering-green but manually rejected. Generic strategy-anchor repair descendant 2e34ebff... passed focused/full/build validation and closed the false Equipment/Voltron inference defect, but its five-fixture replay still fails whole-deck Commander-quality acceptance: Animated Army remains a structural-but-strategic regression and Elven Empire / Explorers still expose identity erosion above hard theme floors. Keep e17b0a1c... as the latest accepted product baseline. Next: diagnose and generically repair identity-aware replacement priority, then fully validate and replay positives + controls from one frozen SHA. Stable remains V0.13 and PR #29 remains unmerged.
+Then: BENCH-01 remains active. Keep e17b0a1c... as the latest accepted product baseline. The source diagnosis for identity erosion is complete: deck-builder-v07 lacks relative requested-theme IN-vs-OUT ranking after hard gates. Commits db471dc7/9e809785 stage a generic advisory comparator and contrasting regression contract, but runtime wiring and validation remain unfinished. Next: wire the comparator into legal cut ordering, add integration coverage, fully validate, freeze the green SHA, then replay Animated Army / Elven Empire / Explorers plus Quick Draw / Virtue and Valor controls. Stable remains V0.13 and PR #29 remains unmerged.
