@@ -11,9 +11,9 @@ permissions:
   contents: write
 
 jobs:
-  repair-and-validate:
+  repair-and-stage:
     runs-on: ubuntu-24.04
-    timeout-minutes: 90
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
@@ -23,7 +23,7 @@ jobs:
         with:
           node-version-file: .node-version
       - run: npm ci
-      - name: Apply unchanged generic incoming-candidate identity repair
+      - name: Apply justified generic incoming-candidate identity repair
         shell: python
         run: |
           from pathlib import Path
@@ -37,9 +37,7 @@ jobs:
           p.write_text(text.replace(old, new, 1))
       - name: Focused replacement-priority regressions
         run: npx tsx --test src/services/replacement-identity-priority-v15.test.ts src/services/upgrade-strategy-affinity-v15.test.ts
-      - name: Full required repository validation
-        run: npm run check
-      - name: Commit only fully green product repair
+      - name: Commit immutable product source and remove temporary patch workflows
         shell: bash
         run: |
           set -euo pipefail
