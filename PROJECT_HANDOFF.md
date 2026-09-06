@@ -21,7 +21,7 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 
 ## Audit reuse rule
 
-BENCH-01 remains active. Keep `e17b0a1c...` as the latest accepted Commander baseline. Component-aware affinity source `27a2fab...` passed focused/full formal validation and an unchanged five-precon replay, but mandatory whole-deck review rejected the lineage; verdict is `test-results/bench01-strategy-anchor-replay/manual-verdict-27a2fab.md`. The remaining centralized defect is role-only structural drift: cards can satisfy draw/protection/tutor/interaction labels while weakly serving the requested commander strategy. Next: implement only a generic role-compatible strategic/requested-identity preference with structural fallback, validate fully, freeze the exact green SHA, replay contrasting fixtures, then broaden BENCH-01. Stable remains V0.13 and PR #29 remains unmerged.
+BENCH-01 remains active. Keep e17b0a1c... as the latest accepted Commander baseline. Component-aware affinity source 27a2fab... passed focused/full formal validation and an unchanged five-precon replay, but mandatory whole-deck review rejected the lineage; verdict is test-results/bench01-strategy-anchor-replay/manual-verdict-27a2fab.md. The remaining centralized defect is role-only structural drift: cards can satisfy draw/protection/tutor/interaction labels while weakly serving the requested commander strategy. Next: implement only a generic role-compatible strategic/requested-identity preference with structural fallback, validate fully, freeze the exact green SHA, replay contrasting fixtures, then broaden BENCH-01. Stable remains V0.13 and PR #29 remains unmerged.
 
 ## Stable safety boundary
 
