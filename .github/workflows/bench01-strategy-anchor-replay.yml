@@ -4,7 +4,7 @@ on:
   push:
     branches: ["agent/v15-native-deck-intelligence"]
     paths:
-      - ".github/workflows/bench01-strategy-anchor-replay.trigger"
+      - ".github/workflows/bench01-strategy-anchor-replay.yml"
   workflow_dispatch:
 
 concurrency:
@@ -15,7 +15,7 @@ permissions:
   contents: write
 
 env:
-  FROZEN_PRODUCT_SHA: 2e34ebff20d0a66b7c4649feb1e9984c156e43ca
+  FROZEN_PRODUCT_SHA: f65f4b7b77ee832e2ac66b2a7403f9dda603b84c
   HTTP_RETRY_BASE_MS: 5000
   HTTP_RETRY_MAX_MS: 15000
   SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
