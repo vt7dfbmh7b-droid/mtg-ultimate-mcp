@@ -1,0 +1,60 @@
+name: Apply BENCH-01 replacement identity source edit
+
+on:
+  push:
+    branches:
+      - agent/v15-native-deck-intelligence
+    paths:
+      - .github/workflows/apply-bench01-replacement-identity-source.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply-source-edit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/v15-native-deck-intelligence
+          fetch-depth: 0
+
+      - name: Apply checked-in deck-builder wiring
+        shell: python
+        run: |
+          from pathlib import Path
+
+          p = Path('src/services/deck-builder-v07.ts')
+          text = p.read_text()
+
+          import_anchor = "import { effectiveCardRolesV15 } from './card-role-truth-v15.js';\n"
+          import_line = "import { compareReplacementIdentityPriorityV15, replacementIdentityPriorityV15 } from './replacement-identity-priority-v15.js';\n"
+          if import_line not in text:
+              if import_anchor not in text:
+                  raise SystemExit('import anchor missing')
+              text = text.replace(import_anchor, import_anchor + import_line, 1)
+
+          helper_anchor = """function upgradeSwapSubstantiveStrategyLossScoreV15(\n  add: Record<string, unknown>,\n  cut: Record<string, unknown>,\n): number {\n"""
+          adapter = """function upgradeSwapReplacementIdentityPriorityV15(\n  add: Record<string, unknown>,\n  cut: Record<string, unknown>,\n) {\n  const addAffinity = strategyAffinityEvidenceV15(add);\n  const cutAffinity = strategyAffinityEvidenceV15(cut);\n  return replacementIdentityPriorityV15(\n    {\n      matchesControlledTheme: recordObject(add.explicitTheme).matchesControlledTheme === true,\n      substantiveStrategyAffinity: addAffinity.score,\n    },\n    {\n      matchesControlledTheme: recordObject(cut.explicitTheme).matchesControlledTheme === true,\n      substantiveStrategyAffinity: cutAffinity.score,\n    },\n  );\n}\n\n"""
+          if 'function upgradeSwapReplacementIdentityPriorityV15' not in text:
+              if helper_anchor not in text:
+                  raise SystemExit('strategy helper anchor missing')
+              text = text.replace(helper_anchor, adapter + helper_anchor, 1)
+
+          sort_anchor = """      const leftStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, left);\n      const rightStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, right);\n      if (leftStrategyLoss !== rightStrategyLoss) return leftStrategyLoss - rightStrategyLoss;\n"""
+          identity_sort = sort_anchor + """      const identityPriority = compareReplacementIdentityPriorityV15(\n        upgradeSwapReplacementIdentityPriorityV15(selection.candidate, left),\n        upgradeSwapReplacementIdentityPriorityV15(selection.candidate, right),\n      );\n      if (identityPriority !== 0) return identityPriority;\n"""
+          if 'const identityPriority = compareReplacementIdentityPriorityV15' not in text:
+              if sort_anchor not in text:
+                  raise SystemExit('sort anchor missing')
+              text = text.replace(sort_anchor, identity_sort, 1)
+
+          p.write_text(text)
+
+      - name: Remove one-shot edit transport and commit checked-in source
+        run: |
+          rm .github/workflows/apply-bench01-replacement-identity-source.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/services/deck-builder-v07.ts .github/workflows/apply-bench01-replacement-identity-source.yml
+          git commit -m "fix(INTEL-02): rank legal cuts by relative requested identity"
+          git push origin HEAD:agent/v15-native-deck-intelligence
