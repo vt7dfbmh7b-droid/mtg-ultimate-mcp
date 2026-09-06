@@ -16,7 +16,7 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Active milestone: **BENCH-01 — Adversarial Commander benchmark suite**
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
-- Development checkpoint: `37ae1efef351f6b502aa0156b9cdd704c294406c`
+- Development checkpoint at pause: `37ae1efef351f6b502aa0156b9cdd704c294406c`
 - Active branch validation: **bench01-role-compatible-strategic-affinity-repair-needed**
 
 ## Audit reuse rule
