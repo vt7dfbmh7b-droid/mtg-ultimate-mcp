@@ -23,55 +23,22 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-
           p = Path('src/services/deck-builder-v07.ts')
           text = p.read_text()
-          old = '''function upgradeSwapReplacementIdentityPriorityV15(
-  add: Record<string, unknown>,
-  cut: Record<string, unknown>,
-) {
-  const addAffinity = strategyAffinityEvidenceV15(add);
-  const cutAffinity = strategyAffinityEvidenceV15(cut);
-  return replacementIdentityPriorityV15(
-    {
-      matchesControlledTheme: recordObject(add.explicitTheme).matchesControlledTheme === true,
-      substantiveStrategyAffinity: addAffinity.score,
-    },
-    {
-      matchesControlledTheme: recordObject(cut.explicitTheme).matchesControlledTheme === true,
-      substantiveStrategyAffinity: cutAffinity.score,
-    },
-  );
-}
-'''
-          new = '''function upgradeSwapReplacementIdentityPriorityV15(
-  add: Record<string, unknown>,
-  cut: Record<string, unknown>,
-) {
-  const addAffinity = strategyAffinityEvidenceV15(add);
-  const cutAffinity = strategyAffinityEvidenceV15(cut);
-  const substantiveScore = (affinity: UpgradeStrategyAffinityEvidenceV15): number => (
-    [...affinity.scoreByStrategy.entries()].reduce((sum, [strategy, score]) => (
-      (affinity.commanderScoreByStrategy.get(strategy) ?? 0) >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15
-        ? sum + score
-        : sum
-    ), 0)
-  );
-  return replacementIdentityPriorityV15(
-    {
-      matchesControlledTheme: recordObject(add.explicitTheme).matchesControlledTheme === true,
-      substantiveStrategyAffinity: substantiveScore(addAffinity),
-    },
-    {
-      matchesControlledTheme: recordObject(cut.explicitTheme).matchesControlledTheme === true,
-      substantiveStrategyAffinity: substantiveScore(cutAffinity),
-    },
-  );
-}
-'''
-          if old not in text:
-              raise SystemExit('replacement identity adapter anchor missing or already changed')
-          p.write_text(text.replace(old, new, 1))
+          anchor = "  return replacementIdentityPriorityV15(\n"
+          insert = "  const substantiveScore = (affinity: UpgradeStrategyAffinityEvidenceV15): number => (\n    [...affinity.scoreByStrategy.entries()].reduce((sum, [strategy, score]) => (\n      (affinity.commanderScoreByStrategy.get(strategy) ?? 0) >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15\n        ? sum + score\n        : sum\n    ), 0)\n  );\n  return replacementIdentityPriorityV15(\n"
+          function_start = text.index('function upgradeSwapReplacementIdentityPriorityV15(')
+          function_end = text.index('\n}\n\nfunction upgradeSwapSubstantiveStrategyLossScoreV15', function_start)
+          before = text[:function_start]
+          block = text[function_start:function_end]
+          after = text[function_end:]
+          if 'const substantiveScore =' not in block:
+              if anchor not in block:
+                  raise SystemExit('identity return anchor missing')
+              block = block.replace(anchor, insert, 1)
+          block = block.replace('substantiveStrategyAffinity: addAffinity.score,', 'substantiveStrategyAffinity: substantiveScore(addAffinity),', 1)
+          block = block.replace('substantiveStrategyAffinity: cutAffinity.score,', 'substantiveStrategyAffinity: substantiveScore(cutAffinity),', 1)
+          p.write_text(before + block + after)
 
       - name: Remove one-shot transport and commit source
         run: |
