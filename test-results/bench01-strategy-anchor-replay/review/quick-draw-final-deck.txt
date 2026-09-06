@@ -15,6 +15,7 @@
 1 Finale of Revelation (OTC) 97 *N*
 1 Mizzix's Mastery (OTC) 175 *N*
 1 Pyretic Charge (OTC) 29 *N*
+1 Smoldering Stagecoach (OTC) 30 *N*
 1 Rousing Refrain (OTC) 178 *N*
 1 Cursed Mirror (OTC) 161 *N*
 1 Bloodthirsty Adversary (OTC) 157 *N*
@@ -67,14 +68,13 @@
 7 Island (OTJ) 280 *N*
 7 Mountain (OTJ) 283 *N*
 6 Mountain (OTJ) 284 *N*
-1 Mind Stone (DMR) 385 *N*
-1 Spectral Denial (TDM) 58 *N*
-1 Sanar, Unfinished Genius // Wild Idea (SOS) 223 *N*
-1 Sword of Once and Future (MOM) 265 *N*
-1 Three Steps Ahead (MAR) 62 *N*
-1 Cool but Rude (TMT) 89 *N*
-1 Sword of Wealth and Power (PBIG) 26p *F*
-1 Coruscation Mage (BLB) 131 *N*
-1 Aether Spellbomb (PLST) MMA-196 *N*
-1 Mangara's Tome (MIR) 309 *N*
+1 Mystic Remora (ICE) 87 *N*
+1 Counterspell (DMR) 281 *F*
 1 Mystical Tutor (DMR) 289 *N*
+1 Sword of Once and Future (MOM) 265 *N*
+1 Mind Stone (DMR) 385 *N*
+1 Cyclonic Rift (RTR) 35 *N*
+1 Sword of Wealth and Power (PBIG) 26p *F*
+1 An Offer You Can't Refuse (FIC) 267 *N*
+1 Sword of Forge and Frontier (SLD) 2817 *F*
+1 Cool but Rude (TMT) 89 *N*
