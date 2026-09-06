@@ -36,13 +36,9 @@ jobs:
               raise SystemExit(f'expected exactly one candidate theme ordering block, found {count}')
           p.write_text(text.replace(old, new, 1))
       - name: Focused replacement-priority regressions
-        run: npx vitest run src/services/replacement-identity-priority-v15.test.ts src/services/upgrade-strategy-affinity-v15.test.ts
-      - name: Full repository test suite
-        run: npm test
-      - name: Production build
-        run: npm run build
-      - name: Project-state integrity
-        run: npm run project-state:check
+        run: npx tsx --test src/services/replacement-identity-priority-v15.test.ts src/services/upgrade-strategy-affinity-v15.test.ts
+      - name: Full required repository validation
+        run: npm run check
       - name: Commit only fully green product repair
         shell: bash
         run: |
