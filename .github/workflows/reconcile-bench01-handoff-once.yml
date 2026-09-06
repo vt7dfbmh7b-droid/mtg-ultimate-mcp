@@ -1,0 +1,62 @@
+name: "BENCH-01 — Reconcile handoff once"
+
+on:
+  push:
+    branches: ["agent/v15-native-deck-intelligence"]
+    paths:
+      - ".github/workflows/reconcile-bench01-handoff-once.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - run: npm ci
+      - name: Remove stale closed-gate action and regenerate state
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const state = JSON.parse(fs.readFileSync('project-state.json', 'utf8'));
+          state.updatedAt = new Date().toISOString();
+          state.handoffProtocol.then = 'BENCH-01 remains active on frozen validated product e17b0a1c.... Batch D candidate-breadth diagnostics changed only package breadth 4→6: Quick Draw was unchanged at 8 swaps/Bracket 3, Virtue unchanged at 4 swaps/Bracket 2, Explorers improved to 9 swaps/Bracket 3 from 4/Bracket 2. The persistence gate is closed. This proves one-fixture bounded-search sensitivity but not the repeated unrelated pattern required for a product repair. Keep the component-preservation guard and complete the active cross-family breadth generalization diagnostic before any Commander product repair, PR merge or stable promotion. Stable remains V0.13.';
+          fs.writeFileSync('project-state.json', JSON.stringify(state, null, 2) + '\n');
+          NODE
+          npx tsx scripts/generate-handoff.ts
+          npm run validation:index
+          npm run project:validate
+          npm run validation:validate
+      - name: Persist and remove one-time workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          cp project-state.json "$RUNNER_TEMP/project-state.json"
+          cp docs/PROJECT-STATE.md "$RUNNER_TEMP/PROJECT-STATE.md"
+          cp PROJECT_HANDOFF.md "$RUNNER_TEMP/PROJECT_HANDOFF.md"
+          cp validation-index.json "$RUNNER_TEMP/validation-index.json"
+          cp docs/VALIDATION-STATE.md "$RUNNER_TEMP/VALIDATION-STATE.md"
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            cp "$RUNNER_TEMP/project-state.json" project-state.json
+            cp "$RUNNER_TEMP/PROJECT-STATE.md" docs/PROJECT-STATE.md
+            cp "$RUNNER_TEMP/PROJECT_HANDOFF.md" PROJECT_HANDOFF.md
+            cp "$RUNNER_TEMP/validation-index.json" validation-index.json
+            cp "$RUNNER_TEMP/VALIDATION-STATE.md" docs/VALIDATION-STATE.md
+            git rm -f .github/workflows/reconcile-bench01-handoff-once.yml
+            git add project-state.json docs/PROJECT-STATE.md PROJECT_HANDOFF.md validation-index.json docs/VALIDATION-STATE.md
+            git commit -m 'docs(BENCH-01): remove stale closed-gate handoff action [skip ci]'
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+          done
+          exit 1
