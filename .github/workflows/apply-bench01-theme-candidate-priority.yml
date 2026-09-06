@@ -1,0 +1,55 @@
+name: Apply BENCH-01 advisory theme candidate priority repair
+
+on:
+  push:
+    branches:
+      - agent/v15-native-deck-intelligence
+    paths:
+      - .github/workflows/apply-bench01-theme-candidate-priority.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair-and-validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/v15-native-deck-intelligence
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - run: npm ci
+      - name: Apply smallest generic incoming-candidate identity repair
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('src/services/upgrade.ts')
+          text = p.read_text()
+          old = '        if (themeDeficit > 0) {\n          const aTheme = themeCandidateNames.has(a.name.toLocaleLowerCase()) ? 1 : 0;\n          const bTheme = themeCandidateNames.has(b.name.toLocaleLowerCase()) ? 1 : 0;\n          if (aTheme !== bTheme) return bTheme - aTheme;\n        }'
+          new = '        // Controlled-theme membership remains an advisory candidate-ordering signal even\n        // after the aggregate minimum is satisfied. This prefers role-compatible on-theme IN\n        // cards without making them mandatory: if no themed candidate exists, the existing\n        // structural/strategy ranking remains fully available.\n        if (themeCandidateNames.size > 0) {\n          const aTheme = themeCandidateNames.has(a.name.toLocaleLowerCase()) ? 1 : 0;\n          const bTheme = themeCandidateNames.has(b.name.toLocaleLowerCase()) ? 1 : 0;\n          if (aTheme !== bTheme) return bTheme - aTheme;\n        }'
+          count = text.count(old)
+          if count != 1:
+              raise SystemExit(f'expected exactly one candidate theme ordering block, found {count}')
+          p.write_text(text.replace(old, new, 1))
+      - name: Focused replacement-priority regressions
+        run: npx vitest run src/services/replacement-identity-priority-v15.test.ts src/services/upgrade-strategy-affinity-v15.test.ts
+      - name: Full repository test suite
+        run: npm test
+      - name: Production build
+        run: npm run build
+      - name: Project-state integrity
+        run: npm run project-state:check
+      - name: Commit only fully green product repair
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm .github/workflows/apply-bench01-theme-candidate-priority.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/services/upgrade.ts .github/workflows/apply-bench01-theme-candidate-priority.yml
+          git commit -m 'fix(INTEL-02): retain advisory theme priority after floor'
+          git push origin HEAD:agent/v15-native-deck-intelligence
