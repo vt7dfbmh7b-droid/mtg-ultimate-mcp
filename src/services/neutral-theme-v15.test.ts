@@ -111,6 +111,47 @@ test('compound parser recognizes typal plus combat and graveyard synonyms as dis
   ]);
 });
 
+test('shared card-role concepts bridge into controlled card-draw and lifegain themes', async () => {
+  const draw = await resolveNeutralThemeIntentV15('card draw', { creatureTypes: [] });
+  assert.equal(draw.kind, 'mechanic');
+  assert.equal(draw.canonicalLabel, 'Card draw');
+  assert.equal(draw.queryClause, 'o:draw');
+  assert.equal(cardMatchesNeutralThemeV15(card('Draw spell', { oracle_text: 'Draw two cards.' }), draw), true);
+
+  const lifegain = await resolveNeutralThemeIntentV15('lifegain', { creatureTypes: [] });
+  assert.equal(lifegain.kind, 'mechanic');
+  assert.equal(lifegain.canonicalLabel, 'Lifegain');
+  assert.equal(lifegain.queryClause, '(o:gain o:life)');
+  assert.equal(cardMatchesNeutralThemeV15(card('Life engine', { oracle_text: 'At the beginning of your end step, you gain 2 life.' }), lifegain), true);
+});
+
+test('compound parser accepts shared card-draw and lifegain semantics across unrelated theme families', async () => {
+  const urzaLike = await resolveNeutralThemeIntentV15('artifacts tokens combat card draw', { creatureTypes: [] });
+  assert.equal(urzaLike.kind, 'compound');
+  assert.deepEqual(urzaLike.components?.map((component) => component.canonicalLabel), [
+    'Artifacts',
+    'Tokens',
+    'Combat / attacks',
+    'Card draw',
+  ]);
+
+  const witherbloomLike = await resolveNeutralThemeIntentV15('sacrifice aristocrats lifegain graveyard recursion', { creatureTypes: [] });
+  assert.equal(witherbloomLike.kind, 'compound');
+  assert.deepEqual(witherbloomLike.components?.map((component) => component.canonicalLabel), [
+    'Sacrifice / aristocrats',
+    'Lifegain',
+    'Graveyard / reanimator',
+  ]);
+});
+
+test('new shared vocabulary does not weaken unknown-token fail-closed behavior', async () => {
+  const unknown = await resolveNeutralThemeIntentV15('card draw lifegain banana', { creatureTypes: [] });
+  assert.equal(unknown.kind, 'unsupported');
+  assert.equal(unknown.enforceability, 'unsupported');
+  assert.match(unknown.explanation, /banana/);
+  assert.equal(unknown.queryClause, null);
+});
+
 test('compound themes still fail closed when any leftover term is unknown', async () => {
   const compound = await resolveNeutralThemeIntentV15('tokens and banana', { creatureTypes: [] });
   assert.equal(compound.kind, 'unsupported');
