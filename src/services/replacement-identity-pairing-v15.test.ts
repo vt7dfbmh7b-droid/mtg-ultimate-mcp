@@ -100,3 +100,14 @@ test('substantive strategy gain can compensate for spending controlled-theme ide
   );
   assert.equal((pairs[0]?.cut.card as any)?.name, 'Unnamed Low Strategy Theme Card');
 });
+
+test('existing substantive strategy preservation still outranks advisory theme identity', () => {
+  const pairs = pairUpgradeSwapsByStructureV15(
+    [addition(false, 0)] as any,
+    [cut('Unnamed High Strategy Neutral Card', 10, false, 8), cut('Unnamed Low Strategy Theme Card', 8, true, 2)],
+    metrics,
+    targets,
+    3,
+  );
+  assert.equal((pairs[0]?.cut.card as any)?.name, 'Unnamed Low Strategy Theme Card');
+});
