@@ -221,15 +221,27 @@ Validation evidence:
 
 This validates the generic repair mechanically. It does **not** prove the benchmark blocker is closed until the two affected fixtures are replayed from this exact unchanged source.
 
-### Paired post-repair replay — NEXT
+### Paired post-repair replay — COMPLETE — component-compensation blocker closed
 
-Freeze `dd085caf4e47f6f5e1976667dc90de2db46c00a1`. Do not change `src/**` between these fixtures.
+The paired Counter Blitz/Cavalry replay ran from frozen validated product source `dd085caf4e47f6f5e1976667dc90de2db46c00a1`. Counter preserved proliferate at 4 → 4 instead of the pre-repair 4 → 2 regression. Cavalry preserved its explicit typal/combat facets materially better while still improving graveyard/recursion. This closes the generic component-compensation correctness blocker.
 
-1. **Counter Blitz** — rerun the same FF-only Bant +1/+1 counters/proliferate/countermagic/combat request. Confirm proliferate no longer regresses, then judge legality, FF printing truth, counters, countermagic, combat identity, protection/access, verified routes, curve, bracket truth and the complete deck against the locked 18-swap general-AI baseline.
-2. **Cavalry Charge** — rerun the same Knights typal + combat + graveyard recursion/reanimation request with NZ$35 per-card, NZ$200 total and 12-swap caps. Confirm Knight/combat components are preserved while recursion/structural improvements, legality, budget and whole-deck coherence remain acceptable.
-3. Interpret both together. Record every controlled component before/after. Aggregate theme density alone cannot close the blocker.
+Counter Blitz still left dense countermagic at 1 → 1 against an explicit target of 8 while spending swaps, but unseen Batch C did not reproduce that allocation pattern. It remains a watch item, not an authorized optimizer repair.
 
-If both fixtures show the compensation defect closed without unacceptable strategy/quality regression, close this correctness blocker and move to several unseen contrasting BENCH-01 fixtures before any further intelligence edit. If the pair exposes another repeated generic defect, localize it from cross-fixture evidence and authorize only the smallest generic repair that addresses it.
+### Unseen Batch C — COMPLETE — generic vocabulary boundary found
+
+With product `src/**` frozen equal to `dd085caf...`, three unrelated fixtures were run: Witherbloom Witchcraft, Urza's Iron Alliance and Necron Dynasties. Witherbloom stopped before optimization because `lifegain` was unsupported; Urza stopped because `card draw` was unsupported; Necron passed the same parser layer with supported vocabulary. Source inspection proved both omitted concepts already have generic measurable truth in `inferCardRoles()`.
+
+### Generic card-draw / lifegain taxonomy bridge — VALIDATED
+
+Product implementation commit: `387709983880fa2fd10c7f0aa50cd8b1524852f5`.
+
+Validated source-equivalent head: `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`; its only delta from the product commit is the BENCH evidence document.
+
+The repair adds controlled neutral-theme registry definitions for card draw and lifegain using bounded generated discovery clauses and independent shared role/Oracle matching. It changes no optimizer allocation, legality, budget, printing, bracket or component-preservation behavior and contains no deck/card-specific conditions. Unknown leftovers remain fail-closed. Focused parser/audit regressions and build passed before publish, then normal CI run `34006676470` passed project-state/index/recovery checks, build/type-check and the full repository test suite.
+
+### Taxonomy post-repair replay — NEXT
+
+Freeze `e17b0a1cba659b229fd6f0b6e2df79c5e464a616` for the replay. Run Witherbloom Witchcraft and Urza's Iron Alliance from that same unchanged source, keeping Necron Dynasties as the supported-vocabulary control. Confirm the natural-language requests resolve through controlled semantics, then inspect hard truth, each requested component's movement/achievement, swap quality, strategy preservation and whole-deck coherence. Do not make another intelligence change before interpreting the fixtures together.
 
 ### After the compound-quality blocker
 
