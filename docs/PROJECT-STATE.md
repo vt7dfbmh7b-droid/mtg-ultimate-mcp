@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-06T17:04:00.000Z**.
+Generated from `project-state.json`. Last state update: **2026-09-06T18:45:00.000Z**.
 
 ## Current mode
 
@@ -10,7 +10,7 @@ Generated from `project-state.json`. Last state update: **2026-09-06T17:04:00.00
 - Active PR: #29
 - Active milestone: **BENCH-01**
 - Intelligence development paused: **no**
-- Reason: BENCH-01 remains active. Frozen source f65f4b7... is formal-validation green but manually rejected across the five-fixture replacement-quality replay. The repeated generic defect is incoming candidate identity priority after the aggregate controlled-theme floor. Validate the smallest advisory ranking repair, freeze its exact green SHA, then replay the same five fixtures unchanged and manually compare complete decks before product acceptance.
+- Reason: BENCH-01 remains active. Frozen source 2c5bbceb... is formally green but manually rejected across the five-fixture repair replay. The binary any-component theme preference is too coarse for compound Commander identities. The next product action is the smallest generic component-aware advisory candidate affinity, followed by focused regressions, full immutable validation, and a frozen multi-fixture replay.
 
 ## Stable boundary
 
@@ -21,9 +21,9 @@ Generated from `project-state.json`. Last state update: **2026-09-06T17:04:00.00
 
 ## Experimental checkpoints
 
-Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
+Development checkpoint at pause: `90eae44f0fca63f51d82f2e05c1e656492a9b768`
 
-The latest accepted fully validated Commander product remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. The replacement-identity runtime lineage was formally validated and frozen at f65f4b7b77ee832e2ac66b2a7403f9dda603b84c, with five-fixture replay evidence persisted at 0322790fbe6f559a08b333df587a3eec0d447713. Manual whole-deck review rejected that lineage: Quick Draw, Virtue and Valor, Explorers of the Deep and Elven Empire still spend upgrade slots on structurally attractive but identity-poor additions; Animated Army is improved but cannot rescue the batch. Source diagnosis shows incoming candidate ordering only prefers explicit-theme candidates while themeDeficit > 0, while replacement identity ranking only chooses the OUT card after the IN candidate is fixed. This repeated cross-archetype defect justifies a generic advisory incoming-candidate theme priority after the aggregate floor. That repair is staged for full validation and is not accepted until the complete repository gate and frozen five-fixture manual replay are green.
+The latest accepted fully validated Commander product remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. The generic advisory incoming-theme-priority repair is immutable-validation green at 2c5bbcebb49c6dab23abcb84acf4968f9741db3b and was replayed from that exact frozen src/** across Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army, with evidence persisted at 36f6734e8f7b02dd24237aecb032379c0dd5cf4b and manual verdict at test-results/bench01-strategy-anchor-replay/manual-verdict-2c5bbceb.md. Mandatory whole-deck review rejected the lineage: binary membership in the union of compound-theme components still admits identity-poor generic cards, while Animated Army regresses to zero accepted swaps. The next justified generic capability is component-aware advisory theme affinity: rank role-compatible candidates by support for defining and/or underrepresented requested components rather than treating any-component membership as equivalent.
 
 Latest fully validated executable experimental baseline recorded by project state:
 
@@ -47,7 +47,7 @@ Always inspect the live active-branch head before editing. A later documentation
 
 ## Current validation status
 
-- Active branch status: **bench01-theme-candidate-priority-repair-validation-pending**
+- Active branch status: **bench01-component-aware-theme-affinity-repair-needed**
 - Last persisted Marvel control source: `5829b37b686255ba35d419b37be17095e54fb696`
 - Last persisted Marvel control outcome: **expected-ceiling-fail-closed-zero-swap**
 - Note: At exact source 5829b37..., focused and broad Marvel execute and persist honestly with zero accepted swaps because the restricted pool cannot repair the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure. Keep these controls red for target achievement. Treat the result as expected construction-ceiling behaviour, not as a passing target and not as a blocker to BENCH-01 on other archetypes. Rerun only when the relevant pool, provider truth or policy changes.
@@ -63,16 +63,17 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 - Keep the earlier Counter Blitz dense-countermagic allocation concern watch-only unless a broader cross-fixture batch reproduces it.
 - Do not merge PR #29 or promote stable/current V0.13 until BENCH-01 becomes promotion-grade and all relevant validation and manual quality evidence are green.
 - Treat frozen runtime f65f4b7b77ee832e2ac66b2a7403f9dda603b84c and persisted replay 0322790fbe6f559a08b333df587a3eec0d447713 as formally green but manually rejected Commander product evidence; do not promote it over e17b0a1cba659b229fd6f0b6e2df79c5e464a616.
-- The repeated replacement-quality defect is centralized incoming-candidate ordering: requested-theme membership ceases to influence candidate ordering once the aggregate theme floor is satisfied, while replacement identity ranking only selects the OUT card for a fixed IN candidate.
-- A generic advisory incoming-candidate theme priority after the floor is justified across spellslinger, enchantress, Merfolk typal and Elf typal fixtures; it must remain advisory and must not veto necessary structural repairs or weaken authoritative gates.
-- Require focused regressions plus the full repository check before committing the repair; then freeze that exact green SHA and replay Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army unchanged with complete manual deck comparison.
+- Treat immutable-validation-green source 2c5bbcebb49c6dab23abcb84acf4968f9741db3b and replay evidence 36f6734e8f7b02dd24237aecb032379c0dd5cf4b as manually rejected Commander product evidence; do not promote it over e17b0a1cba659b229fd6f0b6e2df79c5e464a616.
+- The repeated replacement-quality defect is now narrower: binary membership in the union of requested compound-theme components cannot distinguish defining identity components from broad support components such as draw, interaction, counters or combat.
+- A generic component-aware advisory candidate affinity is justified across spellslinger, enchantment-combat, Merfolk typal and Elf typal evidence; it must remain role-compatible and advisory, preserve structural fallback, and must not become a hard freeze or fixture/card exception.
+- Require focused generic regressions spanning spellslinger, enchantment, Merfolk, Elf and artifact/enchantment compound cases plus the full immutable repository check before freezing any new repair SHA; then replay contrasting fixtures unchanged and manually inspect complete decks.
 
 ## Next actions
 
-1. Validate the generic advisory incoming-candidate requested-theme priority after the aggregate floor using focused replacement/strategy regressions and the complete repository check; do not accept or commit product source unless all required gates are green.
-2. If validation is green, freeze the exact product SHA and replay Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army from that unchanged source.
-3. Manually inspect all five complete decks against rejected frozen source f65f4b7b77ee832e2ac66b2a7403f9dda603b84c, requiring materially better replacement identity without Animated Army regression before accepting the lineage.
-4. After acceptance or rejection, persist the batch verdict and broaden BENCH-01 only when the repeated replacement-quality pattern is resolved; keep PR #29 and stable/current V0.13 unchanged until promotion-grade evidence exists.
+1. Design the smallest generic component-aware advisory theme-affinity signal so role-compatible incoming candidates are ranked by support for defining and/or currently underrepresented requested compound-theme components instead of binary any-component membership.
+2. Add focused generic regressions spanning spellslinger, enchantment-combat, Merfolk typal, Elf typal and artifact/enchantment compound requests; do not encode fixture names or card-specific exceptions.
+3. Run the complete immutable repository validation. Only if green, freeze the exact repair SHA and replay Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army from unchanged source, then manually compare complete decks against f65f4b7... and 2c5bbceb....
+4. Accept the lineage only if replacement identity materially improves across the repeated problem fixtures without Animated Army regression; otherwise persist the new generic failure pattern. After resolution, broaden BENCH-01 to fresh combo, hybrid, control, aristocrats, budget and unusual-commander fixtures with strong general-AI comparison.
 
 ## Permanent truth boundary
 
@@ -108,4 +109,4 @@ Read in this order:
 9. `docs/VALIDATION-MATRIX.md`
 10. `docs/KNOWN-FAILURES.md`
 
-Then: BENCH-01 remains active. Keep e17b0a1c... as the latest accepted Commander baseline. Frozen runtime f65f4b7... and replay evidence 0322790... are formally green but manually rejected: repeated off-plan incoming additions remain across Quick Draw, Virtue and Valor, Explorers and Elven Empire. The centralized defect is incoming requested-theme candidate ordering after the aggregate floor. Next: fully validate the smallest advisory candidate priority repair, freeze the exact green SHA, replay the same five fixtures unchanged, and accept only if complete manual deck quality materially improves. Stable remains V0.13 and PR #29 remains unmerged.
+Then: BENCH-01 remains active. Keep e17b0a1c... as the latest accepted Commander baseline. The advisory any-theme-component repair at frozen 2c5bbceb... passed immutable full validation but failed mandatory five-precon manual whole-deck review; evidence is persisted at 36f6734e... with manual verdict manual-verdict-2c5bbceb.md. The remaining centralized defect is compound-theme component priority: broad support components can outrank defining typal/enchantment/spellslinger identity. Next: implement only a generic component-aware advisory candidate affinity, validate fully, freeze the exact green SHA, replay the same comparison fixtures, then broaden BENCH-01 only after this pattern is resolved. Stable remains V0.13 and PR #29 remains unmerged.

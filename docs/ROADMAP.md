@@ -73,23 +73,28 @@ The repair **successfully closes the false Equipment/Voltron inference defect**,
 
 Evidence: `docs/benchmarks/BENCH-01-STRATEGY-ANCHOR-MANUAL-REVIEW.md`.
 
-### Current generic weakness — IDENTITY-AWARE REPLACEMENT PRIORITY
+### Frozen advisory-theme candidate repair — FULLY VALIDATED / MANUAL REJECT
 
-The repeated cross-fixture problem is now narrower and better supported:
+The smallest post-floor advisory theme-membership repair was validated immutably at `2c5bbcebb49c6dab23abcb84acf4968f9741db3b` and replayed from that exact frozen executable source across Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army. Replay evidence is persisted at `36f6734e8f7b02dd24237aecb032379c0dd5cf4b`; mandatory manual verdict is `test-results/bench01-strategy-anchor-replay/manual-verdict-2c5bbceb.md`.
 
-1. Hard legality, budget, printing, component and strategy-loss gates are required and should remain unchanged.
-2. Structural Bracket targets can still make a candidate package look better even when the incoming card contributes materially less to the commander/requested identity than the outgoing card.
-3. Aggregate theme/component minimums prevent catastrophic failure but can allow meaningful erosion above the minimum floor.
-4. Correct strategy labels alone are insufficient; replacement scoring must account for relative identity/strategy value of **IN versus OUT**.
+The lineage is **manually rejected** despite green formal validation:
+- Quick Draw still uses upgrade slots on equipment/value pieces that dilute the Stella Lee spell plan.
+- Virtue and Valor still replaces defining enchantment/Aura pieces with generic structural cards.
+- Explorers still cuts Merfolk/typal engines for generic counters/value/protection cards.
+- Elven Empire improves one slot with Llanowar Elves but still accepts non-Elf structural utility and remains Bracket 2.
+- Animated Army accepts zero swaps, so the repair fails the required regression guard.
 
-The next authorized product work is source diagnosis and, only if the mechanism is centralized, a small generic identity-aware replacement-priority repair. The repair must not freeze all typal/theme cards, simply raise minimum theme floors, weaken structural target gates, or add deck/card exceptions.
+### Current generic weakness — COMPOUND-THEME COMPONENT-AWARE CANDIDATE AFFINITY
 
-Required proof before acceptance:
-- generic regressions across at least typal, artifact/enchantment and control families;
-- focused + full repository validation and build;
-- one exact frozen repair SHA;
-- multi-fixture replay on Animated Army, Elven Empire and Explorers with Quick Draw and Virtue controls;
-- manual complete-deck review showing actual Commander-quality improvement, not only Bracket/metric movement.
+The cross-fixture diagnosis is now narrower than simple post-floor theme membership. A binary `matchesControlledTheme` signal treats every card that matches **any** component of a compound request as equally on-theme. Broad support components such as card draw, interaction, counters, combat or value can therefore outrank the defining typal/enchantment/spellslinger component. Aggregate and per-component hard preservation gates still prevent catastrophic loss, but they do not provide enough positive ranking pressure to preserve identity quality above those floors.
+
+The next justified product work is the smallest generic **component-aware advisory** incoming-candidate affinity. It must:
+- reward role-compatible candidates that support defining and/or currently underrepresented requested components;
+- preserve a fallback to structurally necessary generic candidates when no suitable identity-preserving candidate exists;
+- remain advisory rather than freezing all theme cards or raising hard minimums;
+- avoid fixture, commander and card-name exceptions;
+- add generic focused regressions across spellslinger, enchantment-combat, Merfolk typal, Elf typal and artifact/enchantment compound cases;
+- pass full immutable repository validation before another exact frozen-source multi-fixture replay and manual complete-deck comparison.
 
 Remaining BENCH breadth should still cover unrestricted combo, hybrid combat/combo, commander damage, control, aristocrats, budget, unusual commander/partner incentives and strong general-AI comparison before promotion readiness.
 

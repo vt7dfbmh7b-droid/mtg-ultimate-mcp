@@ -16,12 +16,12 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Active milestone: **BENCH-01 — Adversarial Commander benchmark suite**
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
-- Development checkpoint at pause: `77a5383fa7490aa91360b8186a4bda890f632157`
-- Active branch validation: **bench01-theme-candidate-priority-repair-validation-pending**
+- Development checkpoint at pause: `90eae44f0fca63f51d82f2e05c1e656492a9b768`
+- Active branch validation: **bench01-component-aware-theme-affinity-repair-needed**
 
 ## Audit reuse rule
 
-BENCH-01 remains active. Keep e17b0a1c... as the latest accepted Commander baseline. Frozen runtime f65f4b7... and replay evidence 0322790... are formally green but manually rejected: repeated off-plan incoming additions remain across Quick Draw, Virtue and Valor, Explorers and Elven Empire. The centralized defect is incoming requested-theme candidate ordering after the aggregate floor. Next: fully validate the smallest advisory candidate priority repair, freeze the exact green SHA, replay the same five fixtures unchanged, and accept only if complete manual deck quality materially improves. Stable remains V0.13 and PR #29 remains unmerged.
+BENCH-01 remains active. Keep e17b0a1c... as the latest accepted Commander baseline. The advisory any-theme-component repair at frozen 2c5bbceb... passed immutable full validation but failed mandatory five-precon manual whole-deck review; evidence is persisted at 36f6734e... with manual verdict manual-verdict-2c5bbceb.md. The remaining centralized defect is compound-theme component priority: broad support components can outrank defining typal/enchantment/spellslinger identity. Next: implement only a generic component-aware advisory candidate affinity, validate fully, freeze the exact green SHA, replay the same comparison fixtures, then broaden BENCH-01 only after this pattern is resolved. Stable remains V0.13 and PR #29 remains unmerged.
 
 ## Stable safety boundary
 
@@ -39,10 +39,10 @@ The last persisted Marvel control is `5829b37b686255ba35d419b37be17095e54fb696` 
 
 ## Next actions
 
-1. Validate the generic advisory incoming-candidate requested-theme priority after the aggregate floor using focused replacement/strategy regressions and the complete repository check; do not accept or commit product source unless all required gates are green.
-2. If validation is green, freeze the exact product SHA and replay Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army from that unchanged source.
-3. Manually inspect all five complete decks against rejected frozen source f65f4b7b77ee832e2ac66b2a7403f9dda603b84c, requiring materially better replacement identity without Animated Army regression before accepting the lineage.
-4. After acceptance or rejection, persist the batch verdict and broaden BENCH-01 only when the repeated replacement-quality pattern is resolved; keep PR #29 and stable/current V0.13 unchanged until promotion-grade evidence exists.
+1. Design the smallest generic component-aware advisory theme-affinity signal so role-compatible incoming candidates are ranked by support for defining and/or currently underrepresented requested compound-theme components instead of binary any-component membership.
+2. Add focused generic regressions spanning spellslinger, enchantment-combat, Merfolk typal, Elf typal and artifact/enchantment compound requests; do not encode fixture names or card-specific exceptions.
+3. Run the complete immutable repository validation. Only if green, freeze the exact repair SHA and replay Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army from unchanged source, then manually compare complete decks against f65f4b7... and 2c5bbceb....
+4. Accept the lineage only if replacement identity materially improves across the repeated problem fixtures without Animated Army regression; otherwise persist the new generic failure pattern. After resolution, broaden BENCH-01 to fresh combo, hybrid, control, aristocrats, budget and unusual-commander fixtures with strong general-AI comparison.
 
 ## Permanent recovery references
 
