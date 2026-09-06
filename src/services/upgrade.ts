@@ -624,7 +624,11 @@ export async function suggestDeckUpgrades(
       .filter((card) => card.legalities.commander === 'legal')
       .filter((card) => cardMatchesRole(card, deficit.role, deficit.targetGate))
       .sort((a, b) => {
-        if (themeDeficit > 0) {
+        // Controlled-theme membership remains an advisory candidate-ordering signal even
+        // after the aggregate minimum is satisfied. This prefers role-compatible on-theme IN
+        // cards without making them mandatory: if no themed candidate exists, the existing
+        // structural/strategy ranking remains fully available.
+        if (themeCandidateNames.size > 0) {
           const aTheme = themeCandidateNames.has(a.name.toLocaleLowerCase()) ? 1 : 0;
           const bTheme = themeCandidateNames.has(b.name.toLocaleLowerCase()) ? 1 : 0;
           if (aTheme !== bTheme) return bTheme - aTheme;
