@@ -923,8 +923,8 @@
             "set": "FIC",
             "collectorNumber": "30",
             "finish": "nonfoil",
-            "priceNzd": 16.36,
-            "priceUsdReference": 9.62
+            "priceNzd": 16.79,
+            "priceUsdReference": 9.87
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -1186,11 +1186,11 @@
           "in": "Arcane Denial",
           "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
           "recommendedPrinting": {
-            "set": "MSC",
-            "collectorNumber": "147",
+            "set": "SOC",
+            "collectorNumber": "187",
             "finish": "nonfoil",
-            "priceNzd": 3.1,
-            "priceUsdReference": 1.82
+            "priceNzd": 3.06,
+            "priceUsdReference": 1.8
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -1318,8 +1318,8 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.11,
-            "priceUsdReference": 21.23
+            "priceNzd": 36.03,
+            "priceUsdReference": 21.18
           },
           "structuralPairing": {
             "addressedRole": "protection",
@@ -1364,8 +1364,8 @@
             "set": "TLA",
             "collectorNumber": "187",
             "finish": "nonfoil",
-            "priceNzd": 0.44,
-            "priceUsdReference": 0.26
+            "priceNzd": 0.48,
+            "priceUsdReference": 0.28
           },
           "structuralPairing": {
             "addressedRole": "interaction",
@@ -1791,8 +1791,8 @@
             "set": "SOC",
             "collectorNumber": "269",
             "finish": "nonfoil",
-            "priceNzd": 0.61,
-            "priceUsdReference": 0.36
+            "priceNzd": 0.58,
+            "priceUsdReference": 0.34
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -1980,11 +1980,11 @@
           "in": "The Meathook Massacre",
           "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.43 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: aristocrats, food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
           "recommendedPrinting": {
-            "set": "INR",
-            "collectorNumber": "387",
+            "set": "MID",
+            "collectorNumber": "112",
             "finish": "nonfoil",
-            "priceNzd": 41.3,
-            "priceUsdReference": 24.28
+            "priceNzd": 41.49,
+            "priceUsdReference": 24.39
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -2121,8 +2121,8 @@
             "set": "FIC",
             "collectorNumber": "464",
             "finish": "foil",
-            "priceNzd": 19.58,
-            "priceUsdReference": 11.51
+            "priceNzd": 19.14,
+            "priceUsdReference": 11.25
           },
           "structuralPairing": {
             "addressedRole": "protection",

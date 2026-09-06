@@ -66,7 +66,7 @@
 1 Pawpatch Formation (BLB) 186 *N*
 1 Culling the Weak (EXO) 55 *N*
 1 Transmutation Font (PW24) 11 *F*
-1 The Meathook Massacre (INR) 387 *N*
+1 The Meathook Massacre (MID) 112 *N*
 1 Savor (BLB) 109 *N*
 1 Kura, the Boundless Sky (PNEO) 200p *N*
 1 Campsite Cuisine (FIC) 464 *F*

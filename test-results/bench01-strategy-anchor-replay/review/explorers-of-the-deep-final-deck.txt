@@ -76,7 +76,7 @@
 3 Forest (LCI) 402 *N*
 7 Island (LCI) 395 *N*
 6 Island (LCI) 396 *N*
-1 Arcane Denial (MSC) 147 *N*
+1 Arcane Denial (SOC) 187 *N*
 1 District Mascot (DFT) 344 *N*
 1 Worldly Tutor (CC1) 6 *N*
 1 Sword of Fire and Ice (MAR) 100 *N*

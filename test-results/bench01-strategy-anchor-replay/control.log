@@ -17185,8 +17185,8 @@
                     "reason": "package-causes-a-significant-simulated-regression",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 52.96,
-                    "estimatedSpendUsdReference": 31.13,
+                    "estimatedSpendNzd": 52.87,
+                    "estimatedSpendUsdReference": 31.08,
                     "unknownPriceCount": 0,
                     "improvementScore": 0.904,
                     "significantRegression": true,
@@ -17491,8 +17491,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -19263,8 +19263,8 @@
                     "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                     "attemptedSwaps": 4,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 33.99,
-                    "estimatedSpendUsdReference": 19.98,
+                    "estimatedSpendNzd": 34.16,
+                    "estimatedSpendUsdReference": 20.08,
                     "unknownPriceCount": 0,
                     "improvementScore": 38.119,
                     "significantRegression": false,
@@ -19573,8 +19573,8 @@
                           "set": "TSR",
                           "collectorNumber": "77",
                           "finish": "nonfoil",
-                          "priceNzd": 29.74,
-                          "priceUsdReference": 17.48
+                          "priceNzd": 29.91,
+                          "priceUsdReference": 17.58
                         },
                         "structuralPairing": {
                           "addressedRole": "interaction",
@@ -19627,8 +19627,8 @@
                     "reason": "package-causes-a-significant-simulated-regression",
                     "attemptedSwaps": 3,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 43.19,
-                    "estimatedSpendUsdReference": 25.39,
+                    "estimatedSpendNzd": 43.11,
+                    "estimatedSpendUsdReference": 25.34,
                     "unknownPriceCount": 0,
                     "improvementScore": -3.038,
                     "significantRegression": true,
@@ -19911,8 +19911,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -21447,8 +21447,8 @@
                     "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                     "attemptedSwaps": 3,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 33.99,
-                    "estimatedSpendUsdReference": 19.98,
+                    "estimatedSpendNzd": 34.16,
+                    "estimatedSpendUsdReference": 20.08,
                     "unknownPriceCount": 0,
                     "improvementScore": 38.119,
                     "significantRegression": false,
@@ -21757,8 +21757,8 @@
                           "set": "TSR",
                           "collectorNumber": "77",
                           "finish": "nonfoil",
-                          "priceNzd": 29.74,
-                          "priceUsdReference": 17.48
+                          "priceNzd": 29.91,
+                          "priceUsdReference": 17.58
                         },
                         "structuralPairing": {
                           "addressedRole": "interaction",
@@ -21811,8 +21811,8 @@
                     "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                     "attemptedSwaps": 2,
                     "actualSwaps": 2,
-                    "estimatedSpendNzd": 42.68,
-                    "estimatedSpendUsdReference": 25.09,
+                    "estimatedSpendNzd": 42.6,
+                    "estimatedSpendUsdReference": 25.04,
                     "unknownPriceCount": 0,
                     "improvementScore": 1.138,
                     "significantRegression": false,
@@ -22067,8 +22067,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -22111,8 +22111,8 @@
                     "reason": "package-causes-a-significant-simulated-regression",
                     "attemptedSwaps": 2,
                     "actualSwaps": 2,
-                    "estimatedSpendNzd": 36.62,
-                    "estimatedSpendUsdReference": 21.53,
+                    "estimatedSpendNzd": 36.54,
+                    "estimatedSpendUsdReference": 21.48,
                     "unknownPriceCount": 0,
                     "improvementScore": -8.923,
                     "significantRegression": true,
@@ -22365,8 +22365,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -22409,8 +22409,8 @@
                     "reason": "package-causes-a-significant-simulated-regression",
                     "attemptedSwaps": 2,
                     "actualSwaps": 2,
-                    "estimatedSpendNzd": 45.88,
-                    "estimatedSpendUsdReference": 26.97,
+                    "estimatedSpendNzd": 45.79,
+                    "estimatedSpendUsdReference": 26.92,
                     "unknownPriceCount": 0,
                     "improvementScore": -9.553,
                     "significantRegression": true,
@@ -22663,8 +22663,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -22707,8 +22707,8 @@
                     "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                     "attemptedSwaps": 2,
                     "actualSwaps": 2,
-                    "estimatedSpendNzd": 41.18,
-                    "estimatedSpendUsdReference": 24.21,
+                    "estimatedSpendNzd": 41.1,
+                    "estimatedSpendUsdReference": 24.16,
                     "unknownPriceCount": 0,
                     "improvementScore": 2.679,
                     "significantRegression": false,
@@ -22957,8 +22957,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -23001,8 +23001,8 @@
                     "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                     "attemptedSwaps": 2,
                     "actualSwaps": 2,
-                    "estimatedSpendNzd": 37.02,
-                    "estimatedSpendUsdReference": 21.76,
+                    "estimatedSpendNzd": 36.93,
+                    "estimatedSpendUsdReference": 21.71,
                     "unknownPriceCount": 0,
                     "improvementScore": 2.675,
                     "significantRegression": false,
@@ -23251,8 +23251,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -23295,8 +23295,8 @@
                     "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                     "attemptedSwaps": 2,
                     "actualSwaps": 2,
-                    "estimatedSpendNzd": 36.44,
-                    "estimatedSpendUsdReference": 21.42,
+                    "estimatedSpendNzd": 36.35,
+                    "estimatedSpendUsdReference": 21.37,
                     "unknownPriceCount": 0,
                     "improvementScore": 4.693,
                     "significantRegression": false,
@@ -23543,8 +23543,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -25178,8 +25178,8 @@
           "adaptive": true
         },
         "packageAcceptanceContract": null,
-        "estimatedUpgradeSpendNzd": 18.44,
-        "estimatedUpgradeSpendUsdReference": 10.84,
+        "estimatedUpgradeSpendNzd": 18.87,
+        "estimatedUpgradeSpendUsdReference": 11.09,
         "maxTotalNzd": 249.99,
         "maxTotalUsdReference": 146.96,
         "swaps": [
@@ -25331,8 +25331,8 @@
               "set": "FIC",
               "collectorNumber": "30",
               "finish": "nonfoil",
-              "priceNzd": 16.36,
-              "priceUsdReference": 9.62
+              "priceNzd": 16.79,
+              "priceUsdReference": 9.87
             },
             "structuralPairing": {
               "addressedRole": "average-nonland-mv",
@@ -26032,8 +26032,8 @@
             ],
             "candidatePackagesGeneratedAcrossAttempts": 6,
             "winningCandidate": 2,
-            "estimatedSpendNzd": 18.44,
-            "estimatedSpendUsdReference": 10.84,
+            "estimatedSpendNzd": 18.87,
+            "estimatedSpendUsdReference": 11.09,
             "improvementScore": 18.362,
             "winRouteProtection": {
               "status": "no-verified-route",
@@ -26116,8 +26116,8 @@
             "candidatePackagesGenerated": 6,
             "candidatePackagesEligible": 2,
             "winningCandidate": 2,
-            "estimatedSpendNzd": 18.44,
-            "estimatedSpendUsdReference": 10.84,
+            "estimatedSpendNzd": 18.87,
+            "estimatedSpendUsdReference": 11.09,
             "improvementScore": 18.362,
             "winRouteProtection": {
               "status": "no-verified-route",
@@ -26805,8 +26805,8 @@
                   "collectorNumber": "30",
                   "releaseDate": "2025-06-13",
                   "finish": "nonfoil",
-                  "priceNzd": 16.36,
-                  "priceUsdReference": 9.62,
+                  "priceNzd": 16.79,
+                  "priceUsdReference": 9.87,
                   "promo": false,
                   "promoTypes": [
                     "ffxiv",
@@ -27391,8 +27391,8 @@
                 "reason": "theme-preserved",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 18.44,
-                "estimatedSpendUsdReference": 10.84,
+                "estimatedSpendNzd": 18.87,
+                "estimatedSpendUsdReference": 11.09,
                 "unknownPriceCount": 0,
                 "improvementScore": 18.362,
                 "significantRegression": false,
@@ -27878,8 +27878,8 @@
                       "set": "FIC",
                       "collectorNumber": "30",
                       "finish": "nonfoil",
-                      "priceNzd": 16.36,
-                      "priceUsdReference": 9.62
+                      "priceNzd": 16.79,
+                      "priceUsdReference": 9.87
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -27926,8 +27926,8 @@
                 "reason": "theme-preserved",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 17.95,
-                "estimatedSpendUsdReference": 10.55,
+                "estimatedSpendNzd": 18.37,
+                "estimatedSpendUsdReference": 10.8,
                 "unknownPriceCount": 0,
                 "improvementScore": 17.739,
                 "significantRegression": false,
@@ -28275,8 +28275,8 @@
                       "set": "FIC",
                       "collectorNumber": "30",
                       "finish": "nonfoil",
-                      "priceNzd": 16.36,
-                      "priceUsdReference": 9.62
+                      "priceNzd": 16.79,
+                      "priceUsdReference": 9.87
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -28465,8 +28465,8 @@
                 "reason": "package-would-regress-required-compound-theme-component-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 18.75,
-                "estimatedSpendUsdReference": 11.02,
+                "estimatedSpendNzd": 18.92,
+                "estimatedSpendUsdReference": 11.12,
                 "unknownPriceCount": 0,
                 "improvementScore": 23.147,
                 "significantRegression": false,
@@ -28940,11 +28940,11 @@
                     "in": "Skullclamp",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.31 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "MSC",
-                      "collectorNumber": "210",
+                      "set": "FIC",
+                      "collectorNumber": "355",
                       "finish": "nonfoil",
-                      "priceNzd": 9.76,
-                      "priceUsdReference": 5.74
+                      "priceNzd": 9.93,
+                      "priceUsdReference": 5.84
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -28986,8 +28986,8 @@
                 "reason": "package-would-regress-required-compound-theme-component-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 13.03,
-                "estimatedSpendUsdReference": 7.66,
+                "estimatedSpendNzd": 13.2,
+                "estimatedSpendUsdReference": 7.76,
                 "unknownPriceCount": 0,
                 "improvementScore": 15.132,
                 "significantRegression": false,
@@ -29322,11 +29322,11 @@
                     "in": "Skullclamp",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.31 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "MSC",
-                      "collectorNumber": "210",
+                      "set": "FIC",
+                      "collectorNumber": "355",
                       "finish": "nonfoil",
-                      "priceNzd": 9.76,
-                      "priceUsdReference": 5.74
+                      "priceNzd": 9.93,
+                      "priceUsdReference": 5.84
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -29504,8 +29504,8 @@
                 "reason": "package-would-regress-required-compound-theme-component-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 8.76,
-                "estimatedSpendUsdReference": 5.15,
+                "estimatedSpendNzd": 8.83,
+                "estimatedSpendUsdReference": 5.19,
                 "unknownPriceCount": 0,
                 "improvementScore": 16.636,
                 "significantRegression": false,
@@ -29979,8 +29979,8 @@
                       "set": "SOC",
                       "collectorNumber": "176",
                       "finish": "nonfoil",
-                      "priceNzd": 2.47,
-                      "priceUsdReference": 1.45
+                      "priceNzd": 2.53,
+                      "priceUsdReference": 1.49
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -30562,8 +30562,8 @@
                     "reason": "theme-preserved",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 18.44,
-                    "estimatedSpendUsdReference": 10.84,
+                    "estimatedSpendNzd": 18.87,
+                    "estimatedSpendUsdReference": 11.09,
                     "unknownPriceCount": 0,
                     "improvementScore": 18.362,
                     "significantRegression": false,
@@ -31049,8 +31049,8 @@
                           "set": "FIC",
                           "collectorNumber": "30",
                           "finish": "nonfoil",
-                          "priceNzd": 16.36,
-                          "priceUsdReference": 9.62
+                          "priceNzd": 16.79,
+                          "priceUsdReference": 9.87
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -31097,8 +31097,8 @@
                     "reason": "theme-preserved",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 17.95,
-                    "estimatedSpendUsdReference": 10.55,
+                    "estimatedSpendNzd": 18.37,
+                    "estimatedSpendUsdReference": 10.8,
                     "unknownPriceCount": 0,
                     "improvementScore": 17.739,
                     "significantRegression": false,
@@ -31446,8 +31446,8 @@
                           "set": "FIC",
                           "collectorNumber": "30",
                           "finish": "nonfoil",
-                          "priceNzd": 16.36,
-                          "priceUsdReference": 9.62
+                          "priceNzd": 16.79,
+                          "priceUsdReference": 9.87
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -31636,8 +31636,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 18.75,
-                    "estimatedSpendUsdReference": 11.02,
+                    "estimatedSpendNzd": 18.92,
+                    "estimatedSpendUsdReference": 11.12,
                     "unknownPriceCount": 0,
                     "improvementScore": 23.147,
                     "significantRegression": false,
@@ -32111,11 +32111,11 @@
                         "in": "Skullclamp",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.31 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "210",
+                          "set": "FIC",
+                          "collectorNumber": "355",
                           "finish": "nonfoil",
-                          "priceNzd": 9.76,
-                          "priceUsdReference": 5.74
+                          "priceNzd": 9.93,
+                          "priceUsdReference": 5.84
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -32157,8 +32157,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 13.03,
-                    "estimatedSpendUsdReference": 7.66,
+                    "estimatedSpendNzd": 13.2,
+                    "estimatedSpendUsdReference": 7.76,
                     "unknownPriceCount": 0,
                     "improvementScore": 15.132,
                     "significantRegression": false,
@@ -32493,11 +32493,11 @@
                         "in": "Skullclamp",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.31 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "210",
+                          "set": "FIC",
+                          "collectorNumber": "355",
                           "finish": "nonfoil",
-                          "priceNzd": 9.76,
-                          "priceUsdReference": 5.74
+                          "priceNzd": 9.93,
+                          "priceUsdReference": 5.84
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -32675,8 +32675,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 8.76,
-                    "estimatedSpendUsdReference": 5.15,
+                    "estimatedSpendNzd": 8.83,
+                    "estimatedSpendUsdReference": 5.19,
                     "unknownPriceCount": 0,
                     "improvementScore": 16.636,
                     "significantRegression": false,
@@ -33150,8 +33150,8 @@
                           "set": "SOC",
                           "collectorNumber": "176",
                           "finish": "nonfoil",
-                          "priceNzd": 2.47,
-                          "priceUsdReference": 1.45
+                          "priceNzd": 2.53,
+                          "priceUsdReference": 1.49
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -35329,8 +35329,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 43.6,
-                    "estimatedSpendUsdReference": 25.63,
+                    "estimatedSpendNzd": 43.51,
+                    "estimatedSpendUsdReference": 25.58,
                     "unknownPriceCount": 0,
                     "improvementScore": 11.616,
                     "significantRegression": false,
@@ -35725,8 +35725,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -35815,8 +35815,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 45.23,
-                    "estimatedSpendUsdReference": 26.59,
+                    "estimatedSpendNzd": 45.15,
+                    "estimatedSpendUsdReference": 26.54,
                     "unknownPriceCount": 0,
                     "improvementScore": 12.636,
                     "significantRegression": false,
@@ -36209,8 +36209,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -36297,8 +36297,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 48.77,
-                    "estimatedSpendUsdReference": 28.67,
+                    "estimatedSpendNzd": 48.69,
+                    "estimatedSpendUsdReference": 28.62,
                     "unknownPriceCount": 0,
                     "improvementScore": 11.121,
                     "significantRegression": false,
@@ -36681,8 +36681,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -36773,8 +36773,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 47.66,
-                    "estimatedSpendUsdReference": 28.02,
+                    "estimatedSpendNzd": 47.58,
+                    "estimatedSpendUsdReference": 27.97,
                     "unknownPriceCount": 0,
                     "improvementScore": 14.599,
                     "significantRegression": false,
@@ -37163,8 +37163,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -37251,8 +37251,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 43.94,
-                    "estimatedSpendUsdReference": 25.83,
+                    "estimatedSpendNzd": 43.85,
+                    "estimatedSpendUsdReference": 25.78,
                     "unknownPriceCount": 0,
                     "improvementScore": 10.92,
                     "significantRegression": false,
@@ -37644,8 +37644,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -37735,8 +37735,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 82.03,
-                    "estimatedSpendUsdReference": 48.22,
+                    "estimatedSpendNzd": 81.98,
+                    "estimatedSpendUsdReference": 48.19,
                     "unknownPriceCount": 0,
                     "improvementScore": 11.916,
                     "significantRegression": false,
@@ -38123,8 +38123,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -38170,8 +38170,8 @@
                           "set": "SCD",
                           "collectorNumber": "217",
                           "finish": "nonfoil",
-                          "priceNzd": 1.26,
-                          "priceUsdReference": 0.74
+                          "priceNzd": 1.29,
+                          "priceUsdReference": 0.76
                         },
                         "structuralPairing": {
                           "addressedRole": "interaction",
@@ -38226,8 +38226,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 3,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 42.97,
-                    "estimatedSpendUsdReference": 25.26,
+                    "estimatedSpendNzd": 42.88,
+                    "estimatedSpendUsdReference": 25.21,
                     "unknownPriceCount": 0,
                     "improvementScore": 8.828,
                     "significantRegression": false,
@@ -38597,8 +38597,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -38642,8 +38642,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 3,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 37.2,
-                    "estimatedSpendUsdReference": 21.87,
+                    "estimatedSpendNzd": 37.12,
+                    "estimatedSpendUsdReference": 21.82,
                     "unknownPriceCount": 0,
                     "improvementScore": 13.05,
                     "significantRegression": false,
@@ -39015,8 +39015,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -39062,8 +39062,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 3,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 46.46,
-                    "estimatedSpendUsdReference": 27.31,
+                    "estimatedSpendNzd": 46.37,
+                    "estimatedSpendUsdReference": 27.26,
                     "unknownPriceCount": 0,
                     "improvementScore": 12.417,
                     "significantRegression": false,
@@ -39421,8 +39421,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -39468,8 +39468,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 3,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 42.32,
-                    "estimatedSpendUsdReference": 24.88,
+                    "estimatedSpendNzd": 42.24,
+                    "estimatedSpendUsdReference": 24.83,
                     "unknownPriceCount": 0,
                     "improvementScore": 12.413,
                     "significantRegression": false,
@@ -39837,8 +39837,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -39884,8 +39884,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 3,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 43.12,
-                    "estimatedSpendUsdReference": 25.35,
+                    "estimatedSpendNzd": 43.04,
+                    "estimatedSpendUsdReference": 25.3,
                     "unknownPriceCount": 0,
                     "improvementScore": 16.085,
                     "significantRegression": false,
@@ -40251,8 +40251,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -40296,8 +40296,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 3,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 80.77,
-                    "estimatedSpendUsdReference": 47.48,
+                    "estimatedSpendNzd": 80.68,
+                    "estimatedSpendUsdReference": 47.43,
                     "unknownPriceCount": 0,
                     "improvementScore": 13.272,
                     "significantRegression": false,
@@ -40659,8 +40659,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -44587,8 +44587,8 @@
           "adaptive": true
         },
         "packageAcceptanceContract": null,
-        "estimatedUpgradeSpendNzd": 101.3,
-        "estimatedUpgradeSpendUsdReference": 59.55,
+        "estimatedUpgradeSpendNzd": 101.22,
+        "estimatedUpgradeSpendUsdReference": 59.5,
         "maxTotalNzd": 249.99,
         "maxTotalUsdReference": 146.96,
         "swaps": [
@@ -44597,11 +44597,11 @@
             "in": "Arcane Denial",
             "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
             "recommendedPrinting": {
-              "set": "MSC",
-              "collectorNumber": "147",
+              "set": "SOC",
+              "collectorNumber": "187",
               "finish": "nonfoil",
-              "priceNzd": 3.1,
-              "priceUsdReference": 1.82
+              "priceNzd": 3.06,
+              "priceUsdReference": 1.8
             },
             "structuralPairing": {
               "addressedRole": "average-nonland-mv",
@@ -44729,8 +44729,8 @@
               "set": "MAR",
               "collectorNumber": "100",
               "finish": "nonfoil",
-              "priceNzd": 36.11,
-              "priceUsdReference": 21.23
+              "priceNzd": 36.03,
+              "priceUsdReference": 21.18
             },
             "structuralPairing": {
               "addressedRole": "protection",
@@ -44775,8 +44775,8 @@
               "set": "TLA",
               "collectorNumber": "187",
               "finish": "nonfoil",
-              "priceNzd": 0.44,
-              "priceUsdReference": 0.26
+              "priceNzd": 0.48,
+              "priceUsdReference": 0.28
             },
             "structuralPairing": {
               "addressedRole": "interaction",
@@ -44998,7 +44998,7 @@
             }
           }
         ],
-        "finalDecklist": "// COMMANDER\n1 Hakbal of the Surging Soul (LCC) 3 *F*\n\n// MAIN\n1 Xolatoyac, the Smiling Flood (LCC) 8 *F*\n1 Mist Dancer (LCC) 76 *N*\n1 Wave Goodbye (LCC) 79 *N*\n1 Bygone Marvels (LCC) 89 *N*\n1 Deeproot Historian (LCC) 91 *N*\n1 Topography Tracker (LCC) 95 *N*\n1 Tributary Instructor (LCC) 96 *N*\n1 Singer of Swift Rivers (LCC) 98 *N*\n1 Benthic Biomancer (LCC) 145 *N*\n1 Coralhelm Commander (LCC) 148 *N*\n1 Emperor Mihail II (LCC) 155 *N*\n1 Herald of Secret Streams (LCC) 158 *N*\n1 Kindred Discovery (LCC) 159 *N*\n1 Master of the Pearl Trident (LCC) 162 *N*\n1 Merfolk Sovereign (LCC) 164 *N*\n1 Seafloor Oracle (LCC) 170 *N*\n1 Surgespanner (LCC) 174 *N*\n1 Svyelun of Sea and Sky (LCC) 175 *N*\n1 Thassa, God of the Sea (LCC) 176 *N*\n1 Branching Evolution (LCC) 234 *N*\n1 Deeproot Elite (LCC) 237 *N*\n1 Hardened Scales (LCC) 243 *N*\n1 Realmwalker (LCC) 250 *N*\n1 Ruinous Intrusion (LCC) 255 *N*\n1 Kumena, Tyrant of Orazca (LCC) 274 *N*\n1 Quandrix Command (LCC) 280 *N*\n1 Simic Ascendancy (LCC) 288 *N*\n1 Tishana, Voice of Thunder (LCC) 291 *N*\n1 Vorel of the Hull Clade (LCC) 294 *N*\n1 Zegana, Utopian Speaker (LCC) 298 *N*\n1 Metallic Mimic (LCC) 308 *N*\n1 Alchemist's Refuge (LCC) 318 *N*\n1 Hinterland Harbor (LCC) 336 *N*\n1 Karn's Bastion (LCC) 339 *N*\n1 Mosswort Bridge (LCC) 342 *N*\n1 Temple of Mystery (LCC) 357 *N*\n1 Vineglimmer Snarl (LCC) 368 *N*\n1 Merfolk Cave-Diver (LCI) 65 *N*\n1 Deeproot Waters (LCC) 152 *N*\n1 Merrow Reejerey (LCC) 165 *N*\n1 Rapid Hybridization (LCC) 166 *N*\n1 Ravenform (LCC) 167 *N*\n1 Sage of Fables (LCC) 169 *N*\n1 Stonybrook Banneret (LCC) 173 *N*\n1 Beast Within (LCC) 233 *N*\n1 Nicanzil, Current Conductor (LCI) 236 *N*\n1 Evolution Sage (LCC) 240 *N*\n1 Explore (LCC) 241 *N*\n1 Inspiring Call (LCC) 244 *N*\n1 Kodama's Reach (LCC) 245 *N*\n1 Growth Spiral (LCC) 270 *N*\n1 Kiora's Follower (LCC) 273 *N*\n1 Merfolk Mistbinder (LCC) 276 *N*\n1 Merfolk Skydiver (LCC) 277 *N*\n1 Tatyova, Benthic Druid (LCC) 290 *N*\n1 Arcane Signet (LCC) 299 *N*\n1 Commander's Sphere (LCC) 301 *N*\n1 Simic Signet (LCC) 312 *N*\n1 Sol Ring (LCC) 313 *N*\n1 Swiftfoot Boots (LCC) 314 *N*\n1 Command Tower (LCC) 325 *N*\n1 Llanowar Reborn (LCC) 341 *N*\n1 Myriad Landscape (LCC) 343 *N*\n1 Path of Ancestry (LCC) 346 *N*\n1 Reliquary Tower (LCC) 348 *N*\n1 Rogue's Passage (LCC) 349 *N*\n1 Secluded Courtyard (LCC) 350 *N*\n1 Simic Growth Chamber (LCC) 352 *N*\n1 Temple of the False God (LCC) 359 *N*\n1 Unclaimed Territory (LCC) 366 *N*\n4 Forest (LCI) 401 *N*\n3 Forest (LCI) 402 *N*\n7 Island (LCI) 395 *N*\n6 Island (LCI) 396 *N*\n1 Arcane Denial (MSC) 147 *N*\n1 District Mascot (DFT) 344 *N*\n1 Worldly Tutor (CC1) 6 *N*\n1 Sword of Fire and Ice (MAR) 100 *N*\n1 Origin of Metalbending (TLA) 187 *N*\n1 Jace, Vryn's Prodigy // Jace, Telepath Unbound (ORI) 60 *N*\n1 Titania's Command (BRO) 194 *N*\n1 Padeem, Consul of Innovation (J25) 62 *N*\n1 Trade Routes (8ED) 109 *N*",
+        "finalDecklist": "// COMMANDER\n1 Hakbal of the Surging Soul (LCC) 3 *F*\n\n// MAIN\n1 Xolatoyac, the Smiling Flood (LCC) 8 *F*\n1 Mist Dancer (LCC) 76 *N*\n1 Wave Goodbye (LCC) 79 *N*\n1 Bygone Marvels (LCC) 89 *N*\n1 Deeproot Historian (LCC) 91 *N*\n1 Topography Tracker (LCC) 95 *N*\n1 Tributary Instructor (LCC) 96 *N*\n1 Singer of Swift Rivers (LCC) 98 *N*\n1 Benthic Biomancer (LCC) 145 *N*\n1 Coralhelm Commander (LCC) 148 *N*\n1 Emperor Mihail II (LCC) 155 *N*\n1 Herald of Secret Streams (LCC) 158 *N*\n1 Kindred Discovery (LCC) 159 *N*\n1 Master of the Pearl Trident (LCC) 162 *N*\n1 Merfolk Sovereign (LCC) 164 *N*\n1 Seafloor Oracle (LCC) 170 *N*\n1 Surgespanner (LCC) 174 *N*\n1 Svyelun of Sea and Sky (LCC) 175 *N*\n1 Thassa, God of the Sea (LCC) 176 *N*\n1 Branching Evolution (LCC) 234 *N*\n1 Deeproot Elite (LCC) 237 *N*\n1 Hardened Scales (LCC) 243 *N*\n1 Realmwalker (LCC) 250 *N*\n1 Ruinous Intrusion (LCC) 255 *N*\n1 Kumena, Tyrant of Orazca (LCC) 274 *N*\n1 Quandrix Command (LCC) 280 *N*\n1 Simic Ascendancy (LCC) 288 *N*\n1 Tishana, Voice of Thunder (LCC) 291 *N*\n1 Vorel of the Hull Clade (LCC) 294 *N*\n1 Zegana, Utopian Speaker (LCC) 298 *N*\n1 Metallic Mimic (LCC) 308 *N*\n1 Alchemist's Refuge (LCC) 318 *N*\n1 Hinterland Harbor (LCC) 336 *N*\n1 Karn's Bastion (LCC) 339 *N*\n1 Mosswort Bridge (LCC) 342 *N*\n1 Temple of Mystery (LCC) 357 *N*\n1 Vineglimmer Snarl (LCC) 368 *N*\n1 Merfolk Cave-Diver (LCI) 65 *N*\n1 Deeproot Waters (LCC) 152 *N*\n1 Merrow Reejerey (LCC) 165 *N*\n1 Rapid Hybridization (LCC) 166 *N*\n1 Ravenform (LCC) 167 *N*\n1 Sage of Fables (LCC) 169 *N*\n1 Stonybrook Banneret (LCC) 173 *N*\n1 Beast Within (LCC) 233 *N*\n1 Nicanzil, Current Conductor (LCI) 236 *N*\n1 Evolution Sage (LCC) 240 *N*\n1 Explore (LCC) 241 *N*\n1 Inspiring Call (LCC) 244 *N*\n1 Kodama's Reach (LCC) 245 *N*\n1 Growth Spiral (LCC) 270 *N*\n1 Kiora's Follower (LCC) 273 *N*\n1 Merfolk Mistbinder (LCC) 276 *N*\n1 Merfolk Skydiver (LCC) 277 *N*\n1 Tatyova, Benthic Druid (LCC) 290 *N*\n1 Arcane Signet (LCC) 299 *N*\n1 Commander's Sphere (LCC) 301 *N*\n1 Simic Signet (LCC) 312 *N*\n1 Sol Ring (LCC) 313 *N*\n1 Swiftfoot Boots (LCC) 314 *N*\n1 Command Tower (LCC) 325 *N*\n1 Llanowar Reborn (LCC) 341 *N*\n1 Myriad Landscape (LCC) 343 *N*\n1 Path of Ancestry (LCC) 346 *N*\n1 Reliquary Tower (LCC) 348 *N*\n1 Rogue's Passage (LCC) 349 *N*\n1 Secluded Courtyard (LCC) 350 *N*\n1 Simic Growth Chamber (LCC) 352 *N*\n1 Temple of the False God (LCC) 359 *N*\n1 Unclaimed Territory (LCC) 366 *N*\n4 Forest (LCI) 401 *N*\n3 Forest (LCI) 402 *N*\n7 Island (LCI) 395 *N*\n6 Island (LCI) 396 *N*\n1 Arcane Denial (SOC) 187 *N*\n1 District Mascot (DFT) 344 *N*\n1 Worldly Tutor (CC1) 6 *N*\n1 Sword of Fire and Ice (MAR) 100 *N*\n1 Origin of Metalbending (TLA) 187 *N*\n1 Jace, Vryn's Prodigy // Jace, Telepath Unbound (ORI) 60 *N*\n1 Titania's Command (BRO) 194 *N*\n1 Padeem, Consul of Innovation (J25) 62 *N*\n1 Trade Routes (8ED) 109 *N*",
         "finalCommanderRules": {
           "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
           "status": "legal",
@@ -45752,8 +45752,8 @@
             ],
             "candidatePackagesGeneratedAcrossAttempts": 24,
             "winningCandidate": 6,
-            "estimatedSpendNzd": 3.1,
-            "estimatedSpendUsdReference": 1.82,
+            "estimatedSpendNzd": 3.06,
+            "estimatedSpendUsdReference": 1.8,
             "improvementScore": 13.77,
             "winRouteProtection": {
               "status": "no-verified-route",
@@ -45781,8 +45781,8 @@
             ],
             "candidatePackagesGeneratedAcrossAttempts": 6,
             "winningCandidate": 6,
-            "estimatedSpendNzd": 80.99,
-            "estimatedSpendUsdReference": 47.61,
+            "estimatedSpendNzd": 80.94,
+            "estimatedSpendUsdReference": 47.58,
             "improvementScore": 6.136,
             "winRouteProtection": {
               "status": "no-verified-route",
@@ -45893,8 +45893,8 @@
             "candidatePackagesGenerated": 6,
             "candidatePackagesEligible": 5,
             "winningCandidate": 6,
-            "estimatedSpendNzd": 3.1,
-            "estimatedSpendUsdReference": 1.82,
+            "estimatedSpendNzd": 3.06,
+            "estimatedSpendUsdReference": 1.8,
             "improvementScore": 13.77,
             "winRouteProtection": {
               "status": "no-verified-route",
@@ -46476,21 +46476,18 @@
                 "out": "Reflections of Littjara",
                 "in": "Arcane Denial",
                 "recommendedPrinting": {
-                  "set": "MSC",
-                  "setName": "Marvel Super Heroes Commander",
-                  "collectorNumber": "147",
-                  "releaseDate": "2026-06-26",
+                  "set": "SOC",
+                  "setName": "Secrets of Strixhaven Commander",
+                  "collectorNumber": "187",
+                  "releaseDate": "2026-04-24",
                   "finish": "nonfoil",
-                  "priceNzd": 3.1,
-                  "priceUsdReference": 1.82,
+                  "priceNzd": 3.06,
+                  "priceUsdReference": 1.8,
                   "promo": false,
-                  "promoTypes": [
-                    "surgefoil",
-                    "universesbeyond"
-                  ],
+                  "promoTypes": [],
                   "flavorName": null,
                   "familyMatch": "unrestricted",
-                  "scryfallUrl": "https://scryfall.com/card/msc/147/arcane-denial?utm_source=api"
+                  "scryfallUrl": "https://scryfall.com/card/soc/187/arcane-denial?utm_source=api"
                 },
                 "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                 "structuralPairing": {
@@ -46849,8 +46846,8 @@
                 "reason": "theme-preserved",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 9.76,
-                "estimatedSpendUsdReference": 5.74,
+                "estimatedSpendNzd": 9.93,
+                "estimatedSpendUsdReference": 5.84,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.519,
                 "significantRegression": false,
@@ -47099,11 +47096,11 @@
                     "in": "Skullclamp",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "MSC",
-                      "collectorNumber": "210",
+                      "set": "FIC",
+                      "collectorNumber": "355",
                       "finish": "nonfoil",
-                      "priceNzd": 9.76,
-                      "priceUsdReference": 5.74
+                      "priceNzd": 9.93,
+                      "priceUsdReference": 5.84
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -48019,8 +48016,8 @@
                 "reason": "theme-preserved",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 3.1,
-                "estimatedSpendUsdReference": 1.82,
+                "estimatedSpendNzd": 3.06,
+                "estimatedSpendUsdReference": 1.8,
                 "unknownPriceCount": 0,
                 "improvementScore": 13.77,
                 "significantRegression": false,
@@ -48270,11 +48267,11 @@
                     "in": "Arcane Denial",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "MSC",
-                      "collectorNumber": "147",
+                      "set": "SOC",
+                      "collectorNumber": "187",
                       "finish": "nonfoil",
-                      "priceNzd": 3.1,
-                      "priceUsdReference": 1.82
+                      "priceNzd": 3.06,
+                      "priceUsdReference": 1.8
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -48325,8 +48322,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 17.47,
-                    "estimatedSpendUsdReference": 10.27,
+                    "estimatedSpendNzd": 17.44,
+                    "estimatedSpendUsdReference": 10.25,
                     "unknownPriceCount": 0,
                     "improvementScore": 18.251,
                     "significantRegression": false,
@@ -48710,11 +48707,11 @@
                         "in": "Arcane Denial",
                         "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (1 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "147",
+                          "set": "SOC",
+                          "collectorNumber": "187",
                           "finish": "nonfoil",
-                          "priceNzd": 3.1,
-                          "priceUsdReference": 1.82
+                          "priceNzd": 3.06,
+                          "priceUsdReference": 1.8
                         },
                         "structuralPairing": {
                           "addressedRole": "interaction",
@@ -48842,8 +48839,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 19.26,
-                    "estimatedSpendUsdReference": 11.32,
+                    "estimatedSpendNzd": 19.43,
+                    "estimatedSpendUsdReference": 11.42,
                     "unknownPriceCount": 0,
                     "improvementScore": 11.846,
                     "significantRegression": false,
@@ -49171,11 +49168,11 @@
                         "in": "Skullclamp",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "210",
+                          "set": "FIC",
+                          "collectorNumber": "355",
                           "finish": "nonfoil",
-                          "priceNzd": 9.76,
-                          "priceUsdReference": 5.74
+                          "priceNzd": 9.93,
+                          "priceUsdReference": 5.84
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -50854,8 +50851,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 36.56,
-                    "estimatedSpendUsdReference": 21.49,
+                    "estimatedSpendNzd": 36.49,
+                    "estimatedSpendUsdReference": 21.45,
                     "unknownPriceCount": 0,
                     "improvementScore": 17.336,
                     "significantRegression": false,
@@ -51184,11 +51181,11 @@
                         "in": "Faerie Mastermind",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "PMOM",
-                          "collectorNumber": "58p",
+                          "set": "SOC",
+                          "collectorNumber": "114",
                           "finish": "nonfoil",
-                          "priceNzd": 20.58,
-                          "priceUsdReference": 12.1
+                          "priceNzd": 20.52,
+                          "priceUsdReference": 12.06
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -51372,8 +51369,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 3,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 16.6,
-                    "estimatedSpendUsdReference": 9.76,
+                    "estimatedSpendNzd": 16.57,
+                    "estimatedSpendUsdReference": 9.74,
                     "unknownPriceCount": 0,
                     "improvementScore": 15.443,
                     "significantRegression": false,
@@ -51731,11 +51728,11 @@
                         "in": "Arcane Denial",
                         "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (1 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "147",
+                          "set": "SOC",
+                          "collectorNumber": "187",
                           "finish": "nonfoil",
-                          "priceNzd": 3.1,
-                          "priceUsdReference": 1.82
+                          "priceNzd": 3.06,
+                          "priceUsdReference": 1.8
                         },
                         "structuralPairing": {
                           "addressedRole": "interaction",
@@ -51817,8 +51814,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 3,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 18.71,
-                    "estimatedSpendUsdReference": 11,
+                    "estimatedSpendNzd": 18.88,
+                    "estimatedSpendUsdReference": 11.1,
                     "unknownPriceCount": 0,
                     "improvementScore": 12.982,
                     "significantRegression": false,
@@ -52118,11 +52115,11 @@
                         "in": "Skullclamp",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "210",
+                          "set": "FIC",
+                          "collectorNumber": "355",
                           "finish": "nonfoil",
-                          "priceNzd": 9.76,
-                          "priceUsdReference": 5.74
+                          "priceNzd": 9.93,
+                          "priceUsdReference": 5.84
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -53538,8 +53535,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 3,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 34.29,
-                    "estimatedSpendUsdReference": 20.16,
+                    "estimatedSpendNzd": 34.23,
+                    "estimatedSpendUsdReference": 20.12,
                     "unknownPriceCount": 0,
                     "improvementScore": 10.058,
                     "significantRegression": false,
@@ -53835,11 +53832,11 @@
                         "in": "Faerie Mastermind",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "PMOM",
-                          "collectorNumber": "58p",
+                          "set": "SOC",
+                          "collectorNumber": "114",
                           "finish": "nonfoil",
-                          "priceNzd": 20.58,
-                          "priceUsdReference": 12.1
+                          "priceNzd": 20.52,
+                          "priceUsdReference": 12.06
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -53976,8 +53973,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 2,
                     "actualSwaps": 2,
-                    "estimatedSpendNzd": 8.52,
-                    "estimatedSpendUsdReference": 5.01,
+                    "estimatedSpendNzd": 8.49,
+                    "estimatedSpendUsdReference": 4.99,
                     "unknownPriceCount": 0,
                     "improvementScore": 17.406,
                     "significantRegression": false,
@@ -54312,11 +54309,11 @@
                         "in": "Arcane Denial",
                         "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (1 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "147",
+                          "set": "SOC",
+                          "collectorNumber": "187",
                           "finish": "nonfoil",
-                          "priceNzd": 3.1,
-                          "priceUsdReference": 1.82
+                          "priceNzd": 3.06,
+                          "priceUsdReference": 1.8
                         },
                         "structuralPairing": {
                           "addressedRole": "interaction",
@@ -54356,8 +54353,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 2,
                     "actualSwaps": 2,
-                    "estimatedSpendNzd": 12.86,
-                    "estimatedSpendUsdReference": 7.56,
+                    "estimatedSpendNzd": 13,
+                    "estimatedSpendUsdReference": 7.64,
                     "unknownPriceCount": 0,
                     "improvementScore": 26.115,
                     "significantRegression": false,
@@ -54629,11 +54626,11 @@
                         "in": "Skullclamp",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "210",
+                          "set": "FIC",
+                          "collectorNumber": "355",
                           "finish": "nonfoil",
-                          "priceNzd": 9.76,
-                          "priceUsdReference": 5.74
+                          "priceNzd": 9.93,
+                          "priceUsdReference": 5.84
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -54670,11 +54667,11 @@
                         "in": "Arcane Denial",
                         "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (1 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "147",
+                          "set": "SOC",
+                          "collectorNumber": "187",
                           "finish": "nonfoil",
-                          "priceNzd": 3.1,
-                          "priceUsdReference": 1.82
+                          "priceNzd": 3.06,
+                          "priceUsdReference": 1.8
                         },
                         "structuralPairing": {
                           "addressedRole": "interaction",
@@ -54716,8 +54713,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 2,
                     "actualSwaps": 2,
-                    "estimatedSpendNzd": 19.9,
-                    "estimatedSpendUsdReference": 11.7,
+                    "estimatedSpendNzd": 19.87,
+                    "estimatedSpendUsdReference": 11.68,
                     "unknownPriceCount": 0,
                     "improvementScore": 20.745,
                     "significantRegression": false,
@@ -55026,11 +55023,11 @@
                         "in": "Arcane Denial",
                         "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (1 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "147",
+                          "set": "SOC",
+                          "collectorNumber": "187",
                           "finish": "nonfoil",
-                          "priceNzd": 3.1,
-                          "priceUsdReference": 1.82
+                          "priceNzd": 3.06,
+                          "priceUsdReference": 1.8
                         },
                         "structuralPairing": {
                           "addressedRole": "interaction",
@@ -55428,8 +55425,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 2,
                     "actualSwaps": 2,
-                    "estimatedSpendNzd": 3.54,
-                    "estimatedSpendUsdReference": 2.08,
+                    "estimatedSpendNzd": 3.5,
+                    "estimatedSpendUsdReference": 2.06,
                     "unknownPriceCount": 0,
                     "improvementScore": 27.331,
                     "significantRegression": false,
@@ -55744,11 +55741,11 @@
                         "in": "Arcane Denial",
                         "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (1 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "147",
+                          "set": "SOC",
+                          "collectorNumber": "187",
                           "finish": "nonfoil",
-                          "priceNzd": 3.1,
-                          "priceUsdReference": 1.82
+                          "priceNzd": 3.06,
+                          "priceUsdReference": 1.8
                         },
                         "structuralPairing": {
                           "addressedRole": "interaction",
@@ -55790,8 +55787,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 2,
                     "actualSwaps": 2,
-                    "estimatedSpendNzd": 11.18,
-                    "estimatedSpendUsdReference": 6.57,
+                    "estimatedSpendNzd": 11.14,
+                    "estimatedSpendUsdReference": 6.55,
                     "unknownPriceCount": 0,
                     "improvementScore": 13.489,
                     "significantRegression": false,
@@ -56064,11 +56061,11 @@
                         "in": "Arcane Denial",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "147",
+                          "set": "SOC",
+                          "collectorNumber": "187",
                           "finish": "nonfoil",
-                          "priceNzd": 3.1,
-                          "priceUsdReference": 1.82
+                          "priceNzd": 3.06,
+                          "priceUsdReference": 1.8
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -56480,8 +56477,8 @@
                     "reason": "theme-preserved",
                     "attemptedSwaps": 1,
                     "actualSwaps": 1,
-                    "estimatedSpendNzd": 9.76,
-                    "estimatedSpendUsdReference": 5.74,
+                    "estimatedSpendNzd": 9.93,
+                    "estimatedSpendUsdReference": 5.84,
                     "unknownPriceCount": 0,
                     "improvementScore": 12.519,
                     "significantRegression": false,
@@ -56730,11 +56727,11 @@
                         "in": "Skullclamp",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "210",
+                          "set": "FIC",
+                          "collectorNumber": "355",
                           "finish": "nonfoil",
-                          "priceNzd": 9.76,
-                          "priceUsdReference": 5.74
+                          "priceNzd": 9.93,
+                          "priceUsdReference": 5.84
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -57650,8 +57647,8 @@
                     "reason": "theme-preserved",
                     "attemptedSwaps": 1,
                     "actualSwaps": 1,
-                    "estimatedSpendNzd": 3.1,
-                    "estimatedSpendUsdReference": 1.82,
+                    "estimatedSpendNzd": 3.06,
+                    "estimatedSpendUsdReference": 1.8,
                     "unknownPriceCount": 0,
                     "improvementScore": 13.77,
                     "significantRegression": false,
@@ -57901,11 +57898,11 @@
                         "in": "Arcane Denial",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "147",
+                          "set": "SOC",
+                          "collectorNumber": "187",
                           "finish": "nonfoil",
-                          "priceNzd": 3.1,
-                          "priceUsdReference": 1.82
+                          "priceNzd": 3.06,
+                          "priceUsdReference": 1.8
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -57951,8 +57948,8 @@
             "candidatePackagesGenerated": 6,
             "candidatePackagesEligible": 2,
             "winningCandidate": 6,
-            "estimatedSpendNzd": 80.99,
-            "estimatedSpendUsdReference": 47.61,
+            "estimatedSpendNzd": 80.94,
+            "estimatedSpendUsdReference": 47.58,
             "improvementScore": 6.136,
             "winRouteProtection": {
               "status": "no-verified-route",
@@ -58644,8 +58641,8 @@
                   "collectorNumber": "100",
                   "releaseDate": "2026-06-26",
                   "finish": "nonfoil",
-                  "priceNzd": 36.11,
-                  "priceUsdReference": 21.23,
+                  "priceNzd": 36.03,
+                  "priceUsdReference": 21.18,
                   "promo": false,
                   "promoTypes": [
                     "sourcematerial",
@@ -58700,8 +58697,8 @@
                   "collectorNumber": "187",
                   "releaseDate": "2025-11-21",
                   "finish": "nonfoil",
-                  "priceNzd": 0.44,
-                  "priceUsdReference": 0.26,
+                  "priceNzd": 0.48,
+                  "priceUsdReference": 0.28,
                   "promo": false,
                   "promoTypes": [
                     "universesbeyond"
@@ -58755,8 +58752,8 @@
                 "reason": "package-would-regress-required-compound-theme-component-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 45.61,
-                "estimatedSpendUsdReference": 26.81,
+                "estimatedSpendNzd": 45.52,
+                "estimatedSpendUsdReference": 26.76,
                 "unknownPriceCount": 0,
                 "improvementScore": 11.232,
                 "significantRegression": false,
@@ -59174,8 +59171,8 @@
                       "set": "MAR",
                       "collectorNumber": "100",
                       "finish": "nonfoil",
-                      "priceNzd": 36.11,
-                      "priceUsdReference": 21.23
+                      "priceNzd": 36.03,
+                      "priceUsdReference": 21.18
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -59270,8 +59267,8 @@
                 "reason": "package-would-regress-required-compound-theme-component-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 52.07,
-                "estimatedSpendUsdReference": 30.61,
+                "estimatedSpendNzd": 51.99,
+                "estimatedSpendUsdReference": 30.56,
                 "unknownPriceCount": 0,
                 "improvementScore": 4.256,
                 "significantRegression": false,
@@ -59686,8 +59683,8 @@
                       "set": "MAR",
                       "collectorNumber": "100",
                       "finish": "nonfoil",
-                      "priceNzd": 36.11,
-                      "priceUsdReference": 21.23
+                      "priceNzd": 36.03,
+                      "priceUsdReference": 21.18
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -59779,8 +59776,8 @@
                 "reason": "package-would-regress-required-compound-theme-component-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 51.29,
-                "estimatedSpendUsdReference": 30.15,
+                "estimatedSpendNzd": 51.2,
+                "estimatedSpendUsdReference": 30.1,
                 "unknownPriceCount": 0,
                 "improvementScore": 6.007,
                 "significantRegression": false,
@@ -60211,8 +60208,8 @@
                       "set": "MAR",
                       "collectorNumber": "100",
                       "finish": "nonfoil",
-                      "priceNzd": 36.11,
-                      "priceUsdReference": 21.23
+                      "priceNzd": 36.03,
+                      "priceUsdReference": 21.18
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -60300,8 +60297,8 @@
                 "reason": "package-would-regress-required-compound-theme-component-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 44.33,
-                "estimatedSpendUsdReference": 26.06,
+                "estimatedSpendNzd": 44.25,
+                "estimatedSpendUsdReference": 26.01,
                 "unknownPriceCount": 0,
                 "improvementScore": 5.29,
                 "significantRegression": false,
@@ -60719,8 +60716,8 @@
                       "set": "MAR",
                       "collectorNumber": "100",
                       "finish": "nonfoil",
-                      "priceNzd": 36.11,
-                      "priceUsdReference": 21.23
+                      "priceNzd": 36.03,
+                      "priceUsdReference": 21.18
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -60811,8 +60808,8 @@
                 "reason": "theme-preserved",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 39.21,
-                "estimatedSpendUsdReference": 23.05,
+                "estimatedSpendNzd": 39.13,
+                "estimatedSpendUsdReference": 23,
                 "unknownPriceCount": 0,
                 "improvementScore": 3.162,
                 "significantRegression": false,
@@ -61229,8 +61226,8 @@
                       "set": "MAR",
                       "collectorNumber": "100",
                       "finish": "nonfoil",
-                      "priceNzd": 36.11,
-                      "priceUsdReference": 21.23
+                      "priceNzd": 36.03,
+                      "priceUsdReference": 21.18
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -61322,8 +61319,8 @@
                 "reason": "theme-preserved",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 80.99,
-                "estimatedSpendUsdReference": 47.61,
+                "estimatedSpendNzd": 80.94,
+                "estimatedSpendUsdReference": 47.58,
                 "unknownPriceCount": 0,
                 "improvementScore": 6.136,
                 "significantRegression": false,
@@ -61740,8 +61737,8 @@
                       "set": "MAR",
                       "collectorNumber": "100",
                       "finish": "nonfoil",
-                      "priceNzd": 36.11,
-                      "priceUsdReference": 21.23
+                      "priceNzd": 36.03,
+                      "priceUsdReference": 21.18
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -61786,8 +61783,8 @@
                       "set": "TLA",
                       "collectorNumber": "187",
                       "finish": "nonfoil",
-                      "priceNzd": 0.44,
-                      "priceUsdReference": 0.26
+                      "priceNzd": 0.48,
+                      "priceUsdReference": 0.28
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -61845,8 +61842,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 45.61,
-                    "estimatedSpendUsdReference": 26.81,
+                    "estimatedSpendNzd": 45.52,
+                    "estimatedSpendUsdReference": 26.76,
                     "unknownPriceCount": 0,
                     "improvementScore": 11.232,
                     "significantRegression": false,
@@ -62264,8 +62261,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -62360,8 +62357,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 52.07,
-                    "estimatedSpendUsdReference": 30.61,
+                    "estimatedSpendNzd": 51.99,
+                    "estimatedSpendUsdReference": 30.56,
                     "unknownPriceCount": 0,
                     "improvementScore": 4.256,
                     "significantRegression": false,
@@ -62776,8 +62773,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -62869,8 +62866,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 51.29,
-                    "estimatedSpendUsdReference": 30.15,
+                    "estimatedSpendNzd": 51.2,
+                    "estimatedSpendUsdReference": 30.1,
                     "unknownPriceCount": 0,
                     "improvementScore": 6.007,
                     "significantRegression": false,
@@ -63301,8 +63298,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -63390,8 +63387,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 44.33,
-                    "estimatedSpendUsdReference": 26.06,
+                    "estimatedSpendNzd": 44.25,
+                    "estimatedSpendUsdReference": 26.01,
                     "unknownPriceCount": 0,
                     "improvementScore": 5.29,
                     "significantRegression": false,
@@ -63809,8 +63806,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -63901,8 +63898,8 @@
                     "reason": "theme-preserved",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 39.21,
-                    "estimatedSpendUsdReference": 23.05,
+                    "estimatedSpendNzd": 39.13,
+                    "estimatedSpendUsdReference": 23,
                     "unknownPriceCount": 0,
                     "improvementScore": 3.162,
                     "significantRegression": false,
@@ -64319,8 +64316,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -64412,8 +64409,8 @@
                     "reason": "theme-preserved",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 80.99,
-                    "estimatedSpendUsdReference": 47.61,
+                    "estimatedSpendNzd": 80.94,
+                    "estimatedSpendUsdReference": 47.58,
                     "unknownPriceCount": 0,
                     "improvementScore": 6.136,
                     "significantRegression": false,
@@ -64830,8 +64827,8 @@
                           "set": "MAR",
                           "collectorNumber": "100",
                           "finish": "nonfoil",
-                          "priceNzd": 36.11,
-                          "priceUsdReference": 21.23
+                          "priceNzd": 36.03,
+                          "priceUsdReference": 21.18
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -64876,8 +64873,8 @@
                           "set": "TLA",
                           "collectorNumber": "187",
                           "finish": "nonfoil",
-                          "priceNzd": 0.44,
-                          "priceUsdReference": 0.26
+                          "priceNzd": 0.48,
+                          "priceUsdReference": 0.28
                         },
                         "structuralPairing": {
                           "addressedRole": "interaction",
@@ -68035,8 +68032,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 11.06,
-                "estimatedSpendUsdReference": 6.5,
+                "estimatedSpendNzd": 11.09,
+                "estimatedSpendUsdReference": 6.52,
                 "unknownPriceCount": 0,
                 "improvementScore": 22.187,
                 "significantRegression": false,
@@ -68467,8 +68464,8 @@
                       "set": "NEO",
                       "collectorNumber": "72",
                       "finish": "nonfoil",
-                      "priceNzd": 0.58,
-                      "priceUsdReference": 0.34
+                      "priceNzd": 0.61,
+                      "priceUsdReference": 0.36
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -70838,8 +70835,8 @@
                     "reason": "package-reduces-substantive-deck-strategy-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 11.06,
-                    "estimatedSpendUsdReference": 6.5,
+                    "estimatedSpendNzd": 11.09,
+                    "estimatedSpendUsdReference": 6.52,
                     "unknownPriceCount": 0,
                     "improvementScore": 22.187,
                     "significantRegression": false,
@@ -71270,8 +71267,8 @@
                           "set": "NEO",
                           "collectorNumber": "72",
                           "finish": "nonfoil",
-                          "priceNzd": 0.58,
-                          "priceUsdReference": 0.34
+                          "priceNzd": 0.61,
+                          "priceUsdReference": 0.36
                         },
                         "structuralPairing": {
                           "addressedRole": "interaction",
@@ -79216,8 +79213,8 @@
           "adaptive": true
         },
         "packageAcceptanceContract": null,
-        "estimatedUpgradeSpendNzd": 89.58,
-        "estimatedUpgradeSpendUsdReference": 52.66,
+        "estimatedUpgradeSpendNzd": 89.29,
+        "estimatedUpgradeSpendUsdReference": 52.49,
         "maxTotalNzd": 249.99,
         "maxTotalUsdReference": 146.96,
         "swaps": [
@@ -79229,8 +79226,8 @@
               "set": "SOC",
               "collectorNumber": "269",
               "finish": "nonfoil",
-              "priceNzd": 0.61,
-              "priceUsdReference": 0.36
+              "priceNzd": 0.58,
+              "priceUsdReference": 0.34
             },
             "structuralPairing": {
               "addressedRole": "average-nonland-mv",
@@ -79418,11 +79415,11 @@
             "in": "The Meathook Massacre",
             "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.43 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: aristocrats, food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
             "recommendedPrinting": {
-              "set": "INR",
-              "collectorNumber": "387",
+              "set": "MID",
+              "collectorNumber": "112",
               "finish": "nonfoil",
-              "priceNzd": 41.3,
-              "priceUsdReference": 24.28
+              "priceNzd": 41.49,
+              "priceUsdReference": 24.39
             },
             "structuralPairing": {
               "addressedRole": "average-nonland-mv",
@@ -79559,8 +79556,8 @@
               "set": "FIC",
               "collectorNumber": "464",
               "finish": "foil",
-              "priceNzd": 19.58,
-              "priceUsdReference": 11.51
+              "priceNzd": 19.14,
+              "priceUsdReference": 11.25
             },
             "structuralPairing": {
               "addressedRole": "protection",
@@ -79790,7 +79787,7 @@
             }
           }
         ],
-        "finalDecklist": "// COMMANDER\n1 Lathril, Blade of the Elves (KHC) 1 *F*\n\n// MAIN\n1 Beast Whisperer (KHC) 54 *N*\n1 Canopy Tactician (KHM) 378 *N*\n1 Cultivator of Blades (KHC) 55 *N*\n1 Dwynen, Gilt-Leaf Daen (KHC) 56 *N*\n1 Elderfang Ritualist (KHM) 385 *N*\n1 Elvish Archdruid (KHC) 57 *N*\n1 Elvish Mystic (KHC) 58 *N*\n1 Elvish Rejuvenator (KHC) 60 *N*\n1 End-Raze Forerunners (KHC) 61 *N*\n1 Farhaven Elf (KHC) 62 *N*\n1 Golgari Findbroker (KHC) 86 *N*\n1 Harald, King of Skemfar (KHM) 212 *N*\n1 Imperious Perfect (KHC) 64 *N*\n1 Jaspera Sentinel (KHM) 178 *N*\n1 Llanowar Tribe (KHC) 66 *N*\n1 Lys Alana Huntmaster (KHC) 67 *N*\n1 Lys Alana Scarblade (KHC) 50 *N*\n1 Marwyn, the Nurturer (KHC) 68 *N*\n1 Masked Admirers (KHC) 69 *N*\n1 Miara, Thorn of the Glade (KHC) 51 *N*\n1 Nullmage Shepherd (KHC) 70 *N*\n1 Numa, Joraga Chieftain (KHC) 71 *N*\n1 Poison-Tip Archer (KHC) 90 *N*\n1 Reclamation Sage (KHC) 72 *N*\n1 Rhys the Exiled (KHC) 73 *N*\n1 Shaman of the Pack (KHC) 92 *N*\n1 Skemfar Shadowsage (KHM) 110 *N*\n1 Springbloom Druid (KHC) 74 *N*\n1 Timberwatch Elf (KHC) 76 *N*\n1 Voice of Many (KHC) 77 *N*\n1 Wood Elves (KHC) 80 *N*\n1 Elven Ambush (KHM) 391 *N*\n1 Poison the Cup (KHM) 103 *N*\n1 Putrefy (KHC) 91 *N*\n1 Ambition's Cost (KHC) 47 *N*\n1 Casualties of War (KHC) 83 *N*\n1 Elvish Promenade (KHC) 59 *N*\n1 Harvest Season (KHC) 63 *N*\n1 Pact of the Serpent (KHC) 9 *N*\n1 Return Upon the Tide (KHM) 106 *N*\n1 Roots of Wisdom (KHM) 190 *N*\n1 Arcane Signet (KHC) 96 *N*\n1 Serpent's Soul-Jar (KHC) 11 *N*\n1 Sol Ring (KHC) 104 *N*\n1 Binding the Old Gods (KHM) 206 *N*\n1 Crown of Skemfar (KHC) 13 *N*\n1 Elderfang Venom (KHC) 15 *N*\n1 Pride of the Perfect (KHC) 52 *N*\n1 Prowess of the Fair (KHC) 53 *N*\n1 Moldervine Reclamation (KHC) 89 *N*\n1 Command Tower (KHC) 108 *N*\n16 Forest (KHM) 398 *N*\n1 Foul Orchard (KHC) 110 *N*\n1 Golgari Guildgate (KHC) 111 *N*\n1 Golgari Rot Farm (KHC) 112 *N*\n1 Jungle Hollow (KHC) 113 *N*\n1 Myriad Landscape (KHC) 115 *N*\n1 Path of Ancestry (KHC) 117 *N*\n1 Skemfar Elderhall (KHM) 268 *N*\n13 Swamp (KHM) 396 *N*\n1 Gilded Goose (SOC) 269 *N*\n1 Pawpatch Formation (BLB) 186 *N*\n1 Culling the Weak (EXO) 55 *N*\n1 Transmutation Font (PW24) 11 *F*\n1 The Meathook Massacre (INR) 387 *N*\n1 Savor (BLB) 109 *N*\n1 Kura, the Boundless Sky (PNEO) 200p *N*\n1 Campsite Cuisine (FIC) 464 *F*\n1 Valley Rotcaller (BLB) 313 *F*\n1 Warping Wail (OGW) 12 *N*\n1 Gyome, Master Chef (SOC) 313 *N*\n1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*",
+        "finalDecklist": "// COMMANDER\n1 Lathril, Blade of the Elves (KHC) 1 *F*\n\n// MAIN\n1 Beast Whisperer (KHC) 54 *N*\n1 Canopy Tactician (KHM) 378 *N*\n1 Cultivator of Blades (KHC) 55 *N*\n1 Dwynen, Gilt-Leaf Daen (KHC) 56 *N*\n1 Elderfang Ritualist (KHM) 385 *N*\n1 Elvish Archdruid (KHC) 57 *N*\n1 Elvish Mystic (KHC) 58 *N*\n1 Elvish Rejuvenator (KHC) 60 *N*\n1 End-Raze Forerunners (KHC) 61 *N*\n1 Farhaven Elf (KHC) 62 *N*\n1 Golgari Findbroker (KHC) 86 *N*\n1 Harald, King of Skemfar (KHM) 212 *N*\n1 Imperious Perfect (KHC) 64 *N*\n1 Jaspera Sentinel (KHM) 178 *N*\n1 Llanowar Tribe (KHC) 66 *N*\n1 Lys Alana Huntmaster (KHC) 67 *N*\n1 Lys Alana Scarblade (KHC) 50 *N*\n1 Marwyn, the Nurturer (KHC) 68 *N*\n1 Masked Admirers (KHC) 69 *N*\n1 Miara, Thorn of the Glade (KHC) 51 *N*\n1 Nullmage Shepherd (KHC) 70 *N*\n1 Numa, Joraga Chieftain (KHC) 71 *N*\n1 Poison-Tip Archer (KHC) 90 *N*\n1 Reclamation Sage (KHC) 72 *N*\n1 Rhys the Exiled (KHC) 73 *N*\n1 Shaman of the Pack (KHC) 92 *N*\n1 Skemfar Shadowsage (KHM) 110 *N*\n1 Springbloom Druid (KHC) 74 *N*\n1 Timberwatch Elf (KHC) 76 *N*\n1 Voice of Many (KHC) 77 *N*\n1 Wood Elves (KHC) 80 *N*\n1 Elven Ambush (KHM) 391 *N*\n1 Poison the Cup (KHM) 103 *N*\n1 Putrefy (KHC) 91 *N*\n1 Ambition's Cost (KHC) 47 *N*\n1 Casualties of War (KHC) 83 *N*\n1 Elvish Promenade (KHC) 59 *N*\n1 Harvest Season (KHC) 63 *N*\n1 Pact of the Serpent (KHC) 9 *N*\n1 Return Upon the Tide (KHM) 106 *N*\n1 Roots of Wisdom (KHM) 190 *N*\n1 Arcane Signet (KHC) 96 *N*\n1 Serpent's Soul-Jar (KHC) 11 *N*\n1 Sol Ring (KHC) 104 *N*\n1 Binding the Old Gods (KHM) 206 *N*\n1 Crown of Skemfar (KHC) 13 *N*\n1 Elderfang Venom (KHC) 15 *N*\n1 Pride of the Perfect (KHC) 52 *N*\n1 Prowess of the Fair (KHC) 53 *N*\n1 Moldervine Reclamation (KHC) 89 *N*\n1 Command Tower (KHC) 108 *N*\n16 Forest (KHM) 398 *N*\n1 Foul Orchard (KHC) 110 *N*\n1 Golgari Guildgate (KHC) 111 *N*\n1 Golgari Rot Farm (KHC) 112 *N*\n1 Jungle Hollow (KHC) 113 *N*\n1 Myriad Landscape (KHC) 115 *N*\n1 Path of Ancestry (KHC) 117 *N*\n1 Skemfar Elderhall (KHM) 268 *N*\n13 Swamp (KHM) 396 *N*\n1 Gilded Goose (SOC) 269 *N*\n1 Pawpatch Formation (BLB) 186 *N*\n1 Culling the Weak (EXO) 55 *N*\n1 Transmutation Font (PW24) 11 *F*\n1 The Meathook Massacre (MID) 112 *N*\n1 Savor (BLB) 109 *N*\n1 Kura, the Boundless Sky (PNEO) 200p *N*\n1 Campsite Cuisine (FIC) 464 *F*\n1 Valley Rotcaller (BLB) 313 *F*\n1 Warping Wail (OGW) 12 *N*\n1 Gyome, Master Chef (SOC) 313 *N*\n1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*",
         "finalCommanderRules": {
           "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
           "status": "legal",
@@ -80443,8 +80440,8 @@
             ],
             "candidatePackagesGeneratedAcrossAttempts": 6,
             "winningCandidate": 2,
-            "estimatedSpendNzd": 15.51,
-            "estimatedSpendUsdReference": 9.12,
+            "estimatedSpendNzd": 15.48,
+            "estimatedSpendUsdReference": 9.1,
             "improvementScore": 16.439,
             "winRouteProtection": {
               "status": "no-verified-route",
@@ -80472,8 +80469,8 @@
             ],
             "candidatePackagesGeneratedAcrossAttempts": 6,
             "winningCandidate": 3,
-            "estimatedSpendNzd": 65.08,
-            "estimatedSpendUsdReference": 38.26,
+            "estimatedSpendNzd": 64.83,
+            "estimatedSpendUsdReference": 38.11,
             "improvementScore": 20.687,
             "winRouteProtection": {
               "status": "no-verified-route",
@@ -80552,8 +80549,8 @@
             "candidatePackagesGenerated": 6,
             "candidatePackagesEligible": 2,
             "winningCandidate": 2,
-            "estimatedSpendNzd": 15.51,
-            "estimatedSpendUsdReference": 9.12,
+            "estimatedSpendNzd": 15.48,
+            "estimatedSpendUsdReference": 9.1,
             "improvementScore": 16.439,
             "winRouteProtection": {
               "status": "no-verified-route",
@@ -81070,8 +81067,8 @@
                   "collectorNumber": "269",
                   "releaseDate": "2026-04-24",
                   "finish": "nonfoil",
-                  "priceNzd": 0.61,
-                  "priceUsdReference": 0.36,
+                  "priceNzd": 0.58,
+                  "priceUsdReference": 0.34,
                   "promo": false,
                   "promoTypes": [],
                   "flavorName": null,
@@ -81836,8 +81833,8 @@
                 "reason": "theme-preserved",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 15.51,
-                "estimatedSpendUsdReference": 9.12,
+                "estimatedSpendNzd": 15.48,
+                "estimatedSpendUsdReference": 9.1,
                 "unknownPriceCount": 0,
                 "improvementScore": 16.439,
                 "significantRegression": false,
@@ -82206,8 +82203,8 @@
                       "set": "SOC",
                       "collectorNumber": "269",
                       "finish": "nonfoil",
-                      "priceNzd": 0.61,
-                      "priceUsdReference": 0.36
+                      "priceNzd": 0.58,
+                      "priceUsdReference": 0.34
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -82398,8 +82395,8 @@
                 "reason": "package-would-regress-required-compound-theme-component-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 16.42,
-                "estimatedSpendUsdReference": 9.65,
+                "estimatedSpendNzd": 16.43,
+                "estimatedSpendUsdReference": 9.66,
                 "unknownPriceCount": 0,
                 "improvementScore": 14.504,
                 "significantRegression": false,
@@ -82761,8 +82758,8 @@
                       "set": "PLST",
                       "collectorNumber": "GNT-36",
                       "finish": "nonfoil",
-                      "priceNzd": 1.82,
-                      "priceUsdReference": 1.07
+                      "priceNzd": 1.84,
+                      "priceUsdReference": 1.08
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -82946,8 +82943,8 @@
                 "reason": "package-would-regress-required-compound-theme-component-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 55.88,
-                "estimatedSpendUsdReference": 32.85,
+                "estimatedSpendNzd": 56.07,
+                "estimatedSpendUsdReference": 32.96,
                 "unknownPriceCount": 0,
                 "improvementScore": 16.828,
                 "significantRegression": false,
@@ -83305,11 +83302,11 @@
                     "in": "The Meathook Massacre",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.6 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: aristocrats, food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "INR",
-                      "collectorNumber": "387",
+                      "set": "MID",
+                      "collectorNumber": "112",
                       "finish": "nonfoil",
-                      "priceNzd": 41.3,
-                      "priceUsdReference": 24.28
+                      "priceNzd": 41.49,
+                      "priceUsdReference": 24.39
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -85138,8 +85135,8 @@
                     "reason": "theme-preserved",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 15.51,
-                    "estimatedSpendUsdReference": 9.12,
+                    "estimatedSpendNzd": 15.48,
+                    "estimatedSpendUsdReference": 9.1,
                     "unknownPriceCount": 0,
                     "improvementScore": 16.439,
                     "significantRegression": false,
@@ -85508,8 +85505,8 @@
                           "set": "SOC",
                           "collectorNumber": "269",
                           "finish": "nonfoil",
-                          "priceNzd": 0.61,
-                          "priceUsdReference": 0.36
+                          "priceNzd": 0.58,
+                          "priceUsdReference": 0.34
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -85700,8 +85697,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 16.42,
-                    "estimatedSpendUsdReference": 9.65,
+                    "estimatedSpendNzd": 16.43,
+                    "estimatedSpendUsdReference": 9.66,
                     "unknownPriceCount": 0,
                     "improvementScore": 14.504,
                     "significantRegression": false,
@@ -86063,8 +86060,8 @@
                           "set": "PLST",
                           "collectorNumber": "GNT-36",
                           "finish": "nonfoil",
-                          "priceNzd": 1.82,
-                          "priceUsdReference": 1.07
+                          "priceNzd": 1.84,
+                          "priceUsdReference": 1.08
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -86248,8 +86245,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 55.88,
-                    "estimatedSpendUsdReference": 32.85,
+                    "estimatedSpendNzd": 56.07,
+                    "estimatedSpendUsdReference": 32.96,
                     "unknownPriceCount": 0,
                     "improvementScore": 16.828,
                     "significantRegression": false,
@@ -86607,11 +86604,11 @@
                         "in": "The Meathook Massacre",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.6 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: aristocrats, food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "INR",
-                          "collectorNumber": "387",
+                          "set": "MID",
+                          "collectorNumber": "112",
                           "finish": "nonfoil",
-                          "priceNzd": 41.3,
-                          "priceUsdReference": 24.28
+                          "priceNzd": 41.49,
+                          "priceUsdReference": 24.39
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -87890,8 +87887,8 @@
             "candidatePackagesGenerated": 6,
             "candidatePackagesEligible": 4,
             "winningCandidate": 3,
-            "estimatedSpendNzd": 65.08,
-            "estimatedSpendUsdReference": 38.26,
+            "estimatedSpendNzd": 64.83,
+            "estimatedSpendUsdReference": 38.11,
             "improvementScore": 20.687,
             "winRouteProtection": {
               "status": "no-verified-route",
@@ -88403,18 +88400,18 @@
                 "out": "Tergrid's Shadow",
                 "in": "The Meathook Massacre",
                 "recommendedPrinting": {
-                  "set": "INR",
-                  "setName": "Innistrad Remastered",
-                  "collectorNumber": "387",
-                  "releaseDate": "2025-01-24",
+                  "set": "MID",
+                  "setName": "Innistrad: Midnight Hunt",
+                  "collectorNumber": "112",
+                  "releaseDate": "2021-09-24",
                   "finish": "nonfoil",
-                  "priceNzd": 41.3,
-                  "priceUsdReference": 24.28,
+                  "priceNzd": 41.49,
+                  "priceUsdReference": 24.39,
                   "promo": false,
                   "promoTypes": [],
                   "flavorName": null,
                   "familyMatch": "unrestricted",
-                  "scryfallUrl": "https://scryfall.com/card/inr/387/the-meathook-massacre?utm_source=api"
+                  "scryfallUrl": "https://scryfall.com/card/mid/112/the-meathook-massacre?utm_source=api"
                 },
                 "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.43 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: aristocrats, food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
                 "structuralPairing": {
@@ -88570,8 +88567,8 @@
                   "collectorNumber": "464",
                   "releaseDate": "2025-12-05",
                   "finish": "foil",
-                  "priceNzd": 19.58,
-                  "priceUsdReference": 11.51,
+                  "priceNzd": 19.14,
+                  "priceUsdReference": 11.25,
                   "promo": false,
                   "promoTypes": [
                     "ffxv",
@@ -88627,8 +88624,8 @@
                 "reason": "package-would-regress-required-compound-theme-component-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 27.27,
-                "estimatedSpendUsdReference": 16.03,
+                "estimatedSpendNzd": 26.83,
+                "estimatedSpendUsdReference": 15.77,
                 "unknownPriceCount": 0,
                 "improvementScore": 22.717,
                 "significantRegression": false,
@@ -89132,8 +89129,8 @@
                       "set": "FIC",
                       "collectorNumber": "464",
                       "finish": "foil",
-                      "priceNzd": 19.58,
-                      "priceUsdReference": 11.51
+                      "priceNzd": 19.14,
+                      "priceUsdReference": 11.25
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -89180,8 +89177,8 @@
                 "reason": "theme-preserved",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 25.62,
-                "estimatedSpendUsdReference": 15.06,
+                "estimatedSpendNzd": 25.19,
+                "estimatedSpendUsdReference": 14.81,
                 "unknownPriceCount": 0,
                 "improvementScore": 17.519,
                 "significantRegression": false,
@@ -89530,8 +89527,8 @@
                       "set": "PLST",
                       "collectorNumber": "GNT-36",
                       "finish": "nonfoil",
-                      "priceNzd": 1.82,
-                      "priceUsdReference": 1.07
+                      "priceNzd": 1.84,
+                      "priceUsdReference": 1.08
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -89669,8 +89666,8 @@
                       "set": "FIC",
                       "collectorNumber": "464",
                       "finish": "foil",
-                      "priceNzd": 19.58,
-                      "priceUsdReference": 11.51
+                      "priceNzd": 19.14,
+                      "priceUsdReference": 11.25
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -89713,8 +89710,8 @@
                 "reason": "theme-preserved",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 65.08,
-                "estimatedSpendUsdReference": 38.26,
+                "estimatedSpendNzd": 64.83,
+                "estimatedSpendUsdReference": 38.11,
                 "unknownPriceCount": 0,
                 "improvementScore": 20.687,
                 "significantRegression": false,
@@ -90063,11 +90060,11 @@
                     "in": "The Meathook Massacre",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.43 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: aristocrats, food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "INR",
-                      "collectorNumber": "387",
+                      "set": "MID",
+                      "collectorNumber": "112",
                       "finish": "nonfoil",
-                      "priceNzd": 41.3,
-                      "priceUsdReference": 24.28
+                      "priceNzd": 41.49,
+                      "priceUsdReference": 24.39
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -90204,8 +90201,8 @@
                       "set": "FIC",
                       "collectorNumber": "464",
                       "finish": "foil",
-                      "priceNzd": 19.58,
-                      "priceUsdReference": 11.51
+                      "priceNzd": 19.14,
+                      "priceUsdReference": 11.25
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -90252,8 +90249,8 @@
                 "reason": "theme-preserved",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 24.31,
-                "estimatedSpendUsdReference": 14.29,
+                "estimatedSpendNzd": 23.87,
+                "estimatedSpendUsdReference": 14.03,
                 "unknownPriceCount": 0,
                 "improvementScore": 16.743,
                 "significantRegression": false,
@@ -90741,8 +90738,8 @@
                       "set": "FIC",
                       "collectorNumber": "464",
                       "finish": "foil",
-                      "priceNzd": 19.58,
-                      "priceUsdReference": 11.51
+                      "priceNzd": 19.14,
+                      "priceUsdReference": 11.25
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -90785,8 +90782,8 @@
                 "reason": "theme-preserved",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 29.63,
-                "estimatedSpendUsdReference": 17.42,
+                "estimatedSpendNzd": 29.19,
+                "estimatedSpendUsdReference": 17.16,
                 "unknownPriceCount": 0,
                 "improvementScore": 17.519,
                 "significantRegression": false,
@@ -91276,8 +91273,8 @@
                       "set": "FIC",
                       "collectorNumber": "464",
                       "finish": "foil",
-                      "priceNzd": 19.58,
-                      "priceUsdReference": 11.51
+                      "priceNzd": 19.14,
+                      "priceUsdReference": 11.25
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -91320,8 +91317,8 @@
                 "reason": "package-would-regress-required-compound-theme-component-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 26.71,
-                "estimatedSpendUsdReference": 15.7,
+                "estimatedSpendNzd": 26.26,
+                "estimatedSpendUsdReference": 15.44,
                 "unknownPriceCount": 0,
                 "improvementScore": 25.231,
                 "significantRegression": false,
@@ -91823,8 +91820,8 @@
                       "set": "FIC",
                       "collectorNumber": "464",
                       "finish": "foil",
-                      "priceNzd": 19.58,
-                      "priceUsdReference": 11.51
+                      "priceNzd": 19.14,
+                      "priceUsdReference": 11.25
                     },
                     "structuralPairing": {
                       "addressedRole": "protection",
@@ -91883,8 +91880,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 27.27,
-                    "estimatedSpendUsdReference": 16.03,
+                    "estimatedSpendNzd": 26.83,
+                    "estimatedSpendUsdReference": 15.77,
                     "unknownPriceCount": 0,
                     "improvementScore": 22.717,
                     "significantRegression": false,
@@ -92388,8 +92385,8 @@
                           "set": "FIC",
                           "collectorNumber": "464",
                           "finish": "foil",
-                          "priceNzd": 19.58,
-                          "priceUsdReference": 11.51
+                          "priceNzd": 19.14,
+                          "priceUsdReference": 11.25
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -92436,8 +92433,8 @@
                     "reason": "theme-preserved",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 25.62,
-                    "estimatedSpendUsdReference": 15.06,
+                    "estimatedSpendNzd": 25.19,
+                    "estimatedSpendUsdReference": 14.81,
                     "unknownPriceCount": 0,
                     "improvementScore": 17.519,
                     "significantRegression": false,
@@ -92786,8 +92783,8 @@
                           "set": "PLST",
                           "collectorNumber": "GNT-36",
                           "finish": "nonfoil",
-                          "priceNzd": 1.82,
-                          "priceUsdReference": 1.07
+                          "priceNzd": 1.84,
+                          "priceUsdReference": 1.08
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -92925,8 +92922,8 @@
                           "set": "FIC",
                           "collectorNumber": "464",
                           "finish": "foil",
-                          "priceNzd": 19.58,
-                          "priceUsdReference": 11.51
+                          "priceNzd": 19.14,
+                          "priceUsdReference": 11.25
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -92969,8 +92966,8 @@
                     "reason": "theme-preserved",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 65.08,
-                    "estimatedSpendUsdReference": 38.26,
+                    "estimatedSpendNzd": 64.83,
+                    "estimatedSpendUsdReference": 38.11,
                     "unknownPriceCount": 0,
                     "improvementScore": 20.687,
                     "significantRegression": false,
@@ -93319,11 +93316,11 @@
                         "in": "The Meathook Massacre",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.43 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: aristocrats, food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "INR",
-                          "collectorNumber": "387",
+                          "set": "MID",
+                          "collectorNumber": "112",
                           "finish": "nonfoil",
-                          "priceNzd": 41.3,
-                          "priceUsdReference": 24.28
+                          "priceNzd": 41.49,
+                          "priceUsdReference": 24.39
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -93460,8 +93457,8 @@
                           "set": "FIC",
                           "collectorNumber": "464",
                           "finish": "foil",
-                          "priceNzd": 19.58,
-                          "priceUsdReference": 11.51
+                          "priceNzd": 19.14,
+                          "priceUsdReference": 11.25
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -93508,8 +93505,8 @@
                     "reason": "theme-preserved",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 24.31,
-                    "estimatedSpendUsdReference": 14.29,
+                    "estimatedSpendNzd": 23.87,
+                    "estimatedSpendUsdReference": 14.03,
                     "unknownPriceCount": 0,
                     "improvementScore": 16.743,
                     "significantRegression": false,
@@ -93997,8 +93994,8 @@
                           "set": "FIC",
                           "collectorNumber": "464",
                           "finish": "foil",
-                          "priceNzd": 19.58,
-                          "priceUsdReference": 11.51
+                          "priceNzd": 19.14,
+                          "priceUsdReference": 11.25
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -94041,8 +94038,8 @@
                     "reason": "theme-preserved",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 29.63,
-                    "estimatedSpendUsdReference": 17.42,
+                    "estimatedSpendNzd": 29.19,
+                    "estimatedSpendUsdReference": 17.16,
                     "unknownPriceCount": 0,
                     "improvementScore": 17.519,
                     "significantRegression": false,
@@ -94532,8 +94529,8 @@
                           "set": "FIC",
                           "collectorNumber": "464",
                           "finish": "foil",
-                          "priceNzd": 19.58,
-                          "priceUsdReference": 11.51
+                          "priceNzd": 19.14,
+                          "priceUsdReference": 11.25
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -94576,8 +94573,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 26.71,
-                    "estimatedSpendUsdReference": 15.7,
+                    "estimatedSpendNzd": 26.26,
+                    "estimatedSpendUsdReference": 15.44,
                     "unknownPriceCount": 0,
                     "improvementScore": 25.231,
                     "significantRegression": false,
@@ -95079,8 +95076,8 @@
                           "set": "FIC",
                           "collectorNumber": "464",
                           "finish": "foil",
-                          "priceNzd": 19.58,
-                          "priceUsdReference": 11.51
+                          "priceNzd": 19.14,
+                          "priceUsdReference": 11.25
                         },
                         "structuralPairing": {
                           "addressedRole": "protection",
@@ -96415,8 +96412,8 @@
                 "reason": "package-would-regress-required-compound-theme-component-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 4.97,
-                "estimatedSpendUsdReference": 2.92,
+                "estimatedSpendNzd": 4.98,
+                "estimatedSpendUsdReference": 2.93,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.181,
                 "significantRegression": false,
@@ -96770,8 +96767,8 @@
                       "set": "PLST",
                       "collectorNumber": "GNT-36",
                       "finish": "nonfoil",
-                      "priceNzd": 1.82,
-                      "priceUsdReference": 1.07
+                      "priceNzd": 1.84,
+                      "priceUsdReference": 1.08
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -99681,8 +99678,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 4.97,
-                    "estimatedSpendUsdReference": 2.92,
+                    "estimatedSpendNzd": 4.98,
+                    "estimatedSpendUsdReference": 2.93,
                     "unknownPriceCount": 0,
                     "improvementScore": 12.181,
                     "significantRegression": false,
@@ -100036,8 +100033,8 @@
                           "set": "PLST",
                           "collectorNumber": "GNT-36",
                           "finish": "nonfoil",
-                          "priceNzd": 1.82,
-                          "priceUsdReference": 1.07
+                          "priceNzd": 1.84,
+                          "priceUsdReference": 1.08
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -104320,8 +104317,8 @@
                 "reason": "theme-preserved",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 22.79,
-                "estimatedSpendUsdReference": 13.4,
+                "estimatedSpendNzd": 22.96,
+                "estimatedSpendUsdReference": 13.5,
                 "unknownPriceCount": 0,
                 "improvementScore": 7.405,
                 "significantRegression": false,
@@ -104631,11 +104628,11 @@
                     "in": "Skullclamp",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (4.02 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "MSC",
-                      "collectorNumber": "210",
+                      "set": "FIC",
+                      "collectorNumber": "355",
                       "finish": "nonfoil",
-                      "priceNzd": 9.76,
-                      "priceUsdReference": 5.74
+                      "priceNzd": 9.93,
+                      "priceUsdReference": 5.84
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -106439,8 +106436,8 @@
                       "set": "MSC",
                       "collectorNumber": "170",
                       "finish": "nonfoil",
-                      "priceNzd": 16.04,
-                      "priceUsdReference": 9.43
+                      "priceNzd": 16.08,
+                      "priceUsdReference": 9.45
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -106483,8 +106480,8 @@
                       "set": "PMH3",
                       "collectorNumber": "11p",
                       "finish": "nonfoil",
-                      "priceNzd": 12.95,
-                      "priceUsdReference": 7.61
+                      "priceNzd": 12.91,
+                      "priceUsdReference": 7.59
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -106576,8 +106573,8 @@
                 "reason": "package-would-break-required-compound-theme-component-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 12.79,
-                "estimatedSpendUsdReference": 7.52,
+                "estimatedSpendNzd": 12.81,
+                "estimatedSpendUsdReference": 7.53,
                 "unknownPriceCount": 0,
                 "improvementScore": 7.905,
                 "significantRegression": false,
@@ -106894,8 +106891,8 @@
                       "set": "M10",
                       "collectorNumber": "189",
                       "finish": "nonfoil",
-                      "priceNzd": 0.46,
-                      "priceUsdReference": 0.27
+                      "priceNzd": 0.48,
+                      "priceUsdReference": 0.28
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -107044,8 +107041,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 25.92,
-                    "estimatedSpendUsdReference": 15.24,
+                    "estimatedSpendNzd": 26.09,
+                    "estimatedSpendUsdReference": 15.34,
                     "unknownPriceCount": 0,
                     "improvementScore": 10.438,
                     "significantRegression": false,
@@ -107383,11 +107380,11 @@
                         "in": "Skullclamp",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (4.02 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "210",
+                          "set": "FIC",
+                          "collectorNumber": "355",
                           "finish": "nonfoil",
-                          "priceNzd": 9.76,
-                          "priceUsdReference": 5.74
+                          "priceNzd": 9.93,
+                          "priceUsdReference": 5.84
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -108620,8 +108617,8 @@
                     "reason": "package-would-break-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 30.76,
-                    "estimatedSpendUsdReference": 18.08,
+                    "estimatedSpendNzd": 30.79,
+                    "estimatedSpendUsdReference": 18.1,
                     "unknownPriceCount": 0,
                     "improvementScore": 10.46,
                     "significantRegression": false,
@@ -109094,8 +109091,8 @@
                           "set": "MSC",
                           "collectorNumber": "170",
                           "finish": "nonfoil",
-                          "priceNzd": 16.04,
-                          "priceUsdReference": 9.43
+                          "priceNzd": 16.08,
+                          "priceUsdReference": 9.45
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -109138,8 +109135,8 @@
                     "reason": "package-would-break-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 41.61,
-                    "estimatedSpendUsdReference": 24.46,
+                    "estimatedSpendNzd": 41.63,
+                    "estimatedSpendUsdReference": 24.47,
                     "unknownPriceCount": 0,
                     "improvementScore": 10.19,
                     "significantRegression": false,
@@ -109486,8 +109483,8 @@
                           "set": "MSC",
                           "collectorNumber": "170",
                           "finish": "nonfoil",
-                          "priceNzd": 16.04,
-                          "priceUsdReference": 9.43
+                          "priceNzd": 16.08,
+                          "priceUsdReference": 9.45
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -109530,8 +109527,8 @@
                           "set": "PMH3",
                           "collectorNumber": "11p",
                           "finish": "nonfoil",
-                          "priceNzd": 12.95,
-                          "priceUsdReference": 7.61
+                          "priceNzd": 12.91,
+                          "priceUsdReference": 7.59
                         },
                         "structuralPairing": {
                           "addressedRole": "interaction",
@@ -109623,8 +109620,8 @@
                           "set": "M10",
                           "collectorNumber": "189",
                           "finish": "nonfoil",
-                          "priceNzd": 0.46,
-                          "priceUsdReference": 0.27
+                          "priceNzd": 0.48,
+                          "priceUsdReference": 0.28
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -109674,8 +109671,8 @@
                     "reason": "package-would-break-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 13.61,
-                    "estimatedSpendUsdReference": 8,
+                    "estimatedSpendNzd": 13.66,
+                    "estimatedSpendUsdReference": 8.03,
                     "unknownPriceCount": 0,
                     "improvementScore": 9.742,
                     "significantRegression": false,
@@ -110023,8 +110020,8 @@
                           "set": "M10",
                           "collectorNumber": "189",
                           "finish": "nonfoil",
-                          "priceNzd": 0.46,
-                          "priceUsdReference": 0.27
+                          "priceNzd": 0.48,
+                          "priceUsdReference": 0.28
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -110161,8 +110158,8 @@
                           "set": "M15",
                           "collectorNumber": "173",
                           "finish": "nonfoil",
-                          "priceNzd": 0.82,
-                          "priceUsdReference": 0.48
+                          "priceNzd": 0.85,
+                          "priceUsdReference": 0.5
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -110224,8 +110221,8 @@
                     "reason": "theme-preserved",
                     "attemptedSwaps": 3,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 22.79,
-                    "estimatedSpendUsdReference": 13.4,
+                    "estimatedSpendNzd": 22.96,
+                    "estimatedSpendUsdReference": 13.5,
                     "unknownPriceCount": 0,
                     "improvementScore": 7.405,
                     "significantRegression": false,
@@ -110535,11 +110532,11 @@
                         "in": "Skullclamp",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (4.02 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "210",
+                          "set": "FIC",
+                          "collectorNumber": "355",
                           "finish": "nonfoil",
-                          "priceNzd": 9.76,
-                          "priceUsdReference": 5.74
+                          "priceNzd": 9.93,
+                          "priceUsdReference": 5.84
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -112343,8 +112340,8 @@
                           "set": "MSC",
                           "collectorNumber": "170",
                           "finish": "nonfoil",
-                          "priceNzd": 16.04,
-                          "priceUsdReference": 9.43
+                          "priceNzd": 16.08,
+                          "priceUsdReference": 9.45
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -112387,8 +112384,8 @@
                           "set": "PMH3",
                           "collectorNumber": "11p",
                           "finish": "nonfoil",
-                          "priceNzd": 12.95,
-                          "priceUsdReference": 7.61
+                          "priceNzd": 12.91,
+                          "priceUsdReference": 7.59
                         },
                         "structuralPairing": {
                           "addressedRole": "interaction",
@@ -112480,8 +112477,8 @@
                     "reason": "package-would-break-required-compound-theme-component-density",
                     "attemptedSwaps": 3,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 12.79,
-                    "estimatedSpendUsdReference": 7.52,
+                    "estimatedSpendNzd": 12.81,
+                    "estimatedSpendUsdReference": 7.53,
                     "unknownPriceCount": 0,
                     "improvementScore": 7.905,
                     "significantRegression": false,
@@ -112798,8 +112795,8 @@
                           "set": "M10",
                           "collectorNumber": "189",
                           "finish": "nonfoil",
-                          "priceNzd": 0.46,
-                          "priceUsdReference": 0.27
+                          "priceNzd": 0.48,
+                          "priceUsdReference": 0.28
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -113529,8 +113526,8 @@
                 "reason": "package-would-regress-required-compound-theme-component-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 9.76,
-                "estimatedSpendUsdReference": 5.74,
+                "estimatedSpendNzd": 9.93,
+                "estimatedSpendUsdReference": 5.84,
                 "unknownPriceCount": 0,
                 "improvementScore": 4.086,
                 "significantRegression": false,
@@ -113785,11 +113782,11 @@
                     "in": "Skullclamp",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.82 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "MSC",
-                      "collectorNumber": "210",
+                      "set": "FIC",
+                      "collectorNumber": "355",
                       "finish": "nonfoil",
-                      "priceNzd": 9.76,
-                      "priceUsdReference": 5.74
+                      "priceNzd": 9.93,
+                      "priceUsdReference": 5.84
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -114441,8 +114438,8 @@
                 "reason": "package-would-break-required-compound-theme-component-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 16.04,
-                "estimatedSpendUsdReference": 9.43,
+                "estimatedSpendNzd": 16.08,
+                "estimatedSpendUsdReference": 9.45,
                 "unknownPriceCount": 0,
                 "improvementScore": 7.327,
                 "significantRegression": false,
@@ -114697,8 +114694,8 @@
                       "set": "MSC",
                       "collectorNumber": "170",
                       "finish": "nonfoil",
-                      "priceNzd": 16.04,
-                      "priceUsdReference": 9.43
+                      "priceNzd": 16.08,
+                      "priceUsdReference": 9.45
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -114741,8 +114738,8 @@
                 "reason": "package-would-break-required-compound-theme-component-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 0.46,
-                "estimatedSpendUsdReference": 0.27,
+                "estimatedSpendNzd": 0.48,
+                "estimatedSpendUsdReference": 0.28,
                 "unknownPriceCount": 0,
                 "improvementScore": 4.822,
                 "significantRegression": false,
@@ -114997,8 +114994,8 @@
                       "set": "M10",
                       "collectorNumber": "189",
                       "finish": "nonfoil",
-                      "priceNzd": 0.46,
-                      "priceUsdReference": 0.27
+                      "priceNzd": 0.48,
+                      "priceUsdReference": 0.28
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -115349,8 +115346,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 17.18,
-                    "estimatedSpendUsdReference": 10.1,
+                    "estimatedSpendNzd": 17.35,
+                    "estimatedSpendUsdReference": 10.2,
                     "unknownPriceCount": 0,
                     "improvementScore": 15.927,
                     "significantRegression": false,
@@ -115687,11 +115684,11 @@
                         "in": "Skullclamp",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.82 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "210",
+                          "set": "FIC",
+                          "collectorNumber": "355",
                           "finish": "nonfoil",
-                          "priceNzd": 9.76,
-                          "priceUsdReference": 5.74
+                          "priceNzd": 9.93,
+                          "priceUsdReference": 5.84
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -116399,8 +116396,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 24.58,
-                    "estimatedSpendUsdReference": 14.45,
+                    "estimatedSpendNzd": 24.61,
+                    "estimatedSpendUsdReference": 14.47,
                     "unknownPriceCount": 0,
                     "improvementScore": 15.392,
                     "significantRegression": false,
@@ -116868,8 +116865,8 @@
                           "set": "MSC",
                           "collectorNumber": "170",
                           "finish": "nonfoil",
-                          "priceNzd": 16.04,
-                          "priceUsdReference": 9.43
+                          "priceNzd": 16.08,
+                          "priceUsdReference": 9.45
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -116915,8 +116912,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 35.43,
-                    "estimatedSpendUsdReference": 20.83,
+                    "estimatedSpendNzd": 35.45,
+                    "estimatedSpendUsdReference": 20.84,
                     "unknownPriceCount": 0,
                     "improvementScore": 15.968,
                     "significantRegression": false,
@@ -117263,8 +117260,8 @@
                           "set": "MSC",
                           "collectorNumber": "170",
                           "finish": "nonfoil",
-                          "priceNzd": 16.04,
-                          "priceUsdReference": 9.43
+                          "priceNzd": 16.08,
+                          "priceUsdReference": 9.45
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -117307,8 +117304,8 @@
                           "set": "PMH3",
                           "collectorNumber": "11p",
                           "finish": "nonfoil",
-                          "priceNzd": 12.95,
-                          "priceUsdReference": 7.61
+                          "priceNzd": 12.91,
+                          "priceUsdReference": 7.59
                         },
                         "structuralPairing": {
                           "addressedRole": "interaction",
@@ -117400,8 +117397,8 @@
                           "set": "M10",
                           "collectorNumber": "189",
                           "finish": "nonfoil",
-                          "priceNzd": 0.46,
-                          "priceUsdReference": 0.27
+                          "priceNzd": 0.48,
+                          "priceUsdReference": 0.28
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -117451,8 +117448,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 7.43,
-                    "estimatedSpendUsdReference": 4.37,
+                    "estimatedSpendNzd": 7.48,
+                    "estimatedSpendUsdReference": 4.4,
                     "unknownPriceCount": 0,
                     "improvementScore": 16.077,
                     "significantRegression": false,
@@ -117800,8 +117797,8 @@
                           "set": "M10",
                           "collectorNumber": "189",
                           "finish": "nonfoil",
-                          "priceNzd": 0.46,
-                          "priceUsdReference": 0.27
+                          "priceNzd": 0.48,
+                          "priceUsdReference": 0.28
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -117938,8 +117935,8 @@
                           "set": "M15",
                           "collectorNumber": "173",
                           "finish": "nonfoil",
-                          "priceNzd": 0.82,
-                          "priceUsdReference": 0.48
+                          "priceNzd": 0.85,
+                          "priceUsdReference": 0.5
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -117989,8 +117986,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 4,
                     "actualSwaps": 4,
-                    "estimatedSpendNzd": 11.18,
-                    "estimatedSpendUsdReference": 6.57,
+                    "estimatedSpendNzd": 11.07,
+                    "estimatedSpendUsdReference": 6.51,
                     "unknownPriceCount": 0,
                     "improvementScore": 14.548,
                     "significantRegression": false,
@@ -118329,8 +118326,8 @@
                           "set": "M15",
                           "collectorNumber": "173",
                           "finish": "nonfoil",
-                          "priceNzd": 0.82,
-                          "priceUsdReference": 0.48
+                          "priceNzd": 0.85,
+                          "priceUsdReference": 0.5
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -118462,8 +118459,8 @@
                           "set": "CMR",
                           "collectorNumber": "228",
                           "finish": "nonfoil",
-                          "priceNzd": 4,
-                          "priceUsdReference": 2.35
+                          "priceNzd": 3.86,
+                          "priceUsdReference": 2.27
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -118520,8 +118517,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 3,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 16.62,
-                    "estimatedSpendUsdReference": 9.77,
+                    "estimatedSpendNzd": 16.79,
+                    "estimatedSpendUsdReference": 9.87,
                     "unknownPriceCount": 0,
                     "improvementScore": 12.628,
                     "significantRegression": false,
@@ -118826,11 +118823,11 @@
                         "in": "Skullclamp",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.82 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "210",
+                          "set": "FIC",
+                          "collectorNumber": "355",
                           "finish": "nonfoil",
-                          "priceNzd": 9.76,
-                          "priceUsdReference": 5.74
+                          "priceNzd": 9.93,
+                          "priceUsdReference": 5.84
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -120157,8 +120154,8 @@
                           "set": "MSC",
                           "collectorNumber": "170",
                           "finish": "nonfoil",
-                          "priceNzd": 16.04,
-                          "priceUsdReference": 9.43
+                          "priceNzd": 16.08,
+                          "priceUsdReference": 9.45
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -120201,8 +120198,8 @@
                           "set": "PMH3",
                           "collectorNumber": "11p",
                           "finish": "nonfoil",
-                          "priceNzd": 12.95,
-                          "priceUsdReference": 7.61
+                          "priceNzd": 12.91,
+                          "priceUsdReference": 7.59
                         },
                         "structuralPairing": {
                           "addressedRole": "interaction",
@@ -120294,8 +120291,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 3,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 6.62,
-                    "estimatedSpendUsdReference": 3.89,
+                    "estimatedSpendNzd": 6.63,
+                    "estimatedSpendUsdReference": 3.9,
                     "unknownPriceCount": 0,
                     "improvementScore": 14.383,
                     "significantRegression": false,
@@ -120612,8 +120609,8 @@
                           "set": "M10",
                           "collectorNumber": "189",
                           "finish": "nonfoil",
-                          "priceNzd": 0.46,
-                          "priceUsdReference": 0.27
+                          "priceNzd": 0.48,
+                          "priceUsdReference": 0.28
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -120750,8 +120747,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 3,
                     "actualSwaps": 3,
-                    "estimatedSpendNzd": 7.18,
-                    "estimatedSpendUsdReference": 4.22,
+                    "estimatedSpendNzd": 7.21,
+                    "estimatedSpendUsdReference": 4.24,
                     "unknownPriceCount": 0,
                     "improvementScore": 11.901,
                     "significantRegression": false,
@@ -121063,8 +121060,8 @@
                           "set": "M15",
                           "collectorNumber": "173",
                           "finish": "nonfoil",
-                          "priceNzd": 0.82,
-                          "priceUsdReference": 0.48
+                          "priceNzd": 0.85,
+                          "priceUsdReference": 0.5
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -121207,8 +121204,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 2,
                     "actualSwaps": 2,
-                    "estimatedSpendNzd": 10.63,
-                    "estimatedSpendUsdReference": 6.25,
+                    "estimatedSpendNzd": 10.8,
+                    "estimatedSpendUsdReference": 6.35,
                     "unknownPriceCount": 0,
                     "improvementScore": 6.338,
                     "significantRegression": false,
@@ -121490,11 +121487,11 @@
                         "in": "Skullclamp",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.82 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "210",
+                          "set": "FIC",
+                          "collectorNumber": "355",
                           "finish": "nonfoil",
-                          "priceNzd": 9.76,
-                          "priceUsdReference": 5.74
+                          "priceNzd": 9.93,
+                          "priceUsdReference": 5.84
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -122338,8 +122335,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 2,
                     "actualSwaps": 2,
-                    "estimatedSpendNzd": 16.91,
-                    "estimatedSpendUsdReference": 9.94,
+                    "estimatedSpendNzd": 16.94,
+                    "estimatedSpendUsdReference": 9.96,
                     "unknownPriceCount": 0,
                     "improvementScore": 9.218,
                     "significantRegression": false,
@@ -122631,8 +122628,8 @@
                           "set": "MSC",
                           "collectorNumber": "170",
                           "finish": "nonfoil",
-                          "priceNzd": 16.04,
-                          "priceUsdReference": 9.43
+                          "priceNzd": 16.08,
+                          "priceUsdReference": 9.45
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -122725,8 +122722,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 2,
                     "actualSwaps": 2,
-                    "estimatedSpendNzd": 1.33,
-                    "estimatedSpendUsdReference": 0.78,
+                    "estimatedSpendNzd": 1.34,
+                    "estimatedSpendUsdReference": 0.79,
                     "unknownPriceCount": 0,
                     "improvementScore": 8.033,
                     "significantRegression": false,
@@ -123018,8 +123015,8 @@
                           "set": "M10",
                           "collectorNumber": "189",
                           "finish": "nonfoil",
-                          "priceNzd": 0.46,
-                          "priceUsdReference": 0.27
+                          "priceNzd": 0.48,
+                          "priceUsdReference": 0.28
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -123501,8 +123498,8 @@
                     "reason": "package-would-regress-required-compound-theme-component-density",
                     "attemptedSwaps": 1,
                     "actualSwaps": 1,
-                    "estimatedSpendNzd": 9.76,
-                    "estimatedSpendUsdReference": 5.74,
+                    "estimatedSpendNzd": 9.93,
+                    "estimatedSpendUsdReference": 5.84,
                     "unknownPriceCount": 0,
                     "improvementScore": 4.086,
                     "significantRegression": false,
@@ -123757,11 +123754,11 @@
                         "in": "Skullclamp",
                         "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.82 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                         "recommendedPrinting": {
-                          "set": "MSC",
-                          "collectorNumber": "210",
+                          "set": "FIC",
+                          "collectorNumber": "355",
                           "finish": "nonfoil",
-                          "priceNzd": 9.76,
-                          "priceUsdReference": 5.74
+                          "priceNzd": 9.93,
+                          "priceUsdReference": 5.84
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -124413,8 +124410,8 @@
                     "reason": "package-would-break-required-compound-theme-component-density",
                     "attemptedSwaps": 1,
                     "actualSwaps": 1,
-                    "estimatedSpendNzd": 16.04,
-                    "estimatedSpendUsdReference": 9.43,
+                    "estimatedSpendNzd": 16.08,
+                    "estimatedSpendUsdReference": 9.45,
                     "unknownPriceCount": 0,
                     "improvementScore": 7.327,
                     "significantRegression": false,
@@ -124669,8 +124666,8 @@
                           "set": "MSC",
                           "collectorNumber": "170",
                           "finish": "nonfoil",
-                          "priceNzd": 16.04,
-                          "priceUsdReference": 9.43
+                          "priceNzd": 16.08,
+                          "priceUsdReference": 9.45
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
@@ -124713,8 +124710,8 @@
                     "reason": "package-would-break-required-compound-theme-component-density",
                     "attemptedSwaps": 1,
                     "actualSwaps": 1,
-                    "estimatedSpendNzd": 0.46,
-                    "estimatedSpendUsdReference": 0.27,
+                    "estimatedSpendNzd": 0.48,
+                    "estimatedSpendUsdReference": 0.28,
                     "unknownPriceCount": 0,
                     "improvementScore": 4.822,
                     "significantRegression": false,
@@ -124969,8 +124966,8 @@
                           "set": "M10",
                           "collectorNumber": "189",
                           "finish": "nonfoil",
-                          "priceNzd": 0.46,
-                          "priceUsdReference": 0.27
+                          "priceNzd": 0.48,
+                          "priceUsdReference": 0.28
                         },
                         "structuralPairing": {
                           "addressedRole": "average-nonland-mv",
