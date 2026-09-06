@@ -18,6 +18,13 @@ import {
 } from './printing-policy-v08.js';
 import { searchCards, summarizeCard } from './scryfall.js';
 
+export interface UpgradeThemeComponentSignalV15 {
+  id: string;
+  queryClause: string;
+  currentMainMatches: number;
+  requiredMainMatches: number;
+}
+
 export interface UpgradeOptions {
   targetBracket?: number;
   maxUsdPerCard?: number;
@@ -32,6 +39,8 @@ export interface UpgradeOptions {
   themeQuery?: string;
   themeMinimumMainMatches?: number;
   themeCurrentMainMatches?: number;
+  /** Structured component evidence derived only from the already-resolved V0.15 compound theme. */
+  themeComponents?: UpgradeThemeComponentSignalV15[];
   excludedCards?: string[];
   maxCandidatesPerRole?: number;
 }
@@ -383,6 +392,30 @@ function candidateStrategyPriorityV15(
   };
 }
 
+export function upgradeThemeComponentAffinityScoreV15(
+  matchedComponentIds: readonly string[],
+  components: readonly UpgradeThemeComponentSignalV15[],
+): number {
+  if (matchedComponentIds.length === 0 || components.length === 0) return 0;
+  const byId = new Map(components.map((component) => [component.id, component] as const));
+  const coverages = components.map((component) => (
+    Math.max(0, component.currentMainMatches) / Math.max(1, component.requiredMainMatches)
+  ));
+  const maxCoverage = Math.max(1, ...coverages);
+  let score = 0;
+  for (const id of new Set(matchedComponentIds)) {
+    const component = byId.get(id);
+    if (!component) continue;
+    const required = Math.max(1, component.requiredMainMatches);
+    const current = Math.max(0, component.currentMainMatches);
+    const coverage = current / required;
+    const deficitRatio = Math.max(0, (required - current) / required);
+    const relativeScarcity = Math.min(1, Math.max(0, (maxCoverage - coverage) / maxCoverage));
+    score += 2 + deficitRatio * 6 + relativeScarcity * 4;
+  }
+  return Number(Math.min(12, score).toFixed(3));
+}
+
 export function contextualCutPressureV15(
   card: ScryfallCard,
   strategyContext: CommanderStrategyContextV15,
@@ -533,6 +566,42 @@ export async function suggestDeckUpgrades(
     }
   }
 
+  const themeComponents = (options.themeComponents ?? [])
+    .filter((component) => component.id.trim().length > 0 && component.queryClause.trim().length > 0)
+    .slice(0, 6)
+    .map((component) => ({
+      id: component.id,
+      queryClause: component.queryClause,
+      currentMainMatches: Math.max(0, Math.trunc(component.currentMainMatches)),
+      requiredMainMatches: Math.max(1, Math.trunc(component.requiredMainMatches)),
+    }));
+  const themeComponentCandidateNames = new Map<string, Set<string>>();
+  const themeComponentSearchQueries: Array<{ id: string; query: string }> = [];
+  for (const component of themeComponents) {
+    const query = themeSearchQuery(allowedIdentity, component.queryClause, printingPolicy);
+    themeComponentSearchQueries.push({ id: component.id, query });
+    try {
+      const results = await searchCards(query, 100);
+      const names = new Set(results.map((card) => card.name.toLocaleLowerCase()));
+      themeComponentCandidateNames.set(component.id, names);
+      for (const name of names) themeCandidateNames.add(name);
+    } catch {
+      // Component affinity is advisory only. Missing positive membership evidence never becomes
+      // a hard negative; post-candidate compound-theme audits remain authoritative.
+    }
+  }
+  const componentAffinityForCard = (card: ScryfallCard): { score: number; matchedComponentIds: string[] } => {
+    const name = card.name.toLocaleLowerCase();
+    const matchedComponentIds = themeComponents
+      .filter((component) => themeComponentCandidateNames.get(component.id)?.has(name))
+      .map((component) => component.id);
+    return {
+      score: upgradeThemeComponentAffinityScoreV15(matchedComponentIds, themeComponents),
+      matchedComponentIds,
+    };
+  };
+  const componentAwareThemeRanking = themeComponents.length > 1 && themeComponentCandidateNames.size > 0;
+
   const existing = new Set([...parsed.commanders, ...parsed.main].map((entry) => entry.name.toLocaleLowerCase()));
   const excluded = new Set((options.excludedCards ?? []).map((name) => name.toLocaleLowerCase()));
   const maxCandidates = Math.max(1, Math.min(10, Math.trunc(options.maxCandidatesPerRole ?? 5)));
@@ -624,19 +693,28 @@ export async function suggestDeckUpgrades(
       .filter((card) => card.legalities.commander === 'legal')
       .filter((card) => cardMatchesRole(card, deficit.role, deficit.targetGate))
       .sort((a, b) => {
-        // Controlled-theme membership remains an advisory candidate-ordering signal even
-        // after the aggregate minimum is satisfied. This prefers role-compatible on-theme IN
-        // cards without making them mandatory: if no themed candidate exists, the existing
-        // structural/strategy ranking remains fully available.
-        if (themeCandidateNames.size > 0) {
-          const aTheme = themeCandidateNames.has(a.name.toLocaleLowerCase()) ? 1 : 0;
-          const bTheme = themeCandidateNames.has(b.name.toLocaleLowerCase()) ? 1 : 0;
-          if (aTheme !== bTheme) return bTheme - aTheme;
-        }
         const aStrategy = candidateStrategyPriorityV15(a, strategyContext);
         const bStrategy = candidateStrategyPriorityV15(b, strategyContext);
-        if (aStrategy.substantive !== bStrategy.substantive) return bStrategy.substantive ? 1 : -1;
-        if (aStrategy.substantive && aStrategy.score !== bStrategy.score) return bStrategy.score - aStrategy.score;
+        if (componentAwareThemeRanking) {
+          // For compound themes, substantive commander strategy remains the first candidate tier.
+          // Component affinity is deliberately bounded and advisory inside that tier so it cannot
+          // override structural-role eligibility or turn theme purity into a hard requirement.
+          if (aStrategy.substantive !== bStrategy.substantive) return bStrategy.substantive ? 1 : -1;
+          if (aStrategy.substantive && aStrategy.score !== bStrategy.score) return bStrategy.score - aStrategy.score;
+          const aComponent = componentAffinityForCard(a).score;
+          const bComponent = componentAffinityForCard(b).score;
+          if (aComponent !== bComponent) return bComponent - aComponent;
+        } else {
+          // Preserve the established single-theme behavior: controlled-theme membership remains
+          // an advisory tier, while final theme truth is still independently audited downstream.
+          if (themeCandidateNames.size > 0) {
+            const aTheme = themeCandidateNames.has(a.name.toLocaleLowerCase()) ? 1 : 0;
+            const bTheme = themeCandidateNames.has(b.name.toLocaleLowerCase()) ? 1 : 0;
+            if (aTheme !== bTheme) return bTheme - aTheme;
+          }
+          if (aStrategy.substantive !== bStrategy.substantive) return bStrategy.substantive ? 1 : -1;
+          if (aStrategy.substantive && aStrategy.score !== bStrategy.score) return bStrategy.score - aStrategy.score;
+        }
         return candidateScore(b, deficit.role, strategyContext, deficit.target, deficit.targetGate)
           - candidateScore(a, deficit.role, strategyContext, deficit.target, deficit.targetGate)
         || a.name.localeCompare(b.name);
@@ -661,12 +739,15 @@ export async function suggestDeckUpgrades(
       const substantiveAffinityScore = substantiveCommanderStrategyAffinityScoreV15(affinity);
       const matchedStrategies = affinity.matches.map((match) => match.archetype);
       const matchesControlledTheme = themeCandidateNames.has(card.name.toLocaleLowerCase());
+      const componentAffinity = componentAffinityForCard(card);
       const strategyReason = matchedStrategies.length > 0
         ? ` and also supports the existing V0.15 deck strategy signal${matchedStrategies.length === 1 ? '' : 's'}: ${matchedStrategies.join(', ')}`
         : '';
       const themeReason = matchesControlledTheme && themeDeficit > 0
         ? ' It also helps close the current controlled theme-density deficit.'
-        : '';
+        : componentAffinity.score > 0
+          ? ` It supports the compound-theme component balance (${componentAffinity.matchedComponentIds.join(', ')}) without becoming a hard theme requirement.`
+          : '';
       const targetDirection = deficit.targetGate === 'average-nonland-mv'
         ? `${deficit.current} must fall to ${deficit.target} or lower`
         : `${deficit.current} must rise to ${deficit.target} or higher`;
@@ -688,6 +769,8 @@ export async function suggestDeckUpgrades(
           currentMainMatches: themeCurrentMainMatches,
           requiredMainMatches: themeMinimumMainMatches,
           deficitBeforeSwap: themeDeficit,
+          componentAffinityScore: componentAffinity.score,
+          matchedComponentIds: componentAffinity.matchedComponentIds,
         },
         recommendedPrinting: {
           set: printing.card.set.toUpperCase(),
@@ -745,6 +828,9 @@ export async function suggestDeckUpgrades(
       deficit: themeDeficit,
       discoveredThemeCandidateNames: themeCandidateNames.size,
       supplementalRoleSearchesEnabled: themeDeficit > 0 && Boolean(themeClause),
+      componentAwareRanking: componentAwareThemeRanking,
+      componentSignals: themeComponents,
+      componentSearchQueries: themeComponentSearchQueries,
     },
     constraints: {
       maxUsdPerCard: options.maxUsdPerCard ?? null,
@@ -763,7 +849,7 @@ export async function suggestDeckUpgrades(
     },
     caveats: [
       'Role-count targets are engineering heuristics for deck consistency, but failed Bracket-4/5 construction gates now outrank aspirational role targets. When several authoritative gates are failing, candidate generation retains a small ranked backup set for each gate so downstream pairing can preserve gate diversity while trying strategy-safe alternatives.',
-      'Within an already-required structural role or target gate, candidate ordering treats the existing V0.15 substantive-strategy threshold as a first-class tier before generic mana-efficiency and EDHREC/community-adoption scoring. Multiplayer-scope quality can break ties inside that substantive tier, but cannot manufacture substantive support below the raw strategy threshold.',
+      'Within an already-required structural role or target gate, candidate ordering treats the existing V0.15 substantive-strategy threshold as a first-class tier before generic mana-efficiency and EDHREC/community-adoption scoring. For compound themes, bounded component-aware affinity then prefers relatively underrepresented controlled components within that structural/strategy-safe lane; it never makes a themed card mandatory.',
       'Unrestricted Upgrade supplements the bounded popularity-ordered role search with bounded per-archetype searches for strategies the starting deck has already proven substantive. The merged pool is still independently filtered by the requested structural gate, legality, printing policy, exclusions, price, and final candidate cap, so strategy search improves recall without bypassing construction constraints.',
       'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window.',
       'When a V0.15 controlled theme is below its minimum density, the engine uses the controlled theme query as a positive membership/ranking signal. Under a printing restriction, only cards already admitted by the exhaustive shared eligible pool can become candidates.',
