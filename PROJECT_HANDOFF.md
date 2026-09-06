@@ -21,7 +21,7 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 
 ## Audit reuse rule
 
-BENCH-01 remains active on frozen validated product e17b0a1c.... Batch D candidate-breadth diagnostics changed only package breadth 4→6: Quick Draw was unchanged at 8 swaps/Bracket 3, Virtue unchanged at 4 swaps/Bracket 2, Explorers improved to 9 swaps/Bracket 3 from 4/Bracket 2. This proves one-fixture bounded-search sensitivity but not the repeated unrelated pattern required for a product repair. Keep the component-preservation guard. First verify corrected non-empty evidence persistence, then broaden frozen-source breadth diagnostics across another component-rich fixture and an unrelated non-typal compound fixture. No product repair, PR merge or stable promotion is authorized yet. Stable remains V0.13.
+BENCH-01 remains active on frozen validated product e17b0a1c.... Batch D candidate-breadth diagnostics changed only package breadth 4→6: Quick Draw was unchanged at 8 swaps/Bracket 3, Virtue unchanged at 4 swaps/Bracket 2, Explorers improved to 9 swaps/Bracket 3 from 4/Bracket 2. The persistence gate is closed. This proves one-fixture bounded-search sensitivity but not the repeated unrelated pattern required for a product repair. Keep the component-preservation guard and complete the active cross-family breadth generalization diagnostic before any Commander product repair, PR merge or stable promotion. Stable remains V0.13.
 
 ## Stable safety boundary
 

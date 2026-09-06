@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-06T08:01:12.339Z**.
+Generated from `project-state.json`. Last state update: **2026-09-06T08:03:05.838Z**.
 
 ## Current mode
 
@@ -100,4 +100,4 @@ Read in this order:
 9. `docs/VALIDATION-MATRIX.md`
 10. `docs/KNOWN-FAILURES.md`
 
-Then: BENCH-01 remains active on frozen validated product e17b0a1c.... Batch D candidate-breadth diagnostics changed only package breadth 4→6: Quick Draw was unchanged at 8 swaps/Bracket 3, Virtue unchanged at 4 swaps/Bracket 2, Explorers improved to 9 swaps/Bracket 3 from 4/Bracket 2. This proves one-fixture bounded-search sensitivity but not the repeated unrelated pattern required for a product repair. Keep the component-preservation guard. First verify corrected non-empty evidence persistence, then broaden frozen-source breadth diagnostics across another component-rich fixture and an unrelated non-typal compound fixture. No product repair, PR merge or stable promotion is authorized yet. Stable remains V0.13.
+Then: BENCH-01 remains active on frozen validated product e17b0a1c.... Batch D candidate-breadth diagnostics changed only package breadth 4→6: Quick Draw was unchanged at 8 swaps/Bracket 3, Virtue unchanged at 4 swaps/Bracket 2, Explorers improved to 9 swaps/Bracket 3 from 4/Bracket 2. The persistence gate is closed. This proves one-fixture bounded-search sensitivity but not the repeated unrelated pattern required for a product repair. Keep the component-preservation guard and complete the active cross-family breadth generalization diagnostic before any Commander product repair, PR merge or stable promotion. Stable remains V0.13.
