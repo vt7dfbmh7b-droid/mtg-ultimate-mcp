@@ -75,11 +75,11 @@
       ],
       "metadataPath": "test-results/marvel-bracket5/refine-run-metadata.txt",
       "exists": true,
-      "sourceSha": "556787e7864293ecdbd29a37a5761d80fe8af50e",
+      "sourceSha": "bafc023828fadafa811757e0e04e56a70beecdeb",
       "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "556787e7864293ecdbd29a37a5761d80fe8af50e",
+        "source_sha": "bafc023828fadafa811757e0e04e56a70beecdeb",
         "control_outcome": "failure",
         "execution_outcome": "success",
         "target_gate_quality_outcome": "failure",
