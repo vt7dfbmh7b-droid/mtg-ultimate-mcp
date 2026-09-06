@@ -75,12 +75,12 @@
 3 Forest (LCI) 402 *N*
 7 Island (LCI) 395 *N*
 6 Island (LCI) 396 *N*
-1 Curiosity (ISD) 49 *N*
+1 Curiosity (JMP) 147 *N*
 1 Mind Stone (DMR) 385 *N*
 1 Jace, Vryn's Prodigy // Jace, Telepath Unbound (ORI) 60 *N*
 1 Archmage Ascension (ZEN) 42 *N*
 1 Essence Flux (INR) 64 *N*
-1 Worldly Tutor (CC1) 6 *N*
+1 Worldly Tutor (DMR) 442 *N*
 1 Sword of Fire and Ice (MAR) 100 *N*
 1 District Mascot (DFT) 344 *N*
 1 Origin of Metalbending (TLA) 187 *N*

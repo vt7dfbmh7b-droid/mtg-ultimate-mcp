@@ -1,7 +1,7 @@
 {
   "schema": "bench01-adaptive-diversification-replay-v2",
   "batch": "BENCH-01-STRATEGY-ANCHOR-REPLAY",
-  "productRuntimeBaselineSha": "27a2fab9561d3aa89e9306d07e15c248106988eb",
+  "productRuntimeBaselineSha": "d7b203ce14161875720c72290a7adbcc12129cde",
   "sourceFrozenWithinBatch": true,
   "results": [
     {
@@ -136,14 +136,14 @@
         "accepted": true,
         "acceptedSwaps": 4,
         "candidatePackagesGenerated": 6,
-        "candidatePackagesEligible": 4,
+        "candidatePackagesEligible": 3,
         "candidateAttemptSizes": [
           4
         ],
         "candidatePackagesGeneratedAcrossAttempts": 6,
         "winningCandidate": 2,
-        "estimatedSpendNzd": 23.12,
-        "estimatedSpendUsdReference": 13.59,
+        "estimatedSpendNzd": 23.91,
+        "estimatedSpendUsdReference": 14.06,
         "improvementScore": 9.514,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -344,8 +344,8 @@
             "set": "MOM",
             "collectorNumber": "265",
             "finish": "nonfoil",
-            "priceNzd": 8.1,
-            "priceUsdReference": 4.76
+            "priceNzd": 8.13,
+            "priceUsdReference": 4.78
           },
           "structuralPairing": {
             "addressedRole": "protection",
@@ -388,8 +388,8 @@
             "set": "MAR",
             "collectorNumber": "62",
             "finish": "nonfoil",
-            "priceNzd": 6.19,
-            "priceUsdReference": 3.64
+            "priceNzd": 6.65,
+            "priceUsdReference": 3.91
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -527,8 +527,8 @@
             "set": "BLB",
             "collectorNumber": "131",
             "finish": "nonfoil",
-            "priceNzd": 4.08,
-            "priceUsdReference": 2.4
+            "priceNzd": 4.37,
+            "priceUsdReference": 2.57
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -612,8 +612,8 @@
             "set": "SLD",
             "collectorNumber": "2817",
             "finish": "foil",
-            "priceNzd": 13.86,
-            "priceUsdReference": 8.15
+            "priceNzd": 14.56,
+            "priceUsdReference": 8.56
           },
           "structuralPairing": {
             "addressedRole": "protection",
@@ -660,8 +660,8 @@
             "set": "ZEN",
             "collectorNumber": "42",
             "finish": "nonfoil",
-            "priceNzd": 8.08,
-            "priceUsdReference": 4.75
+            "priceNzd": 8.18,
+            "priceUsdReference": 4.81
           },
           "structuralPairing": {
             "addressedRole": "tutor",
@@ -1133,11 +1133,11 @@
           "in": "Skullclamp",
           "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.23 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "FIC",
-            "collectorNumber": "355",
+            "set": "MSC",
+            "collectorNumber": "210",
             "finish": "nonfoil",
-            "priceNzd": 9.93,
-            "priceUsdReference": 5.84
+            "priceNzd": 9.76,
+            "priceUsdReference": 5.74
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -1318,8 +1318,8 @@
             "set": "MAR",
             "collectorNumber": "44",
             "finish": "nonfoil",
-            "priceNzd": 8.03,
-            "priceUsdReference": 4.72
+            "priceNzd": 8.16,
+            "priceUsdReference": 4.8
           },
           "structuralPairing": {
             "addressedRole": "interaction",
@@ -1363,8 +1363,8 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.11,
-            "priceUsdReference": 21.23
+            "priceNzd": 36.02,
+            "priceUsdReference": 21.18
           },
           "structuralPairing": {
             "addressedRole": "protection",
@@ -1723,11 +1723,11 @@
           "in": "Curiosity",
           "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "ISD",
-            "collectorNumber": "49",
+            "set": "JMP",
+            "collectorNumber": "147",
             "finish": "nonfoil",
-            "priceNzd": 1.38,
-            "priceUsdReference": 0.81
+            "priceNzd": 1.45,
+            "priceUsdReference": 0.85
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -1813,7 +1813,7 @@
             "set": "ORI",
             "collectorNumber": "60",
             "finish": "nonfoil",
-            "priceNzd": 7.88,
+            "priceNzd": 7.87,
             "priceUsdReference": 4.63
           },
           "structuralPairing": {
@@ -1858,8 +1858,8 @@
             "set": "ZEN",
             "collectorNumber": "42",
             "finish": "nonfoil",
-            "priceNzd": 8.08,
-            "priceUsdReference": 4.75
+            "priceNzd": 8.18,
+            "priceUsdReference": 4.81
           },
           "structuralPairing": {
             "addressedRole": "tutor",
@@ -1904,8 +1904,8 @@
             "set": "INR",
             "collectorNumber": "64",
             "finish": "nonfoil",
-            "priceNzd": 2.26,
-            "priceUsdReference": 1.33
+            "priceNzd": 2.19,
+            "priceUsdReference": 1.29
           },
           "structuralPairing": {
             "addressedRole": "interaction",
@@ -1945,11 +1945,11 @@
           "in": "Worldly Tutor",
           "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
           "recommendedPrinting": {
-            "set": "CC1",
-            "collectorNumber": "6",
+            "set": "DMR",
+            "collectorNumber": "442",
             "finish": "nonfoil",
-            "priceNzd": 43.83,
-            "priceUsdReference": 25.77
+            "priceNzd": 43.63,
+            "priceUsdReference": 25.65
           },
           "structuralPairing": {
             "addressedRole": "tutor",
@@ -1993,8 +1993,8 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.11,
-            "priceUsdReference": 21.23
+            "priceNzd": 36.02,
+            "priceUsdReference": 21.18
           },
           "structuralPairing": {
             "addressedRole": "protection",
@@ -2384,8 +2384,8 @@
             "set": "BLB",
             "collectorNumber": "313",
             "finish": "foil",
-            "priceNzd": 5.34,
-            "priceUsdReference": 3.14
+            "priceNzd": 5.24,
+            "priceUsdReference": 3.08
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -2516,8 +2516,8 @@
             "set": "WOE",
             "collectorNumber": "101",
             "finish": "nonfoil",
-            "priceNzd": 2.48,
-            "priceUsdReference": 1.46
+            "priceNzd": 2.64,
+            "priceUsdReference": 1.55
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -2657,7 +2657,7 @@
             "set": "FIC",
             "collectorNumber": "464",
             "finish": "foil",
-            "priceNzd": 19.14,
+            "priceNzd": 19.13,
             "priceUsdReference": 11.25
           },
           "structuralPairing": {
@@ -2698,11 +2698,11 @@
           "in": "The Meathook Massacre",
           "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: aristocrats, food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
           "recommendedPrinting": {
-            "set": "INR",
-            "collectorNumber": "387",
+            "set": "MID",
+            "collectorNumber": "112",
             "finish": "nonfoil",
-            "priceNzd": 41.3,
-            "priceUsdReference": 24.28
+            "priceNzd": 41.48,
+            "priceUsdReference": 24.39
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -2791,7 +2791,7 @@
             "set": "PNEO",
             "collectorNumber": "200p",
             "finish": "nonfoil",
-            "priceNzd": 3.9,
+            "priceNzd": 3.89,
             "priceUsdReference": 2.29
           },
           "structuralPairing": {
@@ -3131,8 +3131,8 @@
             "set": "FIC",
             "collectorNumber": "350",
             "finish": "nonfoil",
-            "priceNzd": 0.56,
-            "priceUsdReference": 0.33
+            "priceNzd": 0.58,
+            "priceUsdReference": 0.34
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",

@@ -68,7 +68,7 @@
 1 Winds of Abandon (SOA) 12 *N*
 1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
 1 Sram, Senior Edificer (SOC) 176 *N*
-1 Skullclamp (FIC) 355 *N*
+1 Skullclamp (MSC) 210 *N*
 1 Parting Gust (BLB) 24 *F*
 1 Mangara's Tome (MIR) 309 *N*
 1 Prosperous Innkeeper (AFR) 200 *N*
