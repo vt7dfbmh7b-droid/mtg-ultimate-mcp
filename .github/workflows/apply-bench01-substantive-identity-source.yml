@@ -1,0 +1,83 @@
+name: Apply BENCH-01 substantive identity source edit
+
+on:
+  push:
+    branches:
+      - agent/v15-native-deck-intelligence
+    paths:
+      - .github/workflows/apply-bench01-substantive-identity-source.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply-source-edit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/v15-native-deck-intelligence
+          fetch-depth: 0
+
+      - name: Narrow identity affinity to substantive strategy evidence
+        shell: python
+        run: |
+          from pathlib import Path
+
+          p = Path('src/services/deck-builder-v07.ts')
+          text = p.read_text()
+          old = '''function upgradeSwapReplacementIdentityPriorityV15(
+  add: Record<string, unknown>,
+  cut: Record<string, unknown>,
+) {
+  const addAffinity = strategyAffinityEvidenceV15(add);
+  const cutAffinity = strategyAffinityEvidenceV15(cut);
+  return replacementIdentityPriorityV15(
+    {
+      matchesControlledTheme: recordObject(add.explicitTheme).matchesControlledTheme === true,
+      substantiveStrategyAffinity: addAffinity.score,
+    },
+    {
+      matchesControlledTheme: recordObject(cut.explicitTheme).matchesControlledTheme === true,
+      substantiveStrategyAffinity: cutAffinity.score,
+    },
+  );
+}
+'''
+          new = '''function upgradeSwapReplacementIdentityPriorityV15(
+  add: Record<string, unknown>,
+  cut: Record<string, unknown>,
+) {
+  const addAffinity = strategyAffinityEvidenceV15(add);
+  const cutAffinity = strategyAffinityEvidenceV15(cut);
+  const substantiveScore = (affinity: UpgradeStrategyAffinityEvidenceV15): number => (
+    [...affinity.scoreByStrategy.entries()].reduce((sum, [strategy, score]) => (
+      (affinity.commanderScoreByStrategy.get(strategy) ?? 0) >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15
+        ? sum + score
+        : sum
+    ), 0)
+  );
+  return replacementIdentityPriorityV15(
+    {
+      matchesControlledTheme: recordObject(add.explicitTheme).matchesControlledTheme === true,
+      substantiveStrategyAffinity: substantiveScore(addAffinity),
+    },
+    {
+      matchesControlledTheme: recordObject(cut.explicitTheme).matchesControlledTheme === true,
+      substantiveStrategyAffinity: substantiveScore(cutAffinity),
+    },
+  );
+}
+'''
+          if old not in text:
+              raise SystemExit('replacement identity adapter anchor missing or already changed')
+          p.write_text(text.replace(old, new, 1))
+
+      - name: Remove one-shot transport and commit source
+        run: |
+          rm .github/workflows/apply-bench01-substantive-identity-source.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/services/deck-builder-v07.ts .github/workflows/apply-bench01-substantive-identity-source.yml
+          git commit -m "fix(INTEL-02): use substantive affinity for identity ranking"
+          git push origin HEAD:agent/v15-native-deck-intelligence
