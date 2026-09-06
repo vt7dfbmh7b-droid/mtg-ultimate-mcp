@@ -864,14 +864,21 @@ function upgradeSwapReplacementIdentityPriorityV15(
 ) {
   const addAffinity = strategyAffinityEvidenceV15(add);
   const cutAffinity = strategyAffinityEvidenceV15(cut);
+  const substantiveScore = (affinity: UpgradeStrategyAffinityEvidenceV15): number => (
+    [...affinity.scoreByStrategy.entries()].reduce((sum, [strategy, score]) => (
+      (affinity.commanderScoreByStrategy.get(strategy) ?? 0) >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15
+        ? sum + score
+        : sum
+    ), 0)
+  );
   return replacementIdentityPriorityV15(
     {
       matchesControlledTheme: recordObject(add.explicitTheme).matchesControlledTheme === true,
-      substantiveStrategyAffinity: addAffinity.score,
+      substantiveStrategyAffinity: substantiveScore(addAffinity),
     },
     {
       matchesControlledTheme: recordObject(cut.explicitTheme).matchesControlledTheme === true,
-      substantiveStrategyAffinity: cutAffinity.score,
+      substantiveStrategyAffinity: substantiveScore(cutAffinity),
     },
   );
 }
