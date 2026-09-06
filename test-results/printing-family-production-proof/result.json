@@ -9,9 +9,9 @@
         "MSC",
         "LMAR",
         "PSPM",
+        "MAR",
         "SPE",
-        "SPM",
-        "MAR"
+        "SPM"
       ],
       "includePromos": true,
       "includeSpecialReleases": true,
