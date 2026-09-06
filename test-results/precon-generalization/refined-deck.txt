@@ -7,7 +7,6 @@
 1 Mutilate (40K) 203 *N*
 1 Dread Return (40K) 200 *N*
 1 Defile (40K) 199 *N*
-1 Darkness (40K) 197 *N*
 1 Go for the Throat (40K) 201 *N*
 1 Endless Atlas (40K) 237 *N*
 1 Gilded Lotus (40K) 239 *N*
@@ -59,6 +58,7 @@
 1 Convergence of Dominion (40K) 154 *N*
 1 Cryptothrall (40K) 155 *N*
 1 Ghost Ark (40K) 156 *N*
+1 Necron Monolith (40K) 161 *N*
 1 Resurrection Orb (40K) 165 *N*
 1 Sceptre of Eternal Glory (40K) 166 *N*
 1 Tomb Fortress (40K) 168 *N*
