@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import test from 'node:test';
@@ -59,6 +59,10 @@ function git(args: string[], allowFailure = false): string {
   }
 }
 
+function gitSucceeded(args: string[]): boolean {
+  return spawnSync('git', args, { stdio: 'ignore' }).status === 0;
+}
+
 test('workflow actions validate checked-in source instead of generating or patching src/**', () => {
   const violations: string[] = [];
 
@@ -76,11 +80,14 @@ test('workflow actions validate checked-in source instead of generating or patch
 });
 
 test('self-deleting workflow mutations cannot disappear from validation provenance', () => {
-  git(['cat-file', '-e', `${workflowPolicyEpochSha}^{commit}`]);
-  const ancestry = git(['merge-base', '--is-ancestor', workflowPolicyEpochSha, 'HEAD'], true);
   assert.equal(
-    ancestry,
-    '',
+    gitSucceeded(['cat-file', '-e', `${workflowPolicyEpochSha}^{commit}`]),
+    true,
+    `Workflow policy epoch ${workflowPolicyEpochSha} must exist in the checkout.`,
+  );
+  assert.equal(
+    gitSucceeded(['merge-base', '--is-ancestor', workflowPolicyEpochSha, 'HEAD']),
+    true,
     `Workflow policy epoch ${workflowPolicyEpochSha} must remain an ancestor of HEAD.`,
   );
 
@@ -108,9 +115,7 @@ test('self-deleting workflow mutations cannot disappear from validation provenan
       if (!/\.ya?ml$/i.test(path)) continue;
       const workflow = git(['show', `${commit}:${path}`], true);
       if (!workflow) continue; // deletion; any offending earlier version is scanned at its own commit.
-      violations.push(
-        ...workflowViolations(`${commit.slice(0, 12)}:${path}`, workflow),
-      );
+      violations.push(...workflowViolations(`${commit.slice(0, 12)}:${path}`, workflow));
     }
   }
 
