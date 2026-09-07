@@ -301,20 +301,20 @@
       ],
       "metadataPath": "test-results/precon-generalization-squirrels/run-metadata.txt",
       "exists": true,
-      "sourceSha": "3f4509083eef7fe1bf1cc74f9c6adee1caeb8d9b",
-      "outcome": "fail",
+      "sourceSha": "e6850c8ffab7c52cf0f6e1d7bf0c323e14d76ad7",
+      "outcome": "pass",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "3f4509083eef7fe1bf1cc74f9c6adee1caeb8d9b",
-        "workflow_source_sha": "3f4509083eef7fe1bf1cc74f9c6adee1caeb8d9b",
-        "executed_head_sha": "3f4509083eef7fe1bf1cc74f9c6adee1caeb8d9b",
-        "control_outcome": "failure",
+        "source_sha": "e6850c8ffab7c52cf0f6e1d7bf0c323e14d76ad7",
+        "workflow_source_sha": "e6850c8ffab7c52cf0f6e1d7bf0c323e14d76ad7",
+        "executed_head_sha": "e6850c8ffab7c52cf0f6e1d7bf0c323e14d76ad7",
+        "control_outcome": "success",
         "build_outcome": "success",
-        "regression_outcome": "failure",
-        "execution_outcome": "skipped",
-        "hard_truth_outcome": "skipped",
-        "target_quality_outcome": "skipped",
-        "strategy_preservation_outcome": "skipped",
+        "regression_outcome": "success",
+        "execution_outcome": "success",
+        "hard_truth_outcome": "success",
+        "target_quality_outcome": "success",
+        "strategy_preservation_outcome": "success",
         "policy": "exact-squirreled-away-stock-unrestricted-budgeted-upgrade",
         "printing_family": "unrestricted",
         "exact_card_count": "true",
@@ -328,14 +328,7 @@
         "structural_floors_required": "true",
         "meaningful_strategy_loss_rejected": "true"
       },
-      "unmetPassConditions": [
-        "control_outcome=success",
-        "regression_outcome=success",
-        "execution_outcome=success",
-        "hard_truth_outcome=success",
-        "target_quality_outcome=success",
-        "strategy_preservation_outcome=success"
-      ]
+      "unmetPassConditions": []
     }
   ]
 }
