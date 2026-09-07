@@ -1,7 +1,7 @@
 {
   "schema": "bench01-adaptive-diversification-replay-v2",
   "batch": "BENCH-01-STRATEGY-ANCHOR-REPLAY",
-  "productRuntimeBaselineSha": "00571713696977093fee717deecc2b26969e2643",
+  "productRuntimeBaselineSha": "4a7bbf616ac6826ec4ac979894f8752133af3bca",
   "sourceFrozenWithinBatch": true,
   "results": [
     {
@@ -391,8 +391,8 @@
             "set": "DMR",
             "collectorNumber": "281",
             "finish": "foil",
-            "priceNzd": 3.66,
-            "priceUsdReference": 2.15
+            "priceNzd": 3.69,
+            "priceUsdReference": 2.17
           },
           "structuralPairing": {
             "addressedRole": "interaction",
@@ -477,8 +477,8 @@
             "set": "M3C",
             "collectorNumber": "33",
             "finish": "nonfoil",
-            "priceNzd": 13.32,
-            "priceUsdReference": 7.83
+            "priceNzd": 13.2,
+            "priceUsdReference": 7.76
           },
           "structuralPairing": {
             "addressedRole": "protection",
@@ -843,8 +843,8 @@
             "set": "FIN",
             "collectorNumber": "201",
             "finish": "nonfoil",
-            "priceNzd": 0.51,
-            "priceUsdReference": 0.3
+            "priceNzd": 0.48,
+            "priceUsdReference": 0.28
           },
           "structuralPairing": {
             "addressedRole": "tutor",
@@ -2621,8 +2621,8 @@
             "set": "MSC",
             "collectorNumber": "289",
             "finish": "nonfoil",
-            "priceNzd": 5.54,
-            "priceUsdReference": 3.26
+            "priceNzd": 5.6,
+            "priceUsdReference": 3.29
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -2762,8 +2762,8 @@
             "set": "FIC",
             "collectorNumber": "355",
             "finish": "nonfoil",
-            "priceNzd": 9.93,
-            "priceUsdReference": 5.84
+            "priceNzd": 9.42,
+            "priceUsdReference": 5.54
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -2809,8 +2809,8 @@
             "set": "DFT",
             "collectorNumber": "344",
             "finish": "nonfoil",
-            "priceNzd": 0.6,
-            "priceUsdReference": 0.35
+            "priceNzd": 0.58,
+            "priceUsdReference": 0.34
           },
           "structuralPairing": {
             "addressedRole": "interaction",
@@ -2852,8 +2852,8 @@
             "set": "TMT",
             "collectorNumber": "89",
             "finish": "nonfoil",
-            "priceNzd": 13.1,
-            "priceUsdReference": 7.7
+            "priceNzd": 13.56,
+            "priceUsdReference": 7.97
           },
           "structuralPairing": {
             "addressedRole": "tutor",
@@ -2891,11 +2891,11 @@
           "in": "Wayfarer's Bauble",
           "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.74 must fall to 3.1 or lower). The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Artifacts) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "C17",
-            "collectorNumber": "230",
+            "set": "LCC",
+            "collectorNumber": "317",
             "finish": "nonfoil",
-            "priceNzd": 0.49,
-            "priceUsdReference": 0.29
+            "priceNzd": 0.51,
+            "priceUsdReference": 0.3
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
