@@ -1,4 +1,4 @@
-product_runtime_baseline_sha=e6850c8ffab7c52cf0f6e1d7bf0c323e14d76ad7
+product_runtime_baseline_sha=a2bacce2a70e3ccdf0faca5dd96501fa8f5adc31
 source_relationship=wrapper-descendant-src-verified-equal-to-frozen-product-sha
 formal_product_validation=focused-plus-full-suite-plus-build-green-before-replay
 bench_outcome=success

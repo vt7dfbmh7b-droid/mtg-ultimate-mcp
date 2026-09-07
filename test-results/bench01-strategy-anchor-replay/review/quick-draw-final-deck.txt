@@ -16,6 +16,7 @@
 1 Forger's Foundry (OTC) 14 *N*
 1 Finale of Revelation (OTC) 97 *N*
 1 Mizzix's Mastery (OTC) 175 *N*
+1 Chaos Warp (OTC) 160 *N*
 1 Pyretic Charge (OTC) 29 *N*
 1 Rousing Refrain (OTC) 178 *N*
 1 Cursed Mirror (OTC) 161 *N*
@@ -28,7 +29,6 @@
 1 Galvanic Iteration (OTC) 227 *N*
 1 Epic Experiment (OTC) 222 *N*
 1 Veyran, Voice of Duality (OTC) 248 *N*
-1 Leyline Dowser (OTC) 39 *N*
 1 Exotic Orchard (OTC) 293 *N*
 1 Shivan Reef (OTC) 320 *N*
 1 Sulfur Falls (OTC) 322 *N*
@@ -70,11 +70,11 @@
 7 Island (OTJ) 280 *N*
 7 Mountain (OTJ) 283 *N*
 6 Mountain (OTJ) 284 *N*
-1 Coruscation Mage (BLB) 131 *N*
+1 An Offer You Can't Refuse (FIC) 267 *N*
 1 Pact of Negation (TSR) 77 *N*
 1 Vexing Puzzlebox (CLB) 343 *N*
 1 Sword of Once and Future (MOM) 265 *N*
-1 Three Steps Ahead (MAR) 62 *N*
-1 Daze (MB2) 26 *N*
+1 Counterspell (DMR) 281 *F*
+1 Mental Misstep (MB2) 30 *N*
 1 Mystical Tutor (DMR) 289 *N*
 1 Sword of Wealth and Power (PBIG) 26p *F*

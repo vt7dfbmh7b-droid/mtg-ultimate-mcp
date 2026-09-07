@@ -2,7 +2,6 @@
 1 Lathril, Blade of the Elves (KHC) 1 *F*
 
 // MAIN
-1 Abomination of Llanowar (KHC) 81 *N*
 1 Beast Whisperer (KHC) 54 *N*
 1 Canopy Tactician (KHM) 378 *N*
 1 Cultivator of Blades (KHC) 55 *N*
@@ -12,12 +11,10 @@
 1 Elvish Mystic (KHC) 58 *N*
 1 Elvish Rejuvenator (KHC) 60 *N*
 1 End-Raze Forerunners (KHC) 61 *N*
-1 Eyeblight Cullers (KHC) 48 *N*
 1 Farhaven Elf (KHC) 62 *N*
 1 Golgari Findbroker (KHC) 86 *N*
 1 Harald, King of Skemfar (KHM) 212 *N*
 1 Imperious Perfect (KHC) 64 *N*
-1 Jagged-Scar Archers (KHC) 65 *N*
 1 Jaspera Sentinel (KHM) 178 *N*
 1 Llanowar Tribe (KHC) 66 *N*
 1 Lys Alana Huntmaster (KHC) 67 *N*
@@ -30,25 +27,20 @@
 1 Poison-Tip Archer (KHC) 90 *N*
 1 Reclamation Sage (KHC) 72 *N*
 1 Rhys the Exiled (KHC) 73 *N*
-1 Shaman of the Pack (KHC) 92 *N*
 1 Skemfar Shadowsage (KHM) 110 *N*
 1 Springbloom Druid (KHC) 74 *N*
-1 Sylvan Messenger (KHC) 75 *N*
 1 Timberwatch Elf (KHC) 76 *N*
 1 Voice of Many (KHC) 77 *N*
 1 Voice of the Woods (KHC) 78 *N*
-1 Wirewood Channeler (KHC) 79 *N*
 1 Wolverine Riders (KHC) 14 *N*
 1 Wood Elves (KHC) 80 *N*
 1 Elven Ambush (KHM) 391 *N*
 1 Poison the Cup (KHM) 103 *N*
 1 Putrefy (KHC) 91 *N*
-1 Ambition's Cost (KHC) 47 *N*
-1 Bounty of Skemfar (KHC) 12 *N*
+1 Tergrid's Shadow (KHM) 113 *N*
 1 Casualties of War (KHC) 83 *N*
 1 Elvish Promenade (KHC) 59 *N*
 1 Harvest Season (KHC) 63 *N*
-1 Pact of the Serpent (KHC) 9 *N*
 1 Return Upon the Tide (KHM) 106 *N*
 1 Roots of Wisdom (KHM) 190 *N*
 1 Arcane Signet (KHC) 96 *N*
@@ -70,7 +62,15 @@
 1 Path of Ancestry (KHC) 117 *N*
 1 Skemfar Elderhall (KHM) 268 *N*
 13 Swamp (KHM) 396 *N*
-1 Not Dead After All (WOE) 101 *N*
-1 Giant Mana Cake (SUNF) 25 *N*
-1 The Meathook Massacre (INR) 387 *N*
+1 Dreadhorde Invasion (DRC) 91 *N*
+1 Pawpatch Formation (BLB) 186 *N*
+1 Culling the Weak (EXO) 55 *N*
+1 Transmutation Font (PW24) 11 *F*
 1 Deadly Dispute (MSC) 794 *N*
+1 The Witch's Vanity (WOE) 119 *N*
+1 Kura, the Boundless Sky (PNEO) 200p *N*
+1 Sword of Hearth and Home (TMC) 136 *F*
+1 Not Dead After All (WOE) 101 *N*
+1 Savor (BLB) 109 *N*
+1 Sword of Fire and Ice (MAR) 100 *N*
+1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*

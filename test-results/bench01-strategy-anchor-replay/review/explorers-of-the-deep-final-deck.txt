@@ -11,7 +11,6 @@
 1 Singer of Swift Rivers (LCC) 98 *N*
 1 Benthic Biomancer (LCC) 145 *N*
 1 Commit // Memory (LCC) 147 *N*
-1 Curse of the Swine (LCC) 150 *N*
 1 Emperor Mihail II (LCC) 155 *N*
 1 Herald of Secret Streams (LCC) 158 *N*
 1 Kindred Discovery (LCC) 159 *N*
@@ -78,10 +77,11 @@
 7 Island (LCI) 395 *N*
 6 Island (LCI) 396 *N*
 1 Wizard Class (PLST) AFR-81 *N*
-1 Origin of Metalbending (TLA) 187 *N*
-1 Titania's Command (PBRO) 194s *F*
 1 Delay (FUT) 35 *N*
-1 District Mascot (DFT) 344 *N*
-1 Worldly Tutor (DMR) 442 *N*
-1 Silkguard (SOC) 286 *N*
+1 Titania's Command (PBRO) 194s *F*
 1 Planar Incision (NEO) 72 *N*
+1 Origin of Metalbending (TLA) 187 *N*
+1 Crop Rotation (C20) 169 *N*
+1 Sword of Fire and Ice (MAR) 100 *N*
+1 Teferi's Time Twist (WAR) 72 *N*
+1 District Mascot (DFT) 344 *N*
