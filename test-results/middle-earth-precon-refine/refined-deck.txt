@@ -23,7 +23,6 @@
 1 Dusk // Dawn (LTC) 166 *N*
 1 Fell the Mighty (LTC) 167 *N*
 1 Fumigate (LTC) 170 *N*
-1 Mentor of the Meek (LTC) 173 *N*
 1 Sanguine Bond (LTC) 208 *N*
 1 Toxic Deluge (LTC) 209 *N*
 1 Birds of Paradise (LTC) 235 *N*
@@ -48,13 +47,13 @@
 1 Rosie Cotton of South Lane (LTR) 27 *N*
 1 Shire Shirriff (LTR) 30 *N*
 1 Mirkwood Bats (LTR) 95 *N*
+1 Generous Ent (LTR) 169 *N*
 1 Path to Exile (LTC) 175 *N*
 1 Swords to Plowshares (LTC) 178 *N*
 1 Revive the Shire (LTR) 185 *N*
 1 Butterbur, Bree Innkeeper (LTR) 197 *N*
 1 Crypt Incursion (LTC) 198 *N*
 1 Go for the Throat (LTC) 201 *N*
-1 Night's Whisper (LTC) 205 *N*
 1 Cultivate (LTC) 236 *N*
 1 Essence Warden (LTC) 242 *N*
 1 Farseek (LTC) 244 *N*
@@ -90,4 +89,5 @@
 1 Orcish Medicine (LTR) 104 *F*
 1 Samwise Gamgee (LTR) 327 *N*
 1 Ravening Warg (HOB) 80 *N*
-1 Shelob's Ambush (LTR) 108 *N*
+1 Gorbag of Minas Morgul (LTR) 86 *N*
+1 Bilbo's Gambit (HOB) 5 *N*
