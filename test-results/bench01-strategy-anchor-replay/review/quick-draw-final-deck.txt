@@ -17,8 +17,8 @@
 1 Finale of Revelation (OTC) 97 *N*
 1 Mizzix's Mastery (OTC) 175 *N*
 1 Pyretic Charge (OTC) 29 *N*
-1 Smoldering Stagecoach (OTC) 30 *N*
 1 Rousing Refrain (OTC) 178 *N*
+1 Cursed Mirror (OTC) 161 *N*
 1 Bloodthirsty Adversary (OTC) 157 *N*
 1 Finale of Promise (OTC) 166 *N*
 1 Arcane Bombardment (OTC) 154 *N*
@@ -72,9 +72,9 @@
 6 Mountain (OTJ) 284 *N*
 1 Mental Misstep (MB2) 30 *N*
 1 Mystical Tutor (DMR) 289 *N*
-1 Sword of Once and Future (MOM) 265 *N*
+1 March of Swirling Mist (NEO) 447 *N*
 1 Pyroblast (MB2) 198 *N*
-1 Flusterstorm (MH3) 496 *F*
+1 Counterspell (DMR) 281 *F*
+1 Sanar, Unfinished Genius // Wild Idea (SOS) 223 *N*
+1 Eldritch Immunity (M3C) 33 *N*
 1 Red Elemental Blast (SUM) 171 *N*
-1 Vexing Puzzlebox (CLB) 343 *N*
-1 Sword of Wealth and Power (PBIG) 26p *F*

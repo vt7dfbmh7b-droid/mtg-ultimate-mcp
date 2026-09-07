@@ -3,6 +3,7 @@
 
 // MAIN
 1 Gylwain, Casting Director (WOC) 4 *F*
+1 Liberated Livestock (WOC) 5 *N*
 1 Ox Drover (WOC) 6 *N*
 1 Unfinished Business (WOC) 8 *N*
 1 Giant Inheritance (WOC) 17 *N*
@@ -15,13 +16,13 @@
 1 Kor Spiritdancer (WOC) 69 *N*
 1 Mantle of the Ancients (WOC) 70 *N*
 1 Realm-Cloaked Giant // Cast Off (WOC) 71 *N*
-1 Shalai, Voice of Plenty (WOC) 74 *N*
 1 Starfield Mystic (WOC) 76 *N*
 1 Sun Titan (WOC) 77 *N*
 1 Timely Ward (WOC) 79 *N*
 1 Tithe Taker (WOC) 80 *N*
 1 Umbra Mystic (WOC) 82 *N*
 1 Winds of Rath (WOC) 83 *N*
+1 Bear Umbra (WOC) 121 *N*
 1 Eidolon of Blossoms (WOC) 124 *N*
 1 Enchantress's Presence (WOC) 125 *N*
 1 Indomitable Might (WOC) 127 *N*
@@ -71,8 +72,7 @@
 1 Flaxen Intruder // Welcome Home (ELD) 155 *N*
 1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
 1 Springheart Nantuko (PMH3) 171p *N*
-1 Reconnaissance (PLST) EXO-17 *N*
-1 Reprieve (LTR) 26 *N*
-1 Hour of Promise (HOU) 120 *N*
-1 Intangible Virtue (PLST) ISD-19 *N*
+1 Flowering of the White Tree (LTR) 15 *N*
 1 Battle Menu (FIN) 9 *N*
+1 Sterling Grove (MH2) 293 *N*
+1 Sigarda's Aid (EMN) 41 *N*
