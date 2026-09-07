@@ -4,13 +4,14 @@
 // MAIN
 1 Xolatoyac, the Smiling Flood (LCC) 8 *F*
 1 Mist Dancer (LCC) 76 *N*
-1 Wave Goodbye (LCC) 79 *N*
 1 Bygone Marvels (LCC) 89 *N*
 1 Deeproot Historian (LCC) 91 *N*
 1 Topography Tracker (LCC) 95 *N*
 1 Tributary Instructor (LCC) 96 *N*
 1 Singer of Swift Rivers (LCC) 98 *N*
 1 Benthic Biomancer (LCC) 145 *N*
+1 Commit // Memory (LCC) 147 *N*
+1 Curse of the Swine (LCC) 150 *N*
 1 Emperor Mihail II (LCC) 155 *N*
 1 Herald of Secret Streams (LCC) 158 *N*
 1 Kindred Discovery (LCC) 159 *N*
@@ -39,6 +40,7 @@
 1 Mosswort Bridge (LCC) 342 *N*
 1 Temple of Mystery (LCC) 357 *N*
 1 Vineglimmer Snarl (LCC) 368 *N*
+1 Merfolk Cave-Diver (LCI) 65 *N*
 1 Aetherize (LCC) 142 *N*
 1 Merrow Reejerey (LCC) 165 *N*
 1 Rapid Hybridization (LCC) 166 *N*
@@ -75,13 +77,11 @@
 3 Forest (LCI) 402 *N*
 7 Island (LCI) 395 *N*
 6 Island (LCI) 396 *N*
-1 Curiosity (JMP) 147 *N*
-1 Mind Stone (DMR) 385 *N*
-1 Jace, Vryn's Prodigy // Jace, Telepath Unbound (ORI) 60 *N*
-1 Archmage Ascension (ZEN) 42 *N*
-1 Essence Flux (INR) 64 *N*
-1 Worldly Tutor (DMR) 442 *N*
-1 Sword of Fire and Ice (MAR) 100 *N*
-1 District Mascot (DFT) 344 *N*
+1 Wizard Class (PLST) AFR-81 *N*
 1 Origin of Metalbending (TLA) 187 *N*
-1 Padeem, Consul of Innovation (J25) 62 *N*
+1 Titania's Command (PBRO) 194s *F*
+1 Delay (FUT) 35 *N*
+1 District Mascot (DFT) 344 *N*
+1 Worldly Tutor (DMR) 442 *N*
+1 Silkguard (SOC) 286 *N*
+1 Planar Incision (NEO) 72 *N*

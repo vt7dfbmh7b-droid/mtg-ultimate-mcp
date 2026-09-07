@@ -6,6 +6,7 @@
 1 Domri, Anarch of Bolas (BLC) 98 *F*
 1 Etali, Primal Storm (BLC) 196 *N*
 1 Prosperous Bandit (BLC) 25 *N*
+1 Pyreswipe Hawk (BLC) 26 *N*
 1 Alchemist's Talent (BLC) 22 *N*
 1 Berserkers' Onslaught (BLC) 192 *N*
 1 Outpost Siege (BLC) 199 *N*
@@ -43,6 +44,7 @@
 1 Mosswort Bridge (BLC) 317 *N*
 1 Blasphemous Act (BLC) 114 *N*
 1 Llanowar Loamspeaker (BLC) 228 *N*
+1 Tendershoot Dryad (BLC) 242 *N*
 1 Goreclaw, Terror of Qal Sisma (BLC) 222 *N*
 1 Path of Discovery (BLC) 231 *N*
 1 Decimate (BLC) 251 *N*
@@ -84,6 +86,4 @@
 4 Mountain (BLB) 376 *N*
 5 Forest (BLB) 377 *N*
 5 Forest (BLB) 378 *N*
-1 Mask of Memory (FIC) 350 *N*
-1 You Find Some Prisoners (PLST) AFR-169 *N*
-1 Cool but Rude (TMT) 89 *N*
+1 Sword of the Animist (MSC) 289 *N*

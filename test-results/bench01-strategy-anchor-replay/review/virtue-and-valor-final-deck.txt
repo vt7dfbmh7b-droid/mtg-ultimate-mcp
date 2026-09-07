@@ -4,9 +4,9 @@
 // MAIN
 1 Gylwain, Casting Director (WOC) 4 *F*
 1 Ox Drover (WOC) 6 *N*
-1 Songbirds' Blessing (WOC) 7 *N*
 1 Unfinished Business (WOC) 8 *N*
 1 Giant Inheritance (WOC) 17 *N*
+1 Knickknack Ouphe (WOC) 18 *N*
 1 Ajani's Chosen (WOC) 59 *N*
 1 Archon of Sun's Grace (WOC) 61 *N*
 1 Austere Command (WOC) 62 *N*
@@ -15,6 +15,7 @@
 1 Kor Spiritdancer (WOC) 69 *N*
 1 Mantle of the Ancients (WOC) 70 *N*
 1 Realm-Cloaked Giant // Cast Off (WOC) 71 *N*
+1 Shalai, Voice of Plenty (WOC) 74 *N*
 1 Starfield Mystic (WOC) 76 *N*
 1 Sun Titan (WOC) 77 *N*
 1 Timely Ward (WOC) 79 *N*
@@ -24,6 +25,7 @@
 1 Bear Umbra (WOC) 121 *N*
 1 Eidolon of Blossoms (WOC) 124 *N*
 1 Enchantress's Presence (WOC) 125 *N*
+1 Rishkar's Expertise (WOC) 130 *N*
 1 Sanctum Weaver (WOC) 131 *N*
 1 Setessan Champion (WOC) 132 *N*
 1 Verdant Embrace (WOC) 136 *N*
@@ -64,15 +66,13 @@
 7 Forest (WOE) 276 *N*
 7 Plains (WOE) 267 *N*
 7 Plains (WOE) 268 *N*
-1 Mind Stone (DMR) 385 *N*
-1 Winds of Abandon (SOA) 12 *N*
+1 Intangible Virtue (PLST) ISD-19 *N*
+1 Battle Menu (FIN) 9 *N*
 1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
-1 Sram, Senior Edificer (SOC) 176 *N*
-1 Skullclamp (MSC) 210 *N*
-1 Parting Gust (BLB) 24 *F*
-1 Mangara's Tome (MIR) 309 *N*
-1 Prosperous Innkeeper (AFR) 200 *N*
-1 Ephemerate (MAR) 44 *N*
-1 Sword of Fire and Ice (MAR) 100 *N*
+1 Hangarback Walker (EOC) 139 *N*
+1 Bloodforged Battle-Axe (PIP) 226 *F*
+1 Warping Wail (OGW) 12 *N*
 1 Hour of Promise (HOU) 120 *N*
-1 Insidious Fungus (DSK) 321 *F*
+1 Idol of Oblivion (SCD) 268 *N*
+1 Pawpatch Formation (BLB) 186 *N*
+1 Sword of Wealth and Power (PBIG) 26p *F*
