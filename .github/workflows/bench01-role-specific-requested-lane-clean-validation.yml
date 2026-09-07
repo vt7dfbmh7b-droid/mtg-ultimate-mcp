@@ -1,0 +1,30 @@
+name: BENCH-01 Role-Specific Requested Lane Clean Validation
+
+on:
+  push:
+    branches:
+      - agent/v15-native-deck-intelligence
+    paths:
+      - .github/workflows/bench01-role-specific-requested-lane-clean-validation.yml
+
+concurrency:
+  group: bench01-role-specific-requested-lane-clean-validation
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+      - run: npm ci
+      - name: Verify immutable Commander source
+        run: git diff --exit-code 6686f2892e93cc571ee9e4f7717bb5f0156bd301 -- src
+      - name: Focused cross-archetype regressions
+        run: npx tsx --test src/services/upgrade-strategy-compatible-lane-v15.test.ts src/services/upgrade-theme-component-affinity-v15.test.ts
+      - name: Full repository validation
+        run: npm run check
