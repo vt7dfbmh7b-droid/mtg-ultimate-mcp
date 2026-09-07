@@ -55,8 +55,8 @@
 1 Talisman of Conviction (MSC) 217
 1 Secure the Wastes (SLD) 1748
 1 Counterspell (MAR) 52
-1 Skullclamp (MSC) 210
 1 Living Laser (MSC) 55
+1 Skullclamp (MSC) 210
 1 Chromatic Lantern (MSC) 195
 1 Helm of the Host (MSC) 200
 1 Stark Industries Executive (MSH) 153
