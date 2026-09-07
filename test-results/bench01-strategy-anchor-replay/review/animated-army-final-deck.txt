@@ -83,7 +83,7 @@
 1 Sword of the Animist (MSC) 289 *N*
 1 Flaxen Intruder // Welcome Home (ELD) 155 *N*
 1 Vexing Puzzlebox (CLB) 343 *N*
-1 Jet Medallion (CMM) 395 *F*
-1 Dreadmaw's Ire (LCI) 147 *N*
+1 Skullclamp (FIC) 355 *N*
+1 District Mascot (DFT) 344 *N*
 1 Cool but Rude (TMT) 89 *N*
 1 Wayfarer's Bauble (C17) 230 *N*
