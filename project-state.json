@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-06T20:32:00.000Z",
+  "updatedAt": "2026-09-07T22:06:00.000Z",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
   "stable": {
@@ -12,18 +12,18 @@
   "experimental": {
     "activeBranch": "agent/v15-native-deck-intelligence",
     "activePullRequest": 29,
-    "developmentCheckpointSha": "37ae1efef351f6b502aa0156b9cdd704c294406c",
-    "developmentCheckpointNote": "The latest accepted fully validated Commander product remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. The generic component-aware compound-theme affinity repair is formally validated at 27a2fab9561d3aa89e9306d07e15c248106988eb and was replayed from that exact frozen src/** across Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army. Mandatory whole-deck review rejected the lineage; evidence is persisted at test-results/bench01-strategy-anchor-replay/manual-verdict-27a2fab.md in checkpoint 37ae1efef351f6b502aa0156b9cdd704c294406c. Repeated off-plan structural replacements remain across spellslinger, enchantment-combat, Merfolk, Elf and Bello decks. The next justified generic capability is role-compatible strategic/requested-identity preference among candidates that satisfy the same structural deficit, with structural fallback preserved when no compatible candidate exists.",
+    "developmentCheckpointSha": "2f93c9ec1a171775500e7c7cfd9cb7d0c11bc5ea",
+    "developmentCheckpointNote": "The repository is in BENCH-01 with the autonomous schedule re-enabled. The latest accepted Commander product baseline remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Product candidate 00571713696977093fee717deecc2b26969e2643 passed focused/full/build validation and was replayed from frozen src/** across Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army; persisted replay metadata confirms source equality and bench execution success. No manual whole-deck verdict for this 005717 lineage is currently persisted, so it is not an accepted Commander product checkpoint. Repository-maintenance hardening is now in place: AGENTS.md forbids scheduled/autonomous workflow writes, the strategy-anchor replay accepts an external .automation request SHA, and normal CI freezes workflow provenance after policy epoch 4a7f308e04de33eb2b68c461925a2360579971d4.",
     "lastFullyValidatedExperimentalBaseline": {
       "branch": "agent/v15-native-deck-intelligence",
       "sha": "e17b0a1cba659b229fd6f0b6e2df79c5e464a616",
-      "scope": "Latest accepted fully validated Commander product baseline. Generic neutral-theme taxonomy bridge for shared card-draw and lifegain semantics. Later adaptive-diversification, strategy-anchor and component-affinity descendants contain useful engineering fixes/evidence but have not passed required manual whole-deck Commander-quality acceptance as a product lineage."
+      "scope": "Latest accepted fully validated Commander product baseline. Later candidates, including formally validated frozen product candidate 00571713696977093fee717deecc2b26969e2643, are not accepted until mandatory manual whole-deck BENCH review is persisted and passes."
     }
   },
   "workMode": {
     "intelligenceDevelopmentPaused": false,
     "activeMilestone": "BENCH-01",
-    "reason": "BENCH-01 remains active. Frozen source 27a2fab... is formally green and replay-complete but manually rejected across the five-fixture whole-deck review. Component weighting alone does not stop structural-role candidates with weak commander/request identity from winning. The next product action is the smallest generic role-compatible strategic-affinity preference, followed by focused regressions, full immutable validation, and a frozen multi-fixture replay."
+    "reason": "The autonomous hourly Workday is enabled. Schedule reliability is protected by the repository authority boundary in AGENTS.md and the workflow-provenance freeze. The next product step is not another repair: manually review the complete frozen 005717... five-fixture replay, persist the verdict, and only then accept the lineage or diagnose the next repeated generic weakness."
   },
   "milestones": [
     {
@@ -70,27 +70,23 @@
     }
   ],
   "validation": {
-    "activeBranchStatus": "bench01-role-compatible-strategic-affinity-repair-needed",
+    "activeBranchStatus": "bench01-005717-frozen-replay-manual-review-pending",
     "latestPersistedMarvelControl": {
       "sourceSha": "5829b37b686255ba35d419b37be17095e54fb696",
       "outcome": "expected-ceiling-fail-closed-zero-swap",
       "note": "At exact source 5829b37..., focused and broad Marvel execute and persist honestly with zero accepted swaps because the restricted pool cannot repair the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure. Keep these controls red for target achievement. Treat the result as expected construction-ceiling behaviour, not as a passing target and not as a blocker to BENCH-01 on other archetypes. Rerun only when the relevant pool, provider truth or policy changes."
     },
     "requiredBeforeResumingIntelligenceClaims": [
-      "Keep e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest accepted fully validated Commander baseline until a later product lineage passes both formal validation and required whole-deck BENCH acceptance.",
-      "Retain the generic positive Equipment/equip/attach anchor regression from 2e34ebff20d0a66b7c4649feb1e9984c156e43ca; the false Bello Equipment/Voltron strategy signal is a closed semantic defect.",
-      "Treat 247fb37bc34ad70678ff12ec297a6e9bdc220323 adaptive diversification as engineering-green but manually rejected, and 2e34ebff20d0a66b7c4649feb1e9984c156e43ca as a fully tested strategy-anchor descendant whose overall adaptive lineage remains manually rejected.",
-      "Do not freeze all typal/theme cards, add fixture/card exceptions, weaken target gates, or simply raise theme minimums.",
-      "Do not weaken compound-theme/component preservation, legality, budget, printing, strategy-preservation, package acceptance, target-progress, simulation or win-route truth gates.",
-      "Require focused + full validation and one frozen-source multi-fixture replay with manual whole-deck review before accepting a replacement-priority repair.",
-      "Keep the earlier Counter Blitz dense-countermagic allocation concern watch-only unless a broader cross-fixture batch reproduces it.",
-      "Do not merge PR #29 or promote stable/current V0.13 until BENCH-01 becomes promotion-grade and all relevant validation and manual quality evidence are green.",
-      "Treat frozen runtime f65f4b7b77ee832e2ac66b2a7403f9dda603b84c and persisted replay 0322790fbe6f559a08b333df587a3eec0d447713 as formally green but manually rejected Commander product evidence; do not promote it over e17b0a1cba659b229fd6f0b6e2df79c5e464a616.",
-      "Treat immutable-validation-green source 2c5bbcebb49c6dab23abcb84acf4968f9741db3b and replay evidence 36f6734e8f7b02dd24237aecb032379c0dd5cf4b as manually rejected Commander product evidence; do not promote it over e17b0a1cba659b229fd6f0b6e2df79c5e464a616.",
-      "Treat formally validated source 27a2fab9561d3aa89e9306d07e15c248106988eb and its frozen five-fixture replay as manually rejected Commander product evidence; manual verdict is test-results/bench01-strategy-anchor-replay/manual-verdict-27a2fab.md.",
-      "The repeated replacement-quality defect is now narrower: candidates can satisfy a failed structural role while remaining weakly aligned with the requested/commander strategy, so generic role cards still displace identity-bearing cards even after compound-component affinity is available.",
-      "A generic role-compatible strategic/requested-identity preference is justified across spellslinger, enchantment-combat, Merfolk typal, Elf typal and high-MV artifact/enchantment evidence. It must compare candidates that satisfy the same structural need, remain advisory, and preserve structural fallback when no compatible candidate exists.",
-      "Require focused generic regressions spanning spellslinger, enchantment, Merfolk, Elf and high-MV artifact/enchantment commander incentives plus the full immutable repository check before freezing any new repair SHA; then replay contrasting fixtures unchanged and manually inspect complete decks."
+      "Keep e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest accepted Commander product baseline until a later lineage passes both formal validation and mandatory manual whole-deck BENCH acceptance.",
+      "Treat 00571713696977093fee717deecc2b26969e2643 as the latest frozen formally validated product candidate for the five-fixture strategy-anchor replay. Replay metadata confirms frozen src/** equality and successful execution, but no persisted manual whole-deck verdict currently exists.",
+      "Before changing Commander product logic again, manually inspect the complete 005717... outputs for Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army; persist an explicit accept/reject verdict with cross-fixture reasoning.",
+      "Do not infer product acceptance from green CI, successful replay execution, swap count movement, bracket movement, or generated evidence alone.",
+      "If the 005717... lineage is rejected, identify a repeated cross-fixture generic weakness before making another product repair. Preserve legality, printing, budget, compound-component preservation, strategy-preservation, target-progress and win-route truth gates.",
+      "Scheduled/autonomous runs must read AGENTS.md before repository writes and must not create, edit, delete, stage, bypass or otherwise alter .github/workflows/**, src/workflow-immutability.test.ts, or workflowPolicyEpochSha.",
+      "For strategy-anchor replays, use .automation/bench01-strategy-anchor-replay.request with one exact validated 40-character product SHA; never edit the replay workflow to change its frozen SHA.",
+      "A workflow-provenance CI failure is a repository-integrity/harness failure. Do not repair it by advancing the epoch, weakening the immutability test, rewriting history, or adding another workflow.",
+      "Keep the earlier Counter Blitz dense-countermagic allocation concern watch-only unless broader cross-fixture evidence reproduces it.",
+      "Do not merge PR #29 or promote stable/current V0.13 until BENCH-01 is promotion-grade and all relevant formal and manual quality evidence are green."
     ]
   },
   "truthBoundary": [
@@ -103,23 +99,23 @@
     "A compound aggregate theme-density pass does not prove that every explicitly requested component was preserved or improved.",
     "For a controlled compound request, candidate acceptance must preserve every already-satisfied component and must not move any below-target component backward while gains elsewhere compensate.",
     "A downstream preservation veto does not by itself prove the guard is too strict; distinguish lack of compatible candidates from candidate-discovery/ranking failure before changing product behavior.",
-    "Repeated breadth sensitivity plus source proof that the breadth parameter bounds serial diversification justified adaptive-search experimentation, but manual whole-deck rejection means breadth movement alone is not product-quality success.",
-    "Correct strategy labels do not by themselves prove replacement quality; relative commander/requested-identity value of IN versus OUT must be considered above hard minimum floors.",
-    "Relative identity priority is advisory ordering among already-legal replacements, not a new hard preservation floor; necessary structural cuts must remain possible.",
-    "Common Commander vocabulary must only become enforceable when it maps to generic measurable card semantics; never silently accept unknown leftovers.",
-    "Never treat an unvalidated or manually rejected head as an accepted checkpoint.",
+    "Correct strategy labels or structurally valid replacements do not by themselves prove whole-deck Commander quality; manual complete-deck review remains mandatory.",
+    "A frozen-source replay is product evidence only when src/** is proven equal to the validated product SHA used for that batch.",
+    "Scheduled/autonomous development has no authority to modify .github/workflows/**, src/workflow-immutability.test.ts, or the approved workflow-policy epoch; those are explicit interactive-maintenance-only surfaces.",
+    "Never treat an unvalidated or manually unreviewed/rejected head as an accepted Commander checkpoint.",
     "No scenario-specific, card-name or benchmark-specific hacks; product changes require generic evidence.",
     "Stable/current promotion or PR merging requires complete validation, non-redundancy, safety and promotion-grade benchmark evidence. The user has granted standing authority to perform those actions once those gates are genuinely satisfied; no extra approval is required at that point."
   ],
   "nextActions": [
-    "Implement the smallest generic role-compatible strategic/requested-identity preference so candidates satisfying the same structural deficit are ordered by commander/request affinity before identity-poor generic role cards, while preserving structural fallback when no compatible candidate exists.",
-    "Add focused generic regressions spanning spellslinger, enchantment-combat, Merfolk typal, Elf typal and high-MV artifact/enchantment commander incentives; do not encode fixture names, commander names or card-specific exceptions.",
-    "Run the complete immutable repository validation. Only if green, freeze the exact repair SHA and replay several contrasting fixtures from unchanged source, including representative prior failures for pre/post comparison.",
-    "Accept the lineage only if whole-deck replacement coherence materially improves without structural target regressions. After resolving this repeated defect, broaden BENCH-01 to fresh combo, hybrid, control, aristocrats, budget and unusual-commander fixtures with strong general-AI comparison rather than repeatedly polishing the same five precons."
+    "Read AGENTS.md before any scheduled/autonomous repository write and preserve the hard workflow authority boundary; do not touch .github/workflows/** or the workflow-policy epoch.",
+    "Manually inspect the complete frozen 00571713696977093fee717deecc2b26969e2643 five-fixture replay outputs and persist one explicit whole-deck BENCH verdict covering Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army.",
+    "If manual review accepts the lineage, record 005717... as the new accepted Commander product checkpoint only with the exact supporting evidence. If it rejects the lineage, isolate the repeated generic cross-fixture weakness before any further product repair.",
+    "After the current five-fixture lineage is conclusively accepted or rejected, broaden BENCH-01 to fresh combo, hybrid, control, aristocrats, budget and unusual-commander fixtures with strong general-AI comparison rather than continuing to polish the same precons."
   ],
   "handoffProtocol": {
     "readFirst": [
       "project-state.json",
+      "AGENTS.md",
       "docs/PROJECT-STATE.md",
       "validation-index.json",
       "docs/VALIDATION-STATE.md",
@@ -130,7 +126,7 @@
       "docs/VALIDATION-MATRIX.md",
       "docs/KNOWN-FAILURES.md"
     ],
-    "then": "BENCH-01 remains active. Keep e17b0a1c... as the latest accepted Commander baseline. Component-aware affinity source 27a2fab... passed focused/full formal validation and an unchanged five-precon replay, but mandatory whole-deck review rejected the lineage; verdict is test-results/bench01-strategy-anchor-replay/manual-verdict-27a2fab.md. The remaining centralized defect is role-only structural drift: cards can satisfy draw/protection/tutor/interaction labels while weakly serving the requested commander strategy. Next: implement only a generic role-compatible strategic/requested-identity preference with structural fallback, validate fully, freeze the exact green SHA, replay contrasting fixtures, then broaden BENCH-01. Stable remains V0.13 and PR #29 remains unmerged.",
+    "then": "BENCH-01 remains active and the hourly autonomous Workday is enabled. Keep e17b0a1c... as the latest accepted Commander baseline. The newest frozen formally validated five-fixture product candidate is 00571713696977093fee717deecc2b26969e2643; replay metadata confirms src/** equality and successful execution, but no manual whole-deck verdict is currently persisted, so do not change product logic again before reviewing those complete decks. Before any repository write read AGENTS.md and obey its hard workflow authority boundary. Use .automation/bench01-strategy-anchor-replay.request for future frozen replay requests; never edit .github/workflows/** during scheduled/autonomous development. Stable remains V0.13 and PR #29 remains unmerged.",
     "compatibilityEntryPoint": "PROJECT_HANDOFF.md"
   }
 }

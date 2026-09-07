@@ -16,12 +16,12 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Active milestone: **BENCH-01 — Adversarial Commander benchmark suite**
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
-- Development checkpoint at pause: `37ae1efef351f6b502aa0156b9cdd704c294406c`
-- Active branch validation: **bench01-role-compatible-strategic-affinity-repair-needed**
+- Development checkpoint at pause: `2f93c9ec1a171775500e7c7cfd9cb7d0c11bc5ea`
+- Active branch validation: **bench01-005717-frozen-replay-manual-review-pending**
 
 ## Audit reuse rule
 
-BENCH-01 remains active. Keep e17b0a1c... as the latest accepted Commander baseline. Component-aware affinity source 27a2fab... passed focused/full formal validation and an unchanged five-precon replay, but mandatory whole-deck review rejected the lineage; verdict is test-results/bench01-strategy-anchor-replay/manual-verdict-27a2fab.md. The remaining centralized defect is role-only structural drift: cards can satisfy draw/protection/tutor/interaction labels while weakly serving the requested commander strategy. Next: implement only a generic role-compatible strategic/requested-identity preference with structural fallback, validate fully, freeze the exact green SHA, replay contrasting fixtures, then broaden BENCH-01. Stable remains V0.13 and PR #29 remains unmerged.
+BENCH-01 remains active and the hourly autonomous Workday is enabled. Keep e17b0a1c... as the latest accepted Commander baseline. The newest frozen formally validated five-fixture product candidate is 00571713696977093fee717deecc2b26969e2643; replay metadata confirms src/** equality and successful execution, but no manual whole-deck verdict is currently persisted, so do not change product logic again before reviewing those complete decks. Before any repository write read AGENTS.md and obey its hard workflow authority boundary. Use .automation/bench01-strategy-anchor-replay.request for future frozen replay requests; never edit .github/workflows/** during scheduled/autonomous development. Stable remains V0.13 and PR #29 remains unmerged.
 
 ## Stable safety boundary
 
@@ -31,7 +31,7 @@ Stable remains **V0.13 / 0.13.0** on `main`. Standing user authorization permits
 
 `e17b0a1cba659b229fd6f0b6e2df79c5e464a616` on `agent/v15-native-deck-intelligence`.
 
-Latest accepted fully validated Commander product baseline. Generic neutral-theme taxonomy bridge for shared card-draw and lifegain semantics. Later adaptive-diversification, strategy-anchor and component-affinity descendants contain useful engineering fixes/evidence but have not passed required manual whole-deck Commander-quality acceptance as a product lineage.
+Latest accepted fully validated Commander product baseline. Later candidates, including formally validated frozen product candidate 00571713696977093fee717deecc2b26969e2643, are not accepted until mandatory manual whole-deck BENCH review is persisted and passes.
 
 ## Important pending validation
 
@@ -39,10 +39,10 @@ The last persisted Marvel control is `5829b37b686255ba35d419b37be17095e54fb696` 
 
 ## Next actions
 
-1. Implement the smallest generic role-compatible strategic/requested-identity preference so candidates satisfying the same structural deficit are ordered by commander/request affinity before identity-poor generic role cards, while preserving structural fallback when no compatible candidate exists.
-2. Add focused generic regressions spanning spellslinger, enchantment-combat, Merfolk typal, Elf typal and high-MV artifact/enchantment commander incentives; do not encode fixture names, commander names or card-specific exceptions.
-3. Run the complete immutable repository validation. Only if green, freeze the exact repair SHA and replay several contrasting fixtures from unchanged source, including representative prior failures for pre/post comparison.
-4. Accept the lineage only if whole-deck replacement coherence materially improves without structural target regressions. After resolving this repeated defect, broaden BENCH-01 to fresh combo, hybrid, control, aristocrats, budget and unusual-commander fixtures with strong general-AI comparison rather than repeatedly polishing the same five precons.
+1. Read AGENTS.md before any scheduled/autonomous repository write and preserve the hard workflow authority boundary; do not touch .github/workflows/** or the workflow-policy epoch.
+2. Manually inspect the complete frozen 00571713696977093fee717deecc2b26969e2643 five-fixture replay outputs and persist one explicit whole-deck BENCH verdict covering Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army.
+3. If manual review accepts the lineage, record 005717... as the new accepted Commander product checkpoint only with the exact supporting evidence. If it rejects the lineage, isolate the repeated generic cross-fixture weakness before any further product repair.
+4. After the current five-fixture lineage is conclusively accepted or rejected, broaden BENCH-01 to fresh combo, hybrid, control, aristocrats, budget and unusual-commander fixtures with strong general-AI comparison rather than continuing to polish the same precons.
 
 ## Permanent recovery references
 
