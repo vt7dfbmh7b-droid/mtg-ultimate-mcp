@@ -6,6 +6,8 @@ This roadmap tracks milestone-level direction and durable completed evidence. `p
 
 Before any scheduled or autonomous repository write, read root `AGENTS.md` and treat its **Hard workflow authority boundary** as binding. Scheduled/autonomous runs must not create, edit, rename, delete, stage, bypass or otherwise alter `.github/workflows/**`, `src/workflow-immutability.test.ts`, or its approved workflow-policy epoch. Existing immutable workflows may be used only through their checked-in interfaces. For the BENCH-01 strategy-anchor replay, request the already-validated frozen product SHA through `.automation/bench01-strategy-anchor-replay.request`; never edit the replay workflow merely to change the SHA. If a protected-surface change seems necessary, classify it as an interactive repository-maintenance blocker and continue other safe BENCH/product work rather than modifying the protected surface.
 
+Scheduled/autonomous runs must also obey the root `AGENTS.md` single-flight rule: do not start a new branch-changing validation, replay, state writer, evidence persistence operation, or Commander product repair while another relevant branch-writing operation is still active. Manual verdicts belong under `test-results/bench01-manual-verdicts/`, outside replaceable generated replay output.
+
 ## North star
 
 Build an evidence-backed Commander specialist that can consistently outperform strong general-purpose AI on complete deck construction and analysis while preserving exact legality, budget, printing, strategy and user constraints.
@@ -92,24 +94,46 @@ The lineage was **manually rejected** despite green formal validation:
 
 Later generic work moved replacement ordering toward commander/request identity and direct mechanism affinity. It produced meaningful local improvements, especially in Quick Draw and portions of Explorers/Elven Empire, but repeated whole-deck manual review still found generic/off-plan replacements and insufficient mechanism-positive prioritization. These descendants therefore did not replace `e17b0a1c...` as the accepted Commander baseline.
 
-### Current frozen candidate — `00571713696977093fee717deecc2b26969e2643` — FORMALLY VALIDATED / MANUAL REVIEW PENDING
+### Current frozen candidate — `00571713696977093fee717deecc2b26969e2643` — FORMALLY VALIDATED / MANUAL REJECT
 
-The latest frozen formally validated five-fixture product candidate is `00571713696977093fee717deecc2b26969e2643` (`fix(BENCH-01): reject context-dead low-curve utility`). Its source contents were subsequently validated in a clean descendant tree and the five-fixture strategy-anchor replay persisted successfully with `src/**` proven equal to the frozen product SHA.
+The frozen five-fixture product candidate `00571713696977093fee717deecc2b26969e2643` (`fix(BENCH-01): reject context-dead low-curve utility`) passed focused/full/build validation and was replayed with `src/**` proven equal to the frozen product SHA across Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army.
 
-The replay covers:
-- Quick Draw
-- Virtue and Valor
-- Explorers of the Deep
-- Elven Empire
-- Animated Army
+Mandatory whole-deck review is now permanently persisted at `test-results/bench01-manual-verdicts/00571713696977093fee717deecc2b26969e2643.md` and **rejects the lineage as a new accepted Commander product baseline**.
 
-The repair closes the specific context-dead low-curve utility failure that previously allowed unusable color-restricted cost reducers to survive through structural low-curve lanes. In the latest Animated Army output, the previously decisive Jet Medallion-in-Gruul error is gone.
+Fixture-level conclusion:
+- Quick Draw / Stella: local pass and strongest fixture; the earlier Equipment/Sword drift is gone and the replacement tail is coherently spellslinger/control oriented.
+- Virtue and Valor / Ellivere: mixed; structural metrics improve and several incoming enchantment-support cards are good, but defining Aura/enchantment pieces are still too readily cut for broad value/interaction cards.
+- Explorers of the Deep / Hakbal: fail; strong bracket/metric movement is accompanied by Merfolk/explore/counter identity dilution through generic interaction, blink, tutors and Equipment.
+- Elven Empire / Lathril: fail; several good Elf additions coexist with cuts to Elf payoffs/typal cards for generic aristocrats utility and Equipment.
+- Animated Army / Bello: decisive fail despite the local bug fix; Jet Medallion is gone, but direct Bello mechanism pieces such as qualifying high-MV artifact/enchantment cards are still displaced by low-cost generic structural/value cards.
 
-However, **this candidate is not yet an accepted Commander product checkpoint**. No current-tree manual whole-deck verdict has yet been persisted for the `005717...` replay. The next required action is therefore manual inspection of all five complete decks and one explicit accept/reject verdict with cross-fixture reasoning. Do not make another Commander product repair before that verdict unless a separate hard product or integrity blocker is independently proven.
+The context-dead low-curve utility repair itself remains useful engineering evidence and should be retained. The observed Jet Medallion-in-Gruul failure is closed. That local success does not establish whole-deck specialist acceptance.
 
-If the lineage is rejected, isolate a repeated generic weakness across the complete decks before another product change. If the lineage is accepted, only then record `005717...` as the new accepted Commander product checkpoint with its exact formal and manual evidence.
+### Current generic weakness — MECHANISM-AWARE RELATIVE IN-vs-OUT REPLACEMENT VALUE
 
-After this five-fixture lineage is conclusively accepted or rejected, broaden BENCH-01 to fresh combo, hybrid, control, aristocrats, budget and unusual-commander fixtures, including strong general-AI comparison where practical, rather than continuing to polish the same precons.
+The repeated cross-fixture defect is now narrower and better evidenced than generic incoming-card affinity alone: **direct requested-component and commander-mechanism importance is under-valued on the outgoing/cut side, so identity-bearing OUT cards can lose to generic structurally useful IN cards.**
+
+Repeated evidence spans genuinely different mechanisms:
+- Ellivere: Aura/enchantment identity pieces are cut while generic value/token/interaction cards enter.
+- Hakbal: Merfolk/explore/counter engines and typal value pieces are displaced by generic interaction, blink, tutors and a Sword.
+- Lathril: Elf payoff/typal cards are displaced by non-Elf structural utility and Equipment.
+- Bello: qualifying high-MV artifact/enchantment mechanism pieces are displaced by cheaper generic structural cards even though those high-MV permanents directly embody the commander's incentive.
+
+A recurring diagnostic signal is that outgoing identity-bearing cards can receive weak or zero cut-strategy affinity despite obvious deck-specific importance. Hard component/theme floors prevent catastrophic collapse but do not prove above-floor identity preservation.
+
+The next justified repair is the smallest generic **advisory relative replacement mechanism**:
+- score direct requested-component/commander-mechanism importance for OUT as well as IN;
+- compare IN versus OUT mechanism/component value among already structurally valid replacements;
+- apply an advisory identity-preservation/cut-priority preference above existing hard floors;
+- preserve structural fallback when no credible strategy-compatible alternative exists;
+- avoid card-name, fixture-name and commander-specific exceptions;
+- add focused generic regressions spanning Aura/enchantment, typal, counters/explore-style, token/combat and high-MV artifact/enchantment mechanisms;
+- pass full immutable validation before freezing the exact repair SHA and replaying representative failures plus contrasting controls;
+- persist a new durable manual whole-deck verdict before any acceptance claim.
+
+Do **not** solve this by freezing all theme cards, raising global theme minimums, adding scenario-specific vetoes, or merely increasing candidate breadth.
+
+Once the repeated replacement-value defect is resolved or conclusively bounded, broaden BENCH-01 beyond these five precons to fresh combo, hybrid, control, aristocrats, budget and unusual commander incentives, with strong general-AI comparison where practical.
 
 ## INTEL-03 — Human-level strategic reasoning layer — PLANNED
 
