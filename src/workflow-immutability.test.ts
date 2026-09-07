@@ -6,10 +6,12 @@ import test from 'node:test';
 
 const workflowsDir = resolve(process.cwd(), '.github', 'workflows');
 
-// Policy epoch: the clean checked-in head immediately after CI was changed to
-// fetch full history. Every descendant must preserve workflow immutability even
-// if an offending workflow is later deleted from the current tree.
-const workflowPolicyEpochSha = '365a4c182a2c64ed91716fce15e173099d66e275';
+// Policy epoch: explicit interactive maintenance moved BENCH replay selection
+// out of workflow edits and into an external request file. Autonomous descendants
+// must not change .github/workflows/** at all. A future explicit interactive
+// maintenance action may deliberately advance this SHA after reviewing the new
+// workflow tree.
+const workflowPolicyEpochSha = '4a7f308e04de33eb2b68c461925a2360579971d4';
 
 const forbiddenSourceMutationPatterns: Array<{ label: string; pattern: RegExp }> = [
   {
@@ -79,7 +81,7 @@ test('workflow actions validate checked-in source instead of generating or patch
   );
 });
 
-test('self-deleting workflow mutations cannot disappear from validation provenance', () => {
+test('autonomous lineage cannot change workflow files after the approved maintenance epoch', () => {
   assert.equal(
     gitSucceeded(['cat-file', '-e', `${workflowPolicyEpochSha}^{commit}`]),
     true,
@@ -91,37 +93,27 @@ test('self-deleting workflow mutations cannot disappear from validation provenan
     `Workflow policy epoch ${workflowPolicyEpochSha} must remain an ancestor of HEAD.`,
   );
 
-  const commitList = git([
+  const workflowChangingCommits = git([
     'rev-list',
     '--reverse',
     `${workflowPolicyEpochSha}..HEAD`,
     '--',
     '.github/workflows',
   ]);
-  const violations: string[] = [];
 
-  for (const commit of commitList.split(/\s+/).filter(Boolean)) {
-    const paths = git([
-      'diff-tree',
-      '--no-commit-id',
-      '--name-only',
-      '-r',
-      commit,
-      '--',
-      '.github/workflows',
-    ]);
+  assert.equal(
+    workflowChangingCommits,
+    '',
+    `No descendant of the approved workflow-policy epoch may change .github/workflows/** during autonomous development.\n` +
+      `Observed workflow-changing commits:\n${workflowChangingCommits}\n` +
+      `Only an explicit interactive repository-maintenance action may review the workflow change and deliberately advance workflowPolicyEpochSha.`,
+  );
 
-    for (const path of paths.split('\n').map((value) => value.trim()).filter(Boolean)) {
-      if (!/\.ya?ml$/i.test(path)) continue;
-      const workflow = git(['show', `${commit}:${path}`], true);
-      if (!workflow) continue; // deletion; any offending earlier version is scanned at its own commit.
-      violations.push(...workflowViolations(`${commit.slice(0, 12)}:${path}`, workflow));
-    }
-  }
-
-  assert.deepEqual(
-    violations,
-    [],
-    `A workflow that mutates checked-in source or self-deletes remains a provenance failure even after it disappears from HEAD.\n${violations.join('\n')}`,
+  const approvedWorkflowTree = git(['rev-parse', `${workflowPolicyEpochSha}:.github/workflows`]);
+  const currentWorkflowTree = git(['rev-parse', 'HEAD:.github/workflows']);
+  assert.equal(
+    currentWorkflowTree,
+    approvedWorkflowTree,
+    'The current workflow tree must exactly match the explicitly approved maintenance epoch.',
   );
 });
