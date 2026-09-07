@@ -12,6 +12,28 @@ If direct repository write capability is unavailable or a required operation can
 
 For the existing five-fixture BENCH-01 strategy-anchor replay, request a frozen replay by creating or updating `.automation/bench01-strategy-anchor-replay.request` with exactly one 40-character validated product commit SHA. **Do not edit the replay workflow or its environment to change the frozen SHA.** The checked-in workflow resolves the request file, proves `src/**` is identical to that product SHA, then runs and persists the replay evidence.
 
+## Single-flight autonomous execution
+
+Before starting any branch-changing validation, replay request, evidence persistence, state reconciliation, or Commander product repair, inspect current/recent GitHub Actions and branch state for the active experimental branch.
+
+If a relevant validation, BENCH replay, project-state integrity writer, or other branch-writing operation is still in progress, do **not** start another overlapping branch-changing operation. Prefer read-only analysis, manual deck review of already-persisted evidence, or simply resume after the active operation has completed on a later scheduled invocation.
+
+A scheduled hourly invocation is a recovery opportunity, not permission to create overlapping work. Never trade branch consistency for activity.
+
+## Durable manual-verdict boundary
+
+Generated replay output under `test-results/bench01-strategy-anchor-replay/` may be replaced by later frozen replays. Manual acceptance/rejection evidence must therefore be persisted outside that replaceable generated-output directory.
+
+Use `test-results/bench01-manual-verdicts/<product-sha>.md` for BENCH-01 manual whole-deck verdicts. Each verdict should identify the exact frozen product SHA, replay evidence, fixture-level conclusions, cross-fixture diagnosis, accept/reject decision, and next justified action. Do not treat a replay-generated directory as the only durable location of human/manual quality evidence.
+
+## State reconciliation coordination
+
+When `project-state.json` materially changes, keep `PROJECT_HANDOFF.md`, `docs/PROJECT-STATE.md`, `validation-index.json`, and `docs/VALIDATION-STATE.md` synchronized as one reconciliation package wherever the available GitHub tooling permits.
+
+Do not intentionally leave a stale validation index or generated recovery surface behind merely because a state edit was completed first. If the repository's approved Project State Integrity writer must finalize self-consistent metadata, allow that existing writer to complete, re-read the resulting branch head, and only then begin a new branch-changing product/benchmark operation.
+
+An intermediate CI failure caused solely by the state writer racing a still-stale generated validation index is a state-coordination/harness issue, not a Commander-product failure. It must not be "fixed" by weakening `validation:validate`, skipping project-state checks, or bypassing the approved integrity writer.
+
 For every scheduled or autonomous development run:
 
 1. Read `project-state.json` first and follow its recovery/handoff protocol before making development decisions.
