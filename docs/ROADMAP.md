@@ -79,32 +79,41 @@ Evidence: `docs/benchmarks/BENCH-01-STRATEGY-ANCHOR-MANUAL-REVIEW.md`.
 
 ### Frozen advisory-theme candidate repair — FULLY VALIDATED / MANUAL REJECT
 
-The smallest post-floor advisory theme-membership repair was validated immutably at `2c5bbcebb49c6dab23abcb84acf4968f9741db3b` and replayed from that exact frozen executable source across Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army. Replay evidence is persisted at `36f6734e8f7b02dd24237aecb032379c0dd5cf4b`; mandatory manual verdict is `test-results/bench01-strategy-anchor-replay/manual-verdict-2c5bbceb.md`.
+The smallest post-floor advisory theme-membership repair was validated immutably at `2c5bbcebb49c6dab23abcb84acf4968f9741db3b` and replayed from that exact frozen executable source across Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army. Replay evidence is persisted at `36f6734e8f7b02dd24237aecb032379c0dd5cf4b`; mandatory manual verdict was historically persisted for that lineage.
 
-The lineage is **manually rejected** despite green formal validation:
-- Quick Draw still uses upgrade slots on equipment/value pieces that dilute the Stella Lee spell plan.
-- Virtue and Valor still replaces defining enchantment/Aura pieces with generic structural cards.
-- Explorers still cuts Merfolk/typal engines for generic counters/value/protection cards.
-- Elven Empire improves one slot with Llanowar Elves but still accepts non-Elf structural utility and remains Bracket 2.
-- Animated Army accepts zero swaps, so the repair fails the required regression guard.
+The lineage was **manually rejected** despite green formal validation:
+- Quick Draw still used upgrade slots on equipment/value pieces that diluted the Stella Lee spell plan.
+- Virtue and Valor still replaced defining enchantment/Aura pieces with generic structural cards.
+- Explorers still cut Merfolk/typal engines for generic counters/value/protection cards.
+- Elven Empire improved one slot with Llanowar Elves but still accepted non-Elf structural utility and remained Bracket 2.
+- Animated Army accepted zero swaps, so the repair failed the required regression guard.
 
-### Current generic weakness — COMPOUND-THEME COMPONENT-AWARE CANDIDATE AFFINITY
+### Subsequent strategy-compatible and mechanism-aware work — PARTIAL IMPROVEMENT / MANUAL REJECT LINEAGE
 
-The cross-fixture diagnosis is now narrower than simple post-floor theme membership. A binary `matchesControlledTheme` signal treats every card that matches **any** component of a compound request as equally on-theme. Broad support components such as card draw, interaction, counters, combat or value can therefore outrank the defining typal/enchantment/spellslinger component. Aggregate and per-component hard preservation gates still prevent catastrophic loss, but they do not provide enough positive ranking pressure to preserve identity quality above those floors.
+Later generic work moved replacement ordering toward commander/request identity and direct mechanism affinity. It produced meaningful local improvements, especially in Quick Draw and portions of Explorers/Elven Empire, but repeated whole-deck manual review still found generic/off-plan replacements and insufficient mechanism-positive prioritization. These descendants therefore did not replace `e17b0a1c...` as the accepted Commander baseline.
 
-The next justified product work is the smallest generic **component-aware advisory** incoming-candidate affinity. It must:
-- reward role-compatible candidates that support defining and/or currently underrepresented requested components;
-- preserve a fallback to structurally necessary generic candidates when no suitable identity-preserving candidate exists;
-- remain advisory rather than freezing all theme cards or raising hard minimums;
-- avoid fixture, commander and card-name exceptions;
-- add generic focused regressions across spellslinger, enchantment-combat, Merfolk typal, Elf typal and artifact/enchantment compound cases;
-- pass full immutable repository validation before another exact frozen-source multi-fixture replay and manual complete-deck comparison.
+### Current frozen candidate — `00571713696977093fee717deecc2b26969e2643` — FORMALLY VALIDATED / MANUAL REVIEW PENDING
 
-Remaining BENCH breadth should still cover unrestricted combo, hybrid combat/combo, commander damage, control, aristocrats, budget, unusual commander/partner incentives and strong general-AI comparison before promotion readiness.
+The latest frozen formally validated five-fixture product candidate is `00571713696977093fee717deecc2b26969e2643` (`fix(BENCH-01): reject context-dead low-curve utility`). Its source contents were subsequently validated in a clean descendant tree and the five-fixture strategy-anchor replay persisted successfully with `src/**` proven equal to the frozen product SHA.
+
+The replay covers:
+- Quick Draw
+- Virtue and Valor
+- Explorers of the Deep
+- Elven Empire
+- Animated Army
+
+The repair closes the specific context-dead low-curve utility failure that previously allowed unusable color-restricted cost reducers to survive through structural low-curve lanes. In the latest Animated Army output, the previously decisive Jet Medallion-in-Gruul error is gone.
+
+However, **this candidate is not yet an accepted Commander product checkpoint**. No current-tree manual whole-deck verdict has yet been persisted for the `005717...` replay. The next required action is therefore manual inspection of all five complete decks and one explicit accept/reject verdict with cross-fixture reasoning. Do not make another Commander product repair before that verdict unless a separate hard product or integrity blocker is independently proven.
+
+If the lineage is rejected, isolate a repeated generic weakness across the complete decks before another product change. If the lineage is accepted, only then record `005717...` as the new accepted Commander product checkpoint with its exact formal and manual evidence.
+
+After this five-fixture lineage is conclusively accepted or rejected, broaden BENCH-01 to fresh combo, hybrid, control, aristocrats, budget and unusual-commander fixtures, including strong general-AI comparison where practical, rather than continuing to polish the same precons.
 
 ## INTEL-03 — Human-level strategic reasoning layer — PLANNED
 
-Do not start speculative INTEL-03 work while BENCH-01 has the narrower identity-aware replacement-priority gate.
+Do not start speculative INTEL-03 work while BENCH-01 still has narrower evidence-driven quality gates.
 
 ## INTEL-04 — Counterfactual deck comparison & expert explanation — PLANNED
 
