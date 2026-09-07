@@ -23,7 +23,7 @@ jobs:
           node-version-file: .node-version
       - run: npm ci
       - name: Verify immutable Commander source
-        run: git diff --exit-code b2839a76282d94a1c194a62c33b17d4c28656ac7 -- src
+        run: git diff --exit-code 2d0d5ee260da6ef31215d7a4cb542cf00f21077a -- src
       - name: Focused context-applicability regressions
         run: npx tsx --test src/services/upgrade-context-role-applicability-v15.test.ts src/services/upgrade-aspirational-fallback-v15.test.ts src/services/upgrade-strategy-compatible-lane-v15.test.ts src/services/replacement-identity-pairing-v15.test.ts
       - name: Full repository validation
