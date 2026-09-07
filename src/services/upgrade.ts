@@ -366,13 +366,33 @@ export function compoundComponentCandidateLanesV15<T>(
   candidates: readonly T[],
   isComponentAligned: (candidate: T) => boolean,
   isStrategyCompatible: (candidate: T) => boolean,
+  isAnchorAligned?: (candidate: T) => boolean,
 ): T[][] {
-  const component = candidates.filter(isComponentAligned);
+  const anchor = isAnchorAligned ? candidates.filter(isAnchorAligned) : [];
+  const anchorSet = new Set(anchor);
+  const component = candidates.filter((candidate) => !anchorSet.has(candidate) && isComponentAligned(candidate));
   const componentSet = new Set(component);
-  const strategy = candidates.filter((candidate) => !componentSet.has(candidate) && isStrategyCompatible(candidate));
+  const strategy = candidates.filter((candidate) => !anchorSet.has(candidate) && !componentSet.has(candidate) && isStrategyCompatible(candidate));
   const strategySet = new Set(strategy);
-  const generic = candidates.filter((candidate) => !componentSet.has(candidate) && !strategySet.has(candidate));
-  return [component, strategy, generic].filter((lane) => lane.length > 0);
+  const generic = candidates.filter((candidate) => !anchorSet.has(candidate) && !componentSet.has(candidate) && !strategySet.has(candidate));
+  return [anchor, component, strategy, generic].filter((lane) => lane.length > 0);
+}
+
+/**
+ * Treat the most-represented requested component in the resolved starting deck as the identity
+ * anchor. Deficit/scarcity remains useful for balancing secondary components, but cannot invert
+ * the deck's established mechanism. Exact ties remain co-anchors rather than inventing priority.
+ */
+export function upgradeThemeAnchorComponentIdsV15(
+  components: readonly UpgradeThemeComponentSignalV15[],
+): string[] {
+  const represented = components.filter((component) => component.currentMainMatches > 0);
+  if (represented.length === 0) return [];
+  const maximum = Math.max(...represented.map((component) => component.currentMainMatches));
+  return represented
+    .filter((component) => component.currentMainMatches === maximum)
+    .map((component) => component.id)
+    .sort((left, right) => left.localeCompare(right));
 }
 
 export function upgradeThemeComponentAffinityScoreV15(
@@ -546,6 +566,9 @@ export async function suggestDeckUpgrades(
     return { score: upgradeThemeComponentAffinityScoreV15(matchedComponentIds, themeComponents), matchedComponentIds };
   };
   const componentAwareThemeRanking = themeComponents.length > 1 && themeComponentCandidateNames.size > 0;
+  const anchorComponentIds = new Set(upgradeThemeAnchorComponentIdsV15(themeComponents));
+  const anchorAffinityForCard = (card: ScryfallCard): number => componentAffinityForCard(card).matchedComponentIds
+    .filter((id) => anchorComponentIds.has(id)).length;
 
   const existing = new Set([...parsed.commanders, ...parsed.main].map((entry) => entry.name.toLocaleLowerCase()));
   const excluded = new Set((options.excludedCards ?? []).map((name) => name.toLocaleLowerCase()));
@@ -611,10 +634,13 @@ export async function suggestDeckUpgrades(
         const aStrategy = candidateStrategyPriorityV15(a, strategyContext);
         const bStrategy = candidateStrategyPriorityV15(b, strategyContext);
         if (componentAwareThemeRanking) {
+          const aAnchor = anchorAffinityForCard(a);
+          const bAnchor = anchorAffinityForCard(b);
           const aComponent = componentAffinityForCard(a).score;
           const bComponent = componentAffinityForCard(b).score;
-          // The explicit resolved request is the strongest positive signal among structurally
-          // eligible candidates. Inferred strategy remains the secondary tie-break/fallback.
+          // Preserve the established requested mechanism before balancing secondary requested
+          // components. Scarcity affinity remains a secondary within-component signal.
+          if (aAnchor !== bAnchor) return bAnchor - aAnchor;
           if (aComponent !== bComponent) return bComponent - aComponent;
           if (aStrategy.substantive !== bStrategy.substantive) return bStrategy.substantive ? 1 : -1;
           if (aStrategy.substantive && aStrategy.score !== bStrategy.score) return bStrategy.score - aStrategy.score;
@@ -641,6 +667,7 @@ export async function suggestDeckUpgrades(
           rankedForPrinting,
           (card) => componentAffinityForCard(card).score >= 4,
           (card) => candidateStrategyPriorityV15(card, strategyContext).substantive,
+          (card) => anchorAffinityForCard(card) > 0,
         )
       : strategyCompatibleCandidateLanesV15(
           rankedForPrinting,
@@ -686,6 +713,7 @@ export async function suggestDeckUpgrades(
             matchesControlledTheme, currentMainMatches: themeCurrentMainMatches, requiredMainMatches: themeMinimumMainMatches,
             deficitBeforeSwap: themeDeficit, componentAffinityScore: componentAffinity.score,
             matchedComponentIds: componentAffinity.matchedComponentIds,
+            matchesAnchorComponent: componentAffinity.matchedComponentIds.some((id) => anchorComponentIds.has(id)),
           },
           recommendedPrinting: {
             set: printing.card.set.toUpperCase(), setName: printing.card.set_name, collectorNumber: printing.card.collector_number,
@@ -718,7 +746,7 @@ export async function suggestDeckUpgrades(
       active: Boolean(themeClause), queryClause: themeClause || null, searchQuery: controlledThemeSearchQuery,
       currentMainMatches: themeCurrentMainMatches, requiredMainMatches: themeMinimumMainMatches, deficit: themeDeficit,
       discoveredThemeCandidateNames: themeCandidateNames.size, supplementalRoleSearchesEnabled: themeDeficit > 0 && Boolean(themeClause),
-      componentAwareRanking: componentAwareThemeRanking, componentSignals: themeComponents, componentSearchQueries: themeComponentSearchQueries,
+      componentAwareRanking: componentAwareThemeRanking, anchorComponentIds: [...anchorComponentIds], componentSignals: themeComponents, componentSearchQueries: themeComponentSearchQueries,
     },
     constraints: {
       maxUsdPerCard: options.maxUsdPerCard ?? null, allowedSets: options.allowedSets ?? [], printingFamily: options.printingFamily ?? null,
@@ -732,7 +760,7 @@ export async function suggestDeckUpgrades(
     },
     caveats: [
       'Role-count targets are engineering heuristics for deck consistency, but failed Bracket-4/5 construction gates now outrank aspirational role targets. When several authoritative gates are failing, candidate generation retains a small ranked backup set for each gate so downstream pairing can preserve gate diversity while trying strategy-safe alternatives.',
-      'Within an already-required structural role or target gate, an explicit compound request now gets a distinct component-aligned first lane, followed by substantive inferred commander strategy and finally generic structural fallback. A later lane is considered only when the earlier lane yields zero eligible printings after printing/price policy checks.',
+      'Within an already-required structural role or target gate, an explicit compound request preserves the starting deck’s dominant requested component first, then considers other requested components, substantive inferred commander strategy, and finally generic structural fallback. A later lane is considered only when the earlier lane yields zero eligible printings after printing/price policy checks.',
       'Unrestricted Upgrade supplements the bounded popularity-ordered role search with bounded per-archetype searches for strategies the starting deck has already proven substantive. The spells-control recall path includes actual Instant/Sorcery card types as well as Oracle-text spell mechanisms.',
       'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window.',
       'When a V0.15 controlled theme is below its minimum density, the engine uses the controlled theme query as a positive membership/ranking signal. Under a printing restriction, only cards already admitted by the exhaustive shared eligible pool can become candidates.',

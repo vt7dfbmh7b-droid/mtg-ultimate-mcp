@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
+  upgradeThemeAnchorComponentIdsV15,
   upgradeThemeComponentAffinityScoreV15,
   type UpgradeThemeComponentSignalV15,
 } from './upgrade.js';
@@ -47,4 +48,20 @@ test('multi-component affinity remains bounded so theme preference cannot become
     { id: 'third', queryClause: 't:artifact', currentMainMatches: 0, requiredMainMatches: 18 },
   ];
   assert.equal(upgradeThemeComponentAffinityScoreV15(['broad', 'anchor', 'third'], signals), 12);
+});
+
+
+test('dominant starting-deck representation identifies the compound-theme anchor independently of scarcity', () => {
+  const signals = components({ broad: { currentMainMatches: 12, requiredMainMatches: 12 }, anchor: { currentMainMatches: 28, requiredMainMatches: 15 } });
+  assert.deepEqual(upgradeThemeAnchorComponentIdsV15(signals), ['anchor']);
+});
+
+test('equal dominant evidence stays as co-anchors instead of inventing arbitrary priority', () => {
+  const signals = components({ broad: { currentMainMatches: 24 }, anchor: { currentMainMatches: 24 } });
+  assert.deepEqual(upgradeThemeAnchorComponentIdsV15(signals), ['anchor', 'broad']);
+});
+
+test('zero starting-deck component evidence does not manufacture an anchor', () => {
+  const signals = components({ broad: { currentMainMatches: 0 }, anchor: { currentMainMatches: 0 } });
+  assert.deepEqual(upgradeThemeAnchorComponentIdsV15(signals), []);
 });

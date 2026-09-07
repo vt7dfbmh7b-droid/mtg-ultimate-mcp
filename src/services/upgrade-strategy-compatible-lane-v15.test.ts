@@ -12,6 +12,7 @@ type Candidate = {
   componentFit?: boolean;
   strategyFit?: boolean;
   printingEligible?: boolean;
+  anchorFit?: boolean;
 };
 
 test('typal role candidates use aligned normal lane before generic fallback', () => {
@@ -141,4 +142,36 @@ test('spells-control supplemental recall includes actual Instant and Sorcery car
   const clause = clauses.find((entry) => entry.archetype === 'spells-control')?.clause ?? '';
   assert.match(clause, /t:instant/);
   assert.match(clause, /t:sorcery/);
+});
+
+
+test('dominant compound anchor lane outranks secondary requested components without removing fallback', () => {
+  const anchor: Candidate = { name: 'Identity anchor', identityFit: true, componentFit: true, anchorFit: true };
+  const secondary: Candidate = { name: 'Secondary requested support', identityFit: true, componentFit: true, anchorFit: false };
+  const strategy: Candidate = { name: 'Inferred strategy support', identityFit: true, componentFit: false, strategyFit: true };
+  const generic: Candidate = { name: 'Generic role support', identityFit: false, componentFit: false };
+  assert.deepEqual(compoundComponentCandidateLanesV15(
+    [secondary, strategy, generic, anchor],
+    (candidate) => Boolean(candidate.componentFit),
+    (candidate) => Boolean(candidate.strategyFit),
+    (candidate) => Boolean(candidate.anchorFit),
+  ), [[anchor], [secondary], [strategy], [generic]]);
+});
+
+test('secondary requested component remains reachable when dominant anchor has no eligible printing', () => {
+  const anchor: Candidate = { name: 'Unavailable anchor', identityFit: true, componentFit: true, anchorFit: true, printingEligible: false };
+  const secondary: Candidate = { name: 'Available secondary', identityFit: true, componentFit: true, anchorFit: false, printingEligible: true };
+  const generic: Candidate = { name: 'Available generic', identityFit: false, componentFit: false, printingEligible: true };
+  const chosen: Candidate[] = [];
+  for (const lane of compoundComponentCandidateLanesV15(
+    [anchor, secondary, generic],
+    (candidate) => Boolean(candidate.componentFit),
+    (candidate) => Boolean(candidate.strategyFit),
+    (candidate) => Boolean(candidate.anchorFit),
+  )) {
+    const before = chosen.length;
+    chosen.push(...lane.filter((candidate) => candidate.printingEligible));
+    if (chosen.length > before) break;
+  }
+  assert.deepEqual(chosen, [secondary]);
 });
