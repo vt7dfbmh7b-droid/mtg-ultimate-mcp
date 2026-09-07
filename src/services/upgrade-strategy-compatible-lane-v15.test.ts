@@ -1,8 +1,18 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { strategyCompatibleCandidateLanesV15 } from './upgrade.js';
+import {
+  compoundComponentCandidateLanesV15,
+  strategyCompatibleCandidateLanesV15,
+  upgradeStrategySearchClausesV15,
+} from './upgrade.js';
 
-type Candidate = { name: string; identityFit: boolean; printingEligible?: boolean };
+type Candidate = {
+  name: string;
+  identityFit: boolean;
+  componentFit?: boolean;
+  strategyFit?: boolean;
+  printingEligible?: boolean;
+};
 
 test('typal role candidates use aligned normal lane before generic fallback', () => {
   const aligned = { name: 'Typal draw engine', identityFit: true };
@@ -47,4 +57,88 @@ test('generic fallback is entered only when aligned lane yields zero eligible pr
   assert.deepEqual(choose([generic, unavailable]), [generic]);
   const available: Candidate = { name: 'Aligned available', identityFit: true, printingEligible: true };
   assert.deepEqual(choose([generic, available]), [available]);
+});
+
+test('explicit compound component is a distinct lane ahead of inferred strategy and generic utility', () => {
+  const component: Candidate = { name: 'Requested mechanism', identityFit: true, componentFit: true, strategyFit: false };
+  const strategy: Candidate = { name: 'Generic archetype payoff', identityFit: true, componentFit: false, strategyFit: true };
+  const generic: Candidate = { name: 'Generic role card', identityFit: false, componentFit: false, strategyFit: false };
+  assert.deepEqual(
+    compoundComponentCandidateLanesV15(
+      [strategy, generic, component],
+      (candidate) => Boolean(candidate.componentFit),
+      (candidate) => Boolean(candidate.strategyFit),
+    ),
+    [[component], [strategy], [generic]],
+  );
+});
+
+test('compound component fallback advances to inferred strategy only when component printings are unavailable', () => {
+  const component: Candidate = {
+    name: 'Unavailable requested mechanism',
+    identityFit: true,
+    componentFit: true,
+    strategyFit: false,
+    printingEligible: false,
+  };
+  const strategy: Candidate = {
+    name: 'Available inferred strategy',
+    identityFit: true,
+    componentFit: false,
+    strategyFit: true,
+    printingEligible: true,
+  };
+  const generic: Candidate = {
+    name: 'Available generic role',
+    identityFit: false,
+    componentFit: false,
+    strategyFit: false,
+    printingEligible: true,
+  };
+  const lanes = compoundComponentCandidateLanesV15(
+    [generic, strategy, component],
+    (candidate) => Boolean(candidate.componentFit),
+    (candidate) => Boolean(candidate.strategyFit),
+  );
+  const chosen: Candidate[] = [];
+  for (const lane of lanes) {
+    const before = chosen.length;
+    chosen.push(...lane.filter((candidate) => candidate.printingEligible));
+    if (chosen.length > before) break;
+  }
+  assert.deepEqual(chosen, [strategy]);
+});
+
+test('compound component fallback still reaches generic structural cards when neither aligned lane has an eligible printing', () => {
+  const component: Candidate = {
+    name: 'Unavailable requested mechanism', identityFit: true, componentFit: true, strategyFit: false, printingEligible: false,
+  };
+  const strategy: Candidate = {
+    name: 'Unavailable inferred strategy', identityFit: true, componentFit: false, strategyFit: true, printingEligible: false,
+  };
+  const generic: Candidate = {
+    name: 'Available generic role', identityFit: false, componentFit: false, strategyFit: false, printingEligible: true,
+  };
+  const lanes = compoundComponentCandidateLanesV15(
+    [component, strategy, generic],
+    (candidate) => Boolean(candidate.componentFit),
+    (candidate) => Boolean(candidate.strategyFit),
+  );
+  const chosen: Candidate[] = [];
+  for (const lane of lanes) {
+    const before = chosen.length;
+    chosen.push(...lane.filter((candidate) => candidate.printingEligible));
+    if (chosen.length > before) break;
+  }
+  assert.deepEqual(chosen, [generic]);
+});
+
+test('spells-control supplemental recall includes actual Instant and Sorcery card types', () => {
+  const clauses = upgradeStrategySearchClausesV15({
+    commanderNames: ['Synthetic Commander'],
+    strategies: [{ archetype: 'spells-control', score: 999, evidence: [] }],
+  } as never);
+  const clause = clauses.find((entry) => entry.archetype === 'spells-control')?.clause ?? '';
+  assert.match(clause, /t:instant/);
+  assert.match(clause, /t:sorcery/);
 });
