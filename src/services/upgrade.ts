@@ -145,12 +145,6 @@ function authoritativePriority(
   };
 }
 
-/**
- * Put currently failed authoritative construction gates for the requested bracket ahead of
- * aspirational role targets. Bracket 4 uses the actual optimized-structure thresholds from the
- * finished-deck assessor; Bracket 5 uses its construction thresholds. Verified win-route pressure
- * remains handled atomically by deck-builder-v07 rather than being approximated as a role count.
- */
 export function upgradeCandidatePrioritiesV15(
   metrics: UpgradeCandidateMetricsV15,
   targets: UpgradeStructuralTargetsV15,
@@ -231,29 +225,13 @@ function roleSearchQuery(
   printingPolicy: ResolvedPrintingPolicyV08,
   targetGate: UpgradeTargetGateV15 | null = null,
 ): string {
-  return [
-    'f:commander',
-    identityQuery(identity),
-    '-t:land',
-    roleClause(role, targetGate),
-    printingPolicy.searchClause,
-  ]
+  return ['f:commander', identityQuery(identity), '-t:land', roleClause(role, targetGate), printingPolicy.searchClause]
     .filter(Boolean)
     .join(' ');
 }
 
-function themeSearchQuery(
-  identity: string[],
-  themeClause: string,
-  printingPolicy: ResolvedPrintingPolicyV08,
-): string {
-  return [
-    'f:commander',
-    identityQuery(identity),
-    '-t:land',
-    themeClause,
-    printingPolicy.searchClause,
-  ]
+function themeSearchQuery(identity: string[], themeClause: string, printingPolicy: ResolvedPrintingPolicyV08): string {
+  return ['f:commander', identityQuery(identity), '-t:land', themeClause, printingPolicy.searchClause]
     .filter(Boolean)
     .join(' ');
 }
@@ -265,14 +243,7 @@ function themedRoleSearchQuery(
   printingPolicy: ResolvedPrintingPolicyV08,
   targetGate: UpgradeTargetGateV15 | null = null,
 ): string {
-  return [
-    'f:commander',
-    identityQuery(identity),
-    '-t:land',
-    roleClause(role, targetGate),
-    themeClause,
-    printingPolicy.searchClause,
-  ]
+  return ['f:commander', identityQuery(identity), '-t:land', roleClause(role, targetGate), themeClause, printingPolicy.searchClause]
     .filter(Boolean)
     .join(' ');
 }
@@ -285,7 +256,7 @@ const UPGRADE_STRATEGY_SEARCH_CLAUSES_V15: Record<string, string> = {
   'artifact-engine': '(t:artifact OR o:"artifact")',
   aristocrats: '(o:"each opponent" OR o:"sacrifice" OR o:"dies")',
   'food-lifegain': '(o:"Food" OR o:"gain life" OR o:"each opponent")',
-  'spells-control': '(o:"counter target spell" OR o:"instant or sorcery" OR o:"noncreature spell")',
+  'spells-control': '(t:instant OR t:sorcery OR o:"counter target spell" OR o:"instant or sorcery" OR o:"noncreature spell")',
   'value-engine': '(o:"draw" OR o:"you may cast" OR o:"you may play" OR o:"exile the top")',
   'big-mana': '(o:"add" OR o:"costs" OR o:"untap")',
 };
@@ -295,10 +266,7 @@ export function upgradeStrategySearchClausesV15(
 ): Array<{ archetype: string; clause: string }> {
   return strategyContext.strategies
     .filter((strategy) => strategy.score >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15)
-    .map((strategy) => ({
-      archetype: strategy.archetype,
-      clause: UPGRADE_STRATEGY_SEARCH_CLAUSES_V15[strategy.archetype] ?? '',
-    }))
+    .map((strategy) => ({ archetype: strategy.archetype, clause: UPGRADE_STRATEGY_SEARCH_CLAUSES_V15[strategy.archetype] ?? '' }))
     .filter((entry) => entry.clause.length > 0)
     .slice(0, 3);
 }
@@ -310,23 +278,14 @@ function strategyRoleSearchQuery(
   printingPolicy: ResolvedPrintingPolicyV08,
   targetGate: UpgradeTargetGateV15 | null = null,
 ): string {
-  return [
-    'f:commander',
-    identityQuery(identity),
-    '-t:land',
-    roleClause(role, targetGate),
-    strategyClause,
-    printingPolicy.searchClause,
-  ]
+  return ['f:commander', identityQuery(identity), '-t:land', roleClause(role, targetGate), strategyClause, printingPolicy.searchClause]
     .filter(Boolean)
     .join(' ');
 }
 
 function cardMatchesRole(card: ScryfallCard, role: string, targetGate: UpgradeTargetGateV15 | null = null): boolean {
   const roles = new Set(effectiveCardRolesV15(card));
-  if (targetGate === 'cheap-interaction') {
-    return roles.has('cheap interaction');
-  }
+  if (targetGate === 'cheap-interaction') return roles.has('cheap interaction');
   if (targetGate === 'fast-mana') return roles.has('fast mana');
   if (targetGate === 'free-interaction') return roles.has('free interaction');
   if (role === 'ramp') return roles.has('mana acceleration') || roles.has('land ramp') || roles.has('cost reduction');
@@ -383,20 +342,10 @@ function candidateStrategyPriorityV15(
   card: ScryfallCard,
   strategyContext: CommanderStrategyContextV15,
 ): { substantive: boolean; score: number } {
-  const score = substantiveCommanderStrategyAffinityScoreV15(
-    cardCommanderStrategyAffinityV15(card, strategyContext),
-  );
-  return {
-    substantive: score >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15,
-    score,
-  };
+  const score = substantiveCommanderStrategyAffinityScoreV15(cardCommanderStrategyAffinityV15(card, strategyContext));
+  return { substantive: score >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15, score };
 }
 
-/**
- * Split an already structurally-compatible role pool into an identity-aligned normal lane and a
- * generic structural fallback. Callers advance to fallback only when the aligned lane produces
- * zero actually eligible printings after downstream printing/price policy checks.
- */
 export function strategyCompatibleCandidateLanesV15<T>(
   candidates: readonly T[],
   isStrategyCompatible: (candidate: T) => boolean,
@@ -408,15 +357,31 @@ export function strategyCompatibleCandidateLanesV15<T>(
   return fallback.length > 0 ? [preferred, fallback] : [preferred];
 }
 
+/**
+ * For an explicit compound request, keep the user's requested mechanism as a distinct first lane.
+ * Inferred commander strategy remains the second lane, and generic structural utility remains the
+ * final fallback. Callers only advance when the previous lane yields zero eligible printings.
+ */
+export function compoundComponentCandidateLanesV15<T>(
+  candidates: readonly T[],
+  isComponentAligned: (candidate: T) => boolean,
+  isStrategyCompatible: (candidate: T) => boolean,
+): T[][] {
+  const component = candidates.filter(isComponentAligned);
+  const componentSet = new Set(component);
+  const strategy = candidates.filter((candidate) => !componentSet.has(candidate) && isStrategyCompatible(candidate));
+  const strategySet = new Set(strategy);
+  const generic = candidates.filter((candidate) => !componentSet.has(candidate) && !strategySet.has(candidate));
+  return [component, strategy, generic].filter((lane) => lane.length > 0);
+}
+
 export function upgradeThemeComponentAffinityScoreV15(
   matchedComponentIds: readonly string[],
   components: readonly UpgradeThemeComponentSignalV15[],
 ): number {
   if (matchedComponentIds.length === 0 || components.length === 0) return 0;
   const byId = new Map(components.map((component) => [component.id, component] as const));
-  const coverages = components.map((component) => (
-    Math.max(0, component.currentMainMatches) / Math.max(1, component.requiredMainMatches)
-  ));
+  const coverages = components.map((component) => Math.max(0, component.currentMainMatches) / Math.max(1, component.requiredMainMatches));
   const maxCoverage = Math.max(1, ...coverages);
   let score = 0;
   for (const id of new Set(matchedComponentIds)) {
@@ -435,26 +400,12 @@ export function upgradeThemeComponentAffinityScoreV15(
 export function contextualCutPressureV15(
   card: ScryfallCard,
   strategyContext: CommanderStrategyContextV15,
-): {
-  cutPressure: number;
-  strategyAffinityScore: number;
-  strategyProtectionApplied: number;
-  matchedStrategies: string[];
-  reasons: string[];
-} {
+): { cutPressure: number; strategyAffinityScore: number; strategyProtectionApplied: number; matchedStrategies: string[]; reasons: string[] } {
   const roles = effectiveCardRolesV15(card).filter((role) => !['creature', 'equipment', 'etb synergy'].includes(role));
   let cutPressure = Math.max(0, card.cmc - 3) * 2;
   if (roles.length === 0) cutPressure += 5;
   if (card.cmc >= 6) cutPressure += 4;
-  if (
-    roles.includes('card draw')
-    || roles.includes('tutor')
-    || roles.includes('spot interaction')
-    || roles.includes('countermagic')
-    || roles.includes('protection')
-    || roles.includes('board wipe')
-    || roles.includes('graveyard recursion')
-  ) cutPressure -= 4;
+  if (roles.includes('card draw') || roles.includes('tutor') || roles.includes('spot interaction') || roles.includes('countermagic') || roles.includes('protection') || roles.includes('board wipe') || roles.includes('graveyard recursion')) cutPressure -= 4;
   if (roles.includes('fast mana')) cutPressure -= 6;
   else if (roles.includes('mana acceleration') && card.cmc <= 2) cutPressure -= 3;
   if (roles.includes('persistent colored mana source') && card.cmc <= 2) cutPressure -= 2;
@@ -462,12 +413,10 @@ export function contextualCutPressureV15(
   const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
   const strategyProtectionApplied = Math.min(4, substantiveCommanderStrategyAffinityScoreV15(affinity));
   cutPressure -= strategyProtectionApplied;
-
   const reasons: string[] = [];
   if (card.cmc >= 6) reasons.push('high mana value');
   if (roles.length === 0) reasons.push('few detected utility roles');
   if (card.cmc >= 4 && roles.length <= 1) reasons.push('expensive relative to detected flexibility');
-
   return {
     cutPressure: Number(cutPressure.toFixed(1)),
     strategyAffinityScore: Number(affinity.score.toFixed(1)),
@@ -502,10 +451,7 @@ function cutCandidates(
           matchedStrategies: context.matchedStrategies,
           matches: cardCommanderStrategyAffinityV15(card, strategyContext).matches,
         },
-        explicitTheme: {
-          matchesControlledTheme: themeMatch,
-          protectionApplied: themeProtectionApplied,
-        },
+        explicitTheme: { matchesControlledTheme: themeMatch, protectionApplied: themeProtectionApplied },
         reasons: themeProtectionApplied > 0
           ? [...context.reasons, 'supports the explicit controlled theme while the deck is at or below its required theme density']
           : context.reasons,
@@ -542,15 +488,9 @@ export async function suggestDeckUpgrades(
 ): Promise<Record<string, unknown>> {
   const targetBracket = clampBracket(options.targetBracket);
   const targetPressure = commanderTargetPressureV15(targetBracket);
-  const targets: UpgradeStructuralTargetsV15 = {
-    ...(TARGETS[targetBracket] as UpgradeStructuralTargetsV15),
-    freeInteraction: targetPressure.minimumFreeInteraction,
-  };
+  const targets: UpgradeStructuralTargetsV15 = { ...(TARGETS[targetBracket] as UpgradeStructuralTargetsV15), freeInteraction: targetPressure.minimumFreeInteraction };
   const metrics = buildDeckMetrics(parsed, cards);
-  const currentMetrics: UpgradeCandidateMetricsV15 = {
-    ...metrics,
-    commanderColorCount: allowedIdentity.length,
-  };
+  const currentMetrics: UpgradeCandidateMetricsV15 = { ...metrics, commanderColorCount: allowedIdentity.length };
   const strategyContext = deriveUpgradeStrategyContextV15(parsed, cards);
   const substantiveStrategySearchClauses = upgradeStrategySearchClausesV15(strategyContext);
   const printingPolicy = await resolvePrintingPolicyV08({
@@ -560,10 +500,8 @@ export async function suggestDeckUpgrades(
     ...(options.includeSpecialReleases !== undefined ? { includeSpecialReleases: options.includeSpecialReleases } : {}),
   });
   const candidatePriorities = upgradeCandidatePrioritiesV15(currentMetrics, targets, targetBracket);
-  const authoritativeTargetGatePriorities = candidatePriorities
-    .filter((priority) => priority.prioritySource === 'authoritative-target-gate');
-  const deficits = candidatePriorities
-    .filter((priority) => priority.prioritySource === 'aspirational-role-target');
+  const authoritativeTargetGatePriorities = candidatePriorities.filter((priority) => priority.prioritySource === 'authoritative-target-gate');
+  const deficits = candidatePriorities.filter((priority) => priority.prioritySource === 'aspirational-role-target');
 
   const themeClause = options.themeQuery?.trim() ?? '';
   const themeMinimumMainMatches = Math.max(0, Math.trunc(options.themeMinimumMainMatches ?? 0));
@@ -576,10 +514,7 @@ export async function suggestDeckUpgrades(
     try {
       const themeResults = await searchCards(controlledThemeSearchQuery, 100);
       for (const card of themeResults) themeCandidateNames.add(card.name.toLocaleLowerCase());
-    } catch {
-      // Theme membership is independently audited by the V0.15 refinement caller. A transient
-      // membership-search failure only removes positive ranking help here; it never proves absence.
-    }
+    } catch {}
   }
 
   const themeComponents = (options.themeComponents ?? [])
@@ -601,20 +536,14 @@ export async function suggestDeckUpgrades(
       const names = new Set(results.map((card) => card.name.toLocaleLowerCase()));
       themeComponentCandidateNames.set(component.id, names);
       for (const name of names) themeCandidateNames.add(name);
-    } catch {
-      // Component affinity is advisory only. Missing positive membership evidence never becomes
-      // a hard negative; post-candidate compound-theme audits remain authoritative.
-    }
+    } catch {}
   }
   const componentAffinityForCard = (card: ScryfallCard): { score: number; matchedComponentIds: string[] } => {
     const name = card.name.toLocaleLowerCase();
     const matchedComponentIds = themeComponents
       .filter((component) => themeComponentCandidateNames.get(component.id)?.has(name))
       .map((component) => component.id);
-    return {
-      score: upgradeThemeComponentAffinityScoreV15(matchedComponentIds, themeComponents),
-      matchedComponentIds,
-    };
+    return { score: upgradeThemeComponentAffinityScoreV15(matchedComponentIds, themeComponents), matchedComponentIds };
   };
   const componentAwareThemeRanking = themeComponents.length > 1 && themeComponentCandidateNames.size > 0;
 
@@ -623,24 +552,17 @@ export async function suggestDeckUpgrades(
   const maxCandidates = Math.max(1, Math.min(10, Math.trunc(options.maxCandidatesPerRole ?? 5)));
   const candidateGroups: Array<Record<string, unknown>> = [];
   const restrictedPoolActive = hasPrintingRestriction(printingPolicy);
-  const restrictedEligiblePool = restrictedPoolActive
-    ? await discoverEligiblePoolV15(allowedIdentity, printingPolicy, options.maxUsdPerCard)
-    : null;
+  const restrictedEligiblePool = restrictedPoolActive ? await discoverEligiblePoolV15(allowedIdentity, printingPolicy, options.maxUsdPerCard) : null;
   const candidateDiscovery = restrictedPoolActive
     ? {
-        mode: 'exhaustive-bounded-printing-policy',
-        exhaustiveWithinSafetyCeilings: true,
-        eligiblePoolCards: restrictedEligiblePool?.length ?? 0,
-        roleSearchResultCap: null,
+        mode: 'exhaustive-bounded-printing-policy', exhaustiveWithinSafetyCeilings: true,
+        eligiblePoolCards: restrictedEligiblePool?.length ?? 0, roleSearchResultCap: null,
         strategySupplementalResultCapPerArchetype: null,
         note: 'Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card.',
       }
     : {
-        mode: 'bounded-role-plus-strategy-search',
-        exhaustiveWithinSafetyCeilings: false,
-        eligiblePoolCards: null,
-        roleSearchResultCap: 40,
-        strategySupplementalResultCapPerArchetype: 20,
+        mode: 'bounded-role-plus-strategy-search', exhaustiveWithinSafetyCeilings: false,
+        eligiblePoolCards: null, roleSearchResultCap: 40, strategySupplementalResultCapPerArchetype: 20,
         note: 'Unrestricted Upgrade keeps the bounded role-specific popularity search, then supplements it with a bounded search for each already-substantive inferred strategy before final role, legality, strategy, printing, and price ranking. This prevents the initial EDHREC slice from discarding all less-popular on-plan alternatives while keeping every search and final candidate count bounded.',
       };
 
@@ -650,30 +572,16 @@ export async function suggestDeckUpgrades(
     if (restrictedEligiblePool) {
       genericResults = restrictedUpgradeCandidatesForRoleV15(restrictedEligiblePool, deficit.role, existing, excluded, deficit.targetGate);
     } else if (query) {
-      try {
-        genericResults = await searchCards(query, 40);
-      } catch {
-        // Supplemental controlled-theme and substantive-strategy queries can still provide candidates below.
-      }
+      try { genericResults = await searchCards(query, 40); } catch {}
     }
 
     const supplementalStrategyRoleQueries: Array<{ archetype: string; query: string }> = [];
     let strategyResults: ScryfallCard[] = [];
     if (!restrictedPoolActive) {
       for (const strategy of substantiveStrategySearchClauses) {
-        const strategyQuery = strategyRoleSearchQuery(
-          deficit.role,
-          allowedIdentity,
-          strategy.clause,
-          printingPolicy,
-          deficit.targetGate,
-        );
+        const strategyQuery = strategyRoleSearchQuery(deficit.role, allowedIdentity, strategy.clause, printingPolicy, deficit.targetGate);
         supplementalStrategyRoleQueries.push({ archetype: strategy.archetype, query: strategyQuery });
-        try {
-          strategyResults = mergeCardsByName(strategyResults, await searchCards(strategyQuery, 20));
-        } catch {
-          // This is an additive recall path. Failure never proves the strategy has no candidates.
-        }
+        try { strategyResults = mergeCardsByName(strategyResults, await searchCards(strategyQuery, 20)); } catch {}
       }
     }
 
@@ -684,24 +592,15 @@ export async function suggestDeckUpgrades(
       try {
         themedResults = await searchCards(themedQuery, 40);
         for (const card of themedResults) themeCandidateNames.add(card.name.toLocaleLowerCase());
-      } catch {
-        // Generic structural discovery remains usable. Final theme truth is independently audited.
-      }
+      } catch {}
     }
 
-    const results = restrictedPoolActive
-      ? genericResults
-      : mergeCardsByName(themedResults, strategyResults, genericResults);
+    const results = restrictedPoolActive ? genericResults : mergeCardsByName(themedResults, strategyResults, genericResults);
     const roleMatchesBeforeExistingExclusions = restrictedEligiblePool
-      ? restrictedEligiblePool
-        .filter((card) => !card.type_line.toLowerCase().includes('land'))
-        .filter((card) => card.legalities.commander === 'legal')
-        .filter((card) => cardMatchesRole(card, deficit.role, deficit.targetGate)).length
+      ? restrictedEligiblePool.filter((card) => !card.type_line.toLowerCase().includes('land')).filter((card) => card.legalities.commander === 'legal').filter((card) => cardMatchesRole(card, deficit.role, deficit.targetGate)).length
       : null;
-    const candidatesForPriority = deficit.prioritySource === 'authoritative-target-gate'
-      && authoritativeTargetGatePriorities.length > 1
-      ? Math.min(3, maxCandidates)
-      : maxCandidates;
+    const candidatesForPriority = deficit.prioritySource === 'authoritative-target-gate' && authoritativeTargetGatePriorities.length > 1
+      ? Math.min(3, maxCandidates) : maxCandidates;
     const ranked = results
       .filter((card) => !card.type_line.toLowerCase().includes('land'))
       .filter((card) => !existing.has(card.name.toLocaleLowerCase()))
@@ -712,17 +611,14 @@ export async function suggestDeckUpgrades(
         const aStrategy = candidateStrategyPriorityV15(a, strategyContext);
         const bStrategy = candidateStrategyPriorityV15(b, strategyContext);
         if (componentAwareThemeRanking) {
-          // For compound themes, substantive commander strategy remains the first candidate tier.
-          // Component affinity is deliberately bounded and advisory inside that tier so it cannot
-          // override structural-role eligibility or turn theme purity into a hard requirement.
-          if (aStrategy.substantive !== bStrategy.substantive) return bStrategy.substantive ? 1 : -1;
-          if (aStrategy.substantive && aStrategy.score !== bStrategy.score) return bStrategy.score - aStrategy.score;
           const aComponent = componentAffinityForCard(a).score;
           const bComponent = componentAffinityForCard(b).score;
+          // The explicit resolved request is the strongest positive signal among structurally
+          // eligible candidates. Inferred strategy remains the secondary tie-break/fallback.
           if (aComponent !== bComponent) return bComponent - aComponent;
+          if (aStrategy.substantive !== bStrategy.substantive) return bStrategy.substantive ? 1 : -1;
+          if (aStrategy.substantive && aStrategy.score !== bStrategy.score) return bStrategy.score - aStrategy.score;
         } else {
-          // Preserve the established single-theme behavior: controlled-theme membership remains
-          // an advisory tier, while final theme truth is still independently audited downstream.
           if (themeCandidateNames.size > 0) {
             const aTheme = themeCandidateNames.has(a.name.toLocaleLowerCase()) ? 1 : 0;
             const bTheme = themeCandidateNames.has(b.name.toLocaleLowerCase()) ? 1 : 0;
@@ -733,31 +629,27 @@ export async function suggestDeckUpgrades(
         }
         return candidateScore(b, deficit.role, strategyContext, deficit.target, deficit.targetGate)
           - candidateScore(a, deficit.role, strategyContext, deficit.target, deficit.targetGate)
-        || a.name.localeCompare(b.name);
+          || a.name.localeCompare(b.name);
       });
-    const candidateAvailability = ranked.length > 0
-      ? 'candidates-found'
-      : restrictedPoolActive
-        ? roleMatchesBeforeExistingExclusions === 0
-          ? 'no-eligible-role-cards-in-policy-pool'
-          : 'all-role-cards-already-present-or-excluded'
-        : 'no-candidates-after-search-filtering';
-    const rankedForPrinting = restrictedPoolActive
-      ? ranked.slice(0, Math.max(candidatesForPriority * 3, candidatesForPriority))
-      : ranked;
+    const candidateAvailability = ranked.length > 0 ? 'candidates-found'
+      : restrictedPoolActive ? roleMatchesBeforeExistingExclusions === 0 ? 'no-eligible-role-cards-in-policy-pool' : 'all-role-cards-already-present-or-excluded'
+      : 'no-candidates-after-search-filtering';
+    const rankedForPrinting = restrictedPoolActive ? ranked.slice(0, Math.max(candidatesForPriority * 3, candidatesForPriority)) : ranked;
 
-    const candidateSelectionLanes = strategyCompatibleCandidateLanesV15(
-      rankedForPrinting,
-      (card) => {
-        const strategy = candidateStrategyPriorityV15(card, strategyContext);
-        if (strategy.substantive) return true;
-        if (componentAwareThemeRanking) {
-          // Score 2 is the saturated component floor; 4+ indicates meaningful scarcity/deficit support.
-          return componentAffinityForCard(card).score >= 4;
-        }
-        return Boolean(themeClause) && themeCandidateNames.has(card.name.toLocaleLowerCase());
-      },
-    );
+    const candidateSelectionLanes = componentAwareThemeRanking
+      ? compoundComponentCandidateLanesV15(
+          rankedForPrinting,
+          (card) => componentAffinityForCard(card).score >= 4,
+          (card) => candidateStrategyPriorityV15(card, strategyContext).substantive,
+        )
+      : strategyCompatibleCandidateLanesV15(
+          rankedForPrinting,
+          (card) => {
+            const strategy = candidateStrategyPriorityV15(card, strategyContext);
+            if (strategy.substantive) return true;
+            return Boolean(themeClause) && themeCandidateNames.has(card.name.toLocaleLowerCase());
+          },
+        );
 
     const candidates: Array<Record<string, unknown>> = [];
     for (const candidateLane of candidateSelectionLanes) {
@@ -772,16 +664,13 @@ export async function suggestDeckUpgrades(
         const matchesControlledTheme = themeCandidateNames.has(card.name.toLocaleLowerCase());
         const componentAffinity = componentAffinityForCard(card);
         const strategyReason = matchedStrategies.length > 0
-          ? ` and also supports the existing V0.15 deck strategy signal${matchedStrategies.length === 1 ? '' : 's'}: ${matchedStrategies.join(', ')}`
-          : '';
+          ? ` and also supports the existing V0.15 deck strategy signal${matchedStrategies.length === 1 ? '' : 's'}: ${matchedStrategies.join(', ')}` : '';
         const themeReason = matchesControlledTheme && themeDeficit > 0
           ? ' It also helps close the current controlled theme-density deficit.'
           : componentAffinity.score > 0
-            ? ` It supports the compound-theme component balance (${componentAffinity.matchedComponentIds.join(', ')}) without becoming a hard theme requirement.`
-            : '';
+            ? ` It supports the compound-theme component balance (${componentAffinity.matchedComponentIds.join(', ')}) without becoming a hard theme requirement.` : '';
         const targetDirection = deficit.targetGate === 'average-nonland-mv'
-          ? `${deficit.current} must fall to ${deficit.target} or lower`
-          : `${deficit.current} must rise to ${deficit.target} or higher`;
+          ? `${deficit.current} must fall to ${deficit.target} or lower` : `${deficit.current} must rise to ${deficit.target} or higher`;
         const targetReason = deficit.prioritySource === 'authoritative-target-gate'
           ? `Advances the currently failed authoritative Bracket-${targetBracket} ${deficit.targetGate} gate (${targetDirection})`
           : `Addresses the detected ${deficit.role} deficit`;
@@ -790,102 +679,61 @@ export async function suggestDeckUpgrades(
           score: Number(candidateScore(card, deficit.role, strategyContext, deficit.target, deficit.targetGate).toFixed(1)),
           authoritativeTargetGate: deficit.prioritySource === 'authoritative-target-gate' ? deficit.targetGate : null,
           strategyAffinity: {
-            score: Number(affinity.score.toFixed(1)),
-            protectionApplied: Number(Math.min(4, substantiveAffinityScore).toFixed(1)),
-            matchedStrategies,
-            matches: affinity.matches,
+            score: Number(affinity.score.toFixed(1)), protectionApplied: Number(Math.min(4, substantiveAffinityScore).toFixed(1)),
+            matchedStrategies, matches: affinity.matches,
           },
           explicitTheme: {
-            matchesControlledTheme,
-            currentMainMatches: themeCurrentMainMatches,
-            requiredMainMatches: themeMinimumMainMatches,
-            deficitBeforeSwap: themeDeficit,
-            componentAffinityScore: componentAffinity.score,
+            matchesControlledTheme, currentMainMatches: themeCurrentMainMatches, requiredMainMatches: themeMinimumMainMatches,
+            deficitBeforeSwap: themeDeficit, componentAffinityScore: componentAffinity.score,
             matchedComponentIds: componentAffinity.matchedComponentIds,
           },
           recommendedPrinting: {
-            set: printing.card.set.toUpperCase(),
-            setName: printing.card.set_name,
-            collectorNumber: printing.card.collector_number,
-            releaseDate: printing.card.released_at ?? null,
-            finish: printing.finish,
-            priceUsd: printing.priceUsd,
-            promo: Boolean(printing.card.promo),
-            promoTypes: printing.card.promo_types ?? [],
-            flavorName: printing.card.flavor_name ?? null,
-            familyMatch: printing.matchedBy,
-            scryfallUrl: printing.card.scryfall_uri,
+            set: printing.card.set.toUpperCase(), setName: printing.card.set_name, collectorNumber: printing.card.collector_number,
+            releaseDate: printing.card.released_at ?? null, finish: printing.finish, priceUsd: printing.priceUsd,
+            promo: Boolean(printing.card.promo), promoTypes: printing.card.promo_types ?? [], flavorName: printing.card.flavor_name ?? null,
+            familyMatch: printing.matchedBy, scryfallUrl: printing.card.scryfall_uri,
           },
           whyItFits: `${targetReason}${strategyReason}. The recommended physical printing satisfies the active printing-family/set policy.${themeReason}`,
         });
       }
-      // Do not pad a successful identity-aligned lane with generic role cards. Generic cards are a
-      // fallback only when the aligned lane yields zero actually eligible printings.
       if (candidates.length > laneStartCount) break;
     }
 
     candidateGroups.push({
-      ...deficit,
-      candidateDiscoveryMode: candidateDiscovery.mode,
-      candidateAvailability,
-      roleMatchesBeforeExistingExclusions,
-      searchQuery: query,
-      supplementalStrategyRoleQueries,
-      supplementalThemeRoleQuery: themedQuery,
-      candidates,
+      ...deficit, candidateDiscoveryMode: candidateDiscovery.mode, candidateAvailability, roleMatchesBeforeExistingExclusions,
+      searchQuery: query, supplementalStrategyRoleQueries, supplementalThemeRoleQuery: themedQuery, candidates,
     });
   }
 
   return {
-    targetBracket,
-    targetPressure,
-    currentMetrics,
-    structuralTargets: targets,
-    structuralDeficits: deficits,
-    authoritativeTargetGatePriorities,
-    candidateGenerationPriorities: candidatePriorities,
-    candidateDiscovery,
+    targetBracket, targetPressure, currentMetrics, structuralTargets: targets, structuralDeficits: deficits,
+    authoritativeTargetGatePriorities, candidateGenerationPriorities: candidatePriorities, candidateDiscovery,
     candidateAddsByDeficit: candidateGroups,
     candidateCuts: cutCandidates(
-      parsed,
-      cards,
-      strategyContext,
-      themeCandidateNames,
+      parsed, cards, strategyContext, themeCandidateNames,
       themeMinimumMainMatches > 0 && themeCurrentMainMatches <= themeMinimumMainMatches,
       authoritativeTargetGatePriorities.some((priority) => priority.targetGate === 'average-nonland-mv'),
     ),
     controlledThemeSelection: {
-      active: Boolean(themeClause),
-      queryClause: themeClause || null,
-      searchQuery: controlledThemeSearchQuery,
-      currentMainMatches: themeCurrentMainMatches,
-      requiredMainMatches: themeMinimumMainMatches,
-      deficit: themeDeficit,
-      discoveredThemeCandidateNames: themeCandidateNames.size,
-      supplementalRoleSearchesEnabled: themeDeficit > 0 && Boolean(themeClause),
-      componentAwareRanking: componentAwareThemeRanking,
-      componentSignals: themeComponents,
-      componentSearchQueries: themeComponentSearchQueries,
+      active: Boolean(themeClause), queryClause: themeClause || null, searchQuery: controlledThemeSearchQuery,
+      currentMainMatches: themeCurrentMainMatches, requiredMainMatches: themeMinimumMainMatches, deficit: themeDeficit,
+      discoveredThemeCandidateNames: themeCandidateNames.size, supplementalRoleSearchesEnabled: themeDeficit > 0 && Boolean(themeClause),
+      componentAwareRanking: componentAwareThemeRanking, componentSignals: themeComponents, componentSearchQueries: themeComponentSearchQueries,
     },
     constraints: {
-      maxUsdPerCard: options.maxUsdPerCard ?? null,
-      allowedSets: options.allowedSets ?? [],
-      printingFamily: options.printingFamily ?? null,
-      includePromos: options.includePromos ?? true,
-      includeSpecialReleases: options.includeSpecialReleases ?? true,
-      themeQuery: options.themeQuery ?? null,
-      excludedCards: options.excludedCards ?? [],
+      maxUsdPerCard: options.maxUsdPerCard ?? null, allowedSets: options.allowedSets ?? [], printingFamily: options.printingFamily ?? null,
+      includePromos: options.includePromos ?? true, includeSpecialReleases: options.includeSpecialReleases ?? true,
+      themeQuery: options.themeQuery ?? null, excludedCards: options.excludedCards ?? [],
     },
     printingPolicy: describePrintingPolicyV08(printingPolicy),
     pricingPolicy: {
       printingAware: true,
-      explanation:
-        'Candidates are tied to a qualifying physical printing with set code, collector number, finish, promo metadata, and price. A cheaper or more common unrelated printing of the same Oracle card cannot bypass a themed printing-family restriction.',
+      explanation: 'Candidates are tied to a qualifying physical printing with set code, collector number, finish, promo metadata, and price. A cheaper or more common unrelated printing of the same Oracle card cannot bypass a themed printing-family restriction.',
     },
     caveats: [
       'Role-count targets are engineering heuristics for deck consistency, but failed Bracket-4/5 construction gates now outrank aspirational role targets. When several authoritative gates are failing, candidate generation retains a small ranked backup set for each gate so downstream pairing can preserve gate diversity while trying strategy-safe alternatives.',
-      'Within an already-required structural role or target gate, candidates are first split into a strategy/identity-compatible lane and a generic structural fallback. Generic role-only cards are considered only when the aligned lane yields zero eligible printings after printing/price policy checks. Within the aligned lane, substantive commander strategy remains first-class and compound-theme component affinity stays bounded/advisory rather than becoming a hard theme requirement.',
-      'Unrestricted Upgrade supplements the bounded popularity-ordered role search with bounded per-archetype searches for strategies the starting deck has already proven substantive. The merged pool is still independently filtered by the requested structural gate, legality, printing policy, exclusions, price, and final candidate cap, so strategy search improves recall without bypassing construction constraints.',
+      'Within an already-required structural role or target gate, an explicit compound request now gets a distinct component-aligned first lane, followed by substantive inferred commander strategy and finally generic structural fallback. A later lane is considered only when the earlier lane yields zero eligible printings after printing/price policy checks.',
+      'Unrestricted Upgrade supplements the bounded popularity-ordered role search with bounded per-archetype searches for strategies the starting deck has already proven substantive. The spells-control recall path includes actual Instant/Sorcery card types as well as Oracle-text spell mechanisms.',
       'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window.',
       'When a V0.15 controlled theme is below its minimum density, the engine uses the controlled theme query as a positive membership/ranking signal. Under a printing restriction, only cards already admitted by the exhaustive shared eligible pool can become candidates.',
       'Cut ordering uses the same V0.15 commander strategy context as additions. When the deck is at or below its controlled theme minimum, matching cards also receive a capped four-point cut-protection signal; final theme preservation is still enforced independently by refinement rather than by this heuristic alone.',
