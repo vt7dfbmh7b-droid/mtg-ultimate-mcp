@@ -10,6 +10,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: bench01-anchor-full-validation-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   validate:
     runs-on: ubuntu-24.04
@@ -29,17 +33,24 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p test-results/bench01-anchor-priority-validation
-          cat > test-results/bench01-anchor-priority-validation/e06a95cb-validation.txt <<'EOF'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin "refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            mkdir -p test-results/bench01-anchor-priority-validation
+            cat > test-results/bench01-anchor-priority-validation/e06a95cb-validation.txt <<'EOF'
           BENCH-01 dominant compound-theme anchor validation
           frozen_product_src_sha=e06a95cb03d03a3dcce1adeee8339e0e6625efa4
           focused_regressions=green
           full_repository_check=green
           acceptance=provisional_pending_frozen_replay_and_manual_whole_deck_review
           EOF
-          git rm .github/workflows/bench01-anchor-full-validation.yml
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add test-results/bench01-anchor-priority-validation/e06a95cb-validation.txt
-          git commit -m 'BENCH-01: persist anchor repair validation evidence'
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+            git rm .github/workflows/bench01-anchor-full-validation.yml
+            git add test-results/bench01-anchor-priority-validation/e06a95cb-validation.txt
+            git commit -m 'BENCH-01: persist anchor repair validation evidence'
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "Anchor validation evidence persistence attempt ${attempt} lost a branch race; retrying against the latest head."
+          done
+          echo 'BENCH-01 anchor validation evidence persistence exhausted eight branch-race retries.' >&2
+          exit 1
