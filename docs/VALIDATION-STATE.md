@@ -6,7 +6,7 @@ Development checkpoint: `ff34b8d85412f56ac48144de9beec6c7503c3eb5`
 | Control | Claim level | Outcome | Tested source | Matches checkpoint | Metadata |
 |---|---|---|---|---|---|
 | PM-STATE-INTEGRITY | engineering+truth | pass | `77fc902b3ba92262bc6fcbb5dc9817699b12a176` | no | `test-results/project-management/integrity.txt` |
-| INTEL-01-POSITIVE | scenario-intelligence | pass | `5829b37b686255ba35d419b37be17095e54fb696` | no | `test-results/intel01-positive/run-metadata.txt` |
+| INTEL-01-POSITIVE | scenario-intelligence | pass | `4a7bbf616ac6826ec4ac979894f8752133af3bca` | no | `test-results/intel01-positive/run-metadata.txt` |
 | MARVEL-B5-REFINE | scenario-intelligence | fail | `60971af2f052f051cee1047733c22fac44d8eebe` | no | `test-results/marvel-bracket5/refine-run-metadata.txt` |
 | MARVEL-B5-BROAD | scenario-intelligence | fail | `60971af2f052f051cee1047733c22fac44d8eebe` | no | `test-results/marvel-bracket5-broad/run-metadata.txt` |
 | SCIONS-SPELLCRAFT-FF-ONLY | scenario-intelligence | pass | `e6850c8ffab7c52cf0f6e1d7bf0c323e14d76ad7` | no | `test-results/scions-spellcraft-ff-only/run-metadata.txt` |
