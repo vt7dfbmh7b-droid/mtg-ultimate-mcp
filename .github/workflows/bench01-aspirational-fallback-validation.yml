@@ -1,0 +1,52 @@
+name: BENCH-01 aspirational fallback immutable validation
+
+on:
+  push:
+    branches:
+      - agent/v15-native-deck-intelligence
+    paths:
+      - .github/workflows/bench01-aspirational-fallback-validation.yml
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/v15-native-deck-intelligence
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Verify frozen product source
+        run: git diff --exit-code 49ca828c3581c6992c270ade84012014a3c9d733 -- src
+      - name: Remove validation wrapper from test surface
+        run: rm .github/workflows/bench01-aspirational-fallback-validation.yml
+      - name: Focused regression
+        run: npx tsx --test src/services/upgrade-aspirational-fallback-v15.test.ts src/services/upgrade-strategy-compatible-lane-v15.test.ts src/services/replacement-identity-pairing-v15.test.ts
+      - name: Full immutable repository validation
+        run: npm run check
+      - name: Persist green validation evidence
+        run: |
+          mkdir -p test-results/bench01-aspirational-fallback-validation
+          cat > test-results/bench01-aspirational-fallback-validation/49ca828c-validation.txt <<'EOF'
+          product_source_sha=49ca828c3581c6992c270ade84012014a3c9d733
+          source_relationship=wrapper-descendant-src-verified-equal-to-product-sha
+          focused_regression=green
+          full_repository_check=green
+          product_acceptance=provisional-pending-frozen-multi-fixture-whole-deck-review
+          EOF
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add test-results/bench01-aspirational-fallback-validation/49ca828c-validation.txt .github/workflows/bench01-aspirational-fallback-validation.yml
+          git commit -m "test-results(BENCH-01): validate aspirational fallback repair [skip ci]"
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git pull --rebase origin agent/v15-native-deck-intelligence && git push origin HEAD:agent/v15-native-deck-intelligence && exit 0
+            sleep $((attempt * 2))
+          done
+          exit 1
