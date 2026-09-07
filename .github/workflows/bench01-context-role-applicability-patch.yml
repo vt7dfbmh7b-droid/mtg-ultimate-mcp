@@ -101,13 +101,14 @@ jobs:
           ''')
       - name: Focused regression
         run: npx tsx --test src/services/upgrade-context-role-applicability-v15.test.ts src/services/upgrade-aspirational-fallback-v15.test.ts src/services/upgrade-strategy-compatible-lane-v15.test.ts src/services/replacement-identity-pairing-v15.test.ts
+      - name: Retire temporary staging workflow before final-tree validation
+        run: rm .github/workflows/bench01-context-role-applicability-patch.yml
       - name: Full repository validation
         run: npm run check
-      - name: Commit repair and retire patch workflow
+      - name: Commit validated repair
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          rm .github/workflows/bench01-context-role-applicability-patch.yml
           git add src/services/upgrade.ts src/services/upgrade-context-role-applicability-v15.test.ts .github/workflows/bench01-context-role-applicability-patch.yml
           git commit -m "fix(BENCH-01): reject context-dead role candidates"
           for attempt in 1 2 3 4 5 6 7 8; do
