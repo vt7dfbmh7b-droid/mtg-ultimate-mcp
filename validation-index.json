@@ -148,19 +148,22 @@
       ],
       "metadataPath": "test-results/scions-spellcraft-ff-only/run-metadata.txt",
       "exists": true,
-      "sourceSha": "bafc023828fadafa811757e0e04e56a70beecdeb",
-      "outcome": "pass",
+      "sourceSha": "3f4509083eef7fe1bf1cc74f9c6adee1caeb8d9b",
+      "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "bafc023828fadafa811757e0e04e56a70beecdeb",
+        "source_sha": "3f4509083eef7fe1bf1cc74f9c6adee1caeb8d9b",
         "build_outcome": "success",
-        "mechanic_test_outcome": "success",
-        "control_outcome": "success",
+        "mechanic_test_outcome": "failure",
+        "control_outcome": "skipped",
         "policy": "scions-spellcraft-final-fantasy-no-new-infinite",
         "target_bracket": "4",
         "strategy": "yshtola-spells-control-drain"
       },
-      "unmetPassConditions": []
+      "unmetPassConditions": [
+        "control_outcome=success",
+        "mechanic_test_outcome=success"
+      ]
     },
     {
       "id": "MIDDLE-EARTH-PRECON-REFINE",
