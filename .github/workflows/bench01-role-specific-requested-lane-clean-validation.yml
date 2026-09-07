@@ -1,4 +1,4 @@
-name: BENCH-01 Role-Specific Requested Lane Clean Validation
+name: BENCH-01 Context Role Applicability Clean Validation
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
       - .github/workflows/bench01-role-specific-requested-lane-clean-validation.yml
 
 concurrency:
-  group: bench01-role-specific-requested-lane-clean-validation
+  group: bench01-context-role-applicability-clean-validation
   cancel-in-progress: false
 
 jobs:
@@ -23,8 +23,8 @@ jobs:
           node-version-file: .node-version
       - run: npm ci
       - name: Verify immutable Commander source
-        run: git diff --exit-code 6686f2892e93cc571ee9e4f7717bb5f0156bd301 -- src
-      - name: Focused cross-archetype regressions
-        run: npx tsx --test src/services/upgrade-strategy-compatible-lane-v15.test.ts src/services/upgrade-theme-component-affinity-v15.test.ts
+        run: git diff --exit-code b2839a76282d94a1c194a62c33b17d4c28656ac7 -- src
+      - name: Focused context-applicability regressions
+        run: npx tsx --test src/services/upgrade-context-role-applicability-v15.test.ts src/services/upgrade-aspirational-fallback-v15.test.ts src/services/upgrade-strategy-compatible-lane-v15.test.ts src/services/replacement-identity-pairing-v15.test.ts
       - name: Full repository validation
         run: npm run check
