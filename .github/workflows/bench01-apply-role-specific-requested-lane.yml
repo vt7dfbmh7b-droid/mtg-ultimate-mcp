@@ -1,0 +1,45 @@
+name: BENCH-01 Apply Role-Specific Requested Lane
+
+on:
+  push:
+    branches:
+      - agent/v15-native-deck-intelligence
+    paths:
+      - .github/workflows/bench01-apply-role-specific-requested-lane.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bench01-role-specific-requested-lane
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+      - run: npm ci
+      - name: Apply generic role-specific requested-lane repair
+        run: python3 scripts/bench01-apply-role-specific-requested-lane.py
+      - name: Run focused regressions
+        run: npx tsx --test src/services/upgrade-strategy-compatible-lane-v15.test.ts src/services/upgrade-theme-component-affinity-v15.test.ts
+      - name: Commit product repair
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rm .github/workflows/bench01-apply-role-specific-requested-lane.yml scripts/bench01-apply-role-specific-requested-lane.py
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/services/upgrade.ts src/services/upgrade-strategy-compatible-lane-v15.test.ts
+          git commit -m 'BENCH-01: preserve role-specific requested identity lane'
+          for attempt in 1 2 3; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep $((attempt * 2))
+          done
+          exit 1
