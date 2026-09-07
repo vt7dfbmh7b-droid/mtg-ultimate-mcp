@@ -13,7 +13,7 @@ Development checkpoint: `ff34b8d85412f56ac48144de9beec6c7503c3eb5`
 | MIDDLE-EARTH-PRECON-REFINE | scenario-intelligence | pass | `e6850c8ffab7c52cf0f6e1d7bf0c323e14d76ad7` | no | `test-results/middle-earth-precon-refine/run-metadata.txt` |
 | PRECON-GENERALIZATION | scenario-intelligence | pass | `e6850c8ffab7c52cf0f6e1d7bf0c323e14d76ad7` | no | `test-results/precon-generalization/run-metadata.txt` |
 | STRATEGY-INFERENCE-GENERALIZATION | engineering+truth | pass | `5829b37b686255ba35d419b37be17095e54fb696` | no | `test-results/strategy-inference-generalization/run-metadata.txt` |
-| SQUIRRELED-AWAY-GENERALIZATION | scenario-intelligence | pass | `e6850c8ffab7c52cf0f6e1d7bf0c323e14d76ad7` | no | `test-results/precon-generalization-squirrels/run-metadata.txt` |
+| SQUIRRELED-AWAY-GENERALIZATION | scenario-intelligence | pass | `4a7bbf616ac6826ec4ac979894f8752133af3bca` | no | `test-results/precon-generalization-squirrels/run-metadata.txt` |
 
 ## Interpretation
 
