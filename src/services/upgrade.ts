@@ -16,7 +16,7 @@ import {
   selectEligiblePrintingV08,
   type ResolvedPrintingPolicyV08,
 } from './printing-policy-v08.js';
-import { searchCards, summarizeCard } from './scryfall.js';
+import { getCardOracleText, searchCards, summarizeCard } from './scryfall.js';
 
 export interface UpgradeThemeComponentSignalV15 {
   id: string;
@@ -290,6 +290,35 @@ function strategyRoleSearchQuery(
   return ['f:commander', identityQuery(identity), '-t:land', roleClause(role, targetGate), strategyClause, printingPolicy.searchClause]
     .filter(Boolean)
     .join(' ');
+}
+
+export function costReductionApplicableToCommanderIdentityV15(
+  oracleText: string,
+  allowedIdentity: readonly string[],
+): boolean {
+  const normalized = oracleText.toLocaleLowerCase();
+  if (!normalized.includes('cost') || !normalized.includes('less')) return true;
+  const colorSymbols: Record<string, string> = { white: 'W', blue: 'U', black: 'B', red: 'R', green: 'G' };
+  const restricted = new Set<string>();
+  for (const match of normalized.matchAll(/\b(white|blue|black|red|green)\b[^.\n]{0,100}\bspells? you cast\b[^.\n]{0,100}\bcost\b[^.\n]{0,80}\bless\b/g)) {
+    const symbol = match[1] ? colorSymbols[match[1]] : undefined;
+    if (symbol) restricted.add(symbol);
+  }
+  if (restricted.size == 0) return true;
+  const identity = new Set(allowedIdentity.map((color) => color.toLocaleUpperCase()));
+  return [...restricted].some((color) => identity.has(color));
+}
+
+export function cardRoleApplicableToDeckContextV15(
+  card: ScryfallCard,
+  role: string,
+  allowedIdentity: readonly string[],
+): boolean {
+  if (role !== 'ramp') return true;
+  const roles = new Set(effectiveCardRolesV15(card));
+  if (!roles.has('cost reduction')) return true;
+  if (roles.has('mana acceleration') || roles.has('land ramp')) return true;
+  return costReductionApplicableToCommanderIdentityV15(getCardOracleText(card), allowedIdentity);
 }
 
 function cardMatchesRole(card: ScryfallCard, role: string, targetGate: UpgradeTargetGateV15 | null = null): boolean {
@@ -666,6 +695,7 @@ export async function suggestDeckUpgrades(
       .filter((card) => !excluded.has(card.name.toLocaleLowerCase()))
       .filter((card) => card.legalities.commander === 'legal')
       .filter((card) => cardMatchesRole(card, deficit.role, deficit.targetGate))
+      .filter((card) => cardRoleApplicableToDeckContextV15(card, deficit.role, allowedIdentity))
       .sort((a, b) => {
         const aStrategy = candidateStrategyPriorityV15(a, strategyContext);
         const bStrategy = candidateStrategyPriorityV15(b, strategyContext);
