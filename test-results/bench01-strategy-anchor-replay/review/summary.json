@@ -1,7 +1,7 @@
 {
   "schema": "bench01-adaptive-diversification-replay-v2",
   "batch": "BENCH-01-STRATEGY-ANCHOR-REPLAY",
-  "productRuntimeBaselineSha": "a2bacce2a70e3ccdf0faca5dd96501fa8f5adc31",
+  "productRuntimeBaselineSha": "e06a95cb03d03a3dcce1adeee8339e0e6625efa4",
   "sourceFrozenWithinBatch": true,
   "results": [
     {
@@ -9,7 +9,7 @@
       "family": "spellslinger-control",
       "reference": "Quick Draw",
       "themeQuery": "spellslinger card draw countermagic",
-      "totalSwaps": 8,
+      "totalSwaps": 10,
       "assessedBracket": 3,
       "before": {
         "cardCount": 100,
@@ -81,16 +81,16 @@
         "assessedBracket": 3,
         "assessedBand": "bracket-3-upgraded-range",
         "metrics": {
-          "averageNonlandManaValue": 3.06,
-          "earlyPlayCount": 31,
+          "averageNonlandManaValue": 2.85,
+          "earlyPlayCount": 35,
           "fastManaCount": 1,
-          "cheapInteractionCount": 6,
+          "cheapInteractionCount": 7,
           "tutorCount": 2,
           "recursionCount": 8,
           "boardWipeCount": 1,
-          "rampCount": 18,
-          "drawCount": 21,
-          "interactionCount": 10,
+          "rampCount": 17,
+          "drawCount": 20,
+          "interactionCount": 11,
           "protectionCount": 2
         },
         "postBuildEvidence": {
@@ -103,13 +103,13 @@
             "verifiedWinningCombos": 0,
             "ruthlessWinningCombos": 0,
             "strategicallyRelevantCombos": 1,
-            "averageNonlandManaValue": 3.06,
-            "earlyPlayCount": 31,
+            "averageNonlandManaValue": 2.85,
+            "earlyPlayCount": 35,
             "fastManaCount": 1,
             "freeInteractionCount": 2,
-            "cheapInteractionCount": 6,
+            "cheapInteractionCount": 7,
             "tutorCount": 2,
-            "gameChangerCount": 1,
+            "gameChangerCount": 2,
             "efficientWinConditionEvidence": false,
             "cedhIntent": false,
             "competitiveMetagameEvidence": false,
@@ -129,23 +129,22 @@
           "ruthlessWinningCombos": 0,
           "strategicallyRelevantCombos": 1,
           "gameChangerNames": [
+            "Cyclonic Rift",
             "Mystical Tutor"
           ]
         }
       },
       "terminalRound": {
-        "round": 3,
+        "round": 4,
         "accepted": false,
         "acceptedSwaps": 0,
-        "candidatePackagesGenerated": 6,
+        "candidatePackagesGenerated": 4,
         "candidatePackagesEligible": 0,
         "candidateAttemptSizes": [
-          4,
-          3,
           2,
           1
         ],
-        "candidatePackagesGeneratedAcrossAttempts": 24,
+        "candidatePackagesGeneratedAcrossAttempts": 8,
         "winningCandidate": null,
         "estimatedSpendNzd": 0,
         "estimatedSpendUsdReference": 0,
@@ -160,9 +159,9 @@
           "status": "satisfied",
           "satisfied": true,
           "canonicalLabel": "Instants and sorceries / spellslinger + Card draw + Countermagic",
-          "matchedMainCards": 45,
+          "matchedMainCards": 47,
           "requiredMainMatches": 18,
-          "mainCoverage": 0.45454545454545453
+          "mainCoverage": 0.47474747474747475
         },
         "stopReason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate"
       },
@@ -183,21 +182,32 @@
             "round": 2,
             "accepted": true,
             "candidatePackagesGenerated": 6,
-            "candidatePackagesGeneratedAcrossAttempts": 6,
+            "candidatePackagesGeneratedAcrossAttempts": 18,
             "candidateAttemptSizes": [
-              4
+              4,
+              3,
+              2
             ],
-            "winningCandidate": 1,
+            "winningCandidate": 2,
             "stopReason": null
           },
           {
             "round": 3,
-            "accepted": false,
+            "accepted": true,
             "candidatePackagesGenerated": 6,
-            "candidatePackagesGeneratedAcrossAttempts": 24,
+            "candidatePackagesGeneratedAcrossAttempts": 6,
             "candidateAttemptSizes": [
-              4,
-              3,
+              4
+            ],
+            "winningCandidate": 3,
+            "stopReason": null
+          },
+          {
+            "round": 4,
+            "accepted": false,
+            "candidatePackagesGenerated": 4,
+            "candidatePackagesGeneratedAcrossAttempts": 8,
+            "candidateAttemptSizes": [
               2,
               1
             ],
@@ -205,7 +215,7 @@
             "stopReason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate"
           }
         ],
-        "totalPackagesGeneratedAcrossAttempts": 36
+        "totalPackagesGeneratedAcrossAttempts": 38
       },
       "acceptedSwaps": [
         {
@@ -216,7 +226,7 @@
             "set": "FIC",
             "collectorNumber": "267",
             "finish": "nonfoil",
-            "priceNzd": 5.14,
+            "priceNzd": 5.13,
             "priceUsdReference": 3.02
           },
           "structuralPairing": {
@@ -260,8 +270,8 @@
             "set": "TSR",
             "collectorNumber": "77",
             "finish": "nonfoil",
-            "priceNzd": 29.9,
-            "priceUsdReference": 17.58
+            "priceNzd": 29.93,
+            "priceUsdReference": 17.6
           },
           "structuralPairing": {
             "addressedRole": "interaction",
@@ -298,38 +308,35 @@
         },
         {
           "out": "Windfall",
-          "in": "Vexing Puzzlebox",
-          "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: big-mana. The recommended physical printing satisfies the active printing-family/set policy.",
+          "in": "Mystical Tutor",
+          "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: spells-control. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Instants and sorceries / spellslinger) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "CLB",
-            "collectorNumber": "343",
+            "set": "DMR",
+            "collectorNumber": "289",
             "finish": "nonfoil",
-            "priceNzd": 15.22,
-            "priceUsdReference": 8.95
+            "priceNzd": 28.21,
+            "priceUsdReference": 16.59
           },
           "structuralPairing": {
             "addressedRole": "tutor",
             "remainingStructuralDeficitAfterSwap": 18,
             "authoritativeTargetGate": "tutors",
             "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 6,
+            "persistentColoredManaSourcesAfterSwap": 5,
             "persistentColoredManaSourceFloor": 4,
             "strategyPreservation": {
               "cutStrategyAffinityScore": 0,
-              "addStrategyAffinityScore": 6,
+              "addStrategyAffinityScore": 5,
               "cutStrategyProtectionApplied": 0,
               "cutMatchedStrategies": [],
               "addMatchedStrategies": [
-                "big-mana"
+                "spells-control"
               ],
               "locallyUnreplacedStrategies": [],
               "cutRoles": [
                 "wheel"
               ],
               "addRoles": [
-                "mana acceleration",
-                "mana rock",
-                "persistent colored mana source",
                 "tutor"
               ],
               "unreplacedRoles": [
@@ -357,7 +364,7 @@
             "remainingStructuralDeficitAfterSwap": 17,
             "authoritativeTargetGate": null,
             "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 6,
+            "persistentColoredManaSourcesAfterSwap": 5,
             "persistentColoredManaSourceFloor": 4,
             "strategyPreservation": {
               "cutStrategyAffinityScore": 1,
@@ -386,22 +393,60 @@
           }
         },
         {
-          "out": "Crackling Spellslinger",
-          "in": "Counterspell",
-          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.16 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: spells-control. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Instants and sorceries / spellslinger, Countermagic) without becoming a hard theme requirement.",
+          "out": "Chaos Warp",
+          "in": "Swan Song",
+          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Instants and sorceries / spellslinger, Countermagic) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "DMR",
-            "collectorNumber": "281",
-            "finish": "foil",
-            "priceNzd": 3.66,
-            "priceUsdReference": 2.15
+            "set": "THS",
+            "collectorNumber": "65",
+            "finish": "nonfoil",
+            "priceNzd": 17.02,
+            "priceUsdReference": 10.01
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
-            "remainingStructuralDeficitAfterSwap": 16,
+            "remainingStructuralDeficitAfterSwap": 17,
             "authoritativeTargetGate": "average-nonland-mv",
-            "nonlandManaValueReduction": 3,
-            "persistentColoredManaSourcesAfterSwap": 6,
+            "nonlandManaValueReduction": 2,
+            "persistentColoredManaSourcesAfterSwap": 5,
+            "persistentColoredManaSourceFloor": 4,
+            "strategyPreservation": {
+              "cutStrategyAffinityScore": 1,
+              "addStrategyAffinityScore": 1,
+              "cutStrategyProtectionApplied": 1,
+              "cutMatchedStrategies": [
+                "value-engine"
+              ],
+              "addMatchedStrategies": [
+                "value-engine"
+              ],
+              "locallyUnreplacedStrategies": [],
+              "cutRoles": [],
+              "addRoles": [],
+              "unreplacedRoles": [],
+              "unreplacedStrategyComponentRoles": [],
+              "meaningfulStrategyLoss": false,
+              "verdict": "preserved"
+            }
+          }
+        },
+        {
+          "out": "Crackling Spellslinger",
+          "in": "Mental Misstep",
+          "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (4 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: spells-control. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Instants and sorceries / spellslinger, Countermagic) without becoming a hard theme requirement.",
+          "recommendedPrinting": {
+            "set": "MB2",
+            "collectorNumber": "30",
+            "finish": "nonfoil",
+            "priceNzd": 9.86,
+            "priceUsdReference": 5.8
+          },
+          "structuralPairing": {
+            "addressedRole": "interaction",
+            "remainingStructuralDeficitAfterSwap": 16,
+            "authoritativeTargetGate": "cheap-interaction",
+            "nonlandManaValueReduction": null,
+            "persistentColoredManaSourcesAfterSwap": 5,
             "persistentColoredManaSourceFloor": 4,
             "strategyPreservation": {
               "cutStrategyAffinityScore": 5,
@@ -419,7 +464,8 @@
               ],
               "addRoles": [
                 "cheap interaction",
-                "countermagic"
+                "countermagic",
+                "free interaction"
               ],
               "unreplacedRoles": [
                 "creature"
@@ -431,39 +477,38 @@
           }
         },
         {
-          "out": "Smoldering Stagecoach",
-          "in": "Mental Misstep",
-          "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (4 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: spells-control. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Instants and sorceries / spellslinger, Countermagic) without becoming a hard theme requirement.",
+          "out": "Curse of the Swine",
+          "in": "Red Elemental Blast",
+          "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Instants and sorceries / spellslinger, Countermagic) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "MB2",
-            "collectorNumber": "30",
+            "set": "SUM",
+            "collectorNumber": "171",
             "finish": "nonfoil",
-            "priceNzd": 9.86,
-            "priceUsdReference": 5.8
+            "priceNzd": 3.25,
+            "priceUsdReference": 1.91
           },
           "structuralPairing": {
             "addressedRole": "interaction",
             "remainingStructuralDeficitAfterSwap": 15,
             "authoritativeTargetGate": "cheap-interaction",
             "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 6,
+            "persistentColoredManaSourcesAfterSwap": 5,
             "persistentColoredManaSourceFloor": 4,
             "strategyPreservation": {
-              "cutStrategyAffinityScore": 5,
-              "addStrategyAffinityScore": 8,
-              "cutStrategyProtectionApplied": 4,
+              "cutStrategyAffinityScore": 1,
+              "addStrategyAffinityScore": 1,
+              "cutStrategyProtectionApplied": 1,
               "cutMatchedStrategies": [
-                "spells-control"
+                "value-engine"
               ],
               "addMatchedStrategies": [
-                "spells-control"
+                "value-engine"
               ],
               "locallyUnreplacedStrategies": [],
               "cutRoles": [],
               "addRoles": [
                 "cheap interaction",
-                "countermagic",
-                "free interaction"
+                "spot interaction"
               ],
               "unreplacedRoles": [],
               "unreplacedStrategyComponentRoles": [],
@@ -473,39 +518,50 @@
           }
         },
         {
-          "out": "Leyline Dowser",
-          "in": "Mystical Tutor",
-          "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: spells-control. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Instants and sorceries / spellslinger) without becoming a hard theme requirement.",
+          "out": "Dig Through Time",
+          "in": "Sanar, Unfinished Genius // Wild Idea",
+          "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signals: spells-control, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
           "recommendedPrinting": {
-            "set": "DMR",
-            "collectorNumber": "289",
+            "set": "SOS",
+            "collectorNumber": "223",
             "finish": "nonfoil",
-            "priceNzd": 28.21,
-            "priceUsdReference": 16.59
+            "priceNzd": 0.43,
+            "priceUsdReference": 0.25
           },
           "structuralPairing": {
             "addressedRole": "tutor",
             "remainingStructuralDeficitAfterSwap": 14,
             "authoritativeTargetGate": "tutors",
             "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 6,
+            "persistentColoredManaSourcesAfterSwap": 5,
             "persistentColoredManaSourceFloor": 4,
             "strategyPreservation": {
-              "cutStrategyAffinityScore": 5,
-              "addStrategyAffinityScore": 5,
+              "cutStrategyAffinityScore": 4,
+              "addStrategyAffinityScore": 15,
               "cutStrategyProtectionApplied": 4,
               "cutMatchedStrategies": [
-                "spells-control"
+                "value-engine"
               ],
               "addMatchedStrategies": [
-                "spells-control"
+                "spells-control",
+                "value-engine"
               ],
               "locallyUnreplacedStrategies": [],
-              "cutRoles": [],
+              "cutRoles": [
+                "card selection",
+                "graveyard utility"
+              ],
               "addRoles": [
+                "creature",
+                "repeatable token engine",
+                "token production",
+                "treasure",
                 "tutor"
               ],
-              "unreplacedRoles": [],
+              "unreplacedRoles": [
+                "card selection",
+                "graveyard utility"
+              ],
               "unreplacedStrategyComponentRoles": [],
               "meaningfulStrategyLoss": false,
               "verdict": "preserved"
@@ -513,7 +569,7 @@
           }
         },
         {
-          "out": "Curse of the Swine",
+          "out": "Smoldering Stagecoach",
           "in": "Sword of Wealth and Power",
           "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signals: spells-control, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
           "recommendedPrinting": {
@@ -528,14 +584,14 @@
             "remainingStructuralDeficitAfterSwap": 13,
             "authoritativeTargetGate": null,
             "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 6,
+            "persistentColoredManaSourcesAfterSwap": 5,
             "persistentColoredManaSourceFloor": 4,
             "strategyPreservation": {
-              "cutStrategyAffinityScore": 1,
+              "cutStrategyAffinityScore": 5,
               "addStrategyAffinityScore": 17,
-              "cutStrategyProtectionApplied": 1,
+              "cutStrategyProtectionApplied": 4,
               "cutMatchedStrategies": [
-                "value-engine"
+                "spells-control"
               ],
               "addMatchedStrategies": [
                 "spells-control",
@@ -556,6 +612,47 @@
               "verdict": "preserved"
             }
           }
+        },
+        {
+          "out": "Baral's Expertise",
+          "in": "Cyclonic Rift",
+          "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Instants and sorceries / spellslinger) without becoming a hard theme requirement.",
+          "recommendedPrinting": {
+            "set": "RTR",
+            "collectorNumber": "35",
+            "finish": "nonfoil",
+            "priceNzd": 47.76,
+            "priceUsdReference": 28.09
+          },
+          "structuralPairing": {
+            "addressedRole": "interaction",
+            "remainingStructuralDeficitAfterSwap": 12,
+            "authoritativeTargetGate": "cheap-interaction",
+            "nonlandManaValueReduction": null,
+            "persistentColoredManaSourcesAfterSwap": 5,
+            "persistentColoredManaSourceFloor": 4,
+            "strategyPreservation": {
+              "cutStrategyAffinityScore": 6,
+              "addStrategyAffinityScore": 6,
+              "cutStrategyProtectionApplied": 0,
+              "cutMatchedStrategies": [
+                "value-engine"
+              ],
+              "addMatchedStrategies": [
+                "value-engine"
+              ],
+              "locallyUnreplacedStrategies": [],
+              "cutRoles": [],
+              "addRoles": [
+                "cheap interaction",
+                "spot interaction"
+              ],
+              "unreplacedRoles": [],
+              "unreplacedStrategyComponentRoles": [],
+              "meaningfulStrategyLoss": false,
+              "verdict": "preserved"
+            }
+          }
         }
       ]
     },
@@ -565,7 +662,7 @@
       "reference": "Virtue and Valor",
       "themeQuery": "enchantments combat card draw",
       "totalSwaps": 8,
-      "assessedBracket": 2,
+      "assessedBracket": 3,
       "before": {
         "cardCount": 100,
         "commanderLegal": true,
@@ -633,19 +730,19 @@
         "commanderNames": [
           "Ellivere of the Wild Court"
         ],
-        "assessedBracket": 2,
-        "assessedBand": "bracket-2-core-range",
+        "assessedBracket": 3,
+        "assessedBand": "bracket-3-upgraded-range",
         "metrics": {
-          "averageNonlandManaValue": 3.1,
+          "averageNonlandManaValue": 3.13,
           "earlyPlayCount": 26,
           "fastManaCount": 1,
-          "cheapInteractionCount": 3,
+          "cheapInteractionCount": 4,
           "tutorCount": 2,
           "recursionCount": 3,
           "boardWipeCount": 3,
           "rampCount": 11,
-          "drawCount": 16,
-          "interactionCount": 7,
+          "drawCount": 14,
+          "interactionCount": 8,
           "protectionCount": 2
         },
         "postBuildEvidence": {
@@ -658,11 +755,11 @@
             "verifiedWinningCombos": 0,
             "ruthlessWinningCombos": 0,
             "strategicallyRelevantCombos": 0,
-            "averageNonlandManaValue": 3.1,
+            "averageNonlandManaValue": 3.13,
             "earlyPlayCount": 26,
             "fastManaCount": 1,
             "freeInteractionCount": 0,
-            "cheapInteractionCount": 3,
+            "cheapInteractionCount": 4,
             "tutorCount": 2,
             "gameChangerCount": 0,
             "efficientWinConditionEvidence": false,
@@ -713,11 +810,11 @@
           "status": "satisfied",
           "satisfied": true,
           "canonicalLabel": "Enchantments + Combat / attacks + Card draw",
-          "matchedMainCards": 36,
+          "matchedMainCards": 35,
           "requiredMainMatches": 18,
-          "mainCoverage": 0.36363636363636365
+          "mainCoverage": 0.35353535353535354
         },
-        "stopReason": "all-competing-packages-below-improvement-threshold"
+        "stopReason": "all-competing-packages-would-regress-a-required-compound-theme-component"
       },
       "candidateWork": {
         "rounds": [
@@ -729,7 +826,7 @@
             "candidateAttemptSizes": [
               4
             ],
-            "winningCandidate": 4,
+            "winningCandidate": 1,
             "stopReason": null
           },
           {
@@ -740,7 +837,7 @@
             "candidateAttemptSizes": [
               4
             ],
-            "winningCandidate": 6,
+            "winningCandidate": 5,
             "stopReason": null
           },
           {
@@ -755,7 +852,7 @@
               1
             ],
             "winningCandidate": null,
-            "stopReason": "all-competing-packages-below-improvement-threshold"
+            "stopReason": "all-competing-packages-would-regress-a-required-compound-theme-component"
           }
         ],
         "totalPackagesGeneratedAcrossAttempts": 36
@@ -763,25 +860,25 @@
       "acceptedSwaps": [
         {
           "out": "Angelic Destiny",
-          "in": "Skullclamp",
-          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.31 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
+          "in": "Sylvan Library",
+          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.31 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments, Card draw) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "FIC",
-            "collectorNumber": "355",
+            "set": "SLD",
+            "collectorNumber": "2058",
             "finish": "nonfoil",
-            "priceNzd": 9.93,
-            "priceUsdReference": 5.84
+            "priceNzd": 44.02,
+            "priceUsdReference": 25.89
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
             "remainingStructuralDeficitAfterSwap": 22,
             "authoritativeTargetGate": "average-nonland-mv",
-            "nonlandManaValueReduction": 3,
+            "nonlandManaValueReduction": 2,
             "persistentColoredManaSourcesAfterSwap": 2,
             "persistentColoredManaSourceFloor": 2,
             "strategyPreservation": {
               "cutStrategyAffinityScore": 0,
-              "addStrategyAffinityScore": 14,
+              "addStrategyAffinityScore": 1,
               "cutStrategyProtectionApplied": 0,
               "cutMatchedStrategies": [],
               "addMatchedStrategies": [
@@ -789,12 +886,7 @@
               ],
               "locallyUnreplacedStrategies": [],
               "cutRoles": [],
-              "addRoles": [
-                "card draw",
-                "death-trigger draw engine",
-                "equipment",
-                "repeatable draw"
-              ],
+              "addRoles": [],
               "unreplacedRoles": [],
               "unreplacedStrategyComponentRoles": [],
               "meaningfulStrategyLoss": false,
@@ -804,14 +896,14 @@
         },
         {
           "out": "Timber Paladin",
-          "in": "Warping Wail",
-          "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (1 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+          "in": "Reprieve",
+          "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (1 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "OGW",
-            "collectorNumber": "12",
+            "set": "LTR",
+            "collectorNumber": "26",
             "finish": "nonfoil",
-            "priceNzd": 0.82,
-            "priceUsdReference": 0.48
+            "priceNzd": 3.38,
+            "priceUsdReference": 1.99
           },
           "structuralPairing": {
             "addressedRole": "interaction",
@@ -822,22 +914,20 @@
             "persistentColoredManaSourceFloor": 2,
             "strategyPreservation": {
               "cutStrategyAffinityScore": 0,
-              "addStrategyAffinityScore": 6,
+              "addStrategyAffinityScore": 5,
               "cutStrategyProtectionApplied": 0,
               "cutMatchedStrategies": [],
               "addMatchedStrategies": [
-                "combat-tokens"
+                "value-engine"
               ],
               "locallyUnreplacedStrategies": [],
               "cutRoles": [
                 "creature"
               ],
               "addRoles": [
+                "card draw",
                 "cheap interaction",
-                "conditional mana acceleration",
-                "self sacrifice",
-                "spot interaction",
-                "token production"
+                "spot interaction"
               ],
               "unreplacedRoles": [
                 "creature"
@@ -856,8 +946,8 @@
             "set": "FIN",
             "collectorNumber": "201",
             "finish": "nonfoil",
-            "priceNzd": 0.51,
-            "priceUsdReference": 0.3
+            "priceNzd": 0.48,
+            "priceUsdReference": 0.28
           },
           "structuralPairing": {
             "addressedRole": "tutor",
@@ -900,63 +990,15 @@
           }
         },
         {
-          "out": "Shalai, Voice of Plenty",
-          "in": "Veil of Summer",
-          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.31 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
-          "recommendedPrinting": {
-            "set": "MB2",
-            "collectorNumber": "75",
-            "finish": "nonfoil",
-            "priceNzd": 5.54,
-            "priceUsdReference": 3.26
-          },
-          "structuralPairing": {
-            "addressedRole": "average-nonland-mv",
-            "remainingStructuralDeficitAfterSwap": 19,
-            "authoritativeTargetGate": "average-nonland-mv",
-            "nonlandManaValueReduction": 3,
-            "persistentColoredManaSourcesAfterSwap": 3,
-            "persistentColoredManaSourceFloor": 3,
-            "strategyPreservation": {
-              "cutStrategyAffinityScore": 0,
-              "addStrategyAffinityScore": 5,
-              "cutStrategyProtectionApplied": 0,
-              "cutMatchedStrategies": [],
-              "addMatchedStrategies": [
-                "value-engine"
-              ],
-              "locallyUnreplacedStrategies": [],
-              "cutRoles": [
-                "+1/+1 counters",
-                "board protection",
-                "creature",
-                "protection"
-              ],
-              "addRoles": [
-                "board protection",
-                "card draw",
-                "protection"
-              ],
-              "unreplacedRoles": [
-                "+1/+1 counters",
-                "creature"
-              ],
-              "unreplacedStrategyComponentRoles": [],
-              "meaningfulStrategyLoss": false,
-              "verdict": "preserved"
-            }
-          }
-        },
-        {
           "out": "Loamcrafter Faun",
-          "in": "Sram, Senior Edificer",
-          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.18 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
+          "in": "Springheart Nantuko",
+          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.31 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "SOC",
-            "collectorNumber": "176",
+            "set": "MH3",
+            "collectorNumber": "171",
             "finish": "nonfoil",
-            "priceNzd": 2.53,
-            "priceUsdReference": 1.49
+            "priceNzd": 9.5,
+            "priceUsdReference": 5.59
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -967,10 +1009,11 @@
             "persistentColoredManaSourceFloor": 3,
             "strategyPreservation": {
               "cutStrategyAffinityScore": 0,
-              "addStrategyAffinityScore": 14,
+              "addStrategyAffinityScore": 10,
               "cutStrategyProtectionApplied": 0,
               "cutMatchedStrategies": [],
               "addMatchedStrategies": [
+                "combat-tokens",
                 "value-engine"
               ],
               "locallyUnreplacedStrategies": [],
@@ -979,10 +1022,9 @@
                 "graveyard recursion"
               ],
               "addRoles": [
-                "card draw",
                 "creature",
-                "equipment",
-                "repeatable draw"
+                "etb synergy",
+                "token production"
               ],
               "unreplacedRoles": [
                 "graveyard recursion"
@@ -994,15 +1036,58 @@
           }
         },
         {
+          "out": "Celestial Archon",
+          "in": "Spirited Companion",
+          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.23 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments) without becoming a hard theme requirement.",
+          "recommendedPrinting": {
+            "set": "PLST",
+            "collectorNumber": "NEO-38",
+            "finish": "nonfoil",
+            "priceNzd": 0.34,
+            "priceUsdReference": 0.2
+          },
+          "structuralPairing": {
+            "addressedRole": "average-nonland-mv",
+            "remainingStructuralDeficitAfterSwap": 19,
+            "authoritativeTargetGate": "average-nonland-mv",
+            "nonlandManaValueReduction": 3,
+            "persistentColoredManaSourcesAfterSwap": 3,
+            "persistentColoredManaSourceFloor": 3,
+            "strategyPreservation": {
+              "cutStrategyAffinityScore": 1,
+              "addStrategyAffinityScore": 5,
+              "cutStrategyProtectionApplied": 1,
+              "cutMatchedStrategies": [
+                "value-engine"
+              ],
+              "addMatchedStrategies": [
+                "value-engine"
+              ],
+              "locallyUnreplacedStrategies": [],
+              "cutRoles": [
+                "creature"
+              ],
+              "addRoles": [
+                "card draw",
+                "creature"
+              ],
+              "unreplacedRoles": [],
+              "unreplacedStrategyComponentRoles": [],
+              "meaningfulStrategyLoss": false,
+              "verdict": "preserved"
+            }
+          }
+        },
+        {
           "out": "Spectral Steel",
-          "in": "Battle Menu",
+          "in": "Personify",
           "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (2 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
           "recommendedPrinting": {
-            "set": "FIN",
-            "collectorNumber": "9",
+            "set": "ECL",
+            "collectorNumber": "402",
             "finish": "nonfoil",
-            "priceNzd": 0.37,
-            "priceUsdReference": 0.22
+            "priceNzd": 0.43,
+            "priceUsdReference": 0.25
           },
           "structuralPairing": {
             "addressedRole": "interaction",
@@ -1090,43 +1175,39 @@
           }
         },
         {
-          "out": "Celestial Archon",
-          "in": "Archivist of Oghma",
-          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.18 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
+          "out": "Songbirds' Blessing",
+          "in": "Battle Menu",
+          "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (2 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
           "recommendedPrinting": {
-            "set": "CLB",
-            "collectorNumber": "4",
+            "set": "FIN",
+            "collectorNumber": "9",
             "finish": "nonfoil",
-            "priceNzd": 11.14,
-            "priceUsdReference": 6.55
+            "priceNzd": 0.37,
+            "priceUsdReference": 0.22
           },
           "structuralPairing": {
-            "addressedRole": "average-nonland-mv",
-            "remainingStructuralDeficitAfterSwap": 16,
-            "authoritativeTargetGate": "average-nonland-mv",
-            "nonlandManaValueReduction": 3,
+            "addressedRole": "interaction",
+            "remainingStructuralDeficitAfterSwap": 15,
+            "authoritativeTargetGate": "cheap-interaction",
+            "nonlandManaValueReduction": null,
             "persistentColoredManaSourcesAfterSwap": 4,
             "persistentColoredManaSourceFloor": 4,
             "strategyPreservation": {
-              "cutStrategyAffinityScore": 1,
-              "addStrategyAffinityScore": 14,
-              "cutStrategyProtectionApplied": 1,
+              "cutStrategyAffinityScore": 2,
+              "addStrategyAffinityScore": 6,
+              "cutStrategyProtectionApplied": 2,
               "cutMatchedStrategies": [
-                "value-engine"
+                "combat-tokens"
               ],
               "addMatchedStrategies": [
-                "value-engine"
+                "combat-tokens"
               ],
               "locallyUnreplacedStrategies": [],
-              "cutRoles": [
-                "creature"
-              ],
+              "cutRoles": [],
               "addRoles": [
-                "card draw",
-                "creature",
-                "life-gain-triggered draw engine",
-                "repeatable draw",
-                "repeatable life gain engine"
+                "cheap interaction",
+                "spot interaction",
+                "token production"
               ],
               "unreplacedRoles": [],
               "unreplacedStrategyComponentRoles": [],
@@ -1361,8 +1442,8 @@
             "set": "PLST",
             "collectorNumber": "AFR-81",
             "finish": "nonfoil",
-            "priceNzd": 5.42,
-            "priceUsdReference": 3.19
+            "priceNzd": 5.41,
+            "priceUsdReference": 3.18
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -1589,8 +1670,8 @@
             "set": "C20",
             "collectorNumber": "169",
             "finish": "nonfoil",
-            "priceNzd": 5.49,
-            "priceUsdReference": 3.23
+            "priceNzd": 5.53,
+            "priceUsdReference": 3.25
           },
           "structuralPairing": {
             "addressedRole": "tutor",
@@ -1635,7 +1716,7 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.02,
+            "priceNzd": 36.01,
             "priceUsdReference": 21.18
           },
           "structuralPairing": {
@@ -1679,8 +1760,8 @@
             "set": "WAR",
             "collectorNumber": "72",
             "finish": "nonfoil",
-            "priceNzd": 0.58,
-            "priceUsdReference": 0.34
+            "priceNzd": 0.63,
+            "priceUsdReference": 0.37
           },
           "structuralPairing": {
             "addressedRole": "interaction",
@@ -1839,15 +1920,15 @@
         "assessedBracket": 2,
         "assessedBand": "bracket-2-core-range",
         "metrics": {
-          "averageNonlandManaValue": 3.35,
+          "averageNonlandManaValue": 3.27,
           "earlyPlayCount": 15,
           "fastManaCount": 2,
           "cheapInteractionCount": 3,
-          "tutorCount": 3,
-          "recursionCount": 7,
+          "tutorCount": 2,
+          "recursionCount": 6,
           "boardWipeCount": 1,
-          "rampCount": 14,
-          "drawCount": 13,
+          "rampCount": 13,
+          "drawCount": 12,
           "interactionCount": 14,
           "protectionCount": 3
         },
@@ -1861,12 +1942,12 @@
             "verifiedWinningCombos": 0,
             "ruthlessWinningCombos": 0,
             "strategicallyRelevantCombos": 0,
-            "averageNonlandManaValue": 3.35,
+            "averageNonlandManaValue": 3.27,
             "earlyPlayCount": 15,
             "fastManaCount": 2,
             "freeInteractionCount": 0,
             "cheapInteractionCount": 3,
-            "tutorCount": 3,
+            "tutorCount": 2,
             "gameChangerCount": 0,
             "efficientWinConditionEvidence": false,
             "cedhIntent": false,
@@ -1890,19 +1971,19 @@
         }
       },
       "terminalRound": {
-        "round": 3,
+        "round": 4,
         "accepted": true,
-        "acceptedSwaps": 4,
+        "acceptedSwaps": 1,
         "candidatePackagesGenerated": 6,
         "candidatePackagesEligible": 6,
         "candidateAttemptSizes": [
-          4
+          1
         ],
         "candidatePackagesGeneratedAcrossAttempts": 6,
-        "winningCandidate": 3,
-        "estimatedSpendNzd": 39.32,
-        "estimatedSpendUsdReference": 23.12,
-        "improvementScore": 15.746,
+        "winningCandidate": 4,
+        "estimatedSpendNzd": 0.58,
+        "estimatedSpendUsdReference": 0.34,
+        "improvementScore": 6.957,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -1913,9 +1994,9 @@
           "status": "satisfied",
           "satisfied": true,
           "canonicalLabel": "Elf typal + Tokens + Combat / attacks",
-          "matchedMainCards": 46,
+          "matchedMainCards": 47,
           "requiredMainMatches": 20,
-          "mainCoverage": 0.46464646464646464
+          "mainCoverage": 0.47474747474747475
         }
       },
       "candidateWork": {
@@ -1924,11 +2005,12 @@
             "round": 1,
             "accepted": true,
             "candidatePackagesGenerated": 6,
-            "candidatePackagesGeneratedAcrossAttempts": 6,
+            "candidatePackagesGeneratedAcrossAttempts": 12,
             "candidateAttemptSizes": [
-              4
+              4,
+              3
             ],
-            "winningCandidate": 2,
+            "winningCandidate": 4,
             "stopReason": null
           },
           {
@@ -1939,7 +2021,7 @@
             "candidateAttemptSizes": [
               4
             ],
-            "winningCandidate": 4,
+            "winningCandidate": 6,
             "stopReason": null
           },
           {
@@ -1950,29 +2032,40 @@
             "candidateAttemptSizes": [
               4
             ],
-            "winningCandidate": 3,
+            "winningCandidate": 4,
+            "stopReason": null
+          },
+          {
+            "round": 4,
+            "accepted": true,
+            "candidatePackagesGenerated": 6,
+            "candidatePackagesGeneratedAcrossAttempts": 6,
+            "candidateAttemptSizes": [
+              1
+            ],
+            "winningCandidate": 4,
             "stopReason": null
           }
         ],
-        "totalPackagesGeneratedAcrossAttempts": 18
+        "totalPackagesGeneratedAcrossAttempts": 30
       },
       "acceptedSwaps": [
         {
           "out": "Ruthless Winnower",
-          "in": "Dreadhorde Invasion",
+          "in": "Bloodforged Battle-Axe",
           "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.6 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Combat / attacks) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "DRC",
-            "collectorNumber": "91",
-            "finish": "nonfoil",
-            "priceNzd": 0.78,
-            "priceUsdReference": 0.46
+            "set": "PIP",
+            "collectorNumber": "226",
+            "finish": "foil",
+            "priceNzd": 2.43,
+            "priceUsdReference": 1.43
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
             "remainingStructuralDeficitAfterSwap": 27,
             "authoritativeTargetGate": "average-nonland-mv",
-            "nonlandManaValueReduction": 3,
+            "nonlandManaValueReduction": 4,
             "persistentColoredManaSourcesAfterSwap": 8,
             "persistentColoredManaSourceFloor": 4,
             "strategyPreservation": {
@@ -1988,7 +2081,8 @@
                 "creature"
               ],
               "addRoles": [
-                "+1/+1 counters",
+                "equipment",
+                "repeatable token engine",
                 "token production"
               ],
               "unreplacedRoles": [
@@ -2002,14 +2096,14 @@
         },
         {
           "out": "Eyeblight Massacre",
-          "in": "Pawpatch Formation",
+          "in": "Savor",
           "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (0 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: combat-tokens, food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
           "recommendedPrinting": {
             "set": "BLB",
-            "collectorNumber": "186",
+            "collectorNumber": "109",
             "finish": "nonfoil",
-            "priceNzd": 0.61,
-            "priceUsdReference": 0.36
+            "priceNzd": 0.31,
+            "priceUsdReference": 0.18
           },
           "structuralPairing": {
             "addressedRole": "interaction",
@@ -2030,8 +2124,6 @@
               "locallyUnreplacedStrategies": [],
               "cutRoles": [],
               "addRoles": [
-                "artifact/enchantment interaction",
-                "card draw",
                 "cheap interaction",
                 "spot interaction",
                 "token production"
@@ -2051,7 +2143,7 @@
             "set": "EXO",
             "collectorNumber": "55",
             "finish": "nonfoil",
-            "priceNzd": 11.96,
+            "priceNzd": 11.95,
             "priceUsdReference": 7.03
           },
           "structuralPairing": {
@@ -2088,75 +2180,26 @@
           }
         },
         {
-          "out": "Twinblade Assassins",
-          "in": "Transmutation Font",
-          "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signals: combat-tokens, food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
-          "recommendedPrinting": {
-            "set": "PW24",
-            "collectorNumber": "11",
-            "finish": "foil",
-            "priceNzd": 2.31,
-            "priceUsdReference": 1.36
-          },
-          "structuralPairing": {
-            "addressedRole": "tutor",
-            "remainingStructuralDeficitAfterSwap": 22,
-            "authoritativeTargetGate": "tutors",
-            "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 8,
-            "persistentColoredManaSourceFloor": 4,
-            "strategyPreservation": {
-              "cutStrategyAffinityScore": 0,
-              "addStrategyAffinityScore": 13,
-              "cutStrategyProtectionApplied": 0,
-              "cutMatchedStrategies": [],
-              "addMatchedStrategies": [
-                "combat-tokens",
-                "food-lifegain"
-              ],
-              "locallyUnreplacedStrategies": [],
-              "cutRoles": [
-                "card draw",
-                "creature",
-                "repeatable draw"
-              ],
-              "addRoles": [
-                "repeatable token engine",
-                "token production",
-                "tutor"
-              ],
-              "unreplacedRoles": [
-                "card draw",
-                "creature",
-                "repeatable draw"
-              ],
-              "unreplacedStrategyComponentRoles": [],
-              "meaningfulStrategyLoss": false,
-              "verdict": "preserved"
-            }
-          }
-        },
-        {
           "out": "Wirewood Channeler",
-          "in": "Deadly Dispute",
-          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.48 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Tokens) without becoming a hard theme requirement.",
+          "in": "Not Dead After All",
+          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.46 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Tokens) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "MSC",
-            "collectorNumber": "794",
+            "set": "WOE",
+            "collectorNumber": "101",
             "finish": "nonfoil",
-            "priceNzd": 0.46,
-            "priceUsdReference": 0.27
+            "priceNzd": 2.48,
+            "priceUsdReference": 1.46
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
             "remainingStructuralDeficitAfterSwap": 21,
             "authoritativeTargetGate": "average-nonland-mv",
-            "nonlandManaValueReduction": 2,
+            "nonlandManaValueReduction": 3,
             "persistentColoredManaSourcesAfterSwap": 8,
             "persistentColoredManaSourceFloor": 4,
             "strategyPreservation": {
               "cutStrategyAffinityScore": 0,
-              "addStrategyAffinityScore": 13,
+              "addStrategyAffinityScore": 15,
               "cutStrategyProtectionApplied": 0,
               "cutMatchedStrategies": [],
               "addMatchedStrategies": [
@@ -2169,11 +2212,10 @@
                 "mana dork"
               ],
               "addRoles": [
-                "card draw",
-                "conditional mana acceleration",
-                "sacrifice synergy",
-                "token production",
-                "treasure"
+                "graveyard recursion",
+                "life drain",
+                "protection",
+                "token production"
               ],
               "unreplacedRoles": [
                 "creature",
@@ -2187,8 +2229,187 @@
         },
         {
           "out": "Abomination of Llanowar",
+          "in": "Bone Shards",
+          "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (1 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: aristocrats. The recommended physical printing satisfies the active printing-family/set policy.",
+          "recommendedPrinting": {
+            "set": "PLST",
+            "collectorNumber": "MH2-76",
+            "finish": "nonfoil",
+            "priceNzd": 0.32,
+            "priceUsdReference": 0.19
+          },
+          "structuralPairing": {
+            "addressedRole": "interaction",
+            "remainingStructuralDeficitAfterSwap": 19,
+            "authoritativeTargetGate": "cheap-interaction",
+            "nonlandManaValueReduction": null,
+            "persistentColoredManaSourcesAfterSwap": 8,
+            "persistentColoredManaSourceFloor": 4,
+            "strategyPreservation": {
+              "cutStrategyAffinityScore": 0,
+              "addStrategyAffinityScore": 7,
+              "cutStrategyProtectionApplied": 0,
+              "cutMatchedStrategies": [],
+              "addMatchedStrategies": [
+                "aristocrats"
+              ],
+              "locallyUnreplacedStrategies": [],
+              "cutRoles": [
+                "creature"
+              ],
+              "addRoles": [
+                "cheap interaction",
+                "sacrifice synergy",
+                "spot interaction"
+              ],
+              "unreplacedRoles": [
+                "creature"
+              ],
+              "unreplacedStrategyComponentRoles": [],
+              "meaningfulStrategyLoss": false,
+              "verdict": "preserved"
+            }
+          }
+        },
+        {
+          "out": "Voice of the Woods",
+          "in": "Transmutation Font",
+          "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signals: combat-tokens, food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
+          "recommendedPrinting": {
+            "set": "PW24",
+            "collectorNumber": "11",
+            "finish": "foil",
+            "priceNzd": 2.31,
+            "priceUsdReference": 1.36
+          },
+          "structuralPairing": {
+            "addressedRole": "tutor",
+            "remainingStructuralDeficitAfterSwap": 18,
+            "authoritativeTargetGate": "tutors",
+            "nonlandManaValueReduction": null,
+            "persistentColoredManaSourcesAfterSwap": 8,
+            "persistentColoredManaSourceFloor": 4,
+            "strategyPreservation": {
+              "cutStrategyAffinityScore": 6,
+              "addStrategyAffinityScore": 13,
+              "cutStrategyProtectionApplied": 4,
+              "cutMatchedStrategies": [
+                "combat-tokens"
+              ],
+              "addMatchedStrategies": [
+                "combat-tokens",
+                "food-lifegain"
+              ],
+              "locallyUnreplacedStrategies": [],
+              "cutRoles": [
+                "creature",
+                "repeatable token engine",
+                "token production"
+              ],
+              "addRoles": [
+                "repeatable token engine",
+                "token production",
+                "tutor"
+              ],
+              "unreplacedRoles": [
+                "creature"
+              ],
+              "unreplacedStrategyComponentRoles": [],
+              "meaningfulStrategyLoss": false,
+              "verdict": "preserved"
+            }
+          }
+        },
+        {
+          "out": "Bounty of Skemfar",
+          "in": "Sword of Hearth and Home",
+          "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Combat / attacks) without becoming a hard theme requirement.",
+          "recommendedPrinting": {
+            "set": "TMC",
+            "collectorNumber": "136",
+            "finish": "foil",
+            "priceNzd": 24.04,
+            "priceUsdReference": 14.14
+          },
+          "structuralPairing": {
+            "addressedRole": "protection",
+            "remainingStructuralDeficitAfterSwap": 16,
+            "authoritativeTargetGate": null,
+            "nonlandManaValueReduction": null,
+            "persistentColoredManaSourcesAfterSwap": 9,
+            "persistentColoredManaSourceFloor": 4,
+            "strategyPreservation": {
+              "cutStrategyAffinityScore": 0,
+              "addStrategyAffinityScore": 2,
+              "cutStrategyProtectionApplied": 0,
+              "cutMatchedStrategies": [],
+              "addMatchedStrategies": [
+                "combat-tokens"
+              ],
+              "locallyUnreplacedStrategies": [],
+              "cutRoles": [],
+              "addRoles": [
+                "equipment",
+                "land ramp",
+                "land tutor",
+                "persistent colored mana source",
+                "protection",
+                "spot interaction"
+              ],
+              "unreplacedRoles": [],
+              "unreplacedStrategyComponentRoles": [],
+              "meaningfulStrategyLoss": false,
+              "verdict": "preserved"
+            }
+          }
+        },
+        {
+          "out": "Crown of Skemfar",
+          "in": "Dreadhorde Invasion",
+          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Combat / attacks) without becoming a hard theme requirement.",
+          "recommendedPrinting": {
+            "set": "DRC",
+            "collectorNumber": "91",
+            "finish": "nonfoil",
+            "priceNzd": 0.78,
+            "priceUsdReference": 0.46
+          },
+          "structuralPairing": {
+            "addressedRole": "average-nonland-mv",
+            "remainingStructuralDeficitAfterSwap": 15,
+            "authoritativeTargetGate": "average-nonland-mv",
+            "nonlandManaValueReduction": 2,
+            "persistentColoredManaSourcesAfterSwap": 9,
+            "persistentColoredManaSourceFloor": 4,
+            "strategyPreservation": {
+              "cutStrategyAffinityScore": 0,
+              "addStrategyAffinityScore": 8,
+              "cutStrategyProtectionApplied": 0,
+              "cutMatchedStrategies": [],
+              "addMatchedStrategies": [
+                "combat-tokens"
+              ],
+              "locallyUnreplacedStrategies": [],
+              "cutRoles": [
+                "graveyard recursion"
+              ],
+              "addRoles": [
+                "+1/+1 counters",
+                "token production"
+              ],
+              "unreplacedRoles": [
+                "graveyard recursion"
+              ],
+              "unreplacedStrategyComponentRoles": [],
+              "meaningfulStrategyLoss": false,
+              "verdict": "preserved"
+            }
+          }
+        },
+        {
+          "out": "Jagged-Scar Archers",
           "in": "The Witch's Vanity",
-          "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (1 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: combat-tokens, food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
+          "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (2 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: combat-tokens, food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
           "recommendedPrinting": {
             "set": "WOE",
             "collectorNumber": "119",
@@ -2198,10 +2419,10 @@
           },
           "structuralPairing": {
             "addressedRole": "interaction",
-            "remainingStructuralDeficitAfterSwap": 19,
+            "remainingStructuralDeficitAfterSwap": 13,
             "authoritativeTargetGate": "cheap-interaction",
             "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 8,
+            "persistentColoredManaSourcesAfterSwap": 9,
             "persistentColoredManaSourceFloor": 4,
             "strategyPreservation": {
               "cutStrategyAffinityScore": 0,
@@ -2243,10 +2464,10 @@
           },
           "structuralPairing": {
             "addressedRole": "tutor",
-            "remainingStructuralDeficitAfterSwap": 18,
+            "remainingStructuralDeficitAfterSwap": 12,
             "authoritativeTargetGate": "tutors",
             "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 8,
+            "persistentColoredManaSourcesAfterSwap": 9,
             "persistentColoredManaSourceFloor": 4,
             "strategyPreservation": {
               "cutStrategyAffinityScore": 12,
@@ -2279,140 +2500,6 @@
           }
         },
         {
-          "out": "Bounty of Skemfar",
-          "in": "Sword of Hearth and Home",
-          "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Combat / attacks) without becoming a hard theme requirement.",
-          "recommendedPrinting": {
-            "set": "TMC",
-            "collectorNumber": "136",
-            "finish": "foil",
-            "priceNzd": 24.05,
-            "priceUsdReference": 14.14
-          },
-          "structuralPairing": {
-            "addressedRole": "protection",
-            "remainingStructuralDeficitAfterSwap": 16,
-            "authoritativeTargetGate": null,
-            "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 9,
-            "persistentColoredManaSourceFloor": 4,
-            "strategyPreservation": {
-              "cutStrategyAffinityScore": 0,
-              "addStrategyAffinityScore": 2,
-              "cutStrategyProtectionApplied": 0,
-              "cutMatchedStrategies": [],
-              "addMatchedStrategies": [
-                "combat-tokens"
-              ],
-              "locallyUnreplacedStrategies": [],
-              "cutRoles": [],
-              "addRoles": [
-                "equipment",
-                "land ramp",
-                "land tutor",
-                "persistent colored mana source",
-                "protection",
-                "spot interaction"
-              ],
-              "unreplacedRoles": [],
-              "unreplacedStrategyComponentRoles": [],
-              "meaningfulStrategyLoss": false,
-              "verdict": "preserved"
-            }
-          }
-        },
-        {
-          "out": "Ambition's Cost",
-          "in": "Not Dead After All",
-          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.43 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Tokens) without becoming a hard theme requirement.",
-          "recommendedPrinting": {
-            "set": "WOE",
-            "collectorNumber": "101",
-            "finish": "nonfoil",
-            "priceNzd": 2.48,
-            "priceUsdReference": 1.46
-          },
-          "structuralPairing": {
-            "addressedRole": "average-nonland-mv",
-            "remainingStructuralDeficitAfterSwap": 14,
-            "authoritativeTargetGate": "average-nonland-mv",
-            "nonlandManaValueReduction": 3,
-            "persistentColoredManaSourcesAfterSwap": 9,
-            "persistentColoredManaSourceFloor": 4,
-            "strategyPreservation": {
-              "cutStrategyAffinityScore": 0,
-              "addStrategyAffinityScore": 15,
-              "cutStrategyProtectionApplied": 0,
-              "cutMatchedStrategies": [],
-              "addMatchedStrategies": [
-                "aristocrats",
-                "combat-tokens"
-              ],
-              "locallyUnreplacedStrategies": [],
-              "cutRoles": [
-                "card draw"
-              ],
-              "addRoles": [
-                "graveyard recursion",
-                "life drain",
-                "protection",
-                "token production"
-              ],
-              "unreplacedRoles": [
-                "card draw"
-              ],
-              "unreplacedStrategyComponentRoles": [],
-              "meaningfulStrategyLoss": false,
-              "verdict": "preserved"
-            }
-          }
-        },
-        {
-          "out": "Jagged-Scar Archers",
-          "in": "Savor",
-          "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (2 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: combat-tokens, food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
-          "recommendedPrinting": {
-            "set": "BLB",
-            "collectorNumber": "109",
-            "finish": "nonfoil",
-            "priceNzd": 0.31,
-            "priceUsdReference": 0.18
-          },
-          "structuralPairing": {
-            "addressedRole": "interaction",
-            "remainingStructuralDeficitAfterSwap": 12,
-            "authoritativeTargetGate": "cheap-interaction",
-            "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 9,
-            "persistentColoredManaSourceFloor": 4,
-            "strategyPreservation": {
-              "cutStrategyAffinityScore": 0,
-              "addStrategyAffinityScore": 13,
-              "cutStrategyProtectionApplied": 0,
-              "cutMatchedStrategies": [],
-              "addMatchedStrategies": [
-                "combat-tokens",
-                "food-lifegain"
-              ],
-              "locallyUnreplacedStrategies": [],
-              "cutRoles": [
-                "creature"
-              ],
-              "addRoles": [
-                "cheap interaction",
-                "spot interaction",
-                "token production"
-              ],
-              "unreplacedRoles": [
-                "creature"
-              ],
-              "unreplacedStrategyComponentRoles": [],
-              "meaningfulStrategyLoss": false,
-              "verdict": "preserved"
-            }
-          }
-        },
-        {
           "out": "Pact of the Serpent",
           "in": "Sword of Fire and Ice",
           "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Combat / attacks) without becoming a hard theme requirement.",
@@ -2420,7 +2507,7 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.02,
+            "priceNzd": 36.01,
             "priceUsdReference": 21.18
           },
           "structuralPairing": {
@@ -2455,47 +2542,52 @@
           }
         },
         {
-          "out": "Shaman of the Pack",
-          "in": "Sidequest: Raise a Chocobo // Black Chocobo",
-          "why": "Addresses the detected tutor deficit and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+          "out": "Twinblade Assassins",
+          "in": "Gilded Goose",
+          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.33 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: combat-tokens, aristocrats, food-lifegain. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Tokens) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "FIN",
-            "collectorNumber": "201",
+            "set": "SOC",
+            "collectorNumber": "269",
             "finish": "nonfoil",
-            "priceNzd": 0.51,
-            "priceUsdReference": 0.3
+            "priceNzd": 0.58,
+            "priceUsdReference": 0.34
           },
           "structuralPairing": {
-            "addressedRole": "tutor",
-            "remainingStructuralDeficitAfterSwap": 8,
-            "authoritativeTargetGate": null,
-            "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 10,
+            "addressedRole": "average-nonland-mv",
+            "remainingStructuralDeficitAfterSwap": 9,
+            "authoritativeTargetGate": "average-nonland-mv",
+            "nonlandManaValueReduction": 4,
+            "persistentColoredManaSourcesAfterSwap": 9,
             "persistentColoredManaSourceFloor": 4,
             "strategyPreservation": {
               "cutStrategyAffinityScore": 0,
-              "addStrategyAffinityScore": 8,
+              "addStrategyAffinityScore": 20,
               "cutStrategyProtectionApplied": 0,
               "cutMatchedStrategies": [],
               "addMatchedStrategies": [
-                "combat-tokens"
+                "aristocrats",
+                "combat-tokens",
+                "food-lifegain"
               ],
               "locallyUnreplacedStrategies": [],
               "cutRoles": [
-                "creature"
+                "card draw",
+                "creature",
+                "repeatable draw"
               ],
               "addRoles": [
+                "conditional mana acceleration",
                 "creature",
-                "etb synergy",
-                "go-wide payoff",
-                "land ramp",
-                "land tutor",
-                "persistent colored mana source",
+                "delayed mana acceleration",
+                "narrow sacrifice outlet",
                 "repeatable token engine",
-                "token production",
-                "tutor"
+                "sacrifice synergy",
+                "token production"
               ],
-              "unreplacedRoles": [],
+              "unreplacedRoles": [
+                "card draw",
+                "repeatable draw"
+              ],
               "unreplacedStrategyComponentRoles": [],
               "meaningfulStrategyLoss": false,
               "verdict": "preserved"
@@ -2588,10 +2680,10 @@
           "tutorCount": 0,
           "recursionCount": 1,
           "boardWipeCount": 2,
-          "rampCount": 29,
+          "rampCount": 28,
           "drawCount": 14,
           "interactionCount": 8,
-          "protectionCount": 0
+          "protectionCount": 1
         },
         "postBuildEvidence": {
           "signals": {
@@ -2662,7 +2754,7 @@
           "requiredMainMatches": 18,
           "mainCoverage": 0.36363636363636365
         },
-        "stopReason": "all-competing-packages-would-break-a-required-compound-theme-component"
+        "stopReason": "all-competing-packages-below-improvement-threshold"
       },
       "candidateWork": {
         "rounds": [
@@ -2677,7 +2769,7 @@
               2,
               1
             ],
-            "winningCandidate": 1,
+            "winningCandidate": 6,
             "stopReason": null
           },
           {
@@ -2692,7 +2784,7 @@
               1
             ],
             "winningCandidate": null,
-            "stopReason": "all-competing-packages-would-break-a-required-compound-theme-component"
+            "stopReason": "all-competing-packages-below-improvement-threshold"
           }
         ],
         "totalPackagesGeneratedAcrossAttempts": 48
@@ -2700,21 +2792,21 @@
       "acceptedSwaps": [
         {
           "out": "Grothama, All-Devouring",
-          "in": "Sword of the Animist",
-          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (4.02 must fall to 3.1 or lower). The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Artifacts, Combat / attacks) without becoming a hard theme requirement.",
+          "in": "Swiftfoot Boots",
+          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (4.02 must fall to 3.1 or lower). The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Artifacts) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "MSC",
-            "collectorNumber": "289",
+            "set": "A25",
+            "collectorNumber": "234",
             "finish": "nonfoil",
-            "priceNzd": 5.54,
-            "priceUsdReference": 3.26
+            "priceNzd": 3.93,
+            "priceUsdReference": 2.31
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
-            "remainingStructuralDeficitAfterSwap": 20,
+            "remainingStructuralDeficitAfterSwap": 19,
             "authoritativeTargetGate": "average-nonland-mv",
             "nonlandManaValueReduction": 3,
-            "persistentColoredManaSourcesAfterSwap": 15,
+            "persistentColoredManaSourcesAfterSwap": 14,
             "persistentColoredManaSourceFloor": 4,
             "strategyPreservation": {
               "cutStrategyAffinityScore": 0,
@@ -2728,9 +2820,8 @@
               ],
               "addRoles": [
                 "equipment",
-                "land ramp",
-                "land tutor",
-                "persistent colored mana source"
+                "haste",
+                "protection"
               ],
               "unreplacedRoles": [
                 "creature"

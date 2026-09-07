@@ -4,7 +4,6 @@
 // MAIN
 1 Gylwain, Casting Director (WOC) 4 *F*
 1 Ox Drover (WOC) 6 *N*
-1 Songbirds' Blessing (WOC) 7 *N*
 1 Unfinished Business (WOC) 8 *N*
 1 Giant Inheritance (WOC) 17 *N*
 1 Knickknack Ouphe (WOC) 18 *N*
@@ -16,6 +15,7 @@
 1 Kor Spiritdancer (WOC) 69 *N*
 1 Mantle of the Ancients (WOC) 70 *N*
 1 Realm-Cloaked Giant // Cast Off (WOC) 71 *N*
+1 Shalai, Voice of Plenty (WOC) 74 *N*
 1 Starfield Mystic (WOC) 76 *N*
 1 Sun Titan (WOC) 77 *N*
 1 Timely Ward (WOC) 79 *N*
@@ -68,11 +68,11 @@
 7 Forest (WOE) 276 *N*
 7 Plains (WOE) 267 *N*
 7 Plains (WOE) 268 *N*
-1 Skullclamp (FIC) 355 *N*
-1 Warping Wail (OGW) 12 *N*
+1 Sylvan Library (SLD) 2058 *N*
+1 Reprieve (LTR) 26 *N*
 1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
-1 Veil of Summer (MB2) 75 *N*
-1 Sram, Senior Edificer (SOC) 176 *N*
-1 Battle Menu (FIN) 9 *N*
+1 Springheart Nantuko (MH3) 171 *N*
+1 Spirited Companion (PLST) NEO-38 *N*
+1 Personify (ECL) 402 *N*
 1 Hour of Promise (HOU) 120 *N*
-1 Archivist of Oghma (CLB) 4 *N*
+1 Battle Menu (FIN) 9 *N*
