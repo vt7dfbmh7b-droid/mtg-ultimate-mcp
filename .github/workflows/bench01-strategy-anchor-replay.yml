@@ -4,8 +4,13 @@ on:
   push:
     branches: ["agent/v15-native-deck-intelligence"]
     paths:
-      - ".github/workflows/bench01-strategy-anchor-replay.yml"
+      - ".automation/bench01-strategy-anchor-replay.request"
   workflow_dispatch:
+    inputs:
+      frozen_product_sha:
+        description: "Exact already-validated product SHA to replay"
+        required: true
+        type: string
 
 concurrency:
   group: bench01-strategy-anchor-replay-${{ github.ref }}
@@ -15,7 +20,6 @@ permissions:
   contents: write
 
 env:
-  FROZEN_PRODUCT_SHA: 00571713696977093fee717deecc2b26969e2643
   HTTP_RETRY_BASE_MS: 5000
   HTTP_RETRY_MAX_MS: 15000
   SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
@@ -30,11 +34,34 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 0
+      - name: Resolve requested frozen product SHA
+        shell: bash
+        env:
+          DISPATCH_SHA: ${{ inputs.frozen_product_sha }}
+        run: |
+          set -euo pipefail
+          if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+            requested="${DISPATCH_SHA:-}"
+            request_source="workflow_dispatch"
+          else
+            request_file=".automation/bench01-strategy-anchor-replay.request"
+            test -f "$request_file"
+            requested="$(tr -d '[:space:]' < "$request_file")"
+            request_source="$request_file"
+          fi
+          if [[ ! "$requested" =~ ^[0-9a-fA-F]{40}$ ]]; then
+            echo "Replay request must contain one exact 40-character commit SHA; got: $requested" >&2
+            exit 1
+          fi
+          requested="$(printf '%s' "$requested" | tr '[:upper:]' '[:lower:]')"
+          git cat-file -e "${requested}^{commit}"
+          echo "FROZEN_PRODUCT_SHA=$requested" >> "$GITHUB_ENV"
+          echo "REPLAY_REQUEST_SOURCE=$request_source" >> "$GITHUB_ENV"
+          echo "Resolved frozen product SHA $requested from $request_source."
       - name: Prove product source is frozen
         shell: bash
         run: |
           set -euo pipefail
-          git cat-file -e "${FROZEN_PRODUCT_SHA}^{commit}"
           git diff --quiet "$FROZEN_PRODUCT_SHA" HEAD -- src/
           echo "src/** exactly matches ${FROZEN_PRODUCT_SHA}."
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
@@ -85,6 +112,7 @@ jobs:
           fs.copyFileSync('strategy-anchor-replay.log', `${out}/control.log`);
           fs.writeFileSync(`${out}/run-metadata.txt`, [
             `product_runtime_baseline_sha=${process.env.FROZEN_PRODUCT_SHA}`,
+            `request_source=${process.env.REPLAY_REQUEST_SOURCE}`,
             'source_relationship=wrapper-descendant-src-verified-equal-to-frozen-product-sha',
             'formal_product_validation=focused-plus-full-suite-plus-build-green-before-replay',
             'bench_outcome=success',
