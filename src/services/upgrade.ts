@@ -376,15 +376,24 @@ export function compoundComponentCandidateLanesV15<T>(
   isComponentAligned: (candidate: T) => boolean,
   isStrategyCompatible: (candidate: T) => boolean,
   isAnchorAligned?: (candidate: T) => boolean,
+  isRequestedRoleAligned?: (candidate: T) => boolean,
 ): T[][] {
   const anchor = isAnchorAligned ? candidates.filter(isAnchorAligned) : [];
   const anchorSet = new Set(anchor);
   const component = candidates.filter((candidate) => !anchorSet.has(candidate) && isComponentAligned(candidate));
   const componentSet = new Set(component);
-  const strategy = candidates.filter((candidate) => !anchorSet.has(candidate) && !componentSet.has(candidate) && isStrategyCompatible(candidate));
+  // Role-specific requested-theme discovery is stronger evidence than broad inferred-strategy
+  // overlap. Keep it in its own lane so cards discovered by the exact requested mechanism +
+  // structural-role query cannot be demoted merely because they fell outside a bounded global
+  // component search window.
+  const requestedRole = isRequestedRoleAligned
+    ? candidates.filter((candidate) => !anchorSet.has(candidate) && !componentSet.has(candidate) && isRequestedRoleAligned(candidate))
+    : [];
+  const requestedRoleSet = new Set(requestedRole);
+  const strategy = candidates.filter((candidate) => !anchorSet.has(candidate) && !componentSet.has(candidate) && !requestedRoleSet.has(candidate) && isStrategyCompatible(candidate));
   const strategySet = new Set(strategy);
-  const generic = candidates.filter((candidate) => !anchorSet.has(candidate) && !componentSet.has(candidate) && !strategySet.has(candidate));
-  return [anchor, component, strategy, generic].filter((lane) => lane.length > 0);
+  const generic = candidates.filter((candidate) => !anchorSet.has(candidate) && !componentSet.has(candidate) && !requestedRoleSet.has(candidate) && !strategySet.has(candidate));
+  return [anchor, component, requestedRole, strategy, generic].filter((lane) => lane.length > 0);
 }
 
 /**
@@ -677,6 +686,7 @@ export async function suggestDeckUpgrades(
           (card) => componentAffinityForCard(card).score >= 4,
           (card) => candidateStrategyPriorityV15(card, strategyContext).substantive,
           (card) => anchorAffinityForCard(card) > 0,
+          (card) => themeCandidateNames.has(card.name.toLocaleLowerCase()),
         )
       : strategyCompatibleCandidateLanesV15(
           rankedForPrinting,
@@ -769,7 +779,7 @@ export async function suggestDeckUpgrades(
     },
     caveats: [
       'Role-count targets are engineering heuristics for deck consistency, but failed Bracket-4/5 construction gates now outrank aspirational role targets. When several authoritative gates are failing, candidate generation retains a small ranked backup set for each gate so downstream pairing can preserve gate diversity while trying strategy-safe alternatives.',
-      'Within an already-required structural role or target gate, an explicit compound request preserves the starting deck’s dominant requested component first, then considers other requested components, substantive inferred commander strategy, and finally generic structural fallback. A later lane is considered only when the earlier lane yields zero eligible printings after printing/price policy checks.',
+      'Within an already-required structural role or target gate, an explicit compound request preserves the starting deck’s dominant requested component first, then considers globally recognized requested components, exact role-specific requested-theme discoveries, substantive inferred commander strategy, and finally generic structural fallback. A later lane is considered only when the earlier lane yields zero eligible printings after printing/price policy checks.',
       'Unrestricted Upgrade supplements the bounded popularity-ordered role search with bounded per-archetype searches for strategies the starting deck has already proven substantive. The spells-control recall path includes actual Instant/Sorcery card types as well as Oracle-text spell mechanisms.',
       'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window.',
       'A V0.15 controlled/requested theme remains an advisory role-candidate discovery and ranking signal even after its minimum density is satisfied; the minimum remains a preservation gate rather than a switch that disables on-plan replacement search. Under a printing restriction, only cards already admitted by the exhaustive shared eligible pool can become candidates.',

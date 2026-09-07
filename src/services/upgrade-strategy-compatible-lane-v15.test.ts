@@ -14,6 +14,7 @@ type Candidate = {
   strategyFit?: boolean;
   printingEligible?: boolean;
   anchorFit?: boolean;
+  requestedRoleFit?: boolean;
 };
 
 test('typal role candidates use aligned normal lane before generic fallback', () => {
@@ -189,4 +190,36 @@ test('requested identity role discovery stays enabled after a theme minimum is a
 test('requested identity role discovery remains disabled when no explicit controlled identity exists', () => {
   assert.equal(requestedIdentityRoleSearchEnabledV15(''), false);
   assert.equal(requestedIdentityRoleSearchEnabledV15('   '), false);
+});
+
+
+test('role-specific requested-theme discovery outranks inferred strategy and generic fallback when global component recall misses it', () => {
+  const requestedRole: Candidate = { name: 'Role-specific requested mechanism', identityFit: true, requestedRoleFit: true, strategyFit: false };
+  const strategy: Candidate = { name: 'Broad inferred strategy', identityFit: true, strategyFit: true };
+  const generic: Candidate = { name: 'Generic structural utility', identityFit: false };
+  assert.deepEqual(compoundComponentCandidateLanesV15(
+    [generic, strategy, requestedRole],
+    (candidate) => Boolean(candidate.componentFit),
+    (candidate) => Boolean(candidate.strategyFit),
+    (candidate) => Boolean(candidate.anchorFit),
+    (candidate) => Boolean(candidate.requestedRoleFit),
+  ), [[requestedRole], [strategy], [generic]]);
+});
+
+test('role-specific requested-theme lane preserves generic fallback when its printings are unavailable', () => {
+  const requestedRole: Candidate = { name: 'Unavailable requested role card', identityFit: true, requestedRoleFit: true, printingEligible: false };
+  const generic: Candidate = { name: 'Available generic structural utility', identityFit: false, printingEligible: true };
+  const chosen: Candidate[] = [];
+  for (const lane of compoundComponentCandidateLanesV15(
+    [generic, requestedRole],
+    (candidate) => Boolean(candidate.componentFit),
+    (candidate) => Boolean(candidate.strategyFit),
+    (candidate) => Boolean(candidate.anchorFit),
+    (candidate) => Boolean(candidate.requestedRoleFit),
+  )) {
+    const before = chosen.length;
+    chosen.push(...lane.filter((candidate) => candidate.printingEligible));
+    if (chosen.length > before) break;
+  }
+  assert.deepEqual(chosen, [generic]);
 });
