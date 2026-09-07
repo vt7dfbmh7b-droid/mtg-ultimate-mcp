@@ -71,7 +71,7 @@
 1 Sylvan Library (SLD) 2058 *N*
 1 Flaxen Intruder // Welcome Home (ELD) 155 *N*
 1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
-1 Springheart Nantuko (PMH3) 171p *N*
+1 Springheart Nantuko (MH3) 171 *N*
 1 Flowering of the White Tree (LTR) 15 *N*
 1 Battle Menu (FIN) 9 *N*
 1 Sterling Grove (MH2) 293 *N*

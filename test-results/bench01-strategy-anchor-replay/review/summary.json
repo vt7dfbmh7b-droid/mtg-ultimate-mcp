@@ -1,7 +1,7 @@
 {
   "schema": "bench01-adaptive-diversification-replay-v2",
   "batch": "BENCH-01-STRATEGY-ANCHOR-REPLAY",
-  "productRuntimeBaselineSha": "6686f2892e93cc571ee9e4f7717bb5f0156bd301",
+  "productRuntimeBaselineSha": "49ca828c3581c6992c270ade84012014a3c9d733",
   "sourceFrozenWithinBatch": true,
   "results": [
     {
@@ -299,11 +299,11 @@
           "in": "March of Swirling Mist",
           "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: big-mana. The recommended physical printing satisfies the active printing-family/set policy.",
           "recommendedPrinting": {
-            "set": "NEO",
-            "collectorNumber": "447",
-            "finish": "nonfoil",
-            "priceNzd": 8.71,
-            "priceUsdReference": 5.12
+            "set": "PNEO",
+            "collectorNumber": "61s",
+            "finish": "foil",
+            "priceNzd": 8.76,
+            "priceUsdReference": 5.15
           },
           "structuralPairing": {
             "addressedRole": "protection",
@@ -477,7 +477,7 @@
             "set": "M3C",
             "collectorNumber": "33",
             "finish": "nonfoil",
-            "priceNzd": 13.2,
+            "priceNzd": 13.19,
             "priceUsdReference": 7.76
           },
           "structuralPairing": {
@@ -843,8 +843,8 @@
             "set": "FIN",
             "collectorNumber": "201",
             "finish": "nonfoil",
-            "priceNzd": 0.48,
-            "priceUsdReference": 0.28
+            "priceNzd": 0.51,
+            "priceUsdReference": 0.3
           },
           "structuralPairing": {
             "addressedRole": "tutor",
@@ -891,11 +891,11 @@
           "in": "Springheart Nantuko",
           "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.31 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "PMH3",
-            "collectorNumber": "171p",
+            "set": "MH3",
+            "collectorNumber": "171",
             "finish": "nonfoil",
-            "priceNzd": 9.68,
-            "priceUsdReference": 5.69
+            "priceNzd": 9.5,
+            "priceUsdReference": 5.59
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -1464,8 +1464,8 @@
             "set": "INR",
             "collectorNumber": "64",
             "finish": "nonfoil",
-            "priceNzd": 2.18,
-            "priceUsdReference": 1.28
+            "priceNzd": 2.19,
+            "priceUsdReference": 1.29
           },
           "structuralPairing": {
             "addressedRole": "interaction",
@@ -1510,8 +1510,8 @@
             "set": "WAR",
             "collectorNumber": "72",
             "finish": "nonfoil",
-            "priceNzd": 0.63,
-            "priceUsdReference": 0.37
+            "priceNzd": 0.58,
+            "priceUsdReference": 0.34
           },
           "structuralPairing": {
             "addressedRole": "interaction",
@@ -1554,8 +1554,8 @@
             "set": "DMR",
             "collectorNumber": "442",
             "finish": "nonfoil",
-            "priceNzd": 43.09,
-            "priceUsdReference": 25.34
+            "priceNzd": 43.61,
+            "priceUsdReference": 25.65
           },
           "structuralPairing": {
             "addressedRole": "tutor",
@@ -1819,7 +1819,7 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 6,
         "winningCandidate": 6,
-        "estimatedSpendNzd": 65.47,
+        "estimatedSpendNzd": 65.46,
         "estimatedSpendUsdReference": 38.5,
         "improvementScore": 6.106,
         "winRouteProtection": {
@@ -2181,8 +2181,8 @@
             "set": "TMC",
             "collectorNumber": "136",
             "finish": "foil",
-            "priceNzd": 24.16,
-            "priceUsdReference": 14.21
+            "priceNzd": 24.04,
+            "priceUsdReference": 14.14
           },
           "structuralPairing": {
             "addressedRole": "protection",
@@ -2711,8 +2711,8 @@
             "set": "CLB",
             "collectorNumber": "343",
             "finish": "nonfoil",
-            "priceNzd": 15.18,
-            "priceUsdReference": 8.93
+            "priceNzd": 15.22,
+            "priceUsdReference": 8.95
           },
           "structuralPairing": {
             "addressedRole": "tutor",
@@ -2850,8 +2850,8 @@
             "set": "TMT",
             "collectorNumber": "89",
             "finish": "nonfoil",
-            "priceNzd": 13.55,
-            "priceUsdReference": 7.97
+            "priceNzd": 13.09,
+            "priceUsdReference": 7.7
           },
           "structuralPairing": {
             "addressedRole": "tutor",
