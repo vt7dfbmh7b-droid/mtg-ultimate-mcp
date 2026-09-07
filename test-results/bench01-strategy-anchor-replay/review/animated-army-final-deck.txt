@@ -86,4 +86,4 @@
 4 Mountain (BLB) 376 *N*
 5 Forest (BLB) 377 *N*
 5 Forest (BLB) 378 *N*
-1 Swiftfoot Boots (A25) 234 *N*
+1 Sword of the Animist (MSC) 289 *N*

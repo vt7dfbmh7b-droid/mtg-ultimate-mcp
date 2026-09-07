@@ -4,9 +4,11 @@
 // MAIN
 1 Eris, Roar of the Storm (OTC) 5 *F*
 1 Archmage Emeritus (OTC) 90 *N*
+1 Baral's Expertise (OTC) 91 *N*
 1 Tezzeret's Gambit (OTC) 117 *N*
 1 Midnight Clock (OTC) 100 *N*
 1 Haughty Djinn (OTC) 99 *N*
+1 Dig Through Time (OTC) 95 *N*
 1 Talrand, Sky Summoner (OTC) 116 *N*
 1 Octavia, Living Thesis (OTC) 103 *N*
 1 Thunderclap Drake (OTC) 17 *N*
@@ -15,8 +17,8 @@
 1 Finale of Revelation (OTC) 97 *N*
 1 Mizzix's Mastery (OTC) 175 *N*
 1 Pyretic Charge (OTC) 29 *N*
+1 Smoldering Stagecoach (OTC) 30 *N*
 1 Rousing Refrain (OTC) 178 *N*
-1 Cursed Mirror (OTC) 161 *N*
 1 Bloodthirsty Adversary (OTC) 157 *N*
 1 Finale of Promise (OTC) 166 *N*
 1 Arcane Bombardment (OTC) 154 *N*
@@ -68,13 +70,11 @@
 7 Island (OTJ) 280 *N*
 7 Mountain (OTJ) 283 *N*
 6 Mountain (OTJ) 284 *N*
-1 An Offer You Can't Refuse (FIC) 267 *N*
-1 Pact of Negation (TSR) 77 *N*
+1 Mental Misstep (MB2) 30 *N*
 1 Mystical Tutor (DMR) 289 *N*
 1 Sword of Once and Future (MOM) 265 *N*
-1 Swan Song (THS) 65 *N*
-1 Mental Misstep (MB2) 30 *N*
+1 Pyroblast (MB2) 198 *N*
+1 Flusterstorm (MH3) 496 *F*
 1 Red Elemental Blast (SUM) 171 *N*
-1 Sanar, Unfinished Genius // Wild Idea (SOS) 223 *N*
+1 Vexing Puzzlebox (CLB) 343 *N*
 1 Sword of Wealth and Power (PBIG) 26p *F*
-1 Cyclonic Rift (RTR) 35 *N*

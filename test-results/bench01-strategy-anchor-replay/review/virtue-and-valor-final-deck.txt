@@ -22,7 +22,6 @@
 1 Tithe Taker (WOC) 80 *N*
 1 Umbra Mystic (WOC) 82 *N*
 1 Winds of Rath (WOC) 83 *N*
-1 Bear Umbra (WOC) 121 *N*
 1 Eidolon of Blossoms (WOC) 124 *N*
 1 Enchantress's Presence (WOC) 125 *N*
 1 Indomitable Might (WOC) 127 *N*
@@ -69,10 +68,11 @@
 7 Plains (WOE) 267 *N*
 7 Plains (WOE) 268 *N*
 1 Sylvan Library (SLD) 2058 *N*
-1 Reprieve (LTR) 26 *N*
+1 Flaxen Intruder // Welcome Home (ELD) 155 *N*
 1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
-1 Springheart Nantuko (MH3) 171 *N*
-1 Spirited Companion (PLST) NEO-38 *N*
-1 Personify (ECL) 402 *N*
+1 Springheart Nantuko (PMH3) 171p *N*
+1 Reconnaissance (PLST) EXO-17 *N*
+1 Reprieve (LTR) 26 *N*
 1 Hour of Promise (HOU) 120 *N*
+1 Intangible Virtue (PLST) ISD-19 *N*
 1 Battle Menu (FIN) 9 *N*

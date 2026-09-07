@@ -27,6 +27,7 @@
 1 Realmwalker (LCC) 250 *N*
 1 Ruinous Intrusion (LCC) 255 *N*
 1 Kumena, Tyrant of Orazca (LCC) 274 *N*
+1 Prime Speaker Zegana (LCC) 278 *N*
 1 Quandrix Command (LCC) 280 *N*
 1 Simic Ascendancy (LCC) 288 *N*
 1 Tishana, Voice of Thunder (LCC) 291 *N*
@@ -76,12 +77,11 @@
 3 Forest (LCI) 402 *N*
 7 Island (LCI) 395 *N*
 6 Island (LCI) 396 *N*
-1 Wizard Class (PLST) AFR-81 *N*
+1 Aqueous Form (CMR) 56 *N*
 1 Delay (FUT) 35 *N*
 1 Titania's Command (PBRO) 194s *F*
 1 Planar Incision (NEO) 72 *N*
-1 Origin of Metalbending (TLA) 187 *N*
-1 Crop Rotation (C20) 169 *N*
-1 Sword of Fire and Ice (MAR) 100 *N*
 1 Teferi's Time Twist (WAR) 72 *N*
-1 District Mascot (DFT) 344 *N*
+1 Mystical Tutor (DMR) 289 *N*
+1 Sword of Fire and Ice (MAR) 100 *N*
+1 Aberrant (40K) 86 *N*

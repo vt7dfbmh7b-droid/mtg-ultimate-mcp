@@ -9,8 +9,8 @@
 1 Elderfang Ritualist (KHM) 385 *N*
 1 Elvish Archdruid (KHC) 57 *N*
 1 Elvish Mystic (KHC) 58 *N*
-1 Elvish Rejuvenator (KHC) 60 *N*
 1 End-Raze Forerunners (KHC) 61 *N*
+1 Eyeblight Cullers (KHC) 48 *N*
 1 Farhaven Elf (KHC) 62 *N*
 1 Golgari Findbroker (KHC) 86 *N*
 1 Harald, King of Skemfar (KHM) 212 *N*
@@ -27,11 +27,11 @@
 1 Poison-Tip Archer (KHC) 90 *N*
 1 Reclamation Sage (KHC) 72 *N*
 1 Rhys the Exiled (KHC) 73 *N*
-1 Shaman of the Pack (KHC) 92 *N*
 1 Skemfar Shadowsage (KHM) 110 *N*
 1 Springbloom Druid (KHC) 74 *N*
-1 Timberwatch Elf (KHC) 76 *N*
+1 Twinblade Assassins (KHC) 95 *N*
 1 Voice of Many (KHC) 77 *N*
+1 Voice of the Woods (KHC) 78 *N*
 1 Wolverine Riders (KHC) 14 *N*
 1 Wood Elves (KHC) 80 *N*
 1 Elven Ambush (KHM) 391 *N*
@@ -62,15 +62,15 @@
 1 Path of Ancestry (KHC) 117 *N*
 1 Skemfar Elderhall (KHM) 268 *N*
 13 Swamp (KHM) 396 *N*
-1 Bloodforged Battle-Axe (PIP) 226 *F*
-1 Savor (BLB) 109 *N*
+1 Elves of Deep Shadow (GK1) 56 *N*
+1 Flaxen Intruder // Welcome Home (ELD) 155 *N*
 1 Culling the Weak (EXO) 55 *N*
-1 Not Dead After All (WOE) 101 *N*
-1 Bone Shards (PLST) MH2-76 *N*
-1 Transmutation Font (PW24) 11 *F*
+1 Elvish Reclaimer (MB2) 205 *N*
+1 Llanowar Elves (M10) 189 *N*
+1 Deathspore Thallid (TSP) 102 *N*
+1 Formidable Speaker (PECL) 176p *N*
 1 Sword of Hearth and Home (TMC) 136 *F*
-1 Dreadhorde Invasion (DRC) 91 *N*
-1 The Witch's Vanity (WOE) 119 *N*
-1 Kura, the Boundless Sky (PNEO) 200p *N*
+1 Bloom Tender (SPG) 79 *N*
+1 Haywire Mite (PLST) BRO-199 *N*
 1 Sword of Fire and Ice (MAR) 100 *N*
-1 Gilded Goose (SOC) 269 *N*
+1 Fauna Shaman (PBRO) 179p *N*
