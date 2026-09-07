@@ -840,8 +840,14 @@ function upgradeSwapStrategyPreservationV15(
   const unreplacedStrategyComponentRoles = cutRoles.filter((role) => (
     strategyComponentRoles.has(role) && !addRoleSet.has(role)
   ));
-  const meaningfulStrategyLoss = affinityStrategyLoss
-    || cutAffinity.protectionApplied >= 4 && unreplacedStrategyComponentRoles.length > 0;
+  // Exact engine/payoff components are categorical strategy evidence once the commander/deck
+  // strategy itself is substantive. Narrow mechanism cards can have modest broad-overlap scores,
+  // so requiring maximum numeric cut protection here allowed structurally attractive swaps to
+  // erase real Commander mechanisms. Keep the max-protection threshold only for broad affinity
+  // loss; exact component loss independently activates the existing preservation gate.
+  const exactStrategyComponentLoss = substantiveCutStrategies.length > 0
+    && unreplacedStrategyComponentRoles.length > 0;
+  const meaningfulStrategyLoss = affinityStrategyLoss || exactStrategyComponentLoss;
   return {
     cutStrategyAffinityScore: Number(cutAffinity.score.toFixed(3)),
     addStrategyAffinityScore: Number(addAffinity.score.toFixed(3)),
