@@ -86,4 +86,4 @@
 1 Jet Medallion (CMM) 395 *F*
 1 Dreadmaw's Ire (LCI) 147 *N*
 1 Cool but Rude (TMT) 89 *N*
-1 Wayfarer's Bauble (LCC) 317 *N*
+1 Wayfarer's Bauble (C17) 230 *N*

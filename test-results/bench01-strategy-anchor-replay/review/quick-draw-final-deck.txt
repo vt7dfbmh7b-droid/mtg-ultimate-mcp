@@ -72,7 +72,7 @@
 6 Mountain (OTJ) 284 *N*
 1 Mental Misstep (MB2) 30 *N*
 1 Mystical Tutor (DMR) 289 *N*
-1 March of Swirling Mist (PNEO) 61s *F*
+1 March of Swirling Mist (NEO) 447 *N*
 1 Pyroblast (MB2) 198 *N*
 1 Counterspell (DMR) 281 *F*
 1 Sanar, Unfinished Genius // Wild Idea (SOS) 223 *N*
