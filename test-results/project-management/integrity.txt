@@ -1,8 +1,8 @@
-source_sha=7c74eb7a871bd69754ec897d32882aebb8af2851
+source_sha=0817d95e39a55bd8964faf5d7ae09da51e616c28
 active_milestone=BENCH-01
 typecheck_outcome=success
 scripts_typecheck_outcome=success
-state_validate_outcome=success
+state_validate_outcome=failure
 validation_index_outcome=success
 recovery_smoke_outcome=success
 source_build_outcome=success
