@@ -62,16 +62,88 @@ const DECK_SUPPORTED_STRATEGY_MIN_BRIDGE_SUPPORT_V15 = 3;
 const DECK_SUPPORTED_STRATEGY_MIN_AFFINITY_V15 = 72;
 const MULTIPLAYER_SCOPE_QUALITY_BONUS_V15 = 2;
 
+// Keep direct-mechanism admission private so the public affinity payload and whole-deck retention
+// evidence remain backward compatible. Broad utility overlap can still improve ranking/retention,
+// but it cannot by itself manufacture preferred-lane strategy compatibility.
+const DIRECT_MECHANISM_AFFINITY_V15 = new WeakMap<CardCommanderStrategyAffinityV15, number>();
+
+function hasDirectStrategyMechanismEvidenceV15(strategy: NeutralStrategyScoreV15): boolean {
+  const evidence = strategy.evidence.map((entry) => entry.toLocaleLowerCase());
+  const has = (...needles: string[]) => evidence.some((entry) => needles.some((needle) => entry.includes(needle)));
+
+  switch (strategy.archetype) {
+    case 'combat-tokens':
+      return has(
+        'token production',
+        'go-wide combat payoff',
+        'asymmetric typal board control',
+        'death-trigger token engine',
+        'token-event life-drain payoff',
+        'team combat-damage draw',
+        'attacking-token text',
+      );
+    case 'equipment-voltron':
+      return has('equipment role', 'equip/attach text', 'combat scaling');
+    case 'counters':
+      return has('+1/+1 counters', 'proliferate', 'counter movement', 'counter placement');
+    case 'graveyard-reanimator':
+      return has(
+        'graveyard recursion',
+        'own-graveyard access',
+        'graveyard setup',
+        'milled-card recovery',
+        'mass graveyard return',
+        'selected graveyard cards returned to battlefield',
+        'reanimation text',
+      );
+    case 'artifact-engine':
+      // Being an Artifact permanent alone is structural/type overlap, not proof that the card
+      // advances an artifact engine. Require engine/copy/recursion semantics.
+      return has('artifact/vehicle engine text', 'artifact-copy engine text', 'artifact recursion');
+    case 'aristocrats':
+      return has(
+        'sacrifice synergy',
+        'sacrifice outlet',
+        'death-trigger card engine',
+        'death-trigger token engine',
+        'token-event life-drain payoff',
+        'mass sacrifice conversion',
+        'forced sacrifice bridge',
+        'death trigger',
+        'sacrifice text',
+      );
+    case 'food-lifegain':
+      return has(
+        'food engine/payoff text',
+        'repeatable life-gain engine',
+        'repeatable life-gain engine/payoff',
+        'life-gain conversion to opponent pressure',
+      );
+    case 'spells-control':
+      return has('countermagic', 'control restriction', 'copy effect', 'cast trigger', 'spell-type payoff');
+    case 'value-engine':
+      // Value-engine is intentionally not a preferred-lane anchor. Draw/selection/access is an
+      // important Commander role, but broad value by itself is exactly the false-positive class
+      // reproduced across the rejected BENCH-01 precon batch.
+      return false;
+    case 'big-mana':
+      // Generic ramp/cost-reduction roles remain structural fallback. Only explicit scalable mana
+      // or cost-reduction rules text qualifies as direct strategy mechanism evidence.
+      return has('mana-generation text', 'cost-reduction text');
+  }
+}
+
 export function substantiveCommanderStrategyAffinityScoreV15(
   affinity: CardCommanderStrategyAffinityV15,
 ): number {
-  const substantiveOverlap = affinity.matches
+  const directMechanismOverlap = DIRECT_MECHANISM_AFFINITY_V15.get(affinity);
+  const substantiveOverlap = directMechanismOverlap ?? affinity.matches
     .filter((match) => match.commanderScore >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15)
     .reduce((sum, match) => sum + match.overlapScore, 0);
   if (substantiveOverlap < SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15) return substantiveOverlap;
 
   // Aggregate affinity may contain a quality premium, but it can never manufacture substantive
-  // strategy support. Only add the premium after the raw substantive overlap already clears the
+  // strategy support. Only add the premium after direct mechanism overlap already clears the
   // shared threshold, and exclude any base overlap from non-substantive context matches.
   const allBaseOverlap = affinity.matches.reduce((sum, match) => sum + match.overlapScore, 0);
   const qualityPremium = Math.max(0, affinity.score - allBaseOverlap);
@@ -246,6 +318,7 @@ export function cardCommanderStrategyAffinityV15(
     inferNeutralStrategyV15([card]).map((strategy) => [strategy.archetype, strategy] as const),
   );
   const matches: CommanderStrategyMatchV15[] = [];
+  let directMechanismOverlap = 0;
 
   for (const commanderStrategy of context.strategies) {
     const cardStrategy = cardStrategies.get(commanderStrategy.archetype);
@@ -258,6 +331,12 @@ export function cardCommanderStrategyAffinityV15(
       cardScore: cardStrategy.score,
       overlapScore,
     });
+    if (
+      commanderStrategy.score >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15
+      && hasDirectStrategyMechanismEvidenceV15(cardStrategy)
+    ) {
+      directMechanismOverlap += overlapScore;
+    }
   }
 
   const baseScore = matches.reduce((sum, match) => sum + match.overlapScore, 0);
@@ -265,10 +344,12 @@ export function cardCommanderStrategyAffinityV15(
     .filter((match) => match.commanderScore >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15)
     .reduce((sum, match) => sum + multiplayerStrategyQualityBonusV15(card, match.archetype), 0);
 
-  return {
+  const affinity = {
     score: baseScore + multiplayerQualityBonus,
     matches,
   };
+  DIRECT_MECHANISM_AFFINITY_V15.set(affinity, directMechanismOverlap);
+  return affinity;
 }
 
 /**
