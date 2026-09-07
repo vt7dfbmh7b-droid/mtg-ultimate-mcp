@@ -10,7 +10,7 @@ Development checkpoint: `37ae1efef351f6b502aa0156b9cdd704c294406c`
 | MARVEL-B5-REFINE | scenario-intelligence | fail | `60971af2f052f051cee1047733c22fac44d8eebe` | no | `test-results/marvel-bracket5/refine-run-metadata.txt` |
 | MARVEL-B5-BROAD | scenario-intelligence | fail | `60971af2f052f051cee1047733c22fac44d8eebe` | no | `test-results/marvel-bracket5-broad/run-metadata.txt` |
 | SCIONS-SPELLCRAFT-FF-ONLY | scenario-intelligence | pass | `e6850c8ffab7c52cf0f6e1d7bf0c323e14d76ad7` | no | `test-results/scions-spellcraft-ff-only/run-metadata.txt` |
-| MIDDLE-EARTH-PRECON-REFINE | scenario-intelligence | fail | `3f4509083eef7fe1bf1cc74f9c6adee1caeb8d9b` | no | `test-results/middle-earth-precon-refine/run-metadata.txt` |
+| MIDDLE-EARTH-PRECON-REFINE | scenario-intelligence | pass | `e6850c8ffab7c52cf0f6e1d7bf0c323e14d76ad7` | no | `test-results/middle-earth-precon-refine/run-metadata.txt` |
 | PRECON-GENERALIZATION | scenario-intelligence | pass | `e6850c8ffab7c52cf0f6e1d7bf0c323e14d76ad7` | no | `test-results/precon-generalization/run-metadata.txt` |
 | STRATEGY-INFERENCE-GENERALIZATION | engineering+truth | pass | `5829b37b686255ba35d419b37be17095e54fb696` | no | `test-results/strategy-inference-generalization/run-metadata.txt` |
 | SQUIRRELED-AWAY-GENERALIZATION | scenario-intelligence | pass | `e6850c8ffab7c52cf0f6e1d7bf0c323e14d76ad7` | no | `test-results/precon-generalization-squirrels/run-metadata.txt` |
