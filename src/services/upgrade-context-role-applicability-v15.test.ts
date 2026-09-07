@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { costReductionApplicableToCommanderIdentityV15 } from './upgrade.js';
+import { cardHasIndependentUtilityBeyondContextDeadCostReductionV15, costReductionApplicableToCommanderIdentityV15 } from './upgrade.js';
 
 test('color-restricted cost reduction is context-dead outside commander identity', () => {
   assert.equal(costReductionApplicableToCommanderIdentityV15('Black spells you cast cost {1} less to cast.', ['R', 'G']), false);
@@ -19,4 +19,21 @@ test('generic and non-color cost reduction stays available', () => {
 
 test('non-cost-reduction text is unaffected', () => {
   assert.equal(costReductionApplicableToCommanderIdentityV15('Add {B}{B}.', ['R', 'G']), true);
+});
+
+
+test('context-dead reducer cannot qualify as useful low-curve filler by reducer labels alone', () => {
+  assert.equal(cardHasIndependentUtilityBeyondContextDeadCostReductionV15(
+    'Black spells you cast cost {1} less to cast.',
+    ['cost reduction', 'mana acceleration'],
+    ['R', 'G'],
+  ), false);
+});
+
+test('context-dead reducer remains usable when the card has an independent deck role', () => {
+  assert.equal(cardHasIndependentUtilityBeyondContextDeadCostReductionV15(
+    'When this enters, draw a card. Black spells you cast cost {1} less to cast.',
+    ['cost reduction', 'mana acceleration', 'card draw'],
+    ['R', 'G'],
+  ), true);
 });

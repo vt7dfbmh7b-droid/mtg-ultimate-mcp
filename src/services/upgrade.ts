@@ -309,16 +309,45 @@ export function costReductionApplicableToCommanderIdentityV15(
   return [...restricted].some((color) => identity.has(color));
 }
 
+export function cardHasIndependentUtilityBeyondContextDeadCostReductionV15(
+  oracleText: string,
+  detectedRoles: readonly string[],
+  allowedIdentity: readonly string[],
+): boolean {
+  if (costReductionApplicableToCommanderIdentityV15(oracleText, allowedIdentity)) return true;
+  const reducerOnlyRoles = new Set(['cost reduction', 'mana acceleration', 'delayed mana acceleration']);
+  return detectedRoles.some((detectedRole) => !reducerOnlyRoles.has(detectedRole));
+}
+
 export function cardRoleApplicableToDeckContextV15(
   card: ScryfallCard,
   role: string,
   allowedIdentity: readonly string[],
 ): boolean {
-  if (role !== 'ramp') return true;
   const roles = new Set(effectiveCardRolesV15(card));
+  if (roles.has('cost reduction')) {
+    const oracleText = getCardOracleText(card);
+    const reducerApplicable = costReductionApplicableToCommanderIdentityV15(oracleText, allowedIdentity);
+    if (!reducerApplicable) {
+      const hasIndependentUtility = cardHasIndependentUtilityBeyondContextDeadCostReductionV15(
+        oracleText,
+        [...roles],
+        allowedIdentity,
+      );
+      if (!hasIndependentUtility && ['ramp', 'early', 'average-nonland-mv'].includes(role)) return false;
+    }
+  }
+  if (role !== 'ramp') return true;
   if (!roles.has('cost reduction')) return true;
-  if (roles.has('mana acceleration') || roles.has('land ramp')) return true;
-  return costReductionApplicableToCommanderIdentityV15(getCardOracleText(card), allowedIdentity);
+  if (roles.has('land ramp')) return true;
+  if (!costReductionApplicableToCommanderIdentityV15(getCardOracleText(card), allowedIdentity)) {
+    return cardHasIndependentUtilityBeyondContextDeadCostReductionV15(
+      getCardOracleText(card),
+      [...roles],
+      allowedIdentity,
+    );
+  }
+  return true;
 }
 
 function cardMatchesRole(card: ScryfallCard, role: string, targetGate: UpgradeTargetGateV15 | null = null): boolean {
