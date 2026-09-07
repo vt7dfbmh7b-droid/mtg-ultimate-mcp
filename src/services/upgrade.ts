@@ -367,6 +367,18 @@ export function strategyCompatibleCandidateLanesV15<T>(
 }
 
 /**
+ * Generic structural fallback is mandatory for authoritative construction gates, but an
+ * aspirational role-count heuristic must not force an identity-free swap when every
+ * requested/strategy-compatible lane is empty. This keeps fallback available for real
+ * structural requirements without turning soft Commander heuristics into staple drift.
+ */
+export function genericStructuralFallbackAllowedV15(
+  prioritySource: UpgradeCandidatePriorityV15['prioritySource'],
+): boolean {
+  return prioritySource === 'authoritative-target-gate';
+}
+
+/**
  * For an explicit compound request, keep the user's requested mechanism as a distinct first lane.
  * Inferred commander strategy remains the second lane, and generic structural utility remains the
  * final fallback. Callers only advance when the previous lane yields zero eligible printings.
@@ -377,6 +389,7 @@ export function compoundComponentCandidateLanesV15<T>(
   isStrategyCompatible: (candidate: T) => boolean,
   isAnchorAligned?: (candidate: T) => boolean,
   isRequestedRoleAligned?: (candidate: T) => boolean,
+  includeGenericFallback = true,
 ): T[][] {
   const anchor = isAnchorAligned ? candidates.filter(isAnchorAligned) : [];
   const anchorSet = new Set(anchor);
@@ -393,7 +406,12 @@ export function compoundComponentCandidateLanesV15<T>(
   const strategy = candidates.filter((candidate) => !anchorSet.has(candidate) && !componentSet.has(candidate) && !requestedRoleSet.has(candidate) && isStrategyCompatible(candidate));
   const strategySet = new Set(strategy);
   const generic = candidates.filter((candidate) => !anchorSet.has(candidate) && !componentSet.has(candidate) && !requestedRoleSet.has(candidate) && !strategySet.has(candidate));
-  return [anchor, component, requestedRole, strategy, generic].filter((lane) => lane.length > 0);
+  const lanes = [anchor, component, requestedRole, strategy];
+  // Aspirational role counts are heuristic consistency goals, not permission to force an
+  // identity-free replacement. Keep generic structural fallback for authoritative target
+  // gates, where the caller has explicit evidence that the structural repair is required.
+  if (includeGenericFallback) lanes.push(generic);
+  return lanes.filter((lane) => lane.length > 0);
 }
 
 /**
@@ -687,6 +705,7 @@ export async function suggestDeckUpgrades(
           (card) => candidateStrategyPriorityV15(card, strategyContext).substantive,
           (card) => anchorAffinityForCard(card) > 0,
           (card) => themeCandidateNames.has(card.name.toLocaleLowerCase()),
+          genericStructuralFallbackAllowedV15(deficit.prioritySource),
         )
       : strategyCompatibleCandidateLanesV15(
           rankedForPrinting,
@@ -779,7 +798,7 @@ export async function suggestDeckUpgrades(
     },
     caveats: [
       'Role-count targets are engineering heuristics for deck consistency, but failed Bracket-4/5 construction gates now outrank aspirational role targets. When several authoritative gates are failing, candidate generation retains a small ranked backup set for each gate so downstream pairing can preserve gate diversity while trying strategy-safe alternatives.',
-      'Within an already-required structural role or target gate, an explicit compound request preserves the starting deck’s dominant requested component first, then considers globally recognized requested components, exact role-specific requested-theme discoveries, substantive inferred commander strategy, and finally generic structural fallback. A later lane is considered only when the earlier lane yields zero eligible printings after printing/price policy checks.',
+      'Within an already-required structural role or target gate, an explicit compound request preserves the starting deck’s dominant requested component first, then considers globally recognized requested components, exact role-specific requested-theme discoveries, and substantive inferred commander strategy. Generic structural fallback remains available for authoritative target gates, but aspirational role-count heuristics do not force an identity-free replacement when all compatible lanes are empty. A later lane is considered only when the earlier lane yields zero eligible printings after printing/price policy checks.',
       'Unrestricted Upgrade supplements the bounded popularity-ordered role search with bounded per-archetype searches for strategies the starting deck has already proven substantive. The spells-control recall path includes actual Instant/Sorcery card types as well as Oracle-text spell mechanisms.',
       'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window.',
       'A V0.15 controlled/requested theme remains an advisory role-candidate discovery and ranking signal even after its minimum density is satisfied; the minimum remains a preservation gate rather than a switch that disables on-plan replacement search. Under a printing restriction, only cards already admitted by the exhaustive shared eligible pool can become candidates.',
