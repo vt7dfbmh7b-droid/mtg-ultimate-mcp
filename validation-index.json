@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedFromProjectStateUpdatedAt": "2026-09-07T22:24:00.000Z",
-  "developmentCheckpointSha": "ff34b8d85412f56ac48144de9beec6c7503c3eb5",
+  "generatedFromProjectStateUpdatedAt": "2026-09-07T23:40:00.000Z",
+  "developmentCheckpointSha": "d246758f789e3595002a996e67576fb821afb592",
   "records": [
     {
       "id": "PM-STATE-INTEGRITY",
@@ -13,20 +13,22 @@
       ],
       "metadataPath": "test-results/project-management/integrity.txt",
       "exists": true,
-      "sourceSha": "77fc902b3ba92262bc6fcbb5dc9817699b12a176",
-      "outcome": "pass",
+      "sourceSha": "a13a42af309bee9da806e6fd70391426fba260cf",
+      "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "77fc902b3ba92262bc6fcbb5dc9817699b12a176",
+        "source_sha": "a13a42af309bee9da806e6fd70391426fba260cf",
         "active_milestone": "BENCH-01",
         "typecheck_outcome": "success",
         "scripts_typecheck_outcome": "success",
-        "state_validate_outcome": "success",
+        "state_validate_outcome": "failure",
         "validation_index_outcome": "success",
         "recovery_smoke_outcome": "success",
         "source_build_outcome": "success"
       },
-      "unmetPassConditions": []
+      "unmetPassConditions": [
+        "state_validate_outcome=success"
+      ]
     },
     {
       "id": "INTEL-01-POSITIVE",
