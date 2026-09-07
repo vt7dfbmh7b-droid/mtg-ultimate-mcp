@@ -1,0 +1,500 @@
+  duration_ms: 0.592572
+  type: 'test'
+  ...
+# Subtest: generic protection upgrades preserve cheap interaction instead of trading down operational quality
+ok 926 - generic protection upgrades preserve cheap interaction instead of trading down operational quality
+  ---
+  duration_ms: 0.481024
+  type: 'test'
+  ...
+# Subtest: single-axis payoffs cannot replace repeatable engines spanning tokens cards and mana
+ok 927 - single-axis payoffs cannot replace repeatable engines spanning tokens cards and mana
+  ---
+  duration_ms: 0.556074
+  type: 'test'
+  ...
+# Subtest: two-axis card-and-mana engines cannot collapse into an unrelated protection upgrade
+ok 928 - two-axis card-and-mana engines cannot collapse into an unrelated protection upgrade
+  ---
+  duration_ms: 0.615855
+  type: 'test'
+  ...
+# Subtest: multi-component operational cards require like-for-like component families
+ok 929 - multi-component operational cards require like-for-like component families
+  ---
+  duration_ms: 8.425384
+  type: 'test'
+  ...
+# Subtest: curve repair preserves scarce artifact and high-capacity recursion engines
+ok 930 - curve repair preserves scarce artifact and high-capacity recursion engines
+  ---
+  duration_ms: 0.327138
+  type: 'test'
+  ...
+# Subtest: curve repair can inspect non-positive-pressure cuts only when the real curve gate is active
+ok 931 - curve repair can inspect non-positive-pressure cuts only when the real curve gate is active
+  ---
+  duration_ms: 0.193049
+  type: 'test'
+  ...
+# Subtest: swap pairing preserves board-wipe and recursion minima before heuristic cut pressure
+ok 932 - swap pairing preserves board-wipe and recursion minima before heuristic cut pressure
+  ---
+  duration_ms: 0.385677
+  type: 'test'
+  ...
+# Subtest: later aspirational swaps cannot cut away a currently failed authoritative cheap-interaction gate
+ok 933 - later aspirational swaps cannot cut away a currently failed authoritative cheap-interaction gate
+  ---
+  duration_ms: 0.246769
+  type: 'test'
+  ...
+# Subtest: swap pairing declines an apparent repair when every cut would create a new structural hole
+ok 934 - swap pairing declines an apparent repair when every cut would create a new structural hole
+  ---
+  duration_ms: 0.160539
+  type: 'test'
+  ...
+# Subtest: five-color curve repair cannot strip persistent colored mana below its floor
+ok 935 - five-color curve repair cannot strip persistent colored mana below its floor
+  ---
+  duration_ms: 0.477718
+  type: 'test'
+  ...
+# Subtest: near the curve threshold, pairing prefers the more cuttable safe card over a premium low-cost role piece
+ok 936 - near the curve threshold, pairing prefers the more cuttable safe card over a premium low-cost role piece
+  ---
+  duration_ms: 0.23132
+  type: 'test'
+  ...
+# Subtest: non-mana upgrades cannot spend premium low-cost acceleration as a fallback cut
+ok 937 - non-mana upgrades cannot spend premium low-cost acceleration as a fallback cut
+  ---
+  duration_ms: 0.161861
+  type: 'test'
+  ...
+# Subtest: four-color upgrades preserve broad fixing rocks against conditional land tutors
+ok 938 - four-color upgrades preserve broad fixing rocks against conditional land tutors
+  ---
+  duration_ms: 0.14537
+  type: 'test'
+  ...
+# Subtest: near-threshold five-color repair uses surplus interaction before a protected combat engine
+ok 939 - near-threshold five-color repair uses surplus interaction before a protected combat engine
+  ---
+  duration_ms: 0.480664
+  type: 'test'
+  ...
+# Subtest: curve packages stop once cumulative safe reduction crosses the real threshold
+ok 940 - curve packages stop once cumulative safe reduction crosses the real threshold
+  ---
+  duration_ms: 0.800007
+  type: 'test'
+  ...
+# Subtest: Bracket-4 curve pairing stops at 3.1 instead of chasing the Bracket-5 2.6 threshold
+ok 941 - Bracket-4 curve pairing stops at 3.1 instead of chasing the Bracket-5 2.6 threshold
+  ---
+  duration_ms: 0.281553
+  type: 'test'
+  ...
+# Subtest: Najeela curve repair preserves Aurelia-style combat strategy before maximizing mana reduction
+ok 942 - Najeela curve repair preserves Aurelia-style combat strategy before maximizing mana reduction
+  ---
+  duration_ms: 0.314796
+  type: 'test'
+  ...
+# Subtest: a weak secondary commander signal does not turn every matching curve cut into strategy loss
+ok 943 - a weak secondary commander signal does not turn every matching curve cut into strategy loss
+  ---
+  duration_ms: 0.773408
+  type: 'test'
+  ...
+# Subtest: an uncompensated fully protected commander-strategy cut is explicit and ineligible
+ok 944 - an uncompensated fully protected commander-strategy cut is explicit and ineligible
+  ---
+  duration_ms: 0.455447
+  type: 'test'
+  ...
+# Subtest: candidate strategy preservation evidence fails closed when it is absent
+ok 945 - candidate strategy preservation evidence fails closed when it is absent
+  ---
+  duration_ms: 0.147855
+  type: 'test'
+  ...
+# Subtest: a strategically matched incoming card can compensate a protected strategy cut
+ok 946 - a strategically matched incoming card can compensate a protected strategy cut
+  ---
+  duration_ms: 0.238764
+  type: 'test'
+  ...
+# Subtest: aggregate archetype points cannot hide a meaningful loss in one pairing
+ok 947 - aggregate archetype points cannot hide a meaningful loss in one pairing
+  ---
+  duration_ms: 0.393191
+  type: 'test'
+  ...
+# Subtest: same-archetype affinity cannot replace a missing combat payoff component with a generic enabler
+ok 948 - same-archetype affinity cannot replace a missing combat payoff component with a generic enabler
+  ---
+  duration_ms: 0.336245
+  type: 'test'
+  ...
+# Subtest: same-archetype affinity cannot replace a repeatable aristocrats payoff with a tutor enabler
+ok 949 - same-archetype affinity cannot replace a repeatable aristocrats payoff with a tutor enabler
+  ---
+  duration_ms: 0.263089
+  type: 'test'
+  ...
+# Subtest: same reanimator affinity cannot replace a high-capacity recursion engine with a narrow return spell
+ok 950 - same reanimator affinity cannot replace a high-capacity recursion engine with a narrow return spell
+  ---
+  duration_ms: 0.249143
+  type: 'test'
+  ...
+# Subtest: same-archetype affinity cannot spend death-draw, typal-control, or scaling-draw engines on generic role gains
+ok 951 - same-archetype affinity cannot spend death-draw, typal-control, or scaling-draw engines on generic role gains
+  ---
+  duration_ms: 1.459343
+  type: 'test'
+  ...
+# Subtest: protected narrow and trigger-specific engines cannot be spent on generic gains
+ok 952 - protected narrow and trigger-specific engines cannot be spent on generic gains
+  ---
+  duration_ms: 1.216792
+  type: 'test'
+  ...
+# Subtest: curve repair inspects a safe surplus cut even when protected high-pressure cards fill the old shortlist
+ok 953 - curve repair inspects a safe surplus cut even when protected high-pressure cards fill the old shortlist
+  ---
+  duration_ms: 2.954963
+  type: 'test'
+  ...
+# Subtest: relatively underrepresented compound-theme components outrank saturated broad components after both floors are met
+ok 954 - relatively underrepresented compound-theme components outrank saturated broad components after both floors are met
+  ---
+  duration_ms: 1.547758
+  type: 'test'
+  ...
+# Subtest: a component still below its required floor receives stronger affinity than a saturated component
+ok 955 - a component still below its required floor receives stronger affinity than a saturated component
+  ---
+  duration_ms: 0.277686
+  type: 'test'
+  ...
+# Subtest: cards without controlled component evidence receive no component affinity
+ok 956 - cards without controlled component evidence receive no component affinity
+  ---
+  duration_ms: 0.263069
+  type: 'test'
+  ...
+# Subtest: multi-component affinity remains bounded so theme preference cannot become a hard structural override
+ok 957 - multi-component affinity remains bounded so theme preference cannot become a hard structural override
+  ---
+  duration_ms: 0.331406
+  type: 'test'
+  ...
+# Subtest: dominant starting-deck representation identifies the compound-theme anchor independently of scarcity
+ok 958 - dominant starting-deck representation identifies the compound-theme anchor independently of scarcity
+  ---
+  duration_ms: 1.112037
+  type: 'test'
+  ...
+# Subtest: equal dominant evidence stays as co-anchors instead of inventing arbitrary priority
+ok 959 - equal dominant evidence stays as co-anchors instead of inventing arbitrary priority
+  ---
+  duration_ms: 12.542388
+  type: 'test'
+  ...
+# Subtest: zero starting-deck component evidence does not manufacture an anchor
+ok 960 - zero starting-deck component evidence does not manufacture an anchor
+  ---
+  duration_ms: 0.393482
+  type: 'test'
+  ...
+# Subtest: bounded Spellbook collection paginates until the provider result set is exhausted
+ok 961 - bounded Spellbook collection paginates until the provider result set is exhausted
+  ---
+  duration_ms: 2.659465
+  type: 'test'
+  ...
+# Subtest: bounded Spellbook collection reports a scan cap as partial evidence rather than absence
+ok 962 - bounded Spellbook collection reports a scan cap as partial evidence rather than absence
+  ---
+  duration_ms: 0.534944
+  type: 'test'
+  ...
+# Subtest: later-page provider failure preserves earlier positive rows but keeps verification incomplete
+ok 963 - later-page provider failure preserves earlier positive rows but keeps verification incomplete
+  ---
+  duration_ms: 0.309405
+  type: 'test'
+  ...
+# Subtest: restricted win-package prefilter rejects packages with any noncommander piece outside the eligible physical pool
+ok 964 - restricted win-package prefilter rejects packages with any noncommander piece outside the eligible physical pool
+  ---
+  duration_ms: 2.351111
+  type: 'test'
+  ...
+# Subtest: commander dependencies do not need to appear in the library eligible pool
+ok 965 - commander dependencies do not need to appear in the library eligible pool
+  ---
+  duration_ms: 0.251447
+  type: 'test'
+  ...
+# Subtest: restricted win-package prefilter fails closed on malformed candidates
+ok 966 - restricted win-package prefilter fails closed on malformed candidates
+  ---
+  duration_ms: 0.294027
+  type: 'test'
+  ...
+# Subtest: explicit game wins and opponent-loss results pass strict closure
+ok 967 - explicit game wins and opponent-loss results pass strict closure
+  ---
+  duration_ms: 2.919538
+  type: 'test'
+  ...
+# Subtest: unbounded damage or life loss supplies a lethal outlet in the same result
+ok 968 - unbounded damage or life loss supplies a lethal outlet in the same result
+  ---
+  duration_ms: 1.329261
+  type: 'test'
+  ...
+# Subtest: infinite mana does not become a win merely because the resource is unbounded
+ok 969 - infinite mana does not become a win merely because the resource is unbounded
+  ---
+  duration_ms: 2.553607
+  type: 'test'
+  ...
+# Subtest: resource generation plus explicit lethal closure is accepted
+ok 970 - resource generation plus explicit lethal closure is accepted
+  ---
+  duration_ms: 0.337868
+  type: 'test'
+  ...
+# Subtest: generic infinite mill is not assumed to target opponents
+ok 971 - generic infinite mill is not assumed to target opponents
+  ---
+  duration_ms: 0.888091
+  type: 'test'
+  ...
+# Subtest: infinite combat phases alone remain conditional rather than deterministic
+ok 972 - infinite combat phases alone remain conditional rather than deterministic
+  ---
+  duration_ms: 0.223866
+  type: 'test'
+  ...
+# Subtest: two packages sharing half of the smaller seed package are a shared core, not independent redundancy
+ok 973 - two packages sharing half of the smaller seed package are a shared core, not independent redundancy
+  ---
+  duration_ms: 0.717604
+  type: 'test'
+  ...
+# Subtest: disjoint library packages that share the commander are commander-coupled, not fully independent
+ok 974 - disjoint library packages that share the commander are commander-coupled, not fully independent
+  ---
+  duration_ms: 0.276003
+  type: 'test'
+  ...
+# Subtest: portfolio selection prefers a genuinely independent backup over a slightly higher-scoring shared core
+ok 975 - portfolio selection prefers a genuinely independent backup over a slightly higher-scoring shared core
+  ---
+  duration_ms: 14.150318
+  type: 'test'
+  ...
+# Subtest: resource-only loops receive no portfolio redundancy credit
+ok 976 - resource-only loops receive no portfolio redundancy credit
+  ---
+  duration_ms: 0.806569
+  type: 'test'
+  ...
+# Subtest: portfolio ordering is deterministic on equal scores
+ok 977 - portfolio ordering is deterministic on equal scores
+  ---
+  duration_ms: 0.681347
+  type: 'test'
+  ...
+# Subtest: provider absence can remain an empty route portfolio without fabricating route failure
+ok 978 - provider absence can remain an empty route portfolio without fabricating route failure
+  ---
+  duration_ms: 1.205571
+  type: 'test'
+  ...
+# Subtest: a verified route with no explicit card components remains unknown rather than zero access
+ok 979 - a verified route with no explicit card components remains unknown rather than zero access
+  ---
+  duration_ms: 0.608441
+  type: 'test'
+  ...
+# Subtest: one universal tutor cannot cover two simultaneously missing library pieces
+ok 980 - one universal tutor cannot cover two simultaneously missing library pieces
+  ---
+  duration_ms: 18.65267
+  type: 'test'
+  ...
+# Subtest: a command-zone combo piece is guaranteed separately and is not charged as a library requirement
+ok 981 - a command-zone combo piece is guaranteed separately and is not charged as a library requirement
+  ---
+  duration_ms: 3.502312
+  type: 'test'
+  ...
+# Subtest: universal plus restricted tutors use a distinct matching across different route pieces
+ok 982 - universal plus restricted tutors use a distinct matching across different route pieces
+  ---
+  duration_ms: 2.357734
+  type: 'test'
+  ...
+# Subtest: two restricted tutors that both find only the same piece cannot cover a two-piece route
+ok 983 - two restricted tutors that both find only the same piece cannot cover a two-piece route
+  ---
+  duration_ms: 1.601398
+  type: 'test'
+  ...
+# Subtest: graveyard and top-deck tutors are audited but excluded from conservative direct access
+ok 984 - graveyard and top-deck tutors are audited but excluded from conservative direct access
+  ---
+  duration_ms: 1.522421
+  type: 'test'
+  ...
+# Subtest: unsupported tutor restrictions fail closed instead of becoming fake universal access
+ok 985 - unsupported tutor restrictions fail closed instead of becoming fake universal access
+  ---
+  duration_ms: 0.876329
+  type: 'test'
+  ...
+# Subtest: artifact tutor does not fabricate coverage for a creature piece
+ok 986 - artifact tutor does not fabricate coverage for a creature piece
+  ---
+  duration_ms: 0.758891
+  type: 'test'
+  ...
+# Subtest: an unresolved verified route piece stays unknown rather than becoming zero-access evidence
+ok 987 - an unresolved verified route piece stays unknown rather than becoming zero-access evidence
+  ---
+  duration_ms: 0.3655
+  type: 'test'
+  ...
+# Subtest: template requirements remain explicitly outside the card-only exact probability
+ok 988 - template requirements remain explicitly outside the card-only exact probability
+  ---
+  duration_ms: 0.967008
+  type: 'test'
+  ...
+# Subtest: setup audit preserves provider mana/prerequisite evidence and explicit zone mentions
+ok 989 - setup audit preserves provider mana/prerequisite evidence and explicit zone mentions
+  ---
+  duration_ms: 32.571878
+  type: 'test'
+  ...
+# Subtest: missing provider setup fields stay unknown rather than becoming proof of trivial setup
+ok 990 - missing provider setup fields stay unknown rather than becoming proof of trivial setup
+  ---
+  duration_ms: 0.908939
+  type: 'test'
+  ...
+# Subtest: instant or sorcery pieces expose stack interaction while delayed wins expose an extra response window
+ok 991 - instant or sorcery pieces expose stack interaction while delayed wins expose an extra response window
+  ---
+  duration_ms: 0.497475
+  type: 'test'
+  ...
+# Subtest: deck support is role-level advisory and does not claim exact tutor or recovery coverage
+ok 992 - deck support is role-level advisory and does not claim exact tutor or recovery coverage
+  ---
+  duration_ms: 1.971766
+  type: 'test'
+  ...
+# Subtest: unresolved combo-piece profiles are surfaced instead of silently omitted
+ok 993 - unresolved combo-piece profiles are surfaced instead of silently omitted
+  ---
+  duration_ms: 0.631704
+  type: 'test'
+  ...
+# Subtest: active evidence writers execute independently instead of sharing a cancelling pending queue
+ok 994 - active evidence writers execute independently instead of sharing a cancelling pending queue
+  ---
+  duration_ms: 2.830303
+  type: 'test'
+  ...
+# Subtest: every active evidence push retries from the latest branch head
+not ok 995 - every active evidence push retries from the latest branch head
+  ---
+  duration_ms: 3.661818
+  type: 'test'
+  location: '/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/workflow-evidence-writer-v15.test.ts:26:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    .github/workflows/bench01-role-specific-requested-lane-diagnostic.yml must wrap every evidence push in its own bounded retry loop
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/workflow-evidence-writer-v15.test.ts:33:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: live controls gate intelligence and persistence independently
+ok 996 - live controls gate intelligence and persistence independently
+  ---
+  duration_ms: 0.457601
+  type: 'test'
+  ...
+# Subtest: focused Marvel live refinement allows bounded provider backoff to finish
+ok 997 - focused Marvel live refinement allows bounded provider backoff to finish
+  ---
+  duration_ms: 0.250194
+  type: 'test'
+  ...
+# Subtest: Middle-earth precon evidence separates execution, hard truth, target quality and strategy quality
+ok 998 - Middle-earth precon evidence separates execution, hard truth, target quality and strategy quality
+  ---
+  duration_ms: 0.326978
+  type: 'test'
+  ...
+# Subtest: precon generalization requires both inferred engines and the recursion floor to survive
+ok 999 - precon generalization requires both inferred engines and the recursion floor to survive
+  ---
+  duration_ms: 0.336425
+  type: 'test'
+  ...
+# Subtest: strategy-inference evidence distinguishes engines from generic artifacts and graveyard hate
+ok 1000 - strategy-inference evidence distinguishes engines from generic artifacts and graveyard hate
+  ---
+  duration_ms: 0.246078
+  type: 'test'
+  ...
+# Subtest: Squirreled Away evidence requires token-engine, sacrifice-payoff, and cumulative semantics
+ok 1001 - Squirreled Away evidence requires token-engine, sacrifice-payoff, and cumulative semantics
+  ---
+  duration_ms: 0.238073
+  type: 'test'
+  ...
+# Subtest: Marvel controls fail closed on whole-deck quality and persistent colored-mana access
+ok 1002 - Marvel controls fail closed on whole-deck quality and persistent colored-mana access
+  ---
+  duration_ms: 0.52199
+  type: 'test'
+  ...
+# Subtest: workflow actions validate checked-in source instead of generating or patching src/**
+ok 1003 - workflow actions validate checked-in source instead of generating or patching src/**
+  ---
+  duration_ms: 4.189709
+  type: 'test'
+  ...
+1..1003
+# tests 1003
+# suites 0
+# pass 1002
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 28377.7859
