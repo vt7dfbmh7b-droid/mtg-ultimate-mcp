@@ -2,6 +2,10 @@
 
 This roadmap tracks milestone-level direction and durable completed evidence. `project-state.json` is authoritative for the active milestone, current status, blockers and exact next actions. Reconcile this roadmap against newer committed evidence before using it.
 
+## Autonomous schedule safety boundary
+
+Before any scheduled or autonomous repository write, read root `AGENTS.md` and treat its **Hard workflow authority boundary** as binding. Scheduled/autonomous runs must not create, edit, rename, delete, stage, bypass or otherwise alter `.github/workflows/**`, `src/workflow-immutability.test.ts`, or its approved workflow-policy epoch. Existing immutable workflows may be used only through their checked-in interfaces. For the BENCH-01 strategy-anchor replay, request the already-validated frozen product SHA through `.automation/bench01-strategy-anchor-replay.request`; never edit the replay workflow merely to change the SHA. If a protected-surface change seems necessary, classify it as an interactive repository-maintenance blocker and continue other safe BENCH/product work rather than modifying the protected surface.
+
 ## North star
 
 Build an evidence-backed Commander specialist that can consistently outperform strong general-purpose AI on complete deck construction and analysis while preserving exact legality, budget, printing, strategy and user constraints.
