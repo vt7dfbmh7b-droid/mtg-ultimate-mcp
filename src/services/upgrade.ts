@@ -248,6 +248,15 @@ function themedRoleSearchQuery(
     .join(' ');
 }
 
+/**
+ * An explicit controlled/requested identity remains useful candidate-discovery evidence after its
+ * minimum density is satisfied. Minimums are preservation gates, not a signal to stop searching
+ * for role-compatible on-plan replacements.
+ */
+export function requestedIdentityRoleSearchEnabledV15(themeClause: string): boolean {
+  return themeClause.trim().length > 0;
+}
+
 const UPGRADE_STRATEGY_SEARCH_CLAUSES_V15: Record<string, string> = {
   'combat-tokens': '(o:"create" OR o:"token")',
   'equipment-voltron': '(t:equipment OR o:"equip" OR o:"attach")',
@@ -610,7 +619,7 @@ export async function suggestDeckUpgrades(
 
     let themedQuery: string | null = null;
     let themedResults: ScryfallCard[] = [];
-    if (themeDeficit > 0 && themeClause) {
+    if (requestedIdentityRoleSearchEnabledV15(themeClause)) {
       themedQuery = themedRoleSearchQuery(deficit.role, allowedIdentity, themeClause, printingPolicy, deficit.targetGate);
       try {
         themedResults = await searchCards(themedQuery, 40);
@@ -745,7 +754,7 @@ export async function suggestDeckUpgrades(
     controlledThemeSelection: {
       active: Boolean(themeClause), queryClause: themeClause || null, searchQuery: controlledThemeSearchQuery,
       currentMainMatches: themeCurrentMainMatches, requiredMainMatches: themeMinimumMainMatches, deficit: themeDeficit,
-      discoveredThemeCandidateNames: themeCandidateNames.size, supplementalRoleSearchesEnabled: themeDeficit > 0 && Boolean(themeClause),
+      discoveredThemeCandidateNames: themeCandidateNames.size, supplementalRoleSearchesEnabled: requestedIdentityRoleSearchEnabledV15(themeClause),
       componentAwareRanking: componentAwareThemeRanking, anchorComponentIds: [...anchorComponentIds], componentSignals: themeComponents, componentSearchQueries: themeComponentSearchQueries,
     },
     constraints: {
@@ -763,7 +772,7 @@ export async function suggestDeckUpgrades(
       'Within an already-required structural role or target gate, an explicit compound request preserves the starting deck’s dominant requested component first, then considers other requested components, substantive inferred commander strategy, and finally generic structural fallback. A later lane is considered only when the earlier lane yields zero eligible printings after printing/price policy checks.',
       'Unrestricted Upgrade supplements the bounded popularity-ordered role search with bounded per-archetype searches for strategies the starting deck has already proven substantive. The spells-control recall path includes actual Instant/Sorcery card types as well as Oracle-text spell mechanisms.',
       'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window.',
-      'When a V0.15 controlled theme is below its minimum density, the engine uses the controlled theme query as a positive membership/ranking signal. Under a printing restriction, only cards already admitted by the exhaustive shared eligible pool can become candidates.',
+      'A V0.15 controlled/requested theme remains an advisory role-candidate discovery and ranking signal even after its minimum density is satisfied; the minimum remains a preservation gate rather than a switch that disables on-plan replacement search. Under a printing restriction, only cards already admitted by the exhaustive shared eligible pool can become candidates.',
       'Cut ordering uses the same V0.15 commander strategy context as additions. When the deck is at or below its controlled theme minimum, matching cards also receive a capped four-point cut-protection signal; final theme preservation is still enforced independently by refinement rather than by this heuristic alone.',
       'Automatic upgrade packages pair the nonland cut pool with nonland additions so a utility land cannot silently replace a spell; dedicated mana-base work should be handled explicitly.',
       'Cut suggestions deliberately avoid claiming thematic/high-mana cards are bad; validate them against simulations, actual games, and reference-deck evidence.',

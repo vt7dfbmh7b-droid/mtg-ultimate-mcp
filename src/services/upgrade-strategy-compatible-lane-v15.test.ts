@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   compoundComponentCandidateLanesV15,
+  requestedIdentityRoleSearchEnabledV15,
   strategyCompatibleCandidateLanesV15,
   upgradeStrategySearchClausesV15,
 } from './upgrade.js';
@@ -174,4 +175,18 @@ test('secondary requested component remains reachable when dominant anchor has n
     if (chosen.length > before) break;
   }
   assert.deepEqual(chosen, [secondary]);
+});
+
+
+test('requested identity role discovery stays enabled after a theme minimum is already satisfied', () => {
+  // Density satisfaction must not disable discovery of on-plan role replacements.
+  assert.equal(requestedIdentityRoleSearchEnabledV15('t:elf'), true);
+  assert.equal(requestedIdentityRoleSearchEnabledV15('t:instant OR t:sorcery'), true);
+  assert.equal(requestedIdentityRoleSearchEnabledV15('t:enchantment'), true);
+  assert.equal(requestedIdentityRoleSearchEnabledV15('(t:artifact OR t:enchantment) mv>=4'), true);
+});
+
+test('requested identity role discovery remains disabled when no explicit controlled identity exists', () => {
+  assert.equal(requestedIdentityRoleSearchEnabledV15(''), false);
+  assert.equal(requestedIdentityRoleSearchEnabledV15('   '), false);
 });
