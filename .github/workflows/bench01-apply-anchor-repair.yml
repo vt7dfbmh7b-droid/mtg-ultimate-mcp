@@ -1,0 +1,9 @@
+name: BENCH-01 Anchor Repair Runner
+
+on: [push]
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo anchor-runner-ready
