@@ -1,0 +1,5 @@
+product_source_sha=49ca828c3581c6992c270ade84012014a3c9d733
+source_relationship=wrapper-descendant-src-verified-equal-to-product-sha
+focused_regression=green
+full_repository_check=green
+product_acceptance=provisional-pending-frozen-multi-fixture-whole-deck-review
