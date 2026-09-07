@@ -1,0 +1,5 @@
+BENCH-01 requested-identity role-discovery validation
+frozen_product_src_sha=73d7e3944a7a4da51b9c5a87834eb6642a61a1c8
+focused_regressions=green
+full_repository_check=green
+acceptance=provisional_pending_frozen_replay_and_manual_whole_deck_review
