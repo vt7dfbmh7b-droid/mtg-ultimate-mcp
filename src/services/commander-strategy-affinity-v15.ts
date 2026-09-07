@@ -206,7 +206,7 @@ export function deriveCommanderStrategyContextV15(
   const commanderNames = parsed.commanders.map((entry) => entry.name);
   const wanted = new Set(commanderNames.map(normalizeName));
   const commanders = cards.filter((card) => wanted.has(normalizeName(card.name)));
-  if (commanders.length !== commanderNames.length || commanders.length < 1 || commanders.length > 2) {
+  if (commanders.length !== commanderNames.length || commanderNames.length < 1 || commanderNames.length > 2) {
     return { commanderNames, strategies: [] };
   }
 
@@ -348,7 +348,15 @@ export function cardCommanderStrategyAffinityV15(
     score: baseScore + multiplayerQualityBonus,
     matches,
   };
-  DIRECT_MECHANISM_AFFINITY_V15.set(affinity, directMechanismOverlap);
+  const broadSubstantiveOverlap = matches
+    .filter((match) => match.commanderScore >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15)
+    .reduce((sum, match) => sum + match.overlapScore, 0);
+  // Keep weak incidental affinity available to the existing advisory cut-protection model. The
+  // direct-mechanism override is only needed once broad overlap would otherwise cross the shared
+  // substantive threshold and falsely admit generic utility into the preferred candidate lane.
+  if (broadSubstantiveOverlap >= SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15) {
+    DIRECT_MECHANISM_AFFINITY_V15.set(affinity, directMechanismOverlap);
+  }
   return affinity;
 }
 
