@@ -840,6 +840,11 @@ function upgradeSwapStrategyPreservationV15(
   const unreplacedStrategyComponentRoles = cutRoles.filter((role) => (
     strategyComponentRoles.has(role) && !addRoleSet.has(role)
   ));
+  // Exact engine/payoff components are categorical strategy evidence once the commander/deck
+  // strategy itself is substantive. Narrow mechanism cards can have modest broad-overlap scores,
+  // so requiring maximum numeric cut protection here allowed structurally attractive swaps to
+  // erase real Commander mechanisms. Keep the max-protection threshold only for broad affinity
+  // loss; exact component loss independently activates the existing preservation gate.
   const exactStrategyComponentLoss = substantiveCutStrategies.length > 0
     && unreplacedStrategyComponentRoles.length > 0;
   const meaningfulStrategyLoss = affinityStrategyLoss || exactStrategyComponentLoss;
@@ -992,35 +997,102 @@ function summaryMatchesCountTargetGateV15(card: Record<string, unknown>, gate: U
   return roles.has('tutor');
 }
 
+/**
+ * These role families describe operational components rather than broad deck labels. A card can
+ * satisfy several families at once (for example, interaction plus cost reduction, or a repeatable
+ * token/card/mana engine). Once a card carries two or more distinct components, replacing it with
+ * a card that drops one of those components is a semantic downgrade even when aggregate role counts
+ * and commander-affinity scores remain unchanged. Aliases within one family are intentionally
+ * interchangeable; the rule never names a card or a set.
+ */
 const COMPOUND_SEMANTIC_COMPONENTS_V15: ReadonlyArray<{
   id: string;
   roles: ReadonlySet<string>;
 }> = [
-  { id: 'interaction', roles: new Set(['spot interaction', 'countermagic', 'free interaction']) },
-  { id: 'counter-synergy', roles: new Set(['+1/+1 counters', 'proliferate']) },
-  { id: 'card-advantage', roles: new Set(['card draw', 'repeatable draw', 'board-scaling card draw']) },
-  { id: 'repeatable-token-engine', roles: new Set(['repeatable token engine', 'token multiplier', 'death-trigger token engine']) },
-  { id: 'reliable-mana', roles: new Set(['fast mana', 'mana acceleration', 'mana rock', 'mana dork']) },
-  { id: 'conditional-mana', roles: new Set(['conditional mana acceleration']) },
-  { id: 'treasure', roles: new Set(['treasure']) },
-  { id: 'land-ramp', roles: new Set(['land ramp']) },
-  { id: 'land-tutor', roles: new Set(['land tutor']) },
-  { id: 'persistent-colored-mana', roles: new Set(['persistent colored mana source']) },
-  { id: 'sacrifice-bridge', roles: new Set(['sacrifice synergy', 'sacrifice outlet', 'creature sacrifice outlet', 'artifact sacrifice outlet', 'mass sacrifice conversion', 'forced sacrifice interaction']) },
-  { id: 'cost-reduction', roles: new Set(['cost reduction']) },
+  {
+    id: 'interaction',
+    // Board wipes are governed by their own structural floor. Treat spot/stack interaction as
+    // the compound operational component so a broad wipe plus a cost reducer does not make the
+    // independent mass-removal floor stricter than its structural contract.
+    roles: new Set(['spot interaction', 'countermagic', 'free interaction']),
+  },
+  {
+    id: 'counter-synergy',
+    roles: new Set(['+1/+1 counters', 'proliferate']),
+  },
+  {
+    id: 'card-advantage',
+    roles: new Set(['card draw', 'repeatable draw', 'board-scaling card draw']),
+  },
+  {
+    id: 'repeatable-token-engine',
+    roles: new Set(['repeatable token engine', 'token multiplier', 'death-trigger token engine']),
+  },
+  {
+    id: 'reliable-mana',
+    roles: new Set(['fast mana', 'mana acceleration', 'mana rock', 'mana dork']),
+  },
+  {
+    id: 'conditional-mana',
+    roles: new Set(['conditional mana acceleration']),
+  },
+  {
+    id: 'treasure',
+    roles: new Set(['treasure']),
+  },
+  {
+    id: 'land-ramp',
+    roles: new Set(['land ramp']),
+  },
+  {
+    id: 'land-tutor',
+    roles: new Set(['land tutor']),
+  },
+  {
+    id: 'persistent-colored-mana',
+    roles: new Set(['persistent colored mana source']),
+  },
+  {
+    id: 'sacrifice-bridge',
+    roles: new Set([
+      'sacrifice synergy',
+      'sacrifice outlet',
+      'creature sacrifice outlet',
+      'artifact sacrifice outlet',
+      'mass sacrifice conversion',
+      'forced sacrifice interaction',
+    ]),
+  },
+  {
+    id: 'cost-reduction',
+    roles: new Set(['cost reduction']),
+  },
 ];
 
 function compoundSemanticComponentsV15(roles: ReadonlySet<string>): Set<string> {
-  return new Set(COMPOUND_SEMANTIC_COMPONENTS_V15.filter((component) => [...component.roles].some((role) => roles.has(role))).map((component) => component.id));
+  return new Set(
+    COMPOUND_SEMANTIC_COMPONENTS_V15
+      .filter((component) => [...component.roles].some((role) => roles.has(role)))
+      .map((component) => component.id),
+  );
 }
 
-function preservesCompoundSemanticComponentsV15(cutRoles: ReadonlySet<string>, addRoles: ReadonlySet<string>): boolean {
+function preservesCompoundSemanticComponentsV15(
+  cutRoles: ReadonlySet<string>,
+  addRoles: ReadonlySet<string>,
+): boolean {
   const cutComponents = compoundSemanticComponentsV15(cutRoles);
   if (cutComponents.size < 2) return true;
   const addComponents = compoundSemanticComponentsV15(addRoles);
   return [...cutComponents].every((component) => addComponents.has(component));
 }
 
+/**
+ * Preserve low-volume semantic infrastructure even when aggregate structural counts have
+ * surplus. These are deliberately role-level floors, not card-name exceptions: a replacement
+ * may spend the role only when the incoming card supplies the same semantic role and the
+ * starting deck has demonstrated enough redundancy for that role.
+ */
 function preservesSemanticSafetyFloorsV15(
   cutCard: Record<string, unknown>,
   addCard: Record<string, unknown>,
@@ -1030,6 +1102,9 @@ function preservesSemanticSafetyFloorsV15(
 ): boolean {
   const cutRoles = summarizedRoles(cutCard);
   const addRoles = summarizedRoles(addCard);
+  // Aggregate resource axes are useful, but they intentionally group unlike effects such as a
+  // mana rock and a one-shot Treasure. Preserve every distinct operational component on a
+  // multi-component outgoing card before applying the broader role-count floors below.
   if (!preservesCompoundSemanticComponentsV15(cutRoles, addRoles)) return false;
   const resourceAxes = (roles: Set<string>): [boolean, boolean, boolean] => [
     roles.has('repeatable token engine'),
@@ -1041,34 +1116,59 @@ function preservesSemanticSafetyFloorsV15(
   const cutResourceAxisCount = cutResourceAxes.filter(Boolean).length;
   const replacementResourceAxisCount = addResourceAxes.filter(Boolean).length;
   if (cutResourceAxisCount === 2) {
+    // A two-axis resource card is still a compound engine: do not collapse its
+    // card-advantage, token, or mana axis into an unrelated one-axis upgrade.
     if (cutResourceAxes.some((present, index) => present && !addResourceAxes[index])) return false;
   } else if (cutResourceAxisCount === 3) {
+    // A repeatable engine spanning bodies, cards and mana is more than an aggregate role
+    // count. An incoming card must retain at least two of those functional axes rather
+    // than exchanging the engine for a single token/protection payoff.
     if (replacementResourceAxisCount < 2) return false;
   }
   const safetyFloors: Array<{ role: string; floor: number }> = [
-    { role: 'cost reduction', floor: selectionRole === 'average-nonland-mv' ? (semanticRoleCounts['cost reduction'] ?? 0) : Math.min(semanticRoleCounts['cost reduction'] ?? 0, 3) },
+    // A curve repair must not trade away cost reducers that directly support the speed goal.
+    {
+      role: 'cost reduction',
+      floor: selectionRole === 'average-nonland-mv'
+        ? (semanticRoleCounts['cost reduction'] ?? 0)
+        : Math.min(semanticRoleCounts['cost reduction'] ?? 0, 3),
+    },
+    // Preserve at least one graveyard utility effect whenever the deck has only one.
     { role: 'graveyard utility', floor: Math.min(semanticRoleCounts['graveyard utility'] ?? 0, 1) },
+    // Do not spend the deck's only explicit graveyard-hate interaction on an unrelated quota.
     { role: 'graveyard hate', floor: Math.min(semanticRoleCounts['graveyard hate'] ?? 0, 1) },
+    // Trigger-specific and narrow sacrifice engines are not interchangeable with generic bodies,
+    // recursion, or protection when they are the deck's only copy.
     { role: 'narrow sacrifice outlet', floor: Math.min(semanticRoleCounts['narrow sacrifice outlet'] ?? 0, 1) },
     { role: 'spell-triggered token engine', floor: Math.min(semanticRoleCounts['spell-triggered token engine'] ?? 0, 1) },
     { role: 'combat-scaling life drain', floor: Math.min(semanticRoleCounts['combat-scaling life drain'] ?? 0, 1) },
     { role: '+1/+1 counters', floor: Math.min(semanticRoleCounts['+1/+1 counters'] ?? 0, 1) },
     { role: 'team-wide untap pump', floor: Math.min(semanticRoleCounts['team-wide untap pump'] ?? 0, 1) },
+    // Artifact-specific and high-capacity recursion are scarce engines, not generic surplus
+    // recursion. Retain the unique artifact bridge and up to two broad recursion effects unless
+    // the incoming card preserves the same operational role.
     { role: 'artifact graveyard recursion', floor: Math.min(semanticRoleCounts['artifact graveyard recursion'] ?? 0, 1) },
     { role: 'high-capacity graveyard recursion', floor: Math.min(semanticRoleCounts['high-capacity graveyard recursion'] ?? 0, 2) },
     { role: 'self-recurring engine', floor: Math.min(semanticRoleCounts['self-recurring engine'] ?? 0, 1) },
+    // Narrow tutors are consistency infrastructure while the authoritative tutor gate is
+    // still failed; do not silently replace them with unrelated protection or creatures.
     {
       role: 'narrow tutor',
       floor: authoritativeCounts.tutors < BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15.tutors
         ? (semanticRoleCounts['narrow tutor'] ?? 0)
         : Math.min(semanticRoleCounts['narrow tutor'] ?? 0, 4),
     },
+    // Keep a complete spot-interaction floor at the established bracket-5 structural target.
     { role: 'spot interaction', floor: Math.min(semanticRoleCounts['spot interaction'] ?? 0, 14) },
+    // Cheap interaction is operationally premium at high power. Do not spend it on an
+    // unrelated protection/curve quota merely because aggregate interaction has surplus.
     { role: 'cheap interaction', floor: semanticRoleCounts['cheap interaction'] ?? 0 },
   ];
   return safetyFloors.every(({ role, floor }) => {
     if (!cutRoles.has(role) || floor <= 0) return true;
-    const after = (semanticRoleCounts[role] ?? 0) - 1 + (addRoles.has(role) ? 1 : 0);
+    const after = (semanticRoleCounts[role] ?? 0)
+      - 1
+      + (addRoles.has(role) ? 1 : 0);
     return after >= floor;
   });
 }
@@ -1086,11 +1186,20 @@ function applySummaryToStructuralCountsV15(
 }
 
 function structuralDeficitTotalV15(counts: UpgradeStructuralCountsV15, targets: UpgradeStructuralTargetsV15): number {
-  return UPGRADE_STRUCTURAL_ROLES_V15.reduce((sum, role) => sum + Math.max(0, targets[role] - counts[role]), 0);
+  return UPGRADE_STRUCTURAL_ROLES_V15.reduce(
+    (sum, role) => sum + Math.max(0, targets[role] - counts[role]),
+    0,
+  );
 }
 
-function preservesStructuralFloorsV15(before: UpgradeStructuralCountsV15, after: UpgradeStructuralCountsV15, targets: UpgradeStructuralTargetsV15): boolean {
-  return UPGRADE_STRUCTURAL_ROLES_V15.every((role) => after[role] >= Math.min(before[role], targets[role]));
+function preservesStructuralFloorsV15(
+  before: UpgradeStructuralCountsV15,
+  after: UpgradeStructuralCountsV15,
+  targets: UpgradeStructuralTargetsV15,
+): boolean {
+  return UPGRADE_STRUCTURAL_ROLES_V15.every((role) => (
+    after[role] >= Math.min(before[role], targets[role])
+  ));
 }
 
 function currentRoleCountV15(currentMetrics: Record<string, unknown>, role: string): number {
@@ -1141,8 +1250,14 @@ export function pairUpgradeSwapsByStructureV15(
   const bracket = clampBracket(targetBracket);
   const currentAverageNonlandManaValue = recordNumber(currentMetrics.averageNonlandManaValue);
   const currentNonlandCount = recordNumber(currentMetrics.nonlandCount);
-  const curveTarget = bracket >= 5 ? BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15 : bracket >= 4 ? BRACKET_FOUR_AVERAGE_NONLAND_MV_MAX_V15 : Number.POSITIVE_INFINITY;
-  const requiredCurveReduction = Number.isFinite(curveTarget) && currentAverageNonlandManaValue > curveTarget && currentNonlandCount > 0
+  const curveTarget = bracket >= 5
+    ? BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15
+    : bracket >= 4
+      ? BRACKET_FOUR_AVERAGE_NONLAND_MV_MAX_V15
+      : Number.POSITIVE_INFINITY;
+  const requiredCurveReduction = Number.isFinite(curveTarget)
+    && currentAverageNonlandManaValue > curveTarget
+    && currentNonlandCount > 0
     ? (currentAverageNonlandManaValue - curveTarget) * currentNonlandCount
     : Number.POSITIVE_INFINITY;
   let remainingCurveReduction = requiredCurveReduction;
@@ -1172,10 +1287,14 @@ export function pairUpgradeSwapsByStructureV15(
     tutors: recordNumber(currentMetrics.tutorCount),
   };
   let persistentColoredManaSources = recordNumber(currentMetrics.persistentColoredManaSourceCount);
-  const persistentColoredManaSourceTarget = minimumPersistentColoredManaSourcesV15(recordNumber(currentMetrics.commanderColorCount));
+  const persistentColoredManaSourceTarget = minimumPersistentColoredManaSourcesV15(
+    recordNumber(currentMetrics.commanderColorCount),
+  );
   const packageAcceptanceFloors = options.packageAcceptanceFloors ?? [];
   let packageAcceptanceCounts = packageAcceptanceFloors.map((floor) => floor.beforeCount);
-  const maxPairs = options.maxPairs === undefined ? Number.POSITIVE_INFINITY : Math.max(0, Math.trunc(options.maxPairs));
+  const maxPairs = options.maxPairs === undefined
+    ? Number.POSITIVE_INFINITY
+    : Math.max(0, Math.trunc(options.maxPairs));
   const remainingCuts = [...cutPool];
   const pairs: UpgradePairingV15[] = [];
   const semanticRoleCounts: Record<string, number> = Object.fromEntries(
@@ -1193,19 +1312,36 @@ export function pairUpgradeSwapsByStructureV15(
     const selectionTargetGate = asUpgradeTargetGateV15(selection.candidate.authoritativeTargetGate)
       ?? (selection.role === 'average-nonland-mv' ? 'average-nonland-mv' : null);
     const afterAdd = applySummaryToStructuralCountsV15(counts, addCard, 1);
-    const persistentColoredManaSourcesAfterAdd = persistentColoredManaSources + (summaryIsPersistentColoredManaSourceV15(addCard) ? 1 : 0);
-    const persistentColoredManaSourceFloor = Math.min(persistentColoredManaSources, persistentColoredManaSourceTarget);
+    const persistentColoredManaSourcesAfterAdd = persistentColoredManaSources
+      + (summaryIsPersistentColoredManaSourceV15(addCard) ? 1 : 0);
+    const persistentColoredManaSourceFloor = Math.min(
+      persistentColoredManaSources,
+      persistentColoredManaSourceTarget,
+    );
     const deficitBeforeSwap = structuralDeficitTotalV15(counts, state.targets);
     const candidateCuts = (selection.role === 'average-nonland-mv'
       ? remainingCuts.filter((cut) => recordNumber(summarizedCard(cut).manaValue) > Math.max(2, addManaValue))
       : [...remainingCuts])
       .filter((cut) => {
         const cutCard = summarizedCard(cut);
-        if (summaryIsPremiumEarlyInfrastructureV15(cutCard) && !summaryIsPremiumEarlyInfrastructureV15(addCard)) return false;
+        // Do not spend a premium one- or two-mana acceleration piece on an unrelated
+        // upgrade. A persistent low-cost mana source is foundational early infrastructure;
+        // only another premium early infrastructure card may replace it.
+        if (summaryIsPremiumEarlyInfrastructureV15(cutCard)
+          && !summaryIsPremiumEarlyInfrastructureV15(addCard)) return false;
+        // In four- and five-colour decks, a broad persistent fixing rock is not
+        // interchangeable with a conditional land tutor. Preserve the fixing
+        // source unless the incoming card supplies the same persistent role.
         if (recordNumber(currentMetrics.commanderColorCount) >= 4
           && summaryIsBroadColorFixingManaSourceV15(cutCard)
           && !summaryIsBroadColorFixingManaSourceV15(addCard)) return false;
-        if (!preservesSemanticSafetyFloorsV15(cutCard, addCard, semanticRoleCounts, selection.role, authoritativeCounts)) return false;
+        if (!preservesSemanticSafetyFloorsV15(
+          cutCard,
+          addCard,
+          semanticRoleCounts,
+          selection.role,
+          authoritativeCounts,
+        )) return false;
         if (!packageAcceptanceFloorPreservedV15(packageAcceptanceFloors, packageAcceptanceCounts, addCard, cutCard)) return false;
         const afterSwap = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);
         if (!preservesStructuralFloorsV15(counts, afterSwap, state.targets)) return false;
@@ -1246,14 +1382,14 @@ export function pairUpgradeSwapsByStructureV15(
       if (leftStrategy.meaningfulStrategyLoss !== rightStrategy.meaningfulStrategyLoss) {
         return leftStrategy.meaningfulStrategyLoss ? 1 : -1;
       }
+      const leftStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, left);
+      const rightStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, right);
+      if (leftStrategyLoss !== rightStrategyLoss) return leftStrategyLoss - rightStrategyLoss;
       const identityPriority = compareReplacementIdentityPriorityV15(
         upgradeSwapReplacementIdentityPriorityV15(selection.candidate, left),
         upgradeSwapReplacementIdentityPriorityV15(selection.candidate, right),
       );
       if (identityPriority !== 0) return identityPriority;
-      const leftStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, left);
-      const rightStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, right);
-      if (leftStrategyLoss !== rightStrategyLoss) return leftStrategyLoss - rightStrategyLoss;
       let leftCurveReduction: number | null = null;
       let rightCurveReduction: number | null = null;
       let bothCurveCutsSufficient = false;
@@ -1532,7 +1668,9 @@ export async function buildSimulationBackedUpgradePlanV07(
   const groups = (suggestions.candidateAddsByDeficit ?? []) as Array<Record<string, unknown>>;
   const targetPressure = commanderTargetPressureV15(options.targetBracket);
   const winPackagePriority = await buildWinPackagePriorityV15(parsed, cards, options);
-  const packageProtectedNames = new Set((winPackagePriority.protectedExistingPackageNames ?? []).map((name) => name.toLocaleLowerCase()));
+  const packageProtectedNames = new Set(
+    (winPackagePriority.protectedExistingPackageNames ?? []).map((name) => name.toLocaleLowerCase()),
+  );
   const cutPool = ((suggestions.candidateCuts ?? []) as Array<Record<string, unknown>>)
     .filter((cut) => {
       const card = cut.card as Record<string, unknown> | undefined;
@@ -1544,7 +1682,8 @@ export async function buildSimulationBackedUpgradePlanV07(
 
   const chosenAdds: UpgradeAddSelectionV15[] = [];
   const addNames = new Set<string>();
-  const atomicWinPackageFits = winPackagePriority.selections.length > 0 && winPackagePriority.selections.length <= swapCapacity;
+  const atomicWinPackageFits = winPackagePriority.selections.length > 0
+    && winPackagePriority.selections.length <= swapCapacity;
   if (atomicWinPackageFits) {
     for (const selection of winPackagePriority.selections) {
       const name = candidateName(selection.candidate);
@@ -1573,7 +1712,13 @@ export async function buildSimulationBackedUpgradePlanV07(
   }
 
   const packageAcceptanceBaseline = options.packageAcceptanceContract
-    ? auditRefinementPackageAcceptanceV15({ beforeParsed: parsed, beforeCards: cards, afterParsed: parsed, afterCards: cards, contract: options.packageAcceptanceContract })
+    ? auditRefinementPackageAcceptanceV15({
+        beforeParsed: parsed,
+        beforeCards: cards,
+        afterParsed: parsed,
+        afterCards: cards,
+        contract: options.packageAcceptanceContract,
+      })
     : null;
   const packageAcceptanceFloors = packageAcceptanceBaseline
     ? [...packageAcceptanceBaseline.strategyFuel, ...packageAcceptanceBaseline.structuralFloors]
@@ -1602,7 +1747,14 @@ export async function buildSimulationBackedUpgradePlanV07(
     .filter((entry) => !cutNames.has(entry.name.toLocaleLowerCase()))
     .map(entryLine);
   const addLines = selectedAdds.map(candidateLine).filter((line): line is string => Boolean(line));
-  const newDecklist = ['// COMMANDER', ...parsed.commanders.map(entryLine), '', '// MAIN', ...newMainLines, ...addLines].join('\n');
+  const newDecklist = [
+    '// COMMANDER',
+    ...parsed.commanders.map(entryLine),
+    '',
+    '// MAIN',
+    ...newMainLines,
+    ...addLines,
+  ].join('\n');
   const upgradedParsed = parseDecklist(newDecklist);
   const identifiers = [...upgradedParsed.commanders, ...upgradedParsed.main].map((entry) => ({
     name: entry.name,
@@ -1651,7 +1803,7 @@ export async function buildSimulationBackedUpgradePlanV07(
         authoritativeTargetGate: pair.authoritativeTargetGate ?? null,
         nonlandManaValueReduction: pair.nonlandManaValueReduction ?? null,
         persistentColoredManaSourcesAfterSwap: pair.persistentColoredManaSourcesAfterSwap,
-        persistentColoredManaSourceFloor,
+        persistentColoredManaSourceFloor: pair.persistentColoredManaSourceFloor,
         strategyPreservation: pair.strategyPreservation,
       },
     })),
