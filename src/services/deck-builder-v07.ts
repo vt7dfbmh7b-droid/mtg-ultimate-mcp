@@ -307,7 +307,7 @@ async function basicPrinting(
     const results = await searchCards(query, 10);
     const priceCap = candidatePriceCapV07(options);
     for (const card of results) {
-      const printing = await eligibleCardPrinting(card, policy, priceCap, printingCache);
+      const printing = await eligibleCardPrinting(card, policy, priceCap, cache);
       if (printing) return printing;
     }
     return null;
