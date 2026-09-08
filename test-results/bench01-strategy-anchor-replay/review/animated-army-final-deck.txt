@@ -3,7 +3,6 @@
 
 // MAIN
 1 Wildsear, Scouring Maw (BLC) 8 *F*
-1 Domri, Anarch of Bolas (BLC) 98 *F*
 1 Etali, Primal Storm (BLC) 196 *N*
 1 Prosperous Bandit (BLC) 25 *N*
 1 Alchemist's Talent (BLC) 22 *N*
@@ -64,7 +63,6 @@
 1 Gruul Signet (BLC) 273 *N*
 1 Hedron Archive (BLC) 275 *N*
 1 Fellwar Stone (BLC) 269 *N*
-1 Thran Dynamo (BLC) 290 *N*
 1 Sol Ring (BLC) 129 *N*
 1 Mind Stone (BLC) 280 *N*
 1 Talisman of Impulse (BLC) 287 *N*
@@ -87,3 +85,5 @@
 1 District Mascot (DFT) 344 *N*
 1 Cool but Rude (TMT) 89 *N*
 1 Wayfarer's Bauble (LCC) 317 *N*
+1 Ornithopter of Paradise (J25) 153 *N*
+1 Everflowing Chalice (MM2) 212 *N*
