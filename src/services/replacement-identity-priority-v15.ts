@@ -14,6 +14,9 @@ export interface ReplacementIdentityPriorityV15 {
   requestedComponentLossCount: number;
   requestedComponentGainCount: number;
   requestedComponentPreservedCount: number;
+  requestedRelationshipLossCount: number;
+  requestedRelationshipGainCount: number;
+  requestedRelationshipPreservedCount: number;
   substantiveStrategyAffinityDelta: number;
   requestedRelationshipAffinityDelta: number;
   identityErosion: number;
@@ -31,6 +34,10 @@ function normalizedRequestedComponentIds(value: unknown): Set<string> {
     .filter((item): item is string => typeof item === 'string')
     .map((item) => item.trim().toLocaleLowerCase())
     .filter(Boolean));
+}
+
+function requestedRelationshipIds(componentIds: ReadonlySet<string>): Set<string> {
+  return new Set([...componentIds].filter((id) => id.startsWith('relation:')));
 }
 
 /**
@@ -51,6 +58,11 @@ export function replacementIdentityPriorityV15(
   const requestedComponentLossCount = [...cutComponents].filter((id) => !addComponents.has(id)).length;
   const requestedComponentGainCount = [...addComponents].filter((id) => !cutComponents.has(id)).length;
   const requestedComponentPreservedCount = [...cutComponents].filter((id) => addComponents.has(id)).length;
+  const addRelationships = requestedRelationshipIds(addComponents);
+  const cutRelationships = requestedRelationshipIds(cutComponents);
+  const requestedRelationshipLossCount = [...cutRelationships].filter((id) => !addRelationships.has(id)).length;
+  const requestedRelationshipGainCount = [...addRelationships].filter((id) => !cutRelationships.has(id)).length;
+  const requestedRelationshipPreservedCount = [...cutRelationships].filter((id) => addRelationships.has(id)).length;
   const substantiveStrategyAffinityDelta = Number((
     finiteNonNegative(add.substantiveStrategyAffinity)
       - finiteNonNegative(cut.substantiveStrategyAffinity)
@@ -75,6 +87,9 @@ export function replacementIdentityPriorityV15(
     requestedComponentLossCount,
     requestedComponentGainCount,
     requestedComponentPreservedCount,
+    requestedRelationshipLossCount,
+    requestedRelationshipGainCount,
+    requestedRelationshipPreservedCount,
     substantiveStrategyAffinityDelta,
     requestedRelationshipAffinityDelta,
     identityErosion,
@@ -87,13 +102,24 @@ export function replacementIdentityPriorityV15(
   };
 }
 
-/** Lower erosion wins first; then higher gain. Zero preserves downstream tie-breaks. */
+/**
+ * Typed requested relationships represent the concrete engine/payoff/commander-shape mechanism
+ * inside a broad requested component. Prefer preserving those mechanisms before comparing broad
+ * identity erosion/gain. This remains advisory: when every eligible cut loses the relationship,
+ * downstream structural/curve/cut-pressure ranking still decides the replacement.
+ */
 export function compareReplacementIdentityPriorityV15(
   left: ReplacementIdentityPriorityV15,
   right: ReplacementIdentityPriorityV15,
 ): number {
+  if (left.requestedRelationshipLossCount !== right.requestedRelationshipLossCount) {
+    return left.requestedRelationshipLossCount - right.requestedRelationshipLossCount;
+  }
   if (left.identityErosion !== right.identityErosion) {
     return left.identityErosion - right.identityErosion;
+  }
+  if (left.requestedRelationshipGainCount !== right.requestedRelationshipGainCount) {
+    return right.requestedRelationshipGainCount - left.requestedRelationshipGainCount;
   }
   if (left.identityGain !== right.identityGain) {
     return right.identityGain - left.identityGain;
