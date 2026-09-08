@@ -2,7 +2,7 @@
   "experimental": {
     "activeBranch": "agent/v15-native-deck-intelligence",
     "activePullRequest": 29,
-    "developmentCheckpointNote": "The generic commander-compatible Aura target-shape repair at 473edf473a284b9532aa03747abfa41a1081ca2c passed immutable full CI (run 34238285554) and the exact-source frozen five-fixture replay (run 34238484370; evidence persistence bb2f097db51f8b242983a3a7baa03afddf50a0de). Manual whole-deck review in test-results/bench01-manual-verdicts/473edf473a284b9532aa03747abfa41a1081ca2c.md ACCEPTS the repair as BENCH-01 progression: Ellivere retains Angelic Destiny and Ancestral Mask; Hakbal retains Reflections of Littjara; Bello retains Esika's Chariot; Quick Draw and Elven Empire show no repair-caused regression. All decks are exact-100, legal and resolved. This SHA is not yet the accepted Commander baseline because the replay is a familiar post-repair control batch, higher bracket targets remain unachieved, and fresh contrasting plus strong general-AI evidence is still required. Accepted baseline remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616.",
+    "developmentCheckpointNote": "Fresh contrasting BENCH-01 evidence from exact frozen product 473edf473a284b9532aa03747abfa41a1081ca2c is durably reviewed at test-results/bench01-fresh-contrasting-473edf47/manual-verdict.md (evidence commit 23da6102842bf1aeb8db91f4a3e3a068d2df05b1). Endless Punishment rejected common group-slug/punisher language and made zero swaps. Revenant Recon and Deep Clue Sea stayed legal and within budget, but manual whole-deck review found repeated generic replacement-priority/contextual-role failures: loosely supported Swords/Padeem displaced commander-specific engines, cheap interaction stayed at one, and aggregate theme counters concealed component-quality loss. All three comparisons are general-AI clear wins. The Aura repair remains fully validated progression, but 473edf47 is not accepted as the Commander baseline; accepted baseline remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616.",
     "developmentCheckpointSha": "473edf473a284b9532aa03747abfa41a1081ca2c",
     "lastFullyValidatedExperimentalBaseline": {
       "branch": "agent/v15-native-deck-intelligence",
@@ -25,7 +25,7 @@
       "docs/VALIDATION-MATRIX.md",
       "docs/KNOWN-FAILURES.md"
     ],
-    "then": "BENCH-01 remains active. Accepted Commander baseline remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Product 473edf473a284b9532aa03747abfa41a1081ca2c has green immutable CI and exact-source frozen five-fixture replay; the durable manual verdict ACCEPTS its generic Aura target-shape repair as progression but defers baseline acceptance. The prior Ellivere artifact-only Aura replacement is gone while Hakbal/Bello repairs and Quick Draw/Elven Empire controls remain stable. Do not repeat the Aura regression, repair or five-fixture replay. Next unfinished stage: freeze 473edf47 for genuinely fresh contrasting BENCH-01 evidence, manually review complete decks and compare with a strong general-purpose AI. Only then decide baseline acceptance or whether cross-fixture evidence justifies another generic repair. Stable remains V0.13 and PR #29 unmerged."
+    "then": "BENCH-01 remains active. Accepted Commander baseline remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Product 473edf473a284b9532aa03747abfa41a1081ca2c remains fully validated for the Aura target-shape repair, but fresh contrasting evidence at test-results/bench01-fresh-contrasting-473edf47/manual-verdict.md rejects baseline acceptance: Endless Punishment is an unsupported-theme failure; Revenant Recon and Deep Clue Sea expose repeated contextual replacement-priority/role-effectiveness weaknesses and are general-AI clear wins. Do not repeat the Aura replay or this fresh batch. Next unfinished stage: add generic production-path regressions for context-sensitive protection effectiveness, engine/payoff replacement compensation, per-component before/after theme movement and target-pressure priority; then implement the smallest justified generic repair, fully validate it, freeze it and replay affected fixtures plus a control. Stable remains V0.13 and PR #29 unmerged."
   },
   "milestones": [
     {
@@ -73,11 +73,12 @@
   ],
   "nextActions": [
     "Read project-state.json and AGENTS.md; inspect all relevant branch writers, including earlier-commit jobs. Do not overlap a running validation, replay, integrity writer or product repair.",
-    "Resume from the completed 473edf473a284b9532aa03747abfa41a1081ca2c Aura repair, green CI, frozen five-fixture replay and durable manual verdict. Do not repeat the regression, repair, replay or review.",
-    "Freeze exact product SHA 473edf473a284b9532aa03747abfa41a1081ca2c for a genuinely fresh contrasting BENCH-01 batch outside the Aura/precon-control family. Prefer high-interaction control, aristocrats/graveyard, unrestricted combo or an unusual commander with competing constraints.",
-    "Inspect every complete deck manually for legality, target achievement, mana, curve, roles, synergy, commander support, replacement quality, resilience and alternative wins. Preserve target movement versus target achievement and restricted-pool ceiling classifications.",
-    "Compare the specialist output against a strong general-purpose AI answer and record a fixture-level verdict. Do not accept a new baseline solely because the familiar repair controls are green.",
-    "If fresh evidence is competitive without a repeated new weakness, accept 473edf473a284b9532aa03747abfa41a1081ca2c as the new Commander baseline and continue breadth. If it loses, require contrasting cross-fixture evidence or a clearly centralized defect before another smallest generic repair.",
+    "Resume from fresh batch evidence commit 23da6102842bf1aeb8db91f4a3e3a068d2df05b1 and test-results/bench01-fresh-contrasting-473edf47/manual-verdict.md. Do not repeat the completed Aura replay or the three fresh fixtures on unchanged source.",
+    "State the generic deficient capability precisely: replacement priority and role inference reward abstract protection/tutor/theme counts without enough deck-context effectiveness, commander-specific engine compensation or per-component before/after movement.",
+    "Add production-path regressions showing that protection requires usable connectivity/setup, commander-specific engine/payoff cuts require same-role or same-component compensation, aggregate compound-theme OR coverage cannot hide a degraded component, and failed cheap-interaction target pressure cannot be bypassed by unrelated metric gains.",
+    "Implement the smallest generic repair with no card-name, commander, fixture or benchmark-label exceptions. Preserve downstream legality, printing, budget, strategy and route-protection gates.",
+    "Run focused regression tests and the full required validation suite. Require corrected validation green before freezing the exact repair SHA.",
+    "Replay Endless Punishment, Revenant Recon and Deep Clue Sea plus at least one unchanged control from that exact validated repair SHA; manually inspect complete decks and compare with pre-repair and strong general AI.",
     "Persist meaningful evidence and synchronize project-state, roadmap, handoff and validation surfaces. Keep PR #29 and stable/current V0.13 unmerged/unpromoted until promotion-grade BENCH-01 evidence exists."
   ],
   "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
@@ -109,25 +110,26 @@
     "Scheduled/autonomous development has no authority to modify .github/workflows/**, src/workflow-immutability.test.ts, or the approved workflow-policy epoch; those are explicit interactive-maintenance-only surfaces.",
     "Never treat an unvalidated or manually unreviewed/rejected head as an accepted Commander checkpoint.",
     "No scenario-specific, card-name or benchmark-specific hacks; product changes require generic evidence.",
-    "Stable/current promotion or PR merging requires complete validation, non-redundancy, safety and promotion-grade benchmark evidence. The user has granted standing authority to perform those actions once those gates are genuinely satisfied; no extra approval is required at that point."
+    "Stable/current promotion or PR merging requires complete validation, non-redundancy, safety and promotion-grade benchmark evidence. The user has granted standing authority to perform those actions once those gates are genuinely satisfied; no extra approval is required at that point.",
+    "Abstract role-count or aggregate-theme gains are not proof of replacement quality; candidate effectiveness must account for deck-context setup/connectivity, commander-specific engine importance and per-component before/after movement."
   ],
-  "updatedAt": "2026-09-08T14:49:27.487Z",
+  "updatedAt": "2026-09-08T15:24:12.729Z",
   "validation": {
-    "activeBranchStatus": "bench01-473edf47-aura-repair-green-fresh-fixture-general-ai-next",
+    "activeBranchStatus": "bench01-473edf47-fresh-batch-general-ai-loss-contextual-replacement-repair-next",
     "latestPersistedMarvelControl": {
       "sourceSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
       "outcome": "execution-success-target-not-achieved",
       "note": "Latest registered focused and broad Marvel metadata at c2fa83b7 records successful execution/build where reported, but failed control/target-quality gates; no target achievement is claimed. Preserve the earlier exact-source 5829b37 restricted-pool construction-ceiling result as historical evidence. A red historical or constrained target is not automatically a blocker to unrelated BENCH-01 work; investigate only if relevant source, pool, provider truth or policy evidence changes. Do not convert provider uncertainty into absence or an intelligence failure."
     },
     "requiredBeforeResumingIntelligenceClaims": [
-      "Keep e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest accepted Commander baseline until fresh contrasting and strong general-AI evidence supports accepting 473edf473a284b9532aa03747abfa41a1081ca2c.",
-      "Use test-results/bench01-manual-verdicts/473edf473a284b9532aa03747abfa41a1081ca2c.md as the newest durable whole-deck verdict. It accepts the generic Aura repair as progression but explicitly defers baseline acceptance.",
-      "Treat regression 0b2a8d29993e0870de48eb6541e967d644ef4c85, repair 473edf473a284b9532aa03747abfa41a1081ca2c, CI runs 34212749049 and 34238285554, replay request fff076725a9e034484e746e9050820181a01d9db, replay run 34238484370, evidence persistence bb2f097db51f8b242983a3a7baa03afddf50a0de and manual review as completed work.",
-      "The Aura target-shape defect is repaired through the actual production relationship and replacement-priority path: Ellivere keeps Angelic Destiny and Ancestral Mask, while artifact-only Hardlight Containment is not accepted as an equivalent replacement.",
-      "Retain prior repaired controls: Hakbal keeps Reflections of Littjara; Bello keeps Esika's Chariot; Quick Draw and Elven Empire show no material repair-caused regression. All five replay decks remain exact-100, Commander legal and resolved.",
-      "Do not claim target achievement from bracket movement. Quick Draw remains Bracket 3; Ellivere, Hakbal and Bello move to Bracket 3; Elven Empire remains Bracket 2.",
-      "Require at least one genuinely fresh contrasting fixture from exact frozen source 473edf473a284b9532aa03747abfa41a1081ca2c plus complete-deck manual review and strong general-AI comparison before baseline acceptance.",
-      "Do not patch isolated questionable swaps. Require a repeated cross-fixture weakness or clearly centralized defect and preserve all hard/advisory safety boundaries.",
+      "Keep e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest accepted Commander baseline. Fresh contrasting evidence rejects accepting 473edf473a284b9532aa03747abfa41a1081ca2c as the replacement baseline.",
+      "Use test-results/bench01-fresh-contrasting-473edf47/manual-verdict.md (evidence commit 23da6102842bf1aeb8db91f4a3e3a068d2df05b1) as the newest durable whole-deck verdict.",
+      "Treat Endless Punishment as a centralized semantic-taxonomy failure: common group-slug/punisher/opponents-lose-life language was rejected, producing zero swaps and no target movement.",
+      "Treat Revenant Recon and Deep Clue Sea as repeated generic contextual replacement-priority/role-inference failures, not legality, provider, printing, harness or restricted-pool failures.",
+      "Do not claim target achievement: Revenant Recon remained Bracket 2 against requested Bracket 3; Deep Clue Sea preserved its existing Bracket 3 but degraded important Clue engines; Endless Punishment remained Bracket 2 against requested Bracket 4.",
+      "All three fresh fixtures are general-AI clear wins after complete-deck manual review.",
+      "Before another product repair, add generic production-path regressions for protection connectivity/setup, engine/payoff compensation, per-component theme movement and target-pressure priority. No card-name, commander or fixture exceptions.",
+      "After the smallest justified repair, require focused and full validation green, freeze the exact repair SHA, replay affected fixtures plus a control unchanged, and manually compare complete outputs with pre-repair evidence.",
       "Read AGENTS.md before writes. Use single-flight execution and existing checked-in interfaces; never alter .github/workflows/**, src/workflow-immutability.test.ts or workflowPolicyEpochSha during scheduled/autonomous development.",
       "PR #29 and stable/current V0.13 remain unmerged/unpromoted until promotion-grade BENCH-01 evidence and all applicable formal/manual gates are satisfied."
     ]
@@ -135,6 +137,6 @@
   "workMode": {
     "activeMilestone": "BENCH-01",
     "intelligenceDevelopmentPaused": false,
-    "reason": "BENCH-01 remains active. The generic Aura target-shape repair is fully validated and generalized across the frozen five-fixture control replay, with a durable manual verdict accepting the repair as progression. The next product-quality gate is fresh contrasting whole-deck evidence and strong general-AI comparison from exact source 473edf47, not another familiar replay or immediate repair."
+    "reason": "BENCH-01 remains active. The validated Aura repair generalized across its control replay, but the completed fresh contrasting batch produced three general-AI clear wins and isolated a repeated generic contextual replacement-priority/role-inference weakness. The next product-quality gate is regression-first generic repair and full validation, not more documentation or acceptance of 473edf47."
   }
 }
