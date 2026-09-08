@@ -295,20 +295,20 @@
       ],
       "metadataPath": "test-results/precon-generalization-squirrels/run-metadata.txt",
       "exists": true,
-      "sourceSha": "8f7a38e4f3cbd6aa8faaf0092771d0c34b2f7514",
-      "outcome": "pass",
+      "sourceSha": "5a94d1bc4b203398402ed160e4149cadb71b43b4",
+      "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "8f7a38e4f3cbd6aa8faaf0092771d0c34b2f7514",
-        "workflow_source_sha": "8f7a38e4f3cbd6aa8faaf0092771d0c34b2f7514",
-        "executed_head_sha": "8f7a38e4f3cbd6aa8faaf0092771d0c34b2f7514",
-        "control_outcome": "success",
-        "build_outcome": "success",
-        "regression_outcome": "success",
-        "execution_outcome": "success",
-        "hard_truth_outcome": "success",
-        "target_quality_outcome": "success",
-        "strategy_preservation_outcome": "success",
+        "source_sha": "5a94d1bc4b203398402ed160e4149cadb71b43b4",
+        "workflow_source_sha": "5a94d1bc4b203398402ed160e4149cadb71b43b4",
+        "executed_head_sha": "5a94d1bc4b203398402ed160e4149cadb71b43b4",
+        "control_outcome": "failure",
+        "build_outcome": "failure",
+        "regression_outcome": "skipped",
+        "execution_outcome": "skipped",
+        "hard_truth_outcome": "skipped",
+        "target_quality_outcome": "skipped",
+        "strategy_preservation_outcome": "skipped",
         "policy": "exact-squirreled-away-stock-unrestricted-budgeted-upgrade",
         "printing_family": "unrestricted",
         "exact_card_count": "true",
@@ -322,7 +322,15 @@
         "structural_floors_required": "true",
         "meaningful_strategy_loss_rejected": "true"
       },
-      "unmetPassConditions": []
+      "unmetPassConditions": [
+        "control_outcome=success",
+        "build_outcome=success",
+        "regression_outcome=success",
+        "execution_outcome=success",
+        "hard_truth_outcome=success",
+        "target_quality_outcome=success",
+        "strategy_preservation_outcome=success"
+      ]
     }
   ]
 }
