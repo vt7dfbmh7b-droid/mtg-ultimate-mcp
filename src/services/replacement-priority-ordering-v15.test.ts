@@ -113,6 +113,52 @@ test('actual Upgrade pairing preserves a typed requested mechanism ahead of weak
   assert.equal((pairings[0]?.cut.card as { name?: string } | undefined)?.name, 'Broad Legacy Value Card');
 });
 
+test('actual Upgrade pairing preserves stronger requested relationship affinity when component IDs tie', () => {
+  const incoming = {
+    ...interactionAdd,
+    explicitTheme: {
+      matchesControlledTheme: true,
+      matchedComponentIds: ['requested-value', 'relation:value-engine'],
+      requestedRelationshipAffinity: 4,
+    },
+  };
+  const strongEngineCut = {
+    ...summarized('Strong Requested Engine'),
+    explicitTheme: {
+      matchesControlledTheme: true,
+      matchedComponentIds: ['requested-value', 'relation:value-engine'],
+      requestedRelationshipAffinity: 8,
+    },
+    strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [], matches: [] },
+    heuristicCutPressure: 10,
+  };
+  const incidentalRelationshipCut = {
+    ...summarized('Incidental Requested Relationship'),
+    explicitTheme: {
+      matchesControlledTheme: true,
+      matchedComponentIds: ['requested-value', 'relation:value-engine'],
+      requestedRelationshipAffinity: 1,
+    },
+    strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [], matches: [] },
+    heuristicCutPressure: 8,
+  };
+
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{ candidate: incoming, role: 'interaction' }],
+    [strongEngineCut, incidentalRelationshipCut],
+    metrics,
+    targets,
+    3,
+    { rejectMeaningfulStrategyLoss: true, maxPairs: 1 },
+  );
+
+  assert.equal(pairings.length, 1);
+  assert.equal(
+    (pairings[0]?.cut.card as { name?: string } | undefined)?.name,
+    'Incidental Requested Relationship',
+  );
+});
+
 test('commander-compatible Aura target shape propagates through requested identity into replacement priority', () => {
   const commander = scryfallCard('Generic Enchanted-Creature Commander', {
     type_line: 'Legendary Creature — Human',
