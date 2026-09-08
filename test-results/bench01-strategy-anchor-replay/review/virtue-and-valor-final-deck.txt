@@ -10,6 +10,7 @@
 1 Giant Inheritance (WOC) 17 *N*
 1 Knickknack Ouphe (WOC) 18 *N*
 1 Ajani's Chosen (WOC) 59 *N*
+1 Angelic Destiny (WOC) 60 *N*
 1 Archon of Sun's Grace (WOC) 61 *N*
 1 Austere Command (WOC) 62 *N*
 1 Daybreak Coronet (WOC) 65 *N*
@@ -42,9 +43,9 @@
 1 Spectral Steel (WOC) 75 *N*
 1 Swords to Plowshares (WOC) 78 *N*
 1 Transcendent Envoy (WOC) 81 *N*
+1 Ancestral Mask (WOC) 119 *N*
 1 Careful Cultivation (WOC) 122 *N*
 1 Destiny Spinner (WOC) 123 *N*
-1 Fertile Ground (WOC) 126 *N*
 1 Kenrith's Transformation (WOC) 128 *N*
 1 Paradise Druid (WOC) 129 *N*
 1 Snake Umbra (WOC) 133 *N*
@@ -73,6 +74,5 @@
 1 Ossification (PLST) ONE-26 *N*
 1 Sterling Grove (MH2) 293 *N*
 1 Authority of the Consuls (FIC) 232 *N*
-1 Hardlight Containment (EOE) 20 *N*
 1 Sheltered by Ghosts (SOC) 171 *N*
 1 Unquestioned Authority (JUD) 31 *N*
