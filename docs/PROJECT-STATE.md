@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-08T09:43:14.000Z**.
+Generated from `project-state.json`. Last state update: **2026-09-08T14:49:27.487Z**.
 
 ## Current mode
 
@@ -10,7 +10,7 @@ Generated from `project-state.json`. Last state update: **2026-09-08T09:43:14.00
 - Active PR: #29
 - Active milestone: **BENCH-01**
 - Intelligence development paused: **no**
-- Reason: BENCH-01 remains active. The c2fa83b7 precedence repair and five-fixture review are complete: two signature failures improve, but commander-compatible Aura target shape still fails in Ellivere. Resume with a focused production-path relationship/ordering regression and the smallest evidence-backed generic target-shape repair, not another precedence change or replay of unchanged completed work. Preserve all hard gates and the accepted e17b0a1c baseline.
+- Reason: BENCH-01 remains active. The generic Aura target-shape repair is fully validated and generalized across the frozen five-fixture control replay, with a durable manual verdict accepting the repair as progression. The next product-quality gate is fresh contrasting whole-deck evidence and strong general-AI comparison from exact source 473edf47, not another familiar replay or immediate repair.
 
 ## Stable boundary
 
@@ -21,9 +21,9 @@ Generated from `project-state.json`. Last state update: **2026-09-08T09:43:14.00
 
 ## Experimental checkpoints
 
-Development checkpoint at pause: `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd`
+Development checkpoint at pause: `473edf473a284b9532aa03747abfa41a1081ca2c`
 
-The generic cut-order precedence repair at c2fa83b7ea4a81e18445aba3a54529cdb31d86cd passed immutable CI (run 34204677999) and its frozen five-fixture replay. Complete-deck manual review REJECTED it as a replacement Commander baseline. The review repairs the prior Hakbal/Reflections of Littjara and Bello/Esika's Chariot failure signatures; Quick Draw and Elven Empire show no material regression. Ellivere still cuts the creature-enchanting Angelic Destiny for artifact-enchanting Hardlight Containment, exposing commander-compatible Aura target-shape reasoning. All replay decks remain exact-100, Commander legal and resolved. Durable verdict: test-results/bench01-manual-verdicts/c2fa83b7ea4a81e18445aba3a54529cdb31d86cd.md, originally committed at 44279f204c97bfb98197201adb75aeb431db1f24. The precedence repair, five-fixture replay and manual verdict are completed work; do not repeat them as unfinished tasks.
+The generic commander-compatible Aura target-shape repair at 473edf473a284b9532aa03747abfa41a1081ca2c passed immutable full CI (run 34238285554) and the exact-source frozen five-fixture replay (run 34238484370; evidence persistence bb2f097db51f8b242983a3a7baa03afddf50a0de). Manual whole-deck review in test-results/bench01-manual-verdicts/473edf473a284b9532aa03747abfa41a1081ca2c.md ACCEPTS the repair as BENCH-01 progression: Ellivere retains Angelic Destiny and Ancestral Mask; Hakbal retains Reflections of Littjara; Bello retains Esika's Chariot; Quick Draw and Elven Empire show no repair-caused regression. All decks are exact-100, legal and resolved. This SHA is not yet the accepted Commander baseline because the replay is a familiar post-repair control batch, higher bracket targets remain unachieved, and fresh contrasting plus strong general-AI evidence is still required. Accepted baseline remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616.
 
 Latest fully validated executable experimental baseline recorded by project state:
 
@@ -47,35 +47,33 @@ Always inspect the live active-branch head before editing. A later documentation
 
 ## Current validation status
 
-- Active branch status: **bench01-c2fa83b7-manual-reject-aura-target-shape-regression-next**
+- Active branch status: **bench01-473edf47-aura-repair-green-fresh-fixture-general-ai-next**
 - Last persisted Marvel control source: `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd`
 - Last persisted Marvel control outcome: **execution-success-target-not-achieved**
 - Note: Latest registered focused and broad Marvel metadata at c2fa83b7 records successful execution/build where reported, but failed control/target-quality gates; no target achievement is claimed. Preserve the earlier exact-source 5829b37 restricted-pool construction-ceiling result as historical evidence. A red historical or constrained target is not automatically a blocker to unrelated BENCH-01 work; investigate only if relevant source, pool, provider truth or policy evidence changes. Do not convert provider uncertainty into absence or an intelligence failure.
 
 Required before resuming broad INTEL-01/INTEL-02 claims:
 
-- Keep e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest accepted Commander baseline. The latest product c2fa83b7ea4a81e18445aba3a54529cdb31d86cd is formally validated and replayed but manually rejected; prior rejected candidates remain historical evidence, not accepted replacements.
-- Use test-results/bench01-manual-verdicts/c2fa83b7ea4a81e18445aba3a54529cdb31d86cd.md as the newest durable whole-deck verdict. Green CI, successful replay execution, swap counts and bracket movement are not sufficient for baseline acceptance.
-- Treat the cut-order precedence correction, five-fixture replay and manual review as complete. Preserve the meaningful-strategy-loss first priority and the corrected typed-identity-before-legacy-score ordering.
-- Retain the demonstrated partial progress: Hakbal keeps Reflections of Littjara; Bello keeps Esika's Chariot; Quick Draw and Elven Empire show no material regression in this replay.
-- The remaining observed failure is commander-compatible Aura target shape: broad Aura/enchantment identity allows a creature-enchanting mechanism to be replaced by an artifact-only Aura. This is strategy/relationship reasoning, not a legality, provider or harness failure.
-- Source inspection at the recovered head identifies auraSpecializationV15 in src/services/requested-component-relationship-v15.ts as a concrete broad-type source: it recognizes requested/commander Aura vocabulary but does not inspect the candidate's Enchant target. Confirm the effect through the actual production relationship and replacement-priority path with a generic failing regression before implementing a repair.
-- Keep the next repair advisory and generic. Preserve hard legality, authoritative targets, structural floors, semantic safety, package acceptance, meaningful strategy preservation and structural fallback. Do not make all Auras uncuttable or use card/commander/fixture exceptions.
-- Run focused regressions and the complete immutable validation suite before freezing a repair SHA. Replay the affected five controls from unchanged validated source, review complete decks, and require material improvement without regression.
-- No fresh contrasting acceptance fixture or new provider general-AI comparison was completed for c2fa83b7 because Ellivere still fails. After the affected controls improve, require at least one genuinely fresh contrasting fixture and strong general-AI comparison before a new baseline acceptance claim.
-- Once this replacement-coherence defect is resolved or conclusively bounded, broaden BENCH-01 to fresh combo, hybrid, control, aristocrats, budget and unusual-commander cases. Keep Counter Blitz dense-countermagic allocation watch-only unless contrasting evidence reproduces it.
-- Read AGENTS.md before writes. Use single-flight execution and existing checked-in interfaces; never alter .github/workflows/**, src/workflow-immutability.test.ts or workflowPolicyEpochSha during scheduled/autonomous development. Persist manual verdicts outside replaceable replay output.
-- PR #29 and stable/current V0.13 remain unmerged/unpromoted until promotion-grade BENCH-01 evidence and all applicable formal/manual gates are satisfied. Existing standing gated authority is unchanged.
+- Keep e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest accepted Commander baseline until fresh contrasting and strong general-AI evidence supports accepting 473edf473a284b9532aa03747abfa41a1081ca2c.
+- Use test-results/bench01-manual-verdicts/473edf473a284b9532aa03747abfa41a1081ca2c.md as the newest durable whole-deck verdict. It accepts the generic Aura repair as progression but explicitly defers baseline acceptance.
+- Treat regression 0b2a8d29993e0870de48eb6541e967d644ef4c85, repair 473edf473a284b9532aa03747abfa41a1081ca2c, CI runs 34212749049 and 34238285554, replay request fff076725a9e034484e746e9050820181a01d9db, replay run 34238484370, evidence persistence bb2f097db51f8b242983a3a7baa03afddf50a0de and manual review as completed work.
+- The Aura target-shape defect is repaired through the actual production relationship and replacement-priority path: Ellivere keeps Angelic Destiny and Ancestral Mask, while artifact-only Hardlight Containment is not accepted as an equivalent replacement.
+- Retain prior repaired controls: Hakbal keeps Reflections of Littjara; Bello keeps Esika's Chariot; Quick Draw and Elven Empire show no material repair-caused regression. All five replay decks remain exact-100, Commander legal and resolved.
+- Do not claim target achievement from bracket movement. Quick Draw remains Bracket 3; Ellivere, Hakbal and Bello move to Bracket 3; Elven Empire remains Bracket 2.
+- Require at least one genuinely fresh contrasting fixture from exact frozen source 473edf473a284b9532aa03747abfa41a1081ca2c plus complete-deck manual review and strong general-AI comparison before baseline acceptance.
+- Do not patch isolated questionable swaps. Require a repeated cross-fixture weakness or clearly centralized defect and preserve all hard/advisory safety boundaries.
+- Read AGENTS.md before writes. Use single-flight execution and existing checked-in interfaces; never alter .github/workflows/**, src/workflow-immutability.test.ts or workflowPolicyEpochSha during scheduled/autonomous development.
+- PR #29 and stable/current V0.13 remain unmerged/unpromoted until promotion-grade BENCH-01 evidence and all applicable formal/manual gates are satisfied.
 
 ## Next actions
 
 1. Read project-state.json and AGENTS.md; inspect all relevant branch writers, including earlier-commit jobs. Do not overlap a running validation, replay, integrity writer or product repair.
-2. Resume from the completed c2fa83b7ea4a81e18445aba3a54529cdb31d86cd replay/manual rejection in test-results/bench01-manual-verdicts/c2fa83b7ea4a81e18445aba3a54529cdb31d86cd.md. Do not redo the completed precedence repair, five-fixture replay or manual review merely because a scheduled invocation ended.
-3. Add a focused generic production-path regression for commander-compatible Aura target shape, starting with auraSpecializationV15 in src/services/requested-component-relationship-v15.ts and its actual requested-component/replacement-priority callers. Distinguish creature-enchanting support from artifact-only or other incompatible targets; include a valid compatible replacement and a structural fallback control.
-4. Only after the regression/trace proves the centralized defect, implement the smallest generic relationship-shape inference or propagation correction. Preserve all existing hard and advisory safety boundaries; no fixture, card or commander exceptions.
-5. Run focused tests plus the complete immutable repository validation. If green, freeze that exact repair SHA through the existing replay request interface; run the affected five fixtures unchanged and manually compare full decks with the c2fa83b7 verdict.
-6. Once those controls materially improve without regression, run at least one fresh contrasting fixture from the same frozen source and resume strong general-AI comparison before accepting a new Commander baseline.
-7. Persist meaningful results and update project-state plus its generated handoff/validation surfaces as one coordinated checkpoint. Then broaden BENCH-01 rather than restarting completed audits or familiar replay cycles.
+2. Resume from the completed 473edf473a284b9532aa03747abfa41a1081ca2c Aura repair, green CI, frozen five-fixture replay and durable manual verdict. Do not repeat the regression, repair, replay or review.
+3. Freeze exact product SHA 473edf473a284b9532aa03747abfa41a1081ca2c for a genuinely fresh contrasting BENCH-01 batch outside the Aura/precon-control family. Prefer high-interaction control, aristocrats/graveyard, unrestricted combo or an unusual commander with competing constraints.
+4. Inspect every complete deck manually for legality, target achievement, mana, curve, roles, synergy, commander support, replacement quality, resilience and alternative wins. Preserve target movement versus target achievement and restricted-pool ceiling classifications.
+5. Compare the specialist output against a strong general-purpose AI answer and record a fixture-level verdict. Do not accept a new baseline solely because the familiar repair controls are green.
+6. If fresh evidence is competitive without a repeated new weakness, accept 473edf473a284b9532aa03747abfa41a1081ca2c as the new Commander baseline and continue breadth. If it loses, require contrasting cross-fixture evidence or a clearly centralized defect before another smallest generic repair.
+7. Persist meaningful evidence and synchronize project-state, roadmap, handoff and validation surfaces. Keep PR #29 and stable/current V0.13 unmerged/unpromoted until promotion-grade BENCH-01 evidence exists.
 
 ## Permanent truth boundary
 
@@ -116,4 +114,4 @@ Read in this order:
 10. `docs/VALIDATION-MATRIX.md`
 11. `docs/KNOWN-FAILURES.md`
 
-Then: BENCH-01 remains active. Accepted Commander baseline: e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Latest tested product: c2fa83b7ea4a81e18445aba3a54529cdb31d86cd; immutable CI and frozen five-fixture replay are green, but test-results/bench01-manual-verdicts/c2fa83b7ea4a81e18445aba3a54529cdb31d86cd.md manually REJECTS baseline acceptance. Hakbal and Bello failure signatures are repaired; Ellivere still confuses creature-enchanting support with an artifact-only Aura. Precedence repair/replay/review are complete. Next unfinished stage: a generic failing production-path Aura target-shape regression, then the smallest justified repair, full validation and unchanged replay. Start at src/services/requested-component-relationship-v15.ts; broad Aura specialization currently omits candidate Enchant-target inspection. Require fresh contrasting and general-AI evidence only after affected controls improve. Obey AGENTS.md single-flight and protected-workflow boundaries. Stable remains V0.13 and PR #29 unmerged.
+Then: BENCH-01 remains active. Accepted Commander baseline remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Product 473edf473a284b9532aa03747abfa41a1081ca2c has green immutable CI and exact-source frozen five-fixture replay; the durable manual verdict ACCEPTS its generic Aura target-shape repair as progression but defers baseline acceptance. The prior Ellivere artifact-only Aura replacement is gone while Hakbal/Bello repairs and Quick Draw/Elven Empire controls remain stable. Do not repeat the Aura regression, repair or five-fixture replay. Next unfinished stage: freeze 473edf47 for genuinely fresh contrasting BENCH-01 evidence, manually review complete decks and compare with a strong general-purpose AI. Only then decide baseline acceptance or whether cross-fixture evidence justifies another generic repair. Stable remains V0.13 and PR #29 unmerged.
