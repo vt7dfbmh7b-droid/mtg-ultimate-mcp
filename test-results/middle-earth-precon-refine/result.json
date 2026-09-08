@@ -255,10 +255,10 @@
         }
       ]
     },
-    "estimatedUpgradeSpendNzd": 12.84,
-    "estimatedUpgradeSpendUsdReference": 7.55,
-    "maxTotalNzd": 200,
-    "maxTotalUsdReference": 117.59,
+    "estimatedUpgradeSpendNzd": 12.86,
+    "estimatedUpgradeSpendUsdReference": 7.56,
+    "maxTotalNzd": 199.99,
+    "maxTotalUsdReference": 117.58,
     "swaps": [
       {
         "out": "Landroval, Horizon Witness",
@@ -470,8 +470,8 @@
           "set": "LTR",
           "collectorNumber": "327",
           "finish": "nonfoil",
-          "priceNzd": 1.96,
-          "priceUsdReference": 1.15
+          "priceNzd": 1.97,
+          "priceUsdReference": 1.16
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -785,8 +785,8 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 4,
         "winningCandidate": 4,
-        "estimatedSpendNzd": 9.13,
-        "estimatedSpendUsdReference": 5.37,
+        "estimatedSpendNzd": 9.15,
+        "estimatedSpendUsdReference": 5.38,
         "improvementScore": 10.021,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -849,8 +849,8 @@
       "targetBracket": 4,
       "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.58,
-      "maxTotalNzd": 200,
-      "maxTotalUsdReference": 117.59,
+      "maxTotalNzd": 199.99,
+      "maxTotalUsdReference": 117.58,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -8487,8 +8487,8 @@
         "candidatePackagesGenerated": 4,
         "candidatePackagesEligible": 1,
         "winningCandidate": 4,
-        "estimatedSpendNzd": 9.13,
-        "estimatedSpendUsdReference": 5.37,
+        "estimatedSpendNzd": 9.15,
+        "estimatedSpendUsdReference": 5.38,
         "improvementScore": 10.021,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -8632,8 +8632,8 @@
               "collectorNumber": "327",
               "releaseDate": "2023-06-23",
               "finish": "nonfoil",
-              "priceNzd": 1.96,
-              "priceUsdReference": 1.15,
+              "priceNzd": 1.97,
+              "priceUsdReference": 1.16,
               "promo": false,
               "promoTypes": [
                 "universesbeyond",
@@ -10304,8 +10304,8 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 9.13,
-            "estimatedSpendUsdReference": 5.37,
+            "estimatedSpendNzd": 9.15,
+            "estimatedSpendUsdReference": 5.38,
             "unknownPriceCount": 0,
             "improvementScore": 10.021,
             "significantRegression": false,
@@ -10811,8 +10811,8 @@
                   "set": "LTR",
                   "collectorNumber": "327",
                   "finish": "nonfoil",
-                  "priceNzd": 1.96,
-                  "priceUsdReference": 1.15
+                  "priceNzd": 1.97,
+                  "priceUsdReference": 1.16
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -12478,8 +12478,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 9.13,
-                "estimatedSpendUsdReference": 5.37,
+                "estimatedSpendNzd": 9.15,
+                "estimatedSpendUsdReference": 5.38,
                 "unknownPriceCount": 0,
                 "improvementScore": 10.021,
                 "significantRegression": false,
@@ -12985,8 +12985,8 @@
                       "set": "LTR",
                       "collectorNumber": "327",
                       "finish": "nonfoil",
-                      "priceNzd": 1.96,
-                      "priceUsdReference": 1.15
+                      "priceNzd": 1.97,
+                      "priceUsdReference": 1.16
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
