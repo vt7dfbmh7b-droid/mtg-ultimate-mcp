@@ -4,6 +4,7 @@ import { getCardOracleText } from './scryfall.js';
 export interface RequestedComponentRelationshipSignalV15 {
   score: number;
   reasons: string[];
+  relationshipIds: string[];
 }
 
 export interface RequestedComponentClauseV15 {
@@ -53,7 +54,7 @@ function auraSpecializationV15(card: ScryfallCard, commanders: readonly Scryfall
 
 function commanderShapeAffinityV15(card: ScryfallCard, commanders: readonly ScryfallCard[]): RequestedComponentRelationshipSignalV15 {
   const commanderOracle = normalized(commanders.map((commander) => getCardOracleText(commander)).join(' // '));
-  if (!commanderOracle) return { score: 0, reasons: [] };
+  if (!commanderOracle) return { score: 0, reasons: [], relationshipIds: [] };
 
   const cardTypes = new Set(card.type_line.toLocaleLowerCase().split(/[^a-z0-9]+/).filter(Boolean));
   const excludesEquipment = /\bnon-?equipment artifacts?\b/.test(commanderOracle);
@@ -69,7 +70,7 @@ function commanderShapeAffinityV15(card: ScryfallCard, commanders: readonly Scry
     return true;
   });
   const matchesReferencedType = allowedReferencedTypes.some((type) => cardTypes.has(type));
-  if (!matchesReferencedType) return { score: 0, reasons: [] };
+  if (!matchesReferencedType) return { score: 0, reasons: [], relationshipIds: [] };
 
   let score = 1;
   const reasons = ['matches a permanent/card type explicitly referenced by the commander'];
@@ -91,14 +92,19 @@ function commanderShapeAffinityV15(card: ScryfallCard, commanders: readonly Scry
     score += 1;
     reasons.push('matches a commander-conditioned combat conversion relationship');
   }
-  return { score, reasons };
+  return {
+    score,
+    reasons,
+    relationshipIds: score >= 4 ? ['relation:commander-shape'] : [],
+  };
 }
 
 /**
  * Advisory relationship evidence for relative replacement ranking. Broad requested-component
  * membership is handled elsewhere; this scorer asks whether a card is an engine/payoff/specialized
  * realization of that component or satisfies a commander-declared card-shape relationship.
- * It never makes a card uncuttable and contains no card, commander, fixture, or set names.
+ * Typed relationship IDs let the existing symmetric advisory replacement comparator distinguish
+ * mechanisms without changing hard structural or theme-preservation gates.
  */
 export function requestedComponentRelationshipAffinityV15(
   card: ScryfallCard,
@@ -107,35 +113,43 @@ export function requestedComponentRelationshipAffinityV15(
 ): RequestedComponentRelationshipSignalV15 {
   let score = 0;
   const reasons: string[] = [];
+  const relationshipIds: string[] = [];
   const requestedCreatureTypes = components.flatMap((component) => quotedTypeAtomsV15(component.queryClause));
   const genericTypalEngine = requestedCreatureTypes.length > 0 && genericTypalEngineV15(card);
 
   if (genericTypalEngine) {
     score += 5;
     reasons.push('provides a generic choose/share-creature-type engine for an explicitly requested typal component');
+    relationshipIds.push('relation:typal-engine');
   }
 
+  let hasTypalPayoff = false;
   for (const creatureType of requestedCreatureTypes) {
     if (oracleMentionsTypePayoffV15(card, creatureType)) {
       score += 4;
       reasons.push(`provides payoff/engine text for requested creature type ${creatureType}`);
+      hasTypalPayoff = true;
     } else if (typeContainsV15(card, creatureType) && !genericTypalEngine) {
       score += 1;
       reasons.push(`is a requested creature-type member (${creatureType})`);
     }
   }
+  if (hasTypalPayoff) relationshipIds.push('relation:typal-payoff');
 
   if (auraSpecializationV15(card, commanders, components)) {
     score += 3;
     reasons.push('is an Aura-specific realization of the requested/commander enchantment mechanism');
+    relationshipIds.push('relation:aura-specialization');
   }
 
   const commanderShape = commanderShapeAffinityV15(card, commanders);
   score += commanderShape.score;
   reasons.push(...commanderShape.reasons);
+  relationshipIds.push(...commanderShape.relationshipIds);
 
   return {
     score: Number(Math.min(12, score).toFixed(3)),
     reasons: [...new Set(reasons)],
+    relationshipIds: [...new Set(relationshipIds)],
   };
 }
