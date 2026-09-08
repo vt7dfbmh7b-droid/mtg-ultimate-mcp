@@ -17,6 +17,7 @@ import {
   selectEligiblePrintingV08,
   type ResolvedPrintingPolicyV08,
 } from './printing-policy-v08.js';
+import { requestedComponentRelationshipAffinityV15 } from './requested-component-relationship-v15.js';
 import { getCardOracleText, searchCards, summarizeCard } from './scryfall.js';
 
 export interface UpgradeThemeComponentSignalV15 {
@@ -454,10 +455,6 @@ export function compoundComponentCandidateLanesV15<T>(
   const anchorSet = new Set(anchor);
   const component = candidates.filter((candidate) => !anchorSet.has(candidate) && isComponentAligned(candidate));
   const componentSet = new Set(component);
-  // Role-specific requested-theme discovery is stronger evidence than broad inferred-strategy
-  // overlap. Keep it in its own lane so cards discovered by the exact requested mechanism +
-  // structural-role query cannot be demoted merely because they fell outside a bounded global
-  // component search window.
   const requestedRole = isRequestedRoleAligned
     ? candidates.filter((candidate) => !anchorSet.has(candidate) && !componentSet.has(candidate) && isRequestedRoleAligned(candidate))
     : [];
@@ -466,18 +463,10 @@ export function compoundComponentCandidateLanesV15<T>(
   const strategySet = new Set(strategy);
   const generic = candidates.filter((candidate) => !anchorSet.has(candidate) && !componentSet.has(candidate) && !requestedRoleSet.has(candidate) && !strategySet.has(candidate));
   const lanes = [anchor, component, requestedRole, strategy];
-  // Aspirational role counts are heuristic consistency goals, not permission to force an
-  // identity-free replacement. Keep generic structural fallback for authoritative target
-  // gates, where the caller has explicit evidence that the structural repair is required.
   if (includeGenericFallback) lanes.push(generic);
   return lanes.filter((lane) => lane.length > 0);
 }
 
-/**
- * Treat the most-represented requested component in the resolved starting deck as the identity
- * anchor. Deficit/scarcity remains useful for balancing secondary components, but cannot invert
- * the deck's established mechanism. Exact ties remain co-anchors rather than inventing priority.
- */
 export function upgradeThemeAnchorComponentIdsV15(
   components: readonly UpgradeThemeComponentSignalV15[],
 ): string[] {
@@ -510,6 +499,31 @@ export function upgradeThemeComponentAffinityScoreV15(
     score += 2 + deficitRatio * 6 + relativeScarcity * 4;
   }
   return Number(Math.min(12, score).toFixed(3));
+}
+
+export function upgradeRequestedIdentityAffinityV15(
+  card: ScryfallCard,
+  commanders: readonly ScryfallCard[],
+  components: readonly UpgradeThemeComponentSignalV15[],
+  broadMatchedComponentIds: readonly string[],
+): {
+  score: number;
+  broadMatchedComponentIds: string[];
+  matchedComponentIds: string[];
+  requestedRelationshipAffinity: number;
+  requestedRelationshipIds: string[];
+  requestedRelationshipReasons: string[];
+} {
+  const relationship = requestedComponentRelationshipAffinityV15(card, commanders, components);
+  const broadIds = [...new Set(broadMatchedComponentIds)];
+  return {
+    score: upgradeThemeComponentAffinityScoreV15(broadIds, components),
+    broadMatchedComponentIds: broadIds,
+    matchedComponentIds: [...new Set([...broadIds, ...relationship.relationshipIds])],
+    requestedRelationshipAffinity: relationship.score,
+    requestedRelationshipIds: relationship.relationshipIds,
+    requestedRelationshipReasons: relationship.reasons,
+  };
 }
 
 export function contextualCutPressureV15(
@@ -546,7 +560,7 @@ function cutCandidates(
   cards: ScryfallCard[],
   strategyContext: CommanderStrategyContextV15,
   themeCandidateNames: ReadonlySet<string>,
-  componentAffinityForCard: (card: ScryfallCard) => { score: number; matchedComponentIds: string[] },
+  componentAffinityForCard: (card: ScryfallCard) => ReturnType<typeof upgradeRequestedIdentityAffinityV15>,
   protectThemeMatches: boolean,
   allowCurveFallback: boolean,
 ): Array<Record<string, unknown>> {
@@ -556,7 +570,7 @@ function cutCandidates(
     .map((card) => {
       const context = contextualCutPressureV15(card, strategyContext);
       const componentAffinity = componentAffinityForCard(card);
-      const themeMatch = themeCandidateNames.has(card.name.toLocaleLowerCase()) || componentAffinity.matchedComponentIds.length > 0;
+      const themeMatch = themeCandidateNames.has(card.name.toLocaleLowerCase()) || componentAffinity.broadMatchedComponentIds.length > 0;
       const themeProtectionApplied = protectThemeMatches && themeMatch ? 4 : 0;
       const cutPressure = Number((context.cutPressure - themeProtectionApplied).toFixed(1));
       return {
@@ -573,6 +587,10 @@ function cutCandidates(
           protectionApplied: themeProtectionApplied,
           componentAffinityScore: componentAffinity.score,
           matchedComponentIds: componentAffinity.matchedComponentIds,
+          broadMatchedComponentIds: componentAffinity.broadMatchedComponentIds,
+          requestedRelationshipAffinity: componentAffinity.requestedRelationshipAffinity,
+          requestedRelationshipIds: componentAffinity.requestedRelationshipIds,
+          requestedRelationshipReasons: componentAffinity.requestedRelationshipReasons,
         },
         reasons: themeProtectionApplied > 0
           ? [...context.reasons, 'supports the explicit controlled theme while the deck is at or below its required theme density']
@@ -648,6 +666,8 @@ export async function suggestDeckUpgrades(
       currentMainMatches: Math.max(0, Math.trunc(component.currentMainMatches)),
       requiredMainMatches: Math.max(1, Math.trunc(component.requiredMainMatches)),
     }));
+  const commanderNames = new Set(parsed.commanders.map((entry) => entry.name.toLocaleLowerCase()));
+  const commanderCards = cards.filter((card) => commanderNames.has(card.name.toLocaleLowerCase()));
   const themeComponentCandidateNames = new Map<string, Set<string>>();
   const themeComponentSearchQueries: Array<{ id: string; query: string }> = [];
   for (const component of themeComponents) {
@@ -660,17 +680,17 @@ export async function suggestDeckUpgrades(
       for (const name of names) themeCandidateNames.add(name);
     } catch {}
   }
-  const componentAffinityForCard = (card: ScryfallCard): { score: number; matchedComponentIds: string[] } => {
+  const componentAffinityForCard = (card: ScryfallCard): ReturnType<typeof upgradeRequestedIdentityAffinityV15> => {
     const name = card.name.toLocaleLowerCase();
-    const matchedComponentIds = themeComponents
+    const broadMatchedComponentIds = themeComponents
       .filter((component) => cardMatchesControlledThemeClauseV15(card, component.queryClause)
         || themeComponentCandidateNames.get(component.id)?.has(name))
       .map((component) => component.id);
-    return { score: upgradeThemeComponentAffinityScoreV15(matchedComponentIds, themeComponents), matchedComponentIds };
+    return upgradeRequestedIdentityAffinityV15(card, commanderCards, themeComponents, broadMatchedComponentIds);
   };
   const componentAwareThemeRanking = themeComponents.length > 1;
   const anchorComponentIds = new Set(upgradeThemeAnchorComponentIdsV15(themeComponents));
-  const anchorAffinityForCard = (card: ScryfallCard): number => componentAffinityForCard(card).matchedComponentIds
+  const anchorAffinityForCard = (card: ScryfallCard): number => componentAffinityForCard(card).broadMatchedComponentIds
     .filter((id) => anchorComponentIds.has(id)).length;
 
   const existing = new Set([...parsed.commanders, ...parsed.main].map((entry) => entry.name.toLocaleLowerCase()));
@@ -742,8 +762,6 @@ export async function suggestDeckUpgrades(
           const bAnchor = anchorAffinityForCard(b);
           const aComponent = componentAffinityForCard(a).score;
           const bComponent = componentAffinityForCard(b).score;
-          // Preserve the established requested mechanism before balancing secondary requested
-          // components. Scarcity affinity remains a secondary within-component signal.
           if (aAnchor !== bAnchor) return bAnchor - aAnchor;
           if (aComponent !== bComponent) return bComponent - aComponent;
           if (aStrategy.substantive !== bStrategy.substantive) return bStrategy.substantive ? 1 : -1;
@@ -795,13 +813,16 @@ export async function suggestDeckUpgrades(
         const substantiveAffinityScore = substantiveCommanderStrategyAffinityScoreV15(affinity);
         const matchedStrategies = affinity.matches.map((match) => match.archetype);
         const componentAffinity = componentAffinityForCard(card);
-        const matchesControlledTheme = themeCandidateNames.has(card.name.toLocaleLowerCase()) || componentAffinity.matchedComponentIds.length > 0;
+        const matchesControlledTheme = themeCandidateNames.has(card.name.toLocaleLowerCase()) || componentAffinity.broadMatchedComponentIds.length > 0;
         const strategyReason = matchedStrategies.length > 0
           ? ` and also supports the existing V0.15 deck strategy signal${matchedStrategies.length === 1 ? '' : 's'}: ${matchedStrategies.join(', ')}` : '';
         const themeReason = matchesControlledTheme && themeDeficit > 0
           ? ' It also helps close the current controlled theme-density deficit.'
           : componentAffinity.score > 0
-            ? ` It supports the compound-theme component balance (${componentAffinity.matchedComponentIds.join(', ')}) without becoming a hard theme requirement.` : '';
+            ? ` It supports the compound-theme component balance (${componentAffinity.broadMatchedComponentIds.join(', ')}) without becoming a hard theme requirement.`
+            : componentAffinity.requestedRelationshipAffinity > 0
+              ? ' It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.'
+              : '';
         const targetDirection = deficit.targetGate === 'average-nonland-mv'
           ? `${deficit.current} must fall to ${deficit.target} or lower` : `${deficit.current} must rise to ${deficit.target} or higher`;
         const targetReason = deficit.prioritySource === 'authoritative-target-gate'
@@ -819,7 +840,11 @@ export async function suggestDeckUpgrades(
             matchesControlledTheme, currentMainMatches: themeCurrentMainMatches, requiredMainMatches: themeMinimumMainMatches,
             deficitBeforeSwap: themeDeficit, componentAffinityScore: componentAffinity.score,
             matchedComponentIds: componentAffinity.matchedComponentIds,
-            matchesAnchorComponent: componentAffinity.matchedComponentIds.some((id) => anchorComponentIds.has(id)),
+            broadMatchedComponentIds: componentAffinity.broadMatchedComponentIds,
+            requestedRelationshipAffinity: componentAffinity.requestedRelationshipAffinity,
+            requestedRelationshipIds: componentAffinity.requestedRelationshipIds,
+            requestedRelationshipReasons: componentAffinity.requestedRelationshipReasons,
+            matchesAnchorComponent: componentAffinity.broadMatchedComponentIds.some((id) => anchorComponentIds.has(id)),
           },
           recommendedPrinting: {
             set: printing.card.set.toUpperCase(), setName: printing.card.set_name, collectorNumber: printing.card.collector_number,
@@ -866,11 +891,12 @@ export async function suggestDeckUpgrades(
     },
     caveats: [
       'Role-count targets are engineering heuristics for deck consistency, but failed Bracket-4/5 construction gates now outrank aspirational role targets. When several authoritative gates are failing, candidate generation retains a small ranked backup set for each gate so downstream pairing can preserve gate diversity while trying strategy-safe alternatives.',
-      'Within an already-required structural role or target gate, an explicit compound request preserves the starting deck’s dominant requested component first, then considers globally recognized requested components, exact role-specific requested-theme discoveries, and substantive inferred commander strategy. Generic structural fallback remains available for authoritative target gates, but aspirational role-count heuristics do not force an identity-free replacement when all compatible lanes are empty. A later lane is considered only when the earlier lane yields zero eligible printings after printing/price policy checks.',
-      'Unrestricted Upgrade supplements the bounded popularity-ordered role search with bounded per-archetype searches for strategies the starting deck has already proven substantive. The spells-control recall path includes actual Instant/Sorcery card types as well as Oracle-text spell mechanisms.',
+      'Within an already-required structural role or target gate, an explicit compound request preserves the starting deck’s dominant requested component first, then considers globally recognized requested components, exact role-specific requested-theme discoveries and substantive inferred commander strategy. Generic structural fallback remains available for authoritative target gates, but aspirational role-count heuristics do not force an identity-free replacement when all compatible lanes are empty.',
+      'Requested payoff/engine and commander-shape relationships are now emitted as typed advisory identity IDs on both incoming and outgoing cards. They feed the existing symmetric replacement comparator without changing hard theme floors, legality, structural target gates or package-preservation vetoes.',
+      'Unrestricted Upgrade supplements the bounded popularity-ordered role search with bounded per-archetype searches for strategies the starting deck has already proven substantive.',
       'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window.',
-      'A V0.15 controlled/requested theme remains an advisory role-candidate discovery and ranking signal even after its minimum density is satisfied; the minimum remains a preservation gate rather than a switch that disables on-plan replacement search. Under a printing restriction, only cards already admitted by the exhaustive shared eligible pool can become candidates.',
-      'Cut ordering uses the same V0.15 commander strategy context as additions. Compound-theme component membership is evaluated directly against resolved card rules/type data using only the fail-closed controlled theme grammar, with bounded search membership retained as fallback discovery evidence. When the deck is at or below its controlled theme minimum, matching cards also receive a capped four-point cut-protection signal; final theme preservation is still enforced independently by refinement rather than by this heuristic alone.',
+      'A V0.15 controlled/requested theme remains an advisory role-candidate discovery and ranking signal even after its minimum density is satisfied; the minimum remains a preservation gate rather than a switch that disables on-plan replacement search.',
+      'Cut ordering uses the same V0.15 commander strategy context as additions. Broad compound-theme membership remains independently classified from advisory relationship IDs so commander-shape evidence cannot masquerade as hard theme membership.',
       'Automatic upgrade packages pair the nonland cut pool with nonland additions so a utility land cannot silently replace a spell; dedicated mana-base work should be handled explicitly.',
       'Cut suggestions deliberately avoid claiming thematic/high-mana cards are bad; validate them against simulations, actual games, and reference-deck evidence.',
       'Scryfall USD prices are printing-specific reference values rather than guaranteed store checkout prices, and this version does not yet convert them to NZD.',
