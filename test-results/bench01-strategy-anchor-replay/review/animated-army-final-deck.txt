@@ -25,6 +25,7 @@
 1 Bootleggers' Stash (BLC) 207 *N*
 1 Primeval Bounty (BLC) 232 *N*
 1 Gilded Lotus (BLC) 271 *N*
+1 Spine of Ish Sah (BLC) 285 *N*
 1 Temple of Abandon (BLC) 338 *N*
 1 Karplusan Forest (BLC) 314 *N*
 1 Exotic Orchard (BLC) 131 *N*
@@ -59,7 +60,6 @@
 1 Gruul Signet (BLC) 273 *N*
 1 Hedron Archive (BLC) 275 *N*
 1 Fellwar Stone (BLC) 269 *N*
-1 Thran Dynamo (BLC) 290 *N*
 1 Sol Ring (BLC) 129 *N*
 1 Mind Stone (BLC) 280 *N*
 1 Talisman of Impulse (BLC) 287 *N*
@@ -75,15 +75,15 @@
 4 Mountain (BLB) 376 *N*
 5 Forest (BLB) 377 *N*
 5 Forest (BLB) 378 *N*
-1 Swiftfoot Boots (A25) 234 *N*
-1 Negative Zone Portal (MSC) 111 *N*
+1 Mask of Memory (FIC) 350 *N*
+1 Umezawa's Jitte (PZA) 19 *N*
 1 Vexing Puzzlebox (CLB) 343 *N*
+1 Swiftfoot Boots (A25) 234 *N*
 1 Sword of the Animist (MSC) 289 *N*
-1 Skullclamp (FIC) 355 *N*
-1 Latulla's Orders (PCY) 96 *N*
+1 Negative Zone Portal (MSC) 111 *N*
 1 Expedition Map (FDN) 724 *F*
+1 Everflowing Chalice (MM2) 212 *N*
 1 Wayfarer's Bauble (LCC) 317 *N*
-1 Ruby Medallion (CM2) 212 *N*
-1 Despotic Scepter (ICE) 316 *N*
+1 Latulla's Orders (PCY) 96 *N*
 1 Sword of Fire and Ice (MAR) 100 *N*
-1 Walking Ballista (FIC) 371 *N*
+1 Basilisk Collar (MM3) 216 *F*
