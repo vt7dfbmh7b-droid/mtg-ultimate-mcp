@@ -307,7 +307,7 @@ async function basicPrinting(
     const results = await searchCards(query, 10);
     const priceCap = candidatePriceCapV07(options);
     for (const card of results) {
-      const printing = await eligibleCardPrinting(card, policy, priceCap, cache);
+      const printing = await eligibleCardPrinting(card, policy, priceCap, printingCache);
       if (printing) return printing;
     }
     return null;
@@ -882,11 +882,13 @@ function upgradeSwapReplacementIdentityPriorityV15(
       matchesControlledTheme: recordObject(add.explicitTheme).matchesControlledTheme === true,
       matchedRequestedComponentIds: recordObject(add.explicitTheme).matchedComponentIds,
       substantiveStrategyAffinity: substantiveScore(addAffinity),
+      requestedRelationshipAffinity: recordNumber(recordObject(add.explicitTheme).requestedRelationshipAffinity),
     },
     {
       matchesControlledTheme: recordObject(cut.explicitTheme).matchesControlledTheme === true,
       matchedRequestedComponentIds: recordObject(cut.explicitTheme).matchedComponentIds,
       substantiveStrategyAffinity: substantiveScore(cutAffinity),
+      requestedRelationshipAffinity: recordNumber(recordObject(cut.explicitTheme).requestedRelationshipAffinity),
     },
   );
 }
