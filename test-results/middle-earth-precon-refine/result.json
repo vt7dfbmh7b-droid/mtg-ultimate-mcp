@@ -1432,12 +1432,12 @@
             "estimatedSpendNzd": 0.78,
             "estimatedSpendUsdReference": 0.46,
             "unknownPriceCount": 0,
-            "improvementScore": 8.344,
+            "improvementScore": 7.81,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
               "applicable": true,
-              "score": 7.4,
+              "score": 6.5,
               "failedBefore": [
                 "average-nonland-mv",
                 "cheap-interaction",
@@ -1475,46 +1475,45 @@
                 },
                 {
                   "strategy": "food-lifegain",
-                  "cutAffinityScore": 7,
+                  "cutAffinityScore": 8,
                   "addAffinityScore": 23,
-                  "netAffinityDelta": 16
+                  "netAffinityDelta": 15
                 }
               ],
               "swapImpacts": [
                 {
-                  "cutStrategyAffinityScore": 7,
+                  "cutStrategyAffinityScore": 2,
                   "addStrategyAffinityScore": 15,
-                  "cutStrategyProtectionApplied": 4,
+                  "cutStrategyProtectionApplied": 2,
                   "cutMatchedStrategies": [
-                    "food-lifegain"
+                    "combat-tokens"
                   ],
                   "addMatchedStrategies": [
                     "food-lifegain"
                   ],
-                  "locallyUnreplacedStrategies": [],
+                  "locallyUnreplacedStrategies": [
+                    "combat-tokens"
+                  ],
                   "cutRoles": [
-                    "mana acceleration",
-                    "mana rock",
-                    "repeatable life gain engine"
+                    "creature"
                   ],
                   "addRoles": [
                     "repeatable life gain engine",
                     "self sacrifice"
                   ],
                   "unreplacedRoles": [
-                    "mana acceleration",
-                    "mana rock"
+                    "creature"
                   ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
                   "verdict": "preserved"
                 },
                 {
-                  "cutStrategyAffinityScore": 2,
+                  "cutStrategyAffinityScore": 8,
                   "addStrategyAffinityScore": 10,
-                  "cutStrategyProtectionApplied": 2,
+                  "cutStrategyProtectionApplied": 4,
                   "cutMatchedStrategies": [
-                    "combat-tokens"
+                    "food-lifegain"
                   ],
                   "addMatchedStrategies": [
                     "combat-tokens",
@@ -1522,6 +1521,7 @@
                   ],
                   "locallyUnreplacedStrategies": [],
                   "cutRoles": [
+                    "+1/+1 counters",
                     "creature"
                   ],
                   "addRoles": [
@@ -1530,7 +1530,9 @@
                     "sacrifice synergy",
                     "spot interaction"
                   ],
-                  "unreplacedRoles": [],
+                  "unreplacedRoles": [
+                    "+1/+1 counters"
+                  ],
                   "unreplacedStrategyComponentRoles": [],
                   "meaningfulStrategyLoss": false,
                   "verdict": "preserved"
@@ -1581,8 +1583,8 @@
                   "afterSupportCount": 31,
                   "supportDelta": 1,
                   "beforeAffinityTotal": 269,
-                  "afterAffinityTotal": 285,
-                  "affinityDelta": 16,
+                  "afterAffinityTotal": 284,
+                  "affinityDelta": 15,
                   "preserved": true
                 },
                 {
@@ -1747,7 +1749,7 @@
             },
             "swaps": [
               {
-                "out": "Pristine Talisman",
+                "out": "Landroval, Horizon Witness",
                 "in": "Supper for Spiders",
                 "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.26 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -1761,32 +1763,31 @@
                   "addressedRole": "average-nonland-mv",
                   "remainingStructuralDeficitAfterSwap": 14,
                   "authoritativeTargetGate": "average-nonland-mv",
-                  "nonlandManaValueReduction": 1,
+                  "nonlandManaValueReduction": 3,
                   "persistentColoredManaSourcesAfterSwap": 8,
                   "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
-                    "cutStrategyAffinityScore": 7,
+                    "cutStrategyAffinityScore": 2,
                     "addStrategyAffinityScore": 15,
-                    "cutStrategyProtectionApplied": 4,
+                    "cutStrategyProtectionApplied": 2,
                     "cutMatchedStrategies": [
-                      "food-lifegain"
+                      "combat-tokens"
                     ],
                     "addMatchedStrategies": [
                       "food-lifegain"
                     ],
-                    "locallyUnreplacedStrategies": [],
+                    "locallyUnreplacedStrategies": [
+                      "combat-tokens"
+                    ],
                     "cutRoles": [
-                      "mana acceleration",
-                      "mana rock",
-                      "repeatable life gain engine"
+                      "creature"
                     ],
                     "addRoles": [
                       "repeatable life gain engine",
                       "self sacrifice"
                     ],
                     "unreplacedRoles": [
-                      "mana acceleration",
-                      "mana rock"
+                      "creature"
                     ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
@@ -1795,7 +1796,7 @@
                 }
               },
               {
-                "out": "Landroval, Horizon Witness",
+                "out": "Feasting Hobbit",
                 "in": "Nimble Hobbit",
                 "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                 "recommendedPrinting": {
@@ -1813,11 +1814,11 @@
                   "persistentColoredManaSourcesAfterSwap": 8,
                   "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
-                    "cutStrategyAffinityScore": 2,
+                    "cutStrategyAffinityScore": 8,
                     "addStrategyAffinityScore": 10,
-                    "cutStrategyProtectionApplied": 2,
+                    "cutStrategyProtectionApplied": 4,
                     "cutMatchedStrategies": [
-                      "combat-tokens"
+                      "food-lifegain"
                     ],
                     "addMatchedStrategies": [
                       "combat-tokens",
@@ -1825,6 +1826,7 @@
                     ],
                     "locallyUnreplacedStrategies": [],
                     "cutRoles": [
+                      "+1/+1 counters",
                       "creature"
                     ],
                     "addRoles": [
@@ -1833,7 +1835,9 @@
                       "sacrifice synergy",
                       "spot interaction"
                     ],
-                    "unreplacedRoles": [],
+                    "unreplacedRoles": [
+                      "+1/+1 counters"
+                    ],
                     "unreplacedStrategyComponentRoles": [],
                     "meaningfulStrategyLoss": false,
                     "verdict": "preserved"
@@ -3300,7 +3304,7 @@
                 "estimatedSpendNzd": 3.62,
                 "estimatedSpendUsdReference": 2.13,
                 "unknownPriceCount": 0,
-                "improvementScore": 19.287,
+                "improvementScore": 16.724,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -3342,41 +3346,40 @@
                     },
                     {
                       "strategy": "food-lifegain",
-                      "cutAffinityScore": 23,
+                      "cutAffinityScore": 16,
                       "addAffinityScore": 31,
-                      "netAffinityDelta": 8
+                      "netAffinityDelta": 15
                     },
                     {
                       "strategy": "value-engine",
-                      "cutAffinityScore": 0,
+                      "cutAffinityScore": 10,
                       "addAffinityScore": 1,
-                      "netAffinityDelta": 1
+                      "netAffinityDelta": -9
                     }
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 7,
+                      "cutStrategyAffinityScore": 2,
                       "addStrategyAffinityScore": 15,
-                      "cutStrategyProtectionApplied": 4,
+                      "cutStrategyProtectionApplied": 2,
                       "cutMatchedStrategies": [
-                        "food-lifegain"
+                        "combat-tokens"
                       ],
                       "addMatchedStrategies": [
                         "food-lifegain"
                       ],
-                      "locallyUnreplacedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens"
+                      ],
                       "cutRoles": [
-                        "mana acceleration",
-                        "mana rock",
-                        "repeatable life gain engine"
+                        "creature"
                       ],
                       "addRoles": [
                         "repeatable life gain engine",
                         "self sacrifice"
                       ],
                       "unreplacedRoles": [
-                        "mana acceleration",
-                        "mana rock"
+                        "creature"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -3410,27 +3413,36 @@
                       "verdict": "preserved"
                     },
                     {
-                      "cutStrategyAffinityScore": 2,
+                      "cutStrategyAffinityScore": 10,
                       "addStrategyAffinityScore": 1,
-                      "cutStrategyProtectionApplied": 2,
+                      "cutStrategyProtectionApplied": 0,
                       "cutMatchedStrategies": [
-                        "combat-tokens"
+                        "value-engine"
                       ],
                       "addMatchedStrategies": [
                         "value-engine"
                       ],
-                      "locallyUnreplacedStrategies": [
-                        "combat-tokens"
-                      ],
+                      "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "creature"
+                        "artifact sacrifice outlet",
+                        "card selection",
+                        "creature",
+                        "life drain",
+                        "sacrifice outlet",
+                        "sacrifice synergy"
                       ],
                       "addRoles": [
                         "creature",
                         "land tutor",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "artifact sacrifice outlet",
+                        "card selection",
+                        "life drain",
+                        "sacrifice outlet",
+                        "sacrifice synergy"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -3506,23 +3518,23 @@
                       "archetype": "food-lifegain",
                       "commanderScore": 15,
                       "beforeSupportCount": 30,
-                      "afterSupportCount": 30,
-                      "supportDelta": 0,
+                      "afterSupportCount": 31,
+                      "supportDelta": 1,
                       "beforeAffinityTotal": 269,
-                      "afterAffinityTotal": 277,
-                      "affinityDelta": 8,
+                      "afterAffinityTotal": 284,
+                      "affinityDelta": 15,
                       "preserved": true
                     },
                     {
                       "archetype": "value-engine",
                       "commanderScore": 14,
                       "beforeSupportCount": 62,
-                      "afterSupportCount": 63,
-                      "supportDelta": 1,
+                      "afterSupportCount": 62,
+                      "supportDelta": 0,
                       "beforeAffinityTotal": 214,
-                      "afterAffinityTotal": 215,
-                      "affinityDelta": 1,
-                      "preserved": true
+                      "afterAffinityTotal": 205,
+                      "affinityDelta": -9,
+                      "preserved": false
                     },
                     {
                       "archetype": "combat-tokens",
@@ -3537,6 +3549,11 @@
                     }
                   ],
                   "losses": [
+                    {
+                      "archetype": "value-engine",
+                      "supportDelta": 0,
+                      "affinityDelta": -9
+                    },
                     {
                       "archetype": "combat-tokens",
                       "supportDelta": -1,
@@ -3681,7 +3698,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Pristine Talisman",
+                    "out": "Landroval, Horizon Witness",
                     "in": "Supper for Spiders",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.26 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -3695,32 +3712,31 @@
                       "addressedRole": "average-nonland-mv",
                       "remainingStructuralDeficitAfterSwap": 14,
                       "authoritativeTargetGate": "average-nonland-mv",
-                      "nonlandManaValueReduction": 1,
+                      "nonlandManaValueReduction": 3,
                       "persistentColoredManaSourcesAfterSwap": 8,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 7,
+                        "cutStrategyAffinityScore": 2,
                         "addStrategyAffinityScore": 15,
-                        "cutStrategyProtectionApplied": 4,
+                        "cutStrategyProtectionApplied": 2,
                         "cutMatchedStrategies": [
-                          "food-lifegain"
+                          "combat-tokens"
                         ],
                         "addMatchedStrategies": [
                           "food-lifegain"
                         ],
-                        "locallyUnreplacedStrategies": [],
+                        "locallyUnreplacedStrategies": [
+                          "combat-tokens"
+                        ],
                         "cutRoles": [
-                          "mana acceleration",
-                          "mana rock",
-                          "repeatable life gain engine"
+                          "creature"
                         ],
                         "addRoles": [
                           "repeatable life gain engine",
                           "self sacrifice"
                         ],
                         "unreplacedRoles": [
-                          "mana acceleration",
-                          "mana rock"
+                          "creature"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -3776,7 +3792,7 @@
                     }
                   },
                   {
-                    "out": "Landroval, Horizon Witness",
+                    "out": "Lobelia, Defender of Bag End",
                     "in": "Weathered Wayfarer",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
@@ -3794,27 +3810,36 @@
                       "persistentColoredManaSourcesAfterSwap": 8,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 2,
+                        "cutStrategyAffinityScore": 10,
                         "addStrategyAffinityScore": 1,
-                        "cutStrategyProtectionApplied": 2,
+                        "cutStrategyProtectionApplied": 0,
                         "cutMatchedStrategies": [
-                          "combat-tokens"
+                          "value-engine"
                         ],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
-                        "locallyUnreplacedStrategies": [
-                          "combat-tokens"
-                        ],
+                        "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "creature"
+                          "artifact sacrifice outlet",
+                          "card selection",
+                          "creature",
+                          "life drain",
+                          "sacrifice outlet",
+                          "sacrifice synergy"
                         ],
                         "addRoles": [
                           "creature",
                           "land tutor",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "artifact sacrifice outlet",
+                          "card selection",
+                          "life drain",
+                          "sacrifice outlet",
+                          "sacrifice synergy"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -5388,7 +5413,7 @@
                 "estimatedSpendNzd": 3.16,
                 "estimatedSpendUsdReference": 1.86,
                 "unknownPriceCount": 0,
-                "improvementScore": 8.971,
+                "improvementScore": 4.618,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
@@ -5432,41 +5457,40 @@
                     },
                     {
                       "strategy": "food-lifegain",
-                      "cutAffinityScore": 15,
+                      "cutAffinityScore": 8,
                       "addAffinityScore": 23,
-                      "netAffinityDelta": 8
+                      "netAffinityDelta": 15
                     },
                     {
                       "strategy": "value-engine",
-                      "cutAffinityScore": 0,
+                      "cutAffinityScore": 10,
                       "addAffinityScore": 1,
-                      "netAffinityDelta": 1
+                      "netAffinityDelta": -9
                     }
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 7,
+                      "cutStrategyAffinityScore": 2,
                       "addStrategyAffinityScore": 15,
-                      "cutStrategyProtectionApplied": 4,
+                      "cutStrategyProtectionApplied": 2,
                       "cutMatchedStrategies": [
-                        "food-lifegain"
+                        "combat-tokens"
                       ],
                       "addMatchedStrategies": [
                         "food-lifegain"
                       ],
-                      "locallyUnreplacedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens"
+                      ],
                       "cutRoles": [
-                        "mana acceleration",
-                        "mana rock",
-                        "repeatable life gain engine"
+                        "creature"
                       ],
                       "addRoles": [
                         "repeatable life gain engine",
                         "self sacrifice"
                       ],
                       "unreplacedRoles": [
-                        "mana acceleration",
-                        "mana rock"
+                        "creature"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
@@ -5500,27 +5524,36 @@
                       "verdict": "preserved"
                     },
                     {
-                      "cutStrategyAffinityScore": 2,
+                      "cutStrategyAffinityScore": 10,
                       "addStrategyAffinityScore": 1,
-                      "cutStrategyProtectionApplied": 2,
+                      "cutStrategyProtectionApplied": 0,
                       "cutMatchedStrategies": [
-                        "combat-tokens"
+                        "value-engine"
                       ],
                       "addMatchedStrategies": [
                         "value-engine"
                       ],
-                      "locallyUnreplacedStrategies": [
-                        "combat-tokens"
-                      ],
+                      "locallyUnreplacedStrategies": [],
                       "cutRoles": [
-                        "creature"
+                        "artifact sacrifice outlet",
+                        "card selection",
+                        "creature",
+                        "life drain",
+                        "sacrifice outlet",
+                        "sacrifice synergy"
                       ],
                       "addRoles": [
                         "creature",
                         "land tutor",
                         "tutor"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "artifact sacrifice outlet",
+                        "card selection",
+                        "life drain",
+                        "sacrifice outlet",
+                        "sacrifice synergy"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -5568,23 +5601,23 @@
                       "archetype": "food-lifegain",
                       "commanderScore": 15,
                       "beforeSupportCount": 30,
-                      "afterSupportCount": 30,
-                      "supportDelta": 0,
+                      "afterSupportCount": 31,
+                      "supportDelta": 1,
                       "beforeAffinityTotal": 269,
-                      "afterAffinityTotal": 277,
-                      "affinityDelta": 8,
+                      "afterAffinityTotal": 284,
+                      "affinityDelta": 15,
                       "preserved": true
                     },
                     {
                       "archetype": "value-engine",
                       "commanderScore": 14,
                       "beforeSupportCount": 62,
-                      "afterSupportCount": 63,
-                      "supportDelta": 1,
+                      "afterSupportCount": 62,
+                      "supportDelta": 0,
                       "beforeAffinityTotal": 214,
-                      "afterAffinityTotal": 215,
-                      "affinityDelta": 1,
-                      "preserved": true
+                      "afterAffinityTotal": 205,
+                      "affinityDelta": -9,
+                      "preserved": false
                     },
                     {
                       "archetype": "combat-tokens",
@@ -5599,6 +5632,11 @@
                     }
                   ],
                   "losses": [
+                    {
+                      "archetype": "value-engine",
+                      "supportDelta": 0,
+                      "affinityDelta": -9
+                    },
                     {
                       "archetype": "combat-tokens",
                       "supportDelta": -1,
@@ -5743,7 +5781,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Pristine Talisman",
+                    "out": "Landroval, Horizon Witness",
                     "in": "Supper for Spiders",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.26 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -5757,32 +5795,31 @@
                       "addressedRole": "average-nonland-mv",
                       "remainingStructuralDeficitAfterSwap": 14,
                       "authoritativeTargetGate": "average-nonland-mv",
-                      "nonlandManaValueReduction": 1,
+                      "nonlandManaValueReduction": 3,
                       "persistentColoredManaSourcesAfterSwap": 8,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 7,
+                        "cutStrategyAffinityScore": 2,
                         "addStrategyAffinityScore": 15,
-                        "cutStrategyProtectionApplied": 4,
+                        "cutStrategyProtectionApplied": 2,
                         "cutMatchedStrategies": [
-                          "food-lifegain"
+                          "combat-tokens"
                         ],
                         "addMatchedStrategies": [
                           "food-lifegain"
                         ],
-                        "locallyUnreplacedStrategies": [],
+                        "locallyUnreplacedStrategies": [
+                          "combat-tokens"
+                        ],
                         "cutRoles": [
-                          "mana acceleration",
-                          "mana rock",
-                          "repeatable life gain engine"
+                          "creature"
                         ],
                         "addRoles": [
                           "repeatable life gain engine",
                           "self sacrifice"
                         ],
                         "unreplacedRoles": [
-                          "mana acceleration",
-                          "mana rock"
+                          "creature"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -5838,7 +5875,7 @@
                     }
                   },
                   {
-                    "out": "Landroval, Horizon Witness",
+                    "out": "Lobelia, Defender of Bag End",
                     "in": "Weathered Wayfarer",
                     "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
@@ -5856,27 +5893,36 @@
                       "persistentColoredManaSourcesAfterSwap": 8,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 2,
+                        "cutStrategyAffinityScore": 10,
                         "addStrategyAffinityScore": 1,
-                        "cutStrategyProtectionApplied": 2,
+                        "cutStrategyProtectionApplied": 0,
                         "cutMatchedStrategies": [
-                          "combat-tokens"
+                          "value-engine"
                         ],
                         "addMatchedStrategies": [
                           "value-engine"
                         ],
-                        "locallyUnreplacedStrategies": [
-                          "combat-tokens"
-                        ],
+                        "locallyUnreplacedStrategies": [],
                         "cutRoles": [
-                          "creature"
+                          "artifact sacrifice outlet",
+                          "card selection",
+                          "creature",
+                          "life drain",
+                          "sacrifice outlet",
+                          "sacrifice synergy"
                         ],
                         "addRoles": [
                           "creature",
                           "land tutor",
                           "tutor"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "artifact sacrifice outlet",
+                          "card selection",
+                          "life drain",
+                          "sacrifice outlet",
+                          "sacrifice synergy"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -7225,12 +7271,12 @@
                 "estimatedSpendNzd": 0.78,
                 "estimatedSpendUsdReference": 0.46,
                 "unknownPriceCount": 0,
-                "improvementScore": 8.344,
+                "improvementScore": 7.81,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 7.4,
+                  "score": 6.5,
                   "failedBefore": [
                     "average-nonland-mv",
                     "cheap-interaction",
@@ -7268,46 +7314,45 @@
                     },
                     {
                       "strategy": "food-lifegain",
-                      "cutAffinityScore": 7,
+                      "cutAffinityScore": 8,
                       "addAffinityScore": 23,
-                      "netAffinityDelta": 16
+                      "netAffinityDelta": 15
                     }
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 7,
+                      "cutStrategyAffinityScore": 2,
                       "addStrategyAffinityScore": 15,
-                      "cutStrategyProtectionApplied": 4,
+                      "cutStrategyProtectionApplied": 2,
                       "cutMatchedStrategies": [
-                        "food-lifegain"
+                        "combat-tokens"
                       ],
                       "addMatchedStrategies": [
                         "food-lifegain"
                       ],
-                      "locallyUnreplacedStrategies": [],
+                      "locallyUnreplacedStrategies": [
+                        "combat-tokens"
+                      ],
                       "cutRoles": [
-                        "mana acceleration",
-                        "mana rock",
-                        "repeatable life gain engine"
+                        "creature"
                       ],
                       "addRoles": [
                         "repeatable life gain engine",
                         "self sacrifice"
                       ],
                       "unreplacedRoles": [
-                        "mana acceleration",
-                        "mana rock"
+                        "creature"
                       ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
                     },
                     {
-                      "cutStrategyAffinityScore": 2,
+                      "cutStrategyAffinityScore": 8,
                       "addStrategyAffinityScore": 10,
-                      "cutStrategyProtectionApplied": 2,
+                      "cutStrategyProtectionApplied": 4,
                       "cutMatchedStrategies": [
-                        "combat-tokens"
+                        "food-lifegain"
                       ],
                       "addMatchedStrategies": [
                         "combat-tokens",
@@ -7315,6 +7360,7 @@
                       ],
                       "locallyUnreplacedStrategies": [],
                       "cutRoles": [
+                        "+1/+1 counters",
                         "creature"
                       ],
                       "addRoles": [
@@ -7323,7 +7369,9 @@
                         "sacrifice synergy",
                         "spot interaction"
                       ],
-                      "unreplacedRoles": [],
+                      "unreplacedRoles": [
+                        "+1/+1 counters"
+                      ],
                       "unreplacedStrategyComponentRoles": [],
                       "meaningfulStrategyLoss": false,
                       "verdict": "preserved"
@@ -7374,8 +7422,8 @@
                       "afterSupportCount": 31,
                       "supportDelta": 1,
                       "beforeAffinityTotal": 269,
-                      "afterAffinityTotal": 285,
-                      "affinityDelta": 16,
+                      "afterAffinityTotal": 284,
+                      "affinityDelta": 15,
                       "preserved": true
                     },
                     {
@@ -7540,7 +7588,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Pristine Talisman",
+                    "out": "Landroval, Horizon Witness",
                     "in": "Supper for Spiders",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.26 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: food-lifegain. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -7554,32 +7602,31 @@
                       "addressedRole": "average-nonland-mv",
                       "remainingStructuralDeficitAfterSwap": 14,
                       "authoritativeTargetGate": "average-nonland-mv",
-                      "nonlandManaValueReduction": 1,
+                      "nonlandManaValueReduction": 3,
                       "persistentColoredManaSourcesAfterSwap": 8,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 7,
+                        "cutStrategyAffinityScore": 2,
                         "addStrategyAffinityScore": 15,
-                        "cutStrategyProtectionApplied": 4,
+                        "cutStrategyProtectionApplied": 2,
                         "cutMatchedStrategies": [
-                          "food-lifegain"
+                          "combat-tokens"
                         ],
                         "addMatchedStrategies": [
                           "food-lifegain"
                         ],
-                        "locallyUnreplacedStrategies": [],
+                        "locallyUnreplacedStrategies": [
+                          "combat-tokens"
+                        ],
                         "cutRoles": [
-                          "mana acceleration",
-                          "mana rock",
-                          "repeatable life gain engine"
+                          "creature"
                         ],
                         "addRoles": [
                           "repeatable life gain engine",
                           "self sacrifice"
                         ],
                         "unreplacedRoles": [
-                          "mana acceleration",
-                          "mana rock"
+                          "creature"
                         ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
@@ -7588,7 +7635,7 @@
                     }
                   },
                   {
-                    "out": "Landroval, Horizon Witness",
+                    "out": "Feasting Hobbit",
                     "in": "Nimble Hobbit",
                     "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
@@ -7606,11 +7653,11 @@
                       "persistentColoredManaSourcesAfterSwap": 8,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
-                        "cutStrategyAffinityScore": 2,
+                        "cutStrategyAffinityScore": 8,
                         "addStrategyAffinityScore": 10,
-                        "cutStrategyProtectionApplied": 2,
+                        "cutStrategyProtectionApplied": 4,
                         "cutMatchedStrategies": [
-                          "combat-tokens"
+                          "food-lifegain"
                         ],
                         "addMatchedStrategies": [
                           "combat-tokens",
@@ -7618,6 +7665,7 @@
                         ],
                         "locallyUnreplacedStrategies": [],
                         "cutRoles": [
+                          "+1/+1 counters",
                           "creature"
                         ],
                         "addRoles": [
@@ -7626,7 +7674,9 @@
                           "sacrifice synergy",
                           "spot interaction"
                         ],
-                        "unreplacedRoles": [],
+                        "unreplacedRoles": [
+                          "+1/+1 counters"
+                        ],
                         "unreplacedStrategyComponentRoles": [],
                         "meaningfulStrategyLoss": false,
                         "verdict": "preserved"
@@ -9853,18 +9903,18 @@
           {
             "candidate": 3,
             "eligible": false,
-            "reason": "package-reduces-substantive-deck-strategy-density",
+            "reason": "improvement-below-threshold",
             "attemptedSwaps": 4,
-            "actualSwaps": 2,
-            "estimatedSpendNzd": 0.71,
-            "estimatedSpendUsdReference": 0.42,
+            "actualSwaps": 1,
+            "estimatedSpendNzd": 0.26,
+            "estimatedSpendUsdReference": 0.15,
             "unknownPriceCount": 0,
-            "improvementScore": 19.998,
+            "improvementScore": -1.535,
             "significantRegression": false,
             "zeroTargetProgressWhileFailedGatesRemain": false,
             "targetGate": {
               "applicable": true,
-              "score": 14,
+              "score": 1.1,
               "failedBefore": [
                 "average-nonland-mv",
                 "early-plays",
@@ -9872,14 +9922,16 @@
                 "tutors"
               ],
               "failedAfter": [
+                "average-nonland-mv",
+                "early-plays",
                 "fast-mana",
                 "tutors"
               ],
-              "repairedGates": [
+              "repairedGates": [],
+              "advancedFailedGates": [
                 "average-nonland-mv",
                 "early-plays"
               ],
-              "advancedFailedGates": [],
               "regressedGates": [],
               "ignoredUnverifiedGates": []
             },
@@ -9891,15 +9943,15 @@
               "strategyDeltas": [
                 {
                   "strategy": "combat-tokens",
-                  "cutAffinityScore": 6,
-                  "addAffinityScore": 12,
+                  "cutAffinityScore": 0,
+                  "addAffinityScore": 6,
                   "netAffinityDelta": 6
                 },
                 {
                   "strategy": "food-lifegain",
-                  "cutAffinityScore": 8,
+                  "cutAffinityScore": 0,
                   "addAffinityScore": 8,
-                  "netAffinityDelta": 0
+                  "netAffinityDelta": 8
                 },
                 {
                   "strategy": "value-engine",
@@ -9910,41 +9962,15 @@
               ],
               "swapImpacts": [
                 {
-                  "cutStrategyAffinityScore": 14,
-                  "addStrategyAffinityScore": 14,
-                  "cutStrategyProtectionApplied": 4,
-                  "cutMatchedStrategies": [
-                    "combat-tokens",
-                    "food-lifegain"
-                  ],
-                  "addMatchedStrategies": [
-                    "combat-tokens",
-                    "food-lifegain"
-                  ],
-                  "locallyUnreplacedStrategies": [],
-                  "cutRoles": [
-                    "creature",
-                    "token production"
-                  ],
-                  "addRoles": [
-                    "token production"
-                  ],
-                  "unreplacedRoles": [
-                    "creature"
-                  ],
-                  "unreplacedStrategyComponentRoles": [],
-                  "meaningfulStrategyLoss": false,
-                  "verdict": "preserved"
-                },
-                {
                   "cutStrategyAffinityScore": 10,
-                  "addStrategyAffinityScore": 6,
+                  "addStrategyAffinityScore": 14,
                   "cutStrategyProtectionApplied": 0,
                   "cutMatchedStrategies": [
                     "value-engine"
                   ],
                   "addMatchedStrategies": [
-                    "combat-tokens"
+                    "combat-tokens",
+                    "food-lifegain"
                   ],
                   "locallyUnreplacedStrategies": [
                     "value-engine"
@@ -9958,8 +9984,6 @@
                     "sacrifice synergy"
                   ],
                   "addRoles": [
-                    "+1/+1 counters",
-                    "protection",
                     "token production"
                   ],
                   "unreplacedRoles": [
@@ -9977,85 +10001,8 @@
               ],
               "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
             },
-            "packageAcceptance": {
-              "status": "preserved",
-              "evidenceComplete": true,
-              "preserved": true,
-              "strategyFuel": [
-                {
-                  "kind": "strategy-fuel",
-                  "id": "repeatable-life-gain-draw-engine",
-                  "minimumCount": 2,
-                  "zone": "main",
-                  "matcher": {
-                    "requiredRoles": [
-                      "life-gain-triggered draw engine"
-                    ],
-                    "requireNonland": true
-                  },
-                  "beforeCount": 2,
-                  "afterCount": 2,
-                  "delta": 0,
-                  "preserved": true
-                }
-              ],
-              "structuralFloors": [],
-              "losses": [],
-              "unresolvedBefore": [],
-              "unresolvedAfter": [],
-              "invalidRequirements": [],
-              "acceptanceRule": "Every caller-declared strategy-fuel component and structural-floor component must retain at least its declared minimum count across the complete accepted package. Exact card resolution and descriptor validation are required; a missing or malformed component cannot be treated as preserved."
-            },
-            "deckStrategyRetention": {
-              "status": "strategy-density-loss",
-              "evidenceComplete": true,
-              "preserved": false,
-              "unresolvedBefore": [],
-              "unresolvedAfter": [],
-              "strategies": [
-                {
-                  "archetype": "food-lifegain",
-                  "commanderScore": 15,
-                  "beforeSupportCount": 31,
-                  "afterSupportCount": 31,
-                  "supportDelta": 0,
-                  "beforeAffinityTotal": 277,
-                  "afterAffinityTotal": 277,
-                  "affinityDelta": 0,
-                  "preserved": true
-                },
-                {
-                  "archetype": "value-engine",
-                  "commanderScore": 14,
-                  "beforeSupportCount": 62,
-                  "afterSupportCount": 61,
-                  "supportDelta": -1,
-                  "beforeAffinityTotal": 214,
-                  "afterAffinityTotal": 204,
-                  "affinityDelta": -10,
-                  "preserved": false
-                },
-                {
-                  "archetype": "combat-tokens",
-                  "commanderScore": 8,
-                  "beforeSupportCount": 27,
-                  "afterSupportCount": 28,
-                  "supportDelta": 1,
-                  "beforeAffinityTotal": 168,
-                  "afterAffinityTotal": 174,
-                  "affinityDelta": 6,
-                  "preserved": true
-                }
-              ],
-              "losses": [
-                {
-                  "archetype": "value-engine",
-                  "supportDelta": -1,
-                  "affinityDelta": -10
-                }
-              ],
-              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
-            },
+            "packageAcceptance": null,
+            "deckStrategyRetention": {},
             "planProvenance": {
               "targetBracket": 4,
               "winRouteVerificationStatus": "no-verified-route",
@@ -10192,7 +10139,7 @@
             },
             "swaps": [
               {
-                "out": "Generous Ent",
+                "out": "Lobelia, Defender of Bag End",
                 "in": "Shelob's Ambush",
                 "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
@@ -10206,65 +10153,19 @@
                   "addressedRole": "average-nonland-mv",
                   "remainingStructuralDeficitAfterSwap": 13,
                   "authoritativeTargetGate": "average-nonland-mv",
-                  "nonlandManaValueReduction": 5,
-                  "persistentColoredManaSourcesAfterSwap": 8,
-                  "persistentColoredManaSourceFloor": 6,
-                  "strategyPreservation": {
-                    "cutStrategyAffinityScore": 14,
-                    "addStrategyAffinityScore": 14,
-                    "cutStrategyProtectionApplied": 4,
-                    "cutMatchedStrategies": [
-                      "combat-tokens",
-                      "food-lifegain"
-                    ],
-                    "addMatchedStrategies": [
-                      "combat-tokens",
-                      "food-lifegain"
-                    ],
-                    "locallyUnreplacedStrategies": [],
-                    "cutRoles": [
-                      "creature",
-                      "token production"
-                    ],
-                    "addRoles": [
-                      "token production"
-                    ],
-                    "unreplacedRoles": [
-                      "creature"
-                    ],
-                    "unreplacedStrategyComponentRoles": [],
-                    "meaningfulStrategyLoss": false,
-                    "verdict": "preserved"
-                  }
-                }
-              },
-              {
-                "out": "Lobelia, Defender of Bag End",
-                "in": "Orcish Medicine",
-                "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
-                "recommendedPrinting": {
-                  "set": "LTR",
-                  "collectorNumber": "104",
-                  "finish": "foil",
-                  "priceNzd": 0.46,
-                  "priceUsdReference": 0.27
-                },
-                "structuralPairing": {
-                  "addressedRole": "protection",
-                  "remainingStructuralDeficitAfterSwap": 12,
-                  "authoritativeTargetGate": null,
-                  "nonlandManaValueReduction": null,
+                  "nonlandManaValueReduction": 2,
                   "persistentColoredManaSourcesAfterSwap": 8,
                   "persistentColoredManaSourceFloor": 6,
                   "strategyPreservation": {
                     "cutStrategyAffinityScore": 10,
-                    "addStrategyAffinityScore": 6,
+                    "addStrategyAffinityScore": 14,
                     "cutStrategyProtectionApplied": 0,
                     "cutMatchedStrategies": [
                       "value-engine"
                     ],
                     "addMatchedStrategies": [
-                      "combat-tokens"
+                      "combat-tokens",
+                      "food-lifegain"
                     ],
                     "locallyUnreplacedStrategies": [
                       "value-engine"
@@ -10278,8 +10179,6 @@
                       "sacrifice synergy"
                     ],
                     "addRoles": [
-                      "+1/+1 counters",
-                      "protection",
                       "token production"
                     ],
                     "unreplacedRoles": [
@@ -10913,8 +10812,9 @@
             "winningCandidate": 4,
             "reasonCounts": {
               "eligible": 1,
+              "improvement-below-threshold": 1,
               "package-causes-a-significant-simulated-regression": 1,
-              "package-reduces-substantive-deck-strategy-density": 2
+              "package-reduces-substantive-deck-strategy-density": 1
             },
             "candidateComparisons": [
               {
@@ -12027,18 +11927,18 @@
               {
                 "candidate": 3,
                 "eligible": false,
-                "reason": "package-reduces-substantive-deck-strategy-density",
+                "reason": "improvement-below-threshold",
                 "attemptedSwaps": 4,
-                "actualSwaps": 2,
-                "estimatedSpendNzd": 0.71,
-                "estimatedSpendUsdReference": 0.42,
+                "actualSwaps": 1,
+                "estimatedSpendNzd": 0.26,
+                "estimatedSpendUsdReference": 0.15,
                 "unknownPriceCount": 0,
-                "improvementScore": 19.998,
+                "improvementScore": -1.535,
                 "significantRegression": false,
                 "zeroTargetProgressWhileFailedGatesRemain": false,
                 "targetGate": {
                   "applicable": true,
-                  "score": 14,
+                  "score": 1.1,
                   "failedBefore": [
                     "average-nonland-mv",
                     "early-plays",
@@ -12046,14 +11946,16 @@
                     "tutors"
                   ],
                   "failedAfter": [
+                    "average-nonland-mv",
+                    "early-plays",
                     "fast-mana",
                     "tutors"
                   ],
-                  "repairedGates": [
+                  "repairedGates": [],
+                  "advancedFailedGates": [
                     "average-nonland-mv",
                     "early-plays"
                   ],
-                  "advancedFailedGates": [],
                   "regressedGates": [],
                   "ignoredUnverifiedGates": []
                 },
@@ -12065,15 +11967,15 @@
                   "strategyDeltas": [
                     {
                       "strategy": "combat-tokens",
-                      "cutAffinityScore": 6,
-                      "addAffinityScore": 12,
+                      "cutAffinityScore": 0,
+                      "addAffinityScore": 6,
                       "netAffinityDelta": 6
                     },
                     {
                       "strategy": "food-lifegain",
-                      "cutAffinityScore": 8,
+                      "cutAffinityScore": 0,
                       "addAffinityScore": 8,
-                      "netAffinityDelta": 0
+                      "netAffinityDelta": 8
                     },
                     {
                       "strategy": "value-engine",
@@ -12084,41 +11986,15 @@
                   ],
                   "swapImpacts": [
                     {
-                      "cutStrategyAffinityScore": 14,
-                      "addStrategyAffinityScore": 14,
-                      "cutStrategyProtectionApplied": 4,
-                      "cutMatchedStrategies": [
-                        "combat-tokens",
-                        "food-lifegain"
-                      ],
-                      "addMatchedStrategies": [
-                        "combat-tokens",
-                        "food-lifegain"
-                      ],
-                      "locallyUnreplacedStrategies": [],
-                      "cutRoles": [
-                        "creature",
-                        "token production"
-                      ],
-                      "addRoles": [
-                        "token production"
-                      ],
-                      "unreplacedRoles": [
-                        "creature"
-                      ],
-                      "unreplacedStrategyComponentRoles": [],
-                      "meaningfulStrategyLoss": false,
-                      "verdict": "preserved"
-                    },
-                    {
                       "cutStrategyAffinityScore": 10,
-                      "addStrategyAffinityScore": 6,
+                      "addStrategyAffinityScore": 14,
                       "cutStrategyProtectionApplied": 0,
                       "cutMatchedStrategies": [
                         "value-engine"
                       ],
                       "addMatchedStrategies": [
-                        "combat-tokens"
+                        "combat-tokens",
+                        "food-lifegain"
                       ],
                       "locallyUnreplacedStrategies": [
                         "value-engine"
@@ -12132,8 +12008,6 @@
                         "sacrifice synergy"
                       ],
                       "addRoles": [
-                        "+1/+1 counters",
-                        "protection",
                         "token production"
                       ],
                       "unreplacedRoles": [
@@ -12151,85 +12025,8 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "packageAcceptance": {
-                  "status": "preserved",
-                  "evidenceComplete": true,
-                  "preserved": true,
-                  "strategyFuel": [
-                    {
-                      "kind": "strategy-fuel",
-                      "id": "repeatable-life-gain-draw-engine",
-                      "minimumCount": 2,
-                      "zone": "main",
-                      "matcher": {
-                        "requiredRoles": [
-                          "life-gain-triggered draw engine"
-                        ],
-                        "requireNonland": true
-                      },
-                      "beforeCount": 2,
-                      "afterCount": 2,
-                      "delta": 0,
-                      "preserved": true
-                    }
-                  ],
-                  "structuralFloors": [],
-                  "losses": [],
-                  "unresolvedBefore": [],
-                  "unresolvedAfter": [],
-                  "invalidRequirements": [],
-                  "acceptanceRule": "Every caller-declared strategy-fuel component and structural-floor component must retain at least its declared minimum count across the complete accepted package. Exact card resolution and descriptor validation are required; a missing or malformed component cannot be treated as preserved."
-                },
-                "deckStrategyRetention": {
-                  "status": "strategy-density-loss",
-                  "evidenceComplete": true,
-                  "preserved": false,
-                  "unresolvedBefore": [],
-                  "unresolvedAfter": [],
-                  "strategies": [
-                    {
-                      "archetype": "food-lifegain",
-                      "commanderScore": 15,
-                      "beforeSupportCount": 31,
-                      "afterSupportCount": 31,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 277,
-                      "afterAffinityTotal": 277,
-                      "affinityDelta": 0,
-                      "preserved": true
-                    },
-                    {
-                      "archetype": "value-engine",
-                      "commanderScore": 14,
-                      "beforeSupportCount": 62,
-                      "afterSupportCount": 61,
-                      "supportDelta": -1,
-                      "beforeAffinityTotal": 214,
-                      "afterAffinityTotal": 204,
-                      "affinityDelta": -10,
-                      "preserved": false
-                    },
-                    {
-                      "archetype": "combat-tokens",
-                      "commanderScore": 8,
-                      "beforeSupportCount": 27,
-                      "afterSupportCount": 28,
-                      "supportDelta": 1,
-                      "beforeAffinityTotal": 168,
-                      "afterAffinityTotal": 174,
-                      "affinityDelta": 6,
-                      "preserved": true
-                    }
-                  ],
-                  "losses": [
-                    {
-                      "archetype": "value-engine",
-                      "supportDelta": -1,
-                      "affinityDelta": -10
-                    }
-                  ],
-                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
-                },
+                "packageAcceptance": null,
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -12366,7 +12163,7 @@
                 },
                 "swaps": [
                   {
-                    "out": "Generous Ent",
+                    "out": "Lobelia, Defender of Bag End",
                     "in": "Shelob's Ambush",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
@@ -12380,65 +12177,19 @@
                       "addressedRole": "average-nonland-mv",
                       "remainingStructuralDeficitAfterSwap": 13,
                       "authoritativeTargetGate": "average-nonland-mv",
-                      "nonlandManaValueReduction": 5,
-                      "persistentColoredManaSourcesAfterSwap": 8,
-                      "persistentColoredManaSourceFloor": 6,
-                      "strategyPreservation": {
-                        "cutStrategyAffinityScore": 14,
-                        "addStrategyAffinityScore": 14,
-                        "cutStrategyProtectionApplied": 4,
-                        "cutMatchedStrategies": [
-                          "combat-tokens",
-                          "food-lifegain"
-                        ],
-                        "addMatchedStrategies": [
-                          "combat-tokens",
-                          "food-lifegain"
-                        ],
-                        "locallyUnreplacedStrategies": [],
-                        "cutRoles": [
-                          "creature",
-                          "token production"
-                        ],
-                        "addRoles": [
-                          "token production"
-                        ],
-                        "unreplacedRoles": [
-                          "creature"
-                        ],
-                        "unreplacedStrategyComponentRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      }
-                    }
-                  },
-                  {
-                    "out": "Lobelia, Defender of Bag End",
-                    "in": "Orcish Medicine",
-                    "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
-                    "recommendedPrinting": {
-                      "set": "LTR",
-                      "collectorNumber": "104",
-                      "finish": "foil",
-                      "priceNzd": 0.46,
-                      "priceUsdReference": 0.27
-                    },
-                    "structuralPairing": {
-                      "addressedRole": "protection",
-                      "remainingStructuralDeficitAfterSwap": 12,
-                      "authoritativeTargetGate": null,
-                      "nonlandManaValueReduction": null,
+                      "nonlandManaValueReduction": 2,
                       "persistentColoredManaSourcesAfterSwap": 8,
                       "persistentColoredManaSourceFloor": 6,
                       "strategyPreservation": {
                         "cutStrategyAffinityScore": 10,
-                        "addStrategyAffinityScore": 6,
+                        "addStrategyAffinityScore": 14,
                         "cutStrategyProtectionApplied": 0,
                         "cutMatchedStrategies": [
                           "value-engine"
                         ],
                         "addMatchedStrategies": [
-                          "combat-tokens"
+                          "combat-tokens",
+                          "food-lifegain"
                         ],
                         "locallyUnreplacedStrategies": [
                           "value-engine"
@@ -12452,8 +12203,6 @@
                           "sacrifice synergy"
                         ],
                         "addRoles": [
-                          "+1/+1 counters",
-                          "protection",
                           "token production"
                         ],
                         "unreplacedRoles": [
