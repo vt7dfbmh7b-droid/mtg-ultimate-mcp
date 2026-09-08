@@ -59,3 +59,40 @@ test('relative identity ranking is advisory and reports erosion rather than hard
   assert.equal(result.substantiveStrategyAffinityDelta, -3);
   assert.equal(result.identityErosion, 4);
 });
+
+test('preserves exact requested mechanisms across contrasting Commander strategy families', () => {
+  for (const componentId of ['aura-enchantment', 'elf-typal', 'counter-explore', 'artifact-enchantment-shape']) {
+    const preserves = replacementIdentityPriorityV15(
+      { matchesControlledTheme: true, matchedRequestedComponentIds: [componentId], substantiveStrategyAffinity: 4 },
+      { matchesControlledTheme: true, matchedRequestedComponentIds: [componentId], substantiveStrategyAffinity: 4 },
+    );
+    const loses = replacementIdentityPriorityV15(
+      { matchesControlledTheme: true, matchedRequestedComponentIds: [], substantiveStrategyAffinity: 4 },
+      { matchesControlledTheme: true, matchedRequestedComponentIds: [componentId], substantiveStrategyAffinity: 4 },
+    );
+    assert.equal(preserves.requestedComponentLossCount, 0);
+    assert.equal(loses.requestedComponentLossCount, 1);
+    assert.ok(compareReplacementIdentityPriorityV15(preserves, loses) < 0, componentId);
+  }
+});
+
+test('can trade one requested component for another but records the lost mechanism independently', () => {
+  const result = replacementIdentityPriorityV15(
+    { matchesControlledTheme: true, matchedRequestedComponentIds: ['secondary-payoff'], substantiveStrategyAffinity: 6 },
+    { matchesControlledTheme: true, matchedRequestedComponentIds: ['primary-engine'], substantiveStrategyAffinity: 6 },
+  );
+  assert.equal(result.requestedComponentLossCount, 1);
+  assert.equal(result.requestedComponentGainCount, 1);
+  assert.equal(result.identityErosion, 1);
+  assert.equal(result.identityGain, 1);
+});
+
+test('keeps legacy structural fallback ranking unchanged when exact component evidence is unavailable', () => {
+  const withUnknownComponents = replacementIdentityPriorityV15(
+    { matchesControlledTheme: false, substantiveStrategyAffinity: 3 },
+    { matchesControlledTheme: false, substantiveStrategyAffinity: 3 },
+  );
+  assert.equal(withUnknownComponents.requestedComponentLossCount, 0);
+  assert.equal(withUnknownComponents.requestedComponentGainCount, 0);
+  assert.equal(withUnknownComponents.verdict, 'identity-neutral');
+});

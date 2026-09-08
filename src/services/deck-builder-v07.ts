@@ -880,10 +880,12 @@ function upgradeSwapReplacementIdentityPriorityV15(
   return replacementIdentityPriorityV15(
     {
       matchesControlledTheme: recordObject(add.explicitTheme).matchesControlledTheme === true,
+      matchedRequestedComponentIds: recordObject(add.explicitTheme).matchedComponentIds,
       substantiveStrategyAffinity: substantiveScore(addAffinity),
     },
     {
       matchesControlledTheme: recordObject(cut.explicitTheme).matchesControlledTheme === true,
+      matchedRequestedComponentIds: recordObject(cut.explicitTheme).matchedComponentIds,
       substantiveStrategyAffinity: substantiveScore(cutAffinity),
     },
   );

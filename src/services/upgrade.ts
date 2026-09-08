@@ -545,6 +545,7 @@ function cutCandidates(
   cards: ScryfallCard[],
   strategyContext: CommanderStrategyContextV15,
   themeCandidateNames: ReadonlySet<string>,
+  componentAffinityForCard: (card: ScryfallCard) => { score: number; matchedComponentIds: string[] },
   protectThemeMatches: boolean,
   allowCurveFallback: boolean,
 ): Array<Record<string, unknown>> {
@@ -554,6 +555,7 @@ function cutCandidates(
     .map((card) => {
       const context = contextualCutPressureV15(card, strategyContext);
       const themeMatch = themeCandidateNames.has(card.name.toLocaleLowerCase());
+      const componentAffinity = componentAffinityForCard(card);
       const themeProtectionApplied = protectThemeMatches && themeMatch ? 4 : 0;
       const cutPressure = Number((context.cutPressure - themeProtectionApplied).toFixed(1));
       return {
@@ -565,7 +567,12 @@ function cutCandidates(
           matchedStrategies: context.matchedStrategies,
           matches: cardCommanderStrategyAffinityV15(card, strategyContext).matches,
         },
-        explicitTheme: { matchesControlledTheme: themeMatch, protectionApplied: themeProtectionApplied },
+        explicitTheme: {
+          matchesControlledTheme: themeMatch,
+          protectionApplied: themeProtectionApplied,
+          componentAffinityScore: componentAffinity.score,
+          matchedComponentIds: componentAffinity.matchedComponentIds,
+        },
         reasons: themeProtectionApplied > 0
           ? [...context.reasons, 'supports the explicit controlled theme while the deck is at or below its required theme density']
           : context.reasons,
@@ -835,7 +842,7 @@ export async function suggestDeckUpgrades(
     authoritativeTargetGatePriorities, candidateGenerationPriorities: candidatePriorities, candidateDiscovery,
     candidateAddsByDeficit: candidateGroups,
     candidateCuts: cutCandidates(
-      parsed, cards, strategyContext, themeCandidateNames,
+      parsed, cards, strategyContext, themeCandidateNames, componentAffinityForCard,
       themeMinimumMainMatches > 0 && themeCurrentMainMatches <= themeMinimumMainMatches,
       authoritativeTargetGatePriorities.some((priority) => priority.targetGate === 'average-nonland-mv'),
     ),
