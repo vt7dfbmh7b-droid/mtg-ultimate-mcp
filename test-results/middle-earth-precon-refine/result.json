@@ -309,7 +309,7 @@
       {
         "out": "Feasting Hobbit",
         "in": "Nimble Hobbit",
-        "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+        "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
         "recommendedPrinting": {
           "set": "LTR",
           "collectorNumber": "23",
@@ -358,7 +358,7 @@
       {
         "out": "Harmonize",
         "in": "Belladonna Took",
-        "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+        "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
         "recommendedPrinting": {
           "set": "HOB",
           "collectorNumber": "4",
@@ -465,7 +465,7 @@
       {
         "out": "Merry, Warden of Isengard",
         "in": "Samwise Gamgee",
-        "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+        "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
         "recommendedPrinting": {
           "set": "LTR",
           "collectorNumber": "327",
@@ -515,7 +515,7 @@
       {
         "out": "Pristine Talisman",
         "in": "Ravening Warg",
-        "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+        "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
         "recommendedPrinting": {
           "set": "HOB",
           "collectorNumber": "80",
@@ -564,7 +564,7 @@
       {
         "out": "Mentor of the Meek",
         "in": "Gorbag of Minas Morgul",
-        "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+        "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
         "recommendedPrinting": {
           "set": "LTR",
           "collectorNumber": "86",
@@ -963,7 +963,7 @@
               "familyMatch": "family-set",
               "scryfallUrl": "https://scryfall.com/card/ltr/23/nimble-hobbit?utm_source=api"
             },
-            "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+            "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
             "structuralPairing": {
               "addressedRole": "interaction",
               "remainingStructuralDeficitAfterSwap": 13,
@@ -1330,7 +1330,7 @@
               {
                 "out": "Landroval, Horizon Witness",
                 "in": "Meriadoc Brandybuck",
-                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.26 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.26 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                 "recommendedPrinting": {
                   "set": "LTR",
                   "collectorNumber": "177",
@@ -1375,7 +1375,7 @@
               {
                 "out": "Feasting Hobbit",
                 "in": "Nimble Hobbit",
-                "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                 "recommendedPrinting": {
                   "set": "LTR",
                   "collectorNumber": "23",
@@ -1797,7 +1797,7 @@
               {
                 "out": "Landroval, Horizon Witness",
                 "in": "Nimble Hobbit",
-                "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                 "recommendedPrinting": {
                   "set": "LTR",
                   "collectorNumber": "23",
@@ -2215,7 +2215,7 @@
               {
                 "out": "Feasting Hobbit",
                 "in": "Nimble Hobbit",
-                "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                 "recommendedPrinting": {
                   "set": "LTR",
                   "collectorNumber": "23",
@@ -2634,7 +2634,7 @@
               {
                 "out": "Feasting Hobbit",
                 "in": "Nimble Hobbit",
-                "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                 "recommendedPrinting": {
                   "set": "LTR",
                   "collectorNumber": "23",
@@ -3095,7 +3095,7 @@
                   {
                     "out": "Landroval, Horizon Witness",
                     "in": "Meriadoc Brandybuck",
-                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.26 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.26 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTR",
                       "collectorNumber": "177",
@@ -3140,7 +3140,7 @@
                   {
                     "out": "Feasting Hobbit",
                     "in": "Nimble Hobbit",
-                    "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTR",
                       "collectorNumber": "23",
@@ -3189,7 +3189,7 @@
                   {
                     "out": "Lobelia, Defender of Bag End",
                     "in": "Weathered Wayfarer",
-                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTC",
                       "collectorNumber": "183",
@@ -3778,7 +3778,7 @@
                   {
                     "out": "Landroval, Horizon Witness",
                     "in": "Weathered Wayfarer",
-                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTC",
                       "collectorNumber": "183",
@@ -4300,7 +4300,7 @@
                   {
                     "out": "Lobelia, Defender of Bag End",
                     "in": "Weathered Wayfarer",
-                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTC",
                       "collectorNumber": "183",
@@ -5231,7 +5231,7 @@
                   {
                     "out": "Landroval, Horizon Witness",
                     "in": "Meriadoc Brandybuck",
-                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.26 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.26 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTR",
                       "collectorNumber": "177",
@@ -5276,7 +5276,7 @@
                   {
                     "out": "Feasting Hobbit",
                     "in": "Nimble Hobbit",
-                    "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTR",
                       "collectorNumber": "23",
@@ -5325,7 +5325,7 @@
                   {
                     "out": "Lobelia, Defender of Bag End",
                     "in": "Weathered Wayfarer",
-                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTC",
                       "collectorNumber": "183",
@@ -5840,7 +5840,7 @@
                   {
                     "out": "Landroval, Horizon Witness",
                     "in": "Weathered Wayfarer",
-                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTC",
                       "collectorNumber": "183",
@@ -6288,7 +6288,7 @@
                   {
                     "out": "Lobelia, Defender of Bag End",
                     "in": "Weathered Wayfarer",
-                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTC",
                       "collectorNumber": "183",
@@ -7123,7 +7123,7 @@
                   {
                     "out": "Landroval, Horizon Witness",
                     "in": "Meriadoc Brandybuck",
-                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.26 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.26 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTR",
                       "collectorNumber": "177",
@@ -7168,7 +7168,7 @@
                   {
                     "out": "Feasting Hobbit",
                     "in": "Nimble Hobbit",
-                    "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTR",
                       "collectorNumber": "23",
@@ -7590,7 +7590,7 @@
                   {
                     "out": "Landroval, Horizon Witness",
                     "in": "Nimble Hobbit",
-                    "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTR",
                       "collectorNumber": "23",
@@ -8008,7 +8008,7 @@
                   {
                     "out": "Feasting Hobbit",
                     "in": "Nimble Hobbit",
-                    "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTR",
                       "collectorNumber": "23",
@@ -8427,7 +8427,7 @@
                   {
                     "out": "Feasting Hobbit",
                     "in": "Nimble Hobbit",
-                    "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (5 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTR",
                       "collectorNumber": "23",
@@ -8517,7 +8517,7 @@
               "familyMatch": "family-set",
               "scryfallUrl": "https://scryfall.com/card/hob/4/belladonna-took?utm_source=api"
             },
-            "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+            "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
             "structuralPairing": {
               "addressedRole": "average-nonland-mv",
               "remainingStructuralDeficitAfterSwap": 13,
@@ -8643,7 +8643,7 @@
               "familyMatch": "family-set",
               "scryfallUrl": "https://scryfall.com/card/ltr/327/samwise-gamgee?utm_source=api"
             },
-            "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+            "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
             "structuralPairing": {
               "addressedRole": "average-nonland-mv",
               "remainingStructuralDeficitAfterSwap": 12,
@@ -8702,7 +8702,7 @@
               "familyMatch": "family-set",
               "scryfallUrl": "https://scryfall.com/card/hob/80/ravening-warg?utm_source=api"
             },
-            "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+            "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
             "structuralPairing": {
               "addressedRole": "average-nonland-mv",
               "remainingStructuralDeficitAfterSwap": 12,
@@ -9141,7 +9141,7 @@
               {
                 "out": "Merry, Warden of Isengard",
                 "in": "Meriadoc Brandybuck",
-                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                 "recommendedPrinting": {
                   "set": "LTR",
                   "collectorNumber": "177",
@@ -9188,7 +9188,7 @@
               {
                 "out": "Lobelia, Defender of Bag End",
                 "in": "Weathered Wayfarer",
-                "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                 "recommendedPrinting": {
                   "set": "LTC",
                   "collectorNumber": "183",
@@ -10699,7 +10699,7 @@
               {
                 "out": "Harmonize",
                 "in": "Belladonna Took",
-                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                 "recommendedPrinting": {
                   "set": "HOB",
                   "collectorNumber": "4",
@@ -10806,7 +10806,7 @@
               {
                 "out": "Merry, Warden of Isengard",
                 "in": "Samwise Gamgee",
-                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                 "recommendedPrinting": {
                   "set": "LTR",
                   "collectorNumber": "327",
@@ -10856,7 +10856,7 @@
               {
                 "out": "Pristine Talisman",
                 "in": "Ravening Warg",
-                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                 "recommendedPrinting": {
                   "set": "HOB",
                   "collectorNumber": "80",
@@ -11315,7 +11315,7 @@
                   {
                     "out": "Merry, Warden of Isengard",
                     "in": "Meriadoc Brandybuck",
-                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTR",
                       "collectorNumber": "177",
@@ -11362,7 +11362,7 @@
                   {
                     "out": "Lobelia, Defender of Bag End",
                     "in": "Weathered Wayfarer",
-                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTC",
                       "collectorNumber": "183",
@@ -12873,7 +12873,7 @@
                   {
                     "out": "Harmonize",
                     "in": "Belladonna Took",
-                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "HOB",
                       "collectorNumber": "4",
@@ -12980,7 +12980,7 @@
                   {
                     "out": "Merry, Warden of Isengard",
                     "in": "Samwise Gamgee",
-                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTR",
                       "collectorNumber": "327",
@@ -13030,7 +13030,7 @@
                   {
                     "out": "Pristine Talisman",
                     "in": "Ravening Warg",
-                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.19 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "HOB",
                       "collectorNumber": "80",
@@ -13120,7 +13120,7 @@
               "familyMatch": "family-set",
               "scryfallUrl": "https://scryfall.com/card/ltr/86/gorbag-of-minas-morgul?utm_source=api"
             },
-            "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+            "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
             "structuralPairing": {
               "addressedRole": "average-nonland-mv",
               "remainingStructuralDeficitAfterSwap": 12,
@@ -13574,7 +13574,7 @@
               {
                 "out": "Assemble the Entmoot",
                 "in": "Meriadoc Brandybuck",
-                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                 "recommendedPrinting": {
                   "set": "LTR",
                   "collectorNumber": "177",
@@ -14067,7 +14067,7 @@
               {
                 "out": "Generous Ent",
                 "in": "Voracious Fell Beast",
-                "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                 "recommendedPrinting": {
                   "set": "LTR",
                   "collectorNumber": "113",
@@ -14570,7 +14570,7 @@
               {
                 "out": "Generous Ent",
                 "in": "The Sackville-Bagginses",
-                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                 "recommendedPrinting": {
                   "set": "HOB",
                   "collectorNumber": "83",
@@ -15038,7 +15038,7 @@
               {
                 "out": "Mentor of the Meek",
                 "in": "Gorbag of Minas Morgul",
-                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                 "recommendedPrinting": {
                   "set": "LTR",
                   "collectorNumber": "86",
@@ -15502,7 +15502,7 @@
                   {
                     "out": "Assemble the Entmoot",
                     "in": "Meriadoc Brandybuck",
-                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTR",
                       "collectorNumber": "177",
@@ -15995,7 +15995,7 @@
                   {
                     "out": "Generous Ent",
                     "in": "Voracious Fell Beast",
-                    "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTR",
                       "collectorNumber": "113",
@@ -16498,7 +16498,7 @@
                   {
                     "out": "Generous Ent",
                     "in": "The Sackville-Bagginses",
-                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "HOB",
                       "collectorNumber": "83",
@@ -16966,7 +16966,7 @@
                   {
                     "out": "Mentor of the Meek",
                     "in": "Gorbag of Minas Morgul",
-                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
                     "recommendedPrinting": {
                       "set": "LTR",
                       "collectorNumber": "86",
