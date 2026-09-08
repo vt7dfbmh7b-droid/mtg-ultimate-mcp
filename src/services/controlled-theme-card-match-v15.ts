@@ -3,7 +3,7 @@ import { getCardOracleText } from './scryfall.js';
 
 type TokenV15 =
   | { type: 'lparen' | 'rparen' | 'or' }
-  | { type: 'atom'; field: 'o' | 't'; value: string };
+  | { type: 'atom'; field: 'o' | 't'; value: string; quoted: boolean };
 
 function tokenizeControlledThemeClauseV15(clause: string): TokenV15[] | null {
   const tokens: TokenV15[] = [];
@@ -35,7 +35,9 @@ function tokenizeControlledThemeClauseV15(clause: string): TokenV15[] | null {
     if ((field !== 'o' && field !== 't') || clause[index + 1] !== ':') return null;
     index += 2;
     let value = '';
+    let quoted = false;
     if (clause[index] === '"') {
+      quoted = true;
       index += 1;
       let closed = false;
       while (index < clause.length) {
@@ -60,7 +62,7 @@ function tokenizeControlledThemeClauseV15(clause: string): TokenV15[] | null {
       value = clause.slice(start, index);
     }
     if (!value.trim()) return null;
-    tokens.push({ type: 'atom', field, value: value.toLocaleLowerCase() });
+    tokens.push({ type: 'atom', field, value: value.toLocaleLowerCase(), quoted });
   }
   return tokens;
 }
@@ -72,6 +74,12 @@ function typeContainsWordV15(typeLine: string, needle: string): boolean {
 function cardMatchesAtomV15(card: ScryfallCard, atom: Extract<TokenV15, { type: 'atom' }>): boolean {
   if (atom.field === 'o') return getCardOracleText(card).toLocaleLowerCase().includes(atom.value);
   if (typeContainsWordV15(card.type_line, atom.value)) return true;
+
+  // The controlled resolver emits verified creature types as quoted t:"Type" atoms, while
+  // card/permanent types and mechanical subtypes use unquoted t:artifact/t:enchantment/t:aura/
+  // t:equipment atoms. Changeling grants every creature type, not every Magic card type or
+  // noncreature subtype, so only the resolver's verified quoted typal atoms may use this fallback.
+  if (!atom.quoted) return false;
   const keywords = new Set((card.keywords ?? []).map((value) => value.toLocaleLowerCase()));
   return keywords.has('changeling') || /this card is every creature type/i.test(getCardOracleText(card));
 }
