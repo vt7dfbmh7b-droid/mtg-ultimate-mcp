@@ -52,6 +52,25 @@ function auraSpecializationV15(card: ScryfallCard, commanders: readonly Scryfall
   return /\bauras?\b|\benchanted creature\b|\bbecomes enchanted\b|\baura spell\b|\battached to\b/.test(commanderOracle);
 }
 
+function auraEnchantCreatureCompatibilityV15(card: ScryfallCard, commanders: readonly ScryfallCard[]): boolean {
+  if (!typeContainsV15(card, 'aura')) return false;
+
+  const commanderOracle = normalized(commanders.map((commander) => getCardOracleText(commander)).join(' // '));
+  const rewardsEnchantedCreatures = /\bwhenever\b[^.]{0,180}\b(?:enchanted creatures?|creatures?[^.]{0,100}becomes? enchanted)\b/.test(commanderOracle)
+    || /\b(?:enchanted creatures?|creatures? you control[^.]{0,100}becomes? enchanted)\b[^.]{0,180}\b(?:get|gets|gain|gains|have|has|draw|create|put|double|add|deals?|attacks?|dies?|sacrifice)\b/.test(commanderOracle);
+  if (!rewardsEnchantedCreatures) return false;
+
+  const enchantAbilities = getCardOracleText(card)
+    .split(/\r?\n/)
+    .map(normalized)
+    .filter((line) => line.startsWith('enchant '));
+
+  return enchantAbilities.some((ability) => {
+    if (/\bcreatures?\b/.test(ability) && !/\bcreature cards?\b/.test(ability)) return true;
+    return /\b(?:nonland )?permanents?\b/.test(ability) && !/\bnoncreature\b/.test(ability);
+  });
+}
+
 function commanderShapeAffinityV15(card: ScryfallCard, commanders: readonly ScryfallCard[]): RequestedComponentRelationshipSignalV15 {
   const commanderOracle = normalized(commanders.map((commander) => getCardOracleText(commander)).join(' // '));
   if (!commanderOracle) return { score: 0, reasons: [], relationshipIds: [] };
@@ -140,6 +159,12 @@ export function requestedComponentRelationshipAffinityV15(
     score += 3;
     reasons.push('is an Aura-specific realization of the requested/commander enchantment mechanism');
     relationshipIds.push('relation:aura-specialization');
+  }
+
+  if (auraEnchantCreatureCompatibilityV15(card, commanders)) {
+    score += 2;
+    reasons.push('can enchant a creature rewarded by the commander');
+    relationshipIds.push('relation:aura-enchant-creature');
   }
 
   const commanderShape = commanderShapeAffinityV15(card, commanders);
