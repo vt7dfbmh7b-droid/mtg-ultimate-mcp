@@ -11,7 +11,7 @@ const workflowsDir = resolve(process.cwd(), '.github', 'workflows');
 // must not change .github/workflows/** at all. A future explicit interactive
 // maintenance action may deliberately advance this SHA after reviewing the new
 // workflow tree.
-const workflowPolicyEpochSha = '4a7f308e04de33eb2b68c461925a2360579971d4';
+const workflowPolicyEpochSha = '7662e6adb4d1f6df931cfc8b477cb7994bbb3aba';
 
 const forbiddenSourceMutationPatterns: Array<{ label: string; pattern: RegExp }> = [
   {
