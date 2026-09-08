@@ -263,8 +263,8 @@
     "packageAcceptanceContract": null,
     "estimatedUpgradeSpendNzd": 3.69,
     "estimatedUpgradeSpendUsdReference": 2.17,
-    "maxTotalNzd": 200,
-    "maxTotalUsdReference": 117.59,
+    "maxTotalNzd": 199.99,
+    "maxTotalUsdReference": 117.58,
     "swaps": [
       {
         "out": "Caged Sun",
@@ -481,8 +481,8 @@
       "targetBracket": 4,
       "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.58,
-      "maxTotalNzd": 200,
-      "maxTotalUsdReference": 117.59,
+      "maxTotalNzd": 199.99,
+      "maxTotalUsdReference": 117.58,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
