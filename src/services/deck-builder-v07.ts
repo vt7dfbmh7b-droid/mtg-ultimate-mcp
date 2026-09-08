@@ -1382,14 +1382,14 @@ export function pairUpgradeSwapsByStructureV15(
       if (leftStrategy.meaningfulStrategyLoss !== rightStrategy.meaningfulStrategyLoss) {
         return leftStrategy.meaningfulStrategyLoss ? 1 : -1;
       }
-      const leftStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, left);
-      const rightStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, right);
-      if (leftStrategyLoss !== rightStrategyLoss) return leftStrategyLoss - rightStrategyLoss;
       const identityPriority = compareReplacementIdentityPriorityV15(
         upgradeSwapReplacementIdentityPriorityV15(selection.candidate, left),
         upgradeSwapReplacementIdentityPriorityV15(selection.candidate, right),
       );
       if (identityPriority !== 0) return identityPriority;
+      const leftStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, left);
+      const rightStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, right);
+      if (leftStrategyLoss !== rightStrategyLoss) return leftStrategyLoss - rightStrategyLoss;
       let leftCurveReduction: number | null = null;
       let rightCurveReduction: number | null = null;
       let bothCurveCutsSufficient = false;
