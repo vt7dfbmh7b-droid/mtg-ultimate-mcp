@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedFromProjectStateUpdatedAt": "2026-09-08T05:23:00.000Z",
-  "developmentCheckpointSha": "66836fef0009a6913336efe0ec074aefd277abd5",
+  "generatedFromProjectStateUpdatedAt": "2026-09-08T07:38:00.000Z",
+  "developmentCheckpointSha": "dfdb9663bd2394dfa620511d750501880b903770",
   "records": [
     {
       "id": "PM-STATE-INTEGRITY",
@@ -77,14 +77,14 @@
       ],
       "metadataPath": "test-results/marvel-bracket5/refine-run-metadata.txt",
       "exists": true,
-      "sourceSha": "8f7a38e4f3cbd6aa8faaf0092771d0c34b2f7514",
+      "sourceSha": "5a94d1bc4b203398402ed160e4149cadb71b43b4",
       "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "8f7a38e4f3cbd6aa8faaf0092771d0c34b2f7514",
+        "source_sha": "5a94d1bc4b203398402ed160e4149cadb71b43b4",
         "control_outcome": "failure",
-        "execution_outcome": "success",
-        "target_gate_quality_outcome": "failure",
+        "execution_outcome": "skipped",
+        "target_gate_quality_outcome": "skipped",
         "policy": "checked-in-very-good-candidate",
         "max_win_package_cards": "4",
         "spellbook_max_rows_per_query": "400",
@@ -102,6 +102,7 @@
       },
       "unmetPassConditions": [
         "control_outcome=success",
+        "execution_outcome=success",
         "target_gate_quality_outcome=success"
       ]
     },
