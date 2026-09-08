@@ -30,10 +30,20 @@ test('resolved typal cards classify directly even when no candidate-search membe
   assert.equal(cardMatchesControlledThemeClauseV15(merfolk, 't:"Merfolk"'), true);
 });
 
-test('changeling preserves typal component identity from resolved card semantics', () => {
+test('changeling preserves verified typal identity without becoming every card or noncreature subtype', () => {
   const changeling = card('Adaptive Changeling', { type_line: 'Creature — Shapeshifter', keywords: ['Changeling'] });
   assert.equal(cardMatchesControlledThemeClauseV15(changeling, 't:"Merfolk"'), true);
   assert.equal(cardMatchesControlledThemeClauseV15(changeling, 't:"Knight"'), true);
+  assert.equal(cardMatchesControlledThemeClauseV15(changeling, 't:artifact'), false);
+  assert.equal(cardMatchesControlledThemeClauseV15(changeling, 't:enchantment'), false);
+  assert.equal(cardMatchesControlledThemeClauseV15(changeling, 't:equipment'), false);
+  assert.equal(cardMatchesControlledThemeClauseV15(changeling, 't:aura'), false);
+});
+
+test('oracle every-creature-type text follows the same verified typal boundary', () => {
+  const everyType = card('Every Type', { oracle_text: 'This card is every creature type.' });
+  assert.equal(cardMatchesControlledThemeClauseV15(everyType, 't:"Elf"'), true);
+  assert.equal(cardMatchesControlledThemeClauseV15(everyType, 't:artifact'), false);
 });
 
 test('controlled mechanical and card-type clauses classify contrasting Commander mechanisms', () => {
