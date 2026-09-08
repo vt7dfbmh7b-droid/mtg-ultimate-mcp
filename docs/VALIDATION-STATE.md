@@ -5,7 +5,7 @@ Development checkpoint: `66836fef0009a6913336efe0ec074aefd277abd5`
 
 | Control | Claim level | Outcome | Tested source | Matches checkpoint | Metadata |
 |---|---|---|---|---|---|
-| PM-STATE-INTEGRITY | engineering+truth | fail | `024fe19c4ca3ed5b6d3f99771dceb2aedaa112b7` | no | `test-results/project-management/integrity.txt` |
+| PM-STATE-INTEGRITY | engineering+truth | fail | `dce929110b25c8338ca8930908cf413b261eaa0b` | no | `test-results/project-management/integrity.txt` |
 | INTEL-01-POSITIVE | scenario-intelligence | pass | `7b0e61d2e738742b6c9687038f179f3f24ca57ca` | no | `test-results/intel01-positive/run-metadata.txt` |
 | MARVEL-B5-REFINE | scenario-intelligence | fail | `427d38917de1943a35e0b5e776f3f912917a5120` | no | `test-results/marvel-bracket5/refine-run-metadata.txt` |
 | MARVEL-B5-BROAD | scenario-intelligence | fail | `427d38917de1943a35e0b5e776f3f912917a5120` | no | `test-results/marvel-bracket5-broad/run-metadata.txt` |
