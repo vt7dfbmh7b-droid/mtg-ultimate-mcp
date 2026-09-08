@@ -24,7 +24,6 @@
 1 Masked Admirers (KHC) 69 *N*
 1 Miara, Thorn of the Glade (KHC) 51 *N*
 1 Nullmage Shepherd (KHC) 70 *N*
-1 Numa, Joraga Chieftain (KHC) 71 *N*
 1 Poison-Tip Archer (KHC) 90 *N*
 1 Reclamation Sage (KHC) 72 *N*
 1 Rhys the Exiled (KHC) 73 *N*
@@ -32,22 +31,23 @@
 1 Skemfar Shadowsage (KHM) 110 *N*
 1 Springbloom Druid (KHC) 74 *N*
 1 Sylvan Messenger (KHC) 75 *N*
-1 Timberwatch Elf (KHC) 76 *N*
 1 Twinblade Assassins (KHC) 95 *N*
 1 Voice of Many (KHC) 77 *N*
 1 Voice of the Woods (KHC) 78 *N*
 1 Wolverine Riders (KHC) 14 *N*
-1 Wood Elves (KHC) 80 *N*
 1 Elven Ambush (KHM) 391 *N*
 1 Poison the Cup (KHM) 103 *N*
 1 Tergrid's Shadow (KHM) 113 *N*
 1 Ambition's Cost (KHC) 47 *N*
+1 Eyeblight Massacre (KHC) 49 *N*
 1 Elvish Promenade (KHC) 59 *N*
+1 Pact of the Serpent (KHC) 9 *N*
 1 Return Upon the Tide (KHM) 106 *N*
 1 Roots of Wisdom (KHM) 190 *N*
 1 Arcane Signet (KHC) 96 *N*
 1 Serpent's Soul-Jar (KHC) 11 *N*
 1 Sol Ring (KHC) 104 *N*
+1 Crown of Skemfar (KHC) 13 *N*
 1 Elderfang Venom (KHC) 15 *N*
 1 Pride of the Perfect (KHC) 52 *N*
 1 Prowess of the Fair (KHC) 53 *N*
@@ -62,12 +62,12 @@
 1 Path of Ancestry (KHC) 117 *N*
 1 Skemfar Elderhall (KHM) 268 *N*
 13 Swamp (KHM) 396 *N*
-1 Fyndhorn Elves (CMR) 228 *N*
-1 Flaxen Intruder // Welcome Home (ELD) 155 *N*
+1 Elves of Deep Shadow (GK1) 56 *N*
+1 Dokuchi Silencer (NEO) 340 *N*
 1 Culling the Weak (EXO) 55 *N*
 1 Elvish Reclaimer (MB2) 205 *N*
-1 Llanowar Elves (M10) 189 *N*
-1 Viridian Zealot (C15) 210 *N*
+1 Fyndhorn Elves (CMR) 228 *N*
+1 Flaxen Intruder // Welcome Home (ELD) 155 *N*
 1 Formidable Speaker (PECL) 176p *N*
 1 Campsite Cuisine (FIC) 464 *F*
 1 Deathrite Shaman (MB2) 81 *N*

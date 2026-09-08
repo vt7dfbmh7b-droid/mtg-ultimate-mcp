@@ -30,6 +30,7 @@
 1 Quandrix Command (LCC) 280 *N*
 1 Simic Ascendancy (LCC) 288 *N*
 1 Tishana, Voice of Thunder (LCC) 291 *N*
+1 Vorel of the Hull Clade (LCC) 294 *N*
 1 Zegana, Utopian Speaker (LCC) 298 *N*
 1 Metallic Mimic (LCC) 308 *N*
 1 Alchemist's Refuge (LCC) 318 *N*
@@ -38,6 +39,7 @@
 1 Mosswort Bridge (LCC) 342 *N*
 1 Temple of Mystery (LCC) 357 *N*
 1 Vineglimmer Snarl (LCC) 368 *N*
+1 Merfolk Cave-Diver (LCI) 65 *N*
 1 Deeproot Waters (LCC) 152 *N*
 1 Merrow Reejerey (LCC) 165 *N*
 1 Rapid Hybridization (LCC) 166 *N*
@@ -54,7 +56,6 @@
 1 Kiora's Follower (LCC) 273 *N*
 1 Merfolk Mistbinder (LCC) 276 *N*
 1 Merfolk Skydiver (LCC) 277 *N*
-1 Tatyova, Benthic Druid (LCC) 290 *N*
 1 Arcane Signet (LCC) 299 *N*
 1 Commander's Sphere (LCC) 301 *N*
 1 Simic Signet (LCC) 312 *N*
@@ -74,14 +75,13 @@
 3 Forest (LCI) 402 *N*
 7 Island (LCI) 395 *N*
 6 Island (LCI) 396 *N*
-1 Ozolith, the Shattered Spire (PMOM) 198p *N*
-1 District Mascot (DFT) 344 *N*
+1 Sphere Grid (FIC) 70 *N*
+1 Masked Vandal (PLST) KHM-184 *N*
 1 Archmage Ascension (ZEN) 42 *N*
-1 Kappa Tech-Wrecker (PLST) NEO-198 *N*
-1 Aberrant (40K) 86 *N*
 1 Tezzeret, Artifice Master (PLST) M19-79 *N*
-1 Sword of Fire and Ice (MAR) 100 *N*
-1 Umezawa's Jitte (PZA) 19 *N*
-1 Harbinger of the Tides (FDN) 593 *N*
-1 Sword of Wealth and Power (PBIG) 26p *F*
+1 District Mascot (DFT) 344 *N*
+1 Sword of Body and Mind (V10) 14 *F*
 1 Titania's Command (PBRO) 194s *F*
+1 Kappa Tech-Wrecker (PLST) NEO-198 *N*
+1 Three Steps Ahead (MAR) 62 *N*
+1 Sword of Fire and Ice (MAR) 100 *N*
