@@ -10,19 +10,17 @@ Scheduled/autonomous runs must also obey the root `AGENTS.md` single-flight rule
 
 ## Current BENCH-01 checkpoint — 2026-09-08
 
-The latest tested product is `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd`: the generic cut-order precedence correction passed immutable CI and a frozen five-fixture replay, but was **manually rejected as the new Commander baseline**. Accepted baseline remains `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`.
+The generic commander-compatible Aura target-shape repair at `473edf473a284b9532aa03747abfa41a1081ca2c` passed immutable full CI and an exact-source frozen five-fixture replay. The durable whole-deck verdict accepts the repair as meaningful BENCH-01 progression but defers accepting it as the new Commander baseline. Accepted baseline remains `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`.
 
-- Hakbal / Explorers of the Deep: the Reflections of Littjara cut failure is repaired.
-- Bello / Animated Army: the Esika's Chariot cut failure is repaired.
-- Ellivere / Virtue and Valor: the remaining cut replaces creature-enchanting Angelic Destiny with artifact-enchanting Hardlight Containment. Broad Aura identity is preserved, but commander-compatible relationship shape is not.
-- Quick Draw and Elven Empire: no material regression observed.
-- All five outputs remain exact-100, Commander legal and resolved.
+- Virtue and Valor / Ellivere: the prior `Angelic Destiny` → artifact-only `Hardlight Containment` swap is gone. `Angelic Destiny` and `Ancestral Mask` remain; the deck moves Bracket 2→3 without losing its enchanted-creature combat identity.
+- Explorers of the Deep / Hakbal: `Reflections of Littjara` remains; prior typal-engine preservation stays fixed.
+- Animated Army / Bello: `Esika's Chariot` remains; prior commander-shape preservation stays fixed.
+- Quick Draw and Elven Empire: no material Aura-repair regression.
+- All five outputs are exact-100, Commander legal and resolved.
+- Target movement is not target achievement: Quick Draw remains Bracket 3; Ellivere, Hakbal and Bello finish Bracket 3; Elven Empire remains Bracket 2.
+- The replay is a familiar post-repair control batch. Fresh contrasting Commander evidence and a strong general-AI comparison remain mandatory before baseline acceptance.
 
-Evidence: `test-results/bench01-manual-verdicts/c2fa83b7ea4a81e18445aba3a54529cdb31d86cd.md`; formal CI run `34204677999`; replay persistence `7f4ed8aea8731bec0ec36c4357c8486ef3f7c3b8`.
-
-The precedence repair, replay and complete-deck verdict are finished. The next incomplete stage is a **generic production-path Aura target-shape regression**, starting at `src/services/requested-component-relationship-v15.ts` and its real consumers. Source inspection identifies broad Aura specialization without candidate Enchant-target inspection; establish the integration failure before a smallest generic correction. Preserve fallback and all hard gates. Then require full immutable validation, exact-source replay and manual review. Only after affected controls improve should a fresh contrasting fixture and strong general-AI acceptance comparison be spent.
-
-Historical sections below describe their own checkpoints. Their former next actions must not override this section or current `project-state.json`.
+Evidence: `test-results/bench01-manual-verdicts/473edf473a284b9532aa03747abfa41a1081ca2c.md`. Exact next direction: freeze `473edf47...` for a genuinely fresh high-interaction control, aristocrats/graveyard, unrestricted combo or unusual-commander fixture; manually inspect the complete deck and compare it against strong general AI. Do not repeat the completed Aura regression/repair/replay and do not patch isolated questionable swaps without the generic-repair threshold.
 
 ## North star
 
