@@ -1,6 +1,6 @@
 {
   "schema": "intel01-positive-full-table-package-live-v15.1",
-  "sourceSha": "ca6a40fe5766e22a905d9db6fbfd44e38ac3973e",
+  "sourceSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
   "commander": "Frodo, Sauron's Bane",
   "request": {
     "targetBracket": 4,
@@ -256,7 +256,7 @@
           "collectorNumber": "18",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.26,
+          "priceUsd": 0.27,
           "status": "within-cap"
         },
         {
@@ -267,7 +267,7 @@
           "collectorNumber": "92",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 36.4,
+          "priceUsd": 37.29,
           "status": "within-cap"
         },
         {
@@ -278,7 +278,7 @@
           "collectorNumber": "122",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.55,
+          "priceUsd": 0.53,
           "status": "within-cap"
         },
         {
@@ -288,8 +288,8 @@
           "set": "AKH",
           "collectorNumber": "4",
           "requestedFinish": null,
-          "finish": "nonfoil",
-          "priceUsd": 7.61,
+          "finish": "foil",
+          "priceUsd": 8.14,
           "status": "within-cap"
         },
         {
@@ -300,7 +300,7 @@
           "collectorNumber": "108",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 53.97,
+          "priceUsd": 53.95,
           "status": "within-cap"
         },
         {
@@ -322,7 +322,7 @@
           "collectorNumber": "26",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 1.99,
+          "priceUsd": 1.98,
           "status": "within-cap"
         },
         {
@@ -344,7 +344,7 @@
           "collectorNumber": "211",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 1.75,
+          "priceUsd": 1.54,
           "status": "within-cap"
         },
         {
@@ -366,7 +366,7 @@
           "collectorNumber": "793",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 6.2,
+          "priceUsd": 6.13,
           "status": "within-cap"
         },
         {
@@ -388,7 +388,7 @@
           "collectorNumber": "143",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 1.55,
+          "priceUsd": 1.56,
           "status": "within-cap"
         },
         {
@@ -575,7 +575,7 @@
           "collectorNumber": "150",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 66.3,
+          "priceUsd": 65.99,
           "status": "within-cap"
         },
         {
@@ -586,7 +586,7 @@
           "collectorNumber": "191",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.56,
+          "priceUsd": 0.6,
           "status": "within-cap"
         },
         {
@@ -982,7 +982,7 @@
           "collectorNumber": "233",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.33,
+          "priceUsd": 0.3,
           "status": "within-cap"
         },
         {
@@ -1406,7 +1406,7 @@
             "Bloodletter of Aclazotz",
             "Scourge of the Skyclaves"
           ],
-          "observedUsd": 66.3,
+          "observedUsd": 65.99,
           "reason": "The tutor can find 2 route pieces and moves the selected card to a directly usable access zone."
         },
         {
@@ -1496,7 +1496,7 @@
             "Bloodletter of Aclazotz",
             "Scourge of the Skyclaves"
           ],
-          "observedUsd": 53.97,
+          "observedUsd": 53.95,
           "reason": "Tutor text contains a restriction or destination that is not modeled safely enough for exact route access."
         },
         {
