@@ -213,7 +213,7 @@
           "set": "FCA",
           "collectorNumber": "34",
           "finish": "nonfoil",
-          "priceNzd": 25.61,
+          "priceNzd": 25.62,
           "priceUsdReference": 15.06
         },
         "structuralPairing": {
@@ -541,7 +541,7 @@
               "collectorNumber": "34",
               "releaseDate": "2025-06-13",
               "finish": "nonfoil",
-              "priceNzd": 25.61,
+              "priceNzd": 25.62,
               "priceUsdReference": 15.06,
               "promo": false,
               "promoTypes": [
@@ -1100,7 +1100,7 @@
                   "set": "FCA",
                   "collectorNumber": "34",
                   "finish": "nonfoil",
-                  "priceNzd": 25.61,
+                  "priceNzd": 25.62,
                   "priceUsdReference": 15.06
                 },
                 "structuralPairing": {
@@ -2445,7 +2445,7 @@
                       "set": "FCA",
                       "collectorNumber": "34",
                       "finish": "nonfoil",
-                      "priceNzd": 25.61,
+                      "priceNzd": 25.62,
                       "priceUsdReference": 15.06
                     },
                     "structuralPairing": {

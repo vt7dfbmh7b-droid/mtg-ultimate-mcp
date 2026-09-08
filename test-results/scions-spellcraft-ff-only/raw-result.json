@@ -3,8 +3,8 @@
   "currencyPolicy": {
     "primaryCurrency": "NZD",
     "displaySymbol": "NZ$",
-    "usdToNzdRate": 1.7008,
-    "rateDate": "2026-09-07",
+    "usdToNzdRate": 1.7009,
+    "rateDate": "2026-09-08",
     "rateSource": "Frankfurter",
     "rateSourceUrl": "https://api.frankfurter.dev/v2/rate/USD/NZD",
     "staleRate": false,
@@ -101,7 +101,7 @@
             "set": "FCA",
             "collectorNumber": "34",
             "finish": "nonfoil",
-            "priceNzd": 25.61,
+            "priceNzd": 25.62,
             "priceUsdReference": 15.06
           },
           "structuralPairing": {
@@ -429,7 +429,7 @@
                 "collectorNumber": "34",
                 "releaseDate": "2025-06-13",
                 "finish": "nonfoil",
-                "priceNzd": 25.61,
+                "priceNzd": 25.62,
                 "priceUsdReference": 15.06,
                 "promo": false,
                 "promoTypes": [
@@ -988,7 +988,7 @@
                     "set": "FCA",
                     "collectorNumber": "34",
                     "finish": "nonfoil",
-                    "priceNzd": 25.61,
+                    "priceNzd": 25.62,
                     "priceUsdReference": 15.06
                   },
                   "structuralPairing": {
@@ -2333,7 +2333,7 @@
                         "set": "FCA",
                         "collectorNumber": "34",
                         "finish": "nonfoil",
-                        "priceNzd": 25.61,
+                        "priceNzd": 25.62,
                         "priceUsdReference": 15.06
                       },
                       "structuralPairing": {
