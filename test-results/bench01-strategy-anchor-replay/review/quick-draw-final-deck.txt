@@ -70,8 +70,8 @@
 7 Island (OTJ) 280 *N*
 7 Mountain (OTJ) 283 *N*
 6 Mountain (OTJ) 284 *N*
-1 Pact of Negation (TSR) 77 *N*
-1 Remand (J25) 349 *N*
+1 An Offer You Can't Refuse (FDN) 160 *N*
+1 Three Steps Ahead (MAR) 62 *N*
 1 Foresight (ALL) 29a *N*
 1 March of Swirling Mist (NEO) 447 *N*
 1 Mental Misstep (MB2) 30 *N*

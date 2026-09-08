@@ -2,11 +2,10 @@
 1 Hakbal of the Surging Soul (LCC) 3 *F*
 
 // MAIN
-1 Xolatoyac, the Smiling Flood (LCC) 8 *F*
 1 Mist Dancer (LCC) 76 *N*
+1 Wave Goodbye (LCC) 79 *N*
 1 Bygone Marvels (LCC) 89 *N*
 1 Deeproot Historian (LCC) 91 *N*
-1 Topography Tracker (LCC) 95 *N*
 1 Tributary Instructor (LCC) 96 *N*
 1 Singer of Swift Rivers (LCC) 98 *N*
 1 Benthic Biomancer (LCC) 145 *N*
@@ -18,6 +17,7 @@
 1 Kopala, Warden of Waves (LCC) 160 *N*
 1 Master of the Pearl Trident (LCC) 162 *N*
 1 Merfolk Sovereign (LCC) 164 *N*
+1 Reflections of Littjara (LCC) 168 *N*
 1 Seafloor Oracle (LCC) 170 *N*
 1 Surgespanner (LCC) 174 *N*
 1 Svyelun of Sea and Sky (LCC) 175 *N*
@@ -30,7 +30,6 @@
 1 Quandrix Command (LCC) 280 *N*
 1 Simic Ascendancy (LCC) 288 *N*
 1 Tishana, Voice of Thunder (LCC) 291 *N*
-1 Vorel of the Hull Clade (LCC) 294 *N*
 1 Zegana, Utopian Speaker (LCC) 298 *N*
 1 Metallic Mimic (LCC) 308 *N*
 1 Alchemist's Refuge (LCC) 318 *N*
@@ -39,7 +38,6 @@
 1 Mosswort Bridge (LCC) 342 *N*
 1 Temple of Mystery (LCC) 357 *N*
 1 Vineglimmer Snarl (LCC) 368 *N*
-1 Merfolk Cave-Diver (LCI) 65 *N*
 1 Deeproot Waters (LCC) 152 *N*
 1 Merrow Reejerey (LCC) 165 *N*
 1 Rapid Hybridization (LCC) 166 *N*
@@ -56,6 +54,7 @@
 1 Kiora's Follower (LCC) 273 *N*
 1 Merfolk Mistbinder (LCC) 276 *N*
 1 Merfolk Skydiver (LCC) 277 *N*
+1 Tatyova, Benthic Druid (LCC) 290 *N*
 1 Arcane Signet (LCC) 299 *N*
 1 Commander's Sphere (LCC) 301 *N*
 1 Simic Signet (LCC) 312 *N*
@@ -75,13 +74,14 @@
 3 Forest (LCI) 402 *N*
 7 Island (LCI) 395 *N*
 6 Island (LCI) 396 *N*
-1 Sphere Grid (FIC) 70 *N*
-1 Masked Vandal (PLST) KHM-184 *N*
+1 Wizard Class (PLST) AFR-81 *N*
+1 Aberrant (40K) 86 *N*
 1 Archmage Ascension (ZEN) 42 *N*
-1 Tezzeret, Artifice Master (PLST) M19-79 *N*
-1 District Mascot (DFT) 344 *N*
-1 Sword of Body and Mind (V10) 14 *F*
-1 Titania's Command (PBRO) 194s *F*
 1 Kappa Tech-Wrecker (PLST) NEO-198 *N*
-1 Three Steps Ahead (MAR) 62 *N*
+1 Worldly Tutor (DMR) 442 *N*
 1 Sword of Fire and Ice (MAR) 100 *N*
+1 Umezawa's Jitte (PZA) 19 *N*
+1 Harbinger of the Tides (FDN) 593 *N*
+1 Sword of Forge and Frontier (SLD) 2817 *N*
+1 Titania's Command (PBRO) 194s *F*
+1 Masked Vandal (PLST) KHM-184 *N*
