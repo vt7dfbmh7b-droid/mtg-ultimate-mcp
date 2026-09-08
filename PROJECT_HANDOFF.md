@@ -16,12 +16,12 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Active milestone: **BENCH-01 — Adversarial Commander benchmark suite**
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
-- Development checkpoint at pause: `dfdb9663bd2394dfa620511d750501880b903770`
-- Active branch validation: **bench01-dfdb9663-manual-reject-typed-mechanism-precedence-defect-next**
+- Development checkpoint at pause: `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd`
+- Active branch validation: **bench01-c2fa83b7-manual-reject-aura-target-shape-regression-next**
 
 ## Audit reuse rule
 
-BENCH-01 remains active. Keep e17b0a1c... as the latest accepted Commander baseline. Product SHA dfdb9663... is fully validated, source-frozen replay green and manually REJECTED as a replacement baseline; newest durable verdict is test-results/bench01-manual-verdicts/dfdb9663bd2394dfa620511d750501880b903770.md. The same Hakbal Reflections of Littjara, Bello Esika's Chariot and Ellivere Angelic Destiny failures survive. The remaining centralized defect is cut-order precedence: after meaningful-strategy-loss, quantitative legacy strategy loss is compared before typed requested/replacement identity. Next: make the smallest generic advisory precedence correction, add an ordering regression plus fallback control, validate fully, freeze the exact green SHA and replay affected controls. Only after those improve should a fresh contrasting fixture and strong-general-AI comparison be spent. Before any write read AGENTS.md, obey single-flight execution, and never alter .github/workflows/** during scheduled/autonomous development. Stable remains V0.13 and PR #29 remains unmerged.
+BENCH-01 remains active. Accepted Commander baseline: e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Latest tested product: c2fa83b7ea4a81e18445aba3a54529cdb31d86cd; immutable CI and frozen five-fixture replay are green, but test-results/bench01-manual-verdicts/c2fa83b7ea4a81e18445aba3a54529cdb31d86cd.md manually REJECTS baseline acceptance. Hakbal and Bello failure signatures are repaired; Ellivere still confuses creature-enchanting support with an artifact-only Aura. Precedence repair/replay/review are complete. Next unfinished stage: a generic failing production-path Aura target-shape regression, then the smallest justified repair, full validation and unchanged replay. Start at src/services/requested-component-relationship-v15.ts; broad Aura specialization currently omits candidate Enchant-target inspection. Require fresh contrasting and general-AI evidence only after affected controls improve. Obey AGENTS.md single-flight and protected-workflow boundaries. Stable remains V0.13 and PR #29 unmerged.
 
 ## Stable safety boundary
 
@@ -31,21 +31,21 @@ Stable remains **V0.13 / 0.13.0** on `main`. Standing user authorization permits
 
 `e17b0a1cba659b229fd6f0b6e2df79c5e464a616` on `agent/v15-native-deck-intelligence`.
 
-Latest accepted fully validated Commander product baseline. Later candidates 00571713696977093fee717deecc2b26969e2643, 4a7bbf616ac6826ec4ac979894f8752133af3bca, 66836fef0009a6913336efe0ec074aefd277abd5, 569933bf605a841f14dc000d1f04296ad3456df3 and dfdb9663bd2394dfa620511d750501880b903770 are formally validated/replayed but manually rejected as replacement baselines.
+Latest accepted fully validated Commander product baseline. Later candidates 00571713696977093fee717deecc2b26969e2643, 4a7bbf616ac6826ec4ac979894f8752133af3bca, 66836fef0009a6913336efe0ec074aefd277abd5, 569933bf605a841f14dc000d1f04296ad3456df3, dfdb9663bd2394dfa620511d750501880b903770 and c2fa83b7ea4a81e18445aba3a54529cdb31d86cd are formally validated/replayed but manually rejected as replacement baselines.
 
 ## Important pending validation
 
-The last persisted Marvel control is `5829b37b686255ba35d419b37be17095e54fb696` with outcome **expected-ceiling-fail-closed-zero-swap**. At exact source 5829b37..., focused and broad Marvel execute and persist honestly with zero accepted swaps because the restricted pool cannot repair the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure. Keep these controls red for target achievement. Treat the result as expected construction-ceiling behaviour, not as a passing target and not as a blocker to BENCH-01 on other archetypes. Rerun only when the relevant pool, provider truth or policy changes.
+The last persisted Marvel control is `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` with outcome **execution-success-target-not-achieved**. Latest registered focused and broad Marvel metadata at c2fa83b7 records successful execution/build where reported, but failed control/target-quality gates; no target achievement is claimed. Preserve the earlier exact-source 5829b37 restricted-pool construction-ceiling result as historical evidence. A red historical or constrained target is not automatically a blocker to unrelated BENCH-01 work; investigate only if relevant source, pool, provider truth or policy evidence changes. Do not convert provider uncertainty into absence or an intelligence failure.
 
 ## Next actions
 
-1. Read project-state.json and AGENTS.md first; obey single-flight execution and do not overlap a still-running branch-changing validation, replay, integrity writer or product repair.
-2. Implement the smallest generic cut-order precedence repair: retain the meaningful-strategy-loss comparison first, then evaluate upgradeSwapReplacementIdentityPriorityV15 before upgradeSwapSubstantiveStrategyLossScoreV15 so typed requested mechanisms are not silently spent merely because their legacy broad strategy label is weaker.
-3. Keep the repair advisory and preserve all existing hard legality, authoritative-target, structural-floor, semantic-safety, package-acceptance and meaningful-strategy-loss gates. Do not encode fixture, card, commander or benchmark names.
-4. Add a focused generic ordering/integration regression covering a typed requested mechanism versus a superficially lower legacy-strategy-loss cut, plus a structural fallback where the mechanism remains cuttable when no better hard-valid alternative exists.
-5. Run the complete immutable repository validation. Only if green, freeze that exact precedence-repair SHA and replay the affected five controls from unchanged source; manually inspect full decks against the dfdb9663 rejection signatures.
-6. Only if affected controls materially improve without regression, run at least one fresh contrasting fixture from the same frozen source and resume strong general-AI comparison before accepting a new Commander baseline.
-7. Once the repeated replacement-coherence defect is conclusively resolved or bounded, broaden BENCH-01 to fresh combo, hybrid, control, aristocrats, budget and unusual-commander fixtures.
+1. Read project-state.json and AGENTS.md; inspect all relevant branch writers, including earlier-commit jobs. Do not overlap a running validation, replay, integrity writer or product repair.
+2. Resume from the completed c2fa83b7ea4a81e18445aba3a54529cdb31d86cd replay/manual rejection in test-results/bench01-manual-verdicts/c2fa83b7ea4a81e18445aba3a54529cdb31d86cd.md. Do not redo the completed precedence repair, five-fixture replay or manual review merely because a scheduled invocation ended.
+3. Add a focused generic production-path regression for commander-compatible Aura target shape, starting with auraSpecializationV15 in src/services/requested-component-relationship-v15.ts and its actual requested-component/replacement-priority callers. Distinguish creature-enchanting support from artifact-only or other incompatible targets; include a valid compatible replacement and a structural fallback control.
+4. Only after the regression/trace proves the centralized defect, implement the smallest generic relationship-shape inference or propagation correction. Preserve all existing hard and advisory safety boundaries; no fixture, card or commander exceptions.
+5. Run focused tests plus the complete immutable repository validation. If green, freeze that exact repair SHA through the existing replay request interface; run the affected five fixtures unchanged and manually compare full decks with the c2fa83b7 verdict.
+6. Once those controls materially improve without regression, run at least one fresh contrasting fixture from the same frozen source and resume strong general-AI comparison before accepting a new Commander baseline.
+7. Persist meaningful results and update project-state plus its generated handoff/validation surfaces as one coordinated checkpoint. Then broaden BENCH-01 rather than restarting completed audits or familiar replay cycles.
 
 ## Permanent recovery references
 

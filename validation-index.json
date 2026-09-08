@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedFromProjectStateUpdatedAt": "2026-09-08T07:38:00.000Z",
-  "developmentCheckpointSha": "dfdb9663bd2394dfa620511d750501880b903770",
+  "generatedFromProjectStateUpdatedAt": "2026-09-08T09:43:14.000Z",
+  "developmentCheckpointSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
   "records": [
     {
       "id": "PM-STATE-INTEGRITY",
@@ -41,7 +41,7 @@
       "exists": true,
       "sourceSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
       "outcome": "pass",
-      "matchesDevelopmentCheckpoint": false,
+      "matchesDevelopmentCheckpoint": true,
       "metadata": {
         "source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
         "workflow_source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
@@ -79,7 +79,7 @@
       "exists": true,
       "sourceSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
       "outcome": "fail",
-      "matchesDevelopmentCheckpoint": false,
+      "matchesDevelopmentCheckpoint": true,
       "metadata": {
         "source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
         "control_outcome": "failure",
@@ -116,7 +116,7 @@
       "exists": true,
       "sourceSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
       "outcome": "fail",
-      "matchesDevelopmentCheckpoint": false,
+      "matchesDevelopmentCheckpoint": true,
       "metadata": {
         "source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
         "workflow_source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
@@ -152,7 +152,7 @@
       "exists": true,
       "sourceSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
       "outcome": "pass",
-      "matchesDevelopmentCheckpoint": false,
+      "matchesDevelopmentCheckpoint": true,
       "metadata": {
         "source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
         "build_outcome": "success",
@@ -175,7 +175,7 @@
       "exists": true,
       "sourceSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
       "outcome": "pass",
-      "matchesDevelopmentCheckpoint": false,
+      "matchesDevelopmentCheckpoint": true,
       "metadata": {
         "source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
         "workflow_source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
@@ -211,7 +211,7 @@
       "exists": true,
       "sourceSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
       "outcome": "pass",
-      "matchesDevelopmentCheckpoint": false,
+      "matchesDevelopmentCheckpoint": true,
       "metadata": {
         "source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
         "workflow_source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
@@ -288,7 +288,7 @@
       "exists": true,
       "sourceSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
       "outcome": "pass",
-      "matchesDevelopmentCheckpoint": false,
+      "matchesDevelopmentCheckpoint": true,
       "metadata": {
         "source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
         "workflow_source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",

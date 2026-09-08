@@ -8,6 +8,22 @@ Before any scheduled or autonomous repository write, read root `AGENTS.md` and t
 
 Scheduled/autonomous runs must also obey the root `AGENTS.md` single-flight rule: do not start a new branch-changing validation, replay, state writer, evidence persistence operation, or Commander product repair while another relevant branch-writing operation is still active. Manual verdicts belong under `test-results/bench01-manual-verdicts/`, outside replaceable generated replay output.
 
+## Current BENCH-01 checkpoint — 2026-09-08
+
+The latest tested product is `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd`: the generic cut-order precedence correction passed immutable CI and a frozen five-fixture replay, but was **manually rejected as the new Commander baseline**. Accepted baseline remains `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`.
+
+- Hakbal / Explorers of the Deep: the Reflections of Littjara cut failure is repaired.
+- Bello / Animated Army: the Esika's Chariot cut failure is repaired.
+- Ellivere / Virtue and Valor: the remaining cut replaces creature-enchanting Angelic Destiny with artifact-enchanting Hardlight Containment. Broad Aura identity is preserved, but commander-compatible relationship shape is not.
+- Quick Draw and Elven Empire: no material regression observed.
+- All five outputs remain exact-100, Commander legal and resolved.
+
+Evidence: `test-results/bench01-manual-verdicts/c2fa83b7ea4a81e18445aba3a54529cdb31d86cd.md`; formal CI run `34204677999`; replay persistence `7f4ed8aea8731bec0ec36c4357c8486ef3f7c3b8`.
+
+The precedence repair, replay and complete-deck verdict are finished. The next incomplete stage is a **generic production-path Aura target-shape regression**, starting at `src/services/requested-component-relationship-v15.ts` and its real consumers. Source inspection identifies broad Aura specialization without candidate Enchant-target inspection; establish the integration failure before a smallest generic correction. Preserve fallback and all hard gates. Then require full immutable validation, exact-source replay and manual review. Only after affected controls improve should a fresh contrasting fixture and strong general-AI acceptance comparison be spent.
+
+Historical sections below describe their own checkpoints. Their former next actions must not override this section or current `project-state.json`.
+
 ## North star
 
 Build an evidence-backed Commander specialist that can consistently outperform strong general-purpose AI on complete deck construction and analysis while preserving exact legality, budget, printing, strategy and user constraints.
@@ -94,7 +110,7 @@ The lineage was **manually rejected** despite green formal validation:
 
 Later generic work moved replacement ordering toward commander/request identity and direct mechanism affinity. It produced meaningful local improvements, especially in Quick Draw and portions of Explorers/Elven Empire, but repeated whole-deck manual review still found generic/off-plan replacements and insufficient mechanism-positive prioritization. These descendants therefore did not replace `e17b0a1c...` as the accepted Commander baseline.
 
-### Current frozen candidate — `00571713696977093fee717deecc2b26969e2643` — FORMALLY VALIDATED / MANUAL REJECT
+### Historical frozen candidate — `00571713696977093fee717deecc2b26969e2643` — FORMALLY VALIDATED / MANUAL REJECT
 
 The frozen five-fixture product candidate `00571713696977093fee717deecc2b26969e2643` (`fix(BENCH-01): reject context-dead low-curve utility`) passed focused/full/build validation and was replayed with `src/**` proven equal to the frozen product SHA across Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army.
 
@@ -109,7 +125,7 @@ Fixture-level conclusion:
 
 The context-dead low-curve utility repair itself remains useful engineering evidence and should be retained. The observed Jet Medallion-in-Gruul failure is closed. That local success does not establish whole-deck specialist acceptance.
 
-### Current generic weakness — MECHANISM-AWARE RELATIVE IN-vs-OUT REPLACEMENT VALUE
+### Historical generic weakness — MECHANISM-AWARE RELATIVE IN-vs-OUT REPLACEMENT VALUE
 
 The repeated cross-fixture defect is now narrower and better evidenced than generic incoming-card affinity alone: **direct requested-component and commander-mechanism importance is under-valued on the outgoing/cut side, so identity-bearing OUT cards can lose to generic structurally useful IN cards.**
 
