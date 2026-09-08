@@ -3,7 +3,7 @@
 
 // MAIN
 1 Xolatoyac, the Smiling Flood (LCC) 8 *F*
-1 Mist Dancer (LCC) 76 *N*
+1 Ripples of Potential (LCC) 77 *N*
 1 Wave Goodbye (LCC) 79 *N*
 1 Bygone Marvels (LCC) 89 *N*
 1 Deeproot Historian (LCC) 91 *N*
@@ -11,19 +11,18 @@
 1 Tributary Instructor (LCC) 96 *N*
 1 Singer of Swift Rivers (LCC) 98 *N*
 1 Benthic Biomancer (LCC) 145 *N*
-1 Commit // Memory (LCC) 147 *N*
+1 Coralhelm Commander (LCC) 148 *N*
 1 Emperor Mihail II (LCC) 155 *N*
 1 Herald of Secret Streams (LCC) 158 *N*
 1 Kindred Discovery (LCC) 159 *N*
 1 Master of the Pearl Trident (LCC) 162 *N*
-1 Merfolk Sovereign (LCC) 164 *N*
 1 Seafloor Oracle (LCC) 170 *N*
 1 Surgespanner (LCC) 174 *N*
 1 Svyelun of Sea and Sky (LCC) 175 *N*
-1 Thassa, God of the Sea (LCC) 176 *N*
 1 Branching Evolution (LCC) 234 *N*
 1 Deeproot Elite (LCC) 237 *N*
 1 Hardened Scales (LCC) 243 *N*
+1 Realmwalker (LCC) 250 *N*
 1 Ruinous Intrusion (LCC) 255 *N*
 1 Kumena, Tyrant of Orazca (LCC) 274 *N*
 1 Quandrix Command (LCC) 280 *N*
@@ -38,6 +37,7 @@
 1 Mosswort Bridge (LCC) 342 *N*
 1 Temple of Mystery (LCC) 357 *N*
 1 Vineglimmer Snarl (LCC) 368 *N*
+1 Merfolk Cave-Diver (LCI) 65 *N*
 1 Merrow Reejerey (LCC) 165 *N*
 1 Rapid Hybridization (LCC) 166 *N*
 1 Ravenform (LCC) 167 *N*
@@ -73,15 +73,15 @@
 3 Forest (LCI) 402 *N*
 7 Island (LCI) 395 *N*
 6 Island (LCI) 396 *N*
-1 Thassa's Oracle (MB2) 175 *N*
-1 Arcane Denial (SOC) 187 *N*
+1 Sphere Grid (FIC) 70 *N*
+1 Masked Vandal (PLST) KHM-184 *N*
+1 Archmage Ascension (ZEN) 42 *N*
+1 Tezzeret, Artifice Master (PLST) M19-79 *N*
+1 Outland Liberator // Frenzied Trapbreaker (MID) 303 *N*
+1 Sword of Light and Shadow (ACR) 100 *F*
 1 Titania's Command (PBRO) 194s *F*
-1 Essence Flux (INR) 64 *N*
-1 Teferi's Time Twist (WAR) 72 *N*
-1 Worldly Tutor (DMR) 442 *N*
+1 Sword of War and Peace (NPH) 161 *N*
+1 Harbinger of the Tides (FDN) 593 *N*
 1 Sword of Fire and Ice (MAR) 100 *N*
-1 Aberrant (40K) 86 *N*
-1 Insidious Fungus (DSK) 186 *N*
-1 Sword of Forge and Frontier (SLD) 2817 *N*
 1 Realm Seekers (CNS) 38 *N*
-1 Aether Spellbomb (PLST) MMA-196 *N*
+1 Sword of Forge and Frontier (SLD) 2817 *N*

@@ -9,12 +9,14 @@
 1 Elderfang Ritualist (KHM) 385 *N*
 1 Elvish Archdruid (KHC) 57 *N*
 1 Elvish Mystic (KHC) 58 *N*
+1 Elvish Rejuvenator (KHC) 60 *N*
 1 End-Raze Forerunners (KHC) 61 *N*
 1 Eyeblight Cullers (KHC) 48 *N*
 1 Farhaven Elf (KHC) 62 *N*
 1 Golgari Findbroker (KHC) 86 *N*
 1 Harald, King of Skemfar (KHM) 212 *N*
 1 Imperious Perfect (KHC) 64 *N*
+1 Jagged-Scar Archers (KHC) 65 *N*
 1 Jaspera Sentinel (KHM) 178 *N*
 1 Llanowar Tribe (KHC) 66 *N*
 1 Lys Alana Huntmaster (KHC) 67 *N*
@@ -27,27 +29,25 @@
 1 Poison-Tip Archer (KHC) 90 *N*
 1 Reclamation Sage (KHC) 72 *N*
 1 Rhys the Exiled (KHC) 73 *N*
+1 Shaman of the Pack (KHC) 92 *N*
 1 Skemfar Shadowsage (KHM) 110 *N*
 1 Springbloom Druid (KHC) 74 *N*
+1 Sylvan Messenger (KHC) 75 *N*
+1 Timberwatch Elf (KHC) 76 *N*
 1 Twinblade Assassins (KHC) 95 *N*
 1 Voice of Many (KHC) 77 *N*
 1 Voice of the Woods (KHC) 78 *N*
 1 Wolverine Riders (KHC) 14 *N*
 1 Wood Elves (KHC) 80 *N*
-1 Elven Ambush (KHM) 391 *N*
 1 Poison the Cup (KHM) 103 *N*
 1 Putrefy (KHC) 91 *N*
 1 Tergrid's Shadow (KHM) 113 *N*
 1 Ambition's Cost (KHC) 47 *N*
-1 Casualties of War (KHC) 83 *N*
 1 Elvish Promenade (KHC) 59 *N*
-1 Harvest Season (KHC) 63 *N*
 1 Return Upon the Tide (KHM) 106 *N*
 1 Roots of Wisdom (KHM) 190 *N*
 1 Arcane Signet (KHC) 96 *N*
-1 Serpent's Soul-Jar (KHC) 11 *N*
 1 Sol Ring (KHC) 104 *N*
-1 Binding the Old Gods (KHM) 206 *N*
 1 Elderfang Venom (KHC) 15 *N*
 1 Pride of the Perfect (KHC) 52 *N*
 1 Prowess of the Fair (KHC) 53 *N*
@@ -69,8 +69,8 @@
 1 Elves of Deep Shadow (GK1) 56 *N*
 1 Dokuchi Silencer (NEO) 340 *N*
 1 Formidable Speaker (PECL) 176p *N*
-1 Sword of Hearth and Home (TMC) 136 *F*
-1 Bloom Tender (SPG) 79 *N*
-1 Grist, Voracious Larva // Grist, the Plague Swarm (MH3) 251 *N*
-1 Sword of Fire and Ice (MAR) 100 *N*
+1 Campsite Cuisine (FIC) 464 *F*
+1 Deathrite Shaman (MB2) 81 *N*
+1 Elvish Lyrist (7ED) 241 *N*
+1 Sword of Wealth and Power (PBIG) 26p *F*
 1 Fauna Shaman (PBRO) 179p *N*

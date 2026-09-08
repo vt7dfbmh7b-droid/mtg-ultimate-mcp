@@ -3,14 +3,14 @@
 
 // MAIN
 1 Gylwain, Casting Director (WOC) 4 *F*
-1 Liberated Livestock (WOC) 5 *N*
 1 Ox Drover (WOC) 6 *N*
+1 Songbirds' Blessing (WOC) 7 *N*
 1 Unfinished Business (WOC) 8 *N*
 1 Giant Inheritance (WOC) 17 *N*
-1 Knickknack Ouphe (WOC) 18 *N*
 1 Ajani's Chosen (WOC) 59 *N*
 1 Archon of Sun's Grace (WOC) 61 *N*
 1 Austere Command (WOC) 62 *N*
+1 Celestial Archon (WOC) 63 *N*
 1 Daybreak Coronet (WOC) 65 *N*
 1 Eidolon of Countless Battles (WOC) 66 *N*
 1 Kor Spiritdancer (WOC) 69 *N*
@@ -40,10 +40,10 @@
 1 Ethereal Armor (WOC) 67 *N*
 1 Generous Gift (WOC) 68 *N*
 1 Sage's Reverie (WOC) 73 *N*
+1 Spectral Steel (WOC) 75 *N*
 1 Swords to Plowshares (WOC) 78 *N*
 1 Transcendent Envoy (WOC) 81 *N*
 1 Ancestral Mask (WOC) 119 *N*
-1 Aura Gnarlid (WOC) 120 *N*
 1 Careful Cultivation (WOC) 122 *N*
 1 Destiny Spinner (WOC) 123 *N*
 1 Fertile Ground (WOC) 126 *N*
@@ -69,10 +69,10 @@
 7 Plains (WOE) 267 *N*
 7 Plains (WOE) 268 *N*
 1 Sylvan Library (SLD) 2058 *N*
-1 Flaxen Intruder // Welcome Home (ELD) 155 *N*
+1 On Thin Ice (MH1) 20 *N*
 1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
 1 Springheart Nantuko (PMH3) 171p *N*
-1 Flowering of the White Tree (LTR) 15 *N*
-1 Battle Menu (FIN) 9 *N*
+1 Intangible Virtue (PLST) ISD-19 *N*
+1 Static Prison (MH3) 44 *N*
 1 Sterling Grove (MH2) 293 *N*
-1 Sigarda's Aid (EMN) 41 *N*
+1 Flowering of the White Tree (LTR) 15 *N*

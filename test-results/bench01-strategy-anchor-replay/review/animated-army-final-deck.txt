@@ -6,9 +6,9 @@
 1 Etali, Primal Storm (BLC) 196 *N*
 1 Prosperous Bandit (BLC) 25 *N*
 1 Alchemist's Talent (BLC) 22 *N*
+1 Berserkers' Onslaught (BLC) 192 *N*
 1 Outpost Siege (BLC) 199 *N*
 1 Rain of Riches (BLC) 200 *N*
-1 Chaos Warp (BLC) 115 *N*
 1 Sunbird's Invocation (BLC) 116 *N*
 1 Gratuitous Violence (BLC) 197 *N*
 1 Warstorm Surge (BLC) 117 *N*
@@ -20,13 +20,11 @@
 1 Thickest in the Thicket (BLC) 34 *N*
 1 Ghalta, Primal Hunger (BLC) 220 *N*
 1 Unnatural Growth (BLC) 245 *N*
-1 Greater Good (BLC) 223 *N*
 1 Kodama of the East Tree (BLC) 227 *N*
 1 Rampaging Baloths (BLC) 233 *N*
 1 Bootleggers' Stash (BLC) 207 *N*
 1 Primeval Bounty (BLC) 232 *N*
 1 Gilded Lotus (BLC) 271 *N*
-1 Spine of Ish Sah (BLC) 285 *N*
 1 Temple of Abandon (BLC) 338 *N*
 1 Karplusan Forest (BLC) 314 *N*
 1 Exotic Orchard (BLC) 131 *N*
@@ -42,9 +40,7 @@
 1 Llanowar Loamspeaker (BLC) 228 *N*
 1 Goreclaw, Terror of Qal Sisma (BLC) 222 *N*
 1 Path of Discovery (BLC) 231 *N*
-1 Decimate (BLC) 251 *N*
 1 Rolling Hamsphere (BLC) 39 *N*
-1 Teapot Slinger (BLB) 157 *N*
 1 Explore (BLC) 216 *N*
 1 Farseek (BLC) 119 *N*
 1 Cultivate (BLC) 212 *N*
@@ -63,6 +59,7 @@
 1 Gruul Signet (BLC) 273 *N*
 1 Hedron Archive (BLC) 275 *N*
 1 Fellwar Stone (BLC) 269 *N*
+1 Thran Dynamo (BLC) 290 *N*
 1 Sol Ring (BLC) 129 *N*
 1 Mind Stone (BLC) 280 *N*
 1 Talisman of Impulse (BLC) 287 *N*
@@ -78,12 +75,15 @@
 4 Mountain (BLB) 376 *N*
 5 Forest (BLB) 377 *N*
 5 Forest (BLB) 378 *N*
-1 Sword of the Animist (MSC) 289 *N*
-1 Flaxen Intruder // Welcome Home (ELD) 155 *N*
+1 Swiftfoot Boots (A25) 234 *N*
+1 Negative Zone Portal (MSC) 111 *N*
 1 Vexing Puzzlebox (CLB) 343 *N*
+1 Sword of the Animist (MSC) 289 *N*
 1 Skullclamp (FIC) 355 *N*
-1 District Mascot (DFT) 344 *N*
-1 Cool but Rude (TMT) 89 *N*
+1 Latulla's Orders (PCY) 96 *N*
+1 Expedition Map (FDN) 724 *F*
 1 Wayfarer's Bauble (LCC) 317 *N*
-1 Ornithopter of Paradise (J25) 153 *N*
-1 Everflowing Chalice (MM2) 212 *N*
+1 Ruby Medallion (CM2) 212 *N*
+1 Despotic Scepter (ICE) 316 *N*
+1 Sword of Fire and Ice (MAR) 100 *N*
+1 Walking Ballista (FIC) 371 *N*
