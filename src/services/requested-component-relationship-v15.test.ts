@@ -35,8 +35,20 @@ test('typal payoff/engine relevance outranks bare requested creature-type member
   const components = [{ id: 'typal', queryClause: 't:"Merfolk"' }];
   const memberSignal = requestedComponentRelationshipAffinityV15(member, [commander], components);
   const payoffSignal = requestedComponentRelationshipAffinityV15(payoff, [commander], components);
+  assert.equal(memberSignal.score, 1);
   assert.ok(payoffSignal.score > memberSignal.score);
   assert.ok(payoffSignal.reasons.some((reason) => reason.includes('payoff/engine')));
+});
+
+test('generic choose-a-creature-type engines support requested typal identity without literal subtype membership', () => {
+  const commander = card('Typal Commander', { oracle_text: 'Whenever one or more Merfolk you control attack, draw a card.' });
+  const engine = card('Adaptive Typal Engine', {
+    type_line: 'Enchantment',
+    oracle_text: 'As this enchantment enters, choose a creature type. Whenever you cast a spell of the chosen type, copy that spell.',
+  });
+  const signal = requestedComponentRelationshipAffinityV15(engine, [commander], [{ id: 'typal', queryClause: 't:"Merfolk"' }]);
+  assert.ok(signal.score >= 5);
+  assert.ok(signal.reasons.some((reason) => reason.includes('choose/share-creature-type')));
 });
 
 test('Aura specialization is stronger than broad enchantment membership when the request or commander cares about Auras', () => {
@@ -69,10 +81,22 @@ test('commander-declared permanent shape recognizes type plus noncreature plus m
   assert.ok(qualifyingScore > requestedComponentRelationshipAffinityV15(creature, [commander], components).score);
 });
 
+test('commander shape exclusions do not treat Equipment or Auras as qualifying non-Equipment/non-Aura permanents', () => {
+  const commander = card('Shape Commander', {
+    oracle_text: 'During your turn, each non-Equipment artifact and non-Aura enchantment you control with mana value 4 or greater becomes a 4/4 creature.',
+  });
+  const artifact = card('Qualifying Artifact', { type_line: 'Artifact', cmc: 4 });
+  const equipment = card('Excluded Equipment', { type_line: 'Artifact — Equipment', cmc: 4 });
+  const enchantment = card('Qualifying Enchantment', { type_line: 'Enchantment', cmc: 4 });
+  const aura = card('Excluded Aura', { type_line: 'Enchantment — Aura', cmc: 4 });
+  assert.ok(requestedComponentRelationshipAffinityV15(artifact, [commander], []).score > requestedComponentRelationshipAffinityV15(equipment, [commander], []).score);
+  assert.ok(requestedComponentRelationshipAffinityV15(enchantment, [commander], []).score > requestedComponentRelationshipAffinityV15(aura, [commander], []).score);
+});
+
 test('weak on-theme membership remains a small advisory signal rather than a hard protection class', () => {
   const commander = card('Typal Commander', { oracle_text: 'Merfolk you control have ward {1}.' });
   const vanilla = card('Vanilla Member', { type_line: 'Creature — Merfolk' });
   const signal = requestedComponentRelationshipAffinityV15(vanilla, [commander], [{ id: 'typal', queryClause: 't:"Merfolk"' }]);
-  assert.equal(signal.score, 2);
+  assert.equal(signal.score, 1);
   assert.ok(signal.score < 4);
 });

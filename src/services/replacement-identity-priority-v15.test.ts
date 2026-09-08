@@ -57,6 +57,7 @@ test('relative identity ranking is advisory and reports erosion rather than hard
   assert.equal(result.verdict, 'identity-eroding');
   assert.equal(result.requestedThemeDelta, -1);
   assert.equal(result.substantiveStrategyAffinityDelta, -3);
+  assert.equal(result.requestedRelationshipAffinityDelta, 0);
   assert.equal(result.identityErosion, 4);
 });
 
@@ -87,12 +88,37 @@ test('can trade one requested component for another but records the lost mechani
   assert.equal(result.identityGain, 1);
 });
 
-test('keeps legacy structural fallback ranking unchanged when exact component evidence is unavailable', () => {
+test('relationship affinity distinguishes payoff or commander-shape preservation inside the same broad component', () => {
+  const preserves = replacementIdentityPriorityV15(
+    { matchesControlledTheme: true, matchedRequestedComponentIds: ['enchantment'], substantiveStrategyAffinity: 4, requestedRelationshipAffinity: 6 },
+    { matchesControlledTheme: true, matchedRequestedComponentIds: ['enchantment'], substantiveStrategyAffinity: 4, requestedRelationshipAffinity: 6 },
+  );
+  const erodes = replacementIdentityPriorityV15(
+    { matchesControlledTheme: true, matchedRequestedComponentIds: ['enchantment'], substantiveStrategyAffinity: 4, requestedRelationshipAffinity: 1 },
+    { matchesControlledTheme: true, matchedRequestedComponentIds: ['enchantment'], substantiveStrategyAffinity: 4, requestedRelationshipAffinity: 6 },
+  );
+  assert.equal(preserves.requestedRelationshipAffinityDelta, 0);
+  assert.equal(erodes.requestedRelationshipAffinityDelta, -5);
+  assert.ok(erodes.identityErosion > preserves.identityErosion);
+  assert.ok(compareReplacementIdentityPriorityV15(preserves, erodes) < 0);
+});
+
+test('stronger substantive strategy can still justify cutting a relational card because the signal remains advisory', () => {
+  const result = replacementIdentityPriorityV15(
+    { matchesControlledTheme: false, substantiveStrategyAffinity: 12, requestedRelationshipAffinity: 0 },
+    { matchesControlledTheme: true, substantiveStrategyAffinity: 2, requestedRelationshipAffinity: 5 },
+  );
+  assert.equal(result.requestedRelationshipAffinityDelta, -5);
+  assert.equal(result.verdict, 'identity-improving');
+});
+
+test('keeps legacy structural fallback ranking unchanged when exact component and relationship evidence are unavailable', () => {
   const withUnknownComponents = replacementIdentityPriorityV15(
     { matchesControlledTheme: false, substantiveStrategyAffinity: 3 },
     { matchesControlledTheme: false, substantiveStrategyAffinity: 3 },
   );
   assert.equal(withUnknownComponents.requestedComponentLossCount, 0);
   assert.equal(withUnknownComponents.requestedComponentGainCount, 0);
+  assert.equal(withUnknownComponents.requestedRelationshipAffinityDelta, 0);
   assert.equal(withUnknownComponents.verdict, 'identity-neutral');
 });

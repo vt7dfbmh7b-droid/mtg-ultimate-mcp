@@ -5,6 +5,8 @@ export interface ReplacementIdentitySignalV15 {
   matchedRequestedComponentIds?: unknown;
   /** Substantive commander/deck-strategy overlap already inferred by V0.15. */
   substantiveStrategyAffinity?: number;
+  /** Advisory payoff/engine/commander-shape relationship strength within the requested plan. */
+  requestedRelationshipAffinity?: number;
 }
 
 export interface ReplacementIdentityPriorityV15 {
@@ -13,6 +15,7 @@ export interface ReplacementIdentityPriorityV15 {
   requestedComponentGainCount: number;
   requestedComponentPreservedCount: number;
   substantiveStrategyAffinityDelta: number;
+  requestedRelationshipAffinityDelta: number;
   identityErosion: number;
   identityGain: number;
   verdict: 'identity-improving' | 'identity-neutral' | 'identity-eroding';
@@ -33,8 +36,8 @@ function normalizedRequestedComponentIds(value: unknown): Set<string> {
 /**
  * Compare relative requested/deck identity after all hard legality, structural, package,
  * target-progress, and preservation gates have already admitted the swap. Exact requested
- * component loss is deliberately advisory: it changes replacement priority but never makes
- * a theme card uncuttable and never weakens an authoritative target gate.
+ * component and relationship loss are deliberately advisory: they change replacement priority
+ * but never make a theme card uncuttable and never weaken an authoritative target gate.
  */
 export function replacementIdentityPriorityV15(
   add: ReplacementIdentitySignalV15,
@@ -52,8 +55,14 @@ export function replacementIdentityPriorityV15(
     finiteNonNegative(add.substantiveStrategyAffinity)
       - finiteNonNegative(cut.substantiveStrategyAffinity)
   ).toFixed(3));
+  const requestedRelationshipAffinityDelta = Number((
+    finiteNonNegative(add.requestedRelationshipAffinity)
+      - finiteNonNegative(cut.requestedRelationshipAffinity)
+  ).toFixed(3));
 
-  const netBroadIdentityDelta = Number((requestedThemeDelta + substantiveStrategyAffinityDelta).toFixed(3));
+  const netBroadIdentityDelta = Number((
+    requestedThemeDelta + substantiveStrategyAffinityDelta + requestedRelationshipAffinityDelta
+  ).toFixed(3));
   const identityErosion = Number((
     Math.max(0, -netBroadIdentityDelta) + requestedComponentLossCount
   ).toFixed(3));
@@ -67,6 +76,7 @@ export function replacementIdentityPriorityV15(
     requestedComponentGainCount,
     requestedComponentPreservedCount,
     substantiveStrategyAffinityDelta,
+    requestedRelationshipAffinityDelta,
     identityErosion,
     identityGain,
     verdict: identityErosion > 0
