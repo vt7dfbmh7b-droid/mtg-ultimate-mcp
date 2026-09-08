@@ -1,19 +1,19 @@
 <!-- GENERATED FROM validation-registry.json + test-results + project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Validation State
 
-Development checkpoint: `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd`
+Development checkpoint: `473edf473a284b9532aa03747abfa41a1081ca2c`
 
 | Control | Claim level | Outcome | Tested source | Matches checkpoint | Metadata |
 |---|---|---|---|---|---|
-| PM-STATE-INTEGRITY | engineering+truth | pass | `4ff56af3fb9a49184d64c634bb0bd1d309ae4d4e` | no | `test-results/project-management/integrity.txt` |
-| INTEL-01-POSITIVE | scenario-intelligence | pass | `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` | yes | `test-results/intel01-positive/run-metadata.txt` |
-| MARVEL-B5-REFINE | scenario-intelligence | fail | `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` | yes | `test-results/marvel-bracket5/refine-run-metadata.txt` |
-| MARVEL-B5-BROAD | scenario-intelligence | fail | `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` | yes | `test-results/marvel-bracket5-broad/run-metadata.txt` |
-| SCIONS-SPELLCRAFT-FF-ONLY | scenario-intelligence | pass | `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` | yes | `test-results/scions-spellcraft-ff-only/run-metadata.txt` |
-| MIDDLE-EARTH-PRECON-REFINE | scenario-intelligence | pass | `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` | yes | `test-results/middle-earth-precon-refine/run-metadata.txt` |
-| PRECON-GENERALIZATION | scenario-intelligence | pass | `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` | yes | `test-results/precon-generalization/run-metadata.txt` |
+| PM-STATE-INTEGRITY | engineering+truth | fail | `bcfff27b82eeb79ccfd6bf2754a618af04ebbd3a` | no | `test-results/project-management/integrity.txt` |
+| INTEL-01-POSITIVE | scenario-intelligence | pass | `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` | no | `test-results/intel01-positive/run-metadata.txt` |
+| MARVEL-B5-REFINE | scenario-intelligence | fail | `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` | no | `test-results/marvel-bracket5/refine-run-metadata.txt` |
+| MARVEL-B5-BROAD | scenario-intelligence | fail | `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` | no | `test-results/marvel-bracket5-broad/run-metadata.txt` |
+| SCIONS-SPELLCRAFT-FF-ONLY | scenario-intelligence | pass | `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` | no | `test-results/scions-spellcraft-ff-only/run-metadata.txt` |
+| MIDDLE-EARTH-PRECON-REFINE | scenario-intelligence | pass | `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` | no | `test-results/middle-earth-precon-refine/run-metadata.txt` |
+| PRECON-GENERALIZATION | scenario-intelligence | pass | `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` | no | `test-results/precon-generalization/run-metadata.txt` |
 | STRATEGY-INFERENCE-GENERALIZATION | engineering+truth | pass | `5829b37b686255ba35d419b37be17095e54fb696` | no | `test-results/strategy-inference-generalization/run-metadata.txt` |
-| SQUIRRELED-AWAY-GENERALIZATION | scenario-intelligence | pass | `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` | yes | `test-results/precon-generalization-squirrels/run-metadata.txt` |
+| SQUIRRELED-AWAY-GENERALIZATION | scenario-intelligence | pass | `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` | no | `test-results/precon-generalization-squirrels/run-metadata.txt` |
 
 ## Interpretation
 

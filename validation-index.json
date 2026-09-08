@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedFromProjectStateUpdatedAt": "2026-09-08T09:43:14.000Z",
-  "developmentCheckpointSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
+  "generatedFromProjectStateUpdatedAt": "2026-09-08T14:49:27.487Z",
+  "developmentCheckpointSha": "473edf473a284b9532aa03747abfa41a1081ca2c",
   "records": [
     {
       "id": "PM-STATE-INTEGRITY",
@@ -13,20 +13,22 @@
       ],
       "metadataPath": "test-results/project-management/integrity.txt",
       "exists": true,
-      "sourceSha": "4ff56af3fb9a49184d64c634bb0bd1d309ae4d4e",
-      "outcome": "pass",
+      "sourceSha": "bcfff27b82eeb79ccfd6bf2754a618af04ebbd3a",
+      "outcome": "fail",
       "matchesDevelopmentCheckpoint": false,
       "metadata": {
-        "source_sha": "4ff56af3fb9a49184d64c634bb0bd1d309ae4d4e",
+        "source_sha": "bcfff27b82eeb79ccfd6bf2754a618af04ebbd3a",
         "active_milestone": "BENCH-01",
         "typecheck_outcome": "success",
         "scripts_typecheck_outcome": "success",
-        "state_validate_outcome": "success",
+        "state_validate_outcome": "failure",
         "validation_index_outcome": "success",
         "recovery_smoke_outcome": "success",
         "source_build_outcome": "success"
       },
-      "unmetPassConditions": []
+      "unmetPassConditions": [
+        "state_validate_outcome=success"
+      ]
     },
     {
       "id": "INTEL-01-POSITIVE",
@@ -39,7 +41,7 @@
       "exists": true,
       "sourceSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
       "outcome": "pass",
-      "matchesDevelopmentCheckpoint": true,
+      "matchesDevelopmentCheckpoint": false,
       "metadata": {
         "source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
         "workflow_source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
@@ -77,7 +79,7 @@
       "exists": true,
       "sourceSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
       "outcome": "fail",
-      "matchesDevelopmentCheckpoint": true,
+      "matchesDevelopmentCheckpoint": false,
       "metadata": {
         "source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
         "control_outcome": "failure",
@@ -114,7 +116,7 @@
       "exists": true,
       "sourceSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
       "outcome": "fail",
-      "matchesDevelopmentCheckpoint": true,
+      "matchesDevelopmentCheckpoint": false,
       "metadata": {
         "source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
         "workflow_source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
@@ -150,7 +152,7 @@
       "exists": true,
       "sourceSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
       "outcome": "pass",
-      "matchesDevelopmentCheckpoint": true,
+      "matchesDevelopmentCheckpoint": false,
       "metadata": {
         "source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
         "build_outcome": "success",
@@ -173,7 +175,7 @@
       "exists": true,
       "sourceSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
       "outcome": "pass",
-      "matchesDevelopmentCheckpoint": true,
+      "matchesDevelopmentCheckpoint": false,
       "metadata": {
         "source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
         "workflow_source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
@@ -209,7 +211,7 @@
       "exists": true,
       "sourceSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
       "outcome": "pass",
-      "matchesDevelopmentCheckpoint": true,
+      "matchesDevelopmentCheckpoint": false,
       "metadata": {
         "source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
         "workflow_source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
@@ -286,7 +288,7 @@
       "exists": true,
       "sourceSha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
       "outcome": "pass",
-      "matchesDevelopmentCheckpoint": true,
+      "matchesDevelopmentCheckpoint": false,
       "metadata": {
         "source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
         "workflow_source_sha": "c2fa83b7ea4a81e18445aba3a54529cdb31d86cd",
