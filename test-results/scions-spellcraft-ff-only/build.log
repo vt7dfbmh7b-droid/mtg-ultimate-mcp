@@ -2,4 +2,3 @@
 > mtg-ultimate-mcp@0.13.0 build
 > tsc -p tsconfig.json
 
-src/services/deck-builder-v07.ts(1654,9): error TS18004: No value exists in scope for the shorthand property 'persistentColoredManaSourceFloor'. Either declare one or provide an initializer.
