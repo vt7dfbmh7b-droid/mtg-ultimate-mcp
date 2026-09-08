@@ -20,7 +20,11 @@ The generic commander-compatible Aura target-shape repair at `473edf473a284b9532
 - Target movement is not target achievement: Quick Draw remains Bracket 3; Ellivere, Hakbal and Bello finish Bracket 3; Elven Empire remains Bracket 2.
 - The replay is a familiar post-repair control batch. Fresh contrasting Commander evidence and a strong general-AI comparison remain mandatory before baseline acceptance.
 
-Evidence: `test-results/bench01-manual-verdicts/473edf473a284b9532aa03747abfa41a1081ca2c.md`. Exact next direction: freeze `473edf47...` for a genuinely fresh high-interaction control, aristocrats/graveyard, unrestricted combo or unusual-commander fixture; manually inspect the complete deck and compare it against strong general AI. Do not repeat the completed Aura regression/repair/replay and do not patch isolated questionable swaps without the generic-repair threshold.
+Evidence: `test-results/bench01-manual-verdicts/473edf473a284b9532aa03747abfa41a1081ca2c.md`.
+
+The required fresh contrasting batch is now complete from the same exact frozen product SHA. `Endless Punishment` rejected common group-slug/punisher language and made no target movement. `Revenant Recon` and `Deep Clue Sea` stayed legal and within budget, but both exposed the same contextual replacement-priority weakness: abstract protection/tutor/theme counts displaced commander-specific engines, cheap interaction remained at one, and aggregate compound-theme coverage concealed component-quality loss. Manual whole-deck comparison records all three as general-AI clear wins. Evidence: `test-results/bench01-fresh-contrasting-473edf47/manual-verdict.md`.
+
+This batch crosses the generic-repair threshold without authorizing fixture-specific exceptions. Exact next direction: add production-path regressions for protection connectivity/setup, commander-specific engine/payoff compensation, per-component before/after theme movement and failed target-pressure priority; implement the smallest generic repair; require focused and full validation green; then replay the affected fixtures plus an unchanged control from one exact repaired SHA. Do not accept `473edf47...` as the Commander baseline yet.
 
 ## North star
 
