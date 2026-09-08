@@ -8,6 +8,7 @@ import {
 } from './commander-strategy-affinity-v15.js';
 import { commanderTargetPressureV15 } from './commander-target-pressure-v15.js';
 import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
+import { cardMatchesControlledThemeClauseV15 } from './controlled-theme-card-match-v15.js';
 import { buildDeckMetrics, type ParsedDeck } from './deck.js';
 import { discoverEligiblePoolV15 } from './neutral-deck-builder-v15.js';
 import {
@@ -554,8 +555,8 @@ function cutCandidates(
     .filter((card) => mainNames.has(card.name.toLocaleLowerCase()) && !card.type_line.toLowerCase().includes('land'))
     .map((card) => {
       const context = contextualCutPressureV15(card, strategyContext);
-      const themeMatch = themeCandidateNames.has(card.name.toLocaleLowerCase());
       const componentAffinity = componentAffinityForCard(card);
+      const themeMatch = themeCandidateNames.has(card.name.toLocaleLowerCase()) || componentAffinity.matchedComponentIds.length > 0;
       const themeProtectionApplied = protectThemeMatches && themeMatch ? 4 : 0;
       const cutPressure = Number((context.cutPressure - themeProtectionApplied).toFixed(1));
       return {
@@ -662,11 +663,12 @@ export async function suggestDeckUpgrades(
   const componentAffinityForCard = (card: ScryfallCard): { score: number; matchedComponentIds: string[] } => {
     const name = card.name.toLocaleLowerCase();
     const matchedComponentIds = themeComponents
-      .filter((component) => themeComponentCandidateNames.get(component.id)?.has(name))
+      .filter((component) => cardMatchesControlledThemeClauseV15(card, component.queryClause)
+        || themeComponentCandidateNames.get(component.id)?.has(name))
       .map((component) => component.id);
     return { score: upgradeThemeComponentAffinityScoreV15(matchedComponentIds, themeComponents), matchedComponentIds };
   };
-  const componentAwareThemeRanking = themeComponents.length > 1 && themeComponentCandidateNames.size > 0;
+  const componentAwareThemeRanking = themeComponents.length > 1;
   const anchorComponentIds = new Set(upgradeThemeAnchorComponentIdsV15(themeComponents));
   const anchorAffinityForCard = (card: ScryfallCard): number => componentAffinityForCard(card).matchedComponentIds
     .filter((id) => anchorComponentIds.has(id)).length;
@@ -792,8 +794,8 @@ export async function suggestDeckUpgrades(
         const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
         const substantiveAffinityScore = substantiveCommanderStrategyAffinityScoreV15(affinity);
         const matchedStrategies = affinity.matches.map((match) => match.archetype);
-        const matchesControlledTheme = themeCandidateNames.has(card.name.toLocaleLowerCase());
         const componentAffinity = componentAffinityForCard(card);
+        const matchesControlledTheme = themeCandidateNames.has(card.name.toLocaleLowerCase()) || componentAffinity.matchedComponentIds.length > 0;
         const strategyReason = matchedStrategies.length > 0
           ? ` and also supports the existing V0.15 deck strategy signal${matchedStrategies.length === 1 ? '' : 's'}: ${matchedStrategies.join(', ')}` : '';
         const themeReason = matchesControlledTheme && themeDeficit > 0
@@ -868,7 +870,7 @@ export async function suggestDeckUpgrades(
       'Unrestricted Upgrade supplements the bounded popularity-ordered role search with bounded per-archetype searches for strategies the starting deck has already proven substantive. The spells-control recall path includes actual Instant/Sorcery card types as well as Oracle-text spell mechanisms.',
       'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window.',
       'A V0.15 controlled/requested theme remains an advisory role-candidate discovery and ranking signal even after its minimum density is satisfied; the minimum remains a preservation gate rather than a switch that disables on-plan replacement search. Under a printing restriction, only cards already admitted by the exhaustive shared eligible pool can become candidates.',
-      'Cut ordering uses the same V0.15 commander strategy context as additions. When the deck is at or below its controlled theme minimum, matching cards also receive a capped four-point cut-protection signal; final theme preservation is still enforced independently by refinement rather than by this heuristic alone.',
+      'Cut ordering uses the same V0.15 commander strategy context as additions. Compound-theme component membership is evaluated directly against resolved card rules/type data using only the fail-closed controlled theme grammar, with bounded search membership retained as fallback discovery evidence. When the deck is at or below its controlled theme minimum, matching cards also receive a capped four-point cut-protection signal; final theme preservation is still enforced independently by refinement rather than by this heuristic alone.',
       'Automatic upgrade packages pair the nonland cut pool with nonland additions so a utility land cannot silently replace a spell; dedicated mana-base work should be handled explicitly.',
       'Cut suggestions deliberately avoid claiming thematic/high-mana cards are bad; validate them against simulations, actual games, and reference-deck evidence.',
       'Scryfall USD prices are printing-specific reference values rather than guaranteed store checkout prices, and this version does not yet convert them to NZD.',
