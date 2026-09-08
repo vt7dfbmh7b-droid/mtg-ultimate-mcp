@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-08T05:23:00.000Z",
+  "updatedAt": "2026-09-08T07:38:00.000Z",
   "repository": "vt7dfbmh7b-droid/mtg-ultimate-mcp",
   "northStar": "Build a Commander-specialist system that consistently outperforms strong general-purpose AI at Commander deck construction and analysis by combining expert human-level strategic understanding with machine-level verification, search, exact math, simulation, and counterfactual testing—and prove that advantage on adversarial benchmarks.",
   "stable": {
@@ -12,18 +12,18 @@
   "experimental": {
     "activeBranch": "agent/v15-native-deck-intelligence",
     "activePullRequest": 29,
-    "developmentCheckpointSha": "66836fef0009a6913336efe0ec074aefd277abd5",
-    "developmentCheckpointNote": "BENCH-01 semantic requested-component recognition repair is fully validated and source-frozen replay/manual review are complete at exact product SHA 66836fef0009a6913336efe0ec074aefd277abd5. The lineage is manually REJECTED as a new accepted Commander baseline, but the repair is retained as a meaningful partial generic improvement. Lathril materially improves and Timberwatch Elf is preserved; Bello also retains Berserkers' Onslaught. However Hakbal still drifts into generic/off-plan equipment and Bello still cuts Esika's Chariot for Ruby Medallion, while Ellivere still treats broad Enchantment membership as equivalent to Aura-specific function. The repeated generic defect is now narrower: commander-specific relationship/card-shape reasoning and payoff-level requested-component importance remain too shallow after broad component membership is known. Durable manual verdict: test-results/bench01-manual-verdicts/66836fef0009a6913336efe0ec074aefd277abd5.md.",
+    "developmentCheckpointSha": "dfdb9663bd2394dfa620511d750501880b903770",
+    "developmentCheckpointNote": "BENCH-01 typed requested-mechanism replacement-priority repair is fully validated at exact product SHA dfdb9663bd2394dfa620511d750501880b903770 and its five-fixture frozen-source replay/manual review are complete. The lineage is manually REJECTED as a new accepted Commander baseline. The repair correctly distinguishes relation:* requested mechanisms inside the advisory replacement-identity comparator, but the same signature failures survive in actual Upgrade pairing: Hakbal still cuts Reflections of Littjara for Kappa Tech-Wrecker, Bello still cuts Esika's Chariot for Latulla's Orders, and Ellivere still cuts Angelic Destiny for Flowering of the White Tree. The centralized remaining defect is precedence in the cut sorter: after the meaningful-strategy-loss classification, quantitative legacy substantive-strategy-loss is compared before typed requested/replacement identity, so low-legacy-affinity mechanism cards can be selected before their stronger requested mechanism evidence is considered. Durable manual verdict: test-results/bench01-manual-verdicts/dfdb9663bd2394dfa620511d750501880b903770.md.",
     "lastFullyValidatedExperimentalBaseline": {
       "branch": "agent/v15-native-deck-intelligence",
       "sha": "e17b0a1cba659b229fd6f0b6e2df79c5e464a616",
-      "scope": "Latest accepted fully validated Commander product baseline. Frozen candidates 00571713696977093fee717deecc2b26969e2643, 4a7bbf616ac6826ec4ac979894f8752133af3bca and 66836fef0009a6913336efe0ec074aefd277abd5 are formally validated/replayed but manually rejected as replacement baselines; 66836fef is retained as useful partial generic repair evidence."
+      "scope": "Latest accepted fully validated Commander product baseline. Later candidates 00571713696977093fee717deecc2b26969e2643, 4a7bbf616ac6826ec4ac979894f8752133af3bca, 66836fef0009a6913336efe0ec074aefd277abd5, 569933bf605a841f14dc000d1f04296ad3456df3 and dfdb9663bd2394dfa620511d750501880b903770 are formally validated/replayed but manually rejected as replacement baselines."
     }
   },
   "workMode": {
     "intelligenceDevelopmentPaused": false,
     "activeMilestone": "BENCH-01",
-    "reason": "The 66836fef five-fixture manual review is complete. Symmetric semantic requested-component recognition materially improves Lathril and some outgoing identity preservation, so that repair is retained. Cross-fixture evidence now localizes the remaining defect beyond broad component membership: payoff importance, Aura specialization, typal engine relevance and commander-conditioned permanent/card-shape relationships are not represented strongly enough in relative replacement scoring. The next justified product action is the smallest generic Commander relationship/mechanism-affinity repair, followed by focused cross-archetype regressions, full immutable validation and a new representative replay that includes at least one fresh contrasting fixture."
+    "reason": "The dfdb9663 five-fixture frozen replay and whole-deck manual review are complete and reject the candidate. Typed relationship IDs are now represented, but three contrasting signature failures survive because the actual cut sorter evaluates quantitative legacy substantive-strategy loss before typed requested/replacement identity. The next justified product action is the smallest generic precedence correction: keep meaningful-strategy-loss first, then compare typed requested/replacement identity before the weaker quantitative strategy-loss tie-break. Hard legality, target, structural, semantic-safety and package gates must remain unchanged."
   },
   "milestones": [
     {
@@ -70,23 +70,23 @@
     }
   ],
   "validation": {
-    "activeBranchStatus": "bench01-66836fef-manual-reject-partial-component-repair-relationship-affinity-next",
+    "activeBranchStatus": "bench01-dfdb9663-manual-reject-typed-mechanism-precedence-defect-next",
     "latestPersistedMarvelControl": {
       "sourceSha": "5829b37b686255ba35d419b37be17095e54fb696",
       "outcome": "expected-ceiling-fail-closed-zero-swap",
       "note": "At exact source 5829b37..., focused and broad Marvel execute and persist honestly with zero accepted swaps because the restricted pool cannot repair the remaining Bracket-5 fast-mana/tutor/verified-win requirements without violating preserved structure. Keep these controls red for target achievement. Treat the result as expected construction-ceiling behaviour, not as a passing target and not as a blocker to BENCH-01 on other archetypes. Rerun only when the relevant pool, provider truth or policy changes."
     },
     "requiredBeforeResumingIntelligenceClaims": [
-      "Keep e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest accepted Commander product baseline. 00571713696977093fee717deecc2b26969e2643, 4a7bbf616ac6826ec4ac979894f8752133af3bca and 66836fef0009a6913336efe0ec074aefd277abd5 are formally validated/replayed but manually rejected as replacement baselines.",
-      "Use test-results/bench01-manual-verdicts/66836fef0009a6913336efe0ec074aefd277abd5.md as the newest durable whole-deck verdict. Green CI, frozen replay success, swap-count movement or bracket movement do not imply acceptance.",
-      "Retain the 66836fef semantic requested-component repair as useful generic evidence: outgoing explicit component membership is now classified symmetrically with incoming candidates, Lathril materially improves, and the Changeling fallback is correctly restricted to verified quoted creature-type atoms rather than all t: atoms.",
-      "Treat the remaining repeated weakness as Commander relationship/mechanism affinity and payoff importance after broad component membership is known. Ellivere Aura-specific execution, Hakbal typal engine value and Bello permanent-type/noncreature/mana-value shape incentives remain under-modeled.",
-      "The next repair must be generic and advisory. Derive relational signals from commander/request/card rules text such as typal payoff/engine relevance, Aura specialization, commander-referenced card/permanent shape conditions and cross-component bridge/payoff relationships. Do not add commander/card-name exceptions, freeze all theme cards or raise hard theme floors.",
-      "Add focused generic regressions spanning typal payoff, Aura specialization, permanent-type/mana-value shape and a structural-fallback control proving weak on-theme cards remain cuttable.",
-      "After a green relational repair SHA, freeze exactly that source and run a new representative replay including at least one fresh contrasting fixture rather than repeating only the identical five-precon batch. Manual complete-deck review remains mandatory.",
-      "No new provider general-AI comparison was run for the 66836fef replay. Do not claim a specialist-vs-general-AI win from this batch; resume strong-general-AI comparison as BENCH-01 broadens.",
+      "Keep e17b0a1cba659b229fd6f0b6e2df79c5e464a616 as the latest accepted Commander product baseline. Later 00571713696977093fee717deecc2b26969e2643, 4a7bbf616ac6826ec4ac979894f8752133af3bca, 66836fef0009a6913336efe0ec074aefd277abd5, 569933bf605a841f14dc000d1f04296ad3456df3 and dfdb9663bd2394dfa620511d750501880b903770 are formally validated/replayed but manually rejected as replacement baselines.",
+      "Use test-results/bench01-manual-verdicts/dfdb9663bd2394dfa620511d750501880b903770.md as the newest durable whole-deck verdict. Green CI, frozen replay success, swap-count movement or bracket movement do not imply acceptance.",
+      "Retain the relationship/mechanism evidence as useful generic progress: outgoing and incoming cards can carry typed relation:* requested-mechanism IDs for typal engine/payoff, Aura specialization and commander-conditioned card shape, and the replacement-identity helper distinguishes their loss/gain.",
+      "Treat the remaining repeated weakness as replacement-priority precedence, not missing relationship vocabulary. In the actual pairing sorter, meaningful-strategy-loss is checked first, then quantitative legacy substantive-strategy-loss, then requested/replacement identity. This lets low-legacy-affinity mechanism cards lose before typed requested identity is consulted.",
+      "The next repair must be generic and advisory: preserve the meaningful-strategy-loss first priority, but compare typed requested/replacement identity before the weaker quantitative substantive-strategy-loss tie-break. Do not create card, commander, precon or benchmark exceptions and do not make all relationship cards uncuttable.",
+      "Add a focused ordering/integration regression proving a relation-bearing requested mechanism outranks a lower legacy-strategy-loss cut when both are already hard-valid, plus a fallback control proving the relationship remains cuttable when no better eligible cut exists.",
+      "Run the complete immutable repository validation. Only if green, freeze the exact precedence-repair SHA and replay affected controls. If the three signature failures are materially repaired without Quick Draw/Lathril regression, add at least one fresh contrasting fixture before acceptance.",
+      "No new provider general-AI comparison was run for the dfdb9663 replay because the affected frozen replay already disproved the candidate's acceptance hypothesis. Do not claim a specialist-vs-general-AI win from this batch.",
       "Once the replacement-coherence defect is resolved or bounded, broaden BENCH-01 toward fresh combo, hybrid, control, aristocrats, budget and unusual-commander fixtures instead of continuing to polish the same precons.",
-      "Scheduled/autonomous runs must obey AGENTS.md single-flight execution and must not create, edit, delete, stage, bypass or otherwise alter .github/workflows/**, src/workflow-immutability.test.ts, or workflowPolicyEpochSha. Use the checked-in .automation replay request interface.",
+      "Scheduled/autonomous runs must obey AGENTS.md single-flight execution and must not create, edit, delete, stage, bypass or otherwise alter .github/workflows/**, src/workflow-immutability.test.ts, or workflowPolicyEpochSha. Use checked-in request interfaces.",
       "Keep the earlier Counter Blitz dense-countermagic allocation concern watch-only unless broader cross-fixture evidence reproduces it.",
       "Do not merge PR #29 or promote stable/current V0.13 until BENCH-01 is promotion-grade and all relevant formal and manual quality evidence are green."
     ]
@@ -105,6 +105,7 @@
     "Relative requested-component and commander-mechanism value must consider the outgoing card as well as the incoming card; hard theme floors alone do not prove above-floor identity preservation.",
     "Boolean controlled-theme membership is insufficient to prove component preservation in a compound request; preserve and compare structured component identity symmetrically for outgoing and incoming cards.",
     "Broad requested-component membership is not proof of strategic equivalence. Relative replacement quality must also account for payoff/engine importance, mechanism specificity and commander-conditioned card-shape relationships where evidence supports them.",
+    "Typed requested-mechanism evidence is ineffective if a weaker legacy affinity tie-break removes the card before replacement identity is compared; cut-ranking precedence is part of Commander strategy preservation.",
     "A frozen-source replay is product evidence only when src/** is proven equal to the validated product SHA used for that batch.",
     "Scheduled/autonomous development has no authority to modify .github/workflows/**, src/workflow-immutability.test.ts, or the approved workflow-policy epoch; those are explicit interactive-maintenance-only surfaces.",
     "Never treat an unvalidated or manually unreviewed/rejected head as an accepted Commander checkpoint.",
@@ -113,11 +114,12 @@
   ],
   "nextActions": [
     "Read project-state.json and AGENTS.md first; obey single-flight execution and do not overlap a still-running branch-changing validation, replay, integrity writer or product repair.",
-    "Implement the smallest generic Commander relationship/mechanism-affinity repair feeding existing advisory replacement identity: distinguish broad requested-component membership from typal payoff/engine relevance, Aura specialization and commander-referenced permanent/card-shape conditions such as type, noncreature status, mana-value thresholds or combat/modified conditions.",
-    "Prefer rules-text/structured-role evidence and reusable relationships. Do not encode fixture names, commander names, card names or benchmark labels, and do not make all relational matches uncuttable.",
-    "Add focused generic regressions for typal payoff importance, Aura specialization, artifact/enchantment plus mana-value/noncreature shape, cross-component bridge relevance and a control where a weak theme card still loses to necessary structural repair.",
-    "Run the complete immutable repository validation. Only if green, freeze the exact relational repair SHA and run a new representative replay that includes at least one fresh contrasting fixture plus enough prior controls to prove no regression, then persist a new durable manual whole-deck verdict.",
-    "Once the repeated replacement-coherence defect is conclusively resolved or bounded, broaden BENCH-01 to fresh combo, hybrid, control, aristocrats, budget and unusual-commander fixtures with strong general-AI comparison."
+    "Implement the smallest generic cut-order precedence repair: retain the meaningful-strategy-loss comparison first, then evaluate upgradeSwapReplacementIdentityPriorityV15 before upgradeSwapSubstantiveStrategyLossScoreV15 so typed requested mechanisms are not silently spent merely because their legacy broad strategy label is weaker.",
+    "Keep the repair advisory and preserve all existing hard legality, authoritative-target, structural-floor, semantic-safety, package-acceptance and meaningful-strategy-loss gates. Do not encode fixture, card, commander or benchmark names.",
+    "Add a focused generic ordering/integration regression covering a typed requested mechanism versus a superficially lower legacy-strategy-loss cut, plus a structural fallback where the mechanism remains cuttable when no better hard-valid alternative exists.",
+    "Run the complete immutable repository validation. Only if green, freeze that exact precedence-repair SHA and replay the affected five controls from unchanged source; manually inspect full decks against the dfdb9663 rejection signatures.",
+    "Only if affected controls materially improve without regression, run at least one fresh contrasting fixture from the same frozen source and resume strong general-AI comparison before accepting a new Commander baseline.",
+    "Once the repeated replacement-coherence defect is conclusively resolved or bounded, broaden BENCH-01 to fresh combo, hybrid, control, aristocrats, budget and unusual-commander fixtures."
   ],
   "handoffProtocol": {
     "readFirst": [
@@ -133,7 +135,7 @@
       "docs/VALIDATION-MATRIX.md",
       "docs/KNOWN-FAILURES.md"
     ],
-    "then": "BENCH-01 remains active. Keep e17b0a1c... as the latest accepted Commander baseline. Product SHA 66836fef... is fully validated, source-frozen replay green and manually REJECTED as a replacement baseline, but its semantic requested-component repair is retained as a meaningful partial generic improvement; newest durable verdict is test-results/bench01-manual-verdicts/66836fef0009a6913336efe0ec074aefd277abd5.md. Lathril materially improves, but Hakbal and Bello remain clear failures and Ellivere remains mixed. The repeated weakness is now beyond broad component membership: Commander relationship/card-shape affinity and payoff importance are too shallow. Next: implement the smallest generic advisory relational layer, add cross-archetype regressions including structural-fallback controls, validate fully, freeze the exact green SHA, and use a new representative replay with at least one fresh contrasting fixture before manual acceptance. Before any write read AGENTS.md, obey single-flight execution, and never alter .github/workflows/** during scheduled/autonomous development. Stable remains V0.13 and PR #29 remains unmerged.",
+    "then": "BENCH-01 remains active. Keep e17b0a1c... as the latest accepted Commander baseline. Product SHA dfdb9663... is fully validated, source-frozen replay green and manually REJECTED as a replacement baseline; newest durable verdict is test-results/bench01-manual-verdicts/dfdb9663bd2394dfa620511d750501880b903770.md. The same Hakbal Reflections of Littjara, Bello Esika's Chariot and Ellivere Angelic Destiny failures survive. The remaining centralized defect is cut-order precedence: after meaningful-strategy-loss, quantitative legacy strategy loss is compared before typed requested/replacement identity. Next: make the smallest generic advisory precedence correction, add an ordering regression plus fallback control, validate fully, freeze the exact green SHA and replay affected controls. Only after those improve should a fresh contrasting fixture and strong-general-AI comparison be spent. Before any write read AGENTS.md, obey single-flight execution, and never alter .github/workflows/** during scheduled/autonomous development. Stable remains V0.13 and PR #29 remains unmerged.",
     "compatibilityEntryPoint": "PROJECT_HANDOFF.md"
   }
 }
