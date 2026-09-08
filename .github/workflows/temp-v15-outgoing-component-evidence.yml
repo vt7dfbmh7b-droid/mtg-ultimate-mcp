@@ -1,0 +1,258 @@
+name: TEMP V15 outgoing component evidence repair
+
+on:
+  push:
+    branches:
+      - agent/v15-native-deck-intelligence
+    paths:
+      - .github/workflows/temp-v15-outgoing-component-evidence.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/v15-native-deck-intelligence
+          fetch-depth: 0
+      - name: Verify frozen Commander source lineage
+        run: |
+          git diff --quiet 4a7bbf616ac6826ec4ac979894f8752133af3bca -- src || {
+            echo "src/** changed since validated product source 4a7bbf6; refusing to patch" >&2
+            git diff --stat 4a7bbf616ac6826ec4ac979894f8752133af3bca -- src
+            exit 1
+          }
+      - name: Apply generic outgoing requested-component evidence repair
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          upgrade = Path('src/services/upgrade.ts')
+          text = upgrade.read_text()
+          old = '''function cutCandidates(
+            parsed: ParsedDeck,
+            cards: ScryfallCard[],
+            strategyContext: CommanderStrategyContextV15,
+            themeCandidateNames: ReadonlySet<string>,
+            protectThemeMatches: boolean,
+            allowCurveFallback: boolean,
+          ): Array<Record<string, unknown>> {'''
+          new = '''function cutCandidates(
+            parsed: ParsedDeck,
+            cards: ScryfallCard[],
+            strategyContext: CommanderStrategyContextV15,
+            themeCandidateNames: ReadonlySet<string>,
+            componentAffinityForCard: (card: ScryfallCard) => { score: number; matchedComponentIds: string[] },
+            protectThemeMatches: boolean,
+            allowCurveFallback: boolean,
+          ): Array<Record<string, unknown>> {'''
+          assert text.count(old) == 1, 'cutCandidates signature changed unexpectedly'
+          text = text.replace(old, new)
+          old = '''      const context = contextualCutPressureV15(card, strategyContext);
+                const themeMatch = themeCandidateNames.has(card.name.toLocaleLowerCase());
+                const themeProtectionApplied = protectThemeMatches && themeMatch ? 4 : 0;'''
+          new = '''      const context = contextualCutPressureV15(card, strategyContext);
+                const themeMatch = themeCandidateNames.has(card.name.toLocaleLowerCase());
+                const componentAffinity = componentAffinityForCard(card);
+                const themeProtectionApplied = protectThemeMatches && themeMatch ? 4 : 0;'''
+          assert text.count(old) == 1, 'cut candidate body changed unexpectedly'
+          text = text.replace(old, new)
+          old = '''        explicitTheme: { matchesControlledTheme: themeMatch, protectionApplied: themeProtectionApplied },'''
+          new = '''        explicitTheme: {
+                  matchesControlledTheme: themeMatch,
+                  protectionApplied: themeProtectionApplied,
+                  componentAffinityScore: componentAffinity.score,
+                  matchedComponentIds: componentAffinity.matchedComponentIds,
+                },'''
+          assert text.count(old) == 1, 'cut explicitTheme output changed unexpectedly'
+          text = text.replace(old, new)
+          old = '''    candidateCuts: cutCandidates(
+                parsed, cards, strategyContext, themeCandidateNames,
+                themeMinimumMainMatches > 0 && themeCurrentMainMatches <= themeMinimumMainMatches,'''
+          new = '''    candidateCuts: cutCandidates(
+                parsed, cards, strategyContext, themeCandidateNames, componentAffinityForCard,
+                themeMinimumMainMatches > 0 && themeCurrentMainMatches <= themeMinimumMainMatches,'''
+          assert text.count(old) == 1, 'cutCandidates call changed unexpectedly'
+          text = text.replace(old, new)
+          upgrade.write_text(text)
+
+          priority = Path('src/services/replacement-identity-priority-v15.ts')
+          priority.write_text('''export interface ReplacementIdentitySignalV15 {
+            /** Whether the card matches the active caller-controlled requested theme. */
+            matchesControlledTheme?: boolean;
+            /** Exact active requested-theme component IDs supported by this card, when known. */
+            matchedRequestedComponentIds?: unknown;
+            /** Substantive commander/deck-strategy overlap already inferred by V0.15. */
+            substantiveStrategyAffinity?: number;
+          }
+
+          export interface ReplacementIdentityPriorityV15 {
+            requestedThemeDelta: number;
+            requestedComponentLossCount: number;
+            requestedComponentGainCount: number;
+            requestedComponentPreservedCount: number;
+            substantiveStrategyAffinityDelta: number;
+            identityErosion: number;
+            identityGain: number;
+            verdict: 'identity-improving' | 'identity-neutral' | 'identity-eroding';
+          }
+
+          function finiteNonNegative(value: unknown): number {
+            return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : 0;
+          }
+
+          function normalizedRequestedComponentIds(value: unknown): Set<string> {
+            if (!Array.isArray(value)) return new Set();
+            return new Set(value
+              .filter((item): item is string => typeof item === 'string')
+              .map((item) => item.trim().toLocaleLowerCase())
+              .filter(Boolean));
+          }
+
+          /**
+           * Compare relative requested/deck identity after all hard legality, structural, package,
+           * target-progress, and preservation gates have already admitted the swap. Exact requested
+           * component loss is deliberately advisory: it changes replacement priority but never makes
+           * a theme card uncuttable and never weakens an authoritative target gate.
+           */
+          export function replacementIdentityPriorityV15(
+            add: ReplacementIdentitySignalV15,
+            cut: ReplacementIdentitySignalV15,
+          ): ReplacementIdentityPriorityV15 {
+            const addTheme = add.matchesControlledTheme === true ? 1 : 0;
+            const cutTheme = cut.matchesControlledTheme === true ? 1 : 0;
+            const requestedThemeDelta = addTheme - cutTheme;
+            const addComponents = normalizedRequestedComponentIds(add.matchedRequestedComponentIds);
+            const cutComponents = normalizedRequestedComponentIds(cut.matchedRequestedComponentIds);
+            const requestedComponentLossCount = [...cutComponents].filter((id) => !addComponents.has(id)).length;
+            const requestedComponentGainCount = [...addComponents].filter((id) => !cutComponents.has(id)).length;
+            const requestedComponentPreservedCount = [...cutComponents].filter((id) => addComponents.has(id)).length;
+            const substantiveStrategyAffinityDelta = Number((
+              finiteNonNegative(add.substantiveStrategyAffinity)
+                - finiteNonNegative(cut.substantiveStrategyAffinity)
+            ).toFixed(3));
+
+            const netBroadIdentityDelta = Number((requestedThemeDelta + substantiveStrategyAffinityDelta).toFixed(3));
+            const identityErosion = Number((
+              Math.max(0, -netBroadIdentityDelta) + requestedComponentLossCount
+            ).toFixed(3));
+            const identityGain = Number((
+              Math.max(0, netBroadIdentityDelta) + requestedComponentGainCount
+            ).toFixed(3));
+
+            return {
+              requestedThemeDelta,
+              requestedComponentLossCount,
+              requestedComponentGainCount,
+              requestedComponentPreservedCount,
+              substantiveStrategyAffinityDelta,
+              identityErosion,
+              identityGain,
+              verdict: identityErosion > 0
+                ? 'identity-eroding'
+                : identityGain > 0
+                  ? 'identity-improving'
+                  : 'identity-neutral',
+            };
+          }
+
+          /** Lower erosion wins first; then higher gain. Zero preserves downstream tie-breaks. */
+          export function compareReplacementIdentityPriorityV15(
+            left: ReplacementIdentityPriorityV15,
+            right: ReplacementIdentityPriorityV15,
+          ): number {
+            if (left.identityErosion !== right.identityErosion) {
+              return left.identityErosion - right.identityErosion;
+            }
+            if (left.identityGain !== right.identityGain) {
+              return right.identityGain - left.identityGain;
+            }
+            return 0;
+          }
+          '''.replace('          ', ''))
+
+          builder = Path('src/services/deck-builder-v07.ts')
+          text = builder.read_text()
+          old = '''    {
+                matchesControlledTheme: recordObject(add.explicitTheme).matchesControlledTheme === true,
+                substantiveStrategyAffinity: substantiveScore(addAffinity),
+              },
+              {
+                matchesControlledTheme: recordObject(cut.explicitTheme).matchesControlledTheme === true,
+                substantiveStrategyAffinity: substantiveScore(cutAffinity),
+              },'''
+          new = '''    {
+                matchesControlledTheme: recordObject(add.explicitTheme).matchesControlledTheme === true,
+                matchedRequestedComponentIds: recordObject(add.explicitTheme).matchedComponentIds,
+                substantiveStrategyAffinity: substantiveScore(addAffinity),
+              },
+              {
+                matchesControlledTheme: recordObject(cut.explicitTheme).matchesControlledTheme === true,
+                matchedRequestedComponentIds: recordObject(cut.explicitTheme).matchedComponentIds,
+                substantiveStrategyAffinity: substantiveScore(cutAffinity),
+              },'''
+          assert text.count(old) == 1, 'replacement identity call changed unexpectedly'
+          builder.write_text(text.replace(old, new))
+
+          test = Path('src/services/replacement-identity-priority-v15.test.ts')
+          text = test.read_text()
+          addition = '''
+
+          test('preserves exact requested mechanisms across contrasting Commander strategy families', () => {
+            for (const componentId of ['aura-enchantment', 'elf-typal', 'counter-explore', 'artifact-enchantment-shape']) {
+              const preserves = replacementIdentityPriorityV15(
+                { matchesControlledTheme: true, matchedRequestedComponentIds: [componentId], substantiveStrategyAffinity: 4 },
+                { matchesControlledTheme: true, matchedRequestedComponentIds: [componentId], substantiveStrategyAffinity: 4 },
+              );
+              const loses = replacementIdentityPriorityV15(
+                { matchesControlledTheme: true, matchedRequestedComponentIds: [], substantiveStrategyAffinity: 4 },
+                { matchesControlledTheme: true, matchedRequestedComponentIds: [componentId], substantiveStrategyAffinity: 4 },
+              );
+              assert.equal(preserves.requestedComponentLossCount, 0);
+              assert.equal(loses.requestedComponentLossCount, 1);
+              assert.ok(compareReplacementIdentityPriorityV15(preserves, loses) < 0, componentId);
+            }
+          });
+
+          test('can trade one requested component for another but records the lost mechanism independently', () => {
+            const result = replacementIdentityPriorityV15(
+              { matchesControlledTheme: true, matchedRequestedComponentIds: ['secondary-payoff'], substantiveStrategyAffinity: 6 },
+              { matchesControlledTheme: true, matchedRequestedComponentIds: ['primary-engine'], substantiveStrategyAffinity: 6 },
+            );
+            assert.equal(result.requestedComponentLossCount, 1);
+            assert.equal(result.requestedComponentGainCount, 1);
+            assert.equal(result.identityErosion, 1);
+            assert.equal(result.identityGain, 1);
+          });
+
+          test('keeps legacy structural fallback ranking unchanged when exact component evidence is unavailable', () => {
+            const withUnknownComponents = replacementIdentityPriorityV15(
+              { matchesControlledTheme: false, substantiveStrategyAffinity: 3 },
+              { matchesControlledTheme: false, substantiveStrategyAffinity: 3 },
+            );
+            assert.equal(withUnknownComponents.requestedComponentLossCount, 0);
+            assert.equal(withUnknownComponents.requestedComponentGainCount, 0);
+            assert.equal(withUnknownComponents.verdict, 'identity-neutral');
+          });
+          '''.replace('          ', '')
+          assert 'preserves exact requested mechanisms across contrasting Commander strategy families' not in text
+          test.write_text(text + addition)
+          PY
+      - name: Install dependencies
+        run: npm ci
+      - name: Focused replacement identity regression
+        run: npx tsx --test src/services/replacement-identity-priority-v15.test.ts
+      - name: Full validation
+        run: npm run check
+      - name: Commit validated Commander repair
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add src/services/upgrade.ts src/services/deck-builder-v07.ts src/services/replacement-identity-priority-v15.ts src/services/replacement-identity-priority-v15.test.ts
+          git diff --cached --quiet && { echo 'No product changes produced'; exit 1; }
+          git commit -m "fix(v15): preserve requested component identity across swaps"
+          git push origin HEAD:agent/v15-native-deck-intelligence
