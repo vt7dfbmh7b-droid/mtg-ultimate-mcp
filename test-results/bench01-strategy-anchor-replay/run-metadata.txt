@@ -1,4 +1,4 @@
-product_runtime_baseline_sha=473edf473a284b9532aa03747abfa41a1081ca2c
+product_runtime_baseline_sha=1b92d7b741ce3e1dc92207bd9f426ffc69df0ef6
 request_source=.automation/bench01-strategy-anchor-replay.request
 source_relationship=wrapper-descendant-src-verified-equal-to-frozen-product-sha
 formal_product_validation=focused-plus-full-suite-plus-build-green-before-replay
