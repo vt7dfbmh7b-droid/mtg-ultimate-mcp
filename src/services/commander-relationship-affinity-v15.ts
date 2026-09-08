@@ -61,7 +61,6 @@ function auraSpecializationAffinityV15(card: ScryfallCard, commanders: readonly 
 
 function satisfiesCommanderPermanentShapeV15(card: ScryfallCard, commander: ScryfallCard): { score: number; reason: string | null } {
   const oracle = normalized(getCardOracleText(commander));
-  const cardType = normalized(card.type_line);
   const typeWords = words(card.type_line);
 
   const thresholdMatch = oracle.match(/mana value\s+(\d+)\s+or greater/);
