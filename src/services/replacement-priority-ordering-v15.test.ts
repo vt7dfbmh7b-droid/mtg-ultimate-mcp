@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import type { ScryfallCard } from '../types/scryfall.js';
 import { pairUpgradeSwapsByStructureV15 } from './deck-builder-v07.js';
+import { replacementIdentityPriorityV15 } from './replacement-identity-priority-v15.js';
+import { upgradeRequestedIdentityAffinityV15 } from './upgrade.js';
 
 function summarized(name: string, roles: string[] = []) {
   return {
@@ -10,6 +13,28 @@ function summarized(name: string, roles: string[] = []) {
       typeLine: 'Enchantment',
       roles,
     },
+  };
+}
+
+function scryfallCard(name: string, overrides: Partial<ScryfallCard> = {}): ScryfallCard {
+  return {
+    id: name.toLocaleLowerCase().replace(/\s+/g, '-'),
+    oracle_id: `oracle-${name.toLocaleLowerCase().replace(/\s+/g, '-')}`,
+    name,
+    lang: 'en',
+    cmc: 3,
+    type_line: 'Enchantment — Aura',
+    oracle_text: '',
+    color_identity: ['G'],
+    keywords: [],
+    legalities: { commander: 'legal' },
+    set: 'tst',
+    set_name: 'Test',
+    collector_number: '1',
+    rarity: 'uncommon',
+    prices: {},
+    scryfall_uri: `https://scryfall.com/card/tst/1/${encodeURIComponent(name)}`,
+    ...overrides,
   };
 }
 
@@ -88,12 +113,68 @@ test('actual Upgrade pairing preserves a typed requested mechanism ahead of weak
   assert.equal((pairings[0]?.cut.card as { name?: string } | undefined)?.name, 'Broad Legacy Value Card');
 });
 
-test('typed requested mechanisms remain advisory when no better hard-valid cut exists', () => {
+test('commander-compatible Aura target shape propagates through requested identity into replacement priority', () => {
+  const commander = scryfallCard('Generic Enchanted-Creature Commander', {
+    type_line: 'Legendary Creature — Human',
+    oracle_text: 'Whenever a creature you control becomes enchanted, draw a card.',
+  });
+  const creatureAura = scryfallCard('Creature-Support Aura', {
+    oracle_text: 'Enchant creature\nEnchanted creature gets +2/+2.',
+  });
+  const compatibleCreatureAura = scryfallCard('Second Creature-Support Aura', {
+    oracle_text: 'Enchant creature you control\nEnchanted creature has vigilance.',
+  });
+  const artifactAura = scryfallCard('Artifact-Only Aura', {
+    oracle_text: 'Enchant artifact\nEnchanted artifact loses all abilities.',
+  });
+  const components = [
+    { id: 'enchantments', queryClause: 't:enchantment', currentMainMatches: 18, requiredMainMatches: 12 },
+    { id: 'auras', queryClause: 't:aura', currentMainMatches: 11, requiredMainMatches: 8 },
+  ];
+  const broadIds = ['enchantments', 'auras'];
+  const creatureIdentity = upgradeRequestedIdentityAffinityV15(creatureAura, [commander], components, broadIds);
+  const compatibleIdentity = upgradeRequestedIdentityAffinityV15(compatibleCreatureAura, [commander], components, broadIds);
+  const artifactIdentity = upgradeRequestedIdentityAffinityV15(artifactAura, [commander], components, broadIds);
+
+  assert.ok(creatureIdentity.matchedComponentIds.includes('relation:aura-enchant-creature'));
+  assert.ok(compatibleIdentity.matchedComponentIds.includes('relation:aura-enchant-creature'));
+  assert.ok(!artifactIdentity.matchedComponentIds.includes('relation:aura-enchant-creature'));
+
+  const incompatibleSwap = replacementIdentityPriorityV15(
+    {
+      matchesControlledTheme: true,
+      matchedRequestedComponentIds: artifactIdentity.matchedComponentIds,
+      requestedRelationshipAffinity: artifactIdentity.requestedRelationshipAffinity,
+    },
+    {
+      matchesControlledTheme: true,
+      matchedRequestedComponentIds: creatureIdentity.matchedComponentIds,
+      requestedRelationshipAffinity: creatureIdentity.requestedRelationshipAffinity,
+    },
+  );
+  const compatibleSwap = replacementIdentityPriorityV15(
+    {
+      matchesControlledTheme: true,
+      matchedRequestedComponentIds: compatibleIdentity.matchedComponentIds,
+      requestedRelationshipAffinity: compatibleIdentity.requestedRelationshipAffinity,
+    },
+    {
+      matchesControlledTheme: true,
+      matchedRequestedComponentIds: creatureIdentity.matchedComponentIds,
+      requestedRelationshipAffinity: creatureIdentity.requestedRelationshipAffinity,
+    },
+  );
+
+  assert.equal(incompatibleSwap.requestedRelationshipLossCount, 1);
+  assert.equal(compatibleSwap.requestedRelationshipLossCount, 0);
+});
+
+test('commander-compatible Aura target shape remains advisory under a hard structural fallback', () => {
   const onlyEligibleCut = {
-    ...summarized('Only Eligible Requested Mechanism'),
+    ...summarized('Only Eligible Creature Aura'),
     explicitTheme: {
       matchesControlledTheme: true,
-      matchedComponentIds: ['requested-aura', 'relation:aura-specialization'],
+      matchedComponentIds: ['requested-aura', 'relation:aura-specialization', 'relation:aura-enchant-creature'],
     },
     strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [], matches: [] },
     heuristicCutPressure: 1,
@@ -109,5 +190,5 @@ test('typed requested mechanisms remain advisory when no better hard-valid cut e
   );
 
   assert.equal(pairings.length, 1);
-  assert.equal((pairings[0]?.cut.card as { name?: string } | undefined)?.name, 'Only Eligible Requested Mechanism');
+  assert.equal((pairings[0]?.cut.card as { name?: string } | undefined)?.name, 'Only Eligible Creature Aura');
 });
