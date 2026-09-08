@@ -56,11 +56,15 @@ function commanderShapeAffinityV15(card: ScryfallCard, commanders: readonly Scry
   if (!commanderOracle) return { score: 0, reasons: [] };
 
   const cardTypes = new Set(card.type_line.toLocaleLowerCase().split(/[^a-z0-9]+/).filter(Boolean));
+  const excludesEquipment = /\bnon-?equipment artifacts?\b/.test(commanderOracle);
+  const excludesAura = /\bnon-?aura enchantments?\b/.test(commanderOracle);
   const referencedTypes = ['artifact', 'enchantment', 'creature', 'equipment', 'aura', 'instant', 'sorcery']
     .filter((type) => new RegExp(`\\b${type}s?\\b`).test(commanderOracle));
   const allowedReferencedTypes = referencedTypes.filter((type) => {
-    if (type === 'artifact' && /\bnon-?equipment artifacts?\b/.test(commanderOracle) && cardTypes.has('equipment')) return false;
-    if (type === 'enchantment' && /\bnon-?aura enchantments?\b/.test(commanderOracle) && cardTypes.has('aura')) return false;
+    if (type === 'equipment' && excludesEquipment) return false;
+    if (type === 'aura' && excludesAura) return false;
+    if (type === 'artifact' && excludesEquipment && cardTypes.has('equipment')) return false;
+    if (type === 'enchantment' && excludesAura && cardTypes.has('aura')) return false;
     if ((type === 'artifact' || type === 'enchantment') && /\bnoncreature\b[^.]{0,120}\b(?:artifact|enchantment|permanent)s?\b|\b(?:artifact|enchantment)s?\b[^.]{0,120}\bnoncreature\b/.test(commanderOracle) && cardTypes.has('creature')) return false;
     return true;
   });
