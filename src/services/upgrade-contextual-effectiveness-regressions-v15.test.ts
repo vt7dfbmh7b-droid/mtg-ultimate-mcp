@@ -162,7 +162,7 @@ test('production pairing prioritizes the cheaper practical interaction when both
     [cut('Replaceable Four-Drop')] as any,
     metrics,
     targets,
-    3,
+    4,
     { maxPairs: 1 } as any,
   );
 
