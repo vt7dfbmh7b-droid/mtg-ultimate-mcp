@@ -69,6 +69,64 @@ function hasUncompensatedStrongRelationshipV15(
   return relationships.length > 0 && relationships.some((id) => !availableReplacementRelationships.has(id));
 }
 
+function normalizedRoleLabelsV15(item: Record<string, unknown>): string[] {
+  return [...new Set(recordStringsV15(summarizedCardV15(item).roles)
+    .map((role) => role.trim().toLocaleLowerCase())
+    .filter(Boolean))];
+}
+
+function operationalEngineRolesV15(item: Record<string, unknown>): string[] {
+  return normalizedRoleLabelsV15(item).filter((role) => (
+    role.includes('repeatable') || role.includes('engine')
+  ));
+}
+
+function operationalSetupBurdenV15(item: Record<string, unknown>): number {
+  const oracleText = recordStringV15(summarizedCardV15(item).oracleText).toLocaleLowerCase();
+  if (!oracleText) return 0;
+
+  let burden = 0;
+  // These are generic connectivity/setup requirements, not card-name or fixture rules. They
+  // describe effects that need another permanent/state or a successful combat event before a
+  // nominally repeatable role becomes available.
+  if (/\b(?:equipped|enchanted|modified)\s+(?:creature|permanent)\b/.test(oracleText)) burden += 2;
+  if (/\b(?:deals?|dealt)\s+combat\s+damage\s+to\b/.test(oracleText)) burden += 2;
+  if (/\bwhenever\s+(?:one or more\s+)?(?:creatures?|permanents?)\s+you\s+control\s+attacks?\b/.test(oracleText)) burden += 1;
+  if (/\b(?:if|as long as)\s+you\s+control\b/.test(oracleText)) burden += 1;
+  if (/\b(?:if|as long as)\b[^.]{0,80}\b(?:three|four|five|six|seven|eight|nine|ten|\d+)\s+or\s+more\s+counters?\b/.test(oracleText)) burden += 2;
+  return burden;
+}
+
+function setupHeavierSharedEngineReplacementV15(
+  addition: Record<string, unknown>,
+  cut: Record<string, unknown>,
+): boolean {
+  const cutEngineRoles = new Set(operationalEngineRolesV15(cut));
+  if (cutEngineRoles.size === 0) return false;
+  const sharedEngineRole = operationalEngineRolesV15(addition).some((role) => cutEngineRoles.has(role));
+  if (!sharedEngineRole) return false;
+  return operationalSetupBurdenV15(addition) > operationalSetupBurdenV15(cut);
+}
+
+function operationallyProtectedCutsV15(
+  additions: Array<Record<string, unknown>>,
+  cuts: Array<Record<string, unknown>>,
+): Set<Record<string, unknown>> {
+  const protectedCuts = new Set<Record<string, unknown>>();
+  for (const cut of cuts) {
+    const cutRoles = new Set(operationalEngineRolesV15(cut));
+    if (cutRoles.size === 0) continue;
+    const roleMatchingAdds = additions.filter((addition) => (
+      operationalEngineRolesV15(addition).some((role) => cutRoles.has(role))
+    ));
+    if (roleMatchingAdds.length === 0) continue;
+    if (roleMatchingAdds.every((addition) => setupHeavierSharedEngineReplacementV15(addition, cut))) {
+      protectedCuts.add(cut);
+    }
+  }
+  return protectedCuts;
+}
+
 const CONTEXTUAL_PERMANENT_TYPE_WORDS_V15 = new Set([
   'artifact', 'battle', 'creature', 'enchantment', 'land', 'permanent', 'planeswalker',
 ]);
@@ -252,7 +310,13 @@ export function pairUpgradeSwapsByStructureV15(
   // Strong engine/payoff relationships are protected while a weaker fallback exists. If every
   // structural fallback carries the same loss, keep the established advisory behavior rather
   // than turning requested identity into an absolute hard freeze.
-  const contextSafeCuts = advisoryContextSafeCuts.length > 0 ? advisoryContextSafeCuts : cutPool;
+  const relationshipSafeCuts = advisoryContextSafeCuts.length > 0 ? advisoryContextSafeCuts : cutPool;
+  const operationallyProtected = operationallyProtectedCutsV15(
+    supportedAdditions.map((selection) => selection.candidate),
+    relationshipSafeCuts,
+  );
+  const advisoryOperationalSafeCuts = relationshipSafeCuts.filter((cut) => !operationallyProtected.has(cut));
+  const contextSafeCuts = advisoryOperationalSafeCuts.length > 0 ? advisoryOperationalSafeCuts : relationshipSafeCuts;
   const contextRankedAdditions = contextuallyDominantAdditionsV15(
     supportedAdditions,
     contextSafeCuts,
@@ -321,13 +385,20 @@ function contextualPlanGuardsV15(
     const name = recordStringV15(summarizedCardV15(cut).name);
     if (name) cutByName.set(name.toLocaleLowerCase(), cut);
   }
+  const supportedCandidates = candidates.filter((candidate) => (
+    candidateSelfTargetSetupSupportedV15(candidate, contextCards)
+    && candidateContextualRoleEffectiveV15(candidate, contextCards)
+  ));
   const supportedCandidateRelationships = new Set(
-    candidates
-      .filter((candidate) => candidateSelfTargetSetupSupportedV15(candidate, contextCards)
-        && candidateContextualRoleEffectiveV15(candidate, contextCards))
-      .flatMap(requestedRelationshipIdsV15),
+    supportedCandidates.flatMap(requestedRelationshipIdsV15),
   );
   const protectedNames = new Set<string>();
+  const operationalProtectedCuts = operationallyProtectedCutsV15(supportedCandidates, cuts);
+  const operationalProtectedNames = new Set(
+    [...operationalProtectedCuts]
+      .map((cut) => recordStringV15(summarizedCardV15(cut).name))
+      .filter(Boolean),
+  );
   for (const cut of cuts) {
     const name = recordStringV15(summarizedCardV15(cut).name);
     if (!name) continue;
@@ -338,7 +409,9 @@ function contextualPlanGuardsV15(
       cut,
       supportedCandidateRelationships,
     );
-    if (uncompensatedUniqueRelationship || uncompensatedStrongRelationship) protectedNames.add(name);
+    if (uncompensatedUniqueRelationship || uncompensatedStrongRelationship || operationalProtectedNames.has(name)) {
+      protectedNames.add(name);
+    }
   }
 
   let invalidSelected = false;
@@ -357,7 +430,10 @@ function contextualPlanGuardsV15(
       (relationshipCounts[id] ?? 0) <= 1 && !addRelationships.has(id)
     ));
     const uncompensatedStrongRelationship = hasUncompensatedStrongRelationshipV15(cut, addRelationships);
-    if (uncompensatedUniqueRelationship || uncompensatedStrongRelationship) {
+    const operationallyInferiorReplacement = Boolean(add)
+      && operationalProtectedCuts.has(cut)
+      && setupHeavierSharedEngineReplacementV15(add as Record<string, unknown>, cut);
+    if (uncompensatedUniqueRelationship || uncompensatedStrongRelationship || operationallyInferiorReplacement) {
       invalidSelected = true;
       if (outName) protectedNames.add(outName);
     }
