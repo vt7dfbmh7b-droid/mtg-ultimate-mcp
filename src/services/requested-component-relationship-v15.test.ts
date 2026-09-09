@@ -100,3 +100,23 @@ test('weak on-theme membership remains a small advisory signal rather than a har
   assert.equal(signal.score, 1);
   assert.ok(signal.score < 4);
 });
+
+test('investigate supplies advisory artifact-mechanism relationship evidence without becoming artifact card-type membership', () => {
+  const commander = card('Value Commander', { oracle_text: 'Whenever you sacrifice an artifact, put a +1/+1 counter on this creature.' });
+  const investigator = card('Recurring Evidence Maker', {
+    type_line: 'Creature — Human Detective',
+    oracle_text: 'Whenever you draw your second card each turn, investigate.',
+  });
+  const unrelated = card('Generic Draw Support', {
+    type_line: 'Creature — Human Advisor',
+    oracle_text: 'Whenever you draw your second card each turn, scry 1.',
+  });
+  const components = [{ id: 'artifacts', queryClause: 't:artifact' }];
+  const investigatorSignal = requestedComponentRelationshipAffinityV15(investigator, [commander], components);
+  const unrelatedSignal = requestedComponentRelationshipAffinityV15(unrelated, [commander], components);
+
+  assert.ok(investigatorSignal.score >= 4, 'repeatable investigate should be a strong advisory realization of an explicitly requested artifact component');
+  assert.ok(investigatorSignal.score > unrelatedSignal.score);
+  assert.ok(investigatorSignal.relationshipIds.includes('relation:artifact-token-engine'));
+  assert.equal(investigator.type_line.toLocaleLowerCase().includes('artifact'), false, 'the regression must not redefine hard artifact card-type membership');
+});
