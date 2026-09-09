@@ -1,7 +1,7 @@
 {
   "schema": "bench01-adaptive-diversification-replay-v3",
   "batch": "BENCH-01-STRATEGY-ANCHOR-REPLAY",
-  "productRuntimeBaselineSha": "63b9d75cf425727d1aa0be1ed5123bf6c13ea3f9",
+  "productRuntimeBaselineSha": "1d6b73aae4edc72d80a2ebc945a160506a13c71e",
   "sourceFrozenWithinBatch": true,
   "results": [
     {
@@ -777,7 +777,7 @@
             "set": "SLD",
             "collectorNumber": "2058",
             "finish": "nonfoil",
-            "priceNzd": 44.2,
+            "priceNzd": 44.22,
             "priceUsdReference": 25.89
           },
           "structuralPairing": {
@@ -957,7 +957,7 @@
             "set": "PLST",
             "collectorNumber": "EXO-17",
             "finish": "nonfoil",
-            "priceNzd": 6.81,
+            "priceNzd": 6.82,
             "priceUsdReference": 3.99
           },
           "structuralPairing": {
@@ -1136,7 +1136,7 @@
             "set": "EMN",
             "collectorNumber": "41",
             "finish": "nonfoil",
-            "priceNzd": 32.83,
+            "priceNzd": 32.85,
             "priceUsdReference": 19.23
           },
           "structuralPairing": {
@@ -1526,7 +1526,7 @@
             "set": "PMOM",
             "collectorNumber": "198p",
             "finish": "nonfoil",
-            "priceNzd": 10.65,
+            "priceNzd": 10.66,
             "priceUsdReference": 6.24
           },
           "structuralPairing": {
@@ -1701,7 +1701,7 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.83,
+            "priceNzd": 36.84,
             "priceUsdReference": 21.57
           },
           "structuralPairing": {
@@ -1842,7 +1842,7 @@
             "set": "DMR",
             "collectorNumber": "289",
             "finish": "nonfoil",
-            "priceNzd": 28.39,
+            "priceNzd": 28.41,
             "priceUsdReference": 16.63
           },
           "structuralPairing": {
@@ -1886,7 +1886,7 @@
             "set": "SLD",
             "collectorNumber": "2817",
             "finish": "nonfoil",
-            "priceNzd": 15.23,
+            "priceNzd": 15.24,
             "priceUsdReference": 8.92
           },
           "structuralPairing": {
@@ -1930,7 +1930,7 @@
             "set": "MOM",
             "collectorNumber": "265",
             "finish": "nonfoil",
-            "priceNzd": 8.26,
+            "priceNzd": 8.27,
             "priceUsdReference": 4.84
           },
           "structuralPairing": {
@@ -2105,7 +2105,7 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 6,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 48.42,
+        "estimatedSpendNzd": 48.44,
         "estimatedSpendUsdReference": 28.36,
         "improvementScore": 18.073,
         "winRouteProtection": {
@@ -2255,7 +2255,7 @@
             "set": "EXO",
             "collectorNumber": "55",
             "finish": "nonfoil",
-            "priceNzd": 12.12,
+            "priceNzd": 12.13,
             "priceUsdReference": 7.1
           },
           "structuralPairing": {
@@ -2434,7 +2434,7 @@
             "set": "PECL",
             "collectorNumber": "176p",
             "finish": "nonfoil",
-            "priceNzd": 15.62,
+            "priceNzd": 15.63,
             "priceUsdReference": 9.15
           },
           "structuralPairing": {
@@ -2477,7 +2477,7 @@
             "set": "FIC",
             "collectorNumber": "464",
             "finish": "foil",
-            "priceNzd": 19.21,
+            "priceNzd": 19.22,
             "priceUsdReference": 11.25
           },
           "structuralPairing": {
@@ -2620,7 +2620,7 @@
             "set": "PBIG",
             "collectorNumber": "26p",
             "finish": "foil",
-            "priceNzd": 33.45,
+            "priceNzd": 33.46,
             "priceUsdReference": 19.59
           },
           "structuralPairing": {
@@ -3549,7 +3549,7 @@
             "set": "OTJ",
             "collectorNumber": "93",
             "finish": "nonfoil",
-            "priceNzd": 6.86,
+            "priceNzd": 6.87,
             "priceUsdReference": 4.02
           },
           "structuralPairing": {
@@ -3681,7 +3681,7 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.83,
+            "priceNzd": 36.84,
             "priceUsdReference": 21.57
           },
           "structuralPairing": {
@@ -4025,7 +4025,7 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.83,
+            "priceNzd": 36.84,
             "priceUsdReference": 21.57
           },
           "structuralPairing": {
@@ -4207,7 +4207,7 @@
             "set": "SLD",
             "collectorNumber": "2803",
             "finish": "nonfoil",
-            "priceNzd": 9.08,
+            "priceNzd": 9.09,
             "priceUsdReference": 5.32
           },
           "structuralPairing": {
