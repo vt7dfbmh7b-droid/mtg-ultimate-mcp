@@ -44,6 +44,18 @@ function genericTypalEngineV15(card: ScryfallCard): boolean {
   return /\bchoose a creature type\b|\bcreature type of your choice\b|\bchosen type\b|\bshare a creature type\b|\bof that type\b/.test(oracle);
 }
 
+function requestsArtifactCardTypeV15(components: readonly RequestedComponentClauseV15[]): boolean {
+  return components.some((component) => [...quotedTypeAtomsV15(component.queryClause), ...unquotedTypeAtomsV15(component.queryClause)].includes('artifact'));
+}
+
+function recurringInvestigateArtifactEngineV15(card: ScryfallCard, components: readonly RequestedComponentClauseV15[]): boolean {
+  if (!requestsArtifactCardTypeV15(components)) return false;
+  const oracle = normalized(getCardOracleText(card));
+  if (!/\binvestigat(?:e|es|ed|ing)\b/.test(oracle)) return false;
+  return /\bwhenever\b[^.]{0,220}\binvestigat(?:e|es|ed|ing)\b/.test(oracle)
+    || /\b(?:at the beginning of|each)\b[^.]{0,220}\binvestigat(?:e|es|ed|ing)\b/.test(oracle);
+}
+
 function auraSpecializationV15(card: ScryfallCard, commanders: readonly ScryfallCard[], clauses: readonly RequestedComponentClauseV15[]): boolean {
   if (!typeContainsV15(card, 'aura')) return false;
   const requestedAura = clauses.some((component) => [...quotedTypeAtomsV15(component.queryClause), ...unquotedTypeAtomsV15(component.queryClause)].includes('aura'));
@@ -154,6 +166,12 @@ export function requestedComponentRelationshipAffinityV15(
     }
   }
   if (hasTypalPayoff) relationshipIds.push('relation:typal-payoff');
+
+  if (recurringInvestigateArtifactEngineV15(card, components)) {
+    score += 4;
+    reasons.push('repeatedly investigates, creating Clue artifact tokens for an explicitly requested artifact component');
+    relationshipIds.push('relation:artifact-token-engine');
+  }
 
   if (auraSpecializationV15(card, commanders, components)) {
     score += 3;
