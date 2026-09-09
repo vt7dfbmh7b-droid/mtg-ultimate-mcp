@@ -1,6 +1,6 @@
 {
   "schema": "intel01-positive-full-table-package-live-v15.1",
-  "sourceSha": "8ae2e9609851df51361116fb7b4b3f3dccea95d4",
+  "sourceSha": "1d6b73aae4edc72d80a2ebc945a160506a13c71e",
   "commander": "Frodo, Sauron's Bane",
   "request": {
     "targetBracket": 4,
@@ -40,7 +40,7 @@
         "set": "PLCI",
         "collectorNumber": "92p",
         "finish": "nonfoil",
-        "priceUsd": 33.53
+        "priceUsd": 33.63
       },
       {
         "name": "Scourge of the Skyclaves",
