@@ -200,7 +200,7 @@
         }
       ]
     },
-    "estimatedUpgradeSpendNzd": 26.41,
+    "estimatedUpgradeSpendNzd": 26.42,
     "estimatedUpgradeSpendUsdReference": 15.49,
     "maxTotalNzd": null,
     "maxTotalUsdReference": null,
@@ -213,7 +213,7 @@
           "set": "FCA",
           "collectorNumber": "34",
           "finish": "nonfoil",
-          "priceNzd": 25.7,
+          "priceNzd": 25.71,
           "priceUsdReference": 15.07
         },
         "structuralPairing": {
@@ -429,7 +429,7 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 5,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 26.41,
+        "estimatedSpendNzd": 26.42,
         "estimatedSpendUsdReference": 15.49,
         "improvementScore": 1.9,
         "winRouteProtection": {
@@ -521,7 +521,7 @@
         "candidatePackagesGenerated": 5,
         "candidatePackagesEligible": 1,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 26.41,
+        "estimatedSpendNzd": 26.42,
         "estimatedSpendUsdReference": 15.49,
         "improvementScore": 1.9,
         "winRouteProtection": {
@@ -541,7 +541,7 @@
               "collectorNumber": "34",
               "releaseDate": "2025-06-13",
               "finish": "nonfoil",
-              "priceNzd": 25.7,
+              "priceNzd": 25.71,
               "priceUsdReference": 15.07,
               "promo": false,
               "promoTypes": [
@@ -711,7 +711,7 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 3,
-            "estimatedSpendNzd": 26.41,
+            "estimatedSpendNzd": 26.42,
             "estimatedSpendUsdReference": 15.49,
             "unknownPriceCount": 0,
             "improvementScore": 1.9,
@@ -1100,7 +1100,7 @@
                   "set": "FCA",
                   "collectorNumber": "34",
                   "finish": "nonfoil",
-                  "priceNzd": 25.7,
+                  "priceNzd": 25.71,
                   "priceUsdReference": 15.07
                 },
                 "structuralPairing": {
@@ -2056,7 +2056,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 26.41,
+                "estimatedSpendNzd": 26.42,
                 "estimatedSpendUsdReference": 15.49,
                 "unknownPriceCount": 0,
                 "improvementScore": 1.9,
@@ -2445,7 +2445,7 @@
                       "set": "FCA",
                       "collectorNumber": "34",
                       "finish": "nonfoil",
-                      "priceNzd": 25.7,
+                      "priceNzd": 25.71,
                       "priceUsdReference": 15.07
                     },
                     "structuralPairing": {
