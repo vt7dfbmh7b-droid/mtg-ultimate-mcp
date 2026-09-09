@@ -64,7 +64,6 @@
 1 Tomb Fortress (40K) 168 *N*
 1 Flayed One (40K) 34 *N*
 1 Hexmark Destroyer (40K) 36 *N*
-1 Plasmancer (40K) 48 *N*
 1 Psychomancer (40K) 51 *N*
 1 Sautekh Immortal (40K) 54 *N*
 1 Skorpekh Destroyer (40K) 57 *N*
@@ -74,3 +73,4 @@
 1 Hellish Sideswipe (DFT) 90 *N*
 1 Myr Retriever (MRD) 215 *N*
 1 Annihilating Glare (ONE) 80 *N*
+1 Deadly Dispute (MSC) 794 *N*
