@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { pairUpgradeSwapsByStructureV15 } from './deck-builder-v07.js';
+import { requestedComponentRelationshipAffinityV15 } from './requested-component-relationship-v15.js';
 
 const metrics = {
   averageNonlandManaValue: 3,
@@ -119,5 +120,55 @@ test('production pairing retains structural fallback when a requested mechanism 
     (pairs[0]?.cut.card as { name?: string } | undefined)?.name,
     'Anonymous Requested Multiplier',
     'advisory preservation must not freeze construction when no safer cut exists',
+  );
+});
+
+test('production pairing receives artifact-resource importance from an anonymous persistent improvise engine before choosing a safer filler cut', () => {
+  const artifactComponent = {
+    id: 'theme:artifacts',
+    label: 'artifact',
+    query: 't:artifact',
+    kind: 'type' as const,
+    value: 'artifact',
+  };
+  const improviseEngineCard = {
+    name: 'Anonymous Artifact Resource Engine',
+    manaValue: 3,
+    typeLine: 'Artifact',
+    oracleText: 'Nonartifact spells you cast have improvise.',
+    roles: ['ramp'],
+  };
+  const relationship = requestedComponentRelationshipAffinityV15(improviseEngineCard as any, [artifactComponent] as any);
+
+  assert.ok(
+    relationship.score >= 5,
+    'a persistent effect that lets requested artifacts pay for spells must carry meaningful artifact-resource relationship evidence',
+  );
+
+  const improviseEngine = {
+    card: improviseEngineCard,
+    heuristicCutPressure: 12,
+    explicitTheme: {
+      matchesControlledTheme: true,
+      matchedComponentIds: ['theme:artifacts'],
+      requestedRelationshipAffinity: relationship.score,
+    },
+    strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [], matches: [] },
+  };
+
+  const pairs = pairUpgradeSwapsByStructureV15(
+    [protection('Anonymous Broad Protection', ['theme:artifacts'], 1)] as any,
+    [improviseEngine, filler] as any,
+    metrics,
+    targets,
+    3,
+    { maxPairs: 1 } as any,
+  );
+
+  assert.equal(pairs.length, 1);
+  assert.equal(
+    (pairs[0]?.cut.card as { name?: string } | undefined)?.name,
+    'Anonymous Replaceable Filler',
+    'once upstream artifact-resource evidence exists, the production pairer should preserve the improvise engine when safer filler exists',
   );
 });
