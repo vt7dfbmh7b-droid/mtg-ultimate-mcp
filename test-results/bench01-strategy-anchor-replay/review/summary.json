@@ -1,7 +1,7 @@
 {
   "schema": "bench01-adaptive-diversification-replay-v3",
   "batch": "BENCH-01-STRATEGY-ANCHOR-REPLAY",
-  "productRuntimeBaselineSha": "d5c349cbfa7aba5d22fa249fe2b247009d98e82a",
+  "productRuntimeBaselineSha": "28efcb47aef0765d818664e36275a988975a4b15",
   "sourceFrozenWithinBatch": true,
   "results": [
     {
@@ -3369,15 +3369,15 @@
         "assessedBracket": 2,
         "assessedBand": "bracket-2-core-range",
         "metrics": {
-          "averageNonlandManaValue": 3.22,
-          "earlyPlayCount": 28,
+          "averageNonlandManaValue": 3.3,
+          "earlyPlayCount": 27,
           "fastManaCount": 1,
           "cheapInteractionCount": 1,
           "tutorCount": 3,
           "recursionCount": 17,
           "boardWipeCount": 2,
           "rampCount": 12,
-          "drawCount": 39,
+          "drawCount": 40,
           "interactionCount": 12,
           "protectionCount": 4
         },
@@ -3391,8 +3391,8 @@
             "verifiedWinningCombos": 0,
             "ruthlessWinningCombos": 0,
             "strategicallyRelevantCombos": 0,
-            "averageNonlandManaValue": 3.22,
-            "earlyPlayCount": 28,
+            "averageNonlandManaValue": 3.3,
+            "earlyPlayCount": 27,
             "fastManaCount": 1,
             "freeInteractionCount": 0,
             "cheapInteractionCount": 1,
@@ -3462,7 +3462,7 @@
             "candidateAttemptSizes": [
               4
             ],
-            "winningCandidate": 2,
+            "winningCandidate": 1,
             "stopReason": null
           },
           {
@@ -3495,7 +3495,100 @@
       },
       "acceptedSwaps": [
         {
-          "out": "Massacre Wurm",
+          "out": "Phyrexian Metamorph",
+          "in": "Sword of Once and Future",
+          "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signals: graveyard-reanimator, value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Graveyard / reanimator) without becoming a hard theme requirement.",
+          "recommendedPrinting": {
+            "set": "MOM",
+            "collectorNumber": "265",
+            "finish": "nonfoil",
+            "priceNzd": 8.25,
+            "priceUsdReference": 4.83
+          },
+          "structuralPairing": {
+            "addressedRole": "protection",
+            "remainingStructuralDeficitAfterSwap": 6,
+            "authoritativeTargetGate": null,
+            "nonlandManaValueReduction": null,
+            "persistentColoredManaSourcesAfterSwap": 3,
+            "persistentColoredManaSourceFloor": 3,
+            "strategyPreservation": {
+              "cutStrategyAffinityScore": 0,
+              "addStrategyAffinityScore": 26,
+              "cutStrategyProtectionApplied": 0,
+              "cutMatchedStrategies": [],
+              "addMatchedStrategies": [
+                "graveyard-reanimator",
+                "value-engine"
+              ],
+              "locallyUnreplacedStrategies": [],
+              "cutRoles": [
+                "creature"
+              ],
+              "addRoles": [
+                "card selection",
+                "equipment",
+                "graveyard recursion",
+                "protection"
+              ],
+              "unreplacedRoles": [
+                "creature"
+              ],
+              "unreplacedStrategyComponentRoles": [],
+              "meaningfulStrategyLoss": false,
+              "verdict": "preserved"
+            }
+          }
+        },
+        {
+          "out": "Twilight Prophet",
+          "in": "The Cruelty of Gix",
+          "why": "Addresses the detected tutor deficit and also supports the existing V0.15 deck strategy signals: graveyard-reanimator, counters. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Graveyard / reanimator, Card draw) without becoming a hard theme requirement.",
+          "recommendedPrinting": {
+            "set": "PDMU",
+            "collectorNumber": "87p",
+            "finish": "nonfoil",
+            "priceNzd": 2.2,
+            "priceUsdReference": 1.29
+          },
+          "structuralPairing": {
+            "addressedRole": "tutor",
+            "remainingStructuralDeficitAfterSwap": 5,
+            "authoritativeTargetGate": null,
+            "nonlandManaValueReduction": null,
+            "persistentColoredManaSourcesAfterSwap": 3,
+            "persistentColoredManaSourceFloor": 3,
+            "strategyPreservation": {
+              "cutStrategyAffinityScore": 0,
+              "addStrategyAffinityScore": 23,
+              "cutStrategyProtectionApplied": 0,
+              "cutMatchedStrategies": [],
+              "addMatchedStrategies": [
+                "counters",
+                "graveyard-reanimator"
+              ],
+              "locallyUnreplacedStrategies": [],
+              "cutRoles": [
+                "creature",
+                "life drain"
+              ],
+              "addRoles": [
+                "graveyard recursion",
+                "high-capacity graveyard recursion",
+                "tutor"
+              ],
+              "unreplacedRoles": [
+                "creature",
+                "life drain"
+              ],
+              "unreplacedStrategyComponentRoles": [],
+              "meaningfulStrategyLoss": false,
+              "verdict": "preserved"
+            }
+          }
+        },
+        {
+          "out": "Foreboding Steamboat",
           "in": "Sword of Light and Shadow",
           "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Graveyard / reanimator) without becoming a hard theme requirement.",
           "recommendedPrinting": {
@@ -3507,7 +3600,7 @@
           },
           "structuralPairing": {
             "addressedRole": "protection",
-            "remainingStructuralDeficitAfterSwap": 6,
+            "remainingStructuralDeficitAfterSwap": 4,
             "authoritativeTargetGate": null,
             "nonlandManaValueReduction": null,
             "persistentColoredManaSourcesAfterSwap": 3,
@@ -3521,20 +3614,14 @@
                 "graveyard-reanimator"
               ],
               "locallyUnreplacedStrategies": [],
-              "cutRoles": [
-                "creature",
-                "repeatable life drain"
-              ],
+              "cutRoles": [],
               "addRoles": [
                 "equipment",
                 "graveyard recursion",
                 "protection",
                 "repeatable life gain engine"
               ],
-              "unreplacedRoles": [
-                "creature",
-                "repeatable life drain"
-              ],
+              "unreplacedRoles": [],
               "unreplacedStrategyComponentRoles": [],
               "meaningfulStrategyLoss": false,
               "verdict": "preserved"
@@ -3542,7 +3629,7 @@
           }
         },
         {
-          "out": "Phyrexian Metamorph",
+          "out": "Vizier of Many Faces",
           "in": "Lively Dirge",
           "why": "Addresses the detected tutor deficit and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Graveyard / reanimator) without becoming a hard theme requirement.",
           "recommendedPrinting": {
@@ -3554,20 +3641,24 @@
           },
           "structuralPairing": {
             "addressedRole": "tutor",
-            "remainingStructuralDeficitAfterSwap": 5,
+            "remainingStructuralDeficitAfterSwap": 3,
             "authoritativeTargetGate": null,
             "nonlandManaValueReduction": null,
             "persistentColoredManaSourcesAfterSwap": 3,
             "persistentColoredManaSourceFloor": 3,
             "strategyPreservation": {
-              "cutStrategyAffinityScore": 0,
+              "cutStrategyAffinityScore": 1,
               "addStrategyAffinityScore": 21,
-              "cutStrategyProtectionApplied": 0,
-              "cutMatchedStrategies": [],
+              "cutStrategyProtectionApplied": 1,
+              "cutMatchedStrategies": [
+                "value-engine"
+              ],
               "addMatchedStrategies": [
                 "graveyard-reanimator"
               ],
-              "locallyUnreplacedStrategies": [],
+              "locallyUnreplacedStrategies": [
+                "value-engine"
+              ],
               "cutRoles": [
                 "creature"
               ],
@@ -3586,95 +3677,7 @@
           }
         },
         {
-          "out": "Twilight Prophet",
-          "in": "Not Dead After All",
-          "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Graveyard / reanimator) without becoming a hard theme requirement.",
-          "recommendedPrinting": {
-            "set": "WOE",
-            "collectorNumber": "101",
-            "finish": "nonfoil",
-            "priceNzd": 3.5,
-            "priceUsdReference": 2.05
-          },
-          "structuralPairing": {
-            "addressedRole": "protection",
-            "remainingStructuralDeficitAfterSwap": 4,
-            "authoritativeTargetGate": null,
-            "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 3,
-            "persistentColoredManaSourceFloor": 3,
-            "strategyPreservation": {
-              "cutStrategyAffinityScore": 0,
-              "addStrategyAffinityScore": 9,
-              "cutStrategyProtectionApplied": 0,
-              "cutMatchedStrategies": [],
-              "addMatchedStrategies": [
-                "graveyard-reanimator"
-              ],
-              "locallyUnreplacedStrategies": [],
-              "cutRoles": [
-                "creature",
-                "life drain"
-              ],
-              "addRoles": [
-                "graveyard recursion",
-                "life drain",
-                "protection",
-                "token production"
-              ],
-              "unreplacedRoles": [
-                "creature"
-              ],
-              "unreplacedStrategyComponentRoles": [],
-              "meaningfulStrategyLoss": false,
-              "verdict": "preserved"
-            }
-          }
-        },
-        {
-          "out": "Foreboding Steamboat",
-          "in": "Corpse Connoisseur",
-          "why": "Addresses the detected tutor deficit and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Graveyard / reanimator) without becoming a hard theme requirement.",
-          "recommendedPrinting": {
-            "set": "PLST",
-            "collectorNumber": "ALA-68",
-            "finish": "nonfoil",
-            "priceNzd": 0.41,
-            "priceUsdReference": 0.24
-          },
-          "structuralPairing": {
-            "addressedRole": "tutor",
-            "remainingStructuralDeficitAfterSwap": 3,
-            "authoritativeTargetGate": null,
-            "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 3,
-            "persistentColoredManaSourceFloor": 3,
-            "strategyPreservation": {
-              "cutStrategyAffinityScore": 0,
-              "addStrategyAffinityScore": 21,
-              "cutStrategyProtectionApplied": 0,
-              "cutMatchedStrategies": [],
-              "addMatchedStrategies": [
-                "graveyard-reanimator"
-              ],
-              "locallyUnreplacedStrategies": [],
-              "cutRoles": [],
-              "addRoles": [
-                "creature",
-                "creature tutor",
-                "graveyard recursion",
-                "haste",
-                "tutor"
-              ],
-              "unreplacedRoles": [],
-              "unreplacedStrategyComponentRoles": [],
-              "meaningfulStrategyLoss": false,
-              "verdict": "preserved"
-            }
-          }
-        },
-        {
-          "out": "Vizier of Many Faces",
+          "out": "Sphinx of the Second Sun",
           "in": "Sword of Fire and Ice",
           "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
           "recommendedPrinting": {
@@ -3764,7 +3767,7 @@
           }
         },
         {
-          "out": "Sphinx of the Second Sun",
+          "out": "Final-Word Phantom",
           "in": "Padeem, Consul of Innovation",
           "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
           "recommendedPrinting": {
@@ -3782,9 +3785,9 @@
             "persistentColoredManaSourcesAfterSwap": 3,
             "persistentColoredManaSourceFloor": 3,
             "strategyPreservation": {
-              "cutStrategyAffinityScore": 1,
+              "cutStrategyAffinityScore": 6,
               "addStrategyAffinityScore": 6,
-              "cutStrategyProtectionApplied": 1,
+              "cutStrategyProtectionApplied": 0,
               "cutMatchedStrategies": [
                 "value-engine"
               ],

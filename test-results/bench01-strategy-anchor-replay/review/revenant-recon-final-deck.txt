@@ -5,7 +5,6 @@
 1 Marvo, Deep Operative (MKC) 7 *F*
 1 Case of the Shifting Visage (MKC) 19 *N*
 1 Copy Catchers (MKC) 20 *N*
-1 Final-Word Phantom (MKC) 22 *N*
 1 Watcher of Hours (MKC) 25 *N*
 1 Charnel Serenade (MKC) 26 *N*
 1 Eye of Duskmantle (MKC) 27 *N*
@@ -19,6 +18,7 @@
 1 Dogged Detective (MKC) 127 *N*
 1 Doom Whisperer (MKC) 128 *N*
 1 Grave Titan (MKC) 129 *N*
+1 Massacre Wurm (MKC) 130 *N*
 1 Overseer of the Damned (MKC) 132 *N*
 1 Phyrexian Arena (MKC) 133 *N*
 1 Pile On (MKC) 134 *N*
@@ -80,10 +80,10 @@
 4 Island (MKM) 280 *N*
 5 Swamp (MKM) 281 *N*
 4 Swamp (MKM) 282 *N*
+1 Sword of Once and Future (MOM) 265 *N*
+1 The Cruelty of Gix (PDMU) 87p *N*
 1 Sword of Light and Shadow (ACR) 100 *F*
 1 Lively Dirge (OTJ) 93 *N*
-1 Not Dead After All (WOE) 101 *N*
-1 Corpse Connoisseur (PLST) ALA-68 *N*
 1 Sword of Fire and Ice (MAR) 100 *N*
 1 Increasing Ambition (DKA) 69 *N*
 1 Padeem, Consul of Innovation (J25) 62 *N*
