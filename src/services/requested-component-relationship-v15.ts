@@ -56,6 +56,14 @@ function recurringInvestigateArtifactEngineV15(card: ScryfallCard, components: r
     || /\b(?:at the beginning of|each)\b[^.]{0,220}\binvestigat(?:e|es|ed|ing)\b/.test(oracle);
 }
 
+function persistentImproviseArtifactResourceEngineV15(card: ScryfallCard, components: readonly RequestedComponentClauseV15[]): boolean {
+  if (!requestsArtifactCardTypeV15(components)) return false;
+  const typeLine = normalized(card.type_line);
+  if (!/\b(?:artifact|creature|enchantment|planeswalker|battle)\b/.test(typeLine)) return false;
+  const oracle = normalized(getCardOracleText(card));
+  return /\b(?:nonartifact |artifact |noncreature |creature )?spells? you cast (?:has|have) improvise\b/.test(oracle);
+}
+
 function auraSpecializationV15(card: ScryfallCard, commanders: readonly ScryfallCard[], clauses: readonly RequestedComponentClauseV15[]): boolean {
   if (!typeContainsV15(card, 'aura')) return false;
   const requestedAura = clauses.some((component) => [...quotedTypeAtomsV15(component.queryClause), ...unquotedTypeAtomsV15(component.queryClause)].includes('aura'));
@@ -171,6 +179,12 @@ export function requestedComponentRelationshipAffinityV15(
     score += 4;
     reasons.push('repeatedly investigates, creating Clue artifact tokens for an explicitly requested artifact component');
     relationshipIds.push('relation:artifact-token-engine');
+  }
+
+  if (persistentImproviseArtifactResourceEngineV15(card, components)) {
+    score += 5;
+    reasons.push('persistently grants improvise, converting requested artifacts into spell-casting resources');
+    relationshipIds.push('relation:artifact-resource-engine');
   }
 
   if (auraSpecializationV15(card, commanders, components)) {
