@@ -264,7 +264,7 @@
     "estimatedUpgradeSpendNzd": 6.26,
     "estimatedUpgradeSpendUsdReference": 3.67,
     "maxTotalNzd": 200.01,
-    "maxTotalUsdReference": 117.32,
+    "maxTotalUsdReference": 117.3,
     "swaps": [
       {
         "out": "Shard of the Nightbringer",
@@ -589,10 +589,10 @@
     ],
     "constraints": {
       "targetBracket": 4,
-      "maxNzdPerCard": 35,
+      "maxNzdPerCard": 35.01,
       "maxUsdPerCardReference": 20.53,
       "maxTotalNzd": 200.01,
-      "maxTotalUsdReference": 117.32,
+      "maxTotalUsdReference": 117.3,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -9757,7 +9757,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 11.18,
+                "estimatedSpendNzd": 11.19,
                 "estimatedSpendUsdReference": 6.56,
                 "unknownPriceCount": 0,
                 "improvementScore": 18.518,
