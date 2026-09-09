@@ -26,6 +26,10 @@ function recordStringV15(value: unknown): string {
   return typeof value === 'string' ? value : '';
 }
 
+function recordNumberV15(value: unknown): number {
+  return typeof value === 'number' && Number.isFinite(value) ? value : 0;
+}
+
 function recordStringsV15(value: unknown): string[] {
   return Array.isArray(value)
     ? value.filter((item): item is string => typeof item === 'string' && item.trim().length > 0)
@@ -42,6 +46,19 @@ function requestedRelationshipIdsV15(item: Record<string, unknown>): string[] {
     recordStringsV15(recordObjectV15(item.explicitTheme).matchedComponentIds)
       .filter((id) => id.startsWith('relation:')),
   )].sort((left, right) => left.localeCompare(right));
+}
+
+function requestedRelationshipAffinityV15(item: Record<string, unknown>): number {
+  return recordNumberV15(recordObjectV15(item.explicitTheme).requestedRelationshipAffinity);
+}
+
+function hasUncompensatedStrongRelationshipV15(
+  cut: Record<string, unknown>,
+  availableReplacementRelationships: ReadonlySet<string>,
+): boolean {
+  if (requestedRelationshipAffinityV15(cut) < 4) return false;
+  const relationships = requestedRelationshipIdsV15(cut);
+  return relationships.length > 0 && relationships.some((id) => !availableReplacementRelationships.has(id));
 }
 
 const CONTEXTUAL_PERMANENT_TYPE_WORDS_V15 = new Set([
@@ -130,10 +147,15 @@ export function pairUpgradeSwapsByStructureV15(
     supportedAdditions.flatMap((selection) => requestedRelationshipIdsV15(selection.candidate)),
   );
   const relationshipCounts = options.contextualRelationshipCounts ?? relationshipCountsFromCutsV15(cutPool);
-  const advisoryContextSafeCuts = cutPool.filter((cut) => requestedRelationshipIdsV15(cut).every((id) => (
-    (relationshipCounts[id] ?? 0) > 1 || availableAddRelationships.has(id)
-  )));
-  // Relationship preservation is advisory: never erase the only structurally eligible fallback.
+  const advisoryContextSafeCuts = cutPool.filter((cut) => (
+    !hasUncompensatedStrongRelationshipV15(cut, availableAddRelationships)
+    && requestedRelationshipIdsV15(cut).every((id) => (
+      (relationshipCounts[id] ?? 0) > 1 || availableAddRelationships.has(id)
+    ))
+  ));
+  // Strong engine/payoff relationships are protected while a weaker fallback exists. If every
+  // structural fallback carries the same loss, keep the established advisory behavior rather
+  // than turning requested identity into an absolute hard freeze.
   const contextSafeCuts = advisoryContextSafeCuts.length > 0 ? advisoryContextSafeCuts : cutPool;
   const {
     contextualDeckCards: _contextualDeckCards,
@@ -205,9 +227,14 @@ function contextualPlanGuardsV15(
   for (const cut of cuts) {
     const name = recordStringV15(summarizedCardV15(cut).name);
     if (!name) continue;
-    if (requestedRelationshipIdsV15(cut).some((id) => (
+    const uncompensatedUniqueRelationship = requestedRelationshipIdsV15(cut).some((id) => (
       (relationshipCounts[id] ?? 0) <= 1 && !supportedCandidateRelationships.has(id)
-    ))) protectedNames.add(name);
+    ));
+    const uncompensatedStrongRelationship = hasUncompensatedStrongRelationshipV15(
+      cut,
+      supportedCandidateRelationships,
+    );
+    if (uncompensatedUniqueRelationship || uncompensatedStrongRelationship) protectedNames.add(name);
   }
 
   let invalidSelected = false;
@@ -225,7 +252,8 @@ function contextualPlanGuardsV15(
     const uncompensatedUniqueRelationship = requestedRelationshipIdsV15(cut).some((id) => (
       (relationshipCounts[id] ?? 0) <= 1 && !addRelationships.has(id)
     ));
-    if (uncompensatedUniqueRelationship) {
+    const uncompensatedStrongRelationship = hasUncompensatedStrongRelationshipV15(cut, addRelationships);
+    if (uncompensatedUniqueRelationship || uncompensatedStrongRelationship) {
       invalidSelected = true;
       if (outName) protectedNames.add(outName);
     }
@@ -258,7 +286,7 @@ export async function buildSimulationBackedUpgradePlanV07(
 
   // The core remains the source of candidate generation, target pressure, pairing, legality and
   // simulation. The wrapper only reruns when the concrete proposed package demonstrates one of
-  // the two evidence-backed contextual defects, preserving all other established behavior.
+  // the evidence-backed contextual defects, preserving all other established behavior.
   for (let correctionRound = 0; correctionRound < 2; correctionRound += 1) {
     const guards = contextualPlanGuardsV15(plan, cards);
     if (!guards.invalidSelected) return plan;
