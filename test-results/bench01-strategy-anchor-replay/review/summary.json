@@ -1,7 +1,7 @@
 {
   "schema": "bench01-adaptive-diversification-replay-v3",
   "batch": "BENCH-01-STRATEGY-ANCHOR-REPLAY",
-  "productRuntimeBaselineSha": "3bd0c39fa168a0848e18a709a101bc76bd224734",
+  "productRuntimeBaselineSha": "d5c349cbfa7aba5d22fa249fe2b247009d98e82a",
   "sourceFrozenWithinBatch": true,
   "results": [
     {
@@ -777,7 +777,7 @@
             "set": "SLD",
             "collectorNumber": "2058",
             "finish": "nonfoil",
-            "priceNzd": 44.22,
+            "priceNzd": 44.23,
             "priceUsdReference": 25.89
           },
           "structuralPairing": {
@@ -957,7 +957,7 @@
             "set": "PLST",
             "collectorNumber": "EXO-17",
             "finish": "nonfoil",
-            "priceNzd": 6.81,
+            "priceNzd": 6.82,
             "priceUsdReference": 3.99
           },
           "structuralPairing": {
@@ -1701,7 +1701,7 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.82,
+            "priceNzd": 36.83,
             "priceUsdReference": 21.56
           },
           "structuralPairing": {
@@ -2255,8 +2255,8 @@
             "set": "EXO",
             "collectorNumber": "55",
             "finish": "nonfoil",
-            "priceNzd": 12.13,
-            "priceUsdReference": 7.1
+            "priceNzd": 12.23,
+            "priceUsdReference": 7.16
           },
           "structuralPairing": {
             "addressedRole": "ramp",
@@ -2299,7 +2299,7 @@
             "set": "MB2",
             "collectorNumber": "205",
             "finish": "nonfoil",
-            "priceNzd": 7.75,
+            "priceNzd": 7.76,
             "priceUsdReference": 4.54
           },
           "structuralPairing": {
@@ -2477,7 +2477,7 @@
             "set": "FIC",
             "collectorNumber": "464",
             "finish": "foil",
-            "priceNzd": 19.33,
+            "priceNzd": 19.34,
             "priceUsdReference": 11.32
           },
           "structuralPairing": {
@@ -3115,7 +3115,7 @@
             "set": "PDSK",
             "collectorNumber": "201p",
             "finish": "nonfoil",
-            "priceNzd": 4.18,
+            "priceNzd": 4.19,
             "priceUsdReference": 2.45
           },
           "structuralPairing": {
@@ -3681,7 +3681,7 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.82,
+            "priceNzd": 36.83,
             "priceUsdReference": 21.56
           },
           "structuralPairing": {
@@ -3816,7 +3816,7 @@
       "family": "clue-artifact-value-control",
       "reference": "Deep Clue Sea",
       "themeQuery": "artifacts and card draw",
-      "totalSwaps": 6,
+      "totalSwaps": 7,
       "assessedBracket": 3,
       "before": {
         "cardCount": 100,
@@ -3890,11 +3890,11 @@
         "assessedBracket": 3,
         "assessedBand": "bracket-3-upgraded-range",
         "metrics": {
-          "averageNonlandManaValue": 3.51,
-          "earlyPlayCount": 19,
+          "averageNonlandManaValue": 3.37,
+          "earlyPlayCount": 20,
           "fastManaCount": 1,
-          "cheapInteractionCount": 1,
-          "tutorCount": 1,
+          "cheapInteractionCount": 2,
+          "tutorCount": 2,
           "recursionCount": 0,
           "boardWipeCount": 2,
           "rampCount": 17,
@@ -3912,12 +3912,12 @@
             "verifiedWinningCombos": 0,
             "ruthlessWinningCombos": 0,
             "strategicallyRelevantCombos": 0,
-            "averageNonlandManaValue": 3.51,
-            "earlyPlayCount": 19,
+            "averageNonlandManaValue": 3.37,
+            "earlyPlayCount": 20,
             "fastManaCount": 1,
             "freeInteractionCount": 0,
-            "cheapInteractionCount": 1,
-            "tutorCount": 1,
+            "cheapInteractionCount": 2,
+            "tutorCount": 2,
             "gameChangerCount": 1,
             "efficientWinConditionEvidence": false,
             "cedhIntent": false,
@@ -3943,7 +3943,7 @@
         }
       },
       "terminalRound": {
-        "round": 3,
+        "round": 4,
         "accepted": false,
         "acceptedSwaps": 0,
         "candidatePackagesGenerated": 3,
@@ -3969,11 +3969,11 @@
           "status": "satisfied",
           "satisfied": true,
           "canonicalLabel": "Artifacts + Card draw",
-          "matchedMainCards": 44,
+          "matchedMainCards": 46,
           "requiredMainMatches": 18,
-          "mainCoverage": 0.4444444444444444
+          "mainCoverage": 0.46464646464646464
         },
-        "stopReason": "all-competing-packages-below-improvement-threshold"
+        "stopReason": "no-supported-swaps-found"
       },
       "candidateWork": {
         "rounds": [
@@ -3985,14 +3985,14 @@
             "candidateAttemptSizes": [
               4
             ],
-            "winningCandidate": 1,
+            "winningCandidate": 2,
             "stopReason": null
           },
           {
             "round": 2,
             "accepted": true,
-            "candidatePackagesGenerated": 6,
-            "candidatePackagesGeneratedAcrossAttempts": 6,
+            "candidatePackagesGenerated": 3,
+            "candidatePackagesGeneratedAcrossAttempts": 3,
             "candidateAttemptSizes": [
               4
             ],
@@ -4001,6 +4001,17 @@
           },
           {
             "round": 3,
+            "accepted": true,
+            "candidatePackagesGenerated": 3,
+            "candidatePackagesGeneratedAcrossAttempts": 3,
+            "candidateAttemptSizes": [
+              4
+            ],
+            "winningCandidate": 1,
+            "stopReason": null
+          },
+          {
+            "round": 4,
             "accepted": false,
             "candidatePackagesGenerated": 3,
             "candidatePackagesGeneratedAcrossAttempts": 12,
@@ -4011,22 +4022,22 @@
               1
             ],
             "winningCandidate": null,
-            "stopReason": "all-competing-packages-below-improvement-threshold"
+            "stopReason": "no-supported-swaps-found"
           }
         ],
         "totalPackagesGeneratedAcrossAttempts": 24
       },
       "acceptedSwaps": [
         {
-          "out": "Organic Extinction",
-          "in": "Sword of Fire and Ice",
-          "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signals: combat-tokens, value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Artifacts, Card draw) without becoming a hard theme requirement.",
+          "out": "Knowledge Is Power",
+          "in": "Veil of Summer",
+          "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "MAR",
-            "collectorNumber": "100",
+            "set": "MB2",
+            "collectorNumber": "75",
             "finish": "nonfoil",
-            "priceNzd": 36.82,
-            "priceUsdReference": 21.56
+            "priceNzd": 5.5,
+            "priceUsdReference": 3.22
           },
           "structuralPairing": {
             "addressedRole": "protection",
@@ -4037,66 +4048,20 @@
             "persistentColoredManaSourceFloor": 6,
             "strategyPreservation": {
               "cutStrategyAffinityScore": 1,
-              "addStrategyAffinityScore": 8,
+              "addStrategyAffinityScore": 5,
               "cutStrategyProtectionApplied": 1,
               "cutMatchedStrategies": [
                 "value-engine"
               ],
               "addMatchedStrategies": [
-                "combat-tokens",
                 "value-engine"
-              ],
-              "locallyUnreplacedStrategies": [],
-              "cutRoles": [
-                "board wipe"
-              ],
-              "addRoles": [
-                "card draw",
-                "equipment",
-                "protection",
-                "repeatable draw",
-                "spot interaction"
-              ],
-              "unreplacedRoles": [
-                "board wipe"
-              ],
-              "unreplacedStrategyComponentRoles": [],
-              "meaningfulStrategyLoss": false,
-              "verdict": "preserved"
-            }
-          }
-        },
-        {
-          "out": "Inspiring Statuary",
-          "in": "Tamiyo's Journal",
-          "why": "Addresses the detected tutor deficit and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Artifacts, Card draw) without becoming a hard theme requirement.",
-          "recommendedPrinting": {
-            "set": "SOI",
-            "collectorNumber": "265",
-            "finish": "nonfoil",
-            "priceNzd": 1.02,
-            "priceUsdReference": 0.6
-          },
-          "structuralPairing": {
-            "addressedRole": "tutor",
-            "remainingStructuralDeficitAfterSwap": 10,
-            "authoritativeTargetGate": null,
-            "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 6,
-            "persistentColoredManaSourceFloor": 6,
-            "strategyPreservation": {
-              "cutStrategyAffinityScore": 0,
-              "addStrategyAffinityScore": 6,
-              "cutStrategyProtectionApplied": 0,
-              "cutMatchedStrategies": [],
-              "addMatchedStrategies": [
-                "combat-tokens"
               ],
               "locallyUnreplacedStrategies": [],
               "cutRoles": [],
               "addRoles": [
-                "token production",
-                "tutor"
+                "board protection",
+                "card draw",
+                "protection"
               ],
               "unreplacedRoles": [],
               "unreplacedStrategyComponentRoles": [],
@@ -4106,7 +4071,54 @@
           }
         },
         {
-          "out": "Knowledge Is Power",
+          "out": "Hornet Queen",
+          "in": "Transmutation Font",
+          "why": "Addresses the detected tutor deficit and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Artifacts) without becoming a hard theme requirement.",
+          "recommendedPrinting": {
+            "set": "PW24",
+            "collectorNumber": "11",
+            "finish": "foil",
+            "priceNzd": 2.68,
+            "priceUsdReference": 1.57
+          },
+          "structuralPairing": {
+            "addressedRole": "tutor",
+            "remainingStructuralDeficitAfterSwap": 10,
+            "authoritativeTargetGate": null,
+            "nonlandManaValueReduction": null,
+            "persistentColoredManaSourcesAfterSwap": 6,
+            "persistentColoredManaSourceFloor": 6,
+            "strategyPreservation": {
+              "cutStrategyAffinityScore": 6,
+              "addStrategyAffinityScore": 6,
+              "cutStrategyProtectionApplied": 4,
+              "cutMatchedStrategies": [
+                "combat-tokens"
+              ],
+              "addMatchedStrategies": [
+                "combat-tokens"
+              ],
+              "locallyUnreplacedStrategies": [],
+              "cutRoles": [
+                "creature",
+                "token production"
+              ],
+              "addRoles": [
+                "repeatable token engine",
+                "token production",
+                "tutor"
+              ],
+              "unreplacedRoles": [
+                "creature"
+              ],
+              "unreplacedStrategyComponentRoles": [],
+              "meaningfulStrategyLoss": false,
+              "verdict": "preserved"
+            }
+          }
+        },
+        {
+          "out": "On the Trail",
           "in": "Staff of Compleation",
           "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: counters, value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Artifacts, Card draw) without becoming a hard theme requirement.",
           "recommendedPrinting": {
@@ -4152,61 +4164,19 @@
           }
         },
         {
-          "out": "On the Trail",
-          "in": "Veil of Summer",
-          "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
-          "recommendedPrinting": {
-            "set": "MB2",
-            "collectorNumber": "75",
-            "finish": "nonfoil",
-            "priceNzd": 5.5,
-            "priceUsdReference": 3.22
-          },
-          "structuralPairing": {
-            "addressedRole": "protection",
-            "remainingStructuralDeficitAfterSwap": 8,
-            "authoritativeTargetGate": null,
-            "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 7,
-            "persistentColoredManaSourceFloor": 6,
-            "strategyPreservation": {
-              "cutStrategyAffinityScore": 1,
-              "addStrategyAffinityScore": 5,
-              "cutStrategyProtectionApplied": 1,
-              "cutMatchedStrategies": [
-                "value-engine"
-              ],
-              "addMatchedStrategies": [
-                "value-engine"
-              ],
-              "locallyUnreplacedStrategies": [],
-              "cutRoles": [],
-              "addRoles": [
-                "board protection",
-                "card draw",
-                "protection"
-              ],
-              "unreplacedRoles": [],
-              "unreplacedStrategyComponentRoles": [],
-              "meaningfulStrategyLoss": false,
-              "verdict": "preserved"
-            }
-          }
-        },
-        {
           "out": "Tangletrove Kelp",
-          "in": "The Mightstone and Weakstone",
+          "in": "Aether Spellbomb",
           "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Artifacts, Card draw) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "BRO",
-            "collectorNumber": "238",
-            "finish": "foil",
-            "priceNzd": 9.39,
-            "priceUsdReference": 5.5
+            "set": "PLST",
+            "collectorNumber": "MMA-196",
+            "finish": "nonfoil",
+            "priceNzd": 0.55,
+            "priceUsdReference": 0.32
           },
           "structuralPairing": {
             "addressedRole": "interaction",
-            "remainingStructuralDeficitAfterSwap": 7,
+            "remainingStructuralDeficitAfterSwap": 8,
             "authoritativeTargetGate": null,
             "nonlandManaValueReduction": null,
             "persistentColoredManaSourcesAfterSwap": 7,
@@ -4229,13 +4199,12 @@
               ],
               "addRoles": [
                 "card draw",
-                "conditional mana acceleration",
-                "mana rock",
+                "cheap interaction",
+                "self sacrifice",
                 "spot interaction"
               ],
               "unreplacedRoles": [
-                "creature",
-                "self sacrifice"
+                "creature"
               ],
               "unreplacedStrategyComponentRoles": [],
               "meaningfulStrategyLoss": false,
@@ -4256,7 +4225,7 @@
           },
           "structuralPairing": {
             "addressedRole": "protection",
-            "remainingStructuralDeficitAfterSwap": 6,
+            "remainingStructuralDeficitAfterSwap": 7,
             "authoritativeTargetGate": null,
             "nonlandManaValueReduction": null,
             "persistentColoredManaSourcesAfterSwap": 7,
@@ -4285,6 +4254,101 @@
                 "repeatable draw"
               ],
               "unreplacedRoles": [],
+              "unreplacedStrategyComponentRoles": [],
+              "meaningfulStrategyLoss": false,
+              "verdict": "preserved"
+            }
+          }
+        },
+        {
+          "out": "Organic Extinction",
+          "in": "Sword of Fire and Ice",
+          "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signals: combat-tokens, value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Artifacts, Card draw) without becoming a hard theme requirement.",
+          "recommendedPrinting": {
+            "set": "MAR",
+            "collectorNumber": "100",
+            "finish": "nonfoil",
+            "priceNzd": 36.83,
+            "priceUsdReference": 21.56
+          },
+          "structuralPairing": {
+            "addressedRole": "protection",
+            "remainingStructuralDeficitAfterSwap": 6,
+            "authoritativeTargetGate": null,
+            "nonlandManaValueReduction": null,
+            "persistentColoredManaSourcesAfterSwap": 7,
+            "persistentColoredManaSourceFloor": 6,
+            "strategyPreservation": {
+              "cutStrategyAffinityScore": 1,
+              "addStrategyAffinityScore": 8,
+              "cutStrategyProtectionApplied": 1,
+              "cutMatchedStrategies": [
+                "value-engine"
+              ],
+              "addMatchedStrategies": [
+                "combat-tokens",
+                "value-engine"
+              ],
+              "locallyUnreplacedStrategies": [],
+              "cutRoles": [
+                "board wipe"
+              ],
+              "addRoles": [
+                "card draw",
+                "equipment",
+                "protection",
+                "repeatable draw",
+                "spot interaction"
+              ],
+              "unreplacedRoles": [
+                "board wipe"
+              ],
+              "unreplacedStrategyComponentRoles": [],
+              "meaningfulStrategyLoss": false,
+              "verdict": "preserved"
+            }
+          }
+        },
+        {
+          "out": "Esix, Fractal Bloom",
+          "in": "Tamiyo's Journal",
+          "why": "Addresses the detected tutor deficit and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Artifacts, Card draw) without becoming a hard theme requirement.",
+          "recommendedPrinting": {
+            "set": "SOI",
+            "collectorNumber": "265",
+            "finish": "nonfoil",
+            "priceNzd": 1.02,
+            "priceUsdReference": 0.6
+          },
+          "structuralPairing": {
+            "addressedRole": "tutor",
+            "remainingStructuralDeficitAfterSwap": 5,
+            "authoritativeTargetGate": null,
+            "nonlandManaValueReduction": null,
+            "persistentColoredManaSourcesAfterSwap": 7,
+            "persistentColoredManaSourceFloor": 6,
+            "strategyPreservation": {
+              "cutStrategyAffinityScore": 6,
+              "addStrategyAffinityScore": 6,
+              "cutStrategyProtectionApplied": 4,
+              "cutMatchedStrategies": [
+                "combat-tokens"
+              ],
+              "addMatchedStrategies": [
+                "combat-tokens"
+              ],
+              "locallyUnreplacedStrategies": [],
+              "cutRoles": [
+                "creature",
+                "token production"
+              ],
+              "addRoles": [
+                "token production",
+                "tutor"
+              ],
+              "unreplacedRoles": [
+                "creature"
+              ],
               "unreplacedStrategyComponentRoles": [],
               "meaningfulStrategyLoss": false,
               "verdict": "preserved"

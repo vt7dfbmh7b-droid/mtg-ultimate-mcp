@@ -25,20 +25,19 @@
 1 Teferi's Ageless Insight (MKC) 119 *N*
 1 Tezzeret, Betrayer of Flesh (MKC) 120 *N*
 1 Thought Monitor (MKC) 121 *N*
-1 Hornet Queen (MKC) 172 *N*
 1 Jolrael, Mwonvuli Recluse (MKC) 173 *N*
 1 Killer Service (MKC) 174 *N*
 1 Tireless Tracker (MKC) 190 *N*
 1 Adrix and Nev, Twincasters (MKC) 198 *N*
 1 Chulane, Teller of Tales (MKC) 202 *N*
 1 Disorder in the Court (MKC) 209 *N*
-1 Esix, Fractal Bloom (MKC) 210 *N*
 1 Hydroid Krasis (MKC) 212 *N*
 1 Koma, Cosmos Serpent (MKC) 213 *N*
 1 Lonis, Cryptozoologist (MKC) 215 *N*
 1 Selvala, Explorer Returned (MKC) 218 *N*
 1 Academy Manufactor (MKC) 221 *N*
 1 Idol of Oblivion (MKC) 229 *N*
+1 Inspiring Statuary (MKC) 230 *N*
 1 Nettlecyst (MKC) 233 *N*
 1 Psychosis Crawler (MKC) 234 *N*
 1 Canopy Vista (MKC) 252 *N*
@@ -87,9 +86,10 @@
 3 Island (MKM) 280 *N*
 3 Forest (MKM) 285 *N*
 2 Forest (MKM) 286 *N*
+1 Veil of Summer (MB2) 75 *N*
+1 Transmutation Font (PW24) 11 *F*
+1 Staff of Compleation (ONE) 242 *N*
+1 Aether Spellbomb (PLST) MMA-196 *N*
+1 Padeem, Consul of Innovation (J25) 62 *N*
 1 Sword of Fire and Ice (MAR) 100 *N*
 1 Tamiyo's Journal (SOI) 265 *N*
-1 Staff of Compleation (ONE) 242 *N*
-1 Veil of Summer (MB2) 75 *N*
-1 The Mightstone and Weakstone (BRO) 238 *F*
-1 Padeem, Consul of Innovation (J25) 62 *N*
