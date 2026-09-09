@@ -261,10 +261,10 @@
       "adaptive": false
     },
     "packageAcceptanceContract": null,
-    "estimatedUpgradeSpendNzd": 6.74,
+    "estimatedUpgradeSpendNzd": 6.75,
     "estimatedUpgradeSpendUsdReference": 3.95,
     "maxTotalNzd": 200,
-    "maxTotalUsdReference": 117.2,
+    "maxTotalUsdReference": 117.08,
     "swaps": [
       {
         "out": "Shard of the Nightbringer",
@@ -362,7 +362,7 @@
           "set": "MRD",
           "collectorNumber": "215",
           "finish": "nonfoil",
-          "priceNzd": 3.41,
+          "priceNzd": 3.42,
           "priceUsdReference": 2
         },
         "structuralPairing": {
@@ -598,7 +598,7 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 12,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 3.77,
+        "estimatedSpendNzd": 3.78,
         "estimatedSpendUsdReference": 2.21,
         "improvementScore": 2.289,
         "winRouteProtection": {
@@ -664,9 +664,9 @@
     "constraints": {
       "targetBracket": 4,
       "maxNzdPerCard": 35,
-      "maxUsdPerCardReference": 20.51,
+      "maxUsdPerCardReference": 20.49,
       "maxTotalNzd": 200,
-      "maxTotalUsdReference": 117.2,
+      "maxTotalUsdReference": 117.08,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -814,7 +814,7 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 2,
             "actualSwaps": 2,
-            "estimatedSpendNzd": 3.7,
+            "estimatedSpendNzd": 3.71,
             "estimatedSpendUsdReference": 2.17,
             "unknownPriceCount": 0,
             "improvementScore": 5.348,
@@ -1127,7 +1127,7 @@
                   "set": "MRD",
                   "collectorNumber": "215",
                   "finish": "nonfoil",
-                  "priceNzd": 3.41,
+                  "priceNzd": 3.42,
                   "priceUsdReference": 2
                 },
                 "structuralPairing": {
@@ -2431,8 +2431,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 11.13,
-                "estimatedSpendUsdReference": 6.52,
+                "estimatedSpendNzd": 11.33,
+                "estimatedSpendUsdReference": 6.63,
                 "unknownPriceCount": 0,
                 "improvementScore": 13.725,
                 "significantRegression": false,
@@ -2795,7 +2795,7 @@
                       "set": "MRD",
                       "collectorNumber": "215",
                       "finish": "nonfoil",
-                      "priceNzd": 3.41,
+                      "priceNzd": 3.42,
                       "priceUsdReference": 2
                     },
                     "structuralPairing": {
@@ -2926,8 +2926,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -2974,8 +2974,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 9.98,
-                "estimatedSpendUsdReference": 5.85,
+                "estimatedSpendNzd": 10.18,
+                "estimatedSpendUsdReference": 5.96,
                 "unknownPriceCount": 0,
                 "improvementScore": 16.461,
                 "significantRegression": false,
@@ -3470,8 +3470,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -3518,8 +3518,8 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 11.06,
-                "estimatedSpendUsdReference": 6.48,
+                "estimatedSpendNzd": 11.24,
+                "estimatedSpendUsdReference": 6.58,
                 "unknownPriceCount": 0,
                 "improvementScore": 15.963,
                 "significantRegression": false,
@@ -3934,11 +3934,11 @@
                     "in": "Feed the Swarm",
                     "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (2 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "TLE",
-                      "collectorNumber": "257",
-                      "finish": "nonfoil",
-                      "priceNzd": 0.32,
-                      "priceUsdReference": 0.19
+                      "set": "FDN",
+                      "collectorNumber": "712",
+                      "finish": "foil",
+                      "priceNzd": 0.31,
+                      "priceUsdReference": 0.18
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -4022,8 +4022,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -4070,8 +4070,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 12.59,
-                "estimatedSpendUsdReference": 7.38,
+                "estimatedSpendNzd": 12.79,
+                "estimatedSpendUsdReference": 7.49,
                 "unknownPriceCount": 0,
                 "improvementScore": 18.951,
                 "significantRegression": false,
@@ -4570,8 +4570,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -4630,7 +4630,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 4.45,
+                "estimatedSpendNzd": 4.46,
                 "estimatedSpendUsdReference": 2.61,
                 "unknownPriceCount": 0,
                 "improvementScore": 13.594,
@@ -4965,7 +4965,7 @@
                       "set": "MRD",
                       "collectorNumber": "215",
                       "finish": "nonfoil",
-                      "priceNzd": 3.41,
+                      "priceNzd": 3.42,
                       "priceUsdReference": 2
                     },
                     "structuralPairing": {
@@ -5558,8 +5558,8 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 4.39,
-                "estimatedSpendUsdReference": 2.57,
+                "estimatedSpendNzd": 4.37,
+                "estimatedSpendUsdReference": 2.56,
                 "unknownPriceCount": 0,
                 "improvementScore": 13.108,
                 "significantRegression": false,
@@ -5945,11 +5945,11 @@
                     "in": "Feed the Swarm",
                     "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (2 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "TLE",
-                      "collectorNumber": "257",
-                      "finish": "nonfoil",
-                      "priceNzd": 0.32,
-                      "priceUsdReference": 0.19
+                      "set": "FDN",
+                      "collectorNumber": "712",
+                      "finish": "foil",
+                      "priceNzd": 0.31,
+                      "priceUsdReference": 0.18
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -6033,7 +6033,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 5.92,
+                "estimatedSpendNzd": 5.93,
                 "estimatedSpendUsdReference": 3.47,
                 "unknownPriceCount": 0,
                 "improvementScore": 14.625,
@@ -6517,7 +6517,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 3.7,
+                "estimatedSpendNzd": 3.71,
                 "estimatedSpendUsdReference": 2.17,
                 "unknownPriceCount": 0,
                 "improvementScore": 5.348,
@@ -6830,7 +6830,7 @@
                       "set": "MRD",
                       "collectorNumber": "215",
                       "finish": "nonfoil",
-                      "priceNzd": 3.41,
+                      "priceNzd": 3.42,
                       "priceUsdReference": 2
                     },
                     "structuralPairing": {
@@ -8128,7 +8128,7 @@
         "candidatePackagesGenerated": 4,
         "candidatePackagesEligible": 1,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 3.77,
+        "estimatedSpendNzd": 3.78,
         "estimatedSpendUsdReference": 2.21,
         "improvementScore": 2.289,
         "winRouteProtection": {
@@ -8148,7 +8148,7 @@
               "collectorNumber": "215",
               "releaseDate": "2003-10-02",
               "finish": "nonfoil",
-              "priceNzd": 3.41,
+              "priceNzd": 3.42,
               "priceUsdReference": 2,
               "promo": false,
               "promoTypes": [],
@@ -8249,7 +8249,7 @@
             "reason": "eligible",
             "attemptedSwaps": 2,
             "actualSwaps": 2,
-            "estimatedSpendNzd": 3.77,
+            "estimatedSpendNzd": 3.78,
             "estimatedSpendUsdReference": 2.21,
             "unknownPriceCount": 0,
             "improvementScore": 2.289,
@@ -8548,7 +8548,7 @@
                   "set": "MRD",
                   "collectorNumber": "215",
                   "finish": "nonfoil",
-                  "priceNzd": 3.41,
+                  "priceNzd": 3.42,
                   "priceUsdReference": 2
                 },
                 "structuralPairing": {
@@ -9033,7 +9033,7 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 2,
             "actualSwaps": 2,
-            "estimatedSpendNzd": 5.2,
+            "estimatedSpendNzd": 5.21,
             "estimatedSpendUsdReference": 3.05,
             "unknownPriceCount": 0,
             "improvementScore": 6.132,
@@ -9831,8 +9831,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 11.19,
-                "estimatedSpendUsdReference": 6.56,
+                "estimatedSpendNzd": 11.39,
+                "estimatedSpendUsdReference": 6.67,
                 "unknownPriceCount": 0,
                 "improvementScore": 18.518,
                 "significantRegression": false,
@@ -10193,7 +10193,7 @@
                       "set": "MRD",
                       "collectorNumber": "215",
                       "finish": "nonfoil",
-                      "priceNzd": 3.41,
+                      "priceNzd": 3.42,
                       "priceUsdReference": 2
                     },
                     "structuralPairing": {
@@ -10326,8 +10326,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -10376,8 +10376,8 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 11.06,
-                "estimatedSpendUsdReference": 6.48,
+                "estimatedSpendNzd": 11.24,
+                "estimatedSpendUsdReference": 6.58,
                 "unknownPriceCount": 0,
                 "improvementScore": 15.467,
                 "significantRegression": false,
@@ -10789,11 +10789,11 @@
                     "in": "Feed the Swarm",
                     "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (3 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "TLE",
-                      "collectorNumber": "257",
-                      "finish": "nonfoil",
-                      "priceNzd": 0.32,
-                      "priceUsdReference": 0.19
+                      "set": "FDN",
+                      "collectorNumber": "712",
+                      "finish": "foil",
+                      "priceNzd": 0.31,
+                      "priceUsdReference": 0.18
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -10885,8 +10885,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -10935,8 +10935,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 12.59,
-                "estimatedSpendUsdReference": 7.38,
+                "estimatedSpendNzd": 12.79,
+                "estimatedSpendUsdReference": 7.49,
                 "unknownPriceCount": 0,
                 "improvementScore": 19.96,
                 "significantRegression": false,
@@ -11434,8 +11434,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -11484,8 +11484,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 8.79,
-                "estimatedSpendUsdReference": 5.15,
+                "estimatedSpendNzd": 9,
+                "estimatedSpendUsdReference": 5.27,
                 "unknownPriceCount": 0,
                 "improvementScore": 21.893,
                 "significantRegression": false,
@@ -11889,8 +11889,8 @@
                       "set": "SOA",
                       "collectorNumber": "26",
                       "finish": "nonfoil",
-                      "priceNzd": 0.56,
-                      "priceUsdReference": 0.33
+                      "priceNzd": 0.58,
+                      "priceUsdReference": 0.34
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -11981,8 +11981,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -12043,7 +12043,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 4.52,
+                "estimatedSpendNzd": 4.53,
                 "estimatedSpendUsdReference": 2.65,
                 "unknownPriceCount": 0,
                 "improvementScore": 15.971,
@@ -12374,7 +12374,7 @@
                       "set": "MRD",
                       "collectorNumber": "215",
                       "finish": "nonfoil",
-                      "priceNzd": 3.41,
+                      "priceNzd": 3.42,
                       "priceUsdReference": 2
                     },
                     "structuralPairing": {
@@ -12507,8 +12507,8 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 4.39,
-                "estimatedSpendUsdReference": 2.57,
+                "estimatedSpendNzd": 4.37,
+                "estimatedSpendUsdReference": 2.56,
                 "unknownPriceCount": 0,
                 "improvementScore": 14.24,
                 "significantRegression": false,
@@ -12889,11 +12889,11 @@
                     "in": "Feed the Swarm",
                     "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (3 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "TLE",
-                      "collectorNumber": "257",
-                      "finish": "nonfoil",
-                      "priceNzd": 0.32,
-                      "priceUsdReference": 0.19
+                      "set": "FDN",
+                      "collectorNumber": "712",
+                      "finish": "foil",
+                      "priceNzd": 0.31,
+                      "priceUsdReference": 0.18
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -12985,7 +12985,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 5.92,
+                "estimatedSpendNzd": 5.93,
                 "estimatedSpendUsdReference": 3.47,
                 "unknownPriceCount": 0,
                 "improvementScore": 16.38,
@@ -13453,8 +13453,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 2.12,
-                "estimatedSpendUsdReference": 1.24,
+                "estimatedSpendNzd": 2.14,
+                "estimatedSpendUsdReference": 1.25,
                 "unknownPriceCount": 0,
                 "improvementScore": 18.143,
                 "significantRegression": false,
@@ -13827,8 +13827,8 @@
                       "set": "SOA",
                       "collectorNumber": "26",
                       "finish": "nonfoil",
-                      "priceNzd": 0.56,
-                      "priceUsdReference": 0.33
+                      "priceNzd": 0.58,
+                      "priceUsdReference": 0.34
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -13932,7 +13932,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 3.77,
+                "estimatedSpendNzd": 3.78,
                 "estimatedSpendUsdReference": 2.21,
                 "unknownPriceCount": 0,
                 "improvementScore": 2.289,
@@ -14231,7 +14231,7 @@
                       "set": "MRD",
                       "collectorNumber": "215",
                       "finish": "nonfoil",
-                      "priceNzd": 3.41,
+                      "priceNzd": 3.42,
                       "priceUsdReference": 2
                     },
                     "structuralPairing": {
@@ -14716,7 +14716,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 5.2,
+                "estimatedSpendNzd": 5.21,
                 "estimatedSpendUsdReference": 3.05,
                 "unknownPriceCount": 0,
                 "improvementScore": 6.132,
@@ -16911,8 +16911,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 15.15,
-                "estimatedSpendUsdReference": 8.88,
+                "estimatedSpendNzd": 15.36,
+                "estimatedSpendUsdReference": 8.99,
                 "unknownPriceCount": 0,
                 "improvementScore": 8.485,
                 "significantRegression": false,
@@ -17343,8 +17343,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -17435,8 +17435,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 12.8,
-                "estimatedSpendUsdReference": 7.5,
+                "estimatedSpendNzd": 13,
+                "estimatedSpendUsdReference": 7.61,
                 "unknownPriceCount": 0,
                 "improvementScore": 9.054,
                 "significantRegression": false,
@@ -17864,8 +17864,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -17956,8 +17956,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 8.09,
-                "estimatedSpendUsdReference": 4.74,
+                "estimatedSpendNzd": 8.28,
+                "estimatedSpendUsdReference": 4.85,
                 "unknownPriceCount": 0,
                 "improvementScore": 6.878,
                 "significantRegression": false,
@@ -18385,8 +18385,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -18478,8 +18478,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 8.98,
-                "estimatedSpendUsdReference": 5.26,
+                "estimatedSpendNzd": 9.19,
+                "estimatedSpendUsdReference": 5.38,
                 "unknownPriceCount": 0,
                 "improvementScore": 5.42,
                 "significantRegression": false,
@@ -18907,8 +18907,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -18956,8 +18956,8 @@
                       "set": "SOC",
                       "collectorNumber": "210",
                       "finish": "nonfoil",
-                      "priceNzd": 1.43,
-                      "priceUsdReference": 0.84
+                      "priceNzd": 1.45,
+                      "priceUsdReference": 0.85
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -19014,8 +19014,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 10.31,
-                "estimatedSpendUsdReference": 6.04,
+                "estimatedSpendNzd": 10.51,
+                "estimatedSpendUsdReference": 6.15,
                 "unknownPriceCount": 0,
                 "improvementScore": 4.539,
                 "significantRegression": false,
@@ -19423,8 +19423,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -19472,8 +19472,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 12,
-                "estimatedSpendUsdReference": 7.03,
+                "estimatedSpendNzd": 12.2,
+                "estimatedSpendUsdReference": 7.14,
                 "unknownPriceCount": 0,
                 "improvementScore": 6.166,
                 "significantRegression": false,
@@ -19918,8 +19918,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -19967,8 +19967,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 7.7,
-                "estimatedSpendUsdReference": 4.51,
+                "estimatedSpendNzd": 7.89,
+                "estimatedSpendUsdReference": 4.62,
                 "unknownPriceCount": 0,
                 "improvementScore": 6.325,
                 "significantRegression": false,
@@ -20372,8 +20372,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -20421,8 +20421,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 7.54,
-                "estimatedSpendUsdReference": 4.42,
+                "estimatedSpendNzd": 7.74,
+                "estimatedSpendUsdReference": 4.53,
                 "unknownPriceCount": 0,
                 "improvementScore": 6.656,
                 "significantRegression": false,
@@ -20824,8 +20824,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -20885,7 +20885,7 @@
                 "reason": "improvement-below-threshold",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 3.63,
+                "estimatedSpendNzd": 3.64,
                 "estimatedSpendUsdReference": 2.13,
                 "unknownPriceCount": 0,
                 "improvementScore": -0.253,
@@ -21255,7 +21255,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 5.32,
+                "estimatedSpendNzd": 5.33,
                 "estimatedSpendUsdReference": 3.12,
                 "unknownPriceCount": 0,
                 "improvementScore": 6.778,
@@ -24736,8 +24736,8 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 1.43,
-            "estimatedSpendUsdReference": 0.84,
+            "estimatedSpendNzd": 1.45,
+            "estimatedSpendUsdReference": 0.85,
             "unknownPriceCount": 0,
             "improvementScore": 1.046,
             "significantRegression": false,
@@ -25021,8 +25021,8 @@
                   "set": "SOC",
                   "collectorNumber": "210",
                   "finish": "nonfoil",
-                  "priceNzd": 1.43,
-                  "priceUsdReference": 0.84
+                  "priceNzd": 1.45,
+                  "priceUsdReference": 0.85
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -25083,8 +25083,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 15,
-                "estimatedSpendUsdReference": 8.79,
+                "estimatedSpendNzd": 15.2,
+                "estimatedSpendUsdReference": 8.9,
                 "unknownPriceCount": 0,
                 "improvementScore": 19.877,
                 "significantRegression": false,
@@ -25465,8 +25465,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -25613,7 +25613,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 10.61,
+                "estimatedSpendNzd": 10.63,
                 "estimatedSpendUsdReference": 6.22,
                 "unknownPriceCount": 0,
                 "improvementScore": 17.609,
@@ -26667,8 +26667,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 4.2,
-                "estimatedSpendUsdReference": 2.46,
+                "estimatedSpendNzd": 4.22,
+                "estimatedSpendUsdReference": 2.47,
                 "unknownPriceCount": 0,
                 "improvementScore": 17.423,
                 "significantRegression": false,
@@ -27003,8 +27003,8 @@
                       "set": "SOC",
                       "collectorNumber": "210",
                       "finish": "nonfoil",
-                      "priceNzd": 1.43,
-                      "priceUsdReference": 0.84
+                      "priceNzd": 1.45,
+                      "priceUsdReference": 0.85
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -27214,8 +27214,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 14.83,
-                "estimatedSpendUsdReference": 8.69,
+                "estimatedSpendNzd": 15.03,
+                "estimatedSpendUsdReference": 8.8,
                 "unknownPriceCount": 0,
                 "improvementScore": 3.864,
                 "significantRegression": false,
@@ -27558,8 +27558,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -27655,7 +27655,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 10.44,
+                "estimatedSpendNzd": 10.45,
                 "estimatedSpendUsdReference": 6.12,
                 "unknownPriceCount": 0,
                 "improvementScore": 4.376,
@@ -28552,8 +28552,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 4.03,
-                "estimatedSpendUsdReference": 2.36,
+                "estimatedSpendNzd": 4.05,
+                "estimatedSpendUsdReference": 2.37,
                 "unknownPriceCount": 0,
                 "improvementScore": 2.499,
                 "significantRegression": false,
@@ -28856,8 +28856,8 @@
                       "set": "SOC",
                       "collectorNumber": "210",
                       "finish": "nonfoil",
-                      "priceNzd": 1.43,
-                      "priceUsdReference": 0.84
+                      "priceNzd": 1.45,
+                      "priceUsdReference": 0.85
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -29016,8 +29016,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 9.98,
-                "estimatedSpendUsdReference": 5.85,
+                "estimatedSpendNzd": 10.18,
+                "estimatedSpendUsdReference": 5.96,
                 "unknownPriceCount": 0,
                 "improvementScore": -0.056,
                 "significantRegression": false,
@@ -29332,8 +29332,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -29381,8 +29381,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 11.52,
-                "estimatedSpendUsdReference": 6.75,
+                "estimatedSpendNzd": 11.72,
+                "estimatedSpendUsdReference": 6.86,
                 "unknownPriceCount": 0,
                 "improvementScore": 0.268,
                 "significantRegression": false,
@@ -29695,8 +29695,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -29744,8 +29744,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 7.47,
-                "estimatedSpendUsdReference": 4.38,
+                "estimatedSpendNzd": 7.67,
+                "estimatedSpendUsdReference": 4.49,
                 "unknownPriceCount": 0,
                 "improvementScore": 4.183,
                 "significantRegression": false,
@@ -30058,8 +30058,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -30107,8 +30107,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 8.11,
-                "estimatedSpendUsdReference": 4.75,
+                "estimatedSpendNzd": 8.32,
+                "estimatedSpendUsdReference": 4.87,
                 "unknownPriceCount": 0,
                 "improvementScore": 0.407,
                 "significantRegression": false,
@@ -30382,8 +30382,8 @@
                       "set": "SOC",
                       "collectorNumber": "210",
                       "finish": "nonfoil",
-                      "priceNzd": 1.43,
-                      "priceUsdReference": 0.84
+                      "priceNzd": 1.45,
+                      "priceUsdReference": 0.85
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -30433,8 +30433,8 @@
                       "set": "OTJ",
                       "collectorNumber": "93",
                       "finish": "nonfoil",
-                      "priceNzd": 6.67,
-                      "priceUsdReference": 3.91
+                      "priceNzd": 6.87,
+                      "priceUsdReference": 4.02
                     },
                     "structuralPairing": {
                       "addressedRole": "tutor",
@@ -31368,8 +31368,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 1.43,
-                "estimatedSpendUsdReference": 0.84,
+                "estimatedSpendNzd": 1.45,
+                "estimatedSpendUsdReference": 0.85,
                 "unknownPriceCount": 0,
                 "improvementScore": 1.046,
                 "significantRegression": false,
@@ -31653,8 +31653,8 @@
                       "set": "SOC",
                       "collectorNumber": "210",
                       "finish": "nonfoil",
-                      "priceNzd": 1.43,
-                      "priceUsdReference": 0.84
+                      "priceNzd": 1.45,
+                      "priceUsdReference": 0.85
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
