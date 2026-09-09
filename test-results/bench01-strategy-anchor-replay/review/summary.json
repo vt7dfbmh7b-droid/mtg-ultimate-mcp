@@ -1,7 +1,7 @@
 {
   "schema": "bench01-adaptive-diversification-replay-v3",
   "batch": "BENCH-01-STRATEGY-ANCHOR-REPLAY",
-  "productRuntimeBaselineSha": "8ae2e9609851df51361116fb7b4b3f3dccea95d4",
+  "productRuntimeBaselineSha": "63b9d75cf425727d1aa0be1ed5123bf6c13ea3f9",
   "sourceFrozenWithinBatch": true,
   "results": [
     {
@@ -258,7 +258,7 @@
             "set": "MAR",
             "collectorNumber": "62",
             "finish": "nonfoil",
-            "priceNzd": 6.77,
+            "priceNzd": 6.78,
             "priceUsdReference": 3.97
           },
           "structuralPairing": {
@@ -390,7 +390,7 @@
             "set": "MB2",
             "collectorNumber": "30",
             "finish": "nonfoil",
-            "priceNzd": 10.1,
+            "priceNzd": 10.11,
             "priceUsdReference": 5.92
           },
           "structuralPairing": {
@@ -522,7 +522,7 @@
             "set": "M3C",
             "collectorNumber": "33",
             "finish": "nonfoil",
-            "priceNzd": 13.19,
+            "priceNzd": 13.2,
             "priceUsdReference": 7.73
           },
           "structuralPairing": {
@@ -777,7 +777,7 @@
             "set": "SLD",
             "collectorNumber": "2058",
             "finish": "nonfoil",
-            "priceNzd": 44.18,
+            "priceNzd": 44.2,
             "priceUsdReference": 25.89
           },
           "structuralPairing": {
@@ -912,7 +912,7 @@
             "set": "PMH3",
             "collectorNumber": "171p",
             "finish": "nonfoil",
-            "priceNzd": 9.76,
+            "priceNzd": 9.77,
             "priceUsdReference": 5.72
           },
           "structuralPairing": {
@@ -1043,7 +1043,7 @@
             "set": "MH2",
             "collectorNumber": "293",
             "finish": "nonfoil",
-            "priceNzd": 6.89,
+            "priceNzd": 6.9,
             "priceUsdReference": 4.04
           },
           "structuralPairing": {
@@ -1090,7 +1090,7 @@
             "set": "MH2",
             "collectorNumber": "214",
             "finish": "nonfoil",
-            "priceNzd": 4.91,
+            "priceNzd": 4.92,
             "priceUsdReference": 2.88
           },
           "structuralPairing": {
@@ -1136,7 +1136,7 @@
             "set": "EMN",
             "collectorNumber": "41",
             "finish": "nonfoil",
-            "priceNzd": 32.82,
+            "priceNzd": 32.83,
             "priceUsdReference": 19.23
           },
           "structuralPairing": {
@@ -1228,7 +1228,7 @@
             "set": "JUD",
             "collectorNumber": "31",
             "finish": "nonfoil",
-            "priceNzd": 2.35,
+            "priceNzd": 2.36,
             "priceUsdReference": 1.38
           },
           "structuralPairing": {
@@ -1430,7 +1430,7 @@
           "strategicallyRelevantCombos": 0,
           "gameChangerNames": [
             "Crop Rotation",
-            "Worldly Tutor"
+            "Mystical Tutor"
           ]
         }
       },
@@ -1649,14 +1649,14 @@
         },
         {
           "out": "Thieving Skydiver",
-          "in": "Worldly Tutor",
+          "in": "Crop Rotation",
           "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
           "recommendedPrinting": {
-            "set": "DMR",
-            "collectorNumber": "442",
+            "set": "C20",
+            "collectorNumber": "169",
             "finish": "nonfoil",
-            "priceNzd": 43.79,
-            "priceUsdReference": 25.66
+            "priceNzd": 5.55,
+            "priceUsdReference": 3.25
           },
           "structuralPairing": {
             "addressedRole": "tutor",
@@ -1679,7 +1679,8 @@
                 "equipment"
               ],
               "addRoles": [
-                "creature tutor",
+                "land replacement",
+                "land tutor",
                 "tutor"
               ],
               "unreplacedRoles": [
@@ -1700,7 +1701,7 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.81,
+            "priceNzd": 36.83,
             "priceUsdReference": 21.57
           },
           "structuralPairing": {
@@ -1835,14 +1836,14 @@
         },
         {
           "out": "Vorel of the Hull Clade",
-          "in": "Crop Rotation",
-          "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+          "in": "Mystical Tutor",
+          "why": "Advances the currently failed authoritative Bracket-4 tutors gate (1 must rise to 2 or higher). The recommended physical printing satisfies the active printing-family/set policy.",
           "recommendedPrinting": {
-            "set": "C20",
-            "collectorNumber": "169",
+            "set": "DMR",
+            "collectorNumber": "289",
             "finish": "nonfoil",
-            "priceNzd": 5.55,
-            "priceUsdReference": 3.25
+            "priceNzd": 28.39,
+            "priceUsdReference": 16.63
           },
           "structuralPairing": {
             "addressedRole": "tutor",
@@ -1853,21 +1854,19 @@
             "persistentColoredManaSourceFloor": 4,
             "strategyPreservation": {
               "cutStrategyAffinityScore": 1,
-              "addStrategyAffinityScore": 1,
+              "addStrategyAffinityScore": 0,
               "cutStrategyProtectionApplied": 1,
               "cutMatchedStrategies": [
                 "value-engine"
               ],
-              "addMatchedStrategies": [
+              "addMatchedStrategies": [],
+              "locallyUnreplacedStrategies": [
                 "value-engine"
               ],
-              "locallyUnreplacedStrategies": [],
               "cutRoles": [
                 "creature"
               ],
               "addRoles": [
-                "land replacement",
-                "land tutor",
                 "tutor"
               ],
               "unreplacedRoles": [
@@ -1887,7 +1886,7 @@
             "set": "SLD",
             "collectorNumber": "2817",
             "finish": "nonfoil",
-            "priceNzd": 15.22,
+            "priceNzd": 15.23,
             "priceUsdReference": 8.92
           },
           "structuralPairing": {
@@ -2106,7 +2105,7 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 6,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 48.4,
+        "estimatedSpendNzd": 48.42,
         "estimatedSpendUsdReference": 28.36,
         "improvementScore": 18.073,
         "winRouteProtection": {
@@ -2171,7 +2170,7 @@
             "set": "GK1",
             "collectorNumber": "56",
             "finish": "nonfoil",
-            "priceNzd": 8.77,
+            "priceNzd": 8.78,
             "priceUsdReference": 5.14
           },
           "structuralPairing": {
@@ -2435,7 +2434,7 @@
             "set": "PECL",
             "collectorNumber": "176p",
             "finish": "nonfoil",
-            "priceNzd": 15.61,
+            "priceNzd": 15.62,
             "priceUsdReference": 9.15
           },
           "structuralPairing": {
@@ -2478,7 +2477,7 @@
             "set": "FIC",
             "collectorNumber": "464",
             "finish": "foil",
-            "priceNzd": 19.2,
+            "priceNzd": 19.21,
             "priceUsdReference": 11.25
           },
           "structuralPairing": {
@@ -2621,7 +2620,7 @@
             "set": "PBIG",
             "collectorNumber": "26p",
             "finish": "foil",
-            "priceNzd": 33.43,
+            "priceNzd": 33.45,
             "priceUsdReference": 19.59
           },
           "structuralPairing": {
@@ -2932,7 +2931,7 @@
             "set": "LCI",
             "collectorNumber": "143",
             "finish": "foil",
-            "priceNzd": 4.62,
+            "priceNzd": 4.63,
             "priceUsdReference": 2.71
           },
           "structuralPairing": {
@@ -3503,7 +3502,7 @@
             "set": "ACR",
             "collectorNumber": "100",
             "finish": "foil",
-            "priceNzd": 14.13,
+            "priceNzd": 14.14,
             "priceUsdReference": 8.28
           },
           "structuralPairing": {
@@ -3682,7 +3681,7 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.81,
+            "priceNzd": 36.83,
             "priceUsdReference": 21.57
           },
           "structuralPairing": {
@@ -3891,8 +3890,8 @@
         "assessedBracket": 3,
         "assessedBand": "bracket-3-upgraded-range",
         "metrics": {
-          "averageNonlandManaValue": 3.57,
-          "earlyPlayCount": 19,
+          "averageNonlandManaValue": 3.56,
+          "earlyPlayCount": 20,
           "fastManaCount": 1,
           "cheapInteractionCount": 1,
           "tutorCount": 2,
@@ -3913,8 +3912,8 @@
             "verifiedWinningCombos": 0,
             "ruthlessWinningCombos": 0,
             "strategicallyRelevantCombos": 0,
-            "averageNonlandManaValue": 3.57,
-            "earlyPlayCount": 19,
+            "averageNonlandManaValue": 3.56,
+            "earlyPlayCount": 20,
             "fastManaCount": 1,
             "freeInteractionCount": 0,
             "cheapInteractionCount": 1,
@@ -3970,11 +3969,11 @@
           "status": "satisfied",
           "satisfied": true,
           "canonicalLabel": "Artifacts + Card draw",
-          "matchedMainCards": 45,
+          "matchedMainCards": 46,
           "requiredMainMatches": 18,
-          "mainCoverage": 0.45454545454545453
+          "mainCoverage": 0.46464646464646464
         },
-        "stopReason": "all-competing-packages-below-improvement-threshold"
+        "stopReason": "no-supported-swaps-found"
       },
       "candidateWork": {
         "rounds": [
@@ -4012,7 +4011,7 @@
               1
             ],
             "winningCandidate": null,
-            "stopReason": "all-competing-packages-below-improvement-threshold"
+            "stopReason": "no-supported-swaps-found"
           }
         ],
         "totalPackagesGeneratedAcrossAttempts": 24
@@ -4026,7 +4025,7 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.81,
+            "priceNzd": 36.83,
             "priceUsdReference": 21.57
           },
           "structuralPairing": {
@@ -4120,8 +4119,8 @@
             "set": "ONE",
             "collectorNumber": "242",
             "finish": "nonfoil",
-            "priceNzd": 6.72,
-            "priceUsdReference": 3.94
+            "priceNzd": 6.76,
+            "priceUsdReference": 3.96
           },
           "structuralPairing": {
             "addressedRole": "interaction",
@@ -4240,19 +4239,66 @@
           }
         },
         {
-          "out": "Tangletrove Kelp",
-          "in": "Archmage Ascension",
-          "why": "Addresses the detected tutor deficit and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
+          "out": "Hornet Queen",
+          "in": "Transmutation Font",
+          "why": "Addresses the detected tutor deficit and also supports the existing V0.15 deck strategy signal: combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Artifacts) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "ZEN",
-            "collectorNumber": "42",
-            "finish": "nonfoil",
-            "priceNzd": 8.21,
-            "priceUsdReference": 4.81
+            "set": "PW24",
+            "collectorNumber": "11",
+            "finish": "foil",
+            "priceNzd": 2.68,
+            "priceUsdReference": 1.57
           },
           "structuralPairing": {
             "addressedRole": "tutor",
             "remainingStructuralDeficitAfterSwap": 5,
+            "authoritativeTargetGate": null,
+            "nonlandManaValueReduction": null,
+            "persistentColoredManaSourcesAfterSwap": 7,
+            "persistentColoredManaSourceFloor": 6,
+            "strategyPreservation": {
+              "cutStrategyAffinityScore": 6,
+              "addStrategyAffinityScore": 6,
+              "cutStrategyProtectionApplied": 4,
+              "cutMatchedStrategies": [
+                "combat-tokens"
+              ],
+              "addMatchedStrategies": [
+                "combat-tokens"
+              ],
+              "locallyUnreplacedStrategies": [],
+              "cutRoles": [
+                "creature",
+                "token production"
+              ],
+              "addRoles": [
+                "repeatable token engine",
+                "token production",
+                "tutor"
+              ],
+              "unreplacedRoles": [
+                "creature"
+              ],
+              "unreplacedStrategyComponentRoles": [],
+              "meaningfulStrategyLoss": false,
+              "verdict": "preserved"
+            }
+          }
+        },
+        {
+          "out": "Tangletrove Kelp",
+          "in": "Shelter",
+          "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
+          "recommendedPrinting": {
+            "set": "PLST",
+            "collectorNumber": "ODY-46",
+            "finish": "nonfoil",
+            "priceNzd": 0.32,
+            "priceUsdReference": 0.19
+          },
+          "structuralPairing": {
+            "addressedRole": "protection",
+            "remainingStructuralDeficitAfterSwap": 4,
             "authoritativeTargetGate": null,
             "nonlandManaValueReduction": null,
             "persistentColoredManaSourcesAfterSwap": 7,
@@ -4275,60 +4321,12 @@
               ],
               "addRoles": [
                 "card draw",
-                "tutor"
+                "protection"
               ],
               "unreplacedRoles": [
                 "creature",
                 "self sacrifice"
               ],
-              "unreplacedStrategyComponentRoles": [],
-              "meaningfulStrategyLoss": false,
-              "verdict": "preserved"
-            }
-          }
-        },
-        {
-          "out": "Shimmer Dragon",
-          "in": "Padeem, Consul of Innovation",
-          "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
-          "recommendedPrinting": {
-            "set": "J25",
-            "collectorNumber": "62",
-            "finish": "nonfoil",
-            "priceNzd": 2.03,
-            "priceUsdReference": 1.19
-          },
-          "structuralPairing": {
-            "addressedRole": "protection",
-            "remainingStructuralDeficitAfterSwap": 4,
-            "authoritativeTargetGate": null,
-            "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 7,
-            "persistentColoredManaSourceFloor": 6,
-            "strategyPreservation": {
-              "cutStrategyAffinityScore": 6,
-              "addStrategyAffinityScore": 6,
-              "cutStrategyProtectionApplied": 0,
-              "cutMatchedStrategies": [
-                "value-engine"
-              ],
-              "addMatchedStrategies": [
-                "value-engine"
-              ],
-              "locallyUnreplacedStrategies": [],
-              "cutRoles": [
-                "card draw",
-                "creature",
-                "repeatable draw"
-              ],
-              "addRoles": [
-                "board protection",
-                "card draw",
-                "creature",
-                "protection",
-                "repeatable draw"
-              ],
-              "unreplacedRoles": [],
               "unreplacedStrategyComponentRoles": [],
               "meaningfulStrategyLoss": false,
               "verdict": "preserved"

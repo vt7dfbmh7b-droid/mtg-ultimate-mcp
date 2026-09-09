@@ -78,10 +78,10 @@
 1 Ozolith, the Shattered Spire (PMOM) 198p *N*
 1 Harbinger of the Tides (FDN) 593 *N*
 1 Kappa Tech-Wrecker (PLST) NEO-198 *N*
-1 Worldly Tutor (DMR) 442 *N*
+1 Crop Rotation (C20) 169 *N*
 1 Sword of Fire and Ice (MAR) 100 *N*
 1 Umezawa's Jitte (PZA) 19 *N*
 1 Outland Liberator // Frenzied Trapbreaker (MID) 303 *N*
-1 Crop Rotation (C20) 169 *N*
+1 Mystical Tutor (DMR) 289 *N*
 1 Sword of Forge and Frontier (SLD) 2817 *N*
 1 Sword of Once and Future (MOM) 265 *N*
