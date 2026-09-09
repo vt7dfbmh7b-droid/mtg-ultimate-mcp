@@ -16,12 +16,12 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Active milestone: **BENCH-01 — Adversarial Commander benchmark suite**
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
-- Development checkpoint at pause: `34cbc7843fcc936bd153a6516e1762ad2b5091e5`
-- Active branch validation: **bench01-34cbc-eight-fixture-replay-complete-manual-reject-contextual-quality**
+- Development checkpoint at pause: `1d6b73aae4edc72d80a2ebc945a160506a13c71e`
+- Active branch validation: **bench01-1d6b73-eight-fixture-manual-reject-3bc7e2b-test-only-ci-green**
 
 ## Audit reuse rule
 
-BENCH-01 active. Eight-fixture replay of 34cbc784 is complete and manually rejected; see test-results/bench01-manual-verdicts/34cbc7843fcc936bd153a6516e1762ad2b5091e5.md and immutable evidence 069b700adf9329004791d52e3961aedd60d318b5. Do not repeat it or report an execution-interface blocker. Reproduce residual outgoing-engine/incoming-role-effectiveness failures through the public production planner before a generic repair. Validate, freeze and replay a new repair through the existing request interface. Accepted baseline stays e17b0a1c; stable V0.13 and PR #29 remain unpromoted/unmerged.
+BENCH-01 active. Reuse completed 34cbc784, 63b9d75c and 1d6b73a replay/verdict evidence; do not repeat those batches. Latest durable verdict: test-results/bench01-manual-verdicts/1d6b73aae4edc72d80a2ebc945a160506a13c71e.md. Requested-mechanism pairing tests already exist and pass at 3bc7e2b; no new production repair followed 1d6b73a. Next prove the residual mechanism-importance defect through the actual public planner/precon path, including the real serialized OUT/IN evidence. Keep accepted e17b0a1c and stable V0.13 unchanged.
 
 ## Stable safety boundary
 
@@ -31,22 +31,22 @@ Stable remains **V0.13 / 0.13.0** on `main`. Standing user authorization permits
 
 `e17b0a1cba659b229fd6f0b6e2df79c5e464a616` on `agent/v15-native-deck-intelligence`.
 
-Latest accepted Commander product baseline. Later formally validated 34cbc784 has completed eight-fixture execution and is manually rejected for residual whole-deck quality failures.
+Latest accepted Commander product baseline. Later formally validated 1d6b73a completed eight-fixture execution and has a persisted manual baseline rejection.
 
 ## Important pending validation
 
-The last persisted Marvel control is `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` with outcome **execution-success-target-not-achieved**. Historical constrained control; do not convert provider uncertainty or construction ceiling into unrelated BENCH failure.
+The last persisted Marvel control is `1d6b73aae4edc72d80a2ebc945a160506a13c71e` with outcome **execution-success-target-not-achieved**. Focused and broad source-1d6b73a controls execute successfully but fail target-quality gates. Retain this unresolved result; other scenario passes do not establish promotion readiness.
 
 ## Next actions
 
-1. Read project-state.json and AGENTS.md; inspect all branch writers, including earlier-commit validation/replay/integrity jobs, and refresh head before writes. Preserve single-flight execution.
-2. Reuse the completed eight-fixture 34cbc784 replay and durable manual rejection at test-results/bench01-manual-verdicts/34cbc7843fcc936bd153a6516e1762ad2b5091e5.md. Exact evidence commit 069b700adf9329004791d52e3961aedd60d318b5. The interface blocker is resolved; actual result.json has eight fixtures although legacy workflow metadata lists five.
-3. Reproduce residual replacement-quality failures through buildSimulationBackedUpgradePlanV07/the actual production route using anonymous Oracle-shaped evidence. Trace contextual helper versus core planner wiring, outgoing engine recognition and incoming practical protection/tutor/interaction contribution.
-4. Implement only the smallest generic change supported by production-path failing regressions across contrasting cases; keep positive compatible-replacement controls and all existing truth/strategy/package gates.
-5. Run focused plus full required validation on the exact committed repair, then request frozen eight-fixture replay through .automation/bench01-strategy-anchor-replay.request. Do not modify protected workflows, workflow-immutability.test.ts or policy epoch.
-6. Manually review complete new affected decks and controls against 473edf47 and 34cbc784 evidence. Preserve qualitative comparison limits; promotion still requires real strong-general-AI comparison evidence and all validation gates.
-7. Keep Endless Punishment unsupported group-slug/punisher vocabulary as a separate open semantic-taxonomy failure. Do not count a contextual repair as fixing it without evidence.
-8. Keep accepted baseline e17b0a1cba659b229fd6f0b6e2df79c5e464a616, PR #29 unmerged and stable/current V0.13 unpromoted while product-quality gates remain open. Keep the hourly schedule unchanged.
+1. Read project-state.json and AGENTS.md; inspect all current/recent branch writers, including earlier-commit jobs, then refresh head before writes. The enabled hourly Chat Fast Path already requires reconciliation; preserve its full prompt and schedule.
+2. Reuse completed frozen eight-fixture replay 34370124608 of product 1d6b73aae4edc72d80a2ebc945a160506a13c71e, evidence ce854778d280eed76ea290767361cdd7af038130 and its durable manual rejection. Earlier 34cbc784 and 63b9d75c verdicts remain historical comparisons, not unfinished replay requests.
+3. Do not recreate the requested-mechanism tests: src/services/upgrade-requested-mechanism-importance-v15.test.ts was added at 1e06aaf and its fallback control corrected at 3bc7e2b. CI 34377710210 passes; these are test-only changes, not a new product repair or proof of a remaining failing production case.
+4. Reproduce the residual OUT-card mechanism loss through buildSimulationBackedUpgradePlanV07/the actual precon production route using anonymous Oracle-shaped cards and realistic generated summaries. Trace role serialization, requested relationships and commander/request mechanism importance; include a safer filler cut and a compatible same-mechanism positive control. A passing hand-authored pairing witness is insufficient to justify another patch.
+5. Only after a genuine failing production regression, implement the smallest generic repair. Keep existing legality, exact-printing/budget, role truth, strategy and package gates; no card, commander or fixture exceptions.
+6. Require focused and full exact-commit validation, then request a new frozen affected/control replay through .automation/bench01-strategy-anchor-replay.request. Preserve the protected workflows, workflow-immutability test and policy epoch; do not replay unchanged 1d6b73a.
+7. Review complete new decks against retained 473edf47/34cbc784/63b9d75c/1d6b73a evidence. Existing general-AI verdicts are analytical assessments, not independently executed alternative-build or matchup evidence. Keep Endless Punishment's unsupported group-slug/punisher taxonomy defect separate.
+8. Keep accepted baseline e17b0a1cba659b229fd6f0b6e2df79c5e464a616, PR #29 unmerged and stable/current V0.13 unpromoted. Marvel focused/broad still execute without a supported improvement and fail quality gates; do not convert execution success into target achievement. Reconcile synchronized state after material progress.
 
 ## Permanent recovery references
 
