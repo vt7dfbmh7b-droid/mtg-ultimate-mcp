@@ -130,9 +130,11 @@ export function pairUpgradeSwapsByStructureV15(
     supportedAdditions.flatMap((selection) => requestedRelationshipIdsV15(selection.candidate)),
   );
   const relationshipCounts = options.contextualRelationshipCounts ?? relationshipCountsFromCutsV15(cutPool);
-  const contextSafeCuts = cutPool.filter((cut) => requestedRelationshipIdsV15(cut).every((id) => (
+  const advisoryContextSafeCuts = cutPool.filter((cut) => requestedRelationshipIdsV15(cut).every((id) => (
     (relationshipCounts[id] ?? 0) > 1 || availableAddRelationships.has(id)
   )));
+  // Relationship preservation is advisory: never erase the only structurally eligible fallback.
+  const contextSafeCuts = advisoryContextSafeCuts.length > 0 ? advisoryContextSafeCuts : cutPool;
   const {
     contextualDeckCards: _contextualDeckCards,
     contextualRelationshipCounts: _contextualRelationshipCounts,
