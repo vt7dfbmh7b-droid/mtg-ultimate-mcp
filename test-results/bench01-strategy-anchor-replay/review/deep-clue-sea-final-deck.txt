@@ -4,6 +4,7 @@
 // MAIN
 1 Sophia, Dogged Detective (MKC) 8 *F*
 1 Armed with Proof (MKC) 9 *N*
+1 Merchant of Truth (MKC) 11 *N*
 1 Serene Sleuth (MKC) 14 *N*
 1 Detective of the Month (MKC) 21 *N*
 1 Follow the Bodies (MKC) 23 *N*
@@ -13,7 +14,6 @@
 1 Bennie Bracks, Zoologist (MKC) 57 *N*
 1 Farewell (MKC) 64 *N*
 1 Fumigate (MKC) 66 *N*
-1 Organic Extinction (MKC) 76 *N*
 1 Search the Premises (MKC) 81 *N*
 1 Alandra, Sky Dreamer (MKC) 94 *N*
 1 Confirm Suspicions (MKC) 97 *N*
@@ -22,10 +22,10 @@
 1 Kappa Cannoneer (MKC) 108 *N*
 1 Mechanized Production (MKC) 109 *N*
 1 Nadir Kraken (MKC) 112 *N*
-1 Shimmer Dragon (MKC) 117 *N*
 1 Teferi's Ageless Insight (MKC) 119 *N*
 1 Tezzeret, Betrayer of Flesh (MKC) 120 *N*
 1 Thought Monitor (MKC) 121 *N*
+1 Hornet Queen (MKC) 172 *N*
 1 Jolrael, Mwonvuli Recluse (MKC) 173 *N*
 1 Killer Service (MKC) 174 *N*
 1 Tireless Tracker (MKC) 190 *N*
@@ -53,6 +53,7 @@
 1 Temple of Mystery (MKC) 303 *N*
 1 Temple of Plenty (MKC) 304 *N*
 1 Swords to Plowshares (MKC) 88 *N*
+1 Erdwal Illuminator (MKC) 104 *N*
 1 Junk Winder (MKC) 107 *N*
 1 Ongoing Investigation (MKC) 114 *N*
 1 Whirler Rogue (MKC) 124 *N*
@@ -90,6 +91,5 @@
 1 Tamiyo's Journal (SOI) 265 *N*
 1 Staff of Compleation (ONE) 242 *N*
 1 Veil of Summer (MB2) 75 *N*
-1 Dawn's Truce (SLD) 2803 *N*
-1 Transmutation Font (PW24) 11 *F*
-1 Shelter (PLST) ODY-46 *N*
+1 The Mightstone and Weakstone (BRO) 238 *F*
+1 Padeem, Consul of Innovation (J25) 62 *N*
