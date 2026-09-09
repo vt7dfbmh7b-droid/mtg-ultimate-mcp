@@ -1,0 +1,95 @@
+// COMMANDER
+1 Morska, Undersea Sleuth (MKC) 3 *F*
+
+// MAIN
+1 Sophia, Dogged Detective (MKC) 8 *F*
+1 Armed with Proof (MKC) 9 *N*
+1 Serene Sleuth (MKC) 14 *N*
+1 Detective of the Month (MKC) 21 *N*
+1 Follow the Bodies (MKC) 23 *N*
+1 Innocuous Researcher (MKC) 38 *N*
+1 Ransom Note (MKC) 46 *N*
+1 Aerial Extortionist (MKC) 54 *N*
+1 Bennie Bracks, Zoologist (MKC) 57 *N*
+1 Farewell (MKC) 64 *N*
+1 Fumigate (MKC) 66 *N*
+1 Organic Extinction (MKC) 76 *N*
+1 Search the Premises (MKC) 81 *N*
+1 Alandra, Sky Dreamer (MKC) 94 *N*
+1 Confirm Suspicions (MKC) 97 *N*
+1 Ethereal Investigator (MKC) 105 *N*
+1 Finale of Revelation (MKC) 106 *N*
+1 Kappa Cannoneer (MKC) 108 *N*
+1 Mechanized Production (MKC) 109 *N*
+1 Nadir Kraken (MKC) 112 *N*
+1 Teferi's Ageless Insight (MKC) 119 *N*
+1 Tezzeret, Betrayer of Flesh (MKC) 120 *N*
+1 Thought Monitor (MKC) 121 *N*
+1 Jolrael, Mwonvuli Recluse (MKC) 173 *N*
+1 Killer Service (MKC) 174 *N*
+1 Tireless Tracker (MKC) 190 *N*
+1 Adrix and Nev, Twincasters (MKC) 198 *N*
+1 Chulane, Teller of Tales (MKC) 202 *N*
+1 Disorder in the Court (MKC) 209 *N*
+1 Hydroid Krasis (MKC) 212 *N*
+1 Koma, Cosmos Serpent (MKC) 213 *N*
+1 Lonis, Cryptozoologist (MKC) 215 *N*
+1 Selvala, Explorer Returned (MKC) 218 *N*
+1 Academy Manufactor (MKC) 221 *N*
+1 Idol of Oblivion (MKC) 229 *N*
+1 Nettlecyst (MKC) 233 *N*
+1 Psychosis Crawler (MKC) 234 *N*
+1 Canopy Vista (MKC) 252 *N*
+1 Exotic Orchard (MKC) 260 *N*
+1 Irrigated Farmland (MKC) 267 *N*
+1 Prairie Stream (MKC) 281 *N*
+1 Scattered Groves (MKC) 286 *N*
+1 Skycloud Expanse (MKC) 294 *N*
+1 Spire of Industry (MKC) 296 *N*
+1 Sungrass Prairie (MKC) 297 *N*
+1 Temple of Enlightenment (MKC) 302 *N*
+1 Temple of Mystery (MKC) 303 *N*
+1 Temple of Plenty (MKC) 304 *N*
+1 Swords to Plowshares (MKC) 88 *N*
+1 Junk Winder (MKC) 107 *N*
+1 Ongoing Investigation (MKC) 114 *N*
+1 Whirler Rogue (MKC) 124 *N*
+1 Graf Mole (MKC) 170 *N*
+1 Ulvenwald Mysteries (MKC) 193 *N*
+1 Wilderness Reclamation (MKC) 196 *N*
+1 Wavesifter (MKC) 220 *N*
+1 Arcane Signet (MKC) 223 *N*
+1 Azorius Signet (MKC) 224 *N*
+1 Simic Signet (MKC) 236 *N*
+1 Sol Ring (MKC) 237 *N*
+1 Talisman of Curiosity (MKC) 241 *N*
+1 Talisman of Progress (MKC) 243 *N*
+1 Talisman of Unity (MKC) 244 *N*
+1 Azorius Chancery (MKC) 249 *N*
+1 Magnifying Glass (MKM) 255 *N*
+1 Command Tower (MKC) 256 *N*
+1 Krosan Verge (MKC) 271 *N*
+1 Lonely Sandbar (MKC) 273 *N*
+1 Path of Ancestry (MKC) 279 *N*
+1 Reliquary Tower (MKC) 282 *N*
+1 Seaside Citadel (MKC) 288 *N*
+1 Secluded Steppe (MKC) 289 *N*
+1 Selesnya Sanctuary (MKC) 290 *N*
+1 Simic Growth Chamber (MKC) 293 *N*
+1 Temple of the False God (MKC) 305 *N*
+1 Tranquil Thicket (MKC) 309 *N*
+2 Plains (MKM) 277 *N*
+1 Plains (MKM) 278 *N*
+3 Island (MKM) 279 *N*
+3 Island (MKM) 280 *N*
+3 Forest (MKM) 285 *N*
+2 Forest (MKM) 286 *N*
+1 Veil of Summer (MB2) 75 *N*
+1 Tezzeret, Artifice Master (PLST) M19-79 *N*
+1 Staff of Compleation (ONE) 242 *N*
+1 Dawn's Truce (SLD) 2803 *N*
+1 Padeem, Consul of Innovation (J25) 62 *N*
+1 Vexing Puzzlebox (CLB) 343 *N*
+1 Aether Spellbomb (PLST) MMA-196 *N*
+1 Transmutation Font (PW24) 11 *F*
+1 Sword of Wealth and Power (PBIG) 26p *F*
