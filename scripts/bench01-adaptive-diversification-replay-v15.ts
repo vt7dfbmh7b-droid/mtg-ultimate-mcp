@@ -21,6 +21,9 @@ const FIXTURES = [
   { id: 'explorers-of-the-deep', reference: 'Explorers of the Deep', family: 'typal-counters-combat', targetBracket: 4, themeQuery: 'Merfolk +1/+1 counters card draw combat', breadth4Swaps: 4, breadth4Bracket: 2, breadth6Swaps: 9, breadth6Bracket: 3 },
   { id: 'elven-empire', reference: 'Elven Empire', family: 'typal-tokens-combat', targetBracket: 4, themeQuery: 'Elves tokens combat', breadth4Swaps: null, breadth4Bracket: null, breadth6Swaps: null, breadth6Bracket: null },
   { id: 'animated-army', reference: 'Animated Army', family: 'artifact-enchantment-combat', targetBracket: 4, themeQuery: 'artifacts enchantments combat', breadth4Swaps: 9, breadth4Bracket: 2, breadth6Swaps: 12, breadth6Bracket: 3 },
+  { id: 'endless-punishment', reference: 'Endless Punishment', family: 'group-slug-punisher', targetBracket: 4, themeQuery: 'group slug punisher opponents lose life card draw interaction', breadth4Swaps: null, breadth4Bracket: null, breadth6Swaps: null, breadth6Bracket: null },
+  { id: 'revenant-recon', reference: 'Revenant Recon', family: 'graveyard-reanimator-control', targetBracket: 3, themeQuery: 'graveyard and card draw', breadth4Swaps: null, breadth4Bracket: null, breadth6Swaps: null, breadth6Bracket: null },
+  { id: 'deep-clue-sea', reference: 'Deep Clue Sea', family: 'clue-artifact-value-control', targetBracket: 3, themeQuery: 'artifacts and card draw', breadth4Swaps: null, breadth4Bracket: null, breadth6Swaps: null, breadth6Bracket: null },
 ] as const;
 
 type Json = Record<string, unknown>;
@@ -95,9 +98,14 @@ async function runFixture(fixture: typeof FIXTURES[number]): Promise<Json> {
   const preconResult = record(rawResult.result);
   const refinement = record(preconResult.refinement);
   const adaptiveContract = record(refinement.candidateDiversification);
-  assert.equal(adaptiveContract.adaptive, true, `${fixture.reference} must execute with adaptive candidate diversification active`);
-  assert.equal(adaptiveContract.minimumAttempts, 3, `${fixture.reference} must retain the historical three-attempt minimum`);
-  assert.equal(adaptiveContract.hardLimit, 6, `${fixture.reference} must retain the bounded six-attempt hard ceiling`);
+  const hasAdaptiveContract = Object.keys(adaptiveContract).length > 0;
+  if (hasAdaptiveContract) {
+    assert.equal(adaptiveContract.adaptive, true, `${fixture.reference} must execute with adaptive candidate diversification active`);
+    assert.equal(adaptiveContract.minimumAttempts, 3, `${fixture.reference} must retain the historical three-attempt minimum`);
+    assert.equal(adaptiveContract.hardLimit, 6, `${fixture.reference} must retain the bounded six-attempt hard ceiling`);
+  } else {
+    assert.equal(refinement.status, 'unsupported-theme', `${fixture.reference} may omit candidate diversification only when the request is rejected before candidate search`);
+  }
   const finalDecklist = typeof refinement.finalDecklist === 'string' && refinement.finalDecklist.trim() ? refinement.finalDecklist.trim() : stock.decklist.trim();
   const after = await auditDeck(finalDecklist);
   assert.deepEqual(after.commanderNames, before.commanderNames, `${fixture.reference} must preserve the command zone`);
@@ -140,15 +148,15 @@ async function main(): Promise<void> {
   const results: Json[] = [];
   for (const fixture of FIXTURES) results.push(await runFixture(fixture));
   const output = {
-    schema: 'bench01-adaptive-diversification-replay-v2',
+    schema: 'bench01-adaptive-diversification-replay-v3',
     batch: 'BENCH-01-ADAPTIVE-DIVERSIFICATION-REPLAY',
     productRuntimeBaselineSha: FROZEN_PRODUCT_SHA,
     sourceFrozenWithinBatch: true,
     noCommanderIntelligenceChangesBetweenFixtures: true,
     explicitCandidatePackagesPerRoundOmitted: true,
-    adaptiveContractRequired: { minimumAttempts: 3, hardLimit: 6, adaptive: true },
-    purpose: 'Validate whether the bounded adaptive diversification repair recovers broader-search quality on affected fixtures without regressing unrelated controls, while exposing actual candidate-work cost.',
-    acceptanceRule: 'Affected fixtures Explorers of the Deep and Animated Army should recover meaningful breadth-6 quality without violating legality/theme/strategy gates; Quick Draw, Virtue and Valor, and Elven Empire must not materially regress. Whole-deck manual review remains required before product acceptance.',
+    adaptiveContractRequiredWhenCandidateSearchBegins: { minimumAttempts: 3, hardLimit: 6, adaptive: true },
+    purpose: 'Replay the five established strategy-anchor controls and the three fresh contextual-effectiveness failures from one unchanged validated Commander product SHA. Measure actual post-repair deck quality rather than green assertions alone.',
+    acceptanceRule: 'The five established controls must not materially regress. Revenant Recon and Deep Clue Sea must show whole-deck contextual replacement improvement against their frozen pre-repair evidence; Endless Punishment must be classified independently if its semantic-taxonomy rejection remains. Whole-deck manual review and general-AI comparison remain required before product acceptance.',
     results,
   };
   await writeFile('bench01-adaptive-diversification-replay-result.json', `${JSON.stringify(output, null, 2)}\n`);
