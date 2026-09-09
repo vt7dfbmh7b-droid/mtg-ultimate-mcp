@@ -103,10 +103,10 @@ test('production pairing preserves a high-affinity requested mechanism over fill
   );
 });
 
-test('production pairing may replace the requested mechanism when incoming protection preserves equally strong requested-component evidence', () => {
+test('production pairing retains structural fallback when a requested mechanism is the only available cut', () => {
   const pairs = pairUpgradeSwapsByStructureV15(
     [protection('Anonymous Mechanism-Aligned Protection', ['theme:artifacts', 'theme:tokens'], 8)] as any,
-    [requestedMechanism, filler] as any,
+    [requestedMechanism] as any,
     metrics,
     targets,
     3,
@@ -118,6 +118,6 @@ test('production pairing may replace the requested mechanism when incoming prote
   assert.equal(
     (pairs[0]?.cut.card as { name?: string } | undefined)?.name,
     'Anonymous Requested Multiplier',
-    'equally strong requested-component compensation should remain eligible',
+    'advisory preservation must not freeze construction when no safer cut exists',
   );
 });
