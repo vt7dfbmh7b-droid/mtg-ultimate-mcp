@@ -16,12 +16,12 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Active milestone: **BENCH-01 — Adversarial Commander benchmark suite**
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
-- Development checkpoint at pause: `473edf473a284b9532aa03747abfa41a1081ca2c`
-- Active branch validation: **bench01-473edf47-fresh-batch-general-ai-loss-contextual-replacement-repair-next**
+- Development checkpoint at pause: `34cbc7843fcc936bd153a6516e1762ad2b5091e5`
+- Active branch validation: **bench01-34cbc-validated-control-safe-affected-fixture-replay-interface-blocked**
 
 ## Audit reuse rule
 
-BENCH-01 remains active. Accepted Commander baseline remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Product 473edf473a284b9532aa03747abfa41a1081ca2c remains fully validated for the Aura target-shape repair, but fresh contrasting evidence at test-results/bench01-fresh-contrasting-473edf47/manual-verdict.md rejects baseline acceptance: Endless Punishment is an unsupported-theme failure; Revenant Recon and Deep Clue Sea expose repeated contextual replacement-priority/role-effectiveness weaknesses and are general-AI clear wins. Do not repeat the Aura replay or this fresh batch. Next unfinished stage: add generic production-path regressions for context-sensitive protection effectiveness, engine/payoff replacement compensation, per-component before/after theme movement and target-pressure priority; then implement the smallest justified generic repair, fully validate it, freeze it and replay affected fixtures plus a control. Stable remains V0.13 and PR #29 unmerged.
+BENCH-01 remains active. Accepted Commander baseline remains e17b0a1cba659b229fd6f0b6e2df79c5e464a616. Candidate 34cbc7843fcc936bd153a6516e1762ad2b5091e5 is formally validated and five-control-replay safe, with durable verdict at test-results/bench01-manual-verdicts/34cbc7843fcc936bd153a6516e1762ad2b5091e5.md. Do not repeat that control replay. The unfinished acceptance gate is exact-source replay of Endless Punishment, Revenant Recon and Deep Clue Sea plus a control, followed by complete-deck manual comparison against 473edf47 and strong general AI. The current authorized replay request only runs the five strategy-anchor controls and autonomous work may not modify .github/workflows/**. Treat this as an execution-interface blocker rather than a product failure. Stable remains V0.13 and PR #29 unmerged.
 
 ## Stable safety boundary
 
@@ -31,22 +31,22 @@ Stable remains **V0.13 / 0.13.0** on `main`. Standing user authorization permits
 
 `e17b0a1cba659b229fd6f0b6e2df79c5e464a616` on `agent/v15-native-deck-intelligence`.
 
-Latest accepted fully validated Commander product baseline. Later candidates 00571713696977093fee717deecc2b26969e2643, 4a7bbf616ac6826ec4ac979894f8752133af3bca, 66836fef0009a6913336efe0ec074aefd277abd5, 569933bf605a841f14dc000d1f04296ad3456df3, dfdb9663bd2394dfa620511d750501880b903770 and c2fa83b7ea4a81e18445aba3a54529cdb31d86cd are formally validated/replayed but manually rejected as replacement baselines.
+Latest accepted fully validated Commander product baseline. 34cbc7843fcc936bd153a6516e1762ad2b5091e5 is a later formally validated candidate with green five-control replay, but remains provisional until affected-fixture replay and manual comparison are completed.
 
 ## Important pending validation
 
-The last persisted Marvel control is `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` with outcome **execution-success-target-not-achieved**. Latest registered focused and broad Marvel metadata at c2fa83b7 records successful execution/build where reported, but failed control/target-quality gates; no target achievement is claimed. Preserve the earlier exact-source 5829b37 restricted-pool construction-ceiling result as historical evidence. A red historical or constrained target is not automatically a blocker to unrelated BENCH-01 work; investigate only if relevant source, pool, provider truth or policy evidence changes. Do not convert provider uncertainty into absence or an intelligence failure.
+The last persisted Marvel control is `c2fa83b7ea4a81e18445aba3a54529cdb31d86cd` with outcome **execution-success-target-not-achieved**. Historical constrained control; do not convert provider uncertainty or construction ceiling into unrelated BENCH failure.
 
 ## Next actions
 
 1. Read project-state.json and AGENTS.md; inspect all relevant branch writers, including earlier-commit jobs. Do not overlap a running validation, replay, integrity writer or product repair.
-2. Resume from fresh batch evidence commit 23da6102842bf1aeb8db91f4a3e3a068d2df05b1 and test-results/bench01-fresh-contrasting-473edf47/manual-verdict.md. Do not repeat the completed Aura replay or the three fresh fixtures on unchanged source.
-3. State the generic deficient capability precisely: replacement priority and role inference reward abstract protection/tutor/theme counts without enough deck-context effectiveness, commander-specific engine compensation or per-component before/after movement.
-4. Add production-path regressions showing that protection requires usable connectivity/setup, commander-specific engine/payoff cuts require same-role or same-component compensation, aggregate compound-theme OR coverage cannot hide a degraded component, and failed cheap-interaction target pressure cannot be bypassed by unrelated metric gains.
-5. Implement the smallest generic repair with no card-name, commander, fixture or benchmark-label exceptions. Preserve downstream legality, printing, budget, strategy and route-protection gates.
-6. Run focused regression tests and the full required validation suite. Require corrected validation green before freezing the exact repair SHA.
-7. Replay Endless Punishment, Revenant Recon and Deep Clue Sea plus at least one unchanged control from that exact validated repair SHA; manually inspect complete decks and compare with pre-repair and strong general AI.
-8. Persist meaningful evidence and synchronize project-state, roadmap, handoff and validation surfaces. Keep PR #29 and stable/current V0.13 unmerged/unpromoted until promotion-grade BENCH-01 evidence exists.
+2. Keep 34cbc7843fcc936bd153a6516e1762ad2b5091e5 frozen as the validated contextual-effectiveness candidate and do not repeat its completed five-fixture strategy-anchor control replay.
+3. Complete the unfinished affected-fixture gate: run Endless Punishment, Revenant Recon and Deep Clue Sea plus at least one control from exact source 34cbc7843fcc936bd153a6516e1762ad2b5091e5, then manually inspect complete decks and compare against 473edf47 and the existing strong-general-AI verdicts.
+4. Current blocker: no checked-in autonomous replay interface is available for that affected-fixture set; the authorized .automation/bench01-strategy-anchor-replay.request interface is fixed to Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire and Animated Army. Do not edit .github/workflows/**, src/workflow-immutability.test.ts or workflowPolicyEpochSha to work around this.
+5. If an already-authorized non-workflow execution path for the affected fixtures is found, use it without changing Commander source. Otherwise defer only the blocked replay and continue safe read-only/manual analysis; do not infer acceptance from the five-control replay.
+6. After affected-fixture evidence exists, accept or reject 34cbc784 based on actual whole-deck improvement. If the same contextual failures remain, reproduce them through the production path before another generic repair.
+7. Endless Punishment's group-slug/punisher vocabulary failure remains a separate semantic-taxonomy issue unless affected replay evidence shows it has independently changed; do not conflate it with the contextual-effectiveness repair.
+8. Keep PR #29 and stable/current V0.13 unmerged/unpromoted until promotion-grade BENCH-01 evidence exists.
 
 ## Permanent recovery references
 
