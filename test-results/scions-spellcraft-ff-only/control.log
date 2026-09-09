@@ -1,8 +1,8 @@
 {
   "precon": "Scions & Spellcraft (FINAL FANTASY XIV)",
   "status": "refined",
-  "totalSwaps": 3,
-  "stopReason": "no-supported-swaps-found",
+  "totalSwaps": 2,
+  "stopReason": "all-competing-packages-below-improvement-threshold",
   "beforeBracket": 2,
   "afterBracket": 2,
   "beforeYshTriggerSpells": 29,
@@ -16,43 +16,45 @@
   "newInfiniteCombos": [],
   "swaps": [
     {
-      "out": "Sage's Nouliths",
-      "in": "Diabolic Intent",
-      "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher). The recommended physical printing satisfies the active printing-family/set policy.",
+      "out": "Dancer's Chakrams",
+      "in": "Syncopate",
+      "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: spells-control. The recommended physical printing satisfies the active printing-family/set policy.",
       "recommendedPrinting": {
-        "set": "FCA",
-        "collectorNumber": "34",
+        "set": "FIN",
+        "collectorNumber": "80",
         "finish": "nonfoil",
-        "priceNzd": 25.71,
-        "priceUsdReference": 15.07
+        "priceNzd": 0.43,
+        "priceUsdReference": 0.25
       },
       "structuralPairing": {
-        "addressedRole": "tutor",
-        "remainingStructuralDeficitAfterSwap": 10,
-        "authoritativeTargetGate": "tutors",
-        "nonlandManaValueReduction": null,
+        "addressedRole": "average-nonland-mv",
+        "remainingStructuralDeficitAfterSwap": 11,
+        "authoritativeTargetGate": "average-nonland-mv",
+        "nonlandManaValueReduction": 3,
         "persistentColoredManaSourcesAfterSwap": 6,
         "persistentColoredManaSourceFloor": 6,
         "strategyPreservation": {
           "cutStrategyAffinityScore": 0,
-          "addStrategyAffinityScore": 0,
+          "addStrategyAffinityScore": 8,
           "cutStrategyProtectionApplied": 0,
           "cutMatchedStrategies": [],
-          "addMatchedStrategies": [],
+          "addMatchedStrategies": [
+            "spells-control"
+          ],
           "locallyUnreplacedStrategies": [],
           "cutRoles": [
             "equipment",
-            "token production",
-            "untap engine"
+            "go-wide payoff",
+            "token production"
           ],
           "addRoles": [
-            "sacrifice synergy",
-            "tutor"
+            "cheap interaction",
+            "countermagic"
           ],
           "unreplacedRoles": [
             "equipment",
-            "token production",
-            "untap engine"
+            "go-wide payoff",
+            "token production"
           ],
           "unreplacedStrategyComponentRoles": [],
           "meaningfulStrategyLoss": false,
@@ -62,18 +64,18 @@
     },
     {
       "out": "Ardbert, Warrior of Darkness",
-      "in": "Black Mage's Rod",
-      "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: spells-control. The recommended physical printing satisfies the active printing-family/set policy.",
+      "in": "Sahagin",
+      "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.33 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: spells-control. The recommended physical printing satisfies the active printing-family/set policy.",
       "recommendedPrinting": {
         "set": "FIN",
-        "collectorNumber": "90",
+        "collectorNumber": "71",
         "finish": "nonfoil",
-        "priceNzd": 0.55,
-        "priceUsdReference": 0.32
+        "priceNzd": 0.17,
+        "priceUsdReference": 0.1
       },
       "structuralPairing": {
         "addressedRole": "average-nonland-mv",
-        "remainingStructuralDeficitAfterSwap": 10,
+        "remainingStructuralDeficitAfterSwap": 11,
         "authoritativeTargetGate": "average-nonland-mv",
         "nonlandManaValueReduction": 1,
         "persistentColoredManaSourcesAfterSwap": 6,
@@ -94,60 +96,10 @@
             "creature"
           ],
           "addRoles": [
-            "equipment",
-            "token production"
-          ],
-          "unreplacedRoles": [
             "+1/+1 counters",
             "creature"
           ],
-          "unreplacedStrategyComponentRoles": [],
-          "meaningfulStrategyLoss": false,
-          "verdict": "preserved"
-        }
-      }
-    },
-    {
-      "out": "G'raha Tia, Scion Reborn",
-      "in": "Sahagin",
-      "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.38 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: spells-control. The recommended physical printing satisfies the active printing-family/set policy.",
-      "recommendedPrinting": {
-        "set": "FIN",
-        "collectorNumber": "71",
-        "finish": "nonfoil",
-        "priceNzd": 0.17,
-        "priceUsdReference": 0.1
-      },
-      "structuralPairing": {
-        "addressedRole": "average-nonland-mv",
-        "remainingStructuralDeficitAfterSwap": 10,
-        "authoritativeTargetGate": "average-nonland-mv",
-        "nonlandManaValueReduction": 1,
-        "persistentColoredManaSourcesAfterSwap": 6,
-        "persistentColoredManaSourceFloor": 6,
-        "strategyPreservation": {
-          "cutStrategyAffinityScore": 12,
-          "addStrategyAffinityScore": 12,
-          "cutStrategyProtectionApplied": 4,
-          "cutMatchedStrategies": [
-            "spells-control"
-          ],
-          "addMatchedStrategies": [
-            "spells-control"
-          ],
-          "locallyUnreplacedStrategies": [],
-          "cutRoles": [
-            "+1/+1 counters",
-            "creature",
-            "token production"
-          ],
-          "addRoles": [
-            "+1/+1 counters",
-            "creature"
-          ],
-          "unreplacedRoles": [
-            "token production"
-          ],
+          "unreplacedRoles": [],
           "unreplacedStrategyComponentRoles": [],
           "meaningfulStrategyLoss": false,
           "verdict": "preserved"

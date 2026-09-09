@@ -2,9 +2,9 @@
 1 Y'shtola, Night's Blessed (FIC) 7 *F*
 
 // MAIN
+1 G'raha Tia, Scion Reborn (FIC) 3 *F*
 1 Alisaie Leveilleur (FIC) 9 *N*
 1 Champions from Beyond (FIC) 11 *N*
-1 Dancer's Chakrams (FIC) 17 *N*
 1 Summon: Good King Mog XII (FIC) 26 *N*
 1 Tataru Taru (FIC) 30 *N*
 1 Thancred Waters (FIC) 31 *N*
@@ -59,6 +59,7 @@
 1 Sunken Ruins (FIC) 430 *N*
 1 Underground River (FIC) 439 *N*
 1 White Auracite (FIN) 41 *N*
+1 Sage's Nouliths (FIN) 70 *N*
 1 Circle of Power (FIN) 92 *N*
 1 Cut a Deal (FIC) 238 *N*
 1 Lingering Souls (FIC) 245 *N*
@@ -96,6 +97,5 @@
 2 Plains (FIN) 294 *N*
 1 Plains (FIN) 295 *N*
 1 Plains (FIN) 296 *N*
-1 Diabolic Intent (FCA) 34 *N*
-1 Black Mage's Rod (FIN) 90 *N*
+1 Syncopate (FIN) 80 *N*
 1 Sahagin (FIN) 71 *N*
