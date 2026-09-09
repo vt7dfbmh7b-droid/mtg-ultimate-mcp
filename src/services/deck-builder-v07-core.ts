@@ -907,6 +907,15 @@ function upgradeSwapSubstantiveStrategyLossScoreV15(
   return loss;
 }
 
+function uncompensatedEngineCountV15(add: Record<string, unknown>, cut: Record<string, unknown>): number {
+  const addRoles = summarizedRoles(summarizedCard(add));
+  const cutRoles = summarizedRoles(summarizedCard(cut));
+  // Recognized operational engines remain valuable even when broad commander inference
+  // is weak. Prefer a safe surplus cut; this ordering does not create a new hard floor.
+  return ['repeatable draw', 'board-scaling card draw', 'repeatable token engine', 'token multiplier', 'cost reduction', 'high-capacity graveyard recursion']
+    .filter(role => cutRoles.has(role) && !addRoles.has(role)).length;
+}
+
 export function auditUpgradeStrategyPreservationV15(
   pairings: ReadonlyArray<Pick<UpgradePairingV15, 'add' | 'cut'>>,
 ): UpgradeStrategyPreservationAuditV15 {
@@ -1384,10 +1393,17 @@ export function pairUpgradeSwapsByStructureV15(
       if (leftStrategy.meaningfulStrategyLoss !== rightStrategy.meaningfulStrategyLoss) {
         return leftStrategy.meaningfulStrategyLoss ? 1 : -1;
       }
-      const identityPriority = compareReplacementIdentityPriorityV15(
-        upgradeSwapReplacementIdentityPriorityV15(selection.candidate, left),
-        upgradeSwapReplacementIdentityPriorityV15(selection.candidate, right),
-      );
+      const leftIdentity = upgradeSwapReplacementIdentityPriorityV15(selection.candidate, left);
+      const rightIdentity = upgradeSwapReplacementIdentityPriorityV15(selection.candidate, right);
+      if (leftIdentity.requestedRelationshipLossCount !== rightIdentity.requestedRelationshipLossCount) {
+        return leftIdentity.requestedRelationshipLossCount - rightIdentity.requestedRelationshipLossCount;
+      }
+      // Concrete engine loss outranks weak broad-type affinity (e.g. simply being a
+      // creature mentioned by the commander), after exact requested mechanisms.
+      const leftEngineLoss = uncompensatedEngineCountV15(selection.candidate, left);
+      const rightEngineLoss = uncompensatedEngineCountV15(selection.candidate, right);
+      if (leftEngineLoss !== rightEngineLoss) return leftEngineLoss - rightEngineLoss;
+      const identityPriority = compareReplacementIdentityPriorityV15(leftIdentity, rightIdentity);
       if (identityPriority !== 0) return identityPriority;
       const leftStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, left);
       const rightStrategyLoss = upgradeSwapSubstantiveStrategyLossScoreV15(selection.candidate, right);

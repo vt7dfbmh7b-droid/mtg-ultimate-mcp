@@ -168,6 +168,28 @@ function stripReminderText(text: string): string {
   return current.replace(/\s+/g, ' ').trim();
 }
 
+function hasRepeatableDraw(card: ScryfallCard): boolean {
+  const selfNames = [card.name, ...(card.card_faces ?? []).map(face => face.name)]
+    .flatMap(name => name.split('//')).map(name => name.trim().toLocaleLowerCase()).filter(Boolean);
+  // Assess each printed ability separately. A consumable draw mode must not borrow the
+  // repeatability of another activated ability, nor erase a genuinely repeatable draw mode.
+  const survivingAbilities = getCardOracleText(card).toLocaleLowerCase().split(/\r?\n/).filter(line => {
+    const colon = line.indexOf(':');
+    if (colon < 0) return true;
+    const cost = line.slice(0, colon);
+    return !/\b(?:sacrifice|exile) this (?:artifact|creature|enchantment|permanent|token|card)\b/.test(cost)
+      && !selfNames.some(name => {
+        const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return new RegExp(`\\b(?:sacrifice|exile) ${escaped}(?:$|,| from\\b)`).test(cost);
+      });
+  });
+  return survivingAbilities.some(ability => {
+    const mechanical = stripReminderText(ability);
+    return /\b(?:whenever|at the beginning of)\b[\s\S]{0,260}\bdraw (?:a|one|two|three|four|five|x|\d+) cards?/.test(mechanical)
+      || /:\s*[\s\S]{0,260}\bdraw (?:a|one|two|three|four|five|x|\d+) cards?/.test(mechanical);
+  });
+}
+
 function basicLandRampOnlySearch(text: string): boolean {
   const fragments = [...text.matchAll(/search your library for ([^.]+)/g)]
     .map((match) => match[1]?.trim() ?? '')
@@ -284,8 +306,7 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   const drawText = mechanicalText.replace(/\bdraw (?:a|one|1) card,? then discard (?:a|one|1) card\b/g, '');
   if (/draw (?:a|one|two|three|four|five|x|\d+) cards?/.test(drawText)) roles.add('card draw');
   if (oneForOneLoot) roles.add('card selection');
-  const repeatableDraw = /\b(?:whenever|at the beginning of)\b[\s\S]{0,260}\bdraw (?:a|one|two|three|four|five|x|\d+) cards?/.test(mechanicalText)
-    || /:\s*[\s\S]{0,260}\bdraw (?:a|one|two|three|four|five|x|\d+) cards?/.test(mechanicalText);
+  const repeatableDraw = hasRepeatableDraw(card);
   if (repeatableDraw) roles.add('repeatable draw');
   const lifeGainTriggeredDraw = /\b(?:whenever|at the beginning of)\b[\s\S]{0,260}\bgain(?: (?:\d+|one|two|three|four|five|x|that much))? life\b[\s\S]{0,180}\bdraw (?:a|one|two|three|four|five|x|\d+) cards?/.test(mechanicalText);
   if (lifeGainTriggeredDraw) roles.add('life-gain-triggered draw engine');

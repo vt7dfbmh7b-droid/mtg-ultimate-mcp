@@ -45,10 +45,36 @@ export interface SacrificeRoleTruthV15 {
 export interface TutorRoleTruthV15 {
   searchesLibrary: boolean;
   randomOutcomeGated: boolean;
+  setupGated: boolean;
   targetScope: 'broad' | 'narrow' | 'unknown';
   targetDescription: string | null;
   reliableStructuralTutor: boolean;
   reasons: string[];
+}
+
+function oracleQuantityV15(value: string): number | null {
+  const words: Record<string, number> = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, twenty: 20, hundred: 100, 'one hundred': 100 };
+  const normalized = value.trim().toLocaleLowerCase();
+  return /^\d+$/.test(normalized) ? Number(normalized) : words[normalized] ?? null;
+}
+
+function librarySearchRequiresAccumulationV15(card: ScryfallCard, oracle: string): boolean {
+  const searchAbilities = oracle.split(/\r?\n/).filter(line => /\bsearch your library for\b/.test(line));
+  return searchAbilities.length > 0 && searchAbilities.every(ability => {
+    const loyaltyCost = /^\s*[−–-](\d+)\s*:/.exec(ability);
+    if (loyaltyCost) {
+      const startingLoyalty = Number(card.loyalty ?? 'NaN');
+      return !Number.isFinite(startingLoyalty) || Number(loyaltyCost[1]) > startingLoyalty;
+    }
+    const cost = ability.split(':')[0] ?? '';
+    const counterCost = /\bremove (\d+|one hundred|hundred|one|two|three|four|five|six|seven|eight|nine|ten|twenty|a|an) ([a-z-]+) counters? from\b/.exec(cost);
+    if (!counterCost) return false;
+    const required = oracleQuantityV15(counterCost[1] ?? '');
+    const counterType = counterCost[2] ?? '';
+    const startingCounters = [...oracle.matchAll(/\benters(?: the battlefield)? with (\d+|one hundred|hundred|one|two|three|four|five|six|seven|eight|nine|ten|twenty|a|an) ([a-z-]+) counters? on it\b/g)]
+      .filter(match => match[2] === counterType).map(match => oracleQuantityV15(match[1] ?? '') ?? 0);
+    return required === null || required > Math.max(0, ...startingCounters);
+  });
 }
 
 function text(card: ScryfallCard): string {
@@ -264,12 +290,15 @@ export function tutorRoleTruthV15(card: ScryfallCard): TutorRoleTruthV15 {
   const inferred = new Set(inferCardRoles(card));
   const searchesLibrary = /\bsearch your library for\b/.test(oracle);
   const randomOutcomeGated = inferred.has('tutor') && hasRandomOutcomeGatedLibrarySearch(oracle);
+  const setupGated = inferred.has('tutor') && librarySearchRequiresAccumulationV15(card, oracle);
   const target = tutorTargetScopeV15(oracle);
   const reliableStructuralTutor = inferred.has('tutor')
     && !randomOutcomeGated
+    && !setupGated
     && target.scope === 'broad';
   const reasons: string[] = [];
   if (randomOutcomeGated) reasons.push('library search is only available through a random die/coin outcome rather than reliable tutor access');
+  if (setupGated) reasons.push('library search requires counter or loyalty accumulation beyond the card\'s initial resources');
   if (!randomOutcomeGated && inferred.has('tutor') && target.scope === 'narrow') {
     reasons.push(`library search is restricted to ${target.description ?? 'a narrow card class'} rather than broad generic access`);
   }
@@ -279,6 +308,7 @@ export function tutorRoleTruthV15(card: ScryfallCard): TutorRoleTruthV15 {
   return {
     searchesLibrary,
     randomOutcomeGated,
+    setupGated,
     targetScope: target.scope,
     targetDescription: target.description,
     reliableStructuralTutor,
@@ -508,6 +538,7 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
   if (roles.has('tutor') && !tutorTruth.reliableStructuralTutor) {
     roles.delete('tutor');
     if (tutorTruth.randomOutcomeGated) roles.add('random tutor');
+    else if (tutorTruth.setupGated) roles.add('conditional tutor');
     else if (tutorTruth.targetScope === 'narrow') roles.add('narrow tutor');
     else roles.add('unverified tutor');
   }

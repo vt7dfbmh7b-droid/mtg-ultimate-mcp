@@ -537,6 +537,18 @@ Remediation: the anonymous variable-quantity regression was added at source `f3d
 
 Status: prevented for the exact Food control at source `63b664dc0f93d57c100ea284062a453523aa23dc`; keep this failure open as a broader regression watch until the full INTEL-02 family is manually acceptable.
 
+## KF-054 — Nominal tutor and draw roles spend recurring engines on impractical replacements
+
+Observed: the frozen eight-fixture replay at product `34cbc7843fcc936bd153a6516e1762ad2b5091e5` (run `34330764487`, evidence `069b700adf9329004791d52e3961aedd60d318b5`) still cut Deep Clue Sea engines while counting a 100-counter activation and a planeswalker ultimate as structural tutor repairs. A one-use self-sacrifice draw ability also received repeatable-draw credit. Anonymous full-100-card regressions through the public `buildSimulationBackedUpgradePlanV07` reproduced the production route cutting a recurring draw engine for consumable draw, accepting setup-only tutors for a tutor deficit, and preferring the 100-counter search over immediately usable search.
+
+Risk: coarse role totals and curve gains can improve while the finished deck loses sustained resources or receives cards whose claimed repair needs substantial extra setup. Weak commander card-type affinity can also outrank a concrete recurring engine when choosing the cut.
+
+Protection: classify draw abilities separately so self-consumption cannot masquerade as repeatable draw or borrow another mode's repeatability. Search requiring more counters or loyalty than a card initially supplies is conditional rather than a reliable structural tutor; independent immediately usable search modes retain their credit. In the actual core planner's cut ordering, prefer cuts that do not lose recognized operational engines after substantive strategy and exact requested-relationship protection, before weak broad-type affinity. This is advisory ranking, not a new hard floor; all existing legality, budget, strategy and package gates remain.
+
+Regression/control: `src/services/upgrade-operational-role-production-v15.test.ts` runs the real public planner with only deterministic provider responses substituted. It includes contrasting positive controls for immediate search, entry counters, sufficient starting loyalty, independent search modes, retained recurring draw and sacrificing another resource. The original four production/role cases failed before repair. All six new cases and the complete local 1,060-test suite pass after repair; runtime, management and scripts strict builds plus project/validation integrity also pass. The local runner uses `node --import tsx` because the `tsx` CLI's IPC socket is unavailable in this workspace.
+
+Status: partially prevented by production-path regressions; exact committed CI and frozen eight-fixture manual review are required before any live quality claim. The broader contextual replacement failure and the separate Endless Punishment theme-taxonomy rejection remain open. Accepted Commander baseline remains `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`.
+
 ## Adding a failure
 
 Every new material failure should record:
