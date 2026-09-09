@@ -233,7 +233,7 @@
     "status": "refined",
     "stopReason": "no-supported-swaps-found",
     "roundsAccepted": 3,
-    "totalSwaps": 8,
+    "totalSwaps": 9,
     "candidatePackagesPerRound": 4,
     "candidateDiversification": {
       "minimumAttempts": 4,
@@ -255,10 +255,10 @@
         }
       ]
     },
-    "estimatedUpgradeSpendNzd": 11.82,
-    "estimatedUpgradeSpendUsdReference": 6.93,
+    "estimatedUpgradeSpendNzd": 25.63,
+    "estimatedUpgradeSpendUsdReference": 15.02,
     "maxTotalNzd": 200,
-    "maxTotalUsdReference": 117.24,
+    "maxTotalUsdReference": 117.2,
     "swaps": [
       {
         "out": "Landroval, Horizon Witness",
@@ -562,68 +562,15 @@
         }
       },
       {
-        "out": "Mentor of the Meek",
-        "in": "Gorbag of Minas Morgul",
-        "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
+        "out": "Generous Ent",
+        "in": "The Battle of Bywater",
+        "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
         "recommendedPrinting": {
           "set": "LTR",
-          "collectorNumber": "86",
+          "collectorNumber": "2",
           "finish": "nonfoil",
-          "priceNzd": 0.36,
-          "priceUsdReference": 0.21
-        },
-        "structuralPairing": {
-          "addressedRole": "average-nonland-mv",
-          "remainingStructuralDeficitAfterSwap": 12,
-          "authoritativeTargetGate": "average-nonland-mv",
-          "nonlandManaValueReduction": 1,
-          "persistentColoredManaSourcesAfterSwap": 8,
-          "persistentColoredManaSourceFloor": 6,
-          "strategyPreservation": {
-            "cutStrategyAffinityScore": 14,
-            "addStrategyAffinityScore": 22,
-            "cutStrategyProtectionApplied": 0,
-            "cutMatchedStrategies": [
-              "value-engine"
-            ],
-            "addMatchedStrategies": [
-              "combat-tokens",
-              "value-engine"
-            ],
-            "locallyUnreplacedStrategies": [],
-            "cutRoles": [
-              "card draw",
-              "creature",
-              "etb synergy",
-              "repeatable draw"
-            ],
-            "addRoles": [
-              "card draw",
-              "conditional mana acceleration",
-              "creature",
-              "repeatable draw",
-              "token production",
-              "treasure"
-            ],
-            "unreplacedRoles": [
-              "etb synergy"
-            ],
-            "unreplacedStrategyComponentRoles": [],
-            "meaningfulStrategyLoss": false,
-            "verdict": "preserved"
-          }
-        }
-      },
-      {
-        "out": "Night's Whisper",
-        "in": "Bilbo's Gambit",
-        "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
-        "recommendedPrinting": {
-          "set": "HOB",
-          "collectorNumber": "5",
-          "finish": "nonfoil",
-          "priceNzd": 2.64,
-          "priceUsdReference": 1.55
+          "priceNzd": 6.28,
+          "priceUsdReference": 3.68
         },
         "structuralPairing": {
           "addressedRole": "interaction",
@@ -633,31 +580,125 @@
           "persistentColoredManaSourcesAfterSwap": 8,
           "persistentColoredManaSourceFloor": 6,
           "strategyPreservation": {
-            "cutStrategyAffinityScore": 5,
-            "addStrategyAffinityScore": 11,
+            "cutStrategyAffinityScore": 14,
+            "addStrategyAffinityScore": 14,
             "cutStrategyProtectionApplied": 4,
+            "cutMatchedStrategies": [
+              "combat-tokens",
+              "food-lifegain"
+            ],
+            "addMatchedStrategies": [
+              "combat-tokens",
+              "food-lifegain"
+            ],
+            "locallyUnreplacedStrategies": [],
+            "cutRoles": [
+              "creature",
+              "token production"
+            ],
+            "addRoles": [
+              "board wipe",
+              "token production"
+            ],
+            "unreplacedRoles": [
+              "creature"
+            ],
+            "unreplacedStrategyComponentRoles": [],
+            "meaningfulStrategyLoss": false,
+            "verdict": "preserved"
+          }
+        }
+      },
+      {
+        "out": "Orchard Strider",
+        "in": "Shelob's Ambush",
+        "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+        "recommendedPrinting": {
+          "set": "LTR",
+          "collectorNumber": "108",
+          "finish": "nonfoil",
+          "priceNzd": 0.27,
+          "priceUsdReference": 0.16
+        },
+        "structuralPairing": {
+          "addressedRole": "average-nonland-mv",
+          "remainingStructuralDeficitAfterSwap": 11,
+          "authoritativeTargetGate": "average-nonland-mv",
+          "nonlandManaValueReduction": 5,
+          "persistentColoredManaSourcesAfterSwap": 8,
+          "persistentColoredManaSourceFloor": 6,
+          "strategyPreservation": {
+            "cutStrategyAffinityScore": 14,
+            "addStrategyAffinityScore": 14,
+            "cutStrategyProtectionApplied": 4,
+            "cutMatchedStrategies": [
+              "combat-tokens",
+              "food-lifegain"
+            ],
+            "addMatchedStrategies": [
+              "combat-tokens",
+              "food-lifegain"
+            ],
+            "locallyUnreplacedStrategies": [],
+            "cutRoles": [
+              "creature",
+              "land tutor",
+              "token production"
+            ],
+            "addRoles": [
+              "token production"
+            ],
+            "unreplacedRoles": [
+              "creature",
+              "land tutor"
+            ],
+            "unreplacedStrategyComponentRoles": [],
+            "meaningfulStrategyLoss": false,
+            "verdict": "preserved"
+          }
+        }
+      },
+      {
+        "out": "Cultivate",
+        "in": "Tempt with Discovery",
+        "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+        "recommendedPrinting": {
+          "set": "LTC",
+          "collectorNumber": "532",
+          "finish": "nonfoil",
+          "priceNzd": 10.26,
+          "priceUsdReference": 6.01
+        },
+        "structuralPairing": {
+          "addressedRole": "tutor",
+          "remainingStructuralDeficitAfterSwap": 10,
+          "authoritativeTargetGate": "tutors",
+          "nonlandManaValueReduction": null,
+          "persistentColoredManaSourcesAfterSwap": 8,
+          "persistentColoredManaSourceFloor": 6,
+          "strategyPreservation": {
+            "cutStrategyAffinityScore": 1,
+            "addStrategyAffinityScore": 1,
+            "cutStrategyProtectionApplied": 1,
             "cutMatchedStrategies": [
               "value-engine"
             ],
             "addMatchedStrategies": [
-              "combat-tokens",
               "value-engine"
             ],
             "locallyUnreplacedStrategies": [],
             "cutRoles": [
-              "card draw"
+              "land ramp",
+              "land tutor",
+              "persistent colored mana source"
             ],
             "addRoles": [
-              "cheap interaction",
-              "conditional mana acceleration",
-              "spot interaction",
-              "stax/control",
-              "token production",
-              "treasure"
+              "land ramp",
+              "land tutor",
+              "persistent colored mana source",
+              "tutor"
             ],
-            "unreplacedRoles": [
-              "card draw"
-            ],
+            "unreplacedRoles": [],
             "unreplacedStrategyComponentRoles": [],
             "meaningfulStrategyLoss": false,
             "verdict": "preserved"
@@ -665,7 +706,7 @@
         }
       }
     ],
-    "finalDecklist": "// COMMANDER\n1 Frodo, Adventurous Hobbit (LTC) 2 *F*\n1 Sam, Loyal Attendant (LTC) 7 *F*\n\n// MAIN\n1 Field-Tested Frying Pan (LTC) 11 *N*\n1 The Gaffer (LTC) 12 *N*\n1 Gwaihir, Greatest of the Eagles (LTC) 15 *N*\n1 Of Herbs and Stewed Rabbit (LTC) 17 *N*\n1 Gollum, Obsessed Stalker (LTC) 26 *N*\n1 Rapacious Guest (LTC) 28 *N*\n1 Assemble the Entmoot (LTC) 36 *N*\n1 Motivated Pony (LTC) 42 *N*\n1 Prize Pig (LTC) 43 *N*\n1 Banquet Guests (LTC) 47 *N*\n1 Bilbo, Birthday Celebrant (LTC) 48 *N*\n1 Farmer Cotton (LTC) 55 *N*\n1 Pippin, Warden of Isengard (LTC) 65 *N*\n1 Treebeard, Gracious Host (LTC) 73 *N*\n1 Hithlain Rope (LTC) 76 *N*\n1 Call for Unity (LTC) 163 *N*\n1 Dawn of Hope (LTC) 164 *N*\n1 Dusk // Dawn (LTC) 166 *N*\n1 Fell the Mighty (LTC) 167 *N*\n1 Fumigate (LTC) 170 *N*\n1 Sanguine Bond (LTC) 208 *N*\n1 Toxic Deluge (LTC) 209 *N*\n1 Birds of Paradise (LTC) 235 *N*\n1 Gilded Goose (LTC) 246 *N*\n1 Woodfall Primus (LTC) 264 *N*\n1 Anguished Unmaking (LTC) 265 *N*\n1 Chromatic Lantern (LTC) 275 *N*\n1 Trading Post (LTC) 288 *N*\n1 Well of Lost Dreams (LTC) 291 *N*\n1 Brushland (LTC) 297 *N*\n1 Canopy Vista (LTC) 298 *N*\n1 Exotic Orchard (LTC) 307 *N*\n1 Fortified Village (LTC) 311 *N*\n1 Isolated Chapel (LTC) 318 *N*\n1 Murmuring Bosk (LTC) 320 *N*\n1 Necroblossom Snarl (LTC) 321 *N*\n1 Scattered Groves (LTC) 328 *N*\n1 Shineshadow Snarl (LTC) 331 *N*\n1 Sunpetal Grove (LTC) 336 *N*\n1 Woodland Cemetery (LTC) 346 *N*\n1 Eagles of the North (LTR) 7 *N*\n1 Rosie Cotton of South Lane (LTR) 27 *N*\n1 Shire Shirriff (LTR) 30 *N*\n1 Mirkwood Bats (LTR) 95 *N*\n1 Generous Ent (LTR) 169 *N*\n1 Path to Exile (LTC) 175 *N*\n1 Swords to Plowshares (LTC) 178 *N*\n1 Revive the Shire (LTR) 185 *N*\n1 Butterbur, Bree Innkeeper (LTR) 197 *N*\n1 Crypt Incursion (LTC) 198 *N*\n1 Go for the Throat (LTC) 201 *N*\n1 Cultivate (LTC) 236 *N*\n1 Essence Warden (LTC) 242 *N*\n1 Farseek (LTC) 244 *N*\n1 Great Oak Guardian (LTC) 247 *N*\n1 Orchard Strider (LTC) 253 *N*\n1 Prosperous Innkeeper (LTC) 256 *N*\n1 Shire Terrace (LTR) 261 *N*\n1 Tireless Provisioner (LTC) 262 *N*\n1 Mortify (LTC) 269 *N*\n1 Savvy Hunter (LTC) 271 *N*\n1 Arcane Signet (LTC) 273 *N*\n1 Commander's Sphere (LTC) 276 *N*\n1 Sol Ring (LTC) 284 *N*\n1 Access Tunnel (LTC) 294 *N*\n1 Ash Barrens (LTC) 295 *N*\n1 Command Tower (LTC) 301 *N*\n1 Evolving Wilds (LTC) 306 *N*\n1 Ghost Quarter (LTC) 314 *N*\n1 Graypelt Refuge (LTC) 316 *N*\n1 Path of Ancestry (LTC) 322 *N*\n1 Rogue's Passage (LTC) 326 *N*\n1 Sandsteppe Citadel (LTC) 327 *N*\n1 Scoured Barrens (LTC) 329 *N*\n2 Plains (LTR) 262 *N*\n2 Plains (LTR) 263 *N*\n2 Swamp (LTR) 266 *N*\n2 Swamp (LTR) 267 *N*\n4 Forest (LTR) 270 *N*\n4 Forest (LTR) 271 *N*\n1 Many Partings (LTR) 445 *N*\n1 Nimble Hobbit (LTR) 23 *N*\n1 Belladonna Took (HOB) 4 *N*\n1 Orcish Medicine (LTR) 104 *N*\n1 Samwise Gamgee (LTR) 327 *N*\n1 Ravening Warg (HOB) 80 *N*\n1 Gorbag of Minas Morgul (LTR) 86 *N*\n1 Bilbo's Gambit (HOB) 5 *N*",
+    "finalDecklist": "// COMMANDER\n1 Frodo, Adventurous Hobbit (LTC) 2 *F*\n1 Sam, Loyal Attendant (LTC) 7 *F*\n\n// MAIN\n1 Field-Tested Frying Pan (LTC) 11 *N*\n1 The Gaffer (LTC) 12 *N*\n1 Gwaihir, Greatest of the Eagles (LTC) 15 *N*\n1 Of Herbs and Stewed Rabbit (LTC) 17 *N*\n1 Gollum, Obsessed Stalker (LTC) 26 *N*\n1 Rapacious Guest (LTC) 28 *N*\n1 Assemble the Entmoot (LTC) 36 *N*\n1 Motivated Pony (LTC) 42 *N*\n1 Prize Pig (LTC) 43 *N*\n1 Banquet Guests (LTC) 47 *N*\n1 Bilbo, Birthday Celebrant (LTC) 48 *N*\n1 Farmer Cotton (LTC) 55 *N*\n1 Pippin, Warden of Isengard (LTC) 65 *N*\n1 Treebeard, Gracious Host (LTC) 73 *N*\n1 Hithlain Rope (LTC) 76 *N*\n1 Call for Unity (LTC) 163 *N*\n1 Dawn of Hope (LTC) 164 *N*\n1 Dusk // Dawn (LTC) 166 *N*\n1 Fell the Mighty (LTC) 167 *N*\n1 Fumigate (LTC) 170 *N*\n1 Mentor of the Meek (LTC) 173 *N*\n1 Sanguine Bond (LTC) 208 *N*\n1 Toxic Deluge (LTC) 209 *N*\n1 Birds of Paradise (LTC) 235 *N*\n1 Gilded Goose (LTC) 246 *N*\n1 Woodfall Primus (LTC) 264 *N*\n1 Anguished Unmaking (LTC) 265 *N*\n1 Chromatic Lantern (LTC) 275 *N*\n1 Trading Post (LTC) 288 *N*\n1 Well of Lost Dreams (LTC) 291 *N*\n1 Brushland (LTC) 297 *N*\n1 Canopy Vista (LTC) 298 *N*\n1 Exotic Orchard (LTC) 307 *N*\n1 Fortified Village (LTC) 311 *N*\n1 Isolated Chapel (LTC) 318 *N*\n1 Murmuring Bosk (LTC) 320 *N*\n1 Necroblossom Snarl (LTC) 321 *N*\n1 Scattered Groves (LTC) 328 *N*\n1 Shineshadow Snarl (LTC) 331 *N*\n1 Sunpetal Grove (LTC) 336 *N*\n1 Woodland Cemetery (LTC) 346 *N*\n1 Eagles of the North (LTR) 7 *N*\n1 Rosie Cotton of South Lane (LTR) 27 *N*\n1 Shire Shirriff (LTR) 30 *N*\n1 Mirkwood Bats (LTR) 95 *N*\n1 Path to Exile (LTC) 175 *N*\n1 Swords to Plowshares (LTC) 178 *N*\n1 Revive the Shire (LTR) 185 *N*\n1 Butterbur, Bree Innkeeper (LTR) 197 *N*\n1 Crypt Incursion (LTC) 198 *N*\n1 Go for the Throat (LTC) 201 *N*\n1 Night's Whisper (LTC) 205 *N*\n1 Essence Warden (LTC) 242 *N*\n1 Farseek (LTC) 244 *N*\n1 Great Oak Guardian (LTC) 247 *N*\n1 Prosperous Innkeeper (LTC) 256 *N*\n1 Shire Terrace (LTR) 261 *N*\n1 Tireless Provisioner (LTC) 262 *N*\n1 Mortify (LTC) 269 *N*\n1 Savvy Hunter (LTC) 271 *N*\n1 Arcane Signet (LTC) 273 *N*\n1 Commander's Sphere (LTC) 276 *N*\n1 Sol Ring (LTC) 284 *N*\n1 Access Tunnel (LTC) 294 *N*\n1 Ash Barrens (LTC) 295 *N*\n1 Command Tower (LTC) 301 *N*\n1 Evolving Wilds (LTC) 306 *N*\n1 Ghost Quarter (LTC) 314 *N*\n1 Graypelt Refuge (LTC) 316 *N*\n1 Path of Ancestry (LTC) 322 *N*\n1 Rogue's Passage (LTC) 326 *N*\n1 Sandsteppe Citadel (LTC) 327 *N*\n1 Scoured Barrens (LTC) 329 *N*\n2 Plains (LTR) 262 *N*\n2 Plains (LTR) 263 *N*\n2 Swamp (LTR) 266 *N*\n2 Swamp (LTR) 267 *N*\n4 Forest (LTR) 270 *N*\n4 Forest (LTR) 271 *N*\n1 Many Partings (LTR) 445 *N*\n1 Nimble Hobbit (LTR) 23 *N*\n1 Belladonna Took (HOB) 4 *N*\n1 Orcish Medicine (LTR) 104 *N*\n1 Samwise Gamgee (LTR) 327 *N*\n1 Ravening Warg (HOB) 80 *N*\n1 The Battle of Bywater (LTR) 2 *N*\n1 Shelob's Ambush (LTR) 108 *N*\n1 Tempt with Discovery (LTC) 532 *N*",
     "finalCommanderRules": {
       "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
       "status": "legal",
@@ -799,17 +840,17 @@
       {
         "round": 3,
         "accepted": true,
-        "acceptedSwaps": 2,
+        "acceptedSwaps": 3,
         "candidatePackagesGenerated": 4,
-        "candidatePackagesEligible": 3,
+        "candidatePackagesEligible": 2,
         "candidateAttemptSizes": [
           4
         ],
         "candidatePackagesGeneratedAcrossAttempts": 4,
-        "winningCandidate": 4,
-        "estimatedSpendNzd": 3,
-        "estimatedSpendUsdReference": 1.76,
-        "improvementScore": 13.011,
+        "winningCandidate": 2,
+        "estimatedSpendNzd": 16.81,
+        "estimatedSpendUsdReference": 9.85,
+        "improvementScore": 9.968,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -825,12 +866,11 @@
         "candidatePackagesGenerated": 4,
         "candidatePackagesEligible": 0,
         "candidateAttemptSizes": [
-          4,
           3,
           2,
           1
         ],
-        "candidatePackagesGeneratedAcrossAttempts": 16,
+        "candidatePackagesGeneratedAcrossAttempts": 12,
         "winningCandidate": null,
         "estimatedSpendNzd": 0,
         "estimatedSpendUsdReference": 0,
@@ -847,10 +887,10 @@
     ],
     "constraints": {
       "targetBracket": 4,
-      "maxNzdPerCard": 35.01,
-      "maxUsdPerCardReference": 20.52,
+      "maxNzdPerCard": 35,
+      "maxUsdPerCardReference": 20.51,
       "maxTotalNzd": 200,
-      "maxTotalUsdReference": 117.24,
+      "maxTotalUsdReference": 117.2,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -1172,8 +1212,8 @@
                   "beforeSupportCount": 62,
                   "afterSupportCount": 62,
                   "supportDelta": 0,
-                  "beforeAffinityTotal": 214,
-                  "afterAffinityTotal": 214,
+                  "beforeAffinityTotal": 205,
+                  "afterAffinityTotal": 205,
                   "affinityDelta": 0,
                   "preserved": true
                 },
@@ -1593,8 +1633,8 @@
                   "beforeSupportCount": 62,
                   "afterSupportCount": 62,
                   "supportDelta": 0,
-                  "beforeAffinityTotal": 214,
-                  "afterAffinityTotal": 214,
+                  "beforeAffinityTotal": 205,
+                  "afterAffinityTotal": 205,
                   "affinityDelta": 0,
                   "preserved": true
                 },
@@ -2015,8 +2055,8 @@
                   "beforeSupportCount": 62,
                   "afterSupportCount": 62,
                   "supportDelta": 0,
-                  "beforeAffinityTotal": 214,
-                  "afterAffinityTotal": 214,
+                  "beforeAffinityTotal": 205,
+                  "afterAffinityTotal": 205,
                   "affinityDelta": 0,
                   "preserved": true
                 },
@@ -2435,8 +2475,8 @@
                   "beforeSupportCount": 62,
                   "afterSupportCount": 62,
                   "supportDelta": 0,
-                  "beforeAffinityTotal": 214,
-                  "afterAffinityTotal": 214,
+                  "beforeAffinityTotal": 205,
+                  "afterAffinityTotal": 205,
                   "affinityDelta": 0,
                   "preserved": true
                 },
@@ -2935,8 +2975,8 @@
                       "beforeSupportCount": 62,
                       "afterSupportCount": 62,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 214,
-                      "afterAffinityTotal": 205,
+                      "beforeAffinityTotal": 205,
+                      "afterAffinityTotal": 196,
                       "affinityDelta": -9,
                       "preserved": false
                     },
@@ -3198,7 +3238,7 @@
                       "set": "LTC",
                       "collectorNumber": "183",
                       "finish": "nonfoil",
-                      "priceNzd": 2.23,
+                      "priceNzd": 2.24,
                       "priceUsdReference": 1.31
                     },
                     "structuralPairing": {
@@ -3531,8 +3571,8 @@
                       "beforeSupportCount": 62,
                       "afterSupportCount": 62,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 214,
-                      "afterAffinityTotal": 205,
+                      "beforeAffinityTotal": 205,
+                      "afterAffinityTotal": 196,
                       "affinityDelta": -9,
                       "preserved": false
                     },
@@ -3799,7 +3839,7 @@
                       "set": "LTC",
                       "collectorNumber": "183",
                       "finish": "nonfoil",
-                      "priceNzd": 2.23,
+                      "priceNzd": 2.24,
                       "priceUsdReference": 1.31
                     },
                     "structuralPairing": {
@@ -4280,7 +4320,7 @@
                       "set": "HOB",
                       "collectorNumber": "5",
                       "finish": "nonfoil",
-                      "priceNzd": 2.64,
+                      "priceNzd": 2.65,
                       "priceUsdReference": 1.55
                     },
                     "structuralPairing": {
@@ -4330,7 +4370,7 @@
                       "set": "LTC",
                       "collectorNumber": "183",
                       "finish": "nonfoil",
-                      "priceNzd": 2.23,
+                      "priceNzd": 2.24,
                       "priceUsdReference": 1.31
                     },
                     "structuralPairing": {
@@ -5092,8 +5132,8 @@
                       "beforeSupportCount": 62,
                       "afterSupportCount": 62,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 214,
-                      "afterAffinityTotal": 205,
+                      "beforeAffinityTotal": 205,
+                      "afterAffinityTotal": 196,
                       "affinityDelta": -9,
                       "preserved": false
                     },
@@ -5355,7 +5395,7 @@
                       "set": "LTC",
                       "collectorNumber": "183",
                       "finish": "nonfoil",
-                      "priceNzd": 2.23,
+                      "priceNzd": 2.24,
                       "priceUsdReference": 1.31
                     },
                     "structuralPairing": {
@@ -5614,8 +5654,8 @@
                       "beforeSupportCount": 62,
                       "afterSupportCount": 62,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 214,
-                      "afterAffinityTotal": 205,
+                      "beforeAffinityTotal": 205,
+                      "afterAffinityTotal": 196,
                       "affinityDelta": -9,
                       "preserved": false
                     },
@@ -5882,7 +5922,7 @@
                       "set": "LTC",
                       "collectorNumber": "183",
                       "finish": "nonfoil",
-                      "priceNzd": 2.23,
+                      "priceNzd": 2.24,
                       "priceUsdReference": 1.31
                     },
                     "structuralPairing": {
@@ -6289,7 +6329,7 @@
                       "set": "HOB",
                       "collectorNumber": "5",
                       "finish": "nonfoil",
-                      "priceNzd": 2.64,
+                      "priceNzd": 2.65,
                       "priceUsdReference": 1.55
                     },
                     "structuralPairing": {
@@ -6339,7 +6379,7 @@
                       "set": "LTC",
                       "collectorNumber": "183",
                       "finish": "nonfoil",
-                      "priceNzd": 2.23,
+                      "priceNzd": 2.24,
                       "priceUsdReference": 1.31
                     },
                     "structuralPairing": {
@@ -7011,8 +7051,8 @@
                       "beforeSupportCount": 62,
                       "afterSupportCount": 62,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 214,
-                      "afterAffinityTotal": 214,
+                      "beforeAffinityTotal": 205,
+                      "afterAffinityTotal": 205,
                       "affinityDelta": 0,
                       "preserved": true
                     },
@@ -7432,8 +7472,8 @@
                       "beforeSupportCount": 62,
                       "afterSupportCount": 62,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 214,
-                      "afterAffinityTotal": 214,
+                      "beforeAffinityTotal": 205,
+                      "afterAffinityTotal": 205,
                       "affinityDelta": 0,
                       "preserved": true
                     },
@@ -7854,8 +7894,8 @@
                       "beforeSupportCount": 62,
                       "afterSupportCount": 62,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 214,
-                      "afterAffinityTotal": 214,
+                      "beforeAffinityTotal": 205,
+                      "afterAffinityTotal": 205,
                       "affinityDelta": 0,
                       "preserved": true
                     },
@@ -8274,8 +8314,8 @@
                       "beforeSupportCount": 62,
                       "afterSupportCount": 62,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 214,
-                      "afterAffinityTotal": 214,
+                      "beforeAffinityTotal": 205,
+                      "afterAffinityTotal": 205,
                       "affinityDelta": 0,
                       "preserved": true
                     },
@@ -9027,8 +9067,8 @@
                   "beforeSupportCount": 62,
                   "afterSupportCount": 62,
                   "supportDelta": 0,
-                  "beforeAffinityTotal": 214,
-                  "afterAffinityTotal": 205,
+                  "beforeAffinityTotal": 205,
+                  "afterAffinityTotal": 196,
                   "affinityDelta": -9,
                   "preserved": false
                 },
@@ -9243,7 +9283,7 @@
                   "set": "LTC",
                   "collectorNumber": "183",
                   "finish": "nonfoil",
-                  "priceNzd": 2.23,
+                  "priceNzd": 2.24,
                   "priceUsdReference": 1.31
                 },
                 "structuralPairing": {
@@ -9393,7 +9433,7 @@
             "reason": "package-causes-a-significant-simulated-regression",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 38.01,
+            "estimatedSpendNzd": 38.02,
             "estimatedSpendUsdReference": 22.28,
             "unknownPriceCount": 0,
             "improvementScore": 14.759,
@@ -9758,7 +9798,7 @@
                   "set": "SLD",
                   "collectorNumber": "2563",
                   "finish": "nonfoil",
-                  "priceNzd": 26.95,
+                  "priceNzd": 26.96,
                   "priceUsdReference": 15.8
                 },
                 "structuralPairing": {
@@ -9859,7 +9899,7 @@
                   "set": "LTC",
                   "collectorNumber": "532",
                   "finish": "nonfoil",
-                  "priceNzd": 10.25,
+                  "priceNzd": 10.26,
                   "priceUsdReference": 6.01
                 },
                 "structuralPairing": {
@@ -10440,8 +10480,8 @@
                   "beforeSupportCount": 62,
                   "afterSupportCount": 62,
                   "supportDelta": 0,
-                  "beforeAffinityTotal": 214,
-                  "afterAffinityTotal": 217,
+                  "beforeAffinityTotal": 205,
+                  "afterAffinityTotal": 208,
                   "affinityDelta": 3,
                   "preserved": true
                 },
@@ -11051,8 +11091,8 @@
                       "beforeSupportCount": 62,
                       "afterSupportCount": 62,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 214,
-                      "afterAffinityTotal": 205,
+                      "beforeAffinityTotal": 205,
+                      "afterAffinityTotal": 196,
                       "affinityDelta": -9,
                       "preserved": false
                     },
@@ -11267,7 +11307,7 @@
                       "set": "LTC",
                       "collectorNumber": "183",
                       "finish": "nonfoil",
-                      "priceNzd": 2.23,
+                      "priceNzd": 2.24,
                       "priceUsdReference": 1.31
                     },
                     "structuralPairing": {
@@ -11417,7 +11457,7 @@
                 "reason": "package-causes-a-significant-simulated-regression",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 38.01,
+                "estimatedSpendNzd": 38.02,
                 "estimatedSpendUsdReference": 22.28,
                 "unknownPriceCount": 0,
                 "improvementScore": 14.759,
@@ -11782,7 +11822,7 @@
                       "set": "SLD",
                       "collectorNumber": "2563",
                       "finish": "nonfoil",
-                      "priceNzd": 26.95,
+                      "priceNzd": 26.96,
                       "priceUsdReference": 15.8
                     },
                     "structuralPairing": {
@@ -11883,7 +11923,7 @@
                       "set": "LTC",
                       "collectorNumber": "532",
                       "finish": "nonfoil",
-                      "priceNzd": 10.25,
+                      "priceNzd": 10.26,
                       "priceUsdReference": 6.01
                     },
                     "structuralPairing": {
@@ -12464,8 +12504,8 @@
                       "beforeSupportCount": 62,
                       "afterSupportCount": 62,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 214,
-                      "afterAffinityTotal": 217,
+                      "beforeAffinityTotal": 205,
+                      "afterAffinityTotal": 208,
                       "affinityDelta": 3,
                       "preserved": true
                     },
@@ -12835,13 +12875,13 @@
         "round": 3,
         "accepted": true,
         "attemptedSwaps": 4,
-        "acceptedSwaps": 2,
+        "acceptedSwaps": 3,
         "candidatePackagesGenerated": 4,
-        "candidatePackagesEligible": 3,
-        "winningCandidate": 4,
-        "estimatedSpendNzd": 3,
-        "estimatedSpendUsdReference": 1.76,
-        "improvementScore": 13.011,
+        "candidatePackagesEligible": 2,
+        "winningCandidate": 2,
+        "estimatedSpendNzd": 16.81,
+        "estimatedSpendUsdReference": 9.85,
+        "improvementScore": 9.968,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -12851,87 +12891,25 @@
         "themeAuditBefore": null,
         "swaps": [
           {
-            "out": "Mentor of the Meek",
-            "in": "Gorbag of Minas Morgul",
+            "out": "Generous Ent",
+            "in": "The Battle of Bywater",
             "recommendedPrinting": {
               "set": "LTR",
               "setName": "The Lord of the Rings: Tales of Middle-earth",
-              "collectorNumber": "86",
+              "collectorNumber": "2",
               "releaseDate": "2023-06-23",
               "finish": "nonfoil",
-              "priceNzd": 0.36,
-              "priceUsdReference": 0.21,
+              "priceNzd": 6.28,
+              "priceUsdReference": 3.68,
               "promo": false,
               "promoTypes": [
                 "universesbeyond"
               ],
               "flavorName": null,
               "familyMatch": "family-set",
-              "scryfallUrl": "https://scryfall.com/card/ltr/86/gorbag-of-minas-morgul?utm_source=api"
+              "scryfallUrl": "https://scryfall.com/card/ltr/2/the-battle-of-bywater?utm_source=api"
             },
-            "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
-            "structuralPairing": {
-              "addressedRole": "average-nonland-mv",
-              "remainingStructuralDeficitAfterSwap": 12,
-              "authoritativeTargetGate": "average-nonland-mv",
-              "nonlandManaValueReduction": 1,
-              "persistentColoredManaSourcesAfterSwap": 8,
-              "persistentColoredManaSourceFloor": 6,
-              "strategyPreservation": {
-                "cutStrategyAffinityScore": 14,
-                "addStrategyAffinityScore": 22,
-                "cutStrategyProtectionApplied": 0,
-                "cutMatchedStrategies": [
-                  "value-engine"
-                ],
-                "addMatchedStrategies": [
-                  "combat-tokens",
-                  "value-engine"
-                ],
-                "locallyUnreplacedStrategies": [],
-                "cutRoles": [
-                  "card draw",
-                  "creature",
-                  "etb synergy",
-                  "repeatable draw"
-                ],
-                "addRoles": [
-                  "card draw",
-                  "conditional mana acceleration",
-                  "creature",
-                  "repeatable draw",
-                  "token production",
-                  "treasure"
-                ],
-                "unreplacedRoles": [
-                  "etb synergy"
-                ],
-                "unreplacedStrategyComponentRoles": [],
-                "meaningfulStrategyLoss": false,
-                "verdict": "preserved"
-              }
-            }
-          },
-          {
-            "out": "Night's Whisper",
-            "in": "Bilbo's Gambit",
-            "recommendedPrinting": {
-              "set": "HOB",
-              "setName": "The Hobbit",
-              "collectorNumber": "5",
-              "releaseDate": "2026-08-14",
-              "finish": "nonfoil",
-              "priceNzd": 2.64,
-              "priceUsdReference": 1.55,
-              "promo": false,
-              "promoTypes": [
-                "universesbeyond"
-              ],
-              "flavorName": null,
-              "familyMatch": "family-set",
-              "scryfallUrl": "https://scryfall.com/card/hob/5/bilbos-gambit?utm_source=api"
-            },
-            "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+            "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
             "structuralPairing": {
               "addressedRole": "interaction",
               "remainingStructuralDeficitAfterSwap": 11,
@@ -12940,31 +12918,145 @@
               "persistentColoredManaSourcesAfterSwap": 8,
               "persistentColoredManaSourceFloor": 6,
               "strategyPreservation": {
-                "cutStrategyAffinityScore": 5,
-                "addStrategyAffinityScore": 11,
+                "cutStrategyAffinityScore": 14,
+                "addStrategyAffinityScore": 14,
                 "cutStrategyProtectionApplied": 4,
+                "cutMatchedStrategies": [
+                  "combat-tokens",
+                  "food-lifegain"
+                ],
+                "addMatchedStrategies": [
+                  "combat-tokens",
+                  "food-lifegain"
+                ],
+                "locallyUnreplacedStrategies": [],
+                "cutRoles": [
+                  "creature",
+                  "token production"
+                ],
+                "addRoles": [
+                  "board wipe",
+                  "token production"
+                ],
+                "unreplacedRoles": [
+                  "creature"
+                ],
+                "unreplacedStrategyComponentRoles": [],
+                "meaningfulStrategyLoss": false,
+                "verdict": "preserved"
+              }
+            }
+          },
+          {
+            "out": "Orchard Strider",
+            "in": "Shelob's Ambush",
+            "recommendedPrinting": {
+              "set": "LTR",
+              "setName": "The Lord of the Rings: Tales of Middle-earth",
+              "collectorNumber": "108",
+              "releaseDate": "2023-06-23",
+              "finish": "nonfoil",
+              "priceNzd": 0.27,
+              "priceUsdReference": 0.16,
+              "promo": false,
+              "promoTypes": [
+                "universesbeyond"
+              ],
+              "flavorName": null,
+              "familyMatch": "family-set",
+              "scryfallUrl": "https://scryfall.com/card/ltr/108/shelobs-ambush?utm_source=api"
+            },
+            "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: food-lifegain, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
+            "structuralPairing": {
+              "addressedRole": "average-nonland-mv",
+              "remainingStructuralDeficitAfterSwap": 11,
+              "authoritativeTargetGate": "average-nonland-mv",
+              "nonlandManaValueReduction": 5,
+              "persistentColoredManaSourcesAfterSwap": 8,
+              "persistentColoredManaSourceFloor": 6,
+              "strategyPreservation": {
+                "cutStrategyAffinityScore": 14,
+                "addStrategyAffinityScore": 14,
+                "cutStrategyProtectionApplied": 4,
+                "cutMatchedStrategies": [
+                  "combat-tokens",
+                  "food-lifegain"
+                ],
+                "addMatchedStrategies": [
+                  "combat-tokens",
+                  "food-lifegain"
+                ],
+                "locallyUnreplacedStrategies": [],
+                "cutRoles": [
+                  "creature",
+                  "land tutor",
+                  "token production"
+                ],
+                "addRoles": [
+                  "token production"
+                ],
+                "unreplacedRoles": [
+                  "creature",
+                  "land tutor"
+                ],
+                "unreplacedStrategyComponentRoles": [],
+                "meaningfulStrategyLoss": false,
+                "verdict": "preserved"
+              }
+            }
+          },
+          {
+            "out": "Cultivate",
+            "in": "Tempt with Discovery",
+            "recommendedPrinting": {
+              "set": "LTC",
+              "setName": "Tales of Middle-earth Commander",
+              "collectorNumber": "532",
+              "releaseDate": "2023-11-03",
+              "finish": "nonfoil",
+              "priceNzd": 10.26,
+              "priceUsdReference": 6.01,
+              "promo": false,
+              "promoTypes": [
+                "silverfoil",
+                "universesbeyond",
+                "boosterfun"
+              ],
+              "flavorName": null,
+              "familyMatch": "family-set",
+              "scryfallUrl": "https://scryfall.com/card/ltc/532/tempt-with-discovery?utm_source=api"
+            },
+            "why": "Advances the currently failed authoritative Bracket-4 tutors gate (0 must rise to 2 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy.",
+            "structuralPairing": {
+              "addressedRole": "tutor",
+              "remainingStructuralDeficitAfterSwap": 10,
+              "authoritativeTargetGate": "tutors",
+              "nonlandManaValueReduction": null,
+              "persistentColoredManaSourcesAfterSwap": 8,
+              "persistentColoredManaSourceFloor": 6,
+              "strategyPreservation": {
+                "cutStrategyAffinityScore": 1,
+                "addStrategyAffinityScore": 1,
+                "cutStrategyProtectionApplied": 1,
                 "cutMatchedStrategies": [
                   "value-engine"
                 ],
                 "addMatchedStrategies": [
-                  "combat-tokens",
                   "value-engine"
                 ],
                 "locallyUnreplacedStrategies": [],
                 "cutRoles": [
-                  "card draw"
+                  "land ramp",
+                  "land tutor",
+                  "persistent colored mana source"
                 ],
                 "addRoles": [
-                  "cheap interaction",
-                  "conditional mana acceleration",
-                  "spot interaction",
-                  "stax/control",
-                  "token production",
-                  "treasure"
+                  "land ramp",
+                  "land tutor",
+                  "persistent colored mana source",
+                  "tutor"
                 ],
-                "unreplacedRoles": [
-                  "card draw"
-                ],
+                "unreplacedRoles": [],
                 "unreplacedStrategyComponentRoles": [],
                 "meaningfulStrategyLoss": false,
                 "verdict": "preserved"
@@ -13138,8 +13230,8 @@
                   "beforeSupportCount": 62,
                   "afterSupportCount": 62,
                   "supportDelta": 0,
-                  "beforeAffinityTotal": 217,
-                  "afterAffinityTotal": 217,
+                  "beforeAffinityTotal": 208,
+                  "afterAffinityTotal": 208,
                   "affinityDelta": 0,
                   "preserved": true
                 },
@@ -13391,7 +13483,7 @@
             "reason": "eligible",
             "attemptedSwaps": 4,
             "actualSwaps": 3,
-            "estimatedSpendNzd": 16.8,
+            "estimatedSpendNzd": 16.81,
             "estimatedSpendUsdReference": 9.85,
             "unknownPriceCount": 0,
             "improvementScore": 9.968,
@@ -13584,8 +13676,8 @@
                   "beforeSupportCount": 62,
                   "afterSupportCount": 62,
                   "supportDelta": 0,
-                  "beforeAffinityTotal": 217,
-                  "afterAffinityTotal": 217,
+                  "beforeAffinityTotal": 208,
+                  "afterAffinityTotal": 208,
                   "affinityDelta": 0,
                   "preserved": true
                 },
@@ -13836,7 +13928,7 @@
                   "set": "LTC",
                   "collectorNumber": "532",
                   "finish": "nonfoil",
-                  "priceNzd": 10.25,
+                  "priceNzd": 10.26,
                   "priceUsdReference": 6.01
                 },
                 "structuralPairing": {
@@ -13883,7 +13975,7 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 4,
             "actualSwaps": 3,
-            "estimatedSpendNzd": 11.53,
+            "estimatedSpendNzd": 11.54,
             "estimatedSpendUsdReference": 6.76,
             "unknownPriceCount": 0,
             "improvementScore": 11.179,
@@ -14082,8 +14174,8 @@
                   "beforeSupportCount": 62,
                   "afterSupportCount": 63,
                   "supportDelta": 1,
-                  "beforeAffinityTotal": 217,
-                  "afterAffinityTotal": 227,
+                  "beforeAffinityTotal": 208,
+                  "afterAffinityTotal": 218,
                   "affinityDelta": 10,
                   "preserved": true
                 },
@@ -14346,7 +14438,7 @@
                   "set": "LTC",
                   "collectorNumber": "532",
                   "finish": "nonfoil",
-                  "priceNzd": 10.25,
+                  "priceNzd": 10.26,
                   "priceUsdReference": 6.01
                 },
                 "structuralPairing": {
@@ -14389,31 +14481,30 @@
           },
           {
             "candidate": 4,
-            "eligible": true,
-            "reason": "eligible",
+            "eligible": false,
+            "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
             "attemptedSwaps": 4,
-            "actualSwaps": 2,
-            "estimatedSpendNzd": 3,
-            "estimatedSpendUsdReference": 1.76,
+            "actualSwaps": 1,
+            "estimatedSpendNzd": 2.65,
+            "estimatedSpendUsdReference": 1.55,
             "unknownPriceCount": 0,
-            "improvementScore": 13.011,
+            "improvementScore": -1.751,
             "significantRegression": false,
-            "zeroTargetProgressWhileFailedGatesRemain": false,
+            "zeroTargetProgressWhileFailedGatesRemain": true,
             "targetGate": {
               "applicable": true,
-              "score": 10,
+              "score": 0,
               "failedBefore": [
                 "average-nonland-mv",
                 "fast-mana",
                 "tutors"
               ],
               "failedAfter": [
+                "average-nonland-mv",
                 "fast-mana",
                 "tutors"
               ],
-              "repairedGates": [
-                "average-nonland-mv"
-              ],
+              "repairedGates": [],
               "advancedFailedGates": [],
               "regressedGates": [],
               "ignoredUnverifiedGates": []
@@ -14427,50 +14518,17 @@
                 {
                   "strategy": "combat-tokens",
                   "cutAffinityScore": 0,
-                  "addAffinityScore": 14,
-                  "netAffinityDelta": 14
+                  "addAffinityScore": 6,
+                  "netAffinityDelta": 6
                 },
                 {
                   "strategy": "value-engine",
-                  "cutAffinityScore": 19,
-                  "addAffinityScore": 19,
+                  "cutAffinityScore": 5,
+                  "addAffinityScore": 5,
                   "netAffinityDelta": 0
                 }
               ],
               "swapImpacts": [
-                {
-                  "cutStrategyAffinityScore": 14,
-                  "addStrategyAffinityScore": 22,
-                  "cutStrategyProtectionApplied": 0,
-                  "cutMatchedStrategies": [
-                    "value-engine"
-                  ],
-                  "addMatchedStrategies": [
-                    "combat-tokens",
-                    "value-engine"
-                  ],
-                  "locallyUnreplacedStrategies": [],
-                  "cutRoles": [
-                    "card draw",
-                    "creature",
-                    "etb synergy",
-                    "repeatable draw"
-                  ],
-                  "addRoles": [
-                    "card draw",
-                    "conditional mana acceleration",
-                    "creature",
-                    "repeatable draw",
-                    "token production",
-                    "treasure"
-                  ],
-                  "unreplacedRoles": [
-                    "etb synergy"
-                  ],
-                  "unreplacedStrategyComponentRoles": [],
-                  "meaningfulStrategyLoss": false,
-                  "verdict": "preserved"
-                },
                 {
                   "cutStrategyAffinityScore": 5,
                   "addStrategyAffinityScore": 11,
@@ -14504,79 +14562,8 @@
               ],
               "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
             },
-            "packageAcceptance": {
-              "status": "preserved",
-              "evidenceComplete": true,
-              "preserved": true,
-              "strategyFuel": [
-                {
-                  "kind": "strategy-fuel",
-                  "id": "repeatable-life-gain-draw-engine",
-                  "minimumCount": 2,
-                  "zone": "main",
-                  "matcher": {
-                    "requiredRoles": [
-                      "life-gain-triggered draw engine"
-                    ],
-                    "requireNonland": true
-                  },
-                  "beforeCount": 3,
-                  "afterCount": 3,
-                  "delta": 0,
-                  "preserved": true
-                }
-              ],
-              "structuralFloors": [],
-              "losses": [],
-              "unresolvedBefore": [],
-              "unresolvedAfter": [],
-              "invalidRequirements": [],
-              "acceptanceRule": "Every caller-declared strategy-fuel component and structural-floor component must retain at least its declared minimum count across the complete accepted package. Exact card resolution and descriptor validation are required; a missing or malformed component cannot be treated as preserved."
-            },
-            "deckStrategyRetention": {
-              "status": "preserved",
-              "evidenceComplete": true,
-              "preserved": true,
-              "unresolvedBefore": [],
-              "unresolvedAfter": [],
-              "strategies": [
-                {
-                  "archetype": "food-lifegain",
-                  "commanderScore": 15,
-                  "beforeSupportCount": 33,
-                  "afterSupportCount": 33,
-                  "supportDelta": 0,
-                  "beforeAffinityTotal": 306,
-                  "afterAffinityTotal": 306,
-                  "affinityDelta": 0,
-                  "preserved": true
-                },
-                {
-                  "archetype": "value-engine",
-                  "commanderScore": 14,
-                  "beforeSupportCount": 62,
-                  "afterSupportCount": 62,
-                  "supportDelta": 0,
-                  "beforeAffinityTotal": 217,
-                  "afterAffinityTotal": 217,
-                  "affinityDelta": 0,
-                  "preserved": true
-                },
-                {
-                  "archetype": "combat-tokens",
-                  "commanderScore": 8,
-                  "beforeSupportCount": 29,
-                  "afterSupportCount": 31,
-                  "supportDelta": 2,
-                  "beforeAffinityTotal": 176,
-                  "afterAffinityTotal": 190,
-                  "affinityDelta": 14,
-                  "preserved": true
-                }
-              ],
-              "losses": [],
-              "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
-            },
+            "packageAcceptance": null,
+            "deckStrategyRetention": {},
             "planProvenance": {
               "targetBracket": 4,
               "winRouteVerificationStatus": "no-verified-route",
@@ -14705,59 +14692,6 @@
             },
             "swaps": [
               {
-                "out": "Mentor of the Meek",
-                "in": "Gorbag of Minas Morgul",
-                "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
-                "recommendedPrinting": {
-                  "set": "LTR",
-                  "collectorNumber": "86",
-                  "finish": "nonfoil",
-                  "priceNzd": 0.36,
-                  "priceUsdReference": 0.21
-                },
-                "structuralPairing": {
-                  "addressedRole": "average-nonland-mv",
-                  "remainingStructuralDeficitAfterSwap": 12,
-                  "authoritativeTargetGate": "average-nonland-mv",
-                  "nonlandManaValueReduction": 1,
-                  "persistentColoredManaSourcesAfterSwap": 8,
-                  "persistentColoredManaSourceFloor": 6,
-                  "strategyPreservation": {
-                    "cutStrategyAffinityScore": 14,
-                    "addStrategyAffinityScore": 22,
-                    "cutStrategyProtectionApplied": 0,
-                    "cutMatchedStrategies": [
-                      "value-engine"
-                    ],
-                    "addMatchedStrategies": [
-                      "combat-tokens",
-                      "value-engine"
-                    ],
-                    "locallyUnreplacedStrategies": [],
-                    "cutRoles": [
-                      "card draw",
-                      "creature",
-                      "etb synergy",
-                      "repeatable draw"
-                    ],
-                    "addRoles": [
-                      "card draw",
-                      "conditional mana acceleration",
-                      "creature",
-                      "repeatable draw",
-                      "token production",
-                      "treasure"
-                    ],
-                    "unreplacedRoles": [
-                      "etb synergy"
-                    ],
-                    "unreplacedStrategyComponentRoles": [],
-                    "meaningfulStrategyLoss": false,
-                    "verdict": "preserved"
-                  }
-                }
-              },
-              {
                 "out": "Night's Whisper",
                 "in": "Bilbo's Gambit",
                 "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
@@ -14765,7 +14699,7 @@
                   "set": "HOB",
                   "collectorNumber": "5",
                   "finish": "nonfoil",
-                  "priceNzd": 2.64,
+                  "priceNzd": 2.65,
                   "priceUsdReference": 1.55
                 },
                 "structuralPairing": {
@@ -14814,10 +14748,11 @@
           {
             "attemptSize": 4,
             "candidatePackagesGenerated": 4,
-            "candidatePackagesEligible": 3,
-            "winningCandidate": 4,
+            "candidatePackagesEligible": 2,
+            "winningCandidate": 2,
             "reasonCounts": {
-              "eligible": 3,
+              "eligible": 2,
+              "package-does-not-repair-or-advance-failed-bracket-5-target-gate": 1,
               "package-reduces-substantive-deck-strategy-density": 1
             },
             "candidateComparisons": [
@@ -14986,8 +14921,8 @@
                       "beforeSupportCount": 62,
                       "afterSupportCount": 62,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 217,
-                      "afterAffinityTotal": 217,
+                      "beforeAffinityTotal": 208,
+                      "afterAffinityTotal": 208,
                       "affinityDelta": 0,
                       "preserved": true
                     },
@@ -15239,7 +15174,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 4,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 16.8,
+                "estimatedSpendNzd": 16.81,
                 "estimatedSpendUsdReference": 9.85,
                 "unknownPriceCount": 0,
                 "improvementScore": 9.968,
@@ -15432,8 +15367,8 @@
                       "beforeSupportCount": 62,
                       "afterSupportCount": 62,
                       "supportDelta": 0,
-                      "beforeAffinityTotal": 217,
-                      "afterAffinityTotal": 217,
+                      "beforeAffinityTotal": 208,
+                      "afterAffinityTotal": 208,
                       "affinityDelta": 0,
                       "preserved": true
                     },
@@ -15684,7 +15619,7 @@
                       "set": "LTC",
                       "collectorNumber": "532",
                       "finish": "nonfoil",
-                      "priceNzd": 10.25,
+                      "priceNzd": 10.26,
                       "priceUsdReference": 6.01
                     },
                     "structuralPairing": {
@@ -15731,7 +15666,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 11.53,
+                "estimatedSpendNzd": 11.54,
                 "estimatedSpendUsdReference": 6.76,
                 "unknownPriceCount": 0,
                 "improvementScore": 11.179,
@@ -15930,8 +15865,8 @@
                       "beforeSupportCount": 62,
                       "afterSupportCount": 63,
                       "supportDelta": 1,
-                      "beforeAffinityTotal": 217,
-                      "afterAffinityTotal": 227,
+                      "beforeAffinityTotal": 208,
+                      "afterAffinityTotal": 218,
                       "affinityDelta": 10,
                       "preserved": true
                     },
@@ -16194,7 +16129,7 @@
                       "set": "LTC",
                       "collectorNumber": "532",
                       "finish": "nonfoil",
-                      "priceNzd": 10.25,
+                      "priceNzd": 10.26,
                       "priceUsdReference": 6.01
                     },
                     "structuralPairing": {
@@ -16237,31 +16172,30 @@
               },
               {
                 "candidate": 4,
-                "eligible": true,
-                "reason": "eligible",
+                "eligible": false,
+                "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                 "attemptedSwaps": 4,
-                "actualSwaps": 2,
-                "estimatedSpendNzd": 3,
-                "estimatedSpendUsdReference": 1.76,
+                "actualSwaps": 1,
+                "estimatedSpendNzd": 2.65,
+                "estimatedSpendUsdReference": 1.55,
                 "unknownPriceCount": 0,
-                "improvementScore": 13.011,
+                "improvementScore": -1.751,
                 "significantRegression": false,
-                "zeroTargetProgressWhileFailedGatesRemain": false,
+                "zeroTargetProgressWhileFailedGatesRemain": true,
                 "targetGate": {
                   "applicable": true,
-                  "score": 10,
+                  "score": 0,
                   "failedBefore": [
                     "average-nonland-mv",
                     "fast-mana",
                     "tutors"
                   ],
                   "failedAfter": [
+                    "average-nonland-mv",
                     "fast-mana",
                     "tutors"
                   ],
-                  "repairedGates": [
-                    "average-nonland-mv"
-                  ],
+                  "repairedGates": [],
                   "advancedFailedGates": [],
                   "regressedGates": [],
                   "ignoredUnverifiedGates": []
@@ -16275,50 +16209,17 @@
                     {
                       "strategy": "combat-tokens",
                       "cutAffinityScore": 0,
-                      "addAffinityScore": 14,
-                      "netAffinityDelta": 14
+                      "addAffinityScore": 6,
+                      "netAffinityDelta": 6
                     },
                     {
                       "strategy": "value-engine",
-                      "cutAffinityScore": 19,
-                      "addAffinityScore": 19,
+                      "cutAffinityScore": 5,
+                      "addAffinityScore": 5,
                       "netAffinityDelta": 0
                     }
                   ],
                   "swapImpacts": [
-                    {
-                      "cutStrategyAffinityScore": 14,
-                      "addStrategyAffinityScore": 22,
-                      "cutStrategyProtectionApplied": 0,
-                      "cutMatchedStrategies": [
-                        "value-engine"
-                      ],
-                      "addMatchedStrategies": [
-                        "combat-tokens",
-                        "value-engine"
-                      ],
-                      "locallyUnreplacedStrategies": [],
-                      "cutRoles": [
-                        "card draw",
-                        "creature",
-                        "etb synergy",
-                        "repeatable draw"
-                      ],
-                      "addRoles": [
-                        "card draw",
-                        "conditional mana acceleration",
-                        "creature",
-                        "repeatable draw",
-                        "token production",
-                        "treasure"
-                      ],
-                      "unreplacedRoles": [
-                        "etb synergy"
-                      ],
-                      "unreplacedStrategyComponentRoles": [],
-                      "meaningfulStrategyLoss": false,
-                      "verdict": "preserved"
-                    },
                     {
                       "cutStrategyAffinityScore": 5,
                       "addStrategyAffinityScore": 11,
@@ -16352,79 +16253,8 @@
                   ],
                   "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
                 },
-                "packageAcceptance": {
-                  "status": "preserved",
-                  "evidenceComplete": true,
-                  "preserved": true,
-                  "strategyFuel": [
-                    {
-                      "kind": "strategy-fuel",
-                      "id": "repeatable-life-gain-draw-engine",
-                      "minimumCount": 2,
-                      "zone": "main",
-                      "matcher": {
-                        "requiredRoles": [
-                          "life-gain-triggered draw engine"
-                        ],
-                        "requireNonland": true
-                      },
-                      "beforeCount": 3,
-                      "afterCount": 3,
-                      "delta": 0,
-                      "preserved": true
-                    }
-                  ],
-                  "structuralFloors": [],
-                  "losses": [],
-                  "unresolvedBefore": [],
-                  "unresolvedAfter": [],
-                  "invalidRequirements": [],
-                  "acceptanceRule": "Every caller-declared strategy-fuel component and structural-floor component must retain at least its declared minimum count across the complete accepted package. Exact card resolution and descriptor validation are required; a missing or malformed component cannot be treated as preserved."
-                },
-                "deckStrategyRetention": {
-                  "status": "preserved",
-                  "evidenceComplete": true,
-                  "preserved": true,
-                  "unresolvedBefore": [],
-                  "unresolvedAfter": [],
-                  "strategies": [
-                    {
-                      "archetype": "food-lifegain",
-                      "commanderScore": 15,
-                      "beforeSupportCount": 33,
-                      "afterSupportCount": 33,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 306,
-                      "afterAffinityTotal": 306,
-                      "affinityDelta": 0,
-                      "preserved": true
-                    },
-                    {
-                      "archetype": "value-engine",
-                      "commanderScore": 14,
-                      "beforeSupportCount": 62,
-                      "afterSupportCount": 62,
-                      "supportDelta": 0,
-                      "beforeAffinityTotal": 217,
-                      "afterAffinityTotal": 217,
-                      "affinityDelta": 0,
-                      "preserved": true
-                    },
-                    {
-                      "archetype": "combat-tokens",
-                      "commanderScore": 8,
-                      "beforeSupportCount": 29,
-                      "afterSupportCount": 31,
-                      "supportDelta": 2,
-                      "beforeAffinityTotal": 176,
-                      "afterAffinityTotal": 190,
-                      "affinityDelta": 14,
-                      "preserved": true
-                    }
-                  ],
-                  "losses": [],
-                  "acceptanceRule": "Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package."
-                },
+                "packageAcceptance": null,
+                "deckStrategyRetention": {},
                 "planProvenance": {
                   "targetBracket": 4,
                   "winRouteVerificationStatus": "no-verified-route",
@@ -16553,59 +16383,6 @@
                 },
                 "swaps": [
                   {
-                    "out": "Mentor of the Meek",
-                    "in": "Gorbag of Minas Morgul",
-                    "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It also carries advisory payoff/engine or commander-shape relationship evidence for relative replacement ranking.",
-                    "recommendedPrinting": {
-                      "set": "LTR",
-                      "collectorNumber": "86",
-                      "finish": "nonfoil",
-                      "priceNzd": 0.36,
-                      "priceUsdReference": 0.21
-                    },
-                    "structuralPairing": {
-                      "addressedRole": "average-nonland-mv",
-                      "remainingStructuralDeficitAfterSwap": 12,
-                      "authoritativeTargetGate": "average-nonland-mv",
-                      "nonlandManaValueReduction": 1,
-                      "persistentColoredManaSourcesAfterSwap": 8,
-                      "persistentColoredManaSourceFloor": 6,
-                      "strategyPreservation": {
-                        "cutStrategyAffinityScore": 14,
-                        "addStrategyAffinityScore": 22,
-                        "cutStrategyProtectionApplied": 0,
-                        "cutMatchedStrategies": [
-                          "value-engine"
-                        ],
-                        "addMatchedStrategies": [
-                          "combat-tokens",
-                          "value-engine"
-                        ],
-                        "locallyUnreplacedStrategies": [],
-                        "cutRoles": [
-                          "card draw",
-                          "creature",
-                          "etb synergy",
-                          "repeatable draw"
-                        ],
-                        "addRoles": [
-                          "card draw",
-                          "conditional mana acceleration",
-                          "creature",
-                          "repeatable draw",
-                          "token production",
-                          "treasure"
-                        ],
-                        "unreplacedRoles": [
-                          "etb synergy"
-                        ],
-                        "unreplacedStrategyComponentRoles": [],
-                        "meaningfulStrategyLoss": false,
-                        "verdict": "preserved"
-                      }
-                    }
-                  },
-                  {
                     "out": "Night's Whisper",
                     "in": "Bilbo's Gambit",
                     "why": "Addresses the detected interaction deficit and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy.",
@@ -16613,7 +16390,7 @@
                       "set": "HOB",
                       "collectorNumber": "5",
                       "finish": "nonfoil",
-                      "priceNzd": 2.64,
+                      "priceNzd": 2.65,
                       "priceUsdReference": 1.55
                     },
                     "structuralPairing": {
@@ -16664,7 +16441,7 @@
       {
         "round": 4,
         "accepted": false,
-        "attemptedSwaps": 4,
+        "attemptedSwaps": 3,
         "acceptedSwaps": 0,
         "candidatePackagesGenerated": 4,
         "candidatePackagesEligible": 0,
@@ -16751,9 +16528,9 @@
                 },
                 {
                   "role": "tutor",
-                  "current": 0,
+                  "current": 1,
                   "target": 2,
-                  "deficit": 2,
+                  "deficit": 1,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors"
                 }
@@ -16785,9 +16562,9 @@
                   "role": "tutor",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors",
-                  "current": 0,
+                  "current": 1,
                   "target": 2,
-                  "deficit": 2,
+                  "deficit": 1,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 4,
@@ -16878,9 +16655,9 @@
                 },
                 {
                   "role": "tutor",
-                  "current": 0,
+                  "current": 1,
                   "target": 2,
-                  "deficit": 2,
+                  "deficit": 1,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors"
                 }
@@ -16912,9 +16689,9 @@
                   "role": "tutor",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors",
-                  "current": 0,
+                  "current": 1,
                   "target": 2,
-                  "deficit": 2,
+                  "deficit": 1,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 4,
@@ -17005,9 +16782,9 @@
                 },
                 {
                   "role": "tutor",
-                  "current": 0,
+                  "current": 1,
                   "target": 2,
-                  "deficit": 2,
+                  "deficit": 1,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors"
                 }
@@ -17039,9 +16816,9 @@
                   "role": "tutor",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors",
-                  "current": 0,
+                  "current": 1,
                   "target": 2,
-                  "deficit": 2,
+                  "deficit": 1,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 4,
@@ -17132,9 +16909,9 @@
                 },
                 {
                   "role": "tutor",
-                  "current": 0,
+                  "current": 1,
                   "target": 2,
-                  "deficit": 2,
+                  "deficit": 1,
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors"
                 }
@@ -17166,9 +16943,9 @@
                   "role": "tutor",
                   "prioritySource": "authoritative-target-gate",
                   "targetGate": "tutors",
-                  "current": 0,
+                  "current": 1,
                   "target": 2,
-                  "deficit": 2,
+                  "deficit": 1,
                   "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                   "candidateAvailability": "candidates-found",
                   "roleMatchesBeforeExistingExclusions": 4,
@@ -17192,525 +16969,6 @@
           }
         ],
         "candidateAttempts": [
-          {
-            "attemptSize": 4,
-            "candidatePackagesGenerated": 4,
-            "candidatePackagesEligible": 0,
-            "winningCandidate": null,
-            "reasonCounts": {
-              "no-supported-swaps-found": 4
-            },
-            "candidateComparisons": [
-              {
-                "candidate": 1,
-                "eligible": false,
-                "reason": "no-supported-swaps-found",
-                "attemptedSwaps": 4,
-                "actualSwaps": 0,
-                "estimatedSpendNzd": 0,
-                "estimatedSpendUsdReference": 0,
-                "unknownPriceCount": 0,
-                "improvementScore": 0,
-                "significantRegression": false,
-                "zeroTargetProgressWhileFailedGatesRemain": true,
-                "targetGate": {
-                  "applicable": true,
-                  "score": 0,
-                  "failedBefore": [
-                    "fast-mana",
-                    "tutors"
-                  ],
-                  "failedAfter": [
-                    "fast-mana",
-                    "tutors"
-                  ],
-                  "repairedGates": [],
-                  "advancedFailedGates": [],
-                  "regressedGates": [],
-                  "ignoredUnverifiedGates": []
-                },
-                "themeAudit": null,
-                "strategyPreservation": {
-                  "status": "preserved",
-                  "evidenceComplete": true,
-                  "meaningfulLosses": [],
-                  "strategyDeltas": [],
-                  "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
-                },
-                "packageAcceptance": null,
-                "deckStrategyRetention": {},
-                "planProvenance": {
-                  "targetBracket": 4,
-                  "winRouteVerificationStatus": "no-verified-route",
-                  "winPackageDiscoveryAttempted": false,
-                  "winPackageSourceStatus": "not-required-below-bracket-5",
-                  "winPackageOutcome": "not-attempted",
-                  "selectedComboId": null,
-                  "selectedBracketTag": null,
-                  "missingSeedNames": [],
-                  "atomicWinPackageInjected": false,
-                  "winPackageReason": "The requested target does not require a verified winning package.",
-                  "candidateDiscovery": {
-                    "mode": "exhaustive-bounded-printing-policy",
-                    "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 462,
-                    "roleSearchResultCap": null,
-                    "strategySupplementalResultCapPerArchetype": null,
-                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
-                  },
-                  "authoritativeTargetGatePriorities": [
-                    {
-                      "role": "ramp",
-                      "current": 1,
-                      "target": 2,
-                      "deficit": 1,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "fast-mana"
-                    },
-                    {
-                      "role": "tutor",
-                      "current": 0,
-                      "target": 2,
-                      "deficit": 2,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "tutors"
-                    }
-                  ],
-                  "structuralDeficits": [
-                    {
-                      "role": "protection",
-                      "current": 1,
-                      "target": 6,
-                      "deficit": 5,
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null
-                    }
-                  ],
-                  "candidateGroups": [
-                    {
-                      "role": "ramp",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "fast-mana",
-                      "current": 1,
-                      "target": 2,
-                      "deficit": 1,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
-                      "roleMatchesBeforeExistingExclusions": 1,
-                      "candidateCount": 0
-                    },
-                    {
-                      "role": "tutor",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "tutors",
-                      "current": 0,
-                      "target": 2,
-                      "deficit": 2,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateAvailability": "candidates-found",
-                      "roleMatchesBeforeExistingExclusions": 4,
-                      "candidateCount": 3
-                    },
-                    {
-                      "role": "protection",
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null,
-                      "current": 1,
-                      "target": 6,
-                      "deficit": 5,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateAvailability": "candidates-found",
-                      "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 1
-                    }
-                  ]
-                },
-                "swaps": []
-              },
-              {
-                "candidate": 2,
-                "eligible": false,
-                "reason": "no-supported-swaps-found",
-                "attemptedSwaps": 4,
-                "actualSwaps": 0,
-                "estimatedSpendNzd": 0,
-                "estimatedSpendUsdReference": 0,
-                "unknownPriceCount": 0,
-                "improvementScore": 0,
-                "significantRegression": false,
-                "zeroTargetProgressWhileFailedGatesRemain": true,
-                "targetGate": {
-                  "applicable": true,
-                  "score": 0,
-                  "failedBefore": [
-                    "fast-mana",
-                    "tutors"
-                  ],
-                  "failedAfter": [
-                    "fast-mana",
-                    "tutors"
-                  ],
-                  "repairedGates": [],
-                  "advancedFailedGates": [],
-                  "regressedGates": [],
-                  "ignoredUnverifiedGates": []
-                },
-                "themeAudit": null,
-                "strategyPreservation": {
-                  "status": "preserved",
-                  "evidenceComplete": true,
-                  "meaningfulLosses": [],
-                  "strategyDeltas": [],
-                  "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
-                },
-                "packageAcceptance": null,
-                "deckStrategyRetention": {},
-                "planProvenance": {
-                  "targetBracket": 4,
-                  "winRouteVerificationStatus": "no-verified-route",
-                  "winPackageDiscoveryAttempted": false,
-                  "winPackageSourceStatus": "not-required-below-bracket-5",
-                  "winPackageOutcome": "not-attempted",
-                  "selectedComboId": null,
-                  "selectedBracketTag": null,
-                  "missingSeedNames": [],
-                  "atomicWinPackageInjected": false,
-                  "winPackageReason": "The requested target does not require a verified winning package.",
-                  "candidateDiscovery": {
-                    "mode": "exhaustive-bounded-printing-policy",
-                    "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 462,
-                    "roleSearchResultCap": null,
-                    "strategySupplementalResultCapPerArchetype": null,
-                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
-                  },
-                  "authoritativeTargetGatePriorities": [
-                    {
-                      "role": "ramp",
-                      "current": 1,
-                      "target": 2,
-                      "deficit": 1,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "fast-mana"
-                    },
-                    {
-                      "role": "tutor",
-                      "current": 0,
-                      "target": 2,
-                      "deficit": 2,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "tutors"
-                    }
-                  ],
-                  "structuralDeficits": [
-                    {
-                      "role": "protection",
-                      "current": 1,
-                      "target": 6,
-                      "deficit": 5,
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null
-                    }
-                  ],
-                  "candidateGroups": [
-                    {
-                      "role": "ramp",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "fast-mana",
-                      "current": 1,
-                      "target": 2,
-                      "deficit": 1,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
-                      "roleMatchesBeforeExistingExclusions": 1,
-                      "candidateCount": 0
-                    },
-                    {
-                      "role": "tutor",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "tutors",
-                      "current": 0,
-                      "target": 2,
-                      "deficit": 2,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateAvailability": "candidates-found",
-                      "roleMatchesBeforeExistingExclusions": 4,
-                      "candidateCount": 3
-                    },
-                    {
-                      "role": "protection",
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null,
-                      "current": 1,
-                      "target": 6,
-                      "deficit": 5,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateAvailability": "candidates-found",
-                      "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 1
-                    }
-                  ]
-                },
-                "swaps": []
-              },
-              {
-                "candidate": 3,
-                "eligible": false,
-                "reason": "no-supported-swaps-found",
-                "attemptedSwaps": 4,
-                "actualSwaps": 0,
-                "estimatedSpendNzd": 0,
-                "estimatedSpendUsdReference": 0,
-                "unknownPriceCount": 0,
-                "improvementScore": 0,
-                "significantRegression": false,
-                "zeroTargetProgressWhileFailedGatesRemain": true,
-                "targetGate": {
-                  "applicable": true,
-                  "score": 0,
-                  "failedBefore": [
-                    "fast-mana",
-                    "tutors"
-                  ],
-                  "failedAfter": [
-                    "fast-mana",
-                    "tutors"
-                  ],
-                  "repairedGates": [],
-                  "advancedFailedGates": [],
-                  "regressedGates": [],
-                  "ignoredUnverifiedGates": []
-                },
-                "themeAudit": null,
-                "strategyPreservation": {
-                  "status": "preserved",
-                  "evidenceComplete": true,
-                  "meaningfulLosses": [],
-                  "strategyDeltas": [],
-                  "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
-                },
-                "packageAcceptance": null,
-                "deckStrategyRetention": {},
-                "planProvenance": {
-                  "targetBracket": 4,
-                  "winRouteVerificationStatus": "no-verified-route",
-                  "winPackageDiscoveryAttempted": false,
-                  "winPackageSourceStatus": "not-required-below-bracket-5",
-                  "winPackageOutcome": "not-attempted",
-                  "selectedComboId": null,
-                  "selectedBracketTag": null,
-                  "missingSeedNames": [],
-                  "atomicWinPackageInjected": false,
-                  "winPackageReason": "The requested target does not require a verified winning package.",
-                  "candidateDiscovery": {
-                    "mode": "exhaustive-bounded-printing-policy",
-                    "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 462,
-                    "roleSearchResultCap": null,
-                    "strategySupplementalResultCapPerArchetype": null,
-                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
-                  },
-                  "authoritativeTargetGatePriorities": [
-                    {
-                      "role": "ramp",
-                      "current": 1,
-                      "target": 2,
-                      "deficit": 1,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "fast-mana"
-                    },
-                    {
-                      "role": "tutor",
-                      "current": 0,
-                      "target": 2,
-                      "deficit": 2,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "tutors"
-                    }
-                  ],
-                  "structuralDeficits": [
-                    {
-                      "role": "protection",
-                      "current": 1,
-                      "target": 6,
-                      "deficit": 5,
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null
-                    }
-                  ],
-                  "candidateGroups": [
-                    {
-                      "role": "ramp",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "fast-mana",
-                      "current": 1,
-                      "target": 2,
-                      "deficit": 1,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
-                      "roleMatchesBeforeExistingExclusions": 1,
-                      "candidateCount": 0
-                    },
-                    {
-                      "role": "tutor",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "tutors",
-                      "current": 0,
-                      "target": 2,
-                      "deficit": 2,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateAvailability": "candidates-found",
-                      "roleMatchesBeforeExistingExclusions": 4,
-                      "candidateCount": 3
-                    },
-                    {
-                      "role": "protection",
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null,
-                      "current": 1,
-                      "target": 6,
-                      "deficit": 5,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateAvailability": "candidates-found",
-                      "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 1
-                    }
-                  ]
-                },
-                "swaps": []
-              },
-              {
-                "candidate": 4,
-                "eligible": false,
-                "reason": "no-supported-swaps-found",
-                "attemptedSwaps": 4,
-                "actualSwaps": 0,
-                "estimatedSpendNzd": 0,
-                "estimatedSpendUsdReference": 0,
-                "unknownPriceCount": 0,
-                "improvementScore": 0,
-                "significantRegression": false,
-                "zeroTargetProgressWhileFailedGatesRemain": true,
-                "targetGate": {
-                  "applicable": true,
-                  "score": 0,
-                  "failedBefore": [
-                    "fast-mana",
-                    "tutors"
-                  ],
-                  "failedAfter": [
-                    "fast-mana",
-                    "tutors"
-                  ],
-                  "repairedGates": [],
-                  "advancedFailedGates": [],
-                  "regressedGates": [],
-                  "ignoredUnverifiedGates": []
-                },
-                "themeAudit": null,
-                "strategyPreservation": {
-                  "status": "preserved",
-                  "evidenceComplete": true,
-                  "meaningfulLosses": [],
-                  "strategyDeltas": [],
-                  "swapImpacts": [],
-                  "acceptanceRule": "Reject an autonomous package when a maximum-protected card either loses at least four affinity points from a substantive upgrade-strategy signal (at least six inferred points) or removes an exact engine/payoff component of that strategy without replacing the same functional role in the incoming card."
-                },
-                "packageAcceptance": null,
-                "deckStrategyRetention": {},
-                "planProvenance": {
-                  "targetBracket": 4,
-                  "winRouteVerificationStatus": "no-verified-route",
-                  "winPackageDiscoveryAttempted": false,
-                  "winPackageSourceStatus": "not-required-below-bracket-5",
-                  "winPackageOutcome": "not-attempted",
-                  "selectedComboId": null,
-                  "selectedBracketTag": null,
-                  "missingSeedNames": [],
-                  "atomicWinPackageInjected": false,
-                  "winPackageReason": "The requested target does not require a verified winning package.",
-                  "candidateDiscovery": {
-                    "mode": "exhaustive-bounded-printing-policy",
-                    "exhaustiveWithinSafetyCeilings": true,
-                    "eligiblePoolCards": 462,
-                    "roleSearchResultCap": null,
-                    "strategySupplementalResultCapPerArchetype": null,
-                    "note": "Restricted Upgrade reuses the same bounded eligible physical-printing pool as restricted Build, then applies the existing Upgrade role, strategy, theme, legality, exclusion, and pricing logic. Role-search ordering cannot hide an otherwise eligible family/set card."
-                  },
-                  "authoritativeTargetGatePriorities": [
-                    {
-                      "role": "ramp",
-                      "current": 1,
-                      "target": 2,
-                      "deficit": 1,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "fast-mana"
-                    },
-                    {
-                      "role": "tutor",
-                      "current": 0,
-                      "target": 2,
-                      "deficit": 2,
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "tutors"
-                    }
-                  ],
-                  "structuralDeficits": [
-                    {
-                      "role": "protection",
-                      "current": 1,
-                      "target": 6,
-                      "deficit": 5,
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null
-                    }
-                  ],
-                  "candidateGroups": [
-                    {
-                      "role": "ramp",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "fast-mana",
-                      "current": 1,
-                      "target": 2,
-                      "deficit": 1,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateAvailability": "all-role-cards-already-present-or-excluded",
-                      "roleMatchesBeforeExistingExclusions": 1,
-                      "candidateCount": 0
-                    },
-                    {
-                      "role": "tutor",
-                      "prioritySource": "authoritative-target-gate",
-                      "targetGate": "tutors",
-                      "current": 0,
-                      "target": 2,
-                      "deficit": 2,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateAvailability": "candidates-found",
-                      "roleMatchesBeforeExistingExclusions": 4,
-                      "candidateCount": 3
-                    },
-                    {
-                      "role": "protection",
-                      "prioritySource": "aspirational-role-target",
-                      "targetGate": null,
-                      "current": 1,
-                      "target": 6,
-                      "deficit": 5,
-                      "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
-                      "candidateAvailability": "candidates-found",
-                      "roleMatchesBeforeExistingExclusions": 17,
-                      "candidateCount": 1
-                    }
-                  ]
-                },
-                "swaps": []
-              }
-            ]
-          },
           {
             "attemptSize": 3,
             "candidatePackagesGenerated": 4,
@@ -17789,9 +17047,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -17823,9 +17081,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 4,
@@ -17916,9 +17174,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -17950,9 +17208,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 4,
@@ -18043,9 +17301,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -18077,9 +17335,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 4,
@@ -18170,9 +17428,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -18204,9 +17462,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 4,
@@ -18308,9 +17566,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -18342,9 +17600,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 4,
@@ -18435,9 +17693,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -18469,9 +17727,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 4,
@@ -18562,9 +17820,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -18596,9 +17854,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 4,
@@ -18689,9 +17947,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -18723,9 +17981,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 4,
@@ -18827,9 +18085,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -18861,9 +18119,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 4,
@@ -18954,9 +18212,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -18988,9 +18246,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 4,
@@ -19081,9 +18339,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -19115,9 +18373,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 4,
@@ -19208,9 +18466,9 @@
                     },
                     {
                       "role": "tutor",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors"
                     }
@@ -19242,9 +18500,9 @@
                       "role": "tutor",
                       "prioritySource": "authoritative-target-gate",
                       "targetGate": "tutors",
-                      "current": 0,
+                      "current": 1,
                       "target": 2,
-                      "deficit": 2,
+                      "deficit": 1,
                       "candidateDiscoveryMode": "exhaustive-bounded-printing-policy",
                       "candidateAvailability": "candidates-found",
                       "roleMatchesBeforeExistingExclusions": 4,
@@ -19290,18 +18548,18 @@
       "foodLifegainSupportCount": 33,
       "foodLifegainAffinityTotal": 304
     },
-    "assessedBracket": 2,
-    "assessedBand": "bracket-2-core-range",
+    "assessedBracket": 3,
+    "assessedBand": "bracket-3-upgraded-range",
     "signals": {
-      "averageNonlandManaValue": 3.1,
+      "averageNonlandManaValue": 3,
       "earlyPlayCount": 28,
-      "cheapInteractionCount": 7,
+      "cheapInteractionCount": 6,
       "fastManaCount": 1,
-      "tutorCount": 0,
+      "tutorCount": 1,
       "recursionCount": 5,
-      "boardWipeCount": 4,
+      "boardWipeCount": 5,
       "rampCount": 12,
-      "drawCount": 12,
+      "drawCount": 13,
       "interactionCount": 14,
       "protectionCount": 1,
       "persistentColoredManaSourceCount": 8
@@ -19309,10 +18567,10 @@
     "verifiedWinningCombos": 0,
     "targetComparison": {
       "requestedBracket": 4,
-      "achievedBracket": 2,
-      "achievedBand": "bracket-2-core-range",
+      "achievedBracket": 3,
+      "achievedBand": "bracket-3-upgraded-range",
       "status": "under-target",
-      "targetGap": 2,
+      "targetGap": 1,
       "assessmentConfidence": "medium",
       "evidenceCompleteness": "complete",
       "relevantChecks": [
@@ -19332,11 +18590,11 @@
           "targetBracket": 4,
           "category": "construction",
           "label": "Average nonland mana value",
-          "observed": 3.1,
+          "observed": 3,
           "required": "at most 3.1",
           "state": "passed",
           "pressurePoint": "speed/curve",
-          "detail": "Average nonland mana value: observed 3.1; Bracket 4 requires at most 3.1."
+          "detail": "Average nonland mana value: observed 3; Bracket 4 requires at most 3.1."
         },
         {
           "key": "b4-early-plays",
@@ -19354,11 +18612,11 @@
           "targetBracket": 4,
           "category": "construction",
           "label": "Cheap interaction",
-          "observed": 7,
+          "observed": 6,
           "required": "at least 6",
           "state": "passed",
           "pressurePoint": "interaction density",
-          "detail": "Cheap interaction: observed 7; Bracket 4 requires at least 6."
+          "detail": "Cheap interaction: observed 6; Bracket 4 requires at least 6."
         },
         {
           "key": "b4-fast-mana",
@@ -19376,11 +18634,11 @@
           "targetBracket": 4,
           "category": "construction",
           "label": "Tutors",
-          "observed": 0,
+          "observed": 1,
           "required": "at least 2",
           "state": "failed",
           "pressurePoint": "tutor consistency",
-          "detail": "Tutors: observed 0; Bracket 4 requires at least 2."
+          "detail": "Tutors: observed 1; Bracket 4 requires at least 2."
         },
         {
           "key": "b4-win-evidence",
@@ -19422,11 +18680,11 @@
           "targetBracket": 4,
           "category": "construction",
           "label": "Tutors",
-          "observed": 0,
+          "observed": 1,
           "required": "at least 2",
           "state": "failed",
           "pressurePoint": "tutor consistency",
-          "detail": "Tutors: observed 0; Bracket 4 requires at least 2."
+          "detail": "Tutors: observed 1; Bracket 4 requires at least 2."
         },
         {
           "key": "b4-win-evidence",
@@ -19448,14 +18706,16 @@
         "Improve efficient win plan: Optimized win evidence needs an efficient commander/non-combo win plan, verified winning combo, Ruthless winning combo, or R-tagged Spellbook signal."
       ],
       "restrictionObservations": [
-        "Constraint \"Exact Food and Fellowship stock baseline; Middle-earth physical printings only.\" was active while the finished list missed 8 Bracket-5 construction gates: Average nonland mana value (3.1 vs at most 2.6); Early plays (28 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (7 vs at least 8); Tutors (0 vs at least 4); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=E vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
+        "Constraint \"Exact Food and Fellowship stock baseline; Middle-earth physical printings only.\" was active while the finished list missed 8 Bracket-5 construction gates: Average nonland mana value (3 vs at most 2.6); Early plays (28 vs at least 35); Fast mana (1 vs at least 3); Free interaction (0 vs at least 1); Cheap interaction (6 vs at least 8); Tutors (1 vs at least 4); Verified win-oriented combos (0 vs at least 1); Competitive combo signal (Ruthless=0, strategic=0, Spellbook=E vs at least one Ruthless/strategically relevant/R-tagged signal). These are observed shortfalls under the constraint, not proof that the restriction alone caused them."
       ],
       "guidance": "The target comparison uses only checks relevant to the requested bracket. Unavailable external evidence is reported as unverified rather than converted into a false deck weakness."
     }
   },
   "progress": {
     "advanced": [
+      "b4-tutorCount",
       "b4-recursionCount",
+      "b4-boardWipeCount",
       "b4-protectionCount"
     ],
     "repaired": [
