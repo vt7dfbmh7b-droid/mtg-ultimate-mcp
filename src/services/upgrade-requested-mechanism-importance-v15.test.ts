@@ -127,18 +127,15 @@ test('production pairing receives artifact-resource importance from an anonymous
   const artifactComponent = {
     id: 'theme:artifacts',
     label: 'artifact',
-    query: 't:artifact',
-    kind: 'type' as const,
-    value: 'artifact',
+    queryClause: 't:artifact',
   };
   const improviseEngineCard = {
     name: 'Anonymous Artifact Resource Engine',
-    manaValue: 3,
-    typeLine: 'Artifact',
-    oracleText: 'Nonartifact spells you cast have improvise.',
-    roles: ['ramp'],
+    cmc: 3,
+    type_line: 'Artifact',
+    oracle_text: 'Nonartifact spells you cast have improvise.',
   };
-  const relationship = requestedComponentRelationshipAffinityV15(improviseEngineCard as any, [artifactComponent] as any);
+  const relationship = requestedComponentRelationshipAffinityV15(improviseEngineCard as any, [], [artifactComponent]);
 
   assert.ok(
     relationship.score >= 5,
@@ -146,7 +143,13 @@ test('production pairing receives artifact-resource importance from an anonymous
   );
 
   const improviseEngine = {
-    card: improviseEngineCard,
+    card: {
+      name: improviseEngineCard.name,
+      manaValue: improviseEngineCard.cmc,
+      typeLine: improviseEngineCard.type_line,
+      oracleText: improviseEngineCard.oracle_text,
+      roles: ['ramp'],
+    },
     heuristicCutPressure: 12,
     explicitTheme: {
       matchesControlledTheme: true,
