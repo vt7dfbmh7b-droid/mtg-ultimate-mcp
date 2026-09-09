@@ -8,7 +8,17 @@ Before any scheduled or autonomous repository write, read root `AGENTS.md` and t
 
 Scheduled/autonomous runs must also obey the root `AGENTS.md` single-flight rule: do not start a new branch-changing validation, replay, state writer, evidence persistence operation, or Commander product repair while another relevant branch-writing operation is still active. Manual verdicts belong under `test-results/bench01-manual-verdicts/`, outside replaceable generated replay output.
 
-## Current BENCH-01 checkpoint — 2026-09-08
+## Current BENCH-01 checkpoint — 2026-09-09
+
+The contextual-effectiveness candidate `34cbc7843fcc936bd153a6516e1762ad2b5091e5` is now focused/full/build validated and its exact-source five-fixture strategy-anchor control replay completed green. The durable whole-deck control verdict at `test-results/bench01-manual-verdicts/34cbc7843fcc936bd153a6516e1762ad2b5091e5.md` finds no material repair-caused regression across Quick Draw, Virtue and Valor, Explorers of the Deep, Elven Empire or Animated Army. This is meaningful control safety, not baseline acceptance.
+
+The five-control replay did **not** replay the three fresh failures that justified the contextual repair. Acceptance therefore still requires an exact-source replay of Endless Punishment, Revenant Recon and Deep Clue Sea plus at least one control, followed by complete-deck manual comparison against the frozen `473edf473a284b9532aa03747abfa41a1081ca2c` evidence and the existing strong-general-AI verdicts. `34cbc784...` remains provisional and the accepted Commander baseline remains `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`.
+
+The currently authorized `.automation/bench01-strategy-anchor-replay.request` interface is fixed to the five strategy-anchor controls. No checked-in autonomous replay interface has been found that can execute the required affected-fixture set while preserving exact-source provenance, and autonomous work is forbidden from modifying `.github/workflows/**` to create one. This is an **execution-interface blocker**, not a Commander-product failure. Do not infer contextual-repair generalization from the control replay, do not weaken the source freeze, and do not repurpose stale scenario workflows whose frozen source is a different product SHA.
+
+Endless Punishment's common `group slug` / `punisher` / `opponents lose life` vocabulary rejection remains a separate semantic-taxonomy issue unless a future exact-source affected replay shows otherwise. Revenant Recon and Deep Clue Sea remain the primary affected fixtures for the contextual replacement-priority/role-effectiveness repair.
+
+## Previous BENCH-01 checkpoint — 2026-09-08
 
 The generic commander-compatible Aura target-shape repair at `473edf473a284b9532aa03747abfa41a1081ca2c` passed immutable full CI and an exact-source frozen five-fixture replay. The durable whole-deck verdict accepts the repair as meaningful BENCH-01 progression but defers accepting it as the new Commander baseline. Accepted baseline remains `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`.
 
