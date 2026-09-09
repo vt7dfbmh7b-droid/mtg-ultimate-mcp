@@ -5,7 +5,6 @@
 1 Wildsear, Scouring Maw (BLC) 8 *F*
 1 Etali, Primal Storm (BLC) 196 *N*
 1 Prosperous Bandit (BLC) 25 *N*
-1 Pyreswipe Hawk (BLC) 26 *N*
 1 Alchemist's Talent (BLC) 22 *N*
 1 Berserkers' Onslaught (BLC) 192 *N*
 1 Outpost Siege (BLC) 199 *N*
@@ -24,7 +23,6 @@
 1 Unnatural Growth (BLC) 245 *N*
 1 Greater Good (BLC) 223 *N*
 1 Kodama of the East Tree (BLC) 227 *N*
-1 Grothama, All-Devouring (BLC) 224 *N*
 1 Rampaging Baloths (BLC) 233 *N*
 1 Bootleggers' Stash (BLC) 207 *N*
 1 Primeval Bounty (BLC) 232 *N*
@@ -43,10 +41,12 @@
 1 Mosswort Bridge (BLC) 317 *N*
 1 Blasphemous Act (BLC) 114 *N*
 1 Llanowar Loamspeaker (BLC) 228 *N*
+1 Tendershoot Dryad (BLC) 242 *N*
 1 Goreclaw, Terror of Qal Sisma (BLC) 222 *N*
 1 Path of Discovery (BLC) 231 *N*
 1 Rolling Hamsphere (BLC) 39 *N*
 1 Teapot Slinger (BLB) 157 *N*
+1 Explore (BLC) 216 *N*
 1 Farseek (BLC) 119 *N*
 1 Cultivate (BLC) 212 *N*
 1 Wandertale Mentor (BLB) 240 *N*
@@ -83,7 +83,7 @@
 1 Mask of Memory (FIC) 350 *N*
 1 Umezawa's Jitte (PZA) 19 *N*
 1 Vexing Puzzlebox (CLB) 343 *N*
-1 Swiftfoot Boots (A25) 234 *N*
-1 Walking Ballista (FIC) 371 *N*
-1 Skullclamp (FIC) 355 *N*
 1 Negative Zone Portal (MSC) 111 *N*
+1 Swiftfoot Boots (A25) 234 *N*
+1 Ornithopter of Paradise (PLST) MH2-232 *N*
+1 Walking Ballista (FIC) 371 *N*
