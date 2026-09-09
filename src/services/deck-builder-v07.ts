@@ -12,10 +12,12 @@ type UpgradePairingOptionsCoreV15 = NonNullable<Parameters<typeof pairUpgradeSwa
 type ContextCardV15 = Record<string, unknown>;
 
 type UpgradePairingOptionsContextV15 = UpgradePairingOptionsCoreV15 & {
-  /** Resolved baseline cards used only for conservative self-target setup checks. */
+  /** Resolved baseline cards used only for conservative contextual setup/effectiveness checks. */
   contextualDeckCards?: readonly ContextCardV15[];
   /** Current counts for typed requested mechanisms, keyed by relation:* component id. */
   contextualRelationshipCounts?: Readonly<Record<string, number>>;
+  /** Current counts for requested theme/mechanism components used to prefer the weakest component. */
+  contextualComponentCounts?: Readonly<Record<string, number>>;
 };
 
 function recordObjectV15(value: unknown): Record<string, unknown> {
@@ -41,15 +43,21 @@ function summarizedCardV15(item: Record<string, unknown>): Record<string, unknow
   return card && typeof card === 'object' && !Array.isArray(card) ? card as Record<string, unknown> : {};
 }
 
+function requestedComponentIdsV15(item: Record<string, unknown>): string[] {
+  return [...new Set(recordStringsV15(recordObjectV15(item.explicitTheme).matchedComponentIds))]
+    .sort((left, right) => left.localeCompare(right));
+}
+
 function requestedRelationshipIdsV15(item: Record<string, unknown>): string[] {
-  return [...new Set(
-    recordStringsV15(recordObjectV15(item.explicitTheme).matchedComponentIds)
-      .filter((id) => id.startsWith('relation:')),
-  )].sort((left, right) => left.localeCompare(right));
+  return requestedComponentIdsV15(item).filter((id) => id.startsWith('relation:'));
 }
 
 function requestedRelationshipAffinityV15(item: Record<string, unknown>): number {
   return recordNumberV15(recordObjectV15(item.explicitTheme).requestedRelationshipAffinity);
+}
+
+function authoritativeTargetGateV15(item: Record<string, unknown>): string {
+  return recordStringV15(item.authoritativeTargetGate);
 }
 
 function hasUncompensatedStrongRelationshipV15(
@@ -123,12 +131,99 @@ function candidateSelfTargetSetupSupportedV15(
   return true;
 }
 
+function normalizedPermanentDescriptorV15(raw: string): string {
+  const normalized = raw.trim().toLocaleLowerCase();
+  if (normalized === 'permanents') return 'permanent';
+  if (normalized.endsWith('s')) return normalized.slice(0, -1);
+  return normalized;
+}
+
+function candidateContextualRoleEffectiveV15(
+  item: Record<string, unknown>,
+  contextualDeckCards: readonly ContextCardV15[],
+): boolean {
+  if (contextualDeckCards.length === 0) return true;
+  const oracleText = recordStringV15(summarizedCardV15(item).oracleText);
+  if (!oracleText) return true;
+
+  // Static protection for a controlled permanent class is useful only when that class exists.
+  // Complex/unknown protection text remains eligible; this gate is deliberately fail-open unless
+  // the protected class can be parsed confidently.
+  const staticProtection = /\b(?:other\s+)?(artifacts?|battles?|creatures?|enchantments?|lands?|permanents?|planeswalkers?)\s+you\s+control\s+(?:have|gain)\s+(?:[^.]*\b)?(?:hexproof|indestructible|ward\b)/i.exec(oracleText);
+  if (!staticProtection) return true;
+  const descriptor = normalizedPermanentDescriptorV15(recordStringV15(staticProtection[1]));
+  if (!CONTEXTUAL_PERMANENT_TYPE_WORDS_V15.has(descriptor)) return true;
+  const results = contextualDeckCards.map((card) => descriptorMatchesContextCardV15(descriptor, card));
+  return results.some((result) => result === true) || results.every((result) => result === null);
+}
+
 function relationshipCountsFromCutsV15(cutPool: Array<Record<string, unknown>>): Record<string, number> {
   const counts: Record<string, number> = {};
   for (const cut of cutPool) {
     for (const id of requestedRelationshipIdsV15(cut)) counts[id] = (counts[id] ?? 0) + 1;
   }
   return counts;
+}
+
+function contextuallyDominantAdditionsV15(
+  additions: Parameters<typeof pairUpgradeSwapsByStructureCoreV15>[0],
+  cuts: Parameters<typeof pairUpgradeSwapsByStructureCoreV15>[1],
+  componentCounts: Readonly<Record<string, number>>,
+): Parameters<typeof pairUpgradeSwapsByStructureCoreV15>[0] {
+  let remaining = [...additions];
+  const strongCutRelationships = new Set(
+    cuts.flatMap((cut) => requestedRelationshipAffinityV15(cut) >= 4 ? requestedRelationshipIdsV15(cut) : []),
+  );
+  const gates = [...new Set(remaining.map((selection) => authoritativeTargetGateV15(selection.candidate)).filter(Boolean))];
+
+  for (const gate of gates) {
+    const sameGate = remaining.filter((selection) => authoritativeTargetGateV15(selection.candidate) === gate);
+    if (sameGate.length <= 1) continue;
+
+    const relationshipMatches = sameGate.filter((selection) => (
+      requestedRelationshipIdsV15(selection.candidate).some((id) => strongCutRelationships.has(id))
+    ));
+    if (strongCutRelationships.size > 0 && relationshipMatches.length > 0) {
+      const allowed = new Set(relationshipMatches);
+      remaining = remaining.filter((selection) => (
+        authoritativeTargetGateV15(selection.candidate) !== gate || allowed.has(selection)
+      ));
+    }
+
+    const afterRelationship = remaining.filter((selection) => authoritativeTargetGateV15(selection.candidate) === gate);
+    const componentCandidates = afterRelationship
+      .map((selection) => ({
+        selection,
+        counts: requestedComponentIdsV15(selection.candidate)
+          .filter((id) => !id.startsWith('relation:') && componentCounts[id] !== undefined)
+          .map((id) => componentCounts[id] ?? 0),
+      }))
+      .filter((entry) => entry.counts.length > 0);
+    if (componentCandidates.length > 1) {
+      const weakestCount = Math.min(...componentCandidates.flatMap((entry) => entry.counts));
+      const weakest = componentCandidates.filter((entry) => entry.counts.includes(weakestCount));
+      if (weakest.length > 0 && weakest.length < afterRelationship.length) {
+        const allowed = new Set(weakest.map((entry) => entry.selection));
+        remaining = remaining.filter((selection) => (
+          authoritativeTargetGateV15(selection.candidate) !== gate || allowed.has(selection)
+        ));
+      }
+    }
+
+    const afterComponent = remaining.filter((selection) => authoritativeTargetGateV15(selection.candidate) === gate);
+    if (gate === 'cheap-interaction' && afterComponent.length > 1) {
+      const minimumManaValue = Math.min(...afterComponent.map((selection) => (
+        recordNumberV15(summarizedCardV15(selection.candidate).manaValue)
+      )));
+      const allowed = new Set(afterComponent.filter((selection) => (
+        recordNumberV15(summarizedCardV15(selection.candidate).manaValue) === minimumManaValue
+      )));
+      remaining = remaining.filter((selection) => (
+        authoritativeTargetGateV15(selection.candidate) !== gate || allowed.has(selection)
+      ));
+    }
+  }
+  return remaining;
 }
 
 export function pairUpgradeSwapsByStructureV15(
@@ -142,6 +237,7 @@ export function pairUpgradeSwapsByStructureV15(
   const contextualDeckCards = options.contextualDeckCards ?? [];
   const supportedAdditions = additions.filter((selection) => (
     candidateSelfTargetSetupSupportedV15(selection.candidate, contextualDeckCards)
+    && candidateContextualRoleEffectiveV15(selection.candidate, contextualDeckCards)
   ));
   const availableAddRelationships = new Set(
     supportedAdditions.flatMap((selection) => requestedRelationshipIdsV15(selection.candidate)),
@@ -157,13 +253,19 @@ export function pairUpgradeSwapsByStructureV15(
   // structural fallback carries the same loss, keep the established advisory behavior rather
   // than turning requested identity into an absolute hard freeze.
   const contextSafeCuts = advisoryContextSafeCuts.length > 0 ? advisoryContextSafeCuts : cutPool;
+  const contextRankedAdditions = contextuallyDominantAdditionsV15(
+    supportedAdditions,
+    contextSafeCuts,
+    options.contextualComponentCounts ?? {},
+  );
   const {
     contextualDeckCards: _contextualDeckCards,
     contextualRelationshipCounts: _contextualRelationshipCounts,
+    contextualComponentCounts: _contextualComponentCounts,
     ...coreOptions
   } = options;
   return pairUpgradeSwapsByStructureCoreV15(
-    supportedAdditions,
+    contextRankedAdditions,
     contextSafeCuts,
     currentMetrics,
     structuralTargets,
@@ -209,7 +311,8 @@ function contextualPlanGuardsV15(
     const name = recordStringV15(summarizedCardV15(candidate).name);
     if (!name) continue;
     candidateByName.set(name.toLocaleLowerCase(), candidate);
-    if (!candidateSelfTargetSetupSupportedV15(candidate, contextCards)) unsupportedNames.add(name);
+    if (!candidateSelfTargetSetupSupportedV15(candidate, contextCards)
+      || !candidateContextualRoleEffectiveV15(candidate, contextCards)) unsupportedNames.add(name);
   }
 
   const cutByName = new Map<string, Record<string, unknown>>();
@@ -220,7 +323,8 @@ function contextualPlanGuardsV15(
   }
   const supportedCandidateRelationships = new Set(
     candidates
-      .filter((candidate) => candidateSelfTargetSetupSupportedV15(candidate, contextCards))
+      .filter((candidate) => candidateSelfTargetSetupSupportedV15(candidate, contextCards)
+        && candidateContextualRoleEffectiveV15(candidate, contextCards))
       .flatMap(requestedRelationshipIdsV15),
   );
   const protectedNames = new Set<string>();
