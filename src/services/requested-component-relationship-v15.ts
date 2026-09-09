@@ -64,6 +64,21 @@ function persistentImproviseArtifactResourceEngineV15(card: ScryfallCard, compon
   return /\b(?:nonartifact |artifact |noncreature |creature )?spells? you cast (?:has|have) improvise\b/.test(oracle);
 }
 
+function commanderSupportsCreatureReanimationV15(commanders: readonly ScryfallCard[]): boolean {
+  const oracle = normalized(commanders.map((commander) => getCardOracleText(commander)).join(' // '));
+  return /\breturn\b[^.]{0,120}\bcreature cards?\b[^.]{0,160}\bfrom\b[^.]{0,100}\bgraveyard\b[^.]{0,140}\bto the battlefield\b/.test(oracle)
+    || /\breturn\b[^.]{0,100}\bcreatures?\b[^.]{0,160}\bfrom\b[^.]{0,100}\bgraveyard\b[^.]{0,140}\bto the battlefield\b/.test(oracle);
+}
+
+function contextualReanimationPayloadV15(card: ScryfallCard, commanders: readonly ScryfallCard[]): boolean {
+  if (!commanderSupportsCreatureReanimationV15(commanders) || !typeContainsV15(card, 'creature')) return false;
+  const oracle = normalized(getCardOracleText(card));
+  if (!/\bwhen(?:ever)?\b[^.]{0,100}\benters\b/.test(oracle)) return false;
+
+  const highImpactEnterEffect = /\beach opponent\b|\bcreatures? (?:an |your )?opponents? control\b|\b(?:destroy|exile|return) (?:up to )?target\b|\bsacrifices? (?:a|an|one|two|three|\d+)\b|\bdraw (?:two|three|four|five|\d+) cards?\b|\bcreate (?:two|three|four|five|\d+)\b|\bloses? \d+ life\b|\bgain control of\b/.test(oracle);
+  return highImpactEnterEffect;
+}
+
 function auraSpecializationV15(card: ScryfallCard, commanders: readonly ScryfallCard[], clauses: readonly RequestedComponentClauseV15[]): boolean {
   if (!typeContainsV15(card, 'aura')) return false;
   const requestedAura = clauses.some((component) => [...quotedTypeAtomsV15(component.queryClause), ...unquotedTypeAtomsV15(component.queryClause)].includes('aura'));
@@ -185,6 +200,12 @@ export function requestedComponentRelationshipAffinityV15(
     score += 5;
     reasons.push('persistently grants improvise, converting requested artifacts into spell-casting resources');
     relationshipIds.push('relation:artifact-resource-engine');
+  }
+
+  if (contextualReanimationPayloadV15(card, commanders)) {
+    score += 5;
+    reasons.push('provides a high-impact enter-the-battlefield payload for a commander that reanimates creatures');
+    relationshipIds.push('relation:reanimation-payload');
   }
 
   if (auraSpecializationV15(card, commanders, components)) {
