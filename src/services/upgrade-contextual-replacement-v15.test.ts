@@ -169,3 +169,63 @@ test('a typed engine may be replaced when the incoming card preserves the same m
   assert.equal(pairs.length, 2);
   assert.ok(pairs.some((pair) => (pair.cut.card as { name?: string } | undefined)?.name === 'Requested Mechanism Engine'));
 });
+
+test('an unmet structural target does not justify consuming a high-affinity requested engine when only a same-target cut blocks net progress', () => {
+  const tutorSelection = {
+    role: 'tutor' as const,
+    candidate: {
+      card: {
+        name: 'Generic Search Upgrade',
+        manaValue: 2,
+        typeLine: 'Sorcery',
+        oracleText: 'Search your library for a card, put it into your hand, then shuffle.',
+        roles: ['tutor'],
+      },
+      authoritativeTargetGate: 'tutors',
+      explicitTheme: { matchesControlledTheme: false, matchedComponentIds: [] },
+      strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [], matches: [] },
+    },
+  };
+  const existingTutor = {
+    card: {
+      name: 'Replaceable Existing Search',
+      manaValue: 4,
+      typeLine: 'Sorcery',
+      oracleText: 'Search your library for a card, put it into your hand, then shuffle.',
+      roles: ['tutor'],
+    },
+    heuristicCutPressure: 12,
+    explicitTheme: { matchesControlledTheme: false, matchedComponentIds: [] },
+    strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [], matches: [] },
+  };
+  const requestedEngine = {
+    card: {
+      name: 'Requested Synergy Engine',
+      manaValue: 4,
+      typeLine: 'Enchantment',
+      oracleText: 'Whenever a creature of the chosen type enters, copy that spell.',
+      roles: ['repeatable token engine'],
+    },
+    heuristicCutPressure: 9,
+    explicitTheme: {
+      matchesControlledTheme: true,
+      matchedComponentIds: ['requested-typal', 'relation:typal-engine'],
+      requestedRelationshipAffinity: 8,
+    },
+    strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [], matches: [] },
+  };
+
+  const pairs = pairUpgradeSwapsByStructureV15(
+    [tutorSelection] as any,
+    [existingTutor, requestedEngine] as any,
+    { ...metrics, tutorCount: 2 },
+    targets,
+    3,
+    {
+      maxPairs: 1,
+      contextualRelationshipCounts: { 'relation:typal-engine': 4 },
+    } as any,
+  );
+
+  assert.equal(pairs.length, 0);
+});
