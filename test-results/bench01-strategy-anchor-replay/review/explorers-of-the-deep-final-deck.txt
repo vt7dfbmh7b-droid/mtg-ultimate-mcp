@@ -3,7 +3,6 @@
 
 // MAIN
 1 Mist Dancer (LCC) 76 *N*
-1 Ripples of Potential (LCC) 77 *N*
 1 Bygone Marvels (LCC) 89 *N*
 1 Deeproot Historian (LCC) 91 *N*
 1 Topography Tracker (LCC) 95 *N*
@@ -78,9 +77,10 @@
 6 Island (LCI) 396 *N*
 1 Ozolith, the Shattered Spire (PMOM) 198p *N*
 1 Harbinger of the Tides (FDN) 593 *N*
-1 Umezawa's Jitte (PZA) 19 *N*
+1 Kappa Tech-Wrecker (PLST) NEO-198 *N*
 1 Worldly Tutor (DMR) 442 *N*
 1 Sword of Fire and Ice (MAR) 100 *N*
+1 Umezawa's Jitte (PZA) 19 *N*
 1 Outland Liberator // Frenzied Trapbreaker (MID) 303 *N*
 1 Crop Rotation (C20) 169 *N*
 1 Sword of Forge and Frontier (SLD) 2817 *N*
