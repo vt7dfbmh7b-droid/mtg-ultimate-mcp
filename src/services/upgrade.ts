@@ -712,7 +712,7 @@ export async function suggestDeckUpgrades(
         note: 'Unrestricted Upgrade keeps the bounded role-specific popularity search, then supplements it with a bounded search for each already-substantive inferred strategy before final role, legality, strategy, printing, and price ranking. This prevents the initial EDHREC slice from discarding all less-popular on-plan alternatives while keeping every search and final candidate count bounded.',
       };
 
-  for (const deficit of candidatePriorities.slice(0, 5)) {
+  for (const deficit of candidatePriorities) {
     const query = restrictedPoolActive ? null : roleSearchQuery(deficit.role, allowedIdentity, printingPolicy, deficit.targetGate);
     let genericResults: ScryfallCard[] = [];
     if (restrictedEligiblePool) {
