@@ -112,6 +112,8 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
   const convertsLifeGainToPressure = repeatableOrPayoffLifeGain
     && /\b(?:target|each|an) opponent\b[^.]*\bloses?\b[^.]*\blife\b/i.test(text);
   const recoversMilledCardsToHand = /\bcards? milled (?:this way )?[^.]{0,120}\binto your hand\b/i.test(text);
+  const libraryToOwnGraveyardSetup = /\bsearch your library for\b[^.]{0,260}\bput\b[^.]{0,140}\binto your graveyard\b/i.test(text)
+    || /\bput\b[^.]{0,180}\bfrom your library\b[^.]{0,100}\binto your graveyard\b/i.test(text);
   const massGraveyardReturn = /\bexiles? [^.]{0,180}\bfrom (?:your|their|a|any|all|each|the) graveyards?\b[^.]{0,240}\bputs? [^.]{0,180}\bexiled this way\b[^.]{0,100}\bonto the battlefield\b/i.test(text);
   const selectsOwnGraveyardCards = /\b(?:artifact |creature )?cards?[^.]{0,120}\bin your graveyard\b/i.test(text);
   const returnsSelectedGraveyardCards = /\b(?:choose|target)\b[^.]{0,180}\bcards?\b[^.]{0,180}\bin your graveyard\b[^.]*\.\s*\breturn (?:each(?: of them)?|them|those cards?|that card|it)\b[^.]{0,120}\bto the battlefield\b/i.test(text);
@@ -151,7 +153,7 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
 
   addSignal(table, 'graveyard-reanimator', roles.has('graveyard recursion'), 9, 'graveyard recursion');
   addSignal(table, 'graveyard-reanimator', usesOwnGraveyard && !graveyardHateOnly, 6, 'own-graveyard access');
-  addSignal(table, 'graveyard-reanimator', /mill|surveil|discard/i.test(text), 5, 'graveyard setup');
+  addSignal(table, 'graveyard-reanimator', /mill|surveil|discard/i.test(text) || libraryToOwnGraveyardSetup, 5, 'graveyard setup');
   addSignal(table, 'graveyard-reanimator', recoversMilledCardsToHand, 7, 'milled-card recovery');
   addSignal(table, 'graveyard-reanimator', massGraveyardReturn, 7, 'mass graveyard return');
   addSignal(table, 'graveyard-reanimator', returnsSelectedGraveyardCards, 8, 'selected graveyard cards returned to battlefield');
