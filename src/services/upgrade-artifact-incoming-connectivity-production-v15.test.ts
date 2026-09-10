@@ -124,19 +124,24 @@ async function plan() {
       maxSwaps: 1,
       maxUsdPerCard: 5,
       simulationIterations: 100,
-      themeQuery: 'artifacts and card draw',
-      themeMinimumMainMatches: 0,
+      themeQuery: '(t:artifact OR o:draw)',
+      themeMinimumMainMatches: 18,
+      themeCurrentMainMatches: 39,
+      themeComponents: [
+        { id: 'artifact', queryClause: 't:artifact', currentMainMatches: 19, requiredMainMatches: 18 },
+        { id: 'card-draw', queryClause: 'o:draw', currentMainMatches: 19, requiredMainMatches: 12 },
+      ],
     });
   } finally {
     globalThis.fetch = original;
   }
 }
 
-test('public planner prefers a connected Clue engine over generic artifact protection in a dense investigate shell', async () => {
+test('public planner prefers a connected Clue engine over generic artifact protection in a dense investigate shell when resolved compound context is supplied', async () => {
   const result = await plan();
   const swaps = result.swaps as Array<{ in: string; out: string }>;
   const debug = `serialized swaps: ${JSON.stringify(swaps)}`;
   assert.equal(swaps.length, 1, `the shell should permit one structural upgrade; ${debug}`);
   assert.equal(swaps[0]?.out, filler.name, `the disconnected filler should be the cut; ${debug}`);
-  assert.equal(swaps[0]?.in, connectedEngine.name, `with identical artifact-protection text, the package-connected investigate/draw engine should outrank generic protection; ${debug}`);
+  assert.equal(swaps[0]?.in, connectedEngine.name, `with identical artifact-protection text and resolved compound components, the package-connected investigate/draw engine should outrank generic protection; ${debug}`);
 });
