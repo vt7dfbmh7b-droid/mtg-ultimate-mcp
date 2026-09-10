@@ -65,8 +65,8 @@ const genericProtection = card(
   'Enchantment — Aura',
 );
 
-function fillerCards(prefix: string) {
-  return Array.from({ length: 59 }, (_, i) => card(
+function fillerCards(prefix: string, count: number) {
+  return Array.from({ length: count }, (_, i) => card(
     `${prefix} ${i}`,
     i === 0 ? 'When this creature enters the battlefield, draw a card.' : '',
     i === 0 ? 3 : 4,
@@ -76,7 +76,10 @@ function fillerCards(prefix: string) {
 }
 
 async function planFor(options: { includeCore: boolean }) {
-  const fillers = fillerCards(options.includeCore ? 'Anonymous Reanimation Filler' : 'Anonymous Control Filler');
+  const fillers = fillerCards(
+    options.includeCore ? 'Anonymous Reanimation Filler' : 'Anonymous Control Filler',
+    options.includeCore ? 59 : 60,
+  );
   const mainCards = options.includeCore ? [coreReanimation, ...fillers] : fillers;
   const baseline = [commander, island, ...mainCards];
   const all = [...baseline, genericProtection];
@@ -142,25 +145,31 @@ async function planFor(options: { includeCore: boolean }) {
   }
 }
 
+function swapDebug(swaps: Array<{ in: string; out: string }>): string {
+  return `serialized swaps: ${JSON.stringify(swaps)}`;
+}
+
 test('public planner preserves a core commander reanimation mechanism when generic protection has a safer filler cut', async () => {
   const plan = await planFor({ includeCore: true });
   const swaps = plan.swaps as Array<{ in: string; out: string }>;
+  const debug = swapDebug(swaps);
 
-  assert.equal(swaps.length, 1, 'the structural protection deficit should still produce one upgrade');
-  assert.equal(swaps[0]?.in, genericProtection.name, 'generic protection should remain a valid incoming structural upgrade');
+  assert.equal(swaps.length, 1, `the structural protection deficit should still produce one upgrade; ${debug}`);
+  assert.equal(swaps[0]?.in, genericProtection.name, `generic protection should remain a valid incoming structural upgrade; ${debug}`);
   assert.notEqual(
     swaps[0]?.out,
     coreReanimation.name,
-    'the public planner must not sacrifice the direct reanimation engine while a low-mechanism filler cut is available',
+    `the public planner must not sacrifice the direct reanimation engine while a low-mechanism filler cut is available; ${debug}`,
   );
-  assert.match(swaps[0]?.out ?? '', /^Anonymous Reanimation Filler /, 'the safer low-mechanism filler should be cut instead');
+  assert.match(swaps[0]?.out ?? '', /^Anonymous Reanimation Filler /, `the safer low-mechanism filler should be cut instead; ${debug}`);
 });
 
 test('public planner still selects generic protection when the outgoing pool contains only low-mechanism filler', async () => {
   const plan = await planFor({ includeCore: false });
   const swaps = plan.swaps as Array<{ in: string; out: string }>;
+  const debug = swapDebug(swaps);
 
-  assert.equal(swaps.length, 1, 'the expendable-control deck should still accept one structural protection upgrade');
-  assert.equal(swaps[0]?.in, genericProtection.name, 'mechanism preservation must not globally suppress generic protection');
-  assert.match(swaps[0]?.out ?? '', /^Anonymous Control Filler /, 'a genuinely expendable filler remains a legal cut');
+  assert.equal(swaps.length, 1, `the expendable-control deck should still accept one structural protection upgrade; ${debug}`);
+  assert.equal(swaps[0]?.in, genericProtection.name, `mechanism preservation must not globally suppress generic protection; ${debug}`);
+  assert.match(swaps[0]?.out ?? '', /^Anonymous Control Filler /, `a genuinely expendable filler remains a legal cut; ${debug}`);
 });
