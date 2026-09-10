@@ -60,7 +60,7 @@ const coreReanimation = card(
 
 const genericProtection = card(
   'Anonymous Generic Protection Aura',
-  'Enchant permanent you control. Enchanted permanent has ward {2}. When enchanted permanent leaves the battlefield, draw two cards.',
+  'Enchant permanent. Enchanted permanent has hexproof. When enchanted permanent leaves the battlefield, draw two cards.',
   3,
   'Enchantment — Aura',
 );
