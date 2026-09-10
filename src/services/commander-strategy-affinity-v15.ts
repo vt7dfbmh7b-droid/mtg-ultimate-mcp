@@ -91,6 +91,7 @@ function hasDirectStrategyMechanismEvidenceV15(strategy: NeutralStrategyScoreV15
         'graveyard recursion',
         'own-graveyard access',
         'graveyard setup',
+        'deliberate library-to-graveyard setup',
         'milled-card recovery',
         'mass graveyard return',
         'selected graveyard cards returned to battlefield',
