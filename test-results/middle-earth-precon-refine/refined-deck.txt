@@ -55,9 +55,11 @@
 1 Crypt Incursion (LTC) 198 *N*
 1 Go for the Throat (LTC) 201 *N*
 1 Night's Whisper (LTC) 205 *N*
+1 Cultivate (LTC) 236 *N*
 1 Essence Warden (LTC) 242 *N*
 1 Farseek (LTC) 244 *N*
 1 Great Oak Guardian (LTC) 247 *N*
+1 Orchard Strider (LTC) 253 *N*
 1 Prosperous Innkeeper (LTC) 256 *N*
 1 Shire Terrace (LTR) 261 *N*
 1 Tireless Provisioner (LTC) 262 *N*
@@ -65,6 +67,7 @@
 1 Savvy Hunter (LTC) 271 *N*
 1 Arcane Signet (LTC) 273 *N*
 1 Commander's Sphere (LTC) 276 *N*
+1 Pristine Talisman (LTC) 283 *N*
 1 Sol Ring (LTC) 284 *N*
 1 Access Tunnel (LTC) 294 *N*
 1 Ash Barrens (LTC) 295 *N*
@@ -86,8 +89,5 @@
 1 Nimble Hobbit (LTR) 23 *N*
 1 Belladonna Took (HOB) 4 *N*
 1 Orcish Medicine (LTR) 104 *N*
-1 Samwise Gamgee (LTR) 327 *N*
-1 Ravening Warg (HOB) 80 *N*
 1 The Battle of Bywater (LTR) 2 *N*
-1 Shelob's Ambush (LTR) 108 *N*
-1 Tempt with Discovery (LTC) 532 *N*
+1 Samwise Gamgee (LTR) 327 *N*
