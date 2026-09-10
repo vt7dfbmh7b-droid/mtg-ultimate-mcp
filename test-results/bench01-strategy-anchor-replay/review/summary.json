@@ -1,7 +1,7 @@
 {
   "schema": "bench01-adaptive-diversification-replay-v3",
   "batch": "BENCH-01-STRATEGY-ANCHOR-REPLAY",
-  "productRuntimeBaselineSha": "ca4c4fa4c3ede1be7bf053919fcc686ae5d11fb0",
+  "productRuntimeBaselineSha": "1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7",
   "sourceFrozenWithinBatch": true,
   "results": [
     {
@@ -390,7 +390,7 @@
             "set": "MB2",
             "collectorNumber": "30",
             "finish": "nonfoil",
-            "priceNzd": 10.23,
+            "priceNzd": 10.24,
             "priceUsdReference": 5.99
           },
           "structuralPairing": {
@@ -783,7 +783,7 @@
             "set": "PMH3",
             "collectorNumber": "171p",
             "finish": "nonfoil",
-            "priceNzd": 9.77,
+            "priceNzd": 9.78,
             "priceUsdReference": 5.72
           },
           "structuralPairing": {
@@ -1052,7 +1052,7 @@
             "set": "MH2",
             "collectorNumber": "293",
             "finish": "nonfoil",
-            "priceNzd": 7.41,
+            "priceNzd": 7.42,
             "priceUsdReference": 4.34
           },
           "structuralPairing": {
@@ -1145,7 +1145,7 @@
             "set": "SLD",
             "collectorNumber": "2058",
             "finish": "nonfoil",
-            "priceNzd": 44.23,
+            "priceNzd": 44.26,
             "priceUsdReference": 25.89
           },
           "structuralPairing": {
@@ -1448,7 +1448,7 @@
             "set": "PMOM",
             "collectorNumber": "198p",
             "finish": "nonfoil",
-            "priceNzd": 10.66,
+            "priceNzd": 10.67,
             "priceUsdReference": 6.24
           },
           "structuralPairing": {
@@ -1623,7 +1623,7 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.84,
+            "priceNzd": 36.86,
             "priceUsdReference": 21.56
           },
           "structuralPairing": {
@@ -1764,7 +1764,7 @@
             "set": "DMR",
             "collectorNumber": "289",
             "finish": "nonfoil",
-            "priceNzd": 28.87,
+            "priceNzd": 28.89,
             "priceUsdReference": 16.9
           },
           "structuralPairing": {
@@ -1808,7 +1808,7 @@
             "set": "SLD",
             "collectorNumber": "2817",
             "finish": "nonfoil",
-            "priceNzd": 15.24,
+            "priceNzd": 15.25,
             "priceUsdReference": 8.92
           },
           "structuralPairing": {
@@ -1852,7 +1852,7 @@
             "set": "MOM",
             "collectorNumber": "265",
             "finish": "nonfoil",
-            "priceNzd": 8.25,
+            "priceNzd": 8.26,
             "priceUsdReference": 4.83
           },
           "structuralPairing": {
@@ -2027,7 +2027,7 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 6,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 48.16,
+        "estimatedSpendNzd": 48.19,
         "estimatedSpendUsdReference": 28.19,
         "improvementScore": 18.073,
         "winRouteProtection": {
@@ -2092,7 +2092,7 @@
             "set": "GK1",
             "collectorNumber": "56",
             "finish": "nonfoil",
-            "priceNzd": 8.78,
+            "priceNzd": 8.79,
             "priceUsdReference": 5.14
           },
           "structuralPairing": {
@@ -2177,7 +2177,7 @@
             "set": "EXO",
             "collectorNumber": "55",
             "finish": "nonfoil",
-            "priceNzd": 12.23,
+            "priceNzd": 12.24,
             "priceUsdReference": 7.16
           },
           "structuralPairing": {
@@ -2312,8 +2312,8 @@
             "set": "ELD",
             "collectorNumber": "155",
             "finish": "nonfoil",
-            "priceNzd": 0.34,
-            "priceUsdReference": 0.2
+            "priceNzd": 0.38,
+            "priceUsdReference": 0.22
           },
           "structuralPairing": {
             "addressedRole": "interaction",
@@ -2356,7 +2356,7 @@
             "set": "PECL",
             "collectorNumber": "176p",
             "finish": "nonfoil",
-            "priceNzd": 15.63,
+            "priceNzd": 15.64,
             "priceUsdReference": 9.15
           },
           "structuralPairing": {
@@ -2399,7 +2399,7 @@
             "set": "FIC",
             "collectorNumber": "464",
             "finish": "foil",
-            "priceNzd": 19.34,
+            "priceNzd": 19.35,
             "priceUsdReference": 11.32
           },
           "structuralPairing": {
@@ -2542,7 +2542,7 @@
             "set": "PBIG",
             "collectorNumber": "26p",
             "finish": "foil",
-            "priceNzd": 33.47,
+            "priceNzd": 33.49,
             "priceUsdReference": 19.59
           },
           "structuralPairing": {
@@ -2588,7 +2588,7 @@
             "set": "PBRO",
             "collectorNumber": "179p",
             "finish": "nonfoil",
-            "priceNzd": 5.67,
+            "priceNzd": 5.68,
             "priceUsdReference": 3.32
           },
           "structuralPairing": {
@@ -2853,7 +2853,7 @@
             "set": "LCI",
             "collectorNumber": "143",
             "finish": "foil",
-            "priceNzd": 4.54,
+            "priceNzd": 4.55,
             "priceUsdReference": 2.66
           },
           "structuralPairing": {
@@ -3236,7 +3236,7 @@
           "fastManaCount": 1,
           "cheapInteractionCount": 1,
           "tutorCount": 0,
-          "recursionCount": 12,
+          "recursionCount": 13,
           "boardWipeCount": 2,
           "rampCount": 12,
           "drawCount": 37,
@@ -3291,12 +3291,12 @@
         "assessedBracket": 2,
         "assessedBand": "bracket-2-core-range",
         "metrics": {
-          "averageNonlandManaValue": 3.32,
-          "earlyPlayCount": 26,
+          "averageNonlandManaValue": 3.3,
+          "earlyPlayCount": 27,
           "fastManaCount": 1,
           "cheapInteractionCount": 1,
           "tutorCount": 3,
-          "recursionCount": 17,
+          "recursionCount": 18,
           "boardWipeCount": 2,
           "rampCount": 12,
           "drawCount": 40,
@@ -3313,8 +3313,8 @@
             "verifiedWinningCombos": 0,
             "ruthlessWinningCombos": 0,
             "strategicallyRelevantCombos": 0,
-            "averageNonlandManaValue": 3.32,
-            "earlyPlayCount": 26,
+            "averageNonlandManaValue": 3.3,
+            "earlyPlayCount": 27,
             "fastManaCount": 1,
             "freeInteractionCount": 0,
             "cheapInteractionCount": 1,
@@ -3368,9 +3368,9 @@
           "status": "satisfied",
           "satisfied": true,
           "canonicalLabel": "Graveyard / reanimator + Card draw",
-          "matchedMainCards": 55,
+          "matchedMainCards": 56,
           "requiredMainMatches": 15,
-          "mainCoverage": 0.5555555555555556
+          "mainCoverage": 0.5656565656565656
         },
         "stopReason": "no-supported-swaps-found"
       },
@@ -3424,8 +3424,8 @@
             "set": "MOM",
             "collectorNumber": "265",
             "finish": "nonfoil",
-            "priceNzd": 8.25,
-            "priceUsdReference": 4.83
+            "priceNzd": 8.14,
+            "priceUsdReference": 4.76
           },
           "structuralPairing": {
             "addressedRole": "protection",
@@ -3470,7 +3470,7 @@
             "set": "PDMU",
             "collectorNumber": "87p",
             "finish": "nonfoil",
-            "priceNzd": 2.2,
+            "priceNzd": 2.21,
             "priceUsdReference": 1.29
           },
           "structuralPairing": {
@@ -3516,9 +3516,9 @@
           "recommendedPrinting": {
             "set": "ACR",
             "collectorNumber": "100",
-            "finish": "foil",
-            "priceNzd": 14.18,
-            "priceUsdReference": 8.3
+            "finish": "nonfoil",
+            "priceNzd": 14.09,
+            "priceUsdReference": 8.24
           },
           "structuralPairing": {
             "addressedRole": "protection",
@@ -3687,7 +3687,7 @@
           }
         },
         {
-          "out": "Animate Dead",
+          "out": "Final-Word Phantom",
           "in": "Curator's Ward",
           "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
           "recommendedPrinting": {
@@ -3705,9 +3705,9 @@
             "persistentColoredManaSourcesAfterSwap": 3,
             "persistentColoredManaSourceFloor": 3,
             "strategyPreservation": {
-              "cutStrategyAffinityScore": 1,
+              "cutStrategyAffinityScore": 6,
               "addStrategyAffinityScore": 5,
-              "cutStrategyProtectionApplied": 1,
+              "cutStrategyProtectionApplied": 0,
               "cutMatchedStrategies": [
                 "value-engine"
               ],
@@ -3715,12 +3715,16 @@
                 "value-engine"
               ],
               "locallyUnreplacedStrategies": [],
-              "cutRoles": [],
+              "cutRoles": [
+                "creature"
+              ],
               "addRoles": [
                 "card draw",
                 "protection"
               ],
-              "unreplacedRoles": [],
+              "unreplacedRoles": [
+                "creature"
+              ],
               "unreplacedStrategyComponentRoles": [],
               "meaningfulStrategyLoss": false,
               "verdict": "preserved"
@@ -3954,8 +3958,8 @@
             "set": "MB2",
             "collectorNumber": "75",
             "finish": "nonfoil",
-            "priceNzd": 5.5,
-            "priceUsdReference": 3.22
+            "priceNzd": 5.47,
+            "priceUsdReference": 3.2
           },
           "structuralPairing": {
             "addressedRole": "protection",
@@ -4186,8 +4190,8 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.84,
-            "priceUsdReference": 21.56
+            "priceNzd": 36.43,
+            "priceUsdReference": 21.31
           },
           "structuralPairing": {
             "addressedRole": "protection",
