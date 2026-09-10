@@ -1,6 +1,6 @@
 {
   "schema": "intel01-positive-full-table-package-live-v15.1",
-  "sourceSha": "1d6b73aae4edc72d80a2ebc945a160506a13c71e",
+  "sourceSha": "a835d81b077b06ea4267dd704cef2866f6865284",
   "commander": "Frodo, Sauron's Bane",
   "request": {
     "targetBracket": 4,
@@ -44,10 +44,10 @@
       },
       {
         "name": "Scourge of the Skyclaves",
-        "set": "PZNR",
-        "collectorNumber": "122p",
-        "finish": "foil",
-        "priceUsd": 0.53
+        "set": "ZNR",
+        "collectorNumber": "122",
+        "finish": "nonfoil",
+        "priceUsd": 0.51
       }
     ],
     "candidateCount": 12,
@@ -304,14 +304,14 @@
           "status": "within-cap"
         },
         {
-          "line": "1 Mind Stone (DSC) 248",
+          "line": "1 Mind Stone (DMR) 385",
           "quantity": 1,
           "name": "Mind Stone",
-          "set": "DSC",
-          "collectorNumber": "248",
+          "set": "DMR",
+          "collectorNumber": "385",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.23,
+          "priceUsd": 0.24,
           "status": "within-cap"
         },
         {
@@ -333,7 +333,7 @@
           "collectorNumber": "238",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 21.14,
+          "priceUsd": 21.36,
           "status": "within-cap"
         },
         {
@@ -344,7 +344,7 @@
           "collectorNumber": "66",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 99.81,
+          "priceUsd": 99.39,
           "status": "within-cap"
         },
         {
@@ -421,7 +421,7 @@
           "collectorNumber": "136",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.32,
+          "priceUsd": 0.34,
           "status": "within-cap"
         },
         {
@@ -432,7 +432,7 @@
           "collectorNumber": "139",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.26,
+          "priceUsd": 0.27,
           "status": "within-cap"
         },
         {
@@ -443,7 +443,7 @@
           "collectorNumber": "226",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 33.84,
+          "priceUsd": 33.91,
           "status": "within-cap"
         },
         {
@@ -454,7 +454,7 @@
           "collectorNumber": "210",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 6.37,
+          "priceUsd": 6.38,
           "status": "within-cap"
         },
         {
@@ -498,7 +498,7 @@
           "collectorNumber": "146",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.23,
+          "priceUsd": 0.24,
           "status": "within-cap"
         },
         {
@@ -509,7 +509,7 @@
           "collectorNumber": "12",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 62.55,
+          "priceUsd": 62.96,
           "status": "within-cap"
         },
         {
@@ -520,7 +520,7 @@
           "collectorNumber": "202",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 4.83,
+          "priceUsd": 4.71,
           "status": "within-cap"
         },
         {
@@ -531,7 +531,7 @@
           "collectorNumber": "147",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 28.36,
+          "priceUsd": 28.44,
           "status": "within-cap"
         },
         {
@@ -542,7 +542,7 @@
           "collectorNumber": "6",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 36.12,
+          "priceUsd": 36.15,
           "status": "within-cap"
         },
         {
@@ -597,7 +597,7 @@
           "collectorNumber": "702",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 12.77,
+          "priceUsd": 12.75,
           "status": "within-cap"
         },
         {
@@ -619,7 +619,7 @@
           "collectorNumber": "126",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 3,
+          "priceUsd": 2.98,
           "status": "within-cap"
         },
         {
@@ -630,7 +630,7 @@
           "collectorNumber": "82",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 19.29,
+          "priceUsd": 19.18,
           "status": "within-cap"
         },
         {
@@ -652,7 +652,7 @@
           "collectorNumber": "155",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 10.65,
+          "priceUsd": 10.52,
           "status": "within-cap"
         },
         {
@@ -663,7 +663,7 @@
           "collectorNumber": "32",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 49.01,
+          "priceUsd": 49.55,
           "status": "within-cap"
         },
         {
@@ -674,7 +674,7 @@
           "collectorNumber": "137",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.65,
+          "priceUsd": 0.7,
           "status": "within-cap"
         },
         {
@@ -685,7 +685,7 @@
           "collectorNumber": "257",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.19,
+          "priceUsd": 0.2,
           "status": "within-cap"
         },
         {
@@ -707,7 +707,7 @@
           "collectorNumber": "285",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.83,
+          "priceUsd": 0.87,
           "status": "within-cap"
         },
         {
@@ -718,7 +718,7 @@
           "collectorNumber": "9",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 10.22,
+          "priceUsd": 8.19,
           "status": "within-cap"
         },
         {
@@ -740,7 +740,7 @@
           "collectorNumber": "133",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.94,
+          "priceUsd": 0.93,
           "status": "within-cap"
         },
         {
@@ -751,7 +751,7 @@
           "collectorNumber": "89",
           "requestedFinish": null,
           "finish": "foil",
-          "priceUsd": 16.91,
+          "priceUsd": 17.21,
           "status": "within-cap"
         },
         {
@@ -773,7 +773,7 @@
           "collectorNumber": "100",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 2.56,
+          "priceUsd": 2.59,
           "status": "within-cap"
         },
         {
@@ -839,7 +839,7 @@
           "collectorNumber": "155",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 8.92,
+          "priceUsd": 8.77,
           "status": "within-cap"
         },
         {
@@ -850,7 +850,7 @@
           "collectorNumber": "245",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 32.31,
+          "priceUsd": 32.16,
           "status": "within-cap"
         },
         {
@@ -861,7 +861,7 @@
           "collectorNumber": "142",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.92,
+          "priceUsd": 0.96,
           "status": "within-cap"
         },
         {
@@ -872,7 +872,7 @@
           "collectorNumber": "167",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.39,
+          "priceUsd": 0.4,
           "status": "within-cap"
         },
         {
@@ -883,7 +883,7 @@
           "collectorNumber": "229",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.36,
+          "priceUsd": 0.38,
           "status": "within-cap"
         },
         {
@@ -894,7 +894,7 @@
           "collectorNumber": "57",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 61.68,
+          "priceUsd": 62.05,
           "status": "within-cap"
         },
         {
@@ -905,7 +905,7 @@
           "collectorNumber": "500",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 30.05,
+          "priceUsd": 30.34,
           "status": "within-cap"
         },
         {
@@ -916,7 +916,7 @@
           "collectorNumber": "236",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 34.49,
+          "priceUsd": 35.21,
           "status": "within-cap"
         },
         {
@@ -938,7 +938,7 @@
           "collectorNumber": "209",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 3.44,
+          "priceUsd": 3.22,
           "status": "within-cap"
         },
         {
@@ -949,7 +949,7 @@
           "collectorNumber": "153",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 16.98,
+          "priceUsd": 17.43,
           "status": "within-cap"
         },
         {
@@ -960,7 +960,7 @@
           "collectorNumber": "161",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 4.65,
+          "priceUsd": 4.66,
           "status": "within-cap"
         },
         {
@@ -993,7 +993,7 @@
           "collectorNumber": "155",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.21,
+          "priceUsd": 0.2,
           "status": "within-cap"
         },
         {
@@ -1015,7 +1015,7 @@
           "collectorNumber": "62",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 12.07,
+          "priceUsd": 12.05,
           "status": "within-cap"
         },
         {
@@ -1026,7 +1026,7 @@
           "collectorNumber": "269",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 49.77,
+          "priceUsd": 49.45,
           "status": "within-cap"
         },
         {
@@ -1048,7 +1048,7 @@
           "collectorNumber": "223",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 52.41,
+          "priceUsd": 52.51,
           "status": "within-cap"
         },
         {
@@ -1058,8 +1058,8 @@
           "set": "CLB",
           "collectorNumber": "358",
           "requestedFinish": null,
-          "finish": "foil",
-          "priceUsd": 15.56,
+          "finish": "nonfoil",
+          "priceUsd": 15.67,
           "status": "within-cap"
         },
         {
@@ -1081,7 +1081,7 @@
           "collectorNumber": "873",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.08,
+          "priceUsd": 0.09,
           "status": "within-cap"
         }
       ],
@@ -1418,7 +1418,7 @@
             "Bloodletter of Aclazotz",
             "Scourge of the Skyclaves"
           ],
-          "observedUsd": 16.91,
+          "observedUsd": 17.21,
           "reason": "The tutor can find 2 route pieces and moves the selected card to a directly usable access zone."
         },
         {
@@ -1427,7 +1427,7 @@
           "destination": "unknown",
           "use": "unsupported-or-ambiguous",
           "coversPieces": [],
-          "observedUsd": 36.12,
+          "observedUsd": 36.15,
           "reason": "Tutor text contains a restriction or destination that is not modeled safely enough for exact route access."
         },
         {
@@ -1439,7 +1439,7 @@
             "Bloodletter of Aclazotz",
             "Scourge of the Skyclaves"
           ],
-          "observedUsd": 19.29,
+          "observedUsd": 19.18,
           "reason": "The tutor can find route pieces but moves them to graveyard; that is audited but excluded from conservative exact hand/battlefield access."
         },
         {
@@ -1457,7 +1457,7 @@
           "destination": "unknown",
           "use": "unsupported-or-ambiguous",
           "coversPieces": [],
-          "observedUsd": 16.98,
+          "observedUsd": 17.43,
           "reason": "Tutor text contains a restriction or destination that is not modeled safely enough for exact route access."
         },
         {
@@ -1475,7 +1475,7 @@
           "destination": "unknown",
           "use": "unsupported-or-ambiguous",
           "coversPieces": [],
-          "observedUsd": 21.14,
+          "observedUsd": 21.36,
           "reason": "Tutor text contains a restriction or destination that is not modeled safely enough for exact route access."
         },
         {
