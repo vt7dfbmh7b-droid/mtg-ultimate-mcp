@@ -48,7 +48,7 @@ const filler = card('Anonymous Counter-Shell Filler', 'When this creature enters
 
 const connectedEngine = card(
   'Anonymous Connected Counter Engine',
-  'Whenever one or more +1/+1 counters are put on a creature you control, proliferate. This ability triggers only once each turn. Whenever you proliferate, draw a card.',
+  'Other creatures you control have ward {1}. Whenever one or more +1/+1 counters are put on a creature you control, proliferate. This ability triggers only once each turn. Whenever you proliferate, draw a card.',
   3,
   'Creature — Human Wizard',
   { power: '2', toughness: '3' },
@@ -132,11 +132,11 @@ async function plan() {
   }
 }
 
-test('public planner prefers a connected counter engine over generic creature protection in a dense counter shell', async () => {
+test('public planner prefers a connected counter engine over generic creature protection when both address the same protection deficit', async () => {
   const result = await plan();
   const swaps = result.swaps as Array<{ in: string; out: string }>;
   const debug = `serialized swaps: ${JSON.stringify(swaps)}`;
-  assert.equal(swaps.length, 1, `the shell should permit one structural upgrade; ${debug}`);
+  assert.equal(swaps.length, 1, `the shell should permit one structurally equivalent protection upgrade; ${debug}`);
   assert.equal(swaps[0]?.out, filler.name, `the disconnected filler should be the cut; ${debug}`);
-  assert.equal(swaps[0]?.in, connectedEngine.name, `the package-connected counter/draw engine should outrank generic creature protection; ${debug}`);
+  assert.equal(swaps[0]?.in, connectedEngine.name, `with structural protection value equalized, the package-connected counter/draw engine should outrank generic protection; ${debug}`);
 });
