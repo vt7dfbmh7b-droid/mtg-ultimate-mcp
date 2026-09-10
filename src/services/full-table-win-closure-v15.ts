@@ -103,7 +103,8 @@ function parseNumberedSteps(description: string): NumberedStepV15[] {
   return starts.map((match, index) => {
     const number = Number.parseInt(match[1] ?? '', 10);
     const start = (match.index ?? 0) + match[0].length;
-    const end = index + 1 < starts.length ? starts[index + 1].index ?? normalized.length : normalized.length;
+    const nextStart = starts[index + 1];
+    const end = nextStart?.index ?? normalized.length;
     return {
       number,
       text: normalized.slice(start, end).replace(/\s+/g, ' ').trim(),
