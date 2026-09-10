@@ -261,10 +261,10 @@
       "adaptive": false
     },
     "packageAcceptanceContract": null,
-    "estimatedUpgradeSpendNzd": 6.75,
-    "estimatedUpgradeSpendUsdReference": 3.95,
+    "estimatedUpgradeSpendNzd": 6.71,
+    "estimatedUpgradeSpendUsdReference": 3.93,
     "maxTotalNzd": 200,
-    "maxTotalUsdReference": 117.08,
+    "maxTotalUsdReference": 117.09,
     "swaps": [
       {
         "out": "Shard of the Nightbringer",
@@ -274,8 +274,8 @@
           "set": "DRC",
           "collectorNumber": "43",
           "finish": "nonfoil",
-          "priceNzd": 2.2,
-          "priceUsdReference": 1.29
+          "priceNzd": 2.17,
+          "priceUsdReference": 1.27
         },
         "structuralPairing": {
           "addressedRole": "average-nonland-mv",
@@ -574,8 +574,8 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 12,
         "winningCandidate": 2,
-        "estimatedSpendNzd": 2.49,
-        "estimatedSpendUsdReference": 1.46,
+        "estimatedSpendNzd": 2.46,
+        "estimatedSpendUsdReference": 1.44,
         "improvementScore": 3.757,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -598,7 +598,7 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 12,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 3.78,
+        "estimatedSpendNzd": 3.77,
         "estimatedSpendUsdReference": 2.21,
         "improvementScore": 2.289,
         "winRouteProtection": {
@@ -666,7 +666,7 @@
       "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.49,
       "maxTotalNzd": 200,
-      "maxTotalUsdReference": 117.08,
+      "maxTotalUsdReference": 117.09,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -693,8 +693,8 @@
         "candidatePackagesGenerated": 4,
         "candidatePackagesEligible": 1,
         "winningCandidate": 2,
-        "estimatedSpendNzd": 2.49,
-        "estimatedSpendUsdReference": 1.46,
+        "estimatedSpendNzd": 2.46,
+        "estimatedSpendUsdReference": 1.44,
         "improvementScore": 3.757,
         "winRouteProtection": {
           "status": "no-verified-route",
@@ -713,8 +713,8 @@
               "collectorNumber": "43",
               "releaseDate": "2025-02-14",
               "finish": "nonfoil",
-              "priceNzd": 2.2,
-              "priceUsdReference": 1.29,
+              "priceNzd": 2.17,
+              "priceUsdReference": 1.27,
               "promo": false,
               "promoTypes": [],
               "flavorName": null,
@@ -1217,8 +1217,8 @@
             "reason": "eligible",
             "attemptedSwaps": 2,
             "actualSwaps": 2,
-            "estimatedSpendNzd": 2.49,
-            "estimatedSpendUsdReference": 1.46,
+            "estimatedSpendNzd": 2.46,
+            "estimatedSpendUsdReference": 1.44,
             "unknownPriceCount": 0,
             "improvementScore": 3.757,
             "significantRegression": false,
@@ -1522,8 +1522,8 @@
                   "set": "DRC",
                   "collectorNumber": "43",
                   "finish": "nonfoil",
-                  "priceNzd": 2.2,
-                  "priceUsdReference": 1.29
+                  "priceNzd": 2.17,
+                  "priceUsdReference": 1.27
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -1610,8 +1610,8 @@
             "reason": "candidate-deck-strategy-retention-evidence-incomplete",
             "attemptedSwaps": 2,
             "actualSwaps": 2,
-            "estimatedSpendNzd": 3.6,
-            "estimatedSpendUsdReference": 2.11,
+            "estimatedSpendNzd": 3.83,
+            "estimatedSpendUsdReference": 2.24,
             "unknownPriceCount": 0,
             "improvementScore": 3.096,
             "significantRegression": false,
@@ -1922,11 +1922,11 @@
                 "in": "Reanimate",
                 "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.79 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
-                  "set": "SOS",
-                  "collectorNumber": "85",
+                  "set": "PSOS",
+                  "collectorNumber": "85p",
                   "finish": "nonfoil",
-                  "priceNzd": 3.31,
-                  "priceUsdReference": 1.94
+                  "priceNzd": 3.54,
+                  "priceUsdReference": 2.07
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -2431,7 +2431,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 11.33,
+                "estimatedSpendNzd": 11.32,
                 "estimatedSpendUsdReference": 6.63,
                 "unknownPriceCount": 0,
                 "improvementScore": 13.725,
@@ -2974,8 +2974,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 10.18,
-                "estimatedSpendUsdReference": 5.96,
+                "estimatedSpendNzd": 10.15,
+                "estimatedSpendUsdReference": 5.94,
                 "unknownPriceCount": 0,
                 "improvementScore": 16.461,
                 "significantRegression": false,
@@ -3341,8 +3341,8 @@
                       "set": "DRC",
                       "collectorNumber": "43",
                       "finish": "nonfoil",
-                      "priceNzd": 2.2,
-                      "priceUsdReference": 1.29
+                      "priceNzd": 2.17,
+                      "priceUsdReference": 1.27
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -3518,8 +3518,8 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 11.24,
-                "estimatedSpendUsdReference": 6.58,
+                "estimatedSpendNzd": 11.46,
+                "estimatedSpendUsdReference": 6.71,
                 "unknownPriceCount": 0,
                 "improvementScore": 15.963,
                 "significantRegression": false,
@@ -3887,11 +3887,11 @@
                     "in": "Reanimate",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.79 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "SOS",
-                      "collectorNumber": "85",
+                      "set": "PSOS",
+                      "collectorNumber": "85p",
                       "finish": "nonfoil",
-                      "priceNzd": 3.31,
-                      "priceUsdReference": 1.94
+                      "priceNzd": 3.54,
+                      "priceUsdReference": 2.07
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5096,8 +5096,8 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 3.31,
-                "estimatedSpendUsdReference": 1.94,
+                "estimatedSpendNzd": 3.28,
+                "estimatedSpendUsdReference": 1.92,
                 "unknownPriceCount": 0,
                 "improvementScore": 12.499,
                 "significantRegression": false,
@@ -5429,8 +5429,8 @@
                       "set": "DRC",
                       "collectorNumber": "43",
                       "finish": "nonfoil",
-                      "priceNzd": 2.2,
-                      "priceUsdReference": 1.29
+                      "priceNzd": 2.17,
+                      "priceUsdReference": 1.27
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -5558,8 +5558,8 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 4.37,
-                "estimatedSpendUsdReference": 2.56,
+                "estimatedSpendNzd": 4.59,
+                "estimatedSpendUsdReference": 2.69,
                 "unknownPriceCount": 0,
                 "improvementScore": 13.108,
                 "significantRegression": false,
@@ -5898,11 +5898,11 @@
                     "in": "Reanimate",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.79 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "SOS",
-                      "collectorNumber": "85",
+                      "set": "PSOS",
+                      "collectorNumber": "85p",
                       "finish": "nonfoil",
-                      "priceNzd": 3.31,
-                      "priceUsdReference": 1.94
+                      "priceNzd": 3.54,
+                      "priceUsdReference": 2.07
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -6920,8 +6920,8 @@
                 "reason": "eligible",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 2.49,
-                "estimatedSpendUsdReference": 1.46,
+                "estimatedSpendNzd": 2.46,
+                "estimatedSpendUsdReference": 1.44,
                 "unknownPriceCount": 0,
                 "improvementScore": 3.757,
                 "significantRegression": false,
@@ -7225,8 +7225,8 @@
                       "set": "DRC",
                       "collectorNumber": "43",
                       "finish": "nonfoil",
-                      "priceNzd": 2.2,
-                      "priceUsdReference": 1.29
+                      "priceNzd": 2.17,
+                      "priceUsdReference": 1.27
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -7313,8 +7313,8 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 3.6,
-                "estimatedSpendUsdReference": 2.11,
+                "estimatedSpendNzd": 3.83,
+                "estimatedSpendUsdReference": 2.24,
                 "unknownPriceCount": 0,
                 "improvementScore": 3.096,
                 "significantRegression": false,
@@ -7625,11 +7625,11 @@
                     "in": "Reanimate",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.79 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "SOS",
-                      "collectorNumber": "85",
+                      "set": "PSOS",
+                      "collectorNumber": "85p",
                       "finish": "nonfoil",
-                      "priceNzd": 3.31,
-                      "priceUsdReference": 1.94
+                      "priceNzd": 3.54,
+                      "priceUsdReference": 2.07
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -8128,7 +8128,7 @@
         "candidatePackagesGenerated": 4,
         "candidatePackagesEligible": 1,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 3.78,
+        "estimatedSpendNzd": 3.77,
         "estimatedSpendUsdReference": 2.21,
         "improvementScore": 2.289,
         "winRouteProtection": {
@@ -8249,7 +8249,7 @@
             "reason": "eligible",
             "attemptedSwaps": 2,
             "actualSwaps": 2,
-            "estimatedSpendNzd": 3.78,
+            "estimatedSpendNzd": 3.77,
             "estimatedSpendUsdReference": 2.21,
             "unknownPriceCount": 0,
             "improvementScore": 2.289,
@@ -8636,8 +8636,8 @@
             "reason": "candidate-deck-strategy-retention-evidence-incomplete",
             "attemptedSwaps": 2,
             "actualSwaps": 2,
-            "estimatedSpendNzd": 3.67,
-            "estimatedSpendUsdReference": 2.15,
+            "estimatedSpendNzd": 3.89,
+            "estimatedSpendUsdReference": 2.28,
             "unknownPriceCount": 0,
             "improvementScore": 3.626,
             "significantRegression": false,
@@ -8941,11 +8941,11 @@
                 "in": "Reanimate",
                 "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.68 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
-                  "set": "SOS",
-                  "collectorNumber": "85",
+                  "set": "PSOS",
+                  "collectorNumber": "85p",
                   "finish": "nonfoil",
-                  "priceNzd": 3.31,
-                  "priceUsdReference": 1.94
+                  "priceNzd": 3.54,
+                  "priceUsdReference": 2.07
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -10376,8 +10376,8 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 11.24,
-                "estimatedSpendUsdReference": 6.58,
+                "estimatedSpendNzd": 11.46,
+                "estimatedSpendUsdReference": 6.71,
                 "unknownPriceCount": 0,
                 "improvementScore": 15.467,
                 "significantRegression": false,
@@ -10746,11 +10746,11 @@
                     "in": "Reanimate",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.68 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "SOS",
-                      "collectorNumber": "85",
+                      "set": "PSOS",
+                      "collectorNumber": "85p",
                       "finish": "nonfoil",
-                      "priceNzd": 3.31,
-                      "priceUsdReference": 1.94
+                      "priceNzd": 3.54,
+                      "priceUsdReference": 2.07
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -12507,8 +12507,8 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 4.37,
-                "estimatedSpendUsdReference": 2.56,
+                "estimatedSpendNzd": 4.59,
+                "estimatedSpendUsdReference": 2.69,
                 "unknownPriceCount": 0,
                 "improvementScore": 14.24,
                 "significantRegression": false,
@@ -12846,11 +12846,11 @@
                     "in": "Reanimate",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.68 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "SOS",
-                      "collectorNumber": "85",
+                      "set": "PSOS",
+                      "collectorNumber": "85p",
                       "finish": "nonfoil",
-                      "priceNzd": 3.31,
-                      "priceUsdReference": 1.94
+                      "priceNzd": 3.54,
+                      "priceUsdReference": 2.07
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -13932,7 +13932,7 @@
                 "reason": "eligible",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 3.78,
+                "estimatedSpendNzd": 3.77,
                 "estimatedSpendUsdReference": 2.21,
                 "unknownPriceCount": 0,
                 "improvementScore": 2.289,
@@ -14319,8 +14319,8 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 3.67,
-                "estimatedSpendUsdReference": 2.15,
+                "estimatedSpendNzd": 3.89,
+                "estimatedSpendUsdReference": 2.28,
                 "unknownPriceCount": 0,
                 "improvementScore": 3.626,
                 "significantRegression": false,
@@ -14624,11 +14624,11 @@
                     "in": "Reanimate",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.68 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "SOS",
-                      "collectorNumber": "85",
+                      "set": "PSOS",
+                      "collectorNumber": "85p",
                       "finish": "nonfoil",
-                      "priceNzd": 3.31,
-                      "priceUsdReference": 1.94
+                      "priceNzd": 3.54,
+                      "priceUsdReference": 2.07
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -15585,8 +15585,8 @@
             "reason": "candidate-deck-strategy-retention-evidence-incomplete",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 3.31,
-            "estimatedSpendUsdReference": 1.94,
+            "estimatedSpendNzd": 3.54,
+            "estimatedSpendUsdReference": 2.07,
             "unknownPriceCount": 0,
             "improvementScore": 0.899,
             "significantRegression": false,
@@ -15866,11 +15866,11 @@
                 "in": "Reanimate",
                 "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.56 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
-                  "set": "SOS",
-                  "collectorNumber": "85",
+                  "set": "PSOS",
+                  "collectorNumber": "85p",
                   "finish": "nonfoil",
-                  "priceNzd": 3.31,
-                  "priceUsdReference": 1.94
+                  "priceNzd": 3.54,
+                  "priceUsdReference": 2.07
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -16911,8 +16911,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 15.36,
-                "estimatedSpendUsdReference": 8.99,
+                "estimatedSpendNzd": 15.58,
+                "estimatedSpendUsdReference": 9.12,
                 "unknownPriceCount": 0,
                 "improvementScore": 8.485,
                 "significantRegression": false,
@@ -17242,11 +17242,11 @@
                     "in": "Reanimate",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.56 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "SOS",
-                      "collectorNumber": "85",
+                      "set": "PSOS",
+                      "collectorNumber": "85p",
                       "finish": "nonfoil",
-                      "priceNzd": 3.31,
-                      "priceUsdReference": 1.94
+                      "priceNzd": 3.54,
+                      "priceUsdReference": 2.07
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -18478,8 +18478,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 9.19,
-                "estimatedSpendUsdReference": 5.38,
+                "estimatedSpendNzd": 9.17,
+                "estimatedSpendUsdReference": 5.37,
                 "unknownPriceCount": 0,
                 "improvementScore": 5.42,
                 "significantRegression": false,
@@ -18857,8 +18857,8 @@
                       "set": "DSK",
                       "collectorNumber": "99",
                       "finish": "nonfoil",
-                      "priceNzd": 0.48,
-                      "priceUsdReference": 0.28
+                      "priceNzd": 0.46,
+                      "priceUsdReference": 0.27
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -19014,8 +19014,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 10.51,
-                "estimatedSpendUsdReference": 6.15,
+                "estimatedSpendNzd": 10.73,
+                "estimatedSpendUsdReference": 6.28,
                 "unknownPriceCount": 0,
                 "improvementScore": 4.539,
                 "significantRegression": false,
@@ -19322,11 +19322,11 @@
                     "in": "Reanimate",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.56 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "SOS",
-                      "collectorNumber": "85",
+                      "set": "PSOS",
+                      "collectorNumber": "85p",
                       "finish": "nonfoil",
-                      "priceNzd": 3.31,
-                      "priceUsdReference": 1.94
+                      "priceNzd": 3.54,
+                      "priceUsdReference": 2.07
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -20421,8 +20421,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 7.74,
-                "estimatedSpendUsdReference": 4.53,
+                "estimatedSpendNzd": 7.72,
+                "estimatedSpendUsdReference": 4.52,
                 "unknownPriceCount": 0,
                 "improvementScore": 6.656,
                 "significantRegression": false,
@@ -20774,8 +20774,8 @@
                       "set": "DSK",
                       "collectorNumber": "99",
                       "finish": "nonfoil",
-                      "priceNzd": 0.48,
-                      "priceUsdReference": 0.28
+                      "priceNzd": 0.46,
+                      "priceUsdReference": 0.27
                     },
                     "structuralPairing": {
                       "addressedRole": "interaction",
@@ -20885,8 +20885,8 @@
                 "reason": "improvement-below-threshold",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 3.64,
-                "estimatedSpendUsdReference": 2.13,
+                "estimatedSpendNzd": 3.86,
+                "estimatedSpendUsdReference": 2.26,
                 "unknownPriceCount": 0,
                 "improvementScore": -0.253,
                 "significantRegression": false,
@@ -21154,11 +21154,11 @@
                     "in": "Reanimate",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.56 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "SOS",
-                      "collectorNumber": "85",
+                      "set": "PSOS",
+                      "collectorNumber": "85p",
                       "finish": "nonfoil",
-                      "priceNzd": 3.31,
-                      "priceUsdReference": 1.94
+                      "priceNzd": 3.54,
+                      "priceUsdReference": 2.07
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -22523,8 +22523,8 @@
                 "reason": "candidate-deck-strategy-retention-evidence-incomplete",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 3.31,
-                "estimatedSpendUsdReference": 1.94,
+                "estimatedSpendNzd": 3.54,
+                "estimatedSpendUsdReference": 2.07,
                 "unknownPriceCount": 0,
                 "improvementScore": 0.899,
                 "significantRegression": false,
@@ -22804,11 +22804,11 @@
                     "in": "Reanimate",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.56 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "SOS",
-                      "collectorNumber": "85",
+                      "set": "PSOS",
+                      "collectorNumber": "85p",
                       "finish": "nonfoil",
-                      "priceNzd": 3.31,
-                      "priceUsdReference": 1.94
+                      "priceNzd": 3.54,
+                      "priceUsdReference": 2.07
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -23863,8 +23863,8 @@
             "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
             "attemptedSwaps": 1,
             "actualSwaps": 1,
-            "estimatedSpendNzd": 3.31,
-            "estimatedSpendUsdReference": 1.94,
+            "estimatedSpendNzd": 3.54,
+            "estimatedSpendUsdReference": 2.07,
             "unknownPriceCount": 0,
             "improvementScore": -3.36,
             "significantRegression": false,
@@ -24085,11 +24085,11 @@
                 "in": "Reanimate",
                 "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.52 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                 "recommendedPrinting": {
-                  "set": "SOS",
-                  "collectorNumber": "85",
+                  "set": "PSOS",
+                  "collectorNumber": "85p",
                   "finish": "nonfoil",
-                  "priceNzd": 3.31,
-                  "priceUsdReference": 1.94
+                  "priceNzd": 3.54,
+                  "priceUsdReference": 2.07
                 },
                 "structuralPairing": {
                   "addressedRole": "average-nonland-mv",
@@ -25083,8 +25083,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 15.2,
-                "estimatedSpendUsdReference": 8.9,
+                "estimatedSpendNzd": 15.42,
+                "estimatedSpendUsdReference": 9.03,
                 "unknownPriceCount": 0,
                 "improvementScore": 19.877,
                 "significantRegression": false,
@@ -25413,11 +25413,11 @@
                     "in": "Reanimate",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.52 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "SOS",
-                      "collectorNumber": "85",
+                      "set": "PSOS",
+                      "collectorNumber": "85p",
                       "finish": "nonfoil",
-                      "priceNzd": 3.31,
-                      "priceUsdReference": 1.94
+                      "priceNzd": 3.54,
+                      "priceUsdReference": 2.07
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -25613,7 +25613,7 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 10.63,
+                "estimatedSpendNzd": 10.62,
                 "estimatedSpendUsdReference": 6.22,
                 "unknownPriceCount": 0,
                 "improvementScore": 17.609,
@@ -27214,8 +27214,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 3,
                 "actualSwaps": 3,
-                "estimatedSpendNzd": 15.03,
-                "estimatedSpendUsdReference": 8.8,
+                "estimatedSpendNzd": 15.25,
+                "estimatedSpendUsdReference": 8.93,
                 "unknownPriceCount": 0,
                 "improvementScore": 3.864,
                 "significantRegression": false,
@@ -27506,11 +27506,11 @@
                     "in": "Reanimate",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.52 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "SOS",
-                      "collectorNumber": "85",
+                      "set": "PSOS",
+                      "collectorNumber": "85p",
                       "finish": "nonfoil",
-                      "priceNzd": 3.31,
-                      "priceUsdReference": 1.94
+                      "priceNzd": 3.54,
+                      "priceUsdReference": 2.07
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -29016,8 +29016,8 @@
                 "reason": "package-causes-a-meaningful-commander-strategy-loss",
                 "attemptedSwaps": 2,
                 "actualSwaps": 2,
-                "estimatedSpendNzd": 10.18,
-                "estimatedSpendUsdReference": 5.96,
+                "estimatedSpendNzd": 10.4,
+                "estimatedSpendUsdReference": 6.09,
                 "unknownPriceCount": 0,
                 "improvementScore": -0.056,
                 "significantRegression": false,
@@ -29280,11 +29280,11 @@
                     "in": "Reanimate",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.52 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "SOS",
-                      "collectorNumber": "85",
+                      "set": "PSOS",
+                      "collectorNumber": "85p",
                       "finish": "nonfoil",
-                      "priceNzd": 3.31,
-                      "priceUsdReference": 1.94
+                      "priceNzd": 3.54,
+                      "priceUsdReference": 2.07
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
@@ -30495,8 +30495,8 @@
                 "reason": "package-does-not-repair-or-advance-failed-bracket-5-target-gate",
                 "attemptedSwaps": 1,
                 "actualSwaps": 1,
-                "estimatedSpendNzd": 3.31,
-                "estimatedSpendUsdReference": 1.94,
+                "estimatedSpendNzd": 3.54,
+                "estimatedSpendUsdReference": 2.07,
                 "unknownPriceCount": 0,
                 "improvementScore": -3.36,
                 "significantRegression": false,
@@ -30717,11 +30717,11 @@
                     "in": "Reanimate",
                     "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.52 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: graveyard-reanimator. The recommended physical printing satisfies the active printing-family/set policy.",
                     "recommendedPrinting": {
-                      "set": "SOS",
-                      "collectorNumber": "85",
+                      "set": "PSOS",
+                      "collectorNumber": "85p",
                       "finish": "nonfoil",
-                      "priceNzd": 3.31,
-                      "priceUsdReference": 1.94
+                      "priceNzd": 3.54,
+                      "priceUsdReference": 2.07
                     },
                     "structuralPairing": {
                       "addressedRole": "average-nonland-mv",
