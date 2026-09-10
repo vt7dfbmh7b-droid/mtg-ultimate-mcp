@@ -3,7 +3,7 @@
   "currencyPolicy": {
     "primaryCurrency": "NZD",
     "displaySymbol": "NZ$",
-    "usdToNzdRate": 1.7083,
+    "usdToNzdRate": 1.7085,
     "rateDate": "2026-09-10",
     "rateSource": "Frankfurter",
     "rateSourceUrl": "https://api.frankfurter.dev/v2/rate/USD/NZD",
