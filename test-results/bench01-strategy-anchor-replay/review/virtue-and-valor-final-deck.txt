@@ -25,6 +25,7 @@
 1 Eidolon of Blossoms (WOC) 124 *N*
 1 Enchantress's Presence (WOC) 125 *N*
 1 Indomitable Might (WOC) 127 *N*
+1 Rishkar's Expertise (WOC) 130 *N*
 1 Sanctum Weaver (WOC) 131 *N*
 1 Setessan Champion (WOC) 132 *N*
 1 Verdant Embrace (WOC) 136 *N*
@@ -44,6 +45,7 @@
 1 Ancestral Mask (WOC) 119 *N*
 1 Careful Cultivation (WOC) 122 *N*
 1 Destiny Spinner (WOC) 123 *N*
+1 Fertile Ground (WOC) 126 *N*
 1 Kenrith's Transformation (WOC) 128 *N*
 1 Paradise Druid (WOC) 129 *N*
 1 Snake Umbra (WOC) 133 *N*
@@ -64,15 +66,13 @@
 7 Forest (WOE) 276 *N*
 7 Plains (WOE) 267 *N*
 7 Plains (WOE) 268 *N*
-1 Sylvan Library (SLD) 2058 *N*
-1 Static Prison (MH3) 44 *N*
-1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
 1 Springheart Nantuko (PMH3) 171p *N*
+1 Hardlight Containment (EOE) 20 *N*
+1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
+1 Unquestioned Authority (JUD) 31 *N*
 1 Reconnaissance (PLST) EXO-17 *N*
 1 Soul Snare (C21) 104 *N*
 1 Sterling Grove (MH2) 293 *N*
-1 Sythis, Harvest's Hand (MH2) 214 *N*
-1 Sigarda's Aid (EMN) 41 *N*
-1 Ossification (PLST) ONE-26 *N*
-1 Unquestioned Authority (JUD) 31 *N*
-1 Sheltered by Ghosts (SOC) 171 *N*
+1 Darksteel Mutation (SOC) 142 *N*
+1 Sylvan Library (SLD) 2058 *N*
+1 Authority of the Consuls (FIC) 232 *N*

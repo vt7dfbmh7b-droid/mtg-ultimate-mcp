@@ -1,7 +1,7 @@
 {
   "schema": "bench01-adaptive-diversification-replay-v3",
   "batch": "BENCH-01-STRATEGY-ANCHOR-REPLAY",
-  "productRuntimeBaselineSha": "28efcb47aef0765d818664e36275a988975a4b15",
+  "productRuntimeBaselineSha": "ca4c4fa4c3ede1be7bf053919fcc686ae5d11fb0",
   "sourceFrozenWithinBatch": true,
   "results": [
     {
@@ -258,7 +258,7 @@
             "set": "MAR",
             "collectorNumber": "62",
             "finish": "nonfoil",
-            "priceNzd": 7.29,
+            "priceNzd": 7.3,
             "priceUsdReference": 4.27
           },
           "structuralPairing": {
@@ -522,7 +522,7 @@
             "set": "M3C",
             "collectorNumber": "33",
             "finish": "nonfoil",
-            "priceNzd": 13.32,
+            "priceNzd": 13.33,
             "priceUsdReference": 7.8
           },
           "structuralPairing": {
@@ -567,8 +567,8 @@
       "family": "enchantment-combat",
       "reference": "Virtue and Valor",
       "themeQuery": "enchantments combat card draw",
-      "totalSwaps": 12,
-      "assessedBracket": 3,
+      "totalSwaps": 10,
+      "assessedBracket": 2,
       "before": {
         "cardCount": 100,
         "commanderLegal": true,
@@ -636,20 +636,20 @@
         "commanderNames": [
           "Ellivere of the Wild Court"
         ],
-        "assessedBracket": 3,
-        "assessedBand": "bracket-3-upgraded-range",
+        "assessedBracket": 2,
+        "assessedBand": "bracket-2-core-range",
         "metrics": {
-          "averageNonlandManaValue": 3.03,
-          "earlyPlayCount": 28,
+          "averageNonlandManaValue": 3.1,
+          "earlyPlayCount": 27,
           "fastManaCount": 1,
-          "cheapInteractionCount": 5,
+          "cheapInteractionCount": 3,
           "tutorCount": 2,
           "recursionCount": 4,
           "boardWipeCount": 3,
           "rampCount": 10,
-          "drawCount": 14,
-          "interactionCount": 9,
-          "protectionCount": 3
+          "drawCount": 13,
+          "interactionCount": 7,
+          "protectionCount": 4
         },
         "postBuildEvidence": {
           "signals": {
@@ -661,11 +661,11 @@
             "verifiedWinningCombos": 0,
             "ruthlessWinningCombos": 0,
             "strategicallyRelevantCombos": 0,
-            "averageNonlandManaValue": 3.03,
-            "earlyPlayCount": 28,
+            "averageNonlandManaValue": 3.1,
+            "earlyPlayCount": 27,
             "fastManaCount": 1,
             "freeInteractionCount": 0,
-            "cheapInteractionCount": 5,
+            "cheapInteractionCount": 3,
             "tutorCount": 2,
             "gameChangerCount": 0,
             "efficientWinConditionEvidence": false,
@@ -694,15 +694,17 @@
         "accepted": true,
         "acceptedSwaps": 1,
         "candidatePackagesGenerated": 6,
-        "candidatePackagesEligible": 1,
+        "candidatePackagesEligible": 3,
         "candidateAttemptSizes": [
+          3,
+          2,
           1
         ],
-        "candidatePackagesGeneratedAcrossAttempts": 6,
-        "winningCandidate": 2,
-        "estimatedSpendNzd": 3.01,
-        "estimatedSpendUsdReference": 1.76,
-        "improvementScore": 5.785,
+        "candidatePackagesGeneratedAcrossAttempts": 18,
+        "winningCandidate": 6,
+        "estimatedSpendNzd": 7.09,
+        "estimatedSpendUsdReference": 4.15,
+        "improvementScore": 9.475,
         "winRouteProtection": {
           "status": "no-verified-route",
           "protectedComboIds": [],
@@ -713,9 +715,9 @@
           "status": "satisfied",
           "satisfied": true,
           "canonicalLabel": "Enchantments + Combat / attacks + Card draw",
-          "matchedMainCards": 42,
+          "matchedMainCards": 41,
           "requiredMainMatches": 18,
-          "mainCoverage": 0.42424242424242425
+          "mainCoverage": 0.41414141414141414
         }
       },
       "candidateWork": {
@@ -728,7 +730,7 @@
             "candidateAttemptSizes": [
               4
             ],
-            "winningCandidate": 4,
+            "winningCandidate": 5,
             "stopReason": null
           },
           {
@@ -746,39 +748,43 @@
             "round": 3,
             "accepted": true,
             "candidatePackagesGenerated": 6,
-            "candidatePackagesGeneratedAcrossAttempts": 12,
+            "candidatePackagesGeneratedAcrossAttempts": 24,
             "candidateAttemptSizes": [
               4,
-              3
+              3,
+              2,
+              1
             ],
-            "winningCandidate": 4,
+            "winningCandidate": 3,
             "stopReason": null
           },
           {
             "round": 4,
             "accepted": true,
             "candidatePackagesGenerated": 6,
-            "candidatePackagesGeneratedAcrossAttempts": 6,
+            "candidatePackagesGeneratedAcrossAttempts": 18,
             "candidateAttemptSizes": [
+              3,
+              2,
               1
             ],
-            "winningCandidate": 2,
+            "winningCandidate": 6,
             "stopReason": null
           }
         ],
-        "totalPackagesGeneratedAcrossAttempts": 30
+        "totalPackagesGeneratedAcrossAttempts": 54
       },
       "acceptedSwaps": [
         {
           "out": "Retether",
-          "in": "Sylvan Library",
-          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.31 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments, Card draw) without becoming a hard theme requirement.",
+          "in": "Springheart Nantuko",
+          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.31 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "SLD",
-            "collectorNumber": "2058",
+            "set": "PMH3",
+            "collectorNumber": "171p",
             "finish": "nonfoil",
-            "priceNzd": 44.23,
-            "priceUsdReference": 25.89
+            "priceNzd": 9.77,
+            "priceUsdReference": 5.72
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -789,17 +795,22 @@
             "persistentColoredManaSourceFloor": 2,
             "strategyPreservation": {
               "cutStrategyAffinityScore": 0,
-              "addStrategyAffinityScore": 1,
+              "addStrategyAffinityScore": 10,
               "cutStrategyProtectionApplied": 0,
               "cutMatchedStrategies": [],
               "addMatchedStrategies": [
+                "combat-tokens",
                 "value-engine"
               ],
               "locallyUnreplacedStrategies": [],
               "cutRoles": [
                 "graveyard recursion"
               ],
-              "addRoles": [],
+              "addRoles": [
+                "creature",
+                "etb synergy",
+                "token production"
+              ],
               "unreplacedRoles": [
                 "graveyard recursion"
               ],
@@ -811,14 +822,14 @@
         },
         {
           "out": "Timber Paladin",
-          "in": "Static Prison",
+          "in": "Hardlight Containment",
           "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (1 must rise to 6 or higher). The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "MH3",
-            "collectorNumber": "44",
+            "set": "EOE",
+            "collectorNumber": "20",
             "finish": "nonfoil",
-            "priceNzd": 0.41,
-            "priceUsdReference": 0.24
+            "priceNzd": 0.39,
+            "priceUsdReference": 0.23
           },
           "structuralPairing": {
             "addressedRole": "interaction",
@@ -838,9 +849,7 @@
                 "creature"
               ],
               "addRoles": [
-                "artifact/enchantment interaction",
                 "cheap interaction",
-                "self sacrifice",
                 "spot interaction"
               ],
               "unreplacedRoles": [
@@ -906,31 +915,30 @@
         },
         {
           "out": "Aura Gnarlid",
-          "in": "Springheart Nantuko",
-          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.31 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signals: value-engine, combat-tokens. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments) without becoming a hard theme requirement.",
+          "in": "Unquestioned Authority",
+          "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments, Card draw) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "PMH3",
-            "collectorNumber": "171p",
+            "set": "JUD",
+            "collectorNumber": "31",
             "finish": "nonfoil",
-            "priceNzd": 9.77,
-            "priceUsdReference": 5.72
+            "priceNzd": 2.27,
+            "priceUsdReference": 1.33
           },
           "structuralPairing": {
-            "addressedRole": "average-nonland-mv",
-            "remainingStructuralDeficitAfterSwap": 19,
-            "authoritativeTargetGate": "average-nonland-mv",
-            "nonlandManaValueReduction": 1,
+            "addressedRole": "protection",
+            "remainingStructuralDeficitAfterSwap": 18,
+            "authoritativeTargetGate": null,
+            "nonlandManaValueReduction": null,
             "persistentColoredManaSourcesAfterSwap": 3,
             "persistentColoredManaSourceFloor": 3,
             "strategyPreservation": {
               "cutStrategyAffinityScore": 1,
-              "addStrategyAffinityScore": 10,
+              "addStrategyAffinityScore": 5,
               "cutStrategyProtectionApplied": 1,
               "cutMatchedStrategies": [
                 "value-engine"
               ],
               "addMatchedStrategies": [
-                "combat-tokens",
                 "value-engine"
               ],
               "locallyUnreplacedStrategies": [],
@@ -938,11 +946,12 @@
                 "creature"
               ],
               "addRoles": [
-                "creature",
-                "etb synergy",
-                "token production"
+                "card draw",
+                "protection"
               ],
-              "unreplacedRoles": [],
+              "unreplacedRoles": [
+                "creature"
+              ],
               "unreplacedStrategyComponentRoles": [],
               "meaningfulStrategyLoss": false,
               "verdict": "preserved"
@@ -952,7 +961,7 @@
         {
           "out": "Umbra Mystic",
           "in": "Reconnaissance",
-          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.23 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments, Combat / attacks) without becoming a hard theme requirement.",
+          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.25 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments, Combat / attacks) without becoming a hard theme requirement.",
           "recommendedPrinting": {
             "set": "PLST",
             "collectorNumber": "EXO-17",
@@ -962,7 +971,7 @@
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
-            "remainingStructuralDeficitAfterSwap": 19,
+            "remainingStructuralDeficitAfterSwap": 18,
             "authoritativeTargetGate": "average-nonland-mv",
             "nonlandManaValueReduction": 2,
             "persistentColoredManaSourcesAfterSwap": 3,
@@ -999,12 +1008,12 @@
             "set": "C21",
             "collectorNumber": "104",
             "finish": "nonfoil",
-            "priceNzd": 0.2,
+            "priceNzd": 0.21,
             "priceUsdReference": 0.12
           },
           "structuralPairing": {
             "addressedRole": "interaction",
-            "remainingStructuralDeficitAfterSwap": 18,
+            "remainingStructuralDeficitAfterSwap": 17,
             "authoritativeTargetGate": "cheap-interaction",
             "nonlandManaValueReduction": null,
             "persistentColoredManaSourcesAfterSwap": 3,
@@ -1048,7 +1057,7 @@
           },
           "structuralPairing": {
             "addressedRole": "tutor",
-            "remainingStructuralDeficitAfterSwap": 17,
+            "remainingStructuralDeficitAfterSwap": 16,
             "authoritativeTargetGate": "tutors",
             "nonlandManaValueReduction": null,
             "persistentColoredManaSourcesAfterSwap": 3,
@@ -1083,153 +1092,15 @@
           }
         },
         {
-          "out": "Celestial Archon",
-          "in": "Sythis, Harvest's Hand",
-          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.23 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments, Card draw) without becoming a hard theme requirement.",
-          "recommendedPrinting": {
-            "set": "MH2",
-            "collectorNumber": "214",
-            "finish": "nonfoil",
-            "priceNzd": 5.07,
-            "priceUsdReference": 2.97
-          },
-          "structuralPairing": {
-            "addressedRole": "average-nonland-mv",
-            "remainingStructuralDeficitAfterSwap": 17,
-            "authoritativeTargetGate": "average-nonland-mv",
-            "nonlandManaValueReduction": 3,
-            "persistentColoredManaSourcesAfterSwap": 3,
-            "persistentColoredManaSourceFloor": 3,
-            "strategyPreservation": {
-              "cutStrategyAffinityScore": 1,
-              "addStrategyAffinityScore": 14,
-              "cutStrategyProtectionApplied": 1,
-              "cutMatchedStrategies": [
-                "value-engine"
-              ],
-              "addMatchedStrategies": [
-                "value-engine"
-              ],
-              "locallyUnreplacedStrategies": [],
-              "cutRoles": [
-                "creature"
-              ],
-              "addRoles": [
-                "card draw",
-                "creature",
-                "life-gain-triggered draw engine",
-                "repeatable draw",
-                "repeatable life gain engine"
-              ],
-              "unreplacedRoles": [],
-              "unreplacedStrategyComponentRoles": [],
-              "meaningfulStrategyLoss": false,
-              "verdict": "preserved"
-            }
-          }
-        },
-        {
-          "out": "Eidolon of Countless Battles",
-          "in": "Sigarda's Aid",
-          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.11 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments) without becoming a hard theme requirement.",
-          "recommendedPrinting": {
-            "set": "EMN",
-            "collectorNumber": "41",
-            "finish": "nonfoil",
-            "priceNzd": 33.14,
-            "priceUsdReference": 19.4
-          },
-          "structuralPairing": {
-            "addressedRole": "average-nonland-mv",
-            "remainingStructuralDeficitAfterSwap": 17,
-            "authoritativeTargetGate": "average-nonland-mv",
-            "nonlandManaValueReduction": 2,
-            "persistentColoredManaSourcesAfterSwap": 3,
-            "persistentColoredManaSourceFloor": 3,
-            "strategyPreservation": {
-              "cutStrategyAffinityScore": 1,
-              "addStrategyAffinityScore": 10,
-              "cutStrategyProtectionApplied": 1,
-              "cutMatchedStrategies": [
-                "value-engine"
-              ],
-              "addMatchedStrategies": [
-                "value-engine"
-              ],
-              "locallyUnreplacedStrategies": [],
-              "cutRoles": [
-                "creature"
-              ],
-              "addRoles": [
-                "equipment",
-                "etb synergy"
-              ],
-              "unreplacedRoles": [
-                "creature"
-              ],
-              "unreplacedStrategyComponentRoles": [],
-              "meaningfulStrategyLoss": false,
-              "verdict": "preserved"
-            }
-          }
-        },
-        {
           "out": "Sylvan Ranger",
-          "in": "Ossification",
-          "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (3 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments) without becoming a hard theme requirement.",
+          "in": "Darksteel Mutation",
+          "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "PLST",
-            "collectorNumber": "ONE-26",
+            "set": "SOC",
+            "collectorNumber": "142",
             "finish": "nonfoil",
-            "priceNzd": 0.32,
-            "priceUsdReference": 0.19
-          },
-          "structuralPairing": {
-            "addressedRole": "interaction",
-            "remainingStructuralDeficitAfterSwap": 16,
-            "authoritativeTargetGate": "cheap-interaction",
-            "nonlandManaValueReduction": null,
-            "persistentColoredManaSourcesAfterSwap": 3,
-            "persistentColoredManaSourceFloor": 3,
-            "strategyPreservation": {
-              "cutStrategyAffinityScore": 1,
-              "addStrategyAffinityScore": 1,
-              "cutStrategyProtectionApplied": 1,
-              "cutMatchedStrategies": [
-                "value-engine"
-              ],
-              "addMatchedStrategies": [
-                "value-engine"
-              ],
-              "locallyUnreplacedStrategies": [],
-              "cutRoles": [
-                "creature",
-                "land tutor"
-              ],
-              "addRoles": [
-                "cheap interaction",
-                "spot interaction"
-              ],
-              "unreplacedRoles": [
-                "creature",
-                "land tutor"
-              ],
-              "unreplacedStrategyComponentRoles": [],
-              "meaningfulStrategyLoss": false,
-              "verdict": "preserved"
-            }
-          }
-        },
-        {
-          "out": "Rishkar's Expertise",
-          "in": "Unquestioned Authority",
-          "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments, Card draw) without becoming a hard theme requirement.",
-          "recommendedPrinting": {
-            "set": "JUD",
-            "collectorNumber": "31",
-            "finish": "nonfoil",
-            "priceNzd": 2.27,
-            "priceUsdReference": 1.33
+            "priceNzd": 1.64,
+            "priceUsdReference": 0.96
           },
           "structuralPairing": {
             "addressedRole": "protection",
@@ -1239,9 +1110,9 @@
             "persistentColoredManaSourcesAfterSwap": 3,
             "persistentColoredManaSourceFloor": 3,
             "strategyPreservation": {
-              "cutStrategyAffinityScore": 6,
-              "addStrategyAffinityScore": 5,
-              "cutStrategyProtectionApplied": 0,
+              "cutStrategyAffinityScore": 1,
+              "addStrategyAffinityScore": 1,
+              "cutStrategyProtectionApplied": 1,
               "cutMatchedStrategies": [
                 "value-engine"
               ],
@@ -1249,12 +1120,17 @@
                 "value-engine"
               ],
               "locallyUnreplacedStrategies": [],
-              "cutRoles": [],
+              "cutRoles": [
+                "creature",
+                "land tutor"
+              ],
               "addRoles": [
-                "card draw",
                 "protection"
               ],
-              "unreplacedRoles": [],
+              "unreplacedRoles": [
+                "creature",
+                "land tutor"
+              ],
               "unreplacedStrategyComponentRoles": [],
               "meaningfulStrategyLoss": false,
               "verdict": "preserved"
@@ -1262,21 +1138,21 @@
           }
         },
         {
-          "out": "Fertile Ground",
-          "in": "Sheltered by Ghosts",
-          "why": "Advances the currently failed authoritative Bracket-4 cheap-interaction gate (4 must rise to 6 or higher) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments) without becoming a hard theme requirement.",
+          "out": "Celestial Archon",
+          "in": "Sylvan Library",
+          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.18 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments, Card draw) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "SOC",
-            "collectorNumber": "171",
+            "set": "SLD",
+            "collectorNumber": "2058",
             "finish": "nonfoil",
-            "priceNzd": 3.01,
-            "priceUsdReference": 1.76
+            "priceNzd": 44.23,
+            "priceUsdReference": 25.89
           },
           "structuralPairing": {
-            "addressedRole": "interaction",
-            "remainingStructuralDeficitAfterSwap": 14,
-            "authoritativeTargetGate": "cheap-interaction",
-            "nonlandManaValueReduction": null,
+            "addressedRole": "average-nonland-mv",
+            "remainingStructuralDeficitAfterSwap": 15,
+            "authoritativeTargetGate": "average-nonland-mv",
+            "nonlandManaValueReduction": 3,
             "persistentColoredManaSourcesAfterSwap": 3,
             "persistentColoredManaSourceFloor": 3,
             "strategyPreservation": {
@@ -1290,12 +1166,58 @@
                 "value-engine"
               ],
               "locallyUnreplacedStrategies": [],
-              "cutRoles": [],
-              "addRoles": [
-                "cheap interaction",
-                "spot interaction"
+              "cutRoles": [
+                "creature"
               ],
-              "unreplacedRoles": [],
+              "addRoles": [],
+              "unreplacedRoles": [
+                "creature"
+              ],
+              "unreplacedStrategyComponentRoles": [],
+              "meaningfulStrategyLoss": false,
+              "verdict": "preserved"
+            }
+          }
+        },
+        {
+          "out": "Eidolon of Countless Battles",
+          "in": "Authority of the Consuls",
+          "why": "Advances the currently failed authoritative Bracket-4 average-nonland-mv gate (3.13 must fall to 3.1 or lower) and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Enchantments) without becoming a hard theme requirement.",
+          "recommendedPrinting": {
+            "set": "FIC",
+            "collectorNumber": "232",
+            "finish": "nonfoil",
+            "priceNzd": 7.09,
+            "priceUsdReference": 4.15
+          },
+          "structuralPairing": {
+            "addressedRole": "average-nonland-mv",
+            "remainingStructuralDeficitAfterSwap": 15,
+            "authoritativeTargetGate": "average-nonland-mv",
+            "nonlandManaValueReduction": 2,
+            "persistentColoredManaSourcesAfterSwap": 3,
+            "persistentColoredManaSourceFloor": 3,
+            "strategyPreservation": {
+              "cutStrategyAffinityScore": 1,
+              "addStrategyAffinityScore": 4,
+              "cutStrategyProtectionApplied": 1,
+              "cutMatchedStrategies": [
+                "value-engine"
+              ],
+              "addMatchedStrategies": [
+                "value-engine"
+              ],
+              "locallyUnreplacedStrategies": [],
+              "cutRoles": [
+                "creature"
+              ],
+              "addRoles": [
+                "etb synergy",
+                "repeatable life gain engine"
+              ],
+              "unreplacedRoles": [
+                "creature"
+              ],
               "unreplacedStrategyComponentRoles": [],
               "meaningfulStrategyLoss": false,
               "verdict": "preserved"
@@ -1701,7 +1623,7 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.83,
+            "priceNzd": 36.84,
             "priceUsdReference": 21.56
           },
           "structuralPairing": {
@@ -2105,7 +2027,7 @@
         ],
         "candidatePackagesGeneratedAcrossAttempts": 6,
         "winningCandidate": 1,
-        "estimatedSpendNzd": 48.15,
+        "estimatedSpendNzd": 48.16,
         "estimatedSpendUsdReference": 28.19,
         "improvementScore": 18.073,
         "winRouteProtection": {
@@ -2525,7 +2447,7 @@
             "set": "MB2",
             "collectorNumber": "81",
             "finish": "nonfoil",
-            "priceNzd": 8.69,
+            "priceNzd": 8.7,
             "priceUsdReference": 5.09
           },
           "structuralPairing": {
@@ -2620,7 +2542,7 @@
             "set": "PBIG",
             "collectorNumber": "26p",
             "finish": "foil",
-            "priceNzd": 33.46,
+            "priceNzd": 33.47,
             "priceUsdReference": 19.59
           },
           "structuralPairing": {
@@ -2931,8 +2853,8 @@
             "set": "LCI",
             "collectorNumber": "143",
             "finish": "foil",
-            "priceNzd": 4.63,
-            "priceUsdReference": 2.71
+            "priceNzd": 4.54,
+            "priceUsdReference": 2.66
           },
           "structuralPairing": {
             "addressedRole": "average-nonland-mv",
@@ -3369,8 +3291,8 @@
         "assessedBracket": 2,
         "assessedBand": "bracket-2-core-range",
         "metrics": {
-          "averageNonlandManaValue": 3.3,
-          "earlyPlayCount": 27,
+          "averageNonlandManaValue": 3.32,
+          "earlyPlayCount": 26,
           "fastManaCount": 1,
           "cheapInteractionCount": 1,
           "tutorCount": 3,
@@ -3378,7 +3300,7 @@
           "boardWipeCount": 2,
           "rampCount": 12,
           "drawCount": 40,
-          "interactionCount": 12,
+          "interactionCount": 11,
           "protectionCount": 4
         },
         "postBuildEvidence": {
@@ -3391,8 +3313,8 @@
             "verifiedWinningCombos": 0,
             "ruthlessWinningCombos": 0,
             "strategicallyRelevantCombos": 0,
-            "averageNonlandManaValue": 3.3,
-            "earlyPlayCount": 27,
+            "averageNonlandManaValue": 3.32,
+            "earlyPlayCount": 26,
             "fastManaCount": 1,
             "freeInteractionCount": 0,
             "cheapInteractionCount": 1,
@@ -3446,9 +3368,9 @@
           "status": "satisfied",
           "satisfied": true,
           "canonicalLabel": "Graveyard / reanimator + Card draw",
-          "matchedMainCards": 56,
+          "matchedMainCards": 55,
           "requiredMainMatches": 15,
-          "mainCoverage": 0.5656565656565656
+          "mainCoverage": 0.5555555555555556
         },
         "stopReason": "no-supported-swaps-found"
       },
@@ -3473,7 +3395,7 @@
             "candidateAttemptSizes": [
               4
             ],
-            "winningCandidate": 3,
+            "winningCandidate": 4,
             "stopReason": null
           },
           {
@@ -3648,7 +3570,7 @@
             "persistentColoredManaSourceFloor": 3,
             "strategyPreservation": {
               "cutStrategyAffinityScore": 1,
-              "addStrategyAffinityScore": 21,
+              "addStrategyAffinityScore": 26,
               "cutStrategyProtectionApplied": 1,
               "cutMatchedStrategies": [
                 "value-engine"
@@ -3678,14 +3600,14 @@
         },
         {
           "out": "Sphinx of the Second Sun",
-          "in": "Sword of Fire and Ice",
+          "in": "Padeem, Consul of Innovation",
           "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "MAR",
-            "collectorNumber": "100",
+            "set": "J25",
+            "collectorNumber": "62",
             "finish": "nonfoil",
-            "priceNzd": 36.83,
-            "priceUsdReference": 21.56
+            "priceNzd": 2.05,
+            "priceUsdReference": 1.2
           },
           "structuralPairing": {
             "addressedRole": "protection",
@@ -3709,15 +3631,13 @@
                 "creature"
               ],
               "addRoles": [
+                "board protection",
                 "card draw",
-                "equipment",
+                "creature",
                 "protection",
-                "repeatable draw",
-                "spot interaction"
+                "repeatable draw"
               ],
-              "unreplacedRoles": [
-                "creature"
-              ],
+              "unreplacedRoles": [],
               "unreplacedStrategyComponentRoles": [],
               "meaningfulStrategyLoss": false,
               "verdict": "preserved"
@@ -3767,15 +3687,15 @@
           }
         },
         {
-          "out": "Final-Word Phantom",
-          "in": "Padeem, Consul of Innovation",
+          "out": "Animate Dead",
+          "in": "Curator's Ward",
           "why": "Addresses the detected protection deficit and also supports the existing V0.15 deck strategy signal: value-engine. The recommended physical printing satisfies the active printing-family/set policy. It supports the compound-theme component balance (Card draw) without becoming a hard theme requirement.",
           "recommendedPrinting": {
-            "set": "J25",
-            "collectorNumber": "62",
+            "set": "DOM",
+            "collectorNumber": "49",
             "finish": "nonfoil",
-            "priceNzd": 2.05,
-            "priceUsdReference": 1.2
+            "priceNzd": 0.75,
+            "priceUsdReference": 0.44
           },
           "structuralPairing": {
             "addressedRole": "protection",
@@ -3785,9 +3705,9 @@
             "persistentColoredManaSourcesAfterSwap": 3,
             "persistentColoredManaSourceFloor": 3,
             "strategyPreservation": {
-              "cutStrategyAffinityScore": 6,
-              "addStrategyAffinityScore": 6,
-              "cutStrategyProtectionApplied": 0,
+              "cutStrategyAffinityScore": 1,
+              "addStrategyAffinityScore": 5,
+              "cutStrategyProtectionApplied": 1,
               "cutMatchedStrategies": [
                 "value-engine"
               ],
@@ -3795,15 +3715,10 @@
                 "value-engine"
               ],
               "locallyUnreplacedStrategies": [],
-              "cutRoles": [
-                "creature"
-              ],
+              "cutRoles": [],
               "addRoles": [
-                "board protection",
                 "card draw",
-                "creature",
-                "protection",
-                "repeatable draw"
+                "protection"
               ],
               "unreplacedRoles": [],
               "unreplacedStrategyComponentRoles": [],
@@ -4128,7 +4043,7 @@
             "set": "ONE",
             "collectorNumber": "242",
             "finish": "nonfoil",
-            "priceNzd": 6.76,
+            "priceNzd": 6.77,
             "priceUsdReference": 3.96
           },
           "structuralPairing": {
@@ -4271,7 +4186,7 @@
             "set": "MAR",
             "collectorNumber": "100",
             "finish": "nonfoil",
-            "priceNzd": 36.83,
+            "priceNzd": 36.84,
             "priceUsdReference": 21.56
           },
           "structuralPairing": {
@@ -4320,8 +4235,8 @@
             "set": "SOI",
             "collectorNumber": "265",
             "finish": "nonfoil",
-            "priceNzd": 1.02,
-            "priceUsdReference": 0.6
+            "priceNzd": 1.09,
+            "priceUsdReference": 0.64
           },
           "structuralPairing": {
             "addressedRole": "tutor",
