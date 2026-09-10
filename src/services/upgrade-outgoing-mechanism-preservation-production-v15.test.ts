@@ -131,9 +131,6 @@ async function planFor(coreShape: CoreShape, themeQuery = '(o:"graveyard" OR o:"
           || normalized.includes('surveil')
           || normalized.includes('return target creature card');
         if (graveyardTheme && core) {
-          // The controlled graveyard search sees the already-owned mechanism card, not
-          // the generic protection candidate. Generic structural searches can still
-          // discover protection so the public planner must choose the safer OUT card.
           data = [core];
         } else {
           data = [genericProtection];
@@ -182,6 +179,17 @@ async function assertCorePreserved(
   assert.match(swaps[0]?.out ?? '', /Reanimation Filler /, `the safer low-mechanism filler should be cut instead; ${debug}`);
 }
 
+function serializedCutRoles(plan: Record<string, unknown>, cardName: string): string[] {
+  const analysis = plan.sourceUpgradeAnalysis as Record<string, unknown> | undefined;
+  const cuts = Array.isArray(analysis?.candidateCuts) ? analysis.candidateCuts as Array<Record<string, unknown>> : [];
+  const match = cuts.find((cut) => {
+    const summary = cut.card as Record<string, unknown> | undefined;
+    return summary?.name === cardName;
+  });
+  const summary = match?.card as Record<string, unknown> | undefined;
+  return Array.isArray(summary?.roles) ? summary.roles.filter((role): role is string => typeof role === 'string') : [];
+}
+
 test('public planner preserves a simple core commander reanimation mechanism when generic protection has a safer filler cut', async () => {
   await assertCorePreserved('simple', simpleCoreReanimation.name);
 });
@@ -192,6 +200,22 @@ test('public planner preserves an Oracle-shaped core commander reanimation Aura 
 
 test('public planner preserves an Oracle-shaped reanimation Aura under the real compound graveyard-and-card-draw request shape', async () => {
   await assertCorePreserved('oracle-shaped', oracleShapedCoreReanimation.name, 'graveyard and card draw');
+});
+
+test('public planner serializes reanimation Auras as graveyard recursion before final cut ranking', async () => {
+  const simplePlan = await planFor('simple');
+  const oraclePlan = await planFor('oracle-shaped', 'graveyard and card draw');
+  const simpleRoles = serializedCutRoles(simplePlan, simpleCoreReanimation.name);
+  const oracleRoles = serializedCutRoles(oraclePlan, oracleShapedCoreReanimation.name);
+
+  assert.ok(
+    simpleRoles.includes('graveyard recursion'),
+    `simple graveyard-enchant reanimation Aura lost its recursion role in the public planner cut summary: ${JSON.stringify(simpleRoles)}`,
+  );
+  assert.ok(
+    oracleRoles.includes('graveyard recursion'),
+    `Oracle-shaped graveyard-enchant reanimation Aura lost its recursion role in the public planner cut summary: ${JSON.stringify(oracleRoles)}`,
+  );
 });
 
 test('public planner still selects generic protection when the outgoing pool contains only low-mechanism filler', async () => {
