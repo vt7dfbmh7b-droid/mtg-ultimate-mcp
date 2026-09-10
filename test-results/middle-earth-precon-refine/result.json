@@ -258,7 +258,7 @@
     "estimatedUpgradeSpendNzd": 25.67,
     "estimatedUpgradeSpendUsdReference": 15.03,
     "maxTotalNzd": 200,
-    "maxTotalUsdReference": 117.09,
+    "maxTotalUsdReference": 117.08,
     "swaps": [
       {
         "out": "Landroval, Horizon Witness",
@@ -890,7 +890,7 @@
       "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.49,
       "maxTotalNzd": 200,
-      "maxTotalUsdReference": 117.09,
+      "maxTotalUsdReference": 117.08,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
@@ -8839,7 +8839,7 @@
             "reason": "package-reduces-substantive-deck-strategy-density",
             "attemptedSwaps": 4,
             "actualSwaps": 4,
-            "estimatedSpendNzd": 3.36,
+            "estimatedSpendNzd": 3.37,
             "estimatedSpendUsdReference": 1.97,
             "unknownPriceCount": 0,
             "improvementScore": 16.228,
@@ -9798,7 +9798,7 @@
                   "set": "SLD",
                   "collectorNumber": "2563",
                   "finish": "nonfoil",
-                  "priceNzd": 27.24,
+                  "priceNzd": 27.25,
                   "priceUsdReference": 15.95
                 },
                 "structuralPairing": {
@@ -10863,7 +10863,7 @@
                 "reason": "package-reduces-substantive-deck-strategy-density",
                 "attemptedSwaps": 4,
                 "actualSwaps": 4,
-                "estimatedSpendNzd": 3.36,
+                "estimatedSpendNzd": 3.37,
                 "estimatedSpendUsdReference": 1.97,
                 "unknownPriceCount": 0,
                 "improvementScore": 16.228,
@@ -11822,7 +11822,7 @@
                       "set": "SLD",
                       "collectorNumber": "2563",
                       "finish": "nonfoil",
-                      "priceNzd": 27.24,
+                      "priceNzd": 27.25,
                       "priceUsdReference": 15.95
                     },
                     "structuralPairing": {
