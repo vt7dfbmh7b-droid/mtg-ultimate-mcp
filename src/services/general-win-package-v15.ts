@@ -54,10 +54,16 @@ interface ParsedCandidateV15 {
   bracketTag: string | null;
   names: string[];
   results: string[];
+  description: string;
   popularity: number;
 }
 
 const COLOR_ORDER = ['W', 'U', 'B', 'R', 'G'] as const;
+const DISCOVERY_RESULT_FILTERS_V15 = [
+  'is:winning',
+  'result="Infinite damage"',
+  'result="Infinite lifeloss"',
+] as const;
 
 function record(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
@@ -87,9 +93,12 @@ export function buildGeneralWinPackageQueriesV15(maxPackageCards = 4, identity =
   const canonicalIdentity = identity.trim().toUpperCase() === 'C'
     ? 'C'
     : canonicalIdentityTokenV15([...identity]);
-  const queries = [`card<=2 is:winning legal:commander identity<=${canonicalIdentity}`];
-  if (maxCards >= 3) queries.push(`card<=3 is:winning legal:commander identity<=${canonicalIdentity}`);
-  if (maxCards >= 4) queries.push(`card<=4 is:winning legal:commander identity<=${canonicalIdentity}`);
+  const queries: string[] = [];
+  for (let cardCount = 2; cardCount <= maxCards; cardCount += 1) {
+    for (const resultFilter of DISCOVERY_RESULT_FILTERS_V15) {
+      queries.push(`card<=${cardCount} ${resultFilter} legal:commander identity<=${canonicalIdentity}`);
+    }
+  }
   return queries;
 }
 
@@ -102,9 +111,10 @@ function parseCandidate(
   const variant = record(value);
   const id = String(variant.id ?? '').trim();
   const results = Array.isArray(variant.results) ? variant.results.map(String) : [];
+  const description = typeof variant.description === 'string' ? variant.description : '';
   const requirements = Array.isArray(variant.requirements) ? variant.requirements : [];
   const uses = Array.isArray(variant.cards) ? variant.cards.map(record) : [];
-  if (!id || requirements.length > 0 || !isStrictFullTableWinResultV15(results)) return null;
+  if (!id || requirements.length > 0 || !isStrictFullTableWinResultV15(results, { description })) return null;
 
   const names: string[] = [];
   for (const use of uses) {
@@ -127,6 +137,7 @@ function parseCandidate(
     bracketTag: typeof variant.bracketTag === 'string' ? variant.bracketTag : null,
     names: uniqueNames,
     results,
+    description,
     popularity,
   };
 }
@@ -276,7 +287,8 @@ export async function discoverGeneralWinPackagesV15(
     const comboId = String(row.id ?? '');
     const comboNames = Array.isArray(row.names) ? row.names.map(String) : [];
     const results = Array.isArray(row.results) ? row.results.map(String) : [];
-    const fullTableClosure = assessFullTableWinClosureV15(results);
+    const description = typeof row.description === 'string' ? row.description : '';
+    const fullTableClosure = assessFullTableWinClosureV15(results, { description });
     const closure = assessWinResultClosureV15(results);
     if (!fullTableClosure.verifiedFullTableWin) {
       rejectionAudit.push({
@@ -381,6 +393,6 @@ export async function discoverGeneralWinPackagesV15(
     queryAudit,
     rejectionAudit,
     printingPolicy: describePrintingPolicyV08(policy),
-    source: 'Commander Spellbook winning variants + strict V0.15 game-ending closure + Scryfall legality/physical-printing verification',
+    source: 'Commander Spellbook winning/lethal variants + strict V0.15 result-and-step table closure + Scryfall legality/physical-printing verification',
   };
 }

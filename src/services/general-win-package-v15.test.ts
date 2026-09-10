@@ -6,20 +6,26 @@ import {
   rankGeneralWinPackageVariantsV15,
 } from './general-win-package-v15.js';
 
-test('general win-package queries are winning-outcome searches without requiring Ruthless/cEDH tags', () => {
+test('general win-package queries cover direct wins plus bounded lethal outcomes without requiring Ruthless/cEDH tags', () => {
   const queries = buildGeneralWinPackageQueriesV15(3, 'WUBRG');
   assert.deepEqual(queries, [
     'card<=2 is:winning legal:commander identity<=WUBRG',
+    'card<=2 result="Infinite damage" legal:commander identity<=WUBRG',
+    'card<=2 result="Infinite lifeloss" legal:commander identity<=WUBRG',
     'card<=3 is:winning legal:commander identity<=WUBRG',
+    'card<=3 result="Infinite damage" legal:commander identity<=WUBRG',
+    'card<=3 result="Infinite lifeloss" legal:commander identity<=WUBRG',
   ]);
   assert.equal(queries.some((query) => query.includes('bracket:ruthless')), false);
 });
 
 test('general win-package discovery defaults to the production four-card ceiling', () => {
-  assert.deepEqual(buildGeneralWinPackageQueriesV15(undefined, 'WUBRG'), [
-    'card<=2 is:winning legal:commander identity<=WUBRG',
-    'card<=3 is:winning legal:commander identity<=WUBRG',
+  const queries = buildGeneralWinPackageQueriesV15(undefined, 'WUBRG');
+  assert.equal(queries.length, 9);
+  assert.deepEqual(queries.slice(-3), [
     'card<=4 is:winning legal:commander identity<=WUBRG',
+    'card<=4 result="Infinite damage" legal:commander identity<=WUBRG',
+    'card<=4 result="Infinite lifeloss" legal:commander identity<=WUBRG',
   ]);
 });
 
@@ -29,6 +35,8 @@ test('Spellbook identity tokens always use canonical WUBRG ordering', () => {
   assert.equal(canonicalIdentityTokenV15([]), 'C');
   assert.deepEqual(buildGeneralWinPackageQueriesV15(2, 'BGRUW'), [
     'card<=2 is:winning legal:commander identity<=WUBRG',
+    'card<=2 result="Infinite damage" legal:commander identity<=WUBRG',
+    'card<=2 result="Infinite lifeloss" legal:commander identity<=WUBRG',
   ]);
 });
 
@@ -112,6 +120,37 @@ test('general package ranking uses full-table Commander closure rather than gene
     },
   ], []);
   assert.deepEqual(ranked.map((row) => row.id), ['table-kill']);
+});
+
+test('general package ranking accepts unscoped infinite damage only when verified repeated steps prove player reach', () => {
+  const ranked = rankGeneralWinPackageVariantsV15([
+    {
+      id: 'step-verified-table-damage',
+      cards: [{ name: 'A' }, { name: 'B' }, { name: 'C' }],
+      results: ['Infinite damage', 'Infinite counters'],
+      requirements: [],
+      description: [
+        '1. Activate an ability targeting itself.',
+        '2. Put two counters on it.',
+        '3. Activate the damage ability, dealing 1 damage to any target.',
+        '4. Repeat from step 2.',
+      ].join('\n'),
+      popularity: 5,
+    },
+    {
+      id: 'creature-only-loop',
+      cards: [{ name: 'D' }, { name: 'E' }],
+      results: ['Infinite damage'],
+      requirements: [],
+      description: [
+        '1. Deal 1 damage to target creature.',
+        '2. Untap the source.',
+        '3. Repeat from step 1.',
+      ].join('\n'),
+      popularity: 50,
+    },
+  ], []);
+  assert.deepEqual(ranked.map((row) => row.id), ['step-verified-table-damage']);
 });
 
 test('a package requiring the commander is rejected when that commander is not selected', () => {

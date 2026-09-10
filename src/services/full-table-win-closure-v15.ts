@@ -19,6 +19,11 @@ export interface FullTableWinClosureAssessmentV15 {
   caveat: string;
 }
 
+export interface FullTableWinEvidenceV15 {
+  /** Commander Spellbook's verified step-by-step combo description. */
+  description?: string | null;
+}
+
 function normalizeText(results: readonly string[]): string {
   return results
     .join(' ')
@@ -65,11 +70,20 @@ function hasAllOpponentLifeLoss(text: string): boolean {
     || new RegExp(`\\b(?:each|all) opponents? (?:lose|loses) ${amount} (?:amounts? of )?life\\b`).test(text);
 }
 
-function hasUnscopedLethalEngine(text: string): boolean {
+function hasUnboundedDamage(text: string): boolean {
   const amount = unboundedWord();
   return new RegExp(`\\b${amount} (?:amounts? of )?damage\\b`).test(text)
-    || new RegExp(`\\b${amount} (?:amounts? of )?(?:life ?loss|lifeloss|loss of life)\\b`).test(text)
+    || new RegExp(`\\bdeal(?:s|ing)? ${amount} (?:amounts? of )?damage\\b`).test(text);
+}
+
+function hasUnboundedLifeLoss(text: string): boolean {
+  const amount = unboundedWord();
+  return new RegExp(`\\b${amount} (?:amounts? of )?(?:life ?loss|lifeloss|loss of life)\\b`).test(text)
     || /\binfinite lifeloss\b/.test(text);
+}
+
+function hasUnscopedLethalEngine(text: string): boolean {
+  return hasUnboundedDamage(text) || hasUnboundedLifeLoss(text);
 }
 
 function hasResourceEngine(text: string): boolean {
@@ -77,14 +91,71 @@ function hasResourceEngine(text: string): boolean {
     || /\bnear-infinite\b/.test(text);
 }
 
+type NumberedStepV15 = { number: number; text: string };
+
+function parseNumberedSteps(description: string): NumberedStepV15[] {
+  const normalized = description
+    .replace(/[’‘]/g, "'")
+    .replace(/[–—]/g, '-')
+    .replace(/\r/g, '')
+    .toLocaleLowerCase();
+  const starts = [...normalized.matchAll(/(?:^|\n)\s*(\d+)\s*[.)]\s*/g)];
+  return starts.map((match, index) => {
+    const number = Number.parseInt(match[1] ?? '', 10);
+    const start = (match.index ?? 0) + match[0].length;
+    const end = index + 1 < starts.length ? starts[index + 1].index ?? normalized.length : normalized.length;
+    return {
+      number,
+      text: normalized.slice(start, end).replace(/\s+/g, ' ').trim(),
+    };
+  }).filter((step) => Number.isFinite(step.number) && step.text.length > 0);
+}
+
+function loopStartStep(description: string): number | null {
+  const normalized = normalizeText([description]);
+  const fromStep = normalized.match(/\brepeat(?:ing)? from step (\d+)\b/);
+  if (fromStep) return Number.parseInt(fromStep[1] ?? '', 10);
+  const stepRange = normalized.match(/\brepeat(?:ing)? steps? (\d+)\s+(?:through|to|-)\s*\d+\b/);
+  if (stepRange) return Number.parseInt(stepRange[1] ?? '', 10);
+  return null;
+}
+
+function isPlayerReachableDamageStep(text: string): boolean {
+  return /\b(?:deal|deals|dealing)\b[^.!;]{0,60}\bdamage to (?:any target|target (?:opponent|player)|an opponent)\b/.test(text)
+    || /\b(?:target (?:opponent|player)|an opponent)\b[^.!;]{0,60}\b(?:take|takes|is dealt)\b[^.!;]{0,30}\bdamage\b/.test(text);
+}
+
+function isPlayerReachableLifeLossStep(text: string): boolean {
+  return /\b(?:target opponent|an opponent)\b[^.!;]{0,60}\b(?:lose|loses)\b[^.!;]{0,30}\blife\b/.test(text)
+    || /\b(?:cause|causes|causing) target opponent to lose\b[^.!;]{0,30}\blife\b/.test(text);
+}
+
+function hasRepeatablePlayerReachableLethalStep(
+  description: string,
+  kind: 'damage' | 'life-loss',
+): boolean {
+  if (!description.trim()) return false;
+  const start = loopStartStep(description);
+  if (start === null || !Number.isFinite(start)) return false;
+  const steps = parseNumberedSteps(description);
+  if (steps.length === 0) return false;
+  const predicate = kind === 'damage' ? isPlayerReachableDamageStep : isPlayerReachableLifeLossStep;
+  return steps.some((step) => step.number >= start && predicate(step.text));
+}
+
 /**
  * Commander-specific table-closure classifier.
  *
  * The important boundary is multiplayer scope. Killing one target opponent, producing generic
  * infinite damage/life-loss, or producing an arbitrary resource is not promoted to a full-table
- * deterministic win. Explicit self-win text and explicit each/all-opponent loss remain sufficient.
+ * deterministic win from result labels alone. A verified Spellbook description may close the
+ * otherwise-unscoped damage/life-loss gap only when it proves both an explicit repeated step range
+ * and a player-reachable lethal action inside that repeated range.
  */
-export function assessFullTableWinClosureV15(results: readonly string[]): FullTableWinClosureAssessmentV15 {
+export function assessFullTableWinClosureV15(
+  results: readonly string[],
+  evidence: FullTableWinEvidenceV15 = {},
+): FullTableWinClosureAssessmentV15 {
   const normalizedText = normalizeText(results);
   const signals: string[] = [];
 
@@ -155,6 +226,34 @@ export function assessFullTableWinClosureV15(results: readonly string[]): FullTa
     };
   }
 
+  if (hasUnboundedDamage(normalizedText)
+    && hasRepeatablePlayerReachableLethalStep(evidence.description ?? '', 'damage')) {
+    signals.push('repeatable-player-reachable-unbounded-damage');
+    return {
+      verifiedFullTableWin: true,
+      kind: 'all-opponents-damage',
+      timing: 'immediate',
+      scope: 'all-opponents',
+      normalizedText,
+      signals,
+      caveat: 'The result is unbounded damage and the verified combo steps prove a player-reachable damage action inside the repeated loop, allowing the loop to be distributed across opponents.',
+    };
+  }
+
+  if (hasUnboundedLifeLoss(normalizedText)
+    && hasRepeatablePlayerReachableLethalStep(evidence.description ?? '', 'life-loss')) {
+    signals.push('repeatable-opponent-reachable-unbounded-life-loss');
+    return {
+      verifiedFullTableWin: true,
+      kind: 'all-opponents-life-loss',
+      timing: 'immediate',
+      scope: 'all-opponents',
+      normalizedText,
+      signals,
+      caveat: 'The result is unbounded life loss and the verified combo steps prove an opponent-targetable life-loss action inside the repeated loop, allowing the loop to be distributed across opponents.',
+    };
+  }
+
   if (hasSingleOpponentLoss(normalizedText)) {
     signals.push('single-opponent-loss');
     return {
@@ -177,7 +276,7 @@ export function assessFullTableWinClosureV15(results: readonly string[]): FullTa
       scope: 'unscoped',
       normalizedText,
       signals,
-      caveat: 'The result produces a lethal-scale damage/life-loss engine, but its multiplayer target/scope is not proven by the result text.',
+      caveat: 'The result produces a lethal-scale damage/life-loss engine, but its multiplayer target/scope is not proven by the result text or verified repeated-loop steps.',
     };
   }
 
@@ -205,6 +304,9 @@ export function assessFullTableWinClosureV15(results: readonly string[]): FullTa
   };
 }
 
-export function isStrictFullTableWinResultV15(results: readonly string[]): boolean {
-  return assessFullTableWinClosureV15(results).verifiedFullTableWin;
+export function isStrictFullTableWinResultV15(
+  results: readonly string[],
+  evidence: FullTableWinEvidenceV15 = {},
+): boolean {
+  return assessFullTableWinClosureV15(results, evidence).verifiedFullTableWin;
 }
