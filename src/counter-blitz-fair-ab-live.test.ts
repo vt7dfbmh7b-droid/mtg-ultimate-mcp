@@ -102,7 +102,7 @@ async function audit(decklist: string) {
 
 test('Counter Blitz fair A/B completed FF-only refinement workflow', { timeout: 55 * 60_000 }, async () => {
   const stock = await fetchPreconDeckV10(PRECON_REFERENCE);
-  assert.equal(stock.entry.name, 'Counter Blitz');
+  assert.equal(stock.entry.name, PRECON_REFERENCE);
   const before = await audit(stock.decklist);
   assert.equal(before.cardCount, 100);
   assert.equal(before.commanderLegal, true);
