@@ -84,7 +84,7 @@ function fillerCards(prefix: string, count: number) {
 
 type CoreShape = 'none' | 'simple' | 'oracle-shaped';
 
-async function planFor(coreShape: CoreShape) {
+async function planFor(coreShape: CoreShape, themeQuery = '(o:"graveyard" OR o:"surveil" OR o:"return target creature card")') {
   const core = coreShape === 'simple'
     ? simpleCoreReanimation
     : coreShape === 'oracle-shaped'
@@ -151,7 +151,7 @@ async function planFor(coreShape: CoreShape) {
       maxSwaps: 1,
       maxUsdPerCard: 5,
       simulationIterations: 100,
-      themeQuery: '(o:"graveyard" OR o:"surveil" OR o:"return target creature card")',
+      themeQuery,
       themeMinimumMainMatches: 0,
     });
   } finally {
@@ -163,8 +163,12 @@ function swapDebug(swaps: Array<{ in: string; out: string }>): string {
   return `serialized swaps: ${JSON.stringify(swaps)}`;
 }
 
-async function assertCorePreserved(coreShape: Exclude<CoreShape, 'none'>, coreName: string) {
-  const plan = await planFor(coreShape);
+async function assertCorePreserved(
+  coreShape: Exclude<CoreShape, 'none'>,
+  coreName: string,
+  themeQuery?: string,
+) {
+  const plan = await planFor(coreShape, themeQuery);
   const swaps = plan.swaps as Array<{ in: string; out: string }>;
   const debug = swapDebug(swaps);
 
@@ -184,6 +188,10 @@ test('public planner preserves a simple core commander reanimation mechanism whe
 
 test('public planner preserves an Oracle-shaped core commander reanimation Aura when generic protection has a safer filler cut', async () => {
   await assertCorePreserved('oracle-shaped', oracleShapedCoreReanimation.name);
+});
+
+test('public planner preserves an Oracle-shaped reanimation Aura under the real compound graveyard-and-card-draw request shape', async () => {
+  await assertCorePreserved('oracle-shaped', oracleShapedCoreReanimation.name, 'graveyard and card draw');
 });
 
 test('public planner still selects generic protection when the outgoing pool contains only low-mechanism filler', async () => {
