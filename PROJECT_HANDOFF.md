@@ -16,12 +16,12 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Active milestone: **BENCH-01 — Adversarial Commander benchmark suite**
 - Intelligence development paused: **no**
 - Experimental branch: `agent/v15-native-deck-intelligence`
-- Development checkpoint at pause: `1d6b73aae4edc72d80a2ebc945a160506a13c71e`
-- Active branch validation: **bench01-1d6b73-eight-fixture-manual-reject-3bc7e2b-test-only-ci-green**
+- Development checkpoint at pause: `1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7`
+- Active branch validation: **bench01-1ef10cec-aura-recursion-repair-accepted-manual-verdict**
 
 ## Audit reuse rule
 
-BENCH-01 active. Reuse completed 34cbc784, 63b9d75c and 1d6b73a replay/verdict evidence; do not repeat those batches. Latest durable verdict: test-results/bench01-manual-verdicts/1d6b73aae4edc72d80a2ebc945a160506a13c71e.md. Requested-mechanism pairing tests already exist and pass at 3bc7e2b; no new production repair followed 1d6b73a. Next prove the residual mechanism-importance defect through the actual public planner/precon path, including the real serialized OUT/IN evidence. Keep accepted e17b0a1c and stable V0.13 unchanged.
+BENCH-01 active. Accepted Commander development baseline is 1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7; reuse exact CI 34466465617, frozen replay evidence 31bde31369a4963b22b28207bc1755e4bb50ebec and durable manual verdict test-results/bench01-manual-verdicts/1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7.md. Do not repeat the Aura-recursion reproduction/repair/replay family absent a regression-triggering change. Resume benchmark breadth on Deep Clue Sea's remaining replacement/package-quality gap or another genuinely contrasting unseen fixture. Keep Endless Punishment taxonomy separate. PR #29 stays unmerged and stable/current stays V0.13 until promotion-grade evidence exists.
 
 ## Stable safety boundary
 
@@ -29,9 +29,9 @@ Stable remains **V0.13 / 0.13.0** on `main`. Standing user authorization permits
 
 ## Latest fully validated executable experimental baseline
 
-`e17b0a1cba659b229fd6f0b6e2df79c5e464a616` on `agent/v15-native-deck-intelligence`.
+`1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7` on `agent/v15-native-deck-intelligence`.
 
-Latest accepted Commander product baseline. Later formally validated 1d6b73a completed eight-fixture execution and has a persisted manual baseline rejection.
+Latest accepted Commander product baseline. Exact CI green, frozen affected/control replay successful with src/** equality proven, and durable manual whole-deck verdict accepted the repaired Aura-recursion role inference after Revenant Recon retained Animate Dead without a material control regression.
 
 ## Important pending validation
 
@@ -39,14 +39,14 @@ The last persisted Marvel control is `1d6b73aae4edc72d80a2ebc945a160506a13c71e` 
 
 ## Next actions
 
-1. Read project-state.json and AGENTS.md; inspect all current/recent branch writers, including earlier-commit jobs, then refresh head before writes. The enabled hourly Chat Fast Path already requires reconciliation; preserve its full prompt and schedule.
-2. Reuse completed frozen eight-fixture replay 34370124608 of product 1d6b73aae4edc72d80a2ebc945a160506a13c71e, evidence ce854778d280eed76ea290767361cdd7af038130 and its durable manual rejection. Earlier 34cbc784 and 63b9d75c verdicts remain historical comparisons, not unfinished replay requests.
-3. Do not recreate the requested-mechanism tests: src/services/upgrade-requested-mechanism-importance-v15.test.ts was added at 1e06aaf and its fallback control corrected at 3bc7e2b. CI 34377710210 passes; these are test-only changes, not a new product repair or proof of a remaining failing production case.
-4. Reproduce the residual OUT-card mechanism loss through buildSimulationBackedUpgradePlanV07/the actual precon production route using anonymous Oracle-shaped cards and realistic generated summaries. Trace role serialization, requested relationships and commander/request mechanism importance; include a safer filler cut and a compatible same-mechanism positive control. A passing hand-authored pairing witness is insufficient to justify another patch.
-5. Only after a genuine failing production regression, implement the smallest generic repair. Keep existing legality, exact-printing/budget, role truth, strategy and package gates; no card, commander or fixture exceptions.
-6. Require focused and full exact-commit validation, then request a new frozen affected/control replay through .automation/bench01-strategy-anchor-replay.request. Preserve the protected workflows, workflow-immutability test and policy epoch; do not replay unchanged 1d6b73a.
-7. Review complete new decks against retained 473edf47/34cbc784/63b9d75c/1d6b73a evidence. Existing general-AI verdicts are analytical assessments, not independently executed alternative-build or matchup evidence. Keep Endless Punishment's unsupported group-slug/punisher taxonomy defect separate.
-8. Keep accepted baseline e17b0a1cba659b229fd6f0b6e2df79c5e464a616, PR #29 unmerged and stable/current V0.13 unpromoted. Marvel focused/broad still execute without a supported improvement and fail quality gates; do not convert execution success into target achievement. Reconcile synchronized state after material progress.
+1. Read project-state.json and AGENTS.md; inspect all current/recent branch writers, including earlier-commit jobs, then refresh head before writes. Preserve the enabled hourly Chat Fast Path and its full directive.
+2. Reuse accepted 1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7 evidence: exact CI 34466465617, frozen replay request 490267c4afd210178683b2425a29e95ce594ea20, persisted replay evidence 31bde31369a4963b22b28207bc1755e4bb50ebec and durable manual verdict d05d46bd1506ed3edf8e252bf2b9de574b56238b. Do not repeat the Aura-recursion family absent a regression-triggering change.
+3. Resume BENCH-01 breadth rather than Mirko polishing. Prioritize Deep Clue Sea's remaining replacement/package-quality weakness or a genuinely contrasting unseen Commander fixture that exercises a different strategy family and competing constraints from one frozen source.
+4. For Deep Clue Sea, first use the retained complete-deck evidence to isolate whether the remaining gap is generic-value pressure, package connectivity, outgoing-card importance, or candidate replacement quality. Reproduce a generic defect through the actual public planner path before any repair; require multi-fixture evidence unless one centralized defect is clearly proven.
+5. Continue manual whole-deck review and stronger general-AI comparison. Existing general-AI verdicts are analytical assessments unless independently executed alternative builds exist; do not overstate them as matchup proof.
+6. Keep Endless Punishment's unsupported group-slug/punisher taxonomy issue separate until reproduced generically through the production path. Do not let that unresolved family contaminate unrelated benchmark conclusions.
+7. After any justified product repair, require focused regression plus full exact-commit validation, freeze the exact validated source, run the affected and contrasting controls from that unchanged source, manually inspect complete decks, and persist a durable verdict before baseline acceptance.
+8. Keep accepted baseline 1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7, PR #29 unmerged and stable/current V0.13 unpromoted until promotion-grade breadth and validation evidence exists. Marvel focused/broad still execute without a supported improvement and fail quality gates; do not convert execution success into target achievement.
 
 ## Permanent recovery references
 
