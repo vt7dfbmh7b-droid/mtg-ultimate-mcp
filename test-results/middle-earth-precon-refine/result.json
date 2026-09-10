@@ -255,9 +255,9 @@
         }
       ]
     },
-    "estimatedUpgradeSpendNzd": 25.67,
+    "estimatedUpgradeSpendNzd": 25.68,
     "estimatedUpgradeSpendUsdReference": 15.03,
-    "maxTotalNzd": 200,
+    "maxTotalNzd": 200.01,
     "maxTotalUsdReference": 117.08,
     "swaps": [
       {
@@ -889,7 +889,7 @@
       "targetBracket": 4,
       "maxNzdPerCard": 35,
       "maxUsdPerCardReference": 20.49,
-      "maxTotalNzd": 200,
+      "maxTotalNzd": 200.01,
       "maxTotalUsdReference": 117.08,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
