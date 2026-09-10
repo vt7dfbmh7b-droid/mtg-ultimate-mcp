@@ -48,7 +48,7 @@ const filler = card('Anonymous Counter-Shell Filler', 'When this creature enters
 
 const connectedEngine = card(
   'Anonymous Connected Counter Engine',
-  'Other creatures you control have ward {1}. Whenever one or more +1/+1 counters are put on a creature you control, proliferate. This ability triggers only once each turn. Whenever you proliferate, draw a card.',
+  'Creatures you control have hexproof. Whenever one or more +1/+1 counters are put on a creature you control, proliferate. This ability triggers only once each turn. Whenever you proliferate, draw a card.',
   3,
   'Creature — Human Wizard',
   { power: '2', toughness: '3' },
@@ -56,7 +56,7 @@ const connectedEngine = card(
 
 const genericProtection = card(
   'Anonymous Generic Creature Protection',
-  'Other creatures you control have ward {1}. At the beginning of your upkeep, draw a card.',
+  'Creatures you control have hexproof. At the beginning of your upkeep, draw a card.',
   4,
   'Creature — Human Cleric',
   { power: '2', toughness: '4' },
@@ -107,7 +107,7 @@ async function plan() {
         data = all.filter((entry) => entry.name === exactName);
       } else if (query.includes('+1/+1') || query.includes('counter') || query.includes('proliferate')) {
         data = [connectedEngine];
-      } else if (query.includes('ward') || query.includes('protection')) {
+      } else if (query.includes('hexproof') || query.includes('protection')) {
         data = [genericProtection];
       } else {
         data = [connectedEngine, genericProtection];
@@ -132,11 +132,11 @@ async function plan() {
   }
 }
 
-test('public planner prefers a connected counter engine over generic creature protection when both address the same protection deficit', async () => {
+test('public planner prefers a connected counter engine when competing candidates have identical recognized protection text', async () => {
   const result = await plan();
   const swaps = result.swaps as Array<{ in: string; out: string }>;
   const debug = `serialized swaps: ${JSON.stringify(swaps)}`;
   assert.equal(swaps.length, 1, `the shell should permit one structurally equivalent protection upgrade; ${debug}`);
   assert.equal(swaps[0]?.out, filler.name, `the disconnected filler should be the cut; ${debug}`);
-  assert.equal(swaps[0]?.in, connectedEngine.name, `with structural protection value equalized, the package-connected counter/draw engine should outrank generic protection; ${debug}`);
+  assert.equal(swaps[0]?.in, connectedEngine.name, `with identical protection text, the package-connected counter/proliferate/draw engine should outrank generic protection; ${debug}`);
 });
