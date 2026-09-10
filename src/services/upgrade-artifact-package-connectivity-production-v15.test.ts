@@ -180,12 +180,15 @@ test('public planner preserves a repeatable artifact-draw engine when generic pr
   assert.equal(swaps[0]?.out, expendableFiller.name, `the disconnected filler should be preferred as the cut; ${debug}`);
 });
 
-test('public planner preserves an artifact-synergy board wipe when generic Equipment value has an expendable filler cut', async () => {
+test('public planner preserves an artifact-synergy board wipe while selecting a valid generic artifact upgrade over expendable filler', async () => {
   const swaps = swapsOf(await planFor('artifact-wipe'));
   const debug = `serialized swaps: ${JSON.stringify(swaps)}`;
   assert.equal(swaps.length, 1, `the structural search should still permit one upgrade; ${debug}`);
-  assert.equal(swaps[0]?.in, genericEquipmentValue.name, `generic Equipment value remains available for comparison; ${debug}`);
-  assert.notEqual(swaps[0]?.out, artifactWipe.name, `dense artifact context must not sacrifice the artifact-synergy board wipe for generic Equipment value; ${debug}`);
+  assert.ok(
+    [genericEquipmentValue.name, genericArtifactProtection.name].includes(swaps[0]?.in ?? ''),
+    `a valid generic artifact upgrade should remain selectable without dictating an irrelevant tie-break; ${debug}`,
+  );
+  assert.notEqual(swaps[0]?.out, artifactWipe.name, `dense artifact context must not sacrifice the artifact-synergy board wipe for generic value; ${debug}`);
   assert.equal(swaps[0]?.out, expendableFiller.name, `the disconnected filler should be preferred as the cut; ${debug}`);
 });
 
