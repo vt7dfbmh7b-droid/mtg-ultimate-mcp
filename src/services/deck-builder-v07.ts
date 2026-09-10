@@ -61,7 +61,9 @@ function authoritativeTargetGateV15(item: Record<string, unknown>): string {
 }
 
 function directStrategySupportV15(item: Record<string, unknown>): number {
-  return recordNumberV15(recordObjectV15(item.strategyAffinity).protectionApplied);
+  const strategySupport = recordNumberV15(recordObjectV15(item.strategyAffinity).protectionApplied);
+  const requestedIdentitySupport = recordObjectV15(item.explicitTheme).matchesControlledTheme === true ? 4 : 0;
+  return Math.max(strategySupport, requestedIdentitySupport);
 }
 
 function candidatePrioritySourcesV15(sourceUpgradeAnalysis: Record<string, unknown>): Map<string, string> {
@@ -458,7 +460,7 @@ function contextualPlanGuardsV15(
     if (add && prioritySourceByName.get(inName.toLocaleLowerCase()) === 'aspirational-role-target'
       && strongestAspirationalStrategySupport > directStrategySupportV15(add)) {
       // Authoritative Bracket gates retain absolute precedence. This correction applies only to
-      // soft role-count pressure: if the same planner pass has a more directly commander-aligned
+      // soft role-count pressure: if the same planner pass has a more directly commander/request-aligned
       // aspirational candidate, do not spend scarce swap capacity on weaker generic utility first.
       unsupportedNames.add(inName);
       invalidSelected = true;
