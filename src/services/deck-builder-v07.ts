@@ -60,6 +60,27 @@ function authoritativeTargetGateV15(item: Record<string, unknown>): string {
   return recordStringV15(item.authoritativeTargetGate);
 }
 
+function directStrategySupportV15(item: Record<string, unknown>): number {
+  return recordNumberV15(recordObjectV15(item.strategyAffinity).protectionApplied);
+}
+
+function candidatePrioritySourcesV15(sourceUpgradeAnalysis: Record<string, unknown>): Map<string, string> {
+  const sources = new Map<string, string>();
+  const groups = Array.isArray(sourceUpgradeAnalysis.candidateAddsByDeficit)
+    ? sourceUpgradeAnalysis.candidateAddsByDeficit as Array<Record<string, unknown>>
+    : [];
+  for (const group of groups) {
+    const prioritySource = recordStringV15(group.prioritySource);
+    const candidates = Array.isArray(group.candidates) ? group.candidates as Array<Record<string, unknown>> : [];
+    for (const candidate of candidates) {
+      const name = recordStringV15(summarizedCardV15(candidate).name).toLocaleLowerCase();
+      if (!name || sources.has(name)) continue;
+      sources.set(name, prioritySource);
+    }
+  }
+  return sources;
+}
+
 function hasUncompensatedStrongRelationshipV15(
   cut: Record<string, unknown>,
   availableReplacementRelationships: ReadonlySet<string>,
@@ -379,6 +400,16 @@ function contextualPlanGuardsV15(
       || !candidateContextualRoleEffectiveV15(candidate, contextCards)) unsupportedNames.add(name);
   }
 
+  const prioritySourceByName = candidatePrioritySourcesV15(source);
+  const aspirationalCandidates = candidates.filter((candidate) => {
+    const name = recordStringV15(summarizedCardV15(candidate).name).toLocaleLowerCase();
+    return prioritySourceByName.get(name) === 'aspirational-role-target';
+  });
+  const strongestAspirationalStrategySupport = Math.max(
+    0,
+    ...aspirationalCandidates.map(directStrategySupportV15),
+  );
+
   const cutByName = new Map<string, Record<string, unknown>>();
   const relationshipCounts = relationshipCountsFromCutsV15(cuts);
   for (const cut of cuts) {
@@ -424,6 +455,14 @@ function contextualPlanGuardsV15(
     }
     const cut = cutByName.get(outName.toLocaleLowerCase());
     const add = candidateByName.get(inName.toLocaleLowerCase());
+    if (add && prioritySourceByName.get(inName.toLocaleLowerCase()) === 'aspirational-role-target'
+      && strongestAspirationalStrategySupport > directStrategySupportV15(add)) {
+      // Authoritative Bracket gates retain absolute precedence. This correction applies only to
+      // soft role-count pressure: if the same planner pass has a more directly commander-aligned
+      // aspirational candidate, do not spend scarce swap capacity on weaker generic utility first.
+      unsupportedNames.add(inName);
+      invalidSelected = true;
+    }
     if (!cut) continue;
     const addRelationships = new Set(add ? requestedRelationshipIdsV15(add) : []);
     const uncompensatedUniqueRelationship = requestedRelationshipIdsV15(cut).some((id) => (
