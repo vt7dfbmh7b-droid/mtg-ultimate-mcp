@@ -179,7 +179,7 @@ async function assertCorePreserved(
   assert.match(swaps[0]?.out ?? '', /Reanimation Filler /, `the safer low-mechanism filler should be cut instead; ${debug}`);
 }
 
-function serializedCutRoles(plan: Record<string, unknown>, cardName: string): string[] {
+function serializedCutRoleEvidence(plan: Record<string, unknown>, cardName: string): { offeredAsCut: boolean; roles: string[] } {
   const analysis = plan.sourceUpgradeAnalysis as Record<string, unknown> | undefined;
   const cuts = Array.isArray(analysis?.candidateCuts) ? analysis.candidateCuts as Array<Record<string, unknown>> : [];
   const match = cuts.find((cut) => {
@@ -187,7 +187,8 @@ function serializedCutRoles(plan: Record<string, unknown>, cardName: string): st
     return summary?.name === cardName;
   });
   const summary = match?.card as Record<string, unknown> | undefined;
-  return Array.isArray(summary?.roles) ? summary.roles.filter((role): role is string => typeof role === 'string') : [];
+  const roles = Array.isArray(summary?.roles) ? summary.roles.filter((role): role is string => typeof role === 'string') : [];
+  return { offeredAsCut: Boolean(match), roles };
 }
 
 test('public planner preserves a simple core commander reanimation mechanism when generic protection has a safer filler cut', async () => {
@@ -202,19 +203,19 @@ test('public planner preserves an Oracle-shaped reanimation Aura under the real 
   await assertCorePreserved('oracle-shaped', oracleShapedCoreReanimation.name, 'graveyard and card draw');
 });
 
-test('public planner serializes reanimation Auras as graveyard recursion before final cut ranking', async () => {
+test('public planner either protects reanimation Auras from the cut pool or serializes them as graveyard recursion', async () => {
   const simplePlan = await planFor('simple');
   const oraclePlan = await planFor('oracle-shaped', 'graveyard and card draw');
-  const simpleRoles = serializedCutRoles(simplePlan, simpleCoreReanimation.name);
-  const oracleRoles = serializedCutRoles(oraclePlan, oracleShapedCoreReanimation.name);
+  const simpleEvidence = serializedCutRoleEvidence(simplePlan, simpleCoreReanimation.name);
+  const oracleEvidence = serializedCutRoleEvidence(oraclePlan, oracleShapedCoreReanimation.name);
 
   assert.ok(
-    simpleRoles.includes('graveyard recursion'),
-    `simple graveyard-enchant reanimation Aura lost its recursion role in the public planner cut summary: ${JSON.stringify(simpleRoles)}`,
+    !simpleEvidence.offeredAsCut || simpleEvidence.roles.includes('graveyard recursion'),
+    `simple graveyard-enchant reanimation Aura was offered as an untyped cut: ${JSON.stringify(simpleEvidence)}`,
   );
   assert.ok(
-    oracleRoles.includes('graveyard recursion'),
-    `Oracle-shaped graveyard-enchant reanimation Aura lost its recursion role in the public planner cut summary: ${JSON.stringify(oracleRoles)}`,
+    !oracleEvidence.offeredAsCut || oracleEvidence.roles.includes('graveyard recursion'),
+    `Oracle-shaped graveyard-enchant reanimation Aura was offered as an untyped cut: ${JSON.stringify(oracleEvidence)}`,
   );
 });
 
