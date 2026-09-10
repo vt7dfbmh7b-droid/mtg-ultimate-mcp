@@ -27,6 +27,13 @@ function librarySearchRequiresThresholdCountersV15(card: ScryfallCard): boolean 
   return searchAbilities.length > 0 && searchAbilities.every(ability => THRESHOLD_COUNTER_GATE.test(ability));
 }
 
+function graveyardEnchantReanimationV15(card: ScryfallCard): boolean {
+  const oracle = (card.oracle_text ?? card.card_faces?.map(face => face.oracle_text ?? '').join('\n') ?? '').toLocaleLowerCase();
+  const enchantsCreatureCardInGraveyard = /\benchant (?:target )?creature card in (?:a|the|your|an opponent'?s) graveyard\b/.test(oracle);
+  const movesEnchantedCreatureOntoBattlefield = /\b(?:return|put) enchanted creature card\b[^.\n]{0,140}\b(?:to|onto) the battlefield\b/.test(oracle);
+  return enchantsCreatureCardInGraveyard && movesEnchantedCreatureOntoBattlefield;
+}
+
 export function tutorRoleTruthV15(card: ScryfallCard): ReturnType<typeof baseTutorRoleTruthV15> {
   const base = baseTutorRoleTruthV15(card);
   const thresholdGated = librarySearchRequiresThresholdCountersV15(card);
@@ -51,5 +58,6 @@ export function effectiveCardRolesV15(card: ScryfallCard): string[] {
     roles.delete('tutor');
     roles.add('conditional tutor');
   }
+  if (graveyardEnchantReanimationV15(card)) roles.add('graveyard recursion');
   return [...roles];
 }
