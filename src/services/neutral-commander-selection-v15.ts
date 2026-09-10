@@ -153,7 +153,8 @@ export function inferNeutralStrategyV15(cards: readonly ScryfallCard[]): Neutral
 
   addSignal(table, 'graveyard-reanimator', roles.has('graveyard recursion'), 9, 'graveyard recursion');
   addSignal(table, 'graveyard-reanimator', usesOwnGraveyard && !graveyardHateOnly, 6, 'own-graveyard access');
-  addSignal(table, 'graveyard-reanimator', /mill|surveil|discard/i.test(text) || libraryToOwnGraveyardSetup, 5, 'graveyard setup');
+  addSignal(table, 'graveyard-reanimator', /mill|surveil|discard/i.test(text), 5, 'graveyard setup');
+  addSignal(table, 'graveyard-reanimator', libraryToOwnGraveyardSetup, 6, 'deliberate library-to-graveyard setup');
   addSignal(table, 'graveyard-reanimator', recoversMilledCardsToHand, 7, 'milled-card recovery');
   addSignal(table, 'graveyard-reanimator', massGraveyardReturn, 7, 'mass graveyard return');
   addSignal(table, 'graveyard-reanimator', returnsSelectedGraveyardCards, 8, 'selected graveyard cards returned to battlefield');
