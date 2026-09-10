@@ -48,7 +48,7 @@ const filler = card('Anonymous Expendable Filler', 'When this creature enters, y
 
 const connectedEngine = card(
   'Anonymous Connected Clue Engine',
-  'Whenever one or more artifact tokens enter the battlefield under your control, investigate. This ability triggers only once each turn. Whenever you sacrifice a Clue, draw a card.',
+  'Artifacts you control have hexproof. Whenever one or more artifact tokens enter the battlefield under your control, investigate. This ability triggers only once each turn. Whenever you sacrifice a Clue, draw a card.',
   3,
   'Creature — Human Detective',
   { power: '2', toughness: '3' },
@@ -138,5 +138,5 @@ test('public planner prefers a connected Clue engine over generic artifact prote
   const debug = `serialized swaps: ${JSON.stringify(swaps)}`;
   assert.equal(swaps.length, 1, `the shell should permit one structural upgrade; ${debug}`);
   assert.equal(swaps[0]?.out, filler.name, `the disconnected filler should be the cut; ${debug}`);
-  assert.equal(swaps[0]?.in, connectedEngine.name, `the package-connected investigate/draw engine should outrank generic artifact protection; ${debug}`);
+  assert.equal(swaps[0]?.in, connectedEngine.name, `with identical artifact-protection text, the package-connected investigate/draw engine should outrank generic protection; ${debug}`);
 });
