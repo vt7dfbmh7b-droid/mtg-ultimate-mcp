@@ -1,6 +1,6 @@
 {
   "schema": "intel01-positive-full-table-package-live-v15.1",
-  "sourceSha": "a835d81b077b06ea4267dd704cef2866f6865284",
+  "sourceSha": "c91569d14f79b0b0763d0090289035f6f70ef3ab",
   "commander": "Frodo, Sauron's Bane",
   "request": {
     "targetBracket": 4,
@@ -355,7 +355,7 @@
           "collectorNumber": "211",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 1.57,
+          "priceUsd": 1.55,
           "status": "within-cap"
         },
         {
@@ -377,7 +377,7 @@
           "collectorNumber": "793",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 6.08,
+          "priceUsd": 6.07,
           "status": "within-cap"
         },
         {
@@ -476,7 +476,7 @@
           "collectorNumber": "215",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.31,
+          "priceUsd": 0.29,
           "status": "within-cap"
         },
         {
@@ -586,7 +586,7 @@
           "collectorNumber": "150",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 66.03,
+          "priceUsd": 66.24,
           "status": "within-cap"
         },
         {
@@ -641,7 +641,7 @@
           "collectorNumber": "191",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.54,
+          "priceUsd": 0.57,
           "status": "within-cap"
         },
         {
@@ -982,7 +982,7 @@
           "collectorNumber": "233",
           "requestedFinish": null,
           "finish": "nonfoil",
-          "priceUsd": 0.29,
+          "priceUsd": 0.27,
           "status": "within-cap"
         },
         {
@@ -1406,7 +1406,7 @@
             "Bloodletter of Aclazotz",
             "Scourge of the Skyclaves"
           ],
-          "observedUsd": 66.03,
+          "observedUsd": 66.24,
           "reason": "The tutor can find 2 route pieces and moves the selected card to a directly usable access zone."
         },
         {
@@ -1466,7 +1466,7 @@
           "destination": "battlefield",
           "use": "not-route-relevant",
           "coversPieces": [],
-          "observedUsd": 0.31,
+          "observedUsd": 0.29,
           "reason": "The modeled tutor restrictions cannot find any missing library piece in this route."
         },
         {
