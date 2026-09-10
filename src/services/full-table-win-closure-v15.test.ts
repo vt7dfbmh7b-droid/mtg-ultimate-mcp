@@ -43,10 +43,79 @@ test('infinite damage explicitly to each opponent is full-table lethal', () => {
   assert.equal(result.kind, 'all-opponents-damage');
 });
 
+test('verified repeated any-target damage turns unscoped infinite damage into table closure', () => {
+  const result = assessFullTableWinClosureV15(['Infinite damage'], {
+    description: [
+      '1. Activate an ability by removing a counter, targeting itself.',
+      '2. Put two counters on it.',
+      '3. Activate the damage ability by removing a counter, dealing 1 damage to any target.',
+      '4. Repeat from step 2.',
+    ].join('\n'),
+  });
+  assert.equal(result.verifiedFullTableWin, true);
+  assert.equal(result.kind, 'all-opponents-damage');
+  assert.equal(result.scope, 'all-opponents');
+  assert.ok(result.signals.includes('repeatable-player-reachable-unbounded-damage'));
+});
+
+test('repeatable creature-only damage remains fail-closed', () => {
+  const result = assessFullTableWinClosureV15(['Infinite damage'], {
+    description: [
+      '1. Activate an ability, dealing 1 damage to target creature.',
+      '2. Untap that permanent.',
+      '3. Repeat from step 1.',
+    ].join('\n'),
+  });
+  assert.equal(result.verifiedFullTableWin, false);
+  assert.equal(result.kind, 'unscoped-lethal-engine');
+});
+
+test('repeatable permanent-only damage remains fail-closed', () => {
+  const result = assessFullTableWinClosureV15(['Infinite damage'], {
+    description: [
+      '1. Activate an ability, dealing 1 damage to target permanent.',
+      '2. Untap that permanent.',
+      '3. Repeat from step 1.',
+    ].join('\n'),
+  });
+  assert.equal(result.verifiedFullTableWin, false);
+});
+
+test('player-reachable damage without a verified repeat instruction remains fail-closed', () => {
+  const result = assessFullTableWinClosureV15(['Infinite damage'], {
+    description: '1. Activate an ability, dealing 1 damage to any target.',
+  });
+  assert.equal(result.verifiedFullTableWin, false);
+});
+
+test('a target chosen before the repeated range does not prove retargetable table closure', () => {
+  const result = assessFullTableWinClosureV15(['Infinite damage'], {
+    description: [
+      '1. Choose target opponent.',
+      '2. Deal 1 damage to that player.',
+      '3. Untap the source.',
+      '4. Repeat from step 2.',
+    ].join('\n'),
+  });
+  assert.equal(result.verifiedFullTableWin, false);
+});
+
 test('generic infinite lifeloss is not assumed to hit the whole table', () => {
   const result = assessFullTableWinClosureV15(['Infinite lifeloss']);
   assert.equal(result.verifiedFullTableWin, false);
   assert.equal(result.kind, 'unscoped-lethal-engine');
+});
+
+test('verified repeated opponent-targetable life loss can close the table', () => {
+  const result = assessFullTableWinClosureV15(['Infinite lifeloss'], {
+    description: [
+      '1. Target opponent loses 1 life.',
+      '2. Untap the source.',
+      '3. Repeat from step 1.',
+    ].join('\n'),
+  });
+  assert.equal(result.verifiedFullTableWin, true);
+  assert.equal(result.kind, 'all-opponents-life-loss');
 });
 
 test('infinite life loss explicitly for all opponents is full-table lethal', () => {
