@@ -3,11 +3,63 @@ import test from 'node:test';
 import { Client, StreamableHTTPClientTransport } from '@modelcontextprotocol/client';
 import { createMcpHandler } from '@modelcontextprotocol/server';
 import { createMtgServerV15 } from './server-v15.js';
+import { rankGeneralWinPackageVariantsV15 } from './services/general-win-package-v15.js';
+import { discoverEligiblePoolV15 } from './services/neutral-deck-builder-v15.js';
+import { resolvePrintingPolicyV08 } from './services/printing-policy-v08.js';
+import { searchSpellbookVariantsEvidence } from './services/spellbook.js';
+import { collectBoundedSpellbookVariantsV15 } from './services/win-package-pagination-v15.js';
 
 function record(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value)
     ? value as Record<string, unknown>
     : {};
+}
+
+function normalize(value: string): string {
+  return value.trim().toLocaleLowerCase();
+}
+
+async function emitRestrictedPoolDiagnostics(): Promise<void> {
+  const policy = await resolvePrintingPolicyV08({
+    printingFamily: 'Final Fantasy',
+    includePromos: true,
+    includeSpecialReleases: true,
+  });
+  const pool = await discoverEligiblePoolV15(['G', 'U', 'W'], policy, undefined);
+  const eligible = new Set(pool.map((card) => normalize(card.name)));
+  const spellbook = await collectBoundedSpellbookVariantsV15(
+    'card<=3 is:winning legal:commander identity<=WUG',
+    searchSpellbookVariantsEvidence,
+    { pageSize: 100, maxRows: 400, ordering: '-popularity' },
+  );
+  const ranked = rankGeneralWinPackageVariantsV15(
+    spellbook.rows,
+    ["Tidus, Yuna's Guardian"],
+    { maxPackageCards: 3 },
+  );
+  const targetNames = [
+    'Walking Ballista',
+    'Hardened Scales',
+    'Gatta and Luzzu',
+    'The Destined White Mage',
+  ];
+  const targetCandidates = ranked.filter((candidate) => {
+    const names = Array.isArray(candidate.names) ? candidate.names.map(String).map(normalize) : [];
+    return targetNames.some((name) => names.includes(normalize(name)));
+  });
+
+  console.log('COUNTER_BLITZ_RESTRICTED_POOL_DIAGNOSTICS_BEGIN');
+  console.log(JSON.stringify({
+    eligiblePoolCount: pool.length,
+    targetEligibility: Object.fromEntries(targetNames.map((name) => [name, eligible.has(normalize(name))])),
+    spellbookRows: spellbook.rows.length,
+    spellbookTotalMatching: spellbook.totalMatching,
+    spellbookVerificationComplete: spellbook.verificationComplete,
+    rankedCandidateCount: ranked.length,
+    targetCandidates,
+    firstTwentyRankedCandidates: ranked.slice(0, 20),
+  }, null, 2));
+  console.log('COUNTER_BLITZ_RESTRICTED_POOL_DIAGNOSTICS_END');
 }
 
 async function buildCounterBlitzThroughPublicPipeline(): Promise<Record<string, unknown>> {
@@ -50,6 +102,7 @@ async function buildCounterBlitzThroughPublicPipeline(): Promise<Record<string, 
 }
 
 test('BENCH-01 Counter Blitz full-pipeline historical capability regression', { timeout: 9 * 60_000 }, async () => {
+  await emitRestrictedPoolDiagnostics();
   const result = await buildCounterBlitzThroughPublicPipeline();
 
   // Emit the product output before assertions so a failure is still diagnostically useful.
