@@ -110,7 +110,27 @@ async function planFor(
     } else if (url.pathname.endsWith('/cards/search')) {
       const query = url.searchParams.get('q') ?? '';
       const exactName = /^!\"([^\"]+)\"$/.exec(query)?.[1];
-      data = exactName ? all.filter((entry) => entry.name === exactName) : [graveyardSetup, genericEquipmentValue];
+      if (exactName) {
+        data = all.filter((entry) => entry.name === exactName);
+      } else {
+        const normalizedQuery = query.toLowerCase();
+        const requestsGraveyardTheme = normalizedQuery.includes('graveyard')
+          || normalizedQuery.includes('surveil')
+          || normalizedQuery.includes('return target creature card');
+        const requestsEquipmentTheme = normalizedQuery.includes('t:equipment')
+          || normalizedQuery.includes('equipped creature')
+          || normalizedQuery.includes('equip abilities');
+
+        if (requestsGraveyardTheme && !requestsEquipmentTheme) {
+          data = [graveyardSetup];
+        } else if (requestsEquipmentTheme && !requestsGraveyardTheme) {
+          data = [genericEquipmentValue];
+        } else {
+          // Generic role/popularity searches intentionally expose both candidates so
+          // the production planner still has to resolve the cross-role competition.
+          data = [graveyardSetup, genericEquipmentValue];
+        }
+      }
     } else {
       throw new Error(`Unexpected provider request: ${url.pathname}`);
     }
