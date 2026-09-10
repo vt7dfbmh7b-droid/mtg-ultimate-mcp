@@ -10,7 +10,7 @@ import { printingMatchesPolicyV08, resolvePrintingPolicyV08 } from './services/p
 import { findDeckCombosEvidence } from './services/spellbook.js';
 import { getCardOracleText, getCardsByIdentifiers, type CardIdentifierInput } from './services/scryfall.js';
 
-const PRECON_REFERENCE = 'Counter Blitz';
+const PRECON_REFERENCE = 'Counter Blitz (FINAL FANTASY X)';
 const COMMANDER = "Tidus, Yuna's Guardian";
 const REQUESTED_THEME = '+1/+1 counters and proliferate and countermagic and combat';
 const SEED = 20260910;
