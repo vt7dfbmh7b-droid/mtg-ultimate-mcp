@@ -51,9 +51,16 @@ const commander = card(
 
 const island = card('Island', '({T}: Add {U}.)', 0, 'Basic Land — Island', { produced_mana: ['U'] });
 
-const coreReanimation = card(
-  'Anonymous Core Reanimation Aura',
+const simpleCoreReanimation = card(
+  'Anonymous Simple Reanimation Aura',
   'Enchant creature card in a graveyard. When this Aura enters the battlefield, return enchanted creature card to the battlefield under your control.',
+  2,
+  'Enchantment — Aura',
+);
+
+const oracleShapedCoreReanimation = card(
+  'Anonymous Oracle-Shaped Reanimation Aura',
+  'Enchant creature card in a graveyard\nWhen this Aura enters the battlefield, if it is on the battlefield, it loses "enchant creature card in a graveyard" and gains "enchant creature put onto the battlefield with this Aura." Return enchanted creature card to the battlefield under your control and attach this Aura to it. When this Aura leaves the battlefield, that creature\'s controller sacrifices it.\nEnchanted creature gets -1/-0.',
   2,
   'Enchantment — Aura',
 );
@@ -75,12 +82,19 @@ function fillerCards(prefix: string, count: number) {
   ));
 }
 
-async function planFor(options: { includeCore: boolean }) {
+type CoreShape = 'none' | 'simple' | 'oracle-shaped';
+
+async function planFor(coreShape: CoreShape) {
+  const core = coreShape === 'simple'
+    ? simpleCoreReanimation
+    : coreShape === 'oracle-shaped'
+      ? oracleShapedCoreReanimation
+      : null;
   const fillers = fillerCards(
-    options.includeCore ? 'Anonymous Reanimation Filler' : 'Anonymous Control Filler',
-    options.includeCore ? 59 : 60,
+    core ? `Anonymous ${coreShape} Reanimation Filler` : 'Anonymous Control Filler',
+    core ? 59 : 60,
   );
-  const mainCards = options.includeCore ? [coreReanimation, ...fillers] : fillers;
+  const mainCards = core ? [core, ...fillers] : fillers;
   const baseline = [commander, island, ...mainCards];
   const all = [...baseline, genericProtection];
   const parsed = parseDecklist([
@@ -116,11 +130,11 @@ async function planFor(options: { includeCore: boolean }) {
         const graveyardTheme = normalized.includes('graveyard')
           || normalized.includes('surveil')
           || normalized.includes('return target creature card');
-        if (graveyardTheme && options.includeCore) {
+        if (graveyardTheme && core) {
           // The controlled graveyard search sees the already-owned mechanism card, not
           // the generic protection candidate. Generic structural searches can still
           // discover protection so the public planner must choose the safer OUT card.
-          data = [coreReanimation];
+          data = [core];
         } else {
           data = [genericProtection];
         }
@@ -149,8 +163,8 @@ function swapDebug(swaps: Array<{ in: string; out: string }>): string {
   return `serialized swaps: ${JSON.stringify(swaps)}`;
 }
 
-test('public planner preserves a core commander reanimation mechanism when generic protection has a safer filler cut', async () => {
-  const plan = await planFor({ includeCore: true });
+async function assertCorePreserved(coreShape: Exclude<CoreShape, 'none'>, coreName: string) {
+  const plan = await planFor(coreShape);
   const swaps = plan.swaps as Array<{ in: string; out: string }>;
   const debug = swapDebug(swaps);
 
@@ -158,14 +172,22 @@ test('public planner preserves a core commander reanimation mechanism when gener
   assert.equal(swaps[0]?.in, genericProtection.name, `generic protection should remain a valid incoming structural upgrade; ${debug}`);
   assert.notEqual(
     swaps[0]?.out,
-    coreReanimation.name,
+    coreName,
     `the public planner must not sacrifice the direct reanimation engine while a low-mechanism filler cut is available; ${debug}`,
   );
-  assert.match(swaps[0]?.out ?? '', /^Anonymous Reanimation Filler /, `the safer low-mechanism filler should be cut instead; ${debug}`);
+  assert.match(swaps[0]?.out ?? '', /Reanimation Filler /, `the safer low-mechanism filler should be cut instead; ${debug}`);
+}
+
+test('public planner preserves a simple core commander reanimation mechanism when generic protection has a safer filler cut', async () => {
+  await assertCorePreserved('simple', simpleCoreReanimation.name);
+});
+
+test('public planner preserves an Oracle-shaped core commander reanimation Aura when generic protection has a safer filler cut', async () => {
+  await assertCorePreserved('oracle-shaped', oracleShapedCoreReanimation.name);
 });
 
 test('public planner still selects generic protection when the outgoing pool contains only low-mechanism filler', async () => {
-  const plan = await planFor({ includeCore: false });
+  const plan = await planFor('none');
   const swaps = plan.swaps as Array<{ in: string; out: string }>;
   const debug = swapDebug(swaps);
 
