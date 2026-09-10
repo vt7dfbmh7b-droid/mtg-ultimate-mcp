@@ -257,8 +257,8 @@
     "packageAcceptanceContract": null,
     "estimatedUpgradeSpendNzd": 4.29,
     "estimatedUpgradeSpendUsdReference": 2.51,
-    "maxTotalNzd": 200.01,
-    "maxTotalUsdReference": 117.08,
+    "maxTotalNzd": 200,
+    "maxTotalUsdReference": 117.06,
     "swaps": [
       {
         "out": "Rootcast Apprenticeship",
@@ -477,10 +477,10 @@
     ],
     "constraints": {
       "targetBracket": 4,
-      "maxNzdPerCard": 35,
+      "maxNzdPerCard": 35.01,
       "maxUsdPerCardReference": 20.49,
-      "maxTotalNzd": 200.01,
-      "maxTotalUsdReference": 117.08,
+      "maxTotalNzd": 200,
+      "maxTotalUsdReference": 117.06,
       "maxTotalSwaps": 12,
       "swapsPerRound": 4,
       "maxRounds": 4,
