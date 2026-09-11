@@ -1,5 +1,5 @@
 import type { ScryfallCard } from '../types/scryfall.js';
-import { assessFullTableWinClosureV15, isStrictFullTableWinResultV15 } from './full-table-win-closure-v15.js';
+import { assessFullTableWinClosureV15 } from './full-table-win-closure-v15.js';
 import {
   describePrintingPolicyV08,
   resolvePrintingPolicyV08,
@@ -54,6 +54,7 @@ interface ParsedCandidateV15 {
   bracketTag: string | null;
   names: string[];
   results: string[];
+  description: string;
   popularity: number;
 }
 
@@ -82,14 +83,22 @@ function identityToken(commanders: readonly ScryfallCard[]): string {
   return canonicalIdentityTokenV15(commanders.flatMap((card) => card.color_identity));
 }
 
+/**
+ * Commander Spellbook's `is:winning` tag is useful but manually curated and therefore not a
+ * complete recall boundary. Search it first, then add a bounded lethal-result family whose final
+ * acceptance still goes through strict multiplayer closure verification. This preserves fail-closed
+ * semantics while recovering deterministic damage engines that Spellbook does not tag `is:winning`.
+ */
 export function buildGeneralWinPackageQueriesV15(maxPackageCards = 4, identity = 'C'): string[] {
   const maxCards = Math.max(2, Math.min(4, Math.trunc(maxPackageCards)));
   const canonicalIdentity = identity.trim().toUpperCase() === 'C'
     ? 'C'
     : canonicalIdentityTokenV15([...identity]);
-  const queries = [`card<=2 is:winning legal:commander identity<=${canonicalIdentity}`];
-  if (maxCards >= 3) queries.push(`card<=3 is:winning legal:commander identity<=${canonicalIdentity}`);
-  if (maxCards >= 4) queries.push(`card<=4 is:winning legal:commander identity<=${canonicalIdentity}`);
+  const queries: string[] = [];
+  for (let cardCount = 2; cardCount <= maxCards; cardCount += 1) {
+    queries.push(`card<=${cardCount} is:winning legal:commander identity<=${canonicalIdentity}`);
+    queries.push(`card<=${cardCount} result:"Infinite damage" legal:commander identity<=${canonicalIdentity}`);
+  }
   return queries;
 }
 
@@ -102,9 +111,11 @@ function parseCandidate(
   const variant = record(value);
   const id = String(variant.id ?? '').trim();
   const results = Array.isArray(variant.results) ? variant.results.map(String) : [];
+  const description = typeof variant.description === 'string' ? variant.description : '';
   const requirements = Array.isArray(variant.requirements) ? variant.requirements : [];
   const uses = Array.isArray(variant.cards) ? variant.cards.map(record) : [];
-  if (!id || requirements.length > 0 || !isStrictFullTableWinResultV15(results)) return null;
+  const fullTableClosure = assessFullTableWinClosureV15(results, description);
+  if (!id || requirements.length > 0 || !fullTableClosure.verifiedFullTableWin) return null;
 
   const names: string[] = [];
   for (const use of uses) {
@@ -127,6 +138,7 @@ function parseCandidate(
     bracketTag: typeof variant.bracketTag === 'string' ? variant.bracketTag : null,
     names: uniqueNames,
     results,
+    description,
     popularity,
   };
 }
@@ -276,7 +288,8 @@ export async function discoverGeneralWinPackagesV15(
     const comboId = String(row.id ?? '');
     const comboNames = Array.isArray(row.names) ? row.names.map(String) : [];
     const results = Array.isArray(row.results) ? row.results.map(String) : [];
-    const fullTableClosure = assessFullTableWinClosureV15(results);
+    const description = typeof row.description === 'string' ? row.description : '';
+    const fullTableClosure = assessFullTableWinClosureV15(results, description);
     const closure = assessWinResultClosureV15(results);
     if (!fullTableClosure.verifiedFullTableWin) {
       rejectionAudit.push({
@@ -381,6 +394,6 @@ export async function discoverGeneralWinPackagesV15(
     queryAudit,
     rejectionAudit,
     printingPolicy: describePrintingPolicyV08(policy),
-    source: 'Commander Spellbook winning variants + strict V0.15 game-ending closure + Scryfall legality/physical-printing verification',
+    source: 'Commander Spellbook winning/lethal variants + mechanism-aware strict V0.15 game-ending closure + Scryfall legality/physical-printing verification',
   };
 }

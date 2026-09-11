@@ -29,6 +29,22 @@ function normalizeText(results: readonly string[]): string {
     .trim();
 }
 
+function normalizeMechanismLine(value: string): string {
+  return value
+    .toLocaleLowerCase()
+    .replace(/[’‘]/g, "'")
+    .replace(/[–—]/g, '-')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function mechanismLines(value: string): string[] {
+  return value
+    .split(/\n+/)
+    .map(normalizeMechanismLine)
+    .filter(Boolean);
+}
+
 function hasDirectGameWin(text: string): boolean {
   return /\b(?:you |controller )?(?:win|wins) the game\b/.test(text);
 }
@@ -65,9 +81,14 @@ function hasAllOpponentLifeLoss(text: string): boolean {
     || new RegExp(`\\b(?:each|all) opponents? (?:lose|loses) ${amount} (?:amounts? of )?life\\b`).test(text);
 }
 
+function hasUnscopedDamageEngine(text: string): boolean {
+  const amount = unboundedWord();
+  return new RegExp(`\\b${amount} (?:amounts? of )?damage\\b`).test(text);
+}
+
 function hasUnscopedLethalEngine(text: string): boolean {
   const amount = unboundedWord();
-  return new RegExp(`\\b${amount} (?:amounts? of )?damage\\b`).test(text)
+  return hasUnscopedDamageEngine(text)
     || new RegExp(`\\b${amount} (?:amounts? of )?(?:life ?loss|lifeloss|loss of life)\\b`).test(text)
     || /\binfinite lifeloss\b/.test(text);
 }
@@ -77,14 +98,60 @@ function hasResourceEngine(text: string): boolean {
     || /\bnear-infinite\b/.test(text);
 }
 
+function isOpponentTargetableDamageLine(line: string): boolean {
+  if (!/\bdamage\b/.test(line)) return false;
+  return /\bany target\b/.test(line)
+    || /\btarget (?:opponent|player)\b/.test(line)
+    || /\b(?:an|each|all) opponents?\b/.test(line)
+    || /\b(?:an|each|all) players?\b/.test(line);
+}
+
+function repeatLineCoversDamageStep(line: string, damageStep: number): boolean {
+  const repeatFrom = line.match(/\brepeat(?:ing)? from step\s+(\d+)\b/);
+  if (repeatFrom) return Number.parseInt(repeatFrom[1]!, 10) <= damageStep;
+
+  const repeatStep = line.match(/\brepeat(?:ing)? step\s+(\d+)\b/);
+  if (repeatStep) return Number.parseInt(repeatStep[1]!, 10) === damageStep;
+
+  return /\brepeat\b/.test(line)
+    && /\b(?:as desired|indefinitely|arbitrarily|any number of times|this process|this loop|these steps)\b/.test(line);
+}
+
+/**
+ * Spellbook result labels intentionally do not encode target scope. For an otherwise unscoped
+ * infinite-damage result, accept multiplayer closure only when the provider's verified mechanism
+ * text proves that an opponent/player/"any target" damage action sits inside the repeated loop.
+ * This keeps bare "Infinite damage" fail-closed while allowing retargetable deterministic engines.
+ */
+function hasRepeatableOpponentTargetableDamage(mechanismText: string): boolean {
+  const lines = mechanismLines(mechanismText);
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index]!;
+    if (!isOpponentTargetableDamageLine(line)) continue;
+    const damageStep = index + 1;
+
+    if (/\b(?:repeat|indefinitely|arbitrarily|any number of times)\b/.test(line)) return true;
+
+    for (let cursor = index + 1; cursor < Math.min(lines.length, index + 4); cursor += 1) {
+      if (repeatLineCoversDamageStep(lines[cursor]!, damageStep)) return true;
+    }
+  }
+  return false;
+}
+
 /**
  * Commander-specific table-closure classifier.
  *
  * The important boundary is multiplayer scope. Killing one target opponent, producing generic
  * infinite damage/life-loss, or producing an arbitrary resource is not promoted to a full-table
- * deterministic win. Explicit self-win text and explicit each/all-opponent loss remain sufficient.
+ * deterministic win. Explicit self-win and explicit each/all-opponent loss remain sufficient.
+ * A generic infinite-damage result can also qualify when verified provider mechanism text proves
+ * that a repeatable loop can direct the damage to opponents/players/any target.
  */
-export function assessFullTableWinClosureV15(results: readonly string[]): FullTableWinClosureAssessmentV15 {
+export function assessFullTableWinClosureV15(
+  results: readonly string[],
+  mechanismText = '',
+): FullTableWinClosureAssessmentV15 {
   const normalizedText = normalizeText(results);
   const signals: string[] = [];
 
@@ -168,6 +235,19 @@ export function assessFullTableWinClosureV15(results: readonly string[]): FullTa
     };
   }
 
+  if (hasUnscopedDamageEngine(normalizedText) && hasRepeatableOpponentTargetableDamage(mechanismText)) {
+    signals.push('mechanism-proven-retargetable-unbounded-damage');
+    return {
+      verifiedFullTableWin: true,
+      kind: 'all-opponents-damage',
+      timing: 'immediate',
+      scope: 'all-opponents',
+      normalizedText,
+      signals,
+      caveat: 'The result is unbounded damage and verified mechanism text proves that the repeated loop can direct damage to opponents/players/any target, so the damage can be distributed across the Commander table.',
+    };
+  }
+
   if (hasUnscopedLethalEngine(normalizedText)) {
     signals.push('unscoped-lethal-engine');
     return {
@@ -177,7 +257,7 @@ export function assessFullTableWinClosureV15(results: readonly string[]): FullTa
       scope: 'unscoped',
       normalizedText,
       signals,
-      caveat: 'The result produces a lethal-scale damage/life-loss engine, but its multiplayer target/scope is not proven by the result text.',
+      caveat: 'The result produces a lethal-scale damage/life-loss engine, but its multiplayer target/scope is not proven by the result text or verified mechanism evidence.',
     };
   }
 

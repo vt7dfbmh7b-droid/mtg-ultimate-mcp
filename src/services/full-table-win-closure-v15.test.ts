@@ -37,6 +37,55 @@ test('generic infinite damage is lethal-scale but not full-table scoped', () => 
   assert.equal(result.kind, 'unscoped-lethal-engine');
 });
 
+test('verified repeatable any-target damage mechanism closes a multiplayer table', () => {
+  const result = assessFullTableWinClosureV15(
+    ['Infinite damage', 'Infinite +1/+1 counters on a creature'],
+    [
+      'Activate the source, putting two counters on it.',
+      'Activate the source by removing a counter, dealing 1 damage to any target.',
+      'Repeat from step 1.',
+    ].join('\n'),
+  );
+  assert.equal(result.verifiedFullTableWin, true);
+  assert.equal(result.kind, 'all-opponents-damage');
+  assert.equal(result.scope, 'all-opponents');
+  assert.deepEqual(result.signals, ['mechanism-proven-retargetable-unbounded-damage']);
+});
+
+test('repeatable creature-only damage remains fail-closed', () => {
+  const result = assessFullTableWinClosureV15(
+    ['Infinite damage'],
+    [
+      'Activate the source, dealing 1 damage to target creature.',
+      'Repeat step 1 as desired.',
+    ].join('\n'),
+  );
+  assert.equal(result.verifiedFullTableWin, false);
+  assert.equal(result.kind, 'unscoped-lethal-engine');
+});
+
+test('one-shot any-target damage without repeatability remains fail-closed', () => {
+  const result = assessFullTableWinClosureV15(
+    ['Infinite damage'],
+    'When this enters, it deals 1 damage to any target.',
+  );
+  assert.equal(result.verifiedFullTableWin, false);
+  assert.equal(result.kind, 'unscoped-lethal-engine');
+});
+
+test('repeat of an unrelated earlier step does not falsely prove later targetable damage', () => {
+  const result = assessFullTableWinClosureV15(
+    ['Infinite damage'],
+    [
+      'Create a token.',
+      'Repeat step 1 as desired.',
+      'Sacrifice a token to deal 1 damage to any target.',
+    ].join('\n'),
+  );
+  assert.equal(result.verifiedFullTableWin, false);
+  assert.equal(result.kind, 'unscoped-lethal-engine');
+});
+
 test('infinite damage explicitly to each opponent is full-table lethal', () => {
   const result = assessFullTableWinClosureV15(['Infinite damage to each opponent']);
   assert.equal(result.verifiedFullTableWin, true);
