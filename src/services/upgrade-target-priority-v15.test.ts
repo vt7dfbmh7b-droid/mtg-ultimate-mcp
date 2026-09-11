@@ -4,6 +4,7 @@ import type { ScryfallCard } from '../types/scryfall.js';
 import {
   auditUpgradeStrategyPreservationV15,
   pairUpgradeSwapsByStructureV15,
+  prioritizeUpgradeCandidateLanesV15,
 } from './deck-builder-v07.js';
 import { candidateStrategyPreservationGateV15 } from './optimizer-v12.js';
 import {
@@ -121,6 +122,33 @@ test('Bracket-4 candidate generation exposes actual failed construction gates be
   assert.equal(priorities.find((priority) => priority.role === 'tutor')?.target, 2);
   assert.equal(priorities.find((priority) => priority.role === 'tutor')?.prioritySource, 'authoritative-target-gate');
   assert.equal(priorities.some((priority) => priority.role === 'tutor' && priority.target === 6), false);
+});
+
+
+test('under-target requested component lanes get a selection opportunity before structural lanes', () => {
+  const lanes = prioritizeUpgradeCandidateLanesV15([
+    { role: 'average-nonland-mv', prioritySource: 'authoritative-target-gate', deficit: 0.43, candidates: ['curve'] },
+    { role: 'interaction', prioritySource: 'authoritative-target-gate', deficit: 5, candidates: ['cheap'] },
+    { role: 'theme-component', prioritySource: 'authoritative-target-gate', deficit: 7, candidates: ['countermagic'] },
+    { role: 'draw', prioritySource: 'aspirational-role-target', deficit: 3, candidates: ['draw'] },
+  ]);
+
+  assert.deepEqual(lanes.map((lane) => lane.role), [
+    'theme-component',
+    'average-nonland-mv',
+    'interaction',
+    'draw',
+  ]);
+});
+
+test('lane prioritisation leaves authoritative order unchanged when no component is under target', () => {
+  const lanes = prioritizeUpgradeCandidateLanesV15([
+    { role: 'average-nonland-mv', prioritySource: 'authoritative-target-gate', candidates: ['curve'] },
+    { role: 'interaction', prioritySource: 'authoritative-target-gate', candidates: ['cheap'] },
+    { role: 'draw', prioritySource: 'aspirational-role-target', candidates: ['draw'] },
+  ]);
+
+  assert.deepEqual(lanes.map((lane) => lane.role), ['average-nonland-mv', 'interaction', 'draw']);
 });
 
 test('restricted curve discovery admits only legal nonland additions at mana value two or less', () => {

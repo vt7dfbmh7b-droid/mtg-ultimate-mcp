@@ -635,6 +635,47 @@ interface UpgradePairingOptionsV15 {
   }>;
 }
 
+export interface UpgradeCandidateLaneV15<T, TRole extends string = string> {
+  role: TRole;
+  prioritySource?: string;
+  targetGate?: string | null;
+  deficit?: number;
+  candidates: readonly T[];
+}
+
+/**
+ * Keep an explicitly under-target requested mechanism visible to the bounded pairer. Component
+ * lanes are appended after structural discovery so they can be starved by the first candidate from
+ * every structural lane when swap capacity is small. A component deficit is a caller-declared
+ * objective, so it gets the first selection opportunity; authoritative construction gates remain
+ * ahead of soft aspirational role targets and retain their original order within that class.
+ */
+export function prioritizeUpgradeCandidateLanesV15<T, TRole extends string>(
+  lanes: readonly UpgradeCandidateLaneV15<T, TRole>[],
+): UpgradeCandidateLaneV15<T, TRole>[] {
+  const laneClass = (lane: UpgradeCandidateLaneV15<T, TRole>): number => (
+    lane.role === 'theme-component'
+      ? 0
+      : lane.prioritySource === 'authoritative-target-gate' ? 1 : 2
+  );
+  return lanes
+    .map((lane, index) => ({ lane, index }))
+    .sort((left, right) => {
+      const leftClass = laneClass(left.lane);
+      const rightClass = laneClass(right.lane);
+      if (leftClass !== rightClass) return leftClass - rightClass;
+      if (leftClass === 0) {
+        const leftDeficit = typeof left.lane.deficit === 'number' && Number.isFinite(left.lane.deficit)
+          ? left.lane.deficit : 0;
+        const rightDeficit = typeof right.lane.deficit === 'number' && Number.isFinite(right.lane.deficit)
+          ? right.lane.deficit : 0;
+        if (leftDeficit !== rightDeficit) return rightDeficit - leftDeficit;
+      }
+      return left.index - right.index;
+    })
+    .map(({ lane }) => lane);
+}
+
 interface UpgradeStrategyAffinityEvidenceV15 {
   score: number;
   protectionApplied: number;
@@ -1753,12 +1794,15 @@ export async function buildSimulationBackedUpgradePlanV07(
     }
   }
 
-  const candidateLanes = groups
+  const candidateLanes = prioritizeUpgradeCandidateLanesV15(groups
     .map((group) => ({
       role: recordString(group.role) as UpgradeAddressedRoleV15,
+      prioritySource: recordString(group.prioritySource),
+      targetGate: typeof group.targetGate === 'string' ? group.targetGate : null,
+      deficit: recordNumber(group.deficit),
       candidates: Array.isArray(group.candidates) ? group.candidates as Array<Record<string, unknown>> : [],
     }))
-    .filter((lane) => UPGRADE_CANDIDATE_ROLES_V15.includes(lane.role) && lane.role !== 'win-package');
+    .filter((lane) => UPGRADE_CANDIDATE_ROLES_V15.includes(lane.role) && lane.role !== 'win-package'));
   const candidateDepth = candidateLanes.reduce((depth, lane) => Math.max(depth, lane.candidates.length), 0);
   for (let depth = 0; depth < candidateDepth; depth += 1) {
     for (const lane of candidateLanes) {
@@ -1884,6 +1928,13 @@ export async function buildSimulationBackedUpgradePlanV07(
       delta: afterSignals ? signalDeltas(beforeSignals, afterSignals) : null,
       guidance: 'Positive deltas can support a swap, but simulation consistency is not the only goal. Preserve the deck’s intended theme, win routes, and cards the player explicitly wants to keep.',
     },
+    candidateSelectionOrder: candidateLanes.map((lane) => ({
+      role: lane.role,
+      prioritySource: lane.prioritySource ?? null,
+      targetGate: lane.targetGate ?? null,
+      deficit: lane.deficit ?? 0,
+      candidateCount: lane.candidates.length,
+    })),
     sourceUpgradeAnalysis: suggestions,
     caveats: [
       'V0.7 does not automatically claim the suggested swaps are final. It deliberately returns the whole candidate deck and before/after evidence so an AI or player can reject a swap that harms theme or a preferred win route.',
