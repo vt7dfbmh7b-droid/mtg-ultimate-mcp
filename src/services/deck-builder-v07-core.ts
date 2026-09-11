@@ -585,7 +585,7 @@ type UpgradeStructuralRoleV15 =
   | 'board-wipe'
   | 'early';
 type UpgradeTargetGateRoleV15 = UpgradeTargetGateV15;
-type UpgradeAddressedRoleV15 = UpgradeStructuralRoleV15 | UpgradeTargetGateRoleV15 | 'win-package';
+type UpgradeAddressedRoleV15 = UpgradeStructuralRoleV15 | UpgradeTargetGateRoleV15 | 'theme-component' | 'win-package';
 
 interface UpgradeAddSelectionV15 {
   candidate: Record<string, unknown>;
@@ -683,7 +683,7 @@ const UPGRADE_STRUCTURAL_ROLES_V15: UpgradeStructuralRoleV15[] = [
   'ramp', 'draw', 'interaction', 'free-interaction', 'protection', 'tutor', 'recursion', 'board-wipe', 'early',
 ];
 const UPGRADE_CANDIDATE_ROLES_V15: UpgradeAddressedRoleV15[] = [
-  'average-nonland-mv', ...UPGRADE_STRUCTURAL_ROLES_V15, 'win-package',
+  'average-nonland-mv', ...UPGRADE_STRUCTURAL_ROLES_V15, 'theme-component', 'win-package',
 ];
 const MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15 = 4;
 const STRATEGY_COMPONENT_ROLES_V15: Record<string, ReadonlySet<string>> = {
@@ -1422,7 +1422,7 @@ export function pairUpgradeSwapsByStructureV15(
           if (selectionTargetGate === 'average-nonland-mv' && afterAverage >= beforeAverage - 0.0001) return false;
         }
 
-        if (selection.role === 'average-nonland-mv' || selection.role === 'win-package') return true;
+        if (selection.role === 'average-nonland-mv' || selection.role === 'theme-component' || selection.role === 'win-package') return true;
         return structuralDeficitTotalV15(afterSwap, state.targets) < deficitBeforeSwap;
       });
     candidateCuts.sort((left, right) => {
