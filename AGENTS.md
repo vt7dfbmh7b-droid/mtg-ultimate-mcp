@@ -48,3 +48,9 @@ For every scheduled or autonomous development run:
 10. A later clean tree does not erase workflow provenance. The normal CI history guard must remain green from its policy epoch; **any** workflow-directory change after that epoch is a durable provenance failure until explicitly reviewed and reconciled by an interactive maintenance action.
 
 When this file conflicts with newer explicit user authority or newer authoritative `project-state.json` evidence, follow the newer authority while preserving all safety and validation gates that remain applicable.
+
+## User recovery priority: Counter Blitz
+
+Before selecting the next product task, read [Counter Blitz recovery plan](docs/COUNTER-BLITZ-RECOVERY-PLAN.md). The user requested this durable handoff on 2026-09-11: restore independently generated deck quality comparable to or better than their older Tidus result, without feeding that result to the builder.
+
+Follow the plan's evidence-first sequence, two reproduced boundary checks, blind whole-deck validation, non-regression requirements, and anti-loop stopping rules. This newer user-requested recovery priority takes precedence over older benchmark-breadth scheduling prose only; it does not alter accepted product state, bypass existing validation gates, authorize workflow changes, or authorize stable promotion/PR merge. Read authoritative state first as usual. The generated handoff already requires AGENTS.md, so preserve this link when handoff documents are regenerated. A plan or green narrow tests are not a validated recovery.
