@@ -864,6 +864,79 @@ export async function suggestDeckUpgrades(
     });
   }
 
+  // A compound request is not satisfied merely because its aggregate OR-theme has enough cards.
+  // When an individual facet is below its audited floor, give it a dedicated lane. This is what
+  // lets a mechanic with no broad structural role (such as proliferate) compete for an actual
+  // slot instead of being permanently filtered out by ramp/draw/interaction searches.
+  for (const component of themeComponents.filter((item) => item.currentMainMatches < item.requiredMainMatches)) {
+    const query = themeSearchQuery(allowedIdentity, component.queryClause, printingPolicy);
+    let results: ScryfallCard[] = [];
+    try { results = await searchCards(query, 40); } catch {}
+    const candidates: Array<Record<string, unknown>> = [];
+    const seen = new Set<string>();
+    const ranked = results
+      .filter((card) => !card.type_line.toLowerCase().includes('land'))
+      .filter((card) => !existing.has(card.name.toLocaleLowerCase()))
+      .filter((card) => !excluded.has(card.name.toLocaleLowerCase()))
+      .filter((card) => card.legalities.commander === 'legal')
+      .sort((a, b) => {
+        const aStrategy = candidateStrategyPriorityV15(a, strategyContext);
+        const bStrategy = candidateStrategyPriorityV15(b, strategyContext);
+        if (aStrategy.substantive !== bStrategy.substantive) return bStrategy.substantive ? 1 : -1;
+        if (aStrategy.score !== bStrategy.score) return bStrategy.score - aStrategy.score;
+        return candidateScore(b, 'interaction', strategyContext) - candidateScore(a, 'interaction', strategyContext)
+          || a.name.localeCompare(b.name);
+      });
+    for (const card of ranked) {
+      const name = card.name.toLocaleLowerCase();
+      if (seen.has(name)) continue;
+      seen.add(name);
+      const printing = await selectEligiblePrintingV08(card, printingPolicy, options.maxUsdPerCard);
+      if (!printing) continue;
+      const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
+      const componentAffinity = componentAffinityForCard(card);
+      candidates.push({
+        card: { ...summarizeCard(card), roles: effectiveCardRolesV15(card) },
+        score: Number((componentAffinity.score + substantiveCommanderStrategyAffinityScoreV15(affinity)).toFixed(1)),
+        authoritativeTargetGate: null,
+        explicitTheme: {
+          matchesControlledTheme: true,
+          currentMainMatches: themeCurrentMainMatches,
+          requiredMainMatches: themeMinimumMainMatches,
+          deficitBeforeSwap: themeDeficit,
+          componentAffinityScore: componentAffinity.score,
+          matchedComponentIds: [component.id],
+          broadMatchedComponentIds: [component.id],
+          requestedRelationshipAffinity: componentAffinity.requestedRelationshipAffinity,
+          requestedRelationshipIds: componentAffinity.requestedRelationshipIds,
+          requestedRelationshipReasons: componentAffinity.requestedRelationshipReasons,
+          matchesAnchorComponent: anchorComponentIds.has(component.id),
+        },
+        recommendedPrinting: {
+          set: printing.card.set.toUpperCase(), setName: printing.card.set_name, collectorNumber: printing.card.collector_number,
+          releaseDate: printing.card.released_at ?? null, finish: printing.finish, priceUsd: printing.priceUsd,
+          promo: Boolean(printing.card.promo), promoTypes: printing.card.promo_types ?? [], flavorName: printing.card.flavor_name ?? null,
+          familyMatch: printing.matchedBy, scryfallUrl: printing.card.scryfall_uri,
+        },
+        whyItFits: `Directly advances the under-target requested component ${component.id} (${component.currentMainMatches} of ${component.requiredMainMatches} audited matches). The recommended physical printing satisfies the active printing-family/set policy.`,
+      });
+      if (candidates.length >= maxCandidates) break;
+    }
+    candidateGroups.push({
+      role: 'theme-component',
+      componentId: component.id,
+      current: component.currentMainMatches,
+      target: component.requiredMainMatches,
+      deficit: component.requiredMainMatches - component.currentMainMatches,
+      prioritySource: 'authoritative-target-gate',
+      targetGate: null,
+      candidateDiscoveryMode: candidateDiscovery.mode,
+      candidateAvailability: candidates.length > 0 ? 'candidates-found' : 'no-candidates-after-search-filtering',
+      searchQuery: query,
+      candidates,
+    });
+  }
+
   return {
     targetBracket, targetPressure, currentMetrics, structuralTargets: targets, structuralDeficits: deficits,
     authoritativeTargetGatePriorities, candidateGenerationPriorities: candidatePriorities, candidateDiscovery,
