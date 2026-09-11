@@ -623,6 +623,16 @@ interface UpgradePairingOptionsV15 {
   maxPairs?: number;
   /** Valid caller-declared package floors used to avoid generating known-invalid swap packages. */
   packageAcceptanceFloors?: readonly RefinementComponentAuditV15[];
+  /**
+   * Exact requested-theme components already audited on the starting deck. These are
+   * preservation floors for compound requests (for example, countermagic + proliferate),
+   * rather than a card-name preference.
+   */
+  themeComponents?: ReadonlyArray<{
+    id: string;
+    currentMainMatches: number;
+    requiredMainMatches: number;
+  }>;
 }
 
 interface UpgradeStrategyAffinityEvidenceV15 {
@@ -1184,6 +1194,37 @@ function preservesSemanticSafetyFloorsV15(
   });
 }
 
+function requestedThemeComponentIdsV15(card: Record<string, unknown>): Set<string> {
+  const explicitTheme = card.explicitTheme;
+  if (!explicitTheme || typeof explicitTheme !== 'object' || Array.isArray(explicitTheme)) return new Set();
+  const broad = (explicitTheme as Record<string, unknown>).broadMatchedComponentIds;
+  const matched = (explicitTheme as Record<string, unknown>).matchedComponentIds;
+  const values = [
+    ...(Array.isArray(broad) ? broad : []),
+    ...(Array.isArray(matched) ? matched : []),
+  ];
+  return new Set(values.filter((value): value is string => typeof value === 'string' && !value.startsWith('relation:')));
+}
+
+function preservesRequestedThemeComponentFloorsV15(
+  cutCard: Record<string, unknown>,
+  addCard: Record<string, unknown>,
+  components: UpgradePairingOptionsV15['themeComponents'] = [],
+): boolean {
+  if (!components || components.length === 0) return true;
+  const cutIds = requestedThemeComponentIdsV15(cutCard);
+  if (cutIds.size === 0) return true;
+  const addIds = requestedThemeComponentIdsV15(addCard);
+  return components.every((component) => {
+    if (!cutIds.has(component.id)) return true;
+    const current = Math.max(0, Math.trunc(component.currentMainMatches));
+    const required = Math.max(1, Math.trunc(component.requiredMainMatches));
+    const floor = Math.min(current, required);
+    const after = current - 1 + (addIds.has(component.id) ? 1 : 0);
+    return after >= floor;
+  });
+}
+
 function applySummaryToStructuralCountsV15(
   counts: UpgradeStructuralCountsV15,
   card: Record<string, unknown>,
@@ -1353,6 +1394,7 @@ export function pairUpgradeSwapsByStructureV15(
           selection.role,
           authoritativeCounts,
         )) return false;
+        if (!preservesRequestedThemeComponentFloorsV15(cut, selection.candidate, options.themeComponents)) return false;
         if (!packageAcceptanceFloorPreservedV15(packageAcceptanceFloors, packageAcceptanceCounts, addCard, cutCard)) return false;
         const afterSwap = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);
         if (!preservesStructuralFloorsV15(counts, afterSwap, state.targets)) return false;
@@ -1751,6 +1793,7 @@ export async function buildSimulationBackedUpgradePlanV07(
       rejectMeaningfulStrategyLoss: true,
       maxPairs: swapCapacity,
       packageAcceptanceFloors,
+      ...(options.themeComponents ? { themeComponents: options.themeComponents } : {}),
     },
   );
   const strategyPreservation = auditUpgradeStrategyPreservationV15(pairings);
