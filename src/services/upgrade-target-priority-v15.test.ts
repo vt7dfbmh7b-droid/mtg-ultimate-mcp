@@ -1473,6 +1473,42 @@ test('compound-theme component floors survive final swap pairing', () => {
   assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Generic Expensive Card');
 });
 
+test('under-target component lanes can add a mechanism without bypassing structural floors', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{
+      role: 'theme-component' as const,
+      candidate: {
+        card: { name: 'Incoming Counterspell', roles: ['countermagic'], manaValue: 2, typeLine: 'Instant' },
+        explicitTheme: { broadMatchedComponentIds: ['countermagic'] },
+      },
+    }],
+    [
+      {
+        card: { name: 'Last Counterspell', roles: ['countermagic'], manaValue: 5, typeLine: 'Instant' },
+        explicitTheme: { broadMatchedComponentIds: ['countermagic'] },
+        heuristicCutPressure: 100,
+      },
+      {
+        card: { name: 'Surplus Structural Card', roles: [], manaValue: 5, typeLine: 'Creature' },
+        heuristicCutPressure: 1,
+      },
+    ],
+    {
+      rampCount: 20, drawCount: 20, interactionCount: 20, protectionCount: 8, tutorCount: 8,
+      recursionCount: 4, boardWipeCount: 2, earlyPlayCount: 41, cheapInteractionCount: 13,
+      fastManaCount: 2, averageNonlandManaValue: 2.71, nonlandCount: 69,
+      persistentColoredManaSourceCount: 11, commanderColorCount: 5,
+      roleCounts: { 'free interaction': 1, 'cheap interaction': 13, 'spot interaction': 14, countermagic: 1 },
+    },
+    { ...bracketFiveTargets },
+    5,
+    { themeComponents: [{ id: 'countermagic', currentMainMatches: 1, requiredMainMatches: 8 }] },
+  );
+
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Last Counterspell');
+  assert.equal((pairings[0]?.add.card as Record<string, unknown> | undefined)?.name, 'Incoming Counterspell');
+});
+
 
 test('curve repair inspects a safe surplus cut even when protected high-pressure cards fill the old shortlist', () => {
   const protectedCuts = Array.from({ length: 15 }, (_, index) => ({
