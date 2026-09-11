@@ -86,7 +86,7 @@ test('the public planner gives an under-target requested mechanism the first bou
 
   try {
     const plan = await buildSimulationBackedUpgradePlanV07(parsed, [commander, island, existingCounterspell, ...filler], ['U'], {
-      targetBracket: 3,
+      targetBracket: 5,
       maxSwaps: 1,
       maxUsdPerCard: 5,
       simulationIterations: 100,
