@@ -3,6 +3,7 @@ export type ScryfallLegalities = Record<string, 'legal' | 'not_legal' | 'restric
 export interface ScryfallCardFace {
   name: string;
   mana_cost?: string;
+  cmc?: number;
   type_line?: string;
   oracle_text?: string;
   colors?: string[];
