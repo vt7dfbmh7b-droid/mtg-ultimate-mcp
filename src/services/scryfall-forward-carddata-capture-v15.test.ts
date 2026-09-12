@@ -136,6 +136,36 @@ test('invalid gzip and invalid JSON Lines fail closed', async () => {
   );
 });
 
+test('current Scryfall reversible-card records may use null top-level cmc/type_line and are normalized from the verified first face', async () => {
+  const reversible = {
+    ...card,
+    id: 'reversible-card',
+    name: "Jinnie Fay, Jetmir's Second // Jinnie Fay, Jetmir's Second",
+    cmc: null,
+    type_line: null,
+    card_faces: [{
+      name: "Jinnie Fay, Jetmir's Second",
+      mana_cost: '{R/G}{G}{G/W}',
+      cmc: 3,
+      type_line: 'Legendary Creature — Elf Druid',
+      oracle_text: 'If you would create one or more tokens, you may instead create that many 2/2 green Cat creature tokens with haste or that many 3/1 green Dog creature tokens with vigilance.',
+    }, {
+      name: "Jinnie Fay, Jetmir's Second",
+      mana_cost: '{R/G}{G}{G/W}',
+      cmc: 3,
+      type_line: 'Legendary Creature — Elf Druid',
+      oracle_text: 'If you would create one or more tokens, you may instead create that many 2/2 green Cat creature tokens with haste or that many 3/1 green Dog creature tokens with vigilance.',
+    }],
+  };
+  const payload = gzipSync(new TextEncoder().encode(`${JSON.stringify(reversible)}\n`));
+  const result = await captureScryfallDefaultCardsForwardV15(staticUri, {
+    fetchImpl: successFetch(payload),
+    now: '2026-08-20T00:00:00.000Z',
+  });
+  assert.equal(result.acquisition.cards[0]?.cmc, 3);
+  assert.equal(result.acquisition.cards[0]?.type_line, 'Legendary Creature — Elf Druid');
+});
+
 test('HTTP transport content encoding is rejected because it can obscure exact compressed provider bytes', async () => {
   await assert.rejects(
     captureScryfallDefaultCardsForwardV15(staticUri, {
