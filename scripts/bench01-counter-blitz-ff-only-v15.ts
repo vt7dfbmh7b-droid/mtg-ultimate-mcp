@@ -209,7 +209,7 @@ async function main(): Promise<void> {
     }
     const manifest = JSON.parse(await readFile(RETAINED_MANIFEST_PATH, 'utf8')) as RetainedScryfallCardDataSnapshotManifestV15;
     const replay = await replayRetainedScryfallCardDataSnapshotV15(manifest, new Uint8Array(await readFile(RETAINED_RAW_PATH)));
-    installRetainedScryfallCardDataV15(replay.capture.cards);
+    installRetainedScryfallCardDataV15(replay.capture.acquisition.cards);
     const stockDecklist = await readFile(STOCK_DECK_PATH, 'utf8');
     const stock = {
       decklist: stockDecklist,
