@@ -24,6 +24,8 @@ const MIN_CREATURES_FOR_HYBRID_PLAN = 18;
 const STOCK_DECK_PATH = process.env.BENCH01_STOCK_DECK_PATH?.trim() || 'test-results/bench01-batch-a/counter-blitz/stock-deck.txt';
 const RETAINED_RAW_PATH = process.env.SCRYFALL_RETAINED_RAW_PATH?.trim();
 const RETAINED_MANIFEST_PATH = process.env.SCRYFALL_RETAINED_MANIFEST_PATH?.trim();
+const SIMULATION_ITERATIONS = Number.parseInt(process.env.BENCH01_SIMULATION_ITERATIONS ?? '250', 10);
+const SIMULATION_TURNS = Number.parseInt(process.env.BENCH01_SIMULATION_TURNS ?? '8', 10);
 
 function record(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value)
@@ -248,8 +250,8 @@ async function main(): Promise<void> {
         includePromos: true,
         includeSpecialReleases: true,
         themeQuery: '+1/+1 counters proliferate countermagic combat',
-        simulationIterations: 1000,
-        simulationTurns: 8,
+        simulationIterations: SIMULATION_ITERATIONS,
+        simulationTurns: SIMULATION_TURNS,
         seed: 20260905,
         detailLevel: 'detailed',
       },
