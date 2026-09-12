@@ -48,3 +48,11 @@ For every scheduled or autonomous development run:
 10. A later clean tree does not erase workflow provenance. The normal CI history guard must remain green from its policy epoch; **any** workflow-directory change after that epoch is a durable provenance failure until explicitly reviewed and reconciled by an interactive maintenance action.
 
 When this file conflicts with newer explicit user authority or newer authoritative `project-state.json` evidence, follow the newer authority while preserving all safety and validation gates that remain applicable.
+
+## Counter Blitz recovery priority
+
+The current user-requested recovery objective and resumable blocker are recorded in
+docs/COUNTER-BLITZ-RECOVERY-STATUS.md. Read it before selecting another task.
+It does not authorize workflow changes, stable promotion, PR #29 merging, or use
+of the held-out historical Tidus deck as generation input. A green narrow test is
+not a deck-quality result.
