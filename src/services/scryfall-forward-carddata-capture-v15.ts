@@ -249,12 +249,14 @@ function legalities(value: unknown): value is ScryfallLegalities {
 
 function scryfallCard(value: unknown): value is ScryfallCard {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
-  const card = value as Partial<ScryfallCard>;
+  const card = value as Partial<ScryfallCard> & { cmc?: unknown; type_line?: unknown };
   return typeof card.id === 'string' && card.id.length > 0
     && typeof card.name === 'string' && card.name.length > 0
     && typeof card.lang === 'string' && card.lang.length > 0
-    && typeof card.cmc === 'number' && Number.isFinite(card.cmc)
-    && typeof card.type_line === 'string'
+    // Scryfall's authoritative `reversible_card` records may carry null for
+    // top-level cmc/type_line; the face records remain the source of truth.
+    && (card.cmc === null || (typeof card.cmc === 'number' && Number.isFinite(card.cmc)))
+    && (card.type_line === null || typeof card.type_line === 'string')
     && stringArray(card.color_identity)
     && stringArray(card.keywords)
     && legalities(card.legalities)
@@ -263,6 +265,15 @@ function scryfallCard(value: unknown): value is ScryfallCard {
     && typeof card.collector_number === 'string' && card.collector_number.length > 0
     && typeof card.rarity === 'string' && card.rarity.length > 0
     && typeof card.scryfall_uri === 'string' && card.scryfall_uri.length > 0;
+}
+
+function normalizeNullableTopLevelFields(card: ScryfallCard): ScryfallCard {
+  const firstFace = card.card_faces?.[0];
+  return {
+    ...card,
+    cmc: card.cmc ?? firstFace?.cmc ?? 0,
+    type_line: card.type_line ?? firstFace?.type_line ?? '',
+  };
 }
 
 function decodeJsonlLine(bytes: Uint8Array, lineNumber: number): ScryfallCard | null {
@@ -304,7 +315,7 @@ function decodeJsonlLine(bytes: Uint8Array, lineNumber: number): ScryfallCard | 
       `Scryfall JSON Lines record ${lineNumber} is not a valid Scryfall card object.`,
     );
   }
-  return parsed;
+  return normalizeNullableTopLevelFields(parsed);
 }
 
 function parseScryfallJsonl(decoded: Uint8Array): ScryfallCard[] {
