@@ -1,4 +1,3 @@
-BENCH-01 COUNTER BLITZ — HARD FAILURE
 TypeError: Cannot read properties of undefined (reading 'length')
 TypeError: Cannot read properties of undefined (reading 'length')
     at installRetainedScryfallCardDataV15 (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/services/scryfall.ts:76:13)
