@@ -69,6 +69,66 @@ const IDENTIFIER_CACHE_MAX = 5_000;
 const searchCache = new Map<string, TimedCardCacheEntry>();
 const printingsCache = new Map<string, TimedCardCacheEntry>();
 const identifierCache = new Map<string, ScryfallCard>();
+let retainedCardDataOverride: ScryfallCard[] | null = null;
+
+/** Install exact cards from a verified retained snapshot for deterministic replays. */
+export function installRetainedScryfallCardDataV15(cards: ScryfallCard[]): void {
+  if (cards.length === 0) throw new Error('Retained Scryfall card-data override cannot be empty.');
+  retainedCardDataOverride = [...cards];
+  searchCache.clear();
+  printingsCache.clear();
+  identifierCache.clear();
+  for (const card of cards) cacheCardAliases(card);
+}
+
+export function clearRetainedScryfallCardDataV15(): void {
+  retainedCardDataOverride = null;
+  searchCache.clear();
+  printingsCache.clear();
+  identifierCache.clear();
+}
+
+export function isRetainedScryfallCardDataInstalledV15(): boolean {
+  return retainedCardDataOverride !== null;
+}
+
+function retainedCardText(card: ScryfallCard): string {
+  return `${card.name} ${card.type_line} ${getCardOracleText(card)} ${card.keywords.join(' ')}`.toLocaleLowerCase();
+}
+
+function retainedAtomicMatch(card: ScryfallCard, atom: string): boolean {
+  const value = atom.trim().replace(/^\(|\)$/g, '');
+  if (!value || value === 'f:commander') return true;
+  if (value === '-t:land') return !card.type_line.toLocaleLowerCase().includes('land');
+  const exact = value.match(/^!"(.*)"$/);
+  if (exact) return card.name.toLocaleLowerCase() === (exact[1] ?? '').toLocaleLowerCase();
+  const text = retainedCardText(card);
+  const oracle = getCardOracleText(card).toLocaleLowerCase();
+  const type = card.type_line.toLocaleLowerCase();
+  const match = value.match(/^([a-z]+)(<=|>=|=|:)(.*)$/i);
+  if (!match) return text.includes(value.toLocaleLowerCase().replaceAll('"', ''));
+  const [, field, operator, raw] = match;
+  const needle = (raw ?? '').toLocaleLowerCase().replaceAll('"', '');
+  if (field === 'o') return oracle.includes(needle);
+  if (field === 't') return type.includes(needle);
+  if (field === 'kw') return card.keywords.some((keyword) => keyword.toLocaleLowerCase() === needle);
+  if (field === 'set') return card.set.toLocaleLowerCase() === needle;
+  if (field === 'id') return card.color_identity.every((color) => needle.includes(color.toLocaleLowerCase()));
+  if (field === 'mv') {
+    const numeric = Number(raw);
+    return operator === '<=' ? card.cmc <= numeric : operator === '>=' ? card.cmc >= numeric : card.cmc === numeric;
+  }
+  if (field === 'is') return text.includes(needle);
+  return true;
+}
+
+function retainedSearchMatch(card: ScryfallCard, query: string): boolean {
+  const normalized = normalizeScryfallSearchQueryV15(query).replace(/[()]/g, ' ');
+  return normalized.split(/\s+OR\s+/i).some((group) => (group.match(/(?:!?[a-z]+(?:<=|>=|=|:)"[^"]*"|!?[a-z]+(?:<=|>=|=|:)[^\s]+|!?[^\s]+)/gi) ?? []).every((atom) => {
+    if (atom.startsWith('-')) return !retainedAtomicMatch(card, atom.slice(1));
+    return retainedAtomicMatch(card, atom);
+  }));
+}
 
 const LEGACY_FREE_INTERACTION_SEARCH_CLAUSE_V15 = '((mv=0 OR o:"rather than pay") (o:"counter target" OR o:"destroy target" OR o:"exile target"))';
 export const FREE_INTERACTION_SEARCH_CLAUSE_V15 = '((mv=0 OR o:"rather than pay" OR o:"without paying" OR kw:evoke OR is:phyrexian) (o:counter OR o:destroy OR o:exile OR o:"return target" OR o:"choose new targets" OR o:"puts it on the top" OR o:"puts it on the bottom"))';
@@ -498,6 +558,12 @@ export function summarizeCard(card: ScryfallCard): CardSummary {
 }
 
 export async function lookupCard(name: string, exact = false, set?: string): Promise<ScryfallCard> {
+  if (retainedCardDataOverride) {
+    const card = retainedCardDataOverride.find((candidate) => candidate.name.toLocaleLowerCase() === name.trim().toLocaleLowerCase()
+      && (!set || candidate.set.toLocaleLowerCase() === set.trim().toLocaleLowerCase()));
+    if (!card) throw new Error(`Retained Scryfall card not found: ${name}`);
+    return card;
+  }
   const parameter = exact ? 'exact' : 'fuzzy';
   const setPart = set?.trim() ? `&set=${encodeURIComponent(set.trim().toLowerCase())}` : '';
   const url = `${config.scryfallApiBase}/cards/named?${parameter}=${encodeURIComponent(name.trim())}${setPart}`;
@@ -507,6 +573,13 @@ export async function lookupCard(name: string, exact = false, set?: string): Pro
 }
 
 export async function lookupPrinting(set: string, collectorNumber: string, lang?: string): Promise<ScryfallCard> {
+  if (retainedCardDataOverride) {
+    const card = retainedCardDataOverride.find((candidate) => candidate.set.toLocaleLowerCase() === set.trim().toLocaleLowerCase()
+      && candidate.collector_number.toLocaleLowerCase() === collectorNumber.trim().toLocaleLowerCase()
+      && (!lang || candidate.lang.toLocaleLowerCase() === lang.trim().toLocaleLowerCase()));
+    if (!card) throw new Error(`Retained Scryfall printing not found: ${set}/${collectorNumber}`);
+    return card;
+  }
   const language = lang?.trim() ? `/${encodeURIComponent(lang.trim().toLowerCase())}` : '';
   const url = `${config.scryfallApiBase}/cards/${encodeURIComponent(set.trim().toLowerCase())}/${encodeURIComponent(collectorNumber.trim())}${language}`;
   const card = await scryfallRequest<ScryfallCard>(url);
@@ -517,6 +590,11 @@ export async function lookupPrinting(set: string, collectorNumber: string, lang?
 export async function searchCards(query: string, limit = 10): Promise<ScryfallCard[]> {
   const safeLimit = Math.max(1, Math.min(limit, 50));
   const normalizedQuery = normalizeScryfallSearchQueryV15(query);
+  if (retainedCardDataOverride) {
+    return retainedCardDataOverride.filter((card) => retainedSearchMatch(card, normalizedQuery))
+      .sort((a, b) => (a.edhrec_rank ?? Number.MAX_SAFE_INTEGER) - (b.edhrec_rank ?? Number.MAX_SAFE_INTEGER))
+      .slice(0, safeLimit);
+  }
   const cached = freshTimedCards(searchCache.get(normalizedQuery));
   if (cached) return cached.slice(0, safeLimit);
 
@@ -528,6 +606,15 @@ export async function searchCards(query: string, limit = 10): Promise<ScryfallCa
 }
 
 export async function getScryfallSets(forceRefresh = false): Promise<ScryfallSet[]> {
+  if (retainedCardDataOverride) {
+    const byCode = new Map<string, ScryfallSet>();
+    for (const card of retainedCardDataOverride) if (!byCode.has(card.set)) {
+      const set: ScryfallSet = { id: `retained:${card.set}`, code: card.set, name: card.set_name, set_type: 'unknown', digital: Boolean(card.digital) };
+      if (card.released_at) set.released_at = card.released_at;
+      byCode.set(card.set, set);
+    }
+    return [...byCode.values()];
+  }
   const now = Date.now();
   if (!forceRefresh && setCache && now - setCacheAt < SET_CACHE_TTL_MS) return setCache;
   const result = await scryfallRequest<ScryfallList<ScryfallSet>>(`${config.scryfallApiBase}/sets`);
@@ -539,6 +626,9 @@ export async function getScryfallSets(forceRefresh = false): Promise<ScryfallSet
 export async function getCardPrintings(name: string, limit = 100): Promise<ScryfallCard[]> {
   const safeLimit = Math.max(1, Math.min(limit, 250));
   const normalizedName = name.trim();
+  if (retainedCardDataOverride) {
+    return retainedCardDataOverride.filter((card) => card.name.toLocaleLowerCase() === normalizedName.toLocaleLowerCase()).slice(0, limit);
+  }
   const cacheKey = `${normalizedName.toLocaleLowerCase()}|${safeLimit}`;
   const cached = freshTimedCards(printingsCache.get(cacheKey));
   if (cached) return cached.slice(0, safeLimit);
@@ -570,6 +660,15 @@ export async function getCardsByIdentifiers(identifiers: CardIdentifierInput[]):
   const cards: ScryfallCard[] = [];
   const pending: CardIdentifierInput[] = [];
   const notFound: string[] = [];
+
+  if (retainedCardDataOverride) {
+    for (const identifier of unique) {
+      const match = retainedCardDataOverride.find((card) => cardMatchesIdentifier(card, identifier));
+      if (match) cards.push(match);
+      else notFound.push([identifier.name, identifier.set, identifier.collectorNumber].filter(Boolean).join(' '));
+    }
+    return { cards, notFound };
+  }
 
   for (const identifier of unique) {
     const cached = identifierCache.get(identifierKey(identifier));
