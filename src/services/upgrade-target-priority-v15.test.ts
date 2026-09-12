@@ -6,7 +6,10 @@ import {
   pairUpgradeSwapsByStructureV15,
   prioritizeUpgradeCandidateLanesV15,
 } from './deck-builder-v07.js';
-import { candidateStrategyPreservationGateV15 } from './optimizer-v12.js';
+import {
+  candidateStrategyPreservationGateV15,
+  candidateTargetGateProgressGateV15,
+} from './optimizer-v12.js';
 import {
   restrictedUpgradeCandidatesForRoleV15,
   selectUpgradeCutCandidatesV15,
@@ -124,7 +127,6 @@ test('Bracket-4 candidate generation exposes actual failed construction gates be
   assert.equal(priorities.some((priority) => priority.role === 'tutor' && priority.target === 6), false);
 });
 
-
 test('under-target requested component lanes get a selection opportunity before structural lanes', () => {
   const lanes = prioritizeUpgradeCandidateLanesV15([
     { role: 'average-nonland-mv', prioritySource: 'authoritative-target-gate', deficit: 0.43, candidates: ['curve'] },
@@ -149,6 +151,31 @@ test('lane prioritisation leaves authoritative order unchanged when no component
   ]);
 
   assert.deepEqual(lanes.map((lane) => lane.role), ['average-nonland-mv', 'interaction', 'draw']);
+});
+
+test('explicit requested theme progress can advance a failed construction package safely', () => {
+  const score = {
+    zeroTargetProgressWhileFailedGatesRemain: true,
+    targetGate: {
+      applicable: true,
+      targetBracket: 5,
+      score: 0,
+      thresholdScore: 1,
+      progressScore: 0,
+      failedBefore: ['cheap-interaction'],
+      failedAfter: ['cheap-interaction'],
+      repairedGates: [],
+      advancedFailedGates: [],
+      regressedGates: [],
+      passingBefore: [],
+      passingAfter: [],
+      ignoredUnverifiedGates: [],
+      rationale: 'theme-only progress test',
+    },
+  };
+
+  assert.equal(candidateTargetGateProgressGateV15(score).eligible, false);
+  assert.equal(candidateTargetGateProgressGateV15(score, { requestedThemeProgress: true }).eligible, true);
 });
 
 test('restricted curve discovery admits only legal nonland additions at mana value two or less', () => {

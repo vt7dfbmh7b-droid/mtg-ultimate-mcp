@@ -700,8 +700,9 @@ export function candidateThemeGateV15(
 
 export function candidateTargetGateProgressGateV15(
   score: Pick<RefinementImprovementScoreV11, 'zeroTargetProgressWhileFailedGatesRemain' | 'targetGate'>,
+  options: { requestedThemeProgress?: boolean } = {},
 ): { eligible: boolean; reason: string } {
-  if (score.zeroTargetProgressWhileFailedGatesRemain) {
+  if (score.zeroTargetProgressWhileFailedGatesRemain && options.requestedThemeProgress !== true) {
     return {
       eligible: false,
       reason: 'package-does-not-repair-or-advance-failed-bracket-5-target-gate',
@@ -775,10 +776,6 @@ async function evaluateCandidate(
   }
   if (score.significantRegression) {
     return { ...base, eligible: false, reason: 'package-causes-a-significant-simulated-regression', nextDecklist: null, resolved: null };
-  }
-  const targetProgressGate = candidateTargetGateProgressGateV15(score);
-  if (!targetProgressGate.eligible) {
-    return { ...base, eligible: false, reason: targetProgressGate.reason, nextDecklist: null, resolved: null };
   }
   const minScore = Number.isFinite(options.minimumImprovementScore)
     ? Math.max(-10, Math.min(100, options.minimumImprovementScore ?? 0.1))
@@ -871,6 +868,23 @@ async function evaluateCandidate(
           resolved,
         };
       }
+      const requestedThemeProgress = Boolean(
+        beforeComponents
+        && afterComponents
+        && afterComponents.some((afterComponent, index) => {
+          const beforeComponent = beforeComponents[index];
+          return Boolean(
+            beforeComponent
+            && !beforeComponent.satisfied
+            && afterComponent
+            && afterComponent.matchedMainCards > beforeComponent.matchedMainCards,
+          );
+        }),
+      );
+      const targetProgressGate = candidateTargetGateProgressGateV15(score, { requestedThemeProgress });
+      if (!targetProgressGate.eligible) {
+        return { ...base, themeAudit, eligible: false, reason: targetProgressGate.reason, nextDecklist: null, resolved };
+      }
     }
     const gate = candidateThemeGateV15(currentThemeAudit, themeAudit);
     if (!gate.eligible) {
@@ -883,9 +897,19 @@ async function evaluateCandidate(
         resolved,
       };
     }
+    const targetProgressGate = candidateTargetGateProgressGateV15(score, {
+      requestedThemeProgress: themeAudit.matchedMainCards > currentThemeAudit.matchedMainCards,
+    });
+    if (!targetProgressGate.eligible) {
+      return { ...base, themeAudit, eligible: false, reason: targetProgressGate.reason, nextDecklist: null, resolved };
+    }
     return { ...base, themeAudit, eligible: true, reason: gate.reason, nextDecklist, resolved };
   }
 
+  const targetProgressGate = candidateTargetGateProgressGateV15(score);
+  if (!targetProgressGate.eligible) {
+    return { ...base, eligible: false, reason: targetProgressGate.reason, nextDecklist: null, resolved: null };
+  }
   return { ...base, eligible: true, reason: 'eligible', nextDecklist, resolved };
 }
 
