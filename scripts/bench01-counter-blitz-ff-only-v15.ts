@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { unlink, writeFile } from 'node:fs/promises';
+import { readFile, unlink, writeFile } from 'node:fs/promises';
 import { Client, StreamableHTTPClientTransport } from '@modelcontextprotocol/client';
 import { createMcpHandler } from '@modelcontextprotocol/server';
 import { createMtgServerV15 } from '../src/server-v15.js';
@@ -7,10 +7,11 @@ import { evaluateCommanderBuildV15 } from '../src/services/commander-build-evalu
 import { validateCommanderDeck } from '../src/services/commander-rules.js';
 import { deriveCommanderStrategyContextV15 } from '../src/services/commander-strategy-affinity-v15.js';
 import { parseDecklist, type ParsedDeck } from '../src/services/deck.js';
-import { fetchPreconDeckV10 } from '../src/services/precons-v10.js';
 import { printingMatchesPolicyV08, resolvePrintingPolicyV08 } from '../src/services/printing-policy-v08.js';
 import { findDeckCombosEvidence } from '../src/services/spellbook.js';
-import { getCardsByIdentifiers, type CardIdentifierInput } from '../src/services/scryfall.js';
+import { getCardsByIdentifiers, installRetainedScryfallCardDataV15, type CardIdentifierInput } from '../src/services/scryfall.js';
+import { replayRetainedScryfallCardDataSnapshotV15 } from '../src/services/retained-scryfall-carddata-replay-v15.js';
+import type { RetainedScryfallCardDataSnapshotManifestV15 } from '../src/services/retained-scryfall-carddata-snapshot-v15.js';
 
 const PRECON_REFERENCE = 'CounterBlitzFinalFantasyX_FIC';
 const COMMANDER = "Tidus, Yuna's Guardian";
@@ -20,6 +21,9 @@ const COUNTER_ENGINE_TARGET = 16;
 const PROLIFERATE_TARGET = 3;
 const COMBAT_REFERENCE_TARGET = 8;
 const MIN_CREATURES_FOR_HYBRID_PLAN = 18;
+const STOCK_DECK_PATH = process.env.BENCH01_STOCK_DECK_PATH?.trim() || 'test-results/bench01-batch-a/counter-blitz/stock-deck.txt';
+const RETAINED_RAW_PATH = process.env.SCRYFALL_RETAINED_RAW_PATH?.trim();
+const RETAINED_MANIFEST_PATH = process.env.SCRYFALL_RETAINED_MANIFEST_PATH?.trim();
 
 function record(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value)
@@ -200,7 +204,18 @@ async function main(): Promise<void> {
     unlink('bench01-counter-blitz-failure.txt').catch(() => undefined),
   ]);
 
-  const stock = await fetchPreconDeckV10(PRECON_REFERENCE);
+    if (!RETAINED_RAW_PATH || !RETAINED_MANIFEST_PATH) {
+      throw new Error('BENCH-01 provider/harness failure: SCRYFALL_RETAINED_RAW_PATH and SCRYFALL_RETAINED_MANIFEST_PATH are required; no live fallback is permitted.');
+    }
+    const manifest = JSON.parse(await readFile(RETAINED_MANIFEST_PATH, 'utf8')) as RetainedScryfallCardDataSnapshotManifestV15;
+    const replay = await replayRetainedScryfallCardDataSnapshotV15(manifest, new Uint8Array(await readFile(RETAINED_RAW_PATH)));
+    installRetainedScryfallCardDataV15(replay.capture.cards);
+    const stockDecklist = await readFile(STOCK_DECK_PATH, 'utf8');
+    const stock = {
+      decklist: stockDecklist,
+      entry: { fileName: PRECON_REFERENCE, name: 'Counter Blitz (FINAL FANTASY X)', releaseDate: null },
+      deck: { commander: [{ name: COMMANDER }] },
+    };
   assert.equal(stock.entry.fileName, PRECON_REFERENCE, 'benchmark must bind exact standard Counter Blitz product, not Collector Edition');
   assert.equal(stock.entry.name, 'Counter Blitz (FINAL FANTASY X)');
   const before = await auditDeck(stock.decklist);
