@@ -2,7 +2,7 @@
   "commanderLookupName": "Liliana, Heretical Healer",
   "commanderName": "Liliana, Heretical Healer // Liliana, Defiant Necromancer",
   "maxDeckNzd": 500,
-  "maxDeckUsdReference": 291.29,
+  "maxDeckUsdReference": 291.24,
   "targetBracket": 5,
   "creatureTypePolicy": "none",
   "excludedCards": [
@@ -37,12 +37,12 @@
     "Jet Medallion",
     "Accursed Marauder"
   ],
-  "auditedTotalNzd": 463.82,
+  "auditedTotalNzd": 463.9,
   "auditedTotalUsdReference": 270.21,
   "currencyPolicy": {
     "primaryCurrency": "NZD",
     "displaySymbol": "NZ$",
-    "usdToNzdRate": 1.7165,
+    "usdToNzdRate": 1.7168,
     "rateDate": "2026-09-13",
     "rateSource": "Frankfurter",
     "rateSourceUrl": "https://api.frankfurter.dev/v2/rate/USD/NZD",
@@ -207,7 +207,7 @@
           "requirements": [],
           "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nWhen Gravecrawler enters, Ayara triggers, causing you to gain 1 life and each opponent to lose 1 life.\nRepeat.",
           "manaNeeded": "",
-          "popularity": 22850
+          "popularity": 22874
         }
       },
       {
@@ -251,7 +251,7 @@
           "requirements": [],
           "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler.\nWhen Gravecrawler dies, Blood Artist triggers, causing you to gain 1 life and target opponent to lose 1 life.\nResolve the Warren Soultrader ability, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nRepeat.",
           "manaNeeded": "",
-          "popularity": 44607
+          "popularity": 44658
         }
       }
     ],
@@ -567,7 +567,7 @@
     "currencyPolicy": {
       "primaryCurrency": "NZD",
       "displaySymbol": "NZ$",
-      "usdToNzdRate": 1.7165,
+      "usdToNzdRate": 1.7168,
       "rateDate": "2026-09-13",
       "rateSource": "Frankfurter",
       "rateSourceUrl": "https://api.frankfurter.dev/v2/rate/USD/NZD",
@@ -584,12 +584,12 @@
     "result": {
       "status": "budget-compliant",
       "maxDeckNzd": 500,
-      "maxDeckUsdReference": 291.29,
+      "maxDeckUsdReference": 291.24,
       "estimatedFixedCommanderCostNzd": 12,
       "estimatedFixedCommanderCostUsdReference": 6.99,
       "remainingCandidateBudgetEstimateNzd": 488,
-      "remainingCandidateBudgetEstimateUsdReference": 284.3,
-      "chosenCandidateSearchCapNzd": 12.2,
+      "remainingCandidateBudgetEstimateUsdReference": 284.25,
+      "chosenCandidateSearchCapNzd": 12.21,
       "chosenCandidateSearchCapUsdReference": 7.11,
       "userMaxNzdPerCard": null,
       "userMaxUsdPerCardReference": null,
@@ -598,8 +598,8 @@
         "status": "complete",
         "withinBudget": true,
         "maxDeckNzd": 500,
-        "maxDeckUsdReference": 291.29,
-        "auditedTotalNzd": 463.82,
+        "maxDeckUsdReference": 291.24,
+        "auditedTotalNzd": 463.9,
         "auditedTotalUsdReference": 270.21,
         "overageNzd": 0,
         "overageUsdReference": 0,
@@ -614,7 +614,7 @@
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 369.43,
+          "auditedTotalNzd": 369.49,
           "auditedTotalUsdReference": 215.22,
           "overageNzd": 0,
           "overageUsdReference": 0,
@@ -634,7 +634,7 @@
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 369.8,
+          "auditedTotalNzd": 369.87,
           "auditedTotalUsdReference": 215.44,
           "overageNzd": 0,
           "overageUsdReference": 0,
@@ -654,7 +654,7 @@
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 357.24,
+          "auditedTotalNzd": 357.3,
           "auditedTotalUsdReference": 208.12,
           "overageNzd": 0,
           "overageUsdReference": 0,
@@ -674,7 +674,7 @@
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 341.6,
+          "auditedTotalNzd": 341.66,
           "auditedTotalUsdReference": 199.01,
           "overageNzd": 0,
           "overageUsdReference": 0,
@@ -688,14 +688,14 @@
           }
         },
         {
-          "candidateMaxNzdPerCard": 12.2,
+          "candidateMaxNzdPerCard": 12.21,
           "candidateMaxUsdPerCardReference": 7.11,
           "userMaxNzdPerCard": null,
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 447.3,
-          "auditedTotalUsdReference": 260.59,
+          "auditedTotalNzd": 446.99,
+          "auditedTotalUsdReference": 260.36,
           "overageNzd": 0,
           "overageUsdReference": 0,
           "remainingStructuralDeficitTotal": 9,
@@ -708,16 +708,16 @@
           }
         },
         {
-          "candidateMaxNzdPerCard": 24.39,
+          "candidateMaxNzdPerCard": 24.4,
           "candidateMaxUsdPerCardReference": 14.21,
           "userMaxNzdPerCard": null,
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "over-budget",
-          "auditedTotalNzd": 581.96,
+          "auditedTotalNzd": 582.06,
           "auditedTotalUsdReference": 339.04,
-          "overageNzd": 81.96,
-          "overageUsdReference": 47.75,
+          "overageNzd": 82.06,
+          "overageUsdReference": 47.8,
           "remainingStructuralDeficitTotal": 7,
           "unknownPriceEntries": [],
           "unresolvedEntries": [],
@@ -728,16 +728,16 @@
           }
         },
         {
-          "candidateMaxNzdPerCard": 48.8,
+          "candidateMaxNzdPerCard": 48.81,
           "candidateMaxUsdPerCardReference": 28.43,
           "userMaxNzdPerCard": null,
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "over-budget",
-          "auditedTotalNzd": 878.02,
-          "auditedTotalUsdReference": 511.52,
-          "overageNzd": 378.02,
-          "overageUsdReference": 220.23,
+          "auditedTotalNzd": 878.16,
+          "auditedTotalUsdReference": 511.51,
+          "overageNzd": 378.16,
+          "overageUsdReference": 220.27,
           "remainingStructuralDeficitTotal": 5,
           "unknownPriceEntries": [],
           "unresolvedEntries": [],
@@ -749,15 +749,15 @@
         },
         {
           "candidateMaxNzdPerCard": 488,
-          "candidateMaxUsdPerCardReference": 284.3,
+          "candidateMaxUsdPerCardReference": 284.25,
           "userMaxNzdPerCard": null,
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "over-budget",
-          "auditedTotalNzd": 2407.79,
-          "auditedTotalUsdReference": 1402.73,
-          "overageNzd": 1907.79,
-          "overageUsdReference": 1111.44,
+          "auditedTotalNzd": 2408.64,
+          "auditedTotalUsdReference": 1402.98,
+          "overageNzd": 1908.64,
+          "overageUsdReference": 1111.74,
           "remainingStructuralDeficitTotal": 2,
           "unknownPriceEntries": [],
           "unresolvedEntries": [],
@@ -791,7 +791,7 @@
           "Infinite storm count",
           "Infinite lifeloss"
         ],
-        "popularity": 22850,
+        "popularity": 22874,
         "comboCardNames": [
           "Warren Soultrader",
           "Gravecrawler",
@@ -824,8 +824,8 @@
             "set": "ELD",
             "collectorNumber": "75",
             "finish": "nonfoil",
-            "priceNzd": 15.05,
-            "priceUsdReference": 8.77
+            "priceNzd": 15.04,
+            "priceUsdReference": 8.76
           }
         ],
         "selectionScore": 1290,
@@ -970,11 +970,11 @@
           {
             "comboId": "4475-4794",
             "status": "eligible-package-scored",
-            "structuralScore": 1497.376428822989,
+            "structuralScore": 1497.3271331739065,
             "practicalAdjustment": -803.25,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 694.13,
+            "finalScore": 694.08,
             "totalManaValue": 11,
             "deadPieceRisk": 2.65,
             "bracketTag": "R",
@@ -983,11 +983,11 @@
           {
             "comboId": "3681-6714",
             "status": "eligible-package-scored",
-            "structuralScore": 1494.44163171912,
+            "structuralScore": 1494.4908954150726,
             "practicalAdjustment": -630,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 864.44,
+            "finalScore": 864.49,
             "totalManaValue": 11,
             "deadPieceRisk": 1,
             "bracketTag": "R",
@@ -996,11 +996,11 @@
           {
             "comboId": "5342-6765",
             "status": "eligible-package-scored",
-            "structuralScore": 1482.0524075335823,
+            "structuralScore": 1482.0648693554997,
             "practicalAdjustment": -560,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 922.05,
+            "finalScore": 922.06,
             "totalManaValue": 9,
             "deadPieceRisk": 1,
             "bracketTag": "R",
@@ -1009,11 +1009,11 @@
           {
             "comboId": "1218-6714",
             "status": "eligible-package-scored",
-            "structuralScore": 1480.0425249045538,
+            "structuralScore": 1480.0698562160226,
             "practicalAdjustment": -410,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 1070.04,
+            "finalScore": 1070.07,
             "totalManaValue": 8,
             "deadPieceRisk": 1,
             "bracketTag": "R",
@@ -1055,11 +1055,11 @@
           {
             "comboId": "1824-4549-6518",
             "status": "eligible-package-scored",
-            "structuralScore": 1314.1751309915135,
+            "structuralScore": 1314.210934336962,
             "practicalAdjustment": -215,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 1099.18,
+            "finalScore": 1099.21,
             "totalManaValue": 9,
             "deadPieceRisk": 0,
             "bracketTag": "S",
@@ -1068,11 +1068,11 @@
           {
             "comboId": "3693-3918-4899",
             "status": "eligible-package-scored",
-            "structuralScore": 1310.1083030878253,
+            "structuralScore": 1310.1298990359955,
             "practicalAdjustment": -675,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 635.11,
+            "finalScore": 635.13,
             "totalManaValue": 12,
             "deadPieceRisk": 2,
             "bracketTag": "S",
@@ -1081,11 +1081,11 @@
           {
             "comboId": "3693-4899-5963",
             "status": "eligible-package-scored",
-            "structuralScore": 1304.1546679287844,
+            "structuralScore": 1304.1830717576809,
             "practicalAdjustment": -315,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 989.15,
+            "finalScore": 989.18,
             "totalManaValue": 8,
             "deadPieceRisk": 1,
             "bracketTag": "S",
@@ -1142,12 +1142,12 @@
         "guidance": "The package is only a construction seed. Discovery uses deterministic result evidence rather than Commander Spellbook manual winning tags, then independently applies the local deterministic-win result gate. User exclusions are hard filters, while overlap with user-required/preferred cards is rewarded because it reduces added slots and preserves the requested plan. Candidate selection treats compactness and bracket tags as supporting evidence rather than overriding practical card utility, reserves verification space for each supported package size, permits at most one lightweight prerequisite, and prefers lower-mana cards with useful roles outside the combo. The finished 100-card deck must still independently resolve, pass Commander legality and printing policy, and reproduce a winning combo through find-my-combos before it can satisfy the competitive win-package gate.",
         "attempted": true,
         "seedSearchCapNzd": 488,
-        "seedSearchCapUsdReference": 284.3
+        "seedSearchCapUsdReference": 284.25
       },
       "postBudgetRefinement": {
         "attempted": true,
         "status": "accepted",
-        "refinementSearchCapNzd": 12.2,
+        "refinementSearchCapNzd": 12.21,
         "refinementSearchCapUsdReference": 7.11,
         "quality": {
           "acceptable": true,
@@ -1187,8 +1187,8 @@
           "status": "complete",
           "withinBudget": true,
           "maxDeckNzd": 500,
-          "maxDeckUsdReference": 291.29,
-          "auditedTotalNzd": 437.6,
+          "maxDeckUsdReference": 291.24,
+          "auditedTotalNzd": 437.68,
           "auditedTotalUsdReference": 254.94,
           "overageNzd": 0,
           "overageUsdReference": 0,
@@ -1447,7 +1447,7 @@
                       "requirements": [],
                       "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nWhen Gravecrawler enters, Ayara triggers, causing you to gain 1 life and each opponent to lose 1 life.\nRepeat.",
                       "manaNeeded": "",
-                      "popularity": 22850
+                      "popularity": 22874
                     }
                   },
                   {
@@ -1491,7 +1491,7 @@
                       "requirements": [],
                       "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler.\nWhen Gravecrawler dies, Blood Artist triggers, causing you to gain 1 life and target opponent to lose 1 life.\nResolve the Warren Soultrader ability, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nRepeat.",
                       "manaNeeded": "",
-                      "popularity": 44607
+                      "popularity": 44658
                     }
                   }
                 ],
@@ -3015,19 +3015,19 @@
       "premiumHeadroomRefinement": {
         "attempted": true,
         "status": "accepted",
-        "startingAuditedTotalNzd": 437.6,
+        "startingAuditedTotalNzd": 437.68,
         "startingAuditedTotalUsdReference": 254.94,
-        "remainingHeadroomNzd": 62.39,
-        "remainingHeadroomUsdReference": 36.35,
-        "premiumMaxNzdPerCard": 74.6,
-        "premiumMaxUsdPerCardReference": 43.46,
+        "remainingHeadroomNzd": 62.32,
+        "remainingHeadroomUsdReference": 36.3,
+        "premiumMaxNzdPerCard": 74.53,
+        "premiumMaxUsdPerCardReference": 43.41,
         "acceptedMaxEfficiencySwaps": 1,
         "budgetAudit": {
           "status": "complete",
           "withinBudget": true,
           "maxDeckNzd": 500,
-          "maxDeckUsdReference": 291.29,
-          "auditedTotalNzd": 463.82,
+          "maxDeckUsdReference": 291.24,
+          "auditedTotalNzd": 463.9,
           "auditedTotalUsdReference": 270.21,
           "overageNzd": 0,
           "overageUsdReference": 0,
@@ -3320,7 +3320,7 @@
                       "requirements": [],
                       "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nWhen Gravecrawler enters, Ayara triggers, causing you to gain 1 life and each opponent to lose 1 life.\nRepeat.",
                       "manaNeeded": "",
-                      "popularity": 22850
+                      "popularity": 22874
                     }
                   },
                   {
@@ -3364,7 +3364,7 @@
                       "requirements": [],
                       "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler.\nWhen Gravecrawler dies, Blood Artist triggers, causing you to gain 1 life and target opponent to lose 1 life.\nResolve the Warren Soultrader ability, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nRepeat.",
                       "manaNeeded": "",
-                      "popularity": 44607
+                      "popularity": 44658
                     }
                   }
                 ],
@@ -4023,7 +4023,7 @@
                     "set": "NEO",
                     "collectorNumber": "278",
                     "finish": "nonfoil",
-                    "priceNzd": 19.17,
+                    "priceNzd": 19.18,
                     "priceUsdReference": 11.17
                   }
                 }
@@ -4264,11 +4264,11 @@
               "status": "over-budget",
               "withinBudget": false,
               "maxDeckNzd": 500,
-              "maxDeckUsdReference": 291.29,
-              "auditedTotalNzd": 521.95,
-              "auditedTotalUsdReference": 304.08,
-              "overageNzd": 21.95,
-              "overageUsdReference": 12.79,
+              "maxDeckUsdReference": 291.24,
+              "auditedTotalNzd": 522.47,
+              "auditedTotalUsdReference": 304.33,
+              "overageNzd": 22.47,
+              "overageUsdReference": 13.09,
               "unknownPriceEntries": [],
               "unresolvedEntries": []
             }
@@ -4314,8 +4314,8 @@
               "status": "complete",
               "withinBudget": true,
               "maxDeckNzd": 500,
-              "maxDeckUsdReference": 291.29,
-              "auditedTotalNzd": 463.82,
+              "maxDeckUsdReference": 291.24,
+              "auditedTotalNzd": 463.9,
               "auditedTotalUsdReference": 270.21,
               "overageNzd": 0,
               "overageUsdReference": 0,
@@ -4546,12 +4546,12 @@
           "candidateSource": "role-search"
         },
         "exactPrintingPolicy": "Every selected line carries an exact Scryfall set code and collector number. Oracle identity drives rules; the selected physical printing must independently satisfy the active family/set/promo policy. User maxUsdPerCard applies to required and optional cards; candidateMaxUsdPerCard, when supplied, only tightens optional candidate search.",
-        "selectedPrintingEstimatedNzd": 447.08,
-        "selectedPrintingEstimatedUsdReference": 260.46,
+        "selectedPrintingEstimatedNzd": 446.99,
+        "selectedPrintingEstimatedUsdReference": 260.36,
         "constraints": {
           "maxNzdPerCard": null,
           "maxUsdPerCardReference": null,
-          "candidateMaxNzdPerCard": 12.2,
+          "candidateMaxNzdPerCard": 12.21,
           "candidateMaxUsdPerCardReference": 7.11,
           "allowedSets": [],
           "printingFamily": null,
@@ -4603,7 +4603,7 @@
       },
       "baseDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 211\n1 Deadly Dispute (MSC) 794\n1 Decree of Pain (DSC) 136\n1 Solemn Simulacrum (MSC) 215\n1 Dark Ritual (MSC) 793\n1 Season of Loss (BLB) 112\n1 Ugin, the Ineffable (CMM) 811\n1 Undying Malice (FDN) 528\n1 Hedron Archive (FDN) 726\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Walking Ballista (FIC) 371\n1 Gix's Command (BRO) 97\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Szat's Will (CMR) 152\n1 Baleful Mastery (OTC) 126\n1 Grave Researcher // Reanimate (PSOS) 85p\n1 Buried Alive (MH3) 273\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (MSC) 191\n1 Swiftfoot Boots (A25) 234\n1 Expedition Map (FDN) 724\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Lethal Scheme (MSC) 157\n1 Thought Vessel (PLG22) 2\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Withering Torment (MSC) 162\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Dread Return (CMM) 153\n1 Junk Diver (MH3) 293\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Revenge of the Rats (FDN) 67\n1 Hangarback Walker (SOC) 348\n1 Swarmyard Massacre (BLC) 20\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Zombie Apocalypse (MIC) 131\n1 Command Tower (MSC) 233\n1 Exotic Orchard (CN2) 219\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (SCD) 312\n1 Bojuka Bog (SOC) 363\n22 Swamp (SNC) 267",
       "decklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 211\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (MSC) 793\n1 Undying Malice (FDN) 528\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Walking Ballista (FIC) 371\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Baleful Mastery (OTC) 126\n1 Buried Alive (MH3) 273\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (MSC) 191\n1 Swiftfoot Boots (A25) 234\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Thought Vessel (PLG22) 2\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Command Tower (MSC) 233\n1 Exotic Orchard (CN2) 219\n1 War Room (PIP) 1068 *F*\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Takenuma, Abandoned Mire (NEO) 278 *N*\n1 Demolition Field (FDN) 687 *N*\n1 Ash Barrens (NCC) 386 *N*\n22 Swamp (SNC) 267\n1 Mephidross Vampire (5DN) 53 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Ravenous Amulet (FDN) 131 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 99 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Eaten Alive (J22) 409 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Worthy Cost (TDM) 99 *N*\n1 Bone Splinters (MM2) 73 *N*\n1 Lash of the Balrog (LTR) 92 *F*\n1 Triskelion (M11) 218 *N*\n1 Culling the Weak (EXO) 55 *N*",
-      "constraint": "US$291.29 maximum total deck budget",
+      "constraint": "US$291.24 maximum total deck budget",
       "caveat": "Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. Explicit exclusions and required cards are rechecked after draft selection and again after every accepted refinement; later win-package or efficiency stages cannot silently override them. The search compares every generated budget-compliant draft rather than stopping at the first cheap fit. Candidate quality is ordered by remaining structural deficits and then by the widest legal candidate search cap; raw spend is never treated as power by itself. Bracket-5 whole-budget construction first uses the selected draft’s conservative candidate cap for broad efficiency work. If exact audited headroom remains, a separate premium pass may widen only the per-card search ceiling by the actual unused whole-deck budget and tries at most two efficiency swaps, falling back to one. Premium candidates still need a material strategic/role improvement, preserved winning cores, non-worsened average nonland mana value, preserved protection floor, hard required/excluded-card compliance, and another exact whole-deck budget audit. Creature-type optimization can be explicitly disabled when the requested construction objective has no tribal component. The search remains heuristic rather than proof of the globally strongest possible list."
     }
   }
