@@ -4,9 +4,11 @@ name: "BENCH-01 Batch A — Counter Blitz + Liliana"
 # ce4c9eba59617be2cf57718408b40252230bccf4 for the repaired-source replay.
 on:
   push:
-    branches: ["agent/v15-native-deck-intelligence"]
+    branches: ["agent/v15-native-deck-intelligence", "agent/counter-blitz-generic-mechanism-floor-20260911"]
     paths:
       - "scripts/bench01-counter-blitz-ff-only-v15.ts"
+      - "src/services/scryfall.ts"
+      - "src/services/printing-policy-v08.ts"
       - "scripts/e2e-liliana-budget-500-v15.ts"
       - ".github/workflows/bench01-batch-a.yml"
   workflow_dispatch:
@@ -24,6 +26,8 @@ env:
   SCRYFALL_HTTP_RETRY_ATTEMPTS: 5
   SCRYFALL_MIN_REQUEST_GAP_MS: 750
   COMMANDER_SPELLBOOK_HTTP_RETRY_ATTEMPTS: 5
+  SCRYFALL_RETAINED_RAW_ARTIFACT_REFERENCE: ghcr.io/vt7dfbmh7b-droid/mtg-ultimate-mcp-carddata@sha256:2407618a9f3f4195665cd7db785458d1986ceefa78b11d80cf9df8815a6e4d09
+  SCRYFALL_RETAINED_MANIFEST_ARTIFACT_REFERENCE: ghcr.io/vt7dfbmh7b-droid/mtg-ultimate-mcp-carddata-manifests@sha256:64d8526280df2ad6620aaed62ac1ce54fbd2e23515659864f6ad49dc168a2bbc
 
 jobs:
   batch-a:
@@ -41,6 +45,26 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Set up ORAS for retained Scryfall replay
+        uses: oras-project/setup-oras@1d808f7d7f6995cc68b7bf507bfe5c5446e1dc9d
+
+      - name: Pull immutable retained Scryfall snapshot
+        shell: bash
+        env:
+          RAW_REF: ${{ env.SCRYFALL_RETAINED_RAW_ARTIFACT_REFERENCE }}
+          MANIFEST_REF: ${{ env.SCRYFALL_RETAINED_MANIFEST_ARTIFACT_REFERENCE }}
+        run: |
+          set -euo pipefail
+          echo "${{ secrets.GITHUB_TOKEN }}" | oras login ghcr.io --username "${{ github.actor }}" --password-stdin
+          mkdir -p scryfall-raw scryfall-manifest
+          oras pull "$RAW_REF" -o scryfall-raw
+          oras pull "$MANIFEST_REF" -o scryfall-manifest
+          RAW_FILE=$(find scryfall-raw -maxdepth 1 -type f -name '*.jsonl.gz' -print -quit)
+          MANIFEST_FILE=$(find scryfall-manifest -maxdepth 1 -type f -name '*.json' -print -quit)
+          test -n "$RAW_FILE" && test -n "$MANIFEST_FILE"
+          echo "SCRYFALL_RETAINED_RAW_PATH=$RAW_FILE" >> "$GITHUB_ENV"
+          echo "SCRYFALL_RETAINED_MANIFEST_PATH=$MANIFEST_FILE" >> "$GITHUB_ENV"
 
       - name: Build checked-in source
         id: source_build
