@@ -255,8 +255,8 @@ function scryfallCard(value: unknown): value is ScryfallCard {
     && typeof card.lang === 'string' && card.lang.length > 0
     // Scryfall's authoritative `reversible_card` records may carry null for
     // top-level cmc/type_line; the face records remain the source of truth.
-    && (card.cmc === null || (typeof card.cmc === 'number' && Number.isFinite(card.cmc)))
-    && (card.type_line === null || typeof card.type_line === 'string')
+    && (card.cmc === undefined || card.cmc === null || (typeof card.cmc === 'number' && Number.isFinite(card.cmc)))
+    && (card.type_line === undefined || card.type_line === null || typeof card.type_line === 'string')
     && stringArray(card.color_identity)
     && stringArray(card.keywords)
     && legalities(card.legalities)
