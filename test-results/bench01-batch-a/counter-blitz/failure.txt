@@ -1,4 +1,5 @@
-TypeError: Cannot read properties of undefined (reading 'length')
-TypeError: Cannot read properties of undefined (reading 'length')
-    at installRetainedScryfallCardDataV15 (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/src/services/scryfall.ts:76:13)
-    at main (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/scripts/bench01-counter-blitz-ff-only-v15.ts:212:5)
+SdkError: Request timed out
+SdkError: Request timed out
+    at Timeout.timeoutHandler (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/node_modules/@modelcontextprotocol/core-internal/src/shared/protocol.ts:1555:49)
+    at listOnTimeout (node:internal/timers:585:17)
+    at process.processTimers (node:internal/timers:521:7)
