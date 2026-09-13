@@ -81,6 +81,37 @@ function metricDelta(plan: Record<string, unknown>, key: string): number {
   return left === null || right === null ? 0 : right - left;
 }
 
+const STRUCTURAL_DEFICIT_METRIC_V15: Readonly<Record<string, string>> = {
+  ramp: 'rampCount',
+  draw: 'drawCount',
+  interaction: 'interactionCount',
+  protection: 'protectionCount',
+  tutor: 'tutorCount',
+  recursion: 'recursionCount',
+  'board-wipe': 'boardWipeCount',
+  early: 'earlyPlayCount',
+  'free-interaction': 'freeInteractionCount',
+};
+
+export function requestedStructuralDeficitProgressV15(plan: Record<string, unknown>): number {
+  const pressure = asRecord(plan.v15TargetPressure);
+  const deficits = Array.isArray(pressure.structuralDeficits)
+    ? pressure.structuralDeficits.map(asRecord)
+    : [];
+  const afterMetrics = asRecord(plan.afterMetrics);
+  let progress = 0;
+  for (const deficit of deficits) {
+    const role = typeof deficit.role === 'string' ? deficit.role : '';
+    const metric = STRUCTURAL_DEFICIT_METRIC_V15[role];
+    const current = numeric(deficit.current);
+    const target = numeric(deficit.target);
+    const after = metric ? numeric(afterMetrics[metric]) : null;
+    if (!metric || current === null || target === null || after === null || target <= current) continue;
+    progress += Math.max(0, Math.min(target, after) - current);
+  }
+  return Number(progress.toFixed(3));
+}
+
 export function refinementImprovementScoreV11(plan: Record<string, unknown>): RefinementImprovementScoreV11 {
   const simulation = asRecord(plan.simulation);
   const delta = asRecord(simulation.delta);
@@ -106,6 +137,12 @@ export function refinementImprovementScoreV11(plan: Record<string, unknown>): Re
   components.rampStructure = Number((metricDelta(plan, 'rampCount') * 0.03).toFixed(3));
   components.tutorStructure = Number((metricDelta(plan, 'tutorCount') * 0.03).toFixed(3));
   components.earlyPlayStructure = Number((metricDelta(plan, 'earlyPlayCount') * 0.02).toFixed(3));
+
+  // These are measured deficits requested by the active upgrade contract, not generic role
+  // churn. Give each verified step toward a still-open floor enough weight to survive ordinary
+  // simulation noise while retaining the independent significant-regression veto below.
+  const requestedStructuralProgress = requestedStructuralDeficitProgressV15(plan);
+  components.requestedStructuralProgress = Number((requestedStructuralProgress * 3).toFixed(3));
 
   const beforeMv = numeric(asRecord(plan.beforeMetrics).averageNonlandManaValue);
   const afterMv = numeric(asRecord(plan.afterMetrics).averageNonlandManaValue);
@@ -139,7 +176,8 @@ export function refinementImprovementScoreV11(plan: Record<string, unknown>): Re
   const zeroTargetProgressWhileFailedGatesRemain = targetGate.applicable
     && targetGate.failedBefore.length > 0
     && targetGate.repairedGates.length === 0
-    && targetGate.advancedFailedGates.length === 0;
+    && targetGate.advancedFailedGates.length === 0
+    && requestedStructuralProgress <= 0;
 
   return {
     score: Number(score.toFixed(3)),

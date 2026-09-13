@@ -325,6 +325,31 @@ async function main(): Promise<void> {
       candidatePackagesEligible: finite(round.candidatePackagesEligible),
       stopReason: typeof round.stopReason === 'string' ? round.stopReason : null,
     })),
+    finalRoundCandidates: (() => {
+      const detailedRounds = Array.isArray(refinement.detailedRounds)
+        ? refinement.detailedRounds.map((entry) => record(entry))
+        : [];
+      const finalRound = detailedRounds.at(-1);
+      const comparisons = finalRound && Array.isArray(finalRound.candidateComparisons)
+        ? finalRound.candidateComparisons.map((entry) => record(entry))
+        : [];
+      return comparisons.map((candidate) => ({
+        candidate: finite(candidate.candidate),
+        eligible: candidate.eligible === true,
+        reason: typeof candidate.reason === 'string' ? candidate.reason : null,
+        actualSwaps: finite(candidate.actualSwaps),
+        improvementScore: finite(candidate.improvementScore),
+        swaps: Array.isArray(candidate.swaps)
+          ? candidate.swaps.map((entry) => {
+            const swap = record(entry);
+            return {
+              out: typeof swap.out === 'string' ? swap.out : null,
+              in: typeof swap.in === 'string' ? swap.in : null,
+            };
+          })
+          : [],
+      }));
+    })(),
   };
   await writeFile('bench01-counter-blitz-refined-deck.txt', `${finalDecklist}\n`);
 

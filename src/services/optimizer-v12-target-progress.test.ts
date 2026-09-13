@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { refinementImprovementScoreV11 } from './optimizer-v11.js';
+import {
+  refinementImprovementScoreV11,
+  requestedStructuralDeficitProgressV15,
+} from './optimizer-v11.js';
 import { candidateTargetGateProgressGateV15 } from './optimizer-v12.js';
 
 function metrics(overrides: Record<string, unknown> = {}): Record<string, unknown> {
@@ -76,6 +79,51 @@ test('V0.12 iterative candidate gate rejects cosmetic movement while Bracket-4 o
   assert.equal(score.targetGate.applicable, true);
   assert.equal(score.zeroTargetProgressWhileFailedGatesRemain, true);
   assert.equal(gate.eligible, false);
+});
+
+test('V0.12 scoring recognizes measured progress toward an active structural deficit', () => {
+  const failing = metrics({
+    averageNonlandManaValue: 3.32,
+    earlyPlayCount: 21,
+    cheapInteractionCount: 2,
+    fastManaCount: 1,
+    tutorCount: 0,
+    protectionCount: 2,
+  });
+  const candidate = plan({
+    simulation: { delta: { functionalKeepRate: -2 } },
+    beforeMetrics: failing,
+    afterMetrics: { ...failing, protectionCount: 3 },
+    v15TargetPressure: {
+      targetPressure: { targetBracket: 4 },
+      winRouteVerificationStatus: 'protected',
+      atomicWinPackageInjected: false,
+      selectedBracketTag: null,
+      structuralDeficits: [{ role: 'protection', current: 2, target: 8 }],
+    },
+  });
+  const score = refinementImprovementScoreV11(candidate);
+
+  assert.equal(requestedStructuralDeficitProgressV15(candidate), 1);
+  assert.equal(score.components.requestedStructuralProgress, 3);
+  assert.ok(score.score > 0.1, 'one verified floor step must outweigh ordinary non-significant simulation noise');
+  assert.equal(score.significantRegression, false);
+  assert.equal(score.zeroTargetProgressWhileFailedGatesRemain, false);
+  assert.equal(candidateTargetGateProgressGateV15(score).eligible, true);
+});
+
+test('structural deficit credit is bounded at the requested floor and does not reward unrelated churn', () => {
+  const candidate = plan({
+    beforeMetrics: metrics({ protectionCount: 2, drawCount: 22 }),
+    afterMetrics: metrics({ protectionCount: 12, drawCount: 30 }),
+    v15TargetPressure: {
+      targetPressure: { targetBracket: 5 },
+      winRouteVerificationStatus: 'protected',
+      structuralDeficits: [{ role: 'protection', current: 2, target: 8 }],
+    },
+  });
+
+  assert.equal(requestedStructuralDeficitProgressV15(candidate), 6);
 });
 
 test('V0.12 iterative candidate gate accepts measurable Bracket-4 curve progress', () => {
