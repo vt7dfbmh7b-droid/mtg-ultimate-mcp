@@ -1,8 +1,8 @@
-executed_source_sha=429916c0d7328d8482722b874cd383358ae629f9
-product_runtime_baseline_sha=ce4c9eba59617be2cf57718408b40252230bccf4
-source_relationship=benchmark-harness-only-descendant-product-src-frozen-at-repair-sha
+executed_source_sha=123b571182ef1fd4daa61b833cbe3233f6595a10
+product_runtime_baseline_sha=123b571182ef1fd4daa61b833cbe3233f6595a10
+source_relationship=exact-checked-in-source
 build_outcome=success
-counter_blitz_outcome=failure
+counter_blitz_outcome=success
 liliana_outcome=success
-batch=BENCH-01-A-REPAIRED-REPLAY
+batch=BENCH-01-A-FROZEN-REPLAY
 source_frozen_within_batch=true

@@ -1,6 +1,30 @@
-BENCH-01 COUNTER BLITZ — HARD FAILURE
-SdkError: Request timed out
-SdkError: Request timed out
-    at Timeout.timeoutHandler (/home/runner/work/mtg-ultimate-mcp/mtg-ultimate-mcp/node_modules/@modelcontextprotocol/core-internal/src/shared/protocol.ts:1555:49)
-    at listOnTimeout (node:internal/timers:585:17)
-    at process.processTimers (node:internal/timers:521:7)
+{"elapsedMs":579,"event":"stage","stage":"worker-started","sourceSha":"123b571182ef1fd4daa61b833cbe3233f6595a10","manifestFingerprint":"01c73ca9a486e5fd7eee75cc740242e8345ec31eaacb8533ba2d569667fb6613","evaluationTime":"2026-09-12T08:30:39.498Z"}
+{"elapsedMs":10615,"event":"stage","stage":"verified-scryfall-installed","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":11257,"event":"stage","stage":"untouched-stock-resolved","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":12353,"event":"stage","stage":"stock-audit-complete","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":12480,"event":"stage","stage":"refinement-started","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":309449,"event":"stage","stage":"refinement-complete","scryfall":{"queryEvaluations":52,"failures":[]}}
+{"elapsedMs":310194,"event":"stage","stage":"final-audit-complete","scryfall":{"queryEvaluations":52,"failures":[]}}
+BENCH-01 COUNTER BLITZ — EXECUTION COMPLETE
+REFINEMENT STATUS: refined; SWAPS: 11
+BRACKET: 3 -> 3
+COUNTERMAGIC: 1 -> 3 (target 8)
+COUNTER ENGINE: 52 -> 53 (target 16)
+PROLIFERATE: 4 -> 4 (target 3)
+COMBAT REFERENCES: 12 -> 13 (target 8)
+TARGET MOVEMENT: {"bracket":{"before":false,"after":false},"denseCountermagic":{"before":false,"after":false},"counterEngine":{"before":true,"after":true},"proliferate":{"before":true,"after":true},"combatReference":{"before":true,"after":true},"hybridCreatureFloor":{"before":true,"after":true}}
+{"elapsedMs":585,"event":"stage","stage":"worker-started","sourceSha":"123b571182ef1fd4daa61b833cbe3233f6595a10","manifestFingerprint":"01c73ca9a486e5fd7eee75cc740242e8345ec31eaacb8533ba2d569667fb6613","evaluationTime":"2026-09-12T08:30:39.498Z"}
+{"elapsedMs":10222,"event":"stage","stage":"verified-scryfall-installed","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":10248,"event":"stage","stage":"untouched-stock-resolved","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":10352,"event":"stage","stage":"stock-audit-complete","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":10486,"event":"stage","stage":"refinement-started","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":298175,"event":"stage","stage":"refinement-complete","scryfall":{"queryEvaluations":52,"failures":[]}}
+{"elapsedMs":298207,"event":"stage","stage":"final-audit-complete","scryfall":{"queryEvaluations":52,"failures":[]}}
+BENCH-01 COUNTER BLITZ — EXECUTION COMPLETE
+REFINEMENT STATUS: refined; SWAPS: 11
+BRACKET: 3 -> 3
+COUNTERMAGIC: 1 -> 3 (target 8)
+COUNTER ENGINE: 52 -> 53 (target 16)
+PROLIFERATE: 4 -> 4 (target 3)
+COMBAT REFERENCES: 12 -> 13 (target 8)
+TARGET MOVEMENT: {"bracket":{"before":false,"after":false},"denseCountermagic":{"before":false,"after":false},"counterEngine":{"before":true,"after":true},"proliferate":{"before":true,"after":true},"combatReference":{"before":true,"after":true},"hybridCreatureFloor":{"before":true,"after":true}}
