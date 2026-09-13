@@ -54,7 +54,7 @@
 1 Hangarback Walker (SOC) 348
 1 Oversold Cemetery (DMR) 96
 1 Command Tower (MSC) 233
-1 Exotic Orchard (CN2) 219
+1 Exotic Orchard (FIC) 390
 1 War Room (PIP) 1068 *F*
 1 Fell the Profane // Fell Mire (MH3) 244
 1 Secluded Courtyard (MSC) 265

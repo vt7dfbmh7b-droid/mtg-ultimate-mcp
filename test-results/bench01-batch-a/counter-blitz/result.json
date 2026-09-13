@@ -1,7 +1,7 @@
 {
   "schema": "bench01-counter-blitz-ff-only-v1",
   "provenance": {
-    "sourceSha": "5c086dae8b03e936c7204a6cdb2d6d376fce56c1",
+    "sourceSha": "0c3d84750254570fe4e3a4228887e5233fcec962",
     "manifestFingerprint": "01c73ca9a486e5fd7eee75cc740242e8345ec31eaacb8533ba2d569667fb6613",
     "evaluationTime": "2026-09-12T08:30:39.498Z",
     "stockDeckSha256": "de5141f786f996dec4a9058fc4eafdf39a0e11d99f7eaf6214a65eae637237e3",
@@ -240,6 +240,61 @@
           "candidatePackagesGenerated": 6,
           "candidatePackagesEligible": 0,
           "stopReason": "all-competing-packages-below-improvement-threshold"
+        }
+      ],
+      "finalRoundCandidates": [
+        {
+          "candidate": 1,
+          "eligible": false,
+          "reason": "improvement-below-threshold",
+          "actualSwaps": 1,
+          "improvementScore": -2.181,
+          "swaps": [
+            {
+              "out": "Damning Verdict",
+              "in": "Fated Clash"
+            }
+          ]
+        },
+        {
+          "candidate": 2,
+          "eligible": false,
+          "reason": "no-supported-swaps-found",
+          "actualSwaps": 0,
+          "improvementScore": 0,
+          "swaps": []
+        },
+        {
+          "candidate": 3,
+          "eligible": false,
+          "reason": "no-supported-swaps-found",
+          "actualSwaps": 0,
+          "improvementScore": 0,
+          "swaps": []
+        },
+        {
+          "candidate": 4,
+          "eligible": false,
+          "reason": "no-supported-swaps-found",
+          "actualSwaps": 0,
+          "improvementScore": 0,
+          "swaps": []
+        },
+        {
+          "candidate": 5,
+          "eligible": false,
+          "reason": "no-supported-swaps-found",
+          "actualSwaps": 0,
+          "improvementScore": 0,
+          "swaps": []
+        },
+        {
+          "candidate": 6,
+          "eligible": false,
+          "reason": "no-supported-swaps-found",
+          "actualSwaps": 0,
+          "improvementScore": 0,
+          "swaps": []
         }
       ]
     },
@@ -41208,6 +41263,6 @@
     "freshProcesses": 2,
     "exactDeckAndMetricsEqual": true,
     "networkFallbackInReplay": false,
-    "sourceSha": "5c086dae8b03e936c7204a6cdb2d6d376fce56c1"
+    "sourceSha": "0c3d84750254570fe4e3a4228887e5233fcec962"
   }
 }

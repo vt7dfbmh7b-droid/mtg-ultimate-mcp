@@ -1,10 +1,10 @@
-{"elapsedMs":303,"event":"stage","stage":"worker-started","sourceSha":"5c086dae8b03e936c7204a6cdb2d6d376fce56c1","manifestFingerprint":"01c73ca9a486e5fd7eee75cc740242e8345ec31eaacb8533ba2d569667fb6613","evaluationTime":"2026-09-12T08:30:39.498Z"}
-{"elapsedMs":5504,"event":"stage","stage":"verified-scryfall-installed","scryfall":{"queryEvaluations":0,"failures":[]}}
-{"elapsedMs":6221,"event":"stage","stage":"untouched-stock-resolved","scryfall":{"queryEvaluations":0,"failures":[]}}
-{"elapsedMs":8248,"event":"stage","stage":"stock-audit-complete","scryfall":{"queryEvaluations":0,"failures":[]}}
-{"elapsedMs":8325,"event":"stage","stage":"refinement-started","scryfall":{"queryEvaluations":0,"failures":[]}}
-{"elapsedMs":189146,"event":"stage","stage":"refinement-complete","scryfall":{"queryEvaluations":52,"failures":[]}}
-{"elapsedMs":190045,"event":"stage","stage":"final-audit-complete","scryfall":{"queryEvaluations":52,"failures":[]}}
+{"elapsedMs":609,"event":"stage","stage":"worker-started","sourceSha":"0c3d84750254570fe4e3a4228887e5233fcec962","manifestFingerprint":"01c73ca9a486e5fd7eee75cc740242e8345ec31eaacb8533ba2d569667fb6613","evaluationTime":"2026-09-12T08:30:39.498Z"}
+{"elapsedMs":10068,"event":"stage","stage":"verified-scryfall-installed","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":10723,"event":"stage","stage":"untouched-stock-resolved","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":12336,"event":"stage","stage":"stock-audit-complete","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":12480,"event":"stage","stage":"refinement-started","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":363347,"event":"stage","stage":"refinement-complete","scryfall":{"queryEvaluations":52,"failures":[]}}
+{"elapsedMs":364195,"event":"stage","stage":"final-audit-complete","scryfall":{"queryEvaluations":52,"failures":[]}}
 BENCH-01 COUNTER BLITZ — EXECUTION COMPLETE
 REFINEMENT STATUS: refined; SWAPS: 17
 BRACKET: 3 -> 3
@@ -15,13 +15,13 @@ COMBAT REFERENCES: 12 -> 15 (target 8)
 PROTECTION: 0 -> 2 (target 8)
 SUBSTANTIAL UPGRADE: 17 swaps (target 20)
 TARGET MOVEMENT: {"bracket":{"before":false,"after":false},"denseCountermagic":{"before":false,"after":false},"counterEngine":{"before":true,"after":true},"proliferate":{"before":true,"after":true},"combatReference":{"before":true,"after":true},"hybridCreatureFloor":{"before":true,"after":true},"protection":{"before":false,"after":false},"requestedWhiteMageBallistaAccess":{"before":false,"after":false}}
-{"elapsedMs":316,"event":"stage","stage":"worker-started","sourceSha":"5c086dae8b03e936c7204a6cdb2d6d376fce56c1","manifestFingerprint":"01c73ca9a486e5fd7eee75cc740242e8345ec31eaacb8533ba2d569667fb6613","evaluationTime":"2026-09-12T08:30:39.498Z"}
-{"elapsedMs":5462,"event":"stage","stage":"verified-scryfall-installed","scryfall":{"queryEvaluations":0,"failures":[]}}
-{"elapsedMs":5476,"event":"stage","stage":"untouched-stock-resolved","scryfall":{"queryEvaluations":0,"failures":[]}}
-{"elapsedMs":5541,"event":"stage","stage":"stock-audit-complete","scryfall":{"queryEvaluations":0,"failures":[]}}
-{"elapsedMs":5613,"event":"stage","stage":"refinement-started","scryfall":{"queryEvaluations":0,"failures":[]}}
-{"elapsedMs":182550,"event":"stage","stage":"refinement-complete","scryfall":{"queryEvaluations":52,"failures":[]}}
-{"elapsedMs":182577,"event":"stage","stage":"final-audit-complete","scryfall":{"queryEvaluations":52,"failures":[]}}
+{"elapsedMs":592,"event":"stage","stage":"worker-started","sourceSha":"0c3d84750254570fe4e3a4228887e5233fcec962","manifestFingerprint":"01c73ca9a486e5fd7eee75cc740242e8345ec31eaacb8533ba2d569667fb6613","evaluationTime":"2026-09-12T08:30:39.498Z"}
+{"elapsedMs":9943,"event":"stage","stage":"verified-scryfall-installed","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":9968,"event":"stage","stage":"untouched-stock-resolved","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":10084,"event":"stage","stage":"stock-audit-complete","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":10220,"event":"stage","stage":"refinement-started","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":357199,"event":"stage","stage":"refinement-complete","scryfall":{"queryEvaluations":52,"failures":[]}}
+{"elapsedMs":357249,"event":"stage","stage":"final-audit-complete","scryfall":{"queryEvaluations":52,"failures":[]}}
 BENCH-01 COUNTER BLITZ — EXECUTION COMPLETE
 REFINEMENT STATUS: refined; SWAPS: 17
 BRACKET: 3 -> 3
