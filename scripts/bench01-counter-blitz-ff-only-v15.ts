@@ -275,7 +275,6 @@ async function main(): Promise<void> {
         profile: 'custom',
         targetBracket: TARGET_BRACKET,
         maxSwaps: 30,
-        maxRounds: 5,
         swapsPerRound: 6,
         candidatePackagesPerRound: 6,
         minimumImprovementScore: 0.1,

@@ -942,12 +942,20 @@ export function shouldContinueCandidateDiversificationV15(input: {
   return input.candidateProducedPlan && input.searchStateChanged;
 }
 
+export function refinementRoundLimitV12(
+  configuredRounds: number | undefined,
+  maxTotalSwaps: number,
+): number {
+  const requested = configuredRounds === undefined ? maxTotalSwaps : Math.trunc(configuredRounds);
+  return Math.max(1, Math.min(30, requested));
+}
+
 export async function refineCommanderDeckIterativelyV12(
   decklist: string,
   options: IterativeRefinementOptionsV12 = {},
 ): Promise<Record<string, unknown>> {
-  const maxRounds = Math.max(1, Math.min(5, Math.trunc(options.maxRounds ?? 3)));
   const maxTotalSwaps = Math.max(1, Math.min(30, Math.trunc(options.maxSwaps ?? 12)));
+  const maxRounds = refinementRoundLimitV12(options.maxRounds, maxTotalSwaps);
   const swapsPerRound = Math.max(1, Math.min(8, Math.trunc(options.swapsPerRound ?? 4)));
   const candidateDiversification = candidateDiversificationBudgetV15(options.candidatePackagesPerRound);
   const candidatePackagesPerRound = candidateDiversification.minimumAttempts;

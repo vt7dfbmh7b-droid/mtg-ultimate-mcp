@@ -4,7 +4,10 @@ import {
   refinementImprovementScoreV11,
   requestedStructuralDeficitProgressV15,
 } from './optimizer-v11.js';
-import { candidateTargetGateProgressGateV15 } from './optimizer-v12.js';
+import {
+  candidateTargetGateProgressGateV15,
+  refinementRoundLimitV12,
+} from './optimizer-v12.js';
 
 function metrics(overrides: Record<string, unknown> = {}): Record<string, unknown> {
   return {
@@ -36,6 +39,13 @@ function plan(overrides: Record<string, unknown> = {}): Record<string, unknown> 
     ...overrides,
   };
 }
+
+test('iterative refinement round limits can pursue the requested swap budget without an implicit five-round stop', () => {
+  assert.equal(refinementRoundLimitV12(undefined, 30), 30);
+  assert.equal(refinementRoundLimitV12(undefined, 12), 12);
+  assert.equal(refinementRoundLimitV12(5, 30), 5, 'an explicit caller cap remains authoritative');
+  assert.equal(refinementRoundLimitV12(100, 30), 30, 'the safety ceiling remains bounded');
+});
 
 test('V0.12 iterative candidate gate rejects a positive-scoring package with zero Bracket-5 target progress', () => {
   const score = refinementImprovementScoreV11(plan());
