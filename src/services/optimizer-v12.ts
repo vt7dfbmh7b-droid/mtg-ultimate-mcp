@@ -1,4 +1,5 @@
 import type { ScryfallCard } from '../types/scryfall.js';
+import { executionTraceV15 } from '../lib/execution-trace-v15.js';
 import { derivePostBuildEvidenceV15 } from './commander-build-evaluation-v15.js';
 import { auditUpgradeDeckStrategyRetentionV15 } from './commander-strategy-affinity-v15.js';
 import {
@@ -960,6 +961,7 @@ export async function refineCommanderDeckIterativelyV12(
   const detailLevel = options.detailLevel ?? 'simple';
 
   const initial = await resolveDeck(decklist);
+  executionTraceV15({ event: 'refinement-input-resolved', cardCount: initial.parsed.totalCards });
   if (initial.notFound.length > 0) {
     return {
       status: 'incomplete',
@@ -993,6 +995,7 @@ export async function refineCommanderDeckIterativelyV12(
   let stopReason = 'maximum-rounds-reached';
 
   for (let round = 1; round <= maxRounds; round += 1) {
+    executionTraceV15({ event: 'refinement-round-start', round, acceptedSwaps: acceptedSwaps.length });
     const swapsRemaining = maxTotalSwaps - acceptedSwaps.length;
     if (swapsRemaining <= 0) {
       stopReason = 'maximum-swaps-reached';
@@ -1045,6 +1048,8 @@ export async function refineCommanderDeckIterativelyV12(
       const strategyCutBlocked = new Set<string>();
       const candidates: CandidateEvaluationV12[] = [];
       for (let candidate = 1; candidate <= candidateDiversification.hardLimit; candidate += 1) {
+        const candidateStarted = performance.now();
+        executionTraceV15({ event: 'refinement-candidate-start', round, candidate, attemptSize });
         const diversityBlockedBefore = diversityBlocked.size;
         const strategyCutBlockedBefore = strategyCutBlocked.size;
         const evaluated = await evaluateCandidate(
@@ -1064,6 +1069,7 @@ export async function refineCommanderDeckIterativelyV12(
           currentThemeAudit,
         );
         candidates.push(evaluated);
+        executionTraceV15({ event: 'refinement-candidate-complete', round, candidate, attemptSize, eligible: evaluated.eligible, reason: evaluated.reason, durationMs: performance.now() - candidateStarted });
         if (evaluated.plan) diversifyNextPackage(diversityBlocked, evaluated.plan);
         diversifyRejectedStrategyCuts(strategyCutBlocked, evaluated);
         diversifyRejectedPackageAcceptanceCuts(strategyCutBlocked, evaluated);

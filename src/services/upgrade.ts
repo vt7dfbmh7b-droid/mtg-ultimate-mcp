@@ -648,12 +648,16 @@ export async function suggestDeckUpgrades(
   const themeCurrentMainMatches = Math.max(0, Math.trunc(options.themeCurrentMainMatches ?? 0));
   const themeDeficit = Math.max(0, themeMinimumMainMatches - themeCurrentMainMatches);
   const themeCandidateNames = new Set<string>();
+  const themeDiscoveredCards = new Map<string, ScryfallCard>();
   let controlledThemeSearchQuery: string | null = null;
   if (themeClause) {
     controlledThemeSearchQuery = themeSearchQuery(allowedIdentity, themeClause, printingPolicy);
     try {
       const themeResults = await searchCards(controlledThemeSearchQuery, 100);
-      for (const card of themeResults) themeCandidateNames.add(card.name.toLocaleLowerCase());
+      for (const card of themeResults) {
+        themeCandidateNames.add(card.name.toLocaleLowerCase());
+        themeDiscoveredCards.set(card.name.toLocaleLowerCase(), card);
+      }
     } catch {}
   }
 
@@ -675,6 +679,7 @@ export async function suggestDeckUpgrades(
     themeComponentSearchQueries.push({ id: component.id, query });
     try {
       const results = await searchCards(query, 100);
+      for (const card of results) themeDiscoveredCards.set(card.name.toLocaleLowerCase(), card);
       const names = new Set(results.map((card) => card.name.toLocaleLowerCase()));
       themeComponentCandidateNames.set(component.id, names);
       for (const name of names) themeCandidateNames.add(name);
@@ -741,7 +746,9 @@ export async function suggestDeckUpgrades(
       } catch {}
     }
 
-    const results = restrictedPoolActive ? genericResults : mergeCardsByName(themedResults, strategyResults, genericResults);
+    // A bounded theme/component search already resolved these cards. Preserve that discovery
+    // for role filtering instead of discarding the cards and relying on another popularity slice.
+    const results = restrictedPoolActive ? genericResults : mergeCardsByName(themedResults, strategyResults, [...themeDiscoveredCards.values()], genericResults);
     const roleMatchesBeforeExistingExclusions = restrictedEligiblePool
       ? restrictedEligiblePool.filter((card) => !card.type_line.toLowerCase().includes('land')).filter((card) => card.legalities.commander === 'legal').filter((card) => cardMatchesRole(card, deficit.role, deficit.targetGate)).length
       : null;

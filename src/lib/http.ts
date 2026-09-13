@@ -1,4 +1,5 @@
 import { config } from '../config.js';
+import { retainedScryfallResponseV15 } from '../services/retained-scryfall-provider-v15.js';
 
 export class HttpError extends Error {
   readonly status: number;
@@ -252,6 +253,8 @@ export async function fetchJson<T>(
   init: RequestInit = {},
   timeoutMs?: number,
 ): Promise<T> {
+  const retained = retainedScryfallResponseV15(url, init);
+  if (retained !== undefined) return retained as T;
   const response = await fetchWithRetry(url, { ...init, headers: requestHeaders(init) }, timeoutMs);
 
   if (!response.ok) {

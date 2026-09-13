@@ -11,7 +11,9 @@ const workflowsDir = resolve(process.cwd(), '.github', 'workflows');
 // must not change .github/workflows/** at all. A future explicit interactive
 // maintenance action may deliberately advance this SHA after reviewing the new
 // workflow tree.
-const workflowPolicyEpochSha = 'b1f84be4368b4fbe5367efc276a25ecc1758ec87';
+// Reviewed interactive replay maintenance: docs/COUNTER-BLITZ-REPLAY-MAINTENANCE-20260912.md.
+// The full-history guard below is unchanged; all later autonomous workflow edits still fail.
+const workflowPolicyEpochSha = '087b87768dbc8fb65116d37686ac157c2d7a7e9b';
 
 const forbiddenSourceMutationPatterns: Array<{ label: string; pattern: RegExp }> = [
   {

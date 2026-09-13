@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import { appendFileSync, writeFileSync } from 'node:fs';
 import { readFile, unlink, writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import { Client, StreamableHTTPClientTransport } from '@modelcontextprotocol/client';
 import { createMcpHandler } from '@modelcontextprotocol/server';
 import { createMtgServerV15 } from '../src/server-v15.js';
@@ -12,6 +15,14 @@ import { findDeckCombosEvidence } from '../src/services/spellbook.js';
 import { getCardsByIdentifiers, installRetainedScryfallCardDataV15, type CardIdentifierInput } from '../src/services/scryfall.js';
 import { replayRetainedScryfallCardDataSnapshotV15 } from '../src/services/retained-scryfall-carddata-replay-v15.js';
 import type { RetainedScryfallCardDataSnapshotManifestV15 } from '../src/services/retained-scryfall-carddata-snapshot-v15.js';
+import { assertRetainedScryfallReplayCompleteV15, retainedScryfallDiagnosticsV15 } from '../src/services/retained-scryfall-provider-v15.js';
+import { fetchPreconDeckV10 } from '../src/services/precons-v10.js';
+import { getCardOracleText } from '../src/services/scryfall.js';
+import { config } from '../src/config.js';
+import { runBoundedProcessV15 } from '../src/lib/bounded-process-v15.js';
+import { createRetainedHttpSessionV15, sha256V15, type RetainedHttpCaptureV15 } from '../src/lib/retained-http-session-v15.js';
+import { withEvaluationTimeV15 } from '../src/lib/evaluation-clock-v15.js';
+import { withExecutionTraceV15 } from '../src/lib/execution-trace-v15.js';
 
 const PRECON_REFERENCE = 'CounterBlitzFinalFantasyX_FIC';
 const COMMANDER = "Tidus, Yuna's Guardian";
@@ -21,11 +32,26 @@ const COUNTER_ENGINE_TARGET = 16;
 const PROLIFERATE_TARGET = 3;
 const COMBAT_REFERENCE_TARGET = 8;
 const MIN_CREATURES_FOR_HYBRID_PLAN = 18;
-const STOCK_DECK_PATH = process.env.BENCH01_STOCK_DECK_PATH?.trim() || 'test-results/bench01-batch-a/counter-blitz/stock-deck.txt';
 const RETAINED_RAW_PATH = process.env.SCRYFALL_RETAINED_RAW_PATH?.trim();
 const RETAINED_MANIFEST_PATH = process.env.SCRYFALL_RETAINED_MANIFEST_PATH?.trim();
-const SIMULATION_ITERATIONS = Number.parseInt(process.env.BENCH01_SIMULATION_ITERATIONS ?? '250', 10);
+const SIMULATION_ITERATIONS = Number.parseInt(process.env.BENCH01_SIMULATION_ITERATIONS ?? '1000', 10);
 const SIMULATION_TURNS = Number.parseInt(process.env.BENCH01_SIMULATION_TURNS ?? '8', 10);
+const CAPTURE_PATH = process.env.BENCH01_HTTP_CAPTURE_PATH?.trim() || 'bench01-counter-blitz-http-capture.json';
+const SOURCE_SHA = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+const WORKER_MODE = process.env.BENCH01_WORKER_MODE;
+const TRACE_PATH = `bench01-counter-blitz-${WORKER_MODE ?? 'supervisor'}-trace.jsonl`;
+let providerSession: ReturnType<typeof createRetainedHttpSessionV15> | undefined;
+let inputProvenance: Record<string, unknown> = {};
+const trace = (event: Record<string, unknown>): void => {
+  const row = { elapsedMs: Math.round(performance.now()), ...event };
+  appendFileSync(TRACE_PATH, `${JSON.stringify(row)}\n`);
+  if (event.event === 'stage') console.log(JSON.stringify(row));
+};
+const checkpoint = (stage: string): void => {
+  trace({ event: 'stage', stage, scryfall: retainedScryfallDiagnosticsV15() });
+  assertRetainedScryfallReplayCompleteV15();
+  providerSession?.assertComplete();
+};
 
 function record(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value)
@@ -83,7 +109,7 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
   for (const entry of parsed.main) {
     const card = byName.get(entry.name.toLocaleLowerCase());
     if (!card) continue;
-    const oracle = lower(card.oracle_text);
+    const oracle = lower(getCardOracleText(card));
     const typeLine = lower(card.type_line);
     const quantity = entry.quantity;
     const isLand = typeLine.includes('land');
@@ -212,15 +238,16 @@ async function main(): Promise<void> {
     const manifest = JSON.parse(await readFile(RETAINED_MANIFEST_PATH, 'utf8')) as RetainedScryfallCardDataSnapshotManifestV15;
     const replay = await replayRetainedScryfallCardDataSnapshotV15(manifest, new Uint8Array(await readFile(RETAINED_RAW_PATH)));
     installRetainedScryfallCardDataV15(replay.capture.acquisition.cards);
-    const stockDecklist = await readFile(STOCK_DECK_PATH, 'utf8');
-    const stock = {
-      decklist: stockDecklist,
-      entry: { fileName: PRECON_REFERENCE, name: 'Counter Blitz (FINAL FANTASY X)', releaseDate: null },
-      deck: { commander: [{ name: COMMANDER }] },
-    };
+    checkpoint('verified-scryfall-installed');
+    // Both this audit and refine_precon_v13 consume the exact same retained MTGJSON responses.
+    // No archived upgraded deck, output-directory stock copy, or invented product metadata is used.
+    const stock = await fetchPreconDeckV10(PRECON_REFERENCE);
   assert.equal(stock.entry.fileName, PRECON_REFERENCE, 'benchmark must bind exact standard Counter Blitz product, not Collector Edition');
   assert.equal(stock.entry.name, 'Counter Blitz (FINAL FANTASY X)');
+  inputProvenance = { ...inputProvenance, stockDeckSha256: sha256V15(stock.decklist), stockReference: stock.entry.fileName };
+  checkpoint('untouched-stock-resolved');
   const before = await auditDeck(stock.decklist);
+  checkpoint('stock-audit-complete');
   await writeFile('bench01-counter-blitz-stock-deck.txt', `${stock.decklist.trim()}\n`);
 
   const handler = createMcpHandler(createMtgServerV15);
@@ -235,15 +262,16 @@ async function main(): Promise<void> {
   let rawResult: Record<string, unknown> = {};
   try {
     await client.connect(transport);
+    checkpoint('refinement-started');
     const response = await client.callTool({
       name: 'refine_precon_v13',
       arguments: {
         reference: PRECON_REFERENCE,
         profile: 'custom',
         targetBracket: TARGET_BRACKET,
-        maxSwaps: 20,
+        maxSwaps: 30,
         maxRounds: 5,
-        swapsPerRound: 5,
+        swapsPerRound: 6,
         candidatePackagesPerRound: 6,
         minimumImprovementScore: 0.1,
         printingFamily: 'Final Fantasy',
@@ -264,6 +292,7 @@ async function main(): Promise<void> {
     assert.ok(text, 'Counter Blitz refinement MCP call must return JSON');
     rawResult = JSON.parse(text) as Record<string, unknown>;
     await writeFile('bench01-counter-blitz-raw-result.json', `${JSON.stringify(rawResult, null, 2)}\n`);
+    checkpoint('refinement-complete');
   } finally {
     await client.close();
     await handler.close();
@@ -273,11 +302,21 @@ async function main(): Promise<void> {
   const refinement = record(preconResult.refinement);
   const refinementStatus = String(refinement.status ?? 'unknown');
   const candidateFinalDecklist = typeof refinement.finalDecklist === 'string' ? refinement.finalDecklist.trim() : '';
-  const finalDecklist = candidateFinalDecklist || stock.decklist.trim();
+  assert.ok(candidateFinalDecklist, 'Refinement must return an actual final deck; no silent stock fallback.');
+  const finalDecklist = candidateFinalDecklist;
   const totalSwaps = finite(refinement.totalSwaps);
   await writeFile('bench01-counter-blitz-refined-deck.txt', `${finalDecklist}\n`);
 
   const after = await auditDeck(finalDecklist);
+  checkpoint('final-audit-complete');
+  const beforeNames = new Map(parseDecklist(stock.decklist).main.map(entry => [entry.name, entry.quantity]));
+  const afterNames = new Map(parseDecklist(finalDecklist).main.map(entry => [entry.name, entry.quantity]));
+  const netChanges = {
+    removed: [...beforeNames].flatMap(([name, count]) => count > (afterNames.get(name) ?? 0) ? [{ name, quantity: count - (afterNames.get(name) ?? 0) }] : []),
+    added: [...afterNames].flatMap(([name, count]) => count > (beforeNames.get(name) ?? 0) ? [{ name, quantity: count - (beforeNames.get(name) ?? 0) }] : []),
+  };
+  const netSwaps = netChanges.added.reduce((sum, entry) => sum + entry.quantity, 0);
+  assert.equal(netSwaps, netChanges.removed.reduce((sum, entry) => sum + entry.quantity, 0));
   const beforeTargets = record(before.benchmarkTargets);
   const afterTargets = record(after.benchmarkTargets);
   const beforeMetrics = record(before.metrics);
@@ -285,6 +324,7 @@ async function main(): Promise<void> {
 
   const benchmark = {
     schema: 'bench01-counter-blitz-ff-only-v1',
+    provenance: { ...inputProvenance, sourceSha: SOURCE_SHA, workerMode: WORKER_MODE, finalDeckSha256: sha256V15(finalDecklist), replayDiagnostics: retainedScryfallDiagnosticsV15() },
     fixture: 'BENCH-01 Batch A / Counter Blitz',
     sourceBaseline: 'MTGJSON exact standard precon',
     precon: {
@@ -297,7 +337,7 @@ async function main(): Promise<void> {
       commander: COMMANDER,
       printingFamily: 'Final Fantasy',
       targetBracket: TARGET_BRACKET,
-      maxSwaps: 20,
+      maxSwaps: 30,
       identity: 'Bant +1/+1 counters/proliferate with dense countermagic and hybrid combat/combo routes',
       hardTruthFirst: true,
       benchmarkTargetsAreMeasurementsNotAutomaticPassClaims: true,
@@ -305,6 +345,8 @@ async function main(): Promise<void> {
     refinement: {
       status: refinementStatus,
       totalSwaps,
+      netSwaps,
+      netChanges,
       rawRefinement: refinement,
     },
     before,
@@ -350,9 +392,76 @@ async function main(): Promise<void> {
   assert.equal(after.printingPolicySatisfied, true);
 }
 
-main().catch(async (error) => {
+async function runWorker(): Promise<void> {
+  assert.ok(RETAINED_MANIFEST_PATH && RETAINED_RAW_PATH, 'Provider/harness blocker: verified retained Scryfall raw data and manifest paths are required.');
+  assert.ok(WORKER_MODE === 'capture' || WORKER_MODE === 'replay');
+  const manifest = JSON.parse(await readFile(RETAINED_MANIFEST_PATH, 'utf8')) as RetainedScryfallCardDataSnapshotManifestV15;
+  const retainedCapture = await readFile(CAPTURE_PATH, 'utf8').catch((error: NodeJS.ErrnoException) => {
+    if (error.code === 'ENOENT' && WORKER_MODE === 'capture') return null;
+    throw error;
+  });
+  // A failed acquisition can resume from actual responses already retained at this same SHA.
+  // A stale or different-source capture is rejected, never silently overwritten or used as a seed.
+  const capture: RetainedHttpCaptureV15 = retainedCapture
+    ? JSON.parse(retainedCapture) as RetainedHttpCaptureV15
+    : { schema: 'retained-http-capture-v15.1', sourceSha: SOURCE_SHA, scryfallManifestFingerprint: manifest.manifestFingerprint, evaluationTime: manifest.observedAt, entries: [] };
+  assert.equal(capture.sourceSha, SOURCE_SHA, 'Provider capture must match the frozen executable SHA.');
+  assert.equal(capture.scryfallManifestFingerprint, manifest.manifestFingerprint, 'Provider capture must bind the same verified Scryfall snapshot.');
+  const originalFetch = globalThis.fetch;
+  providerSession = createRetainedHttpSessionV15({
+    mode: WORKER_MODE, capture,
+    allowedOrigins: [config.scryfallApiBase, config.mtgJsonApiBase, config.fxApiBase, config.commanderSpellbookApiBase].map(url => new URL(url).origin),
+    fetchImpl: originalFetch,
+    onEntry: () => writeFileSync(CAPTURE_PATH, `${JSON.stringify(capture)}\n`),
+    onRequest: trace,
+  });
+  globalThis.fetch = providerSession.fetch;
+  inputProvenance = { sourceSha: SOURCE_SHA, manifestFingerprint: manifest.manifestFingerprint, evaluationTime: capture.evaluationTime };
+  trace({ event: 'stage', stage: 'worker-started', ...inputProvenance });
+  try { await withExecutionTraceV15(trace, () => withEvaluationTimeV15(capture.evaluationTime, main)); }
+  finally { globalThis.fetch = originalFetch; }
+}
+
+function qualitySignature(result: Record<string, unknown>): unknown {
+  const project = (audit: Record<string, unknown>): unknown => ({
+    cardCount: audit.cardCount, commanderLegal: audit.commanderLegal, printingPolicySatisfied: audit.printingPolicySatisfied,
+    counterEngineCount: audit.counterEngineCount, proliferateCount: audit.proliferateCount, counterspellCount: audit.counterspellCount,
+    combatReferenceCount: audit.combatReferenceCount, creatureCount: audit.creatureCount, metrics: audit.metrics,
+    comboEvidence: audit.comboEvidence, benchmarkTargets: audit.benchmarkTargets,
+  });
+  const refinement = record(result.refinement);
+  return { before: project(record(result.before)), after: project(record(result.after)), netChanges: refinement.netChanges,
+    totalSwaps: refinement.totalSwaps, stock: record(result.provenance).stockDeckSha256, final: record(result.provenance).finalDeckSha256 };
+}
+
+async function supervise(): Promise<void> {
+  assert.equal(execFileSync('git', ['diff', 'HEAD', '--', 'src', 'scripts'], { encoding: 'utf8' }).trim(), '', 'Freeze source and scripts before a benchmark run.');
+  assert.equal(execFileSync('git', ['ls-files', '--others', '--exclude-standard', '--', 'src', 'scripts'], { encoding: 'utf8' }).trim(), '', 'Untracked executable files cannot be part of a frozen benchmark.');
+  const deadlineMs = Number(process.env.BENCH01_PASS_DEADLINE_MS ?? 1_200_000);
+  const modes = process.env.BENCH01_HTTP_CAPTURE_PATH ? ['replay', 'replay'] : ['capture', 'replay'];
+  let first: unknown;
+  for (const mode of modes) {
+    const run = await runBoundedProcessV15(process.execPath, [...process.execArgv, fileURLToPath(import.meta.url)], {
+      deadlineMs, env: { ...process.env, BENCH01_WORKER_MODE: mode },
+      onTimeout: () => writeFileSync('bench01-counter-blitz-failure.txt', JSON.stringify({ sourceSha: SOURCE_SHA, classification: 'provider-or-harness-timeout', mode, deadlineMs, tracePath: `bench01-counter-blitz-${mode}-trace.jsonl`, nextAction: 'Inspect the last stage/provider trace and resume from retained responses; no deck-quality verdict.' }, null, 2)),
+    });
+    if (run.timedOut || run.code !== 0) throw new Error(`Frozen benchmark ${mode} worker failed: ${JSON.stringify(run)}; inspect retained failure and trace artifacts.`);
+    const result = JSON.parse(await readFile('bench01-counter-blitz-result.json', 'utf8')) as Record<string, unknown>;
+    const signature = qualitySignature(result);
+    if (first === undefined) {
+      first = signature;
+      await writeFile('bench01-counter-blitz-first-pass.json', `${JSON.stringify(result, null, 2)}\n`);
+    } else {
+      assert.deepEqual(signature, first, 'Fresh-process frozen replay must reproduce the complete deck and quality measurements.');
+      result.determinism = { freshProcesses: 2, exactDeckAndMetricsEqual: true, networkFallbackInReplay: false, sourceSha: SOURCE_SHA };
+      await writeFile('bench01-counter-blitz-result.json', `${JSON.stringify(result, null, 2)}\n`);
+    }
+  }
+}
+
+(WORKER_MODE ? runWorker() : supervise()).catch(async (error) => {
   const message = error instanceof Error ? `${error.name}: ${error.message}\n${error.stack ?? ''}` : String(error);
-  await writeFile('bench01-counter-blitz-failure.txt', `${message}\n`).catch(() => undefined);
+  appendFileSync('bench01-counter-blitz-failure.txt', `${message}\n`);
   console.error('BENCH-01 COUNTER BLITZ — HARD FAILURE');
   console.error(message);
   process.exitCode = 1;

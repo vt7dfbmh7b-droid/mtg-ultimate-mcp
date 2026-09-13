@@ -1,4 +1,5 @@
 import type { ScryfallCard } from '../types/scryfall.js';
+import { evaluationTimeV15 } from '../lib/evaluation-clock-v15.js';
 import {
   MARVEL_SPECIAL_COVERAGE_V08,
   MARVEL_SPECIALS_V08,
@@ -7,7 +8,7 @@ import {
   type ThemedSpecialCoverageV08,
   type ThemedSpecialPrintingV08,
 } from './printing-family-specials-v08.js';
-import { getCardPrintings, getScryfallSets, isRetainedScryfallCardDataInstalledV15 } from './scryfall.js';
+import { getCardPrintings, getScryfallSets } from './scryfall.js';
 
 export interface PrintingPolicyInputV08 {
   allowedSets?: string[];
@@ -150,7 +151,7 @@ export function familySetTypeEligibleV08(setType: string, digital = false): bool
 }
 
 function currentEvaluationDateV08(): string {
-  return new Date().toISOString().slice(0, 10);
+  return evaluationTimeV15().slice(0, 10);
 }
 
 function canonicalCalendarDateV08(value: string | undefined): string | null {
@@ -200,8 +201,7 @@ export async function resolvePrintingPolicyV08(input: PrintingPolicyInputV08 = {
     try {
       const sets = await getScryfallSets();
       familyMatchedSetCodes = sets
-        .filter((set) => familySetTypeEligibleV08(set.set_type, Boolean(set.digital))
-          || (isRetainedScryfallCardDataInstalledV15() && set.set_type === 'unknown' && !set.digital))
+        .filter((set) => familySetTypeEligibleV08(set.set_type, Boolean(set.digital)))
         .filter((set) => {
           const name = normalize(set.name);
           return familyPatterns.some((pattern) => name.includes(normalize(pattern)));
