@@ -98,6 +98,25 @@ test('post-build evidence requires explicit multiplayer scope for lethal engines
   assert.equal(evidence.ruthlessWinningCombos, 1);
 });
 
+test('final audit uses provider mechanism evidence without treating unscoped or self-only damage as a table win', () => {
+  // Anonymous unit fixtures, not fabricated provider records or benchmark card-name exceptions.
+  const evidence = derivePostBuildEvidenceV15({
+    ...baseEvidenceInput(),
+    combos: {
+      sourceStatus: 'available', verificationComplete: true, counts: { included: 3 },
+      included: [
+        { id: 'repeatable-opponent-damage', results: ['Infinite damage'],
+          description: 'Activate Piece A, dealing 1 damage to any target.\nRepeat from step 1.' },
+        { id: 'self-only-damage', results: ['Infinite damage'],
+          description: 'Activate Piece A, dealing 1 damage to itself.\nRepeat from step 1.' },
+        { id: 'missing-mechanism', results: ['Infinite damage'] },
+      ],
+    },
+  });
+  assert.deepEqual(evidence.verifiedWinningComboIds, ['repeatable-opponent-damage']);
+  assert.equal(evidence.verifiedWinningComboDetails[0]?.closureScope, 'all-opponents');
+});
+
 test('post-build winning details preserve explicit dependencies, provider setup evidence, and template uncertainty', () => {
   const evidence = derivePostBuildEvidenceV15({
     ...baseEvidenceInput(),
