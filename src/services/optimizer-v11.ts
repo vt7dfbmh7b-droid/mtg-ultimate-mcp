@@ -94,9 +94,9 @@ const STRUCTURAL_DEFICIT_METRIC_V15: Readonly<Record<string, string>> = {
 };
 
 export function requestedStructuralDeficitProgressV15(plan: Record<string, unknown>): number {
-  const pressure = asRecord(plan.v15TargetPressure);
-  const deficits = Array.isArray(pressure.structuralDeficits)
-    ? pressure.structuralDeficits.map(asRecord)
+  const source = asRecord(plan.sourceUpgradeAnalysis);
+  const deficits = Array.isArray(source.structuralDeficits)
+    ? source.structuralDeficits.map(asRecord)
     : [];
   const afterMetrics = asRecord(plan.afterMetrics);
   let progress = 0;

@@ -99,6 +99,8 @@ test('V0.12 scoring recognizes measured progress toward an active structural def
       winRouteVerificationStatus: 'protected',
       atomicWinPackageInjected: false,
       selectedBracketTag: null,
+    },
+    sourceUpgradeAnalysis: {
       structuralDeficits: [{ role: 'protection', current: 2, target: 8 }],
     },
   });
@@ -119,6 +121,8 @@ test('structural deficit credit is bounded at the requested floor and does not r
     v15TargetPressure: {
       targetPressure: { targetBracket: 5 },
       winRouteVerificationStatus: 'protected',
+    },
+    sourceUpgradeAnalysis: {
       structuralDeficits: [{ role: 'protection', current: 2, target: 8 }],
     },
   });
