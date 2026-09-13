@@ -1,7 +1,6 @@
 name: "BENCH-01 Batch A — Counter Blitz + Liliana"
 
-# Benchmark harness only. Commander-intelligence product source is frozen at
-# ce4c9eba59617be2cf57718408b40252230bccf4 for the repaired-source replay.
+# Each run executes its checkout SHA unchanged; the supervisor proves fresh-process replay.
 on:
   push:
     branches: ["agent/v15-native-deck-intelligence", "agent/counter-blitz-generic-mechanism-floor-20260911"]
@@ -9,6 +8,9 @@ on:
       - "scripts/bench01-counter-blitz-ff-only-v15.ts"
       - "src/services/scryfall.ts"
       - "src/services/printing-policy-v08.ts"
+      - "src/services/retained-scryfall-provider-v15.ts"
+      - "src/lib/retained-http-session-v15.ts"
+      - "src/lib/bounded-process-v15.ts"
       - "scripts/e2e-liliana-budget-500-v15.ts"
       - ".github/workflows/bench01-batch-a.yml"
   workflow_dispatch:
@@ -71,6 +73,7 @@ jobs:
         continue-on-error: true
         run: |
           set -o pipefail
+          npm run scripts:typecheck
           npm run build 2>&1 | tee bench01-source-build.log
 
       - name: Run Counter Blitz FF-only benchmark
@@ -95,6 +98,11 @@ jobs:
         with:
           name: bench01-batch-a-${{ github.sha }}
           path: |
+            bench01-counter-blitz-http-capture.json
+            bench01-counter-blitz-first-pass.json
+            bench01-counter-blitz-*-trace.jsonl
+            scryfall-raw/*.jsonl.gz
+            scryfall-manifest/*.json
             bench01-counter-blitz-result.json
             bench01-counter-blitz-raw-result.json
             bench01-counter-blitz-stock-deck.txt
@@ -131,13 +139,16 @@ jobs:
             [ ! -f bench01-counter-blitz-stock-deck.txt ] || cp bench01-counter-blitz-stock-deck.txt test-results/bench01-batch-a/counter-blitz/stock-deck.txt
             [ ! -f bench01-counter-blitz-refined-deck.txt ] || cp bench01-counter-blitz-refined-deck.txt test-results/bench01-batch-a/counter-blitz/refined-deck.txt
             [ ! -f bench01-counter-blitz-failure.txt ] || cp bench01-counter-blitz-failure.txt test-results/bench01-batch-a/counter-blitz/failure.txt
+            for trace in bench01-counter-blitz-*-trace.jsonl; do
+              [ ! -f "$trace" ] || cp "$trace" test-results/bench01-batch-a/counter-blitz/
+            done
             [ ! -f bench01-counter-blitz.log ] || cp bench01-counter-blitz.log test-results/bench01-batch-a/counter-blitz/control.log
             [ ! -f liliana-budget-500-result.json ] || cp liliana-budget-500-result.json test-results/bench01-batch-a/liliana/result.json
             [ ! -f liliana-budget-500-deck.txt ] || cp liliana-budget-500-deck.txt test-results/bench01-batch-a/liliana/deck.txt
             [ ! -f bench01-liliana.log ] || cp bench01-liliana.log test-results/bench01-batch-a/liliana/control.log
             [ ! -f bench01-source-build.log ] || cp bench01-source-build.log test-results/bench01-batch-a/build.log
-            printf 'executed_source_sha=%s\nproduct_runtime_baseline_sha=ce4c9eba59617be2cf57718408b40252230bccf4\nsource_relationship=benchmark-harness-only-descendant-product-src-frozen-at-repair-sha\nbuild_outcome=%s\ncounter_blitz_outcome=%s\nliliana_outcome=%s\nbatch=BENCH-01-A-REPAIRED-REPLAY\nsource_frozen_within_batch=true\n' \
-              "$GITHUB_SHA" "$BUILD_OUTCOME" "$COUNTER_OUTCOME" "$LILIANA_OUTCOME" \
+            printf 'executed_source_sha=%s\nproduct_runtime_baseline_sha=%s\nsource_relationship=exact-checked-in-source\nbuild_outcome=%s\ncounter_blitz_outcome=%s\nliliana_outcome=%s\nbatch=BENCH-01-A-FROZEN-REPLAY\nsource_frozen_within_batch=true\n' \
+              "$GITHUB_SHA" "$GITHUB_SHA" "$BUILD_OUTCOME" "$COUNTER_OUTCOME" "$LILIANA_OUTCOME" \
               > test-results/bench01-batch-a/run-metadata.txt
             git add -- test-results/bench01-batch-a
             if git diff --cached --quiet; then exit 0; fi

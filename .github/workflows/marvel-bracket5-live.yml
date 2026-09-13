@@ -2,7 +2,8 @@ name: Marvel Bracket 5 Live Control
 
 on:
   push:
-    branches: ["agent/**"]
+    # The dedicated Counter Blitz candidate has its own evidence writer. Manual controls remain available.
+    branches: ["agent/**", "!agent/counter-blitz-generic-mechanism-floor-20260911"]
     paths:
       - "scripts/e2e-marvel-bracket5-v15.ts"
       - "scripts/e2e-marvel-bracket5-refine-v15.ts"
