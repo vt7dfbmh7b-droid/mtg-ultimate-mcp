@@ -26,7 +26,6 @@
 1 Together Forever (FIC) 257 *N*
 1 Chasm Skulker (FIC) 262 *N*
 1 Inexorable Tide (FIC) 265 *N*
-1 Pull from Tomorrow (FIC) 269 *N*
 1 Bane of Progress (FIC) 299 *N*
 1 Fight Rigging (FIC) 303 *N*
 1 Forgotten Ancient (FIC) 304 *N*
@@ -34,7 +33,6 @@
 1 Gyre Sage (FIC) 306 *N*
 1 Hardened Scales (FIC) 307 *N*
 1 Incubation Druid (FIC) 309 *N*
-1 Path of Discovery (FIC) 312 *N*
 1 Rampant Rejuvenator (FIC) 314 *N*
 1 Tireless Tracker (FIC) 316 *N*
 1 Altered Ego (FIC) 317 *N*
@@ -93,11 +91,13 @@
 1 Ultros, Obnoxious Octopus (FIN) 83 *N*
 1 Zack Fair (FIN) 45 *N*
 1 Hypnotic Sprite // Mesmeric Glare (FIC) 264 *N*
-1 Astrologian's Planisphere (FIN) 46 *N*
-1 Galuf's Final Act (FIN) 186 *N*
-1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
-1 Sahagin (FIN) 71 *N*
+1 Sword of Truth and Justice (SLD) 1867 *N*
+1 Arcane Denial (RFIN) J2 *N*
 1 Garnet, Princess of Alexandria (FIN) 222 *F*
 1 Conformer Shuriken (FIC) 98 *N*
+1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
 1 Sazh's Chocobo (FIN) 200 *N*
 1 Ride the Shoopuf (FIN) 197 *N*
+1 Tidus, Blitzball Star (FIN) 246 *N*
+1 Astrologian's Planisphere (FIN) 46 *N*
+1 Venat, Heart of Hydaelyn // Hydaelyn, the Mothercrystal (FIN) 39 *N*
