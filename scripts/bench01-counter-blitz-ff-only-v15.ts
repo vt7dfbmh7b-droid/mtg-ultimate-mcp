@@ -31,6 +31,8 @@ const COUNTERMAGIC_TARGET = 8;
 const COUNTER_ENGINE_TARGET = 16;
 const PROLIFERATE_TARGET = 3;
 const COMBAT_REFERENCE_TARGET = 8;
+const PROTECTION_TARGET = 8;
+const SUBSTANTIAL_SWAP_TARGET = 20;
 const MIN_CREATURES_FOR_HYBRID_PLAN = 18;
 const RETAINED_RAW_PATH = process.env.SCRYFALL_RETAINED_RAW_PATH?.trim();
 const RETAINED_MANIFEST_PATH = process.env.SCRYFALL_RETAINED_MANIFEST_PATH?.trim();
@@ -219,6 +221,9 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
       combatReferenceTargetAchieved: combatReferenceCount >= COMBAT_REFERENCE_TARGET,
       minimumCreaturesForHybridPlan: MIN_CREATURES_FOR_HYBRID_PLAN,
       hybridCreatureFloorAchieved: creatureCount >= MIN_CREATURES_FOR_HYBRID_PLAN,
+      protectionTarget: PROTECTION_TARGET,
+      protectionTargetAchieved: metrics.protectionCount >= PROTECTION_TARGET,
+      requestedWhiteMageBallistaAccessAchieved: names.has('the destined white mage') && names.has('walking ballista'),
     },
   };
 }
@@ -338,6 +343,7 @@ async function main(): Promise<void> {
       printingFamily: 'Final Fantasy',
       targetBracket: TARGET_BRACKET,
       maxSwaps: 30,
+      substantialSwapTarget: SUBSTANTIAL_SWAP_TARGET,
       identity: 'Bant +1/+1 counters/proliferate with dense countermagic and hybrid combat/combo routes',
       hardTruthFirst: true,
       benchmarkTargetsAreMeasurementsNotAutomaticPassClaims: true,
@@ -346,6 +352,7 @@ async function main(): Promise<void> {
       status: refinementStatus,
       totalSwaps,
       netSwaps,
+      substantialUpgradeAchieved: netSwaps >= SUBSTANTIAL_SWAP_TARGET,
       netChanges,
       rawRefinement: refinement,
     },
@@ -371,6 +378,8 @@ async function main(): Promise<void> {
       proliferate: { before: beforeTargets.proliferateTargetAchieved ?? false, after: afterTargets.proliferateTargetAchieved ?? false },
       combatReference: { before: beforeTargets.combatReferenceTargetAchieved ?? false, after: afterTargets.combatReferenceTargetAchieved ?? false },
       hybridCreatureFloor: { before: beforeTargets.hybridCreatureFloorAchieved ?? false, after: afterTargets.hybridCreatureFloorAchieved ?? false },
+      protection: { before: beforeTargets.protectionTargetAchieved ?? false, after: afterTargets.protectionTargetAchieved ?? false },
+      requestedWhiteMageBallistaAccess: { before: beforeTargets.requestedWhiteMageBallistaAccessAchieved ?? false, after: afterTargets.requestedWhiteMageBallistaAccessAchieved ?? false },
     },
   };
 
@@ -383,6 +392,8 @@ async function main(): Promise<void> {
   console.log(`COUNTER ENGINE: ${String(before.counterEngineCount)} -> ${String(after.counterEngineCount)} (target ${COUNTER_ENGINE_TARGET})`);
   console.log(`PROLIFERATE: ${String(before.proliferateCount)} -> ${String(after.proliferateCount)} (target ${PROLIFERATE_TARGET})`);
   console.log(`COMBAT REFERENCES: ${String(before.combatReferenceCount)} -> ${String(after.combatReferenceCount)} (target ${COMBAT_REFERENCE_TARGET})`);
+  console.log(`PROTECTION: ${String(beforeMetrics.protectionCount)} -> ${String(afterMetrics.protectionCount)} (target ${PROTECTION_TARGET})`);
+  console.log(`SUBSTANTIAL UPGRADE: ${String(netSwaps)} swaps (target ${SUBSTANTIAL_SWAP_TARGET})`);
   console.log(`TARGET MOVEMENT: ${JSON.stringify(benchmark.targetMovement)}`);
 
   // BENCH-01 is a measurement fixture. Only fail the harness on hard-truth or
