@@ -1463,6 +1463,14 @@ export function pairUpgradeSwapsByStructureV15(
           if (selectionTargetGate === 'average-nonland-mv' && afterAverage >= beforeAverage - 0.0001) return false;
         }
 
+        // Strategy preservation is a property of the add/cut pair. Exclude a damaging
+        // cut before ranking so the same incoming card can still use a lower-pressure,
+        // strategy-safe fallback. Rejecting only after selecting candidateCuts[0]
+        // incorrectly abandoned the whole incoming mechanism.
+        if (options.rejectMeaningfulStrategyLoss
+          && selection.role !== 'win-package'
+          && upgradeSwapStrategyPreservationV15(selection.candidate, cut).meaningfulStrategyLoss) return false;
+
         if (selection.role === 'average-nonland-mv' || selection.role === 'theme-component' || selection.role === 'win-package') return true;
         return structuralDeficitTotalV15(afterSwap, state.targets) < deficitBeforeSwap;
       });

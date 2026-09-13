@@ -90,3 +90,46 @@ test('autonomous pairing skips a strategy-damaging primary add and uses a safe b
   assert.equal((pairings[0]?.cut.card as { name: string }).name, 'Protected Death Draw Engine');
   assert.equal(pairings[0]?.strategyPreservation.verdict, 'preserved');
 });
+
+test('autonomous pairing tries a safe fallback cut before abandoning a requested mechanism', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{
+      role: 'theme-component' as const,
+      candidate: {
+        card: {
+          name: 'Requested Interaction',
+          roles: ['countermagic', 'cheap interaction'],
+          manaValue: 2,
+          typeLine: 'Instant',
+        },
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [], matches: [] },
+      },
+    }],
+    [
+      {
+        card: {
+          name: 'Protected Death Draw Engine',
+          roles: ['card draw', 'death-trigger draw engine'],
+          manaValue: 5,
+          typeLine: 'Creature — Test',
+        },
+        heuristicCutPressure: 10,
+        strategyAffinity: protectedAristocratsEvidence,
+      },
+      {
+        card: { name: 'Safe Filler', roles: [], manaValue: 4, typeLine: 'Creature — Test' },
+        heuristicCutPressure: 1,
+        strategyAffinity: { score: 0, protectionApplied: 0, matchedStrategies: [], matches: [] },
+      },
+    ],
+    metrics,
+    targets,
+    4,
+    { rejectMeaningfulStrategyLoss: true, maxPairs: 1 },
+  );
+
+  assert.equal(pairings.length, 1);
+  assert.equal((pairings[0]?.add.card as { name: string }).name, 'Requested Interaction');
+  assert.equal((pairings[0]?.cut.card as { name: string }).name, 'Safe Filler');
+  assert.equal(pairings[0]?.strategyPreservation.verdict, 'preserved');
+});

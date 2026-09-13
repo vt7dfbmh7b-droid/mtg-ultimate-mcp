@@ -103,6 +103,17 @@ test('the public planner gives an under-target requested mechanism the first bou
     assert.notEqual(swaps[0]?.out, existingCounterspell.name);
     const order = plan.candidateSelectionOrder as Array<{ role: string }>;
     assert.equal(order[0]?.role, 'theme-component');
+    const source = plan.sourceUpgradeAnalysis as {
+      candidateAddsByDeficit: Array<{
+        componentId?: string;
+        candidates: Array<{ strategyAffinity?: { matchedStrategies?: string[]; matches?: unknown[] } }>;
+      }>;
+    };
+    const componentCandidate = source.candidateAddsByDeficit
+      .find((group) => group.componentId === 'countermagic')?.candidates[0];
+    assert.ok(componentCandidate?.strategyAffinity, 'dedicated mechanism candidates retain strategy-affinity evidence');
+    assert.ok(Array.isArray(componentCandidate.strategyAffinity.matchedStrategies));
+    assert.ok(Array.isArray(componentCandidate.strategyAffinity.matches));
   } finally {
     globalThis.fetch = originalFetch;
   }

@@ -906,6 +906,12 @@ export async function suggestDeckUpgrades(
         card: { ...summarizeCard(card), roles: effectiveCardRolesV15(card) },
         score: Number((componentAffinity.score + substantiveCommanderStrategyAffinityScoreV15(affinity)).toFixed(1)),
         authoritativeTargetGate: null,
+        strategyAffinity: {
+          score: Number(affinity.score.toFixed(1)),
+          protectionApplied: Number(Math.min(4, substantiveCommanderStrategyAffinityScoreV15(affinity)).toFixed(1)),
+          matchedStrategies: affinity.matches.map((match) => match.archetype),
+          matches: affinity.matches,
+        },
         explicitTheme: {
           matchesControlledTheme: true,
           currentMainMatches: themeCurrentMainMatches,

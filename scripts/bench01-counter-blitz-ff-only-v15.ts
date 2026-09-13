@@ -326,6 +326,22 @@ async function main(): Promise<void> {
   const afterTargets = record(after.benchmarkTargets);
   const beforeMetrics = record(before.metrics);
   const afterMetrics = record(after.metrics);
+  const requiredTargetAchievement = {
+    substantialUpgrade: netSwaps >= SUBSTANTIAL_SWAP_TARGET,
+    targetBracket: afterTargets.bracketTargetAchieved === true,
+    denseCountermagic: afterTargets.denseCountermagicAchieved === true,
+    counterEngine: afterTargets.counterEngineTargetAchieved === true,
+    proliferate: afterTargets.proliferateTargetAchieved === true,
+    combatReference: afterTargets.combatReferenceTargetAchieved === true,
+    hybridCreatureFloor: afterTargets.hybridCreatureFloorAchieved === true,
+    protection: afterTargets.protectionTargetAchieved === true,
+    requestedWhiteMageBallistaAccess: afterTargets.requestedWhiteMageBallistaAccessAchieved === true,
+    commanderLegal: after.commanderLegal === true,
+    finalFantasyPhysicalPrinting: after.printingPolicySatisfied === true,
+  };
+  const missedRequiredTargets = Object.entries(requiredTargetAchievement)
+    .filter(([, achieved]) => !achieved)
+    .map(([target]) => target);
 
   const benchmark = {
     schema: 'bench01-counter-blitz-ff-only-v1',
@@ -347,6 +363,12 @@ async function main(): Promise<void> {
       identity: 'Bant +1/+1 counters/proliferate with dense countermagic and hybrid combat/combo routes',
       hardTruthFirst: true,
       benchmarkTargetsAreMeasurementsNotAutomaticPassClaims: true,
+    },
+    qualityVerdict: {
+      status: missedRequiredTargets.length === 0 ? 'complete-target-achievement' : 'incomplete-target-achievement',
+      achieved: missedRequiredTargets.length === 0,
+      requiredTargetAchievement,
+      missedRequiredTargets,
     },
     refinement: {
       status: refinementStatus,
