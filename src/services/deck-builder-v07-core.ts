@@ -3,6 +3,7 @@ import { validateCommanderDeck } from './commander-rules.js';
 import {
   cardCommanderStrategyAffinityV15,
   deriveCommanderStrategyContextFromCommandersV15,
+  MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15,
   SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15,
 } from './commander-strategy-affinity-v15.js';
 import { commanderTargetPressureV15, selectInjectableTargetAwareWinPackageV15 } from './commander-target-pressure-v15.js';
@@ -726,7 +727,6 @@ const UPGRADE_STRUCTURAL_ROLES_V15: UpgradeStructuralRoleV15[] = [
 const UPGRADE_CANDIDATE_ROLES_V15: UpgradeAddressedRoleV15[] = [
   'average-nonland-mv', ...UPGRADE_STRUCTURAL_ROLES_V15, 'theme-component', 'win-package',
 ];
-const MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15 = 4;
 const STRATEGY_COMPONENT_ROLES_V15: Record<string, ReadonlySet<string>> = {
   'combat-tokens': new Set(['go-wide payoff', 'typal board control payoff', 'repeatable token engine', 'spell-triggered token engine', 'death-trigger token engine', 'token multiplier', 'token-event life drain', 'team combat-damage draw engine', 'team-wide untap pump', 'extra combat', 'untap engine', 'haste']),
   'equipment-voltron': new Set(['equipment', 'protection', 'board protection']),

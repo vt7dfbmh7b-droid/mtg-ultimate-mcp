@@ -12,7 +12,9 @@ import {
   deriveCommanderStrategyContextFromCommandersV15,
   deriveCommanderStrategyContextV15,
   deriveUpgradeStrategyContextV15,
+  MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15,
   SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15,
+  upgradeDeckStrategyDeltaPreservedV15,
 } from './commander-strategy-affinity-v15.js';
 import { contextualCutPressureV15 } from './upgrade.js';
 
@@ -59,6 +61,30 @@ test('builder-side commander context reuses the same V0.15 strategy inference', 
 
   assert.deepEqual(builderContext, parsedContext);
   assert.equal(builderContext.strategies[0]?.archetype, 'combat-tokens');
+});
+
+test('whole-deck retention tolerates only sub-threshold heuristic drift with hard evidence intact', () => {
+  assert.equal(MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15, 4);
+  assert.equal(upgradeDeckStrategyDeltaPreservedV15({
+    supportDelta: 0,
+    affinityDelta: -3,
+    multiplayerQualityDelta: 0,
+  }), true, 'equivalent support may absorb a non-meaningful three-point scoring drift');
+  assert.equal(upgradeDeckStrategyDeltaPreservedV15({
+    supportDelta: -1,
+    affinityDelta: 12,
+    multiplayerQualityDelta: 0,
+  }), false, 'losing a strategy-supporting card remains a hard rejection');
+  assert.equal(upgradeDeckStrategyDeltaPreservedV15({
+    supportDelta: 0,
+    affinityDelta: -2,
+    multiplayerQualityDelta: -2,
+  }), false, 'losing multiplayer reach remains a hard rejection');
+  assert.equal(upgradeDeckStrategyDeltaPreservedV15({
+    supportDelta: 0,
+    affinityDelta: -4,
+    multiplayerQualityDelta: 0,
+  }), false, 'the shared meaningful-loss threshold remains a hard rejection');
 });
 
 test('existing V0.15 strategy inference gives on-plan cards more affinity than unrelated utility', () => {

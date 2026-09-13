@@ -130,6 +130,7 @@ test('whole-deck strategy retention distinguishes tablewide repeatable drain fro
   assert.ok(aristocrats);
   assert.equal(aristocrats.supportDelta, 0, 'the cards still support the same broad archetype');
   assert.equal(aristocrats.affinityDelta, -2, 'losing tablewide multiplayer pressure must reduce strategy quality');
+  assert.equal(aristocrats.multiplayerQualityDelta, -2, 'the explicit multiplayer-quality floor must record the loss');
 });
 
 test('whole-deck strategy retention permits a cheaper replacement that preserves tablewide drain scope', () => {
@@ -147,4 +148,5 @@ test('whole-deck strategy retention permits a cheaper replacement that preserves
   assert.ok(aristocrats);
   assert.equal(aristocrats.supportDelta, 0);
   assert.equal(aristocrats.affinityDelta, 0);
+  assert.equal(aristocrats.multiplayerQualityDelta, 0);
 });

@@ -310,6 +310,22 @@ async function main(): Promise<void> {
   assert.ok(candidateFinalDecklist, 'Refinement must return an actual final deck; no silent stock fallback.');
   const finalDecklist = candidateFinalDecklist;
   const totalSwaps = finite(refinement.totalSwaps);
+  const refinementRounds = Array.isArray(refinement.rounds)
+    ? refinement.rounds.map((entry) => record(entry))
+    : [];
+  const terminationEvidence = {
+    stopReason: typeof refinement.stopReason === 'string' ? refinement.stopReason : null,
+    roundsAccepted: finite(refinement.roundsAccepted),
+    roundsAttempted: refinementRounds.length,
+    rounds: refinementRounds.map((round) => ({
+      round: finite(round.round),
+      accepted: round.accepted === true,
+      acceptedSwaps: finite(round.acceptedSwaps),
+      candidatePackagesGenerated: finite(round.candidatePackagesGenerated),
+      candidatePackagesEligible: finite(round.candidatePackagesEligible),
+      stopReason: typeof round.stopReason === 'string' ? round.stopReason : null,
+    })),
+  };
   await writeFile('bench01-counter-blitz-refined-deck.txt', `${finalDecklist}\n`);
 
   const after = await auditDeck(finalDecklist);
@@ -376,6 +392,7 @@ async function main(): Promise<void> {
       netSwaps,
       substantialUpgradeAchieved: netSwaps >= SUBSTANTIAL_SWAP_TARGET,
       netChanges,
+      terminationEvidence,
       rawRefinement: refinement,
     },
     before,

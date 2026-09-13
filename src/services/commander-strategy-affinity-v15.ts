@@ -29,6 +29,7 @@ export interface UpgradeDeckStrategySupportV15 {
   commanderScore: number;
   supportCount: number;
   affinityTotal: number;
+  multiplayerQualityTotal: number;
 }
 
 export interface UpgradeDeckStrategyRetentionV15 {
@@ -46,17 +47,22 @@ export interface UpgradeDeckStrategyRetentionV15 {
     beforeAffinityTotal: number;
     afterAffinityTotal: number;
     affinityDelta: number;
+    beforeMultiplayerQualityTotal: number;
+    afterMultiplayerQualityTotal: number;
+    multiplayerQualityDelta: number;
     preserved: boolean;
   }>;
   losses: Array<{
     archetype: NeutralArchetypeV15;
     supportDelta: number;
     affinityDelta: number;
+    multiplayerQualityDelta: number;
   }>;
   acceptanceRule: string;
 }
 
 export const SUBSTANTIVE_COMMANDER_STRATEGY_SCORE_V15 = 6;
+export const MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15 = 4;
 const DECK_SUPPORTED_STRATEGY_MIN_SUPPORT_V15 = 6;
 const DECK_SUPPORTED_STRATEGY_MIN_BRIDGE_SUPPORT_V15 = 3;
 const DECK_SUPPORTED_STRATEGY_MIN_AFFINITY_V15 = 72;
@@ -383,6 +389,7 @@ export function measureUpgradeDeckStrategySupportV15(
   const strategies = substantive.map((strategy) => {
     let supportCount = 0;
     let affinityTotal = 0;
+    let multiplayerQualityTotal = 0;
     for (const entry of parsed.main) {
       const card = cardByName.get(normalizeName(entry.name));
       if (!card) {
@@ -393,15 +400,16 @@ export function measureUpgradeDeckStrategySupportV15(
         .find((candidate) => candidate.archetype === strategy.archetype);
       if (!match || match.overlapScore <= 0) continue;
       supportCount += entry.quantity;
-      affinityTotal += (
-        match.overlapScore + multiplayerStrategyQualityBonusV15(card, strategy.archetype)
-      ) * entry.quantity;
+      const multiplayerQuality = multiplayerStrategyQualityBonusV15(card, strategy.archetype);
+      affinityTotal += (match.overlapScore + multiplayerQuality) * entry.quantity;
+      multiplayerQualityTotal += multiplayerQuality * entry.quantity;
     }
     return {
       archetype: strategy.archetype,
       commanderScore: strategy.score,
       supportCount,
       affinityTotal,
+      multiplayerQualityTotal,
     };
   });
   return {
@@ -411,12 +419,21 @@ export function measureUpgradeDeckStrategySupportV15(
   };
 }
 
+export function upgradeDeckStrategyDeltaPreservedV15(input: {
+  supportDelta: number;
+  affinityDelta: number;
+  multiplayerQualityDelta: number;
+}): boolean {
+  return input.supportDelta >= 0
+    && input.multiplayerQualityDelta >= 0
+    && input.affinityDelta > -MEANINGFUL_STRATEGY_AFFINITY_LOSS_V15;
+}
+
 /**
- * Fail closed when an autonomous upgrade package reduces either the support-card density or the
- * aggregate affinity of any substantive starting strategy. A stronger package can freely replace
- * individual cards, but it must compensate within the same accepted package rather than spending
- * deck identity to satisfy generic role counts. Aggregate affinity includes multiplayer-scope
- * quality for repeatable table-wide drain in drain-centric strategies.
+ * Fail closed when an autonomous upgrade package reduces support-card density, explicit
+ * multiplayer quality, or aggregate affinity by the shared meaningful-loss threshold for any
+ * substantive starting strategy. This keeps categorical evidence hard while preventing harmless
+ * sub-threshold scoring drift from contradicting the pair-level strategy-preservation audit.
  */
 export function auditUpgradeDeckStrategyRetentionV15(
   beforeParsed: ParsedDeck,
@@ -434,9 +451,11 @@ export function auditUpgradeDeckStrategyRetentionV15(
       commanderScore: prior.commanderScore,
       supportCount: 0,
       affinityTotal: 0,
+      multiplayerQualityTotal: 0,
     };
     const supportDelta = next.supportCount - prior.supportCount;
     const affinityDelta = next.affinityTotal - prior.affinityTotal;
+    const multiplayerQualityDelta = next.multiplayerQualityTotal - prior.multiplayerQualityTotal;
     return {
       archetype: prior.archetype,
       commanderScore: prior.commanderScore,
@@ -446,7 +465,14 @@ export function auditUpgradeDeckStrategyRetentionV15(
       beforeAffinityTotal: prior.affinityTotal,
       afterAffinityTotal: next.affinityTotal,
       affinityDelta,
-      preserved: supportDelta >= 0 && affinityDelta >= 0,
+      beforeMultiplayerQualityTotal: prior.multiplayerQualityTotal,
+      afterMultiplayerQualityTotal: next.multiplayerQualityTotal,
+      multiplayerQualityDelta,
+      preserved: upgradeDeckStrategyDeltaPreservedV15({
+        supportDelta,
+        affinityDelta,
+        multiplayerQualityDelta,
+      }),
     };
   });
   const evidenceComplete = before.evidenceComplete && after.evidenceComplete;
@@ -456,6 +482,7 @@ export function auditUpgradeDeckStrategyRetentionV15(
       archetype: strategy.archetype,
       supportDelta: strategy.supportDelta,
       affinityDelta: strategy.affinityDelta,
+      multiplayerQualityDelta: strategy.multiplayerQualityDelta,
     }));
   const preserved = evidenceComplete && losses.length === 0;
   return {
@@ -466,6 +493,6 @@ export function auditUpgradeDeckStrategyRetentionV15(
     unresolvedAfter: after.unresolved,
     strategies,
     losses,
-    acceptanceRule: 'Every substantive starting deck strategy must retain or improve both whole-deck support-card density and aggregate affinity, including multiplayer-scope quality for repeatable table-wide drain in drain-centric strategies, within each accepted autonomous package.',
+    acceptanceRule: 'Every substantive starting deck strategy must retain whole-deck support-card density and multiplayer-scope quality. Aggregate affinity may drift by fewer than four heuristic points, matching the package-level meaningful-loss threshold; a loss of four or more points is rejected.',
   };
 }
