@@ -35,7 +35,6 @@
 1 Incubation Druid (FIC) 309 *N*
 1 Rampant Rejuvenator (FIC) 314 *N*
 1 Tireless Tracker (FIC) 316 *N*
-1 Altered Ego (FIC) 317 *N*
 1 Fathom Mage (FIC) 325 *N*
 1 Walking Ballista (FIC) 371 *N*
 1 Brushland (FIC) 377 *N*
@@ -101,3 +100,4 @@
 1 Tidus, Blitzball Star (FIN) 246 *N*
 1 Astrologian's Planisphere (FIN) 46 *N*
 1 Venat, Heart of Hydaelyn // Hydaelyn, the Mothercrystal (FIN) 39 *N*
+1 Galuf's Final Act (FIN) 186 *N*

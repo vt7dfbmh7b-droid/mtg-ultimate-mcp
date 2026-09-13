@@ -37,8 +37,8 @@
     "Jet Medallion",
     "Accursed Marauder"
   ],
-  "auditedTotalNzd": 463.26,
-  "auditedTotalUsdReference": 269.76,
+  "auditedTotalNzd": 463.24,
+  "auditedTotalUsdReference": 269.75,
   "currencyPolicy": {
     "primaryCurrency": "NZD",
     "displaySymbol": "NZ$",
@@ -145,19 +145,22 @@
         "archetype": "graveyard-reanimator",
         "commanderScore": 26,
         "supportCount": 25,
-        "affinityTotal": 327
+        "affinityTotal": 327,
+        "multiplayerQualityTotal": 0
       },
       {
         "archetype": "aristocrats",
         "commanderScore": 6,
         "supportCount": 32,
-        "affinityTotal": 184
+        "affinityTotal": 184,
+        "multiplayerQualityTotal": 4
       },
       {
         "archetype": "combat-tokens",
         "commanderScore": 6,
         "supportCount": 10,
-        "affinityTotal": 48
+        "affinityTotal": 48,
+        "multiplayerQualityTotal": 0
       }
     ]
   },
@@ -207,7 +210,7 @@
           "requirements": [],
           "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nWhen Gravecrawler enters, Ayara triggers, causing you to gain 1 life and each opponent to lose 1 life.\nRepeat.",
           "manaNeeded": "",
-          "popularity": 22874
+          "popularity": 22903
         }
       },
       {
@@ -251,7 +254,7 @@
           "requirements": [],
           "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler.\nWhen Gravecrawler dies, Blood Artist triggers, causing you to gain 1 life and target opponent to lose 1 life.\nResolve the Warren Soultrader ability, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nRepeat.",
           "manaNeeded": "",
-          "popularity": 44658
+          "popularity": 44725
         }
       }
     ],
@@ -599,8 +602,8 @@
         "withinBudget": true,
         "maxDeckNzd": 499.99,
         "maxDeckUsdReference": 291.15,
-        "auditedTotalNzd": 463.26,
-        "auditedTotalUsdReference": 269.76,
+        "auditedTotalNzd": 463.24,
+        "auditedTotalUsdReference": 269.75,
         "overageNzd": 0,
         "overageUsdReference": 0,
         "unknownPriceEntries": [],
@@ -674,8 +677,8 @@
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 342.31,
-          "auditedTotalUsdReference": 199.33,
+          "auditedTotalNzd": 342.22,
+          "auditedTotalUsdReference": 199.28,
           "overageNzd": 0,
           "overageUsdReference": 0,
           "remainingStructuralDeficitTotal": 11,
@@ -694,8 +697,8 @@
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 446.82,
-          "auditedTotalUsdReference": 260.19,
+          "auditedTotalNzd": 445.95,
+          "auditedTotalUsdReference": 259.68,
           "overageNzd": 0,
           "overageUsdReference": 0,
           "remainingStructuralDeficitTotal": 9,
@@ -734,10 +737,10 @@
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "over-budget",
-          "auditedTotalNzd": 879.46,
-          "auditedTotalUsdReference": 512.12,
-          "overageNzd": 379.47,
-          "overageUsdReference": 220.97,
+          "auditedTotalNzd": 879.17,
+          "auditedTotalUsdReference": 511.95,
+          "overageNzd": 379.18,
+          "overageUsdReference": 220.8,
           "remainingStructuralDeficitTotal": 5,
           "unknownPriceEntries": [],
           "unresolvedEntries": [],
@@ -754,10 +757,10 @@
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "over-budget",
-          "auditedTotalNzd": 2410.64,
-          "auditedTotalUsdReference": 1403.74,
-          "overageNzd": 1910.65,
-          "overageUsdReference": 1112.59,
+          "auditedTotalNzd": 2411.47,
+          "auditedTotalUsdReference": 1404.22,
+          "overageNzd": 1911.48,
+          "overageUsdReference": 1113.07,
           "remainingStructuralDeficitTotal": 2,
           "unknownPriceEntries": [],
           "unresolvedEntries": [],
@@ -791,7 +794,7 @@
           "Infinite storm count",
           "Infinite lifeloss"
         ],
-        "popularity": 22874,
+        "popularity": 22903,
         "comboCardNames": [
           "Warren Soultrader",
           "Gravecrawler",
@@ -970,11 +973,11 @@
           {
             "comboId": "4475-4794",
             "status": "eligible-package-scored",
-            "structuralScore": 1497.3271331739065,
+            "structuralScore": 1497.3517949870006,
             "practicalAdjustment": -803.25,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 694.08,
+            "finalScore": 694.1,
             "totalManaValue": 11,
             "deadPieceRisk": 2.65,
             "bracketTag": "R",
@@ -983,11 +986,11 @@
           {
             "comboId": "3681-6714",
             "status": "eligible-package-scored",
-            "structuralScore": 1494.4908954150726,
+            "structuralScore": 1494.5400476005427,
             "practicalAdjustment": -630,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 864.49,
+            "finalScore": 864.54,
             "totalManaValue": 11,
             "deadPieceRisk": 1,
             "bracketTag": "R",
@@ -996,11 +999,11 @@
           {
             "comboId": "5342-6765",
             "status": "eligible-package-scored",
-            "structuralScore": 1482.0648693554997,
+            "structuralScore": 1482.08977156476,
             "practicalAdjustment": -560,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 922.06,
+            "finalScore": 922.09,
             "totalManaValue": 9,
             "deadPieceRisk": 1,
             "bracketTag": "R",
@@ -1009,11 +1012,11 @@
           {
             "comboId": "1218-6714",
             "status": "eligible-package-scored",
-            "structuralScore": 1480.0698562160226,
+            "structuralScore": 1480.1107887900566,
             "practicalAdjustment": -410,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 1070.07,
+            "finalScore": 1070.11,
             "totalManaValue": 8,
             "deadPieceRisk": 1,
             "bracketTag": "R",
@@ -1055,11 +1058,11 @@
           {
             "comboId": "1824-4549-6518",
             "status": "eligible-package-scored",
-            "structuralScore": 1314.210934336962,
+            "structuralScore": 1314.2288138967165,
             "practicalAdjustment": -215,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 1099.21,
+            "finalScore": 1099.23,
             "totalManaValue": 9,
             "deadPieceRisk": 0,
             "bracketTag": "S",
@@ -1068,11 +1071,11 @@
           {
             "comboId": "3693-3918-4899",
             "status": "eligible-package-scored",
-            "structuralScore": 1310.1298990359955,
+            "structuralScore": 1310.151473527681,
             "practicalAdjustment": -675,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 635.13,
+            "finalScore": 635.15,
             "totalManaValue": 12,
             "deadPieceRisk": 2,
             "bracketTag": "S",
@@ -1081,11 +1084,11 @@
           {
             "comboId": "3693-4899-5963",
             "status": "eligible-package-scored",
-            "structuralScore": 1304.1830717576809,
+            "structuralScore": 1304.2114384816302,
             "practicalAdjustment": -315,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 989.18,
+            "finalScore": 989.21,
             "totalManaValue": 8,
             "deadPieceRisk": 1,
             "bracketTag": "S",
@@ -1447,7 +1450,7 @@
                       "requirements": [],
                       "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nWhen Gravecrawler enters, Ayara triggers, causing you to gain 1 life and each opponent to lose 1 life.\nRepeat.",
                       "manaNeeded": "",
-                      "popularity": 22874
+                      "popularity": 22903
                     }
                   },
                   {
@@ -1491,7 +1494,7 @@
                       "requirements": [],
                       "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler.\nWhen Gravecrawler dies, Blood Artist triggers, causing you to gain 1 life and target opponent to lose 1 life.\nResolve the Warren Soultrader ability, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nRepeat.",
                       "manaNeeded": "",
-                      "popularity": 44658
+                      "popularity": 44725
                     }
                   }
                 ],
@@ -3027,8 +3030,8 @@
           "withinBudget": true,
           "maxDeckNzd": 499.99,
           "maxDeckUsdReference": 291.15,
-          "auditedTotalNzd": 463.26,
-          "auditedTotalUsdReference": 269.76,
+          "auditedTotalNzd": 463.24,
+          "auditedTotalUsdReference": 269.75,
           "overageNzd": 0,
           "overageUsdReference": 0,
           "unknownPriceEntries": [],
@@ -3320,7 +3323,7 @@
                       "requirements": [],
                       "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nWhen Gravecrawler enters, Ayara triggers, causing you to gain 1 life and each opponent to lose 1 life.\nRepeat.",
                       "manaNeeded": "",
-                      "popularity": 22874
+                      "popularity": 22903
                     }
                   },
                   {
@@ -3364,7 +3367,7 @@
                       "requirements": [],
                       "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler.\nWhen Gravecrawler dies, Blood Artist triggers, causing you to gain 1 life and target opponent to lose 1 life.\nResolve the Warren Soultrader ability, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nRepeat.",
                       "manaNeeded": "",
-                      "popularity": 44658
+                      "popularity": 44725
                     }
                   }
                 ],
@@ -4265,10 +4268,10 @@
               "withinBudget": false,
               "maxDeckNzd": 499.99,
               "maxDeckUsdReference": 291.15,
-              "auditedTotalNzd": 521.85,
-              "auditedTotalUsdReference": 303.88,
-              "overageNzd": 21.86,
-              "overageUsdReference": 12.73,
+              "auditedTotalNzd": 522.66,
+              "auditedTotalUsdReference": 304.35,
+              "overageNzd": 22.67,
+              "overageUsdReference": 13.2,
               "unknownPriceEntries": [],
               "unresolvedEntries": []
             }
@@ -4315,8 +4318,8 @@
               "withinBudget": true,
               "maxDeckNzd": 499.99,
               "maxDeckUsdReference": 291.15,
-              "auditedTotalNzd": 463.26,
-              "auditedTotalUsdReference": 269.76,
+              "auditedTotalNzd": 463.24,
+              "auditedTotalUsdReference": 269.75,
               "overageNzd": 0,
               "overageUsdReference": 0,
               "unknownPriceEntries": [],
@@ -4546,8 +4549,8 @@
           "candidateSource": "role-search"
         },
         "exactPrintingPolicy": "Every selected line carries an exact Scryfall set code and collector number. Oracle identity drives rules; the selected physical printing must independently satisfy the active family/set/promo policy. User maxUsdPerCard applies to required and optional cards; candidateMaxUsdPerCard, when supplied, only tightens optional candidate search.",
-        "selectedPrintingEstimatedNzd": 446.64,
-        "selectedPrintingEstimatedUsdReference": 260.08,
+        "selectedPrintingEstimatedNzd": 445.76,
+        "selectedPrintingEstimatedUsdReference": 259.57,
         "constraints": {
           "maxNzdPerCard": null,
           "maxUsdPerCardReference": null,
