@@ -5,7 +5,6 @@
 1 Yuna, Grand Summoner (FIC) 8 *F*
 1 Auron, Venerated Guardian (FIC) 10 *N*
 1 Gatta and Luzzu (FIC) 19 *N*
-1 Protection Magic (FIC) 24 *N*
 1 Summon: Ixion (FIC) 27 *N*
 1 Summon: Yojimbo (FIC) 28 *N*
 1 Summoner's Sending (FIC) 29 *N*
@@ -96,8 +95,9 @@
 1 Conformer Shuriken (FIC) 98 *N*
 1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
 1 Sazh's Chocobo (FIN) 200 *N*
-1 Ride the Shoopuf (FIN) 197 *N*
-1 Tidus, Blitzball Star (FIN) 246 *N*
+1 Umezawa's Jitte (SLD) 1865 *N*
 1 Astrologian's Planisphere (FIN) 46 *N*
 1 Venat, Heart of Hydaelyn // Hydaelyn, the Mothercrystal (FIN) 39 *N*
 1 Galuf's Final Act (FIN) 186 *N*
+1 Sahagin (FIN) 71 *N*
+1 Ride the Shoopuf (FIN) 197 *N*
