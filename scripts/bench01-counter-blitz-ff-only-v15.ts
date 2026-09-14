@@ -33,6 +33,7 @@ const PROLIFERATE_TARGET = 3;
 const COMBAT_REFERENCE_TARGET = 8;
 const PROTECTION_TARGET = 8;
 const SUBSTANTIAL_SWAP_TARGET = 20;
+const OPTIMIZER_BEHAVIOR_REVISION = 'compound-component-rebalance-v1';
 const MIN_CREATURES_FOR_HYBRID_PLAN = 18;
 const RETAINED_RAW_PATH = process.env.SCRYFALL_RETAINED_RAW_PATH?.trim();
 const RETAINED_MANIFEST_PATH = process.env.SCRYFALL_RETAINED_MANIFEST_PATH?.trim();
@@ -391,7 +392,7 @@ async function main(): Promise<void> {
 
   const benchmark = {
     schema: 'bench01-counter-blitz-ff-only-v1',
-    provenance: { ...inputProvenance, sourceSha: SOURCE_SHA, workerMode: WORKER_MODE, finalDeckSha256: sha256V15(finalDecklist), replayDiagnostics: retainedScryfallDiagnosticsV15() },
+    provenance: { ...inputProvenance, sourceSha: SOURCE_SHA, optimizerBehaviorRevision: OPTIMIZER_BEHAVIOR_REVISION, workerMode: WORKER_MODE, finalDeckSha256: sha256V15(finalDecklist), replayDiagnostics: retainedScryfallDiagnosticsV15() },
     fixture: 'BENCH-01 Batch A / Counter Blitz',
     sourceBaseline: 'MTGJSON exact standard precon',
     precon: {
