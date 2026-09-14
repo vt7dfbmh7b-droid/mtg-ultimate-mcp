@@ -33,6 +33,7 @@ import {
   BRACKET_FIVE_AUTHORITATIVE_TARGETS_V15,
   BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15,
   minimumPersistentColoredManaSourcesV15,
+  minimumUpgradeLandCountV15,
   suggestDeckUpgrades,
   type UpgradeOptions,
   type UpgradeTargetGateV15,
@@ -586,7 +587,7 @@ type UpgradeStructuralRoleV15 =
   | 'board-wipe'
   | 'early';
 type UpgradeTargetGateRoleV15 = UpgradeTargetGateV15;
-type UpgradeAddressedRoleV15 = UpgradeStructuralRoleV15 | UpgradeTargetGateRoleV15 | 'theme-component' | 'win-package';
+type UpgradeAddressedRoleV15 = UpgradeStructuralRoleV15 | UpgradeTargetGateRoleV15 | 'theme-component' | 'oracle-synergy' | 'win-package';
 
 interface UpgradeAddSelectionV15 {
   candidate: Record<string, unknown>;
@@ -658,7 +659,9 @@ export function prioritizeUpgradeCandidateLanesV15<T, TRole extends string>(
   const laneClass = (lane: UpgradeCandidateLaneV15<T, TRole>): number => (
     lane.role === 'theme-component'
       ? 0
-      : lane.prioritySource === 'authoritative-target-gate' ? 1 : 2
+      : lane.role === 'oracle-synergy'
+        ? 1
+        : lane.prioritySource === 'authoritative-target-gate' ? 2 : 3
   );
   return lanes
     .map((lane, index) => ({ lane, index }))
@@ -727,7 +730,7 @@ const UPGRADE_STRUCTURAL_ROLES_V15: UpgradeStructuralRoleV15[] = [
   'ramp', 'draw', 'interaction', 'free-interaction', 'protection', 'tutor', 'recursion', 'board-wipe', 'early',
 ];
 const UPGRADE_CANDIDATE_ROLES_V15: UpgradeAddressedRoleV15[] = [
-  'average-nonland-mv', ...UPGRADE_STRUCTURAL_ROLES_V15, 'theme-component', 'win-package',
+  'average-nonland-mv', ...UPGRADE_STRUCTURAL_ROLES_V15, 'theme-component', 'oracle-synergy', 'win-package',
 ];
 const STRATEGY_COMPONENT_ROLES_V15: Record<string, ReadonlySet<string>> = {
   'combat-tokens': new Set(['go-wide payoff', 'typal board control payoff', 'repeatable token engine', 'spell-triggered token engine', 'death-trigger token engine', 'token multiplier', 'token-event life drain', 'team combat-damage draw engine', 'team-wide untap pump', 'extra combat', 'untap engine', 'haste']),
@@ -1389,7 +1392,9 @@ export function pairUpgradeSwapsByStructureV15(
   const state = upgradeStructuralStateV15(currentMetrics, structuralTargets);
   const bracket = clampBracket(targetBracket);
   const currentAverageNonlandManaValue = recordNumber(currentMetrics.averageNonlandManaValue);
-  const currentNonlandCount = recordNumber(currentMetrics.nonlandCount);
+  let currentNonlandCount = recordNumber(currentMetrics.nonlandCount);
+  let currentLandCount = recordNumber(currentMetrics.landCount);
+  const minimumLandCount = Math.min(currentLandCount, minimumUpgradeLandCountV15(bracket));
   const curveTarget = bracket >= 5
     ? BRACKET_FIVE_AVERAGE_NONLAND_MV_MAX_V15
     : bracket >= 4
@@ -1467,6 +1472,10 @@ export function pairUpgradeSwapsByStructureV15(
       : [...remainingCuts])
       .filter((cut) => {
         const cutCard = summarizedCard(cut);
+        const addIsLand = recordString(addCard.typeLine).toLocaleLowerCase().includes('land');
+        const cutIsLand = recordString(cutCard.typeLine).toLocaleLowerCase().includes('land');
+        const landCountAfterSwap = currentLandCount + (addIsLand ? 1 : 0) - (cutIsLand ? 1 : 0);
+        if (landCountAfterSwap < minimumLandCount) return false;
         // Do not spend a premium one- or two-mana acceleration piece on an unrelated
         // upgrade. A persistent low-cost mana source is foundational early infrastructure;
         // only another premium early infrastructure card may replace it.
@@ -1517,9 +1526,12 @@ export function pairUpgradeSwapsByStructureV15(
           if (afterAuthoritative[selectionTargetGate] <= authoritativeCounts[selectionTargetGate]) return false;
         }
 
-        if (currentNonlandCount > 0 && Number.isFinite(curveTarget)) {
+        const nonlandCountAfterSwap = currentNonlandCount + (addIsLand ? 0 : 1) - (cutIsLand ? 0 : 1);
+        if (currentNonlandCount > 0 && nonlandCountAfterSwap > 0 && Number.isFinite(curveTarget)) {
           const beforeAverage = currentNonlandManaValueTotal / currentNonlandCount;
-          const afterAverage = (currentNonlandManaValueTotal + addManaValue - recordNumber(cutCard.manaValue)) / currentNonlandCount;
+          const afterAverage = (currentNonlandManaValueTotal
+            + (addIsLand ? 0 : addManaValue)
+            - (cutIsLand ? 0 : recordNumber(cutCard.manaValue))) / nonlandCountAfterSwap;
           const allowedAverage = Math.max(curveTarget, beforeAverage);
           if (afterAverage > allowedAverage + 0.0001) return false;
           if (selectionTargetGate === 'average-nonland-mv' && afterAverage >= beforeAverage - 0.0001) return false;
@@ -1543,7 +1555,10 @@ export function pairUpgradeSwapsByStructureV15(
           && strategyPreservation.meaningfulStrategyLoss
           && !requestedComponentRebalance) return false;
 
-        if (selection.role === 'average-nonland-mv' || selection.role === 'theme-component' || selection.role === 'win-package') return true;
+        if (selection.role === 'average-nonland-mv'
+          || selection.role === 'theme-component'
+          || selection.role === 'oracle-synergy'
+          || selection.role === 'win-package') return true;
         return structuralDeficitTotalV15(afterSwap, state.targets) < deficitBeforeSwap;
       });
     candidateCuts.sort((left, right) => {
@@ -1617,6 +1632,8 @@ export function pairUpgradeSwapsByStructureV15(
     if (cutIndex < 0) continue;
     remainingCuts.splice(cutIndex, 1);
     const cutCard = summarizedCard(cut);
+    const addIsLand = recordString(addCard.typeLine).toLocaleLowerCase().includes('land');
+    const cutIsLand = recordString(cutCard.typeLine).toLocaleLowerCase().includes('land');
     for (const role of new Set([...summarizedRoles(addCard), ...summarizedRoles(cutCard)])) {
       semanticRoleCounts[role] = (semanticRoleCounts[role] ?? 0)
         + (summarizedRoles(addCard).has(role) ? 1 : 0)
@@ -1644,8 +1661,12 @@ export function pairUpgradeSwapsByStructureV15(
       authoritativeCounts[gate] += (summaryMatchesCountTargetGateV15(addCard, gate) ? 1 : 0)
         - (summaryMatchesCountTargetGateV15(cutCard, gate) ? 1 : 0);
     }
-    currentNonlandManaValueTotal += addManaValue - recordNumber(cutCard.manaValue);
-    const nonlandManaValueReduction = recordNumber(cutCard.manaValue) - addManaValue;
+    currentLandCount += (addIsLand ? 1 : 0) - (cutIsLand ? 1 : 0);
+    currentNonlandCount += (addIsLand ? 0 : 1) - (cutIsLand ? 0 : 1);
+    currentNonlandManaValueTotal += (addIsLand ? 0 : addManaValue)
+      - (cutIsLand ? 0 : recordNumber(cutCard.manaValue));
+    const nonlandManaValueReduction = (cutIsLand ? 0 : recordNumber(cutCard.manaValue))
+      - (addIsLand ? 0 : addManaValue);
     if (selection.role === 'average-nonland-mv') {
       remainingCurveReduction = Math.max(0, remainingCurveReduction - nonlandManaValueReduction);
     }

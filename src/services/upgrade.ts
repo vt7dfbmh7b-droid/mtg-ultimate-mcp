@@ -11,6 +11,7 @@ import { effectiveCardRolesV15 } from './card-role-truth-v15.js';
 import { cardMatchesControlledThemeClauseV15 } from './controlled-theme-card-match-v15.js';
 import { buildDeckMetrics, type ParsedDeck } from './deck.js';
 import { discoverEligiblePoolV15 } from './neutral-deck-builder-v15.js';
+import { oracleMechanismSynergiesV15 } from './oracle-mechanism-synergy-v15.js';
 import {
   describePrintingPolicyV08,
   resolvePrintingPolicyV08,
@@ -60,6 +61,8 @@ export interface UpgradeStructuralTargetsV15 {
 }
 
 export interface UpgradeCandidateMetricsV15 {
+  landCount?: number;
+  nonlandCount?: number;
   rampCount: number;
   drawCount: number;
   interactionCount: number;
@@ -126,6 +129,11 @@ export function minimumPersistentColoredManaSourcesV15(commanderColorCount: numb
 
 function clampBracket(value: number | undefined): number {
   return Math.max(1, Math.min(5, Math.trunc(value ?? 4)));
+}
+
+export function minimumUpgradeLandCountV15(targetBracket: number): number {
+  const bracket = clampBracket(targetBracket);
+  return ({ 1: 39, 2: 38, 3: 36, 4: 34, 5: 31 } as Record<number, number>)[bracket] ?? 35;
 }
 
 function authoritativePriority(
@@ -555,6 +563,26 @@ export function contextualCutPressureV15(
   };
 }
 
+/**
+ * Rank only lands that the construction floor has already proved surplus. The score is derived
+ * from retained Oracle text and detected roles: conditional mana and unconditional tapped entry
+ * are real tempo liabilities, while fixing and on-plan utility are reasons to keep a land.
+ */
+export function surplusNonbasicLandCutBonusV15(card: ScryfallCard): number {
+  if (!card.type_line.toLocaleLowerCase().includes('land')
+    || card.type_line.toLocaleLowerCase().includes('basic land')) return 0;
+  const oracle = getCardOracleText(card).toLocaleLowerCase();
+  const roles = new Set(effectiveCardRolesV15(card));
+  let bonus = 1;
+  if (/activate only if you control five or more lands/.test(oracle)) bonus += 8;
+  if (/(?:this land|~) enters tapped\./.test(oracle)
+    && !/(?:unless|you may reveal|if you don't)/.test(oracle)) bonus += 3;
+  if (roles.has('land ramp') || roles.has('tutor') || roles.has('card selection')) bonus -= 2;
+  if (roles.has('+1/+1 counters') || roles.has('proliferate')) bonus -= 3;
+  if (/any color in your commander's color identity/.test(oracle)) bonus -= 4;
+  return Number(bonus.toFixed(1));
+}
+
 function cutCandidates(
   parsed: ParsedDeck,
   cards: ScryfallCard[],
@@ -563,16 +591,25 @@ function cutCandidates(
   componentAffinityForCard: (card: ScryfallCard) => ReturnType<typeof upgradeRequestedIdentityAffinityV15>,
   protectThemeMatches: boolean,
   allowCurveFallback: boolean,
+  currentLandCount: number,
+  minimumLandCount: number,
 ): Array<Record<string, unknown>> {
   const mainNames = new Set(parsed.main.map((entry) => entry.name.toLocaleLowerCase()));
   const candidates = cards
-    .filter((card) => mainNames.has(card.name.toLocaleLowerCase()) && !card.type_line.toLowerCase().includes('land'))
+    .filter((card) => {
+      if (!mainNames.has(card.name.toLocaleLowerCase())) return false;
+      const typeLine = card.type_line.toLocaleLowerCase();
+      if (!typeLine.includes('land')) return true;
+      return currentLandCount > minimumLandCount && !typeLine.includes('basic land');
+    })
     .map((card) => {
       const context = contextualCutPressureV15(card, strategyContext);
       const componentAffinity = componentAffinityForCard(card);
       const themeMatch = themeCandidateNames.has(card.name.toLocaleLowerCase()) || componentAffinity.broadMatchedComponentIds.length > 0;
       const themeProtectionApplied = protectThemeMatches && themeMatch ? 4 : 0;
-      const cutPressure = Number((context.cutPressure - themeProtectionApplied).toFixed(1));
+      const isSurplusNonbasicLand = card.type_line.toLocaleLowerCase().includes('land');
+      const cutPressure = Number((context.cutPressure - themeProtectionApplied
+        + (isSurplusNonbasicLand ? surplusNonbasicLandCutBonusV15(card) : 0)).toFixed(1));
       return {
         card: { ...summarizeCard(card), roles: effectiveCardRolesV15(card) },
         heuristicCutPressure: cutPressure,
@@ -592,7 +629,9 @@ function cutCandidates(
           requestedRelationshipIds: componentAffinity.requestedRelationshipIds,
           requestedRelationshipReasons: componentAffinity.requestedRelationshipReasons,
         },
-        reasons: themeProtectionApplied > 0
+        reasons: isSurplusNonbasicLand
+          ? [...context.reasons, `nonbasic land is above the ${minimumLandCount}-land construction floor`]
+          : themeProtectionApplied > 0
           ? [...context.reasons, 'supports the explicit controlled theme while the deck is at or below its required theme density']
           : context.reasons,
       };
@@ -950,6 +989,62 @@ export async function suggestDeckUpgrades(
     });
   }
 
+  // Restricted pools already contain verified Oracle records for every eligible physical
+  // printing. Inspect those facts for a closed mechanism with a card already in the deck, rather
+  // than relying on names or an external combo database to happen to index the interaction.
+  if (restrictedEligiblePool) {
+    const oracleSynergyCandidates: Array<Record<string, unknown>> = [];
+    const ranked = restrictedEligiblePool
+      .filter((card) => !card.type_line.toLocaleLowerCase().includes('land'))
+      .filter((card) => !existing.has(card.name.toLocaleLowerCase()))
+      .filter((card) => !excluded.has(card.name.toLocaleLowerCase()))
+      .filter((card) => card.legalities.commander === 'legal')
+      .map((card) => ({ card, relationships: oracleMechanismSynergiesV15(card, cards) }))
+      .filter((item) => item.relationships.length > 0)
+      .sort((a, b) => {
+        const aAffinity = substantiveCommanderStrategyAffinityScoreV15(cardCommanderStrategyAffinityV15(a.card, strategyContext));
+        const bAffinity = substantiveCommanderStrategyAffinityScoreV15(cardCommanderStrategyAffinityV15(b.card, strategyContext));
+        return bAffinity - aAffinity || a.card.cmc - b.card.cmc || a.card.name.localeCompare(b.card.name);
+      });
+    for (const { card, relationships } of ranked) {
+      const printing = await selectEligiblePrintingV08(card, printingPolicy, options.maxUsdPerCard);
+      if (!printing) continue;
+      const affinity = cardCommanderStrategyAffinityV15(card, strategyContext);
+      oracleSynergyCandidates.push({
+        card: { ...summarizeCard(card), roles: effectiveCardRolesV15(card) },
+        score: Number((20 + substantiveCommanderStrategyAffinityScoreV15(affinity)).toFixed(1)),
+        authoritativeTargetGate: null,
+        strategyAffinity: {
+          score: Number(affinity.score.toFixed(1)),
+          protectionApplied: Number(Math.min(4, substantiveCommanderStrategyAffinityScoreV15(affinity)).toFixed(1)),
+          matchedStrategies: affinity.matches.map((match) => match.archetype),
+          matches: affinity.matches,
+        },
+        oracleMechanismEvidence: relationships,
+        recommendedPrinting: {
+          set: printing.card.set.toUpperCase(), setName: printing.card.set_name, collectorNumber: printing.card.collector_number,
+          releaseDate: printing.card.released_at ?? null, finish: printing.finish, priceUsd: printing.priceUsd,
+          promo: Boolean(printing.card.promo), promoTypes: printing.card.promo_types ?? [], flavorName: printing.card.flavor_name ?? null,
+          familyMatch: printing.matchedBy, scryfallUrl: printing.card.scryfall_uri,
+        },
+        whyItFits: `Verified retained Oracle text exposes a closed ${relationships[0]?.id ?? 'mechanism'} with ${relationships[0]?.partnerName ?? 'an existing deck card'}. This is deterministic Oracle-derived synergy evidence, not an external combo-database claim.`,
+      });
+      if (oracleSynergyCandidates.length >= maxCandidates) break;
+    }
+    if (oracleSynergyCandidates.length > 0) {
+      candidateGroups.push({
+        role: 'oracle-synergy',
+        prioritySource: 'verified-oracle-mechanism',
+        targetGate: null,
+        deficit: oracleSynergyCandidates.length,
+        candidateDiscoveryMode: candidateDiscovery.mode,
+        candidateAvailability: 'candidates-found',
+        searchQuery: null,
+        candidates: oracleSynergyCandidates,
+      });
+    }
+  }
+
   return {
     targetBracket, targetPressure, currentMetrics, structuralTargets: targets, structuralDeficits: deficits,
     authoritativeTargetGatePriorities, candidateGenerationPriorities: candidatePriorities, candidateDiscovery,
@@ -959,6 +1054,8 @@ export async function suggestDeckUpgrades(
       themeMinimumMainMatches > 0 && themeCurrentMainMatches <= themeMinimumMainMatches,
       authoritativeTargetGatePriorities.some((priority) => priority.targetGate === 'average-nonland-mv')
         || themeComponents.some((component) => component.currentMainMatches < component.requiredMainMatches),
+      metrics.landCount,
+      minimumUpgradeLandCountV15(targetBracket),
     ),
     controlledThemeSelection: {
       active: Boolean(themeClause), queryClause: themeClause || null, searchQuery: controlledThemeSearchQuery,
@@ -984,7 +1081,8 @@ export async function suggestDeckUpgrades(
       'Printing-family/set-restricted Upgrade reuses the exhaustive bounded eligible pool already used by restricted Build, so a qualifying card cannot be missed merely because it fell outside a small role-search result window.',
       'A V0.15 controlled/requested theme remains an advisory role-candidate discovery and ranking signal even after its minimum density is satisfied; the minimum remains a preservation gate rather than a switch that disables on-plan replacement search.',
       'Cut ordering uses the same V0.15 commander strategy context as additions. Broad compound-theme membership remains independently classified from advisory relationship IDs so commander-shape evidence cannot masquerade as hard theme membership.',
-      'Automatic upgrade packages pair the nonland cut pool with nonland additions so a utility land cannot silently replace a spell; dedicated mana-base work should be handled explicitly.',
+      'Automatic upgrade packages may spend only nonbasic lands proved surplus above the bracket construction floor. Retained Oracle text ranks conditional or unconditional-tapped lands ahead of fixing and on-plan utility lands.',
+      'Restricted Upgrade can surface a closed interaction derived entirely from retained Oracle text. This is labelled deterministic Oracle-mechanism evidence and is not presented as external combo-database verification.',
       'Cut suggestions deliberately avoid claiming thematic/high-mana cards are bad; validate them against simulations, actual games, and reference-deck evidence.',
       'Scryfall USD prices are printing-specific reference values rather than guaranteed store checkout prices, and this version does not yet convert them to NZD.',
       'Promo status by itself never grants membership in a printing family; the printing must match a family set or a curated exact special-printing selector.',

@@ -13,6 +13,7 @@ import {
 import {
   restrictedUpgradeCandidatesForRoleV15,
   selectUpgradeCutCandidatesV15,
+  surplusNonbasicLandCutBonusV15,
   upgradeCandidatePrioritiesV15,
   type UpgradeCandidateMetricsV15,
   type UpgradeStructuralTargetsV15,
@@ -75,6 +76,17 @@ function card(name: string, cmc: number, typeLine = 'Creature — Test'): Scryfa
   } as ScryfallCard;
 }
 
+test('surplus-land ranking cuts conditional and tapped lands before fixing and counter utility', () => {
+  const conditional = { ...card('Conditional Land', 0, 'Land'), oracle_text: 'T: Add CC. Activate only if you control five or more lands.' };
+  const tapped = { ...card('Tapped Dual', 0, 'Land — Plains Island'), oracle_text: 'This land enters tapped.\nT: Add W or U.' };
+  const fixing = { ...card('Commander Fixer', 0, 'Land'), oracle_text: "T: Add one mana of any color in your commander's color identity." };
+  const utility = { ...card('Counter Utility', 0, 'Land'), oracle_text: 'T: Add C.\nT: Move a counter from target permanent you control onto another target permanent.' };
+
+  assert.ok(surplusNonbasicLandCutBonusV15(conditional) > surplusNonbasicLandCutBonusV15(tapped));
+  assert.ok(surplusNonbasicLandCutBonusV15(tapped) > surplusNonbasicLandCutBonusV15(fixing));
+  assert.ok(surplusNonbasicLandCutBonusV15(tapped) > surplusNonbasicLandCutBonusV15(utility));
+});
+
 test('Bracket-5 candidate generation puts the failed real curve gate ahead of tutor ten', () => {
   const priorities = upgradeCandidatePrioritiesV15(marvelMetrics, bracketFiveTargets, 5);
 
@@ -132,11 +144,13 @@ test('under-target requested component lanes get a selection opportunity before 
     { role: 'average-nonland-mv', prioritySource: 'authoritative-target-gate', deficit: 0.43, candidates: ['curve'] },
     { role: 'interaction', prioritySource: 'authoritative-target-gate', deficit: 5, candidates: ['cheap'] },
     { role: 'theme-component', prioritySource: 'authoritative-target-gate', deficit: 7, candidates: ['countermagic'] },
+    { role: 'oracle-synergy', prioritySource: 'verified-oracle-mechanism', deficit: 1, candidates: ['closed-loop'] },
     { role: 'draw', prioritySource: 'aspirational-role-target', deficit: 3, candidates: ['draw'] },
   ]);
 
   assert.deepEqual(lanes.map((lane) => lane.role), [
     'theme-component',
+    'oracle-synergy',
     'average-nonland-mv',
     'interaction',
     'draw',
@@ -1647,6 +1661,50 @@ test('compound rebalance does not waive an unrelated second strategy loss', () =
         { id: 'countermagic', currentMainMatches: 0, requiredMainMatches: 2 },
       ],
     },
+  );
+
+  assert.equal(pairings.length, 0);
+});
+
+test('a nonland upgrade may spend only verified nonbasic land surplus above the bracket floor', () => {
+  const additions = [1, 2].map((index) => ({
+    role: 'protection' as const,
+    candidate: { card: { name: `Protection ${index}`, roles: ['protection'], manaValue: 2, typeLine: 'Artifact' } },
+  }));
+  const cuts = [1, 2].map((index) => ({
+    card: { name: `Surplus Land ${index}`, roles: ['land'], manaValue: 0, typeLine: 'Land' },
+    heuristicCutPressure: 1,
+  }));
+  const metrics = {
+    rampCount: 20, drawCount: 20, interactionCount: 20, protectionCount: 2, tutorCount: 10,
+    recursionCount: 4, boardWipeCount: 2, earlyPlayCount: 41, cheapInteractionCount: 13,
+    fastManaCount: 3, averageNonlandManaValue: 2.5, nonlandCount: 63, landCount: 32,
+    persistentColoredManaSourceCount: 8, commanderColorCount: 3,
+    roleCounts: { 'free interaction': 1, 'cheap interaction': 13, 'spot interaction': 14 },
+  };
+
+  const pairings = pairUpgradeSwapsByStructureV15(additions, cuts, metrics, { ...bracketFiveTargets }, 5, {
+    rejectMeaningfulStrategyLoss: true,
+  });
+
+  assert.equal(pairings.length, 1);
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Surplus Land 1');
+});
+
+test('a deck already at its bracket land floor cannot exchange a land for a spell', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{ role: 'protection', candidate: { card: { name: 'Protection', roles: ['protection'], manaValue: 2, typeLine: 'Artifact' } } }],
+    [{ card: { name: 'Floor Land', roles: ['land'], manaValue: 0, typeLine: 'Land' }, heuristicCutPressure: 1 }],
+    {
+      rampCount: 20, drawCount: 20, interactionCount: 20, protectionCount: 2, tutorCount: 10,
+      recursionCount: 4, boardWipeCount: 2, earlyPlayCount: 41, cheapInteractionCount: 13,
+      fastManaCount: 3, averageNonlandManaValue: 2.5, nonlandCount: 68, landCount: 31,
+      persistentColoredManaSourceCount: 8, commanderColorCount: 3,
+      roleCounts: { 'free interaction': 1, 'cheap interaction': 13, 'spot interaction': 14 },
+    },
+    { ...bracketFiveTargets },
+    5,
+    { rejectMeaningfulStrategyLoss: true },
   );
 
   assert.equal(pairings.length, 0);
