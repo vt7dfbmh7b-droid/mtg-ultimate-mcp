@@ -1528,7 +1528,7 @@ test('compound-theme component floors survive final swap pairing', () => {
   assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Generic Expensive Card');
 });
 
-test('under-target component lanes can add a mechanism without bypassing structural floors', () => {
+test('under-target component lanes make net mechanism progress without bypassing structural floors', () => {
   const pairings = pairUpgradeSwapsByStructureV15(
     [{
       role: 'theme-component' as const,
@@ -1560,8 +1560,96 @@ test('under-target component lanes can add a mechanism without bypassing structu
     { themeComponents: [{ id: 'countermagic', currentMainMatches: 1, requiredMainMatches: 8 }] },
   );
 
-  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Last Counterspell');
+  assert.equal((pairings[0]?.cut.card as Record<string, unknown> | undefined)?.name, 'Surplus Structural Card');
   assert.equal((pairings[0]?.add.card as Record<string, unknown> | undefined)?.name, 'Incoming Counterspell');
+});
+
+test('compound rebalance may spend only the audited surplus of an overrepresented component', () => {
+  const counterStrategy = {
+    score: 9,
+    protectionApplied: 4,
+    matchedStrategies: ['counters'],
+    matches: [{ archetype: 'counters', overlapScore: 9, commanderScore: 9, cardScore: 9 }],
+  };
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [1, 2].map((index) => ({
+      role: 'theme-component' as const,
+      candidate: {
+        card: { name: `Incoming Counterspell ${index}`, roles: ['countermagic'], manaValue: 2, typeLine: 'Instant' },
+        explicitTheme: { broadMatchedComponentIds: ['countermagic'] },
+      },
+    })),
+    [1, 2].map((index) => ({
+      card: { name: `Surplus Counter Card ${index}`, roles: ['+1/+1 counters'], manaValue: 4, typeLine: 'Creature' },
+      explicitTheme: { broadMatchedComponentIds: ['+1/+1 counters'] },
+      heuristicCutPressure: -2,
+      strategyAffinity: counterStrategy,
+    })),
+    {
+      rampCount: 20, drawCount: 20, interactionCount: 20, protectionCount: 8, tutorCount: 10,
+      recursionCount: 4, boardWipeCount: 2, earlyPlayCount: 41, cheapInteractionCount: 13,
+      fastManaCount: 3, averageNonlandManaValue: 2.5, nonlandCount: 69,
+      persistentColoredManaSourceCount: 8, commanderColorCount: 3,
+      roleCounts: { 'free interaction': 1, 'cheap interaction': 13, 'spot interaction': 14, countermagic: 0 },
+    },
+    { ...bracketFiveTargets },
+    5,
+    {
+      rejectMeaningfulStrategyLoss: true,
+      themeComponents: [
+        { id: '+1/+1 counters', currentMainMatches: 3, requiredMainMatches: 2 },
+        { id: 'countermagic', currentMainMatches: 0, requiredMainMatches: 2 },
+      ],
+    },
+  );
+
+  assert.equal(pairings.length, 1);
+  assert.equal(pairings[0]?.requestedComponentRebalance, true);
+  assert.equal(pairings[0]?.strategyPreservation.meaningfulStrategyLoss, false);
+});
+
+test('compound rebalance does not waive an unrelated second strategy loss', () => {
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{
+      role: 'theme-component' as const,
+      candidate: {
+        card: { name: 'Incoming Counterspell', roles: ['countermagic'], manaValue: 2, typeLine: 'Instant' },
+        explicitTheme: { broadMatchedComponentIds: ['countermagic'] },
+      },
+    }],
+    [{
+      card: { name: 'Counter Value Engine', roles: ['+1/+1 counters'], manaValue: 4, typeLine: 'Creature' },
+      explicitTheme: { broadMatchedComponentIds: ['+1/+1 counters'] },
+      heuristicCutPressure: -2,
+      strategyAffinity: {
+        score: 18,
+        protectionApplied: 4,
+        matchedStrategies: ['counters', 'value-engine'],
+        matches: [
+          { archetype: 'counters', overlapScore: 9, commanderScore: 9, cardScore: 9 },
+          { archetype: 'value-engine', overlapScore: 9, commanderScore: 9, cardScore: 9 },
+        ],
+      },
+    }],
+    {
+      rampCount: 20, drawCount: 20, interactionCount: 20, protectionCount: 8, tutorCount: 10,
+      recursionCount: 4, boardWipeCount: 2, earlyPlayCount: 41, cheapInteractionCount: 13,
+      fastManaCount: 3, averageNonlandManaValue: 2.5, nonlandCount: 69,
+      persistentColoredManaSourceCount: 8, commanderColorCount: 3,
+      roleCounts: { 'free interaction': 1, 'cheap interaction': 13, 'spot interaction': 14, countermagic: 0 },
+    },
+    { ...bracketFiveTargets },
+    5,
+    {
+      rejectMeaningfulStrategyLoss: true,
+      themeComponents: [
+        { id: '+1/+1 counters', currentMainMatches: 20, requiredMainMatches: 10 },
+        { id: 'countermagic', currentMainMatches: 0, requiredMainMatches: 2 },
+      ],
+    },
+  );
+
+  assert.equal(pairings.length, 0);
 });
 
 

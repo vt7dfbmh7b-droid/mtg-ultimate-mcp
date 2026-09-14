@@ -617,6 +617,7 @@ interface UpgradePairingV15 {
   persistentColoredManaSourceFloor: number;
   authoritativeTargetGate?: UpgradeTargetGateRoleV15;
   nonlandManaValueReduction?: number;
+  requestedComponentRebalance?: boolean;
 }
 
 interface UpgradePairingOptionsV15 {
@@ -698,6 +699,7 @@ export interface UpgradeSwapStrategyPreservationV15 {
   unreplacedStrategyComponentRoles: string[];
   meaningfulStrategyLoss: boolean;
   verdict: 'preserved' | 'meaningful-strategy-loss';
+  requestedComponentRebalance?: boolean;
 }
 
 export interface UpgradeStrategyPreservationAuditV15 {
@@ -968,15 +970,21 @@ function uncompensatedEngineCountV15(add: Record<string, unknown>, cut: Record<s
 }
 
 export function auditUpgradeStrategyPreservationV15(
-  pairings: ReadonlyArray<Pick<UpgradePairingV15, 'add' | 'cut'>>,
+  pairings: ReadonlyArray<Pick<UpgradePairingV15, 'add' | 'cut' | 'requestedComponentRebalance'>>,
 ): UpgradeStrategyPreservationAuditV15 {
   const cutScores = new Map<string, number>();
   const addScores = new Map<string, number>();
   const strongestCutProtection = new Map<string, number>();
   const strongestCommanderScore = new Map<string, number>();
-  const swapImpacts = pairings.map((pair) => upgradeSwapStrategyPreservationV15(pair.add, pair.cut));
+  const swapImpacts = pairings.map((pair) => {
+    const impact = upgradeSwapStrategyPreservationV15(pair.add, pair.cut);
+    return pair.requestedComponentRebalance
+      ? { ...impact, meaningfulStrategyLoss: false, verdict: 'preserved' as const, requestedComponentRebalance: true }
+      : impact;
+  });
 
   for (const pair of pairings) {
+    if (pair.requestedComponentRebalance) continue;
     const cut = strategyAffinityEvidenceV15(pair.cut);
     const add = strategyAffinityEvidenceV15(pair.add);
     for (const [strategy, strategyScore] of cut.scoreByStrategy) {
@@ -1251,6 +1259,7 @@ function preservesRequestedThemeComponentFloorsV15(
   cutCard: Record<string, unknown>,
   addCard: Record<string, unknown>,
   components: UpgradePairingOptionsV15['themeComponents'] = [],
+  currentCounts?: ReadonlyMap<string, number>,
 ): boolean {
   if (!components || components.length === 0) return true;
   const cutIds = requestedThemeComponentIdsV15(cutCard);
@@ -1258,11 +1267,49 @@ function preservesRequestedThemeComponentFloorsV15(
   const addIds = requestedThemeComponentIdsV15(addCard);
   return components.every((component) => {
     if (!cutIds.has(component.id)) return true;
-    const current = Math.max(0, Math.trunc(component.currentMainMatches));
+    const current = Math.max(0, Math.trunc(currentCounts?.get(component.id) ?? component.currentMainMatches));
     const required = Math.max(1, Math.trunc(component.requiredMainMatches));
     const floor = Math.min(current, required);
     const after = current - 1 + (addIds.has(component.id) ? 1 : 0);
     return after >= floor;
+  });
+}
+
+export function advancesUnderTargetRequestedThemeComponentV15(
+  cutCard: Record<string, unknown>,
+  addCard: Record<string, unknown>,
+  components: UpgradePairingOptionsV15['themeComponents'] = [],
+  currentCounts?: ReadonlyMap<string, number>,
+): boolean {
+  const underTarget = (components ?? []).filter((component) => (
+    (currentCounts?.get(component.id) ?? component.currentMainMatches) < component.requiredMainMatches
+  ));
+  if (underTarget.length === 0) return true;
+  const cutIds = requestedThemeComponentIdsV15(cutCard);
+  const addIds = requestedThemeComponentIdsV15(addCard);
+  return underTarget.some((component) => addIds.has(component.id) && !cutIds.has(component.id));
+}
+
+function permitsRequestedComponentRebalanceV15(
+  cutCard: Record<string, unknown>,
+  addCard: Record<string, unknown>,
+  components: UpgradePairingOptionsV15['themeComponents'],
+  currentCounts: ReadonlyMap<string, number>,
+  strategyPreservation: UpgradeSwapStrategyPreservationV15,
+): boolean {
+  if (!advancesUnderTargetRequestedThemeComponentV15(cutCard, addCard, components, currentCounts)) return false;
+  const cutIds = requestedThemeComponentIdsV15(cutCard);
+  if (cutIds.size === 0) return false;
+  const normalizedCutIds = new Set([...cutIds].map((id) => id.toLocaleLowerCase()));
+  if (strategyPreservation.locallyUnreplacedStrategies.length > 1) return false;
+  if (strategyPreservation.unreplacedStrategyComponentRoles.some((role) => (
+    !normalizedCutIds.has(role.toLocaleLowerCase())
+  ))) return false;
+  if (uncompensatedEngineCountV15(addCard, cutCard) > 0) return false;
+  return [...cutIds].every((id) => {
+    const component = (components ?? []).find((item) => item.id === id);
+    if (!component) return false;
+    return (currentCounts.get(id) ?? component.currentMainMatches) - 1 >= component.requiredMainMatches;
   });
 }
 
@@ -1385,6 +1432,9 @@ export function pairUpgradeSwapsByStructureV15(
   );
   const packageAcceptanceFloors = options.packageAcceptanceFloors ?? [];
   let packageAcceptanceCounts = packageAcceptanceFloors.map((floor) => floor.beforeCount);
+  const requestedThemeComponentCounts = new Map(
+    (options.themeComponents ?? []).map((component) => [component.id, component.currentMainMatches] as const),
+  );
   const maxPairs = options.maxPairs === undefined
     ? Number.POSITIVE_INFINITY
     : Math.max(0, Math.trunc(options.maxPairs));
@@ -1435,7 +1485,19 @@ export function pairUpgradeSwapsByStructureV15(
           selection.role,
           authoritativeCounts,
         )) return false;
-        if (!preservesRequestedThemeComponentFloorsV15(cut, selection.candidate, options.themeComponents)) return false;
+        if (!preservesRequestedThemeComponentFloorsV15(
+          cut,
+          selection.candidate,
+          options.themeComponents,
+          requestedThemeComponentCounts,
+        )) return false;
+        if (selection.role === 'theme-component'
+          && !advancesUnderTargetRequestedThemeComponentV15(
+            cut,
+            selection.candidate,
+            options.themeComponents,
+            requestedThemeComponentCounts,
+          )) return false;
         if (!packageAcceptanceFloorPreservedV15(packageAcceptanceFloors, packageAcceptanceCounts, addCard, cutCard)) return false;
         const afterSwap = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);
         if (!preservesStructuralFloorsV15(counts, afterSwap, state.targets)) return false;
@@ -1467,9 +1529,19 @@ export function pairUpgradeSwapsByStructureV15(
         // cut before ranking so the same incoming card can still use a lower-pressure,
         // strategy-safe fallback. Rejecting only after selecting candidateCuts[0]
         // incorrectly abandoned the whole incoming mechanism.
+        const strategyPreservation = upgradeSwapStrategyPreservationV15(selection.candidate, cut);
+        const requestedComponentRebalance = selection.role === 'theme-component'
+          && permitsRequestedComponentRebalanceV15(
+            cut,
+            selection.candidate,
+            options.themeComponents,
+            requestedThemeComponentCounts,
+            strategyPreservation,
+          );
         if (options.rejectMeaningfulStrategyLoss
           && selection.role !== 'win-package'
-          && upgradeSwapStrategyPreservationV15(selection.candidate, cut).meaningfulStrategyLoss) return false;
+          && strategyPreservation.meaningfulStrategyLoss
+          && !requestedComponentRebalance) return false;
 
         if (selection.role === 'average-nonland-mv' || selection.role === 'theme-component' || selection.role === 'win-package') return true;
         return structuralDeficitTotalV15(afterSwap, state.targets) < deficitBeforeSwap;
@@ -1526,7 +1598,18 @@ export function pairUpgradeSwapsByStructureV15(
     });
     const cut = candidateCuts[0];
     if (!cut) continue;
-    const strategyPreservation = upgradeSwapStrategyPreservationV15(selection.candidate, cut);
+    const rawStrategyPreservation = upgradeSwapStrategyPreservationV15(selection.candidate, cut);
+    const requestedComponentRebalance = selection.role === 'theme-component'
+      && permitsRequestedComponentRebalanceV15(
+        cut,
+        selection.candidate,
+        options.themeComponents,
+        requestedThemeComponentCounts,
+        rawStrategyPreservation,
+      );
+    const strategyPreservation = requestedComponentRebalance
+      ? { ...rawStrategyPreservation, meaningfulStrategyLoss: false, verdict: 'preserved' as const, requestedComponentRebalance: true }
+      : rawStrategyPreservation;
     if (options.rejectMeaningfulStrategyLoss
       && selection.role !== 'win-package'
       && strategyPreservation.meaningfulStrategyLoss) continue;
@@ -1538,6 +1621,16 @@ export function pairUpgradeSwapsByStructureV15(
       semanticRoleCounts[role] = (semanticRoleCounts[role] ?? 0)
         + (summarizedRoles(addCard).has(role) ? 1 : 0)
         - (summarizedRoles(cutCard).has(role) ? 1 : 0);
+    }
+    const addComponentIds = requestedThemeComponentIdsV15(selection.candidate);
+    const cutComponentIds = requestedThemeComponentIdsV15(cut);
+    for (const component of options.themeComponents ?? []) {
+      requestedThemeComponentCounts.set(
+        component.id,
+        (requestedThemeComponentCounts.get(component.id) ?? component.currentMainMatches)
+          + (addComponentIds.has(component.id) ? 1 : 0)
+          - (cutComponentIds.has(component.id) ? 1 : 0),
+      );
     }
     counts = applySummaryToStructuralCountsV15(afterAdd, cutCard, -1);
     persistentColoredManaSources = persistentColoredManaSourcesAfterAdd
@@ -1568,6 +1661,7 @@ export function pairUpgradeSwapsByStructureV15(
       ...(selection.role === 'average-nonland-mv' ? {
         nonlandManaValueReduction: Number(nonlandManaValueReduction.toFixed(3)),
       } : {}),
+      ...(requestedComponentRebalance ? { requestedComponentRebalance: true } : {}),
     });
   }
   return pairs;

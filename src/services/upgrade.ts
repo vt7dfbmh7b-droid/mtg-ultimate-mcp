@@ -957,7 +957,8 @@ export async function suggestDeckUpgrades(
     candidateCuts: cutCandidates(
       parsed, cards, strategyContext, themeCandidateNames, componentAffinityForCard,
       themeMinimumMainMatches > 0 && themeCurrentMainMatches <= themeMinimumMainMatches,
-      authoritativeTargetGatePriorities.some((priority) => priority.targetGate === 'average-nonland-mv'),
+      authoritativeTargetGatePriorities.some((priority) => priority.targetGate === 'average-nonland-mv')
+        || themeComponents.some((component) => component.currentMainMatches < component.requiredMainMatches),
     ),
     controlledThemeSelection: {
       active: Boolean(themeClause), queryClause: themeClause || null, searchQuery: controlledThemeSearchQuery,
