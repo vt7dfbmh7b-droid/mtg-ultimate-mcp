@@ -14,22 +14,20 @@
 1 O'aka, Traveling Merchant (FIC) 39 *N*
 1 Tromell, Seymour's Butler (FIC) 73 *N*
 1 Yuna's Decision (FIC) 74 *N*
-1 Kimahri, Valiant Guardian (FIC) 85 *N*
 1 Shelinda, Yevon Acolyte (FIC) 94 *N*
 1 Wakka, Devoted Guardian (FIC) 97 *N*
 1 Collective Effort (FIC) 237 *N*
-1 Damning Verdict (FIC) 239 *N*
 1 Luminous Broodmoth (FIC) 246 *N*
 1 Scholar of New Horizons (FIC) 252 *N*
 1 Chasm Skulker (FIC) 262 *N*
 1 Inexorable Tide (FIC) 265 *N*
 1 Bane of Progress (FIC) 299 *N*
 1 Fight Rigging (FIC) 303 *N*
+1 Forgotten Ancient (FIC) 304 *N*
 1 Generous Patron (FIC) 305 *N*
 1 Gyre Sage (FIC) 306 *N*
 1 Hardened Scales (FIC) 307 *N*
 1 Incubation Druid (FIC) 309 *N*
-1 Path of Discovery (FIC) 312 *N*
 1 Rampant Rejuvenator (FIC) 314 *N*
 1 Tireless Tracker (FIC) 316 *N*
 1 Fathom Mage (FIC) 325 *N*
@@ -56,21 +54,16 @@
 1 Path to Exile (FIC) 248 *N*
 1 An Offer You Can't Refuse (FIC) 267 *N*
 1 Duskshell Crawler (FIC) 301 *N*
+1 Farseek (FIC) 302 *N*
 1 Inspiring Call (FIC) 310 *N*
 1 Bred for the Hunt (FIC) 321 *N*
 1 Arcane Signet (FIC) 334 *N*
 1 Everflowing Chalice (FIC) 343 *N*
 1 Sol Ring (FIC) 358 *N*
-1 Ash Barrens (FIC) 374 *N*
 1 Evolving Wilds (FIC) 389 *N*
 1 Forge of Heroes (FIC) 395 *N*
-1 Idyllic Beachfront (FIC) 404 *N*
 1 Nesting Grounds (FIC) 408 *N*
 1 Path of Ancestry (FIC) 411 *N*
-1 Radiant Grove (FIC) 414 *N*
-1 Seaside Citadel (FIC) 420 *N*
-1 Tangled Islet (FIC) 434 *N*
-1 Temple of the False God (FIC) 438 *N*
 1 Command Tower (FIC) 486 *N*
 1 Island (FIN) 297 *N*
 1 Island (FIN) 298 *N*
@@ -81,23 +74,30 @@
 1 Plains (FIN) 294 *N*
 1 Plains (FIN) 295 *N*
 1 Plains (FIN) 296 *N*
-1 Counterspell (FCA) 4 *N*
-1 Tome of Legends (FIC) 369 *N*
+1 Syncopate (FIN) 80 *N*
+1 Sazh Katzroy (FIN) 199 *N*
+1 The Destined White Mage (FIC) 444 *N*
 1 Torgal, A Fine Hound (FIN) 208 *N*
-1 Ultros, Obnoxious Octopus (FIN) 83 *N*
-1 Zack Fair (FIN) 45 *N*
 1 Hypnotic Sprite // Mesmeric Glare (FIC) 264 *N*
+1 Zack Fair (FIN) 45 *N*
+1 Solitude (SLD) 7004 *F*
+1 Sublime Epiphany (FIC) 271 *N*
+1 Sazh's Chocobo (FIN) 200 *N*
+1 Dovin's Veto (FCA) 51 *N*
 1 Sword of Truth and Justice (SLD) 1867 *N*
 1 Arcane Denial (RFIN) J2 *N*
-1 Garnet, Princess of Alexandria (FIN) 222 *F*
-1 Conformer Shuriken (FIC) 98 *N*
-1 Cryptic Command (FCA) 29 *N*
-1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
-1 Syncopate (FIN) 80 *N*
-1 Sazh's Chocobo (FIN) 200 *N*
-1 Sublime Epiphany (FIC) 271 *N*
-1 Ride the Shoopuf (FIN) 197 *N*
-1 Dovin's Veto (FCA) 51 *N*
-1 Astrologian's Planisphere (FIN) 46 *N*
 1 Force of Negation (RFIN) J1 *N*
+1 Ride the Shoopuf (FIN) 197 *N*
+1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
+1 Swiftfoot Boots (FIC) 361 *N*
+1 Astrologian's Planisphere (FIN) 46 *N*
+1 Sahagin (FIN) 71 *N*
+1 Umezawa's Jitte (SLD) 1865 *N*
+1 Fated Clash (FIC) 449 *F*
+1 Battle Menu (FIN) 9 *N*
+1 Cryptic Command (FCA) 29 *N*
+1 Garnet, Princess of Alexandria (FIN) 222 *F*
+1 Campsite Cuisine (FIC) 464 *F*
+1 Counterspell (FCA) 4 *N*
+1 Conformer Shuriken (FIC) 98 *N*
 1 Louisoix's Sacrifice (FIN) 59 *N*

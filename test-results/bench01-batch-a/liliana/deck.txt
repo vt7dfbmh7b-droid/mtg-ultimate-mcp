@@ -13,7 +13,7 @@
 1 Jet Medallion (MH3) 292
 1 Accursed Marauder (MH3) 80
 1 Ayara, First of Locthwain (ELD) 75
-1 Mind Stone (DMR) 385
+1 Mind Stone (FIC) 353
 1 Not Dead After All (WOE) 101
 1 Lively Dirge (OTJ) 93
 1 Sol Ring (MSC) 211
@@ -31,7 +31,7 @@
 1 Buried Alive (MH3) 273
 1 Toxic Deluge (MSC) 161
 1 Arcane Signet (MSC) 191
-1 Swiftfoot Boots (A25) 234
+1 Swiftfoot Boots (FIC) 361
 1 Infernal Grasp (SOC) 216
 1 Wayfarer's Bauble (HOC) 211
 1 Skullclamp (MSC) 210
@@ -40,7 +40,7 @@
 1 Wishclaw Talisman (FDN) 617
 1 Fellwar Stone (MSC) 285
 1 Idol of Oblivion (TDC) 319
-1 Thought Vessel (PLG22) 2
+1 Thought Vessel (MSC) 222
 1 Unearth (2X2) 96
 1 Village Rites (INR) 137
 1 Bloodghast (SOC) 210
@@ -54,14 +54,14 @@
 1 Hangarback Walker (SOC) 348
 1 Oversold Cemetery (DMR) 96
 1 Command Tower (MSC) 233
-1 Exotic Orchard (FIC) 390
+1 Exotic Orchard (EOC) 159
 1 War Room (PIP) 1068 *F*
 1 Fell the Profane // Fell Mire (MH3) 244
 1 Secluded Courtyard (MSC) 265
 1 Takenuma, Abandoned Mire (NEO) 278 *N*
 1 Demolition Field (FDN) 687 *N*
 1 Ash Barrens (NCC) 386 *N*
-22 Swamp (SNC) 267
+22 Swamp (FDN) 276
 1 Mephidross Vampire (5DN) 53 *N*
 1 Vampiric Rites (FDN) 615 *N*
 1 Ravenous Amulet (FDN) 131 *N*
