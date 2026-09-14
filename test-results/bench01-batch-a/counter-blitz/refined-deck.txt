@@ -11,9 +11,7 @@
 1 Blitzball Stadium (FIC) 34 *N*
 1 Lulu, Stern Guardian (FIC) 38 *N*
 1 O'aka, Traveling Merchant (FIC) 39 *N*
-1 Maester Seymour (FIC) 68 *N*
 1 Sphere Grid (FIC) 70 *N*
-1 Summon: Magus Sisters (FIC) 71 *N*
 1 Tromell, Seymour's Butler (FIC) 73 *N*
 1 Yuna's Decision (FIC) 74 *N*
 1 Kimahri, Valiant Guardian (FIC) 85 *N*
@@ -24,7 +22,6 @@
 1 Damning Verdict (FIC) 239 *N*
 1 Luminous Broodmoth (FIC) 246 *N*
 1 Scholar of New Horizons (FIC) 252 *N*
-1 Sunscorch Regent (FIC) 255 *N*
 1 Together Forever (FIC) 257 *N*
 1 Chasm Skulker (FIC) 262 *N*
 1 Inexorable Tide (FIC) 265 *N*
@@ -35,10 +32,8 @@
 1 Gyre Sage (FIC) 306 *N*
 1 Hardened Scales (FIC) 307 *N*
 1 Incubation Druid (FIC) 309 *N*
-1 Path of Discovery (FIC) 312 *N*
 1 Rampant Rejuvenator (FIC) 314 *N*
 1 Tireless Tracker (FIC) 316 *N*
-1 Altered Ego (FIC) 317 *N*
 1 Fathom Mage (FIC) 325 *N*
 1 Walking Ballista (FIC) 371 *N*
 1 Brushland (FIC) 377 *N*
@@ -101,3 +96,8 @@
 1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
 1 Sazh's Chocobo (FIN) 200 *N*
 1 Umezawa's Jitte (SLD) 1865 *N*
+1 Astrologian's Planisphere (FIN) 46 *N*
+1 Venat, Heart of Hydaelyn // Hydaelyn, the Mothercrystal (FIN) 39 *N*
+1 Galuf's Final Act (FIN) 186 *N*
+1 Sahagin (FIN) 71 *N*
+1 Ride the Shoopuf (FIN) 197 *N*
