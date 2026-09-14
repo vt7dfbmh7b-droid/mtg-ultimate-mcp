@@ -405,6 +405,7 @@ async function main(): Promise<void> {
       printingFamily: 'Final Fantasy',
       targetBracket: TARGET_BRACKET,
       maxSwaps: 30,
+      roundBudget: 'derived-from-maxSwaps-because-maxRounds-is-omitted',
       substantialSwapTarget: SUBSTANTIAL_SWAP_TARGET,
       identity: 'Bant +1/+1 counters/proliferate with dense countermagic and hybrid combat/combo routes',
       hardTruthFirst: true,

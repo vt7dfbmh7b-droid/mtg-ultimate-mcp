@@ -46,7 +46,7 @@ const refinementFields = {
   maxNzdPerCard: z.number().positive().max(200_000).optional(),
   maxTotalNzd: z.number().positive().max(2_000_000).optional(),
   maxSwaps: z.number().int().min(1).max(30).optional(),
-  maxRounds: z.number().int().min(1).max(5).optional(),
+  maxRounds: z.number().int().min(1).max(30).optional(),
   swapsPerRound: z.number().int().min(1).max(8).optional(),
   candidatePackagesPerRound: z.number().int().min(1).max(6).optional(),
   minimumImprovementScore: z.number().min(-10).max(100).optional(),
@@ -83,6 +83,16 @@ export function candidatePackagesPerRoundForProfileV13(
   if (input !== undefined) return input;
   const fallback = profileDefaultsNzd(profile).candidatePackagesPerRound;
   return typeof fallback === 'number' ? fallback : undefined;
+}
+
+export function refinementRoundsForProfileV13(
+  input: number | undefined,
+  profile: PreconProfileV13,
+  maxSwaps: number,
+): number {
+  if (input !== undefined) return input;
+  const fallback = profileDefaultsNzd(profile).maxRounds;
+  return typeof fallback === 'number' ? fallback : maxSwaps;
 }
 
 export function registerMtgToolsV13(server: McpServer): McpServer {
@@ -175,6 +185,7 @@ export function registerMtgToolsV13(server: McpServer): McpServer {
       try {
         const defaults = profileDefaultsNzd(input.profile);
         const candidatePackagesPerRound = candidatePackagesPerRoundForProfileV13(input.candidatePackagesPerRound, input.profile);
+        const maxSwaps = numberOr(input.maxSwaps, defaults.maxSwaps, 12);
         return jsonResult(await refinePreconNzdV13({
           reference: input.reference,
           targetBracket: numberOr(input.targetBracket, defaults.targetBracket, 3),
@@ -182,8 +193,8 @@ export function registerMtgToolsV13(server: McpServer): McpServer {
             ? { maxNzdPerCard: input.maxNzdPerCard }
             : typeof defaults.maxNzdPerCard === 'number' ? { maxNzdPerCard: defaults.maxNzdPerCard } : {}),
           ...(input.maxTotalNzd !== undefined ? { maxTotalNzd: input.maxTotalNzd } : {}),
-          maxSwaps: numberOr(input.maxSwaps, defaults.maxSwaps, 12),
-          maxRounds: numberOr(input.maxRounds, defaults.maxRounds, 3),
+          maxSwaps,
+          maxRounds: refinementRoundsForProfileV13(input.maxRounds, input.profile, maxSwaps),
           swapsPerRound: numberOr(input.swapsPerRound, defaults.swapsPerRound, 4),
           ...(candidatePackagesPerRound !== undefined ? { candidatePackagesPerRound } : {}),
           ...(input.minimumImprovementScore !== undefined ? { minimumImprovementScore: input.minimumImprovementScore } : {}),
