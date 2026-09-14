@@ -2,11 +2,53 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   appendRefinementCandidateAttemptV15,
+  candidateHasAuditedRequestedComponentRebalanceV15,
   candidatePlanProvenanceV15,
   rejectedStrategyCutNamesV15,
+  requestedComponentRebalanceCoversDeckStrategyLossV15,
   refinementSwapEvidenceV15,
   type RefinementCandidateAttemptV15,
 } from './optimizer-v12.js';
+
+test('audited component rebalance may spend only its explicit whole-deck strategy allowance', () => {
+  const rebalancePlan = {
+    swaps: [{
+      structuralPairing: {
+        strategyPreservation: {
+          requestedComponentRebalance: true,
+          locallyUnreplacedStrategies: ['counters'],
+        },
+      },
+    }],
+    strategyPreservation: {
+      status: 'preserved',
+      evidenceComplete: true,
+      meaningfulLosses: [],
+      swapImpacts: [{ requestedComponentRebalance: true, meaningfulStrategyLoss: false }],
+    },
+  };
+  const retention = {
+    status: 'strategy-density-loss' as const,
+    evidenceComplete: true,
+    preserved: false,
+    unresolvedBefore: [],
+    unresolvedAfter: [],
+    strategies: [],
+    losses: [{ archetype: 'counters' as const, supportDelta: -1, affinityDelta: -9, multiplayerQualityDelta: 0 }],
+    acceptanceRule: 'fixture',
+  };
+
+  assert.equal(candidateHasAuditedRequestedComponentRebalanceV15(rebalancePlan), true);
+  assert.equal(requestedComponentRebalanceCoversDeckStrategyLossV15(rebalancePlan, retention), true);
+  assert.equal(requestedComponentRebalanceCoversDeckStrategyLossV15(rebalancePlan, {
+    ...retention,
+    losses: [{ archetype: 'value-engine' as const, supportDelta: -1, affinityDelta: -9, multiplayerQualityDelta: 0 }],
+  }), false);
+  assert.equal(requestedComponentRebalanceCoversDeckStrategyLossV15(rebalancePlan, {
+    ...retention,
+    losses: [{ archetype: 'counters' as const, supportDelta: -2, affinityDelta: -18, multiplayerQualityDelta: 0 }],
+  }), false);
+});
 
 function plan(sourceStatus: string, overrides: Record<string, unknown> = {}): Record<string, unknown> {
   return {

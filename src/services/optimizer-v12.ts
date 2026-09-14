@@ -1,7 +1,10 @@
 import type { ScryfallCard } from '../types/scryfall.js';
 import { executionTraceV15 } from '../lib/execution-trace-v15.js';
 import { derivePostBuildEvidenceV15 } from './commander-build-evaluation-v15.js';
-import { auditUpgradeDeckStrategyRetentionV15 } from './commander-strategy-affinity-v15.js';
+import {
+  auditUpgradeDeckStrategyRetentionV15,
+  type UpgradeDeckStrategyRetentionV15,
+} from './commander-strategy-affinity-v15.js';
 import {
   auditRefinementPackageAcceptanceV15,
   packageAcceptanceGateV15,
@@ -240,6 +243,48 @@ export function candidateStrategyPreservationGateV15(
     reason: 'commander-strategy-preserved',
     audit,
   };
+}
+
+export function candidateHasAuditedRequestedComponentRebalanceV15(
+  plan: Record<string, unknown> | null,
+): boolean {
+  const audit = asRecord(plan?.strategyPreservation);
+  const swaps = Array.isArray(plan?.swaps) ? plan.swaps.map(asRecord) : [];
+  const swapImpacts = Array.isArray(audit.swapImpacts) ? audit.swapImpacts.map(asRecord) : [];
+  return audit.evidenceComplete === true
+    && audit.status !== 'meaningful-strategy-loss'
+    && swaps.some((swap) => (
+      asRecord(asRecord(swap.structuralPairing).strategyPreservation).requestedComponentRebalance === true
+    ))
+    && swapImpacts.some((impact) => impact.requestedComponentRebalance === true);
+}
+
+export function requestedComponentRebalanceCoversDeckStrategyLossV15(
+  plan: Record<string, unknown> | null,
+  retention: UpgradeDeckStrategyRetentionV15,
+): boolean {
+  if (retention.preserved) return true;
+  if (!retention.evidenceComplete || !candidateHasAuditedRequestedComponentRebalanceV15(plan)) return false;
+  const allowances = new Map<string, number>();
+  for (const rawSwap of Array.isArray(plan?.swaps) ? plan.swaps : []) {
+    const preservation = asRecord(asRecord(asRecord(rawSwap).structuralPairing).strategyPreservation);
+    if (preservation.requestedComponentRebalance !== true) continue;
+    const strategies = Array.isArray(preservation.locallyUnreplacedStrategies)
+      ? preservation.locallyUnreplacedStrategies
+      : [];
+    for (const strategy of strategies) {
+      if (typeof strategy !== 'string' || !strategy.trim()) continue;
+      const key = strategy.toLocaleLowerCase();
+      allowances.set(key, (allowances.get(key) ?? 0) + 1);
+    }
+  }
+  if (allowances.size === 0 || retention.losses.length === 0) return false;
+  return retention.losses.every((loss) => {
+    const allowance = allowances.get(loss.archetype.toLocaleLowerCase()) ?? 0;
+    return allowance > 0
+      && loss.supportDelta >= -allowance
+      && loss.multiplayerQualityDelta >= 0;
+  });
 }
 
 export function candidatePlanProvenanceV15(plan: Record<string, unknown> | null): Record<string, unknown> {
@@ -781,7 +826,7 @@ async function evaluateCandidate(
   const minScore = Number.isFinite(options.minimumImprovementScore)
     ? Math.max(-10, Math.min(100, options.minimumImprovementScore ?? 0.1))
     : 0.1;
-  if (score.score < minScore) {
+  if (score.score < minScore && !candidateHasAuditedRequestedComponentRebalanceV15(plan)) {
     return { ...base, eligible: false, reason: 'improvement-below-threshold', nextDecklist: null, resolved: null };
   }
 
@@ -833,13 +878,23 @@ async function evaluateCandidate(
       resolved,
     };
   }
-  if (!deckStrategyRetention.preserved) {
+  const componentRebalanceCoversStrategyLoss = requestedComponentRebalanceCoversDeckStrategyLossV15(
+    plan,
+    deckStrategyRetention,
+  );
+  if (!deckStrategyRetention.preserved && !componentRebalanceCoversStrategyLoss) {
     return {
       ...base,
       eligible: false,
       reason: 'package-reduces-substantive-deck-strategy-density',
       nextDecklist,
       resolved,
+    };
+  }
+  if (componentRebalanceCoversStrategyLoss && !deckStrategyRetention.preserved) {
+    plan.deckStrategyRetention = {
+      ...deckStrategyRetention,
+      requestedComponentRebalanceAccepted: true,
     };
   }
 
