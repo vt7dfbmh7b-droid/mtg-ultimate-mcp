@@ -18,6 +18,7 @@ import {
 import { buildDeckMetrics, parseDecklist, type DeckEntry, type ParsedDeck } from './deck.js';
 import { discoverGeneralWinPackagesV15 } from './general-win-package-v15.js';
 import { discoverEligiblePoolV15 } from './neutral-deck-builder-v15.js';
+import { oracleMechanismProtectedCardNamesV15 } from './oracle-mechanism-synergy-v15.js';
 import {
   describePrintingPolicyV08,
   printingMatchesPolicyV08,
@@ -868,7 +869,7 @@ function strategyAffinityEvidenceV15(item: Record<string, unknown>): UpgradeStra
   return { score, protectionApplied, matchedStrategies, scoreByStrategy, commanderScoreByStrategy };
 }
 
-function upgradeSwapStrategyPreservationV15(
+export function upgradeSwapStrategyPreservationV15(
   add: Record<string, unknown>,
   cut: Record<string, unknown>,
 ): UpgradeSwapStrategyPreservationV15 {
@@ -1299,8 +1300,19 @@ function permitsRequestedComponentRebalanceV15(
   components: UpgradePairingOptionsV15['themeComponents'],
   currentCounts: ReadonlyMap<string, number>,
   strategyPreservation: UpgradeSwapStrategyPreservationV15,
+  protectionDeficit = false,
 ): boolean {
-  if (!advancesUnderTargetRequestedThemeComponentV15(cutCard, addCard, components, currentCounts)) return false;
+  if (protectionDeficit) {
+    // Protective utility can spend audited theme surplus, but not a repeatable engine or
+    // a specifically requested commander relationship. Do not relabel it as theme support.
+    const add = summarizedCard(addCard);
+    const cut = summarizedCard(cutCard);
+    if (!summaryMatchesUpgradeRoleV15(add, 'protection')
+      || summaryMatchesUpgradeRoleV15(cut, 'protection')) return false;
+    const oracle = recordString(cut.oracleText).toLocaleLowerCase();
+    if (!oracle || /\bwhenever\b|\bat the beginning\b|\{t\}|:/.test(oracle)) return false;
+    if (upgradeSwapReplacementIdentityPriorityV15(addCard, cutCard).requestedRelationshipLossCount > 0) return false;
+  } else if (!advancesUnderTargetRequestedThemeComponentV15(cutCard, addCard, components, currentCounts)) return false;
   const cutIds = requestedThemeComponentIdsV15(cutCard);
   if (cutIds.size === 0) return false;
   const normalizedCutIds = new Set([...cutIds].map((id) => id.toLocaleLowerCase()));
@@ -1542,13 +1554,15 @@ export function pairUpgradeSwapsByStructureV15(
         // strategy-safe fallback. Rejecting only after selecting candidateCuts[0]
         // incorrectly abandoned the whole incoming mechanism.
         const strategyPreservation = upgradeSwapStrategyPreservationV15(selection.candidate, cut);
-        const requestedComponentRebalance = selection.role === 'theme-component'
+        const protectionDeficit = selection.role === 'protection' && counts.protection < state.targets.protection;
+        const requestedComponentRebalance = (selection.role === 'theme-component' || protectionDeficit)
           && permitsRequestedComponentRebalanceV15(
             cut,
             selection.candidate,
             options.themeComponents,
             requestedThemeComponentCounts,
             strategyPreservation,
+            protectionDeficit,
           );
         if (options.rejectMeaningfulStrategyLoss
           && selection.role !== 'win-package'
@@ -1614,13 +1628,15 @@ export function pairUpgradeSwapsByStructureV15(
     const cut = candidateCuts[0];
     if (!cut) continue;
     const rawStrategyPreservation = upgradeSwapStrategyPreservationV15(selection.candidate, cut);
-    const requestedComponentRebalance = selection.role === 'theme-component'
+    const protectionDeficit = selection.role === 'protection' && counts.protection < state.targets.protection;
+    const requestedComponentRebalance = (selection.role === 'theme-component' || protectionDeficit)
       && permitsRequestedComponentRebalanceV15(
         cut,
         selection.candidate,
         options.themeComponents,
         requestedThemeComponentCounts,
         rawStrategyPreservation,
+        protectionDeficit,
       );
     const strategyPreservation = requestedComponentRebalance
       ? { ...rawStrategyPreservation, meaningfulStrategyLoss: false, verdict: 'preserved' as const, requestedComponentRebalance: true }
@@ -1895,12 +1911,15 @@ export async function buildSimulationBackedUpgradePlanV07(
   const packageProtectedNames = new Set(
     (winPackagePriority.protectedExistingPackageNames ?? []).map((name) => name.toLocaleLowerCase()),
   );
+  const oracleMechanismProtectedNames = oracleMechanismProtectedCardNamesV15(cards);
   const cutPool = ((suggestions.candidateCuts ?? []) as Array<Record<string, unknown>>)
     .filter((cut) => {
       const card = cut.card as Record<string, unknown> | undefined;
       if (typeof card?.name !== 'string') return true;
       const name = card.name.toLocaleLowerCase();
-      return !protectedNames.has(name) && !packageProtectedNames.has(name);
+      return !protectedNames.has(name)
+        && !packageProtectedNames.has(name)
+        && !oracleMechanismProtectedNames.has(name);
     });
   const swapCapacity = Math.min(maxSwaps, cutPool.length);
 
@@ -2014,6 +2033,7 @@ export async function buildSimulationBackedUpgradePlanV07(
       selectedBracketTag: winPackagePriority.selectedBracketTag,
       missingSeedNames: winPackagePriority.missingSeedNames,
       protectedExistingPackageNames: winPackagePriority.protectedExistingPackageNames ?? [],
+      protectedExistingOracleMechanismNames: [...oracleMechanismProtectedNames].sort(),
       atomicWinPackageInjected: atomicWinPackageFits,
       reason: winPackagePriority.reason,
     },

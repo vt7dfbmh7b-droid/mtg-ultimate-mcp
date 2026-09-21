@@ -561,6 +561,15 @@ test('curve repair can inspect non-positive-pressure cuts only when the real cur
   );
 });
 
+test('protection repair can inspect safe non-positive-pressure filler behind protected engines', () => {
+  const selected = selectUpgradeCutCandidatesV15([
+    { card: { name: 'Protected Engine' }, heuristicCutPressure: 4 },
+    { card: { name: 'Safe Filler' }, heuristicCutPressure: -2 },
+  ], true);
+
+  assert.deepEqual(selected.map((item) => (item.card as Record<string, unknown>).name), ['Protected Engine', 'Safe Filler']);
+});
+
 test('swap pairing preserves board-wipe and recursion minima before heuristic cut pressure', () => {
   for (const protectedRole of ['board wipe', 'graveyard recursion'] as const) {
     const pairings = pairUpgradeSwapsByStructureV15(
@@ -1620,6 +1629,29 @@ test('compound rebalance may spend only the audited surplus of an overrepresente
   assert.equal(pairings.length, 1);
   assert.equal(pairings[0]?.requestedComponentRebalance, true);
   assert.equal(pairings[0]?.strategyPreservation.meaningfulStrategyLoss, false);
+});
+
+test('protection repair spends only verified nonengine component surplus and stops at its target', () => {
+  const add = { card: { name: 'Shield', roles: ['protection'], manaValue: 2, typeLine: 'Instant' } };
+  const cut = {
+    card: { name: 'Surplus Support', roles: ['+1/+1 counters'], manaValue: 3, typeLine: 'Sorcery', oracleText: 'Put a +1/+1 counter on target creature.' },
+    explicitTheme: { broadMatchedComponentIds: ['+1/+1 counters'] },
+    heuristicCutPressure: 0,
+    strategyAffinity: { score: 9, protectionApplied: 4, matchedStrategies: ['counters'], matches: [{ archetype: 'counters', overlapScore: 9, commanderScore: 9 }] },
+  };
+  const metrics = { ...marvelMetrics, protectionCount: 7, nonlandCount: 69, averageNonlandManaValue: 2.5, persistentColoredManaSourceCount: 8 };
+  const options = { rejectMeaningfulStrategyLoss: true, themeComponents: [{ id: '+1/+1 counters', currentMainMatches: 3, requiredMainMatches: 2 }] };
+  const pair = (candidateCut = cut, protectionCount = 7, currentMainMatches = 3) => pairUpgradeSwapsByStructureV15(
+    [{ role: 'protection', candidate: add }], [candidateCut], { ...metrics, protectionCount }, { ...bracketFiveTargets }, 5,
+    { ...options, themeComponents: [{ ...options.themeComponents[0]!, currentMainMatches }] },
+  );
+  assert.equal(pair().length, 1);
+  assert.equal(pair()[0]?.requestedComponentRebalance, true);
+  assert.equal(pair(cut, 8).length, 0);
+  assert.equal(pair(cut, 7, 2).length, 0);
+  for (const oracleText of ['', 'Whenever you cast a spell, put a +1/+1 counter on this creature.', '{T}: Put a +1/+1 counter on target creature.']) {
+    assert.equal(pair({ ...cut, card: { ...cut.card, oracleText } }).length, 0);
+  }
 });
 
 test('compound rebalance does not waive an unrelated second strategy loss', () => {

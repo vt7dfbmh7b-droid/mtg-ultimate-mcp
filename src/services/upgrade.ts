@@ -442,8 +442,14 @@ export function strategyCompatibleCandidateLanesV15<T>(
  */
 export function genericStructuralFallbackAllowedV15(
   prioritySource: UpgradeCandidatePriorityV15['prioritySource'],
+  role?: UpgradeCandidatePriorityV15['role'],
 ): boolean {
-  return prioritySource === 'authoritative-target-gate';
+  if (prioritySource === 'authoritative-target-gate') return true;
+  // Protection is operationally connected to every permanent-based commander plan: it preserves
+  // the commander and the engines the strategy has already established. It may therefore use a
+  // generic role candidate while the measured protection floor is deficient; final pairing still
+  // enforces strategy, structural, curve, and package-preservation gates.
+  return role === 'protection';
 }
 
 /**
@@ -837,7 +843,7 @@ export async function suggestDeckUpgrades(
           (card) => candidateStrategyPriorityV15(card, strategyContext).substantive,
           (card) => anchorAffinityForCard(card) > 0,
           (card) => themeCandidateNames.has(card.name.toLocaleLowerCase()),
-          genericStructuralFallbackAllowedV15(deficit.prioritySource),
+          genericStructuralFallbackAllowedV15(deficit.prioritySource, deficit.role),
         )
       : strategyCompatibleCandidateLanesV15(
           rankedForPrinting,
@@ -1053,7 +1059,11 @@ export async function suggestDeckUpgrades(
       parsed, cards, strategyContext, themeCandidateNames, componentAffinityForCard,
       themeMinimumMainMatches > 0 && themeCurrentMainMatches <= themeMinimumMainMatches,
       authoritativeTargetGatePriorities.some((priority) => priority.targetGate === 'average-nonland-mv')
-        || themeComponents.some((component) => component.currentMainMatches < component.requiredMainMatches),
+        || themeComponents.some((component) => component.currentMainMatches < component.requiredMainMatches)
+        // A measured protection deficit is allowed to inspect the safe low-pressure tail. The
+        // pairer still rejects strategy loss and structural regression; this prevents a protected
+        // engine at the positive-pressure head from hiding expendable filler farther down.
+        || deficits.some((priority) => priority.role === 'protection'),
       metrics.landCount,
       minimumUpgradeLandCountV15(targetBracket),
     ),

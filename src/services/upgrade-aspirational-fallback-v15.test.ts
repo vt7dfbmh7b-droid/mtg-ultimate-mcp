@@ -13,6 +13,11 @@ test('aspirational role heuristics do not force identity-free generic fallback',
   assert.equal(genericStructuralFallbackAllowedV15('aspirational-role-target'), false);
 });
 
+test('measured protection deficits may use generic protection while downstream safety gates remain active', () => {
+  assert.equal(genericStructuralFallbackAllowedV15('aspirational-role-target', 'protection'), true);
+  assert.equal(genericStructuralFallbackAllowedV15('aspirational-role-target', 'draw'), false);
+});
+
 test('compound candidate lanes omit generic-only cards when aspirational fallback is disabled', () => {
   const candidates = [
     { id: 'anchor' },
