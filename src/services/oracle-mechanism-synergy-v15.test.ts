@@ -43,6 +43,21 @@ test('protects both sides of an already-present Oracle-derived closed mechanism'
   assert.deepEqual([...oracleMechanismProtectedCardNamesV15([support, outlet])].sort(), ['generic outlet', 'generic support']);
 });
 
+test('recognizes modern self references without requiring a repeated card name', () => {
+  const support = card('Anonymous Support', 'T: Another target creature you control gains lifelink until end of turn.\nWhenever you gain life, put a +1/+1 counter on target creature you control.');
+  for (const name of ['Anonymous Outlet', 'Unrelated Engine (Test)']) {
+    for (const oracle of [
+      'Remove a +1/+1 counter from this creature: It deals 1 damage to any target.',
+      'Remove a +1/+1 counter from this artifact: This artifact deals 1 damage to any target.',
+      `Remove a +1/+1 counter from ${name}: It deals 1 damage to any target.`,
+    ]) {
+      const outlet = card(name, oracle);
+      assert.equal(oracleMechanismSynergiesV15(support, [outlet]).length, 1, oracle);
+      assert.deepEqual([...oracleMechanismProtectedCardNamesV15([support, outlet])].sort(), [support.name.toLowerCase(), name.toLowerCase()].sort());
+    }
+  }
+});
+
 test('does not protect false loops with recurring costs, restrictions, or a different damage source', () => {
   const support = card('Support', 'T: Another target creature you control gains lifelink until end of turn.\nWhenever you gain life, put a +1/+1 counter on target creature you control.');
   for (const oracle of [
@@ -51,6 +66,11 @@ test('does not protect false loops with recurring costs, restrictions, or a diff
     'Remove a +1/+1 counter from another creature: Outlet deals 1 damage to any target.',
     'Remove a +1/+1 counter from Outlet: Another permanent deals 1 damage to any target.',
     'Remove a +1/+1 counter from Outlet: Outlet deals 1 damage to any target. Activate only once each turn.',
+    '{1}, Remove a +1/+1 counter from this creature: It deals 1 damage to any target.',
+    '{T}, Remove a +1/+1 counter from this creature: It deals 1 damage to any target.',
+    'Remove a +1/+1 counter from another creature: It deals 1 damage to any target.',
+    'Remove a +1/+1 counter from this creature: Another creature deals 1 damage to any target.',
+    'Remove a +1/+1 counter from this creature: It deals 1 damage to any target. Activate only once each turn.',
   ]) {
     assert.deepEqual([...oracleMechanismProtectedCardNamesV15([support, card('Outlet', oracle)])], [], oracle);
   }

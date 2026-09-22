@@ -23,11 +23,16 @@ function convertsLifeGainToCreatureCountersV15(oracle: string): boolean {
 
 function convertsOwnCountersToAnyTargetDamageV15(card: ScryfallCard): boolean {
   if (!card.type_line?.toLocaleLowerCase().includes('creature') || (card.card_faces?.length ?? 0) > 1) return false;
-  const name = card.name.toLocaleLowerCase();
   // Match the complete activation, including its cost and damage source. An extra tap/mana
   // cost, other counter owner, or separate damage source does not close this mechanism.
-  const activation = `remove a +1/+1 counter from ${name}: ${name} deals 1 damage to any target.`;
-  return getCardOracleText(card).toLocaleLowerCase().split('\n').some((line) => line.trim() === activation);
+  // Current Oracle text uses "this creature" / "it" where older text repeats the name.
+  // Resolve only self references in this one activation; never rewrite retained provider data.
+  const selfReferences = [card.name.toLocaleLowerCase(), 'this creature', 'this permanent'];
+  if (card.type_line.toLocaleLowerCase().includes('artifact')) selfReferences.push('this artifact');
+  const activations = new Set(selfReferences.flatMap((owner) => (
+    [...selfReferences, 'it'].map((source) => `remove a +1/+1 counter from ${owner}: ${source} deals 1 damage to any target.`)
+  )));
+  return getCardOracleText(card).toLocaleLowerCase().split('\n').some((line) => activations.has(line.trim()));
 }
 
 /**
