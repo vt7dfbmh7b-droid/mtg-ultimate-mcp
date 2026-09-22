@@ -15,16 +15,14 @@
 1 Sphere Grid (FIC) 70 *N*
 1 Tromell, Seymour's Butler (FIC) 73 *N*
 1 Yuna's Decision (FIC) 74 *N*
-1 Kimahri, Valiant Guardian (FIC) 85 *N*
 1 Shelinda, Yevon Acolyte (FIC) 94 *N*
 1 Wakka, Devoted Guardian (FIC) 97 *N*
 1 Collective Effort (FIC) 237 *N*
-1 Damning Verdict (FIC) 239 *N*
 1 Luminous Broodmoth (FIC) 246 *N*
 1 Scholar of New Horizons (FIC) 252 *N*
-1 Together Forever (FIC) 257 *N*
 1 Chasm Skulker (FIC) 262 *N*
 1 Inexorable Tide (FIC) 265 *N*
+1 Pull from Tomorrow (FIC) 269 *N*
 1 Bane of Progress (FIC) 299 *N*
 1 Fight Rigging (FIC) 303 *N*
 1 Forgotten Ancient (FIC) 304 *N*
@@ -32,6 +30,7 @@
 1 Gyre Sage (FIC) 306 *N*
 1 Hardened Scales (FIC) 307 *N*
 1 Incubation Druid (FIC) 309 *N*
+1 Path of Discovery (FIC) 312 *N*
 1 Rampant Rejuvenator (FIC) 314 *N*
 1 Tireless Tracker (FIC) 316 *N*
 1 Fathom Mage (FIC) 325 *N*
@@ -77,27 +76,28 @@
 1 Plains (FIN) 294 *N*
 1 Plains (FIN) 295 *N*
 1 Plains (FIN) 296 *N*
-1 Hypnotic Sprite // Mesmeric Glare (FIC) 264 *N*
-1 Tome of Legends (FIC) 369 *N*
+1 Syncopate (FIN) 80 *N*
+1 Sazh Katzroy (FIN) 199 *N*
+1 The Destined White Mage (FIC) 444 *N*
 1 Torgal, A Fine Hound (FIN) 208 *N*
-1 Ultros, Obnoxious Octopus (FIN) 83 *N*
-1 Dovin's Veto (FCA) 51 *N*
-1 Ride the Shoopuf (FIN) 197 *N*
+1 Hypnotic Sprite // Mesmeric Glare (FIC) 264 *N*
+1 Zack Fair (FIN) 45 *N*
 1 Solitude (SLD) 7004 *F*
 1 Sublime Epiphany (FIC) 271 *N*
-1 Astrologian's Planisphere (FIN) 46 *N*
-1 Campsite Cuisine (FIC) 464 *F*
-1 Force of Negation (RFIN) J1 *N*
-1 Galuf's Final Act (FIN) 186 *N*
-1 Counterspell (FCA) 4 *N*
-1 Zack Fair (FIN) 45 *N*
-1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
-1 Syncopate (FIN) 80 *N*
 1 Sazh's Chocobo (FIN) 200 *N*
-1 Louisoix's Sacrifice (FIN) 59 *N*
+1 Dovin's Veto (FCA) 51 *N*
 1 Sword of Truth and Justice (SLD) 1867 *N*
 1 Arcane Denial (RFIN) J2 *N*
-1 Garnet, Princess of Alexandria (FIN) 222 *F*
-1 Cryptic Command (FCA) 29 *N*
+1 Force of Negation (RFIN) J1 *N*
+1 Ride the Shoopuf (FIN) 197 *N*
+1 Sidequest: Raise a Chocobo // Black Chocobo (FIN) 201 *N*
+1 Swiftfoot Boots (FIC) 361 *N*
+1 Astrologian's Planisphere (FIN) 46 *N*
 1 Sahagin (FIN) 71 *N*
-1 Magic Damper (FIN) 61 *N*
+1 Umezawa's Jitte (SLD) 1865 *N*
+1 Fated Clash (FIC) 449 *F*
+1 Battle Menu (FIN) 9 *N*
+1 Louisoix's Sacrifice (FIN) 59 *N*
+1 Ultros, Obnoxious Octopus (FIN) 83 *N*
+1 Heroic Intervention (SLD) 1872 *N*
+1 Restoration Magic (FIN) 30 *N*
