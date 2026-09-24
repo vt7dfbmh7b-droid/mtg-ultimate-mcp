@@ -12,7 +12,6 @@
 1 Blitzball Stadium (FIC) 34 *N*
 1 Lulu, Stern Guardian (FIC) 38 *N*
 1 O'aka, Traveling Merchant (FIC) 39 *N*
-1 Sphere Grid (FIC) 70 *N*
 1 Tromell, Seymour's Butler (FIC) 73 *N*
 1 Yuna's Decision (FIC) 74 *N*
 1 Shelinda, Yevon Acolyte (FIC) 94 *N*
@@ -22,7 +21,6 @@
 1 Scholar of New Horizons (FIC) 252 *N*
 1 Chasm Skulker (FIC) 262 *N*
 1 Inexorable Tide (FIC) 265 *N*
-1 Pull from Tomorrow (FIC) 269 *N*
 1 Bane of Progress (FIC) 299 *N*
 1 Fight Rigging (FIC) 303 *N*
 1 Forgotten Ancient (FIC) 304 *N*
@@ -30,7 +28,6 @@
 1 Gyre Sage (FIC) 306 *N*
 1 Hardened Scales (FIC) 307 *N*
 1 Incubation Druid (FIC) 309 *N*
-1 Path of Discovery (FIC) 312 *N*
 1 Rampant Rejuvenator (FIC) 314 *N*
 1 Tireless Tracker (FIC) 316 *N*
 1 Fathom Mage (FIC) 325 *N*
@@ -101,3 +98,6 @@
 1 Ultros, Obnoxious Octopus (FIN) 83 *N*
 1 Heroic Intervention (SLD) 1872 *N*
 1 Restoration Magic (FIN) 30 *N*
+1 Cryptic Command (FCA) 29 *N*
+1 Counterspell (FCA) 4 *N*
+1 Campsite Cuisine (FIC) 464 *F*
