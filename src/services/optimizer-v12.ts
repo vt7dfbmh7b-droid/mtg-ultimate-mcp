@@ -910,6 +910,7 @@ async function evaluateCandidate(
         resolved,
       };
     }
+    let requestedThemeProgress = themeAudit.matchedMainCards > currentThemeAudit.matchedMainCards;
     if (themeIntent.kind === 'compound') {
       const beforeComponents = auditResolvedCompoundThemeComponentsV15(currentParsed, currentCards, themeIntent);
       const afterComponents = auditResolvedCompoundThemeComponentsV15(resolved.parsed, resolved.cards, themeIntent);
@@ -924,7 +925,7 @@ async function evaluateCandidate(
           resolved,
         };
       }
-      const requestedThemeProgress = Boolean(
+      requestedThemeProgress = Boolean(
         beforeComponents
         && afterComponents
         && afterComponents.some((afterComponent, index) => {
@@ -937,10 +938,6 @@ async function evaluateCandidate(
           );
         }),
       );
-      const targetProgressGate = candidateTargetGateProgressGateV15(score, { requestedThemeProgress });
-      if (!targetProgressGate.eligible) {
-        return { ...base, themeAudit, eligible: false, reason: targetProgressGate.reason, nextDecklist: null, resolved };
-      }
     }
     const gate = candidateThemeGateV15(currentThemeAudit, themeAudit);
     if (!gate.eligible) {
@@ -953,9 +950,10 @@ async function evaluateCandidate(
         resolved,
       };
     }
-    const targetProgressGate = candidateTargetGateProgressGateV15(score, {
-      requestedThemeProgress: themeAudit.matchedMainCards > currentThemeAudit.matchedMainCards,
-    });
+    // A verified compound-component rebalance may leave OR-based aggregate coverage
+    // unchanged. Preserve that evidence through the final target gate; aggregate gains
+    // alone must not override a compound request whose deficient components did not advance.
+    const targetProgressGate = candidateTargetGateProgressGateV15(score, { requestedThemeProgress });
     if (!targetProgressGate.eligible) {
       return { ...base, themeAudit, eligible: false, reason: targetProgressGate.reason, nextDecklist: null, resolved };
     }

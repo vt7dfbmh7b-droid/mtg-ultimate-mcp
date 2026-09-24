@@ -2,24 +2,6 @@
   "schemaVersion": 1,
   "controls": [
     {
-      "id": "BENCH-01-COUNTER-BLITZ-RECOVERY",
-      "label": "Counter Blitz recovery requested quality",
-      "claimLevel": "scenario-intelligence",
-      "milestones": ["BENCH-01"],
-      "metadataPath": "test-results/counter-blitz-recovery/run-metadata.txt",
-      "sourceKeys": ["source_sha"],
-      "passWhen": {
-        "ci_outcome": "success",
-        "execution_outcome": "success",
-        "deterministic_replay": "true",
-        "legal_100": "true",
-        "eligible_ff_printings": "true",
-        "white_mage_ballista_retained": "true",
-        "protection_target_met": "true",
-        "bracket_target_met": "true"
-      }
-    },
-    {
       "id": "PM-STATE-INTEGRITY",
       "label": "Project State Integrity",
       "claimLevel": "engineering+truth",

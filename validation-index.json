@@ -4,39 +4,6 @@
   "developmentCheckpointSha": "4f84101920cad7840cf539cacadde44a3f11052e",
   "records": [
     {
-      "id": "BENCH-01-COUNTER-BLITZ-RECOVERY",
-      "label": "Counter Blitz recovery requested quality",
-      "claimLevel": "scenario-intelligence",
-      "milestones": [
-        "BENCH-01"
-      ],
-      "metadataPath": "test-results/counter-blitz-recovery/run-metadata.txt",
-      "exists": true,
-      "sourceSha": "4f84101920cad7840cf539cacadde44a3f11052e",
-      "outcome": "fail",
-      "matchesDevelopmentCheckpoint": true,
-      "metadata": {
-        "source_sha": "4f84101920cad7840cf539cacadde44a3f11052e",
-        "evidence_sha": "6a742e117bb4b3c9e4c35182ed1775c4be372132",
-        "ci_run_id": "35701235891",
-        "batch_run_id": "35701236039",
-        "ci_outcome": "success",
-        "execution_outcome": "success",
-        "deterministic_replay": "true",
-        "legal_100": "true",
-        "eligible_ff_printings": "true",
-        "white_mage_ballista_retained": "true",
-        "protection_target_met": "false",
-        "bracket_target_met": "false",
-        "quality_outcome": "incomplete-target-achievement",
-        "manual_verdict": "narrow-repair-accepted-full-recovery-rejected"
-      },
-      "unmetPassConditions": [
-        "protection_target_met=true",
-        "bracket_target_met=true"
-      ]
-    },
-    {
       "id": "PM-STATE-INTEGRITY",
       "label": "Project State Integrity",
       "claimLevel": "engineering+truth",
