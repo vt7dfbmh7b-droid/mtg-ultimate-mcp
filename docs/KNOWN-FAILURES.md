@@ -549,7 +549,15 @@ Regression/control: `src/services/upgrade-operational-role-production-v15.test.t
 
 Status: partially prevented. Original repair `8ae2e960` passed CI `34334649614` and replay `34335809764`; these are completed, not pending. Subsequent threshold-tutor and operational-equivalence repairs have persisted manual rejections at `test-results/bench01-manual-verdicts/63b9d75cf425727d1aa0be1ed5123bf6c13ea3f9.md` and `test-results/bench01-manual-verdicts/1d6b73aae4edc72d80a2ebc945a160506a13c71e.md`. The latest frozen replay still loses requested/commander mechanisms. The requested-mechanism pairing witness added at `1e06aaf` passes after the fallback-test correction at `3bc7e2b`; this test-only work is not a runtime repair or a new failing production reproduction. Next trace realistic generated OUT/IN evidence through the actual public planner before another generic change. The broader replacement failure and separate Endless Punishment taxonomy rejection remain open. Accepted Commander baseline remains `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`.
 
-## Adding a failure
+## KF-055 — Modern Oracle self references hide a closed mechanism
+
+Observed: retained Oracle wording uses “this creature” and “It” where the detector expected the literal card name. The previous Counter Blitz result omitted White Mage despite retaining Walking Ballista.
+
+Protection: generic, type-aware self-reference aliases with exact activation cost, damage-source and target checks; no card-name exceptions or provider-data rewriting. Anonymous mechanism tests and src/services/oracle-mechanism-production-v15.test.ts reproduce discovery and subsequent retention through the public planner.
+
+Status: prevented for this failure at source 4f841019, exact CI 35701235891 and frozen Batch A 35701236039, evidence 6a742e11. The route returns, but protection 6/8 and bracket 3/5 remain open quality failures. Earlier KF-054 baseline/next-action statements are historical; accepted baseline is now 1ef10cec, and current priority is the recovery status document.
+
+## Adding future failures
 
 Every new material failure should record:
 - exact observed behavior;

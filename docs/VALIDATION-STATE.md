@@ -1,10 +1,11 @@
 <!-- GENERATED FROM validation-registry.json + test-results + project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Validation State
 
-Development checkpoint: `1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7`
+Development checkpoint: `4f84101920cad7840cf539cacadde44a3f11052e`
 
 | Control | Claim level | Outcome | Tested source | Matches checkpoint | Metadata |
 |---|---|---|---|---|---|
+| BENCH-01-COUNTER-BLITZ-RECOVERY | scenario-intelligence | fail | `4f84101920cad7840cf539cacadde44a3f11052e` | yes | `test-results/counter-blitz-recovery/run-metadata.txt` |
 | PM-STATE-INTEGRITY | engineering+truth | pass | `d3c6b0b3ea15ffc04891ec1e282756174f423891` | no | `test-results/project-management/integrity.txt` |
 | INTEL-01-POSITIVE | scenario-intelligence | pass | `c91569d14f79b0b0763d0090289035f6f70ef3ab` | no | `test-results/intel01-positive/run-metadata.txt` |
 | MARVEL-B5-REFINE | scenario-intelligence | fail | `05c4c21055662a049c07121c129c5ada377bcf2b` | no | `test-results/marvel-bracket5/refine-run-metadata.txt` |

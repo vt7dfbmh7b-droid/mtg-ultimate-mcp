@@ -2,6 +2,14 @@
 
 A passing workflow proves only the claim listed for that control. Do not generalize a narrow pass into a universal intelligence claim.
 
+## Current Counter Blitz evidence — 2026-09-24
+
+Exact source 4f84101920cad7840cf539cacadde44a3f11052e passed CI 35701235891 (1,126 passed, zero failed, one skipped). Frozen Batch A 35701236039 persisted at 6a742e117bb4b3c9e4c35182ed1775c4be372132: legal/FF-printing/deterministic replay passes and White Mage/Ballista restored; protection 6/8 and assessed bracket 3/5 fail requested quality. Liliana is unchanged, legal and within its retained budget, assessed high bracket 4. Durable manual verdict accepts only the narrow repair. Accepted broad baseline remains 1ef10cec.
+
+## Historical control inventory
+
+The source-pinned records below describe their cited checkpoints; older test counts and baseline descriptions are not current recovery status.
+
 | Control / evidence | Primary claim | Hard assertions | Intelligence assertion | Current state |
 |---|---|---|---|---|
 | CI / TypeScript / unit tests | Source compiles and deterministic regressions pass | runtime, management and automation/E2E types; build; unit tests | none by itself | pinned CI run `33796139072` passed on component-guard source `f0c3b9f...`; all three strict TypeScript projects and 940/940 deterministic tests pass locally |

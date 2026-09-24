@@ -1,4 +1,10 @@
 # Ultimate MTG Architecture Decisions
+
+## D-021 — Separate completed recovery execution from target achievement
+
+Status: accepted, 2026-09-24.
+
+Exact source 4f841019 passed CI and frozen Counter Blitz/Liliana replay. Accept the generic Oracle self-reference repair and reuse its evidence; do not recreate resolved snapshot or parser work absent regression. Protection 6/8 and assessed bracket 3/5 remain unmet, so full recovery and a new broad Commander baseline are not accepted. Preserve accepted baseline 1ef10cec, held-out Tidus isolation, hard constraints, main/stable V0.13, PR #29 and paused schedules. Investigate candidate quality before asserting a pool ceiling or changing guards.
 ## D-020 — Restricted printing-family exhaustion is an honest construction ceiling
 
 Status: accepted.

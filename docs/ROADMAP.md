@@ -8,7 +8,13 @@ Before any scheduled or autonomous repository write, read root `AGENTS.md` and t
 
 Scheduled/autonomous runs must also obey the root `AGENTS.md` single-flight rule: do not start a new branch-changing validation, replay, state writer, evidence persistence operation, or Commander product repair while another relevant branch-writing operation is still active. Manual verdicts belong under `test-results/bench01-manual-verdicts/`, outside replaceable generated replay output.
 
-## Current BENCH-01 checkpoint — 2026-09-09
+## Current recovery checkpoint — 2026-09-24
+
+Counter Blitz recovery takes priority. Source 4f841019 passed exact CI 35701235891 and frozen Batch A 35701236039; evidence 6a742e11 restores White Mage/Ballista with 25 swaps, protection 6/8 and assessed bracket 3/5. Accept the narrow repair, not full recovery. Read docs/COUNTER-BLITZ-RECOVERY-STATUS.md and the durable source-4f841019 manual verdict. The snapshot blocker is resolved; investigate protection/bracket quality without repeating completed work.
+
+Accepted Commander baseline is 1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7. Main/stable V0.13 and PR #29 remain untouched. Development schedules were observed paused on September 22 and were not changed. Older checkpoint and schedule statements below are historical, not current instructions.
+
+## Historical BENCH-01 checkpoint — 2026-09-09
 
 Automation has already advanced through threshold-tutor source `63b9d75cf425727d1aa0be1ed5123bf6c13ea3f9` and operational-equivalence source `1d6b73aae4edc72d80a2ebc945a160506a13c71e`. The latter passed exact CI `34365017686` and frozen eight-fixture replay `34370124608`, persisted at `ce854778d280eed76ea290767361cdd7af038130`. Its durable manual verdict is `test-results/bench01-manual-verdicts/1d6b73aae4edc72d80a2ebc945a160506a13c71e.md`: **reject baseline acceptance**, retaining useful generic engineering progress. Deep Clue Sea and Revenant Recon still lose important mechanisms; Endless Punishment's taxonomy failure is separate. Do not repeat these completed replays.
 
@@ -62,7 +68,7 @@ Verified full-table win-package discovery/injection/protection and final-route r
 
 Hard-truth and preservation safeguards are implemented. BENCH-01 remains the active proof gate for actual whole-deck Commander quality.
 
-The latest **accepted** fully validated executable Commander product remains `e17b0a1cba659b229fd6f0b6e2df79c5e464a616`. Later descendants contain useful engineering work and evidence but have not yet passed the required manual whole-deck acceptance boundary.
+The latest **accepted** fully validated executable Commander product is `1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7`. The Counter Blitz narrow repair is not a replacement broad Commander baseline.
 
 ## BENCH-01 — Adversarial Commander benchmark suite — ACTIVE
 
