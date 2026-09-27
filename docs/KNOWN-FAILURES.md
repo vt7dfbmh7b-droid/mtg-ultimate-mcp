@@ -555,7 +555,7 @@ Observed: retained Oracle wording uses “this creature” and “It” where th
 
 Protection: generic, type-aware self-reference aliases with exact activation cost, damage-source and target checks; no card-name exceptions or provider-data rewriting. Anonymous mechanism tests and src/services/oracle-mechanism-production-v15.test.ts reproduce discovery and subsequent retention through the public planner.
 
-Status: prevented for this failure at source 4f841019, exact CI 35701235891 and frozen Batch A 35701236039, evidence 6a742e11. The route returns, but protection 6/8 and bracket 3/5 remain open quality failures. Earlier KF-054 baseline/next-action statements are historical; accepted baseline is now 1ef10cec, and current priority is the recovery status document.
+Status: prevented for this failure at source 4f841019 and reconfirmed by source 43e9c1c8, exact CI 35959975121 and frozen Batch A 35959975135, persisted at 56ef0029. The route remains. Current protection is 7/8 and assessed bracket 3/5; see the recovery status document for current gaps. Earlier KF-054 baseline/next-action statements are historical; accepted baseline remains 1ef10cec.
 
 ## Adding future failures
 
@@ -565,3 +565,14 @@ Every new material failure should record:
 - the protection mechanism;
 - regression/control path;
 - status (`open`, `partially prevented`, `prevented`, `accepted limitation`).
+
+
+## KF-056 — Aggregate theme gate vetoes valid compound-component progress
+
+Observed: a public planner candidate advanced an under-target requested component while aggregate OR-theme coverage stayed flat. The component-aware acceptance passed its local check, but a later aggregate-only check rejected the same candidate, preventing valid progress.
+
+Risk: compound requests cannot repair individual weak components when progress elsewhere or unchanged aggregate coverage masks a real component gain.
+
+Protection: carry the verified `requestedThemeProgress` signal through the final target-gate check while preserving component, aggregate, strategy and structural floors. An anonymous public-planner regression covers the progress case and confirms that unrelated/unsupported progress remains rejected.
+
+Status: prevented for the reproduced failure at product source `43e9c1c80dadfea4d53ed1a2affebd90131e362f`; exact CI `35959975121` passed (1,127 passed, zero failed, one skipped) and frozen Batch A `35959975135` completed with evidence persisted by commit `56ef00294482ca63c37ebe25660721efa5b97b2f`. The repair does not complete Counter Blitz: protection is 7/8, assessed bracket is 3/5, and the next action is a candidate identity/pairing-rejection audit.

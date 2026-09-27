@@ -8,11 +8,11 @@ Before any scheduled or autonomous repository write, read root `AGENTS.md` and t
 
 Scheduled/autonomous runs must also obey the root `AGENTS.md` single-flight rule: do not start a new branch-changing validation, replay, state writer, evidence persistence operation, or Commander product repair while another relevant branch-writing operation is still active. Manual verdicts belong under `test-results/bench01-manual-verdicts/`, outside replaceable generated replay output.
 
-## Current recovery checkpoint — 2026-09-24
+## Current recovery checkpoint — 2026-09-27
 
-Counter Blitz recovery takes priority. Source 4f841019 passed exact CI 35701235891 and frozen Batch A 35701236039; evidence 6a742e11 restores White Mage/Ballista with 25 swaps, protection 6/8 and assessed bracket 3/5. Accept the narrow repair, not full recovery. Read docs/COUNTER-BLITZ-RECOVERY-STATUS.md and the durable source-4f841019 manual verdict. The snapshot blocker is resolved; investigate protection/bracket quality without repeating completed work.
+Counter Blitz recovery takes priority. Source `43e9c1c80dadfea4d53ed1a2affebd90131e362f` passed exact CI `35959975121` (1,127 passed, zero failed, one skipped) and frozen Batch A `35959975135`, persisted by writer commit `56ef00294482ca63c37ebe25660721efa5b97b2f. The generic compound-component progress repair is validated. The legal FF-only 100-card result retains White Mage/Ballista and records 28 swaps; protection is 7/8 and assessed bracket 3/5. Remaining Bracket-5 gates are fast mana 1/3 and tutors 1/4; termination is `no-supported-swaps-found`. Read docs/COUNTER-BLITZ-RECOVERY-STATUS.md and its source-43e9 manual verdict. The frozen trace gives candidate counts but omits identities and detailed package rejection reasons, so audit those before a new repair or a pool-ceiling claim.
 
-Accepted Commander baseline is 1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7. Main/stable V0.13 and PR #29 remain untouched. Development schedules were observed paused on September 22 and were not changed. Older checkpoint and schedule statements below are historical, not current instructions.
+Accepted Commander baseline is `1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7`. Main/stable V0.13 and PR #29 remain untouched. Development schedules were observed paused on September 22 and were not changed. Older checkpoint and schedule statements below are historical, not current instructions.
 
 ## Historical BENCH-01 checkpoint — 2026-09-09
 

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedFromProjectStateUpdatedAt": "2026-09-24T00:00:00.000Z",
-  "developmentCheckpointSha": "4f84101920cad7840cf539cacadde44a3f11052e",
+  "generatedFromProjectStateUpdatedAt": "2026-09-27T00:00:00.000Z",
+  "developmentCheckpointSha": "43e9c1c80dadfea4d53ed1a2affebd90131e362f",
   "records": [
     {
       "id": "PM-STATE-INTEGRITY",
@@ -15,7 +15,7 @@
       "exists": true,
       "sourceSha": "43e9c1c80dadfea4d53ed1a2affebd90131e362f",
       "outcome": "pass",
-      "matchesDevelopmentCheckpoint": false,
+      "matchesDevelopmentCheckpoint": true,
       "metadata": {
         "source_sha": "43e9c1c80dadfea4d53ed1a2affebd90131e362f",
         "active_milestone": "BENCH-01",

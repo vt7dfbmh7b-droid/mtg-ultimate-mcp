@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-24T00:00:00.000Z**.
+Generated from `project-state.json`. Last state update: **2026-09-27T00:00:00.000Z**.
 
 ## Current mode
 
@@ -21,9 +21,9 @@ Generated from `project-state.json`. Last state update: **2026-09-24T00:00:00.00
 
 ## Experimental checkpoints
 
-Development checkpoint at pause: `4f84101920cad7840cf539cacadde44a3f11052e`
+Development checkpoint at pause: `43e9c1c80dadfea4d53ed1a2affebd90131e362f`
 
-Narrow Oracle self-reference repair passed exact CI 35701235891 (1126 passed, 1 skipped) and frozen Batch A 35701236039, evidence 6a742e117bb4b3c9e4c35182ed1775c4be372132. Counter Blitz is legal 100 with eligible FF printings, 25 swaps and White Mage/Ballista restored; protection 6/8 and assessed bracket 3/5 remain unmet. Accept the narrow repair, not full recovery or a new broad Commander baseline. Accepted baseline remains 1ef10cec; PR #29 unmerged, stable V0.13 unchanged.
+Generic compound-theme progress repair passed exact CI 35959975121 (1127 passed, 1 skipped) and frozen Batch A 35959975135; evidence/state writer commit 56ef00294482ca63c37ebe25660721efa5b97b2f. Counter Blitz is legal 100 with eligible FF printings, 28 swaps and White Mage/Ballista retained; protection 7/8 and assessed bracket 3/5 remain unmet. The final frozen trace reports fast mana 1/3, tutors 1/4, and no supported swaps. Accept this narrow repair, not full recovery or a new broad Commander baseline. Accepted baseline remains 1ef10cec; PR #29 unmerged, stable V0.13 unchanged.
 
 Latest fully validated executable experimental baseline recorded by project state:
 
@@ -47,26 +47,26 @@ Always inspect the live active-branch head before editing. A later documentation
 
 ## Current validation status
 
-- Active branch status: **counter-blitz-narrow-repair-validated-full-targets-unmet**
+- Active branch status: **counter-blitz-compound-progress-repair-validated-full-targets-unmet**
 - Last persisted Marvel control source: `1d6b73aae4edc72d80a2ebc945a160506a13c71e`
 - Last persisted Marvel control outcome: **execution-success-target-not-achieved**
 - Note: Focused and broad source-1d6b73a controls execute successfully but fail target-quality gates. Retain this unresolved result; other scenario passes do not establish promotion readiness.
 
 Required before resuming broad INTEL-01/INTEL-02 claims:
 
-- Reuse exact source 4f84101920cad7840cf539cacadde44a3f11052e, CI 35701235891, Batch A 35701236039 and evidence 6a742e117bb4b3c9e4c35182ed1775c4be372132. Do not reacquire snapshots or repeat the fixed self-reference family without a regression.
-- Investigate the remaining protection 6/8 and bracket 3/5 deficits through retained candidate/rejection traces. Current stop is all-competing-packages-below-improvement-threshold, not the prior strategy-density stop. Distinguish discovery/ranking weaknesses from a proven constrained card-pool ceiling before changing gates.
-- Reproduce any further generic defect through the public planner with anonymous regressions; preserve exact legality, FF printing restrictions, component floors and verified mechanisms. Start from untouched stock, never the held-out historical Tidus deck.
-- After a justified repair, require focused/full exact-source validation, frozen affected/contrasting controls, complete-deck review and durable verdict. No independently executed general-AI comparator exists for this repair; broad superiority is unproven.
+- Reuse exact source 43e9c1c80dadfea4d53ed1a2affebd90131e362f, CI 35959975121, Batch A 35959975135 and evidence/state writer commit 56ef00294482ca63c37ebe25660721efa5b97b2f. Do not reacquire snapshots or repeat the fixed Oracle self-reference or compound-component progress families without regression.
+- Trace names and rejection reasons for eligible fast-mana, tutor and protection candidates through the public planner. Separate role-classification misses from unsupported candidate/cut pairings and genuine policy-pool exhaustion.
+- Keep Bracket-5, protection, strategy, legality and FF-printing requirements intact. Do not claim FF pool exhaustion unless the candidate alternatives and reasons are audited.
+- For any justified generic repair, require anonymous public-path regressions, exact-source CI, frozen affected/contrasting controls and a complete-deck review. No independently executed general-AI comparator exists for this repair; broad superiority is unproven.
 - Keep accepted Commander baseline 1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7. Do not change main/stable V0.13, merge PR #29, modify workflows/guard/policy epoch or resume paused schedules.
 
 ## Next actions
 
 1. Read state, AGENTS.md and recovery status; check current/recent writers and refresh candidate head before any write. Development schedules were observed paused on 2026-09-22; do not resume them without user direction.
-2. Reuse exact source 4f84101920cad7840cf539cacadde44a3f11052e, CI 35701235891, Batch A 35701236039 and evidence 6a742e117bb4b3c9e4c35182ed1775c4be372132. Do not reacquire snapshots or repeat the fixed self-reference family without a regression.
-3. Investigate the remaining protection 6/8 and bracket 3/5 deficits through retained candidate/rejection traces. Current stop is all-competing-packages-below-improvement-threshold, not the prior strategy-density stop. Distinguish discovery/ranking weaknesses from a proven constrained card-pool ceiling before changing gates.
-4. Reproduce any further generic defect through the public planner with anonymous regressions; preserve exact legality, FF printing restrictions, component floors and verified mechanisms. Start from untouched stock, never the held-out historical Tidus deck.
-5. After a justified repair, require focused/full exact-source validation, frozen affected/contrasting controls, complete-deck review and durable verdict. No independently executed general-AI comparator exists for this repair; broad superiority is unproven.
+2. Reuse exact source 43e9c1c80dadfea4d53ed1a2affebd90131e362f, CI 35959975121, Batch A 35959975135 and evidence/state writer commit 56ef00294482ca63c37ebe25660721efa5b97b2f. Do not reacquire snapshots or repeat the fixed Oracle self-reference or compound-component progress families without regression.
+3. Trace names and rejection reasons for eligible fast-mana, tutor and protection candidates through the public planner. Separate role-classification misses from unsupported candidate/cut pairings and genuine policy-pool exhaustion.
+4. Keep Bracket-5, protection, strategy, legality and FF-printing requirements intact. Do not claim FF pool exhaustion unless the candidate alternatives and reasons are audited.
+5. For any justified generic repair, require anonymous public-path regressions, exact-source CI, frozen affected/contrasting controls and a complete-deck review. No independently executed general-AI comparator exists for this repair; broad superiority is unproven.
 6. Keep accepted Commander baseline 1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7. Do not change main/stable V0.13, merge PR #29, modify workflows/guard/policy epoch or resume paused schedules.
 7. Return to Deep Clue Sea and wider BENCH-01 breadth after the current recovery objective; keep Endless Punishment taxonomy and Marvel target failures separately open.
 
@@ -113,4 +113,4 @@ Read in this order:
 11. `docs/VALIDATION-MATRIX.md`
 12. `docs/KNOWN-FAILURES.md`
 
-Then: Resume Counter Blitz recovery from source 4f84101920cad7840cf539cacadde44a3f11052e and completed evidence 6a742e117bb4b3c9e4c35182ed1775c4be372132. Read its durable manual verdict. Snapshot/replay and Oracle self-reference blockers are resolved; remaining failures are protection and bracket quality. Do not repeat completed work absent a regression.
+Then: Resume Counter Blitz from source 43e9c1c80dadfea4d53ed1a2affebd90131e362f and persisted Batch A evidence under test-results/bench01-batch-a/ (writer commit 56ef00294482ca63c37ebe25660721efa5b97b2f). Read the exact-source manual verdict. Compound-component progress is fixed. Remaining gaps are protection 7/8 and assessed bracket 3/5, including fast mana 1/3 and tutors 1/4. Audit candidate identities and final pairing rejections before deciding whether another generic repair is justified; do not claim pool exhaustion from counts alone.

@@ -16,12 +16,12 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Active milestone: **BENCH-01 — Adversarial Commander benchmark suite**
 - Intelligence development paused: **no**
 - Experimental branch: `agent/counter-blitz-generic-mechanism-floor-20260911`
-- Development checkpoint at pause: `4f84101920cad7840cf539cacadde44a3f11052e`
-- Active branch validation: **counter-blitz-narrow-repair-validated-full-targets-unmet**
+- Development checkpoint at pause: `43e9c1c80dadfea4d53ed1a2affebd90131e362f`
+- Active branch validation: **counter-blitz-compound-progress-repair-validated-full-targets-unmet**
 
 ## Audit reuse rule
 
-Resume Counter Blitz recovery from source 4f84101920cad7840cf539cacadde44a3f11052e and completed evidence 6a742e117bb4b3c9e4c35182ed1775c4be372132. Read its durable manual verdict. Snapshot/replay and Oracle self-reference blockers are resolved; remaining failures are protection and bracket quality. Do not repeat completed work absent a regression.
+Resume Counter Blitz from source 43e9c1c80dadfea4d53ed1a2affebd90131e362f and persisted Batch A evidence under test-results/bench01-batch-a/ (writer commit 56ef00294482ca63c37ebe25660721efa5b97b2f). Read the exact-source manual verdict. Compound-component progress is fixed. Remaining gaps are protection 7/8 and assessed bracket 3/5, including fast mana 1/3 and tutors 1/4. Audit candidate identities and final pairing rejections before deciding whether another generic repair is justified; do not claim pool exhaustion from counts alone.
 
 ## Stable safety boundary
 
@@ -40,10 +40,10 @@ The last persisted Marvel control is `1d6b73aae4edc72d80a2ebc945a160506a13c71e` 
 ## Next actions
 
 1. Read state, AGENTS.md and recovery status; check current/recent writers and refresh candidate head before any write. Development schedules were observed paused on 2026-09-22; do not resume them without user direction.
-2. Reuse exact source 4f84101920cad7840cf539cacadde44a3f11052e, CI 35701235891, Batch A 35701236039 and evidence 6a742e117bb4b3c9e4c35182ed1775c4be372132. Do not reacquire snapshots or repeat the fixed self-reference family without a regression.
-3. Investigate the remaining protection 6/8 and bracket 3/5 deficits through retained candidate/rejection traces. Current stop is all-competing-packages-below-improvement-threshold, not the prior strategy-density stop. Distinguish discovery/ranking weaknesses from a proven constrained card-pool ceiling before changing gates.
-4. Reproduce any further generic defect through the public planner with anonymous regressions; preserve exact legality, FF printing restrictions, component floors and verified mechanisms. Start from untouched stock, never the held-out historical Tidus deck.
-5. After a justified repair, require focused/full exact-source validation, frozen affected/contrasting controls, complete-deck review and durable verdict. No independently executed general-AI comparator exists for this repair; broad superiority is unproven.
+2. Reuse exact source 43e9c1c80dadfea4d53ed1a2affebd90131e362f, CI 35959975121, Batch A 35959975135 and evidence/state writer commit 56ef00294482ca63c37ebe25660721efa5b97b2f. Do not reacquire snapshots or repeat the fixed Oracle self-reference or compound-component progress families without regression.
+3. Trace names and rejection reasons for eligible fast-mana, tutor and protection candidates through the public planner. Separate role-classification misses from unsupported candidate/cut pairings and genuine policy-pool exhaustion.
+4. Keep Bracket-5, protection, strategy, legality and FF-printing requirements intact. Do not claim FF pool exhaustion unless the candidate alternatives and reasons are audited.
+5. For any justified generic repair, require anonymous public-path regressions, exact-source CI, frozen affected/contrasting controls and a complete-deck review. No independently executed general-AI comparator exists for this repair; broad superiority is unproven.
 6. Keep accepted Commander baseline 1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7. Do not change main/stable V0.13, merge PR #29, modify workflows/guard/policy epoch or resume paused schedules.
 7. Return to Deep Clue Sea and wider BENCH-01 breadth after the current recovery objective; keep Endless Punishment taxonomy and Marvel target failures separately open.
 

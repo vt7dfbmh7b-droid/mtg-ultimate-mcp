@@ -137,3 +137,12 @@ Status: accepted.
 Refinement callers may declare structural strategy-fuel and low-volume package floors using generic semantic matchers rather than card-name exceptions. Valid floors are applied while constructing candidate IN/OUT packages and audited again after exact package resolution; malformed descriptors, unresolved cards or unmet minimum counts fail closed. An omitted contract preserves existing refinement behavior.
 
 Reason: per-swap strategy preservation and aggregate affinity can both pass while a complete package loses the actual fuel or structural components a caller needs. The contract must be caller-owned, measurable, name-independent and visible in final evidence, while still allowing the caller to define different strategy components for different decks.
+
+
+## D-022 — Candidate scarcity is not pool exhaustion without a rejection audit
+
+Status: accepted, 2026-09-27.
+
+The exact-source Counter Blitz replay reports one eligible fast-mana match and two tutor matches in a 429-card FF pool before existing/excluded filtering, plus five selected protection candidates. The final round finds no supported swaps, but its persisted summary omits candidate names and detailed pairing rejection reasons. Keep target gates unchanged and report the measured bracket; do not call the pool exhausted until identities and rejection paths are reviewed.
+
+Reason: aggregate candidate counts cannot distinguish role-classification misses, candidate/cut incompatibility and a truly absent eligible card. The remaining protection and Bracket-5 gaps are not permission to loosen legality, strategy preservation or target requirements.

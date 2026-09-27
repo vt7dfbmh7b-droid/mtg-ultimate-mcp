@@ -2,9 +2,9 @@
 
 A passing workflow proves only the claim listed for that control. Do not generalize a narrow pass into a universal intelligence claim.
 
-## Current Counter Blitz evidence — 2026-09-24
+## Current Counter Blitz evidence — 2026-09-27
 
-Exact source 4f84101920cad7840cf539cacadde44a3f11052e passed CI 35701235891 (1,126 passed, zero failed, one skipped). Frozen Batch A 35701236039 persisted at 6a742e117bb4b3c9e4c35182ed1775c4be372132: legal/FF-printing/deterministic replay passes and White Mage/Ballista restored; protection 6/8 and assessed bracket 3/5 fail requested quality. Liliana is unchanged, legal and within its retained budget, assessed high bracket 4. Durable manual verdict accepts only the narrow repair. Accepted broad baseline remains 1ef10cec.
+Exact product source `43e9c1c80dadfea4d53ed1a2affebd90131e362f` passed CI `35959975121` (1,127 passed, zero failed, one skipped). Frozen Batch A `35959975135` persisted under `test-results/bench01-batch-a/`; state writer commit `56ef00294482ca63c37ebe25660721efa5b97b2f`. Counter Blitz is legal 100 with eligible FF physical printings, deterministic two-process replay and White Mage/Ballista retained after 28 swaps. Counters 44/16, proliferate 5/3, countermagic 10/8 and combat 14/8 pass. Protection 7/8 and assessed bracket 3/5 remain unmet; fast mana 1/3 and tutors 1/4 are the final failed B5 gates. The final stop is `no-supported-swaps-found`; candidate identities and package rejection reasons require further audit before a generic fix or pool-ceiling claim. The component-progress repair is accepted narrowly, not as full recovery. Liliana remains legal, within its retained budget and assessed high bracket 4. Accepted broad baseline remains `1ef10cec`.
 
 ## Historical control inventory
 
