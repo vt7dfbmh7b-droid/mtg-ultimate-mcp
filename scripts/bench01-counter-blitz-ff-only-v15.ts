@@ -352,6 +352,9 @@ async function main(): Promise<void> {
                 targetGate: typeof group.targetGate === 'string' ? group.targetGate : null,
                 candidateAvailability: typeof group.candidateAvailability === 'string' ? group.candidateAvailability : null,
                 roleMatchesBeforeExistingExclusions: finite(group.roleMatchesBeforeExistingExclusions),
+                roleMatchNamesBeforeExistingExclusions: Array.isArray(group.roleMatchNamesBeforeExistingExclusions)
+                  ? group.roleMatchNamesBeforeExistingExclusions.filter((name): name is string => typeof name === 'string').slice(0, 10)
+                  : [],
                 candidateCount: finite(group.candidateCount),
                 candidateNames: Array.isArray(group.candidateNames)
                   ? group.candidateNames.filter((name): name is string => typeof name === 'string').slice(0, 10)
@@ -374,6 +377,12 @@ async function main(): Promise<void> {
                 rejectionCounts: Object.fromEntries(Object.entries(rejectionCounts)
                   .filter(([, count]) => typeof count === 'number' && Number.isFinite(count) && count >= 0)
                   .slice(0, 20)),
+                rejectionExamples: Object.fromEntries(Object.entries(record(pairing.rejectionExamples))
+                  .slice(0, 20)
+                  .map(([reason, names]) => [
+                    reason,
+                    Array.isArray(names) ? names.filter((name): name is string => typeof name === 'string').slice(0, 3) : [],
+                  ])),
               };
             }).slice(0, 12)
             : [],

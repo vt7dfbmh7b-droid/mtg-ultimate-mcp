@@ -794,9 +794,16 @@ export async function suggestDeckUpgrades(
     // A bounded theme/component search already resolved these cards. Preserve that discovery
     // for role filtering instead of discarding the cards and relying on another popularity slice.
     const results = restrictedPoolActive ? genericResults : mergeCardsByName(themedResults, strategyResults, [...themeDiscoveredCards.values()], genericResults);
-    const roleMatchesBeforeExistingExclusions = restrictedEligiblePool
-      ? restrictedEligiblePool.filter((card) => !card.type_line.toLowerCase().includes('land')).filter((card) => card.legalities.commander === 'legal').filter((card) => cardMatchesRole(card, deficit.role, deficit.targetGate)).length
+    const roleMatchCardsBeforeExistingExclusions = restrictedEligiblePool
+      ? restrictedEligiblePool
+        .filter((card) => !card.type_line.toLowerCase().includes('land'))
+        .filter((card) => card.legalities.commander === 'legal')
+        .filter((card) => cardMatchesRole(card, deficit.role, deficit.targetGate))
       : null;
+    const roleMatchesBeforeExistingExclusions = roleMatchCardsBeforeExistingExclusions?.length ?? null;
+    const roleMatchNamesBeforeExistingExclusions = roleMatchCardsBeforeExistingExclusions
+      ?.map((card) => card.name)
+      .slice(0, 10) ?? null;
     const candidatesForPriority = deficit.prioritySource === 'authoritative-target-gate' && authoritativeTargetGatePriorities.length > 1
       ? Math.min(3, maxCandidates) : maxCandidates;
     const ranked = results
@@ -911,7 +918,8 @@ export async function suggestDeckUpgrades(
     }
 
     candidateGroups.push({
-      ...deficit, candidateDiscoveryMode: candidateDiscovery.mode, candidateAvailability, roleMatchesBeforeExistingExclusions,
+      ...deficit, candidateDiscoveryMode: candidateDiscovery.mode, candidateAvailability,
+      roleMatchesBeforeExistingExclusions, roleMatchNamesBeforeExistingExclusions,
       searchQuery: query, supplementalStrategyRoleQueries, supplementalThemeRoleQuery: themedQuery, candidates,
     });
   }

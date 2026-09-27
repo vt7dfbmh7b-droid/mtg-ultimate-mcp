@@ -327,6 +327,9 @@ export function candidatePlanProvenanceV15(plan: Record<string, unknown> | null)
         candidateDiscoveryMode: group.candidateDiscoveryMode ?? null,
         candidateAvailability: group.candidateAvailability ?? null,
         roleMatchesBeforeExistingExclusions: group.roleMatchesBeforeExistingExclusions ?? null,
+        roleMatchNamesBeforeExistingExclusions: Array.isArray(group.roleMatchNamesBeforeExistingExclusions)
+          ? group.roleMatchNamesBeforeExistingExclusions.filter((name): name is string => typeof name === 'string').slice(0, 10)
+          : [],
         candidateCount: candidates.length,
         candidateNames,
       };
@@ -347,6 +350,12 @@ export function candidatePlanProvenanceV15(plan: Record<string, unknown> | null)
         : [],
       rejectionCounts: entry.rejectionCounts && typeof entry.rejectionCounts === 'object' && !Array.isArray(entry.rejectionCounts)
         ? entry.rejectionCounts
+        : {},
+      rejectionExamples: entry.rejectionExamples && typeof entry.rejectionExamples === 'object' && !Array.isArray(entry.rejectionExamples)
+        ? Object.fromEntries(Object.entries(entry.rejectionExamples as Record<string, unknown>).slice(0, 20).map(([reason, names]) => [
+          reason,
+          Array.isArray(names) ? names.filter((name): name is string => typeof name === 'string').slice(0, 3) : [],
+        ]))
         : {},
     }))
     : [];

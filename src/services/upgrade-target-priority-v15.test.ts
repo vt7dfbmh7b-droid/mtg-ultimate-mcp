@@ -213,6 +213,7 @@ test('swap pairing reports bounded rejection reasons when every cut breaks a har
     eligibleCutCount: number;
     eligibleCutNames: string[];
     rejectionCounts: Record<string, number>;
+    rejectionExamples: Record<string, string[]>;
   }> = [];
   const pairings = pairUpgradeSwapsByStructureV15(
     [{
@@ -241,6 +242,7 @@ test('swap pairing reports bounded rejection reasons when every cut breaks a har
     eligibleCutCount: 0,
     eligibleCutNames: [],
     rejectionCounts: { 'minimum-land-count': 1 },
+    rejectionExamples: { 'minimum-land-count': ['Floor Land'] },
   }]);
 });
 

@@ -632,6 +632,7 @@ interface UpgradePairingOptionsV15 {
     eligibleCutCount: number;
     eligibleCutNames: string[];
     rejectionCounts: Record<string, number>;
+    rejectionExamples: Record<string, string[]>;
   }>;
   /** Valid caller-declared package floors used to avoid generating known-invalid swap packages. */
   packageAcceptanceFloors?: readonly RefinementComponentAuditV15[];
@@ -1477,14 +1478,14 @@ export function pairUpgradeSwapsByStructureV15(
     if (selection.role === 'average-nonland-mv' && remainingCurveReduction <= 0.0001) {
       options.pairingDiagnostics?.push({
         incomingName, role: selection.role, candidateCutsExamined: 0, eligibleCutCount: 0,
-        eligibleCutNames: [], rejectionCounts: { 'curve-reduction-already-met': 1 },
+        eligibleCutNames: [], rejectionCounts: { 'curve-reduction-already-met': 1 }, rejectionExamples: {},
       });
       continue;
     }
     if (remainingCuts.length === 0) {
       options.pairingDiagnostics?.push({
         incomingName, role: selection.role, candidateCutsExamined: 0, eligibleCutCount: 0,
-        eligibleCutNames: [], rejectionCounts: { 'no-cuts-remaining': 1 },
+        eligibleCutNames: [], rejectionCounts: { 'no-cuts-remaining': 1 }, rejectionExamples: {},
       });
       break;
     }
@@ -1504,12 +1505,19 @@ export function pairUpgradeSwapsByStructureV15(
       ? remainingCuts.filter((cut) => recordNumber(summarizedCard(cut).manaValue) > Math.max(2, addManaValue))
       : [...remainingCuts])
     const rejectionCounts: Record<string, number> = {};
+    const rejectionExamples: Record<string, string[]> = {};
+    let currentCutName = '';
     const reject = (reason: string): false => {
       rejectionCounts[reason] = (rejectionCounts[reason] ?? 0) + 1;
+      if (currentCutName) {
+        const examples = rejectionExamples[reason] ?? (rejectionExamples[reason] = []);
+        if (examples.length < 3 && !examples.includes(currentCutName)) examples.push(currentCutName);
+      }
       return false;
     };
     const candidateCuts = possibleCuts.filter((cut) => {
         const cutCard = summarizedCard(cut);
+        currentCutName = recordString(cutCard.name);
         const addIsLand = recordString(addCard.typeLine).toLocaleLowerCase().includes('land');
         const cutIsLand = recordString(cutCard.typeLine).toLocaleLowerCase().includes('land');
         const landCountAfterSwap = currentLandCount + (addIsLand ? 1 : 0) - (cutIsLand ? 1 : 0);
@@ -1662,6 +1670,7 @@ export function pairUpgradeSwapsByStructureV15(
         .map((cut) => recordString(summarizedCard(cut).name))
         .filter(Boolean),
       rejectionCounts,
+      rejectionExamples,
     });
     const cut = candidateCuts[0];
     if (!cut) continue;

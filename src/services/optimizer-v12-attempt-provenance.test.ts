@@ -85,6 +85,7 @@ function plan(sourceStatus: string, overrides: Record<string, unknown> = {}): Re
         eligibleCutCount: 0,
         eligibleCutNames: [],
         rejectionCounts: { 'semantic-safety-floor': 20, 'structural-floor': 15 },
+        rejectionExamples: { 'semantic-safety-floor': ['Expensive Draw Spell', 'Narrow Removal'] },
       }],
     },
   };
@@ -111,6 +112,7 @@ test('candidate provenance distinguishes completed absence, unavailable evidence
     eligibleCutCount: 0,
     eligibleCutNames: [],
     rejectionCounts: { 'semantic-safety-floor': 20, 'structural-floor': 15 },
+    rejectionExamples: { 'semantic-safety-floor': ['Expensive Draw Spell', 'Narrow Removal'] },
   });
 });
 
@@ -122,11 +124,13 @@ test('candidate provenance retains constrained-pool absence diagnostics', () => 
     ...groupsInput[0],
     candidateAvailability: 'all-role-cards-already-present-or-excluded',
     roleMatchesBeforeExistingExclusions: 2,
+    roleMatchNamesBeforeExistingExclusions: ['Sol Ring', 'Mana Vault'],
   };
   const result = candidatePlanProvenanceV15(input);
   const groups = result.candidateGroups as Array<Record<string, unknown>>;
   assert.equal(groups[0]?.candidateAvailability, 'all-role-cards-already-present-or-excluded');
   assert.equal(groups[0]?.roleMatchesBeforeExistingExclusions, 2);
+  assert.deepEqual(groups[0]?.roleMatchNamesBeforeExistingExclusions, ['Sol Ring', 'Mana Vault']);
 });
 
 test('attempt trace accumulation retains every attempted swap size and its candidate comparisons', () => {
