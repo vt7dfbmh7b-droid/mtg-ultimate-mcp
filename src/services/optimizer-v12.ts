@@ -311,7 +311,13 @@ export function candidatePlanProvenanceV15(plan: Record<string, unknown> | null)
               ? 'selection-failed-after-discovery'
               : 'no-package-selected';
   const candidateGroups = Array.isArray(source.candidateAddsByDeficit)
-    ? source.candidateAddsByDeficit.map(asRecord).map((group) => ({
+    ? source.candidateAddsByDeficit.map(asRecord).map((group) => {
+      const candidates = Array.isArray(group.candidates) ? group.candidates.map(asRecord) : [];
+      const candidateNames = candidates
+        .map((candidate) => asRecord(candidate.card).name)
+        .filter((name): name is string => typeof name === 'string' && name.length > 0)
+        .slice(0, 10);
+      return {
         role: group.role ?? null,
         prioritySource: group.prioritySource ?? null,
         targetGate: group.targetGate ?? null,
@@ -321,8 +327,10 @@ export function candidatePlanProvenanceV15(plan: Record<string, unknown> | null)
         candidateDiscoveryMode: group.candidateDiscoveryMode ?? null,
         candidateAvailability: group.candidateAvailability ?? null,
         roleMatchesBeforeExistingExclusions: group.roleMatchesBeforeExistingExclusions ?? null,
-        candidateCount: Array.isArray(group.candidates) ? group.candidates.length : 0,
-      }))
+        candidateCount: candidates.length,
+        candidateNames,
+      };
+    })
     : [];
   return {
     targetBracket: asRecord(pressure.targetPressure).targetBracket ?? null,

@@ -344,6 +344,21 @@ async function main(): Promise<void> {
           structuralDeficits: Array.isArray(provenance.structuralDeficits)
             ? provenance.structuralDeficits
             : [],
+          candidateGroups: Array.isArray(provenance.candidateGroups)
+            ? provenance.candidateGroups.map((entry) => {
+              const group = record(entry);
+              return {
+                role: typeof group.role === 'string' ? group.role : null,
+                targetGate: typeof group.targetGate === 'string' ? group.targetGate : null,
+                candidateAvailability: typeof group.candidateAvailability === 'string' ? group.candidateAvailability : null,
+                roleMatchesBeforeExistingExclusions: finite(group.roleMatchesBeforeExistingExclusions),
+                candidateCount: finite(group.candidateCount),
+                candidateNames: Array.isArray(group.candidateNames)
+                  ? group.candidateNames.filter((name): name is string => typeof name === 'string').slice(0, 10)
+                  : [],
+              };
+            })
+            : [],
           swaps: Array.isArray(candidate.swaps)
             ? candidate.swaps.map((entry) => {
               const swap = record(entry);

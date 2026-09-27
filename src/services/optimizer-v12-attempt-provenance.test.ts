@@ -95,6 +95,7 @@ test('candidate provenance distinguishes completed absence, unavailable evidence
     targetGate: 'average-nonland-mv',
   }]);
   assert.equal((absent.candidateGroups as Array<Record<string, unknown>>)[0]?.candidateCount, 1);
+  assert.deepEqual((absent.candidateGroups as Array<Record<string, unknown>>)[0]?.candidateNames, ['Low Curve Candidate']);
 });
 
 test('candidate provenance retains constrained-pool absence diagnostics', () => {
