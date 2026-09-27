@@ -359,6 +359,24 @@ async function main(): Promise<void> {
               };
             })
             : [],
+          pairingDiagnostics: Array.isArray(provenance.pairingDiagnostics)
+            ? provenance.pairingDiagnostics.map((entry) => {
+              const pairing = record(entry);
+              const rejectionCounts = record(pairing.rejectionCounts);
+              return {
+                incomingName: typeof pairing.incomingName === 'string' ? pairing.incomingName : null,
+                role: typeof pairing.role === 'string' ? pairing.role : null,
+                candidateCutsExamined: finite(pairing.candidateCutsExamined),
+                eligibleCutCount: finite(pairing.eligibleCutCount),
+                eligibleCutNames: Array.isArray(pairing.eligibleCutNames)
+                  ? pairing.eligibleCutNames.filter((name): name is string => typeof name === 'string').slice(0, 5)
+                  : [],
+                rejectionCounts: Object.fromEntries(Object.entries(rejectionCounts)
+                  .filter(([, count]) => typeof count === 'number' && Number.isFinite(count) && count >= 0)
+                  .slice(0, 20)),
+              };
+            }).slice(0, 12)
+            : [],
           swaps: Array.isArray(candidate.swaps)
             ? candidate.swaps.map((entry) => {
               const swap = record(entry);
