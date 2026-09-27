@@ -78,6 +78,14 @@ function plan(sourceStatus: string, overrides: Record<string, unknown> = {}): Re
         candidateDiscoveryMode: 'exhaustive-bounded-printing-policy',
         candidates: [{ card: { name: 'Low Curve Candidate' } }],
       }],
+      pairingDiagnostics: [{
+        incomingName: 'World Map',
+        role: 'tutor',
+        candidateCutsExamined: 35,
+        eligibleCutCount: 0,
+        eligibleCutNames: [],
+        rejectionCounts: { 'semantic-safety-floor': 20, 'structural-floor': 15 },
+      }],
     },
   };
 }
@@ -96,6 +104,14 @@ test('candidate provenance distinguishes completed absence, unavailable evidence
   }]);
   assert.equal((absent.candidateGroups as Array<Record<string, unknown>>)[0]?.candidateCount, 1);
   assert.deepEqual((absent.candidateGroups as Array<Record<string, unknown>>)[0]?.candidateNames, ['Low Curve Candidate']);
+  assert.deepEqual((absent.pairingDiagnostics as Array<Record<string, unknown>>)[0], {
+    incomingName: 'World Map',
+    role: 'tutor',
+    candidateCutsExamined: 35,
+    eligibleCutCount: 0,
+    eligibleCutNames: [],
+    rejectionCounts: { 'semantic-safety-floor': 20, 'structural-floor': 15 },
+  });
 });
 
 test('candidate provenance retains constrained-pool absence diagnostics', () => {

@@ -205,6 +205,45 @@ test('restricted curve discovery admits only legal nonland additions at mana val
   assert.deepEqual(candidates.map((candidate) => candidate.name), ['Low Curve Candidate']);
 });
 
+test('swap pairing reports bounded rejection reasons when every cut breaks a hard floor', () => {
+  const pairingDiagnostics: Array<{
+    incomingName: string;
+    role: string;
+    candidateCutsExamined: number;
+    eligibleCutCount: number;
+    eligibleCutNames: string[];
+    rejectionCounts: Record<string, number>;
+  }> = [];
+  const pairings = pairUpgradeSwapsByStructureV15(
+    [{
+      role: 'protection',
+      candidate: { card: { name: 'Incoming Shield', roles: ['protection'], manaValue: 2, typeLine: 'Instant' } },
+    }],
+    [{ card: { name: 'Floor Land', roles: [], manaValue: 0, typeLine: 'Basic Land — Plains' } }],
+    {
+      ...marvelMetrics,
+      protectionCount: 7,
+      landCount: 31,
+      nonlandCount: 69,
+      commanderColorCount: 3,
+      persistentColoredManaSourceCount: 8,
+    },
+    { ...bracketFiveTargets },
+    5,
+    { rejectMeaningfulStrategyLoss: true, pairingDiagnostics },
+  );
+
+  assert.equal(pairings.length, 0);
+  assert.deepEqual(pairingDiagnostics, [{
+    incomingName: 'Incoming Shield',
+    role: 'protection',
+    candidateCutsExamined: 1,
+    eligibleCutCount: 0,
+    eligibleCutNames: [],
+    rejectionCounts: { 'minimum-land-count': 1 },
+  }]);
+});
+
 test('curve-priority pairing chooses a positive mana-value reduction and records the gate provenance', () => {
   const pairings = pairUpgradeSwapsByStructureV15(
     [{

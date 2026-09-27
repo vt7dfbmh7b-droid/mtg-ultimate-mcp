@@ -625,6 +625,14 @@ interface UpgradePairingV15 {
 interface UpgradePairingOptionsV15 {
   rejectMeaningfulStrategyLoss?: boolean;
   maxPairs?: number;
+  pairingDiagnostics?: Array<{
+    incomingName: string;
+    role: string;
+    candidateCutsExamined: number;
+    eligibleCutCount: number;
+    eligibleCutNames: string[];
+    rejectionCounts: Record<string, number>;
+  }>;
   /** Valid caller-declared package floors used to avoid generating known-invalid swap packages. */
   packageAcceptanceFloors?: readonly RefinementComponentAuditV15[];
   /**
@@ -1465,8 +1473,21 @@ export function pairUpgradeSwapsByStructureV15(
 
   for (const selection of additions) {
     if (pairs.length >= maxPairs) break;
-    if (selection.role === 'average-nonland-mv' && remainingCurveReduction <= 0.0001) continue;
-    if (remainingCuts.length === 0) break;
+    const incomingName = recordString(summarizedCard(selection.candidate).name);
+    if (selection.role === 'average-nonland-mv' && remainingCurveReduction <= 0.0001) {
+      options.pairingDiagnostics?.push({
+        incomingName, role: selection.role, candidateCutsExamined: 0, eligibleCutCount: 0,
+        eligibleCutNames: [], rejectionCounts: { 'curve-reduction-already-met': 1 },
+      });
+      continue;
+    }
+    if (remainingCuts.length === 0) {
+      options.pairingDiagnostics?.push({
+        incomingName, role: selection.role, candidateCutsExamined: 0, eligibleCutCount: 0,
+        eligibleCutNames: [], rejectionCounts: { 'no-cuts-remaining': 1 },
+      });
+      break;
+    }
     const addCard = summarizedCard(selection.candidate);
     const addManaValue = recordNumber(addCard.manaValue);
     const selectionTargetGate = asUpgradeTargetGateV15(selection.candidate.authoritativeTargetGate)
@@ -1479,52 +1500,57 @@ export function pairUpgradeSwapsByStructureV15(
       persistentColoredManaSourceTarget,
     );
     const deficitBeforeSwap = structuralDeficitTotalV15(counts, state.targets);
-    const candidateCuts = (selection.role === 'average-nonland-mv'
+    const possibleCuts = (selection.role === 'average-nonland-mv'
       ? remainingCuts.filter((cut) => recordNumber(summarizedCard(cut).manaValue) > Math.max(2, addManaValue))
       : [...remainingCuts])
-      .filter((cut) => {
+    const rejectionCounts: Record<string, number> = {};
+    const reject = (reason: string): false => {
+      rejectionCounts[reason] = (rejectionCounts[reason] ?? 0) + 1;
+      return false;
+    };
+    const candidateCuts = possibleCuts.filter((cut) => {
         const cutCard = summarizedCard(cut);
         const addIsLand = recordString(addCard.typeLine).toLocaleLowerCase().includes('land');
         const cutIsLand = recordString(cutCard.typeLine).toLocaleLowerCase().includes('land');
         const landCountAfterSwap = currentLandCount + (addIsLand ? 1 : 0) - (cutIsLand ? 1 : 0);
-        if (landCountAfterSwap < minimumLandCount) return false;
+        if (landCountAfterSwap < minimumLandCount) return reject('minimum-land-count');
         // Do not spend a premium one- or two-mana acceleration piece on an unrelated
         // upgrade. A persistent low-cost mana source is foundational early infrastructure;
         // only another premium early infrastructure card may replace it.
         if (summaryIsPremiumEarlyInfrastructureV15(cutCard)
-          && !summaryIsPremiumEarlyInfrastructureV15(addCard)) return false;
+          && !summaryIsPremiumEarlyInfrastructureV15(addCard)) return reject('premium-early-infrastructure');
         // In four- and five-colour decks, a broad persistent fixing rock is not
         // interchangeable with a conditional land tutor. Preserve the fixing
         // source unless the incoming card supplies the same persistent role.
         if (recordNumber(currentMetrics.commanderColorCount) >= 4
           && summaryIsBroadColorFixingManaSourceV15(cutCard)
-          && !summaryIsBroadColorFixingManaSourceV15(addCard)) return false;
+          && !summaryIsBroadColorFixingManaSourceV15(addCard)) return reject('broad-color-fixing-source');
         if (!preservesSemanticSafetyFloorsV15(
           cutCard,
           addCard,
           semanticRoleCounts,
           selection.role,
           authoritativeCounts,
-        )) return false;
+        )) return reject('semantic-safety-floor');
         if (!preservesRequestedThemeComponentFloorsV15(
           cut,
           selection.candidate,
           options.themeComponents,
           requestedThemeComponentCounts,
-        )) return false;
+        )) return reject('requested-theme-component-floor');
         if (selection.role === 'theme-component'
           && !advancesUnderTargetRequestedThemeComponentV15(
             cut,
             selection.candidate,
             options.themeComponents,
             requestedThemeComponentCounts,
-          )) return false;
-        if (!packageAcceptanceFloorPreservedV15(packageAcceptanceFloors, packageAcceptanceCounts, addCard, cutCard)) return false;
+          )) return reject('requested-theme-component-no-progress');
+        if (!packageAcceptanceFloorPreservedV15(packageAcceptanceFloors, packageAcceptanceCounts, addCard, cutCard)) return reject('package-acceptance-floor');
         const afterSwap = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(cut), -1);
-        if (!preservesStructuralFloorsV15(counts, afterSwap, state.targets)) return false;
+        if (!preservesStructuralFloorsV15(counts, afterSwap, state.targets)) return reject('structural-floor');
         const persistentColoredManaSourcesAfterSwap = persistentColoredManaSourcesAfterAdd
           - (summaryIsPersistentColoredManaSourceV15(summarizedCard(cut)) ? 1 : 0);
-        if (persistentColoredManaSourcesAfterSwap < persistentColoredManaSourceFloor) return false;
+        if (persistentColoredManaSourcesAfterSwap < persistentColoredManaSourceFloor) return reject('persistent-colored-mana-floor');
 
         const afterAuthoritative = { ...authoritativeCounts };
         for (const [gate, target] of Object.entries(authoritativeCountTargets) as Array<[UpgradeCountTargetGateV15, number]>) {
@@ -1532,10 +1558,10 @@ export function pairUpgradeSwapsByStructureV15(
           const addDelta = summaryMatchesCountTargetGateV15(addCard, gate) ? 1 : 0;
           const cutDelta = summaryMatchesCountTargetGateV15(cutCard, gate) ? 1 : 0;
           afterAuthoritative[gate] = beforeCount + addDelta - cutDelta;
-          if (afterAuthoritative[gate] < Math.min(beforeCount, target)) return false;
+          if (afterAuthoritative[gate] < Math.min(beforeCount, target)) return reject('authoritative-count-floor');
         }
         if (selectionTargetGate && selectionTargetGate !== 'average-nonland-mv') {
-          if (afterAuthoritative[selectionTargetGate] <= authoritativeCounts[selectionTargetGate]) return false;
+          if (afterAuthoritative[selectionTargetGate] <= authoritativeCounts[selectionTargetGate]) return reject('authoritative-target-not-advanced');
         }
 
         const nonlandCountAfterSwap = currentNonlandCount + (addIsLand ? 0 : 1) - (cutIsLand ? 0 : 1);
@@ -1545,8 +1571,8 @@ export function pairUpgradeSwapsByStructureV15(
             + (addIsLand ? 0 : addManaValue)
             - (cutIsLand ? 0 : recordNumber(cutCard.manaValue))) / nonlandCountAfterSwap;
           const allowedAverage = Math.max(curveTarget, beforeAverage);
-          if (afterAverage > allowedAverage + 0.0001) return false;
-          if (selectionTargetGate === 'average-nonland-mv' && afterAverage >= beforeAverage - 0.0001) return false;
+          if (afterAverage > allowedAverage + 0.0001) return reject('average-nonland-mv-ceiling');
+          if (selectionTargetGate === 'average-nonland-mv' && afterAverage >= beforeAverage - 0.0001) return reject('average-nonland-mv-not-reduced');
         }
 
         // Strategy preservation is a property of the add/cut pair. Exclude a damaging
@@ -1567,13 +1593,14 @@ export function pairUpgradeSwapsByStructureV15(
         if (options.rejectMeaningfulStrategyLoss
           && selection.role !== 'win-package'
           && strategyPreservation.meaningfulStrategyLoss
-          && !requestedComponentRebalance) return false;
+          && !requestedComponentRebalance) return reject('meaningful-strategy-loss');
 
         if (selection.role === 'average-nonland-mv'
           || selection.role === 'theme-component'
           || selection.role === 'oracle-synergy'
           || selection.role === 'win-package') return true;
-        return structuralDeficitTotalV15(afterSwap, state.targets) < deficitBeforeSwap;
+        return structuralDeficitTotalV15(afterSwap, state.targets) < deficitBeforeSwap
+          || reject('no-structural-deficit-reduction');
       });
     candidateCuts.sort((left, right) => {
       const leftCounts = applySummaryToStructuralCountsV15(afterAdd, summarizedCard(left), -1);
@@ -1624,6 +1651,17 @@ export function pairUpgradeSwapsByStructureV15(
       const leftName = recordString(summarizedCard(left).name);
       const rightName = recordString(summarizedCard(right).name);
       return leftName.localeCompare(rightName);
+    });
+    options.pairingDiagnostics?.push({
+      incomingName,
+      role: selection.role,
+      candidateCutsExamined: possibleCuts.length,
+      eligibleCutCount: candidateCuts.length,
+      eligibleCutNames: candidateCuts
+        .slice(0, 5)
+        .map((cut) => recordString(summarizedCard(cut).name))
+        .filter(Boolean),
+      rejectionCounts,
     });
     const cut = candidateCuts[0];
     if (!cut) continue;
@@ -1969,6 +2007,7 @@ export async function buildSimulationBackedUpgradePlanV07(
   const packageAcceptanceFloors = packageAcceptanceBaseline
     ? [...packageAcceptanceBaseline.strategyFuel, ...packageAcceptanceBaseline.structuralFloors]
     : [];
+  const pairingDiagnostics: NonNullable<UpgradePairingOptionsV15['pairingDiagnostics']> = [];
   const pairings = pairUpgradeSwapsByStructureV15(
     chosenAdds,
     cutPool,
@@ -1979,6 +2018,7 @@ export async function buildSimulationBackedUpgradePlanV07(
       rejectMeaningfulStrategyLoss: true,
       maxPairs: swapCapacity,
       packageAcceptanceFloors,
+      pairingDiagnostics,
       ...(options.themeComponents ? { themeComponents: options.themeComponents } : {}),
     },
   );
@@ -2078,7 +2118,7 @@ export async function buildSimulationBackedUpgradePlanV07(
       deficit: lane.deficit ?? 0,
       candidateCount: lane.candidates.length,
     })),
-    sourceUpgradeAnalysis: suggestions,
+    sourceUpgradeAnalysis: { ...suggestions, pairingDiagnostics },
     caveats: [
       'V0.7 does not automatically claim the suggested swaps are final. It deliberately returns the whole candidate deck and before/after evidence so an AI or player can reject a swap that harms theme or a preferred win route.',
       'IN/OUT pairing can inspect ranked backup additions across each structural lane. Autonomous non-win-package planning skips a candidate when its best structurally legal cut would cause a meaningful commander-strategy loss, then tries the next bounded backup without consuming the cut or swap slot. Final package-level strategy preservation remains independently audited.',

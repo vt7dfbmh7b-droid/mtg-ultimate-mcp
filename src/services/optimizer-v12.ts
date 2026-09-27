@@ -332,6 +332,24 @@ export function candidatePlanProvenanceV15(plan: Record<string, unknown> | null)
       };
     })
     : [];
+  const pairingDiagnostics = Array.isArray(source.pairingDiagnostics)
+    ? source.pairingDiagnostics.map(asRecord).slice(0, 12).map((entry) => ({
+      incomingName: typeof entry.incomingName === 'string' ? entry.incomingName : null,
+      role: typeof entry.role === 'string' ? entry.role : null,
+      candidateCutsExamined: typeof entry.candidateCutsExamined === 'number' && Number.isFinite(entry.candidateCutsExamined)
+        ? entry.candidateCutsExamined
+        : 0,
+      eligibleCutCount: typeof entry.eligibleCutCount === 'number' && Number.isFinite(entry.eligibleCutCount)
+        ? entry.eligibleCutCount
+        : 0,
+      eligibleCutNames: Array.isArray(entry.eligibleCutNames)
+        ? entry.eligibleCutNames.filter((name): name is string => typeof name === 'string').slice(0, 5)
+        : [],
+      rejectionCounts: entry.rejectionCounts && typeof entry.rejectionCounts === 'object' && !Array.isArray(entry.rejectionCounts)
+        ? entry.rejectionCounts
+        : {},
+    }))
+    : [];
   return {
     targetBracket: asRecord(pressure.targetPressure).targetBracket ?? null,
     winRouteVerificationStatus: pressure.winRouteVerificationStatus ?? null,
@@ -349,6 +367,7 @@ export function candidatePlanProvenanceV15(plan: Record<string, unknown> | null)
       : [],
     structuralDeficits: Array.isArray(source.structuralDeficits) ? source.structuralDeficits : [],
     candidateGroups,
+    pairingDiagnostics,
   };
 }
 
