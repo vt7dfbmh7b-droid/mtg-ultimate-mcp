@@ -1,7 +1,7 @@
 {
   "schema": "bench01-counter-blitz-ff-only-v1",
   "provenance": {
-    "sourceSha": "4be988f0cd99015fb9e18207ae574158bf402f73",
+    "sourceSha": "8606761c4d2e29cebb980bb06520b6aced459a1b",
     "manifestFingerprint": "01c73ca9a486e5fd7eee75cc740242e8345ec31eaacb8533ba2d569667fb6613",
     "evaluationTime": "2026-09-12T08:30:39.498Z",
     "stockDeckSha256": "de5141f786f996dec4a9058fc4eafdf39a0e11d99f7eaf6214a65eae637237e3",
@@ -152432,6 +152432,6 @@
     "freshProcesses": 2,
     "exactDeckAndMetricsEqual": true,
     "networkFallbackInReplay": false,
-    "sourceSha": "4be988f0cd99015fb9e18207ae574158bf402f73"
+    "sourceSha": "8606761c4d2e29cebb980bb06520b6aced459a1b"
   }
 }
