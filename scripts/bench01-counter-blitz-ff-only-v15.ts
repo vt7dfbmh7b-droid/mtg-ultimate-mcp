@@ -26,7 +26,9 @@ import { withExecutionTraceV15 } from '../src/lib/execution-trace-v15.js';
 
 const PRECON_REFERENCE = 'CounterBlitzFinalFantasyX_FIC';
 const COMMANDER = "Tidus, Yuna's Guardian";
-const TARGET_BRACKET = 5;
+// Preserve the existing Bracket 5 fixture by default; permit an explicit comparative trial.
+const TARGET_BRACKET = Number(process.env.BENCH01_COUNTER_BLITZ_TARGET_BRACKET ?? '5');
+assert.ok(TARGET_BRACKET === 4 || TARGET_BRACKET === 5, 'Counter Blitz trial target must be Bracket 4 or 5.');
 const COUNTERMAGIC_TARGET = 8;
 const COUNTER_ENGINE_TARGET = 16;
 const PROLIFERATE_TARGET = 3;
@@ -143,7 +145,7 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
       'Exact Counter Blitz stock-precon lineage.',
       'FINAL FANTASY physical printings only.',
       'Tidus, Yuna\'s Guardian remains the commander.',
-      'Target Bracket 5 is a benchmark target, not permission to falsify target achievement.',
+      `Target Bracket ${TARGET_BRACKET} is a benchmark target, not permission to falsify target achievement.`,
       'Preserve a hybrid counters/proliferate combat plan while allowing compact combo routes.',
       'Dense countermagic is an explicit benchmark objective.',
     ],
@@ -435,7 +437,7 @@ async function main(): Promise<void> {
   const benchmark = {
     schema: 'bench01-counter-blitz-ff-only-v1',
     provenance: { ...inputProvenance, sourceSha: SOURCE_SHA, optimizerBehaviorRevision: OPTIMIZER_BEHAVIOR_REVISION, workerMode: WORKER_MODE, finalDeckSha256: sha256V15(finalDecklist), replayDiagnostics: retainedScryfallDiagnosticsV15() },
-    fixture: 'BENCH-01 Batch A / Counter Blitz',
+    fixture: TARGET_BRACKET === 4 ? 'BENCH-01 / Counter Blitz / Bracket 4 comparison' : 'BENCH-01 Batch A / Counter Blitz',
     sourceBaseline: 'MTGJSON exact standard precon',
     precon: {
       name: stock.entry.name,
