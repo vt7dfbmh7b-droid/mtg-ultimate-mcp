@@ -14,10 +14,6 @@ Development checkpoint: `43e9c1c80dadfea4d53ed1a2affebd90131e362f`
 | PRECON-GENERALIZATION | scenario-intelligence | pass | `f13772d3c414185db658d3f55a20ee45f68c5bc6` | no | `test-results/precon-generalization/run-metadata.txt` |
 | STRATEGY-INFERENCE-GENERALIZATION | engineering+truth | pass | `9c75d8fce791d02169c64e4a3d5357badc892ba9` | no | `test-results/strategy-inference-generalization/run-metadata.txt` |
 | SQUIRRELED-AWAY-GENERALIZATION | scenario-intelligence | pass | `f13772d3c414185db658d3f55a20ee45f68c5bc6` | no | `test-results/precon-generalization-squirrels/run-metadata.txt` |
-| COUNTER-BLITZ-B4-EXISTING-TRUTH | engineering+truth | pass | `8606761c4d2e29cebb980bb06520b6aced459a1b` | no | `test-results/bench01-stage1-records/b4-existing-evidence.txt` |
-| COUNTER-BLITZ-B4-TARGET | scenario-intelligence | fail | `8606761c4d2e29cebb980bb06520b6aced459a1b` | no | `test-results/bench01-stage1-records/b4-existing-evidence.txt` |
-| COUNTER-BLITZ-B5-EXISTING-TRUTH | engineering+truth | pass | `8606761c4d2e29cebb980bb06520b6aced459a1b` | no | `test-results/bench01-stage1-records/b5-existing-evidence.txt` |
-| COUNTER-BLITZ-B5-TARGET | scenario-intelligence | fail | `8606761c4d2e29cebb980bb06520b6aced459a1b` | no | `test-results/bench01-stage1-records/b5-existing-evidence.txt` |
 
 ## Interpretation
 

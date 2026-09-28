@@ -1,12 +1,12 @@
 # START HERE — Ultimate MTG
 
-**Stage 1 handoff proposal. Execution is PAUSED.**
+**Stage 1 published. Bounded Stage 2 safeguards authorized; exact-commit verification/review pending.**
 
 Read `project-state.json`, `AGENTS.md`, this checklist, then `docs/STAGED-RECOVERY-CONTRACT.md`. Do not treat an old “continue autonomously” instruction or a successful workflow as new permission.
 
 ## Current task
 
-Stage 1 prepares instructions and preserves existing evidence. It does not repair the plugin or prove the proposed safeguards. This package was prepared locally against remote head `34109290ba41693d9184ec21768fa65079302409`; publication requires approval because a push may trigger existing CI.
+Justin approved Stage 1 publication and bounded Stage 2 safeguards, necessary tests and existing CI. Stage 1 is published at `e91b8877aa4823bab03e8b5c616e535307824314`. Complete Stage 2 and stop after its review, before recognition repair. Read `docs/STAGE-2-SAFEGUARDS.md`. Routine work inside this approval does not need repeated permission.
 
 ## What is known
 
@@ -19,20 +19,20 @@ Stage 1 prepares instructions and preserves existing evidence. It does not repai
 
 ## Allowed now
 
-- Read existing evidence and prepare/review handoff documents.
-- Preserve files and record checksums without running the saved reproducer.
-- Report gaps or conflicting instructions honestly.
+- Implement bounded acceptance/state safeguards, run necessary tests and existing CI.
+- Publish directly to the active experimental branch after checking head and active writers.
+- Preserve evidence and update coordinated handoff documents; report gaps honestly.
 
 ## Not allowed now
 
-- Tests, builds, benchmarks, reproducer execution, new CI or replay requests.
-- Product-code changes, pushes or schedule resumption.
+- Recognition/ranking repair, fresh deck-generation benchmarks or archived reproducer execution.
+- Schedule resumption, repository permission changes or a new automation platform.
 - Main/stable V0.13 changes, PR #29 merging, workflow/guard/policy-epoch changes.
 - Seeding generation with the supplied or historical Tidus comparison deck.
 
-## Next stage, only after explicit approval
+## Current stage and next boundary
 
-Implement the bounded acceptance gate and baseline-transition checks described in `docs/STAGED-RECOVERY-CONTRACT.md`, then perform the specifically authorized verification. Keep protected maintenance and schedule resumption separately authorized. The first product repair afterwards is shared counterspell/land-search recognition.
+Complete the bounded acceptance gate and baseline-transition checks, verify and review them, then STOP. Protected maintenance and schedule resumption need separate approval. Recognition repair needs Stage 3 approval. Branch-local checks cannot establish tamper-proof unattended enforcement: trusted server policy ownership and shared run ownership remain open.
 
 ## Stop immediately if
 
@@ -45,4 +45,4 @@ Implement the bounded acceptance gate and baseline-transition checks described i
 
 State **ready / blocked / incomplete**, list supporting evidence, unresolved limits and the exact next approval. Separate engineering, truth, deck quality and target achievement.
 
-Evidence inventory and recovery locations: `docs/STAGE-1-EVIDENCE.md`. Detailed current findings: `docs/COUNTER-BLITZ-RECOVERY-STATUS.md`. These instructions are procedural; the proposed new acceptance controls are not yet implemented.
+Evidence inventory: `docs/STAGE-1-EVIDENCE.md`. Current implementation and limits: `docs/STAGE-2-SAFEGUARDS.md`. Historical B4/B5 summaries remain under `test-results/bench01-stage1-records/`, separate from automated-writer controls. No Commander baseline or target has advanced.

@@ -10,13 +10,13 @@ Scheduled/autonomous runs must also obey the root `AGENTS.md` single-flight rule
 
 ## Current staged recovery — 28 September 2026
 
-**Execution paused; Stage 1 handoff prepared locally for review.** Read START-HERE.md, docs/STAGED-RECOVERY-CONTRACT.md and docs/STAGE-1-EVIDENCE.md. No tests, builds, benchmarks, product changes, pushes or schedule changes were performed for this proposal. It has not been published or software-validated.
+**Stage 1 published; bounded Stage 2 safeguards and tests/existing CI approved.** Complete Stage 2 and stop at review before recognition repair. See START-HERE.md and docs/STAGE-2-SAFEGUARDS.md. Historical preparation and evidence descriptions below do not override this newer approval.
 
 The narrow accepted checkpoint remains 43e9c1c8 and the broad accepted baseline remains 1ef10cec8. Later diagnostics are complete. Source 8606761c passed existing CI 36311443690 and frozen Batch A 36311443685; evidence writer 34109290 is the remote base for this proposal. The B5 deck still reports assessed B3, 28 swaps and protection 7/8. The existing local B4 comparison reports assessed B3, 15 swaps, countermagic 6/8 and protection 7/8. Both target-quality verdicts are incomplete. A green measurement run is not a completed recovery.
 
-Stage 2, only after explicit approval, adds a bounded acceptance evaluator and baseline-transition checks with their necessary verification. The first subsequent product repair addresses confirmed restricted-counterspell and land-type-search role failures. Conditional setup, contextual tutors, package quality and bracket calibration remain later evidence-led work. Do not repeat completed candidate diagnostics, change target thresholds to force a pass, or infer pool exhaustion from sparse role matches.
+The approved Stage 2 adds a bounded acceptance evaluator and baseline-transition checks with necessary verification. The first subsequent product repair, requiring Stage 3 approval, addresses restricted-counterspell and land-type-search role failures. Conditional setup, contextual tutors, package quality and bracket calibration remain later evidence-led work. Do not repeat diagnostics, change thresholds to force a pass, or infer pool exhaustion from sparse role matches.
 
-Keep main/stable V0.13, PR #29, workflows, guard, policy epoch, schedules and comparison-only Tidus isolation unchanged. Older roadmap entries below are history, not current execution authority. Publication may trigger existing CI and therefore requires approval beyond the present preparation-only stage.
+Keep main/stable V0.13, PR #29, workflows, guard, policy epoch, schedules and comparison-only Tidus isolation unchanged. Older entries below are history, not current authority. Existing CI is authorized for Stage 2; protected maintenance and schedules are not.
 
 ## Historical BENCH-01 checkpoint — 2026-09-09
 

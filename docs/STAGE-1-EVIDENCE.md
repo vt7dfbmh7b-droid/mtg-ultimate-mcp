@@ -1,6 +1,6 @@
 # Stage 1 evidence inventory
 
-**Prepared locally, not pushed. No new software tests or benchmark runs.** Checksums establish file identity, not Commander quality.
+**Historical Stage 1 inventory, published at e91b8877aa4823bab03e8b5c616e535307824314.** Preparation itself ran no software tests or benchmarks. Checksums establish file identity, not Commander quality. The preparation-time descriptions below are retained as history; current authority/status is in START-HERE.md. Historical summary registrations now live in test-results/bench01-stage1-records/historical-controls.json rather than the automated-writer registry.
 
 ## Already committed upstream
 

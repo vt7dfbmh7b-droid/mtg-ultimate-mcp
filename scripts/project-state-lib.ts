@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { acceptanceStateErrors } from '../src/acceptance-state.js';
 
 export type MilestoneStatus =
   | 'planned'
@@ -106,7 +107,7 @@ function isSha(value: string): boolean {
 }
 
 export function validateProjectState(state: ProjectState, root = process.cwd()): string[] {
-  const errors: string[] = [];
+  const errors: string[] = acceptanceStateErrors(state, root);
   if (state.schemaVersion !== 1) errors.push(`Unsupported schemaVersion=${state.schemaVersion}; expected 1.`);
   if (!state.repository.includes('/')) errors.push('repository must use owner/name form.');
   if (!state.experimental.activeBranch.trim()) errors.push('experimental.activeBranch is required.');

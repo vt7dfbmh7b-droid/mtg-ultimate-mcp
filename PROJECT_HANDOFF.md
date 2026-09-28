@@ -17,11 +17,11 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Intelligence development paused: **yes**
 - Experimental branch: `agent/counter-blitz-generic-mechanism-floor-20260911`
 - Development checkpoint at pause: `43e9c1c80dadfea4d53ed1a2affebd90131e362f`
-- Active branch validation: **stage-1-handoff-proposal-execution-paused-targets-unmet**
+- Active branch validation: **stage-2-safeguards-verification-pending-targets-unmet**
 
 ## Audit reuse rule
 
-STOP at the Stage 1 review boundary. Read START-HERE.md, docs/STAGED-RECOVERY-CONTRACT.md and docs/STAGE-1-EVIDENCE.md. The next approval concerns publication and bounded Stage 2 acceptance safeguards plus their tests. No execution, push or schedule change is currently authorized. After safeguards, the first product repair is shared restricted-counterspell and land-type-search recognition; do not repeat completed candidate diagnostics or benchmark setup.
+Bounded Stage 2 safeguards and necessary tests/existing CI are authorized by Justin. Complete and review Stage 2, then STOP before recognition repair. Read docs/STAGE-2-SAFEGUARDS.md. Main/stable, PR #29, workflows/guard/policy epoch and paused schedules remain unchanged. Server-side trusted policy ownership remains separate maintenance, not granted here.
 
 ## Stable safety boundary
 
@@ -39,14 +39,13 @@ The last persisted Marvel control is `1d6b73aae4edc72d80a2ebc945a160506a13c71e` 
 
 ## Next actions
 
-1. Stage 1 is preparation only. Read START-HERE.md and the staged recovery contract. Keep tests, builds, benchmarks, product changes, pushes, CI/replay requests and schedules paused until specifically authorized.
-2. Review the coordinated proposed handoff and evidence package against remote base 34109290ba41693d9184ec21768fa65079302409. Recheck current head and active writers before any later publication; a push may trigger existing CI.
-3. Preserve existing source-8606761c B4/B5 evidence and anonymous role reproductions. B4 compressed evidence and manifests are under test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/. Do not run the archived reproducer.
-4. Use only the recovered retained snapshot whose compressed SHA-256 is d64aabfa50914fa4571479db29ea262af84b9a80eb0e34a251b168908556b7a4. Two older local cache copies were found incomplete; see docs/STAGE-1-EVIDENCE.md. Do not reacquire a new snapshot or rerun a benchmark during this pause.
-5. Next proposed implementation stage: a bounded structured acceptance evaluator and baseline-transition checks, with specifically authorized verification. Distinguish narrow-repair acceptance from unmet B4/B5 targets. Protected maintenance and schedule resumption need separate authority.
-6. The next product failure is already reproduced: restricted counterspells and land-type ramp are missed. Repair shared discovery/planner/evaluator semantics only after execution approval and the safeguards checkpoint. Conditional setup, tutor relevance and package selection remain later evidence-led work.
-7. Keep accepted baseline 1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7, narrow checkpoint 43e9c1c80dadfea4d53ed1a2affebd90131e362f, main/stable V0.13, PR #29, workflows, workflow guard, policy epoch and held-out comparison isolation unchanged.
-8. Keep Deep Clue Sea engine quality, Endless Punishment taxonomy and Marvel target limitations separately open. Resume broader BENCH-01 only after the current bounded recovery work is accepted or explicitly reprioritized.
+1. Finish Stage 2 safeguards and exact-commit verification under the approved scope; stop at Stage 2 review before recognition repair. No repeated approval is needed for routine actions within this stage.
+2. Stage 1 publication: e91b8877aa4823bab03e8b5c616e535307824314; integrity writer a38bb72f6abf9e3336d2cc16ec39bf88a0e73d84. Recheck live head and active writers before each branch-changing operation.
+3. Historical B4/B5 manual summaries remain under test-results/bench01-stage1-records/ and are not automated validation controls. Their original evidence is preserved; both target-quality verdicts remain failed.
+4. Require hash-bound approved claim contracts, provenance, required observations and complete-deck review before accepted-state changes. Unknown or failed evidence blocks advancement. Existing CI is not deck-quality acceptance.
+5. Do not claim unattended tamper-proof enforcement: trusted server-side acceptance-policy ownership and shared run ownership require separate authorized maintenance before Stage 4.
+6. Preserve accepted baseline 1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7, narrow checkpoint 43e9c1c80dadfea4d53ed1a2affebd90131e362f, main/stable V0.13, PR #29, workflows, workflow guard, policy epoch and held-out comparison isolation.
+7. Recognition repair is the next product task only after a new stage-specific approval. Do not run fresh benchmarks or change Commander ranking during Stage 2. Keep other open Commander failures separately recorded.
 
 ## Permanent recovery references
 

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "revision": "stage2-v1",
+  "stable": {
+    "branch": "main",
+    "promotionAuthorized": false,
+    "serverCurrent": "V0.13",
+    "version": "0.13.0"
+  },
+  "checkpoint": "43e9c1c80dadfea4d53ed1a2affebd90131e362f",
+  "baseline": {
+    "branch": "agent/v15-native-deck-intelligence",
+    "scope": "Latest accepted Commander product baseline. Exact CI green, frozen affected/control replay successful with src/** equality proven, and durable manual whole-deck verdict accepted the repaired Aura-recursion role inference after Revenant Recon retained Animate Dead without a material control regression.",
+    "sha": "1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7"
+  },
+  "validatedMilestones": ["PM-01", "PM-02", "INTEL-01"],
+  "approvedContracts": {}
+}

@@ -4,11 +4,11 @@ A passing workflow proves only the claim listed for that control. Do not general
 
 ## Current proposed evidence reconciliation — 28 September 2026
 
-Stage 1 indexes existing source-8606761c results; no new validation was run. The proposed registry separates B4/B5 execution and hard-truth observations from target quality: both execution/truth rows pass, both target rows fail. These evidence rows are not a new accepted baseline. The accepted narrow checkpoint stays 43e9c1c8; the broad baseline stays 1ef10cec8, so the later evidence's checkpoint-match field is false intentionally.
+Stage 1 preserved source-8606761c results. Its CI exposed four historical registrations without automated evidence writers. Stage 2 moves those unchanged definitions to test-results/bench01-stage1-records/historical-controls.json, retaining summaries and raw artifacts. The automated registry again contains its nine workflow-written controls. No workflow or integrity-test assertion is changed. B4/B5 targets remain failed; accepted checkpoint 43e9c1c8 and broad baseline 1ef10cec8 remain unchanged.
 
 Existing CI 36311443690 and Batch A 36311443685 completed at source 8606761c, persisted at 34109290. B4 evidence is newly preserved in the local proposal, with Node 24.19.0 versus CI's Node 22.23.2 explicitly recorded. Two old local input/archive copies were found incomplete; exact originals were recovered and their hashes matched. See docs/STAGE-1-EVIDENCE.md.
 
-No Stage 1 rendering, JSON inspection, checksum or archive operation is a software-validation or deck-quality pass. Required future verification remains gated by user approval. START-HERE.md and docs/STAGED-RECOVERY-CONTRACT.md supersede historical next-action instructions below.
+No Stage 1 rendering, JSON inspection, checksum or archive operation is a software-validation or deck-quality pass. Stage 2 tests/existing CI are now authorized. The new gate/CLI regressions prove fail-closed software behavior, not Commander quality or unattended security. START-HERE.md and docs/STAGE-2-SAFEGUARDS.md supersede historical next-action instructions below.
 
 ## Historical Counter Blitz evidence — 2026-09-27
 

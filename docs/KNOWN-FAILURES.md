@@ -598,7 +598,7 @@ Risk: an autonomous process can report a false completion or advance an unsuppor
 
 Proposed protection: separate structured acceptance for a named claim, complete provenance, fail/unknown blocking, protected accepted-state transitions and whole-deck review. Keep narrow acceptance distinct from full target achievement. See D-024 and docs/STAGED-RECOVERY-CONTRACT.md.
 
-Status: design proposed, not implemented or verified. Stage 1 only exposes existing target failures in the proposed registry; it does not establish enforcement.
+Status: Stage 2 evaluator and existing state-interface checks implemented; local failure-path tests pass, exact-commit CI/review pending. Server-side trusted policy ownership and unattended entry-point verification remain open. See docs/STAGE-2-SAFEGUARDS.md. Historical summaries are preserved separately from automated-writer registrations.
 
 ## KF-059 — Previously downloaded local evidence can be incomplete
 

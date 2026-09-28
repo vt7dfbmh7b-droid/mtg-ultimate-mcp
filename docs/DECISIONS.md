@@ -4,11 +4,11 @@
 
 Status: current user-directed operating boundary, 28 September 2026.
 
-Stage 1 prepares a short checklist, proposed coordinated handoff updates and existing evidence. Tests, builds, benchmarks, product changes, pushes and schedule resumption remain paused. Stage 2 safeguards and their tests require execution authority; protected repository/workflow maintenance and stable promotion remain separately authorized. Read START-HERE.md and docs/STAGED-RECOVERY-CONTRACT.md. This proposed package is not yet published or software-validated.
+Stage 1 is published at e91b8877. Justin approved bounded Stage 2 safeguards, necessary tests and existing CI. Stop after Stage 2 review before recognition repair. Protected maintenance, stable promotion and schedules still require separate authority. Read START-HERE.md and docs/STAGE-2-SAFEGUARDS.md.
 
 ## D-024 — Acceptance must be separate from measurement completion
 
-Status: design proposed; implementation pending.
+Status: bounded Stage 2 implementation present; exact-commit CI/review pending.
 
 Existing benchmark runners deliberately retain target failures while allowing successful execution. A future acceptance evaluator must consume the structured evidence, bind it to source/contract/input identity and decide a named claim. Fail or unknown blocks advancement of that claim. Narrow-repair acceptance must not silently close B4/B5 failures or advance the broad accepted baseline. Existing index consistency checks are not this new gate. Do not weaken the measurement runner merely to collapse these different outcomes into one status.
 

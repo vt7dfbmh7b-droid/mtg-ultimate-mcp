@@ -1,8 +1,8 @@
 # Counter Blitz recovery status
 
-**28 September 2026 — Stage 1 handoff proposal; execution paused.**
+**28 September 2026 — Stage 1 published; Stage 2 safeguards authorized.**
 
-Read START-HERE.md and docs/STAGED-RECOVERY-CONTRACT.md before acting. This proposal reconciles already completed evidence. No tests, builds, benchmarks, product changes, pushes or schedule changes were performed. It has not been published or software-validated.
+Read START-HERE.md and docs/STAGE-2-SAFEGUARDS.md. Publication and Stage 2 tests/existing CI are approved. Stage 1 commit e91b8877 passed state/build checks; CI 36456549050 had 1127 passes and one historical-registry classification failure. Stage 2 corrects that classification without workflow or integrity-test changes. Recognition repair and schedules remain paused. Evidence descriptions below are the preserved Stage 1 findings.
 
 ## Objective and boundaries
 
@@ -56,4 +56,4 @@ See docs/STAGE-1-EVIDENCE.md and the preservation manifest under test-results/be
 
 Two older local cache copies were incomplete. The original GitHub artifact was recovered and archive/snapshot hashes match the recorded originals. Use the recovered paths in the inventory; do not reuse the incomplete caches.
 
-**Next:** review Stage 1, then obtain explicit authority for publication and bounded Stage 2 safeguards with their necessary verification. No further execution is currently authorized. After safeguards, the first product repair is shared counterspell/land-search recognition. Preserve other open Commander failures separately; whole-deck review remains required before acceptance.
+**Next:** finish Stage 2 verification and review, then STOP before recognition repair. Preserve other open Commander failures separately; whole-deck review remains required before acceptance. No Commander baseline or target has advanced.

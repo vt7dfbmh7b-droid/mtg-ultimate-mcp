@@ -1,6 +1,6 @@
 # Staged recovery contract
 
-Prepared 28 September 2026 from Justin's planning pause and Stage 1 request. This is a proposed repository update, not an authorization to run later stages.
+Updated 28 September 2026: Justin approved Stage 1 publication and bounded Stage 2 safeguards, necessary tests and existing CI. Stage 3 and Stage 4 remain unauthorized. See docs/STAGE-2-SAFEGUARDS.md for implementation and trust limits.
 
 ## Authority and stage mapping
 
@@ -8,16 +8,16 @@ The longer review plan uses P0–P6 for technical work packages. The user-facing
 
 | Stage | Scope | Exit condition | Current status |
 | --- | --- | --- | --- |
-| 1 — Handoff preparation | START HERE, coordinated proposed state/documents, existing evidence preservation | Package is internally consistent and reviewable; publication limits are explicit | Prepared locally; publication and software validation pending |
-| 2 — Safeguards | Structured acceptance evaluator and checks on accepted-baseline transitions through approved interfaces | Authorized failure cases block advancement, a valid narrow claim can pass, accepted state is preserved | Not implemented; execution approval required |
+| 1 — Handoff preparation | START HERE, coordinated proposed state/documents, existing evidence preservation | Package is internally consistent and reviewable; publication limits are explicit | Published at e91b8877; registry classification corrected in Stage 2 |
+| 2 — Safeguards | Structured acceptance evaluator and checks on accepted-baseline transitions through approved interfaces | Authorized failure cases block advancement, a valid narrow claim can pass, accepted state is preserved | Implemented locally; exact-commit CI and review pending |
 | 3 — Recognition repair | Restricted spell counters and land-type searches across discovery, planner, metrics and explanation | Authorized regressions, affected/contrasting controls and complete-deck review support narrow acceptance | Not implemented; execution approval required |
 | 4 — Unattended operation | Actual scheduled entry point, shared run ownership and recovery | Safeguards verified through that entry point and schedule resumption explicitly authorized | Paused |
 
 Stage 2 approval does not authorize main/stable promotion, PR #29 merging, protected workflow/guard/policy-epoch edits, changing repository permissions or restarting schedules. If any are necessary, prepare a concrete maintenance proposal and stop that operation for approval.
 
-## Immediate next task after Stage 1 review
+## Current authorized task
 
-The next decision is whether to authorize publication of the reviewed handoff package and the bounded Stage 2 work, including its necessary tests. No push is allowed during the current no-testing pause: existing CI may run on a push. Do not use skip flags or temporary workflows to evade that boundary.
+Complete bounded Stage 2 implementation, necessary tests and existing CI, then stop after its review before recognition repair. Publication is authorized. Do not use skip flags, temporary workflows or protected maintenance.
 
 Before publication, inspect current head and active writers again. Review this complete diff against the then-current branch. Preserve the broad accepted baseline and the existing narrow accepted repair. Do not publish blindly if the source changed.
 
