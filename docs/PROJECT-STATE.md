@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-27T00:00:00.000Z**.
+Generated from `project-state.json`. Last state update: **2026-09-28T04:02:10.000Z**.
 
 ## Current mode
 
@@ -9,8 +9,8 @@ Generated from `project-state.json`. Last state update: **2026-09-27T00:00:00.00
 - Active experimental branch: `agent/counter-blitz-generic-mechanism-floor-20260911`
 - Active PR: none
 - Active milestone: **BENCH-01**
-- Intelligence development paused: **no**
-- Reason: Interactive Counter Blitz recovery remains active. Narrow self-reference repair accepted; protection and bracket targets remain unmet. Scheduled development was observed paused on 2026-09-22 and was not changed.
+- Intelligence development paused: **yes**
+- Reason: Stage 1 handoff preparation only. Tests, builds, benchmarks, product changes, pushes and schedule resumption remain paused. Review START-HERE.md and docs/STAGED-RECOVERY-CONTRACT.md. This local proposal has not been published or software-validated.
 
 ## Stable boundary
 
@@ -23,7 +23,7 @@ Generated from `project-state.json`. Last state update: **2026-09-27T00:00:00.00
 
 Development checkpoint at pause: `43e9c1c80dadfea4d53ed1a2affebd90131e362f`
 
-Generic compound-theme progress repair passed exact CI 35959975121 (1127 passed, 1 skipped) and frozen Batch A 35959975135; evidence/state writer commit 56ef00294482ca63c37ebe25660721efa5b97b2f. Counter Blitz is legal 100 with eligible FF printings, 28 swaps and White Mage/Ballista retained; protection 7/8 and assessed bracket 3/5 remain unmet. The final frozen trace reports fast mana 1/3, tutors 1/4, and no supported swaps. Accept this narrow repair, not full recovery or a new broad Commander baseline. Accepted baseline remains 1ef10cec; PR #29 unmerged, stable V0.13 unchanged.
+Retain narrow accepted compound-progress checkpoint 43e9c1c8 and broad accepted Commander baseline 1ef10cec8 unchanged. Later diagnostic/runner source 8606761c passed existing CI 36311443690 and frozen Batch A 36311443685; writer 34109290 preserved B5 evidence. B5: legal 100, 28 swaps, assessed B3/target B5, protection 7/8. Existing local B4 comparison: legal 100, 15 swaps, assessed B3/target B4, countermagic 6/8 and protection 7/8. Both quality targets remain unmet. Diagnostics and the B4 runner are completed work, not an accepted recognition repair or new broad baseline. Stage 1 prepares evidence and a paused handoff; no new tests or validation were run.
 
 Latest fully validated executable experimental baseline recorded by project state:
 
@@ -47,28 +47,29 @@ Always inspect the live active-branch head before editing. A later documentation
 
 ## Current validation status
 
-- Active branch status: **counter-blitz-compound-progress-repair-validated-full-targets-unmet**
+- Active branch status: **stage-1-handoff-proposal-execution-paused-targets-unmet**
 - Last persisted Marvel control source: `1d6b73aae4edc72d80a2ebc945a160506a13c71e`
 - Last persisted Marvel control outcome: **execution-success-target-not-achieved**
 - Note: Focused and broad source-1d6b73a controls execute successfully but fail target-quality gates. Retain this unresolved result; other scenario passes do not establish promotion readiness.
 
 Required before resuming broad INTEL-01/INTEL-02 claims:
 
-- Reuse exact source 43e9c1c80dadfea4d53ed1a2affebd90131e362f, CI 35959975121, Batch A 35959975135 and evidence/state writer commit 56ef00294482ca63c37ebe25660721efa5b97b2f. Do not reacquire snapshots or repeat the fixed Oracle self-reference or compound-component progress families without regression.
-- Trace names and rejection reasons for eligible fast-mana, tutor and protection candidates through the public planner. Separate role-classification misses from unsupported candidate/cut pairings and genuine policy-pool exhaustion.
-- Keep Bracket-5, protection, strategy, legality and FF-printing requirements intact. Do not claim FF pool exhaustion unless the candidate alternatives and reasons are audited.
-- For any justified generic repair, require anonymous public-path regressions, exact-source CI, frozen affected/contrasting controls and a complete-deck review. No independently executed general-AI comparator exists for this repair; broad superiority is unproven.
-- Keep accepted Commander baseline 1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7. Do not change main/stable V0.13, merge PR #29, modify workflows/guard/policy epoch or resume paused schedules.
+- Obtain the required stage-specific execution authority. Stage 1 documentation and integrity inspection are not software validation or product acceptance.
+- For future repairs, require anonymous public-planner regressions, exact-source CI, frozen affected and contrasting controls, and a durable complete-deck verdict. Report engineering, truth, deck quality and target achievement separately.
+- Recognize existing B4 and B5 target failures as unresolved; new registry rows record historical outcomes rather than a new pass. Corrected card-role counts must be re-evaluated fairly before any bracket claim.
+- Preserve hard constraints, held-out isolation and accepted baselines. No pool-ceiling claim without audited alternatives; no superiority claim without an independent equal-input comparator.
+- Do not resume schedules or modify main/stable, PR #29, protected workflows, guard or policy epoch under ordinary repair authority.
 
 ## Next actions
 
-1. Read state, AGENTS.md and recovery status; check current/recent writers and refresh candidate head before any write. Development schedules were observed paused on 2026-09-22; do not resume them without user direction.
-2. Reuse exact source 43e9c1c80dadfea4d53ed1a2affebd90131e362f, CI 35959975121, Batch A 35959975135 and evidence/state writer commit 56ef00294482ca63c37ebe25660721efa5b97b2f. Do not reacquire snapshots or repeat the fixed Oracle self-reference or compound-component progress families without regression.
-3. Trace names and rejection reasons for eligible fast-mana, tutor and protection candidates through the public planner. Separate role-classification misses from unsupported candidate/cut pairings and genuine policy-pool exhaustion.
-4. Keep Bracket-5, protection, strategy, legality and FF-printing requirements intact. Do not claim FF pool exhaustion unless the candidate alternatives and reasons are audited.
-5. For any justified generic repair, require anonymous public-path regressions, exact-source CI, frozen affected/contrasting controls and a complete-deck review. No independently executed general-AI comparator exists for this repair; broad superiority is unproven.
-6. Keep accepted Commander baseline 1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7. Do not change main/stable V0.13, merge PR #29, modify workflows/guard/policy epoch or resume paused schedules.
-7. Return to Deep Clue Sea and wider BENCH-01 breadth after the current recovery objective; keep Endless Punishment taxonomy and Marvel target failures separately open.
+1. Stage 1 is preparation only. Read START-HERE.md and the staged recovery contract. Keep tests, builds, benchmarks, product changes, pushes, CI/replay requests and schedules paused until specifically authorized.
+2. Review the coordinated proposed handoff and evidence package against remote base 34109290ba41693d9184ec21768fa65079302409. Recheck current head and active writers before any later publication; a push may trigger existing CI.
+3. Preserve existing source-8606761c B4/B5 evidence and anonymous role reproductions. B4 compressed evidence and manifests are under test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/. Do not run the archived reproducer.
+4. Use only the recovered retained snapshot whose compressed SHA-256 is d64aabfa50914fa4571479db29ea262af84b9a80eb0e34a251b168908556b7a4. Two older local cache copies were found incomplete; see docs/STAGE-1-EVIDENCE.md. Do not reacquire a new snapshot or rerun a benchmark during this pause.
+5. Next proposed implementation stage: a bounded structured acceptance evaluator and baseline-transition checks, with specifically authorized verification. Distinguish narrow-repair acceptance from unmet B4/B5 targets. Protected maintenance and schedule resumption need separate authority.
+6. The next product failure is already reproduced: restricted counterspells and land-type ramp are missed. Repair shared discovery/planner/evaluator semantics only after execution approval and the safeguards checkpoint. Conditional setup, tutor relevance and package selection remain later evidence-led work.
+7. Keep accepted baseline 1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7, narrow checkpoint 43e9c1c80dadfea4d53ed1a2affebd90131e362f, main/stable V0.13, PR #29, workflows, workflow guard, policy epoch and held-out comparison isolation unchanged.
+8. Keep Deep Clue Sea engine quality, Endless Punishment taxonomy and Marvel target limitations separately open. Resume broader BENCH-01 only after the current bounded recovery work is accepted or explicitly reprioritized.
 
 ## Permanent truth boundary
 
@@ -102,15 +103,16 @@ Read in this order:
 
 1. `project-state.json`
 2. `AGENTS.md`
-3. `docs/COUNTER-BLITZ-RECOVERY-STATUS.md`
-4. `docs/PROJECT-STATE.md`
-5. `validation-index.json`
-6. `docs/VALIDATION-STATE.md`
-7. `ULTIMATE_MTG_SPEC.md`
-8. `docs/COMMANDER-SPECIALIST-OBJECTIVE.md`
-9. `docs/ROADMAP.md`
-10. `docs/DECISIONS.md`
-11. `docs/VALIDATION-MATRIX.md`
-12. `docs/KNOWN-FAILURES.md`
+3. `START-HERE.md`
+4. `docs/COUNTER-BLITZ-RECOVERY-STATUS.md`
+5. `docs/PROJECT-STATE.md`
+6. `validation-index.json`
+7. `docs/VALIDATION-STATE.md`
+8. `ULTIMATE_MTG_SPEC.md`
+9. `docs/COMMANDER-SPECIALIST-OBJECTIVE.md`
+10. `docs/ROADMAP.md`
+11. `docs/DECISIONS.md`
+12. `docs/VALIDATION-MATRIX.md`
+13. `docs/KNOWN-FAILURES.md`
 
-Then: Resume Counter Blitz from source 43e9c1c80dadfea4d53ed1a2affebd90131e362f and persisted Batch A evidence under test-results/bench01-batch-a/ (writer commit 56ef00294482ca63c37ebe25660721efa5b97b2f). Read the exact-source manual verdict. Compound-component progress is fixed. Remaining gaps are protection 7/8 and assessed bracket 3/5, including fast mana 1/3 and tutors 1/4. Audit candidate identities and final pairing rejections before deciding whether another generic repair is justified; do not claim pool exhaustion from counts alone.
+Then: STOP at the Stage 1 review boundary. Read START-HERE.md, docs/STAGED-RECOVERY-CONTRACT.md and docs/STAGE-1-EVIDENCE.md. The next approval concerns publication and bounded Stage 2 acceptance safeguards plus their tests. No execution, push or schedule change is currently authorized. After safeguards, the first product repair is shared restricted-counterspell and land-type-search recognition; do not repeat completed candidate diagnostics or benchmark setup.

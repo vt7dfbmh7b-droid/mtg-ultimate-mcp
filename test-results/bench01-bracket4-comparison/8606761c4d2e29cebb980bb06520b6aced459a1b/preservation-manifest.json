@@ -1,0 +1,156 @@
+{
+  "schema": "stage1-existing-evidence-inventory-v1",
+  "publicationStatus": "prepared-locally-not-pushed",
+  "baseRemoteHead": "34109290ba41693d9184ec21768fa65079302409",
+  "productSource": "8606761c4d2e29cebb980bb06520b6aced459a1b",
+  "captureOrigin": "Existing local B4 capture/replay completed before the planning pause; no execution during Stage 1.",
+  "recordedLocalRuntime": "Node 24.19.0",
+  "ciRuntime": "Node 22.23.2",
+  "runtimeComparisonLimit": "B4 local and B5 CI are not a perfectly runtime-matched comparison.",
+  "existingB5Evidence": {
+    "writerCommit": "34109290ba41693d9184ec21768fa65079302409",
+    "path": "test-results/bench01-batch-a/counter-blitz/result.json",
+    "sourceSha": "8606761c4d2e29cebb980bb06520b6aced459a1b",
+    "runId": 36311443685,
+    "ciRunId": 36311443690
+  },
+  "retainedInputArtifact": {
+    "artifactId": 10928372716,
+    "runId": 36308429245,
+    "artifactSource": "4be988f0cd99015fb9e18207ae574158bf402f73",
+    "sizeBytes": 80895729,
+    "sha256": "35056e7815de9d49066fe29c22a61fb97434666fc32c9278d6b16fd09d571dba",
+    "expiresAt": "2026-10-27T09:30:56Z",
+    "sourceCompressedBytes": 78232047,
+    "sourceCompressedSha256": "d64aabfa50914fa4571479db29ea262af84b9a80eb0e34a251b168908556b7a4",
+    "manifestFingerprint": "01c73ca9a486e5fd7eee75cc740242e8345ec31eaacb8533ba2d569667fb6613",
+    "recoveredArchiveLocalPath": "/workspace/scratch/aa6cf5803176/counter-blitz-4be988f-evidence-recovered.zip",
+    "recoveredInputDirectory": "/workspace/scratch/aa6cf5803176/counter-blitz-recovered-inputs",
+    "largeRawSnapshotCommitted": false
+  },
+  "unusablePreviousLocalCopies": [
+    {
+      "path": "counter-blitz-4be988f-evidence.zip",
+      "bytes": 18977792,
+      "sha256": "87564b899d730d80d56bbf178dabf8a0c7210f9e7b3f159079c3453ffa15f0bb",
+      "status": "unreadable ZIP; do not use"
+    },
+    {
+      "path": "counter-blitz-frozen-inputs/scryfall-raw/scryfall-default-cards-retained.jsonl.gz",
+      "bytes": 56136704,
+      "sha256": "d6df8494af23d8f43c7bd0af800fbc45b557d02be5d2da1284559ba3efe9e13b",
+      "status": "size and hash differ from manifest; do not use"
+    }
+  ],
+  "files": [
+    {
+      "originalName": "bench01-counter-blitz-result.json",
+      "storedPath": "test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/bench01-counter-blitz-result.json.gz",
+      "originalBytes": 6982146,
+      "originalSha256": "c82bb7b03de232d2cbf8ccf9eb1837eba5b5617d696d565db24ddd53356d75d3",
+      "storedBytes": 457484,
+      "storedSha256": "56181855c93a7987244054d88552e0cf28e756390c2d85e455de58e93b25c334",
+      "compression": "gzip"
+    },
+    {
+      "originalName": "bench01-counter-blitz-first-pass.json",
+      "storedPath": "test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/bench01-counter-blitz-first-pass.json.gz",
+      "originalBytes": 6981962,
+      "originalSha256": "22f0d199f44a14b03822b1bc48b59071b54d94495e1927bc29e00f455ded94e2",
+      "storedBytes": 457379,
+      "storedSha256": "c55fd3f1847273f08d225073de2ff0760893f4830a923a312add05e004d86c67",
+      "compression": "gzip"
+    },
+    {
+      "originalName": "bench01-counter-blitz-raw-result.json",
+      "storedPath": "test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/bench01-counter-blitz-raw-result.json.gz",
+      "originalBytes": 6917259,
+      "originalSha256": "f947bb41262b047868603be83ccca069b6f28946946bc06b43cf4139ead101c2",
+      "storedBytes": 452208,
+      "storedSha256": "e32cd5ec496eda317fd5fef872ba7f069150082a3527141e73872db49d324a9b",
+      "compression": "gzip"
+    },
+    {
+      "originalName": "bench01-counter-blitz-http-capture.json",
+      "storedPath": "test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/bench01-counter-blitz-http-capture.json.gz",
+      "originalBytes": 6235219,
+      "originalSha256": "cdbbce40813e53e8d2b071a80682be26e4c872fb9073d9ea22cbeb3c0df72f24",
+      "storedBytes": 1016053,
+      "storedSha256": "49eb5e9550ba5aa1eea3dce8bc68e5ecc436d5d0ce6811f06f605e17cc2e03d4",
+      "compression": "gzip"
+    },
+    {
+      "originalName": "bench01-counter-blitz-capture-trace.jsonl",
+      "storedPath": "test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/bench01-counter-blitz-capture-trace.jsonl.gz",
+      "originalBytes": 59916,
+      "originalSha256": "6bc1f69cd5cb7bb2ce08a1b2c62fecd59c23bdb2616c71d0cfe1b6aec49f4316",
+      "storedBytes": 6208,
+      "storedSha256": "8acf3a985a1ac018afdf7cc67043e3e5dd7ff6025be76de7c3ca513767bef142",
+      "compression": "gzip"
+    },
+    {
+      "originalName": "bench01-counter-blitz-replay-trace.jsonl",
+      "storedPath": "test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/bench01-counter-blitz-replay-trace.jsonl.gz",
+      "originalBytes": 56569,
+      "originalSha256": "3f6a5447fe65b1eb3a25ea6ae7184455ea952aeff13a42b2ccd9d984dbc9a913",
+      "storedBytes": 5841,
+      "storedSha256": "71d8985a22dff7f1bc1b1c880fca4884ff594b05e6fb21d71244dcda1cc1afec",
+      "compression": "gzip"
+    },
+    {
+      "originalName": "bench01-counter-blitz-stock-deck.txt",
+      "storedPath": "test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/bench01-counter-blitz-stock-deck.txt",
+      "originalBytes": 3224,
+      "originalSha256": "a5cc29d993473c759412a62a67873cb7d67cef79b9c1d585233b3b4b85f54c49",
+      "storedBytes": 3224,
+      "storedSha256": "a5cc29d993473c759412a62a67873cb7d67cef79b9c1d585233b3b4b85f54c49",
+      "compression": "none"
+    },
+    {
+      "originalName": "bench01-counter-blitz-refined-deck.txt",
+      "storedPath": "test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/bench01-counter-blitz-refined-deck.txt",
+      "originalBytes": 3289,
+      "originalSha256": "e459a887ca2dbcbda0924822eeb71ccae98ef216c772055a7014eecc7e7d0f14",
+      "storedBytes": 3289,
+      "storedSha256": "e459a887ca2dbcbda0924822eeb71ccae98ef216c772055a7014eecc7e7d0f14",
+      "compression": "none"
+    },
+    {
+      "originalName": "bracket4-trial.log",
+      "storedPath": "test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/bracket4-trial.log",
+      "originalBytes": 3327,
+      "originalSha256": "79dcbc57665330bb61863e5ab87d7ca47a39f4addfa5f7bc0369088b428c5bd7",
+      "storedBytes": 3327,
+      "storedSha256": "79dcbc57665330bb61863e5ab87d7ca47a39f4addfa5f7bc0369088b428c5bd7",
+      "compression": "none"
+    },
+    {
+      "originalName": "role-detection-repro.mjs",
+      "storedPath": "test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/role-detection-repro.mjs.txt",
+      "originalBytes": 4326,
+      "originalSha256": "2ae9fa61a3e8c295cf026c9918ed7eea81f5df073c2efba98391c115f42f1c46",
+      "storedBytes": 4326,
+      "storedSha256": "2ae9fa61a3e8c295cf026c9918ed7eea81f5df073c2efba98391c115f42f1c46",
+      "compression": "none"
+    },
+    {
+      "originalName": "role-detection-repro-result.jsonl",
+      "storedPath": "test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/role-detection-repro-result.jsonl",
+      "originalBytes": 594,
+      "originalSha256": "03fd1dc381711897865a6f187298b3ecba4daf92c6a79d494032771ef13c0ffe",
+      "storedBytes": 594,
+      "storedSha256": "03fd1dc381711897865a6f187298b3ecba4daf92c6a79d494032771ef13c0ffe",
+      "compression": "none"
+    },
+    {
+      "originalName": "scryfall-retained-snapshot-manifest-v15.json",
+      "storedPath": "test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/scryfall-retained-snapshot-manifest-v15.json",
+      "originalBytes": 1444,
+      "originalSha256": "9741489496a9e424cc7f75a08e65c6250a216b86a45a733444dd8cd48cbb5a8e",
+      "storedBytes": 1444,
+      "storedSha256": "9741489496a9e424cc7f75a08e65c6250a216b86a45a733444dd8cd48cbb5a8e",
+      "compression": "none"
+    }
+  ],
+  "stage1Actions": "Read saved results; copied/compressed evidence; hashed files; recovered existing artifact; prepared documents. No tests, builds, reproduction or benchmark execution."
+}

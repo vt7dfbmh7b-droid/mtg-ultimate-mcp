@@ -1,32 +1,59 @@
 # Counter Blitz recovery status
 
-Reconciled 2026-09-27 from the exact-source frozen run. This supersedes the September 24 checkpoint.
+**28 September 2026 — Stage 1 handoff proposal; execution paused.**
+
+Read START-HERE.md and docs/STAGED-RECOVERY-CONTRACT.md before acting. This proposal reconciles already completed evidence. No tests, builds, benchmarks, product changes, pushes or schedule changes were performed. It has not been published or software-validated.
 
 ## Objective and boundaries
 
-Independently upgrade untouched Counter Blitz stock with Tidus under legal 100-card Bant and eligible physical Final Fantasy printing constraints. Preserve counters, proliferate, countermagic, combat, protection and the White Mage/Walking Ballista route. Historical Tidus decks stay held out: no seed, must-include list or card-name hack.
+Independently upgrade untouched Counter Blitz stock with Tidus under legal exact-100 Bant and eligible physical Final Fantasy printing constraints. Preserve counters, proliferate, countermagic, combat, protection and White Mage/Walking Ballista access. Supplied and historical Tidus builds remain evaluation-only: no seeds, templates, must-includes or card-name hacks.
 
-Work only on `agent/counter-blitz-generic-mechanism-floor-20260911`. Main/stable V0.13, PR #29, workflows, workflow guard and policy epoch remain unchanged. Development schedules were observed paused on September 22; no schedule changes were made.
+Active experimental branch: agent/counter-blitz-generic-mechanism-floor-20260911. Main/stable V0.13, PR #29, workflows, workflow guard, policy epoch and schedules remain unchanged. A proposed B4 practical milestone does not replace the original B5 challenge. Do not introduce a new budget or weaken existing benchmark assertions.
 
-## Completed evidence
+## Source and acceptance distinctions
 
-- Product source: `43e9c1c80dadfea4d53ed1a2affebd90131e362f`.
-- Exact CI: `35959975121`; 1,127 tests passed, zero failed, one skipped. Local exact-source suite matched.
-- Frozen Counter Blitz + Liliana Batch A: `35959975135`, completed successfully. Project-state writer: `35959975065`, completed successfully.
-- Persisted evidence: `56ef00294482ca63c37ebe25660721efa5b97b2f` under `test-results/bench01-batch-a/`.
-- The generic compound-theme repair carries a verified under-target component gain through the final aggregate gate; aggregate OR coverage no longer vetoes it. An anonymous public-planner regression covers the case. Revision: `compound-progress-preservation-v6`.
-- Counter Blitz replay: two fresh processes, identical deck/metrics, no network fallback. Retained evaluation time is September 12, not current provider freshness.
+| Item | Exact source / status |
+| --- | --- |
+| Broad accepted Commander baseline | 1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7; retained |
+| Narrow accepted compound-progress repair | 43e9c1c80dadfea4d53ed1a2affebd90131e362f; retained |
+| Completed diagnostic source | 4be988f0cd99015fb9e18207ae574158bf402f73; candidate identities and rejection examples exist |
+| Latest recorded executable benchmark source | 8606761c4d2e29cebb980bb06520b6aced459a1b; explicit B4 runner option, not a recognition repair |
+| Existing CI | 36311443690; completed success on source 8606761c |
+| Existing B5/Liliana Batch A | 36311443685; execution success, B5 target quality incomplete |
+| Remote evidence writer/base for this proposal | 34109290ba41693d9184ec21768fa65079302409 |
 
-## Result, not full recovery
+The development checkpoint remains the accepted narrow repair. A later source with green execution is not automatically a new accepted Commander baseline.
 
-Counter Blitz is legal 100 with eligible FF physical printings and 28 net swaps. White Mage and Walking Ballista are both retained. Measured counters 44/16, proliferate 5/3, countermagic 10/8 and combat 14/8 pass; protection is 7/8 and the engine-assessed bracket is 3 against target 5. The hybrid strategy floors, combo access, and substantial-upgrade gate pass. Quality remains `incomplete-target-achievement`; termination is `no-supported-swaps-found`.
+## Existing results
 
-The remaining Bracket-5 construction gates are fast mana (1/3) and tutors (1/4). The final retained-pool trace reports 429 eligible cards, one fast-mana role match and two tutor role matches before existing/excluded filtering; only one tutor candidate is available for another slot. Protection discovery reports 18 role matches and five selected candidates, but none forms a supported package in the final round. These counts identify candidate scarcity and package rejection, not a proven card-pool ceiling: the persisted final trace does not include candidate names or detailed pairing rejection reasons.
+| Measurement | B4 local comparison | B5 Batch A |
+| --- | --- | --- |
+| Legal exact 100 / FF printing observations | Pass | Pass |
+| Net swaps | 15 | 28 |
+| Engine-assessed bracket | 3 / target 4 | 3 / target 5 |
+| Countermagic | 6/8 | 10/8 |
+| Protection | 7/8 | 7/8 |
+| Counters / proliferate / combat counts | 48 / 5 / 14 | 44 / 5 / 14 |
+| White Mage / Ballista access | Recorded present | Recorded present |
+| Recorded capture/replay equality | Two fresh processes; no network fallback | Two fresh processes; no network fallback |
+| Quality verdict | Incomplete target achievement | Incomplete target achievement |
 
-Liliana remains legal 100, NZD 467.61 against its retained NZD 500 budget, assessed high bracket 4. Passing construction thresholds does not certify bracket 5 or competitive performance.
+B4 also misses its inherited 20-swap assertion and stops at all-competing-packages-below-improvement-threshold. B5 stops at no-supported-swaps-found. More swaps are not independently proof of stronger construction. These existing role counts are affected by recognition defects; they are not corrected functional truth or independent bracket certification.
 
-## Verdict and next action
+Both use retained evaluation time 2026-09-12T08:30:39.498Z. B4 used Node 24.19.0 locally; CI is pinned to Node 22.23.2. Do not claim a fully runtime-matched B4/B5 comparison or current price/source freshness.
 
-Accept the generic compound-progress repair, not full recovery or a new broad Commander baseline. Accepted baseline remains `1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7`. Durable complete-deck review: `test-results/bench01-manual-verdicts/43e9c1c80dadfea4d53ed1a2affebd90131e362f.md`.
+## Confirmed next product defects
 
-Next, expose names and rejection reasons for the retained legal tutor/protection/fast-mana candidates through the public planner trace. Then distinguish role-classification misses, incompatible candidate/cut packages and a genuinely exhausted FF-only pool. Keep all target gates, legality, strategy preservation and held-out isolation intact. Do not repeat snapshot setup, fixed self-reference work or the completed compound-progress case. Do not assert the pool ceiling until candidate alternatives and their rejections are audited.
+- Saved anonymous public-planner evidence recognizes “Counter target spell” but misses “Counter target noncreature spell.” Source matching and candidate queries need consistent generic treatment.
+- Saved anonymous evidence recognizes literal land search but misses Forest-type search. The B4 trace permits an outgoing Three Visits with empty roles. Missing loss accounting is the defect; do not hard-code protection for that card.
+- Saved B4 evidence also exposes conditional transform/search credit. Sidequest requires four Birds before transformation. Beneficiary handling and contextual tutor value need bounded follow-up after the first repair.
+
+Generic self-reference and compound-progress repairs already exist. Candidate diagnostics already exist. Do not repeat them or assert FF pool exhaustion from role-count scarcity.
+
+## Evidence preservation and next action
+
+See docs/STAGE-1-EVIDENCE.md and the preservation manifest under test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/. B4 results, traces, provider capture, decks, log and reproducer are preserved in this proposed package. Existing B5 evidence is already committed at the remote base.
+
+Two older local cache copies were incomplete. The original GitHub artifact was recovered and archive/snapshot hashes match the recorded originals. Use the recovered paths in the inventory; do not reuse the incomplete caches.
+
+**Next:** review Stage 1, then obtain explicit authority for publication and bounded Stage 2 safeguards with their necessary verification. No further execution is currently authorized. After safeguards, the first product repair is shared counterspell/land-search recognition. Preserve other open Commander failures separately; whole-deck review remains required before acceptance.

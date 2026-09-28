@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "retained-scryfall-carddata-snapshot-v15.1",
+  "sourceId": "scryfall-default-cards",
+  "format": "scryfall-jsonl-gzip-v1",
+  "temporalMode": "contemporaneous-capture",
+  "historicalArchiveVerified": false,
+  "manifestUri": "https://api.scryfall.com/bulk-data",
+  "providerObjectId": "e2ef41e3-5778-4bc2-af3f-78eca4dd9c23",
+  "providerMetadataUri": "https://api.scryfall.com/bulk-data/e2ef41e3-5778-4bc2-af3f-78eca4dd9c23",
+  "providerUpdatedAt": "2026-09-11T21:05:43.335Z",
+  "discoveredAt": "2026-09-12T08:30:39.498Z",
+  "sourceUri": "https://data.scryfall.io/default-cards/default-cards-20260911210543.jsonl.gz",
+  "sourceContentHash": "d64aabfa50914fa4571479db29ea262af84b9a80eb0e34a251b168908556b7a4",
+  "sourceCompressedBytes": 78232047,
+  "decodedContentHash": "9d0e959c48cc16349982e16f8e37c0675fdf994a1ddfd389c5efa496c4b53abc",
+  "observedAt": "2026-09-12T08:30:39.498Z",
+  "retrievedAt": "2026-09-12T08:30:39.498Z",
+  "storage": {
+    "kind": "oci-registry",
+    "registry": "ghcr.io",
+    "artifactReference": "ghcr.io/vt7dfbmh7b-droid/mtg-ultimate-mcp-carddata@sha256:2407618a9f3f4195665cd7db785458d1986ceefa78b11d80cf9df8815a6e4d09",
+    "sourceLayerDigest": "sha256:d64aabfa50914fa4571479db29ea262af84b9a80eb0e34a251b168908556b7a4",
+    "mediaType": "application/vnd.mtg-ultimate.scryfall-default-cards.v1+gzip"
+  },
+  "manifestFingerprint": "01c73ca9a486e5fd7eee75cc740242e8345ec31eaacb8533ba2d569667fb6613"
+}

@@ -1,0 +1,60 @@
+import { buildSimulationBackedUpgradePlanV07 } from './mtg-bracket4-trial/src/services/deck-builder-v07.ts';
+import { parseDecklist } from './mtg-bracket4-trial/src/services/deck.ts';
+import { clearRetainedScryfallCardDataV15 } from './mtg-bracket4-trial/src/services/scryfall.ts';
+import { effectiveCardRolesV15 } from './mtg-bracket4-trial/src/services/card-role-truth-v15.ts';
+
+const card = (name, oracle, cmc, type = 'Sorcery', extra = {}) => ({
+  id: name, oracle_id: name, name, lang: 'en', set: 'tst', set_name: 'Anonymous Role Audit',
+  collector_number: name.replace(/\W/g, ''), released_at: '2026-01-01', type_line: type,
+  oracle_text: oracle, mana_cost: `{${cmc}}`, cmc, colors: [], color_identity: [], keywords: [],
+  legalities: { commander: 'legal' }, rarity: 'uncommon', prices: { usd: '1.00' },
+  finishes: ['nonfoil'], foil: false, nonfoil: true, promo: false, digital: false,
+  full_art: false, scryfall_uri: 'https://scryfall.com', ...extra,
+});
+const commander = card('Anonymous Role Auditor', '', 3, 'Legendary Creature — Wizard', { color_identity: ['U', 'G'], power: '2', toughness: '3' });
+const land = card('Forest', '({T}: Add {G}.)', 0, 'Basic Land — Forest', { produced_mana: ['G'] });
+const repeated = (n, label, oracle, type = 'Sorcery', extra = {}) => Array.from({ length: n }, (_, i) => card(`${label} ${i}`, oracle, 2, type, extra));
+const shared = [
+  ...repeated(10, 'Anonymous Draw', 'Draw two cards.'),
+  ...repeated(3, 'Anonymous Search', 'Search your library for a card, put that card into your hand, then shuffle.'),
+  ...repeated(4, 'Anonymous Protection', 'Permanents you control gain hexproof until end of turn.', 'Instant'),
+  ...repeated(3, 'Anonymous Recursion', 'Return target creature card from your graveyard to your hand.'),
+  ...repeated(2, 'Anonymous Wipe', 'Destroy all creatures.'),
+];
+const candidates = [
+  card('Anonymous Unrestricted Denial', 'Counter target spell.', 2, 'Instant'),
+  card('Anonymous Restricted Denial', 'Counter target noncreature spell.', 2, 'Instant'),
+  card('Anonymous Land Search', 'Search your library for a land card, put it onto the battlefield tapped, then shuffle.', 2),
+  card('Anonymous Subtype Search', 'Search your library for a Forest card, put it onto the battlefield, then shuffle.', 2),
+];
+for (const [index, desired] of candidates.entries()) {
+  clearRetainedScryfallCardDataV15();
+  const support = [...shared,
+    ...repeated(index < 2 ? 10 : 9, 'Anonymous Mana', '{T}: Add {G}.', 'Artifact', { produced_mana: ['G'] }),
+    ...repeated(index < 2 ? 7 : 10, 'Anonymous Interaction', 'Counter target spell.', 'Instant'),
+  ];
+  const filler = Array.from({ length: 60 - support.length }, (_, i) => card(`Anonymous Filler ${i}`, 'You gain 1 life.', 5));
+  const baseline = [commander, land, ...support, ...filler];
+  const parsed = parseDecklist(['// COMMANDER', `1 ${commander.name}`, '// MAIN', '39 Forest', ...support.map(c => `1 ${c.name}`), ...filler.map(c => `1 ${c.name}`)].join('\n'));
+  const all = [...baseline, ...candidates];
+  const original = globalThis.fetch;
+  globalThis.fetch = async (input, init) => {
+    const url = new URL(String(input));
+    let data;
+    if (url.pathname.endsWith('/cards/collection')) {
+      const ids = JSON.parse(String(init?.body)).identifiers;
+      data = ids.flatMap(id => all.filter(c => id.name ? c.name === id.name : c.set === id.set && c.collector_number === id.collector_number));
+    } else if (url.pathname.endsWith('/cards/search')) {
+      const exact = /^!"([^"]+)"$/.exec(url.searchParams.get('q') ?? '')?.[1];
+      data = exact ? all.filter(c => c.name === exact) : candidates;
+    } else throw new Error(`Unexpected request ${url.pathname}`);
+    return Response.json({ object: 'list', data, has_more: false, not_found: [] });
+  };
+  try {
+    const p = await buildSimulationBackedUpgradePlanV07(parsed, baseline, ['U', 'G'], {
+      targetBracket: 3, maxSwaps: 1, maxUsdPerCard: 5, simulationIterations: 100,
+      excludedCards: candidates.filter(c => c !== desired).map(c => c.name),
+    });
+    console.log(JSON.stringify({ candidate: desired.name, roles: effectiveCardRolesV15(desired), cardCount: parsed.totalCards, swaps: p.swaps.map(s => ({ in: s.in, out: s.out })), legal: p.upgradedCommanderRules.isLegal }));
+  } finally { globalThis.fetch = original; }
+}

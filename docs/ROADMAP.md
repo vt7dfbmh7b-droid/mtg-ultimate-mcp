@@ -8,11 +8,15 @@ Before any scheduled or autonomous repository write, read root `AGENTS.md` and t
 
 Scheduled/autonomous runs must also obey the root `AGENTS.md` single-flight rule: do not start a new branch-changing validation, replay, state writer, evidence persistence operation, or Commander product repair while another relevant branch-writing operation is still active. Manual verdicts belong under `test-results/bench01-manual-verdicts/`, outside replaceable generated replay output.
 
-## Current recovery checkpoint — 2026-09-27
+## Current staged recovery — 28 September 2026
 
-Counter Blitz recovery takes priority. Source `43e9c1c80dadfea4d53ed1a2affebd90131e362f` passed exact CI `35959975121` (1,127 passed, zero failed, one skipped) and frozen Batch A `35959975135`, persisted by writer commit `56ef00294482ca63c37ebe25660721efa5b97b2f. The generic compound-component progress repair is validated. The legal FF-only 100-card result retains White Mage/Ballista and records 28 swaps; protection is 7/8 and assessed bracket 3/5. Remaining Bracket-5 gates are fast mana 1/3 and tutors 1/4; termination is `no-supported-swaps-found`. Read docs/COUNTER-BLITZ-RECOVERY-STATUS.md and its source-43e9 manual verdict. The frozen trace gives candidate counts but omits identities and detailed package rejection reasons, so audit those before a new repair or a pool-ceiling claim.
+**Execution paused; Stage 1 handoff prepared locally for review.** Read START-HERE.md, docs/STAGED-RECOVERY-CONTRACT.md and docs/STAGE-1-EVIDENCE.md. No tests, builds, benchmarks, product changes, pushes or schedule changes were performed for this proposal. It has not been published or software-validated.
 
-Accepted Commander baseline is `1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7`. Main/stable V0.13 and PR #29 remain untouched. Development schedules were observed paused on September 22 and were not changed. Older checkpoint and schedule statements below are historical, not current instructions.
+The narrow accepted checkpoint remains 43e9c1c8 and the broad accepted baseline remains 1ef10cec8. Later diagnostics are complete. Source 8606761c passed existing CI 36311443690 and frozen Batch A 36311443685; evidence writer 34109290 is the remote base for this proposal. The B5 deck still reports assessed B3, 28 swaps and protection 7/8. The existing local B4 comparison reports assessed B3, 15 swaps, countermagic 6/8 and protection 7/8. Both target-quality verdicts are incomplete. A green measurement run is not a completed recovery.
+
+Stage 2, only after explicit approval, adds a bounded acceptance evaluator and baseline-transition checks with their necessary verification. The first subsequent product repair addresses confirmed restricted-counterspell and land-type-search role failures. Conditional setup, contextual tutors, package quality and bracket calibration remain later evidence-led work. Do not repeat completed candidate diagnostics, change target thresholds to force a pass, or infer pool exhaustion from sparse role matches.
+
+Keep main/stable V0.13, PR #29, workflows, guard, policy epoch, schedules and comparison-only Tidus isolation unchanged. Older roadmap entries below are history, not current execution authority. Publication may trigger existing CI and therefore requires approval beyond the present preparation-only stage.
 
 ## Historical BENCH-01 checkpoint — 2026-09-09
 

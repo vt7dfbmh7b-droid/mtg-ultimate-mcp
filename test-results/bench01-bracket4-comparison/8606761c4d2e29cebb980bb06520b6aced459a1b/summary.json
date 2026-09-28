@@ -1,0 +1,84 @@
+{
+  "provenance": {
+    "sourceSha": "8606761c4d2e29cebb980bb06520b6aced459a1b",
+    "manifestFingerprint": "01c73ca9a486e5fd7eee75cc740242e8345ec31eaacb8533ba2d569667fb6613",
+    "evaluationTime": "2026-09-12T08:30:39.498Z",
+    "stockDeckSha256": "de5141f786f996dec4a9058fc4eafdf39a0e11d99f7eaf6214a65eae637237e3",
+    "stockReference": "CounterBlitzFinalFantasyX_FIC",
+    "optimizerBehaviorRevision": "compound-progress-preservation-v6",
+    "workerMode": "replay",
+    "finalDeckSha256": "803ef439303fd67f84253a529268784d537b65797d5dd1e1434463422fda67ce",
+    "replayDiagnostics": {
+      "queryEvaluations": 55,
+      "failures": []
+    }
+  },
+  "constraints": {
+    "commander": "Tidus, Yuna's Guardian",
+    "printingFamily": "Final Fantasy",
+    "targetBracket": 4,
+    "maxSwaps": 30,
+    "roundBudget": "derived-from-maxSwaps-because-maxRounds-is-omitted",
+    "substantialSwapTarget": 20,
+    "identity": "Bant +1/+1 counters/proliferate with dense countermagic and hybrid combat/combo routes",
+    "hardTruthFirst": true,
+    "benchmarkTargetsAreMeasurementsNotAutomaticPassClaims": true
+  },
+  "qualityVerdict": {
+    "status": "incomplete-target-achievement",
+    "achieved": false,
+    "requiredTargetAchievement": {
+      "substantialUpgrade": false,
+      "targetBracket": false,
+      "denseCountermagic": false,
+      "counterEngine": true,
+      "proliferate": true,
+      "combatReference": true,
+      "hybridCreatureFloor": true,
+      "protection": false,
+      "requestedWhiteMageBallistaAccess": true,
+      "commanderLegal": true,
+      "finalFantasyPhysicalPrinting": true
+    },
+    "missedRequiredTargets": [
+      "substantialUpgrade",
+      "targetBracket",
+      "denseCountermagic",
+      "protection"
+    ]
+  },
+  "determinism": {
+    "freshProcesses": 2,
+    "exactDeckAndMetricsEqual": true,
+    "networkFallbackInReplay": false,
+    "sourceSha": "8606761c4d2e29cebb980bb06520b6aced459a1b"
+  },
+  "netSwaps": 15,
+  "stopReason": "all-competing-packages-below-improvement-threshold",
+  "after": {
+    "cardCount": 100,
+    "commanderLegal": true,
+    "printingPolicySatisfied": true,
+    "assessedBracket": 3,
+    "counterEngineCount": 48,
+    "proliferateCount": 5,
+    "counterspellCount": 6,
+    "combatReferenceCount": 14,
+    "creatureCount": 33,
+    "metrics": {
+      "averageNonlandManaValue": 2.71,
+      "earlyPlayCount": 32,
+      "cheapInteractionCount": 5,
+      "freeInteractionCount": 0,
+      "fastManaCount": 1,
+      "tutorCount": 1,
+      "recursionCount": 2,
+      "boardWipeCount": 3,
+      "rampCount": 15,
+      "drawCount": 17,
+      "interactionCount": 14,
+      "protectionCount": 7,
+      "persistentColoredManaSourceCount": 6
+    }
+  }
+}

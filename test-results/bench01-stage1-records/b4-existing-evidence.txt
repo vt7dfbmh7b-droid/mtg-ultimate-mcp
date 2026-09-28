@@ -1,0 +1,15 @@
+source_sha=8606761c4d2e29cebb980bb06520b6aced459a1b
+evidence_origin=existing-pre-pause-run
+execution_outcome=success
+card_count=100
+commander_legal=true
+printing_policy_satisfied=true
+deterministic_replay=true
+quality_achieved=false
+quality_status=incomplete-target-achievement
+assessed_bracket=3
+requested_bracket=4
+net_swaps=15
+manual_acceptance=not-granted-by-stage1
+stage1_software_validation=not-run
+evidence_path=test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/summary.json

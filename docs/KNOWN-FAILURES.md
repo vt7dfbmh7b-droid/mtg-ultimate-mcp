@@ -576,3 +576,36 @@ Risk: compound requests cannot repair individual weak components when progress e
 Protection: carry the verified `requestedThemeProgress` signal through the final target-gate check while preserving component, aggregate, strategy and structural floors. An anonymous public-planner regression covers the progress case and confirms that unrelated/unsupported progress remains rejected.
 
 Status: prevented for the reproduced failure at product source `43e9c1c80dadfea4d53ed1a2affebd90131e362f`; exact CI `35959975121` passed (1,127 passed, zero failed, one skipped) and frozen Batch A `35959975135` completed with evidence persisted by commit `56ef00294482ca63c37ebe25660721efa5b97b2f`. The repair does not complete Counter Blitz: protection is 7/8, assessed bracket is 3/5, and the next action is a candidate identity/pairing-rejection audit.
+
+
+## KF-057 — Restricted spell counters and land-type search lose shared role evidence
+
+Observed in the existing source-8606761c anonymous public-planner diagnostic: an unrestricted counter receives roles and a supported swap, while “Counter target noncreature spell” receives no roles and no swap. Literal land search is recognized, while an otherwise valid Forest-type search receives no roles and no swap. In the saved B4 trace, outgoing Three Visits has empty roles when considered/cut for structural improvements.
+
+Risk: candidate discovery, interaction/ramp metrics and outgoing-loss protection can disagree with actual Oracle functions. A safe useful candidate may be hidden or mana support treated as expendable.
+
+Proposed protection: shared generic semantics through query discovery, public planner, role truth and final audit; positive/negative anonymous cases; no card-name exception. Distinguish spell countering from counter placement/uncounterability and battlefield land search from hand search/replacement-only movement.
+
+Evidence: test-results/bench01-bracket4-comparison/8606761c4d2e29cebb980bb06520b6aced459a1b/role-detection-repro-result.jsonl and the archived .mjs.txt reproducer. These are prior diagnostic outputs, not newly executed regression tests.
+
+Status: open. No recognition repair or new test execution in Stage 1. Future implementation follows the safeguards checkpoint and explicit execution approval.
+
+## KF-058 — Execution and document consistency can be mistaken for quality acceptance
+
+Observed: source-8606761c B4/B5 artifacts report incomplete-target-achievement while the measurement harness permits execution success. The index validator verifies consistency with metadata, not overall deck acceptance. Current state-shape checks do not by themselves establish all evidence required for a newly named accepted baseline.
+
+Risk: an autonomous process can report a false completion or advance an unsupported baseline if it interprets workflow success as acceptance.
+
+Proposed protection: separate structured acceptance for a named claim, complete provenance, fail/unknown blocking, protected accepted-state transitions and whole-deck review. Keep narrow acceptance distinct from full target achievement. See D-024 and docs/STAGED-RECOVERY-CONTRACT.md.
+
+Status: design proposed, not implemented or verified. Stage 1 only exposes existing target failures in the proposed registry; it does not establish enforcement.
+
+## KF-059 — Previously downloaded local evidence can be incomplete
+
+Observed during Stage 1 file preservation: the old archive was 18,977,792 bytes and unreadable as ZIP; the old retained card-data file was 56,136,704 bytes against manifest size 78,232,047. Their hashes differed from the recorded originals. Cause is not established.
+
+Risk: later replay could mistakenly use a familiar path containing incomplete data.
+
+Recovery: the original still-available GitHub artifact 10928372716 was recovered at 80,895,729 bytes with its original SHA-256, and the extracted compressed snapshot matches the original manifest hash and size. No new snapshot or benchmark run was used. Old copies remain untouched and explicitly unusable; recovered paths and exact hashes are in docs/STAGE-1-EVIDENCE.md.
+
+Status: local input recovery complete; durable publication/retention remains pending. This storage issue does not retroactively invalidate the already completed recorded runs. Future replay must check input identity and source availability.

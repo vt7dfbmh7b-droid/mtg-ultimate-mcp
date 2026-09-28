@@ -2,7 +2,15 @@
 
 A passing workflow proves only the claim listed for that control. Do not generalize a narrow pass into a universal intelligence claim.
 
-## Current Counter Blitz evidence — 2026-09-27
+## Current proposed evidence reconciliation — 28 September 2026
+
+Stage 1 indexes existing source-8606761c results; no new validation was run. The proposed registry separates B4/B5 execution and hard-truth observations from target quality: both execution/truth rows pass, both target rows fail. These evidence rows are not a new accepted baseline. The accepted narrow checkpoint stays 43e9c1c8; the broad baseline stays 1ef10cec8, so the later evidence's checkpoint-match field is false intentionally.
+
+Existing CI 36311443690 and Batch A 36311443685 completed at source 8606761c, persisted at 34109290. B4 evidence is newly preserved in the local proposal, with Node 24.19.0 versus CI's Node 22.23.2 explicitly recorded. Two old local input/archive copies were found incomplete; exact originals were recovered and their hashes matched. See docs/STAGE-1-EVIDENCE.md.
+
+No Stage 1 rendering, JSON inspection, checksum or archive operation is a software-validation or deck-quality pass. Required future verification remains gated by user approval. START-HERE.md and docs/STAGED-RECOVERY-CONTRACT.md supersede historical next-action instructions below.
+
+## Historical Counter Blitz evidence — 2026-09-27
 
 Exact product source `43e9c1c80dadfea4d53ed1a2affebd90131e362f` passed CI `35959975121` (1,127 passed, zero failed, one skipped). Frozen Batch A `35959975135` persisted under `test-results/bench01-batch-a/`; state writer commit `56ef00294482ca63c37ebe25660721efa5b97b2f`. Counter Blitz is legal 100 with eligible FF physical printings, deterministic two-process replay and White Mage/Ballista retained after 28 swaps. Counters 44/16, proliferate 5/3, countermagic 10/8 and combat 14/8 pass. Protection 7/8 and assessed bracket 3/5 remain unmet; fast mana 1/3 and tutors 1/4 are the final failed B5 gates. The final stop is `no-supported-swaps-found`; candidate identities and package rejection reasons require further audit before a generic fix or pool-ceiling claim. The component-progress repair is accepted narrowly, not as full recovery. Liliana remains legal, within its retained budget and assessed high bracket 4. Accepted broad baseline remains `1ef10cec`.
 

@@ -1,0 +1,4 @@
+{"candidate":"Anonymous Unrestricted Denial","roles":["countermagic","cheap interaction"],"cardCount":100,"swaps":[{"in":"Anonymous Unrestricted Denial","out":"Anonymous Filler 0"}],"legal":true}
+{"candidate":"Anonymous Restricted Denial","roles":[],"cardCount":100,"swaps":[],"legal":true}
+{"candidate":"Anonymous Land Search","roles":["land ramp","persistent colored mana source","tutor","land tutor"],"cardCount":100,"swaps":[{"in":"Anonymous Land Search","out":"Anonymous Filler 0"}],"legal":true}
+{"candidate":"Anonymous Subtype Search","roles":[],"cardCount":100,"swaps":[],"legal":true}

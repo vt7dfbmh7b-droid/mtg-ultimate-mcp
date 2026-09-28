@@ -255,6 +255,74 @@
         "structural_floors_required": "true",
         "meaningful_strategy_loss_rejected": "true"
       }
+    },
+    {
+      "milestones": [
+        "BENCH-01"
+      ],
+      "metadataPath": "test-results/bench01-stage1-records/b4-existing-evidence.txt",
+      "sourceKeys": [
+        "source_sha"
+      ],
+      "id": "COUNTER-BLITZ-B4-EXISTING-TRUTH",
+      "label": "Counter Blitz B4 existing execution and hard-truth observations",
+      "claimLevel": "engineering+truth",
+      "passWhen": {
+        "execution_outcome": "success",
+        "card_count": "100",
+        "commander_legal": "true",
+        "printing_policy_satisfied": "true",
+        "deterministic_replay": "true"
+      }
+    },
+    {
+      "milestones": [
+        "BENCH-01"
+      ],
+      "metadataPath": "test-results/bench01-stage1-records/b4-existing-evidence.txt",
+      "sourceKeys": [
+        "source_sha"
+      ],
+      "id": "COUNTER-BLITZ-B4-TARGET",
+      "label": "Counter Blitz B4 target achievement (currently unmet)",
+      "claimLevel": "scenario-intelligence",
+      "passWhen": {
+        "quality_achieved": "true"
+      }
+    },
+    {
+      "milestones": [
+        "BENCH-01"
+      ],
+      "metadataPath": "test-results/bench01-stage1-records/b5-existing-evidence.txt",
+      "sourceKeys": [
+        "source_sha"
+      ],
+      "id": "COUNTER-BLITZ-B5-EXISTING-TRUTH",
+      "label": "Counter Blitz B5 existing execution and hard-truth observations",
+      "claimLevel": "engineering+truth",
+      "passWhen": {
+        "execution_outcome": "success",
+        "card_count": "100",
+        "commander_legal": "true",
+        "printing_policy_satisfied": "true",
+        "deterministic_replay": "true"
+      }
+    },
+    {
+      "milestones": [
+        "BENCH-01"
+      ],
+      "metadataPath": "test-results/bench01-stage1-records/b5-existing-evidence.txt",
+      "sourceKeys": [
+        "source_sha"
+      ],
+      "id": "COUNTER-BLITZ-B5-TARGET",
+      "label": "Counter Blitz B5 target achievement (currently unmet)",
+      "claimLevel": "scenario-intelligence",
+      "passWhen": {
+        "quality_achieved": "true"
+      }
     }
   ]
 }
