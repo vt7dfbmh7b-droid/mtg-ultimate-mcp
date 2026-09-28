@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-28T17:30:00.000Z**.
+Generated from `project-state.json`. Last state update: **2026-09-28T17:35:00.000Z**.
 
 ## Current mode
 
@@ -10,7 +10,7 @@ Generated from `project-state.json`. Last state update: **2026-09-28T17:30:00.00
 - Active PR: none
 - Active milestone: **BENCH-01**
 - Intelligence development paused: **yes**
-- Reason: User approved Stage 1 publication and bounded Stage 2 safeguards, necessary tests and existing CI. Stage 1 published at e91b8877; Stage 2 implementation/verification in progress. Intelligence/recognition repair and schedules remain paused. Stop after Stage 2 review.
+- Reason: Stage 2 safeguards implemented and reviewed. Exact-source CI 36458755433 passed at 146eb40040b846beb43274993d1dfdbb73fe55d9 (1156 passed, 0 failed, 1 skipped); integrity run 36458755375 passed. STOP before Stage 3 recognition repair. Schedules and protected areas remain unchanged; unattended trust controls still require separately approved maintenance.
 
 ## Stable boundary
 
@@ -47,14 +47,14 @@ Always inspect the live active-branch head before editing. A later documentation
 
 ## Current validation status
 
-- Active branch status: **stage-2-safeguards-verification-pending-targets-unmet**
+- Active branch status: **stage-2-software-safeguards-verified-review-complete-recognition-paused**
 - Last persisted Marvel control source: `1d6b73aae4edc72d80a2ebc945a160506a13c71e`
 - Last persisted Marvel control outcome: **execution-success-target-not-achieved**
 - Note: Focused and broad source-1d6b73a controls execute successfully but fail target-quality gates. Retain this unresolved result; other scenario passes do not establish promotion readiness.
 
 Required before resuming broad INTEL-01/INTEL-02 claims:
 
-- Stage 2 safeguards are authorized, not recognition repair. Stop after their review; obtain separate Stage 3 authority before intelligence repair.
+- Stage 2 review is complete; Stage 3 recognition repair requires separate approval. Green safeguard tests do not accept a Commander repair or establish unattended readiness.
 - For future repairs, require anonymous public-planner regressions, exact-source CI, frozen affected and contrasting controls, and a durable complete-deck verdict. Report engineering, truth, deck quality and target achievement separately.
 - Recognize existing B4 and B5 target failures as unresolved; new registry rows record historical outcomes rather than a new pass. Corrected card-role counts must be re-evaluated fairly before any bracket claim.
 - Preserve hard constraints, held-out isolation and accepted baselines. No pool-ceiling claim without audited alternatives; no superiority claim without an independent equal-input comparator.
@@ -62,8 +62,8 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 
 ## Next actions
 
-1. Finish Stage 2 safeguards and exact-commit verification under the approved scope; stop at Stage 2 review before recognition repair. No repeated approval is needed for routine actions within this stage.
-2. Stage 1 publication: e91b8877aa4823bab03e8b5c616e535307824314; integrity writer a38bb72f6abf9e3336d2cc16ec39bf88a0e73d84. Recheck live head and active writers before each branch-changing operation.
+1. Stage 2 review is complete; stop before recognition repair. Review docs/STAGE-2-REVIEW.md. Justin may separately authorize the bounded Stage 3 restricted-counterspell and land-type-search recognition repair.
+2. Verified safeguard source 146eb40040b846beb43274993d1dfdbb73fe55d9: CI 36458755433 passed (1156/0/1); integrity 36458755375 passed; writer 464acaa16c5ee9c104cb1840706af8f53391e635 changed evidence metadata only. Check live head and active writers before any later authorized operation.
 3. Historical B4/B5 manual summaries remain under test-results/bench01-stage1-records/ and are not automated validation controls. Their original evidence is preserved; both target-quality verdicts remain failed.
 4. Require hash-bound approved claim contracts, provenance, required observations and complete-deck review before accepted-state changes. Unknown or failed evidence blocks advancement. Existing CI is not deck-quality acceptance.
 5. Do not claim unattended tamper-proof enforcement: trusted server-side acceptance-policy ownership and shared run ownership require separate authorized maintenance before Stage 4.
@@ -104,14 +104,15 @@ Read in this order:
 2. `AGENTS.md`
 3. `START-HERE.md`
 4. `docs/COUNTER-BLITZ-RECOVERY-STATUS.md`
-5. `docs/PROJECT-STATE.md`
-6. `validation-index.json`
-7. `docs/VALIDATION-STATE.md`
-8. `ULTIMATE_MTG_SPEC.md`
-9. `docs/COMMANDER-SPECIALIST-OBJECTIVE.md`
-10. `docs/ROADMAP.md`
-11. `docs/DECISIONS.md`
-12. `docs/VALIDATION-MATRIX.md`
-13. `docs/KNOWN-FAILURES.md`
+5. `docs/STAGE-2-REVIEW.md`
+6. `docs/PROJECT-STATE.md`
+7. `validation-index.json`
+8. `docs/VALIDATION-STATE.md`
+9. `ULTIMATE_MTG_SPEC.md`
+10. `docs/COMMANDER-SPECIALIST-OBJECTIVE.md`
+11. `docs/ROADMAP.md`
+12. `docs/DECISIONS.md`
+13. `docs/VALIDATION-MATRIX.md`
+14. `docs/KNOWN-FAILURES.md`
 
-Then: Bounded Stage 2 safeguards and necessary tests/existing CI are authorized by Justin. Complete and review Stage 2, then STOP before recognition repair. Read docs/STAGE-2-SAFEGUARDS.md. Main/stable, PR #29, workflows/guard/policy epoch and paused schedules remain unchanged. Server-side trusted policy ownership remains separate maintenance, not granted here.
+Then: STOP at the completed Stage 2 review boundary. Read docs/STAGE-2-REVIEW.md and docs/STAGE-2-SAFEGUARDS.md. The next decision is bounded Stage 3 recognition repair; it is not authorized by Stage 2 approval. Server-side trusted policy ownership and shared run ownership remain separate maintenance before unattended operation.

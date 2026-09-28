@@ -10,7 +10,7 @@ Scheduled/autonomous runs must also obey the root `AGENTS.md` single-flight rule
 
 ## Current staged recovery — 28 September 2026
 
-**Stage 1 published; bounded Stage 2 safeguards and tests/existing CI approved.** Complete Stage 2 and stop at review before recognition repair. See START-HERE.md and docs/STAGE-2-SAFEGUARDS.md. Historical preparation and evidence descriptions below do not override this newer approval.
+**Stage 1 published; bounded Stage 2 software safeguards verified and reviewed.** Stop before recognition repair; read docs/STAGE-2-REVIEW.md. See START-HERE.md and docs/STAGE-2-SAFEGUARDS.md. Historical preparation and evidence descriptions below do not override this newer approval.
 
 The narrow accepted checkpoint remains 43e9c1c8 and the broad accepted baseline remains 1ef10cec8. Later diagnostics are complete. Source 8606761c passed existing CI 36311443690 and frozen Batch A 36311443685; evidence writer 34109290 is the remote base for this proposal. The B5 deck still reports assessed B3, 28 swaps and protection 7/8. The existing local B4 comparison reports assessed B3, 15 swaps, countermagic 6/8 and protection 7/8. Both target-quality verdicts are incomplete. A green measurement run is not a completed recovery.
 

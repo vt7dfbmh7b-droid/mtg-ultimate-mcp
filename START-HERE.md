@@ -1,12 +1,12 @@
 # START HERE — Ultimate MTG
 
-**Stage 1 published. Bounded Stage 2 safeguards authorized; exact-commit verification/review pending.**
+**Stage 1 published. Bounded Stage 2 safeguards authorized; exact-commit verification passed and review complete. STOP before Stage 3.**
 
 Read `project-state.json`, `AGENTS.md`, this checklist, then `docs/STAGED-RECOVERY-CONTRACT.md`. Do not treat an old “continue autonomously” instruction or a successful workflow as new permission.
 
 ## Current task
 
-Justin approved Stage 1 publication and bounded Stage 2 safeguards, necessary tests and existing CI. Stage 1 is published at `e91b8877aa4823bab03e8b5c616e535307824314`. Complete Stage 2 and stop after its review, before recognition repair. Read `docs/STAGE-2-SAFEGUARDS.md`. Routine work inside this approval does not need repeated permission.
+Justin approved Stage 1 publication and bounded Stage 2 safeguards, necessary tests and existing CI. Stage 1 is published at `e91b8877aa4823bab03e8b5c616e535307824314`. Stage 2 is complete for the bounded software scope. Stop before recognition repair; read docs/STAGE-2-REVIEW.md. Read `docs/STAGE-2-SAFEGUARDS.md`. Routine work inside this approval does not need repeated permission.
 
 ## What is known
 
@@ -32,7 +32,7 @@ Justin approved Stage 1 publication and bounded Stage 2 safeguards, necessary te
 
 ## Current stage and next boundary
 
-Complete the bounded acceptance gate and baseline-transition checks, verify and review them, then STOP. Protected maintenance and schedule resumption need separate approval. Recognition repair needs Stage 3 approval. Branch-local checks cannot establish tamper-proof unattended enforcement: trusted server policy ownership and shared run ownership remain open.
+The bounded acceptance gate and baseline-transition checks passed verification and review. STOP before Stage 3. Protected maintenance and schedule resumption need separate approval. Recognition repair needs Stage 3 approval. Branch-local checks cannot establish tamper-proof unattended enforcement: trusted server policy ownership and shared run ownership remain open.
 
 ## Stop immediately if
 

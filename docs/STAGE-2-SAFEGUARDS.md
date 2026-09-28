@@ -4,7 +4,7 @@
 
 Justin approved Stage 1 publication and bounded Stage 2 safeguards, necessary tests and existing CI. Stop after Stage 2 review, before recognition repair. Stage 1 was published at `e91b8877aa4823bab03e8b5c616e535307824314`; its existing integrity writer completed at `a38bb72f6abf9e3336d2cc16ec39bf88a0e73d84`.
 
-Current status: implemented locally, local verification passed; exact-commit CI and final review pending. This document is not a new Commander-quality acceptance. Stable V0.13, broad baseline `1ef10cec8`, narrow checkpoint `43e9c1c8`, PR #29, protected workflows/guard/epoch and paused schedules remain unchanged.
+Current status: bounded software implementation and review complete. Exact-source CI 36458755433 passed at 146eb40040b846beb43274993d1dfdbb73fe55d9 (1156 passed, zero failed, one skipped). Integrity run 36458755375 passed. See docs/STAGE-2-REVIEW.md. Stop before recognition repair. This document is not a new Commander-quality acceptance. Stable V0.13, broad baseline `1ef10cec8`, narrow checkpoint `43e9c1c8`, PR #29, protected workflows/guard/epoch and paused schedules remain unchanged.
 
 ## Implemented path
 

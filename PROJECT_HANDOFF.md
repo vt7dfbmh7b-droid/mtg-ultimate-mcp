@@ -17,11 +17,11 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Intelligence development paused: **yes**
 - Experimental branch: `agent/counter-blitz-generic-mechanism-floor-20260911`
 - Development checkpoint at pause: `43e9c1c80dadfea4d53ed1a2affebd90131e362f`
-- Active branch validation: **stage-2-safeguards-verification-pending-targets-unmet**
+- Active branch validation: **stage-2-software-safeguards-verified-review-complete-recognition-paused**
 
 ## Audit reuse rule
 
-Bounded Stage 2 safeguards and necessary tests/existing CI are authorized by Justin. Complete and review Stage 2, then STOP before recognition repair. Read docs/STAGE-2-SAFEGUARDS.md. Main/stable, PR #29, workflows/guard/policy epoch and paused schedules remain unchanged. Server-side trusted policy ownership remains separate maintenance, not granted here.
+STOP at the completed Stage 2 review boundary. Read docs/STAGE-2-REVIEW.md and docs/STAGE-2-SAFEGUARDS.md. The next decision is bounded Stage 3 recognition repair; it is not authorized by Stage 2 approval. Server-side trusted policy ownership and shared run ownership remain separate maintenance before unattended operation.
 
 ## Stable safety boundary
 
@@ -39,8 +39,8 @@ The last persisted Marvel control is `1d6b73aae4edc72d80a2ebc945a160506a13c71e` 
 
 ## Next actions
 
-1. Finish Stage 2 safeguards and exact-commit verification under the approved scope; stop at Stage 2 review before recognition repair. No repeated approval is needed for routine actions within this stage.
-2. Stage 1 publication: e91b8877aa4823bab03e8b5c616e535307824314; integrity writer a38bb72f6abf9e3336d2cc16ec39bf88a0e73d84. Recheck live head and active writers before each branch-changing operation.
+1. Stage 2 review is complete; stop before recognition repair. Review docs/STAGE-2-REVIEW.md. Justin may separately authorize the bounded Stage 3 restricted-counterspell and land-type-search recognition repair.
+2. Verified safeguard source 146eb40040b846beb43274993d1dfdbb73fe55d9: CI 36458755433 passed (1156/0/1); integrity 36458755375 passed; writer 464acaa16c5ee9c104cb1840706af8f53391e635 changed evidence metadata only. Check live head and active writers before any later authorized operation.
 3. Historical B4/B5 manual summaries remain under test-results/bench01-stage1-records/ and are not automated validation controls. Their original evidence is preserved; both target-quality verdicts remain failed.
 4. Require hash-bound approved claim contracts, provenance, required observations and complete-deck review before accepted-state changes. Unknown or failed evidence blocks advancement. Existing CI is not deck-quality acceptance.
 5. Do not claim unattended tamper-proof enforcement: trusted server-side acceptance-policy ownership and shared run ownership require separate authorized maintenance before Stage 4.

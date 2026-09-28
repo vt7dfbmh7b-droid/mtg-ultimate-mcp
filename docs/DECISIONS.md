@@ -8,7 +8,7 @@ Stage 1 is published at e91b8877. Justin approved bounded Stage 2 safeguards, ne
 
 ## D-024 — Acceptance must be separate from measurement completion
 
-Status: bounded Stage 2 implementation present; exact-commit CI/review pending.
+Status: bounded Stage 2 software implementation verified and reviewed; see docs/STAGE-2-REVIEW.md. Trusted server-side enforcement remains separate maintenance.
 
 Existing benchmark runners deliberately retain target failures while allowing successful execution. A future acceptance evaluator must consume the structured evidence, bind it to source/contract/input identity and decide a named claim. Fail or unknown blocks advancement of that claim. Narrow-repair acceptance must not silently close B4/B5 failures or advance the broad accepted baseline. Existing index consistency checks are not this new gate. Do not weaken the measurement runner merely to collapse these different outcomes into one status.
 

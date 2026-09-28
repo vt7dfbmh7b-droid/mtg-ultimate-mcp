@@ -9,7 +9,7 @@ The longer review plan uses P0–P6 for technical work packages. The user-facing
 | Stage | Scope | Exit condition | Current status |
 | --- | --- | --- | --- |
 | 1 — Handoff preparation | START HERE, coordinated proposed state/documents, existing evidence preservation | Package is internally consistent and reviewable; publication limits are explicit | Published at e91b8877; registry classification corrected in Stage 2 |
-| 2 — Safeguards | Structured acceptance evaluator and checks on accepted-baseline transitions through approved interfaces | Authorized failure cases block advancement, a valid narrow claim can pass, accepted state is preserved | Implemented locally; exact-commit CI and review pending |
+| 2 — Safeguards | Structured acceptance evaluator and checks on accepted-baseline transitions through approved interfaces | Authorized failure cases block advancement, a valid narrow claim can pass, accepted state is preserved | Software scope verified and reviewed; STOP before Stage 3 |
 | 3 — Recognition repair | Restricted spell counters and land-type searches across discovery, planner, metrics and explanation | Authorized regressions, affected/contrasting controls and complete-deck review support narrow acceptance | Not implemented; execution approval required |
 | 4 — Unattended operation | Actual scheduled entry point, shared run ownership and recovery | Safeguards verified through that entry point and schedule resumption explicitly authorized | Paused |
 
@@ -17,7 +17,7 @@ Stage 2 approval does not authorize main/stable promotion, PR #29 merging, prote
 
 ## Current authorized task
 
-Complete bounded Stage 2 implementation, necessary tests and existing CI, then stop after its review before recognition repair. Publication is authorized. Do not use skip flags, temporary workflows or protected maintenance.
+Stage 2 implementation, tests, exact-source CI and review are complete for the bounded software scope. Stop before recognition repair; see docs/STAGE-2-REVIEW.md. Publication is authorized. Do not use skip flags, temporary workflows or protected maintenance.
 
 Before publication, inspect current head and active writers again. Review this complete diff against the then-current branch. Preserve the broad accepted baseline and the existing narrow accepted repair. Do not publish blindly if the source changed.
 
