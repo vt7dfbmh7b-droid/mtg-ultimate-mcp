@@ -2,7 +2,7 @@
   "commanderLookupName": "Liliana, Heretical Healer",
   "commanderName": "Liliana, Heretical Healer // Liliana, Defiant Necromancer",
   "maxDeckNzd": 500,
-  "maxDeckUsdReference": 283.49,
+  "maxDeckUsdReference": 283.45,
   "targetBracket": 5,
   "creatureTypePolicy": "none",
   "excludedCards": [
@@ -37,13 +37,13 @@
     "Jet Medallion",
     "Accursed Marauder"
   ],
-  "auditedTotalNzd": 442.6,
-  "auditedTotalUsdReference": 250.95,
+  "auditedTotalNzd": 443.88,
+  "auditedTotalUsdReference": 251.63,
   "currencyPolicy": {
     "primaryCurrency": "NZD",
     "displaySymbol": "NZ$",
-    "usdToNzdRate": 1.7637,
-    "rateDate": "2026-09-27",
+    "usdToNzdRate": 1.764,
+    "rateDate": "2026-09-29",
     "rateSource": "Frankfurter",
     "rateSourceUrl": "https://api.frankfurter.dev/v2/rate/USD/NZD",
     "staleRate": false,
@@ -144,22 +144,22 @@
       {
         "archetype": "graveyard-reanimator",
         "commanderScore": 26,
-        "supportCount": 24,
-        "affinityTotal": 307,
+        "supportCount": 25,
+        "affinityTotal": 316,
         "multiplayerQualityTotal": 0
       },
       {
         "archetype": "aristocrats",
         "commanderScore": 6,
-        "supportCount": 32,
-        "affinityTotal": 186,
+        "supportCount": 33,
+        "affinityTotal": 192,
         "multiplayerQualityTotal": 6
       },
       {
         "archetype": "combat-tokens",
         "commanderScore": 6,
-        "supportCount": 11,
-        "affinityTotal": 54,
+        "supportCount": 12,
+        "affinityTotal": 60,
         "multiplayerQualityTotal": 0
       }
     ]
@@ -210,7 +210,7 @@
           "requirements": [],
           "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nWhen Gravecrawler enters, Ayara triggers, causing you to gain 1 life and each opponent to lose 1 life.\nRepeat.",
           "manaNeeded": "",
-          "popularity": 23411
+          "popularity": 23512
         }
       },
       {
@@ -254,7 +254,7 @@
           "requirements": [],
           "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler.\nWhen Gravecrawler dies, Blood Artist triggers, causing you to gain 1 life and target opponent to lose 1 life.\nResolve the Warren Soultrader ability, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nRepeat.",
           "manaNeeded": "",
-          "popularity": 45653
+          "popularity": 45809
         }
       }
     ],
@@ -277,14 +277,14 @@
     "strategicallyRelevantCombos": 2,
     "metrics": {
       "landCount": 30,
-      "averageNonlandManaValue": 1.84,
-      "earlyPlayCount": 58,
+      "averageNonlandManaValue": 1.83,
+      "earlyPlayCount": 59,
       "fastManaCount": 3,
       "rawInferredFastManaCount": 3,
-      "conditionalManaCount": 3,
+      "conditionalManaCount": 4,
       "delayedManaCount": 0,
       "cheapInteractionCount": 12,
-      "protectionCount": 5,
+      "protectionCount": 6,
       "tutorCount": 5,
       "freeInteractionCount": 2
     },
@@ -371,7 +371,7 @@
       "source": "effective-card-role-truth-v15",
       "rawInferredFastManaCount": 3,
       "effectiveFastManaCount": 3,
-      "conditionalManaCount": 3,
+      "conditionalManaCount": 4,
       "delayedManaCount": 0,
       "rule": "Conditional or delayed mana cannot satisfy competitive fast-mana evidence merely because Oracle text contains a mana ability."
     },
@@ -397,20 +397,20 @@
         "key": "average-nonland-mv",
         "category": "construction",
         "label": "Average nonland mana value",
-        "observed": 1.84,
+        "observed": 1.83,
         "required": "at most 2.6",
         "passed": true,
-        "detail": "Average nonland mana value: observed 1.84; Bracket-5 construction gate requires at most 2.6.",
+        "detail": "Average nonland mana value: observed 1.83; Bracket-5 construction gate requires at most 2.6.",
         "pressurePoint": "speed/curve"
       },
       {
         "key": "early-plays",
         "category": "construction",
         "label": "Early plays",
-        "observed": 58,
+        "observed": 59,
         "required": "at least 35",
         "passed": true,
-        "detail": "Early plays: observed 58; Bracket-5 construction gate requires at least 35.",
+        "detail": "Early plays: observed 59; Bracket-5 construction gate requires at least 35.",
         "pressurePoint": "speed/curve"
       },
       {
@@ -570,8 +570,8 @@
     "currencyPolicy": {
       "primaryCurrency": "NZD",
       "displaySymbol": "NZ$",
-      "usdToNzdRate": 1.7637,
-      "rateDate": "2026-09-27",
+      "usdToNzdRate": 1.764,
+      "rateDate": "2026-09-29",
       "rateSource": "Frankfurter",
       "rateSourceUrl": "https://api.frankfurter.dev/v2/rate/USD/NZD",
       "staleRate": false,
@@ -586,24 +586,24 @@
     },
     "result": {
       "status": "budget-compliant",
-      "maxDeckNzd": 499.99,
-      "maxDeckUsdReference": 283.49,
-      "estimatedFixedCommanderCostNzd": 11.16,
-      "estimatedFixedCommanderCostUsdReference": 6.33,
-      "remainingCandidateBudgetEstimateNzd": 488.83,
-      "remainingCandidateBudgetEstimateUsdReference": 277.16,
-      "chosenCandidateSearchCapNzd": 12.22,
-      "chosenCandidateSearchCapUsdReference": 6.93,
+      "maxDeckNzd": 500.01,
+      "maxDeckUsdReference": 283.45,
+      "estimatedFixedCommanderCostNzd": 10.55,
+      "estimatedFixedCommanderCostUsdReference": 5.98,
+      "remainingCandidateBudgetEstimateNzd": 489.46,
+      "remainingCandidateBudgetEstimateUsdReference": 277.47,
+      "chosenCandidateSearchCapNzd": 12.24,
+      "chosenCandidateSearchCapUsdReference": 6.94,
       "userMaxNzdPerCard": null,
       "userMaxUsdPerCardReference": null,
       "creatureTypeOptimization": false,
       "budgetAudit": {
         "status": "complete",
         "withinBudget": true,
-        "maxDeckNzd": 499.99,
-        "maxDeckUsdReference": 283.49,
-        "auditedTotalNzd": 442.6,
-        "auditedTotalUsdReference": 250.95,
+        "maxDeckNzd": 500.01,
+        "maxDeckUsdReference": 283.45,
+        "auditedTotalNzd": 443.88,
+        "auditedTotalUsdReference": 251.63,
         "overageNzd": 0,
         "overageUsdReference": 0,
         "unknownPriceEntries": [],
@@ -617,11 +617,11 @@
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 374.5,
-          "auditedTotalUsdReference": 212.34,
+          "auditedTotalNzd": 375.63,
+          "auditedTotalUsdReference": 212.94,
           "overageNzd": 0,
           "overageUsdReference": 0,
-          "remainingStructuralDeficitTotal": 10,
+          "remainingStructuralDeficitTotal": 9,
           "unknownPriceEntries": [],
           "unresolvedEntries": [],
           "nameConstraints": {
@@ -637,8 +637,8 @@
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 374.66,
-          "auditedTotalUsdReference": 212.43,
+          "auditedTotalNzd": 369.59,
+          "auditedTotalUsdReference": 209.52,
           "overageNzd": 0,
           "overageUsdReference": 0,
           "remainingStructuralDeficitTotal": 10,
@@ -657,11 +657,11 @@
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 359.79,
-          "auditedTotalUsdReference": 204,
+          "auditedTotalNzd": 355.75,
+          "auditedTotalUsdReference": 201.67,
           "overageNzd": 0,
           "overageUsdReference": 0,
-          "remainingStructuralDeficitTotal": 11,
+          "remainingStructuralDeficitTotal": 10,
           "unknownPriceEntries": [],
           "unresolvedEntries": [],
           "nameConstraints": {
@@ -677,8 +677,8 @@
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 339.62,
-          "auditedTotalUsdReference": 192.56,
+          "auditedTotalNzd": 339.64,
+          "auditedTotalUsdReference": 192.54,
           "overageNzd": 0,
           "overageUsdReference": 0,
           "remainingStructuralDeficitTotal": 11,
@@ -691,36 +691,16 @@
           }
         },
         {
-          "candidateMaxNzdPerCard": 12.22,
-          "candidateMaxUsdPerCardReference": 6.93,
+          "candidateMaxNzdPerCard": 12.24,
+          "candidateMaxUsdPerCardReference": 6.94,
           "userMaxNzdPerCard": null,
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "complete",
-          "auditedTotalNzd": 438,
-          "auditedTotalUsdReference": 248.34,
+          "auditedTotalNzd": 440.28,
+          "auditedTotalUsdReference": 249.59,
           "overageNzd": 0,
           "overageUsdReference": 0,
-          "remainingStructuralDeficitTotal": 9,
-          "unknownPriceEntries": [],
-          "unresolvedEntries": [],
-          "nameConstraints": {
-            "valid": true,
-            "missingRequired": [],
-            "excludedPresent": []
-          }
-        },
-        {
-          "candidateMaxNzdPerCard": 24.44,
-          "candidateMaxUsdPerCardReference": 13.86,
-          "userMaxNzdPerCard": null,
-          "userMaxUsdPerCardReference": null,
-          "buildStatus": "complete-draft",
-          "auditStatus": "over-budget",
-          "auditedTotalNzd": 573.98,
-          "auditedTotalUsdReference": 325.44,
-          "overageNzd": 73.99,
-          "overageUsdReference": 41.95,
           "remainingStructuralDeficitTotal": 8,
           "unknownPriceEntries": [],
           "unresolvedEntries": [],
@@ -731,17 +711,17 @@
           }
         },
         {
-          "candidateMaxNzdPerCard": 48.89,
-          "candidateMaxUsdPerCardReference": 27.72,
+          "candidateMaxNzdPerCard": 24.47,
+          "candidateMaxUsdPerCardReference": 13.87,
           "userMaxNzdPerCard": null,
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "over-budget",
-          "auditedTotalNzd": 803.52,
-          "auditedTotalUsdReference": 455.59,
-          "overageNzd": 303.53,
-          "overageUsdReference": 172.1,
-          "remainingStructuralDeficitTotal": 5,
+          "auditedTotalNzd": 589.69,
+          "auditedTotalUsdReference": 334.29,
+          "overageNzd": 89.68,
+          "overageUsdReference": 50.84,
+          "remainingStructuralDeficitTotal": 6,
           "unknownPriceEntries": [],
           "unresolvedEntries": [],
           "nameConstraints": {
@@ -751,16 +731,36 @@
           }
         },
         {
-          "candidateMaxNzdPerCard": 488.83,
-          "candidateMaxUsdPerCardReference": 277.16,
+          "candidateMaxNzdPerCard": 48.95,
+          "candidateMaxUsdPerCardReference": 27.75,
           "userMaxNzdPerCard": null,
           "userMaxUsdPerCardReference": null,
           "buildStatus": "complete-draft",
           "auditStatus": "over-budget",
-          "auditedTotalNzd": 2446.23,
-          "auditedTotalUsdReference": 1386.99,
-          "overageNzd": 1946.24,
-          "overageUsdReference": 1103.5,
+          "auditedTotalNzd": 805.46,
+          "auditedTotalUsdReference": 456.61,
+          "overageNzd": 305.45,
+          "overageUsdReference": 173.16,
+          "remainingStructuralDeficitTotal": 4,
+          "unknownPriceEntries": [],
+          "unresolvedEntries": [],
+          "nameConstraints": {
+            "valid": true,
+            "missingRequired": [],
+            "excludedPresent": []
+          }
+        },
+        {
+          "candidateMaxNzdPerCard": 489.46,
+          "candidateMaxUsdPerCardReference": 277.47,
+          "userMaxNzdPerCard": null,
+          "userMaxUsdPerCardReference": null,
+          "buildStatus": "complete-draft",
+          "auditStatus": "over-budget",
+          "auditedTotalNzd": 2647.45,
+          "auditedTotalUsdReference": 1500.82,
+          "overageNzd": 2147.44,
+          "overageUsdReference": 1217.37,
           "remainingStructuralDeficitTotal": 2,
           "unknownPriceEntries": [],
           "unresolvedEntries": [],
@@ -773,7 +773,7 @@
       ],
       "compliantCandidateCount": 5,
       "selectionBasis": "fewest remaining structural deficits, then widest candidate search cap",
-      "selectedRemainingStructuralDeficitTotal": 9,
+      "selectedRemainingStructuralDeficitTotal": 8,
       "autoWinSeed": {
         "status": "eligible-winning-seed-package-found",
         "commanderNames": [
@@ -794,7 +794,7 @@
           "Infinite storm count",
           "Infinite lifeloss"
         ],
-        "popularity": 23411,
+        "popularity": 23512,
         "comboCardNames": [
           "Warren Soultrader",
           "Gravecrawler",
@@ -810,25 +810,25 @@
             "name": "Warren Soultrader",
             "set": "PMH3",
             "collectorNumber": "110p",
-            "finish": "foil",
-            "priceNzd": 29.22,
-            "priceUsdReference": 16.57
+            "finish": "nonfoil",
+            "priceNzd": 30.23,
+            "priceUsdReference": 17.14
           },
           {
             "name": "Gravecrawler",
             "set": "DRC",
             "collectorNumber": "43",
             "finish": "nonfoil",
-            "priceNzd": 2.17,
-            "priceUsdReference": 1.23
+            "priceNzd": 1.99,
+            "priceUsdReference": 1.13
           },
           {
             "name": "Ayara, First of Locthwain",
             "set": "ELD",
             "collectorNumber": "75",
             "finish": "nonfoil",
-            "priceNzd": 15.17,
-            "priceUsdReference": 8.6
+            "priceNzd": 13.71,
+            "priceUsdReference": 7.77
           }
         ],
         "selectionScore": 1290,
@@ -986,11 +986,11 @@
           {
             "comboId": "3681-6714",
             "status": "eligible-package-scored",
-            "structuralScore": 1495.453402250858,
+            "structuralScore": 1495.5874855672491,
             "practicalAdjustment": -630,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 865.45,
+            "finalScore": 865.59,
             "totalManaValue": 11,
             "deadPieceRisk": 1,
             "bracketTag": "R",
@@ -999,11 +999,11 @@
           {
             "comboId": "5342-6765",
             "status": "eligible-package-scored",
-            "structuralScore": 1482.6062276252821,
+            "structuralScore": 1482.6426515489948,
             "practicalAdjustment": -560,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 922.61,
+            "finalScore": 922.64,
             "totalManaValue": 9,
             "deadPieceRisk": 1,
             "bracketTag": "R",
@@ -1012,11 +1012,11 @@
           {
             "comboId": "1218-6714",
             "status": "eligible-package-scored",
-            "structuralScore": 1481.109802315086,
+            "structuralScore": 1481.187772682862,
             "practicalAdjustment": -410,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 1071.11,
+            "finalScore": 1071.19,
             "totalManaValue": 8,
             "deadPieceRisk": 1,
             "bracketTag": "R",
@@ -1058,11 +1058,11 @@
           {
             "comboId": "1824-4549-6518",
             "status": "eligible-package-scored",
-            "structuralScore": 1314.636032234205,
+            "structuralScore": 1314.6885890749365,
             "practicalAdjustment": -215,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 1099.64,
+            "finalScore": 1099.69,
             "totalManaValue": 9,
             "deadPieceRisk": 0,
             "bracketTag": "S",
@@ -1084,11 +1084,11 @@
           {
             "comboId": "3693-4899-5963",
             "status": "eligible-package-scored",
-            "structuralScore": 1303.8685672934887,
+            "structuralScore": 1303.753063169585,
             "practicalAdjustment": -315,
             "preferredOverlap": 0,
             "constraintAdjustment": 0,
-            "finalScore": 988.87,
+            "finalScore": 988.75,
             "totalManaValue": 8,
             "deadPieceRisk": 1,
             "bracketTag": "S",
@@ -1144,14 +1144,14 @@
         "source": "Commander Spellbook + Scryfall exact-printing verification",
         "guidance": "The package is only a construction seed. Discovery uses deterministic result evidence rather than Commander Spellbook manual winning tags, then independently applies the local deterministic-win result gate. User exclusions are hard filters, while overlap with user-required/preferred cards is rewarded because it reduces added slots and preserves the requested plan. Candidate selection treats compactness and bracket tags as supporting evidence rather than overriding practical card utility, reserves verification space for each supported package size, permits at most one lightweight prerequisite, and prefers lower-mana cards with useful roles outside the combo. The finished 100-card deck must still independently resolve, pass Commander legality and printing policy, and reproduce a winning combo through find-my-combos before it can satisfy the competitive win-package gate.",
         "attempted": true,
-        "seedSearchCapNzd": 488.83,
-        "seedSearchCapUsdReference": 277.16
+        "seedSearchCapNzd": 489.46,
+        "seedSearchCapUsdReference": 277.47
       },
       "postBudgetRefinement": {
         "attempted": true,
         "status": "accepted",
-        "refinementSearchCapNzd": 12.22,
-        "refinementSearchCapUsdReference": 6.93,
+        "refinementSearchCapNzd": 12.24,
+        "refinementSearchCapUsdReference": 6.94,
         "quality": {
           "acceptable": true,
           "comboWasPreserved": true,
@@ -1168,10 +1168,10 @@
           "finalWinningCombos": 3,
           "initialWinningComboCores": 1,
           "finalWinningComboCores": 2,
-          "initialAverageNonlandManaValue": 2.49,
-          "finalAverageNonlandManaValue": 1.84,
-          "initialProtectionCount": 5,
-          "finalProtectionCount": 5,
+          "initialAverageNonlandManaValue": 2.43,
+          "finalAverageNonlandManaValue": 1.83,
+          "initialProtectionCount": 6,
+          "finalProtectionCount": 6,
           "initialCheapInteractionCount": 6,
           "finalCheapInteractionCount": 12,
           "initialFreeInteractionCount": 2,
@@ -1189,10 +1189,10 @@
         "budgetAudit": {
           "status": "complete",
           "withinBudget": true,
-          "maxDeckNzd": 499.99,
-          "maxDeckUsdReference": 283.49,
-          "auditedTotalNzd": 442.6,
-          "auditedTotalUsdReference": 250.95,
+          "maxDeckNzd": 500.01,
+          "maxDeckUsdReference": 283.45,
+          "auditedTotalNzd": 443.88,
+          "auditedTotalUsdReference": 251.63,
           "overageNzd": 0,
           "overageUsdReference": 0,
           "unknownPriceEntries": [],
@@ -1210,14 +1210,14 @@
             "strategicallyRelevantCombos": 2,
             "metrics": {
               "landCount": 30,
-              "averageNonlandManaValue": 2.49,
-              "earlyPlayCount": 44,
+              "averageNonlandManaValue": 2.43,
+              "earlyPlayCount": 45,
               "fastManaCount": 2,
               "rawInferredFastManaCount": 2,
-              "conditionalManaCount": 3,
+              "conditionalManaCount": 4,
               "delayedManaCount": 0,
               "cheapInteractionCount": 6,
-              "protectionCount": 5,
+              "protectionCount": 6,
               "tutorCount": 6,
               "freeInteractionCount": 2
             },
@@ -1304,7 +1304,7 @@
               "source": "effective-card-role-truth-v15",
               "rawInferredFastManaCount": 2,
               "effectiveFastManaCount": 2,
-              "conditionalManaCount": 3,
+              "conditionalManaCount": 4,
               "delayedManaCount": 0,
               "rule": "Conditional or delayed mana cannot satisfy competitive fast-mana evidence merely because Oracle text contains a mana ability."
             },
@@ -1350,7 +1350,7 @@
                   }
                 }
               ],
-              "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 212\n1 Deadly Dispute (MSC) 794\n1 Solemn Simulacrum (MSC) 215\n1 Dark Ritual (SUM) 99\n1 Season of Loss (BLB) 112\n1 Ugin, the Ineffable (CMM) 811\n1 Undying Malice (FDN) 528\n1 Hedron Archive (FDN) 726\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Walking Ballista (FIC) 371\n1 Gix's Command (BRO) 97\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Szat's Will (CMR) 152\n1 Baleful Mastery (OTC) 126\n1 Grave Researcher // Reanimate (SOS) 85\n1 Buried Alive (MH3) 273\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Swiftfoot Boots (M12) 219\n1 Expedition Map (FDN) 724\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Lethal Scheme (MSC) 157\n1 Thought Vessel (MSC) 222\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Withering Torment (MSC) 162\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Dread Return (CMM) 153\n1 Junk Diver (MH3) 293\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Revenge of the Rats (FDN) 67\n1 Hangarback Walker (SOC) 348\n1 Swarmyard Massacre (BLC) 20\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Zombie Apocalypse (MIC) 131\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (ECC) 158\n1 Bojuka Bog (SOC) 363\n22 Swamp (FDN) 276\n1 Mephidross Vampire (5DN) 53 *N*",
+              "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (FIC) 357\n1 Fake Your Own Death (FDN) 174\n1 Solemn Simulacrum (MSC) 215\n1 Deadly Dispute (MSC) 794\n1 Season of Loss (BLB) 112\n1 Dark Ritual (SUM) 99\n1 Ugin, the Ineffable (CMM) 811\n1 Hedron Archive (FDN) 726\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Undying Malice (FDN) 528\n1 Walking Ballista (FIC) 371\n1 Gix's Command (BRO) 97\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Szat's Will (CMR) 152\n1 Baleful Mastery (OTC) 126\n1 Grave Researcher // Reanimate (SOS) 85\n1 Buried Alive (MH3) 273\n1 Feign Death (AFR) 103\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Expedition Map (FDN) 724\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Swiftfoot Boots (M12) 219\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Lightning Greaves (MSC) 202\n1 Idol of Oblivion (TDC) 319\n1 Lethal Scheme (MSC) 157\n1 Thought Vessel (FIC) 368\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Withering Torment (MSC) 162\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Dread Return (CMM) 153\n1 Junk Diver (MH3) 293\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Revenge of the Rats (FDN) 67\n1 Hangarback Walker (SOC) 348\n1 Swarmyard Massacre (BLC) 20\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (ECC) 158\n1 Bojuka Bog (SOC) 363\n22 Swamp (FDN) 276\n1 Mephidross Vampire (5DN) 53 *N*",
               "finalCommanderRules": {
                 "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
                 "status": "legal",
@@ -1450,7 +1450,7 @@
                       "requirements": [],
                       "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nWhen Gravecrawler enters, Ayara triggers, causing you to gain 1 life and each opponent to lose 1 life.\nRepeat.",
                       "manaNeeded": "",
-                      "popularity": 23411
+                      "popularity": 23512
                     }
                   },
                   {
@@ -1494,7 +1494,7 @@
                       "requirements": [],
                       "description": "Activate Warren Soultrader by paying 1 life and sacrificing Gravecrawler.\nWhen Gravecrawler dies, Blood Artist triggers, causing you to gain 1 life and target opponent to lose 1 life.\nResolve the Warren Soultrader ability, creating a Treasure token.\nActivate the Treasure by tapping and sacrificing it, adding {B}.\nCast Gravecrawler from your graveyard by paying {B}.\nRepeat.",
                       "manaNeeded": "",
-                      "popularity": 45653
+                      "popularity": 45809
                     }
                   }
                 ],
@@ -1572,7 +1572,7 @@
               "status": "cedh-efficiency-refined",
               "swaps": [
                 {
-                  "out": "Szat's Will",
+                  "out": "Season of Loss",
                   "in": "Eaten Alive",
                   "reasons": [
                     "cheap spot interaction",
@@ -1591,7 +1591,7 @@
                   }
                 },
                 {
-                  "out": "Season of Loss",
+                  "out": "Lethal Scheme",
                   "in": "Final Vengeance",
                   "reasons": [
                     "cheap spot interaction",
@@ -1599,34 +1599,14 @@
                     "integrated multi-role engine (2 relevant roles)"
                   ],
                   "qualityScore": 196.1,
-                  "marginalScore": 166.1,
-                  "marginalPenalties": [
-                    "spot interaction already covered at 14; marginal score -30"
-                  ],
+                  "marginalScore": 196.1,
+                  "marginalPenalties": [],
                   "printing": {
                     "set": "DSK",
                     "collectorNumber": "99",
                     "finish": "nonfoil",
-                    "priceNzd": 0.41,
-                    "priceUsdReference": 0.23
-                  }
-                },
-                {
-                  "out": "Lethal Scheme",
-                  "in": "Currency Converter",
-                  "reasons": [
-                    "efficient proven card advantage",
-                    "integrated multi-role engine (2 relevant roles)"
-                  ],
-                  "qualityScore": 158.35,
-                  "marginalScore": 158.35,
-                  "marginalPenalties": [],
-                  "printing": {
-                    "set": "MSC",
-                    "collectorNumber": "197",
-                    "finish": "nonfoil",
-                    "priceNzd": 0.86,
-                    "priceUsdReference": 0.49
+                    "priceNzd": 0.39,
+                    "priceUsdReference": 0.22
                   }
                 },
                 {
@@ -1638,20 +1618,38 @@
                     "integrated multi-role engine (2 relevant roles)"
                   ],
                   "qualityScore": 195.99,
-                  "marginalScore": 155.99,
+                  "marginalScore": 165.99,
                   "marginalPenalties": [
-                    "spot interaction already covered at 15; marginal score -40"
+                    "spot interaction already covered at 14; marginal score -30"
                   ],
                   "printing": {
                     "set": "TDM",
                     "collectorNumber": "99",
                     "finish": "nonfoil",
-                    "priceNzd": 0.28,
-                    "priceUsdReference": 0.16
+                    "priceNzd": 0.3,
+                    "priceUsdReference": 0.17
                   }
                 },
                 {
                   "out": "Victimize",
+                  "in": "Currency Converter",
+                  "reasons": [
+                    "efficient proven card advantage",
+                    "integrated multi-role engine (2 relevant roles)"
+                  ],
+                  "qualityScore": 158.37,
+                  "marginalScore": 158.37,
+                  "marginalPenalties": [],
+                  "printing": {
+                    "set": "MSC",
+                    "collectorNumber": "197",
+                    "finish": "nonfoil",
+                    "priceNzd": 0.9,
+                    "priceUsdReference": 0.51
+                  }
+                },
+                {
+                  "out": "Withering Torment",
                   "in": "Bone Splinters",
                   "reasons": [
                     "cheap spot interaction",
@@ -1659,9 +1657,9 @@
                     "integrated multi-role engine (2 relevant roles)"
                   ],
                   "qualityScore": 195.89,
-                  "marginalScore": 145.89,
+                  "marginalScore": 155.89,
                   "marginalPenalties": [
-                    "spot interaction already covered at 16; marginal score -50"
+                    "spot interaction already covered at 15; marginal score -40"
                   ],
                   "printing": {
                     "set": "MM2",
@@ -1676,14 +1674,14 @@
                 "landCount": 30,
                 "nonlandCount": 70,
                 "landRatio": 0.3,
-                "averageNonlandManaValue": 2.03,
+                "averageNonlandManaValue": 1.99,
                 "manaCurve": {
                   "0": 2,
                   "1": 22,
-                  "2": 30,
+                  "2": 31,
                   "3": 8,
                   "4": 5,
-                  "5": 2,
+                  "5": 1,
                   "6": 1,
                   "7+": 0
                 },
@@ -1696,14 +1694,14 @@
                 },
                 "roleCounts": {
                   "token production": 9,
-                  "graveyard recursion": 16,
+                  "graveyard recursion": 17,
                   "high-capacity graveyard recursion": 2,
                   "creature": 18,
-                  "treasure": 2,
+                  "treasure": 3,
                   "repeatable token engine": 3,
                   "sacrifice synergy": 20,
                   "sacrifice outlet": 8,
-                  "conditional mana acceleration": 3,
+                  "conditional mana acceleration": 4,
                   "creature sacrifice outlet": 8,
                   "repeatable life gain engine": 3,
                   "repeatable life drain": 3,
@@ -1718,39 +1716,39 @@
                   "narrow sacrifice outlet": 1,
                   "mana rock": 5,
                   "self sacrifice": 5,
-                  "protection": 5,
+                  "protection": 6,
                   "multi-card graveyard recursion": 1,
                   "fast mana": 3,
-                  "spot interaction": 13,
-                  "forced sacrifice interaction": 2,
-                  "+1/+1 counters": 9,
+                  "spot interaction": 12,
+                  "forced sacrifice interaction": 1,
                   "board wipe": 2,
                   "cheap interaction": 7,
+                  "+1/+1 counters": 9,
                   "free interaction": 2,
                   "artifact/enchantment interaction": 2,
                   "card selection": 3,
                   "creature tutor": 1,
                   "persistent colored mana source": 3,
-                  "haste": 3,
-                  "equipment": 3,
                   "land tutor": 2,
                   "land ramp": 1,
                   "death-trigger draw engine": 1,
+                  "equipment": 3,
+                  "haste": 3,
                   "token-event life drain": 1,
                   "land": 30,
                   "graveyard hate": 1,
                   "graveyard interaction": 1,
                   "mass sacrifice conversion": 1
                 },
-                "earlyPlayCount": 54,
+                "earlyPlayCount": 55,
                 "fastManaCount": 3,
                 "rampCount": 12,
                 "drawCount": 17,
                 "tutorCount": 6,
-                "interactionCount": 15,
+                "interactionCount": 14,
                 "cheapInteractionCount": 7,
-                "protectionCount": 5,
-                "recursionCount": 16,
+                "protectionCount": 6,
+                "recursionCount": 17,
                 "boardWipeCount": 2,
                 "persistentColoredManaSourceCount": 3,
                 "structuralSignals": []
@@ -1759,12 +1757,12 @@
                 "landCount": 30,
                 "nonlandCount": 70,
                 "landRatio": 0.3,
-                "averageNonlandManaValue": 1.84,
+                "averageNonlandManaValue": 1.83,
                 "manaCurve": {
                   "0": 2,
                   "1": 26,
-                  "2": 30,
-                  "3": 7,
+                  "2": 31,
+                  "3": 6,
                   "4": 4,
                   "5": 0,
                   "6": 1,
@@ -1778,15 +1776,15 @@
                   "G": 0
                 },
                 "roleCounts": {
-                  "token production": 9,
-                  "graveyard recursion": 16,
+                  "token production": 10,
+                  "graveyard recursion": 17,
                   "high-capacity graveyard recursion": 2,
                   "creature": 18,
-                  "treasure": 3,
+                  "treasure": 4,
                   "repeatable token engine": 3,
                   "sacrifice synergy": 23,
                   "sacrifice outlet": 8,
-                  "conditional mana acceleration": 3,
+                  "conditional mana acceleration": 4,
                   "creature sacrifice outlet": 8,
                   "repeatable life gain engine": 3,
                   "repeatable life drain": 3,
@@ -1801,23 +1799,23 @@
                   "narrow sacrifice outlet": 1,
                   "mana rock": 5,
                   "self sacrifice": 4,
-                  "protection": 5,
+                  "protection": 6,
                   "multi-card graveyard recursion": 1,
                   "fast mana": 3,
-                  "+1/+1 counters": 8,
                   "board wipe": 2,
                   "cheap interaction": 11,
-                  "spot interaction": 14,
+                  "spot interaction": 13,
+                  "+1/+1 counters": 8,
                   "free interaction": 2,
-                  "artifact/enchantment interaction": 2,
+                  "artifact/enchantment interaction": 1,
                   "card selection": 4,
                   "creature tutor": 1,
                   "persistent colored mana source": 3,
-                  "haste": 3,
-                  "equipment": 3,
                   "land ramp": 1,
                   "land tutor": 1,
                   "death-trigger draw engine": 1,
+                  "equipment": 3,
+                  "haste": 3,
                   "token-event life drain": 1,
                   "land": 30,
                   "graveyard hate": 1,
@@ -1825,15 +1823,15 @@
                   "mass sacrifice conversion": 1,
                   "graveyard utility": 1
                 },
-                "earlyPlayCount": 58,
+                "earlyPlayCount": 59,
                 "fastManaCount": 3,
                 "rampCount": 12,
                 "drawCount": 17,
                 "tutorCount": 5,
-                "interactionCount": 16,
+                "interactionCount": 15,
                 "cheapInteractionCount": 11,
-                "protectionCount": 5,
-                "recursionCount": 16,
+                "protectionCount": 6,
+                "recursionCount": 17,
                 "boardWipeCount": 2,
                 "persistentColoredManaSourceCount": 3,
                 "structuralSignals": []
@@ -1854,7 +1852,7 @@
               "afterWinningComboCount": 3,
               "beforeWinningComboCoreCount": 2,
               "afterWinningComboCoreCount": 2,
-              "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 212\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (SUM) 99\n1 Undying Malice (FDN) 528\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Walking Ballista (FIC) 371\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Baleful Mastery (OTC) 126\n1 Buried Alive (MH3) 273\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Swiftfoot Boots (M12) 219\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Thought Vessel (MSC) 222\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Withering Torment (MSC) 162\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (ECC) 158\n1 Bojuka Bog (SOC) 363\n22 Swamp (FDN) 276\n1 Mephidross Vampire (5DN) 53 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Ravenous Amulet (FDN) 131 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Culling the Weak (MB2) 40 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Eaten Alive (J22) 409 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Worthy Cost (TDM) 99 *N*\n1 Bone Splinters (MM2) 73 *N*",
+              "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (FIC) 357\n1 Fake Your Own Death (FDN) 174\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (SUM) 99\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Undying Malice (FDN) 528\n1 Walking Ballista (FIC) 371\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Baleful Mastery (OTC) 126\n1 Buried Alive (MH3) 273\n1 Feign Death (AFR) 103\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Swiftfoot Boots (M12) 219\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Lightning Greaves (MSC) 202\n1 Idol of Oblivion (TDC) 319\n1 Thought Vessel (FIC) 368\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (ECC) 158\n1 Bojuka Bog (SOC) 363\n22 Swamp (FDN) 276\n1 Mephidross Vampire (5DN) 53 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Ravenous Amulet (FDN) 131 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Culling the Weak (MB2) 40 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Eaten Alive (J22) 409 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Worthy Cost (TDM) 99 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Bone Splinters (MM2) 73 *N*",
               "finalCommanderRules": {
                 "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
                 "status": "legal",
@@ -1931,7 +1929,7 @@
                 "status": "cedh-efficiency-refined",
                 "swaps": [
                   {
-                    "out": "Zombie Apocalypse",
+                    "out": "Gix's Command",
                     "in": "Vampiric Rites",
                     "reasons": [
                       "efficient proven card advantage",
@@ -1939,8 +1937,8 @@
                       "cheap sacrifice-engine support",
                       "integrated multi-role engine (3 relevant roles)"
                     ],
-                    "qualityScore": 271.43,
-                    "marginalScore": 271.43,
+                    "qualityScore": 271.44,
+                    "marginalScore": 271.44,
                     "marginalPenalties": [],
                     "printing": {
                       "set": "FDN",
@@ -1951,7 +1949,7 @@
                     }
                   },
                   {
-                    "out": "Gix's Command",
+                    "out": "Dread Return",
                     "in": "Ravenous Amulet",
                     "reasons": [
                       "cheap repeatable creature sacrifice outlet",
@@ -1971,7 +1969,7 @@
                     }
                   },
                   {
-                    "out": "Dread Return",
+                    "out": "Revenge of the Rats",
                     "in": "Priest of Forgotten Gods",
                     "reasons": [
                       "efficient proven card advantage",
@@ -1979,8 +1977,8 @@
                       "cheap sacrifice-engine support",
                       "integrated multi-role engine (2 relevant roles)"
                     ],
-                    "qualityScore": 242.43,
-                    "marginalScore": 242.43,
+                    "qualityScore": 242.42,
+                    "marginalScore": 242.42,
                     "marginalPenalties": [],
                     "printing": {
                       "set": "SOC",
@@ -1991,7 +1989,7 @@
                     }
                   },
                   {
-                    "out": "Revenge of the Rats",
+                    "out": "Hedron Archive",
                     "in": "Carrion Feeder",
                     "reasons": [
                       "cheap repeatable creature sacrifice outlet",
@@ -2010,7 +2008,7 @@
                     }
                   },
                   {
-                    "out": "Hedron Archive",
+                    "out": "Solemn Simulacrum",
                     "in": "Indulgent Aristocrat",
                     "reasons": [
                       "cheap repeatable creature sacrifice outlet",
@@ -2024,12 +2022,12 @@
                       "set": "SOI",
                       "collectorNumber": "118",
                       "finish": "nonfoil",
-                      "priceNzd": 0.3,
-                      "priceUsdReference": 0.17
+                      "priceNzd": 0.32,
+                      "priceUsdReference": 0.18
                     }
                   },
                   {
-                    "out": "Solemn Simulacrum",
+                    "out": "Grave Researcher // Reanimate",
                     "in": "Culling the Weak",
                     "reasons": [
                       "reliable immediate fast mana",
@@ -2043,12 +2041,12 @@
                       "set": "MB2",
                       "collectorNumber": "40",
                       "finish": "nonfoil",
-                      "priceNzd": 12.15,
-                      "priceUsdReference": 6.89
+                      "priceNzd": 12.14,
+                      "priceUsdReference": 6.88
                     }
                   },
                   {
-                    "out": "Grave Researcher // Reanimate",
+                    "out": "Junk Diver",
                     "in": "Corrupted Conviction",
                     "reasons": [
                       "efficient proven card advantage",
@@ -2062,12 +2060,12 @@
                       "set": "OTJ",
                       "collectorNumber": "84",
                       "finish": "nonfoil",
-                      "priceNzd": 0.62,
-                      "priceUsdReference": 0.35
+                      "priceNzd": 0.65,
+                      "priceUsdReference": 0.37
                     }
                   },
                   {
-                    "out": "Junk Diver",
+                    "out": "Ugin, the Ineffable",
                     "in": "Plumb the Forbidden",
                     "reasons": [
                       "efficient proven card advantage",
@@ -2081,12 +2079,12 @@
                       "set": "SOC",
                       "collectorNumber": "224",
                       "finish": "nonfoil",
-                      "priceNzd": 0.65,
-                      "priceUsdReference": 0.37
+                      "priceNzd": 0.69,
+                      "priceUsdReference": 0.39
                     }
                   },
                   {
-                    "out": "Ugin, the Ineffable",
+                    "out": "Swarmyard Massacre",
                     "in": "Nasty End",
                     "reasons": [
                       "efficient proven card advantage",
@@ -2100,12 +2098,12 @@
                       "set": "LTR",
                       "collectorNumber": "416",
                       "finish": "nonfoil",
-                      "priceNzd": 0.32,
-                      "priceUsdReference": 0.18
+                      "priceNzd": 0.39,
+                      "priceUsdReference": 0.22
                     }
                   },
                   {
-                    "out": "Swarmyard Massacre",
+                    "out": "Szat's Will",
                     "in": "Bone Shards",
                     "reasons": [
                       "cheap spot interaction",
@@ -2130,34 +2128,34 @@
                   "landCount": 30,
                   "nonlandCount": 70,
                   "landRatio": 0.3,
-                  "averageNonlandManaValue": 2.46,
+                  "averageNonlandManaValue": 2.4,
                   "manaCurve": {
                     "0": 2,
                     "1": 16,
-                    "2": 26,
+                    "2": 27,
                     "3": 10,
                     "4": 9,
                     "5": 4,
-                    "6": 3,
+                    "6": 2,
                     "7+": 0
                   },
                   "coloredPips": {
                     "W": 0,
                     "U": 0,
-                    "B": 69,
+                    "B": 67,
                     "R": 0,
                     "G": 0
                   },
                   "roleCounts": {
-                    "token production": 12,
+                    "token production": 13,
                     "graveyard recursion": 22,
-                    "high-capacity graveyard recursion": 5,
+                    "high-capacity graveyard recursion": 4,
                     "creature": 18,
-                    "treasure": 2,
+                    "treasure": 3,
                     "repeatable token engine": 3,
                     "sacrifice synergy": 10,
                     "sacrifice outlet": 4,
-                    "conditional mana acceleration": 3,
+                    "conditional mana acceleration": 4,
                     "creature sacrifice outlet": 4,
                     "repeatable life gain engine": 2,
                     "repeatable life drain": 3,
@@ -2172,38 +2170,38 @@
                     "narrow sacrifice outlet": 1,
                     "mana rock": 6,
                     "self sacrifice": 5,
-                    "protection": 5,
-                    "multi-card graveyard recursion": 2,
+                    "protection": 6,
+                    "multi-card graveyard recursion": 1,
                     "fast mana": 2,
                     "land ramp": 2,
                     "persistent colored mana source": 4,
                     "land tutor": 3,
                     "spot interaction": 14,
                     "forced sacrifice interaction": 3,
-                    "+1/+1 counters": 8,
                     "board wipe": 3,
                     "cheap interaction": 6,
+                    "+1/+1 counters": 8,
                     "free interaction": 2,
                     "artifact/enchantment interaction": 2,
                     "card selection": 4,
                     "creature tutor": 1,
-                    "haste": 3,
-                    "equipment": 3,
                     "death-trigger draw engine": 1,
+                    "equipment": 3,
+                    "haste": 3,
                     "typal board control payoff": 1,
                     "token-event life drain": 1,
                     "land": 30,
                     "graveyard hate": 1,
                     "graveyard interaction": 1
                   },
-                  "earlyPlayCount": 44,
+                  "earlyPlayCount": 45,
                   "fastManaCount": 2,
                   "rampCount": 13,
                   "drawCount": 14,
                   "tutorCount": 6,
                   "interactionCount": 17,
                   "cheapInteractionCount": 6,
-                  "protectionCount": 5,
+                  "protectionCount": 6,
                   "recursionCount": 22,
                   "boardWipeCount": 3,
                   "persistentColoredManaSourceCount": 4,
@@ -2213,14 +2211,14 @@
                   "landCount": 30,
                   "nonlandCount": 70,
                   "landRatio": 0.3,
-                  "averageNonlandManaValue": 2.03,
+                  "averageNonlandManaValue": 1.99,
                   "manaCurve": {
                     "0": 2,
                     "1": 22,
-                    "2": 30,
+                    "2": 31,
                     "3": 8,
                     "4": 5,
-                    "5": 2,
+                    "5": 1,
                     "6": 1,
                     "7+": 0
                   },
@@ -2233,14 +2231,14 @@
                   },
                   "roleCounts": {
                     "token production": 9,
-                    "graveyard recursion": 16,
+                    "graveyard recursion": 17,
                     "high-capacity graveyard recursion": 2,
                     "creature": 18,
-                    "treasure": 2,
+                    "treasure": 3,
                     "repeatable token engine": 3,
                     "sacrifice synergy": 20,
                     "sacrifice outlet": 8,
-                    "conditional mana acceleration": 3,
+                    "conditional mana acceleration": 4,
                     "creature sacrifice outlet": 8,
                     "repeatable life gain engine": 3,
                     "repeatable life drain": 3,
@@ -2255,39 +2253,39 @@
                     "narrow sacrifice outlet": 1,
                     "mana rock": 5,
                     "self sacrifice": 5,
-                    "protection": 5,
+                    "protection": 6,
                     "multi-card graveyard recursion": 1,
                     "fast mana": 3,
-                    "spot interaction": 13,
-                    "forced sacrifice interaction": 2,
-                    "+1/+1 counters": 9,
+                    "spot interaction": 12,
+                    "forced sacrifice interaction": 1,
                     "board wipe": 2,
                     "cheap interaction": 7,
+                    "+1/+1 counters": 9,
                     "free interaction": 2,
                     "artifact/enchantment interaction": 2,
                     "card selection": 3,
                     "creature tutor": 1,
                     "persistent colored mana source": 3,
-                    "haste": 3,
-                    "equipment": 3,
                     "land tutor": 2,
                     "land ramp": 1,
                     "death-trigger draw engine": 1,
+                    "equipment": 3,
+                    "haste": 3,
                     "token-event life drain": 1,
                     "land": 30,
                     "graveyard hate": 1,
                     "graveyard interaction": 1,
                     "mass sacrifice conversion": 1
                   },
-                  "earlyPlayCount": 54,
+                  "earlyPlayCount": 55,
                   "fastManaCount": 3,
                   "rampCount": 12,
                   "drawCount": 17,
                   "tutorCount": 6,
-                  "interactionCount": 15,
+                  "interactionCount": 14,
                   "cheapInteractionCount": 7,
-                  "protectionCount": 5,
-                  "recursionCount": 16,
+                  "protectionCount": 6,
+                  "recursionCount": 17,
                   "boardWipeCount": 2,
                   "persistentColoredManaSourceCount": 3,
                   "structuralSignals": []
@@ -2308,7 +2306,7 @@
                 "afterWinningComboCount": 3,
                 "beforeWinningComboCoreCount": 2,
                 "afterWinningComboCoreCount": 2,
-                "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 212\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (SUM) 99\n1 Season of Loss (BLB) 112\n1 Undying Malice (FDN) 528\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Walking Ballista (FIC) 371\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Szat's Will (CMR) 152\n1 Baleful Mastery (OTC) 126\n1 Buried Alive (MH3) 273\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Swiftfoot Boots (M12) 219\n1 Expedition Map (FDN) 724\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Lethal Scheme (MSC) 157\n1 Thought Vessel (MSC) 222\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Withering Torment (MSC) 162\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (ECC) 158\n1 Bojuka Bog (SOC) 363\n22 Swamp (FDN) 276\n1 Mephidross Vampire (5DN) 53 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Ravenous Amulet (FDN) 131 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Culling the Weak (MB2) 40 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*",
+                "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (FIC) 357\n1 Fake Your Own Death (FDN) 174\n1 Deadly Dispute (MSC) 794\n1 Season of Loss (BLB) 112\n1 Dark Ritual (SUM) 99\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Undying Malice (FDN) 528\n1 Walking Ballista (FIC) 371\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Baleful Mastery (OTC) 126\n1 Buried Alive (MH3) 273\n1 Feign Death (AFR) 103\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Expedition Map (FDN) 724\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Swiftfoot Boots (M12) 219\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Lightning Greaves (MSC) 202\n1 Idol of Oblivion (TDC) 319\n1 Lethal Scheme (MSC) 157\n1 Thought Vessel (FIC) 368\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Withering Torment (MSC) 162\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (ECC) 158\n1 Bojuka Bog (SOC) 363\n22 Swamp (FDN) 276\n1 Mephidross Vampire (5DN) 53 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Ravenous Amulet (FDN) 131 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Culling the Weak (MB2) 40 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*",
                 "finalCommanderRules": {
                   "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
                   "status": "legal",
@@ -2384,7 +2382,7 @@
                 "status": "cedh-efficiency-refined",
                 "swaps": [
                   {
-                    "out": "Szat's Will",
+                    "out": "Season of Loss",
                     "in": "Eaten Alive",
                     "reasons": [
                       "cheap spot interaction",
@@ -2403,7 +2401,7 @@
                     }
                   },
                   {
-                    "out": "Season of Loss",
+                    "out": "Lethal Scheme",
                     "in": "Final Vengeance",
                     "reasons": [
                       "cheap spot interaction",
@@ -2411,34 +2409,14 @@
                       "integrated multi-role engine (2 relevant roles)"
                     ],
                     "qualityScore": 196.1,
-                    "marginalScore": 166.1,
-                    "marginalPenalties": [
-                      "spot interaction already covered at 14; marginal score -30"
-                    ],
+                    "marginalScore": 196.1,
+                    "marginalPenalties": [],
                     "printing": {
                       "set": "DSK",
                       "collectorNumber": "99",
                       "finish": "nonfoil",
-                      "priceNzd": 0.41,
-                      "priceUsdReference": 0.23
-                    }
-                  },
-                  {
-                    "out": "Lethal Scheme",
-                    "in": "Currency Converter",
-                    "reasons": [
-                      "efficient proven card advantage",
-                      "integrated multi-role engine (2 relevant roles)"
-                    ],
-                    "qualityScore": 158.35,
-                    "marginalScore": 158.35,
-                    "marginalPenalties": [],
-                    "printing": {
-                      "set": "MSC",
-                      "collectorNumber": "197",
-                      "finish": "nonfoil",
-                      "priceNzd": 0.86,
-                      "priceUsdReference": 0.49
+                      "priceNzd": 0.39,
+                      "priceUsdReference": 0.22
                     }
                   },
                   {
@@ -2450,20 +2428,38 @@
                       "integrated multi-role engine (2 relevant roles)"
                     ],
                     "qualityScore": 195.99,
-                    "marginalScore": 155.99,
+                    "marginalScore": 165.99,
                     "marginalPenalties": [
-                      "spot interaction already covered at 15; marginal score -40"
+                      "spot interaction already covered at 14; marginal score -30"
                     ],
                     "printing": {
                       "set": "TDM",
                       "collectorNumber": "99",
                       "finish": "nonfoil",
-                      "priceNzd": 0.28,
-                      "priceUsdReference": 0.16
+                      "priceNzd": 0.3,
+                      "priceUsdReference": 0.17
                     }
                   },
                   {
                     "out": "Victimize",
+                    "in": "Currency Converter",
+                    "reasons": [
+                      "efficient proven card advantage",
+                      "integrated multi-role engine (2 relevant roles)"
+                    ],
+                    "qualityScore": 158.37,
+                    "marginalScore": 158.37,
+                    "marginalPenalties": [],
+                    "printing": {
+                      "set": "MSC",
+                      "collectorNumber": "197",
+                      "finish": "nonfoil",
+                      "priceNzd": 0.9,
+                      "priceUsdReference": 0.51
+                    }
+                  },
+                  {
+                    "out": "Withering Torment",
                     "in": "Bone Splinters",
                     "reasons": [
                       "cheap spot interaction",
@@ -2471,9 +2467,9 @@
                       "integrated multi-role engine (2 relevant roles)"
                     ],
                     "qualityScore": 195.89,
-                    "marginalScore": 145.89,
+                    "marginalScore": 155.89,
                     "marginalPenalties": [
-                      "spot interaction already covered at 16; marginal score -50"
+                      "spot interaction already covered at 15; marginal score -40"
                     ],
                     "printing": {
                       "set": "MM2",
@@ -2488,14 +2484,14 @@
                   "landCount": 30,
                   "nonlandCount": 70,
                   "landRatio": 0.3,
-                  "averageNonlandManaValue": 2.03,
+                  "averageNonlandManaValue": 1.99,
                   "manaCurve": {
                     "0": 2,
                     "1": 22,
-                    "2": 30,
+                    "2": 31,
                     "3": 8,
                     "4": 5,
-                    "5": 2,
+                    "5": 1,
                     "6": 1,
                     "7+": 0
                   },
@@ -2508,14 +2504,14 @@
                   },
                   "roleCounts": {
                     "token production": 9,
-                    "graveyard recursion": 16,
+                    "graveyard recursion": 17,
                     "high-capacity graveyard recursion": 2,
                     "creature": 18,
-                    "treasure": 2,
+                    "treasure": 3,
                     "repeatable token engine": 3,
                     "sacrifice synergy": 20,
                     "sacrifice outlet": 8,
-                    "conditional mana acceleration": 3,
+                    "conditional mana acceleration": 4,
                     "creature sacrifice outlet": 8,
                     "repeatable life gain engine": 3,
                     "repeatable life drain": 3,
@@ -2530,39 +2526,39 @@
                     "narrow sacrifice outlet": 1,
                     "mana rock": 5,
                     "self sacrifice": 5,
-                    "protection": 5,
+                    "protection": 6,
                     "multi-card graveyard recursion": 1,
                     "fast mana": 3,
-                    "spot interaction": 13,
-                    "forced sacrifice interaction": 2,
-                    "+1/+1 counters": 9,
+                    "spot interaction": 12,
+                    "forced sacrifice interaction": 1,
                     "board wipe": 2,
                     "cheap interaction": 7,
+                    "+1/+1 counters": 9,
                     "free interaction": 2,
                     "artifact/enchantment interaction": 2,
                     "card selection": 3,
                     "creature tutor": 1,
                     "persistent colored mana source": 3,
-                    "haste": 3,
-                    "equipment": 3,
                     "land tutor": 2,
                     "land ramp": 1,
                     "death-trigger draw engine": 1,
+                    "equipment": 3,
+                    "haste": 3,
                     "token-event life drain": 1,
                     "land": 30,
                     "graveyard hate": 1,
                     "graveyard interaction": 1,
                     "mass sacrifice conversion": 1
                   },
-                  "earlyPlayCount": 54,
+                  "earlyPlayCount": 55,
                   "fastManaCount": 3,
                   "rampCount": 12,
                   "drawCount": 17,
                   "tutorCount": 6,
-                  "interactionCount": 15,
+                  "interactionCount": 14,
                   "cheapInteractionCount": 7,
-                  "protectionCount": 5,
-                  "recursionCount": 16,
+                  "protectionCount": 6,
+                  "recursionCount": 17,
                   "boardWipeCount": 2,
                   "persistentColoredManaSourceCount": 3,
                   "structuralSignals": []
@@ -2571,12 +2567,12 @@
                   "landCount": 30,
                   "nonlandCount": 70,
                   "landRatio": 0.3,
-                  "averageNonlandManaValue": 1.84,
+                  "averageNonlandManaValue": 1.83,
                   "manaCurve": {
                     "0": 2,
                     "1": 26,
-                    "2": 30,
-                    "3": 7,
+                    "2": 31,
+                    "3": 6,
                     "4": 4,
                     "5": 0,
                     "6": 1,
@@ -2590,15 +2586,15 @@
                     "G": 0
                   },
                   "roleCounts": {
-                    "token production": 9,
-                    "graveyard recursion": 16,
+                    "token production": 10,
+                    "graveyard recursion": 17,
                     "high-capacity graveyard recursion": 2,
                     "creature": 18,
-                    "treasure": 3,
+                    "treasure": 4,
                     "repeatable token engine": 3,
                     "sacrifice synergy": 23,
                     "sacrifice outlet": 8,
-                    "conditional mana acceleration": 3,
+                    "conditional mana acceleration": 4,
                     "creature sacrifice outlet": 8,
                     "repeatable life gain engine": 3,
                     "repeatable life drain": 3,
@@ -2613,23 +2609,23 @@
                     "narrow sacrifice outlet": 1,
                     "mana rock": 5,
                     "self sacrifice": 4,
-                    "protection": 5,
+                    "protection": 6,
                     "multi-card graveyard recursion": 1,
                     "fast mana": 3,
-                    "+1/+1 counters": 8,
                     "board wipe": 2,
                     "cheap interaction": 11,
-                    "spot interaction": 14,
+                    "spot interaction": 13,
+                    "+1/+1 counters": 8,
                     "free interaction": 2,
-                    "artifact/enchantment interaction": 2,
+                    "artifact/enchantment interaction": 1,
                     "card selection": 4,
                     "creature tutor": 1,
                     "persistent colored mana source": 3,
-                    "haste": 3,
-                    "equipment": 3,
                     "land ramp": 1,
                     "land tutor": 1,
                     "death-trigger draw engine": 1,
+                    "equipment": 3,
+                    "haste": 3,
                     "token-event life drain": 1,
                     "land": 30,
                     "graveyard hate": 1,
@@ -2637,15 +2633,15 @@
                     "mass sacrifice conversion": 1,
                     "graveyard utility": 1
                   },
-                  "earlyPlayCount": 58,
+                  "earlyPlayCount": 59,
                   "fastManaCount": 3,
                   "rampCount": 12,
                   "drawCount": 17,
                   "tutorCount": 5,
-                  "interactionCount": 16,
+                  "interactionCount": 15,
                   "cheapInteractionCount": 11,
-                  "protectionCount": 5,
-                  "recursionCount": 16,
+                  "protectionCount": 6,
+                  "recursionCount": 17,
                   "boardWipeCount": 2,
                   "persistentColoredManaSourceCount": 3,
                   "structuralSignals": []
@@ -2666,7 +2662,7 @@
                 "afterWinningComboCount": 3,
                 "beforeWinningComboCoreCount": 2,
                 "afterWinningComboCoreCount": 2,
-                "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 212\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (SUM) 99\n1 Undying Malice (FDN) 528\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Walking Ballista (FIC) 371\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Baleful Mastery (OTC) 126\n1 Buried Alive (MH3) 273\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Swiftfoot Boots (M12) 219\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Thought Vessel (MSC) 222\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Withering Torment (MSC) 162\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (ECC) 158\n1 Bojuka Bog (SOC) 363\n22 Swamp (FDN) 276\n1 Mephidross Vampire (5DN) 53 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Ravenous Amulet (FDN) 131 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Culling the Weak (MB2) 40 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Eaten Alive (J22) 409 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Worthy Cost (TDM) 99 *N*\n1 Bone Splinters (MM2) 73 *N*",
+                "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (FIC) 357\n1 Fake Your Own Death (FDN) 174\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (SUM) 99\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Undying Malice (FDN) 528\n1 Walking Ballista (FIC) 371\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Baleful Mastery (OTC) 126\n1 Buried Alive (MH3) 273\n1 Feign Death (AFR) 103\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Swiftfoot Boots (M12) 219\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Lightning Greaves (MSC) 202\n1 Idol of Oblivion (TDC) 319\n1 Thought Vessel (FIC) 368\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (ECC) 158\n1 Bojuka Bog (SOC) 363\n22 Swamp (FDN) 276\n1 Mephidross Vampire (5DN) 53 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Ravenous Amulet (FDN) 131 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Culling the Weak (MB2) 40 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Eaten Alive (J22) 409 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Worthy Cost (TDM) 99 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Bone Splinters (MM2) 73 *N*",
                 "finalCommanderRules": {
                   "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
                   "status": "legal",
@@ -2758,11 +2754,11 @@
                     "land itself normally enters untapped"
                   ],
                   "printing": {
-                    "set": "FDN",
-                    "collectorNumber": "687",
+                    "set": "FIC",
+                    "collectorNumber": "385",
                     "finish": "nonfoil",
-                    "priceNzd": 0.51,
-                    "priceUsdReference": 0.29
+                    "priceNzd": 0.48,
+                    "priceUsdReference": 0.27
                   }
                 },
                 {
@@ -2804,11 +2800,11 @@
                     "land itself normally enters untapped"
                   ],
                   "printing": {
-                    "set": "CMR",
-                    "collectorNumber": "361",
+                    "set": "SOC",
+                    "collectorNumber": "422",
                     "finish": "nonfoil",
-                    "priceNzd": 9.03,
-                    "priceUsdReference": 5.12
+                    "priceNzd": 9.14,
+                    "priceUsdReference": 5.18
                   }
                 }
               ],
@@ -2816,7 +2812,7 @@
               "afterLandCount": 30,
               "beforeComboCount": 3,
               "afterComboCount": 3,
-              "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 212\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (SUM) 99\n1 Undying Malice (FDN) 528\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Walking Ballista (FIC) 371\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Baleful Mastery (OTC) 126\n1 Buried Alive (MH3) 273\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Swiftfoot Boots (M12) 219\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Thought Vessel (MSC) 222\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Withering Torment (MSC) 162\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 War Room (CMR) 361 *N*\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Demolition Field (FDN) 687 *N*\n1 Ash Barrens (TDC) 339 *N*\n22 Swamp (FDN) 276\n1 Mephidross Vampire (5DN) 53 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Ravenous Amulet (FDN) 131 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Culling the Weak (MB2) 40 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Eaten Alive (J22) 409 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Worthy Cost (TDM) 99 *N*\n1 Bone Splinters (MM2) 73 *N*",
+              "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (FIC) 357\n1 Fake Your Own Death (FDN) 174\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (SUM) 99\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Undying Malice (FDN) 528\n1 Walking Ballista (FIC) 371\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Baleful Mastery (OTC) 126\n1 Buried Alive (MH3) 273\n1 Feign Death (AFR) 103\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Swiftfoot Boots (M12) 219\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Lightning Greaves (MSC) 202\n1 Idol of Oblivion (TDC) 319\n1 Thought Vessel (FIC) 368\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 War Room (SOC) 422 *N*\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Demolition Field (FIC) 385 *N*\n1 Ash Barrens (TDC) 339 *N*\n22 Swamp (FDN) 276\n1 Mephidross Vampire (5DN) 53 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Ravenous Amulet (FDN) 131 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Culling the Weak (MB2) 40 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Eaten Alive (J22) 409 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Worthy Cost (TDM) 99 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Bone Splinters (MM2) 73 *N*",
               "finalCommanderRules": {
                 "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
                 "status": "legal",
@@ -2895,14 +2891,14 @@
             "strategicallyRelevantCombos": 2,
             "metrics": {
               "landCount": 30,
-              "averageNonlandManaValue": 1.84,
-              "earlyPlayCount": 58,
+              "averageNonlandManaValue": 1.83,
+              "earlyPlayCount": 59,
               "fastManaCount": 3,
               "rawInferredFastManaCount": 3,
-              "conditionalManaCount": 3,
+              "conditionalManaCount": 4,
               "delayedManaCount": 0,
               "cheapInteractionCount": 12,
-              "protectionCount": 5,
+              "protectionCount": 6,
               "tutorCount": 5,
               "freeInteractionCount": 2
             },
@@ -2989,7 +2985,7 @@
               "source": "effective-card-role-truth-v15",
               "rawInferredFastManaCount": 3,
               "effectiveFastManaCount": 3,
-              "conditionalManaCount": 3,
+              "conditionalManaCount": 4,
               "delayedManaCount": 0,
               "rule": "Conditional or delayed mana cannot satisfy competitive fast-mana evidence merely because Oracle text contains a mana ability."
             },
@@ -3003,19 +2999,19 @@
           "comboWasPreserved": true,
           "baselineWinningComboCores": 1,
           "finalWinningComboCores": 2,
-          "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 212\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (SUM) 99\n1 Undying Malice (FDN) 528\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Walking Ballista (FIC) 371\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Baleful Mastery (OTC) 126\n1 Buried Alive (MH3) 273\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Swiftfoot Boots (M12) 219\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Thought Vessel (MSC) 222\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Withering Torment (MSC) 162\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 War Room (CMR) 361 *N*\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Demolition Field (FDN) 687 *N*\n1 Ash Barrens (TDC) 339 *N*\n22 Swamp (FDN) 276\n1 Mephidross Vampire (5DN) 53 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Ravenous Amulet (FDN) 131 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Culling the Weak (MB2) 40 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Eaten Alive (J22) 409 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Worthy Cost (TDM) 99 *N*\n1 Bone Splinters (MM2) 73 *N*",
+          "finalDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (FIC) 357\n1 Fake Your Own Death (FDN) 174\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (SUM) 99\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Undying Malice (FDN) 528\n1 Walking Ballista (FIC) 371\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Baleful Mastery (OTC) 126\n1 Buried Alive (MH3) 273\n1 Feign Death (AFR) 103\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Swiftfoot Boots (M12) 219\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Lightning Greaves (MSC) 202\n1 Idol of Oblivion (TDC) 319\n1 Thought Vessel (FIC) 368\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 War Room (SOC) 422 *N*\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Demolition Field (FIC) 385 *N*\n1 Ash Barrens (TDC) 339 *N*\n22 Swamp (FDN) 276\n1 Mephidross Vampire (5DN) 53 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Ravenous Amulet (FDN) 131 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Culling the Weak (MB2) 40 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Eaten Alive (J22) 409 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Worthy Cost (TDM) 99 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Bone Splinters (MM2) 73 *N*",
           "guidance": "The cEDH path is win-package-first and explicit exclusions remain authoritative through win completion and efficiency refinement. Creature-type coherence is disabled for this run, so strict efficiency cannot claim improvement from tribal density. Up to two marginal-value efficiency passes recalculate role saturation while preserving critical role floors and independent winning cores, then lands are optimized separately and the finished list is reassessed."
         }
       },
       "premiumHeadroomRefinement": {
         "attempted": true,
         "status": "rejected-hard-budget",
-        "startingAuditedTotalNzd": 442.6,
-        "startingAuditedTotalUsdReference": 250.95,
-        "remainingHeadroomNzd": 57.39,
-        "remainingHeadroomUsdReference": 32.54,
-        "premiumMaxNzdPerCard": 69.61,
-        "premiumMaxUsdPerCardReference": 39.47,
+        "startingAuditedTotalNzd": 443.88,
+        "startingAuditedTotalUsdReference": 251.63,
+        "remainingHeadroomNzd": 56.13,
+        "remainingHeadroomUsdReference": 31.82,
+        "premiumMaxNzdPerCard": 68.37,
+        "premiumMaxUsdPerCardReference": 38.76,
         "baseDeckUnchanged": true,
         "attempts": [
           {
@@ -3037,10 +3033,10 @@
               "finalWinningCombos": 4,
               "initialWinningComboCores": 2,
               "finalWinningComboCores": 2,
-              "initialAverageNonlandManaValue": 1.84,
+              "initialAverageNonlandManaValue": 1.83,
               "finalAverageNonlandManaValue": 1.83,
-              "initialProtectionCount": 5,
-              "finalProtectionCount": 5,
+              "initialProtectionCount": 6,
+              "finalProtectionCount": 6,
               "initialCheapInteractionCount": 12,
               "finalCheapInteractionCount": 12,
               "initialFreeInteractionCount": 2,
@@ -3058,12 +3054,12 @@
             "budgetAudit": {
               "status": "over-budget",
               "withinBudget": false,
-              "maxDeckNzd": 499.99,
-              "maxDeckUsdReference": 283.49,
-              "auditedTotalNzd": 545.32,
-              "auditedTotalUsdReference": 309.19,
-              "overageNzd": 45.33,
-              "overageUsdReference": 25.7,
+              "maxDeckNzd": 500.01,
+              "maxDeckUsdReference": 283.45,
+              "auditedTotalNzd": 545.91,
+              "auditedTotalUsdReference": 309.47,
+              "overageNzd": 45.9,
+              "overageUsdReference": 26.02,
               "unknownPriceEntries": [],
               "unresolvedEntries": []
             }
@@ -3080,17 +3076,17 @@
               "protectionFloorPreserved": true,
               "materialQualityImprovement": true,
               "creatureTypeCoherenceImproved": false,
-              "recursionSaturationImproved": false,
+              "recursionSaturationImproved": true,
               "initialStatus": "strong-competitive-construction-signals",
               "finalStatus": "strong-competitive-construction-signals",
               "initialWinningCombos": 3,
               "finalWinningCombos": 4,
               "initialWinningComboCores": 2,
               "finalWinningComboCores": 2,
-              "initialAverageNonlandManaValue": 1.84,
-              "finalAverageNonlandManaValue": 1.83,
-              "initialProtectionCount": 5,
-              "finalProtectionCount": 5,
+              "initialAverageNonlandManaValue": 1.83,
+              "finalAverageNonlandManaValue": 1.81,
+              "initialProtectionCount": 6,
+              "finalProtectionCount": 6,
               "initialCheapInteractionCount": 12,
               "finalCheapInteractionCount": 12,
               "initialFreeInteractionCount": 2,
@@ -3108,12 +3104,12 @@
             "budgetAudit": {
               "status": "over-budget",
               "withinBudget": false,
-              "maxDeckNzd": 499.99,
-              "maxDeckUsdReference": 283.49,
-              "auditedTotalNzd": 517.01,
-              "auditedTotalUsdReference": 293.14,
-              "overageNzd": 17.02,
-              "overageUsdReference": 9.65,
+              "maxDeckNzd": 500.01,
+              "maxDeckUsdReference": 283.45,
+              "auditedTotalNzd": 518.39,
+              "auditedTotalUsdReference": 293.87,
+              "overageNzd": 18.38,
+              "overageUsdReference": 10.42,
               "unknownPriceEntries": [],
               "unresolvedEntries": []
             }
@@ -3178,7 +3174,7 @@
               "predh": "not_legal",
               "tlr": "legal"
             },
-            "edhrecRank": 4508,
+            "edhrecRank": 4507,
             "set": "CC2",
             "setName": "Commander Collection: Black",
             "collectorNumber": "1",
@@ -3203,11 +3199,11 @@
             "tcgplayerId": 247521,
             "cardmarketId": 577315,
             "prices": {
-              "usd": "6.33",
-              "usd_foil": "8.62",
+              "usd": "5.98",
+              "usd_foil": "8.71",
               "usd_etched": null,
-              "eur": "2.74",
-              "eur_foil": "4.24",
+              "eur": "2.76",
+              "eur_foil": "4.32",
               "tix": null
             },
             "purchaseUris": {
@@ -3228,7 +3224,7 @@
           "selectedControlledThemeCandidates": 12,
           "satisfied": true
         },
-        "decklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 212\n1 Deadly Dispute (MSC) 794\n1 Decree of Pain (DSC) 136\n1 Solemn Simulacrum (MSC) 215\n1 Dark Ritual (SUM) 99\n1 Season of Loss (BLB) 112\n1 Ugin, the Ineffable (CMM) 811\n1 Undying Malice (FDN) 528\n1 Hedron Archive (FDN) 726\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Walking Ballista (FIC) 371\n1 Gix's Command (BRO) 97\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Szat's Will (CMR) 152\n1 Baleful Mastery (OTC) 126\n1 Grave Researcher // Reanimate (SOS) 85\n1 Buried Alive (MH3) 273\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Swiftfoot Boots (M12) 219\n1 Expedition Map (FDN) 724\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Lethal Scheme (MSC) 157\n1 Thought Vessel (MSC) 222\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Withering Torment (MSC) 162\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Dread Return (CMM) 153\n1 Junk Diver (MH3) 293\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Revenge of the Rats (FDN) 67\n1 Hangarback Walker (SOC) 348\n1 Swarmyard Massacre (BLC) 20\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Zombie Apocalypse (MIC) 131\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (ECC) 158\n1 Bojuka Bog (SOC) 363\n22 Swamp (FDN) 276",
+        "decklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (FIC) 357\n1 Fake Your Own Death (FDN) 174\n1 Decree of Pain (DSC) 136\n1 Solemn Simulacrum (MSC) 215\n1 Deadly Dispute (MSC) 794\n1 Season of Loss (BLB) 112\n1 Dark Ritual (SUM) 99\n1 Ugin, the Ineffable (CMM) 811\n1 Hedron Archive (FDN) 726\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Undying Malice (FDN) 528\n1 Walking Ballista (FIC) 371\n1 Gix's Command (BRO) 97\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Szat's Will (CMR) 152\n1 Baleful Mastery (OTC) 126\n1 Grave Researcher // Reanimate (SOS) 85\n1 Buried Alive (MH3) 273\n1 Feign Death (AFR) 103\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Expedition Map (FDN) 724\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Swiftfoot Boots (M12) 219\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Lightning Greaves (MSC) 202\n1 Idol of Oblivion (TDC) 319\n1 Lethal Scheme (MSC) 157\n1 Thought Vessel (FIC) 368\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Withering Torment (MSC) 162\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Dread Return (CMM) 153\n1 Junk Diver (MH3) 293\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Revenge of the Rats (FDN) 67\n1 Hangarback Walker (SOC) 348\n1 Swarmyard Massacre (BLC) 20\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (ECC) 158\n1 Bojuka Bog (SOC) 363\n22 Swamp (FDN) 276",
         "cardCount": 100,
         "commanderRules": {
           "ruleset": "Commander deck construction (Wizards Comprehensive Rules 903 / current Commander policy)",
@@ -3312,18 +3308,18 @@
           "draw": 14,
           "interaction": 17,
           "freeInteraction": 2,
-          "protection": 5,
+          "protection": 6,
           "tutors": 6,
           "recursion": 21,
           "boardWipes": 4,
-          "early": 44
+          "early": 45
         },
         "remainingRoleDeficits": {
           "ramp": 1,
           "draw": 0,
           "interaction": 1,
           "freeInteraction": 0,
-          "protection": 3,
+          "protection": 2,
           "tutors": 4,
           "recursion": 0,
           "boardWipes": 0,
@@ -3341,13 +3337,13 @@
           "candidateSource": "role-search"
         },
         "exactPrintingPolicy": "Every selected line carries an exact Scryfall set code and collector number. Oracle identity drives rules; the selected physical printing must independently satisfy the active family/set/promo policy. User maxUsdPerCard applies to required and optional cards; candidateMaxUsdPerCard, when supplied, only tightens optional candidate search.",
-        "selectedPrintingEstimatedNzd": 438,
-        "selectedPrintingEstimatedUsdReference": 248.34,
+        "selectedPrintingEstimatedNzd": 439.01,
+        "selectedPrintingEstimatedUsdReference": 248.87,
         "constraints": {
           "maxNzdPerCard": null,
           "maxUsdPerCardReference": null,
-          "candidateMaxNzdPerCard": 12.22,
-          "candidateMaxUsdPerCardReference": 6.93,
+          "candidateMaxNzdPerCard": 12.24,
+          "candidateMaxUsdPerCardReference": 6.94,
           "allowedSets": [],
           "printingFamily": null,
           "includePromos": true,
@@ -3396,9 +3392,9 @@
           "Promo status alone never qualifies a printing for a themed family; the promo must belong to a matching family set or an exact curated special-release selector."
         ]
       },
-      "baseDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 212\n1 Deadly Dispute (MSC) 794\n1 Decree of Pain (DSC) 136\n1 Solemn Simulacrum (MSC) 215\n1 Dark Ritual (SUM) 99\n1 Season of Loss (BLB) 112\n1 Ugin, the Ineffable (CMM) 811\n1 Undying Malice (FDN) 528\n1 Hedron Archive (FDN) 726\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Walking Ballista (FIC) 371\n1 Gix's Command (BRO) 97\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Szat's Will (CMR) 152\n1 Baleful Mastery (OTC) 126\n1 Grave Researcher // Reanimate (SOS) 85\n1 Buried Alive (MH3) 273\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Swiftfoot Boots (M12) 219\n1 Expedition Map (FDN) 724\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Lethal Scheme (MSC) 157\n1 Thought Vessel (MSC) 222\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Withering Torment (MSC) 162\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Dread Return (CMM) 153\n1 Junk Diver (MH3) 293\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Revenge of the Rats (FDN) 67\n1 Hangarback Walker (SOC) 348\n1 Swarmyard Massacre (BLC) 20\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Zombie Apocalypse (MIC) 131\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (ECC) 158\n1 Bojuka Bog (SOC) 363\n22 Swamp (FDN) 276",
-      "decklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (MSC) 212\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (SUM) 99\n1 Undying Malice (FDN) 528\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Feign Death (AFR) 103\n1 Walking Ballista (FIC) 371\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Baleful Mastery (OTC) 126\n1 Buried Alive (MH3) 273\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Swiftfoot Boots (M12) 219\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Lightning Greaves (MSC) 202\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Idol of Oblivion (TDC) 319\n1 Thought Vessel (MSC) 222\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Withering Torment (MSC) 162\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 War Room (CMR) 361 *N*\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Demolition Field (FDN) 687 *N*\n1 Ash Barrens (TDC) 339 *N*\n22 Swamp (FDN) 276\n1 Mephidross Vampire (5DN) 53 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Ravenous Amulet (FDN) 131 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Culling the Weak (MB2) 40 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Eaten Alive (J22) 409 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Worthy Cost (TDM) 99 *N*\n1 Bone Splinters (MM2) 73 *N*",
-      "constraint": "US$283.49 maximum total deck budget",
+      "baseDecklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (FIC) 357\n1 Fake Your Own Death (FDN) 174\n1 Decree of Pain (DSC) 136\n1 Solemn Simulacrum (MSC) 215\n1 Deadly Dispute (MSC) 794\n1 Season of Loss (BLB) 112\n1 Dark Ritual (SUM) 99\n1 Ugin, the Ineffable (CMM) 811\n1 Hedron Archive (FDN) 726\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Undying Malice (FDN) 528\n1 Walking Ballista (FIC) 371\n1 Gix's Command (BRO) 97\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Szat's Will (CMR) 152\n1 Baleful Mastery (OTC) 126\n1 Grave Researcher // Reanimate (SOS) 85\n1 Buried Alive (MH3) 273\n1 Feign Death (AFR) 103\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Expedition Map (FDN) 724\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Swiftfoot Boots (M12) 219\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Lightning Greaves (MSC) 202\n1 Idol of Oblivion (TDC) 319\n1 Lethal Scheme (MSC) 157\n1 Thought Vessel (FIC) 368\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Withering Torment (MSC) 162\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Dread Return (CMM) 153\n1 Junk Diver (MH3) 293\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Revenge of the Rats (FDN) 67\n1 Hangarback Walker (SOC) 348\n1 Swarmyard Massacre (BLC) 20\n1 Oversold Cemetery (DMR) 96\n1 Victimize (TDC) 198\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 Spire of Industry (EOC) 183\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Path of Ancestry (ECC) 158\n1 Bojuka Bog (SOC) 363\n22 Swamp (FDN) 276",
+      "decklist": "// COMMANDER\n1 Liliana, Heretical Healer // Liliana, Defiant Necromancer (CC2) 1\n\n// MAIN\n1 Warren Soultrader (MH3) 110\n1 Gravecrawler (TDC) 93\n1 Blood Artist (SOC) 209\n1 Entomb (DMR) 82\n1 Diabolic Intent (BRO) 89\n1 Yawgmoth, Thran Physician (DMR) 110\n1 Animate Dead (SOC) 207\n1 Cabal Ritual (TOR) 51\n1 Jet Medallion (MH3) 292\n1 Accursed Marauder (MH3) 80\n1 Ayara, First of Locthwain (ELD) 75\n1 Mind Stone (DMR) 385\n1 Not Dead After All (WOE) 101\n1 Lively Dirge (OTJ) 93\n1 Sol Ring (FIC) 357\n1 Fake Your Own Death (FDN) 174\n1 Deadly Dispute (MSC) 794\n1 Dark Ritual (SUM) 99\n1 Black Sun's Zenith (ECC) 71\n1 Bitter Triumph (TDC) 173\n1 Undying Malice (FDN) 528\n1 Walking Ballista (FIC) 371\n1 Snuff Out (FIC) 285\n1 Feed the Swarm (TLE) 257\n1 Woe Strider (SOC) 231\n1 Baleful Mastery (OTC) 126\n1 Buried Alive (MH3) 273\n1 Feign Death (AFR) 103\n1 Toxic Deluge (MSC) 161\n1 Arcane Signet (FIC) 334\n1 Infernal Grasp (SOC) 216\n1 Wayfarer's Bauble (HOC) 211\n1 Skullclamp (MSC) 210\n1 Swiftfoot Boots (M12) 219\n1 Go for the Throat (MOC) 250\n1 Wishclaw Talisman (FDN) 617\n1 Fellwar Stone (MSC) 285\n1 Lightning Greaves (MSC) 202\n1 Idol of Oblivion (TDC) 319\n1 Thought Vessel (FIC) 368\n1 Unearth (2X2) 96\n1 Village Rites (INR) 137\n1 Bloodghast (SOC) 210\n1 Reassembling Skeleton (TDC) 195\n1 Tortured Existence (STH) 74\n1 Persist (ECC) 83\n1 Stitch Together (C18) 119\n1 Songs of the Damned (UMA) 115\n1 Viscera Seer (SOC) 229\n1 Phyrexian Reclamation (TDC) 194\n1 Hangarback Walker (SOC) 348\n1 Oversold Cemetery (DMR) 96\n1 Mirkwood Bats (LTR) 95\n1 Command Tower (MSC) 236\n1 Exotic Orchard (EOC) 159\n1 War Room (SOC) 422 *N*\n1 Fell the Profane // Fell Mire (MH3) 244\n1 Secluded Courtyard (MSC) 265\n1 Unclaimed Territory (MSC) 275\n1 Demolition Field (FIC) 385 *N*\n1 Ash Barrens (TDC) 339 *N*\n22 Swamp (FDN) 276\n1 Mephidross Vampire (5DN) 53 *N*\n1 Vampiric Rites (FDN) 615 *N*\n1 Ravenous Amulet (FDN) 131 *N*\n1 Priest of Forgotten Gods (SOC) 225 *N*\n1 Carrion Feeder (EMA) 84 *N*\n1 Indulgent Aristocrat (SOI) 118 *N*\n1 Culling the Weak (MB2) 40 *N*\n1 Corrupted Conviction (OTJ) 84 *N*\n1 Plumb the Forbidden (SOC) 224 *N*\n1 Nasty End (LTR) 416 *N*\n1 Bone Shards (PLST) MH2-76 *N*\n1 Eaten Alive (J22) 409 *N*\n1 Final Vengeance (DSK) 99 *N*\n1 Worthy Cost (TDM) 99 *N*\n1 Currency Converter (MSC) 197 *N*\n1 Bone Splinters (MM2) 73 *N*",
+      "constraint": "US$283.45 maximum total deck budget",
       "caveat": "Whole-deck compliance is based on an independent exact-printing price audit of every deck quantity. Explicit exclusions and required cards are rechecked after draft selection and again after every accepted refinement; later win-package or efficiency stages cannot silently override them. The search compares every generated budget-compliant draft rather than stopping at the first cheap fit. Candidate quality is ordered by remaining structural deficits and then by the widest legal candidate search cap; raw spend is never treated as power by itself. Bracket-5 whole-budget construction first uses the selected draft’s conservative candidate cap for broad efficiency work. If exact audited headroom remains, a separate premium pass may widen only the per-card search ceiling by the actual unused whole-deck budget and tries at most two efficiency swaps, falling back to one. Premium candidates still need a material strategic/role improvement, preserved winning cores, non-worsened average nonland mana value, preserved protection floor, hard required/excluded-card compliance, and another exact whole-deck budget audit. Creature-type optimization can be explicitly disabled when the requested construction objective has no tribal component. The search remains heuristic rather than proof of the globally strongest possible list."
     }
   }

@@ -1,34 +1,34 @@
-{"elapsedMs":585,"event":"stage","stage":"worker-started","sourceSha":"8606761c4d2e29cebb980bb06520b6aced459a1b","manifestFingerprint":"01c73ca9a486e5fd7eee75cc740242e8345ec31eaacb8533ba2d569667fb6613","evaluationTime":"2026-09-12T08:30:39.498Z"}
-{"elapsedMs":10081,"event":"stage","stage":"verified-scryfall-installed","scryfall":{"queryEvaluations":0,"failures":[]}}
-{"elapsedMs":10796,"event":"stage","stage":"untouched-stock-resolved","scryfall":{"queryEvaluations":0,"failures":[]}}
-{"elapsedMs":12374,"event":"stage","stage":"stock-audit-complete","scryfall":{"queryEvaluations":0,"failures":[]}}
-{"elapsedMs":12503,"event":"stage","stage":"refinement-started","scryfall":{"queryEvaluations":0,"failures":[]}}
-{"elapsedMs":648205,"event":"stage","stage":"refinement-complete","scryfall":{"queryEvaluations":63,"failures":[]}}
-{"elapsedMs":648965,"event":"stage","stage":"final-audit-complete","scryfall":{"queryEvaluations":63,"failures":[]}}
+{"elapsedMs":587,"event":"stage","stage":"worker-started","sourceSha":"5e1163d8c57a92d64dcd2dec14ca0326e56636dc","manifestFingerprint":"01c73ca9a486e5fd7eee75cc740242e8345ec31eaacb8533ba2d569667fb6613","evaluationTime":"2026-09-12T08:30:39.498Z"}
+{"elapsedMs":9741,"event":"stage","stage":"verified-scryfall-installed","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":10509,"event":"stage","stage":"untouched-stock-resolved","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":12617,"event":"stage","stage":"stock-audit-complete","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":12756,"event":"stage","stage":"refinement-started","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":453243,"event":"stage","stage":"refinement-complete","scryfall":{"queryEvaluations":61,"failures":[]}}
+{"elapsedMs":454108,"event":"stage","stage":"final-audit-complete","scryfall":{"queryEvaluations":61,"failures":[]}}
 BENCH-01 COUNTER BLITZ — EXECUTION COMPLETE
-REFINEMENT STATUS: refined; SWAPS: 28
+REFINEMENT STATUS: refined; SWAPS: 24
 BRACKET: 3 -> 3
-COUNTERMAGIC: 1 -> 10 (target 8)
-COUNTER ENGINE: 52 -> 44 (target 16)
+COUNTERMAGIC: 1 -> 8 (target 8)
+COUNTER ENGINE: 52 -> 48 (target 16)
 PROLIFERATE: 4 -> 5 (target 3)
 COMBAT REFERENCES: 12 -> 14 (target 8)
-PROTECTION: 0 -> 7 (target 8)
-SUBSTANTIAL UPGRADE: 28 swaps (target 20)
-TARGET MOVEMENT: {"bracket":{"before":false,"after":false},"denseCountermagic":{"before":false,"after":true},"counterEngine":{"before":true,"after":true},"proliferate":{"before":true,"after":true},"combatReference":{"before":true,"after":true},"hybridCreatureFloor":{"before":true,"after":true},"protection":{"before":false,"after":false},"requestedWhiteMageBallistaAccess":{"before":false,"after":true}}
-{"elapsedMs":586,"event":"stage","stage":"worker-started","sourceSha":"8606761c4d2e29cebb980bb06520b6aced459a1b","manifestFingerprint":"01c73ca9a486e5fd7eee75cc740242e8345ec31eaacb8533ba2d569667fb6613","evaluationTime":"2026-09-12T08:30:39.498Z"}
-{"elapsedMs":9516,"event":"stage","stage":"verified-scryfall-installed","scryfall":{"queryEvaluations":0,"failures":[]}}
-{"elapsedMs":9540,"event":"stage","stage":"untouched-stock-resolved","scryfall":{"queryEvaluations":0,"failures":[]}}
-{"elapsedMs":9652,"event":"stage","stage":"stock-audit-complete","scryfall":{"queryEvaluations":0,"failures":[]}}
-{"elapsedMs":9783,"event":"stage","stage":"refinement-started","scryfall":{"queryEvaluations":0,"failures":[]}}
-{"elapsedMs":637429,"event":"stage","stage":"refinement-complete","scryfall":{"queryEvaluations":63,"failures":[]}}
-{"elapsedMs":637472,"event":"stage","stage":"final-audit-complete","scryfall":{"queryEvaluations":63,"failures":[]}}
+PROTECTION: 0 -> 8 (target 8)
+SUBSTANTIAL UPGRADE: 24 swaps (target 20)
+TARGET MOVEMENT: {"bracket":{"before":false,"after":false},"denseCountermagic":{"before":false,"after":true},"counterEngine":{"before":true,"after":true},"proliferate":{"before":true,"after":true},"combatReference":{"before":true,"after":true},"hybridCreatureFloor":{"before":true,"after":true},"protection":{"before":false,"after":true},"requestedWhiteMageBallistaAccess":{"before":false,"after":true}}
+{"elapsedMs":570,"event":"stage","stage":"worker-started","sourceSha":"5e1163d8c57a92d64dcd2dec14ca0326e56636dc","manifestFingerprint":"01c73ca9a486e5fd7eee75cc740242e8345ec31eaacb8533ba2d569667fb6613","evaluationTime":"2026-09-12T08:30:39.498Z"}
+{"elapsedMs":9455,"event":"stage","stage":"verified-scryfall-installed","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":9480,"event":"stage","stage":"untouched-stock-resolved","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":9597,"event":"stage","stage":"stock-audit-complete","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":9731,"event":"stage","stage":"refinement-started","scryfall":{"queryEvaluations":0,"failures":[]}}
+{"elapsedMs":444637,"event":"stage","stage":"refinement-complete","scryfall":{"queryEvaluations":61,"failures":[]}}
+{"elapsedMs":444716,"event":"stage","stage":"final-audit-complete","scryfall":{"queryEvaluations":61,"failures":[]}}
 BENCH-01 COUNTER BLITZ — EXECUTION COMPLETE
-REFINEMENT STATUS: refined; SWAPS: 28
+REFINEMENT STATUS: refined; SWAPS: 24
 BRACKET: 3 -> 3
-COUNTERMAGIC: 1 -> 10 (target 8)
-COUNTER ENGINE: 52 -> 44 (target 16)
+COUNTERMAGIC: 1 -> 8 (target 8)
+COUNTER ENGINE: 52 -> 48 (target 16)
 PROLIFERATE: 4 -> 5 (target 3)
 COMBAT REFERENCES: 12 -> 14 (target 8)
-PROTECTION: 0 -> 7 (target 8)
-SUBSTANTIAL UPGRADE: 28 swaps (target 20)
-TARGET MOVEMENT: {"bracket":{"before":false,"after":false},"denseCountermagic":{"before":false,"after":true},"counterEngine":{"before":true,"after":true},"proliferate":{"before":true,"after":true},"combatReference":{"before":true,"after":true},"hybridCreatureFloor":{"before":true,"after":true},"protection":{"before":false,"after":false},"requestedWhiteMageBallistaAccess":{"before":false,"after":true}}
+PROTECTION: 0 -> 8 (target 8)
+SUBSTANTIAL UPGRADE: 24 swaps (target 20)
+TARGET MOVEMENT: {"bracket":{"before":false,"after":false},"denseCountermagic":{"before":false,"after":true},"counterEngine":{"before":true,"after":true},"proliferate":{"before":true,"after":true},"combatReference":{"before":true,"after":true},"hybridCreatureFloor":{"before":true,"after":true},"protection":{"before":false,"after":true},"requestedWhiteMageBallistaAccess":{"before":false,"after":true}}
