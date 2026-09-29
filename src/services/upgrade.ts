@@ -211,7 +211,7 @@ function identityQuery(identity: string[]): string {
 
 function roleClause(role: string, targetGate: UpgradeTargetGateV15 | null = null): string {
   if (targetGate === 'cheap-interaction') {
-    return 'mv<=2 (o:"counter target spell" OR o:"destroy target" OR o:"exile target" OR o:"return target" OR o:"target creature gets -")';
+    return 'mv<=2 (o:"counter target" OR o:"destroy target" OR o:"exile target" OR o:"return target" OR o:"target creature gets -")';
   }
   if (targetGate === 'fast-mana') {
     return 'mv<=2 (o:"add" OR o:"Treasure")';
@@ -219,7 +219,7 @@ function roleClause(role: string, targetGate: UpgradeTargetGateV15 | null = null
   const roleClauses: Record<string, string> = {
     ramp: '(o:"add" OR o:"search your library for" OR o:"costs" )',
     draw: '(o:"draw" OR o:"scry" OR o:"surveil" OR o:"look at the top")',
-    interaction: '(o:"counter target spell" OR o:"destroy target" OR o:"exile target" OR o:"return target" OR o:"target creature gets -")',
+    interaction: '(o:"counter target" OR o:"destroy target" OR o:"exile target" OR o:"return target" OR o:"target creature gets -")',
     'free-interaction': '((mv=0 OR o:"rather than pay") (o:"counter target" OR o:"destroy target" OR o:"exile target"))',
     protection: '(o:"hexproof" OR o:"indestructible" OR o:"protection from" OR o:"phase out")',
     tutor: 'o:"search your library for"',

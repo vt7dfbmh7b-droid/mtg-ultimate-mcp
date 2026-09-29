@@ -1,12 +1,12 @@
 # START HERE — Ultimate MTG
 
-**Stage 1 published. Bounded Stage 2 safeguards authorized; exact-commit verification passed and review complete. STOP before Stage 3.**
+**Stage 1/2 complete. Justin authorized bounded Stage 3 on 29 September 2026. Recognition candidate in progress; not accepted. STOP after Stage 3 review.**
 
 Read `project-state.json`, `AGENTS.md`, this checklist, then `docs/STAGED-RECOVERY-CONTRACT.md`. Do not treat an old “continue autonomously” instruction or a successful workflow as new permission.
 
 ## Current task
 
-Justin approved Stage 1 publication and bounded Stage 2 safeguards, necessary tests and existing CI. Stage 1 is published at `e91b8877aa4823bab03e8b5c616e535307824314`. Stage 2 is complete for the bounded software scope. Stop before recognition repair; read docs/STAGE-2-REVIEW.md. Read `docs/STAGE-2-SAFEGUARDS.md`. Routine work inside this approval does not need repeated permission.
+Implement only shared restricted-counterspell and land-type-search recognition. Read `docs/STAGE-3-RECOGNITION-CRITERIA.md` for the prospective claim, required evidence and recovery steps. Necessary tests, existing CI, experimental publication and affected/contrasting whole-deck review are authorized. Stage 1/2 are complete; do not repeat them. Routine work inside Stage 3 does not need repeated permission.
 
 ## What is known
 
@@ -15,24 +15,24 @@ Justin approved Stage 1 publication and bounded Stage 2 safeguards, necessary te
 - Latest recorded executable benchmark source: `8606761c4d2e29cebb980bb06520b6aced459a1b`. This is not a new accepted broad baseline.
 - Existing B4 trial: legal 100, 15 swaps, engine-assessed B3, protection 7/8, countermagic 6/8. Target missed.
 - Existing B5 challenge: legal 100, 28 swaps, engine-assessed B3, protection 7/8. Target missed.
-- Existing anonymous evidence reproduces missed restricted counterspells and Forest-search ramp. No recognition repair is implemented.
+- Existing anonymous evidence reproduces missed restricted counterspells and Forest-search ramp. A shared recognition candidate is being implemented; no new accepted repair or target result yet.
 
 ## Allowed now
 
-- Implement bounded acceptance/state safeguards, run necessary tests and existing CI.
+- Implement bounded Stage 3 recognition, run necessary tests and existing CI/frozen affected and contrasting controls.
 - Publish directly to the active experimental branch after checking head and active writers.
 - Preserve evidence and update coordinated handoff documents; report gaps honestly.
 
 ## Not allowed now
 
-- Recognition/ranking repair, fresh deck-generation benchmarks or archived reproducer execution.
+- Ranking/package expansion, conditional-ability/contextual-tutor follow-up or bracket-threshold changes outside Stage 3.
 - Schedule resumption, repository permission changes or a new automation platform.
 - Main/stable V0.13 changes, PR #29 merging, workflow/guard/policy-epoch changes.
 - Seeding generation with the supplied or historical Tidus comparison deck.
 
 ## Current stage and next boundary
 
-The bounded acceptance gate and baseline-transition checks passed verification and review. STOP before Stage 3. Protected maintenance and schedule resumption need separate approval. Recognition repair needs Stage 3 approval. Branch-local checks cannot establish tamper-proof unattended enforcement: trusted server policy ownership and shared run ownership remain open.
+The bounded acceptance gate and baseline-transition checks passed verification and review. Stage 3 is authorized; STOP after its review. Protected maintenance and schedule resumption need separate approval. Branch-local checks cannot establish tamper-proof unattended enforcement: trusted server policy ownership and shared run ownership remain open.
 
 ## Stop immediately if
 

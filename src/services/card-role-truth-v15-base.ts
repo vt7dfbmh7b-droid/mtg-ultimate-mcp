@@ -1,4 +1,5 @@
 import type { ScryfallCard } from '../types/scryfall.js';
+import { hasTargetedSpellCounterV15 } from './oracle-recognition-v15.js';
 import { getCardManaCost, getCardOracleText, inferCardRoles } from './scryfall.js';
 
 export interface ManaRoleTruthV15 {
@@ -204,7 +205,8 @@ function hasGenericDirectInteraction(textValue: string): boolean {
   const withoutGraveyardExile = textValue
     .replace(/\bexile (?:up to [^.]{0,80})?target [^.]{0,120}\b(?:from|in) (?:a|the|target player's|that player's|your) graveyard\b[^.]*/g, '')
     .replace(/\bexile target player's graveyard\b[^.]*/g, '');
-  return /\bcounter target (?:spell|activated ability|triggered ability)\b/.test(withoutGraveyardExile)
+  return hasTargetedSpellCounterV15(withoutGraveyardExile)
+    || /\bcounter target (?:activated ability|triggered ability)\b/.test(withoutGraveyardExile)
     || /\b(?:destroy|exile)(?: up to [^.]{0,80})? target\b/.test(withoutGraveyardExile)
     || /\breturn target [^.]{0,120} to (?:its|their) owner's hand\b/.test(withoutGraveyardExile)
     || /\btap target (?:artifact|creature|permanent)\b/.test(withoutGraveyardExile)

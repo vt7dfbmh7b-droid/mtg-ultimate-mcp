@@ -1,4 +1,5 @@
 import { config } from '../config.js';
+import { hasTargetedSpellCounterV15, landSearchRecognitionV15 } from './oracle-recognition-v15.js';
 import { fetchJson } from '../lib/http.js';
 import { clearRetainedCardIndexV15, installRetainedCardIndexV15, isRetainedScryfallCardDataInstalledV15 } from './retained-scryfall-provider-v15.js';
 import type {
@@ -305,7 +306,8 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   if (type.includes('artifact') && addsMana && !type.includes('creature')) roles.add('mana rock');
   if (type.includes('creature') && /\{t\}:\s*add|whenever .* add .* mana/.test(text)) roles.add('mana dork');
   if (card.cmc <= 1 && addsMana && !isLand && !requiresPaidManaSetup) roles.add('fast mana');
-  if (/search your library for .*land/.test(text) && /battlefield/.test(text)) roles.add('land ramp');
+  const landSearch = landSearchRecognitionV15(text);
+  if (landSearch.putsSearchedLandOntoBattlefield) roles.add('land ramp');
   if (/costs? .* less to cast/.test(text)) roles.add('cost reduction');
   if (/create .* treasure token/.test(text)) roles.add('treasure');
   const producesColoredMana = (card.produced_mana ?? []).some((color) => /^[WUBRG]$/i.test(color));
@@ -336,9 +338,9 @@ export function inferCardRoles(card: ScryfallCard): string[] {
   const searchesLibrary = /search your library for/.test(text);
   if (searchesLibrary && !basicLandRampOnlySearch(text)) roles.add('tutor');
   if (/search your library for .*creature/.test(text)) roles.add('creature tutor');
-  if (/search your library for .*land/.test(text)) roles.add('land tutor');
+  if (landSearch.searchesLand) roles.add('land tutor');
 
-  if (/counter target spell/.test(text)) roles.add('countermagic');
+  if (hasTargetedSpellCounterV15(text)) roles.add('countermagic');
   if (hasFreeCastAlternative(card, manaCost, text, isLand) && hasDirectInteractionText(text)) roles.add('free interaction');
   if (
     /(?:destroy|exile)(?: up to [^.]{0,80})? target/.test(text)

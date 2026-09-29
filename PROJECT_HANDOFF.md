@@ -14,14 +14,14 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 ## Current mode
 
 - Active milestone: **BENCH-01 — Adversarial Commander benchmark suite**
-- Intelligence development paused: **yes**
+- Intelligence development paused: **no**
 - Experimental branch: `agent/counter-blitz-generic-mechanism-floor-20260911`
 - Development checkpoint at pause: `43e9c1c80dadfea4d53ed1a2affebd90131e362f`
-- Active branch validation: **stage-2-software-safeguards-verified-review-complete-recognition-paused**
+- Active branch validation: **stage-3-recognition-candidate-in-progress-not-accepted**
 
 ## Audit reuse rule
 
-STOP at the completed Stage 2 review boundary. Read docs/STAGE-2-REVIEW.md and docs/STAGE-2-SAFEGUARDS.md. The next decision is bounded Stage 3 recognition repair; it is not authorized by Stage 2 approval. Server-side trusted policy ownership and shared run ownership remain separate maintenance before unattended operation.
+Justin authorized bounded Stage 3 on 29 September 2026. Read docs/STAGE-3-RECOGNITION-CRITERIA.md. Complete only shared restricted-counterspell and land-type-search recognition, necessary tests, existing CI and frozen affected/control review. Stop after Stage 3 review. Stage 1/2 are complete; do not repeat them. Server-side trusted policy ownership and shared run ownership remain separate maintenance before unattended operation.
 
 ## Stable safety boundary
 
@@ -39,13 +39,13 @@ The last persisted Marvel control is `1d6b73aae4edc72d80a2ebc945a160506a13c71e` 
 
 ## Next actions
 
-1. Stage 2 review is complete; stop before recognition repair. Review docs/STAGE-2-REVIEW.md. Justin may separately authorize the bounded Stage 3 restricted-counterspell and land-type-search recognition repair.
+1. Stage 3 is authorized: implement the bounded shared recognition repair against docs/STAGE-3-RECOGNITION-CRITERIA.md; publish candidate source, record exact CI/replay IDs and review frozen affected/contrasting decks before any acceptance. Stop after Stage 3 review.
 2. Verified safeguard source 146eb40040b846beb43274993d1dfdbb73fe55d9: CI 36458755433 passed (1156/0/1); integrity 36458755375 passed; writer 464acaa16c5ee9c104cb1840706af8f53391e635 changed evidence metadata only. Check live head and active writers before any later authorized operation.
 3. Historical B4/B5 manual summaries remain under test-results/bench01-stage1-records/ and are not automated validation controls. Their original evidence is preserved; both target-quality verdicts remain failed.
 4. Require hash-bound approved claim contracts, provenance, required observations and complete-deck review before accepted-state changes. Unknown or failed evidence blocks advancement. Existing CI is not deck-quality acceptance.
 5. Do not claim unattended tamper-proof enforcement: trusted server-side acceptance-policy ownership and shared run ownership require separate authorized maintenance before Stage 4.
 6. Preserve accepted baseline 1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7, narrow checkpoint 43e9c1c80dadfea4d53ed1a2affebd90131e362f, main/stable V0.13, PR #29, workflows, workflow guard, policy epoch and held-out comparison isolation.
-7. Recognition repair is the next product task only after a new stage-specific approval. Do not run fresh benchmarks or change Commander ranking during Stage 2. Keep other open Commander failures separately recorded.
+7. Do not expand Stage 3 into conditional-ability, contextual-tutor, ranking/package, bracket-calibration or unattended-operation work. Keep other open Commander failures separately recorded.
 
 ## Permanent recovery references
 

@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-28T17:35:00.000Z**.
+Generated from `project-state.json`. Last state update: **2026-09-29T07:04:00.000Z**.
 
 ## Current mode
 
@@ -9,8 +9,8 @@ Generated from `project-state.json`. Last state update: **2026-09-28T17:35:00.00
 - Active experimental branch: `agent/counter-blitz-generic-mechanism-floor-20260911`
 - Active PR: none
 - Active milestone: **BENCH-01**
-- Intelligence development paused: **yes**
-- Reason: Stage 2 safeguards implemented and reviewed. Exact-source CI 36458755433 passed at 146eb40040b846beb43274993d1dfdbb73fe55d9 (1156 passed, 0 failed, 1 skipped); integrity run 36458755375 passed. STOP before Stage 3 recognition repair. Schedules and protected areas remain unchanged; unattended trust controls still require separately approved maintenance.
+- Intelligence development paused: **no**
+- Reason: Justin authorized bounded Stage 3 on 29 September 2026: shared recognition repair, necessary tests and existing CI, experimental publication and frozen affected/control whole-deck review. Stop after Stage 3 review. Stage 1/2 complete; do not repeat. Candidate is not accepted. Schedules and protected areas remain unchanged; unattended trust controls still require separately approved maintenance.
 
 ## Stable boundary
 
@@ -47,14 +47,14 @@ Always inspect the live active-branch head before editing. A later documentation
 
 ## Current validation status
 
-- Active branch status: **stage-2-software-safeguards-verified-review-complete-recognition-paused**
+- Active branch status: **stage-3-recognition-candidate-in-progress-not-accepted**
 - Last persisted Marvel control source: `1d6b73aae4edc72d80a2ebc945a160506a13c71e`
 - Last persisted Marvel control outcome: **execution-success-target-not-achieved**
 - Note: Focused and broad source-1d6b73a controls execute successfully but fail target-quality gates. Retain this unresolved result; other scenario passes do not establish promotion readiness.
 
 Required before resuming broad INTEL-01/INTEL-02 claims:
 
-- Stage 2 review is complete; Stage 3 recognition repair requires separate approval. Green safeguard tests do not accept a Commander repair or establish unattended readiness.
+- Stage 2 review is complete; bounded Stage 3 was authorized on 29 September 2026. Green safeguard or recognition tests do not accept a Commander repair or establish unattended readiness.
 - For future repairs, require anonymous public-planner regressions, exact-source CI, frozen affected and contrasting controls, and a durable complete-deck verdict. Report engineering, truth, deck quality and target achievement separately.
 - Recognize existing B4 and B5 target failures as unresolved; new registry rows record historical outcomes rather than a new pass. Corrected card-role counts must be re-evaluated fairly before any bracket claim.
 - Preserve hard constraints, held-out isolation and accepted baselines. No pool-ceiling claim without audited alternatives; no superiority claim without an independent equal-input comparator.
@@ -62,13 +62,13 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 
 ## Next actions
 
-1. Stage 2 review is complete; stop before recognition repair. Review docs/STAGE-2-REVIEW.md. Justin may separately authorize the bounded Stage 3 restricted-counterspell and land-type-search recognition repair.
+1. Stage 3 is authorized: implement the bounded shared recognition repair against docs/STAGE-3-RECOGNITION-CRITERIA.md; publish candidate source, record exact CI/replay IDs and review frozen affected/contrasting decks before any acceptance. Stop after Stage 3 review.
 2. Verified safeguard source 146eb40040b846beb43274993d1dfdbb73fe55d9: CI 36458755433 passed (1156/0/1); integrity 36458755375 passed; writer 464acaa16c5ee9c104cb1840706af8f53391e635 changed evidence metadata only. Check live head and active writers before any later authorized operation.
 3. Historical B4/B5 manual summaries remain under test-results/bench01-stage1-records/ and are not automated validation controls. Their original evidence is preserved; both target-quality verdicts remain failed.
 4. Require hash-bound approved claim contracts, provenance, required observations and complete-deck review before accepted-state changes. Unknown or failed evidence blocks advancement. Existing CI is not deck-quality acceptance.
 5. Do not claim unattended tamper-proof enforcement: trusted server-side acceptance-policy ownership and shared run ownership require separate authorized maintenance before Stage 4.
 6. Preserve accepted baseline 1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7, narrow checkpoint 43e9c1c80dadfea4d53ed1a2affebd90131e362f, main/stable V0.13, PR #29, workflows, workflow guard, policy epoch and held-out comparison isolation.
-7. Recognition repair is the next product task only after a new stage-specific approval. Do not run fresh benchmarks or change Commander ranking during Stage 2. Keep other open Commander failures separately recorded.
+7. Do not expand Stage 3 into conditional-ability, contextual-tutor, ranking/package, bracket-calibration or unattended-operation work. Keep other open Commander failures separately recorded.
 
 ## Permanent truth boundary
 
@@ -115,4 +115,4 @@ Read in this order:
 13. `docs/VALIDATION-MATRIX.md`
 14. `docs/KNOWN-FAILURES.md`
 
-Then: STOP at the completed Stage 2 review boundary. Read docs/STAGE-2-REVIEW.md and docs/STAGE-2-SAFEGUARDS.md. The next decision is bounded Stage 3 recognition repair; it is not authorized by Stage 2 approval. Server-side trusted policy ownership and shared run ownership remain separate maintenance before unattended operation.
+Then: Justin authorized bounded Stage 3 on 29 September 2026. Read docs/STAGE-3-RECOGNITION-CRITERIA.md. Complete only shared restricted-counterspell and land-type-search recognition, necessary tests, existing CI and frozen affected/control review. Stop after Stage 3 review. Stage 1/2 are complete; do not repeat them. Server-side trusted policy ownership and shared run ownership remain separate maintenance before unattended operation.
