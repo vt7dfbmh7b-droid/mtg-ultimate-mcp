@@ -1,7 +1,7 @@
 <!-- GENERATED FROM project-state.json. DO NOT EDIT BY HAND. -->
 # Ultimate MTG — Project State
 
-Generated from `project-state.json`. Last state update: **2026-09-29T07:04:00.000Z**.
+Generated from `project-state.json`. Last state update: **2026-09-30T05:20:00.000Z**.
 
 ## Current mode
 
@@ -47,7 +47,7 @@ Always inspect the live active-branch head before editing. A later documentation
 
 ## Current validation status
 
-- Active branch status: **stage-3-recognition-candidate-in-progress-not-accepted**
+- Active branch status: **stage-3-second-recognition-candidate-not-accepted**
 - Last persisted Marvel control source: `1d6b73aae4edc72d80a2ebc945a160506a13c71e`
 - Last persisted Marvel control outcome: **execution-success-target-not-achieved**
 - Note: Focused and broad source-1d6b73a controls execute successfully but fail target-quality gates. Retain this unresolved result; other scenario passes do not establish promotion readiness.
@@ -62,7 +62,7 @@ Required before resuming broad INTEL-01/INTEL-02 claims:
 
 ## Next actions
 
-1. Stage 3 is authorized: implement the bounded shared recognition repair against docs/STAGE-3-RECOGNITION-CRITERIA.md; publish candidate source, record exact CI/replay IDs and review frozen affected/contrasting decks before any acceptance. Stop after Stage 3 review.
+1. Stage 3 candidate 1 (5e1163d8) is rejected for multi-sentence land-search false negatives despite green CI 36534622262 and Batch A 36534622136. Evidence is preserved at e3265b1a and in its durable manual verdict. Complete only the second bounded recognition attempt, exact-source CI and affected/control review against docs/STAGE-3-RECOGNITION-CRITERIA.md. After two unsuccessful substantive attempts stop for design review; do not repeat Stage 1/2 or matching completed runs.
 2. Verified safeguard source 146eb40040b846beb43274993d1dfdbb73fe55d9: CI 36458755433 passed (1156/0/1); integrity 36458755375 passed; writer 464acaa16c5ee9c104cb1840706af8f53391e635 changed evidence metadata only. Check live head and active writers before any later authorized operation.
 3. Historical B4/B5 manual summaries remain under test-results/bench01-stage1-records/ and are not automated validation controls. Their original evidence is preserved; both target-quality verdicts remain failed.
 4. Require hash-bound approved claim contracts, provenance, required observations and complete-deck review before accepted-state changes. Unknown or failed evidence blocks advancement. Existing CI is not deck-quality acceptance.

@@ -2,6 +2,8 @@
 
 **29 September 2026 — Stage 1/2 complete; bounded Stage 3 authorized and in progress, not accepted.**
 
+30 September: first candidate `5e1163d8` passed exact CI and completed Batch A (runs 36534622262 / 36534622136). Writer `e3265b1a` preserves both complete results. Candidate 1 is rejected for multi-sentence land-search false negatives, not accepted by its green execution. Second bounded recognition attempt is in progress; see the durable manual verdict and Stage 3 criteria. The first candidate's B5 result is legal 100, 24 swaps, assessed B3, protection target satisfied but bracket target failed; Liliana is legal 100, NZ$443.88, assessed B4. Historical tables below remain source-specific.
+
 Read START-HERE.md and docs/STAGE-3-RECOGNITION-CRITERIA.md. Justin authorized Stage 3 recognition repair, necessary tests, existing CI, experimental publication and review. Schedules remain paused. Evidence descriptions below are preserved historical findings, not a Stage 3 verdict.
 
 ## Objective and boundaries

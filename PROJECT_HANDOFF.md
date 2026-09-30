@@ -17,7 +17,7 @@ This is the short compatibility handoff. **`project-state.json` is the authorita
 - Intelligence development paused: **no**
 - Experimental branch: `agent/counter-blitz-generic-mechanism-floor-20260911`
 - Development checkpoint at pause: `43e9c1c80dadfea4d53ed1a2affebd90131e362f`
-- Active branch validation: **stage-3-recognition-candidate-in-progress-not-accepted**
+- Active branch validation: **stage-3-second-recognition-candidate-not-accepted**
 
 ## Audit reuse rule
 
@@ -39,7 +39,7 @@ The last persisted Marvel control is `1d6b73aae4edc72d80a2ebc945a160506a13c71e` 
 
 ## Next actions
 
-1. Stage 3 is authorized: implement the bounded shared recognition repair against docs/STAGE-3-RECOGNITION-CRITERIA.md; publish candidate source, record exact CI/replay IDs and review frozen affected/contrasting decks before any acceptance. Stop after Stage 3 review.
+1. Stage 3 candidate 1 (5e1163d8) is rejected for multi-sentence land-search false negatives despite green CI 36534622262 and Batch A 36534622136. Evidence is preserved at e3265b1a and in its durable manual verdict. Complete only the second bounded recognition attempt, exact-source CI and affected/control review against docs/STAGE-3-RECOGNITION-CRITERIA.md. After two unsuccessful substantive attempts stop for design review; do not repeat Stage 1/2 or matching completed runs.
 2. Verified safeguard source 146eb40040b846beb43274993d1dfdbb73fe55d9: CI 36458755433 passed (1156/0/1); integrity 36458755375 passed; writer 464acaa16c5ee9c104cb1840706af8f53391e635 changed evidence metadata only. Check live head and active writers before any later authorized operation.
 3. Historical B4/B5 manual summaries remain under test-results/bench01-stage1-records/ and are not automated validation controls. Their original evidence is preserved; both target-quality verdicts remain failed.
 4. Require hash-bound approved claim contracts, provenance, required observations and complete-deck review before accepted-state changes. Unknown or failed evidence blocks advancement. Existing CI is not deck-quality acceptance.

@@ -18,6 +18,7 @@ import type { RetainedScryfallCardDataSnapshotManifestV15 } from '../src/service
 import { assertRetainedScryfallReplayCompleteV15, retainedScryfallDiagnosticsV15 } from '../src/services/retained-scryfall-provider-v15.js';
 import { fetchPreconDeckV10 } from '../src/services/precons-v10.js';
 import { getCardOracleText } from '../src/services/scryfall.js';
+import { effectiveCardRolesV15 } from '../src/services/card-role-truth-v15.js';
 import { config } from '../src/config.js';
 import { runBoundedProcessV15 } from '../src/lib/bounded-process-v15.js';
 import { createRetainedHttpSessionV15, sha256V15, type RetainedHttpCaptureV15 } from '../src/lib/retained-http-session-v15.js';
@@ -176,6 +177,13 @@ async function auditDeck(decklist: string): Promise<Record<string, unknown>> {
     combatReferenceCount,
     creatureCount,
     nonlandCount,
+    // Preserve per-card evidence so shared recognition can be reviewed separately
+    // from aggregate target counts without inferring it from a successful run.
+    roleRecognitionAudit: resolved.cards.map(card => ({
+      name: card.name,
+      oracleText: getCardOracleText(card),
+      effectiveRoles: effectiveCardRolesV15(card),
+    })),
     notableRoutePieces: {
       walkingBallista: names.has('walking ballista'),
       destinedWhiteMage: names.has('the destined white mage'),
@@ -553,6 +561,7 @@ function qualitySignature(result: Record<string, unknown>): unknown {
     cardCount: audit.cardCount, commanderLegal: audit.commanderLegal, printingPolicySatisfied: audit.printingPolicySatisfied,
     counterEngineCount: audit.counterEngineCount, proliferateCount: audit.proliferateCount, counterspellCount: audit.counterspellCount,
     combatReferenceCount: audit.combatReferenceCount, creatureCount: audit.creatureCount, metrics: audit.metrics,
+    roleRecognitionAudit: audit.roleRecognitionAudit,
     comboEvidence: audit.comboEvidence, benchmarkTargets: audit.benchmarkTargets,
   });
   const refinement = record(result.refinement);

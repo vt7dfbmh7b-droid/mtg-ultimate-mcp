@@ -8,6 +8,8 @@ Read `project-state.json`, `AGENTS.md`, this checklist, then `docs/STAGED-RECOVE
 
 Implement only shared restricted-counterspell and land-type-search recognition. Read `docs/STAGE-3-RECOGNITION-CRITERIA.md` for the prospective claim, required evidence and recovery steps. Necessary tests, existing CI, experimental publication and affected/contrasting whole-deck review are authorized. Stage 1/2 are complete; do not repeat them. Routine work inside Stage 3 does not need repeated permission.
 
+30 September checkpoint: first candidate `5e1163d8` passed CI `36534622262` and Batch A `36534622136`; evidence writer `e3265b1a` preserves its results. It is rejected for multi-sentence land-search false negatives; read `test-results/bench01-manual-verdicts/5e1163d8c57a92d64dcd2dec14ca0326e56636dc.md`. The second bounded attempt repairs the search/destination association and adds per-card audit evidence. Validate its exact source and review the frozen decks; do not accept candidate 1 or rerun it. Stop for design review after two unsuccessful substantive attempts.
+
 ## What is known
 
 - Broad accepted Commander baseline: `1ef10cec8c50d3d576cb1c3ae3c2566a4f632aa7`.

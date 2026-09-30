@@ -63,6 +63,25 @@ test('a land-type search does not invent missing commander-color mana access', (
   assert.equal(counts.G, 39, 'the search spell is not itself a mana-producing land');
 });
 
+test('multi-sentence land searches retain their searched object without crossing destination or ability boundaries', () => {
+  for (const oracle of [
+    'Search your library for a Forest card and reveal it. Put that card onto the battlefield tapped, then shuffle.',
+    'Search your library for up to X basic land cards, where X is the greatest power among creatures you control. Put those cards onto the battlefield tapped, then shuffle.',
+    '{T}, Remove a counter from a permanent you control: Search your library for a Plains card and reveal it. If an opponent controls more lands than you, you may put that card onto the battlefield tapped. If you do not, put that card into your hand. Then shuffle.',
+    'Search your library for a creature or land card and reveal it. Put it onto the battlefield tapped if it is a land card. Otherwise, put it into your hand. Then shuffle.',
+  ]) {
+    assert.equal(landSearchRecognitionV15(oracle).putsSearchedLandOntoBattlefield, true, oracle);
+  }
+  for (const oracle of [
+    'Search your library for a Forest card, put it into your hand. Put it onto the battlefield.',
+    'Search your library for a Forest card and reveal it. Then shuffle. Put target creature onto the battlefield.',
+    'Search your library for a Forest card and reveal it.\nWhen this creature dies, put it onto the battlefield.',
+    'Search your library for a Forest card and reveal it. When this creature dies, put it onto the battlefield.',
+    'Search your library for a Forest card and reveal it. Exile target creature, then put it onto the battlefield.',
+    'Search your library for a Forest card, exile it. Put it onto the battlefield at the beginning of your next upkeep.',
+  ]) assert.equal(landSearchRecognitionV15(oracle).putsSearchedLandOntoBattlefield, false, oracle);
+});
+
 const commander = card('Anonymous Role Auditor', '', 3, 'Legendary Creature — Wizard', { color_identity: ['U', 'G'], power: '2', toughness: '3' });
 const land = card('Forest', '({T}: Add {G}.)', 0, 'Basic Land — Forest', { produced_mana: ['G'] });
 const repeated = (n: number, label: string, oracle: string, type = 'Sorcery', extra: Partial<ScryfallCard> = {}) =>
@@ -71,6 +90,7 @@ const repeated = (n: number, label: string, oracle: string, type = 'Sorcery', ex
 for (const [label, oracle, role, eligible] of [
   ['Denial', 'Counter target noncreature spell.', 'countermagic', true],
   ['Subtype Search', 'Search your library for a Forest card, put it onto the battlefield, then shuffle.', 'land ramp', true],
+  ['Multi Sentence Search', 'Search your library for a Forest card and reveal it. Put that card onto the battlefield tapped, then shuffle.', 'land ramp', true],
   ['Counter Placement', 'Put a +1/+1 counter on target creature.', 'countermagic', false],
   ['Uncounterability', 'This spell cannot be countered.', 'countermagic', false],
   ['Hand Search', 'Search your library for a Forest card, put it into your hand, then shuffle.', 'land ramp', false],
@@ -86,7 +106,7 @@ for (const [label, oracle, role, eligible] of [
       ...repeated(role === 'countermagic' ? 10 : 9, 'Mana', '{T}: Add {G}.', 'Artifact', { produced_mana: ['G'] }),
       ...repeated(role === 'countermagic' ? 7 : 10, 'Interaction', 'Counter target spell.', 'Instant'),
     ];
-    const incumbent = card(`Anonymous Incumbent ${label}`, role === 'countermagic'
+    const incumbent = card(`Anonymous Incumbent ${label}`, eligible ? oracle : role === 'countermagic'
       ? 'Counter target noncreature spell.'
       : 'Search your library for a Forest card, put it onto the battlefield, then shuffle.', 2, desired.type_line);
     const replaced = support.findIndex(c => c.name.startsWith(role === 'countermagic' ? 'Interaction ' : 'Mana '));
